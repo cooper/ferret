@@ -20,7 +20,6 @@ sub new {
     # add default properties.
     $scope->_apply_default_properties($f);
     
-    # return the new scope.
     return $scope;
 }
 
