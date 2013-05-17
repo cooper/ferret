@@ -14,4 +14,9 @@ sub new {
     return $obj;
 }
 
+# fetch the ferret.
+sub ferret {
+    shift->{ferret};
+}
+
 1
