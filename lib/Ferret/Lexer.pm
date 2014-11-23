@@ -23,13 +23,17 @@ use Ferret::Lexer::Expression;
 use Ferret::Lexer::Expression::String;
 
 use Ferret::Lexer::Structure;
+use Ferret::Lexer::Structure::Instruction;
 use Ferret::Lexer::Structure::List;
 use Ferret::Lexer::Structure::ListItem;
 use Ferret::Lexer::Structure::Call;
 
+use Ferret::Lexer::Token::Bareword;
+
 sub pretty_token {
     my $tok = shift;
-
+    return 'beginning of file' if not defined $tok;
+    
     # keywords.
     if ($tok =~ m/^KEYWORD_(.+)$/) {
         my $key = lc $1;

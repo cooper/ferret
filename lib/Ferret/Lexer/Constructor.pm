@@ -33,6 +33,9 @@ sub construct {
             $last_element
         );
 
+        # call the handler for all.
+        c_any($label, $current, $value);
+
         # call a handler if one exists.
         if (my $code = __PACKAGE__->can("c_$label")) {
             my $el = $code->($current, $value);
@@ -225,8 +228,8 @@ sub c_PAREN_CALL {
     #   a bareword
     #   a variable
     my %allowed = map { $_ => 1 } qw(
-        List Expression
-        BAREWORD VAR_LEX VAR_THIS VAR_SPEC
+        List Expression Bareword
+        VAR_LEX VAR_THIS VAR_SPEC
     );
 
     my $last_el = $c->{last_element};
@@ -234,7 +237,7 @@ sub c_PAREN_CALL {
 
     # if this is a list, it can only have one item.
     if ($last_el->isa('Ferret::Lexer::Structure::List')
-    && $last_el->children > 1) {
+     && $last_el->children > 1) {
         return expected($c, 'single-element list', 'before');
     }
 
@@ -312,6 +315,42 @@ sub c_OP_COMMA {
     return $c->{node};
 }
 
+sub c_BAREWORD {
+    my ($c, $value) = @_;
+    my $word = Ferret::Lexer::Token::Bareword->new(bareword_value => $value);
+    $c->{node}->adopt($word);
+    # not yet in function call at this point.
+    return $word;
+}
+
+sub c_OP_SEMI {
+    my ($c, $value) = @_;
+    if (!$c->{instruction} || $c->{node} != $c->{instruction}) {
+        return unexpected($c);
+    }
+    $c->{node} = $c->{node}{parent};
+    delete $c->{instruction};
+    return;
+}
+
+sub c_any {
+    my ($label, $c, $value) = @_;
+    return if $c->{instruction};
+    my $instruction = Ferret::Lexer::Structure::Instruction->new;
+    @$c{ qw(node instruction) } = ($c->{node}->adopt($instruction)) x 2;
+}
+
+# returns the first parent node which is not a list or a list item.
+sub first_non_list_parent {
+    my $node = shift;
+    while ($node = $node->{parent}) {
+        next if $node->isa('Ferret::Lexer::Structure::List');
+        next if $node->isa('Ferret::Lexer::Structure::ListItem');
+        return $node;
+    }
+    return;
+}
+
 sub fatal {
     my ($c, $err) = @_;
     return Ferret::Lexer::fatal("$err on line $$c{line}.");
@@ -328,7 +367,11 @@ sub unexpected {
     my $reason  = shift;
         $reason = length $reason ? " $reason" : '';
     my $token   = Ferret::Lexer::pretty_token($c->{label});
-    my $last_el = lcfirst $c->{elements}[-1]->desc;
+
+    # determine the previous thing.
+    my $last_el = $c->{elements}[-1] ?
+        lcfirst $c->{elements}[-1]->desc : 'beginning of file';
+
     fatal($c, "Unexpected $token$reason after $last_el");
 }
 

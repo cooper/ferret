@@ -14,11 +14,6 @@ sub desc {
     return $str;
 }
 
-sub perl_fmt {
-    my $exp = shift;
-    return
-}
-
 sub perl_fmt_do {
     return '('.join('', map $_->perl_fmt_do, shift->children).')';
 }

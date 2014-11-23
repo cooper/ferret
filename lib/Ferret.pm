@@ -11,6 +11,7 @@ use Scalar::Util 'blessed';
 use Ferret::Context;
 use Ferret::Function;
 use Ferret::Event;
+use Ferret::Core::Functions;
 use Ferret::Core::Context;
 
 # object constants.

@@ -4,11 +4,11 @@ package Ferret::Core::Context;
 use warnings;
 use strict;
 use utf8;
-
+use 5.010;
 use parent 'Ferret::Context';
 
 my %functions = (
-    say => [ \&_say, qw(message) ]
+    say => [ '_say', qw(message) ]
 );
 
 # creates a new context.
@@ -17,6 +17,7 @@ sub new {
     my $context = $class->SUPER::new($f, %opts);
     foreach my $name (keys %functions) {
         my ($code, @args) = @{ $functions{$name} };
+        $code = Ferret::Core::Functions->can($code) or next;
 
         # create function with proper requirements.
         my $func = Ferret::Function->new($f,
@@ -27,15 +28,10 @@ sub new {
 
         # create and bind an event for the function.
         my $event = Ferret::Event->new($f, default_func => $func);
-        $context->bind_event($name => $event);
+        $context->set_property($name => $event);
 
     }
     return $context;
-}
-
-sub _say {
-    my $arguments = shift;
-    print $arguments->{message}, $/;
 }
 
 1

@@ -15,6 +15,14 @@ sub new {
         %opts,
         ferret => $f
     }, $class;
+
+    # add parents.
+    $obj->add_parent($_) foreach @{
+            delete $obj->{parents}    ||
+            [ delete $obj->{parent} ] ||
+            [ ]
+    };
+
     return $obj;
 }
 

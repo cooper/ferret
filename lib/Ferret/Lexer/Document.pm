@@ -15,8 +15,8 @@ sub desc {
 sub perl_fmt {
     my $doc = shift;
     my $content = '';
-    $content = $_->perl_fmt_do."\n" foreach $doc->children;
-    return Document => { content => $content };
+    $content .= $_->perl_fmt_do."\n" foreach $doc->children;
+    return document => { content => $content };
 }
 
 1

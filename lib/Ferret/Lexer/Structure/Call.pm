@@ -13,16 +13,8 @@ sub perl_fmt {
     my $func = $call->function;
     my $arg_string = join ', ', map $_->perl_fmt_do, $call->func_args;
 
-    my $code_ref;
-    if ($func->type_or_tok eq 'BAREWORD') {
-        $code_ref = $func->get_format(global_event => {
-            event_name => $func->{token_value}
-        });
-    }
-    else { $code_ref = $func->perl_fmt_do }
-
     return call  => {
-        coderef   => $code_ref,
+        coderef   => $func->perl_fmt_do,
         arguments => $arg_string
     };
 }

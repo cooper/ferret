@@ -27,7 +27,7 @@ my %no_value = map { $_ => 1 } qw(
     OP_ADD      OP_SUB      OP_CALL     OP_PROP
     OP_DIV      OP_DIV_A    OP_MUL      OP_MUL_A
     OP_VALUE    OP_PACK     OP_EQUAL    OP_EQUAL_I
-    OP_ASSIGN   OP_COMMA    OP_RETURN
+    OP_ASSIGN   OP_COMMA    OP_RETURN   OP_SEMI
 );
 
 # reused formats
@@ -80,6 +80,7 @@ my @token_formats = (
     [ OP_MUL        => qr/\*/                                               ],  # multiplication
     [ OP_DIV        => qr/\//                                               ],  # division
     [ OP_CALL       => qr/!/                                                ],  # call without arguments
+    [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
     [ OP_PROP       => qr/\./                                               ],  # property
     [ OP_COMMA      => qr/,/                                                ],  # list separator
     [ OP_PACK       => qr/::/                                               ],  # package

@@ -1,4 +1,5 @@
 {
-    my $context = Ferret::Context->new($f, borrow_events => $core_context);
+    my $scope = my $context =
+        Ferret::Context->new($f, parent => $core_context);
     <<content>>
 }

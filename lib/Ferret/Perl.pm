@@ -13,13 +13,25 @@ sub main {
 
 sub get_format {
     my ($name, $info) = @_;
+
+    # no format.
     return '' if not defined $name;
     $name = lc $name;
+
+    # slurp the file.
     local $/ = undef;
-    open my $fh, '<', "lib/Ferret/Perl/Format/$name.fmt" or die $!;
+    open my $fh, '<', "lib/Ferret/Perl/Format/$name.fmt"
+        or die "can't open Perl format $name: $!\n";
     my $format = <$fh>;
+
+    # replace variables, trim.
     $format =~ s/<<(\w+)>>/$$info{$1}/g;
     $format =~ s/^\s+|\s+$//g;
+
+    # remove excess parentheses.
+    # I don't know yet if this is a bad idea.
+    $format =~ s/\(\((.+)\)\)/\($1\)/gs;
+
     return $format;
 }
 
