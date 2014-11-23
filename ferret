@@ -12,6 +12,7 @@ use JSON::XS;
 
 use Ferret;
 use Ferret::Lexer;
+use Ferret::Perl;
 
 # parse arguments.
 my ($args, $file) = '';
@@ -38,6 +39,8 @@ my $doc = Ferret::Lexer::Document->new(name => $file);
 my $err = Ferret::Lexer::Constructor::construct($doc, @tok);
 show_dom($doc) if $args{d};
 die "Error: $err\n" if $err;
+
+say Ferret::Perl::main($doc);
 
 sub show_tok {
     state $json = JSON::XS->new->allow_nonref(1);

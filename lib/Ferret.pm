@@ -6,9 +6,12 @@ use strict;
 use utf8;
 use 5.010;
 
+use Scalar::Util 'blessed';
+
 use Ferret::Context;
 use Ferret::Function;
 use Ferret::Event;
+use Ferret::Core::Context;
 
 # object constants.
 my $undefined = \'undefined';

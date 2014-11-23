@@ -83,8 +83,8 @@ sub property {
 
     # try inheritance.
     foreach my $o ($obj->parents) {
-        return $o->{properties}{$prop_name}
-        if exists $o->{properties}{$prop_name};
+        my $value = $o->property($prop_name);
+        return $value if defined $value;
     }
 
     return;

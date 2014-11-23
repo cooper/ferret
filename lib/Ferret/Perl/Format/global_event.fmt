@@ -1,0 +1,1 @@
+$context->get_event('<<event_name>>')

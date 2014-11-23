@@ -18,6 +18,12 @@ sub new {
         %opts
     );
 
+    # conveniently create an event with a function.
+    if (my $func = delete $event->{default_func}) {
+        $func->{name} = 'default';
+        $event->add_function($func);
+    }
+
     return $event;
 }
 

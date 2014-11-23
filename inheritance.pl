@@ -38,8 +38,9 @@ $func2->{code} = sub {
 };
 $func2->add_argument(name => 'message2', optional => 1);
 
-my $event = Ferret::Event->new($f);
+my $event = Ferret::Event->new($f, name => 'say');
 $event->add_function($func);
 $event->add_function($func2);
 
-$event->call(["Hello World!"]);
+$context->bind_event(say => $event);
+$context->call_event(say => ["Hello World!"]);

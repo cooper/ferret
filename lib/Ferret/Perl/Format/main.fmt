@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use 5.010;
+use lib 'lib';
+use Ferret;
+
+my $f = Ferret->new;
+my $core_context = Ferret::Core::Context->new($f);
+
+<<content>>
