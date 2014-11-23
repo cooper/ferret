@@ -90,6 +90,14 @@ sub c_METHOD {
     return $method;
 }
 
+sub c_FUNCTION {
+    my ($c, $value) = @_;
+    my $function = Ferret::Lexer::Statement::Function->new(%$value);
+    $c->{node}->adopt($function);
+    @$c{ qw(node clos_cap) } = ($function) x 2;
+    return $function;
+}
+
 # start of a closure
 sub c_CLOSURE_S {
     my ($c, $value) = @_;
@@ -336,6 +344,15 @@ sub c_OP_SEMI {
 sub c_any {
     my ($label, $c, $value) = @_;
     return if $c->{instruction};
+
+    # these things cannot start an instruction.
+    # (tokens only) (this is horrendous)
+    my @ignore = qw(
+        ^FUNCTION$  ^METHOD&
+        ^OP_.+$     ^CLOSURE_.+$
+    );
+    foreach (@ignore) { return if $label =~ $_ }
+
     my $instruction = Ferret::Lexer::Structure::Instruction->new;
     @$c{ qw(node instruction) } = ($c->{node}->adopt($instruction)) x 2;
 }

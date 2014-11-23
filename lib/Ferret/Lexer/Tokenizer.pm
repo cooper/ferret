@@ -15,7 +15,7 @@ my $keyword_reg = '^('.join('|', qw{
     package     class       main        method
     need        want        inside      then
     if          else        return      after
-    for         in          __END__
+    for         in          func        __END__
 }).')$';
 $keyword_reg = qr/$keyword_reg/;
 
@@ -184,6 +184,12 @@ sub tok_BAREWORD {
     if ($last->[0] eq 'KEYWORD_PACKAGE') {
         delete $tokens->[-1];
         return [ PKG_DEC => { name => $value } ];
+    }
+
+    # function.
+    if ($last->[0] eq 'KEYWORD_FUNC') {
+        delete $tokens->[-1];
+        return [ FUNCTION => { name => $value } ];
     }
 
     # method.

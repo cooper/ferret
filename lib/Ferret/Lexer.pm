@@ -16,6 +16,7 @@ use Ferret::Lexer::Document;
 use Ferret::Lexer::Statement;
 use Ferret::Lexer::Statement::Class;
 use Ferret::Lexer::Statement::Package;
+use Ferret::Lexer::Statement::Function;
 use Ferret::Lexer::Statement::Method;
 use Ferret::Lexer::Statement::If;
 
@@ -33,7 +34,7 @@ use Ferret::Lexer::Token::Bareword;
 sub pretty_token {
     my $tok = shift;
     return 'beginning of file' if not defined $tok;
-    
+
     # keywords.
     if ($tok =~ m/^KEYWORD_(.+)$/) {
         my $key = lc $1;
