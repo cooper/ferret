@@ -18,14 +18,24 @@ sub get_format {
     return '' if not defined $name;
     $name = lc $name;
 
-    # slurp the file.
-    local $/ = undef;
     open my $fh, '<', "lib/Ferret/Perl/Format/$name.fmt"
         or die "can't open Perl format $name: $!\n";
-    my $format = <$fh>;
 
-    # replace variables, trim.
-    $format =~ s/<<(\w+)>>/$$info{$1}/g;
+    # read line-by-line to preserve indentation.
+    my @lines;
+    while (my $line = <$fh>) {
+        chomp $line;
+        my ($indent) = ($line =~ m/^(\s*).*$/);
+        my $add_indent = sub {
+            my @lines = split "\n", shift;
+            return join "\n$indent", @lines;
+        };
+        $line =~ s/<<\s*(\w+)\s*>>/@{[ $add_indent->($info->{$1}) ]}/g;
+        push @lines, $line;
+    }
+
+    # join, trim.
+    my $format = join "\n", @lines;
     $format =~ s/^\s+|\s+$//g;
 
     # remove excess parentheses.
