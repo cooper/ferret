@@ -1,0 +1,71 @@
+#!/usr/bin/perl
+# Copyright (c) 2014 Mitchell Cooper
+
+use warnings;
+use strict;
+use 5.010;
+use lib 'lib';
+
+use File::Slurp 'slurp';
+use Scalar::Util 'blessed';
+use JSON::XS;
+
+use Ferret;
+use Ferret::Lexer;
+
+# parse arguments.
+my ($args, $file) = '';
+while ($_ = shift) {
+    $file = $_, next unless /^-/;
+    $args .= substr $_, 1;
+}
+my %args = map { $_ => 1 } split //, $args;
+
+# show help.
+help() if !length $file || $args{h};
+
+# parse the file.
+my $str = eval { slurp($file) } or die "$!\n";
+
+# tokenize.
+my @tok = Ferret::Lexer::Tokenizer::tokenize($str);
+die "Error: ${$tok[0]}\n"
+    if blessed $tok[0] && $tok[0]->isa('Ferret::Lexer::Error');
+show_tok(@tok) if $args{t};
+
+# construct elements.
+my $doc = Ferret::Lexer::Document->new(name => $file);
+my $err = Ferret::Lexer::Constructor::construct($doc, @tok);
+show_dom($doc) if $args{d};
+die "Error: $err\n" if $err;
+
+sub show_tok {
+    state $json = JSON::XS->new->allow_nonref(1);
+    foreach (@_) {
+        my ($label, $value) = @$_;
+        printf "%15s | %s\n",
+            $label,
+            defined $value ? $json->encode($value) : '';
+    }
+}
+
+sub show_dom {
+    state $indent = 0;
+    my $el = shift;
+    return if $el->type eq 'Unknown' && !$args{u};
+    printf "%s %s\n", '    ' x $indent, $el->desc;
+    return unless $el->is_node;
+    $indent++;
+        show_dom($_) foreach $el->children;
+    $indent--;
+}
+
+sub help {
+print "usage: $0 [-t | -d | -u] input_file
+-t      show tokenization
+-d      show lexer object tree (DOM)
+-u      show unknown elements in DOM
+-h      show help
+";
+    exit 0;
+}

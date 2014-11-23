@@ -8,7 +8,8 @@ type of element capable of containing other elements.
 ### $node->adopt($el)
 
 Adopts an element. The element will be appended to the node's `->children`, and
-the element's `->parent` will be set to the node. Conveniently returns the
+the element's `->parent` will be set to the node. If the node already belongs to
+another element, that relationship will be nullified. Conveniently returns the
 adopted element.
 
 ```perl
@@ -18,6 +19,15 @@ $c->{node} = $c->{node}->adopt($if);
 ```
 
 * __$el__: any element to be adopted by the node.
+
+### $node->abandon($el)
+
+Abandons a child element. The element will be removed from the node's
+`->children`, and the element's `->parent` will be unset. Unless the element is
+then injected into the tree somewhere else, it will be disposed of. Conveniently
+returns the abandoned element.
+
+* __$el__: any element to be abandoned by the node.
 
 ### $node->is_closure
 
