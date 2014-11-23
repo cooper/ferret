@@ -2,6 +2,8 @@ $context->set_property('<<name>>' => do {
     my $func = Ferret::Function->new($f, name => '<<name>>');
     $func->{code} = sub {
         my ($arguments, $scope) = @_;
+        my $func_scope = Ferret::Scope->new($f, parent => $scope);
+        $scope = $func_scope;
         <<statements>>
     };
     $func;
