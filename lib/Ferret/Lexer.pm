@@ -19,9 +19,14 @@ use Ferret::Lexer::Statement::Package;
 use Ferret::Lexer::Statement::Function;
 use Ferret::Lexer::Statement::Method;
 use Ferret::Lexer::Statement::If;
+use Ferret::Lexer::Statement::Want;
+use Ferret::Lexer::Statement::Need;
 
 use Ferret::Lexer::Expression;
 use Ferret::Lexer::Expression::String;
+use Ferret::Lexer::Expression::LexicalVariable;
+use Ferret::Lexer::Expression::InstanceVariable;
+use Ferret::Lexer::Expression::SpecialVariable;
 
 use Ferret::Lexer::Structure;
 use Ferret::Lexer::Structure::Instruction;

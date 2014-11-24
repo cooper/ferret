@@ -8,15 +8,16 @@ use 5.010;
 use Scalar::Util qw(blessed);
 
 my $fatal = \0;
+our $current;
 
 sub construct {
     my @elements;
     my $main_node = shift;
-    my $current   = {
+    $current = {
         main_node => $main_node,
         node      => $main_node,
         elements  => \@elements,
-        upcoming  => \@_,
+        upcoming  => \@_
         # package
         # class
         # clos_cap      something that intends tp capture an upcoming closure
@@ -315,12 +316,25 @@ sub c_OP_COMMA {
 
     # must be in a list.
     # TODO: we could also be inside of a want/need.
+
+
+    # we're in a list.
+    if ($c->{list}) {
+
+        # set the current node to a new list item.
+        $c->{node} = $c->{list}->new_item;
+
+        return $c->{node};
+    }
+
+    # we're in a want/need.
+    my $wn;
+    if ($wn = $c->{want} || $c->{need} and $c->{node} == $wn) {
+        # should we do something?...
+        return $c->{node};
+    }
+
     return unexpected($c, 'outside of list') if !$c->{list};
-
-    # set the current node to a new list item.
-    $c->{node} = $c->{list}->new_item;
-
-    return $c->{node};
 }
 
 sub c_BAREWORD {
@@ -333,12 +347,54 @@ sub c_BAREWORD {
 
 sub c_OP_SEMI {
     my ($c, $value) = @_;
-    if (!$c->{instruction} || $c->{node} != $c->{instruction}) {
-        return unexpected($c);
+
+    # no instruction open?
+    return unexpected($c, 'outside of instruction statement')
+        unless $c->{instruction};
+
+    # end of instruction can terminate a want or need statement.
+    $c->{node} = $c->{node}{parent}
+        if $c->{node}->type eq 'Want' || $c->{node}->type eq 'Need';
+
+    # at this point, the instruction must be the current node.
+    if ($c->{node} != $c->{instruction}) {
+        my $type = $c->{node}->desc;
+        return unexpected($c, "inside $type");
     }
+
     $c->{node} = $c->{node}{parent};
     delete $c->{instruction};
     return;
+}
+
+sub c_VAR_LEX {
+    my ($c, $value) = @_;
+    my $var = Ferret::Lexer::Expression::LexicalVariable->new(var_name => $value);
+    return $c->{node}->adopt($var);
+}
+
+sub c_VAR_THIS {
+    my ($c, $value) = @_;
+    my $var = Ferret::Lexer::Expression::InstanceVariable->new(var_name => $value);
+    return $c->{node}->adopt($var);
+}
+
+sub c_VAR_SPEC {
+    my ($c, $value) = @_;
+    my $var = Ferret::Lexer::Expression::SpecialVariable->new(var_name => $value);
+    return $c->{node}->adopt($var);
+}
+
+sub c_KEYWORD_WANT {
+    my ($c, $value) = @_;
+    my $want = Ferret::Lexer::Statement::Want->new;
+    return $c->{node} = $c->{want} = $c->{node}->adopt($want);
+}
+
+sub c_KEYWORD_NEED {
+    my ($c, $value) = @_;
+    my $need = Ferret::Lexer::Statement::Need->new;
+    return $c->{node} = $c->{need} = $c->{node}->adopt($need);
 }
 
 sub c_any {

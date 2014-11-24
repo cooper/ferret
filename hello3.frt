@@ -1,6 +1,7 @@
 func helloWorld {
+    need $name;
     say("Hello");
-    say("World!");
+    say($name);
 }
 
-helloWorld();
+helloWorld("Joe");

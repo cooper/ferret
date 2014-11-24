@@ -27,10 +27,11 @@ sub get_format {
         chomp $line;
         my ($indent) = ($line =~ m/^(\s*).*$/);
         my $add_indent = sub {
-            my @lines = split "\n", shift;
+            defined(my $key = $info->{+shift}) or return;
+            my @lines = split "\n", $key;
             return join "\n$indent", @lines;
         };
-        $line =~ s/<<\s*(\w+)\s*>>/@{[ $add_indent->($info->{$1}) ]}/g;
+        $line =~ s/<<\s*(\w+)\s*>>/@{[ $add_indent->($1) ]}/g;
         push @lines, $line;
     }
 

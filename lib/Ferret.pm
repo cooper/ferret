@@ -8,6 +8,8 @@ use 5.010;
 
 use Scalar::Util 'blessed';
 
+use Ferret::Object;
+use Ferret::String;
 use Ferret::Context;
 use Ferret::Function;
 use Ferret::Event;

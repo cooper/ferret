@@ -8,7 +8,8 @@ use parent qw(Ferret::Lexer::Structure Ferret::Lexer::Statement);
 sub type { 'Instruction' }
 
 sub perl_fmt_do {
-    return join('', map $_->perl_fmt_do, shift->children).';';
+    my $stuff = join('', map $_->perl_fmt_do, shift->children);
+    return length $stuff ? "$stuff;" : '';
 }
 
 1

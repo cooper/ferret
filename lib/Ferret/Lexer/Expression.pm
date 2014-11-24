@@ -14,9 +14,10 @@ sub desc {
     return $str;
 }
 
-sub perl_fmt_do {
+sub perl_fmt {
     my $inner = join('', map $_->perl_fmt_do, shift->children);
-    return length $inner ? "($inner)" : '';
+    return expression => { content => "($inner)" } if length $inner;
+    return;
 }
 
 1

@@ -16,8 +16,8 @@ sub desc {
     return "String '$first'";
 }
 
-sub perl_fmt_do {
-    return dump(shift->{value});
+sub perl_fmt {
+    string => { string => dump(shift->{value}) };
 }
 
 1

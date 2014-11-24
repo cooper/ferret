@@ -19,9 +19,18 @@ sub type_or_tok { shift->type }
 sub perl_fmt    { }
 sub perl_fmt_do {
     my @args = shift->perl_fmt;
-    return Ferret::Perl::get_format(@args);
+    my $fmt = '';
+    while (my @a = splice @args, 0, 2) {
+        $fmt .= Ferret::Perl::get_format(@a);
+    }
+    return $fmt;
 }
 
 sub get_format { Ferret::Perl::get_format(@_[1..$#_]) }
+sub unexpected {
+    my $el = shift;
+    my $c = $Ferret::Lexer::Constructor::current;
+    return Ferret::Lexer::Constructor::unexpected($c);
+}
 
 1

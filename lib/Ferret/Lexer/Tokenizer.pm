@@ -204,15 +204,6 @@ sub tok_BAREWORD {
         return [ METHOD => { name => $value, main => $main } ]
     }
 
-    # variable declaration with a type.
-    my $is_want_need = ($tokens->[-2] and
-        $tokens->[-2][0] eq 'WANT' || $tokens->[-2][0] eq 'NEED');
-    if ($last->[0] eq 'OP_VALUE' && $is_want_need) {
-        delete $tokens->[-1];
-        $tokens->[-1][1]{type} = $value;
-        return [];
-    }
-
 }
 
 sub tok_NUMBER {
