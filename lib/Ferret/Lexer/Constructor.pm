@@ -287,6 +287,7 @@ sub c_PAREN_E {
     # the current node becomes
     # the current node (list item)'s parent (list)'s parent
     #
+    $c->{node} = $c->{node}{parent} if $c->{node}->type eq 'Pair';
     $c->{node} = $c->{node}{parent}{parent};
 
     # as a special case, close function calls here as well, since they are
@@ -315,8 +316,7 @@ sub c_OP_COMMA {
     my ($c, $value) = @_;
 
     # must be in a list.
-    # TODO: we could also be inside of a want/need.
-
+    # hmm, should we terminate ListItem or pair, etc?
 
     # we're in a list.
     if ($c->{list}) {
@@ -397,6 +397,22 @@ sub c_KEYWORD_NEED {
     return $c->{node} = $c->{need} = $c->{node}->adopt($need);
 }
 
+sub c_PROP_VALUE {
+    my ($c, $value) = @_;
+
+    # property pair must be a DIRECT descendent of a list item.
+    return unexpected($c, 'outside of list')
+        if !$c->{list};
+    return unexpected($c, 'outside of list item')
+        if $c->{node}->type ne 'ListItem';
+
+    # create a new node which is a pair.
+    my $pair = Ferret::Lexer::Structure::Pair->new(key => $value);
+    $c->{node} = $c->{node}->adopt($pair);
+
+    return $pair;
+}
+
 sub c_any {
     my ($label, $c, $value) = @_;
     return if $c->{instruction};
@@ -426,7 +442,9 @@ sub first_non_list_parent {
 
 sub fatal {
     my ($c, $err) = @_;
-    return Ferret::Lexer::fatal("$err on line $$c{line}.");
+    $err .= "\n     Line    -> $$c{line}";
+    $err .= "\n     Parent  -> ".$c->{node}->desc if $c->{node};
+    return Ferret::Lexer::fatal($err);
 }
 
 sub expected {
@@ -440,12 +458,13 @@ sub unexpected {
     my $reason  = shift;
         $reason = length $reason ? " $reason" : '';
     my $token   = Ferret::Lexer::pretty_token($c->{label});
+    fatal($c, "Unexpected $token$reason near ".last_el($c));
+}
 
-    # determine the previous thing.
-    my $last_el = $c->{elements}[-1] ?
-        lcfirst $c->{elements}[-1]->desc : 'beginning of file';
-
-    fatal($c, "Unexpected $token$reason after $last_el");
+sub last_el {
+    my $c = shift;
+    return lcfirst $c->{elements}[-1]->desc if $c->{elements}[-1];
+    return 'beginning of file';
 }
 
 1

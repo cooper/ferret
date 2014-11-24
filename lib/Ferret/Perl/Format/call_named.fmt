@@ -1,1 +1,1 @@
-(<<coderef>>)->call({<<arguments>>}, $scope)
+(<<coderef>>)->call({ <<arguments>> }, $scope)

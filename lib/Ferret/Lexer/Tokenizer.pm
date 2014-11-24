@@ -52,9 +52,6 @@ my @token_formats = (
     [ VAR_THIS      => qr/\@+[\w_]+/,   \&remove_first_char                 ],  # object variable
     [ VAR_SPEC      => qr/\*+[\w_]+/,   \&remove_first_char                 ],  # special variable
 
-    # numbers
-    [ NUMBER        => qr/[+-]?\d+(?:\.\d+(?:e\d+)?)?/                      ],  # number
-
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start
     [ CLOSURE_E     => qr/}/                                                ],  # closure end
@@ -88,7 +85,8 @@ my @token_formats = (
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other
-    [ BAREWORD      => qr/\w+/                                              ],  # bareword (and keywords)
+    [ BAREWORD      => qr/\b[A-Za-z][A-Za-z0-9]+/                           ],  # bareword (and keywords)
+    [ NUMBER        => qr/[+-]?\d+(?:\.\d+(?:e\d+)?)?/                      ],  # number
     [ NEWLINE       => qr/\n/,          \&ignore_increment                  ],  # newline
     [ SPACE         => qr/\s*/,         \&ignore                            ],  # whitespace
 

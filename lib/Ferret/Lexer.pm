@@ -32,6 +32,7 @@ use Ferret::Lexer::Structure;
 use Ferret::Lexer::Structure::Instruction;
 use Ferret::Lexer::Structure::List;
 use Ferret::Lexer::Structure::ListItem;
+use Ferret::Lexer::Structure::Pair;
 use Ferret::Lexer::Structure::Call;
 
 use Ferret::Lexer::Token::Bareword;
