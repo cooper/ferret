@@ -1,9 +1,9 @@
+helloWorld(name2: "Jack", name1: "Joe");
+helloWorld(name1: helloWorld, name2: "that is the function");
+
 func helloWorld {
-    need $name;
-    need $name2;
+    need $name1, $name2;
     say("Hello");
-    say($name);
+    say($name1);
     say($name2);
 }
-
-helloWorld(name2: "Jack", name: "Joe");

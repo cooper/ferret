@@ -4,7 +4,9 @@ $context->set_property('<<name>>' => do {
     $func->{code} = sub {
         my ($arguments, $scope) = @_;
         $scope = Ferret::Scope->new($f, parent => $scope);
+        my $return = Ferret::Object->new($f);
         <<statements>>
+        return $f;
     };
     $func;
 });

@@ -1,5 +1,6 @@
 {
     my $scope = my $context =
         Ferret::Context->new($f, parent => $core_context);
-    <<content>>
+    <<upper_content>>
+    <<lower_content>>
 }

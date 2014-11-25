@@ -1,4 +1,6 @@
 do {
     return if not defined $arguments->{<<var_name>>};
     $scope->set_property(<<var_name>> => $arguments->{<<var_name>>});
-}
+    # this extra semicolon is necessary at the moment
+    # for multiple variables in a single need statement.
+};
