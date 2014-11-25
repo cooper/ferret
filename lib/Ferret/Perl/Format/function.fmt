@@ -1,12 +1,16 @@
-$context->set_property('<<name>>' => do {
-    my $func = Ferret::Function->new($f, name => '<<name>>');
-    <<arguments>>
-    $func->{code} = sub {
-        my ($arguments, $from_scope) = @_;
-        my $scope = Ferret::Scope->new($f, parent => $scope);
-        my $return = Ferret::Object->new($f);
-        <<statements>>
-        return $f;
-    };
-    $func;
-});
+# Function '<<name>>'
+{
+    state $func;
+    if (!$func) {
+        $func = Ferret::Function->new($f, name => '<<name>>');
+        <<arguments>>
+        $func->{code} = sub {
+            my ($arguments, $from_scope) = @_;
+            my $scope = Ferret::Scope->new($f, parent => $scope);
+            my $return = Ferret::Object->new($f);
+            <<statements>>
+            return $f;
+        };
+    }
+    $scope->set_property('<<name>>' => $func);
+}

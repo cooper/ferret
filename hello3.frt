@@ -1,4 +1,5 @@
 helloWorld(name2: "USA", name1: "World");
+helloWorld(name2: "Humans", name1: "Earth");
 
 func helloWorld {
     need $name1, $name2;
