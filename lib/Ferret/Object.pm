@@ -120,6 +120,7 @@ sub own_property {
 # typically, these objects are the prototypes of classes.
 sub add_parent {
     my ($obj, $new_parent) = @_;
+    return unless $new_parent;
     # TODO: if $new_parent is a Ferret array, convert to Perl array ref.
     unshift @{ $obj->{isa} }, $new_parent;
 }

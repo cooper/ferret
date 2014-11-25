@@ -39,10 +39,6 @@ sub get_format {
     my $format = join "\n", @lines;
     $format =~ s/^\s+|\s+$//g;
 
-    # remove excess parentheses.
-    # I don't know yet if this is a bad idea.
-    $format =~ s/\(\((.+)\)\)/\($1\)/gs;
-
     return $format;
 }
 

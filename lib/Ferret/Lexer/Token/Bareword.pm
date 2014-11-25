@@ -14,7 +14,7 @@ sub desc {
 }
 
 sub perl_fmt {
-    return global_var => { prop_name => shift->{bareword_value} };
+    return lexical_var => { name => shift->{bareword_value} };
 }
 
 1

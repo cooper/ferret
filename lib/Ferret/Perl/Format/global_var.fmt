@@ -1,1 +1,1 @@
-$context->property('<<prop_name>>')
+$context->property('<<name>>')

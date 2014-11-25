@@ -10,12 +10,16 @@ use parent 'Ferret::Object';
 # creates a new scope.
 sub new {
     my ($class, $f, %opts) = @_;
+    $opts{parent_scope} = $opts{parent};
 
     # create a new object.
     my $scope = $class->SUPER::new($f, %opts);
 
-    # determine the containing scope.
-    $scope->{parent_scope} = $opts{parent_scope} || $f->context;
+    # determine parent scope.
+    $scope->{parent_scope} =
+        $opts{parent_scope}     ||
+        $scope->{parent_scope}  ||
+        $f->context;
 
     #$scope->{special} = a ferret object for * variables
 

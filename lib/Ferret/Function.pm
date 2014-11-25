@@ -57,12 +57,12 @@ sub arguments_satisfy_signature {
 }
 
 sub call {
-    my ($func, $arguments) = @_;
+    my ($func, $arguments, $from_scope) = @_;
 
     # hash ref of arguments.
     if (ref $arguments eq 'HASH') {
         return unless $func->arguments_satisfy_signature($arguments);
-        return $func->{code}($arguments);
+        return $func->{code}($arguments, $from_scope);
     }
 
     # list of arguments. must use signature.
