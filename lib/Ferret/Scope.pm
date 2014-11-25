@@ -15,6 +15,16 @@ sub new {
     # create a new object.
     my $scope = $class->SUPER::new($f, %opts);
 
+    # create a special variable object.
+    my $spec;
+    if (not $spec = $scope->{special}) {
+        $spec = $scope->{special} = Ferret::Object->new;
+        $scope->set_property(_special_ => $spec);
+    }
+
+    # set default special variables.
+    $spec->set_property_weak(scope => $scope);
+
     # determine parent scope.
     $scope->{parent_scope} =
         $opts{parent_scope}     ||

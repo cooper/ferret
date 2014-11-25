@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use utf8;
 
-use Scalar::Util 'blessed';
+use Scalar::Util qw(blessed weaken);
 
 # create a new object.
 sub new {
@@ -106,6 +106,24 @@ sub property {
 #
 sub own_property {
     shift->{properties}{+shift};
+}
+
+# weaken a property.
+# this only applies to local properties.
+#
+sub weaken_property {
+    my ($obj, $prop_name) = @_;
+    weaken($obj->{properties}{$prop_name});
+}
+
+# convenience method:
+# sets a property, then weakens it.
+#
+sub set_property_weak {
+    my ($obj, $prop_name, $value) = @_;
+    my $res = $obj->set_property($prop_name => $value);
+    $obj->weaken_property($prop_name);
+    return $res;
 }
 
 ##########################
