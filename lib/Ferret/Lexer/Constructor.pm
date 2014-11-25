@@ -230,6 +230,16 @@ sub c_PAREN_S {
 
 sub c_PAREN_CALL {
     my ($c, $value) = @_;
+    return handle_call($c, $value, 1);
+}
+
+sub c_OP_CALL {
+    my ($c, $value) = @_;
+    return handle_call($c, $value);
+}
+
+sub handle_call {
+    my ($c, $value, $is_paren) = @_;
 
     # a call can only come after one of:
     #   a one-element list
@@ -255,9 +265,11 @@ sub c_PAREN_CALL {
     $call->adopt($last_el);
 
     # handle the list, then adopt it.
-    my $list = start_paren(@_);
-    $list->{is_call} = 1;
-    $call->adopt($list);
+    if ($is_paren) {
+        my $list = start_paren(@_);
+        $list->{is_call} = 1;
+        $call->adopt($list);
+    }
 
     return $call;
 }

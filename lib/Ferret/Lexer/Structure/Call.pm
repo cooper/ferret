@@ -51,6 +51,6 @@ sub perl_fmt {
 }
 
 sub function  { (shift->children)[0] }
-sub func_args { (shift->children)[1]->children }
+sub func_args { my $l = (shift->children)[1]; $l ? $l->children : () }
 
 1

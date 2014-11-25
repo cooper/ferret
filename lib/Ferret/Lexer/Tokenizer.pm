@@ -76,7 +76,7 @@ my @token_formats = (
     [ OP_SUB        => qr/\-/                                               ],  # subtraction
     [ OP_MUL        => qr/\*/                                               ],  # multiplication
     [ OP_DIV        => qr/\//                                               ],  # division
-    [ OP_CALL       => qr/!/                                                ],  # call without arguments
+    [ OP_EXCLAM     => qr/!/                                                ],  # call without arguments
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
     [ OP_PROP       => qr/\./                                               ],  # property
     [ OP_COMMA      => qr/,/                                                ],  # list separator
@@ -106,16 +106,25 @@ sub tok_PAREN_S {
     # if it starts with whitespace, it can't be a function call.
     return if $value =~ m/^\s/;
 
+    # can the previous item be a function value?
+    return unless possibly_call($tokens);
+
+    # otherwise, this a function call.
+    return [ PAREN_CALL => ];
+}
+
+sub possibly_call {
+    my $tokens = shift;
+
     # if there's no previous value, it can't be a function call.
     my $last = $tokens->[-1] or return;
-       $last = $last->[0]    or return;
+    $last    = $last->[0]    or return;
 
     # there can't be an operator or a keyword before a function call.
     return if grep { $last =~ $_ } qr/^OP_(.*)$/, qr/^KEYWORD$/;
     return if grep { $last eq $_ } qw(PAREN_S BRACKET_S CLOSURE_S);
 
-    # otherwise, this a function call.
-    return [ PAREN_CALL => ];
+    return 1;
 }
 
 # differentiate strings and regex.
@@ -214,6 +223,15 @@ sub tok_NUMBER {
         return [];
     }
 
+}
+
+sub tok_OP_EXCLAM {
+    my ($tokens, $value) = @_;
+
+    # can the previous item be a function value?
+    return unless possibly_call($tokens);
+
+    return [ OP_CALL => ];
 }
 
 # common token modifiers.
