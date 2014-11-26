@@ -12,7 +12,6 @@ use F::Element;
 use F::Unknown;
 use F::Node;
 use F::Document;
-
 use F::Statement;
 use F::Class;
 use F::Package;
@@ -21,13 +20,11 @@ use F::Method;
 use F::If;
 use F::Want;
 use F::Need;
-
 use F::Expression;
 use F::String;
 use F::LexicalVariable;
 use F::InstanceVariable;
 use F::SpecialVariable;
-
 use F::Structure;
 use F::Instruction;
 use F::List;
@@ -35,7 +32,6 @@ use F::ListItem;
 use F::Pair;
 use F::Call;
 use F::Property;
-
 use F::Bareword;
 
 # this needs to stay here in case Tokenizer isn't loaded.
@@ -77,7 +73,7 @@ our %pretty_tokens = (
     NUMBER      => 'inline number',
     NEWLINE     => 'newline',
     SPACE       => 'whitespace',
-    PAREN_CALL  => 'start of call (',
+    PAREN_CALL  => 'call parenthesis "("',
     STRING      => 'string ("...")',
     REGEX       => 'regex (/.../)',
     CLASS_DEC   => 'class declaration',

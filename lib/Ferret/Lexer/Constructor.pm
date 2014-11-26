@@ -41,7 +41,7 @@ sub construct {
         if (my $code = __PACKAGE__->can("c_$label")) {
             my $el = $code->($current, $value);
             if (blessed $el) {
-                return $$el if $el->isa('F::Error');
+                return $el if $el->isa('F::Error');
                 push @elements, $el;
             }
             next;
@@ -55,6 +55,17 @@ sub construct {
         $current->{node}->adopt($e);
 
     }
+
+    # when all is said and done, the current node should be the main node.
+    if ($current->{node} != $main_node) {
+        my $node = $current->{node}->desc;
+        return expected($current,
+            "termination of $node",
+            'before reaching end of file'
+        );
+    }
+
+    return;
 }
 
 sub c_PKG_DEC {
@@ -257,7 +268,7 @@ sub handle_call {
     # if this is a list, it can only have one item.
     if ($last_el->isa('F::List')
      && $last_el->children > 1) {
-        return expected($c, 'single-element list', 'before');
+        return expected($c, 'a single-element list', 'before');
     }
 
     # create a function call, adopting the last element.
@@ -469,8 +480,8 @@ sub fatal {
 
 sub expected {
     my ($c, $what, $where) = @_;
-    my $n = $what =~ m/^[aeiou]/ ? 'n' : '';
-    fatal($c, "Expected a$n $what $where $$c{label}");
+    $where //= '';
+    fatal($c, "Expected $what $where");
 }
 
 sub unexpected {
