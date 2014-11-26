@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Structure::Pair;
+package F::Pair;
 
 use warnings;
 use strict;
-use parent qw(Ferret::Lexer::Structure Ferret::Lexer::Expression);
+use parent qw(F::Structure F::Expression);
 
 sub type { 'Pair' }
 sub desc {

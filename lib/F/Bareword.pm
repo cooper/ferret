@@ -1,10 +1,10 @@
 # Copyright (c) 2014 Mitchell Cooper
-package Ferret::Lexer::Token::Bareword;
+package F::Bareword;
 
 use warnings;
 use strict;
 use 5.010;
-use parent 'Ferret::Lexer::Element';
+use parent 'F::Element';
 
 sub type { 'Bareword' }
 sub desc {

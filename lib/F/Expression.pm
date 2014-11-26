@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Expression;
+package F::Expression;
 
 use warnings;
 use strict;
-use parent 'Ferret::Lexer::Statement';
+use parent 'F::Statement';
 
 sub type { 'Expression' }
 sub desc {

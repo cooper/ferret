@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Statement::Need;
+package F::Need;
 
 use warnings;
 use strict;
-use parent 'Ferret::Lexer::Statement';
+use parent 'F::Statement';
 
 sub type { 'Need' }
 

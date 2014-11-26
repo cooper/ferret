@@ -41,14 +41,14 @@ sub construct {
         if (my $code = __PACKAGE__->can("c_$label")) {
             my $el = $code->($current, $value);
             if (blessed $el) {
-                return $$el if $el->isa('Ferret::Lexer::Error');
+                return $$el if $el->isa('F::Error');
                 push @elements, $el;
             }
             next;
         }
 
         # otherwise, throw in an unknown element.
-        my $e = Ferret::Lexer::Unknown->new(
+        my $e = F::Unknown->new(
             token_label => $label,
             token_value => $value
         );
@@ -64,7 +64,7 @@ sub c_PKG_DEC {
     unexpected($c, 'in non-global scope')
         unless $c->{node}->type eq 'Document';
 
-    my $pkg = Ferret::Lexer::Statement::Package->new(%$value);
+    my $pkg = F::Package->new(%$value);
     $c->{node}->adopt($pkg);
     $c->{package} = $pkg;
     return $pkg;
@@ -77,7 +77,7 @@ sub c_CLASS_DEC {
     unexpected($c, 'in non-global scope')
         unless $c->{node}->type eq 'Document';
 
-    my $class = Ferret::Lexer::Statement::Class->new(%$value);
+    my $class = F::Class->new(%$value);
     $c->{node}->adopt($class);
     $c->{class} = $class;
     return $class;
@@ -85,7 +85,7 @@ sub c_CLASS_DEC {
 
 sub c_METHOD {
     my ($c, $value) = @_;
-    my $method = Ferret::Lexer::Statement::Method->new(%$value);
+    my $method = F::Method->new(%$value);
     $c->{node}->adopt($method);
     @$c{ qw(node clos_cap) } = ($method) x 2;
     return $method;
@@ -93,7 +93,7 @@ sub c_METHOD {
 
 sub c_FUNCTION {
     my ($c, $value) = @_;
-    my $function = Ferret::Lexer::Statement::Function->new(%$value);
+    my $function = F::Function->new(%$value);
     $c->{node}->adopt($function);
     @$c{ qw(node clos_cap) } = ($function) x 2;
     return $function;
@@ -139,14 +139,14 @@ sub c_KEYWORD_INSIDE {
     my ($c, $value) = @_;
 
     # create a closure to be opened soon.
-    my $inside = Ferret::Lexer::Node->new(type => 'Inside');
+    my $inside = F::Node->new(type => 'Inside');
     $c->{clos_cap} = $c->{node}->adopt($inside);
 
     # create an expression.
     # the expression is marked as the parameter to the inside keyword.
     # it is also marked as generated, so we know it can be terminated
     # automatically by certain tokens.
-    my $exp = Ferret::Lexer::Expression->new(
+    my $exp = F::Expression->new(
         parameter_for        => 'inside',
         generated_expression => 1
     );
@@ -160,7 +160,7 @@ sub c_KEYWORD_IF {
     my ($c, $value) = @_;
 
     # create an if statement which expects a closure to be opened soon.
-    my $if = Ferret::Lexer::Statement::If->new(type => 'If');
+    my $if = F::If->new(type => 'If');
     $c->{node}->adopt($if);
     $c->{clos_cap} = $if;
 
@@ -172,7 +172,7 @@ sub c_KEYWORD_IF {
 
 sub c_KEYWORD_THEN {
     my ($c, $value) = @_;
-    my $then = Ferret::Lexer::Node->new(type => 'Then');
+    my $then = F::Node->new(type => 'Then');
     $c->{node}->adopt($then);
     @$c{ qw(node clos_cap) } = ($then) x 2;
     return $then;
@@ -182,7 +182,7 @@ sub c_KEYWORD_FOR {
     my ($c, $value) = @_;
 
     # create a closure to be opened soon.
-    my $for = Ferret::Lexer::Node->new(type => 'For');
+    my $for = F::Node->new(type => 'For');
     $c->{node}->adopt($for);
     $c->{clos_cap} = $for;
 
@@ -190,7 +190,7 @@ sub c_KEYWORD_FOR {
     # the expression is marked as the parameter to the for keyword.
     # it is also marked as generated, so we know it can be terminated
     # automatically by certain tokens.
-    my $exp = Ferret::Lexer::Expression->new(
+    my $exp = F::Expression->new(
         parameter_for        => 'for',
         generated_expression => 1
     );
@@ -213,7 +213,7 @@ sub c_KEYWORD_IN {
     # the expression is marked as the parameter to the in keyword.
     # it is also marked as generated, so we know it can be terminated
     # automatically by certain tokens.
-    my $exp = Ferret::Lexer::Expression->new(
+    my $exp = F::Expression->new(
         parameter_for        => 'in',
         generated_expression => 1
     );
@@ -255,13 +255,13 @@ sub handle_call {
     return unexpected($c) unless $allowed{ $last_el->type_or_tok };
 
     # if this is a list, it can only have one item.
-    if ($last_el->isa('Ferret::Lexer::Structure::List')
+    if ($last_el->isa('F::List')
      && $last_el->children > 1) {
         return expected($c, 'single-element list', 'before');
     }
 
     # create a function call, adopting the last element.
-    my $call = $c->{node}->adopt(Ferret::Lexer::Structure::Call->new);
+    my $call = $c->{node}->adopt(F::Call->new);
     $call->adopt($last_el);
 
     # handle the list, then adopt it.
@@ -278,7 +278,7 @@ sub start_paren {
     my ($c, $value) = @_;
 
     # for any of PAREN_S, PAREN_CALL, ... create a list.
-    my $list = Ferret::Lexer::Structure::List->new;
+    my $list = F::List->new;
     $list->{parent_list} = $c->{list};
 
     # set the current list and the current node to the list's first item.
@@ -316,7 +316,7 @@ sub c_STRING {
     my ($c, $value) = @_;
 
     # create the string...
-    my $string = Ferret::Lexer::Expression::String->new(value => $value);
+    my $string = F::String->new(value => $value);
 
     # add to the current node.
     $c->{node}->adopt($string);
@@ -351,7 +351,7 @@ sub c_OP_COMMA {
 
 sub c_BAREWORD {
     my ($c, $value) = @_;
-    my $word = Ferret::Lexer::Token::Bareword->new(bareword_value => $value);
+    my $word = F::Bareword->new(bareword_value => $value);
     $c->{node}->adopt($word);
     # not yet in function call at this point.
     return $word;
@@ -381,31 +381,31 @@ sub c_OP_SEMI {
 
 sub c_VAR_LEX {
     my ($c, $value) = @_;
-    my $var = Ferret::Lexer::Expression::LexicalVariable->new(var_name => $value);
+    my $var = F::LexicalVariable->new(var_name => $value);
     return $c->{node}->adopt($var);
 }
 
 sub c_VAR_THIS {
     my ($c, $value) = @_;
-    my $var = Ferret::Lexer::Expression::InstanceVariable->new(var_name => $value);
+    my $var = F::InstanceVariable->new(var_name => $value);
     return $c->{node}->adopt($var);
 }
 
 sub c_VAR_SPEC {
     my ($c, $value) = @_;
-    my $var = Ferret::Lexer::Expression::SpecialVariable->new(var_name => $value);
+    my $var = F::SpecialVariable->new(var_name => $value);
     return $c->{node}->adopt($var);
 }
 
 sub c_KEYWORD_WANT {
     my ($c, $value) = @_;
-    my $want = Ferret::Lexer::Statement::Want->new;
+    my $want = F::Want->new;
     return $c->{node} = $c->{want} = $c->{node}->adopt($want);
 }
 
 sub c_KEYWORD_NEED {
     my ($c, $value) = @_;
-    my $need = Ferret::Lexer::Statement::Need->new;
+    my $need = F::Need->new;
     return $c->{node} = $c->{need} = $c->{node}->adopt($need);
 }
 
@@ -419,7 +419,7 @@ sub c_PROP_VALUE {
         if $c->{node}->type ne 'ListItem';
 
     # create a new node which is a pair.
-    my $pair = Ferret::Lexer::Structure::Pair->new(key => $value);
+    my $pair = F::Pair->new(key => $value);
     $c->{node} = $c->{node}->adopt($pair);
 
     return $pair;
@@ -427,7 +427,7 @@ sub c_PROP_VALUE {
 
 sub c_PROPERTY {
     my ($c, $value) = @_;
-    my $prop = Ferret::Lexer::Structure::Property->new(prop_name => $value);
+    my $prop = F::Property->new(prop_name => $value);
     return $c->{node}->adopt($prop);
 }
 
@@ -443,7 +443,7 @@ sub c_any {
     );
     foreach (@ignore) { return if $label =~ $_ }
 
-    my $instruction = Ferret::Lexer::Structure::Instruction->new;
+    my $instruction = F::Instruction->new;
     @$c{ qw(node instruction) } = ($c->{node}->adopt($instruction)) x 2;
 }
 
@@ -451,8 +451,8 @@ sub c_any {
 sub first_non_list_parent {
     my $node = shift;
     while ($node = $node->{parent}) {
-        next if $node->isa('Ferret::Lexer::Structure::List');
-        next if $node->isa('Ferret::Lexer::Structure::ListItem');
+        next if $node->isa('F::List');
+        next if $node->isa('F::ListItem');
         return $node;
     }
     return;
@@ -464,7 +464,7 @@ sub fatal {
     $err .= "\n     Line    -> $$c{line}";
     $err .= "\n     Near    -> $near";
     $err .= "\n     Parent  -> ".$c->{node}->desc if $c->{node};
-    return Ferret::Lexer::fatal($err);
+    return F::fatal($err);
 }
 
 sub expected {
@@ -477,7 +477,7 @@ sub unexpected {
     my $c = shift;
     my $reason  = shift;
         $reason = length $reason ? " $reason" : '';
-    my $token   = Ferret::Lexer::pretty_token($c->{label});
+    my $token   = F::pretty_token($c->{label});
     fatal($c, "Unexpected $token$reason");
 }
 

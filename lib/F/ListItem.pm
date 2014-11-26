@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Structure::ListItem;
+package F::ListItem;
 
 use warnings;
 use strict;
-use parent 'Ferret::Lexer::Expression';
+use parent 'F::Expression';
 
 sub type { 'ListItem'  }
 sub desc { 'Item ' . shift->{item_num} }

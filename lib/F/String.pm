@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Expression::String;
+package F::String;
 
 use warnings;
 use strict;
-use parent 'Ferret::Lexer::Expression';
+use parent 'F::Expression';
 
 use Data::Dump qw(dump);
 

@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Structure::List;
+package F::List;
 
 use warnings;
 use strict;
-use parent qw(Ferret::Lexer::Structure Ferret::Lexer::Expression);
+use parent qw(F::Structure F::Expression);
 
 sub type { 'List' }
 sub desc {
@@ -14,7 +14,7 @@ sub desc {
 
 sub new_item {
     my $list = shift;
-    my $item = Ferret::Lexer::Structure::ListItem->new(item_num => $list->{item_c}++);
+    my $item = F::ListItem->new(item_num => $list->{item_c}++);
     return $list->adopt($item);
 }
 

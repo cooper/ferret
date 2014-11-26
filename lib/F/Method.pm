@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Statement::Method;
+package F::Method;
 
 use warnings;
 use strict;
-use parent 'Ferret::Lexer::Statement';
+use parent 'F::Statement';
 
 sub type { 'Method' }
 sub desc { 'M'.($_[0]{main} ? 'ain m' : '')."ethod '$_[0]{name}'" }

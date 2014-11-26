@@ -1,4 +1,4 @@
-# Ferret::Lexer::Element
+# Element
 
 The element is the most basic object created by the lexer. In their simplest
 form, elements are essentially objective representations of [tokens](Tokens.md).

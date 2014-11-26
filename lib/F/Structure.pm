@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Structure;
+package F::Structure;
 
 use warnings;
 use strict;
-use parent 'Ferret::Lexer::Node';
+use parent 'F::Node';
 
 sub type { 'Structure' }
 

@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Expression::InstanceVariable;
+package F::InstanceVariable;
 
 use warnings;
 use strict;
-use parent 'Ferret::Lexer::Expression';
+use parent 'F::Expression';
 
 sub type { 'InstanceVariable' }
 sub desc {

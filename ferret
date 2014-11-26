@@ -35,7 +35,7 @@ die "Error: ${$tok[0]}\n"
 show_tok(@tok) if $args{t};
 
 # construct elements.
-my $doc = Ferret::Lexer::Document->new(name => $file);
+my $doc = F::Document->new(name => $file);
 my $err = Ferret::Lexer::Constructor::construct($doc, @tok);
 show_dom($doc) if $args{d};
 die "Error: $err\n" if $err;

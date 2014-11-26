@@ -8,35 +8,35 @@ use 5.010;
 use Ferret::Lexer::Tokenizer;
 use Ferret::Lexer::Constructor;
 
-use Ferret::Lexer::Element;
-use Ferret::Lexer::Unknown;
-use Ferret::Lexer::Node;
-use Ferret::Lexer::Document;
+use F::Element;
+use F::Unknown;
+use F::Node;
+use F::Document;
 
-use Ferret::Lexer::Statement;
-use Ferret::Lexer::Statement::Class;
-use Ferret::Lexer::Statement::Package;
-use Ferret::Lexer::Statement::Function;
-use Ferret::Lexer::Statement::Method;
-use Ferret::Lexer::Statement::If;
-use Ferret::Lexer::Statement::Want;
-use Ferret::Lexer::Statement::Need;
+use F::Statement;
+use F::Class;
+use F::Package;
+use F::Function;
+use F::Method;
+use F::If;
+use F::Want;
+use F::Need;
 
-use Ferret::Lexer::Expression;
-use Ferret::Lexer::Expression::String;
-use Ferret::Lexer::Expression::LexicalVariable;
-use Ferret::Lexer::Expression::InstanceVariable;
-use Ferret::Lexer::Expression::SpecialVariable;
+use F::Expression;
+use F::String;
+use F::LexicalVariable;
+use F::InstanceVariable;
+use F::SpecialVariable;
 
-use Ferret::Lexer::Structure;
-use Ferret::Lexer::Structure::Instruction;
-use Ferret::Lexer::Structure::List;
-use Ferret::Lexer::Structure::ListItem;
-use Ferret::Lexer::Structure::Pair;
-use Ferret::Lexer::Structure::Call;
-use Ferret::Lexer::Structure::Property;
+use F::Structure;
+use F::Instruction;
+use F::List;
+use F::ListItem;
+use F::Pair;
+use F::Call;
+use F::Property;
 
-use Ferret::Lexer::Token::Bareword;
+use F::Bareword;
 
 sub pretty_token {
     my $tok = shift;
@@ -59,7 +59,7 @@ sub pretty_token {
 
 sub fatal($) {
     my $err = shift;
-    return bless \$err, 'Ferret::Lexer::Error';
+    return bless \$err, 'F::Error';
 }
 
 1

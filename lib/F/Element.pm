@@ -1,5 +1,5 @@
 # Copyright (c) 2014 Mitchell Cooper
-package Ferret::Lexer::Element;
+package F::Element;
 
 use warnings;
 use strict;

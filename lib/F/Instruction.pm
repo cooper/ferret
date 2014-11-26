@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Structure::Instruction;
+package F::Instruction;
 
 use warnings;
 use strict;
-use parent qw(Ferret::Lexer::Structure Ferret::Lexer::Statement);
+use parent qw(F::Structure F::Statement);
 
 sub type { 'Instruction' }
 

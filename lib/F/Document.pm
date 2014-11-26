@@ -1,10 +1,10 @@
 # Copyright (c) 2014 Mitchell Cooper
-package Ferret::Lexer::Document;
+package F::Document;
 
 use warnings;
 use strict;
 use 5.010;
-use parent 'Ferret::Lexer::Node';
+use parent 'F::Node';
 
 sub new {
     my ($class, %opts) = @_;

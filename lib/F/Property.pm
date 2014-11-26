@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Structure::Property;
+package F::Property;
 
 use warnings;
 use strict;
-use parent qw(Ferret::Lexer::Structure Ferret::Lexer::Expression);
+use parent qw(F::Structure F::Expression);
 
 sub type { 'Property' }
 sub desc {

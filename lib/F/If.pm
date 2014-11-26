@@ -1,9 +1,9 @@
 # Copyright 2014 Mitchell Cooper
-package Ferret::Lexer::Statement::If;
+package F::If;
 
 use warnings;
 use strict;
-use parent 'Ferret::Lexer::Statement::Closure';
+use parent 'F::Closure';
 
 use Scalar::Util 'weaken';
 
@@ -15,7 +15,7 @@ sub new {
     # the expression is marked as the parameter to the if keyword.
     # it is also marked as generated, so we know it can be terminated
     # automatically by certain tokens.
-    my $exp = Ferret::Lexer::Expression->new(
+    my $exp = F::Expression->new(
         parameter_for        => 'if',
         generated_expression => 1
     );
