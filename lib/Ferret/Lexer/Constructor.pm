@@ -248,7 +248,7 @@ sub handle_call {
     #   a variable
     my %allowed = map { $_ => 1 } qw(
         List Expression Bareword
-        VAR_LEX VAR_THIS VAR_SPEC
+        VAR_LEX VAR_THIS VAR_SPEC Property
     );
 
     my $last_el = $c->{last_element};
@@ -483,7 +483,7 @@ sub unexpected {
 
 sub last_el {
     my $c = shift;
-    return lcfirst $c->{elements}[-1]->desc if $c->{elements}[-1];
+    return $c->{elements}[-1]->desc if $c->{elements}[-1];
     return 'beginning of file';
 }
 

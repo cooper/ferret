@@ -252,7 +252,7 @@ sub tokenize {
     while (my $token = &$lexer) {
 
         # something wasn't tokenized.
-        return F::fatal(sprintf
+        return Ferret::Lexer::fatal(sprintf
             "Not sure what to do with '%s' at line %d.",
             $token, $current_line
         ) unless ref $token eq 'ARRAY';
