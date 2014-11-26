@@ -4,6 +4,10 @@ helloWorld(name2: "Humans", name1: "Earth");
 func helloWorld {
     need $name1, $name2;
 
+    hello1!;
+    hello2!;
+
+
     func hello1 {
         say("Hello");
         say($name1);
@@ -14,7 +18,5 @@ func helloWorld {
         say($name2);
     }
 
-    hello1!;
-    hello2!;
 
 }

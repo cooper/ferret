@@ -33,6 +33,19 @@ sub abandon {
     return $el;
 }
 
+sub ordered_children {
+    my $node = shift;
+    my (@functions, @others);
+    foreach my $child ($node->children) {
+        if ($child->type eq 'Function') {
+            push @functions, $child;
+            next;
+        }
+        push @others, $child;
+    }
+    return (@functions, @others);
+}
+
 sub type        { shift->{type} || 'Node' }         # element type
 sub is_node     { 1 }                               # is a node
 sub is_closure  { }                                 # isn't a closure

@@ -15,8 +15,7 @@ sub perl_fmt {
     # find the pairs in the arguments.
     my @pairs = grep {
         $_ && $_->type eq 'Pair'
-    } map { ($_->children)[0] }$call->func_args;
-
+    } map { ($_->children)[0] } $call->func_args;
 
     # if there are any pairs, all of the args MUST be pairs.
     # (except eventually when we have variable # of arguments)
@@ -51,6 +50,6 @@ sub perl_fmt {
 }
 
 sub function  { (shift->children)[0] }
-sub func_args { my $l = (shift->children)[1]; $l ? $l->children : () }
+sub func_args { my $l = (shift->children)[1]; $l ? $l->ordered_children : () }
 
 1

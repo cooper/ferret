@@ -22,11 +22,8 @@ sub desc {
 
 sub perl_fmt {
     my $doc = shift;
-    my ($before_c, $after_c, $middle_c) = ('') x 3;
-    my ($before, $after) = $doc->separate_children;
-
-    $middle_c .= $_->perl_fmt_do."\n" foreach @$before;
-    $after_c  .= $_->perl_fmt_do."\n" foreach @$after;
+    my ($before_c, $after_c) = ('') x 2;
+    $after_c .= $_->perl_fmt_do."\n" foreach $doc->ordered_children;
 
     # add each function definitions.
     $before_c .= "$_\n" foreach map {
@@ -35,22 +32,8 @@ sub perl_fmt {
 
     return document => {
         upper_content  => $before_c,    # function declarations
-        middle_content => $middle_c,    # functions
         lower_content  => $after_c      # all other children
     };
-}
-
-sub separate_children {
-    my $doc = shift;
-    my (@before, @after);
-    foreach my $child ($doc->children) {
-        if ($child->type eq 'Function') {
-            push @before, $child;
-            next;
-        }
-        push @after, $child;
-    }
-    return (\@before, \@after);
 }
 
 1

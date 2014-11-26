@@ -4,6 +4,5 @@
         Ferret::Context->new($f, parent => $core_context);
 
     <<upper_content>>
-    <<middle_content>>
     <<lower_content>>
 }

@@ -14,12 +14,12 @@ sub perl_fmt {
     my $func = shift;
     my ($content, $arguments) = ('', '');
 
-    foreach my $child ($func->children) {
+    foreach my $child ($func->ordered_children) {
         $content .= $child->perl_fmt_do."\n";
 
         # wants or needs would be the first child of a child
         # because the child is likely an instruction.
-        my $wn = ($child->children)[0];
+        my $wn = ($child->ordered_children)[0];
 
         # add needs.
         if ($wn && $wn->type eq 'Need') {
