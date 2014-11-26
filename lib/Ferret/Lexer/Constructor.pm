@@ -454,7 +454,9 @@ sub first_non_list_parent {
 
 sub fatal {
     my ($c, $err) = @_;
+    my $near = last_el($c);
     $err .= "\n     Line    -> $$c{line}";
+    $err .= "\n     Near    -> $near";
     $err .= "\n     Parent  -> ".$c->{node}->desc if $c->{node};
     return Ferret::Lexer::fatal($err);
 }
@@ -470,7 +472,7 @@ sub unexpected {
     my $reason  = shift;
         $reason = length $reason ? " $reason" : '';
     my $token   = Ferret::Lexer::pretty_token($c->{label});
-    fatal($c, "Unexpected $token$reason near ".last_el($c));
+    fatal($c, "Unexpected $token$reason");
 }
 
 sub last_el {

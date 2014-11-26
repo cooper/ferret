@@ -6,6 +6,14 @@ use strict;
 use 5.010;
 use parent 'Ferret::Lexer::Node';
 
+sub new {
+    my ($class, %opts) = @_;
+    return $class->SUPER::new(
+        function_defs => [],
+        %opts
+    );
+}
+
 sub type { 'Document' }
 sub desc {
     my $doc = shift;
@@ -14,15 +22,21 @@ sub desc {
 
 sub perl_fmt {
     my $doc = shift;
-    my ($before_c, $after_c) = ('', '');
+    my ($before_c, $after_c, $middle_c) = ('') x 3;
     my ($before, $after) = $doc->separate_children;
 
-    $before_c .= $_->perl_fmt_do."\n" foreach @$before;
+    $middle_c .= $_->perl_fmt_do."\n" foreach @$before;
     $after_c  .= $_->perl_fmt_do."\n" foreach @$after;
 
+    # add each function definitions.
+    $before_c .= "$_\n" foreach map {
+        $doc->get_format(function_def => $_)
+    } @{ $doc->{function_defs} };
+
     return document => {
-        upper_content => $before_c,
-        lower_content => $after_c
+        upper_content  => $before_c,    # function declarations
+        middle_content => $middle_c,    # functions
+        lower_content  => $after_c      # all other children
     };
 }
 

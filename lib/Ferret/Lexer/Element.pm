@@ -33,4 +33,12 @@ sub unexpected {
     return Ferret::Lexer::Constructor::unexpected($c);
 }
 
+sub document {
+    my $el = shift;
+    while ($el = $el->parent) {
+        return $el if $el->type eq 'Document';
+    }
+    return $el;
+}
+
 1

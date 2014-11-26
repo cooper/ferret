@@ -3,6 +3,7 @@ package Ferret::Lexer::Statement::Function;
 
 use warnings;
 use strict;
+use 5.010;
 use parent 'Ferret::Lexer::Statement';
 
 sub type { 'Function' }
@@ -32,11 +33,17 @@ sub perl_fmt {
 
     }
 
-    return function => {
+    my $info = {
+        id         => $func->document->{function_cid}++,
         name       => $func->{name},
         statements => $content,
         arguments  => $arguments
     };
+
+    # add the function definition.
+    push @{ $func->document->{function_defs} }, $info;
+
+    return function => $info;
 }
 
 1

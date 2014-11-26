@@ -62,7 +62,19 @@ sub call {
     # hash ref of arguments.
     if (ref $arguments eq 'HASH') {
         return unless $func->arguments_satisfy_signature($arguments);
-        return $func->{code}($arguments, $from_scope);
+
+        # create a scope which inherits from the outer scope.
+        #
+        # $from_scope   = the scope where the function was called
+        # $scope        = the scope within the function
+        #
+        my $scope = Ferret::Scope->new($func->ferret,
+            parent => $func->{outer_scope}
+        );
+
+        # call the function.
+        return $func->{code}($arguments, $from_scope, $scope);
+
     }
 
     # list of arguments. must use signature.
