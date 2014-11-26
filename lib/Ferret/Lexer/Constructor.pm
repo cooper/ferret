@@ -464,7 +464,7 @@ sub fatal {
     $err .= "\n     Line    -> $$c{line}";
     $err .= "\n     Near    -> $near";
     $err .= "\n     Parent  -> ".$c->{node}->desc if $c->{node};
-    return F::fatal($err);
+    return Ferret::Lexer::fatal($err);
 }
 
 sub expected {
@@ -477,7 +477,7 @@ sub unexpected {
     my $c = shift;
     my $reason  = shift;
         $reason = length $reason ? " $reason" : '';
-    my $token   = F::pretty_token($c->{label});
+    my $token   = Ferret::Lexer::pretty_token($c->{label});
     fatal($c, "Unexpected $token$reason");
 }
 
