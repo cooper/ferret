@@ -19,11 +19,11 @@ sub type_or_tok { shift->type }
 sub perl_fmt    { }
 sub perl_fmt_do {
     my @args = shift->perl_fmt;
-    my $fmt = '';
+    my @fmts;
     while (my @a = splice @args, 0, 2) {
-        $fmt .= Ferret::Perl::get_format(@a);
+        push @fmts, Ferret::Perl::get_format(@a);
     }
-    return $fmt;
+    return join ";\n", @fmts;
 }
 
 sub get_format { Ferret::Perl::get_format(@_[1..$#_]) }

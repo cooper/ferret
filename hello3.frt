@@ -7,7 +7,6 @@ func helloWorld {
     hello1!;
     hello2!;
 
-
     func hello1 {
         say("Hello");
         say($name1);
