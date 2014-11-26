@@ -425,6 +425,12 @@ sub c_PROP_VALUE {
     return $pair;
 }
 
+sub c_PROPERTY {
+    my ($c, $value) = @_;
+    my $prop = Ferret::Lexer::Structure::Property->new(prop_name => $value);
+    return $c->{node}->adopt($prop);
+}
+
 sub c_any {
     my ($label, $c, $value) = @_;
     return if $c->{instruction};
