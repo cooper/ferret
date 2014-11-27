@@ -8,8 +8,10 @@ func helloWorld {
     hello2!;
 
     func hello1 {
-        say("Hello");
-        say($name1);
+        $hello = "Hello";
+        $hello.name = $name1;
+        say($hello);
+        say($hello.name);
     }
 
     func hello2 {

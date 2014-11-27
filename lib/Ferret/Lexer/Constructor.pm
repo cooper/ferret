@@ -379,6 +379,10 @@ sub c_OP_SEMI {
     $c->{node} = $c->{node}{parent}
         if $c->{node}->type eq 'Want' || $c->{node}->type eq 'Need';
 
+    # end of instruction can terminate an assignment statement.
+    $c->{node} = $c->{node}{parent}
+        if $c->{node}->type eq 'Assignment';
+
     # at this point, the instruction must be the current node.
     if ($c->{node} != $c->{instruction}) {
         my $type = $c->{node}->desc;
@@ -398,6 +402,13 @@ sub c_VAR_LEX {
 
 sub c_VAR_THIS {
     my ($c, $value) = @_;
+
+    # if there's no current class, this can't be here.
+    return unexpected($c, 'outside of class') unless $c->{class};
+
+    # if there's no current method, this can't be here either.
+    # TODO: check that.
+
     my $var = F::InstanceVariable->new(var_name => $value);
     return $c->{node}->adopt($var);
 }
@@ -440,6 +451,27 @@ sub c_PROPERTY {
     my ($c, $value) = @_;
     my $prop = F::Property->new(prop_name => $value);
     return $c->{node}->adopt($prop);
+}
+
+sub c_OP_ASSIGN {
+    my ($c, $value) = @_;
+
+    my %allowed = map { $_ => 1 } qw(
+        Bareword LexicalVariable InstanceVariable
+        SpecialVariable Property
+    );
+
+    my $last_el = $c->{last_element};
+    return expected($c,
+        'an assignable statement',
+        'at left of assignment operator (=)'
+    ) unless $allowed{ $last_el->type_or_tok };
+
+    # adopt the last element as the left side of the assignment.
+    my $a = $c->{node} = $c->{node}->adopt(F::Assignment->new);
+    $a->adopt($last_el);
+
+    return $a;
 }
 
 sub c_any {
