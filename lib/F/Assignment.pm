@@ -21,8 +21,9 @@ sub perl_fmt_do {
 
 sub assign_to    { (shift->children)[0] }
 sub assign_value {
-    my @c = shift->children;
-    my $exp = F::Expression->new;
+    my $a = shift;
+    my @c = $a->children;
+    my $exp = F::Expression->new(parent => $a->parent);
     $exp->adopt($_) foreach @c[1..$#c];
     return $exp;
 }

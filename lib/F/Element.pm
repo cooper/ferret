@@ -35,7 +35,7 @@ sub unexpected {
 
 sub document {
     my $el = shift;
-    while ($el = $el->parent) {
+    while ($el = $el->{parent}) {
         return $el if $el->type eq 'Document';
     }
     return $el;

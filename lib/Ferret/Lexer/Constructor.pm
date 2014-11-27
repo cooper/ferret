@@ -343,7 +343,7 @@ sub c_NUMBER {
 
     # add to the current node.
     $c->{node}->adopt($num);
-    
+
     return $num;
 }
 
@@ -469,8 +469,7 @@ sub c_OP_ASSIGN {
     my ($c, $value) = @_;
 
     my %allowed = map { $_ => 1 } qw(
-        Bareword LexicalVariable InstanceVariable
-        SpecialVariable Property
+        Bareword LexicalVariable InstanceVariable Property
     );
 
     my $last_el = $c->{last_element};
@@ -484,6 +483,27 @@ sub c_OP_ASSIGN {
     $a->adopt($last_el);
 
     return $a;
+}
+
+sub c_OP_ADD {
+    my ($c, $value) = @_;
+
+    my %allowed = map { $_ => 1 } qw(
+        Bareword LexicalVariable InstanceVariable Property List Expression
+        String Number Addition
+    );
+
+    my $last_el = $c->{last_element};
+    return expected($c,
+        'an expression',
+        'at left of addition operator (+)'
+    ) unless $allowed{ $last_el->type_or_tok };
+
+    # adopt the last element as the left side of the addition.
+    my $add = $c->{node} = $c->{node}->adopt(F::Addition->new);
+    $add->adopt($last_el);
+
+    return $add;
 }
 
 sub c_any {

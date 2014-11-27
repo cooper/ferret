@@ -21,5 +21,5 @@ func helloWorld {
 
 }
 
-$pi = 3.14;
+$pi = 3 + 0.1 + 0.04;
 say($pi);

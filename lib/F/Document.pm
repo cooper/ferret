@@ -9,7 +9,8 @@ use parent 'F::Node';
 sub new {
     my ($class, %opts) = @_;
     return $class->SUPER::new(
-        function_defs => [],
+        function_defs       => [],
+        required_operations => {},
         %opts
     );
 }
@@ -31,6 +32,7 @@ sub perl_fmt {
     } @{ $doc->{function_defs} };
 
     return document => {
+        operations     => join(' ', keys %{ $doc->{required_operations} }),
         upper_content  => $before_c,    # function declarations
         lower_content  => $after_c      # all other children
     };
