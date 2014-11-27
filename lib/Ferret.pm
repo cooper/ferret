@@ -10,6 +10,7 @@ use Scalar::Util 'blessed';
 
 use Ferret::Object;
 use Ferret::String;
+use Ferret::Number;
 use Ferret::Context;
 use Ferret::Function;
 use Ferret::Event;

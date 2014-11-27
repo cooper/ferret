@@ -1,0 +1,1 @@
+Ferret::Number->new($f, value => <<num>>)

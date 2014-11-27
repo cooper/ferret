@@ -31,7 +31,7 @@ my %no_value = map { $_ => 1 } qw(
 );
 
 # reused formats
-my $prop_reg    = qr/(?:\w)+/;
+my $prop_reg    = qr/\b[A-Za-z][A-Za-z0-9]+/;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
 my $regex_reg   = qr/\/(?:[^\/\\]|\\.)*\/[a-zA-Z]*/;
 
@@ -78,7 +78,7 @@ my @token_formats = (
     [ OP_DIV        => qr/\//                                               ],  # division
     [ OP_EXCLAM     => qr/!/                                                ],  # call without arguments
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
-    [ OP_PROP       => qr/\./                                               ],  # property
+    #[ OP_PROP       => qr/\./                                               ],  # property
     [ OP_COMMA      => qr/,/                                                ],  # list separator
     [ OP_PACK       => qr/::/                                               ],  # package
     [ PROP_VALUE    => qr/$prop_reg:/,  \&remove_last_char                  ],  # property: value

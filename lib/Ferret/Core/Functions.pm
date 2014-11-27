@@ -8,7 +8,7 @@ use 5.010;
 
 sub _say {
     my $arguments = shift;
-    say $arguments->{message}{string_value} // $arguments->{message};
+    say $arguments->{message}{value} // $arguments->{message};
     return; # returning nothing means an empty object.
 }
 

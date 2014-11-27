@@ -22,6 +22,7 @@ use F::Want;
 use F::Need;
 use F::Expression;
 use F::String;
+use F::Number;
 use F::LexicalVariable;
 use F::InstanceVariable;
 use F::SpecialVariable;
@@ -65,7 +66,7 @@ our %pretty_tokens = (
     OP_DIV      => 'division operator (/)',
     OP_EXCLAM   => 'not operator (!)',
     OP_SEMI     => 'semicolon (;)',
-    OP_PROP     => 'property operator (.)',
+    #OP_PROP     => 'property operator (.)',
     OP_COMMA    => 'comma (,)',
     OP_PACK     => 'namespace operator (::)',
     PROP_VALUE  => 'property assignment (property: ...)',

@@ -1,1 +1,1 @@
-Ferret::String->new($f, string_value => <<string>>)
+Ferret::String->new($f, value => <<string>>)

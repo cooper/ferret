@@ -335,6 +335,18 @@ sub c_STRING {
     return $string;
 }
 
+sub c_NUMBER {
+    my ($c, $value) = @_;
+
+    # create the number...
+    my $num = F::Number->new(value => $value);
+
+    # add to the current node.
+    $c->{node}->adopt($num);
+    
+    return $num;
+}
+
 sub c_OP_COMMA {
     my ($c, $value) = @_;
 

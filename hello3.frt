@@ -20,3 +20,6 @@ func helloWorld {
     }
 
 }
+
+$pi = 3.14;
+say($pi);
