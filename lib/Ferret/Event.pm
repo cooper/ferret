@@ -35,7 +35,7 @@ sub add_function {
 }
 
 sub call {
-    my ($event, $arguments) = @_;
+    my ($event, $arguments, $from_scope) = @_;
 
     # arguments for the default function.
     if (ref $arguments eq 'ARRAY') {
@@ -52,7 +52,8 @@ sub call {
     # ->call will do nothing.
     my (@returns, %returns);
     foreach my $func (@sorted) {
-        my $ret = $func->call($arguments);
+        $func->{last_parent} = $event->{last_parent}; # for $self
+        my $ret = $func->call($arguments, $from_scope);
         $returns{ $func->{name} } = $ret if $func->has_name;
         push @returns, $ret;
     }

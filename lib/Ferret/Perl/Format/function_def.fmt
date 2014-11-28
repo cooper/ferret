@@ -3,7 +3,7 @@
     my $func = $funcs[<<id>>] = Ferret::Function->new($f, name => '<<name>>');
     <<arguments>>
     $func->{code} = sub {
-        my ($arguments, $from_scope, $scope) = @_;
+        my ($self, $arguments, $from_scope, $scope) = @_;
         my $return = Ferret::Object->new($f);
         <<statements>>
         return $return;

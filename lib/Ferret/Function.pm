@@ -72,17 +72,27 @@ sub call {
             parent => $func->{outer_scope}
         );
 
+        # for functions, this is undef.
+        my $self = $func->{last_parent};
+        $scope->{special}->set_property(self => $self);
+
         # call the function.
-        return $func->{code}($arguments, $from_scope, $scope);
+        return $func->{code}($self, $arguments, $from_scope, $scope);
 
     }
 
     # list of arguments. must use signature.
-    $arguments = $func->handle_arguments($arguments);
-    return $func->call($arguments);
+    if (ref $arguments eq 'ARRAY') {
+        $arguments = $func->handle_arguments($arguments);
+        return $func->call($arguments);
+    }
+
+    # otherwise, not sure what to do...
+    return;
 
 }
 
-sub has_name { length shift->{name} }
+sub has_name  { length shift->{name} }
+sub is_method { shift->{is_method}   }
 
 1

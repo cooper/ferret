@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 sub _say {
-    my $arguments = shift;
+    my ($self, $arguments) = @_;
     say $arguments->{message}{value} // $arguments->{message};
     return; # returning nothing means an empty object.
 }

@@ -23,6 +23,9 @@ sub new {
             [ ]
     };
 
+    # add methods.
+    $obj->add_methods($obj->methods);
+
     return $obj;
 }
 
@@ -86,8 +89,11 @@ sub property {
     # try the local property first.
     # this is done separately first because hopefully,
     # we won't even need to generate ->parents.
-    return $obj->{properties}{$prop_name}
-        if exists $obj->{properties}{$prop_name};
+    if (exists $obj->{properties}{$prop_name}) {
+        my $p = $obj->{properties}{$prop_name};
+        weaken($p->{last_parent} = $obj);
+        return $p;
+    }
 
     # try inheritance.
     foreach my $o ($obj->parents) {
@@ -105,6 +111,7 @@ sub property {
 # if the property does not exist, returns Perl undef.
 #
 sub own_property {
+    # TODO: this needs to do the same extras as ->property.
     shift->{properties}{+shift};
 }
 
@@ -169,6 +176,57 @@ sub parents {
 # fetch the ferret.
 sub ferret {
     shift->{ferret};
+}
+
+###############
+### METHODS ###
+###############
+
+sub methods { }
+
+# this is a temporary solution.
+# the real deal will be using inheritance of class prototype objects.
+# then, individual Events will be created only when necessary
+# (and events themselves will have some sort of inheritance mechanism)
+sub add_methods {
+    my $obj = shift;
+    my %methods = $obj->methods;
+    foreach my $name (keys %methods) {
+        my $m = $methods{$name};
+        my $func = Ferret::Function->new($obj->ferret,
+            name => $name,
+            code => $m->{code}
+        );
+
+        # needs.
+        $func->add_argument(
+            name   => $_->{name}
+            # type => $_->{type}
+        ) foreach _parse_method_args($m->{need});
+
+        # wants.
+        $func->add_argument(
+            name     => $_->{name},
+            # type   => $_->{type},
+            optional => 1
+        ) foreach _parse_method_args($m->{want});
+
+        $obj->set_property($name => $func);
+    }
+}
+
+sub _parse_method_args {
+    my ($str, @args) = shift;
+    return if not defined $str;
+    foreach my $arg (split /\s+/, $str) {
+        my ($name, $type) = split /:/, $arg, 2;
+        $name =~ s/^\$//;
+        push @args, {
+            name => $name,
+            type => $type
+        };
+    }
+    return @args;
 }
 
 1

@@ -7,7 +7,11 @@ use utf8;
 use 5.010;
 
 sub add {
-
+    my ($scope, $left, $right) = @_;
+    # TODO: errors.
+    return if !$left->property('op_add');
+    return if !$right->property('op_add');
+    return $left->property('op_add')->call({ other => $right }, $scope);
 }
 
 sub import {
