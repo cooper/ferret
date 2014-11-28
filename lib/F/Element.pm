@@ -5,6 +5,8 @@ use warnings;
 use strict;
 use 5.010;
 
+use Scalar::Util 'blessed';
+
 sub new {
     my ($class, %opts) = @_;
     return bless \%opts, $class;
@@ -39,6 +41,18 @@ sub document {
         return $el if $el->type eq 'Document';
     }
     return $el;
+}
+
+sub replace_with {
+    my ($el, $rep) = @_;
+    my $sibs = $el->{parent}{children};
+    for my $i (0..$#$sibs) {
+        next unless $el == $sibs->[$i];
+        delete $el->{parent};
+        $sibs->[$i] = $rep;
+        last;
+    }
+    return $rep;
 }
 
 1

@@ -3,7 +3,7 @@ package F::Property;
 
 use warnings;
 use strict;
-use parent qw(F::Structure F::Expression);
+use parent qw(F::Node F::Structure F::Expression);
 
 sub type { 'Property' }
 sub desc {
@@ -12,7 +12,11 @@ sub desc {
 }
 
 sub perl_fmt {
-    return property => { name => shift->{prop_name} };
+    my $prop = shift;
+    return property => {
+        name => $prop->{prop_name},
+        left => ($prop->children)[0]->perl_fmt_do
+    };
 }
 
 1

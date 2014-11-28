@@ -10,17 +10,14 @@ func helloWorld {
     func hello1 {
         $hello = "Hello";
         $hello.name = $name1;
-        say($hello);
-        say($hello.name);
+        say($hello + " " + $hello.name);
     }
 
     func hello2 {
-        say("Hello");
-        say($name2);
+        say("Hello " + $name2);
     }
 
 }
 
 $pi = 3 + 0.1 + 0.04;
-say("Pi =");
-say($pi);
+say("Pi = " + $pi);

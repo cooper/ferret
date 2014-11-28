@@ -1,1 +1,1 @@
-add($scope, <<left_side>>, <<right_side>>)
+add($scope, <<items>>)

@@ -258,8 +258,8 @@ sub handle_call {
     #   a bareword
     #   a variable
     my %allowed = map { $_ => 1 } qw(
-        List Expression Bareword
-        VAR_LEX VAR_THIS VAR_SPEC Property
+        List Expression Bareword Property
+        LexicalVariable InstanceVariable SpecialVariable
     );
 
     my $last_el = $c->{last_element};
@@ -311,6 +311,7 @@ sub c_PAREN_E {
     # the current node (list item)'s parent (list)'s parent
     #
     $c->{node} = $c->{node}{parent} if $c->{node}->type eq 'Pair';
+    $c->{node} = $c->{node}{parent} if $c->{node}->type eq 'Addition';
     $c->{node} = $c->{node}{parent}{parent};
 
     # as a special case, close function calls here as well, since they are
@@ -391,6 +392,11 @@ sub c_OP_SEMI {
     $c->{node} = $c->{node}{parent}
         if $c->{node}->type eq 'Want' || $c->{node}->type eq 'Need';
 
+    # end of instruction can terminate an addition statement.
+    $c->{node} = $c->{node}{parent}
+        if $c->{node}->type eq 'Addition';
+
+
     # end of instruction can terminate an assignment statement.
     $c->{node} = $c->{node}{parent}
         if $c->{node}->type eq 'Assignment';
@@ -461,7 +467,9 @@ sub c_PROP_VALUE {
 
 sub c_PROPERTY {
     my ($c, $value) = @_;
+    # TODO: check if last element is allowed.
     my $prop = F::Property->new(prop_name => $value);
+    $prop->adopt($c->{last_element});
     return $c->{node}->adopt($prop);
 }
 
@@ -498,6 +506,9 @@ sub c_OP_ADD {
         'an expression',
         'at left of addition operator (+)'
     ) unless $allowed{ $last_el->type_or_tok };
+
+    # if the current node is an addition, just add another thing.
+    return if $c->{node}->type eq 'Addition';
 
     # adopt the last element as the left side of the addition.
     my $add = $c->{node} = $c->{node}->adopt(F::Addition->new);

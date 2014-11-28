@@ -7,11 +7,17 @@ use utf8;
 use 5.010;
 
 sub add {
-    my ($scope, $left, $right) = @_;
+    my ($scope, @items) = @_;
     # TODO: errors.
-    return if !$left->property('op_add');
-    return if !$right->property('op_add');
-    return $left->property('op_add')->call({ other => $right }, $scope);
+    return if grep { !$_->can('op_add') } @items;
+
+    my $left = shift @items;
+    while (@items) {
+        my $right = shift @items;
+        $left = $left->property('op_add')->call({ other => $right }, $scope);
+    }
+
+    return $left;
 }
 
 sub import {
