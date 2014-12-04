@@ -7,9 +7,9 @@ use utf8;
 use 5.010;
 
 sub _say {
-    my ($self, $arguments) = @_;
+    my ($self, $arguments, $from_scope, $scope, $return) = @_;
     say $arguments->{message}{value} // $arguments->{message};
-    return; # returning nothing means an empty object.
+    return $return;
 }
 
 1

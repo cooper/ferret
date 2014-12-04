@@ -10,7 +10,10 @@ use Scalar::Util 'weaken';
 
 sub new {
     my ($class, %opts) = @_;
-    return bless { children => [], %opts }, $class;
+    return $class->SUPER::new(
+        children => [],
+        %opts
+    );
 }
 
 sub adopt {

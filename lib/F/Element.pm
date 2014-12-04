@@ -9,6 +9,7 @@ use Scalar::Util 'blessed';
 
 sub new {
     my ($class, %opts) = @_;
+    $opts{create_line} = $Ferret::Lexer::Constructor::current->{line};
     return bless \%opts, $class;
 }
 

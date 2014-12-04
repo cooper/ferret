@@ -20,7 +20,7 @@ sub new_item {
 
 sub perl_fmt_do {
     my @children = shift->children;
-    die "can't capture the value of a multi-value list\n" if @children > 1;
+    die "can't capture the value of a multi-item list\n" if @children > 1;
     return '('.join('', map $_->perl_fmt_do, @children).')';
 }
 

@@ -57,7 +57,12 @@ sub arguments_satisfy_signature {
 }
 
 sub call {
-    my ($func, $arguments, $from_scope) = @_;
+    my ($func, $arguments, $from_scope, $return) = @_;
+
+    # list of arguments. must use signature.
+    if (ref $arguments eq 'ARRAY') {
+        $arguments = $func->handle_arguments($arguments);
+    }
 
     # hash ref of arguments.
     if (ref $arguments eq 'HASH') {
@@ -77,14 +82,10 @@ sub call {
         $scope->{special}->set_property(self => $self);
 
         # call the function.
-        return $func->{code}($self, $arguments, $from_scope, $scope);
+        # this could return $return
+        $return ||= Ferret::Object->new($func->ferret);
+        return $func->{code}($self, $arguments, $from_scope, $scope, $return);
 
-    }
-
-    # list of arguments. must use signature.
-    if (ref $arguments eq 'ARRAY') {
-        $arguments = $func->handle_arguments($arguments);
-        return $func->call($arguments);
     }
 
     # otherwise, not sure what to do...

@@ -58,9 +58,16 @@ sub construct {
 
     # when all is said and done, the current node should be the main node.
     if ($current->{node} != $main_node) {
-        my $node = $current->{node}->desc;
+        my $node = $current->{node};
+        my $desc = $node->desc;
+
+        # if the node started on a different line than current,
+        # mention where it started.
+        my $started = $node->{create_line} == $current->{line} ?
+            '' : " (which started on line $$node{create_line})";
+
         return expected($current,
-            "termination of $node",
+            "termination of $desc$started",
             'before reaching end of file'
         );
     }
@@ -310,8 +317,12 @@ sub c_PAREN_E {
     # the current node becomes
     # the current node (list item)'s parent (list)'s parent
     #
-    $c->{node} = $c->{node}{parent} if $c->{node}->type eq 'Pair';
+    # also closes these things
+    #       addition must come first here because
+    #       additions can be in pairs, but pairs can't be in additions
+    #
     $c->{node} = $c->{node}{parent} if $c->{node}->type eq 'Addition';
+    $c->{node} = $c->{node}{parent} if $c->{node}->type eq 'Pair';
     $c->{node} = $c->{node}{parent}{parent};
 
     # as a special case, close function calls here as well, since they are
@@ -388,18 +399,11 @@ sub c_OP_SEMI {
     return unexpected($c, 'outside of instruction statement')
         unless $c->{instruction};
 
-    # end of instruction can terminate a want or need statement.
-    $c->{node} = $c->{node}{parent}
-        if $c->{node}->type eq 'Want' || $c->{node}->type eq 'Need';
-
-    # end of instruction can terminate an addition statement.
-    $c->{node} = $c->{node}{parent}
-        if $c->{node}->type eq 'Addition';
-
-
-    # end of instruction can terminate an assignment statement.
-    $c->{node} = $c->{node}{parent}
-        if $c->{node}->type eq 'Assignment';
+    # end of instruction can terminate any of these nodes.
+    my @closes = qw(Want Need Addition Assignment ReturnPair);
+    foreach (@closes) {
+        $c->{node} = $c->{node}{parent} if $_ eq $c->{node}->type;
+    }
 
     # at this point, the instruction must be the current node.
     if ($c->{node} != $c->{instruction}) {
@@ -515,6 +519,26 @@ sub c_OP_ADD {
     $add->adopt($last_el);
 
     return $add;
+}
+
+sub c_OP_RETURN {
+    my ($c, $value) = @_;
+
+    # the previous element MUST be a bareword.
+    my $word = $c->{last_element};
+    return expected($c,
+        'a bareword key',
+        'at left of return operator (->)'
+    ) unless $word->type eq 'Bareword';
+
+    # forget about the bareword.
+    $word->parent->abandon($word);
+
+    # create a return pair with the proper key.
+    my $pair = F::ReturnPair->new(key => $word->{bareword_value});
+    $c->{node} = $c->{node}->adopt($pair);
+
+    return $pair;
 }
 
 sub c_any {

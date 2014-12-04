@@ -36,6 +36,7 @@ use F::Property;
 use F::Bareword;
 use F::Assignment;
 use F::Addition;
+use F::ReturnPair;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (

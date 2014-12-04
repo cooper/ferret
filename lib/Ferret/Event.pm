@@ -35,7 +35,7 @@ sub add_function {
 }
 
 sub call {
-    my ($event, $arguments, $from_scope) = @_;
+    my ($event, $arguments, $from_scope, $return) = @_;
 
     # arguments for the default function.
     if (ref $arguments eq 'ARRAY') {
@@ -50,15 +50,16 @@ sub call {
 
     # call each function. if the dependencies can't be satisfied,
     # ->call will do nothing.
-    my (@returns, %returns);
+    $return ||= Ferret::Object->new($event->ferret);
     foreach my $func (@sorted) {
         $func->{last_parent} = $event->{last_parent}; # for $self
-        my $ret = $func->call($arguments, $from_scope);
-        $returns{ $func->{name} } = $ret if $func->has_name;
-        push @returns, $ret;
+        my $ret = $func->call($arguments, $from_scope, $return);
+        # eventually different return values may be accessible:
+        # $returns{ $func->{name} } = $ret if $func->has_name;
+        # consider: what should we do with $ret if it's not $return?
     }
 
-    return (\@returns, \%returns);
+    return $return;
 }
 
 1
