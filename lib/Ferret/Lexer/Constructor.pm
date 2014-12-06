@@ -432,8 +432,8 @@ sub c_OP_COMMA {
     }
 
     # we're in a want/need.
-    my $wn;
-    if ($wn = $c->{want} || $c->{need} and $c->{node} == $wn) {
+    my $wn = $c->{want} || $c->{need};
+    if ($wn && $c->{node} == $wn) {
         # should we do something?...
         return $c->{node};
     }
@@ -457,7 +457,7 @@ sub c_OP_SEMI {
         unless $c->{instruction};
 
     # end of instruction can terminate any of these nodes.
-    my @closes = qw(Want Need Addition Assignment ReturnPair);
+    my @closes = qw(WantNeed Addition Assignment ReturnPair);
     foreach (@closes) {
         $c->{node} = $c->{node}{parent} if $_ eq $c->{node}->type;
     }
@@ -500,13 +500,13 @@ sub c_VAR_SPEC {
 
 sub c_KEYWORD_WANT {
     my ($c, $value) = @_;
-    my $want = F::Want->new;
+    my $want = F::WantNeed->new(arg_type => 'want');
     return $c->{node} = $c->{want} = $c->{node}->adopt($want);
 }
 
 sub c_KEYWORD_NEED {
     my ($c, $value) = @_;
-    my $need = F::Need->new;
+    my $need = F::WantNeed->new(arg_type => 'need');
     return $c->{node} = $c->{need} = $c->{node}->adopt($need);
 }
 

@@ -1,5 +1,6 @@
 func makePoint {
     need $x, $y;
+    want $z;
     $point = [
         x: $x,
         y: $y

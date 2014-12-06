@@ -29,7 +29,11 @@ sub perl_fmt {
         }
 
         # add wants.
-
+        if ($wn && $wn->type eq 'Want') {
+            $arguments .= $func->get_format(func_arg_want => {
+                name => $_
+            }).";\n" foreach map { $_->{var_name} } $wn->variables;
+        }
 
     }
 
