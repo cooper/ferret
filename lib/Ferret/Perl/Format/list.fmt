@@ -1,0 +1,1 @@
+Ferret::List->new($f, items => [ <<items>> ])

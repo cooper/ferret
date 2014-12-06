@@ -1,0 +1,1 @@
+Ferret::Hash->new($f, pairs => { <<pairs>> })

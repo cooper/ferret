@@ -16,4 +16,10 @@ sub desc {
 
 sub type_or_tok { shift->{token_label} }
 
+# there should be no unconstructed tokens left by this point.
+sub perl_fmt_do {
+    my $el = shift;
+    die sprintf "Unexpected %s on line %d\n", $el->desc, $el->{create_line};
+}
+
 1

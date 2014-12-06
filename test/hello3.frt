@@ -19,9 +19,5 @@ func helloWorld {
 
 }
 
-func getPi {
-    $pi = 3 + 0.1 + 0.04;
-    pi -> $pi;
-}
-
-say(message: "Pi = " + getPi!.pi);
+$pi = 3 + 0.1 + 0.04;
+say("Pi = " + $pi);

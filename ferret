@@ -31,7 +31,7 @@ my $str = eval { slurp($file) } or die "$!\n";
 # tokenize.
 my @tok = Ferret::Lexer::Tokenizer::tokenize($str);
 die "Error: ${$tok[0]}\n"
-    if blessed $tok[0] && $tok[0]->isa('Ferret::Lexer::Error');
+    if blessed $tok[0] && $tok[0]->isa('F::Error');
 show_tok(@tok) if $args{t};
 
 # construct elements.

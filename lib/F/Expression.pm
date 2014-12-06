@@ -16,7 +16,7 @@ sub desc {
 
 sub perl_fmt {
     my $inner = join('', map $_->perl_fmt_do, shift->children);
-    return expression => { content => "($inner)" } if length $inner;
+    return expression => { content => $inner } if length $inner;
     return;
 }
 

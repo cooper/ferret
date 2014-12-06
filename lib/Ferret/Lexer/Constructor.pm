@@ -24,6 +24,7 @@ sub construct {
         # closure       the node capturing a closure currently
         # list          the innermost list
     };
+
     while (my ($label, $value, $line) = @{ shift || [] }) {
         my $last_element = ($current->{node}->children)[-1] || $current->{node};
 
@@ -242,7 +243,14 @@ sub c_KEYWORD_IN {
 
 sub c_PAREN_S {
     my ($c, $value) = @_;
-    my $list = start_paren(@_);
+    my $list = start_list($c, $value, 'PAREN_E');
+    return $list;
+}
+
+sub c_BRACKET_S {
+    my ($c, $value) = @_;
+    my $list = start_list($c, $value, 'BRACKET_E');
+    $list->{collection} = 1; # define as a value list or hash.
     return $list;
 }
 
@@ -284,20 +292,23 @@ sub handle_call {
 
     # handle the list, then adopt it.
     if ($is_paren) {
-        my $list = start_paren(@_);
+        my $list = start_list($c, $value, 'PAREN_E');
         $list->{is_call} = 1;
+        $list->{collection} = 1; # pretend to be array/hash for checks.
         $call->adopt($list);
     }
 
     return $call;
 }
 
-sub start_paren {
-    my ($c, $value) = @_;
+# used for both parenthesis and bracket lists.
+sub start_list {
+    my ($c, $value, $terminator) = @_;
 
     # for any of PAREN_S, PAREN_CALL, ... create a list.
     my $list = F::List->new;
     $list->{parent_list} = $c->{list};
+    $list->{list_terminator} = $terminator;
 
     # set the current list and the current node to the list's first item.
     $c->{list} = $c->{node}->adopt($list);
@@ -312,22 +323,68 @@ sub c_PAREN_E {
     # the current node must be a list.
     return unexpected($c) if !$c->{list};
 
-    # close the list.
+    # this must be the expected list terminator.
+    my $t = $c->{list}{list_terminator};
+    my $p = Ferret::Lexer::pretty_token($t);
+    return unexpected($c, "to close list (instead of $p)")
+        if $t ne 'PAREN_E';
+
+    # closes these things.
     #
-    # the current node becomes
-    # the current node (list item)'s parent (list)'s parent
-    #
-    # also closes these things
     #       addition must come first here because
     #       additions can be in pairs, but pairs can't be in additions
     #
-    $c->{node} = $c->{node}{parent} if $c->{node}->type eq 'Addition';
-    $c->{node} = $c->{node}{parent} if $c->{node}->type eq 'Pair';
+    $c->{node} = $c->{node}{parent} while $c->{node}->type eq 'Addition';
+    $c->{node} = $c->{node}{parent} if    $c->{node}->type eq 'Pair';
+
+    # close the list itself.
+    #
+    #       the current node becomes
+    #       the current node (list item)'s parent (list)'s parent
+    #
+    return unexpected($c) if $c->{node}->parent != $c->{list};
     $c->{node} = $c->{node}{parent}{parent};
 
-    # as a special case, close function calls here as well, since they are
-    # terminated by the end of their argument list.
+    # function call.
+    #
+    #       as a special case, close function calls here as well, since they are
+    #       terminated by the end of their argument list.
+    #
     $c->{node} = $c->{node}{parent} if $c->{node}->type eq 'Call';
+
+    # finally, the current list becomes the next list up in the tree.
+    $c->{list} = $c->{list}{parent_list};
+
+    return $c->{list};
+}
+
+sub c_BRACKET_E {
+    my ($c, $value) = @_;
+
+    # the current node must be a list.
+    return unexpected($c) if !$c->{list};
+
+    # this must be the expected list terminator.
+    my $t = $c->{list}{list_terminator};
+    my $p = Ferret::Lexer::pretty_token($t);
+    return unexpected($c, "to close list (instead of $p)")
+    if $t ne 'BRACKET_E';
+
+    # closes these things.
+    #
+    #       addition must come first here because
+    #       additions can be in pairs, but pairs can't be in additions
+    #
+    $c->{node} = $c->{node}{parent} while $c->{node}->type eq 'Addition';
+    $c->{node} = $c->{node}{parent} if    $c->{node}->type eq 'Pair';
+
+    # close the list itself.
+    #
+    #       the current node becomes
+    #       the current node (list item)'s parent (list)'s parent
+    #
+    return unexpected($c) if $c->{node}->parent != $c->{list};
+    $c->{node} = $c->{node}{parent}{parent};
 
     # finally, the current list becomes the next list up in the tree.
     $c->{list} = $c->{list}{parent_list};
