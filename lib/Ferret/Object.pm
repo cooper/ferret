@@ -202,7 +202,8 @@ sub add_methods {
         my $m = $methods{$name};
         my $func = Ferret::Function->new($obj->ferret,
             name => $name,
-            code => $m->{code}
+            code => $m->{code},
+            is_method => 1
         );
 
         # needs.

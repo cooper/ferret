@@ -10,7 +10,8 @@ use parent 'Ferret::Object';
 our %methods = (
     op_add => {
         code => \&op_add,
-        need => '$other:Str'
+        need => '$other:Str',
+        is_method => 1
     }
 );
 

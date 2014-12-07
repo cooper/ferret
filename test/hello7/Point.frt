@@ -1,4 +1,4 @@
-class Point 1.0
+class Point
 
 init {
     need $x, $y;
@@ -22,15 +22,3 @@ main method midpoint {
         y: ($pt1.y + $pt2.y) / 2
     );
 }
-
-$pt = Point(5, 3);
-say("Point" + $pt.pretty!);
-
-$rpt = $pt.oneToRight!;
-say("Right" + $rpt.pretty!);
-
-$mdpt = Point.midpoint($pt, $rpt);
-say("Midpoint" + $mdpt.pretty!);
-
-$nineteen = 4 + 45 / 3;
-say("Nineteen: $nineteen");
