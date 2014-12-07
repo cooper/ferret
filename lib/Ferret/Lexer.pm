@@ -34,7 +34,8 @@ use F::Call;
 use F::Property;
 use F::Bareword;
 use F::Assignment;
-use F::Addition;
+use F::Operation;
+use F::Operator;
 use F::ReturnPair;
 use F::Return;
 

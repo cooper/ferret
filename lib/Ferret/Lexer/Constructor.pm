@@ -323,10 +323,10 @@ sub c_PAREN_E {
 
     # closes these things.
     #
-    #       addition must come first here because
-    #       additions can be in pairs, but pairs can't be in additions
+    #       math operations must come first here because
+    #       operations can be in pairs, but pairs can't be in operations
     #
-    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Addition';
+    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Operation';
     $c->{node} = $c->{node}->close if    $c->{node}->type eq 'Pair';
 
     # close the list itself.
@@ -364,10 +364,10 @@ sub c_BRACKET_E {
 
     # closes these things.
     #
-    #       addition must come first here because
-    #       additions can be in pairs, but pairs can't be in additions
+    #       math operations must come first here because
+    #       operations can be in pairs, but pairs can't be in operations
     #
-    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Addition';
+    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Operation';
     $c->{node} = $c->{node}->close if    $c->{node}->type eq 'Pair';
 
     # close the list itself.
@@ -449,7 +449,7 @@ sub c_OP_SEMI {
         unless $c->{instruction};
 
     # end of instruction can terminate any of these nodes.
-    my @closes = qw(WantNeed Addition Assignment ReturnPair Return);
+    my @closes = qw(WantNeed Operation Assignment ReturnPair Return);
     foreach (@closes) {
         $c->{node} = $c->{node}->close if $_ eq $c->{node}->type;
     }
@@ -545,28 +545,37 @@ sub c_OP_ASSIGN {
     return $a;
 }
 
-sub c_OP_ADD {
+*c_OP_ADD = *c_OP_SUB =
+*c_OP_MUL = *c_OP_DIV =
+*c_OP_POW = *c_math_operator;
+
+sub c_math_operator {
     my ($c, $value) = @_;
 
     my %allowed = map { $_ => 1 } qw(
         Bareword LexicalVariable InstanceVariable Property List Expression
-        String Number Addition
+        String Number Operation
     );
 
     my $last_el = $c->{last_element};
     return expected($c,
         'an expression',
-        'at left of addition operator (+)'
+        'at left of '.Ferret::Lexer::pretty_token($c->{label})
     ) unless $allowed{ $last_el->type_or_tok };
 
-    # if the current node is an addition, just add another thing.
-    return if $c->{node}->type eq 'Addition';
+    # if the current node is an operation, just add another thing.
+    my $operator = F::Operator->new(token => $c->{label});
+    if ($c->{node}->type eq 'Operation') {
+        $c->{node}->adopt($operator);
+        return $operator;
+    }
 
-    # adopt the last element as the left side of the addition.
-    my $add = $c->{node} = $c->{node}->adopt(F::Addition->new);
-    $add->adopt($last_el);
+    # adopt the last element as the left side of the operation.
+    my $op = $c->{node} = $c->{node}->adopt(F::Operation->new);
+    $op->adopt($last_el);
+    $op->adopt($operator);
 
-    return $add;
+    return $op;
 }
 
 sub c_OP_RETURN {

@@ -34,7 +34,7 @@ my %no_value = map { $_ => 1 } qw(
 # reused formats
 my $prop_reg    = qr/\b[A-Za-z][A-Za-z0-9]*/;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
-my $regex_reg   = qr/\/(?:[^\/\\]|\\.)*\/[a-zA-Z]*/;
+my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
 
 my @token_formats = (
 
