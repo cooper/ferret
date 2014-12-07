@@ -386,14 +386,26 @@ sub c_BRACKET_E {
 
 sub c_STRING {
     my ($c, $value) = @_;
+    my @parts = @$value;
 
-    # create the string...
-    my $string = F::String->new(value => $value);
+    # just one part, a plain string.
+    if (@parts == 1) {
+        my $string = F::String->new(value => $parts[0]);
+        return $c->{node}->adopt($string);
+    }
 
-    # add to the current node.
-    $c->{node}->adopt($string);
+    # more than one part. contains variables.
+    my $op = $c->{node} = $c->{node}->adopt(F::Operation->new);
+    while (my $part = shift @parts) {
+        if (ref $part) {
+            __PACKAGE__->can("c_$$part[0]")->($c, @$part[1..$#$part]);
+        }
+        else { $op->adopt(F::String->new(value => $part)) }
+        $op->adopt(F::Operator->new(token => 'OP_ADD')) if @parts;
+    }
+    $c->{node} = $op->close;
 
-    return $string;
+    return $op;
 }
 
 sub c_NUMBER {

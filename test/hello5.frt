@@ -14,7 +14,7 @@ method oneToRight {
 }
 
 method pretty {
-    return ("(" + @x + ", " + @y + ")");
+    return ("(@x, @y)");
 }
 
 main method midpoint {
@@ -34,5 +34,5 @@ say("Right" + $rpt.pretty!);
 $mdpt = Point.midpoint($pt, $rpt);
 say("Midpoint" + $mdpt.pretty!);
 
-$nineteen = 4 + 5 * 3;
-say("Nineteen: " + $nineteen);
+$nineteen = 4 + 45 / 3;
+say("Nineteen: $nineteen");

@@ -49,9 +49,9 @@ my @token_formats = (
     # I need to fix it by making comment start and end
 
     # variables
-    [ VAR_LEX       => qr/\$+[\w_]+/,   \&remove_first_char                 ],  # lexical variable
-    [ VAR_THIS      => qr/\@+[\w_]+/,   \&remove_first_char                 ],  # object variable
-    [ VAR_SPEC      => qr/\*+[\w_]+/,   \&remove_first_char                 ],  # special variable
+    [ VAR_LEX       => qr/\$+$prop_reg+/,   \&remove_first_char             ],  # lexical variable
+    [ VAR_THIS      => qr/\@+$prop_reg+/,   \&remove_first_char             ],  # object variable
+    [ VAR_SPEC      => qr/\*+$prop_reg+/,   \&remove_first_char             ],  # special variable
 
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start
@@ -131,8 +131,7 @@ sub possibly_call {
 # differentiate strings and regex.
 sub tok_STR_REG {
     my ($tokens, $value) = @_;
-    my ($is_str, $in_str, $in_exp, $escaped);
-    my ($str, $exp) = ('') x 2;
+    my ($dat, $is_str, $in_str, $in_exp, $escaped, $var, @parts) = '';
 
     # TODO: interpolation
     for my $char (split //, $value) {
@@ -141,7 +140,7 @@ sub tok_STR_REG {
         # TODO: escape codes like \n.
         # TODO: consider how this should be handled in regex.
         if ($escaped) {
-            ($in_str ? $str : $exp) .= $char;
+            $dat .= $char;
             undef $escaped;
             next;
         }
@@ -162,13 +161,51 @@ sub tok_STR_REG {
         # start or end the regex.
         if ($char eq '/' && !$in_str) {
             $in_exp = !$in_exp;
+            next;
+        }
+
+        # if interpolating.
+        if ($is_str && 1) {
+
+            # start of a variable.
+            if ($char =~ m/[\$\@\*]/) {
+                $var = { sigil => $char, name => '' };
+                push @parts, $dat if length $dat;
+                $dat = '';
+                next;
+            }
+
+            # add to the variable.
+            if ($var && $char =~ m/$prop_reg/) {
+                $var->{name} .= $char;
+                next;
+            }
+
+            # end of variable.
+            elsif ($var) {
+                push @parts, $var;
+                undef $var;
+            }
+
         }
 
         # regex is fallback because of modifiers.
-        ($in_str ? $str : $exp) .= $char;
+        $dat .= $char;
 
     }
-    return $is_str ? [ STRING => $str ] : [ REGEX => $exp ];
+
+    push @parts, $var if $var;
+    push @parts, $dat if length $dat;
+
+    # tokenize the variables.
+    my $i = -1;
+    foreach my $part (@parts) { $i++;
+        ref $part eq 'HASH' or next;
+        my $code = "$$part{sigil}$$part{name}";
+        $parts[$i] = (tokenize($code))[0];
+    }
+
+    return $is_str ? [ STRING => \@parts ] : [ REGEX => \@parts ];
 }
 
 sub tok_BAREWORD {
