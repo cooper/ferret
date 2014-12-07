@@ -449,7 +449,7 @@ sub c_OP_SEMI {
         unless $c->{instruction};
 
     # end of instruction can terminate any of these nodes.
-    my @closes = qw(WantNeed Addition Assignment ReturnPair);
+    my @closes = qw(WantNeed Addition Assignment ReturnPair Return);
     foreach (@closes) {
         $c->{node} = $c->{node}->close if $_ eq $c->{node}->type;
     }
@@ -587,6 +587,12 @@ sub c_OP_RETURN {
     $c->{node} = $c->{node}->adopt($pair);
 
     return $pair;
+}
+
+sub c_KEYWORD_RETURN {
+    my ($c, $value) = @_;
+    my $ret = F::Return->new;
+    return $c->{node} = $c->{node}->adopt($ret);
 }
 
 sub c_any {

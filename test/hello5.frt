@@ -10,14 +10,13 @@ init {
 
 method oneToRight {
     $pt = Point(@x + 1, @y);
-    point  -> $pt;
-    pretty -> $pt.pretty!;
+    return $pt;
 }
 
 method pretty {
-    text -> ("(" + @x + ", " + @y + ")");
+    return ("(" + @x + ", " + @y + ")");
 }
 
 $pt = Point(5, 3);
-say("Created a point  : " + $pt.pretty!.text);
-say("One to the right : " + $pt.oneToRight!.pretty.text);
+say("Created a point  : " + $pt.pretty!);
+say("One to the right : " + $pt.oneToRight!.pretty!);
