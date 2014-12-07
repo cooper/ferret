@@ -26,8 +26,13 @@ main method midpoint {
 }
 
 $pt = Point(5, 3);
-say("Created a point  : " + $pt.pretty!);
-say("One to the right : " + $pt.oneToRight!.pretty!);
+say("Point" + $pt.pretty!);
 
+$rpt = $pt.oneToRight!;
+say("Right" + $rpt.pretty!);
+
+$mdpt = Point.midpoint($pt, $rpt);
+say("Midpoint" + $mdpt.pretty!);
 
 $nineteen = 4 + 5 * 3;
+say("Nineteen: " + $nineteen);

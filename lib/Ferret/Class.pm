@@ -36,7 +36,6 @@ sub call {
 # initialize an object.
 sub init {
     my ($class, $obj, $arguments) = @_;
-    $obj->{type} = 'the object';
 
     # fetch or create return object.
     my $ret = $class->has_property('_init_') ? do {
