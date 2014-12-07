@@ -18,8 +18,19 @@ sub adopt {
 
         # if the element is a pair, it's a hash.
         # otherwise, it's an array.
-        $list->{ $el->type eq 'Pair' ? 'hash' : 'array' } = 1;
+        # also, if this is a colon (OP_VALUE), it's an empty hash.
+        my $is_empty = $el->type_or_tok eq 'OP_VALUE';
+        if ($el->type eq 'Pair' || $is_empty) {
+            $list->{hash} = 1;
+            delete $list->{array};
 
+            # if it's empty, remember this, and don't adopt the operator.
+            if ($is_empty) {
+                $list->{must_be_empty} = 1;
+                return $el;
+            }
+
+        }
     }
 
     # for all items, check whether they're acceptable.
@@ -36,6 +47,7 @@ sub adopt {
         die "arrays cannot contain key-value pairs\n";
     }
 
+    die "list not expected to have any elements\n" if $list->{must_be_empty};
     return $item->SUPER::adopt($el);
 }
 

@@ -14,6 +14,9 @@ use Ferret::Number;
 use Ferret::Context;
 use Ferret::Function;
 use Ferret::Event;
+use Ferret::Class;
+use Ferret::List;
+use Ferret::Hash;
 use Ferret::Core::Functions;
 use Ferret::Core::Context;
 

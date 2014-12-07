@@ -1,0 +1,13 @@
+# Method '<<name>>' definition
+{
+    my $func = $methods[<<id>>] = Ferret::Function->new($f,
+        name      => '<<name>>',
+        is_method => 1
+    );
+    <<arguments>>
+    $func->{code} = sub {
+        my ($self, $arguments, $from_scope, $scope, $return) = @_;
+        <<statements>>
+        return $return;
+    };
+}

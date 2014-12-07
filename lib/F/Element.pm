@@ -36,13 +36,16 @@ sub unexpected {
     return Ferret::Lexer::Constructor::unexpected($c);
 }
 
-sub document {
-    my $el = shift;
-    while ($el = $el->{parent}) {
-        return $el if $el->type eq 'Document';
-    }
-    return $el;
+sub first_self_or_parent {
+    my ($el, $type) = @_;
+    do {
+        return $el if $el->type eq $type;
+    } while $el = $el->{parent};
+    return;
 }
+
+sub document { first_self_or_parent(shift, 'Document') }
+sub class    { first_self_or_parent(shift, 'Class')    }
 
 sub replace_with {
     my ($el, $rep) = @_;

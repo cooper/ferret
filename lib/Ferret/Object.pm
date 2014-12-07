@@ -84,24 +84,31 @@ sub delete_property {
 # if the property does not exist, returns Perl undef.
 #
 sub property {
-    my ($obj, $prop_name) = @_;
+    my ($obj, $prop_name, $borrow_obj) = @_;
+    $borrow_obj ||= $obj; # the object inheriting the property.
 
     # try the local property first.
     # this is done separately first because hopefully,
     # we won't even need to generate ->parents.
     if (exists $obj->{properties}{$prop_name}) {
         my $p = $obj->{properties}{$prop_name};
-        weaken($p->{last_parent} = $obj);
+        weaken($p->{last_parent} = $borrow_obj);
         return $p;
     }
 
     # try inheritance.
     foreach my $o ($obj->parents) {
-        my $value = $o->property($prop_name);
+        my $value = $o->property($prop_name, $obj);
         return $value if defined $value;
     }
 
     return;
+}
+
+# has a property, either its own or inherited.
+sub has_property {
+    my ($obj, $prop_name) = @_;
+    return defined $obj->property($prop_name);
 }
 
 # fetches a property.

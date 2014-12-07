@@ -64,4 +64,14 @@ sub perl_fmt {
 
 }
 
+# filter out empty items.
+sub close {
+    my $list = shift;
+    foreach my $item ($list->children) {
+        next if $item->children;
+        $list->abandon($item);
+    }
+    $list->SUPER::close;
+}
+
 1

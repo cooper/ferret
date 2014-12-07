@@ -24,17 +24,26 @@ sub desc {
 sub perl_fmt {
     my $doc = shift;
     my ($before_c, $after_c) = ('') x 2;
+
+    # add everything.
+    # this must come first so that function_defs etc. will be up-to-date.
     $after_c .= $_->perl_fmt_do."\n" foreach $doc->ordered_children;
 
-    # add each function definitions.
+    # add each function definition.
     $before_c .= "$_\n" foreach map {
         $doc->get_format(function_def => $_)
     } @{ $doc->{function_defs} };
 
+    # add each method definition.
+    $before_c .= "$_\n" foreach map {
+        $doc->get_format(method_def => $_)
+    } @{ $doc->{method_defs} };
+
+
     return document => {
         operations     => join(' ', keys %{ $doc->{required_operations} }),
         upper_content  => $before_c,    # function declarations
-        lower_content  => $after_c      # all other children
+        lower_content  => $after_c,     # all other children
     };
 }
 

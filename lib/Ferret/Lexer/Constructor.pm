@@ -57,22 +57,8 @@ sub construct {
 
     }
 
-    # when all is said and done, the current node should be the main node.
-    if ($current->{node} != $main_node) {
-        my $node = $current->{node};
-        my $desc = $node->desc;
 
-        # if the node started on a different line than current,
-        # mention where it started.
-        my $started = $node->{create_line} == $current->{line} ?
-            '' : " (which started on line $$node{create_line})";
-
-        return expected($current,
-            "termination of $desc$started",
-            'before reaching end of file'
-        );
-    }
-
+    c_eof($current, $main_node);
     return;
 }
 
@@ -96,9 +82,14 @@ sub c_CLASS_DEC {
     unexpected($c, 'in non-global scope')
         unless $c->{node}->type eq 'Document';
 
+    # create class.
     my $class = F::Class->new(%$value);
-    $c->{node}->adopt($class);
     $c->{class} = $class;
+
+    # set as current node.
+    # will be terminated by another class declaration or end of file.
+    $c->{node} = $c->{node}->adopt($class);
+
     return $class;
 }
 
@@ -106,7 +97,7 @@ sub c_METHOD {
     my ($c, $value) = @_;
     my $method = F::Method->new(%$value);
     $c->{node}->adopt($method);
-    @$c{ qw(node clos_cap) } = ($method) x 2;
+    @$c{ qw(node clos_cap method) } = ($method) x 3;
     return $method;
 }
 
@@ -114,7 +105,7 @@ sub c_FUNCTION {
     my ($c, $value) = @_;
     my $function = F::Function->new(%$value);
     $c->{node}->adopt($function);
-    @$c{ qw(node clos_cap) } = ($function) x 2;
+    @$c{ qw(node clos_cap function) } = ($function) x 3;
     return $function;
 }
 
@@ -128,7 +119,7 @@ sub c_CLOSURE_S {
     # a closure can terminate a generated expression.
     # for instance, inside $something {}. the expression $something ends there.
     if ($c->{node}{generated_expression}) {
-        $c->{node} = $c->{node}{parent};
+        $c->{node} = $c->{node}->close;
     }
 
     # remember which closure this is inside; if any.
@@ -149,7 +140,7 @@ sub c_CLOSURE_E {
 
     # close the closure and the node.
     $c->{closure} = delete $c->{closure}{containing_closure};
-    $c->{node} = $c->{node}{parent};
+    $c->{node} = $c->{node}->close;
 
     return;
 }
@@ -226,7 +217,7 @@ sub c_KEYWORD_IN {
     return unexpected($c, "(where is 'for'?)") unless
         $c->{node}{parameter_for} && $c->{node}{parameter_for} eq 'for';
         # FIXME: if wrapped in parentheses, this will fail.
-    $c->{node} = $c->{node}{parent};
+    $c->{node} = $c->{node}->close;
 
     # create an expression.
     # the expression is marked as the parameter to the in keyword.
@@ -251,6 +242,7 @@ sub c_BRACKET_S {
     my ($c, $value) = @_;
     my $list = start_list($c, $value, 'BRACKET_E');
     $list->{collection} = 1; # define as a value list or hash.
+    $list->{array} = 1;      # default
     return $list;
 }
 
@@ -334,8 +326,8 @@ sub c_PAREN_E {
     #       addition must come first here because
     #       additions can be in pairs, but pairs can't be in additions
     #
-    $c->{node} = $c->{node}{parent} while $c->{node}->type eq 'Addition';
-    $c->{node} = $c->{node}{parent} if    $c->{node}->type eq 'Pair';
+    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Addition';
+    $c->{node} = $c->{node}->close if    $c->{node}->type eq 'Pair';
 
     # close the list itself.
     #
@@ -343,14 +335,14 @@ sub c_PAREN_E {
     #       the current node (list item)'s parent (list)'s parent
     #
     return unexpected($c) if $c->{node}->parent != $c->{list};
-    $c->{node} = $c->{node}{parent}{parent};
+    $c->{node} = $c->{node}->close->close;
 
     # function call.
     #
     #       as a special case, close function calls here as well, since they are
     #       terminated by the end of their argument list.
     #
-    $c->{node} = $c->{node}{parent} if $c->{node}->type eq 'Call';
+    $c->{node} = $c->{node}->close if $c->{node}->type eq 'Call';
 
     # finally, the current list becomes the next list up in the tree.
     $c->{list} = $c->{list}{parent_list};
@@ -375,8 +367,8 @@ sub c_BRACKET_E {
     #       addition must come first here because
     #       additions can be in pairs, but pairs can't be in additions
     #
-    $c->{node} = $c->{node}{parent} while $c->{node}->type eq 'Addition';
-    $c->{node} = $c->{node}{parent} if    $c->{node}->type eq 'Pair';
+    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Addition';
+    $c->{node} = $c->{node}->close if    $c->{node}->type eq 'Pair';
 
     # close the list itself.
     #
@@ -384,7 +376,7 @@ sub c_BRACKET_E {
     #       the current node (list item)'s parent (list)'s parent
     #
     return unexpected($c) if $c->{node}->parent != $c->{list};
-    $c->{node} = $c->{node}{parent}{parent};
+    $c->{node} = $c->{node}->close->close;
 
     # finally, the current list becomes the next list up in the tree.
     $c->{list} = $c->{list}{parent_list};
@@ -459,7 +451,7 @@ sub c_OP_SEMI {
     # end of instruction can terminate any of these nodes.
     my @closes = qw(WantNeed Addition Assignment ReturnPair);
     foreach (@closes) {
-        $c->{node} = $c->{node}{parent} if $_ eq $c->{node}->type;
+        $c->{node} = $c->{node}->close if $_ eq $c->{node}->type;
     }
 
     # at this point, the instruction must be the current node.
@@ -468,7 +460,7 @@ sub c_OP_SEMI {
         return unexpected($c, "inside $type");
     }
 
-    $c->{node} = $c->{node}{parent};
+    $c->{node} = $c->{node}->close;
     delete $c->{instruction};
     return;
 }
@@ -483,10 +475,9 @@ sub c_VAR_THIS {
     my ($c, $value) = @_;
 
     # if there's no current class, this can't be here.
-    return unexpected($c, 'outside of class') unless $c->{class};
-
     # if there's no current method, this can't be here either.
-    # TODO: check that.
+    return unexpected($c, 'outside of class')  unless $c->{class};
+    return unexpected($c, 'outside of method') unless $c->{method};
 
     my $var = F::InstanceVariable->new(var_name => $value);
     return $c->{node}->adopt($var);
@@ -605,8 +596,8 @@ sub c_any {
     # these things cannot start an instruction.
     # (tokens only) (this is horrendous)
     my @ignore = qw(
-        ^FUNCTION$  ^METHOD&
-        ^OP_.+$     ^CLOSURE_.+$
+        ^FUNCTION$      ^METHOD$        ^CLASS_DEC$
+        ^OP_.+$         ^CLOSURE_.+$
     );
     foreach (@ignore) { return if $label =~ $_ }
 
@@ -614,10 +605,33 @@ sub c_any {
     @$c{ qw(node instruction) } = ($c->{node}->adopt($instruction)) x 2;
 }
 
+sub c_eof {
+    my ($c, $main_node) = @_;
+
+    # end of file can terminate a class.
+    $c->{node} = $c->{node}->close if $c->{node}->type eq 'Class';
+
+    # when all is said and done, the current node should be the main node.
+    if ($current->{node} != $main_node) {
+        my $node = $current->{node};
+        my $desc = $node->desc;
+
+        # if the node started on a different line than current,
+        # mention where it started.
+        my $started = $node->{create_line} == $current->{line} ?
+            '' : " (which started on line $$node{create_line})";
+
+        return expected($current,
+            "termination of $desc$started",
+            'before reaching end of file'
+        );
+    }
+}
+
 # returns the first parent node which is not a list or a list item.
 sub first_non_list_parent {
     my $node = shift;
-    while ($node = $node->{parent}) {
+    while ($node = $node->parent) {
         next if $node->isa('F::List');
         next if $node->isa('F::ListItem');
         return $node;

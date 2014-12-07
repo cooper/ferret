@@ -21,18 +21,14 @@ sub perl_fmt {
         # because the child is likely an instruction.
         my $wn = ($child->ordered_children)[0];
 
-        # add needs.
-        if ($wn && $wn->type eq 'Need') {
-            $arguments .= $func->get_format(func_arg_need => {
-                name => $_
-            }).";\n" foreach map { $_->{var_name} } $wn->variables;
-        }
-
-        # add wants.
-        if ($wn && $wn->type eq 'Want') {
-            $arguments .= $func->get_format(func_arg_want => {
-                name => $_
-            }).";\n" foreach map { $_->{var_name} } $wn->variables;
+        # add wants/needs.
+        next unless $wn && $wn->type eq 'WantNeed';
+        foreach my $var ($wn->variables) {
+            my $var_name = $var->{var_name};
+            my $fmt = "func_arg_$$wn{arg_type}";
+            $arguments .= $func->get_format($fmt => {
+                name => $var_name
+            }).";\n";
         }
 
     }

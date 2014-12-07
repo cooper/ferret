@@ -16,6 +16,7 @@ my $keyword_reg = '^('.join('|', qw{
     need        want        inside      then
     if          else        return      after
     for         in          func        __END__
+    init
 }).')$';
 $keyword_reg = qr/$keyword_reg/;
 
@@ -173,7 +174,12 @@ sub tok_STR_REG {
 sub tok_BAREWORD {
     my ($tokens, $value) = @_;
 
-    # keyword.
+    # init keyword = main method _init_.
+    if ($value eq 'init') {
+        return [ METHOD => { name => '_init_', main => 1 } ];
+    }
+
+    # other keyword.
     if ($value =~ $keyword_reg) {
         my $key = uc $value;
         return [ "KEYWORD_$key" => ];

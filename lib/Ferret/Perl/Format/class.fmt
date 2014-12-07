@@ -1,0 +1,13 @@
+# Class '<<name>>'
+{
+    my @methods;
+     my $class = my $self = Ferret::Class->new($f,
+        name    => '<<name>>',
+        version => <<version>>
+    );
+    my $proto = $class->prototype;
+    $context->set_property(<<name>> => $class);
+
+    <<upper_content>>
+    <<lower_content>>
+}
