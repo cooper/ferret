@@ -10,6 +10,7 @@ sub new {
     my ($class, %opts) = @_;
     return $class->SUPER::new(
         function_defs       => [],
+        required_spaces     => {},
         required_operations => {},
         %opts
     );
@@ -23,7 +24,7 @@ sub desc {
 
 sub perl_fmt {
     my $doc = shift;
-    my ($before_c, $after_c) = ('') x 2;
+    my ($before_c, $after_c, $includes) = ('') x 3;
 
     # add everything.
     # this must come first so that function_defs etc. will be up-to-date.
@@ -39,8 +40,12 @@ sub perl_fmt {
         $doc->get_format(method_def => $_)
     } @{ $doc->{method_defs} };
 
+    # add namespace inclusions.
+    my @spaces = keys %{ $doc->{required_spaces} };
+    $includes  = $doc->get_format(space => { names => "@spaces" }).";\n";
 
     return document => {
+        includes       => $includes,
         operations     => join(' ', keys %{ $doc->{required_operations} }),
         upper_content  => $before_c,    # function declarations
         lower_content  => $after_c,     # all other children

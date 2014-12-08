@@ -21,6 +21,7 @@ use Ferret::Core::Functions;
 use Ferret::Core::Context;
 
 # object constants.
+our ($ferret, $core_context, %tried_files);
 my $undefined = \'undefined';
 sub true      () { state $true  = \'true'  } # TODO
 sub false     () { state $false = \'false' } # TODO
@@ -37,16 +38,20 @@ sub new {
     my ($class, %opts) = @_;
     my $f = bless {}, $class;
 
-    # create the main context object.
-    $f->{context} = Ferret::Context->new($f, %opts);
+    # create the core and main context objects.
+    $f->{context}{core} ||=
+        $core_context   ||= Ferret::Core::Context->new($f, %opts);
+    $f->{context}{main} ||= Ferret::Context->new($f,
+        %opts,
+        parent => $f->{context}{core}
+    );
 
     return $f;
 }
 
-# returns the main context.
-sub context {
-    shift->{context};
-}
+sub main_context { shift->{context}{main}   }
+sub core_context { shift->{context}{core}   }
+sub get_context  { shift->{context}{+shift} }
 
 # returns Perl boolean of whether or not a value is a valid Ferret value.
 sub valid_value {
@@ -65,6 +70,28 @@ sub valid_value {
     # it is none of these; not good.
     return;
 
+}
+
+
+# fetch a class or namespace.
+# if necessary, load it.
+sub space {
+    my ($scope, $space) = @_;
+    my $file = "$space.frt.pm";
+
+    # already tried this file, or the namespace/class exists.
+    return $scope->property($space)
+    if $scope->has_property($space) || $tried_files{$file};
+
+    # load it.
+    require $file;
+    return $tried_files{$file} = $scope->property($space);
+
+}
+
+sub spaces {
+    my $scope = shift;
+    space($scope, $_) foreach @_;
 }
 
 1

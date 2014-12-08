@@ -72,6 +72,7 @@ sub call {
         #
         # $from_scope   = the scope where the function was called
         # $scope        = the scope within the function
+        # outer_scope   = the scope outside of the function definition
         #
         my $scope = Ferret::Scope->new($func->ferret,
             parent => $func->{outer_scope}

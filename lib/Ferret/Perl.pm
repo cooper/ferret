@@ -5,10 +5,16 @@ use warnings;
 use strict;
 use 5.010;
 
+use File::Basename 'basename';
+
 sub main {
     my $doc = shift;
     my $doc_perl = $doc->perl_fmt_do;
-    return get_format(main => { content => $doc_perl });
+    return get_format(main => {
+        content   => $doc_perl,
+        file_name => $doc->{name},
+        base_name => basename($doc->{name})
+    });
 }
 
 sub get_format {
@@ -18,7 +24,7 @@ sub get_format {
     return '' if not defined $name;
     $name = lc $name;
 
-    open my $fh, '<', "lib/Ferret/Perl/Format/$name.fmt"
+    open my $fh, '<', "$::bin/lib/Ferret/Perl/Format/$name.fmt"
         or die "can't open Perl format $name: $!\n";
 
     # read line-by-line to preserve indentation.

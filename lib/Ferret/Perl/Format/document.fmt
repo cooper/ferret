@@ -1,9 +1,8 @@
 use Ferret::Core::Operations qw(<<operations>>);
 {
     my @funcs;
-    my $scope = my $context =
-        Ferret::Context->new($f, parent => $core_context);
-
+    my $scope = my $context = $f->get_context('main');
+    <<includes>>
     <<upper_content>>
     <<lower_content>>
 }

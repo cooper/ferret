@@ -49,7 +49,7 @@ sub compile {
 
 sub op_fmt {
     my ($op, $op_name, @items) = (shift, @{ +shift });
-    $op->document->{required_operations}{$op_name} = 1;
+    $op->document->{required_operations}{$op_name}++;
     return operation => {
         operation => $op_name,
         items     => join ', ', map {

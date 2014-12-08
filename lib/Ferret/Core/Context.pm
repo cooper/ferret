@@ -14,7 +14,7 @@ my %functions = (
 # creates a new context.
 sub new {
     my ($class, $f, %opts) = @_;
-    my $context = $class->SUPER::new($f, %opts);
+    my $context = $class->SUPER::new($f, %opts, is_core => 1);
     foreach my $name (keys %functions) {
         my ($code, @args) = @{ $functions{$name} };
         $code = Ferret::Core::Functions->can($code) or next;

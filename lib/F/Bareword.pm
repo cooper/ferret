@@ -14,7 +14,18 @@ sub desc {
 }
 
 sub perl_fmt {
-    return lexical_var => { name => shift->{bareword_value} };
+    my $el  = shift;
+    my $val = $el->{bareword_value};
+
+    # if it starts with a capital letter, it's a class or namespace.
+    if (ucfirst $val eq $val) {
+        my $doc = $el->document;
+        $doc->{required_spaces}{$val} = 1; # do not increment
+    }
+
+    # otherwise, it's a function or something.
+    return lexical_var => { name => $el->{bareword_value} };
+
 }
 
 1

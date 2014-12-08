@@ -4,11 +4,17 @@
 use warnings;
 use strict;
 use 5.010;
-use lib 'lib';
 
 use File::Slurp  'slurp';
 use Scalar::Util 'blessed';
 use JSON::XS;
+
+BEGIN {
+    use FindBin;
+    use lib 'lib';
+    our $bin = $FindBin::Bin;
+    use lib "$FindBin::Bin/lib";
+}
 
 use Ferret;
 use Ferret::Lexer;
@@ -20,7 +26,7 @@ while ($_ = shift) {
     push @files, $_ and next unless /^-/;
     $args .= substr $_, 1;
 }
-my %args = map { $_ => 1 } split //, $args;
+my %args = map  { $_ => 1 } split //, $args;
 @files   = grep { substr($_, -3) eq 'frt' } @files;
 
 # show help.
@@ -50,10 +56,14 @@ sub do_file {
 
     # compile to Perl.
     my $compiled = Ferret::Perl::main($doc);
+    if ($args{p}) {
+        require Perl::Tidy;
+        Perl::Tidy::perltidy(source => \$compiled, destination => \$compiled);
+    }
 
     # open the file.
     my $fh;
-    if ($args{p}) { $fh = \*STDOUT }
+    if ($args{s}) { $fh = \*STDOUT }
     else          { open $fh, '>', "$file.pm" }
 
     # write to file.
@@ -88,7 +98,8 @@ print "usage: $0 [-tdup] file [file ...]
 -t      show tokenization
 -d      show lexer object tree (DOM)
 -u      show unknown elements in DOM
--p      print result instead of writing
+-s      write to STDOUT instead of file
+-p      beautify code with perltidy
 -h      show help
 ";
     exit 0;
