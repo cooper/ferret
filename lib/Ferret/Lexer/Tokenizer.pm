@@ -86,7 +86,7 @@ my @token_formats = (
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other
-    [ BAREWORD      => qr/\b[A-Za-z][A-Za-z0-9]*/                           ],  # bareword (and keywords)
+    [ BAREWORD      => qr/\b[A-Za-z][A-Za-z0-9:]*/                          ],  # bareword (and keywords)
     [ NUMBER        => qr/[+-]?\d+(?:\.\d+(?:e\d+)?)?/                      ],  # number
     [ NEWLINE       => qr/\n/,          \&ignore_increment                  ],  # newline
     [ SPACE         => qr/\s*/,         \&ignore                            ],  # whitespace

@@ -1,3 +1,4 @@
+package Math
 class Point
 
 init {

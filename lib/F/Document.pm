@@ -41,10 +41,15 @@ sub perl_fmt {
     } @{ $doc->{method_defs} };
 
     # add namespace inclusions.
-    my @spaces = keys %{ $doc->{required_spaces} };
+    my @spaces = map {
+        length $doc->{package} && $doc->{package} ne 'main' ?
+            $doc->{package}.'::'.$_                         :
+            $_
+    } keys %{ $doc->{required_spaces} };
     $includes  = $doc->get_format(space => { names => "@spaces" }).";\n";
 
     return document => {
+        'package'      => $doc->{package} // 'main',
         includes       => $includes,
         operations     => join(' ', keys %{ $doc->{required_operations} }),
         upper_content  => $before_c,    # function declarations

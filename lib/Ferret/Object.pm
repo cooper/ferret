@@ -96,6 +96,13 @@ sub property {
         return $p;
     }
 
+    # try a different context.
+    if (index($prop_name, '::') != -1) {
+        my ($context, $real_prop_name) = ($prop_name =~ m/^(.+)::(.+?)$/);
+        $context = $obj->ferret->get_context($context);
+        return $context->property($real_prop_name);
+    }
+
     # try inheritance.
     foreach my $o ($obj->parents) {
         my $value = $o->property($prop_name, $obj);

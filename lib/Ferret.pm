@@ -51,7 +51,15 @@ sub new {
 
 sub main_context { shift->{context}{main}   }
 sub core_context { shift->{context}{core}   }
-sub get_context  { shift->{context}{+shift} }
+
+# fetch a context or create it.
+sub get_context  {
+    my ($f, $name) = @_;
+    return $f->{context}{$name} if $f->{context}{$name};
+    # TODO: if the context is like A::B, B should inheit from A.
+    my $context = Ferret::Context->new($f, parent => $f->main_context);
+    return $f->{context}{$name} = $context;
+}
 
 # returns Perl boolean of whether or not a value is a valid Ferret value.
 sub valid_value {
@@ -72,22 +80,25 @@ sub valid_value {
 
 }
 
-
 # fetch a class or namespace.
 # if necessary, load it.
 sub space {
     my ($scope, $space) = @_;
-    my $file = "$space.frt.pm";
+    my $file = c2s("$space.frt.pm");
 
     # already tried this file, or the namespace/class exists.
     return $scope->property($space)
-    if $scope->has_property($space) || $tried_files{$file};
+        if $scope->has_property($space) || $tried_files{$file};
 
     # load it.
     require $file;
-    return $tried_files{$file} = $scope->property($space);
+    $tried_files{$file} = 1;
+    return $scope->property($space);
 
 }
+
+sub c2s { my $c = shift; $c =~ s/::/\//g; $c }
+sub s2c { my $s = shift; $s =~ s/\//::/g; $s }
 
 sub spaces {
     my $scope = shift;

@@ -447,8 +447,20 @@ sub c_OP_COMMA {
 
 sub c_BAREWORD {
     my ($c, $value) = @_;
+    
+    # if the last element is a bareword, combine them.
+    # ex: Math :: Point == Math::Point
+    # ex: A B = AB
+    my $l_word = $c->{last_element};
+    if ($l_word->type eq 'Bareword') {
+        $l_word->{bareword_value} .= $value;
+        return $l_word;
+    }
+
+    # otherwise, create a new bareword.
     my $word = F::Bareword->new(bareword_value => $value);
     $c->{node}->adopt($word);
+
     # not yet in function call at this point.
     return $word;
 }
@@ -616,6 +628,26 @@ sub c_KEYWORD_RETURN {
     return $c->{node} = $c->{node}->adopt($ret);
 }
 
+sub c_OP_PACK {
+    my ($c, $value) = @_;
+    my $l_word = $c->{last_element};
+
+    # left side must be bareword.
+    return expected($c,
+        'a bareword',
+        'at left of namespace operator (::)'
+    ) unless $l_word->type eq 'Bareword';
+
+    # right side must be bareword.
+    return expected($c,
+        'a bareword',
+        'at right of namespace operator (::)'
+    ) unless $c->{next_tok}[0] eq 'BAREWORD';
+
+    $l_word->{bareword_value} .= '::';
+    return $l_word;
+}
+
 sub c_any {
     my ($label, $c, $value) = @_;
     return if $c->{instruction};
@@ -624,7 +656,7 @@ sub c_any {
     # (tokens only) (this is horrendous)
     my @ignore = qw(
         ^FUNCTION$      ^METHOD$        ^CLASS_DEC$
-        ^OP_.+$         ^CLOSURE_.+$
+        ^OP_.+$         ^CLOSURE_.+$    ^PKG_DEC$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

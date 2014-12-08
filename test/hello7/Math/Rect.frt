@@ -1,3 +1,4 @@
+package Math
 class Rect
 
 init {
@@ -17,6 +18,3 @@ method center {
     $y = @origin.y + @height * 0.5;
     return Point($x, $y);
 }
-
-$rect = Rect(x: 5, y: 4, width: 12, height: 10);
-say($rect.center!.pretty!);
