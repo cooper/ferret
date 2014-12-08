@@ -69,10 +69,8 @@ sub do_file {
 
     # compile to Perl.
     my $compiled = Ferret::Perl::main($doc);
-    if ($args{p}) {
-        require Perl::Tidy;
-        Perl::Tidy::perltidy(source => \$compiled, destination => \$compiled);
-    }
+    beautify(\$compiled) if $args{p};
+    minify(\$compiled)   if $args{m};
 
     # write to file.
     print $fh $compiled;
@@ -114,14 +112,36 @@ sub interf (@) {
     print $str;
 }
 
+sub perltidy {
+    my ($ref, %opts) = @_;
+    require Perl::Tidy;
+    Perl::Tidy::perltidy(
+        source      => $ref,
+        destination => $ref,
+        %opts
+    );
+}
+
+sub beautify {
+    my $ref = shift;
+    perltidy($ref);
+}
+
+sub minify {
+    my $ref = shift;
+    perltidy($ref, argv => '--mangle -dac');
+    $$ref =~ s/\n//g;
+}
+
 sub help {
-print "usage: $0 [-tduscp] file [file ...]
+print "usage: $0 [-tduscpm] file [file ...]
 -t      show tokenization
 -d      show lexer object tree (DOM)
 -u      show unknown elements in DOM
 -s      write to STDOUT instead of file
 -c      write tokens and DOM as comments
 -p      beautify code with perltidy
+-m      minify code with perltidy
 -h      show help
 ";
     exit 0;
