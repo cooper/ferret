@@ -1,1 +1,1 @@
-Ferret::spaces($context, qw(<<names>>))
+Ferret::space($context, $_) for qw(<<names>>)

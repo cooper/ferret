@@ -100,9 +100,4 @@ sub space {
 sub c2s { my $c = shift; $c =~ s/::/\//g; $c }
 sub s2c { my $s = shift; $s =~ s/\//::/g; $s }
 
-sub spaces {
-    my $scope = shift;
-    space($scope, $_) foreach @_;
-}
-
 1
