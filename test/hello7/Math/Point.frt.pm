@@ -1,3 +1,166 @@
+# --- Tokens ---
+#         PKG_DEC | {"name":"Math"}
+#       CLASS_DEC | {"name":"Point"}
+#          METHOD | {"name":"_init_","main":1}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "x"
+#        OP_COMMA | 
+#         VAR_LEX | "y"
+#         OP_SEMI | 
+#        VAR_THIS | "x"
+#       OP_ASSIGN | 
+#         VAR_LEX | "x"
+#         OP_SEMI | 
+#        VAR_THIS | "y"
+#       OP_ASSIGN | 
+#         VAR_LEX | "y"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"oneToRight","main":null}
+#       CLOSURE_S | 
+#         VAR_LEX | "pt"
+#       OP_ASSIGN | 
+#        VAR_SPEC | "class"
+#      PAREN_CALL | 
+#        VAR_THIS | "x"
+#          OP_ADD | 
+#          NUMBER | "1"
+#        OP_COMMA | 
+#        VAR_THIS | "y"
+#         PAREN_E | 
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#         VAR_LEX | "pt"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"main":null,"name":"pretty"}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#         PAREN_S | 
+#          STRING | ["(",["VAR_THIS","x",102],", ",["VAR_THIS","y",102],")"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"midpoint","main":"1"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "pt1"
+#        OP_COMMA | 
+#         VAR_LEX | "pt2"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#      PROP_VALUE | "x"
+#         PAREN_S | 
+#         VAR_LEX | "pt1"
+#        PROPERTY | "x"
+#          OP_ADD | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "x"
+#         PAREN_E | 
+#          OP_DIV | 
+#          NUMBER | "2"
+#        OP_COMMA | 
+#      PROP_VALUE | "y"
+#         PAREN_S | 
+#         VAR_LEX | "pt1"
+#        PROPERTY | "y"
+#          OP_ADD | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "y"
+#         PAREN_E | 
+#          OP_DIV | 
+#          NUMBER | "2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+# --- DOM ---
+#  Document './hello7/Math/Point.frt'
+#      Package 'Math'
+#      Class 'Point'
+#          Main method '_init_'
+#              Instruction
+#                  Need
+#                      Lexical variable '$x'
+#                      Lexical variable '$y'
+#              Instruction
+#                  Assignment
+#                      Instance variable '@x'
+#                      Lexical variable '$x'
+#              Instruction
+#                  Assignment
+#                      Instance variable '@y'
+#                      Lexical variable '$y'
+#          Method 'oneToRight'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$pt'
+#                      Call
+#                          Special variable '*class'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Mathematical operation
+#                                      Instance variable '@x'
+#                                      Addition operator (+)
+#                                      Number '1'
+#                              Item 1
+#                                  Instance variable '@y'
+#              Instruction
+#                  Return
+#                      Lexical variable '$pt'
+#          Method 'pretty'
+#              Instruction
+#                  Return
+#                      Structural list [1 items]
+#                          Item 0
+#                              Mathematical operation
+#                                  String '('
+#                                  Addition operator (+)
+#                                  Instance variable '@x'
+#                                  Addition operator (+)
+#                                  String ', '
+#                                  Addition operator (+)
+#                                  Instance variable '@y'
+#                                  Addition operator (+)
+#                                  String ')'
+#          Main method 'midpoint'
+#              Instruction
+#                  Need
+#                      Lexical variable '$pt1'
+#                      Lexical variable '$pt2'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Hash [2 items]
+#                              Item 0
+#                                  Pair 'x'
+#                                      Mathematical operation
+#                                          Structural list [1 items]
+#                                              Item 0
+#                                                  Mathematical operation
+#                                                      Property 'x'
+#                                                          Lexical variable '$pt1'
+#                                                      Addition operator (+)
+#                                                      Property 'x'
+#                                                          Lexical variable '$pt2'
+#                                          Division operator (/)
+#                                          Number '2'
+#                              Item 1
+#                                  Pair 'y'
+#                                      Mathematical operation
+#                                          Structural list [1 items]
+#                                              Item 0
+#                                                  Mathematical operation
+#                                                      Property 'y'
+#                                                          Lexical variable '$pt1'
+#                                                      Addition operator (+)
+#                                                      Property 'y'
+#                                                          Lexical variable '$pt2'
+#                                          Division operator (/)
+#                                          Number '2'
 #!/usr/bin/perl
 
 use warnings;
@@ -9,7 +172,7 @@ use Ferret;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Point.frt.pm'}++;
 
-use Ferret::Core::Operations qw(div add);
+use Ferret::Core::Operations qw(add div);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');

@@ -1,3 +1,17 @@
+# --- Tokens ---
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Hello World!"]
+#         PAREN_E | 
+#         OP_SEMI | 
+# --- DOM ---
+#  Document './hello.frt'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      String 'Hello World!'
 #!/usr/bin/perl
 
 use warnings;

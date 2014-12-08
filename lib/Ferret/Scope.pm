@@ -18,8 +18,10 @@ sub new {
     # create a special variable object.
     my $spec;
     if (not $spec = $scope->{special}) {
-        $spec = $scope->{special} = Ferret::Object->new;
-        $scope->set_property(_special_ => $spec);
+        my $p_spec = $opts{parent_scope}{special} if $opts{parent_scope};
+        $spec = $scope->{special} = Ferret::Object->new($f,
+            parent => $p_spec
+        );
     }
 
     # set default special variables.
@@ -30,8 +32,6 @@ sub new {
         $opts{parent_scope}     ||
         $scope->{parent_scope}  ||
         $opts{is_core} ? undef : $f->main_context;
-
-    #$scope->{special} = a ferret object for * variables
 
     return $scope;
 }

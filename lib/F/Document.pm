@@ -19,7 +19,8 @@ sub new {
 sub type { 'Document' }
 sub desc {
     my $doc = shift;
-    return "Document '$$doc{name}'";
+    my $str = "Document '$$doc{name}'";
+    return $str;
 }
 
 sub perl_fmt {

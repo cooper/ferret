@@ -20,8 +20,11 @@ use Ferret;
 use Ferret::Lexer;
 use Ferret::Perl;
 
+sub inter  (@);
+sub interf (@);
+
 # parse arguments.
-my ($args, @files) = '';
+my ($args, $fh, @files) = '';
 while ($_ = shift) {
     push @files, $_ and next unless /^-/;
     $args .= substr $_, 1;
@@ -39,19 +42,29 @@ sub do_file {
     my $file = shift;
     say $file;
 
-    # parse the file.
+    # open the output file.
+    if ($args{s}) { $fh = \*STDOUT }
+    else          { open $fh, '>', "$file.pm" }
+
+    # parse the input file.
     my $str = eval { slurp($file) } or die "$!\n";
 
     # tokenize.
     my @tok = Ferret::Lexer::Tokenizer::tokenize($str);
     die "Error: ${$tok[0]}\n"
         if blessed $tok[0] && $tok[0]->isa('F::Error');
-    show_tok(@tok) if $args{t};
+    if ($args{t}) {
+        inter "--- Tokens ---\n";
+        show_tok(@tok);
+    }
 
     # construct elements.
     my $doc = F::Document->new(name => $file);
     my $err = Ferret::Lexer::Constructor::construct($doc, @tok);
-    show_dom($doc) if $args{d};
+    if ($args{d}) {
+        inter "--- DOM ---\n";
+        show_dom($doc);
+    }
     die "Error: $$err\n" if $err;
 
     # compile to Perl.
@@ -60,11 +73,6 @@ sub do_file {
         require Perl::Tidy;
         Perl::Tidy::perltidy(source => \$compiled, destination => \$compiled);
     }
-
-    # open the file.
-    my $fh;
-    if ($args{s}) { $fh = \*STDOUT }
-    else          { open $fh, '>', "$file.pm" }
 
     # write to file.
     print $fh $compiled;
@@ -76,7 +84,7 @@ sub show_tok {
     state $json = JSON::XS->new->allow_nonref(1);
     foreach (@_) {
         my ($label, $value) = @$_;
-        printf "%15s | %s\n",
+        interf "%15s | %s\n",
             $label,
             defined $value ? $json->encode($value) : '';
     }
@@ -86,19 +94,33 @@ sub show_dom {
     state $indent = 0;
     my $el = shift;
     return if $el->type eq 'Unknown' && !$args{u};
-    printf "%s %s\n", '    ' x $indent, $el->desc;
+    interf "%s %s\n", '    ' x $indent, $el->desc;
     return unless $el->is_node;
     $indent++;
         show_dom($_) foreach $el->children;
     $indent--;
 }
 
+sub inter (@) {
+    my $str = join '', @_;
+    print $fh "# $str";
+    print $str;
+}
+
+sub interf (@) {
+    my $str = shift;
+    $str = sprintf $str, @_;
+    print $fh "# $str";
+    print $str;
+}
+
 sub help {
-print "usage: $0 [-tdup] file [file ...]
+print "usage: $0 [-tduscp] file [file ...]
 -t      show tokenization
 -d      show lexer object tree (DOM)
 -u      show unknown elements in DOM
 -s      write to STDOUT instead of file
+-c      write tokens and DOM as comments
 -p      beautify code with perltidy
 -h      show help
 ";

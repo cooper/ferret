@@ -1,3 +1,166 @@
+# --- Tokens ---
+#        BAREWORD | "helloWorld"
+#      PAREN_CALL | 
+#      PROP_VALUE | "name2"
+#          STRING | ["USA"]
+#        OP_COMMA | 
+#      PROP_VALUE | "name1"
+#          STRING | ["World"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "helloWorld"
+#      PAREN_CALL | 
+#      PROP_VALUE | "name2"
+#          STRING | ["Humans"]
+#        OP_COMMA | 
+#      PROP_VALUE | "name1"
+#          STRING | ["Earth"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        FUNCTION | {"name":"helloWorld"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "name1"
+#        OP_COMMA | 
+#         VAR_LEX | "name2"
+#         OP_SEMI | 
+#        BAREWORD | "hello1"
+#         OP_CALL | 
+#         OP_SEMI | 
+#        BAREWORD | "hello2"
+#         OP_CALL | 
+#         OP_SEMI | 
+#        FUNCTION | {"name":"hello1"}
+#       CLOSURE_S | 
+#         VAR_LEX | "hello"
+#       OP_ASSIGN | 
+#          STRING | ["Hello"]
+#         OP_SEMI | 
+#         VAR_LEX | "hello"
+#        PROPERTY | "name"
+#       OP_ASSIGN | 
+#         VAR_LEX | "name1"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#         VAR_LEX | "hello"
+#          OP_ADD | 
+#          STRING | [" "]
+#          OP_ADD | 
+#         VAR_LEX | "hello"
+#        PROPERTY | "name"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"hello2"}
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Hello "]
+#          OP_ADD | 
+#         VAR_LEX | "name2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#       CLOSURE_E | 
+#         VAR_LEX | "pi"
+#       OP_ASSIGN | 
+#          NUMBER | "3"
+#          OP_ADD | 
+#          NUMBER | "0.1"
+#          OP_ADD | 
+#          NUMBER | "0.04"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Pi = "]
+#          OP_ADD | 
+#         VAR_LEX | "pi"
+#         PAREN_E | 
+#         OP_SEMI | 
+# --- DOM ---
+#  Document './hello3.frt'
+#      Instruction
+#          Call
+#              Bareword 'helloWorld'
+#              Hash [2 items]
+#                  Item 0
+#                      Pair 'name2'
+#                          String 'USA'
+#                  Item 1
+#                      Pair 'name1'
+#                          String 'World'
+#      Instruction
+#          Call
+#              Bareword 'helloWorld'
+#              Hash [2 items]
+#                  Item 0
+#                      Pair 'name2'
+#                          String 'Humans'
+#                  Item 1
+#                      Pair 'name1'
+#                          String 'Earth'
+#      Function 'helloWorld'
+#          Instruction
+#              Need
+#                  Lexical variable '$name1'
+#                  Lexical variable '$name2'
+#          Instruction
+#              Call
+#                  Bareword 'hello1'
+#          Instruction
+#              Call
+#                  Bareword 'hello2'
+#          Function 'hello1'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$hello'
+#                      String 'Hello'
+#              Instruction
+#                  Assignment
+#                      Property 'name'
+#                          Lexical variable '$hello'
+#                      Lexical variable '$name1'
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Structural list [1 items]
+#                          Item 0
+#                              Mathematical operation
+#                                  Lexical variable '$hello'
+#                                  Addition operator (+)
+#                                  String ' '
+#                                  Addition operator (+)
+#                                  Property 'name'
+#                                      Lexical variable '$hello'
+#          Function 'hello2'
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Structural list [1 items]
+#                          Item 0
+#                              Mathematical operation
+#                                  String 'Hello '
+#                                  Addition operator (+)
+#                                  Lexical variable '$name2'
+#      Instruction
+#          Assignment
+#              Lexical variable '$pi'
+#              Mathematical operation
+#                  Number '3'
+#                  Addition operator (+)
+#                  Number '0.1'
+#                  Addition operator (+)
+#                  Number '0.04'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Mathematical operation
+#                          String 'Pi = '
+#                          Addition operator (+)
+#                          Lexical variable '$pi'
 #!/usr/bin/perl
 
 use warnings;
