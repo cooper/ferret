@@ -12,7 +12,7 @@ use Ferret::Core::Operations qw(add);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
-    Ferret::space( $context, $_ ) for qw(Math::Rect Math::Point);
+    Ferret::space( $context, $_ ) for qw(Math::Point Math::Rect);
 
     $scope->set_property(
         rect => $scope->property('Math::Rect')->call(

@@ -447,7 +447,7 @@ sub c_OP_COMMA {
 
 sub c_BAREWORD {
     my ($c, $value) = @_;
-    
+
     # if the last element is a bareword, combine them.
     # ex: Math :: Point == Math::Point
     # ex: A B = AB
@@ -485,7 +485,8 @@ sub c_OP_SEMI {
     }
 
     $c->{node} = $c->{node}->close;
-    delete $c->{instruction};
+    $c->{instruction} = $c->{instruction}{parent_instruction};
+
     return;
 }
 
@@ -661,6 +662,7 @@ sub c_any {
     foreach (@ignore) { return if $label =~ $_ }
 
     my $instruction = F::Instruction->new;
+    $instruction->{parent_instruction} = $c->{instruction};
     @$c{ qw(node instruction) } = ($c->{node}->adopt($instruction)) x 2;
 }
 
