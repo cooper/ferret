@@ -7,6 +7,7 @@ use 5.010;
 
 use File::Slurp  'slurp';
 use Scalar::Util 'blessed';
+use Getopt::Long::Descriptive;
 use JSON::XS;
 
 BEGIN {
@@ -23,28 +24,32 @@ use Ferret::Perl;
 sub inter  (@);
 sub interf (@);
 
-# parse arguments.
-my ($args, $fh, @files) = '';
-while ($_ = shift) {
-    push @files, $_ and next unless /^-/;
-    $args .= substr $_, 1;
-}
-my %args = map  { $_ => 1 } split //, $args;
-@files   = grep { substr($_, -3) eq 'frt' } @files;
+my ($o, $usage) = describe_options(
+    "$0 %o [file ...]",
+    [ 'tokens|t'        => 'show tokenization'                          ],
+    [ 'dom|d'           => 'show lexer object tree (DOM)'               ],
+    [ 'show-all'        => 'include unknown objects in DOM'             ],
+    [ 'stdout|s'        => 'write to STDOUT instead of file'            ],
+    [ 'comments|c'      => 'write tokens/DOM as comments (with -t/-d)'  ],
+    [ 'perltidy|p'      => 'beautify code with perltidy'                ],
+    [ 'minify|m'        => 'minify code'                                ],
+    [ 'help|h'          => 'show help'                                  ]
+);
 
 # show help.
-help() if !@files || $args{h};
+print($usage->text) and exit if $o->help;
 
 # handle each file.
-do_file($_) foreach @files;
+do_file($_) foreach grep { substr($_, -3) eq 'frt' } @ARGV;
 
+my $fh;
 sub do_file {
     my $file = shift;
     say $file;
 
     # open the output file.
-    if ($args{s}) { $fh = \*STDOUT }
-    else          { open $fh, '>', "$file.pm" }
+    if ($o->stdout) { $fh = \*STDOUT }
+    else            { open $fh, '>', "$file.pm" }
 
     # parse the input file.
     my $str = eval { slurp($file) } or die "$!\n";
@@ -53,7 +58,7 @@ sub do_file {
     my @tok = Ferret::Lexer::Tokenizer::tokenize($str);
     die "Error: ${$tok[0]}\n"
         if blessed $tok[0] && $tok[0]->isa('F::Error');
-    if ($args{t}) {
+    if ($o->tokens) {
         inter "--- Tokens ---\n";
         show_tok(@tok);
     }
@@ -61,7 +66,7 @@ sub do_file {
     # construct elements.
     my $doc = F::Document->new(name => $file);
     my $err = Ferret::Lexer::Constructor::construct($doc, @tok);
-    if ($args{d}) {
+    if ($o->dom) {
         inter "--- DOM ---\n";
         show_dom($doc);
     }
@@ -69,8 +74,8 @@ sub do_file {
 
     # compile to Perl.
     my $compiled = Ferret::Perl::main($doc);
-    beautify(\$compiled) if $args{p};
-    minify(\$compiled)   if $args{m};
+    beautify(\$compiled) if $o->perltidy;
+    minify(\$compiled)   if $o->minify;
 
     # write to file.
     print $fh $compiled;
@@ -91,7 +96,7 @@ sub show_tok {
 sub show_dom {
     state $indent = 0;
     my $el = shift;
-    return if $el->type eq 'Unknown' && !$args{u};
+    return if $el->type eq 'Unknown' && !$o->unknown;
     interf "%s %s\n", '    ' x $indent, $el->desc;
     return unless $el->is_node;
     $indent++;
@@ -118,6 +123,7 @@ sub perltidy {
     Perl::Tidy::perltidy(
         source      => $ref,
         destination => $ref,
+        argv        => '',
         %opts
     );
 }
@@ -131,18 +137,4 @@ sub minify {
     my $ref = shift;
     perltidy($ref, argv => '--mangle -dac');
     $$ref =~ s/\n//g;
-}
-
-sub help {
-print "usage: $0 [-tduscpm] file [file ...]
--t      show tokenization
--d      show lexer object tree (DOM)
--u      show unknown elements in DOM
--s      write to STDOUT instead of file
--c      write tokens and DOM as comments
--p      beautify code with perltidy
--m      minify code with perltidy
--h      show help
-";
-    exit 0;
 }

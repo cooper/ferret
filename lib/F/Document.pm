@@ -52,7 +52,7 @@ sub perl_fmt {
     return document => {
         'package'      => $doc->{package} // 'main',
         includes       => $includes,
-        operations     => join(' ', keys %{ $doc->{required_operations} }),
+        operations     => join(' ', sort keys %{ $doc->{required_operations} }),
         upper_content  => $before_c,    # function declarations
         lower_content  => $after_c,     # all other children
     };

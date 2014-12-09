@@ -8,7 +8,7 @@ use Ferret;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Point.frt.pm'}++;
 
-use Ferret::Core::Operations qw(div add);
+use Ferret::Core::Operations qw(add div);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
