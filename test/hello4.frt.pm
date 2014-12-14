@@ -44,12 +44,7 @@ use Ferret::Core::Operations qw(add);
             return $return;
         };
     }
-
-    # Function 'makePoint'
-    {
-        $funcs[0]->{outer_scope} = $scope;
-        $scope->set_property( makePoint => $funcs[0] );
-    }
+    $funcs[0]->inside_scope( makePoint => $scope, $scope );
     $scope->set_property(
         pt => $scope->property('makePoint')->call(
             [

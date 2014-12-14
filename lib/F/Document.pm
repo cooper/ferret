@@ -46,7 +46,7 @@ sub perl_fmt {
         length $doc->{package} && $doc->{package} ne 'main' ?
             $doc->{package}.'::'.$_                         :
             $_
-    } keys %{ $doc->{required_spaces} };
+    } sort keys %{ $doc->{required_spaces} };
     $includes  = $doc->get_format(space => { names => "@spaces" }).";\n";
 
     return document => {

@@ -1,7 +1,1 @@
-# Method '<<name>>'
-{
-    my $method = $methods[<<id>>];
-    $method->{class} = $class;
-    $method->{outer_scope} = $scope;
-    $<<owner>>->set_property(<<name>> => $method);
-}
+$methods[<<id>>]->inside_scope(<<name>> => $scope, $<<owner>>, $class);

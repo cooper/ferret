@@ -145,37 +145,9 @@ use Ferret::Core::Operations qw(add div);
                 return $return;
             };
         }
-
-        # Method '_init_'
-        {
-            my $method = $methods[0];
-            $method->{class}       = $class;
-            $method->{outer_scope} = $scope;
-            $class->set_property( _init_ => $method );
-        }
-
-        # Method 'oneToRight'
-        {
-            my $method = $methods[1];
-            $method->{class}       = $class;
-            $method->{outer_scope} = $scope;
-            $proto->set_property( oneToRight => $method );
-        }
-
-        # Method 'pretty'
-        {
-            my $method = $methods[2];
-            $method->{class}       = $class;
-            $method->{outer_scope} = $scope;
-            $proto->set_property( pretty => $method );
-        }
-
-        # Method 'midpoint'
-        {
-            my $method = $methods[3];
-            $method->{class}       = $class;
-            $method->{outer_scope} = $scope;
-            $class->set_property( midpoint => $method );
-        }
+        $methods[0]->inside_scope( _init_     => $scope, $class, $class );
+        $methods[1]->inside_scope( oneToRight => $scope, $proto, $class );
+        $methods[2]->inside_scope( pretty     => $scope, $proto, $class );
+        $methods[3]->inside_scope( midpoint   => $scope, $class, $class );
     }
 }

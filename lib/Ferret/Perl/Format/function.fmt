@@ -1,5 +1,1 @@
-# Function '<<name>>'
-{
-    $funcs[<<id>>]->{outer_scope} = $scope;
-    $scope->set_property(<<name>> => $funcs[<<id>>]);
-}
+$funcs[<<id>>]->inside_scope(<<name>> => $scope, $scope);

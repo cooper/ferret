@@ -67,18 +67,8 @@ use Ferret::Core::Operations qw(add);
         $func->add_argument( name => 'name2' );
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
-
-            # Function 'hello1'
-            {
-                $funcs[0]->{outer_scope} = $scope;
-                $scope->set_property( hello1 => $funcs[0] );
-            }
-
-            # Function 'hello2'
-            {
-                $funcs[1]->{outer_scope} = $scope;
-                $scope->set_property( hello2 => $funcs[1] );
-            }
+            $funcs[0]->inside_scope( hello1 => $scope, $scope );
+            $funcs[1]->inside_scope( hello2 => $scope, $scope );
             do {
                 return if not defined $arguments->{name1};
                 $scope->set_property( name1 => $arguments->{name1} );
@@ -92,12 +82,7 @@ use Ferret::Core::Operations qw(add);
             return $return;
         };
     }
-
-    # Function 'helloWorld'
-    {
-        $funcs[2]->{outer_scope} = $scope;
-        $scope->set_property( helloWorld => $funcs[2] );
-    }
+    $funcs[2]->inside_scope( helloWorld => $scope, $scope );
     $scope->property('helloWorld')->call(
         {
             name2 => Ferret::String->new( $f, value => "USA" ),

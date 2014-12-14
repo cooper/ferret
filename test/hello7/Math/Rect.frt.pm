@@ -198,53 +198,11 @@ use Ferret::Core::Operations qw(add mul);
                 return $return;
             };
         }
-
-        # Method '_init_'
-        {
-            my $method = $methods[0];
-            $method->{class}       = $class;
-            $method->{outer_scope} = $scope;
-            $class->set_property( _init_ => $method );
-        }
-
-        # Method 'bottomLeft'
-        {
-            my $method = $methods[1];
-            $method->{class}       = $class;
-            $method->{outer_scope} = $scope;
-            $proto->set_property( bottomLeft => $method );
-        }
-
-        # Method 'bottomRight'
-        {
-            my $method = $methods[2];
-            $method->{class}       = $class;
-            $method->{outer_scope} = $scope;
-            $proto->set_property( bottomRight => $method );
-        }
-
-        # Method 'topLeft'
-        {
-            my $method = $methods[3];
-            $method->{class}       = $class;
-            $method->{outer_scope} = $scope;
-            $proto->set_property( topLeft => $method );
-        }
-
-        # Method 'topRight'
-        {
-            my $method = $methods[4];
-            $method->{class}       = $class;
-            $method->{outer_scope} = $scope;
-            $proto->set_property( topRight => $method );
-        }
-
-        # Method 'center'
-        {
-            my $method = $methods[5];
-            $method->{class}       = $class;
-            $method->{outer_scope} = $scope;
-            $proto->set_property( center => $method );
-        }
+        $methods[0]->inside_scope( _init_      => $scope, $class, $class );
+        $methods[1]->inside_scope( bottomLeft  => $scope, $proto, $class );
+        $methods[2]->inside_scope( bottomRight => $scope, $proto, $class );
+        $methods[3]->inside_scope( topLeft     => $scope, $proto, $class );
+        $methods[4]->inside_scope( topRight    => $scope, $proto, $class );
+        $methods[5]->inside_scope( center      => $scope, $proto, $class );
     }
 }
