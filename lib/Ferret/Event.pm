@@ -57,6 +57,7 @@ sub call {
         # eventually different return values may be accessible:
         # $returns{ $func->{name} } = $ret if $func->has_name;
         # consider: what should we do with $ret if it's not $return?
+        return $ret if defined $ret && $ret != $return;
     }
 
     return $return;

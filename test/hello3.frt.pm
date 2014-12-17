@@ -8,7 +8,7 @@ use Ferret;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello3.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add);
+use Ferret::Core::Operations qw(add num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -20,8 +20,7 @@ use Ferret::Core::Operations qw(add);
 
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
-            $scope->set_property(
-                hello => Ferret::String->new( $f, value => "Hello" ) );
+            $scope->set_property( hello => str( $f, "Hello" ) );
             $scope->property('hello')
               ->set_property( name => $scope->property('name1') );
             $scope->property('say')->call(
@@ -29,7 +28,7 @@ use Ferret::Core::Operations qw(add);
                     add(
                         $scope,
                         $scope->property('hello'),
-                        Ferret::String->new( $f, value => " " ),
+                        str( $f, " " ),
                         $scope->property('hello')->property('name')
                     )
                 ],
@@ -48,8 +47,7 @@ use Ferret::Core::Operations qw(add);
             $scope->property('say')->call(
                 [
                     add(
-                        $scope,
-                        Ferret::String->new( $f, value => "Hello " ),
+                        $scope, str( $f, "Hello " ),
                         $scope->property('name2')
                     )
                 ],
@@ -83,36 +81,15 @@ use Ferret::Core::Operations qw(add);
         };
     }
     $funcs[2]->inside_scope( helloWorld => $scope, $scope );
-    $scope->property('helloWorld')->call(
-        {
-            name2 => Ferret::String->new( $f, value => "USA" ),
-            name1 => Ferret::String->new( $f, value => "World" )
-        },
-        $scope
-    );
-    $scope->property('helloWorld')->call(
-        {
-            name2 => Ferret::String->new( $f, value => "Humans" ),
-            name1 => Ferret::String->new( $f, value => "Earth" )
-        },
-        $scope
-    );
+    $scope->property('helloWorld')
+      ->call( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
+        $scope );
+    $scope->property('helloWorld')
+      ->call( { name2 => str( $f, "Humans" ), name1 => str( $f, "Earth" ) },
+        $scope );
     $scope->set_property(
-        pi => add(
-            $scope,
-            Ferret::Number->new( $f, value => 3 ),
-            Ferret::Number->new( $f, value => 0.1 ),
-            Ferret::Number->new( $f, value => 0.04 )
-        )
-    );
-    $scope->property('say')->call(
-        [
-            add(
-                $scope,
-                Ferret::String->new( $f, value => "Pi = " ),
-                $scope->property('pi')
-            )
-        ],
-        $scope
-    );
+        pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ) );
+    $scope->property('say')
+      ->call( [ add( $scope, str( $f, "Pi = " ), $scope->property('pi') ) ],
+        $scope );
 }

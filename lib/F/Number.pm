@@ -12,7 +12,9 @@ sub desc {
 }
 
 sub perl_fmt {
-    return number => { num => shift->{value} };
+    my $num = shift;
+    $num->document->{required_operations}{num}++;
+    return number => { num => $num->{value} };
 }
 
 1

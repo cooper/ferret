@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-our %methods = (
+my @methods = (
     op_add => {
         code => \&op_add,
         need => '$other:Num'
@@ -22,7 +22,15 @@ our %methods = (
     }
 );
 
-sub methods { (shift->SUPER::methods, %methods) }
+*new = *Ferret::bind_constructor;
+Ferret::bind_class(
+  # package   => 'Some::Package',   # e.g. Math
+  # parent    => 'Object',          # space-separated list (default: Object)
+    name      => 'Number',
+    alias     => 'Num',             # space-separated list
+  # functions => \@functions,
+    methods   => \@methods          # added as callbacks. do not overwrite each other.
+);
 
 # number plus number
 sub op_add {

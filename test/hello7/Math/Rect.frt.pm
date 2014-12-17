@@ -8,7 +8,7 @@ use Ferret;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Rect.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add mul);
+use Ferret::Core::Operations qw(add mul num);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
@@ -174,11 +174,7 @@ use Ferret::Core::Operations qw(add mul);
                     x => add(
                         $scope,
                         $self->property('origin')->property('x'),
-                        mul(
-                            $scope,
-                            $self->property('width'),
-                            Ferret::Number->new( $f, value => 0.5 )
-                        )
+                        mul( $scope, $self->property('width'), num( $f, 0.5 ) )
                     )
                 );
                 $scope->set_property(
@@ -186,9 +182,7 @@ use Ferret::Core::Operations qw(add mul);
                         $scope,
                         $self->property('origin')->property('y'),
                         mul(
-                            $scope,
-                            $self->property('height'),
-                            Ferret::Number->new( $f, value => 0.5 )
+                            $scope, $self->property('height'), num( $f, 0.5 )
                         )
                     )
                 );

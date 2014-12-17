@@ -23,9 +23,6 @@ sub new {
             [ ]
     };
 
-    # add methods.
-    $obj->add_methods($obj->methods);
-
     return $obj;
 }
 
@@ -229,58 +226,6 @@ sub create_set {
 # fetch the ferret.
 sub ferret {
     shift->{ferret};
-}
-
-###############
-### METHODS ###
-###############
-
-sub methods { }
-
-# this is a temporary solution.
-# the real deal will be using inheritance of class prototype objects.
-# then, individual Events will be created only when necessary
-# (and events themselves will have some sort of inheritance mechanism)
-sub add_methods {
-    my $obj = shift;
-    my %methods = $obj->methods;
-    foreach my $name (keys %methods) {
-        my $m = $methods{$name};
-        my $func = Ferret::Function->new($obj->ferret,
-            name => $name,
-            code => $m->{code},
-            is_method => 1
-        );
-
-        # needs.
-        $func->add_argument(
-            name   => $_->{name}
-            # type => $_->{type}
-        ) foreach _parse_method_args($m->{need});
-
-        # wants.
-        $func->add_argument(
-            name     => $_->{name},
-            # type   => $_->{type},
-            optional => 1
-        ) foreach _parse_method_args($m->{want});
-
-        $obj->set_property($name => $func);
-    }
-}
-
-sub _parse_method_args {
-    my ($str, @args) = shift;
-    return if not defined $str;
-    foreach my $arg (split /\s+/, $str) {
-        my ($name, $type) = split /:/, $arg, 2;
-        $name =~ s/^\$//;
-        push @args, {
-            name => $name,
-            type => $type
-        };
-    }
-    return @args;
 }
 
 1

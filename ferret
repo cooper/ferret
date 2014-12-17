@@ -17,7 +17,6 @@ BEGIN {
     use lib "$FindBin::Bin/lib";
 }
 
-use Ferret;
 use Ferret::Lexer;
 use Ferret::Perl;
 

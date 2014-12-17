@@ -8,7 +8,7 @@ use Ferret;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello7.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add);
+use Ferret::Core::Operations qw(add num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -17,10 +17,10 @@ use Ferret::Core::Operations qw(add);
     $scope->set_property(
         rect => $scope->property('Math::Rect')->call(
             {
-                x      => Ferret::Number->new( $f, value => 5 ),
-                y      => Ferret::Number->new( $f, value => 4 ),
-                width  => Ferret::Number->new( $f, value => 12 ),
-                height => Ferret::Number->new( $f, value => 10 )
+                x      => num( $f, 5 ),
+                y      => num( $f, 4 ),
+                width  => num( $f, 12 ),
+                height => num( $f, 10 )
             },
             $scope
         )
@@ -31,22 +31,15 @@ use Ferret::Core::Operations qw(add);
         [
             add(
                 $scope,
-                Ferret::String->new( $f, value => "Center of rect: " ),
+                str( $f, "Center of rect: " ),
                 $scope->property('center')->property('pretty')
                   ->call( [], $scope )
             )
         ],
         $scope
     );
-    $scope->set_property(
-        otherPt => $scope->property('Math::Point')->call(
-            [
-                Ferret::Number->new( $f, value => 9 ),
-                Ferret::Number->new( $f, value => 2 )
-            ],
-            $scope
-        )
-    );
+    $scope->set_property( otherPt => $scope->property('Math::Point')
+          ->call( [ num( $f, 9 ), num( $f, 2 ) ], $scope ) );
     $scope->set_property( midpoint => $scope->property('center')
           ->create_set( $scope, $scope->property('otherPt') )
           ->property('midpoint')->call( [], $scope )->property('pretty')
@@ -54,9 +47,7 @@ use Ferret::Core::Operations qw(add);
     $scope->property('say')->call(
         [
             add(
-                $scope,
-                Ferret::String->new( $f, value => "Midpoint: " ),
-                $scope->property('midpoint')
+                $scope, str( $f, "Midpoint: " ), $scope->property('midpoint')
             )
         ],
         $scope

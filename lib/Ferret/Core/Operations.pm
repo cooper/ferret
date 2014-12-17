@@ -18,7 +18,8 @@ sub op_star {
     $star = 'sub' if $star eq '_sub';
 
     # TODO: errors.
-    return if grep { !$_->can("op_$star") } @items;
+    # also, what if it inherits this?
+    return if grep { !$_->has_property("op_$star") } @items;
 
     my $left = shift @items;
     while (@items) {
@@ -33,7 +34,10 @@ sub import {
     my $this_package = shift;
     my $package = caller;
     no strict 'refs';
-    *{$package.'::'.$_} = *{$this_package.'::'.$_} foreach @_;
+    *{ "${package}::$_" } = *{ "${this_package}::$_" } foreach @_;
 }
+
+sub num { Ferret::Number->new(shift, value => shift) }
+sub str { Ferret::String->new(shift, value => shift) }
 
 1

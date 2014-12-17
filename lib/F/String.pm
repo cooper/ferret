@@ -17,7 +17,9 @@ sub desc {
 }
 
 sub perl_fmt {
-    string => { string => dump(shift->{value}) };
+    my $str = shift;
+    $str->document->{required_operations}{str}++;
+    return string => { string => dump($str->{value}) };
 }
 
 1

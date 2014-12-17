@@ -8,7 +8,7 @@ use Ferret;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello4.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add);
+use Ferret::Core::Operations qw(add num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -45,24 +45,14 @@ use Ferret::Core::Operations qw(add);
         };
     }
     $funcs[0]->inside_scope( makePoint => $scope, $scope );
-    $scope->set_property(
-        pt => $scope->property('makePoint')->call(
-            [
-                Ferret::Number->new( $f, value => 5 ),
-                Ferret::Number->new( $f, value => 3 )
-            ],
-            $scope
-        )->property('point')
-    );
+    $scope->set_property( pt => $scope->property('makePoint')
+          ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope )->property('point') );
     $scope->property('say')->call(
         [
             add(
-                $scope,
-                Ferret::String->new( $f, value => "Point(" ),
-                $scope->property('pt')->property('x'),
-                Ferret::String->new( $f, value => "," ),
-                $scope->property('pt')->property('y'),
-                Ferret::String->new( $f, value => ")" )
+                $scope,                                str( $f, "Point(" ),
+                $scope->property('pt')->property('x'), str( $f, "," ),
+                $scope->property('pt')->property('y'), str( $f, ")" )
             )
         ],
         $scope
@@ -71,15 +61,11 @@ use Ferret::Core::Operations qw(add);
         numbers => Ferret::List->new(
             $f,
             items => [
-                Ferret::Number->new( $f, value => 1 ),
-                Ferret::Number->new( $f, value => 2 ),
-                Ferret::Number->new( $f, value => 3 ),
-                Ferret::Number->new( $f, value => 4 ),
-                add(
-                    $scope,
-                    Ferret::Number->new( $f, value => 4 ),
-                    Ferret::Number->new( $f, value => 1 )
-                )
+                num( $f, 1 ),
+                num( $f, 2 ),
+                num( $f, 3 ),
+                num( $f, 4 ),
+                add( $scope, num( $f, 4 ), num( $f, 1 ) )
             ]
         )
     );

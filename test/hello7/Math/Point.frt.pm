@@ -8,7 +8,7 @@ use Ferret;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Point.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add div);
+use Ferret::Core::Operations qw(add div num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
@@ -63,11 +63,7 @@ use Ferret::Core::Operations qw(add div);
                 $scope->set_property(
                     pt => $scope->{special}->property('class')->call(
                         [
-                            add(
-                                $scope,
-                                $self->property('x'),
-                                Ferret::Number->new( $f, value => 1 )
-                            ),
+                            add( $scope, $self->property('x'), num( $f, 1 ) ),
                             $self->property('y')
                         ],
                         $scope
@@ -89,12 +85,9 @@ use Ferret::Core::Operations qw(add div);
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 return add(
-                    $scope,
-                    Ferret::String->new( $f, value => "(" ),
-                    $self->property('x'),
-                    Ferret::String->new( $f, value => ", " ),
-                    $self->property('y'),
-                    Ferret::String->new( $f, value => ")" )
+                    $scope,               str( $f, "(" ),
+                    $self->property('x'), str( $f, ", " ),
+                    $self->property('y'), str( $f, ")" )
                 );
                 return $return;
             };
@@ -128,7 +121,7 @@ use Ferret::Core::Operations qw(add div);
                                 $scope->property('pt1')->property('x'),
                                 $scope->property('pt2')->property('x')
                             ),
-                            Ferret::Number->new( $f, value => 2 )
+                            num( $f, 2 )
                         ),
                         y => div(
                             $scope,
@@ -137,7 +130,7 @@ use Ferret::Core::Operations qw(add div);
                                 $scope->property('pt1')->property('y'),
                                 $scope->property('pt2')->property('y')
                             ),
-                            Ferret::Number->new( $f, value => 2 )
+                            num( $f, 2 )
                         )
                     },
                     $scope

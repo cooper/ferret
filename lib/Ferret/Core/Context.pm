@@ -27,7 +27,10 @@ sub new {
         $func->add_argument(name => $_) foreach @args;
 
         # create and bind an event for the function.
-        my $event = Ferret::Event->new($f, default_func => $func);
+        my $event = Ferret::Event->new($f,
+            name         => $name,
+            default_func => $func
+        );
         $context->set_property($name => $event);
 
     }
