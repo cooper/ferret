@@ -47,11 +47,10 @@ use Ferret::Core::Operations qw(add);
             $scope
         )
     );
-    $scope->set_property(
-        midpoint => $scope->property('Math::Point')->property('midpoint')
-          ->call( [ $scope->property('center'), $scope->property('otherPt') ],
-            $scope )->property('pretty')->call( [], $scope )
-    );
+    $scope->set_property( midpoint => $scope->property('center')
+          ->create_set( $scope, $scope->property('otherPt') )
+          ->property('midpoint')->call( [], $scope )->property('pretty')
+          ->call( [], $scope ) );
     $scope->property('say')->call(
         [
             add(

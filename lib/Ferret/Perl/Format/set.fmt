@@ -1,0 +1,1 @@
+<<first_item>>->create_set($scope, <<other_items>>)

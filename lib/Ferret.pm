@@ -17,6 +17,7 @@ use Ferret::Event;
 use Ferret::Class;
 use Ferret::List;
 use Ferret::Hash;
+use Ferret::Set;
 use Ferret::Core::Functions;
 use Ferret::Core::Context;
 

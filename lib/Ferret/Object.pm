@@ -183,6 +183,45 @@ sub parents {
     return @parents;
 }
 
+# returns a flattened and simplified list of parent classes.
+# basically, it searches all parents. if a parent is a prototype object,
+# it finds the class to which that prototype belongs.
+sub parent_classes {
+    my ($obj, @classes) = shift;
+    foreach my $parent ($obj->parents) {
+        next unless $parent->{is_proto};
+        push @classes, $parent->{proto_class};
+    }
+    return @classes;
+}
+
+# returns the "nearest" parental class relationship between two objects.
+sub best_common_class {
+    my ($obj1, $obj2) = @_;
+    my %found;
+    my @classes_1 = $obj1->parent_classes;
+    my @classes_2 = $obj2->parent_classes;
+    while (@classes_1 || @classes_2) {
+        my ($class_1, $class_2) = (shift @classes_1, shift @classes_2);
+        $found{$class_1}++;
+        return $class_2 if $found{$class_2};
+    }
+    return undef;
+    # TODO: it eventually should never return undef but instead Object.
+}
+
+# create an object that represents a set of objects.
+sub create_set {
+    my ($obj, $from_scope, @other_objs) = @_;
+    return Ferret::Set->new($obj->ferret,
+        primary_obj => $obj,
+        other_objs  => \@other_objs,
+        all_objs    => \@_,
+        set_class   => best_common_class($obj, @other_objs),
+        set_scope   => $from_scope
+    );
+}
+
 ################
 ### FETCHERS ###
 ################

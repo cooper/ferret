@@ -7,10 +7,14 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
+use Scalar::Util 'weaken';
+
 sub new {
-    my ($class, $f, %opts) = @_;
-    $opts{prototype} ||= Ferret::Object->new($f);
-    return $class->SUPER::new($f, %opts);
+    my ($class_name, $f, %opts) = @_;
+    $opts{prototype} ||= Ferret::Object->new($f, is_proto => 1);
+    my $class = $class_name->SUPER::new($f, %opts);
+    weaken($class->prototype->{proto_class} ||= $class);
+    return $class;
 }
 
 sub add_property {

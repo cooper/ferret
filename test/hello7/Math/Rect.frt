@@ -18,5 +18,3 @@ method center {
     $y = @origin.y + @height * 0.5;
     return Point($x, $y);
 }
-
-$t = Test();

@@ -58,8 +58,18 @@ sub perl_fmt {
     }
 
     # it's a structural list.
-    die "can't capture the value of a multi-item structural list\n"
-        if @children > 1;
+
+    # it has more than one value. therefore it's a set.
+    if (@children > 1) {
+        my $first_child = shift @children;
+        my $items_str   = join ', ', map $_->perl_fmt_do, @children;
+        return set => {
+            first_item  => $first_child->perl_fmt_do,
+            other_items => $items_str
+        };
+    }
+
+    # it's just one parenthesized value.
     return expression => { content => $children[0]->perl_fmt_do };
 
 }
