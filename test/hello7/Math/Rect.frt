@@ -8,10 +8,10 @@ init {
     @origin = Point($x, $y);
 }
 
-method bottomLeft  { return @origin; }
-method bottomRight { return Point(@origin.x + @width, @origin.y); }
-method topLeft     { return Point(@origin.x, @origin.y + @height); }
-method topRight    { return Point(@origin.x + @width, @origin.y + @height); }
+method bottomLeft  { return @origin }
+method bottomRight { return Point(@origin.x + @width, @origin.y) }
+method topLeft     { return Point(@origin.x, @origin.y + @height) }
+method topRight    { return Point(@origin.x + @width, @origin.y + @height) }
 
 method center {
     $x = @origin.x + @width  * 0.5;

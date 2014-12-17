@@ -136,6 +136,7 @@ sub c_CLOSURE_E {
 
     # no closure is open...
     return unexpected($c) unless $c->{closure};
+    c_OP_SEMI($c) if $c->{instruction};
     return unexpected($c) unless $c->{node} == $c->{closure};
 
     # close the closure and the node.
