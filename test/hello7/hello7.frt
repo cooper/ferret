@@ -6,3 +6,5 @@ say("Center of rect: " + $center.pretty!);
 $otherPt  = Math::Point(9, 2);
 $midpoint = ($center, $otherPt).midpoint!.pretty!;
 say("Midpoint: $midpoint");
+
+say(Number.sum(5, 5));

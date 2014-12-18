@@ -7,6 +7,8 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
+use List::Util qw(sum);
+
 my @methods = (
     op_add => {
         code => \&op_add,
@@ -19,6 +21,11 @@ my @methods = (
     op_mul => {
         code => \&op_mul,
         need => '$other:Num'
+    },
+    sum => {
+        code => \&_sum,
+        need => '$num1:Num num2:Num',
+        main => 1
     }
 );
 
@@ -54,6 +61,13 @@ sub op_mul {
     my $other = $arguments->{other};
     my $new_value = $num->{value} * $other->{value};
     return Ferret::Number->new($num->ferret, value => $new_value);
+}
+
+sub _sum {
+    # TODO: more than two arguments.
+    my ($class, $arguments) = @_;
+    my $sum = sum map { $_->{value} } values %$arguments;
+    return Ferret::Number->new($class->ferret, value => $sum);
 }
 
 1

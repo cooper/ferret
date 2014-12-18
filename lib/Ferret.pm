@@ -180,7 +180,8 @@ sub add_binding {
         $add_func->(1, $name, %$opts);
     }
 
-    $f->main_context->set_property($class->{name} => $class);
+    $f->main_context->set_property($_ => $class)
+        foreach ($class->{name}, split /\s+/, $opts{alias} || '');
     return $class;
 }
 

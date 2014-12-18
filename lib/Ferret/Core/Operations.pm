@@ -18,13 +18,13 @@ sub op_star {
     $star = 'sub' if $star eq '_sub';
 
     # TODO: errors.
-    # also, what if it inherits this?
-    return if grep { !$_->has_property("op_$star") } @items;
+    my $op   = "op_$star";
+    @items   = grep { $_->has_property($op) } @items;
+    my $left = shift @items or return;
 
-    my $left = shift @items;
     while (@items) {
         my $right = shift @items;
-        $left = $left->property("op_$star")->call({ other => $right }, $scope);
+        $left = $left->property($op)->call({ other => $right }, $scope);
     }
 
     return $left;
