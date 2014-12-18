@@ -123,7 +123,7 @@ sub possibly_call {
 
     # there can't be an operator or a keyword before a function call.
     return if grep { $last =~ $_ } qr/^OP_(.*)$/, qr/^KEYWORD$/;
-    return if grep { $last eq $_ } qw(PAREN_S BRACKET_S CLOSURE_S);
+    return if grep { $last eq $_ } qw(PAREN_S PAREN_CALL BRACKET_S CLOSURE_S);
 
     return 1;
 }

@@ -11,6 +11,9 @@ my @methods = (
     op_add => {
         code => \&op_add,
         need => '$other:Str'
+    },
+    length => {
+        code => \&_length
     }
 );
 
@@ -30,6 +33,11 @@ sub op_add {
     my $other = $arguments->{other};
     my $new_value = $str->{value}.$other->{value};
     return Ferret::String->new($str->ferret, value => $new_value);
+}
+
+sub _length {
+    my $str = shift;
+    return Ferret::Number->new($str->ferret, value => length $str->{value});
 }
 
 1

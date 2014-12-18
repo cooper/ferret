@@ -213,7 +213,7 @@ sub create_set {
     return Ferret::Set->new($obj->ferret,
         primary_obj => $obj,
         other_objs  => \@other_objs,
-        all_objs    => \@_,
+        all_objs    => [ $obj, @other_objs ],
         set_class   => best_common_class($obj, @other_objs),
         set_scope   => $from_scope
     );

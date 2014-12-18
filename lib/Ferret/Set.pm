@@ -10,7 +10,7 @@ use parent 'Ferret::Object';
 sub property {
     my ($set, $prop_name) = @_;
     my $func = Ferret::Function->new($set->ferret,
-        name => '_setConstructor_'
+        name => "$$set{set_class}{name}_setMethod_$prop_name"
     );
     $func->{code} = sub {
         # consider: perhaps it should pass additional arguments to function.

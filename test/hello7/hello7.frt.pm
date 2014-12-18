@@ -12,7 +12,7 @@ use Ferret::Core::Operations qw(add num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
-    Ferret::space( $context, $_ ) for qw(Math::Point Math::Rect Number);
+    Ferret::space( $context, $_ ) for qw(Math::Point Math::Rect);
 
     $scope->set_property(
         rect => $scope->property('Math::Rect')->call(
@@ -49,13 +49,6 @@ use Ferret::Core::Operations qw(add num str);
             add(
                 $scope, str( $f, "Midpoint: " ), $scope->property('midpoint')
             )
-        ],
-        $scope
-    );
-    $scope->property('say')->call(
-        [
-            $scope->property('Number')->property('sum')
-              ->call( [ num( $f, 5 ), num( $f, 5 ) ], $scope )
         ],
         $scope
     );
