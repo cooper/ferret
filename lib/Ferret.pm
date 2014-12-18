@@ -94,7 +94,7 @@ sub space {
         if $scope->has_property($space) || $tried_files{$file};
 
     # load it.
-    require $file;
+    do $file;
     $tried_files{$file} = 1;
     return $scope->property($space);
 

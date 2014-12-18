@@ -14,6 +14,10 @@ my @methods = (
         code => \&op_add,
         need => '$other:Num'
     },
+    op_sub => {
+        code => \&op_sub,
+        need => '$other:Num'
+    },
     op_div => {
         code => \&op_div,
         need => '$other:Num'
@@ -44,6 +48,14 @@ sub op_add {
     my ($num, $arguments) = @_;
     my $other = $arguments->{other};
     my $new_value = $num->{value} + $other->{value};
+    return Ferret::Number->new($num->ferret, value => $new_value);
+}
+
+# number minus number
+sub op_sub {
+    my ($num, $arguments) = @_;
+    my $other = $arguments->{other};
+    my $new_value = $num->{value} - $other->{value};
     return Ferret::Number->new($num->ferret, value => $new_value);
 }
 

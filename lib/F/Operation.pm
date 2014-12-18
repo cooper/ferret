@@ -49,6 +49,7 @@ sub compile {
 
 sub op_fmt {
     my ($op, $op_name, @items) = (shift, @{ +shift });
+    $op_name = '_sub' if $op_name eq 'sub';
     $op->document->{required_operations}{$op_name}++;
     return operation => {
         operation => $op_name,

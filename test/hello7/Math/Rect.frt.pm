@@ -17,13 +17,19 @@ use Ferret::Core::Operations qw(add mul num);
     # Class 'Rect'
     {
         my @methods;
-        my $class = my $self = Ferret::Class->new(
-            $f,
-            name    => 'Rect',
-            version => undef
-        );
+        my ( $class, $self );
+        if ( $context->has_property('Rect') ) {
+            $class = $self = $context->property('Rect');
+        }
+        else {
+            $class = $self = Ferret::Class->new(
+                $f,
+                name    => 'Rect',
+                version => undef
+            );
+            $context->set_property( Rect => $class );
+        }
         my $proto = $class->prototype;
-        $context->set_property( Rect => $class );
 
         # Method '_init_' definition
         {

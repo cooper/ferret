@@ -82,6 +82,9 @@ sub c_CLASS_DEC {
     unexpected($c, 'in non-global scope')
         unless $c->{node}->type eq 'Document';
 
+    # terminate current class.
+    $c->{node} = $c->{node}->close if $c->{node}->type eq 'Class';
+
     # create class.
     my $class = F::Class->new(%$value);
     $c->{class} = $class;
@@ -580,7 +583,7 @@ sub c_math_operator {
 
     my %allowed = map { $_ => 1 } qw(
         Bareword LexicalVariable InstanceVariable Property List Expression
-        String Number Operation
+        String Number Operation Call
     );
 
     my $last_el = $c->{last_element};

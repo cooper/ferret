@@ -17,13 +17,19 @@ use Ferret::Core::Operations qw(add div num str);
     # Class 'Point'
     {
         my @methods;
-        my $class = my $self = Ferret::Class->new(
-            $f,
-            name    => 'Point',
-            version => 1.0
-        );
+        my ( $class, $self );
+        if ( $context->has_property('Point') ) {
+            $class = $self = $context->property('Point');
+        }
+        else {
+            $class = $self = Ferret::Class->new(
+                $f,
+                name    => 'Point',
+                version => 1.0
+            );
+            $context->set_property( Point => $class );
+        }
         my $proto = $class->prototype;
-        $context->set_property( Point => $class );
 
         # Method '_init_' definition
         {

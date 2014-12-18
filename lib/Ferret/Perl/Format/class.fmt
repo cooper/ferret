@@ -1,12 +1,18 @@
 # Class '<<name>>'
 {
     my @methods;
-     my $class = my $self = Ferret::Class->new($f,
-        name    => '<<name>>',
-        version => <<version>>
-    );
+    my ($class, $self);
+    if ($context->has_property('<<name>>')) {
+        $class = $self = $context->property('<<name>>');
+    }
+    else {
+        $class = $self = Ferret::Class->new($f,
+            name    => '<<name>>',
+            version => <<version>>
+        );
+        $context->set_property(<<name>> => $class);
+    }
     my $proto = $class->prototype;
-    $context->set_property(<<name>> => $class);
 
     <<upper_content>>
     <<lower_content>>
