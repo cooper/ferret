@@ -1,0 +1,6 @@
+{
+    <<definitions>>
+    if (<<conditionals>>) {
+        <<instruction>>
+    }
+}

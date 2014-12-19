@@ -269,7 +269,7 @@ sub handle_call {
     #   a bareword
     #   a variable
     my %allowed = map { $_ => 1 } qw(
-        List Expression Bareword Property
+        List Expression Bareword Property Maybe
         LexicalVariable InstanceVariable SpecialVariable
     );
 
@@ -651,6 +651,38 @@ sub c_OP_PACK {
 
     $l_word->{bareword_value} .= '::';
     return $l_word;
+}
+
+
+sub c_OP_MAYBE {
+    my ($c, $value) = @_;
+
+    # a maybe can only come after one of:
+    #   a one-element list
+    #   an expression
+    #   a bareword
+    #   a variable
+    my %allowed = map { $_ => 1 } qw(
+        List Expression Bareword Property Maybe
+        LexicalVariable InstanceVariable SpecialVariable
+    );
+
+    my $last_el = $c->{last_element};
+    return unexpected($c) unless $allowed{ $last_el->type_or_tok };
+
+    # if this is a list, it can only have one item.
+    if ($last_el->isa('F::List') && $last_el->children > 1) {
+        return expected($c, 'a single-element list', 'before');
+    }
+
+    # create a maybe, adopting the last element.
+    my $maybe = $c->{node}->adopt(F::Maybe->new);
+    $maybe->adopt($last_el);
+
+    # add the maybe to the instruction.
+    $c->{instruction}->add_maybe($maybe);
+
+    return $maybe;
 }
 
 sub c_any {

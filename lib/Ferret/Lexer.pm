@@ -38,6 +38,7 @@ use F::Operation;
 use F::Operator;
 use F::ReturnPair;
 use F::Return;
+use F::Maybe;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (
@@ -68,6 +69,7 @@ our %pretty_tokens = (
     OP_MUL      => 'multiplication operator (*)',
     OP_DIV      => 'division operator (/)',
     OP_EXCLAM   => 'not operator (!)',
+    OP_MAYBE    => 'inline if operator (?)',
     OP_SEMI     => 'semicolon (;)',
     #OP_PROP     => 'property operator (.)',
     OP_COMMA    => 'comma (,)',

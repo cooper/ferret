@@ -78,6 +78,7 @@ my @token_formats = (
     [ OP_MUL        => qr/\*/                                               ],  # multiplication
     [ OP_DIV        => qr/\//                                               ],  # division
     [ OP_EXCLAM     => qr/!/                                                ],  # call without arguments
+    [ OP_MAYBE      => qr/\?/                                               ],  # inline if operator
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
     #[ OP_PROP       => qr/\./                                               ],  # property
     [ OP_COMMA      => qr/,/                                                ],  # list separator
@@ -122,7 +123,9 @@ sub possibly_call {
     $last    = $last->[0]    or return;
 
     # there can't be an operator or a keyword before a function call.
-    return if grep { $last =~ $_ } qr/^OP_(.*)$/, qr/^KEYWORD$/;
+    return if grep {
+        $last ne 'OP_MAYBE' && $last =~ $_
+    } qr/^OP_(.*)$/, qr/^KEYWORD$/;
     return if grep { $last eq $_ } qw(PAREN_S PAREN_CALL BRACKET_S CLOSURE_S);
 
     return 1;
