@@ -1,3 +1,36 @@
+# --- DOM ---
+#  Document './hello9.frt'
+#      Function 'sayHello'
+#          Instruction
+#              Need
+#                  Lexical variable '$who'
+#                  Token OP_VALUE
+#                  Bareword 'Str'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Structural list [1 items]
+#                      Item 0
+#                          Mathematical operation
+#                              String 'Hello '
+#                              Addition operator (+)
+#                              Lexical variable '$who'
+#                              Addition operator (+)
+#                              String '!'
+#      Instruction
+#          Call
+#              Maybe
+#                  Bareword 'sayHello'
+#              Structural list [1 items]
+#                  Item 0
+#                      String 'World'
+#      Instruction
+#          Call
+#              Maybe
+#                  Bareword 'sayGoodbye'
+#              Structural list [1 items]
+#                  Item 0
+#                      String 'World'
 use warnings;
 use strict;
 use utf8;

@@ -1,3 +1,90 @@
+# --- DOM ---
+#  Document './hello7/Math/Point.frt'
+#      Package 'Math'
+#      Class 'Point'
+#          Main method '_init_'
+#              Instruction
+#                  Need
+#                      Lexical variable '$x'
+#                      Token OP_COMMA
+#                      Lexical variable '$y'
+#              Instruction
+#                  Assignment
+#                      Instance variable '@x'
+#                      Lexical variable '$x'
+#              Instruction
+#                  Assignment
+#                      Instance variable '@y'
+#                      Lexical variable '$y'
+#          Method 'oneToRight'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$pt'
+#                      Call
+#                          Special variable '*class'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Mathematical operation
+#                                      Instance variable '@x'
+#                                      Addition operator (+)
+#                                      Number '1'
+#                              Item 1
+#                                  Instance variable '@y'
+#              Instruction
+#                  Return
+#                      Lexical variable '$pt'
+#          Method 'pretty'
+#              Instruction
+#                  Return
+#                      Structural list [1 items]
+#                          Item 0
+#                              Mathematical operation
+#                                  String '('
+#                                  Addition operator (+)
+#                                  Instance variable '@x'
+#                                  Addition operator (+)
+#                                  String ', '
+#                                  Addition operator (+)
+#                                  Instance variable '@y'
+#                                  Addition operator (+)
+#                                  String ')'
+#          Main method 'midpoint'
+#              Instruction
+#                  Need
+#                      Lexical variable '$pt1'
+#                      Token OP_COMMA
+#                      Lexical variable '$pt2'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Hash [2 items]
+#                              Item 0
+#                                  Pair 'x'
+#                                      Mathematical operation
+#                                          Structural list [1 items]
+#                                              Item 0
+#                                                  Mathematical operation
+#                                                      Property 'x'
+#                                                          Lexical variable '$pt1'
+#                                                      Addition operator (+)
+#                                                      Property 'x'
+#                                                          Lexical variable '$pt2'
+#                                          Division operator (/)
+#                                          Number '2'
+#                              Item 1
+#                                  Pair 'y'
+#                                      Mathematical operation
+#                                          Structural list [1 items]
+#                                              Item 0
+#                                                  Mathematical operation
+#                                                      Property 'y'
+#                                                          Lexical variable '$pt1'
+#                                                      Addition operator (+)
+#                                                      Property 'y'
+#                                                          Lexical variable '$pt2'
+#                                          Division operator (/)
+#                                          Number '2'
 use warnings;
 use strict;
 use utf8;

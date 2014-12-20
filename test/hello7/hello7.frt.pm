@@ -1,3 +1,71 @@
+# --- DOM ---
+#  Document './hello7/hello7.frt'
+#      Instruction
+#          Assignment
+#              Lexical variable '$rect'
+#              Call
+#                  Bareword 'Math::Rect'
+#                  Hash [4 items]
+#                      Item 0
+#                          Pair 'x'
+#                              Number '5'
+#                      Item 1
+#                          Pair 'y'
+#                              Number '4'
+#                      Item 2
+#                          Pair 'width'
+#                              Number '12'
+#                      Item 3
+#                          Pair 'height'
+#                              Number '10'
+#      Instruction
+#          Assignment
+#              Lexical variable '$center'
+#              Call
+#                  Property 'center'
+#                      Lexical variable '$rect'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Mathematical operation
+#                          String 'Center of ...'
+#                          Addition operator (+)
+#                          Call
+#                              Property 'pretty'
+#                                  Lexical variable '$center'
+#      Instruction
+#          Assignment
+#              Lexical variable '$otherPt'
+#              Call
+#                  Bareword 'Math::Point'
+#                  Structural list [2 items]
+#                      Item 0
+#                          Number '9'
+#                      Item 1
+#                          Number '2'
+#      Instruction
+#          Assignment
+#              Lexical variable '$midpoint'
+#              Call
+#                  Property 'pretty'
+#                      Call
+#                          Property 'midpoint'
+#                              Structural list [2 items]
+#                                  Item 0
+#                                      Lexical variable '$center'
+#                                  Item 1
+#                                      Lexical variable '$otherPt'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Mathematical operation
+#                          String 'Midpoint: '
+#                          Addition operator (+)
+#                          Lexical variable '$midpoint'
 use warnings;
 use strict;
 use utf8;

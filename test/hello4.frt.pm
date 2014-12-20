@@ -1,3 +1,80 @@
+# --- DOM ---
+#  Document './hello4.frt'
+#      Function 'makePoint'
+#          Instruction
+#              Need
+#                  Lexical variable '$x'
+#                  Token OP_COMMA
+#                  Lexical variable '$y'
+#          Instruction
+#              Want
+#                  Lexical variable '$z'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$point'
+#                  Hash [2 items]
+#                      Item 0
+#                          Pair 'x'
+#                              Lexical variable '$x'
+#                      Item 1
+#                          Pair 'y'
+#                              Lexical variable '$y'
+#          Instruction
+#              Return pair 'point'
+#                  Lexical variable '$point'
+#      Instruction
+#          Assignment
+#              Lexical variable '$pt'
+#              Property 'point'
+#                  Call
+#                      Bareword 'makePoint'
+#                      Structural list [2 items]
+#                          Item 0
+#                              Number '5'
+#                          Item 1
+#                              Number '3'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Mathematical operation
+#                          String 'Point('
+#                          Addition operator (+)
+#                          Property 'x'
+#                              Lexical variable '$pt'
+#                          Addition operator (+)
+#                          String ','
+#                          Addition operator (+)
+#                          Property 'y'
+#                              Lexical variable '$pt'
+#                          Addition operator (+)
+#                          String ')'
+#      Instruction
+#          Assignment
+#              Lexical variable '$numbers'
+#              Value list [5 items]
+#                  Item 0
+#                      Number '1'
+#                  Item 1
+#                      Number '2'
+#                  Item 2
+#                      Number '3'
+#                  Item 3
+#                      Number '4'
+#                  Item 4
+#                      Mathematical operation
+#                          Number '4'
+#                          Addition operator (+)
+#                          Number '1'
+#      Instruction
+#          Assignment
+#              Lexical variable '$emptyArray'
+#              Value list [0 items]
+#      Instruction
+#          Assignment
+#              Lexical variable '$emptyHash'
+#              Hash [0 items]
 use warnings;
 use strict;
 use utf8;

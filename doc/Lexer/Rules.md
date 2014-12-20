@@ -13,28 +13,16 @@ Requires the token immediately after to be of a type in LIST.
 ### require_element_before => LIST
 
 Requires there to be an element before this one. Also requires that the element
-is of a type in LIST.
+is of a type in LIST.  
+
+Pseudotype NONE indicates no element.
 
 ### require_element_after => LIST
 
 Requires there to be an element after this one. Also requires that the element
-is of a type in LIST.
+is of a type in LIST.  
 
-### allow_element_before => LIST
-
-This requirement works the same as require_element_before except, unlike that
-option, will still be satisfied if this element is the first in its level.
-
-In other words, requires that if there is a previous element, it is of a type in
-LIST.
-
-### allow_element_after => LIST
-
-This requirement works the same as require_element_after except, unlike that
-option, will still be satisfied if this element is the last in its level.
-
-In other words, requires that if there is a following element, it is of a type
-in LIST.
+Pseudotype NONE indicates no element.
 
 ### inside_TYPE => RULES
 

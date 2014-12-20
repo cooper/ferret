@@ -19,6 +19,7 @@ sub desc        { shift->type }                     # description string
 sub fake        { shift->{fake} }
 sub is_node     { }                                 # isn't a node
 sub type_or_tok { shift->type }
+sub t           { shift->type_or_tok }
 sub perl_fmt    { }
 sub perl_fmt_do {
     my @args = shift->perl_fmt;
@@ -33,7 +34,8 @@ sub get_format { Ferret::Perl::get_format(@_[1..$#_]) }
 sub unexpected {
     my $el = shift;
     my $c = $Ferret::Lexer::Constructor::current;
-    return Ferret::Lexer::Constructor::unexpected($c);
+    die ${ Ferret::Lexer::Constructor::unexpected($c) }."\n";
+    # FIXME: this is just ridiculous
 }
 
 sub first_self_or_parent {

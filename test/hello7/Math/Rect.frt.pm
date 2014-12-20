@@ -1,3 +1,117 @@
+# --- DOM ---
+#  Document './hello7/Math/Rect.frt'
+#      Package 'Math'
+#      Class 'Rect'
+#          Main method '_init_'
+#              Instruction
+#                  Need
+#                      Lexical variable '$x'
+#                      Token OP_COMMA
+#                      Lexical variable '$y'
+#                      Token OP_COMMA
+#                      Lexical variable '$width'
+#                      Token OP_COMMA
+#                      Lexical variable '$height'
+#              Instruction
+#                  Assignment
+#                      Instance variable '@width'
+#                      Lexical variable '$width'
+#              Instruction
+#                  Assignment
+#                      Instance variable '@height'
+#                      Lexical variable '$height'
+#              Instruction
+#                  Assignment
+#                      Instance variable '@origin'
+#                      Call
+#                          Bareword 'Point'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Lexical variable '$x'
+#                              Item 1
+#                                  Lexical variable '$y'
+#          Method 'bottomLeft'
+#              Instruction
+#                  Return
+#                      Instance variable '@origin'
+#          Method 'bottomRight'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Mathematical operation
+#                                      Property 'x'
+#                                          Instance variable '@origin'
+#                                      Addition operator (+)
+#                                      Instance variable '@width'
+#                              Item 1
+#                                  Property 'y'
+#                                      Instance variable '@origin'
+#          Method 'topLeft'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Property 'x'
+#                                      Instance variable '@origin'
+#                              Item 1
+#                                  Mathematical operation
+#                                      Property 'y'
+#                                          Instance variable '@origin'
+#                                      Addition operator (+)
+#                                      Instance variable '@height'
+#          Method 'topRight'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Mathematical operation
+#                                      Property 'x'
+#                                          Instance variable '@origin'
+#                                      Addition operator (+)
+#                                      Instance variable '@width'
+#                              Item 1
+#                                  Mathematical operation
+#                                      Property 'y'
+#                                          Instance variable '@origin'
+#                                      Addition operator (+)
+#                                      Instance variable '@height'
+#          Method 'center'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$x'
+#                      Mathematical operation
+#                          Property 'x'
+#                              Instance variable '@origin'
+#                          Addition operator (+)
+#                          Instance variable '@width'
+#                          Multiplication operator (*)
+#                          Number '0.5'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$y'
+#                      Mathematical operation
+#                          Property 'y'
+#                              Instance variable '@origin'
+#                          Addition operator (+)
+#                          Instance variable '@height'
+#                          Multiplication operator (*)
+#                          Number '0.5'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Lexical variable '$x'
+#                              Item 1
+#                                  Lexical variable '$y'
 use warnings;
 use strict;
 use utf8;

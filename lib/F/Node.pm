@@ -19,6 +19,10 @@ sub new {
 sub adopt {
     my ($node, $el) = @_;
 
+    # check if this makes sense.
+    $node->can_adopt($el) or die
+        sprintf "%s can't hold %s in this context", $node->t, $el->t;
+
     # remove from the previous parent.
     $el->{parent}->abandon($el) if $el->{parent};
 
@@ -107,5 +111,6 @@ sub is_closure  {                         } # isn't a closure
 sub children    { @{ shift->{children} }  } # all child elements
 sub children_c  { shift->children         } # closure children (all)
 sub first_child { (shift->children)[0]    } # first child
+sub last_child  { (shift->children)[-1]   } # last child
 
 1

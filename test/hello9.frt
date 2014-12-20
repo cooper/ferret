@@ -1,5 +1,5 @@
 func sayHello {
-    need $who;
+    need $who: Str;
     say("Hello $who!");
 }
 

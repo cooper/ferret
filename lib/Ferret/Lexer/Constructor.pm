@@ -5,6 +5,7 @@ use warnings;
 use strict;
 use 5.010;
 
+use Ferret::Lexer::Rules;
 use Scalar::Util qw(blessed);
 
 my $fatal = \0;
@@ -35,6 +36,11 @@ sub construct {
             $last_element
         );
 
+        $current->{unknown_el} = F::Unknown->new(
+            token_label => $label,
+            token_value => $value
+        );
+
         # call the handler for all.
         c_any($label, $current, $value);
 
@@ -49,11 +55,7 @@ sub construct {
         }
 
         # otherwise, throw in an unknown element.
-        my $e = F::Unknown->new(
-            token_label => $label,
-            token_value => $value
-        );
-        $current->{node}->adopt($e);
+        $current->{node}->adopt($current->{unknown_el});
 
     }
 
@@ -440,10 +442,8 @@ sub c_OP_COMMA {
     }
 
     # we're in a want/need.
-    my $wn = $c->{want} || $c->{need};
-    if ($wn && $c->{node} == $wn) {
-        # should we do something?...
-        return $c->{node};
+    if ($c->{node}->type eq 'WantNeed') {
+        return $c->{node}->adopt($c->{unknown_el});
     }
 
     return unexpected($c, 'outside of list') if !$c->{list};
