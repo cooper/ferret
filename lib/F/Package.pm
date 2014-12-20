@@ -9,7 +9,7 @@ sub type { 'Package' }
 
 sub desc {
     my $pkg = shift;
-    my $desc  = "Package '$$pkg{name}'";
+    my $desc  = "package '$$pkg{name}'";
     return $desc;
 }
 

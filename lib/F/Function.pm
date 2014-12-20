@@ -7,7 +7,7 @@ use 5.010;
 use parent 'F::Statement';
 
 sub type { 'Function' }
-sub desc { "Function '$_[0]{name}'" }
+sub desc { "function '$_[0]{name}'" }
 sub is_closure { 1 }
 
 sub perl_fmt {

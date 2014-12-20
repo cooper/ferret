@@ -9,7 +9,7 @@ use parent qw(F::Node F::Statement);
 use Scalar::Util 'blessed';
 
 sub type { 'Operation' }
-sub desc { 'Mathematical operation' }
+sub desc { 'mathematical operation' }
 
 sub left_side { shift->first_child }
 

@@ -9,7 +9,7 @@ use parent 'F::Element';
 sub type { 'Bareword' }
 sub desc {
     my $el = shift;
-    my $desc  = "Bareword '$$el{bareword_value}'";
+    my $desc  = "bareword '$$el{bareword_value}'";
     return $desc;
 }
 

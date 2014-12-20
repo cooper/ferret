@@ -8,7 +8,7 @@ use parent qw(F::Structure);
 sub type { 'ReturnPair' }
 sub desc {
     my $pair = shift;
-    return "Return pair '$$pair{key}'";
+    return "return pair '$$pair{key}'";
 }
 
 sub key   { shift->{key} }          # a Perl string

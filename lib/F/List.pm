@@ -15,9 +15,9 @@ sub desc {
 sub list_type {
     my $list = shift;
     return
-    $list->{hash}  ? 'Hash'         :
-    $list->{array} ? 'Value list'   :
-    'Structural list';
+    $list->{hash}  ? 'hash'         :
+    $list->{array} ? 'value list'   :
+    'structural list';
 }
 
 sub is_array { shift->{array} }

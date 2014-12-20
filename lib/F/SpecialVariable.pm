@@ -9,7 +9,7 @@ sub type { 'SpecialVariable' }
 
 sub desc {
     my $var = shift;
-    return "Special variable '*$$var{var_name}'";
+    return "special variable '*$$var{var_name}'";
 }
 
 sub perl_fmt {

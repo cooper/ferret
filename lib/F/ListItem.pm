@@ -6,7 +6,7 @@ use strict;
 use parent 'F::Expression';
 
 sub type { 'ListItem'  }
-sub desc { 'Item ' . shift->{item_num} }
+sub desc { 'item ' . shift->{item_num} }
 
 sub adopt {
     my ($item, $el) = @_;

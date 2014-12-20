@@ -9,7 +9,7 @@ sub type { 'Class' }
 
 sub desc {
     my $class = shift;
-    my $desc  = "Class '$$class{name}'";
+    my $desc  = "class '$$class{name}'";
     $desc    .= " version $$class{version}" if defined $class->{version};
     return $desc;
 }

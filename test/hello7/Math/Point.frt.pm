@@ -6,7 +6,7 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$x'
-#                      Token OP_COMMA
+#                      Comma (,)
 #                      Lexical variable '$y'
 #              Instruction
 #                  Assignment
@@ -52,7 +52,7 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$pt1'
-#                      Token OP_COMMA
+#                      Comma (,)
 #                      Lexical variable '$pt2'
 #              Instruction
 #                  Return

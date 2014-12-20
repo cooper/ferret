@@ -16,6 +16,7 @@ sub construct {
     my $main_node = shift;
     $current = {
         main_node => $main_node,
+        file      => $main_node->{name} || 'unknown',
         node      => $main_node,
         elements  => \@elements,
         upcoming  => \@_
@@ -739,6 +740,7 @@ sub first_non_list_parent {
 sub fatal {
     my ($c, $err) = @_;
     my $near = last_el($c);
+    $err .= "\n     File    -> $$c{file}";
     $err .= "\n     Line    -> $$c{line}";
     $err .= "\n     Near    -> $near";
     $err .= "\n     Parent  -> ".$c->{node}->desc if $c->{node};
@@ -755,8 +757,14 @@ sub unexpected {
     my $c = shift;
     my $reason  = shift;
         $reason = length $reason ? " $reason" : '';
-    my $token   = Ferret::Lexer::pretty_token($c->{label});
-    fatal($c, "Unexpected $token$reason");
+
+    # if we're processing element rules, use the actual element if possible.
+    # otherwise, use the pretty representation of the token.
+    my $what = $current->{rule_el} ?
+        $current->{rule_el}->desc  :
+        Ferret::Lexer::pretty_token($c->{label});
+
+    fatal($c, "Unexpected $what$reason");
 }
 
 sub last_el {

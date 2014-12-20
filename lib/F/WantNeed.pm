@@ -6,7 +6,7 @@ use strict;
 use parent 'F::Statement';
 
 sub type { 'WantNeed' }
-sub desc { ucfirst(shift->{arg_type} || 'Argument declaration') }
+sub desc { shift->{arg_type} || 'argument declaration' }
 
 sub variables {
     grep { $_->type eq 'LexicalVariable' } shift->children;

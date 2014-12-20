@@ -13,7 +13,7 @@ sub desc {
     my $first = length $str->{value} > 13  ?
         substr($str->{value}, 0, 10).'...' :
         $str->{value};
-    return "String '$first'";
+    return "string '$first'";
 }
 
 sub perl_fmt {

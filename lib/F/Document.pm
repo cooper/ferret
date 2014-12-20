@@ -19,7 +19,7 @@ sub new {
 sub type { 'Document' }
 sub desc {
     my $doc = shift;
-    my $str = "Document '$$doc{name}'";
+    my $str = "document '$$doc{name}'";
     return $str;
 }
 

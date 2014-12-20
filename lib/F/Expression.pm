@@ -8,7 +8,7 @@ use parent 'F::Statement';
 sub type { 'Expression' }
 sub desc {
     my $exp = shift;
-    my $str = 'Expression';
+    my $str = 'expression';
     $str .= sprintf " ('%s' parameter)", $exp->{parameter_for}
         if $exp->{parameter_for};
     return $str;

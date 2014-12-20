@@ -20,8 +20,8 @@ sub adopt {
     my ($node, $el) = @_;
 
     # check if this makes sense.
-    $node->can_adopt($el) or die
-        sprintf "%s can't hold %s in this context", $node->t, $el->t;
+    my $err = $node->can_adopt($el);
+    return $el->unexpected($err) if $err;
 
     # remove from the previous parent.
     $el->{parent}->abandon($el) if $el->{parent};

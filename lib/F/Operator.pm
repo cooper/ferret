@@ -9,7 +9,7 @@ use parent qw(F::Structure);
 sub type { 'Operator' }
 sub desc {
     my $op = shift;
-    return ucfirst Ferret::Lexer::pretty_token($op->{token});
+    return Ferret::Lexer::pretty_token($op->{token});
 }
 
 sub op_type {

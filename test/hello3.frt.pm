@@ -24,7 +24,7 @@
 #          Instruction
 #              Need
 #                  Lexical variable '$name1'
-#                  Token OP_COMMA
+#                  Comma (,)
 #                  Lexical variable '$name2'
 #          Instruction
 #              Call

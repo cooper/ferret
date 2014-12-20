@@ -9,7 +9,7 @@ sub type { 'LexicalVariable' }
 
 sub desc {
     my $var = shift;
-    return "Lexical variable '\$$$var{var_name}'";
+    return "lexical variable '\$$$var{var_name}'";
 }
 
 sub perl_fmt {

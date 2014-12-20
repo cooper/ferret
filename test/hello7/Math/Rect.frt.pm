@@ -6,11 +6,11 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$x'
-#                      Token OP_COMMA
+#                      Comma (,)
 #                      Lexical variable '$y'
-#                      Token OP_COMMA
+#                      Comma (,)
 #                      Lexical variable '$width'
-#                      Token OP_COMMA
+#                      Comma (,)
 #                      Lexical variable '$height'
 #              Instruction
 #                  Assignment

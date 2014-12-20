@@ -9,7 +9,7 @@ sub type { 'InstanceVariable' }
 
 sub desc {
     my $var = shift;
-    return "Instance variable '\@$$var{var_name}'";
+    return "instance variable '\@$$var{var_name}'";
 }
 
 sub perl_fmt {

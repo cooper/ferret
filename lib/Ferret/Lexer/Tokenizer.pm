@@ -30,6 +30,7 @@ my %no_value = map { $_ => 1 } qw(
     OP_DIV      OP_DIV_A    OP_MUL      OP_MUL_A
     OP_VALUE    OP_PACK     OP_EQUAL    OP_EQUAL_I
     OP_ASSIGN   OP_COMMA    OP_RETURN   OP_SEMI
+    OP_EXCLAM   OP_MAYBE
 );
 
 # reused formats

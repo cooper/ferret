@@ -7,7 +7,7 @@ use 5.010;
 use parent 'F::Statement';
 
 sub type { 'Method' }
-sub desc { 'M'.($_[0]{main} ? 'ain m' : '')."ethod '$_[0]{name}'" }
+sub desc { 'm'.($_[0]{main} ? 'ain m' : '')."ethod '$_[0]{name}'" }
 sub is_closure { 1 }
 
 sub perl_fmt {

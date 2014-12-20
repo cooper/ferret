@@ -7,10 +7,6 @@ use 5.010;
 use parent qw(F::Node F::Statement);
 
 sub type { 'Assignment' }
-sub desc {
-    # TODO
-    shift->type;
-}
 
 sub perl_fmt_do {
     my $a = shift;

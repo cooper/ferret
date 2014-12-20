@@ -8,7 +8,7 @@ use parent 'F::Expression';
 sub type { 'Number' }
 sub desc {
     my $num = shift;
-    return "Number '$$num{value}'";
+    return "number '$$num{value}'";
 }
 
 sub perl_fmt {

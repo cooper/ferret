@@ -4,7 +4,7 @@
 #          Instruction
 #              Need
 #                  Lexical variable '$x'
-#                  Token OP_COMMA
+#                  Comma (,)
 #                  Lexical variable '$y'
 #          Instruction
 #              Want

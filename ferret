@@ -96,7 +96,7 @@ sub show_dom {
     state $indent = 0;
     my $el = shift;
     return if $el->type eq 'Unknown' && !$o->unknown;
-    interf "%s %s\n", '    ' x $indent, $el->desc;
+    interf "%s %s\n", '    ' x $indent, ucfirst $el->desc;
     return unless $el->is_node;
     $indent++;
         show_dom($_) foreach $el->children;

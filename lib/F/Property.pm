@@ -8,7 +8,7 @@ use parent qw(F::Node F::Structure F::Expression);
 sub type { 'Property' }
 sub desc {
     my $prop = shift;
-    return "Property '$$prop{prop_name}'";
+    return "property '$$prop{prop_name}'";
 }
 
 sub perl_fmt {

@@ -8,7 +8,7 @@ use parent qw(F::Structure F::Expression);
 sub type { 'Pair' }
 sub desc {
     my $pair = shift;
-    return "Pair '$$pair{key}'";
+    return "pair '$$pair{key}'";
 }
 
 sub key   { shift->{key} }

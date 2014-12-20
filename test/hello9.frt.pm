@@ -4,7 +4,7 @@
 #          Instruction
 #              Need
 #                  Lexical variable '$who'
-#                  Token OP_VALUE
+#                  Colon (:)
 #                  Bareword 'Str'
 #          Instruction
 #              Call
