@@ -47,12 +47,24 @@ our %element_rules = (
     WantNeed => {
 
         parent_must_be      => 'Instruction',
-        must_be_inside_one  => 'Function Method',
+        must_be_inside_one  => 'Function Method Class',
         children_must_be    => 'LexicalVariable OP_VALUE OP_COMMA Bareword',
+
+        inside_Class => {
+            children_must_be => 'InstanceVariable OP_VALUE OP_COMMA Bareword'
+        },
+
+        inside_Function => {
+            children_must_be => 'LexicalVariable OP_VALUE OP_COMMA Bareword'
+        },
+
+        inside_Method => {
+            children_must_be => 'LexicalVariable OP_VALUE OP_COMMA Bareword'
+        },
 
         child_rules => {
 
-            # lexical variables can come first OR come after a comma.
+            # variables can come first OR come after a comma.
             #
             #   need $x;
             #        ^
@@ -61,6 +73,9 @@ our %element_rules = (
             #            ^
             #
             LexicalVariable => {
+                must_come_after => 'NONE OP_COMMA'
+            },
+            InstanceVariables => {
                 must_come_after => 'NONE OP_COMMA'
             },
 
@@ -112,6 +127,17 @@ our %error_reasons = (
 
 sub err { sprintf $error_reasons{+shift}, @_ }
 
+sub final_check {
+    my $main_el = shift;
+    my $check; $check = sub {
+        my $el  = shift;
+        my $err = $el->parent->can_adopt($el) if $el->parent;
+        die $el->type, $err if $err;
+        if ($el->is_node) { $check->($_) foreach $el->children }
+    };
+    $check->($main_el);
+}
+
 # returns a hash of rules from a section of the rule tree.
 #
 #   e.g. rule_hash('WantNeed', 'child_rules', 'Bareword')
@@ -128,13 +154,12 @@ sub rule_hash {
 
 # returns a rule set object for an element.
 #
-#   optional $parent_t = element or type to get rules for inside.
+#   optional $parent_t = element or type to get rules for inside. (child_rules)
 #   $parent_t will fall back to the element's parent if it has one already.
 #
 sub F::Element::rule_set {
-    my ($el, $parent_t) = @_;
-    $parent_t ||= $el->parent;
-    $parent_t   = $parent_t->t if blessed $parent_t;
+    my ($el, $parent) = @_;
+    $parent ||= $el->parent;
 
     # local rules.
     my $set1 = Ferret::Lexer::RuleSet->new(
@@ -142,13 +167,35 @@ sub F::Element::rule_set {
         rule_hash($el->tok)
     );
 
-    # rules from parent.
-    my $set2 = Ferret::Lexer::RuleSet->new(
-        rule_hash($parent_t, 'child_rules', $el->type),
-        rule_hash($parent_t, 'child_rules', $el->tok)
-    ) if $parent_t;
+    my ($set2, $set3);
+    if ($parent) {
 
-    return $set1->merge_in($set2);
+        # rules from parent and upper nodes.
+
+        # lower rules.
+        my @rules = map {
+            my   @a = rule_hash($_, 'lower_rules', $el->type);
+            push @a,  rule_hash($_, 'lower_rules', $el->tok) if $el->tok;
+            @a;
+        } reverse $parent->types_upwards;
+
+        # child rules.
+        push @rules, rule_hash($parent->t, 'child_rules', $el->type);
+        push @rules, rule_hash($parent->t, 'child_rules', $el->tok) if $el->tok;
+
+        $set2 = Ferret::Lexer::RuleSet->new(@rules);
+
+        # rules from self while inside a certain type of node.
+        @rules = map {
+            my   @a = rule_hash($el->type, "inside_$_");
+            push @a,  rule_hash($el->tok,  "inside_$_") if $el->tok;
+            @a;
+        } reverse $parent->types_upwards;
+
+        $set3 = Ferret::Lexer::RuleSet->new(@rules);
+    }
+
+    return $set1->merge_in($set2)->merge_in($set3);
 }
 
 # checks if an element should be adopted.
@@ -176,7 +223,7 @@ sub F::Element::can_adopt {
 # checks if a child can be in a parent.
 sub F::Element::allows_child {
     my ($parent_maybe, $child_maybe) = @_;
-    my $set = $parent_maybe->rule_set;
+    my $set = $parent_maybe->rule_set(undef, $child_maybe);
 
     # there's no rule, so it allows everything.
     return $ok if !$set->{children_must_be};
@@ -192,7 +239,7 @@ sub F::Element::allows_child {
 # checks if a parent can provide for a child.
 sub F::Element::allows_parent {
     my ($child_maybe, $parent_maybe) = @_;
-    my $set = $child_maybe->rule_set;
+    my $set = $child_maybe->rule_set($parent_maybe);
 
     # there's no rule, so it allows everything.
     return $ok if !$set->{parent_must_be};
@@ -208,7 +255,7 @@ sub F::Element::allows_parent {
 # check if somewhere in an upper level is a certain node type.
 sub F::Element::allows_upper_nodes {
     my ($child_maybe, $parent_maybe) = @_;
-    my $set = $child_maybe->rule_set;
+    my $set = $child_maybe->rule_set($parent_maybe);
 
     # there's no rule, so it allows everything.
     return $ok if !$set->{must_be_inside_one} && !$set->{must_be_inside_all};

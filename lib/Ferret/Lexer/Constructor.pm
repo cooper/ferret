@@ -62,6 +62,8 @@ sub construct {
 
 
     c_eof($current, $main_node);
+    #Ferret::Lexer::Rules::final_check($main_node);
+
     return;
 }
 
@@ -507,7 +509,7 @@ sub c_VAR_THIS {
     # if there's no current class, this can't be here.
     # if there's no current method, this can't be here either.
     return unexpected($c, 'outside of class')  unless $c->{class};
-    return unexpected($c, 'outside of method') unless $c->{method};
+    #return unexpected($c, 'outside of method') unless $c->{method};
 
     my $var = F::InstanceVariable->new(var_name => $value);
     return $c->{node}->adopt($var);

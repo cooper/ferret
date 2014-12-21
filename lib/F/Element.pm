@@ -49,6 +49,14 @@ sub first_self_or_parent {
     return;
 }
 
+# returns a list of all the types of the current element and parents.
+sub types_upwards {
+    my ($el, $type) = @_;
+    my @types;
+    do { push @types, $el->type_or_tok } while $el = $el->{parent};
+    return @types;
+}
+
 sub document { first_self_or_parent(shift, 'Document') }
 sub class    { first_self_or_parent(shift, 'Class')    }
 
