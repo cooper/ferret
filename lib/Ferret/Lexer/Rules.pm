@@ -29,7 +29,16 @@ sub list_contains {
 sub list_items {
     my ($set, $list) = @_;
     my $list_str = $set->{$list} or return;
+    if (ref $list_str eq 'ARRAY') {
+         ($list_str, $set->{last_error}) = @$list_str;
+    }
     return split /\s+/, $list_str;
+}
+
+sub err {
+    my ($set, @err) = @_;
+    my $err_str = Ferret::Lexer::Rules::err(@err);
+    return [ $err_str, $set->{last_error} ];
 }
 
 package Ferret::Lexer::Rules;
@@ -46,71 +55,135 @@ our %element_rules = (
 
     WantNeed => {
 
-        parent_must_be      => 'Instruction',
-        must_be_inside_one  => 'Function Method Class',
-        children_must_be    => 'LexicalVariable OP_VALUE OP_COMMA Bareword',
+        # WantNeed must always be a direct child of an instruction.
+        parent_must_be => 'Instruction',
+
+        # WantNeed must always be inside one of these.
+        must_be_inside_one => [
+            'Function Method Class',
+            'Variable declaration must be within a function, method, or class'
+        ],
 
         inside_Class => {
-            children_must_be => 'InstanceVariable OP_VALUE OP_COMMA Bareword'
+
+            # inside a class, WantNeed can ONLY contain these things.
+            children_must_be => [
+                'InstanceVariable OP_VALUE OP_COMMA Bareword',
+                'Variable declaration in class context may only contain instance variables and their types'
+            ]
+
         },
 
         inside_Method => {
-            children_must_be => 'LexicalVariable OP_VALUE OP_COMMA Bareword'
+
+            # inside a method, WantNeed can ONLY contain these things.
+            children_must_be => [
+                'LexicalVariable OP_VALUE OP_COMMA Bareword',
+                'Variable declaration inside method can only contain lexical variables and their types'
+            ]
+
         },
 
         inside_Function => {
-            children_must_be => 'LexicalVariable OP_VALUE OP_COMMA Bareword'
+
+            # inside a function, WantNeed can ONLY contain these things.
+            children_must_be => [
+                'LexicalVariable OP_VALUE OP_COMMA Bareword',
+                'Variable declaration inside function can only contain lexical variables and their types'
+            ]
+
         },
 
         child_rules => {
 
-            # variables can come first OR come after a comma.
-            #
-            #   need $x;
-            #        ^
-            #
-            #   need $x, $y;
-            #            ^
-            #
             LexicalVariable => {
-                must_come_after => 'NONE OP_COMMA'
+
+                # variables can come first OR come after a comma.
+                #
+                #   need $x;
+                #        ^
+                #
+                #   need $x, $y;
+                #            ^
+                #
+                must_come_after => [
+                    'NONE OP_COMMA',
+                    'Variable inside variable declaration must follow the declaration keyword or a comma'
+                ]
+
             },
 
             InstanceVariable => {
-                must_come_after => 'NONE OP_COMMA'
+
+                # variables can come first OR come after a comma.
+                #
+                #   need @x;
+                #        ^
+                #
+                #   need @x, @y;
+                #            ^
+                #
+                must_come_after => [
+                    'NONE OP_COMMA',
+                    'Variable inside variable declaration must follow the declaration keyword or a comma'
+                ]
+
             },
 
-            # colons can ONLY come after a variable.
-            #
-            #   e.g. need $x: Num;
-            #               ^
-            #
             OP_VALUE => {
-                must_come_after => 'LexicalVariable InstanceVariable'
+
+                # colons can ONLY come after a variable.
+                #
+                #   e.g. need $x: Num;
+                #               ^
+                #
+                must_come_after => [
+                    'LexicalVariable InstanceVariable',
+                    'Colon inside variable declaration must follow a variable'
+                ]
+
             },
 
-            # comma MUST come after a bareword or a variable.
-            #
-            #   e.g. need $x, $y;
-            #               ^
-            #
-            #   e.g. need $x: Num, $y: Num;
-            #                    ^
-            #
             OP_COMMA => {
-                must_come_after  => 'LexicalVariable InstanceVariable Bareword',
-                must_come_before => 'LexicalVariable InstanceVariable'
+
+                # comma MUST come AFTER a bareword or a variable.
+                #
+                #   e.g. need $x, $y;
+                #               ^
+                #
+                #   e.g. need $x: Num, $y: Num;
+                #                    ^
+                #
+                must_come_after => [
+                    'LexicalVariable InstanceVariable Bareword',
+                    'Comma inside variable declaration must follow a variable or type'
+                ],
+
+                # comma MUST come BEFORE a variable, such that
+                #
+                #   e.g. need $x: Num, ;
+                #                    ^ ERROR
+                #
+                must_come_before => [
+                    'LexicalVariable InstanceVariable',
+                    'Comma inside variable declaration must be followed by a variable'
+                ]
+
             },
 
-            # bareword MUST come after a colon.
-            #
-            #   e.g. need $x: Num;
-            #                 ^
-            #
             Bareword => {
-                must_come_after => 'OP_VALUE'
-            }
 
+                # bareword MUST come after a colon.
+                #
+                #   e.g. need $x: Num;
+                #                 ^
+                #
+                must_come_after => [
+                    'OP_VALUE',
+                    'Type specification in variable declaration must follow a colon-suffixed variable'
+                ]
+
+            }
         }
     },
 
@@ -125,6 +198,7 @@ our %error_reasons = (
     child_not_allowed       => 'inside %s',
     previous_not_allowed    => 'after %s',
     expected_before         => 'without previous element at same level',
+    expected_after          => 'without following element at same level',
     must_be_inside          => 'outside of a containing %s'
 );
 
@@ -202,7 +276,7 @@ sub F::Element::rule_set {
 }
 
 # checks if an element should be adopted.
-sub F::Element::can_adopt {
+sub F::Node::can_adopt {
     my ($parent_maybe, $child_maybe) = @_;
 
     # check that the parent allows this type of child.
@@ -229,6 +303,22 @@ sub F::Element::can_adopt {
     return $e || $ok;
 }
 
+sub F::Node::can_close {
+    my $node = shift;
+    my $e;
+
+    # check that the last element allows nothing to follow it.
+    if (my $last_el = $node->last_child) {
+        $e = F::Element::previous_allows(
+            undef,
+            $node,
+            $last_el
+        );
+    }
+
+    return $e || $ok;
+}
+
 # checks if a child can be in a parent.
 sub F::Element::allows_child {
     my ($parent_maybe, $child_maybe) = @_;
@@ -241,7 +331,7 @@ sub F::Element::allows_child {
     return $ok if $set->list_contains(children_must_be => $child_maybe->t);
 
     # not allowed.
-    return err(child_not_allowed => $parent_maybe->desc);
+    return $set->err(child_not_allowed => $parent_maybe->desc);
 
 }
 
@@ -257,7 +347,7 @@ sub F::Element::allows_parent {
     return $ok if $set->list_contains(parent_must_be => $parent_maybe->t);
 
     # not allowed.
-    return err(child_not_allowed => $parent_maybe->desc);
+    return $set->err(child_not_allowed => $parent_maybe->desc);
 
 }
 
@@ -283,7 +373,7 @@ sub F::Element::allows_upper_nodes {
         last;
     }
 
-    return err(must_be_inside => $bad);
+    return $set->err(must_be_inside => $bad);
 }
 
 # checks if the previous element at the same level is allowed.
@@ -299,13 +389,13 @@ sub F::Element::allows_previous {
         $set->list_contains(must_come_after => 'NONE');
 
     # require something, but there's nothing.
-    return err(expected_before => $child_maybe->desc) if !$previous_maybe;
+    return $set->err(expected_before => $child_maybe->desc) if !$previous_maybe;
 
     # this type is in the list.
     return $ok if $set->list_contains(must_come_after => $previous_maybe->t);
 
     # this type doesn't work.
-    return err(previous_not_allowed => $previous_maybe->desc);
+    return $set->err(previous_not_allowed => $previous_maybe->desc);
 
 }
 
@@ -325,17 +415,17 @@ sub F::Element::previous_allows {
     # there's no rule, so it allows everything.
     return $ok if !$set->{must_come_before}; # allow everything.
 
-    # allows none, and there's none.
-    #return $ok if !$previous_maybe &&
-    #    $set->list_contains(must_come_before => 'NONE');
-    # require something, but there's nothing.
-    # return err(expected_before => $child_maybe->desc) if !$previous_maybe;
+    # there's no next element. see if this is allowed.
+    if (!$child_maybe) {
+        return $ok if $set->list_contains(must_come_before => 'NONE');
+        return $set->err('expected_after');
+    }
 
     # this type is in the list.
     return $ok if $set->list_contains(must_come_before => $child_maybe->t);
 
     # this type doesn't work.
-    return err(previous_not_allowed => $previous_maybe->desc);
+    return $set->err(previous_not_allowed => $previous_maybe->desc);
 
 }
 

@@ -756,9 +756,12 @@ sub expected {
 }
 
 sub unexpected {
-    my $c = shift;
-    my $reason  = shift;
-        $reason = length $reason ? " $reason" : '';
+    my ($c, $reason, $err_desc) = @_[0, 1];
+
+    # if it's an arrayref, it's from a rule with a description.
+    ($reason, $err_desc) = @$reason if ref $reason eq 'ARRAY';
+    $err_desc = length $err_desc ? "\n$err_desc." : '';
+    $reason   = length $reason   ? " $reason"     : '';
 
     # if we're processing element rules, use the actual element if possible.
     # otherwise, use the pretty representation of the token.
@@ -766,7 +769,7 @@ sub unexpected {
         $current->{rule_el}->desc  :
         Ferret::Lexer::pretty_token($c->{label});
 
-    fatal($c, "Unexpected $what$reason");
+    fatal($c, "Unexpected $what$reason.$err_desc");
 }
 
 sub last_el {

@@ -1,6 +1,6 @@
 class String
 
-need @x, @y, ;
+need @x, @y;
 
 method doubledLength {
     return @length! * 2;

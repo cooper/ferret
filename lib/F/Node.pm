@@ -98,10 +98,17 @@ sub filter_children {
 }
 
 sub close : method {
+    my $node = shift;
+
+    # check if this makes sense.
+    my $err = $node->can_close;
+    return $node->last_child->unexpected($err) if $err;
+
     # this can be overriden and ->SUPER'd for stuff.
     # like lists, for instance, delete empty items on termination.
     # ex: $c->{node} = $c->{node}->close;
-    return shift->{parent};
+
+    return $node->{parent};
 }
 
 

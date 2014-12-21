@@ -75,7 +75,7 @@ sub perl_fmt {
 }
 
 # filter out empty items.
-sub close {
+sub close : method {
     my $list = shift;
     foreach my $item ($list->children) {
         next if $item->children;
