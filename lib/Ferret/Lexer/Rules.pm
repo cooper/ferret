@@ -98,7 +98,8 @@ our %element_rules = (
             #                    ^
             #
             OP_COMMA => {
-                must_come_after => 'LexicalVariable InstanceVariable Bareword'
+                must_come_after  => 'LexicalVariable InstanceVariable Bareword',
+                must_come_before => 'LexicalVariable InstanceVariable'
             },
 
             # bareword MUST come after a colon.
@@ -219,6 +220,12 @@ sub F::Element::can_adopt {
         $parent_maybe->last_child
     );
 
+    # check that the previous element allows the new child to follow it.
+    $e ||= $child_maybe->previous_allows(
+        $parent_maybe,
+        $parent_maybe->last_child
+    );
+
     return $e || $ok;
 }
 
@@ -296,6 +303,36 @@ sub F::Element::allows_previous {
 
     # this type is in the list.
     return $ok if $set->list_contains(must_come_after => $previous_maybe->t);
+
+    # this type doesn't work.
+    return err(previous_not_allowed => $previous_maybe->desc);
+
+}
+
+# checks if the previous element allows the new element to follow it.
+#
+# TODO: if an element must come before a certain thing but is followed
+# by nothing, this rule currently is not respected. perhaps this can be solved
+# by checking in the ->close method of the parent node.
+#
+sub F::Element::previous_allows {
+    my ($child_maybe, $parent_maybe, $previous_maybe) = @_;
+
+    # no previous element, no rules.
+    return $ok if !$previous_maybe;
+    my $set = $previous_maybe->rule_set; # in actual parent.
+
+    # there's no rule, so it allows everything.
+    return $ok if !$set->{must_come_before}; # allow everything.
+
+    # allows none, and there's none.
+    #return $ok if !$previous_maybe &&
+    #    $set->list_contains(must_come_before => 'NONE');
+    # require something, but there's nothing.
+    # return err(expected_before => $child_maybe->desc) if !$previous_maybe;
+
+    # this type is in the list.
+    return $ok if $set->list_contains(must_come_before => $child_maybe->t);
 
     # this type doesn't work.
     return err(previous_not_allowed => $previous_maybe->desc);
