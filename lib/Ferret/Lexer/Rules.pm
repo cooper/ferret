@@ -54,11 +54,11 @@ our %element_rules = (
             children_must_be => 'InstanceVariable OP_VALUE OP_COMMA Bareword'
         },
 
-        inside_Function => {
+        inside_Method => {
             children_must_be => 'LexicalVariable OP_VALUE OP_COMMA Bareword'
         },
 
-        inside_Method => {
+        inside_Function => {
             children_must_be => 'LexicalVariable OP_VALUE OP_COMMA Bareword'
         },
 
@@ -75,20 +75,21 @@ our %element_rules = (
             LexicalVariable => {
                 must_come_after => 'NONE OP_COMMA'
             },
-            InstanceVariables => {
+
+            InstanceVariable => {
                 must_come_after => 'NONE OP_COMMA'
             },
 
-            # colons can ONLY come after a lexical variable.
+            # colons can ONLY come after a variable.
             #
             #   e.g. need $x: Num;
             #               ^
             #
             OP_VALUE => {
-                must_come_after => 'LexicalVariable'
+                must_come_after => 'LexicalVariable InstanceVariable'
             },
 
-            # comma MUST come after a bareword or a lexical variable.
+            # comma MUST come after a bareword or a variable.
             #
             #   e.g. need $x, $y;
             #               ^
@@ -97,7 +98,7 @@ our %element_rules = (
             #                    ^
             #
             OP_COMMA => {
-                must_come_after => 'LexicalVariable Bareword'
+                must_come_after => 'LexicalVariable InstanceVariable Bareword'
             },
 
             # bareword MUST come after a colon.
@@ -108,6 +109,7 @@ our %element_rules = (
             Bareword => {
                 must_come_after => 'OP_VALUE'
             }
+
         }
     },
 
@@ -122,7 +124,7 @@ our %error_reasons = (
     child_not_allowed       => 'inside %s',
     previous_not_allowed    => 'after %s',
     expected_before         => 'without previous element at same level',
-    must_be_inside          => 'outside of a containing %s node'
+    must_be_inside          => 'outside of a containing %s'
 );
 
 sub err { sprintf $error_reasons{+shift}, @_ }
@@ -213,8 +215,8 @@ sub F::Element::can_adopt {
 
     # check that the child allows the previous element type.
     $e ||= $child_maybe->allows_previous(
-        $parent_maybe->last_child,
-        $parent_maybe
+        $parent_maybe,
+        $parent_maybe->last_child
     );
 
     return $e || $ok;
@@ -279,7 +281,7 @@ sub F::Element::allows_upper_nodes {
 
 # checks if the previous element at the same level is allowed.
 sub F::Element::allows_previous {
-    my ($child_maybe, $previous_maybe, $parent_maybe) = @_;
+    my ($child_maybe, $parent_maybe, $previous_maybe) = @_;
     my $set = $child_maybe->rule_set($parent_maybe);
 
     # there's no rule, so it allows everything.
