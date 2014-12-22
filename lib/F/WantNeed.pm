@@ -9,14 +9,20 @@ sub type { 'WantNeed' }
 sub desc { shift->{arg_type} || 'argument declaration' }
 
 sub variables {
-    grep { $_->type eq 'LexicalVariable' } shift->children;
+    grep {
+        $_->type eq 'LexicalVariable' || $_->type eq 'InstanceVariable'
+    } shift->children;
 }
 
 sub perl_fmt {
     my ($arg, @fmt) = shift;
+
+    # set the variable for each function argument.
     foreach my $var ($arg->variables) {
-        push @fmt, $arg->{arg_type} => { var_name => $var->{var_name} };
+        my $sfx = $var->type eq 'InstanceVariable' ? '_ivar': '';
+        push @fmt, $arg->{arg_type}.$sfx => { var_name => $var->{var_name} };
     }
+
     return @fmt;
 }
 

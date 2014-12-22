@@ -17,8 +17,12 @@ sub new {
     return $class;
 }
 
-sub add_property {
+sub add_var {
+    # add a class variable
+}
 
+sub add_ivar {
+    # add an instance variable
 }
 
 sub prototype { shift->{prototype} }

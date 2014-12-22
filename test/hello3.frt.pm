@@ -12,7 +12,6 @@ use Ferret::Core::Operations qw(add num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
-    Ferret::space( $context, $_ ) for qw();
 
     # Function 'hello1' definition
     {
@@ -81,6 +80,7 @@ use Ferret::Core::Operations qw(add num str);
         };
     }
     $funcs[2]->inside_scope( helloWorld => $scope, $scope );
+
     $scope->property('helloWorld')
       ->call( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
         $scope );

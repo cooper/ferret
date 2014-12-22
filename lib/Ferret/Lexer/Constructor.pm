@@ -60,6 +60,7 @@ sub construct {
 
     }
 
+    c_spaces($current, $main_node);
     c_eof($current, $main_node);
     Ferret::Lexer::Rules::final_check($main_node);
 
@@ -702,6 +703,13 @@ sub c_any {
     my $instruction = F::Instruction->new;
     $instruction->{parent_instruction} = $c->{instruction};
     @$c{ qw(node instruction) } = ($c->{node}->adopt($instruction)) x 2;
+}
+
+sub c_spaces {
+    my ($c, $main_node) = @_;
+    my $spaces = F::Spaces->new;
+    $main_node->adopt($spaces);
+    return;
 }
 
 sub c_eof {

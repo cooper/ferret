@@ -27,9 +27,13 @@ sub perl_fmt {
     my $doc = shift;
     my ($before_c, $after_c, $includes) = ('') x 3;
 
+    my @ordered_children = $doc->filter_children(
+        order => 'Class Function Spaces rest'
+    );
+
     # add everything.
     # this must come first so that function_defs etc. will be up-to-date.
-    $after_c .= $_->perl_fmt_do."\n" foreach $doc->ordered_children;
+    $after_c .= $_->perl_fmt_do."\n" foreach @ordered_children;
 
     # add each function definition.
     $before_c .= "$_\n" foreach map {
@@ -40,14 +44,6 @@ sub perl_fmt {
     $before_c .= "$_\n" foreach map {
         $doc->get_format(method_def => $_)
     } @{ $doc->{method_defs} };
-
-    # add namespace inclusions.
-    my @spaces = map {
-        length $doc->{package} && $doc->{package} ne 'main' ?
-            $doc->{package}.'::'.$_                         :
-            $_
-    } sort keys %{ $doc->{required_spaces} };
-    $includes  = $doc->get_format(space => { names => "@spaces" }).";\n";
 
     return document => {
         'package'      => $doc->{package} // 'main',

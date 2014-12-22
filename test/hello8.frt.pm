@@ -12,7 +12,6 @@ use Ferret::Core::Operations qw(add mul num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
-    Ferret::space( $context, $_ ) for qw();
 
     # Class 'String'
     {

@@ -9,12 +9,12 @@ use parent 'F::Element';
 sub type { 'Bareword' }
 sub desc {
     my $el = shift;
-    my $desc  = "bareword '$$el{bareword_value}'";
+    my $desc = "bareword '$$el{bareword_value}'";
     return $desc;
 }
 
-sub perl_fmt {
-    my $el  = shift;
+sub after_adopt {
+    my $el = shift;
     my $val = $el->{bareword_value};
 
     # if it starts with a capital letter, it's a class or namespace.
@@ -23,9 +23,10 @@ sub perl_fmt {
         $doc->{required_spaces}{$val} = 1; # do not increment
     }
 
-    # otherwise, it's a function or something.
-    return lexical_var => { name => $el->{bareword_value} };
+}
 
+sub perl_fmt {
+    return lexical_var => { name => shift->{bareword_value} };
 }
 
 1

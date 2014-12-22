@@ -12,7 +12,6 @@ use Ferret::Core::Operations qw(add str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
-    Ferret::space( $context, $_ ) for qw();
 
     # Function 'sayHello' definition
     {
@@ -37,6 +36,7 @@ use Ferret::Core::Operations qw(add str);
         };
     }
     $funcs[0]->inside_scope( sayHello => $scope, $scope );
+    Ferret::space( $context, $_ ) for qw(Str);
     {
         my $maybe_0 = $scope->property('sayHello');
         if ($maybe_0) {

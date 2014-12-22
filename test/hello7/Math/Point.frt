@@ -2,9 +2,7 @@ package Math
 class Point
 
 init {
-    need $x, $y;
-    @x = $x;
-    @y = $y;
+    need @x, @y;
 }
 
 method oneToRight {

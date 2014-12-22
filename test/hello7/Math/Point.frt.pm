@@ -12,7 +12,6 @@ use Ferret::Core::Operations qw(add div num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
-    Ferret::space( $context, $_ ) for qw(Math::Point);
 
     # Class 'Point'
     {
@@ -44,14 +43,12 @@ use Ferret::Core::Operations qw(add div num str);
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 do {
                     return if not defined $arguments->{x};
-                    $scope->set_property( x => $arguments->{x} );
+                    $self->set_property( x => $arguments->{x} );
                 };
                 do {
                     return if not defined $arguments->{y};
-                    $scope->set_property( y => $arguments->{y} );
+                    $self->set_property( y => $arguments->{y} );
                 };
-                $self->set_property( x => $scope->property('x') );
-                $self->set_property( y => $scope->property('y') );
                 return $return;
             };
         }
@@ -149,4 +146,5 @@ use Ferret::Core::Operations qw(add div num str);
         $methods[2]->inside_scope( pretty     => $scope, $proto, $class );
         $methods[3]->inside_scope( midpoint   => $scope, $class, $class );
     }
+    Ferret::space( $context, $_ ) for qw(Point);
 }

@@ -30,6 +30,7 @@ sub adopt {
     weaken($el->{parent} = $node);
     push @{ $node->{children} }, $el;
 
+    $el->after_adopt if $el->can('after_adopt');
     return $el;
 }
 
@@ -65,7 +66,7 @@ sub filter_children {
     my (%ordered, @ordered);
     foreach my $child (@children) {
         my $type    = $child->type;
-        my $fc_type = $child->first_child        ?
+        my $fc_type = $child->is_node && $child->first_child ?
             $type.'.'.$child->first_child->type : '';
 
         # ignored.

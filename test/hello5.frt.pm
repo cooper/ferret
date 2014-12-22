@@ -12,7 +12,6 @@ use Ferret::Core::Operations qw(add div num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
-    Ferret::space( $context, $_ ) for qw(Point);
 
     # Class 'Point'
     {
@@ -208,4 +207,5 @@ use Ferret::Core::Operations qw(add div num str);
             $scope
         );
     }
+    Ferret::space( $context, $_ ) for qw(Point);
 }

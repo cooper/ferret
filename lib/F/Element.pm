@@ -9,7 +9,9 @@ use Scalar::Util 'blessed';
 
 sub new {
     my ($class, %opts) = @_;
-    $opts{create_line} = $Ferret::Lexer::Constructor::current->{line};
+    my $c = $Ferret::Lexer::Constructor::current;
+    $opts{create_line} = $c->{line};
+    $opts{create_c}    = { %$c };
     return bless \%opts, $class;
 }
 
@@ -50,7 +52,7 @@ sub first_self_or_parent {
 }
 
 # returns a list of all the types of the current element and parents.
-sub types_upwards {
+sub types_upward {
     my ($el, $type) = @_;
     my @types;
     do { push @types, $el->type_or_tok } while $el = $el->{parent};

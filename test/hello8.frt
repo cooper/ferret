@@ -1,7 +1,5 @@
 class String
 
-need @x, @y;
-
 method doubledLength {
     return @length! * 2;
 }

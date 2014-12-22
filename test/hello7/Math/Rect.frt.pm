@@ -12,7 +12,6 @@ use Ferret::Core::Operations qw(add mul num);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
-    Ferret::space( $context, $_ ) for qw(Math::Point);
 
     # Class 'Rect'
     {
@@ -205,4 +204,5 @@ use Ferret::Core::Operations qw(add mul num);
         $methods[4]->inside_scope( topRight    => $scope, $proto, $class );
         $methods[5]->inside_scope( center      => $scope, $proto, $class );
     }
+    Ferret::space( $context, $_ ) for qw(Point);
 }

@@ -60,26 +60,16 @@ our %element_rules = (
 
         # WantNeed must always be inside one of these.
         must_be_inside_one => [
-            'Function Method Class',
-            'Variable declaration must be within a function, method, or class'
+            'Function Method',
+            'Argument declaration must be within a function or method'
         ],
-
-        inside_Class => {
-
-            # inside a class, WantNeed can ONLY contain these things.
-            children_must_be => [
-                'InstanceVariable OP_VALUE OP_COMMA Bareword',
-                'Variable declaration in class context may only contain instance variables and their types'
-            ]
-
-        },
 
         inside_Method => {
 
             # inside a method, WantNeed can ONLY contain these things.
             children_must_be => [
-                'LexicalVariable OP_VALUE OP_COMMA Bareword',
-                'Variable declaration inside method can only contain lexical variables and their types'
+                'InstanceVariable LexicalVariable OP_VALUE OP_COMMA Bareword',
+                'Argument declaration inside method can only contain lexical or instance variables and their types'
             ]
 
         },
@@ -89,7 +79,7 @@ our %element_rules = (
             # inside a function, WantNeed can ONLY contain these things.
             children_must_be => [
                 'LexicalVariable OP_VALUE OP_COMMA Bareword',
-                'Variable declaration inside function can only contain lexical variables and their types'
+                'Argument declaration inside function can only contain lexical variables and their types'
             ]
 
         },
@@ -260,7 +250,7 @@ sub F::Element::rule_set {
             my   @a = rule_hash($_, 'lower_rules', $el->type);
             push @a,  rule_hash($_, 'lower_rules', $el->tok) if $el->tok;
             @a;
-        } reverse $parent->types_upwards;
+        } reverse $parent->types_upward;
 
         # child rules.
         push @rules, rule_hash($parent->t, 'child_rules', $el->type);
@@ -273,7 +263,7 @@ sub F::Element::rule_set {
             my   @a = rule_hash($el->type, "inside_$_");
             push @a,  rule_hash($el->tok,  "inside_$_") if $el->tok;
             @a;
-        } reverse $parent->types_upwards;
+        } reverse $parent->types_upward;
 
         $set3 = Ferret::Lexer::RuleSet->new(@rules);
     }

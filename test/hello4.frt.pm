@@ -12,7 +12,6 @@ use Ferret::Core::Operations qw(add num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
-    Ferret::space( $context, $_ ) for qw();
 
     # Function 'makePoint' definition
     {
@@ -45,6 +44,7 @@ use Ferret::Core::Operations qw(add num str);
         };
     }
     $funcs[0]->inside_scope( makePoint => $scope, $scope );
+
     $scope->set_property( pt => $scope->property('makePoint')
           ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope )->property('point') );
     $scope->property('say')->call(

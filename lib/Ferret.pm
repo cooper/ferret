@@ -90,8 +90,8 @@ sub space {
     my $file = c2s("$space.frt.pm");
 
     # already tried this file, or the namespace/class exists.
-    return $scope->property($space)
-        if $scope->has_property($space) || $tried_files{$file};
+    my $val = $scope->property($space);
+    return $val if $val || $tried_files{$file};
 
     # load it.
     do $file;
