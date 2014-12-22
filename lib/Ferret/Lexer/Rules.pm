@@ -207,10 +207,16 @@ sub err { sprintf $error_reasons{+shift}, @_ }
 sub final_check {
     my $main_el = shift;
     my $check; $check = sub {
-        my $el  = shift;
+        my $el = shift;
+
+        # do tests.
         my $err = $el->parent->can_adopt($el) if $el->parent;
-        die $el->type, $err if $err;
-        if ($el->is_node) { $check->($_) foreach $el->children }
+        $err  ||= $el->can_close              if $el->is_node;
+        $el->unexpected($err) if $err;
+
+        # now do the same for each child.
+        if ($el->is_node) { $check->($_, $el) foreach $el->children }
+
     };
     $check->($main_el);
 }
@@ -288,16 +294,21 @@ sub F::Node::can_adopt {
     # check that the upper hierarchy is satisfactory.
     $e ||= $child_maybe->allows_upper_nodes($parent_maybe);
 
+    # determine the previous element.
+    my $previous_maybe = $child_maybe->parent   ?
+        $child_maybe->previous_element          :
+        $parent_maybe->last_child;
+
     # check that the child allows the previous element type.
     $e ||= $child_maybe->allows_previous(
         $parent_maybe,
-        $parent_maybe->last_child
+        $previous_maybe
     );
 
     # check that the previous element allows the new child to follow it.
     $e ||= $child_maybe->previous_allows(
         $parent_maybe,
-        $parent_maybe->last_child
+        $previous_maybe
     );
 
     return $e || $ok;

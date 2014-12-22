@@ -60,9 +60,8 @@ sub construct {
 
     }
 
-
     c_eof($current, $main_node);
-    #Ferret::Lexer::Rules::final_check($main_node);
+    Ferret::Lexer::Rules::final_check($main_node);
 
     return;
 }

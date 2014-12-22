@@ -72,4 +72,17 @@ sub replace_with {
     return $rep;
 }
 
+sub index {
+    my $el = shift;
+    return undef if !$el->parent;
+    my @children = $el->parent->children;
+    return (grep { $children[$_] == $el } 0..$#children)[0];
+}
+
+sub previous_element {
+    my $el  = shift;
+    my $idx = $el->index or return; # can't be first.
+    return ($el->parent->children)[$el->index - 1];
+}
+
 1
