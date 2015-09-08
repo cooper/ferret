@@ -16,12 +16,20 @@ sub desc {
 sub after_adopt {
     my $el = shift;
     my $val = $el->{bareword_value};
-
+    
     # if it starts with a capital letter, it's a class or namespace.
-    if (ucfirst $val eq $val) {
-        my $doc = $el->document;
-        $doc->{required_spaces}{$val} = 1; # do not increment
+    my @parts;
+    foreach my $part (split /::/, $val) {
+        if (ucfirst $part eq $part) {
+            push @parts, $part;
+            next;
+        }
+        last;
     }
+    
+    $val = join '::', @parts;
+    my $doc = $el->document;
+    $doc->{required_spaces}{$val} = 1 if $val; # do not increment
 
 }
 

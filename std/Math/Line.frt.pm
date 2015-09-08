@@ -1,3 +1,8 @@
+# --- DOM ---
+#  Document './std/Math/Line.frt'
+#      Package 'Math'
+#      Class 'Line'
+#      Include
 use warnings;
 use strict;
 use utf8;

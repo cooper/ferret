@@ -78,13 +78,10 @@ sub call {
             parent => $func->{outer_scope}
         );
 
-        # for functions, this is undef.
-        my $self;
-        if ($func->is_method) {
-            $self = $func->{last_parent};
-            $scope->{special}->set_property(self  => $self);
-            $scope->{special}->set_property(class => $func->{class});
-        }
+        # class/instance argument.
+        my $self = $func->is_method ? $func->{last_parent} : $func->{class};
+        $scope->{special}->set_property(self  => $self) if $self;
+        $scope->{special}->set_property(class => $func->{class}) if $func->{class};
 
         # call the function.
         # this could return $return

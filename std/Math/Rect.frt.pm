@@ -1,3 +1,134 @@
+# --- DOM ---
+#  Document './std/Math/Rect.frt'
+#      Package 'Math'
+#      Class 'Rect'
+#          Main method '_init_'
+#              Instruction
+#                  Need
+#                      Lexical variable '$x'
+#                      Comma (,)
+#                      Lexical variable '$y'
+#                      Comma (,)
+#                      Instance variable '@width'
+#                      Comma (,)
+#                      Instance variable '@height'
+#              Instruction
+#                  Assignment
+#                      Instance variable '@origin'
+#                      Call
+#                          Bareword 'Point'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Lexical variable '$x'
+#                              Item 1
+#                                  Lexical variable '$y'
+#          Method 'bottomLeft'
+#              Instruction
+#                  Return
+#                      Instance variable '@origin'
+#          Method 'bottomRight'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Mathematical operation
+#                                      Property 'x'
+#                                          Instance variable '@origin'
+#                                      Addition operator (+)
+#                                      Instance variable '@width'
+#                              Item 1
+#                                  Property 'y'
+#                                      Instance variable '@origin'
+#          Method 'topLeft'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Property 'x'
+#                                      Instance variable '@origin'
+#                              Item 1
+#                                  Mathematical operation
+#                                      Property 'y'
+#                                          Instance variable '@origin'
+#                                      Addition operator (+)
+#                                      Instance variable '@height'
+#          Method 'topRight'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Mathematical operation
+#                                      Property 'x'
+#                                          Instance variable '@origin'
+#                                      Addition operator (+)
+#                                      Instance variable '@width'
+#                              Item 1
+#                                  Mathematical operation
+#                                      Property 'y'
+#                                          Instance variable '@origin'
+#                                      Addition operator (+)
+#                                      Instance variable '@height'
+#          Method 'bottomLine'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Line'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Call
+#                                      Instance variable '@bottomLeft'
+#                              Item 1
+#                                  Call
+#                                      Instance variable '@bottomRight'
+#          Method 'topLine'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Line'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Call
+#                                      Instance variable '@topLeft'
+#                              Item 1
+#                                  Call
+#                                      Instance variable '@topRight'
+#          Method 'center'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$x'
+#                      Mathematical operation
+#                          Property 'x'
+#                              Instance variable '@origin'
+#                          Addition operator (+)
+#                          Instance variable '@width'
+#                          Multiplication operator (*)
+#                          Number '0.5'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$y'
+#                      Mathematical operation
+#                          Property 'y'
+#                              Instance variable '@origin'
+#                          Addition operator (+)
+#                          Instance variable '@height'
+#                          Multiplication operator (*)
+#                          Number '0.5'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Lexical variable '$x'
+#                              Item 1
+#                                  Lexical variable '$y'
+#      Include (Point, Line)
 use warnings;
 use strict;
 use utf8;
@@ -252,5 +383,5 @@ use Ferret::Core::Operations qw(add mul num);
         $methods[6]->inside_scope( topLine     => $scope, $proto, $class );
         $methods[7]->inside_scope( center      => $scope, $proto, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Line Point);
+    Ferret::space( $context, $_ ) for qw(Point Line);
 }

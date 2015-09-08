@@ -1,3 +1,26 @@
+# --- DOM ---
+#  Document './test/hello8.frt'
+#      Class 'String'
+#          Method 'doubledLength'
+#              Instruction
+#                  Return
+#                      Mathematical operation
+#                          Call
+#                              Instance variable '@length'
+#                          Multiplication operator (*)
+#                          Number '2'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Structural list [1 items]
+#                      Item 0
+#                          Mathematical operation
+#                              String 'Length tim...'
+#                              Addition operator (+)
+#                              Call
+#                                  Property 'doubledLength'
+#                                      String 'hi there'
+#      Include
 use warnings;
 use strict;
 use utf8;

@@ -1,3 +1,112 @@
+# --- DOM ---
+#  Document './std/Math/Point.frt'
+#      Package 'Math'
+#      Class 'Point'
+#          Main method '_init_'
+#              Instruction
+#                  Need
+#                      Instance variable '@x'
+#                      Comma (,)
+#                      Instance variable '@y'
+#          Method 'distanceTo'
+#              Instruction
+#                  Need
+#                      Lexical variable '$pt2'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$dx'
+#                      Mathematical operation
+#                          Instance variable '@x'
+#                          Subtraction operator (-)
+#                          Property 'x'
+#                              Lexical variable '$pt2'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$dy'
+#                      Mathematical operation
+#                          Instance variable '@y'
+#                          Subtraction operator (-)
+#                          Property 'y'
+#                              Lexical variable '$pt2'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'sqrt'
+#                          Structural list [1 items]
+#                              Item 0
+#                                  Mathematical operation
+#                                      Lexical variable '$dx'
+#                                      OP_POW
+#                                      Number '2'
+#                                      Addition operator (+)
+#                                      Lexical variable '$dy'
+#                                      OP_POW
+#                                      Number '2'
+#          Method 'distanceFromOrigin'
+#              Instruction
+#                  Return
+#                      Call
+#                          Instance variable '@distanceTo'
+#                          Structural list [1 items]
+#                              Item 0
+#                                  Call
+#                                      Special variable '*class'
+#                                      Structural list [2 items]
+#                                          Item 0
+#                                              Number '0'
+#                                          Item 1
+#                                              Number '0'
+#          Method 'pretty'
+#              Instruction
+#                  Return
+#                      Mathematical operation
+#                          String '('
+#                          Addition operator (+)
+#                          Instance variable '@x'
+#                          Addition operator (+)
+#                          String ', '
+#                          Addition operator (+)
+#                          Instance variable '@y'
+#                          Addition operator (+)
+#                          String ')'
+#          Main method 'midpoint'
+#              Instruction
+#                  Need
+#                      Lexical variable '$pt1'
+#                      Comma (,)
+#                      Lexical variable '$pt2'
+#              Instruction
+#                  Return
+#                      Call
+#                          Bareword 'Point'
+#                          Hash [2 items]
+#                              Item 0
+#                                  Pair 'x'
+#                                      Mathematical operation
+#                                          Structural list [1 items]
+#                                              Item 0
+#                                                  Mathematical operation
+#                                                      Property 'x'
+#                                                          Lexical variable '$pt1'
+#                                                      Addition operator (+)
+#                                                      Property 'x'
+#                                                          Lexical variable '$pt2'
+#                                          Division operator (/)
+#                                          Number '2'
+#                              Item 1
+#                                  Pair 'y'
+#                                      Mathematical operation
+#                                          Structural list [1 items]
+#                                              Item 0
+#                                                  Mathematical operation
+#                                                      Property 'y'
+#                                                          Lexical variable '$pt1'
+#                                                      Addition operator (+)
+#                                                      Property 'y'
+#                                                          Lexical variable '$pt2'
+#                                          Division operator (/)
+#                                          Number '2'
+#      Include (Point)
 use warnings;
 use strict;
 use utf8;
@@ -87,7 +196,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
                         $scope->property('pt2')->property('y')
                     )
                 );
-                return $scope->property('CORE::sqrt')->call(
+                return $scope->property('sqrt')->call(
                     [
                         add(
                             $scope,
@@ -193,5 +302,5 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
         $methods[3]->inside_scope( pretty   => $scope, $proto, $class );
         $methods[4]->inside_scope( midpoint => $scope, $class, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Point CORE CORE::sqrt);
+    Ferret::space( $context, $_ ) for qw(Point);
 }

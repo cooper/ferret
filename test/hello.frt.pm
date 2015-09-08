@@ -1,3 +1,12 @@
+# --- DOM ---
+#  Document './test/hello.frt'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      String 'Hello World!'
+#      Include
 use warnings;
 use strict;
 use utf8;

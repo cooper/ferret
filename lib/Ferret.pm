@@ -134,7 +134,7 @@ sub add_binding {
         my ($is_method, $name, %opts) = @_;
 
         # fetch or create event.
-        my $where = $opts{main} ? $class : $class->prototype;
+        my $where = $is_method ? $class->prototype : $class;
         my $event = $where->has_property($name) ?
             $class->property($name) : do {
             my $e = Ferret::Event->new($f,
@@ -149,6 +149,7 @@ sub add_binding {
         my $func = Ferret::Function->new($f,
             name      => $opts{callback} || 'default',
             code      => $opts{code},
+            class     => $class, # sometimes changed by ->inside_scope()
             is_method => $is_method
         );
 
@@ -180,7 +181,13 @@ sub add_binding {
         $add_func->(1, $name, %$opts);
     }
 
-    $f->main_context->set_property($_ => $class)
+    # find the context.
+    my $context = $f->main_context;
+    if (length $opts{package}) {
+        $context = $f->get_context($opts{package});
+    }
+    
+    $context->set_property($_ => $class)
         foreach ($class->{name}, split /\s+/, $opts{alias} || '');
     return $class;
 }

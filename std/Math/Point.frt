@@ -9,7 +9,7 @@ method distanceTo {
     need $pt2;
     $dx = @x - $pt2.x;
     $dy = @y - $pt2.y;
-    return CORE::sqrt($dx ^ 2 + $dy ^ 2);
+    return sqrt($dx ^ 2 + $dy ^ 2);
 }
 
 method distanceFromOrigin {

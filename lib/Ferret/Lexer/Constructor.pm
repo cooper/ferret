@@ -461,6 +461,7 @@ sub c_BAREWORD {
     my $l_word = $c->{last_element};
     if ($l_word->type eq 'Bareword') {
         $l_word->{bareword_value} .= $value;
+        $l_word->{parent}->adopt($l_word); # to redo after_adopt()
         return $l_word;
     }
 
