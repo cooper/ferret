@@ -28,6 +28,7 @@ my %no_value = map { $_ => 1 } qw(
     BRACKET_S   BRACKET_E   OP_ADD_A    OP_SUB_A
     OP_ADD      OP_SUB      OP_CALL     OP_PROP
     OP_DIV      OP_DIV_A    OP_MUL      OP_MUL_A
+    OP_POW      OP_POW_A
     OP_VALUE    OP_PACK     OP_EQUAL    OP_EQUAL_I
     OP_ASSIGN   OP_COMMA    OP_RETURN   OP_SEMI
     OP_EXCLAM   OP_MAYBE
@@ -72,6 +73,7 @@ my @token_formats = (
     [ OP_SUB_A      => qr/-=/                                               ],  # subtraction assignment
     [ OP_MUL_A      => qr/\*=/                                              ],  # multiplication assignment
     [ OP_DIV_A      => qr/\/=/                                              ],  # division assignment
+    [ OP_POW_A      => qr/\^=/                                              ],  # power assignment
     [ OP_EQUAL_I    => qr/==/                                               ],  # object equality
     [ OP_EQUAL      => qr/==/                                               ],  # equality
     [ OP_ASSIGN     => qr/=/                                                ],  # assignment
@@ -79,10 +81,11 @@ my @token_formats = (
     [ OP_SUB        => qr/\-/                                               ],  # subtraction
     [ OP_MUL        => qr/\*/                                               ],  # multiplication
     [ OP_DIV        => qr/\//                                               ],  # division
+    [ OP_POW        => qr/\^/                                               ],  # power
     [ OP_EXCLAM     => qr/!/                                                ],  # call without arguments
     [ OP_MAYBE      => qr/\?/                                               ],  # inline if operator
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
-    #[ OP_PROP       => qr/\./                                               ],  # property
+   #[ OP_PROP       => qr/\./                                               ],  # property
     [ OP_COMMA      => qr/,/                                                ],  # list separator
     [ OP_PACK       => qr/::/                                               ],  # package
     [ PROP_VALUE    => qr/$prop_reg:/,  \&remove_last_char                  ],  # property: value

@@ -2,7 +2,13 @@ use warnings;
 use strict;
 use utf8;
 use 5.010;
-use lib 'lib';
+
+BEGIN {
+    my $libs = do '/etc/ferret.conf';
+    ref $libs eq 'ARRAY' or die "config error";
+    unshift @INC, @$libs;
+}
+
 use Ferret;
 
 my $f = $Ferret::ferret ||= Ferret->new;
@@ -53,14 +59,12 @@ use Ferret::Core::Operations qw(add mul num);
                 };
                 do {
                     return if not defined $arguments->{width};
-                    $scope->set_property( width => $arguments->{width} );
+                    $self->set_property( width => $arguments->{width} );
                 };
                 do {
                     return if not defined $arguments->{height};
-                    $scope->set_property( height => $arguments->{height} );
+                    $self->set_property( height => $arguments->{height} );
                 };
-                $self->set_property( width  => $scope->property('width') );
-                $self->set_property( height => $scope->property('height') );
                 $self->set_property(
                     origin => $scope->property('Point')->call(
                         [ $scope->property('x'), $scope->property('y') ],
@@ -165,9 +169,51 @@ use Ferret::Core::Operations qw(add mul num);
             };
         }
 
-        # Method 'center' definition
+        # Method 'bottomLine' definition
         {
             my $func = $methods[5] = Ferret::Function->new(
+                $f,
+                name      => 'bottomLine',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                return $scope->property('Line')->call(
+                    [
+                        $self->property('bottomLeft')->call( [], $scope ),
+                        $self->property('bottomRight')->call( [], $scope )
+                    ],
+                    $scope
+                );
+                return $return;
+            };
+        }
+
+        # Method 'topLine' definition
+        {
+            my $func = $methods[6] = Ferret::Function->new(
+                $f,
+                name      => 'topLine',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                return $scope->property('Line')->call(
+                    [
+                        $self->property('topLeft')->call( [], $scope ),
+                        $self->property('topRight')->call( [], $scope )
+                    ],
+                    $scope
+                );
+                return $return;
+            };
+        }
+
+        # Method 'center' definition
+        {
+            my $func = $methods[7] = Ferret::Function->new(
                 $f,
                 name      => 'center',
                 is_method => 1
@@ -202,7 +248,9 @@ use Ferret::Core::Operations qw(add mul num);
         $methods[2]->inside_scope( bottomRight => $scope, $proto, $class );
         $methods[3]->inside_scope( topLeft     => $scope, $proto, $class );
         $methods[4]->inside_scope( topRight    => $scope, $proto, $class );
-        $methods[5]->inside_scope( center      => $scope, $proto, $class );
+        $methods[5]->inside_scope( bottomLine  => $scope, $proto, $class );
+        $methods[6]->inside_scope( topLine     => $scope, $proto, $class );
+        $methods[7]->inside_scope( center      => $scope, $proto, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Point);
+    Ferret::space( $context, $_ ) for qw(Line Point);
 }

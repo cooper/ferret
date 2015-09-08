@@ -26,6 +26,10 @@ my @methods = (
         code => \&op_mul,
         need => '$other:Num'
     },
+    op_pow => {
+        code => \&op_pow,
+        need => '$other:Num'
+    },
     sum => {
         code => \&_sum,
         need => '$num1:Num num2:Num',
@@ -75,6 +79,14 @@ sub op_mul {
     return Ferret::Number->new($num->ferret, value => $new_value);
 }
 
+# number to a number power
+sub op_pow {
+    my ($num, $arguments) = @_;
+    my $other = $arguments->{other};
+    my $new_value = $num->{value} ** $other->{value};
+    return Ferret::Number->new($num->ferret, value => $new_value);
+}
+    
 sub _sum {
     # TODO: more than two arguments.
     my ($class, $arguments) = @_;

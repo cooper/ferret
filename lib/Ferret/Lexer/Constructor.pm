@@ -560,6 +560,11 @@ sub c_PROPERTY {
 sub c_OP_ASSIGN {
     my ($c, $value) = @_;
 
+    # if we're in a WantNeed, it's not a real assignment.
+    if ($c->{node}->type eq 'WantNeed') {
+        return $c->{node}->adopt($c->{unknown_el});
+    }
+
     my %allowed = map { $_ => 1 } qw(
         Bareword LexicalVariable InstanceVariable Property
     );

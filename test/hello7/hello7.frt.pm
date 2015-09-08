@@ -2,7 +2,13 @@ use warnings;
 use strict;
 use utf8;
 use 5.010;
-use lib 'lib';
+
+BEGIN {
+    my $libs = do '/etc/ferret.conf';
+    ref $libs eq 'ARRAY' or die "config error";
+    unshift @INC, @$libs;
+}
+
 use Ferret;
 
 my $f = $Ferret::ferret ||= Ferret->new;
@@ -13,7 +19,7 @@ use Ferret::Core::Operations qw(add num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    Ferret::space( $context, $_ ) for qw(Math::Rect Math Math::Point);
+    Ferret::space( $context, $_ ) for qw(Math::Point Math::Rect Math);
     $scope->set_property(
         rect => $scope->property('Math::Rect')->call(
             {

@@ -2,13 +2,19 @@ use warnings;
 use strict;
 use utf8;
 use 5.010;
-use lib 'lib';
+
+BEGIN {
+    my $libs = do '/etc/ferret.conf';
+    ref $libs eq 'ARRAY' or die "config error";
+    unshift @INC, @$libs;
+}
+
 use Ferret;
 
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Point.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add div num str);
+use Ferret::Core::Operations qw(_sub add div num pow str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
@@ -53,33 +59,72 @@ use Ferret::Core::Operations qw(add div num str);
             };
         }
 
-        # Method 'oneToRight' definition
+        # Method 'distanceTo' definition
         {
             my $func = $methods[1] = Ferret::Function->new(
                 $f,
-                name      => 'oneToRight',
+                name      => 'distanceTo',
+                is_method => 1
+            );
+            $func->add_argument( name => 'pt2' );
+            $func->{code} = sub {
+                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                do {
+                    return if not defined $arguments->{pt2};
+                    $scope->set_property( pt2 => $arguments->{pt2} );
+                };
+                $scope->set_property(
+                    dx => _sub(
+                        $scope,
+                        $self->property('x'),
+                        $scope->property('pt2')->property('x')
+                    )
+                );
+                $scope->set_property(
+                    dy => _sub(
+                        $scope,
+                        $self->property('y'),
+                        $scope->property('pt2')->property('y')
+                    )
+                );
+                return $scope->property('CORE::sqrt')->call(
+                    [
+                        add(
+                            $scope,
+                            pow( $scope, $scope->property('dx'), num( $f, 2 ) ),
+                            pow( $scope, $scope->property('dy'), num( $f, 2 ) )
+                        )
+                    ],
+                    $scope
+                );
+                return $return;
+            };
+        }
+
+        # Method 'distanceFromOrigin' definition
+        {
+            my $func = $methods[2] = Ferret::Function->new(
+                $f,
+                name      => 'distanceFromOrigin',
                 is_method => 1
             );
 
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
-                $scope->set_property(
-                    pt => $scope->{special}->property('class')->call(
-                        [
-                            add( $scope, $self->property('x'), num( $f, 1 ) ),
-                            $self->property('y')
-                        ],
-                        $scope
-                    )
+                return $self->property('distanceTo')->call(
+                    [
+                        $scope->{special}->property('class')
+                          ->call( [ num( $f, 0 ), num( $f, 0 ) ], $scope )
+                    ],
+                    $scope
                 );
-                return $scope->property('pt');
                 return $return;
             };
         }
 
         # Method 'pretty' definition
         {
-            my $func = $methods[2] = Ferret::Function->new(
+            my $func = $methods[3] = Ferret::Function->new(
                 $f,
                 name      => 'pretty',
                 is_method => 1
@@ -98,7 +143,7 @@ use Ferret::Core::Operations qw(add div num str);
 
         # Method 'midpoint' definition
         {
-            my $func = $methods[3] = Ferret::Function->new(
+            my $func = $methods[4] = Ferret::Function->new(
                 $f,
                 name      => 'midpoint',
                 is_method => 1
@@ -142,9 +187,11 @@ use Ferret::Core::Operations qw(add div num str);
             };
         }
         $methods[0]->inside_scope( _init_     => $scope, $class, $class );
-        $methods[1]->inside_scope( oneToRight => $scope, $proto, $class );
-        $methods[2]->inside_scope( pretty     => $scope, $proto, $class );
-        $methods[3]->inside_scope( midpoint   => $scope, $class, $class );
+        $methods[1]->inside_scope( distanceTo => $scope, $proto, $class );
+        $methods[2]
+          ->inside_scope( distanceFromOrigin => $scope, $proto, $class );
+        $methods[3]->inside_scope( pretty   => $scope, $proto, $class );
+        $methods[4]->inside_scope( midpoint => $scope, $class, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Point);
+    Ferret::space( $context, $_ ) for qw(Point CORE CORE::sqrt);
 }

@@ -2,7 +2,13 @@ use warnings;
 use strict;
 use utf8;
 use 5.010;
-use lib 'lib';
+
+BEGIN {
+    my $libs = do '/etc/ferret.conf';
+    ref $libs eq 'ARRAY' or die "config error";
+    unshift @INC, @$libs;
+}
+
 use Ferret;
 
 my $f = $Ferret::ferret ||= Ferret->new;
@@ -85,8 +91,10 @@ use Ferret::Core::Operations qw(add num str);
       ->call( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
         $scope );
     $scope->property('helloWorld')
-      ->call( { name2 => str( $f, "Humans" ), name1 => str( $f, "Earth" ) },
+      ->call( { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
         $scope );
+    $scope->property('helloWorld')
+      ->call( [ str( $f, "Benjamin" ), str( $f, "George" ) ], $scope );
     $scope->set_property(
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ) );
     $scope->property('say')

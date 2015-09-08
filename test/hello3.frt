@@ -1,5 +1,11 @@
 helloWorld(name2: "USA", name1: "World");
-helloWorld(name2: "Humans", name1: "Earth");
+
+helloWorld(
+    name1: "Earth",
+    name2: "Humans"
+);
+
+helloWorld("Benjamin", "George");
 
 func helloWorld {
     need $name1, $name2;
@@ -20,4 +26,4 @@ func helloWorld {
 }
 
 $pi = 3 + 0.1 + 0.04;
-say("Pi = " + $pi);
+say("Pi = $pi");
