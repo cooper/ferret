@@ -1,3 +1,12 @@
+# --- Tokens ---
+#         PAREN_S | 
+#         PAREN_S | 
+#        BAREWORD | "say"
+#         PAREN_E | 
+#      PAREN_CALL | 
+#          STRING | ["Hello World!"]
+#         PAREN_E | 
+#         PAREN_E | 
 # --- DOM ---
 #  Document './test/hello2.frt'
 #      Instruction

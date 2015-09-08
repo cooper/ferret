@@ -94,7 +94,7 @@ sub space {
     return $val if $val || $tried_files{$file};
 
     # load it.
-    do $file or print "error in $file: $@\n";
+    do $file or do { print "error in $file: $@\n" if $@ };
     $tried_files{$file} = 1;
     return $scope->property($space);
 

@@ -1,3 +1,87 @@
+# --- Tokens ---
+#         VAR_LEX | "rect"
+#       OP_ASSIGN | 
+#        BAREWORD | "Math"
+#         OP_PACK | 
+#        BAREWORD | "Rect"
+#      PAREN_CALL | 
+#      PROP_VALUE | "x"
+#          NUMBER | "5"
+#        OP_COMMA | 
+#      PROP_VALUE | "y"
+#          NUMBER | "4"
+#        OP_COMMA | 
+#      PROP_VALUE | "width"
+#          NUMBER | "12"
+#        OP_COMMA | 
+#      PROP_VALUE | "height"
+#          NUMBER | "10"
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "center"
+#       OP_ASSIGN | 
+#         VAR_LEX | "rect"
+#        PROPERTY | "center"
+#         OP_CALL | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Center of rect: "]
+#          OP_ADD | 
+#         VAR_LEX | "center"
+#        PROPERTY | "pretty"
+#         OP_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Center distance from origin: "]
+#          OP_ADD | 
+#         VAR_LEX | "center"
+#        PROPERTY | "distanceFromOrigin"
+#         OP_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "otherPt"
+#       OP_ASSIGN | 
+#        BAREWORD | "Math"
+#         OP_PACK | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#          NUMBER | "9"
+#        OP_COMMA | 
+#          NUMBER | "2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "midpoint"
+#       OP_ASSIGN | 
+#         PAREN_S | 
+#         VAR_LEX | "center"
+#        OP_COMMA | 
+#         VAR_LEX | "otherPt"
+#         PAREN_E | 
+#        PROPERTY | "midpoint"
+#         OP_CALL | 
+#        PROPERTY | "pretty"
+#         OP_CALL | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Midpoint: ",["VAR_LEX","midpoint",176]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Square root of four: "]
+#          OP_ADD | 
+#        BAREWORD | "Math"
+#         OP_PACK | 
+#        BAREWORD | "sqrt"
+#      PAREN_CALL | 
+#          NUMBER | "4"
+#         PAREN_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
 # --- DOM ---
 #  Document './test/hello7/hello7.frt'
 #      Instruction
@@ -77,7 +161,20 @@
 #                          String 'Midpoint: '
 #                          Addition operator (+)
 #                          Lexical variable '$midpoint'
-#      Include (Math, Math::Point, Math::Rect)
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Mathematical operation
+#                          String 'Square roo...'
+#                          Addition operator (+)
+#                          Call
+#                              Bareword 'Math::sqrt'
+#                              Structural list [1 items]
+#                                  Item 0
+#                                      Number '4'
+#      Include (Math::Point, Math::Rect, Math)
 use warnings;
 use strict;
 use utf8;
@@ -99,7 +196,7 @@ use Ferret::Core::Operations qw(add num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    Ferret::space( $context, $_ ) for qw(Math Math::Point Math::Rect);
+    Ferret::space( $context, $_ ) for qw(Math::Point Math::Rect Math);
     $scope->set_property(
         rect => $scope->property('Math::Rect')->call(
             {
@@ -145,6 +242,16 @@ use Ferret::Core::Operations qw(add num str);
         [
             add(
                 $scope, str( $f, "Midpoint: " ), $scope->property('midpoint')
+            )
+        ],
+        $scope
+    );
+    $scope->property('say')->call(
+        [
+            add(
+                $scope,
+                str( $f, "Square root of four: " ),
+                $scope->property('Math::sqrt')->call( [ num( $f, 4 ) ], $scope )
             )
         ],
         $scope

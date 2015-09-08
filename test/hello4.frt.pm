@@ -1,3 +1,81 @@
+# --- Tokens ---
+#        FUNCTION | {"name":"makePoint"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "x"
+#        OP_COMMA | 
+#         VAR_LEX | "y"
+#         OP_SEMI | 
+#    KEYWORD_WANT | 
+#         VAR_LEX | "z"
+#         OP_SEMI | 
+#         VAR_LEX | "point"
+#       OP_ASSIGN | 
+#       BRACKET_S | 
+#      PROP_VALUE | "x"
+#         VAR_LEX | "x"
+#        OP_COMMA | 
+#      PROP_VALUE | "y"
+#         VAR_LEX | "y"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#        BAREWORD | "point"
+#       OP_RETURN | 
+#         VAR_LEX | "point"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "pt"
+#       OP_ASSIGN | 
+#        BAREWORD | "makePoint"
+#      PAREN_CALL | 
+#          NUMBER | "5"
+#        OP_COMMA | 
+#          NUMBER | "3"
+#         PAREN_E | 
+#        PROPERTY | "point"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Point("]
+#          OP_ADD | 
+#         VAR_LEX | "pt"
+#        PROPERTY | "x"
+#          OP_ADD | 
+#          STRING | [","]
+#          OP_ADD | 
+#         VAR_LEX | "pt"
+#        PROPERTY | "y"
+#          OP_ADD | 
+#          STRING | [")"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "numbers"
+#       OP_ASSIGN | 
+#       BRACKET_S | 
+#          NUMBER | "1"
+#        OP_COMMA | 
+#          NUMBER | "2"
+#        OP_COMMA | 
+#          NUMBER | "3"
+#        OP_COMMA | 
+#          NUMBER | "4"
+#        OP_COMMA | 
+#          NUMBER | "4"
+#          OP_ADD | 
+#          NUMBER | "1"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "emptyArray"
+#       OP_ASSIGN | 
+#       BRACKET_S | 
+#       BRACKET_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "emptyHash"
+#       OP_ASSIGN | 
+#       BRACKET_S | 
+#        OP_VALUE | 
+#       BRACKET_E | 
+#         OP_SEMI | 
 # --- DOM ---
 #  Document './test/hello4.frt'
 #      Function 'makePoint'

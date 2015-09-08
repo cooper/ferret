@@ -1,3 +1,37 @@
+# --- Tokens ---
+#         PKG_DEC | {"name":"Math"}
+#       CLASS_DEC | {"name":"Line"}
+#          METHOD | {"name":"_init_","main":1}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#        VAR_THIS | "pt1"
+#        OP_COMMA | 
+#        VAR_THIS | "pt2"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"midpoint","main":null}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#         PAREN_S | 
+#        VAR_THIS | "pt1"
+#        OP_COMMA | 
+#        VAR_THIS | "pt2"
+#         PAREN_E | 
+#        PROPERTY | "midpoint"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"length","main":null}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "pt1"
+#        PROPERTY | "distanceTo"
+#      PAREN_CALL | 
+#        VAR_THIS | "pt2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # --- DOM ---
 #  Document './std/Math/Line.frt'
 #      Package 'Math'
@@ -13,12 +47,12 @@
 #                  Return
 #                      Call
 #                          Property 'midpoint'
-#                              Bareword 'Point'
-#                          Structural list [2 items]
-#                              Item 0
-#                                  Instance variable '@pt1'
-#                              Item 1
-#                                  Instance variable '@pt2'
+#                              Structural list [2 items]
+#                                  Item 0
+#                                      Instance variable '@pt1'
+#                                  Item 1
+#                                      Instance variable '@pt2'
+#                          Structural list [0 items]
 #          Method 'length'
 #              Instruction
 #                  Return
@@ -28,7 +62,7 @@
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Instance variable '@pt2'
-#      Include (Point)
+#      Include
 use warnings;
 use strict;
 use utf8;
@@ -100,9 +134,9 @@ use Ferret::Core::Operations qw();
 
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
-                return $scope->property('Point')->property('midpoint')
-                  ->call( [ $self->property('pt1'), $self->property('pt2') ],
-                    $scope );
+                return $self->property('pt1')
+                  ->create_set( $scope, $self->property('pt2') )
+                  ->property('midpoint')->call( [], $scope );
                 return $return;
             };
         }
@@ -126,5 +160,4 @@ use Ferret::Core::Operations qw();
         $methods[1]->inside_scope( midpoint => $scope, $proto, $class );
         $methods[2]->inside_scope( length   => $scope, $proto, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Point);
 }

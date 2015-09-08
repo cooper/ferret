@@ -6,7 +6,7 @@ init {
 }
 
 method midpoint {
-    return Point.midpoint(@pt1, @pt2);
+    return (@pt1, @pt2).midpoint();
 }
 
 method length {

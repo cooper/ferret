@@ -1,3 +1,100 @@
+# --- Tokens ---
+#         PKG_DEC | {"name":"Math"}
+#       CLASS_DEC | {"name":"Point"}
+#          METHOD | {"name":"_init_","main":1}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#        VAR_THIS | "x"
+#        OP_COMMA | 
+#        VAR_THIS | "y"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"main":null,"name":"distanceTo"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "pt2"
+#         OP_SEMI | 
+#         VAR_LEX | "dx"
+#       OP_ASSIGN | 
+#        VAR_THIS | "x"
+#          OP_SUB | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "x"
+#         OP_SEMI | 
+#         VAR_LEX | "dy"
+#       OP_ASSIGN | 
+#        VAR_THIS | "y"
+#          OP_SUB | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "y"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "sqrt"
+#      PAREN_CALL | 
+#         VAR_LEX | "dx"
+#          OP_POW | 
+#          NUMBER | "2"
+#          OP_ADD | 
+#         VAR_LEX | "dy"
+#          OP_POW | 
+#          NUMBER | "2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"main":null,"name":"distanceFromOrigin"}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "distanceTo"
+#      PAREN_CALL | 
+#        VAR_SPEC | "class"
+#      PAREN_CALL | 
+#          NUMBER | "0"
+#        OP_COMMA | 
+#          NUMBER | "0"
+#         PAREN_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"main":null,"name":"pretty"}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#          STRING | ["(",["VAR_THIS","x",33],", ",["VAR_THIS","y",33],")"]
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"main":"1","name":"midpoint"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "pt1"
+#        OP_COMMA | 
+#         VAR_LEX | "pt2"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        VAR_SPEC | "class"
+#      PAREN_CALL | 
+#      PROP_VALUE | "x"
+#         PAREN_S | 
+#         VAR_LEX | "pt1"
+#        PROPERTY | "x"
+#          OP_ADD | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "x"
+#         PAREN_E | 
+#          OP_DIV | 
+#          NUMBER | "2"
+#        OP_COMMA | 
+#      PROP_VALUE | "y"
+#         PAREN_S | 
+#         VAR_LEX | "pt1"
+#        PROPERTY | "y"
+#          OP_ADD | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "y"
+#         PAREN_E | 
+#          OP_DIV | 
+#          NUMBER | "2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # --- DOM ---
 #  Document './std/Math/Point.frt'
 #      Package 'Math'
@@ -78,7 +175,7 @@
 #              Instruction
 #                  Return
 #                      Call
-#                          Bareword 'Point'
+#                          Special variable '*class'
 #                          Hash [2 items]
 #                              Item 0
 #                                  Pair 'x'
@@ -106,7 +203,7 @@
 #                                                          Lexical variable '$pt2'
 #                                          Division operator (/)
 #                                          Number '2'
-#      Include (Point)
+#      Include
 use warnings;
 use strict;
 use utf8;
@@ -269,7 +366,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
                     return if not defined $arguments->{pt2};
                     $scope->set_property( pt2 => $arguments->{pt2} );
                 };
-                return $scope->property('Point')->call(
+                return $scope->{special}->property('class')->call(
                     {
                         x => div(
                             $scope,
@@ -302,5 +399,4 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
         $methods[3]->inside_scope( pretty   => $scope, $proto, $class );
         $methods[4]->inside_scope( midpoint => $scope, $class, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Point);
 }

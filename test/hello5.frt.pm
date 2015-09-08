@@ -1,3 +1,145 @@
+# --- Tokens ---
+#       CLASS_DEC | {"name":"Point","version":"1.0"}
+#          METHOD | {"main":1,"name":"_init_"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "x"
+#        OP_COMMA | 
+#         VAR_LEX | "y"
+#         OP_SEMI | 
+#        VAR_THIS | "x"
+#       OP_ASSIGN | 
+#         VAR_LEX | "x"
+#         OP_SEMI | 
+#        VAR_THIS | "y"
+#       OP_ASSIGN | 
+#         VAR_LEX | "y"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"oneToRight","main":null}
+#       CLOSURE_S | 
+#         VAR_LEX | "pt"
+#       OP_ASSIGN | 
+#        VAR_SPEC | "class"
+#      PAREN_CALL | 
+#        VAR_THIS | "x"
+#          OP_ADD | 
+#          NUMBER | "1"
+#        OP_COMMA | 
+#        VAR_THIS | "y"
+#         PAREN_E | 
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#         VAR_LEX | "pt"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"pretty","main":null}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#         PAREN_S | 
+#          STRING | ["(",["VAR_THIS","x",146],", ",["VAR_THIS","y",146],")"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"main":"1","name":"midpoint"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "pt1"
+#        OP_COMMA | 
+#         VAR_LEX | "pt2"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#      PROP_VALUE | "x"
+#         PAREN_S | 
+#         VAR_LEX | "pt1"
+#        PROPERTY | "x"
+#          OP_ADD | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "x"
+#         PAREN_E | 
+#          OP_DIV | 
+#          NUMBER | "2"
+#        OP_COMMA | 
+#      PROP_VALUE | "y"
+#         PAREN_S | 
+#         VAR_LEX | "pt1"
+#        PROPERTY | "y"
+#          OP_ADD | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "y"
+#         PAREN_E | 
+#          OP_DIV | 
+#          NUMBER | "2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "pt"
+#       OP_ASSIGN | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#          NUMBER | "5"
+#        OP_COMMA | 
+#          NUMBER | "3"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Point"]
+#          OP_ADD | 
+#         VAR_LEX | "pt"
+#        PROPERTY | "pretty"
+#         OP_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "rpt"
+#       OP_ASSIGN | 
+#         VAR_LEX | "pt"
+#        PROPERTY | "oneToRight"
+#         OP_CALL | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Right"]
+#          OP_ADD | 
+#         VAR_LEX | "rpt"
+#        PROPERTY | "pretty"
+#         OP_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "mdpt"
+#       OP_ASSIGN | 
+#        BAREWORD | "Point"
+#        PROPERTY | "midpoint"
+#      PAREN_CALL | 
+#         VAR_LEX | "pt"
+#        OP_COMMA | 
+#         VAR_LEX | "rpt"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Midpoint"]
+#          OP_ADD | 
+#         VAR_LEX | "mdpt"
+#        PROPERTY | "pretty"
+#         OP_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "nineteen"
+#       OP_ASSIGN | 
+#          NUMBER | "4"
+#          OP_ADD | 
+#          NUMBER | "45"
+#          OP_DIV | 
+#          NUMBER | "3"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Nineteen: ",["VAR_LEX","nineteen",167]]
+#         PAREN_E | 
+#         OP_SEMI | 
 # --- DOM ---
 #  Document './test/hello5.frt'
 #      Class 'Point' version 1.0

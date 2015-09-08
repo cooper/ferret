@@ -22,7 +22,7 @@ method pretty {
 
 main method midpoint {
     need $pt1, $pt2;
-    return Point(
+    return *class(
         x: ($pt1.x + $pt2.x) / 2,
         y: ($pt1.y + $pt2.y) / 2
     );
