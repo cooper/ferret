@@ -77,7 +77,7 @@
 #                          String 'Midpoint: '
 #                          Addition operator (+)
 #                          Lexical variable '$midpoint'
-#      Include (Math, Math::Rect, Math::Point)
+#      Include (Math, Math::Point, Math::Rect)
 use warnings;
 use strict;
 use utf8;
@@ -99,7 +99,7 @@ use Ferret::Core::Operations qw(add num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    Ferret::space( $context, $_ ) for qw(Math Math::Rect Math::Point);
+    Ferret::space( $context, $_ ) for qw(Math Math::Point Math::Rect);
     $scope->set_property(
         rect => $scope->property('Math::Rect')->call(
             {
