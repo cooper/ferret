@@ -1,6 +1,6 @@
 # --- Tokens ---
 #       CLASS_DEC | {"name":"Point","version":"1.0"}
-#          METHOD | {"main":1,"name":"_init_"}
+#          METHOD | {"name":"_init_","main":1}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #         VAR_LEX | "x"
@@ -37,11 +37,11 @@
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #         PAREN_S | 
-#          STRING | ["(",["VAR_THIS","x",146],", ",["VAR_THIS","y",146],")"]
+#          STRING | ["(",["VAR_THIS","x",157],", ",["VAR_THIS","y",157],")"]
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":"1","name":"midpoint"}
+#          METHOD | {"name":"midpoint","main":"1"}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #         VAR_LEX | "pt1"
@@ -137,7 +137,7 @@
 #         OP_SEMI | 
 #        BAREWORD | "say"
 #      PAREN_CALL | 
-#          STRING | ["Nineteen: ",["VAR_LEX","nineteen",167]]
+#          STRING | ["Nineteen: ",["VAR_LEX","nineteen",178]]
 #         PAREN_E | 
 #         OP_SEMI | 
 # --- DOM ---

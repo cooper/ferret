@@ -158,19 +158,11 @@ sub c_KEYWORD_INSIDE {
     my ($c, $value) = @_;
 
     # create a closure to be opened soon.
-    my $inside = F::Node->new(type => 'Inside');
+    my $inside = F::Inside->new(type => 'Inside');
     $c->{clos_cap} = $c->{node}->adopt($inside);
 
-    # create an expression.
-    # the expression is marked as the parameter to the inside keyword.
-    # it is also marked as generated, so we know it can be terminated
-    # automatically by certain tokens.
-    my $exp = F::Expression->new(
-        parameter_for        => 'inside',
-        generated_expression => 1
-    );
-    $inside->adopt($exp);
-    $c->{node} = $exp;
+    # set the current node to the inside expression.
+    $c->{node} = $inside->param_exp;
 
     return $inside;
 }
@@ -211,7 +203,8 @@ sub c_KEYWORD_FOR {
     # automatically by certain tokens.
     my $exp = F::Expression->new(
         parameter_for        => 'for',
-        generated_expression => 1
+        generated_expression => 1,
+        no_instructions      => 1
     );
     $for->adopt($exp);
     $c->{node} = $exp;
@@ -234,7 +227,8 @@ sub c_KEYWORD_IN {
     # automatically by certain tokens.
     my $exp = F::Expression->new(
         parameter_for        => 'in',
-        generated_expression => 1
+        generated_expression => 1,
+        no_instructions      => 1
     );
     $c->{node} = $c->{node}->adopt($exp);
 
@@ -696,13 +690,24 @@ sub c_OP_MAYBE {
 
 sub c_any {
     my ($label, $c, $value) = @_;
+    
+    # at this point, we shouldn't have two instructions open.
+    # it may eventually become necessary to allow this, however
+    # (such as for inline anonymous functions, perhaps).
     return if $c->{instruction};
+
+    # if the current node does not directly allow instructions,
+    # do not start an instruction here. for example, the
+    # expression representing the condition of an if block
+    # does not allow instructions.
+    return if $c->{node}{no_instructions};
 
     # these things cannot start an instruction.
     # (tokens only) (this is horrendous)
     my @ignore = qw(
-        ^FUNCTION$      ^METHOD$        ^CLASS_DEC$
-        ^OP_.+$         ^CLOSURE_.+$    ^PKG_DEC$
+        ^FUNCTION$          ^METHOD$        ^CLASS_DEC$
+        ^OP_.+$             ^CLOSURE_.+$    ^PKG_DEC$
+        ^KEYWORD_INSIDE$    ^KEYWORD_FOR$   ^KEYWORD_IF$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

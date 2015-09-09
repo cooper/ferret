@@ -161,6 +161,12 @@ sub add_parent {
     unshift @{ $obj->{isa} }, $new_parent;
 }
 
+# revoke an object of parenthood.
+sub remove_parent {
+    my ($obj, $old_parent) = @_;
+    @{ $obj->{isa} } = grep { $_ != $old_parent } @{ $obj->{isa} };
+}
+
 # returns a flattened and simplified list of parents.
 sub parents {
     my $obj = shift;

@@ -1,0 +1,5 @@
+if (bool(<<condition>>)) {
+    my $scope = Ferret::Scope->new($f, parent => $scope);
+    
+    <<content>>
+}

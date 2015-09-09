@@ -9,7 +9,7 @@
 #        VAR_THIS | "y"
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"distanceTo"}
+#          METHOD | {"name":"distanceTo","main":null}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #         VAR_LEX | "pt2"
@@ -41,7 +41,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"distanceFromOrigin"}
+#          METHOD | {"name":"distanceFromOrigin","main":null}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        VAR_THIS | "distanceTo"
@@ -55,7 +55,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"pretty"}
+#          METHOD | {"name":"pretty","main":null}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #          STRING | ["(",["VAR_THIS","x",33],", ",["VAR_THIS","y",33],")"]

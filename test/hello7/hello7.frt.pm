@@ -67,7 +67,7 @@
 #         OP_SEMI | 
 #        BAREWORD | "say"
 #      PAREN_CALL | 
-#          STRING | ["Midpoint: ",["VAR_LEX","midpoint",176]]
+#          STRING | ["Midpoint: ",["VAR_LEX","midpoint",187]]
 #         PAREN_E | 
 #         OP_SEMI | 
 #        BAREWORD | "say"
@@ -174,7 +174,7 @@
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      Number '4'
-#      Include (Math::Point, Math::Rect, Math)
+#      Include (Math::Rect, Math::Point, Math)
 use warnings;
 use strict;
 use utf8;
@@ -196,7 +196,7 @@ use Ferret::Core::Operations qw(add num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    Ferret::space( $context, $_ ) for qw(Math::Point Math::Rect Math);
+    Ferret::space( $context, $_ ) for qw(Math::Rect Math::Point Math);
     $scope->set_property(
         rect => $scope->property('Math::Rect')->call(
             {

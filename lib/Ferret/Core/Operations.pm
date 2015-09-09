@@ -30,6 +30,12 @@ sub op_star {
     return $left;
 }
 
+sub bool {
+    # TODO: actually make rules for truth of values
+    my $val = shift;
+    return !!$val;
+}
+
 sub import {
     my $this_package = shift;
     my $package = caller;
