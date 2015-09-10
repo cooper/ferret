@@ -1,83 +1,3 @@
-# --- Tokens ---
-#         VAR_LEX | "point"
-#       OP_ASSIGN | 
-#        BAREWORD | "Math"
-#         OP_PACK | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#          NUMBER | "0"
-#        OP_COMMA | 
-#          NUMBER | "0"
-#         PAREN_E | 
-#         OP_SEMI | 
-#      KEYWORD_IF | 
-#         VAR_LEX | "point"
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["It exists!"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#  KEYWORD_INSIDE | 
-#         VAR_LEX | "point"
-#       CLOSURE_S | 
-#         VAR_LEX | "x"
-#       OP_ASSIGN | 
-#          NUMBER | "5"
-#         OP_SEMI | 
-#         VAR_LEX | "y"
-#       OP_ASSIGN | 
-#          NUMBER | "10"
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["Point: "]
-#          OP_ADD | 
-#         VAR_LEX | "point"
-#        PROPERTY | "pretty"
-#         OP_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#      KEYWORD_IF | 
-#         PAREN_S | 
-#    KEYWORD_TRUE | 
-#         PAREN_E | 
-#        OP_VALUE | 
-#      KEYWORD_ON | 
-#        BAREWORD | "say"
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#         VAR_LEX | "twice"
-#        OP_COMMA | 
-#         VAR_LEX | "message"
-#         OP_SEMI | 
-#      KEYWORD_IF | 
-#         VAR_LEX | "twice"
-#        OP_VALUE | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | [["VAR_LEX","message",101]," again"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#      PROP_VALUE | "message"
-#          STRING | ["test"]
-#        OP_COMMA | 
-#      PROP_VALUE | "twice"
-#    KEYWORD_TRUE | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["this should ignore the second parameter"]
-#        OP_COMMA | 
-#    KEYWORD_TRUE | 
-#         PAREN_E | 
-#         OP_SEMI | 
 # --- DOM ---
 #  Document './test/hello11.frt'
 #      Instruction
@@ -98,7 +18,13 @@
 #                  Bareword 'say'
 #                  Structural list [1 items]
 #                      Item 0
-#                          String 'It exists!'
+#                          String 'The point ...'
+#          Instruction
+#              Call
+#                  Bareword 'dump'
+#                  Structural list [1 items]
+#                      Item 0
+#                          Lexical variable '$point'
 #      Inside
 #          Expression ('inside' parameter)
 #              Lexical variable '$point'
@@ -121,42 +47,52 @@
 #                          Call
 #                              Property 'pretty'
 #                                  Lexical variable '$point'
-#      If
-#          Expression ('if' parameter)
-#              Structural list [1 items]
-#                  Item 0
-#                      Boolean true
-#          On
-#              Expression ('on' parameter)
-#                  Bareword 'say'
-#              Function 'callback'
+#      On
+#          Expression ('on' parameter)
+#              Bareword 'say'
+#          Function 'callback'
+#              Instruction
+#                  Need
+#                      Lexical variable '$twice'
+#                      Comma (,)
+#                      Lexical variable '$message'
+#              If
+#                  Expression ('if' parameter)
+#                      Lexical variable '$twice'
 #                  Instruction
-#                      Need
-#                          Lexical variable '$twice'
-#                          Comma (,)
-#                          Lexical variable '$message'
-#                  If
-#                      Expression ('if' parameter)
-#                          Lexical variable '$twice'
-#                      Instruction
-#                          Call
-#                              Bareword 'say'
-#                              Structural list [1 items]
-#                                  Item 0
-#                                      Mathematical operation
-#                                          Lexical variable '$message'
-#                                          Addition operator (+)
-#                                          String ' again'
-#          Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Structural list [1 items]
+#                              Item 0
+#                                  Mathematical operation
+#                                      Lexical variable '$message'
+#                                      Addition operator (+)
+#                                      String ' again'
+#              Instruction
+#                  Return pair 'didTwice'
+#                      Lexical variable '$twice'
+#      Instruction
+#          Assignment
+#              Lexical variable '$r'
 #              Call
 #                  Bareword 'say'
 #                  Hash [2 items]
 #                      Item 0
 #                          Pair 'message'
-#                              String 'test'
+#                              String 'It was said'
 #                      Item 1
 #                          Pair 'twice'
 #                              Boolean true
+#      If
+#          Expression ('if' parameter)
+#              Property 'didTwice'
+#                  Lexical variable '$r'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Structural list [1 items]
+#                      Item 0
+#                          String 'Did the fi...'
 #      Instruction
 #          Call
 #              Bareword 'say'
@@ -165,7 +101,7 @@
 #                      String 'this shoul...'
 #                  Item 1
 #                      Boolean true
-#      Include (Math::Point, Math)
+#      Include (Math, Math::Point)
 use warnings;
 use strict;
 use utf8;
@@ -215,16 +151,19 @@ use Ferret::Core::Operations qw(add bool num str);
                     $scope
                 );
             }
+            $return->set_property( didTwice => $scope->property('twice') );
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Math::Point Math);
+    Ferret::space( $context, $_ ) for qw(Math Math::Point);
     $scope->set_property( point => $scope->property('Math::Point')
           ->call( [ num( $f, 0 ), num( $f, 0 ) ], $scope ) );
     if ( bool( $scope->property('point') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-        $scope->property('say')->call( [ str( $f, "It exists!" ) ], $scope );
+        $scope->property('say')
+          ->call( [ str( $f, "The point exists!" ) ], $scope );
+        $scope->property('dump')->call( [ $scope->property('point') ], $scope );
     }
 
     # Inside
@@ -249,19 +188,25 @@ use Ferret::Core::Operations qw(add bool num str);
         ],
         $scope
     );
-    if ( bool(Ferret::true) ) {
+
+    # On
+    {
+        my $on_func =
+          do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
+
+        $scope->property('say')->add_function($on_func);
+    }
+    $scope->set_property(
+        r => $scope->property('say')->call(
+            { message => str( $f, "It was said" ), twice => Ferret::true },
+            $scope
+        )
+    );
+    if ( bool( $scope->property('r')->property('didTwice') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-        # On
-        {
-            my $on_func =
-              do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
-
-            $scope->property('say')->add_function($on_func);
-        }
         $scope->property('say')
-          ->call( { message => str( $f, "test" ), twice => Ferret::true },
-            $scope );
+          ->call( [ str( $f, "Did the first one twice!" ) ], $scope );
     }
     $scope->property('say')->call(
         [ str( $f, "this should ignore the second parameter" ), Ferret::true ],

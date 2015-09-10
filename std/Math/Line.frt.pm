@@ -1,37 +1,3 @@
-# --- Tokens ---
-#         PKG_DEC | {"name":"Math"}
-#       CLASS_DEC | {"name":"Line"}
-#          METHOD | {"main":1,"name":"_init_"}
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#        VAR_THIS | "pt1"
-#        OP_COMMA | 
-#        VAR_THIS | "pt2"
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"name":"midpoint","main":null}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#         PAREN_S | 
-#        VAR_THIS | "pt1"
-#        OP_COMMA | 
-#        VAR_THIS | "pt2"
-#         PAREN_E | 
-#        PROPERTY | "midpoint"
-#      PAREN_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"name":"length","main":null}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        VAR_THIS | "pt1"
-#        PROPERTY | "distanceTo"
-#      PAREN_CALL | 
-#        VAR_THIS | "pt2"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
 # --- DOM ---
 #  Document './std/Math/Line.frt'
 #      Package 'Math'

@@ -1,7 +1,8 @@
 $point = Math::Point(0, 0);
 
 if $point {
-    say("It exists!");
+    say("The point exists!");
+    dump($point);
 }
 
 inside $point {
@@ -13,8 +14,14 @@ say("Point: " + $point.pretty!);
 
 on say {
     need $twice, $message;
-    if $twice: say("$message again");
+    if $twice:
+        say("$message again");
+    didTwice -> $twice;
 }
 
-say(message: "test", twice: true);
+$r = say(message: "It was said", twice: true);
+
+if $r.didTwice:
+    say("Did the first one twice!");
+
 say("this should ignore the second parameter", true);

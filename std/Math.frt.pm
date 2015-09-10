@@ -1,22 +1,3 @@
-# --- Tokens ---
-#         PKG_DEC | {"name":"Math"}
-#        FUNCTION | {"name":"sqrt"}
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#         VAR_LEX | "num"
-#        OP_VALUE | 
-#        BAREWORD | "Num"
-#         OP_SEMI | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "NATIVE"
-#         OP_PACK | 
-#        BAREWORD | "Math"
-#        PROPERTY | "sqrt"
-#      PAREN_CALL | 
-#         VAR_LEX | "num"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
 # --- DOM ---
 #  Document './std/Math.frt'
 #      Package 'Math'
@@ -34,7 +15,7 @@
 #                      Structural list [1 items]
 #                          Item 0
 #                              Lexical variable '$num'
-#      Include (Num, NATIVE, NATIVE::Math)
+#      Include (NATIVE, Num, NATIVE::Math)
 use warnings;
 use strict;
 use utf8;
@@ -72,5 +53,5 @@ use Ferret::Core::Operations qw();
         };
     }
     $funcs[0]->inside_scope( sqrt => $scope, $scope );
-    Ferret::space( $context, $_ ) for qw(Num NATIVE NATIVE::Math);
+    Ferret::space( $context, $_ ) for qw(NATIVE Num NATIVE::Math);
 }

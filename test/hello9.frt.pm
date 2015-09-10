@@ -1,29 +1,3 @@
-# --- Tokens ---
-#        FUNCTION | {"name":"sayHello"}
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#         VAR_LEX | "who"
-#        OP_VALUE | 
-#        BAREWORD | "Str"
-#         OP_SEMI | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["Hello ",["VAR_LEX","who",206],"!"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#        BAREWORD | "sayHello"
-#        OP_MAYBE | 
-#      PAREN_CALL | 
-#          STRING | ["World"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#        BAREWORD | "sayGoodbye"
-#        OP_MAYBE | 
-#      PAREN_CALL | 
-#          STRING | ["World"]
-#         PAREN_E | 
-#         OP_SEMI | 
 # --- DOM ---
 #  Document './test/hello9.frt'
 #      Function 'sayHello'

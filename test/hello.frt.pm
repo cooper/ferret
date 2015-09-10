@@ -1,9 +1,3 @@
-# --- Tokens ---
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["Hello World!"]
-#         PAREN_E | 
-#         OP_SEMI | 
 # --- DOM ---
 #  Document './test/hello.frt'
 #      Instruction

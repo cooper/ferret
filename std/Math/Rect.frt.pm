@@ -1,135 +1,3 @@
-# --- Tokens ---
-#         PKG_DEC | {"name":"Math"}
-#       CLASS_DEC | {"name":"Rect"}
-#          METHOD | {"name":"_init_","main":1}
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#         VAR_LEX | "x"
-#        OP_COMMA | 
-#         VAR_LEX | "y"
-#        OP_COMMA | 
-#        VAR_THIS | "width"
-#        OP_COMMA | 
-#        VAR_THIS | "height"
-#         OP_SEMI | 
-#        VAR_THIS | "origin"
-#       OP_ASSIGN | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#         VAR_LEX | "x"
-#        OP_COMMA | 
-#         VAR_LEX | "y"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"bottomLeft"}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        VAR_THIS | "origin"
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"name":"bottomRight","main":null}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "x"
-#          OP_ADD | 
-#        VAR_THIS | "width"
-#        OP_COMMA | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "y"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"name":"topLeft","main":null}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "x"
-#        OP_COMMA | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "y"
-#          OP_ADD | 
-#        VAR_THIS | "height"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"topRight"}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "x"
-#          OP_ADD | 
-#        VAR_THIS | "width"
-#        OP_COMMA | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "y"
-#          OP_ADD | 
-#        VAR_THIS | "height"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"bottomLine"}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Line"
-#      PAREN_CALL | 
-#        VAR_THIS | "bottomLeft"
-#         OP_CALL | 
-#        OP_COMMA | 
-#        VAR_THIS | "bottomRight"
-#         OP_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"topLine"}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Line"
-#      PAREN_CALL | 
-#        VAR_THIS | "topLeft"
-#         OP_CALL | 
-#        OP_COMMA | 
-#        VAR_THIS | "topRight"
-#         OP_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"center"}
-#       CLOSURE_S | 
-#         VAR_LEX | "x"
-#       OP_ASSIGN | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "x"
-#          OP_ADD | 
-#        VAR_THIS | "width"
-#          OP_MUL | 
-#          NUMBER | "0.5"
-#         OP_SEMI | 
-#         VAR_LEX | "y"
-#       OP_ASSIGN | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "y"
-#          OP_ADD | 
-#        VAR_THIS | "height"
-#          OP_MUL | 
-#          NUMBER | "0.5"
-#         OP_SEMI | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#         VAR_LEX | "x"
-#        OP_COMMA | 
-#         VAR_LEX | "y"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
 # --- DOM ---
 #  Document './std/Math/Rect.frt'
 #      Package 'Math'
@@ -260,7 +128,7 @@
 #                                  Lexical variable '$x'
 #                              Item 1
 #                                  Lexical variable '$y'
-#      Include (Line, Point)
+#      Include (Point, Line)
 use warnings;
 use strict;
 use utf8;
@@ -515,5 +383,5 @@ use Ferret::Core::Operations qw(add mul num);
         $methods[6]->inside_scope( topLine     => $scope, $proto, $class );
         $methods[7]->inside_scope( center      => $scope, $proto, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Line Point);
+    Ferret::space( $context, $_ ) for qw(Point Line);
 }
