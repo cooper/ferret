@@ -67,7 +67,7 @@
 #         OP_SEMI | 
 #        BAREWORD | "say"
 #      PAREN_CALL | 
-#          STRING | ["Midpoint: ",["VAR_LEX","midpoint",196]]
+#          STRING | ["Midpoint: ",["VAR_LEX","midpoint",195]]
 #         PAREN_E | 
 #         OP_SEMI | 
 #        BAREWORD | "say"

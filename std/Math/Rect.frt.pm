@@ -1,7 +1,7 @@
 # --- Tokens ---
 #         PKG_DEC | {"name":"Math"}
 #       CLASS_DEC | {"name":"Rect"}
-#          METHOD | {"main":1,"name":"_init_"}
+#          METHOD | {"name":"_init_","main":1}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #         VAR_LEX | "x"
@@ -101,7 +101,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"name":"center","main":null}
+#          METHOD | {"main":null,"name":"center"}
 #       CLOSURE_S | 
 #         VAR_LEX | "x"
 #       OP_ASSIGN | 

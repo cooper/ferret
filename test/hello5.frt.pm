@@ -1,6 +1,6 @@
 # --- Tokens ---
 #       CLASS_DEC | {"version":"1.0","name":"Point"}
-#          METHOD | {"name":"_init_","main":1}
+#          METHOD | {"main":1,"name":"_init_"}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #         VAR_LEX | "x"
@@ -16,7 +16,7 @@
 #         VAR_LEX | "y"
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"oneToRight"}
+#          METHOD | {"name":"oneToRight","main":null}
 #       CLOSURE_S | 
 #         VAR_LEX | "pt"
 #       OP_ASSIGN | 
@@ -33,15 +33,15 @@
 #         VAR_LEX | "pt"
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"name":"pretty","main":null}
+#          METHOD | {"main":null,"name":"pretty"}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #         PAREN_S | 
-#          STRING | ["(",["VAR_THIS","x",166],", ",["VAR_THIS","y",166],")"]
+#          STRING | ["(",["VAR_THIS","x",165],", ",["VAR_THIS","y",165],")"]
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":"1","name":"midpoint"}
+#          METHOD | {"name":"midpoint","main":"1"}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #         VAR_LEX | "pt1"
@@ -137,7 +137,7 @@
 #         OP_SEMI | 
 #        BAREWORD | "say"
 #      PAREN_CALL | 
-#          STRING | ["Nineteen: ",["VAR_LEX","nineteen",187]]
+#          STRING | ["Nineteen: ",["VAR_LEX","nineteen",186]]
 #         PAREN_E | 
 #         OP_SEMI | 
 # --- DOM ---

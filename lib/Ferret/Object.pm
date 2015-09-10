@@ -87,9 +87,9 @@ sub property {
     # try the local property first.
     # this is done separately first because hopefully,
     # we won't even need to generate ->parents.
-    if (exists $obj->{properties}{$prop_name}) {
+    if (defined $obj->{properties}{$prop_name}) {
         my $p = $obj->{properties}{$prop_name};
-        weaken($p->{last_parent} = $borrow_obj);
+        weaken($p->{last_parent} = $borrow_obj) if blessed $p;
         return $p;
     }
 

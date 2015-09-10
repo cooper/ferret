@@ -18,7 +18,7 @@ sub perl_fmt {
 }
 
 sub perl_fmt_do {
-    return shift->{value} ? '$Ferret::true' : '$Ferret::false';
+    return shift->{value} ? 'Ferret::true' : 'Ferret::false';
 }
 
 1

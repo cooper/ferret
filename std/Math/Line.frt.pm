@@ -1,7 +1,7 @@
 # --- Tokens ---
 #         PKG_DEC | {"name":"Math"}
 #       CLASS_DEC | {"name":"Line"}
-#          METHOD | {"name":"_init_","main":1}
+#          METHOD | {"main":1,"name":"_init_"}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #        VAR_THIS | "pt1"
@@ -9,7 +9,7 @@
 #        VAR_THIS | "pt2"
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"midpoint"}
+#          METHOD | {"name":"midpoint","main":null}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #         PAREN_S | 
@@ -22,7 +22,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"length"}
+#          METHOD | {"name":"length","main":null}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        VAR_THIS | "pt1"

@@ -1,6 +1,6 @@
 # --- Tokens ---
 #       CLASS_DEC | {"name":"String"}
-#          METHOD | {"main":null,"name":"doubledLength"}
+#          METHOD | {"name":"doubledLength","main":null}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        VAR_THIS | "length"

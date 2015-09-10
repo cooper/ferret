@@ -25,7 +25,10 @@ sub is_hash  { shift->{hash}  }
 
 sub new_item {
     my $list = shift;
-    my $item = F::ListItem->new(item_num => $list->{item_c}++);
+    my $item = F::ListItem->new(
+        item_num => $list->{item_c}++,
+        no_instructions => 1
+    );
     return $list->adopt($item);
 }
 

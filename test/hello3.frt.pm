@@ -80,7 +80,7 @@
 #         OP_SEMI | 
 #        BAREWORD | "say"
 #      PAREN_CALL | 
-#          STRING | ["Pi = ",["VAR_LEX","pi",135]]
+#          STRING | ["Pi = ",["VAR_LEX","pi",134]]
 #         PAREN_E | 
 #         OP_SEMI | 
 # --- DOM ---

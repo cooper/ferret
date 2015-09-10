@@ -1,7 +1,7 @@
 # --- Tokens ---
 #         PKG_DEC | {"name":"Math"}
 #       CLASS_DEC | {"name":"Point"}
-#          METHOD | {"main":1,"name":"_init_"}
+#          METHOD | {"name":"_init_","main":1}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #        VAR_THIS | "x"
@@ -41,7 +41,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"distanceFromOrigin"}
+#          METHOD | {"name":"distanceFromOrigin","main":null}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        VAR_THIS | "distanceTo"
@@ -55,13 +55,13 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"pretty"}
+#          METHOD | {"name":"pretty","main":null}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #          STRING | ["(",["VAR_THIS","x",33],", ",["VAR_THIS","y",33],")"]
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":"1","name":"midpoint"}
+#          METHOD | {"name":"midpoint","main":"1"}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #         VAR_LEX | "pt1"

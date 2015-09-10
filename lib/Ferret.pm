@@ -48,6 +48,7 @@ sub undefined(;$) {
 sub truth {
     # TODO: actually make rules for truth of values
     my $val = shift;
+    return if !defined $val;
     return if $val == false;
     return if undefined($val);
     return !!$val;
