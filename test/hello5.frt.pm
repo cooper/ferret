@@ -380,3 +380,5 @@ use Ferret::Core::Operations qw(add div num str);
     }
     Ferret::space( $context, $_ ) for qw(Point);
 }
+
+Ferret::runtime();

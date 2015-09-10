@@ -213,3 +213,5 @@ use Ferret::Core::Operations qw(add bool num str);
         $scope
     );
 }
+
+Ferret::runtime();

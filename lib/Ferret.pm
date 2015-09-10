@@ -226,6 +226,37 @@ sub bind_constructor {
     return $obj;
 }
 
+###############
+### RUNTIME ###
+###############
+
+my (@notifiers, $loop);
+
+sub init_runtime {
+}
+
+sub add_notifier {
+    my $notifier = shift;
+    push @notifiers, $notifier;
+    $loop->add($notifier) if $loop;
+}
+
+sub remove_notifier {
+    my $notifier = shift;
+    @notifiers = grep { $_ != $notifier } @notifiers;
+    $loop->remove($notifier) if $loop;
+}
+
+sub runtime {
+    return unless @notifiers;
+    require IO::Async::Loop;
+    $loop = IO::Async::Loop->new;
+    $loop->add($_) foreach @notifiers;
+    while ($loop->notifiers) {
+        $loop->loop_once;
+    }
+}
+
 ################
 ### INCLUDES ###
 ################

@@ -156,3 +156,5 @@ use Ferret::Core::Operations qw(add num str);
     $scope->set_property( emptyArray => Ferret::List->new( $f, items => [] ) );
     $scope->set_property( emptyHash  => Ferret::Hash->new( $f, pairs => {} ) );
 }
+
+Ferret::runtime();

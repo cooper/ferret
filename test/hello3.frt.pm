@@ -194,3 +194,5 @@ use Ferret::Core::Operations qw(add num str);
       ->call( [ add( $scope, str( $f, "Pi = " ), $scope->property('pi') ) ],
         $scope );
 }
+
+Ferret::runtime();

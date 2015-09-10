@@ -1,0 +1,75 @@
+# Copyright (c) 2015, Mitchell Cooper
+package Ferret::Timer;
+
+use warnings;
+use strict;
+use utf8;
+use 5.010;
+use parent 'Ferret::Object';
+
+my @methods = (
+    once => {
+        code => \&run_once
+    },
+    expire => {
+        code => \&expire_cb
+    },
+    cancel => {
+        code => \&cancel
+    }
+    # start
+    # stop
+);
+
+Ferret::bind_class(
+    name      => 'Timer',
+    methods   => \@methods
+);
+
+sub new {
+    my ($class, $f, %opts) = @_;
+
+    # create a new object.
+    my $timer = $class->SUPER::new($f, %opts);
+    
+    return $timer;
+}
+
+sub run_once {
+    my ($timer, $arguments, $from_scope, $scope, $return) = @_;
+    
+    # create a countdown timer.
+    require IO::Async::Timer::Countdown;
+    my $t; $t = $timer->{t} = IO::Async::Timer::Countdown->new(
+        delay => $timer->{delay} // 5,
+        on_expire => sub {
+            return if $timer->{canceled};
+            $timer->property('expire')->call([ ]);
+            Ferret::remove_notifier($t);
+        }
+    );
+    
+    # add to loop.
+    Ferret::add_notifier($t->start);
+    
+    # conveniently return the expire event.
+    $return->set_property(expire => $timer->property('expire'));
+    
+    return $return;
+}
+
+sub expire_cb {
+    my ($timer, $arguments, $from_scope, $scope, $return) = @_;
+    $timer->{expired} = 1;
+    return $return;
+}
+
+sub cancel {
+    my ($timer, $arguments, $from_scope, $scope, $return) = @_;
+    $timer->{canceled} = 1;
+    my $t = $timer->{t} or return $return;
+    $t->stop;
+    Ferret::remove_notifier($t);
+}
+
+1

@@ -34,3 +34,5 @@ use Ferret::Core::Operations qw(str);
 
     $scope->property('say')->call( [ str( $f, "Hello World!" ) ], $scope );
 }
+
+Ferret::runtime();

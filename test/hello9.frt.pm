@@ -90,3 +90,5 @@ use Ferret::Core::Operations qw(add str);
         }
     }
 }
+
+Ferret::runtime();

@@ -303,3 +303,5 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
         $methods[4]->inside_scope( midpoint => $scope, $class, $class );
     }
 }
+
+Ferret::runtime();

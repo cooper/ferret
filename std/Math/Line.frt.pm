@@ -127,3 +127,5 @@ use Ferret::Core::Operations qw();
         $methods[2]->inside_scope( length   => $scope, $proto, $class );
     }
 }
+
+Ferret::runtime();

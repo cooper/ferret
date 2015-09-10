@@ -15,3 +15,5 @@ my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'<<base_name>>.pm'}++;
 
 <<content>>
+
+Ferret::runtime();
