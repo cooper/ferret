@@ -12,4 +12,14 @@ sub _say {
     return $return;
 }
 
+sub _dump {
+    my ($self, $arguments, $from_scope, $scope, $return) = @_;
+    require Data::Dumper;
+    Data::Dumper->import('Dumper');
+    $Data::Dumper::Maxdepth = 1;
+    $Data::Dumper::Terse = 1;
+    print Dumper($arguments->{value}), "\n";
+    return $return;
+}
+
 1

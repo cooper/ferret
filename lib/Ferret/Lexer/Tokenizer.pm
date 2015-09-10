@@ -17,7 +17,7 @@ my $keyword_reg = '^('.join('|', qw{
     need        want        inside      then
     if          else        return      after
     for         in          func        __END__
-    init
+    init        on
 }).')$';
 $keyword_reg = qr/$keyword_reg/;
 

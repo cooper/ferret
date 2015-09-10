@@ -96,14 +96,14 @@ sub call {
 }
 
 sub inside_scope {
-    # $name     =   the name of the function within the containing scope
+    # $name     =   the name of the function within the containing scope, or undef if anonymous
     # $scope    =   the containing scope of the function definition
     # $owner    =   the owner of the function: a scope, class, or prototype
     # $class    =   the containing class of the function (if any)
     my ($func, $name, $scope, $owner, $class) = @_;
     $func->{class} = $class;
     $func->{outer_scope} = $scope;
-    $owner->set_property($name => $func);
+    $owner->set_property($name => $func) if defined $name;
     return $func;
 }
 

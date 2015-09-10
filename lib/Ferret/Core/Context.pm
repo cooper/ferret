@@ -8,7 +8,8 @@ use 5.010;
 use parent 'Ferret::Context';
 
 my %functions = (
-    say => [ '_say', qw(message) ]
+    say  => [ '_say',  qw(message) ],
+    dump => [ '_dump', qw(value)   ]
 );
 
 # creates a new context.

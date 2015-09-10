@@ -1,7 +1,7 @@
 # --- Tokens ---
 #         PKG_DEC | {"name":"Math"}
 #       CLASS_DEC | {"name":"Rect"}
-#          METHOD | {"name":"_init_","main":1}
+#          METHOD | {"main":1,"name":"_init_"}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #         VAR_LEX | "x"
@@ -22,13 +22,13 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"name":"bottomLeft","main":null}
+#          METHOD | {"main":null,"name":"bottomLeft"}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        VAR_THIS | "origin"
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"name":"bottomRight","main":null}
+#          METHOD | {"main":null,"name":"bottomRight"}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        BAREWORD | "Point"
@@ -43,7 +43,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"name":"topLeft","main":null}
+#          METHOD | {"main":null,"name":"topLeft"}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        BAREWORD | "Point"
@@ -101,7 +101,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"center"}
+#          METHOD | {"name":"center","main":null}
 #       CLOSURE_S | 
 #         VAR_LEX | "x"
 #       OP_ASSIGN | 

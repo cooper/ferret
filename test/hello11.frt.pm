@@ -40,6 +40,41 @@
 #         OP_CALL | 
 #         PAREN_E | 
 #         OP_SEMI | 
+#        BAREWORD | "dump"
+#      PAREN_CALL | 
+#        BAREWORD | "say"
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#        BAREWORD | "say"
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "twice"
+#        OP_COMMA | 
+#         VAR_LEX | "message"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | [["VAR_LEX","message",102]," again"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#      PROP_VALUE | "message"
+#          STRING | ["test"]
+#        OP_COMMA | 
+#      PROP_VALUE | "twice"
+#          NUMBER | "1"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["okay"]
+#        OP_COMMA | 
+#          NUMBER | "1"
+#         PAREN_E | 
+#         OP_SEMI | 
 # --- DOM ---
 #  Document './test/hello11.frt'
 #      Instruction
@@ -83,7 +118,49 @@
 #                          Call
 #                              Property 'pretty'
 #                                  Lexical variable '$point'
-#      Include (Math::Point, Math)
+#      Instruction
+#          Call
+#              Bareword 'dump'
+#              Structural list [1 items]
+#                  Item 0
+#                      Bareword 'say'
+#      On
+#          Expression ('on' parameter)
+#              Bareword 'say'
+#          Function 'callback'
+#              Instruction
+#                  Need
+#                      Lexical variable '$twice'
+#                      Comma (,)
+#                      Lexical variable '$message'
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Structural list [1 items]
+#                          Item 0
+#                              Mathematical operation
+#                                  Lexical variable '$message'
+#                                  Addition operator (+)
+#                                  String ' again'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Hash [2 items]
+#                  Item 0
+#                      Pair 'message'
+#                          String 'test'
+#                  Item 1
+#                      Pair 'twice'
+#                          Number '1'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [2 items]
+#                  Item 0
+#                      String 'okay'
+#                  Item 1
+#                      Number '1'
+#      Include (Math, Math::Point)
 use warnings;
 use strict;
 use utf8;
@@ -105,7 +182,34 @@ use Ferret::Core::Operations qw(add bool num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    Ferret::space( $context, $_ ) for qw(Math::Point Math);
+    # Function '+undef' definition
+    {
+        my $func = $funcs[0] = Ferret::Function->new( $f, name => '+undef' );
+        $func->add_argument( name => 'twice' );
+        $func->add_argument( name => 'message' );
+        $func->{code} = sub {
+            my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+            do {
+                return if not defined $arguments->{twice};
+                $scope->set_property( twice => $arguments->{twice} );
+            };
+            do {
+                return if not defined $arguments->{message};
+                $scope->set_property( message => $arguments->{message} );
+            };
+            $scope->property('say')->call(
+                [
+                    add(
+                        $scope, $scope->property('message'),
+                        str( $f, " again" )
+                    )
+                ],
+                $scope
+            );
+            return $return;
+        };
+    }
+    Ferret::space( $context, $_ ) for qw(Math Math::Point);
     $scope->set_property( point => $scope->property('Math::Point')
           ->call( [ num( $f, 0 ), num( $f, 0 ) ], $scope ) );
     if ( bool( $scope->property('point') ) ) {
@@ -136,4 +240,18 @@ use Ferret::Core::Operations qw(add bool num str);
         ],
         $scope
     );
+    $scope->property('dump')->call( [ $scope->property('say') ], $scope );
+
+    # On
+    {
+        my $on_func = do {
+            $funcs[0]->inside_scope( +undef => $scope, $scope );
+        };
+
+        $scope->property('say')->add_function($on_func);
+    }
+    $scope->property('say')
+      ->call( { message => str( $f, "test" ), twice => num( $f, 1 ) }, $scope );
+    $scope->property('say')
+      ->call( [ str( $f, "okay" ), num( $f, 1 ) ], $scope );
 }

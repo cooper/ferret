@@ -9,7 +9,7 @@
 #        VAR_THIS | "pt2"
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"midpoint"}
+#          METHOD | {"name":"midpoint","main":null}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #         PAREN_S | 
@@ -22,7 +22,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"name":"length","main":null}
+#          METHOD | {"main":null,"name":"length"}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        VAR_THIS | "pt1"

@@ -167,6 +167,22 @@ sub c_KEYWORD_INSIDE {
     return $inside;
 }
 
+sub c_KEYWORD_ON {
+    my ($c, $value) = @_;
+
+    # create on.
+    my $on = F::On->new(type => 'On');
+    
+    # set the closure to the function of on.
+    $c->{clos_cap} = $on->function;
+    $c->{node}->adopt($on);
+
+    # set the current node to the on expression.
+    $c->{node} = $on->param_exp;
+
+    return $on;
+}
+
 sub c_KEYWORD_IF {
     my ($c, $value) = @_;
 
@@ -708,6 +724,7 @@ sub c_any {
         ^FUNCTION$          ^METHOD$        ^CLASS_DEC$
         ^OP_.+$             ^CLOSURE_.+$    ^PKG_DEC$
         ^KEYWORD_INSIDE$    ^KEYWORD_FOR$   ^KEYWORD_IF$
+        ^KEYWORD_ON$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

@@ -109,7 +109,7 @@ sub close : method {
     # like lists, for instance, delete empty items on termination.
     # ex: $c->{node} = $c->{node}->close;
 
-    return $node->{parent};
+    return $node->{return_on_close} || $node->{parent};
 }
 
 

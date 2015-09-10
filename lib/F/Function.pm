@@ -9,6 +9,18 @@ use parent 'F::Statement';
 sub type { 'Function' }
 sub desc { "function '$_[0]{name}'" }
 sub is_closure { 1 }
+sub anonymous { shift->{anonymous} }
+
+sub close : method {
+    my $func = shift;
+    
+    # this may be a fake function inside an On block
+    if ($func->{parent}->type eq 'On') {
+        return $func->SUPER::close->close;
+    }
+    
+    return $func->SUPER::close(@_);
+}
 
 sub perl_fmt {
     my $func = shift;
@@ -35,7 +47,7 @@ sub perl_fmt {
 
     my $info = {
         id         => $func->document->{function_cid}++,
-        name       => $func->{name},
+        name       => $func->{anonymous} ? '+undef' : $func->{name},
         statements => $content,
         arguments  => $arguments
     };
