@@ -16,7 +16,7 @@
 #         VAR_LEX | "y"
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"name":"oneToRight","main":null}
+#          METHOD | {"main":null,"name":"oneToRight"}
 #       CLOSURE_S | 
 #         VAR_LEX | "pt"
 #       OP_ASSIGN | 

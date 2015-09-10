@@ -31,9 +31,7 @@ sub op_star {
 }
 
 sub bool {
-    # TODO: actually make rules for truth of values
-    my $val = shift;
-    return !!$val;
+    return Ferret::truth(@_);
 }
 
 sub import {

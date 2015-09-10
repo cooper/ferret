@@ -1,8 +1,6 @@
 # On
 {
-    my $on_func = do {
-        <<function>>
-    };
+    my $on_func = do { <<function>> };
     
     <<expression>>->add_function($on_func);
 }

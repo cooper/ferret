@@ -439,6 +439,30 @@ sub c_NUMBER {
     return $num;
 }
 
+sub c_KEYWORD_TRUE {
+    my ($c, $value) = @_;
+
+    # create the bool...
+    my $b = F::Boolean->new(value => 1);
+
+    # add to the current node.
+    $c->{node}->adopt($b);
+
+    return $b;
+}
+
+sub c_KEYWORD_FALSE {
+    my ($c, $value) = @_;
+
+    # create the bool...
+    my $b = F::Boolean->new(value => undef);
+
+    # add to the current node.
+    $c->{node}->adopt($b);
+
+    return $b;
+}
+
 sub c_OP_COMMA {
     my ($c, $value) = @_;
 
@@ -502,8 +526,13 @@ sub c_OP_SEMI {
         return unexpected($c, "inside $type");
     }
 
+    # close the instruction.
     $c->{node} = $c->{node}->close;
     $c->{instruction} = $c->{instruction}{parent_instruction};
+
+    # maybe now we can terminate an inline If.
+    $c->{node} = $c->{node}->close
+        if $c->{node}->type eq 'If' && $c->{node}{inline};
 
     return;
 }
@@ -544,9 +573,24 @@ sub c_KEYWORD_NEED {
     return $c->{node} = $c->{need} = $c->{node}->adopt($need);
 }
 
+sub c_OP_VALUE {
+    my $c = shift;
+    
+    # perhaps this is an inline if?
+    if (($c->{node}{parameter_for} || '') eq 'if') {
+        my $if = $c->{node} = $c->{node}->close;
+        $if->{inline} = 1;
+        return $if;
+    }
+    
+    # otherwise just throw the token back in.
+    $current->{node}->adopt($current->{unknown_el});
+    
+}
+
 sub c_PROP_VALUE {
     my ($c, $value) = @_;
-
+    
     # property pair must be a DIRECT descendent of a list item.
     return unexpected($c, 'outside of list')
         if !$c->{list};

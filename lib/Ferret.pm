@@ -44,6 +44,15 @@ sub undefined(;$) {
     return $test == $undefined;
 }
 
+# returns Perl boolean of whether a Ferret value is true.
+sub truth {
+    # TODO: actually make rules for truth of values
+    my $val = shift;
+    return if $val == false;
+    return if undefined($val);
+    return !!$val;
+}
+
 # returns Perl boolean of whether or not a value is a valid Ferret value.
 sub valid_value {
     defined(my $value = shift) or return;

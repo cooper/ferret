@@ -53,6 +53,9 @@
 #        OP_COMMA | 
 #         VAR_LEX | "message"
 #         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "twice"
+#        OP_VALUE | 
 #        BAREWORD | "say"
 #      PAREN_CALL | 
 #          STRING | [["VAR_LEX","message",102]," again"]
@@ -65,14 +68,14 @@
 #          STRING | ["test"]
 #        OP_COMMA | 
 #      PROP_VALUE | "twice"
-#          NUMBER | "1"
+#    KEYWORD_TRUE | 
 #         PAREN_E | 
 #         OP_SEMI | 
 #        BAREWORD | "say"
 #      PAREN_CALL | 
-#          STRING | ["okay"]
+#          STRING | ["this should ignore the second parameter"]
 #        OP_COMMA | 
-#          NUMBER | "1"
+#    KEYWORD_TRUE | 
 #         PAREN_E | 
 #         OP_SEMI | 
 # --- DOM ---
@@ -133,15 +136,18 @@
 #                      Lexical variable '$twice'
 #                      Comma (,)
 #                      Lexical variable '$message'
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Structural list [1 items]
-#                          Item 0
-#                              Mathematical operation
-#                                  Lexical variable '$message'
-#                                  Addition operator (+)
-#                                  String ' again'
+#              If
+#                  Expression ('if' parameter)
+#                      Lexical variable '$twice'
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Structural list [1 items]
+#                              Item 0
+#                                  Mathematical operation
+#                                      Lexical variable '$message'
+#                                      Addition operator (+)
+#                                      String ' again'
 #      Instruction
 #          Call
 #              Bareword 'say'
@@ -151,16 +157,16 @@
 #                          String 'test'
 #                  Item 1
 #                      Pair 'twice'
-#                          Number '1'
+#                          Boolean true
 #      Instruction
 #          Call
 #              Bareword 'say'
 #              Structural list [2 items]
 #                  Item 0
-#                      String 'okay'
+#                      String 'this shoul...'
 #                  Item 1
-#                      Number '1'
-#      Include (Math, Math::Point)
+#                      Boolean true
+#      Include (Math::Point, Math)
 use warnings;
 use strict;
 use utf8;
@@ -197,19 +203,23 @@ use Ferret::Core::Operations qw(add bool num str);
                 return if not defined $arguments->{message};
                 $scope->set_property( message => $arguments->{message} );
             };
-            $scope->property('say')->call(
-                [
-                    add(
-                        $scope, $scope->property('message'),
-                        str( $f, " again" )
-                    )
-                ],
-                $scope
-            );
+            if ( bool( $scope->property('twice') ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                $scope->property('say')->call(
+                    [
+                        add(
+                            $scope, $scope->property('message'),
+                            str( $f, " again" )
+                        )
+                    ],
+                    $scope
+                );
+            }
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Math Math::Point);
+    Ferret::space( $context, $_ ) for qw(Math::Point Math);
     $scope->set_property( point => $scope->property('Math::Point')
           ->call( [ num( $f, 0 ), num( $f, 0 ) ], $scope ) );
     if ( bool( $scope->property('point') ) ) {
@@ -244,14 +254,16 @@ use Ferret::Core::Operations qw(add bool num str);
 
     # On
     {
-        my $on_func = do {
-            $funcs[0]->inside_scope( +undef => $scope, $scope );
-        };
+        my $on_func =
+          do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
 
         $scope->property('say')->add_function($on_func);
     }
     $scope->property('say')
-      ->call( { message => str( $f, "test" ), twice => num( $f, 1 ) }, $scope );
-    $scope->property('say')
-      ->call( [ str( $f, "okay" ), num( $f, 1 ) ], $scope );
+      ->call( { message => str( $f, "test" ), twice => $Ferret::true },
+        $scope );
+    $scope->property('say')->call(
+        [ str( $f, "this should ignore the second parameter" ), $Ferret::true ],
+        $scope
+    );
 }

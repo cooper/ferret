@@ -28,7 +28,7 @@
 #        VAR_THIS | "origin"
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"bottomRight"}
+#          METHOD | {"name":"bottomRight","main":null}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        BAREWORD | "Point"
@@ -43,7 +43,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"main":null,"name":"topLeft"}
+#          METHOD | {"name":"topLeft","main":null}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        BAREWORD | "Point"
@@ -75,7 +75,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"name":"bottomLine","main":null}
+#          METHOD | {"main":null,"name":"bottomLine"}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        BAREWORD | "Line"
@@ -88,7 +88,7 @@
 #         PAREN_E | 
 #         OP_SEMI | 
 #       CLOSURE_E | 
-#          METHOD | {"name":"topLine","main":null}
+#          METHOD | {"main":null,"name":"topLine"}
 #       CLOSURE_S | 
 #  KEYWORD_RETURN | 
 #        BAREWORD | "Line"

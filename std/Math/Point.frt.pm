@@ -1,7 +1,7 @@
 # --- Tokens ---
 #         PKG_DEC | {"name":"Math"}
 #       CLASS_DEC | {"name":"Point"}
-#          METHOD | {"name":"_init_","main":1}
+#          METHOD | {"main":1,"name":"_init_"}
 #       CLOSURE_S | 
 #    KEYWORD_NEED | 
 #        VAR_THIS | "x"
