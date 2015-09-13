@@ -37,6 +37,7 @@ sub run_once {
         delay => $timer->{delay} // 5,
         on_expire => sub {
             return if $timer->{canceled};
+            delete $timer->{t};
             $timer->property('expire')->call([ ]);
             Ferret::remove_notifier($t);
         }
@@ -49,7 +50,7 @@ sub run_once {
     #$return->set_property(expire => $timer->property('expire'));
     # nvm: can't do this anymore. it causes last_parent to be the
     # return object, meaning the event would belong to that object
-    
+
     return $timer;
 }
 
@@ -62,9 +63,11 @@ sub expire_cb {
 sub cancel {
     my ($timer, $arguments, $from_scope, $scope, $return) = @_;
     $timer->{canceled} = 1;
-    my $t = $timer->{t} or return $return;
+    my $t = delete $timer->{t} or return $return;
     $t->stop;
     Ferret::remove_notifier($t);
+    $return->set_property(canceled => Ferret::true);
+    return $return;
 }
 
 1

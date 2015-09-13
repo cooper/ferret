@@ -13,12 +13,12 @@ sub anonymous { shift->{anonymous} }
 
 sub close : method {
     my $func = shift;
-    
+
     # this may be a fake function inside an On block
     if ($func->{parent}->type eq 'On') {
         return $func->SUPER::close->close;
     }
-    
+
     return $func->SUPER::close(@_);
 }
 
@@ -46,6 +46,7 @@ sub perl_fmt {
     }
 
     my $info = {
+        event_cb   => $func->{event_cb},
         id         => $func->document->{function_cid}++,
         name       => $func->{anonymous} ? '+undef' : $func->{name},
         statements => $content,

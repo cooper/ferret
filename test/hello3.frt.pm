@@ -112,9 +112,9 @@ use Ferret::Core::Operations qw(add num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    # Function 'hello1' definition
+    # Function event 'hello1' callback definition
     {
-        my $func = $funcs[0] = Ferret::Function->new( $f, name => 'hello1' );
+        my $func = Ferret::Function->new( $f, name => 'default' );
 
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
@@ -134,11 +134,16 @@ use Ferret::Core::Operations qw(add num str);
             );
             return $return;
         };
+        $funcs[0] = Ferret::Event->new(
+            $f,
+            name         => 'hello1',
+            default_func => [ undef, $func ]
+        );
     }
 
-    # Function 'hello2' definition
+    # Function event 'hello2' callback definition
     {
-        my $func = $funcs[1] = Ferret::Function->new( $f, name => 'hello2' );
+        my $func = Ferret::Function->new( $f, name => 'default' );
 
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
@@ -153,12 +158,16 @@ use Ferret::Core::Operations qw(add num str);
             );
             return $return;
         };
+        $funcs[1] = Ferret::Event->new(
+            $f,
+            name         => 'hello2',
+            default_func => [ undef, $func ]
+        );
     }
 
-    # Function 'helloWorld' definition
+    # Function event 'helloWorld' callback definition
     {
-        my $func = $funcs[2] =
-          Ferret::Function->new( $f, name => 'helloWorld' );
+        my $func = Ferret::Function->new( $f, name => 'default' );
         $func->add_argument( name => 'name1' );
         $func->add_argument( name => 'name2' );
         $func->{code} = sub {
@@ -177,6 +186,11 @@ use Ferret::Core::Operations qw(add num str);
             $scope->property('hello2')->call( [], $scope );
             return $return;
         };
+        $funcs[2] = Ferret::Event->new(
+            $f,
+            name         => 'helloWorld',
+            default_func => [ undef, $func ]
+        );
     }
     $funcs[2]->inside_scope( helloWorld => $scope, $scope );
 

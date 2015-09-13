@@ -44,7 +44,7 @@ sub perl_fmt {
 
     # add each method definition.
     foreach my $def (@{ $class->{method_defs} }) {
-        my $fmt = $class->get_format(method_def => $def);
+        my $fmt = $class->get_format(method_def_event => $def);
         $before_c .= "$fmt\n";
     }
 

@@ -22,7 +22,7 @@ sub new {
     );
     $on->adopt($exp);
     weaken($on->{param_exp} = $exp);
-    
+
     # create a function.
     my $func = F::Function->new(
         name      => 'callback',
@@ -41,7 +41,7 @@ sub new {
 
 sub perl_fmt {
     my $on = shift;
-    
+
     return on => {
         expression => $on->{param_exp}->perl_fmt_do,
         function   => $on->{function}->perl_fmt_do

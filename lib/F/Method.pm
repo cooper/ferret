@@ -35,6 +35,7 @@ sub perl_fmt {
 
     my $class = $method->class;
     my $info = {
+        event_cb   => $method->{event_cb},
         id         => $class->{method_cid}++,
         name       => $method->{name},
         statements => $content,

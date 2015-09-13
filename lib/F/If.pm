@@ -29,14 +29,14 @@ sub new {
 sub perl_fmt {
     my $if = shift;
     $if->document->{required_operations}{bool}++;
-    
+
     # get content.
     my $content = '';
     foreach my $child ($if->ordered_children) {
         next if $child == $if->{param_exp};
         $content .= $child->perl_fmt_do."\n";
     }
-    
+
     return if => {
         condition => $if->{param_exp}->perl_fmt_do,
         content   => $content

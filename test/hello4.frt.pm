@@ -97,9 +97,9 @@ use Ferret::Core::Operations qw(add num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    # Function 'makePoint' definition
+    # Function event 'makePoint' callback definition
     {
-        my $func = $funcs[0] = Ferret::Function->new( $f, name => 'makePoint' );
+        my $func = Ferret::Function->new( $f, name => 'default' );
         $func->add_argument( name => 'x' );
         $func->add_argument( name => 'y' );
         $func->add_argument( name => 'z', optional => 1 );
@@ -126,6 +126,11 @@ use Ferret::Core::Operations qw(add num str);
             $return->set_property( point => $scope->property('point') );
             return $return;
         };
+        $funcs[0] = Ferret::Event->new(
+            $f,
+            name         => 'makePoint',
+            default_func => [ undef, $func ]
+        );
     }
     $funcs[0]->inside_scope( makePoint => $scope, $scope );
 

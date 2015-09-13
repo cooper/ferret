@@ -103,7 +103,7 @@ sub c_CLASS_DEC {
 
 sub c_METHOD {
     my ($c, $value) = @_;
-    my $method = F::Method->new(%$value);
+    my $method = F::Method->new(%$value, event_cb => 1);
     $c->{node}->adopt($method);
     @$c{ qw(node clos_cap method) } = ($method) x 3;
     return $method;
@@ -111,7 +111,7 @@ sub c_METHOD {
 
 sub c_FUNCTION {
     my ($c, $value) = @_;
-    my $function = F::Function->new(%$value);
+    my $function = F::Function->new(%$value, event_cb => 1);
     $c->{node}->adopt($function);
     @$c{ qw(node clos_cap function) } = ($function) x 3;
     return $function;
@@ -172,7 +172,7 @@ sub c_KEYWORD_ON {
 
     # create on.
     my $on = F::On->new(type => 'On');
-    
+
     # set the closure to the function of on.
     $c->{clos_cap} = $on->function;
     $c->{node}->adopt($on);
@@ -321,7 +321,7 @@ sub start_list {
     $list->{parent_list} = $c->{list};
     $list->{list_terminator} = $terminator;
     $list->{no_instructions} = 1;
-    
+
     # set the current list and the current node to the list's first item.
     $c->{list} = $c->{node}->adopt($list);
     $c->{node} = $list->new_item;
@@ -576,22 +576,22 @@ sub c_KEYWORD_NEED {
 
 sub c_OP_VALUE {
     my $c = shift;
-    
+
     # perhaps this is an inline if?
     if (($c->{node}{parameter_for} || '') eq 'if') {
         my $if = $c->{node} = $c->{node}->close;
         $if->{inline} = 1;
         return $if;
     }
-    
+
     # otherwise just throw the token back in.
     $current->{node}->adopt($current->{unknown_el});
-    
+
 }
 
 sub c_PROP_VALUE {
     my ($c, $value) = @_;
-    
+
     # property pair must be a DIRECT descendent of a list item.
     return unexpected($c, 'outside of list')
         if !$c->{list};
@@ -751,7 +751,7 @@ sub c_OP_MAYBE {
 
 sub c_any {
     my ($label, $c, $value) = @_;
-    
+
     # at this point, we shouldn't have two instructions open.
     # it may eventually become necessary to allow this, however
     # (such as for inline anonymous functions, perhaps).

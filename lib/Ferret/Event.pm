@@ -48,7 +48,13 @@ sub add_function {
     }
 
     my $code = sub {
-        my ($fire, $obj, $arguments, $from_scope, $return) = @_;
+        my (
+            $fire, $obj, $class, $outer_scope,
+            $arguments, $from_scope, $return
+        ) = @_;
+
+        # forward scope information to the function.
+        $func->inside_scope(undef, $outer_scope, undef, $class);
         $func->{last_parent} = $obj; # for $self
 
         # call the function.
@@ -83,7 +89,14 @@ sub call {
     # call each function. if the dependencies can't be satisfied,
     # ->call will do nothing.
     $return ||= Ferret::Object->new($event->ferret);
-    my @args = ($obj, $arguments, $from_scope, $return);
+    my @args = (
+        $obj,
+        $event->{class},
+        $event->{outer_scope},
+        $arguments,
+        $from_scope,
+        $return
+    );
 
     my $fire = Evented::Object::fire_events_together(
         [ $event, call      => @args ],
@@ -91,6 +104,18 @@ sub call {
     );
 
     return $fire->{override_return} // $return;
+}
+
+sub inside_scope {
+    # $name     =   the name of the event within the containing scope, or undef if anonymous
+    # $scope    =   the containing scope of the function definition
+    # $owner    =   the owner of the function: a scope, class, or prototype
+    # $class    =   the containing class of the function (if any)
+    my ($event, $name, $scope, $owner, $class) = @_;
+    $event->{class} = $class;
+    $event->{outer_scope} = $scope;
+    $owner->set_property($name => $event) if length $name;
+    return $event;
 }
 
 1

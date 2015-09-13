@@ -167,11 +167,11 @@ use Ferret::Core::Operations qw(add mul num);
         }
         my $proto = $class->prototype;
 
-        # Method '_init_' definition
+        # Method event '_init_' definition
         {
-            my $func = $methods[0] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => '_init_',
+                name      => 'default',
                 is_method => 1
             );
             $func->add_argument( name => 'x' );
@@ -204,13 +204,18 @@ use Ferret::Core::Operations qw(add mul num);
                 );
                 return $return;
             };
+            $methods[0] = Ferret::Event->new(
+                $f,
+                name         => '_init_',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'bottomLeft' definition
+        # Method event 'bottomLeft' definition
         {
-            my $func = $methods[1] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'bottomLeft',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -219,13 +224,18 @@ use Ferret::Core::Operations qw(add mul num);
                 return $self->property('origin');
                 return $return;
             };
+            $methods[1] = Ferret::Event->new(
+                $f,
+                name         => 'bottomLeft',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'bottomRight' definition
+        # Method event 'bottomRight' definition
         {
-            my $func = $methods[2] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'bottomRight',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -244,13 +254,18 @@ use Ferret::Core::Operations qw(add mul num);
                 );
                 return $return;
             };
+            $methods[2] = Ferret::Event->new(
+                $f,
+                name         => 'bottomRight',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'topLeft' definition
+        # Method event 'topLeft' definition
         {
-            my $func = $methods[3] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'topLeft',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -269,13 +284,18 @@ use Ferret::Core::Operations qw(add mul num);
                 );
                 return $return;
             };
+            $methods[3] = Ferret::Event->new(
+                $f,
+                name         => 'topLeft',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'topRight' definition
+        # Method event 'topRight' definition
         {
-            my $func = $methods[4] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'topRight',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -298,13 +318,18 @@ use Ferret::Core::Operations qw(add mul num);
                 );
                 return $return;
             };
+            $methods[4] = Ferret::Event->new(
+                $f,
+                name         => 'topRight',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'bottomLine' definition
+        # Method event 'bottomLine' definition
         {
-            my $func = $methods[5] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'bottomLine',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -319,13 +344,18 @@ use Ferret::Core::Operations qw(add mul num);
                 );
                 return $return;
             };
+            $methods[5] = Ferret::Event->new(
+                $f,
+                name         => 'bottomLine',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'topLine' definition
+        # Method event 'topLine' definition
         {
-            my $func = $methods[6] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'topLine',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -340,13 +370,18 @@ use Ferret::Core::Operations qw(add mul num);
                 );
                 return $return;
             };
+            $methods[6] = Ferret::Event->new(
+                $f,
+                name         => 'topLine',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'center' definition
+        # Method event 'center' definition
         {
-            my $func = $methods[7] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'center',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -373,6 +408,11 @@ use Ferret::Core::Operations qw(add mul num);
                     $scope );
                 return $return;
             };
+            $methods[7] = Ferret::Event->new(
+                $f,
+                name         => 'center',
+                default_func => [ undef, $func ]
+            );
         }
         $methods[0]->inside_scope( _init_      => $scope, $class, $class );
         $methods[1]->inside_scope( bottomLeft  => $scope, $proto, $class );

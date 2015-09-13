@@ -59,11 +59,11 @@ use Ferret::Core::Operations qw(add mul num str);
         }
         my $proto = $class->prototype;
 
-        # Method 'doubledLength' definition
+        # Method event 'doubledLength' definition
         {
-            my $func = $methods[0] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'doubledLength',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -76,6 +76,11 @@ use Ferret::Core::Operations qw(add mul num str);
                 );
                 return $return;
             };
+            $methods[0] = Ferret::Event->new(
+                $f,
+                name         => 'doubledLength',
+                default_func => [ undef, $func ]
+            );
         }
         $methods[0]->inside_scope( doubledLength => $scope, $proto, $class );
         $scope->property('say')->call(

@@ -155,7 +155,8 @@ sub add_binding {
             $class->property($name) : do {
             my $e = Ferret::Event->new($f,
                 name      => $name,
-                is_method => $is_method
+                is_method => $is_method,
+                class     => $class
             );
             $where->set_property($name => $e);
             $e;
@@ -165,7 +166,6 @@ sub add_binding {
         my $func = Ferret::Function->new($f,
             name      => $opts{callback} || 'default',
             code      => $opts{code},
-            class     => $class, # sometimes changed by ->inside_scope()
             is_method => $is_method
         );
 

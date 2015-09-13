@@ -37,13 +37,9 @@ sub perl_fmt {
 
     # add each function definition.
     $before_c .= "$_\n" foreach map {
-        $doc->get_format(function_def => $_)
+        my $fmt   = $_->{event_cb} ? 'function_def_event' : 'function_def';
+        $doc->get_format($fmt => $_);
     } @{ $doc->{function_defs} };
-
-    # add each method definition.
-    $before_c .= "$_\n" foreach map {
-        $doc->get_format(method_def => $_)
-    } @{ $doc->{method_defs} };
 
     return document => {
         'package'      => $doc->{package} // 'main',

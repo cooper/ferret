@@ -15,7 +15,7 @@
 #                      Structural list [1 items]
 #                          Item 0
 #                              Lexical variable '$num'
-#      Include (NATIVE::Math, Num, NATIVE)
+#      Include (Num, NATIVE, NATIVE::Math)
 use warnings;
 use strict;
 use utf8;
@@ -37,9 +37,9 @@ use Ferret::Core::Operations qw();
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
 
-    # Function 'sqrt' definition
+    # Function event 'sqrt' callback definition
     {
-        my $func = $funcs[0] = Ferret::Function->new( $f, name => 'sqrt' );
+        my $func = Ferret::Function->new( $f, name => 'default' );
         $func->add_argument( name => 'num' );
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
@@ -51,9 +51,14 @@ use Ferret::Core::Operations qw();
               ->call( [ $scope->property('num') ], $scope );
             return $return;
         };
+        $funcs[0] = Ferret::Event->new(
+            $f,
+            name         => 'sqrt',
+            default_func => [ undef, $func ]
+        );
     }
     $funcs[0]->inside_scope( sqrt => $scope, $scope );
-    Ferret::space( $context, $_ ) for qw(NATIVE::Math Num NATIVE);
+    Ferret::space( $context, $_ ) for qw(Num NATIVE NATIVE::Math);
 }
 
 Ferret::runtime();

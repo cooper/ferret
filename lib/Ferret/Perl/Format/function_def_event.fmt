@@ -1,0 +1,14 @@
+# Function event '<<name>>' callback definition
+{
+    my $func = Ferret::Function->new($f, name => 'default');
+    <<arguments>>
+    $func->{code} = sub {
+        my ($self, $arguments, $from_scope, $scope, $return) = @_;
+        <<statements>>
+        return $return;
+    };
+    $funcs[<<id>>] = Ferret::Event->new($f,
+        name         => '<<name>>',
+        default_func => [ undef, $func ]
+    );
+}

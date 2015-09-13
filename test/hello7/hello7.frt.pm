@@ -90,7 +90,7 @@
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      Number '4'
-#      Include (Math::Point, Math, Math::Rect)
+#      Include (Math, Math::Rect, Math::Point)
 use warnings;
 use strict;
 use utf8;
@@ -112,7 +112,7 @@ use Ferret::Core::Operations qw(add num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    Ferret::space( $context, $_ ) for qw(Math::Point Math Math::Rect);
+    Ferret::space( $context, $_ ) for qw(Math Math::Rect Math::Point);
     $scope->set_property(
         rect => $scope->property('Math::Rect')->call(
             {

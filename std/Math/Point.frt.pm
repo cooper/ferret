@@ -145,11 +145,11 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
         }
         my $proto = $class->prototype;
 
-        # Method '_init_' definition
+        # Method event '_init_' definition
         {
-            my $func = $methods[0] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => '_init_',
+                name      => 'default',
                 is_method => 1
             );
             $func->add_argument( name => 'x' );
@@ -166,13 +166,18 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
                 };
                 return $return;
             };
+            $methods[0] = Ferret::Event->new(
+                $f,
+                name         => '_init_',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'distanceTo' definition
+        # Method event 'distanceTo' definition
         {
-            my $func = $methods[1] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'distanceTo',
+                name      => 'default',
                 is_method => 1
             );
             $func->add_argument( name => 'pt2' );
@@ -208,13 +213,18 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
                 );
                 return $return;
             };
+            $methods[1] = Ferret::Event->new(
+                $f,
+                name         => 'distanceTo',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'distanceFromOrigin' definition
+        # Method event 'distanceFromOrigin' definition
         {
-            my $func = $methods[2] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'distanceFromOrigin',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -229,13 +239,18 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
                 );
                 return $return;
             };
+            $methods[2] = Ferret::Event->new(
+                $f,
+                name         => 'distanceFromOrigin',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'pretty' definition
+        # Method event 'pretty' definition
         {
-            my $func = $methods[3] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'pretty',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -248,13 +263,18 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
                 );
                 return $return;
             };
+            $methods[3] = Ferret::Event->new(
+                $f,
+                name         => 'pretty',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'midpoint' definition
+        # Method event 'midpoint' definition
         {
-            my $func = $methods[4] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'midpoint',
+                name      => 'default',
                 is_method => 1
             );
             $func->add_argument( name => 'pt1' );
@@ -294,6 +314,11 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
                 );
                 return $return;
             };
+            $methods[4] = Ferret::Event->new(
+                $f,
+                name         => 'midpoint',
+                default_func => [ undef, $func ]
+            );
         }
         $methods[0]->inside_scope( _init_     => $scope, $class, $class );
         $methods[1]->inside_scope( distanceTo => $scope, $proto, $class );

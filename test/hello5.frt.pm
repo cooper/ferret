@@ -201,11 +201,11 @@ use Ferret::Core::Operations qw(add div num str);
         }
         my $proto = $class->prototype;
 
-        # Method '_init_' definition
+        # Method event '_init_' definition
         {
-            my $func = $methods[0] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => '_init_',
+                name      => 'default',
                 is_method => 1
             );
             $func->add_argument( name => 'x' );
@@ -224,13 +224,18 @@ use Ferret::Core::Operations qw(add div num str);
                 $self->set_property( y => $scope->property('y') );
                 return $return;
             };
+            $methods[0] = Ferret::Event->new(
+                $f,
+                name         => '_init_',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'oneToRight' definition
+        # Method event 'oneToRight' definition
         {
-            my $func = $methods[1] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'oneToRight',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -248,13 +253,18 @@ use Ferret::Core::Operations qw(add div num str);
                 return $scope->property('pt');
                 return $return;
             };
+            $methods[1] = Ferret::Event->new(
+                $f,
+                name         => 'oneToRight',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'pretty' definition
+        # Method event 'pretty' definition
         {
-            my $func = $methods[2] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'pretty',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -267,13 +277,18 @@ use Ferret::Core::Operations qw(add div num str);
                 );
                 return $return;
             };
+            $methods[2] = Ferret::Event->new(
+                $f,
+                name         => 'pretty',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'midpoint' definition
+        # Method event 'midpoint' definition
         {
-            my $func = $methods[3] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'midpoint',
+                name      => 'default',
                 is_method => 1
             );
             $func->add_argument( name => 'pt1' );
@@ -313,6 +328,11 @@ use Ferret::Core::Operations qw(add div num str);
                 );
                 return $return;
             };
+            $methods[3] = Ferret::Event->new(
+                $f,
+                name         => 'midpoint',
+                default_func => [ undef, $func ]
+            );
         }
         $methods[0]->inside_scope( _init_     => $scope, $class, $class );
         $methods[1]->inside_scope( oneToRight => $scope, $proto, $class );

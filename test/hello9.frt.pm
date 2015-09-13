@@ -53,9 +53,9 @@ use Ferret::Core::Operations qw(add str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    # Function 'sayHello' definition
+    # Function event 'sayHello' callback definition
     {
-        my $func = $funcs[0] = Ferret::Function->new( $f, name => 'sayHello' );
+        my $func = Ferret::Function->new( $f, name => 'default' );
         $func->add_argument( name => 'who' );
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
@@ -74,6 +74,11 @@ use Ferret::Core::Operations qw(add str);
             );
             return $return;
         };
+        $funcs[0] = Ferret::Event->new(
+            $f,
+            name         => 'sayHello',
+            default_func => [ undef, $func ]
+        );
     }
     $funcs[0]->inside_scope( sayHello => $scope, $scope );
     Ferret::space( $context, $_ ) for qw(Str);

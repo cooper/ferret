@@ -67,11 +67,11 @@ use Ferret::Core::Operations qw();
         }
         my $proto = $class->prototype;
 
-        # Method '_init_' definition
+        # Method event '_init_' definition
         {
-            my $func = $methods[0] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => '_init_',
+                name      => 'default',
                 is_method => 1
             );
             $func->add_argument( name => 'pt1' );
@@ -88,13 +88,18 @@ use Ferret::Core::Operations qw();
                 };
                 return $return;
             };
+            $methods[0] = Ferret::Event->new(
+                $f,
+                name         => '_init_',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'midpoint' definition
+        # Method event 'midpoint' definition
         {
-            my $func = $methods[1] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'midpoint',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -105,13 +110,18 @@ use Ferret::Core::Operations qw();
                   ->property('midpoint')->call( [], $scope );
                 return $return;
             };
+            $methods[1] = Ferret::Event->new(
+                $f,
+                name         => 'midpoint',
+                default_func => [ undef, $func ]
+            );
         }
 
-        # Method 'length' definition
+        # Method event 'length' definition
         {
-            my $func = $methods[2] = Ferret::Function->new(
+            my $func = Ferret::Function->new(
                 $f,
-                name      => 'length',
+                name      => 'default',
                 is_method => 1
             );
 
@@ -121,6 +131,11 @@ use Ferret::Core::Operations qw();
                   ->call( [ $self->property('pt2') ], $scope );
                 return $return;
             };
+            $methods[2] = Ferret::Event->new(
+                $f,
+                name         => 'length',
+                default_func => [ undef, $func ]
+            );
         }
         $methods[0]->inside_scope( _init_   => $scope, $class, $class );
         $methods[1]->inside_scope( midpoint => $scope, $proto, $class );
