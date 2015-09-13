@@ -78,14 +78,15 @@ sub call {
             parent => $func->{outer_scope}
         );
 
+        $return ||= Ferret::Object->new($func->ferret);
+
         # class/instance argument.
         my $self = $func->is_method ? $func->{last_parent} : $func->{class};
-        $scope->{special}->set_property(self  => $self) if $self;
-        $scope->{special}->set_property(class => $func->{class}) if $func->{class};
+        $scope->{special}->set_property(self   => $self) if $self;
+        $scope->{special}->set_property(class  => $func->{class}) if $func->{class};
+        $scope->{special}->set_property(return => $return);
 
         # call the function.
-        # this could return $return
-        $return ||= Ferret::Object->new($func->ferret);
         return $func->{code}($self, $arguments, $from_scope, $scope, $return);
 
     }

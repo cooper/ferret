@@ -11,9 +11,10 @@ use Scalar::Util 'weaken';
 
 sub new {
     my ($class_name, $f, %opts) = @_;
-    $opts{prototype} ||= Ferret::Object->new($f, is_proto => 1);
+    $opts{prototype} ||= Ferret::Prototype->new($f, is_proto => 1);
     my $class = $class_name->SUPER::new($f, %opts);
     weaken($class->prototype->{proto_class} ||= $class);
+    $class->set_property_weak(proto => $class->prototype);
     return $class;
 }
 
@@ -58,5 +59,8 @@ sub init {
 
     return $ret;
 }
+
+package Ferret::Prototype;
+use parent 'Ferret::Object';
 
 1

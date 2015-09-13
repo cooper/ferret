@@ -66,7 +66,7 @@
 #                                  Addition operator (+)
 #                                  Addition operator (+)
 #                                  String ' :k'
-#      Include (Socket, Socket::TCP, Timer)
+#      Include (Timer, Socket::TCP, Socket)
 use warnings;
 use strict;
 use utf8;
@@ -124,7 +124,7 @@ use Ferret::Core::Operations qw(add num str);
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Socket Socket::TCP Timer);
+    Ferret::space( $context, $_ ) for qw(Timer Socket::TCP Socket);
     $scope->set_property(
         sock => $scope->property('Socket::TCP')->call(
             { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },
@@ -136,7 +136,6 @@ use Ferret::Core::Operations qw(add num str);
     {
         my $on_func =
           do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
-
         $scope->property('sock')->property('gotLine')->add_function($on_func);
     }
     $scope->property('sock')->property('connect')->call( [], $scope );
@@ -145,7 +144,6 @@ use Ferret::Core::Operations qw(add num str);
     {
         my $on_func =
           do { $funcs[1]->inside_scope( +undef => $scope, $scope ); };
-
         $scope->property('Timer')->call( [ num( $f, 5 ) ], $scope )
           ->property('once')->call( [], $scope )->property('expire')
           ->add_function($on_func);

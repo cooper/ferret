@@ -38,6 +38,7 @@ sub add_function {
     if (!$func) {
         $func = $obj;
         $obj  = $event->{last_parent};
+        $obj  = undef if $obj->{is_proto}; # adding to proto is for all objs
     }
 
     # function name is basically callback name.
@@ -45,6 +46,7 @@ sub add_function {
     if ($func->has_name) {
         $opts{name} = $func->{name};
         $event->{function}{ $opts{name} } = $func; # weaken?
+        $opts{priority} = 100 if $opts{name} eq 'default';
     }
 
     my $code = sub {
@@ -53,12 +55,22 @@ sub add_function {
             $arguments, $from_scope, $return
         ) = @_;
 
-        # forward scope information to the function.
-        $func->inside_scope(undef, $outer_scope, undef, $class);
-        $func->{last_parent} = $obj; # for $self
+        # forward function scope variables.
+        # some of these are not overwritten intentionally.
+        # outer_scope, for example, often differs for each callback.
+        $func->{class}       ||= $class;
+        $func->{outer_scope} ||= $outer_scope;
+        $func->{is_method}     = $event->{is_method};
+        $func->{last_parent}   = $obj; # for $self
 
         # call the function.
-        my $ret = $func->call($arguments, $from_scope, $return);
+        my $ret = $func->call(
+            $arguments,
+            $from_scope,
+            $fire->{override_return} // $return
+            # call with override_return such that special property
+            # *return will accurately represent the current return
+        );
 
         # override the return if it returns something besides $return.
         $fire->{override_return} = $ret if $ret && $ret != $return;
@@ -117,5 +129,7 @@ sub inside_scope {
     $owner->set_property($name => $event) if length $name;
     return $event;
 }
+
+sub is_method { shift->{is_method} }
 
 1

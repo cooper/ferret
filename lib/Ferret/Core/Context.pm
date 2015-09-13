@@ -33,7 +33,8 @@ sub new {
             default_func => [ undef, $func ]
         );
 
-        $context->set_property($name => $event);
+        $event->inside_scope($name, $context, $context, undef);
+        #$context->set_property($name => $event);
 
     }
     return $context;
