@@ -26,18 +26,11 @@ Ferret::bind_class(
     methods   => \@methods
 );
 
-sub new {
-    my ($class, $f, %opts) = @_;
-
-    # create a new object.
-    my $timer = $class->SUPER::new($f, %opts);
-    
-    return $timer;
-}
+*new = *Ferret::bind_constructor;
 
 sub run_once {
     my ($timer, $arguments, $from_scope, $scope, $return) = @_;
-    
+
     # create a countdown timer.
     require IO::Async::Timer::Countdown;
     my $t; $t = $timer->{t} = IO::Async::Timer::Countdown->new(
@@ -48,14 +41,16 @@ sub run_once {
             Ferret::remove_notifier($t);
         }
     );
-    
+
     # add to loop.
     Ferret::add_notifier($t->start);
-    
+
     # conveniently return the expire event.
-    $return->set_property(expire => $timer->property('expire'));
+    #$return->set_property(expire => $timer->property('expire'));
+    # nvm: can't do this anymore. it causes last_parent to be the
+    # return object, meaning the event would belong to that object
     
-    return $return;
+    return $timer;
 }
 
 sub expire_cb {

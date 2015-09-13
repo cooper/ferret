@@ -128,7 +128,7 @@
 #                                  Lexical variable '$x'
 #                              Item 1
 #                                  Lexical variable '$y'
-#      Include (Line, Point)
+#      Include (Point, Line)
 use warnings;
 use strict;
 use utf8;
@@ -383,7 +383,7 @@ use Ferret::Core::Operations qw(add mul num);
         $methods[6]->inside_scope( topLine     => $scope, $proto, $class );
         $methods[7]->inside_scope( center      => $scope, $proto, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Line Point);
+    Ferret::space( $context, $_ ) for qw(Point Line);
 }
 
 Ferret::runtime();

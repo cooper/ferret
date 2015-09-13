@@ -1,3 +1,5 @@
+say("hello");
+
 on Timer(5).once!.expire {
     say("five seconds up");
 }

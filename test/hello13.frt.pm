@@ -1,5 +1,11 @@
 # --- DOM ---
 #  Document './test/hello13.frt'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      String 'hello'
 #      On
 #          Expression ('on' parameter)
 #              Property 'expire'
@@ -88,6 +94,7 @@ use Ferret::Core::Operations qw(num str);
         };
     }
     Ferret::space( $context, $_ ) for qw(Timer);
+    $scope->property('say')->call( [ str( $f, "hello" ) ], $scope );
 
     # On
     {

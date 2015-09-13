@@ -66,7 +66,7 @@
 #                                  Addition operator (+)
 #                                  Addition operator (+)
 #                                  String ' :k'
-#      Include (Timer, Socket, Socket::TCP)
+#      Include (Socket, Timer, Socket::TCP)
 use warnings;
 use strict;
 use utf8;
@@ -124,7 +124,7 @@ use Ferret::Core::Operations qw(add num str);
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Timer Socket Socket::TCP);
+    Ferret::space( $context, $_ ) for qw(Socket Timer Socket::TCP);
     $scope->set_property(
         sock => $scope->property('Socket::TCP')->call(
             { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },

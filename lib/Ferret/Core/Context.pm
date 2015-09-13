@@ -30,8 +30,9 @@ sub new {
         # create and bind an event for the function.
         my $event = Ferret::Event->new($f,
             name         => $name,
-            default_func => $func
+            default_func => [ undef, $func ]
         );
+
         $context->set_property($name => $event);
 
     }

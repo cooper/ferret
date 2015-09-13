@@ -133,6 +133,12 @@ sub add_bindings {
 sub add_binding {
     my ($f, %opts) = @_;
 
+    # find the context.
+    my $context = $f->main_context;
+    if (length $opts{package}) {
+        $context = $f->get_context($opts{package});
+    }
+
     # create a class.
     my $class = Ferret::Class->new($f,
         name         => $opts{name},
@@ -177,7 +183,7 @@ sub add_binding {
         ) foreach _parse_method_args($opts{want});
 
         # add the function.
-        $event->add_function($func);
+        $event->add_function(undef, $func);
 
     };
 
@@ -191,14 +197,10 @@ sub add_binding {
         $add_func->(1, $name, %$opts);
     }
 
-    # find the context.
-    my $context = $f->main_context;
-    if (length $opts{package}) {
-        $context = $f->get_context($opts{package});
-    }
-    
+    # define the event in the context.
     $context->set_property($_ => $class)
         foreach ($class->{name}, split /\s+/, $opts{alias} || '');
+
     return $class;
 }
 
@@ -273,5 +275,7 @@ use Ferret::Hash;
 use Ferret::Set;
 use Ferret::Core::Functions;
 use Ferret::Core::Context;
+
+use Evented::Object;
 
 1
