@@ -15,7 +15,7 @@
 #                      Structural list [1 items]
 #                          Item 0
 #                              Lexical variable '$num'
-#      Include (NATIVE, Num, NATIVE::Math)
+#      Include (NATIVE::Math, Num, NATIVE)
 use warnings;
 use strict;
 use utf8;
@@ -58,7 +58,7 @@ use Ferret::Core::Operations qw();
         );
     }
     $funcs[0]->inside_scope( sqrt => $scope, $scope );
-    Ferret::space( $context, $_ ) for qw(NATIVE Num NATIVE::Math);
+    Ferret::space( $context, $_ ) for qw(NATIVE::Math Num NATIVE);
 }
 
 Ferret::runtime();

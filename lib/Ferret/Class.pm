@@ -49,8 +49,7 @@ sub init {
     # fetch or create return object.
     my $ret = $class->has_property('_init_') ? do {
         my $init = $class->property('_init_');
-        $init->{last_parent} = $obj; # for $self ($obj instead of $class)
-        $init->call($arguments, $class->{outer_scope}); # scope necessary?
+        $init->call_with_self($obj, $arguments, $class->{outer_scope}); # scope necessary?
     } : Ferret::Object->new($class->ferret);
 
     # inject instance properties.

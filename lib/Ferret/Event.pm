@@ -61,10 +61,10 @@ sub add_function {
         $func->{class}       ||= $class;
         $func->{outer_scope} ||= $outer_scope;
         $func->{is_method}     = $event->{is_method};
-        $func->{last_parent}   = $obj; # for $self
 
         # call the function.
-        my $ret = $func->call(
+        my $ret = $func->call_with_self(
+            $obj,
             $arguments,
             $from_scope,
             $fire->{override_return} // $return
@@ -86,6 +86,12 @@ sub add_function {
         $event->on(call => $code, %opts);
     }
 
+}
+
+sub call_with_self {
+    my ($event, $self) = (shift, shift);
+    $event->{last_parent} = $self;
+    return $event->call(@_);
 }
 
 sub call {

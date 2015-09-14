@@ -56,6 +56,12 @@ sub arguments_satisfy_signature {
     return 1;
 }
 
+sub call_with_self {
+    my ($func, $self) = (shift, shift);
+    $func->{force_self} = $self;
+    return $func->call(@_);
+}
+
 sub call {
     my ($func, $arguments, $from_scope, $return) = @_;
 
@@ -80,8 +86,11 @@ sub call {
 
         $return ||= Ferret::Object->new($func->ferret);
 
+        my $self =
+            delete $func->{force_self} ||
+            ($func->is_method ? $func->{last_parent} : $func->{class});
+
         # class/instance argument.
-        my $self = $func->is_method ? $func->{last_parent} : $func->{class};
         $scope->{special}->set_property(self   => $self) if $self;
         $scope->{special}->set_property(class  => $func->{class}) if $func->{class};
         $scope->{special}->set_property(return => $return);

@@ -197,6 +197,15 @@ sub add_binding {
         $add_func->(1, $name, %$opts);
     }
 
+    # add init.
+    if (my $init = $opts{init}) {
+        $add_func->(0, '_init_', code => sub {
+            bless $_[0], $opts{perl_package};
+            $init->(@_);
+            return $_[0];
+        });
+    }
+
     # define the event in the context.
     $context->set_property($_ => $class)
         foreach ($class->{name}, split /\s+/, $opts{alias} || '');
@@ -220,6 +229,7 @@ sub _parse_method_args {
 
 sub bind_constructor {
     my ($class, $f, %opts) = @_;
+    # FIXME: this is stupid
     # consider: what if you want a different context?
     # consider: what if you want constructor arguments?
     my $class_name = $class_bindings{$class}{name};
@@ -232,29 +242,35 @@ sub bind_constructor {
 ### RUNTIME ###
 ###############
 
-my (@notifiers, $loop);
+my $loop;
+our $keep_alive = 0;
 
 sub init_runtime {
+    return $loop if $loop;
+    require IO::Async::Loop;
+    $loop = IO::Async::Loop->new;
 }
 
 sub add_notifier {
     my $notifier = shift;
-    push @notifiers, $notifier;
-    $loop->add($notifier) if $loop;
+    init_runtime();
+    $loop->add($notifier);
 }
 
 sub remove_notifier {
     my $notifier = shift;
-    @notifiers = grep { $_ != $notifier } @notifiers;
-    $loop->remove($notifier) if $loop;
+    return unless $loop;
+    $loop->remove($notifier);
+}
+
+sub loop_connect {
+    init_runtime() if !$loop;
+    return $loop->connect(@_);
 }
 
 sub runtime {
-    return unless @notifiers;
-    require IO::Async::Loop;
-    $loop = IO::Async::Loop->new;
-    $loop->add($_) foreach @notifiers;
-    while ($loop->notifiers) {
+    return unless $loop;
+    while ($loop->notifiers || $keep_alive) {
         $loop->loop_once;
     }
 }
