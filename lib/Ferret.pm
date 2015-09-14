@@ -146,60 +146,19 @@ sub add_binding {
         perl_package => $opts{perl_package}
     );
 
-    my $add_func = sub {
-        my ($is_method, $name, %opts) = @_;
-
-        # fetch or create event.
-        my $where = $is_method ? $class->prototype : $class;
-        my $event = $where->has_property($name) ?
-            $class->property($name) : do {
-            my $e = Ferret::Event->new($f,
-                name      => $name,
-                is_method => $is_method,
-                class     => $class
-            );
-            $where->set_property($name => $e);
-            $e;
-        };
-
-        # create function.
-        my $func = Ferret::Function->new($f,
-            name      => $opts{callback} || 'default',
-            code      => $opts{code},
-            is_method => $is_method
-        );
-
-        # add needs.
-        $func->add_argument(
-            name   => $_->{name}
-            # type => $_->{type}
-        ) foreach _parse_method_args($opts{need});
-
-        # add wants.
-        $func->add_argument(
-            name     => $_->{name},
-            # type   => $_->{type},
-            optional => 1
-        ) foreach _parse_method_args($opts{want});
-
-        # add the function.
-        $event->add_function(undef, $func);
-
-    };
-
     # add functions.
     while (my ($name, $opts) = splice @{ $opts{functions} }, 0, 2) {
-        $add_func->(0, $name, %$opts);
+        $class->bind_function($name, %$opts);
     }
 
     # add methods.
     while (my ($name, $opts) = splice @{ $opts{methods} }, 0, 2) {
-        $add_func->(1, $name, %$opts);
+        $class->bind_method($name, %$opts);
     }
 
     # add init.
     if (my $init = $opts{init}) {
-        $add_func->(0, '_init_', code => sub {
+        $class->bind_function('_init_', code => sub {
             bless $_[0], $opts{perl_package};
             $init->(@_);
             return $_[0];

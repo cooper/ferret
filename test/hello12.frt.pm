@@ -94,7 +94,7 @@
 #                      Structural list [1 items]
 #                          Item 0
 #                              String 'JOIN #k'
-#      Include (Socket, Timer, Socket::TCP)
+#      Include (Socket::TCP, Socket, Timer)
 use warnings;
 use strict;
 use utf8;
@@ -185,7 +185,7 @@ use Ferret::Core::Operations qw(add num str);
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Socket Timer Socket::TCP);
+    Ferret::space( $context, $_ ) for qw(Socket::TCP Socket Timer);
     $scope->set_property(
         sock => $scope->property('Socket::TCP')->call(
             { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },

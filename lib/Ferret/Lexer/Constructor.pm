@@ -284,7 +284,7 @@ sub handle_call {
     #   a bareword
     #   a variable
     my %allowed = map { $_ => 1 } qw(
-        List Expression Bareword Property Maybe
+        List Expression Bareword Property Maybe Call
         LexicalVariable InstanceVariable SpecialVariable
     );
 

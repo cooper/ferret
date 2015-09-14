@@ -19,6 +19,15 @@ sub new {
         %opts
     );
 
+    # mimic = copy the signature.
+    if (my $mimic = delete $opts{mimic}) {
+        ref $mimic or return $func;
+        $mimic = $mimic->{function}{default} if $mimic->isa('Ferret::Event');
+        ref $mimic && $mimic->isa('Ferret::Function') or return $func;
+        @$func  {'signature', 'signatures'} =
+        @$mimic {'signature', 'signatures'};
+    }
+
     return $func;
 }
 
@@ -59,7 +68,9 @@ sub arguments_satisfy_signature {
 sub call_with_self {
     my ($func, $self) = (shift, shift);
     $func->{force_self} = $self;
-    return $func->call(@_);
+    my $ret = $func->call(@_);
+    delete $func->{force_self};
+    return $ret;
 }
 
 sub call {
