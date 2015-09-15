@@ -21,6 +21,12 @@
 #                          Number '6667'
 #                      Bareword 'Num'
 #              Instruction
+#                  Want
+#                      Instance variable '@real'
+#                      Expression ('want' parameter)
+#                          String 'Ferret IRC'
+#                      Bareword 'Str'
+#              Instruction
 #                  Assignment
 #                      Instance variable '@sock'
 #                      Call
@@ -88,12 +94,21 @@
 #                      Lexical variable '$line'
 #              Instruction
 #                  Call
+#                      Bareword 'say'
+#                      Structural list [1 items]
+#                          Item 0
+#                              Mathematical operation
+#                                  String 'send: '
+#                                  Addition operator (+)
+#                                  Lexical variable '$line'
+#              Instruction
+#                  Call
 #                      Property 'println'
 #                          Instance variable '@sock'
 #                      Structural list [1 items]
 #                          Item 0
 #                              Lexical variable '$line'
-#      Include (Num, Socket, Socket::TCP, Str)
+#      Include (Socket::TCP, Socket, Num, Str)
 use warnings;
 use strict;
 use utf8;
@@ -192,6 +207,7 @@ use Ferret::Core::Operations qw(add num str);
             $func->add_argument( name => 'nick' );
             $func->add_argument( name => 'user' );
             $func->add_argument( name => 'port', optional => 1 );
+            $func->add_argument( name => 'real', optional => 1 );
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 do {
@@ -210,6 +226,11 @@ use Ferret::Core::Operations qw(add num str);
                     my $want_val = $arguments->{port};
                     $want_val ||= num( $f, 6667 );
                     $self->set_property( port => $want_val );
+                };
+                do {
+                    my $want_val = $arguments->{real};
+                    $want_val ||= str( $f, "Ferret IRC" );
+                    $self->set_property( real => $want_val );
                 };
                 $self->set_property(
                     sock => $scope->property('Socket::TCP')->call(
@@ -282,6 +303,15 @@ use Ferret::Core::Operations qw(add num str);
                     return unless defined $arguments->{line};
                     $scope->set_property( line => $arguments->{line} );
                 };
+                $scope->property('say')->call(
+                    [
+                        add(
+                            $scope, str( $f, "send: " ),
+                            $scope->property('line')
+                        )
+                    ],
+                    $scope
+                );
                 $self->property('sock')->property('println')
                   ->call( [ $scope->property('line') ], $scope );
                 return $return;
@@ -296,7 +326,7 @@ use Ferret::Core::Operations qw(add num str);
         $methods[1]->inside_scope( connect => $scope, $proto, $class );
         $methods[2]->inside_scope( send    => $scope, $proto, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Num Socket Socket::TCP Str);
+    Ferret::space( $context, $_ ) for qw(Socket::TCP Socket Num Str);
 }
 
 Ferret::runtime();

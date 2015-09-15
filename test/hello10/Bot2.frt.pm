@@ -4,7 +4,7 @@
 #          Main method '_init_'
 #              Instruction
 #                  Need
-#                      Instance variable '@addr'
+#                      Instance variable '@address'
 #                      Bareword 'Str'
 #              Instruction
 #                  Need
@@ -21,6 +21,12 @@
 #                          Number '6667'
 #                      Bareword 'Num'
 #              Instruction
+#                  Want
+#                      Instance variable '@real'
+#                      Expression ('want' parameter)
+#                          String 'Ferret IRC'
+#                      Bareword 'Str'
+#              Instruction
 #                  Call
 #                      Call
 #                          Property 'init'
@@ -31,17 +37,21 @@
 #                      Hash [2 items]
 #                          Item 0
 #                              Pair 'addr'
-#                                  Instance variable '@addr'
+#                                  Instance variable '@address'
 #                          Item 1
 #                              Pair 'port'
 #                                  Instance variable '@port'
+#              Instruction
+#                  Assignment
+#                      Instance variable '@send'
+#                      Instance variable '@println'
 #              On
 #                  Expression ('on' parameter)
 #                      Instance variable '@connected'
 #                  Function 'callback'
 #                      Instruction
 #                          Call
-#                              Instance variable '@println'
+#                              Instance variable '@send'
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      Mathematical operation
@@ -54,14 +64,46 @@
 #                                          Instance variable '@real'
 #                      Instruction
 #                          Call
-#                              Instance variable '@println'
+#                              Instance variable '@send'
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      Mathematical operation
 #                                          String 'NICK '
 #                                          Addition operator (+)
 #                                          Instance variable '@nick'
-#      Include (Socket, Socket::TCP, Str, Num)
+#              On
+#                  Expression ('on' parameter)
+#                      Instance variable '@gotLine'
+#                  Function 'callback'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$data'
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Structural list [1 items]
+#                                  Item 0
+#                                      Mathematical operation
+#                                          String 'recv: '
+#                                          Addition operator (+)
+#                                          Lexical variable '$data'
+#              On
+#                  Expression ('on' parameter)
+#                      Instance variable '@println'
+#                  Function 'callback'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$data'
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Structural list [1 items]
+#                                  Item 0
+#                                      Mathematical operation
+#                                          String 'send: '
+#                                          Addition operator (+)
+#                                          Lexical variable '$data'
+#      Include (Socket::TCP, Num, Socket, Str)
 use warnings;
 use strict;
 use utf8;
@@ -91,7 +133,7 @@ use Ferret::Core::Operations qw(add num str);
         $func->{code} = sub {
             my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $self->property('println')->call(
+            $self->property('send')->call(
                 [
                     add(
                         $scope,                  str( $f, "USER " ),
@@ -101,8 +143,54 @@ use Ferret::Core::Operations qw(add num str);
                 ],
                 $scope
             );
-            $self->property('println')->call(
+            $self->property('send')->call(
                 [ add( $scope, str( $f, "NICK " ), $self->property('nick') ) ],
+                $scope
+            );
+            return $return;
+        };
+    }
+
+    # Function '+undef' definition
+    {
+        my $func = $funcs[1] = Ferret::Function->new( $f, name => '+undef' );
+        $func->add_argument( name => 'data' );
+        $func->{code} = sub {
+            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            do {
+                return unless defined $arguments->{data};
+                $scope->set_property( data => $arguments->{data} );
+            };
+            $scope->property('say')->call(
+                [
+                    add(
+                        $scope, str( $f, "recv: " ), $scope->property('data')
+                    )
+                ],
+                $scope
+            );
+            return $return;
+        };
+    }
+
+    # Function '+undef' definition
+    {
+        my $func = $funcs[2] = Ferret::Function->new( $f, name => '+undef' );
+        $func->add_argument( name => 'data' );
+        $func->{code} = sub {
+            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            do {
+                return unless defined $arguments->{data};
+                $scope->set_property( data => $arguments->{data} );
+            };
+            $scope->property('say')->call(
+                [
+                    add(
+                        $scope, str( $f, "send: " ), $scope->property('data')
+                    )
+                ],
                 $scope
             );
             return $return;
@@ -133,15 +221,16 @@ use Ferret::Core::Operations qw(add num str);
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'addr' );
+            $func->add_argument( name => 'address' );
             $func->add_argument( name => 'nick' );
             $func->add_argument( name => 'user' );
             $func->add_argument( name => 'port', optional => 1 );
+            $func->add_argument( name => 'real', optional => 1 );
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 do {
-                    return unless defined $arguments->{addr};
-                    $self->set_property( addr => $arguments->{addr} );
+                    return unless defined $arguments->{address};
+                    $self->set_property( address => $arguments->{address} );
                 };
                 do {
                     return unless defined $arguments->{nick};
@@ -156,15 +245,21 @@ use Ferret::Core::Operations qw(add num str);
                     $want_val ||= num( $f, 6667 );
                     $self->set_property( port => $want_val );
                 };
+                do {
+                    my $want_val = $arguments->{real};
+                    $want_val ||= str( $f, "Ferret IRC" );
+                    $self->set_property( real => $want_val );
+                };
                 $scope->property('Socket::TCP')->property('init')
                   ->call( [ $scope->{special}->property('self') ], $scope )
                   ->call(
                     {
-                        addr => $self->property('addr'),
+                        addr => $self->property('address'),
                         port => $self->property('port')
                     },
                     $scope
                   );
+                $self->set_property( send => $self->property('println') );
 
                 # On
                 {
@@ -172,6 +267,24 @@ use Ferret::Core::Operations qw(add num str);
                         $funcs[0]->inside_scope( +undef => $scope, $scope );
                     };
                     $self->property('connected')
+                      ->add_function_with_self( $self, $on_func );
+                }
+
+                # On
+                {
+                    my $on_func = do {
+                        $funcs[1]->inside_scope( +undef => $scope, $scope );
+                    };
+                    $self->property('gotLine')
+                      ->add_function_with_self( $self, $on_func );
+                }
+
+                # On
+                {
+                    my $on_func = do {
+                        $funcs[2]->inside_scope( +undef => $scope, $scope );
+                    };
+                    $self->property('println')
                       ->add_function_with_self( $self, $on_func );
                 }
                 return $return;
@@ -184,7 +297,7 @@ use Ferret::Core::Operations qw(add num str);
         }
         $methods[0]->inside_scope( _init_ => $scope, $class, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Socket Socket::TCP Str Num);
+    Ferret::space( $context, $_ ) for qw(Socket::TCP Num Socket Str);
 }
 
 Ferret::runtime();

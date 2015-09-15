@@ -102,7 +102,7 @@
 #                      String 'this shoul...'
 #                  Item 1
 #                      Boolean true
-#      Include (Math::Point, Math)
+#      Include (Math, Math::Point)
 use warnings;
 use strict;
 use utf8;
@@ -158,7 +158,7 @@ use Ferret::Core::Operations qw(add bool num str);
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Math::Point Math);
+    Ferret::space( $context, $_ ) for qw(Math Math::Point);
     $scope->set_property( point => $scope->property('Math::Point')
           ->call( [ num( $f, 0 ), num( $f, 0 ) ], $scope ) );
     if ( bool( $scope->property('point') ) ) {

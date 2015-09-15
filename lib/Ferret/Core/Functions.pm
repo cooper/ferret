@@ -14,11 +14,16 @@ sub _say {
 
 sub _dump {
     my ($self, $arguments, $from_scope, $scope, $return) = @_;
+    my $obj     = $arguments->{value};
+    my @parents = map $_->{proto_class}{name}, @{ $obj->{isa} };
+    my $type    = join(',', @parents);
+
     require Data::Dumper;
     Data::Dumper->import('Dumper');
     $Data::Dumper::Maxdepth = 1;
     $Data::Dumper::Terse = 1;
-    print Dumper($arguments->{value}), "\n";
+
+    print Dumper($obj), " = [ $type ]\n";
     return $return;
 }
 

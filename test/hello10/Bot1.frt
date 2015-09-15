@@ -2,7 +2,7 @@ class Bot1
 
 init {
     need @addr: Str, @nick: Str, @user: Str;
-    want @port: Num = 6667;
+    want @port: Num = 6667, @real: Str = "Ferret IRC";
 
     # create a socket
     @sock = Socket::TCP(address: @addr, port: @port);
@@ -27,5 +27,6 @@ method connect {
 
 method send {
     need $line;
+    say("send: $line");
     @sock.println($line);
 }
