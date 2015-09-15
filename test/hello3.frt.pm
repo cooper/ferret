@@ -32,7 +32,8 @@
 #          Instruction
 #              Need
 #                  Lexical variable '$name1'
-#                  Comma (,)
+#          Instruction
+#              Need
 #                  Lexical variable '$name2'
 #          Instruction
 #              Call
@@ -175,11 +176,11 @@ use Ferret::Core::Operations qw(add num str);
             $funcs[0]->inside_scope( hello1 => $scope, $scope );
             $funcs[1]->inside_scope( hello2 => $scope, $scope );
             do {
-                return if not defined $arguments->{name1};
+                return unless defined $arguments->{name1};
                 $scope->set_property( name1 => $arguments->{name1} );
             };
             do {
-                return if not defined $arguments->{name2};
+                return unless defined $arguments->{name2};
                 $scope->set_property( name2 => $arguments->{name2} );
             };
             $scope->property('hello1')->call( [], $scope );

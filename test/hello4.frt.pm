@@ -4,7 +4,8 @@
 #          Instruction
 #              Need
 #                  Lexical variable '$x'
-#                  Comma (,)
+#          Instruction
+#              Need
 #                  Lexical variable '$y'
 #          Instruction
 #              Want
@@ -106,11 +107,11 @@ use Ferret::Core::Operations qw(add num str);
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
             do {
-                return if not defined $arguments->{x};
+                return unless defined $arguments->{x};
                 $scope->set_property( x => $arguments->{x} );
             };
             do {
-                return if not defined $arguments->{y};
+                return unless defined $arguments->{y};
                 $scope->set_property( y => $arguments->{y} );
             };
             $scope->set_property( z => $arguments->{z} );

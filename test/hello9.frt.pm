@@ -4,7 +4,6 @@
 #          Instruction
 #              Need
 #                  Lexical variable '$who'
-#                  Colon (:)
 #                  Bareword 'Str'
 #          Instruction
 #              Call
@@ -60,7 +59,7 @@ use Ferret::Core::Operations qw(add str);
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
             do {
-                return if not defined $arguments->{who};
+                return unless defined $arguments->{who};
                 $scope->set_property( who => $arguments->{who} );
             };
             $scope->property('say')->call(

@@ -68,7 +68,7 @@ our %element_rules = (
 
             # inside a method, WantNeed can ONLY contain these things.
             children_must_be => [
-                'InstanceVariable LexicalVariable OP_VALUE OP_COMMA Bareword',
+                'InstanceVariable LexicalVariable Expression Bareword',
                 'Argument declaration inside method can only contain lexical or instance variables and their types'
             ]
 
@@ -78,103 +78,103 @@ our %element_rules = (
 
             # inside a function, WantNeed can ONLY contain these things.
             children_must_be => [
-                'LexicalVariable OP_VALUE OP_COMMA Bareword',
+                'LexicalVariable Expression Bareword',
                 'Argument declaration inside function can only contain lexical variables and their types'
             ]
 
         },
 
-        child_rules => {
-
-            LexicalVariable => {
-
-                # variables can come first OR come after a comma.
-                #
-                #   need $x;
-                #        ^
-                #
-                #   need $x, $y;
-                #            ^
-                #
-                must_come_after => [
-                    'NONE OP_COMMA',
-                    'Variable inside variable declaration must follow the declaration keyword or a comma'
-                ]
-
-            },
-
-            InstanceVariable => {
-
-                # variables can come first OR come after a comma.
-                #
-                #   need @x;
-                #        ^
-                #
-                #   need @x, @y;
-                #            ^
-                #
-                must_come_after => [
-                    'NONE OP_COMMA',
-                    'Variable inside variable declaration must follow the declaration keyword or a comma'
-                ]
-
-            },
-
-            OP_VALUE => {
-
-                # colons can ONLY come after a variable.
-                #
-                #   e.g. need $x: Num;
-                #               ^
-                #
-                must_come_after => [
-                    'LexicalVariable InstanceVariable',
-                    'Colon inside variable declaration must follow a variable'
-                ]
-
-            },
-
-            OP_COMMA => {
-
-                # comma MUST come AFTER a bareword or a variable.
-                #
-                #   e.g. need $x, $y;
-                #               ^
-                #
-                #   e.g. need $x: Num, $y: Num;
-                #                    ^
-                #
-                must_come_after => [
-                    'LexicalVariable InstanceVariable Bareword',
-                    'Comma inside variable declaration must follow a variable or type'
-                ],
-
-                # comma MUST come BEFORE a variable, such that
-                #
-                #   e.g. need $x: Num, ;
-                #                    ^ ERROR
-                #
-                must_come_before => [
-                    'LexicalVariable InstanceVariable',
-                    'Comma inside variable declaration must be followed by a variable'
-                ]
-
-            },
-
-            Bareword => {
-
-                # bareword MUST come after a colon.
-                #
-                #   e.g. need $x: Num;
-                #                 ^
-                #
-                must_come_after => [
-                    'OP_VALUE',
-                    'Type specification in variable declaration must follow a colon-suffixed variable'
-                ]
-
-            }
-        }
+        # child_rules => {
+        #
+        #     LexicalVariable => {
+        #
+        #         # variables can come first OR come after a comma.
+        #         #
+        #         #   need $x;
+        #         #        ^
+        #         #
+        #         #   need $x, $y;
+        #         #            ^
+        #         #
+        #         must_come_after => [
+        #             'NONE OP_COMMA',
+        #             'Variable inside variable declaration must follow the declaration keyword or a comma'
+        #         ]
+        #
+        #     },
+        #
+        #     InstanceVariable => {
+        #
+        #         # variables can come first OR come after a comma.
+        #         #
+        #         #   need @x;
+        #         #        ^
+        #         #
+        #         #   need @x, @y;
+        #         #            ^
+        #         #
+        #         must_come_after => [
+        #             'NONE OP_COMMA',
+        #             'Variable inside variable declaration must follow the declaration keyword or a comma'
+        #         ]
+        #
+        #     },
+        #
+        #     OP_VALUE => {
+        #
+        #         # colons can ONLY come after a variable.
+        #         #
+        #         #   e.g. need $x: Num;
+        #         #               ^
+        #         #
+        #         must_come_after => [
+        #             'LexicalVariable InstanceVariable',
+        #             'Colon inside variable declaration must follow a variable'
+        #         ]
+        #
+        #     },
+        #
+        #     OP_COMMA => {
+        #
+        #         # comma MUST come AFTER a bareword or a variable.
+        #         #
+        #         #   e.g. need $x, $y;
+        #         #               ^
+        #         #
+        #         #   e.g. need $x: Num, $y: Num;
+        #         #                    ^
+        #         #
+        #         must_come_after => [
+        #             'LexicalVariable InstanceVariable Bareword',
+        #             'Comma inside variable declaration must follow a variable or type'
+        #         ],
+        #
+        #         # comma MUST come BEFORE a variable, such that
+        #         #
+        #         #   e.g. need $x: Num, ;
+        #         #                    ^ ERROR
+        #         #
+        #         must_come_before => [
+        #             'LexicalVariable InstanceVariable',
+        #             'Comma inside variable declaration must be followed by a variable'
+        #         ]
+        #
+        #     },
+        #
+        #     Bareword => {
+        #
+        #         # bareword MUST come after a colon.
+        #         #
+        #         #   e.g. need $x: Num;
+        #         #                 ^
+        #         #
+        #         must_come_after => [
+        #             'OP_VALUE',
+        #             'Type specification in variable declaration must follow a colon-suffixed variable'
+        #         ]
+        #
+        #     }
+        # }
     },
 
     Token => {

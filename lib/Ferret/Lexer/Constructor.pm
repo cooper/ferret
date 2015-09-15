@@ -479,9 +479,25 @@ sub c_OP_COMMA {
         return $c->{node};
     }
 
-    # we're in a want/need.
+    # we're in a want/need. this starts another.
     if ($c->{node}->type eq 'WantNeed') {
-        return $c->{node}->adopt($c->{unknown_el});
+        my $old_wn = $c->{node};
+
+        # fake a semicolon to terminate the instruction
+        # wrapping the previous WantNeed.
+        c_OP_SEMI($c);
+
+        # create new want/need.
+        my $wn = F::WantNeed->new(arg_type => $old_wn->{arg_type});
+        $c->{ $old_wn->{arg_type} } = $wn;
+
+        # wrap it with an instruction.
+        my $instr = F::Instruction->new;
+        $instr->{parent_instruction} = $c->{instruction};
+        $c->{instruction} = $instr;
+        $c->{node} = $c->{node}->adopt($instr);
+
+        return $c->{node} = $instr->adopt($wn);
     }
 
     return unexpected($c, 'outside of list') if !$c->{list};

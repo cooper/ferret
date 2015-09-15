@@ -6,11 +6,14 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$x'
-#                      Comma (,)
+#              Instruction
+#                  Need
 #                      Lexical variable '$y'
-#                      Comma (,)
+#              Instruction
+#                  Need
 #                      Instance variable '@width'
-#                      Comma (,)
+#              Instruction
+#                  Need
 #                      Instance variable '@height'
 #              Instruction
 #                  Assignment
@@ -181,19 +184,19 @@ use Ferret::Core::Operations qw(add mul num);
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 do {
-                    return if not defined $arguments->{x};
+                    return unless defined $arguments->{x};
                     $scope->set_property( x => $arguments->{x} );
                 };
                 do {
-                    return if not defined $arguments->{y};
+                    return unless defined $arguments->{y};
                     $scope->set_property( y => $arguments->{y} );
                 };
                 do {
-                    return if not defined $arguments->{width};
+                    return unless defined $arguments->{width};
                     $self->set_property( width => $arguments->{width} );
                 };
                 do {
-                    return if not defined $arguments->{height};
+                    return unless defined $arguments->{height};
                     $self->set_property( height => $arguments->{height} );
                 };
                 $self->set_property(

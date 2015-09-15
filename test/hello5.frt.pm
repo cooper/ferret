@@ -5,7 +5,8 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$x'
-#                      Comma (,)
+#              Instruction
+#                  Need
 #                      Lexical variable '$y'
 #              Instruction
 #                  Assignment
@@ -51,7 +52,8 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$pt1'
-#                      Comma (,)
+#              Instruction
+#                  Need
 #                      Lexical variable '$pt2'
 #              Instruction
 #                  Return
@@ -213,11 +215,11 @@ use Ferret::Core::Operations qw(add div num str);
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 do {
-                    return if not defined $arguments->{x};
+                    return unless defined $arguments->{x};
                     $scope->set_property( x => $arguments->{x} );
                 };
                 do {
-                    return if not defined $arguments->{y};
+                    return unless defined $arguments->{y};
                     $scope->set_property( y => $arguments->{y} );
                 };
                 $self->set_property( x => $scope->property('x') );
@@ -296,11 +298,11 @@ use Ferret::Core::Operations qw(add div num str);
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 do {
-                    return if not defined $arguments->{pt1};
+                    return unless defined $arguments->{pt1};
                     $scope->set_property( pt1 => $arguments->{pt1} );
                 };
                 do {
-                    return if not defined $arguments->{pt2};
+                    return unless defined $arguments->{pt2};
                     $scope->set_property( pt2 => $arguments->{pt2} );
                 };
                 return $scope->property('Point')->call(

@@ -6,7 +6,8 @@
 #              Instruction
 #                  Need
 #                      Instance variable '@pt1'
-#                      Comma (,)
+#              Instruction
+#                  Need
 #                      Instance variable '@pt2'
 #          Method 'midpoint'
 #              Instruction
@@ -79,11 +80,11 @@ use Ferret::Core::Operations qw();
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 do {
-                    return if not defined $arguments->{pt1};
+                    return unless defined $arguments->{pt1};
                     $self->set_property( pt1 => $arguments->{pt1} );
                 };
                 do {
-                    return if not defined $arguments->{pt2};
+                    return unless defined $arguments->{pt2};
                     $self->set_property( pt2 => $arguments->{pt2} );
                 };
                 return $return;

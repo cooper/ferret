@@ -1,4 +1,4 @@
 do {
-    return if not defined $arguments->{<<var_name>>};
+    return unless defined $arguments->{<<var_name>>};
     $self->set_property(<<var_name>> => $arguments->{<<var_name>>});
-}
+};

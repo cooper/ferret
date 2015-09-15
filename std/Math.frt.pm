@@ -5,7 +5,6 @@
 #          Instruction
 #              Need
 #                  Lexical variable '$num'
-#                  Colon (:)
 #                  Bareword 'Num'
 #          Instruction
 #              Return
@@ -15,7 +14,7 @@
 #                      Structural list [1 items]
 #                          Item 0
 #                              Lexical variable '$num'
-#      Include (NATIVE::Math, Num, NATIVE)
+#      Include (NATIVE::Math, NATIVE, Num)
 use warnings;
 use strict;
 use utf8;
@@ -44,7 +43,7 @@ use Ferret::Core::Operations qw();
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
             do {
-                return if not defined $arguments->{num};
+                return unless defined $arguments->{num};
                 $scope->set_property( num => $arguments->{num} );
             };
             return $scope->property('NATIVE::Math')->property('sqrt')
@@ -58,7 +57,7 @@ use Ferret::Core::Operations qw();
         );
     }
     $funcs[0]->inside_scope( sqrt => $scope, $scope );
-    Ferret::space( $context, $_ ) for qw(NATIVE::Math Num NATIVE);
+    Ferret::space( $context, $_ ) for qw(NATIVE::Math NATIVE Num);
 }
 
 Ferret::runtime();

@@ -94,7 +94,7 @@
 #                      Structural list [1 items]
 #                          Item 0
 #                              String 'JOIN #k'
-#      Include (Socket::TCP, Socket, Timer)
+#      Include (Socket::TCP, Timer, Socket)
 use warnings;
 use strict;
 use utf8;
@@ -123,7 +123,7 @@ use Ferret::Core::Operations qw(add num str);
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
             do {
-                return if not defined $arguments->{data};
+                return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
             $scope->property('say')->call(
@@ -145,7 +145,7 @@ use Ferret::Core::Operations qw(add num str);
         $func->{code} = sub {
             my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
             do {
-                return if not defined $arguments->{data};
+                return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
             $scope->property('say')->call(
@@ -185,7 +185,7 @@ use Ferret::Core::Operations qw(add num str);
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Socket::TCP Socket Timer);
+    Ferret::space( $context, $_ ) for qw(Socket::TCP Timer Socket);
     $scope->set_property(
         sock => $scope->property('Socket::TCP')->call(
             { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },

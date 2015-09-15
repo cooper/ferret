@@ -6,7 +6,8 @@
 #              Instruction
 #                  Need
 #                      Instance variable '@x'
-#                      Comma (,)
+#              Instruction
+#                  Need
 #                      Instance variable '@y'
 #          Method 'distanceTo'
 #              Instruction
@@ -73,7 +74,8 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$pt1'
-#                      Comma (,)
+#              Instruction
+#                  Need
 #                      Lexical variable '$pt2'
 #              Instruction
 #                  Return
@@ -157,11 +159,11 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 do {
-                    return if not defined $arguments->{x};
+                    return unless defined $arguments->{x};
                     $self->set_property( x => $arguments->{x} );
                 };
                 do {
-                    return if not defined $arguments->{y};
+                    return unless defined $arguments->{y};
                     $self->set_property( y => $arguments->{y} );
                 };
                 return $return;
@@ -184,7 +186,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 do {
-                    return if not defined $arguments->{pt2};
+                    return unless defined $arguments->{pt2};
                     $scope->set_property( pt2 => $arguments->{pt2} );
                 };
                 $scope->set_property(
@@ -282,11 +284,11 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 do {
-                    return if not defined $arguments->{pt1};
+                    return unless defined $arguments->{pt1};
                     $scope->set_property( pt1 => $arguments->{pt1} );
                 };
                 do {
-                    return if not defined $arguments->{pt2};
+                    return unless defined $arguments->{pt2};
                     $scope->set_property( pt2 => $arguments->{pt2} );
                 };
                 return $scope->{special}->property('class')->call(
