@@ -25,7 +25,7 @@
 #                      Call
 #                          Property 'pretty'
 #                              Lexical variable '$obj'
-#      Include (Math, Math::Point)
+#      Include (Math::Point, Math)
 use warnings;
 use strict;
 use utf8;
@@ -39,6 +39,7 @@ BEGIN {
 
 use Ferret;
 
+my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello16.frt.pm'}++;
 
@@ -47,7 +48,7 @@ use Ferret::Core::Operations qw(num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    Ferret::space( $context, $_ ) for qw(Math Math::Point);
+    Ferret::space( $context, $_ ) for qw(Math::Point Math);
     $scope->set_property( obj => str( $f, "hi" ) );
     $scope->property('Math::Point')->property('init')
       ->call( [ $scope->property('obj') ], $scope )

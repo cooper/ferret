@@ -90,7 +90,7 @@
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      Number '4'
-#      Include (Math, Math::Point, Math::Rect)
+#      Include (Math::Point, Math, Math::Rect)
 use warnings;
 use strict;
 use utf8;
@@ -104,6 +104,7 @@ BEGIN {
 
 use Ferret;
 
+my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello7.frt.pm'}++;
 
@@ -112,7 +113,7 @@ use Ferret::Core::Operations qw(add num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    Ferret::space( $context, $_ ) for qw(Math Math::Point Math::Rect);
+    Ferret::space( $context, $_ ) for qw(Math::Point Math Math::Rect);
     $scope->set_property(
         rect => $scope->property('Math::Rect')->call(
             {

@@ -102,7 +102,7 @@
 #                      String 'this shoul...'
 #                  Item 1
 #                      Boolean true
-#      Include (Math, Math::Point)
+#      Include (Math::Point, Math)
 use warnings;
 use strict;
 use utf8;
@@ -116,6 +116,7 @@ BEGIN {
 
 use Ferret;
 
+my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello11.frt.pm'}++;
 
@@ -130,7 +131,8 @@ use Ferret::Core::Operations qw(add bool num str);
         $func->add_argument( name => 'twice' );
         $func->add_argument( name => 'message' );
         $func->{code} = sub {
-            my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
             do {
                 return unless defined $arguments->{twice};
                 $scope->set_property( twice => $arguments->{twice} );
@@ -156,7 +158,7 @@ use Ferret::Core::Operations qw(add bool num str);
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Math Math::Point);
+    Ferret::space( $context, $_ ) for qw(Math::Point Math);
     $scope->set_property( point => $scope->property('Math::Point')
           ->call( [ num( $f, 0 ), num( $f, 0 ) ], $scope ) );
     if ( bool( $scope->property('point') ) ) {
@@ -194,7 +196,7 @@ use Ferret::Core::Operations qw(add bool num str);
     {
         my $on_func =
           do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
-        $scope->property('say')->add_function($on_func);
+        $scope->property('say')->add_function_with_self( $self, $on_func );
     }
     $scope->set_property(
         r => $scope->property('say')->call(

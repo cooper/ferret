@@ -1,4 +1,4 @@
-class Bot
+class Bot2
 
 init {
     need @addr: Str, @nick: Str, @user: Str;

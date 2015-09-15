@@ -178,6 +178,7 @@ BEGIN {
 
 use Ferret;
 
+my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello5.frt.pm'}++;
 

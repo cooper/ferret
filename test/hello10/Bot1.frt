@@ -1,4 +1,4 @@
-class Bot
+class Bot1
 
 init {
     need @addr: Str, @nick: Str, @user: Str;
@@ -11,6 +11,12 @@ init {
     on @sock.connected {
         @send("USER @user \* \* :@real");
         @send("NICK @nick");
+    }
+
+    # print data
+    on @sock.gotLine {
+        need $data;
+        say("recv: $data");
     }
 
 }

@@ -97,13 +97,21 @@ sub call {
 
         $return ||= Ferret::Object->new($func->ferret);
 
-        my $self =
-            delete $func->{force_self} ||
-            ($func->is_method ? $func->{last_parent} : $func->{class});
+        # find self.
+        my $self = delete $func->{force_self};
+        if (!$self) {
+            if ($func->is_method) {
+                $self = $func->{last_parent};
+            }
+            elsif ($func->is_class_func) {
+                $self = $func->{class};
+            }
+        }
 
         # class/instance argument.
         $scope->{special}->set_property(self   => $self) if $self;
-        $scope->{special}->set_property(class  => $func->{class}) if $func->{class};
+        $scope->{special}->set_property(class  => $func->{class})       if $func->{class};
+        $scope->{special}->set_property(this   => delete $func->{this}) if $func->{this};
         $scope->{special}->set_property(return => $return);
 
         # call the function.
@@ -124,11 +132,14 @@ sub inside_scope {
     my ($func, $name, $scope, $owner, $class) = @_;
     $func->{class} = $class;
     $func->{outer_scope} = $scope;
+    $func->{is_class_func} = 1 if $owner && $owner->isa('Ferret::Class');
+    $func->{is_method}     = 1 if $owner && $owner->{is_proto};
     $owner->set_property($name => $func) if defined $name;
     return $func;
 }
 
-sub has_name  { length shift->{name} }
-sub is_method { shift->{is_method}   }
+sub has_name      { length shift->{name}   }
+sub is_method     { shift->{is_method}     }
+sub is_class_func { shift->{is_class_func} }
 
 1

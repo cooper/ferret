@@ -23,7 +23,7 @@
 #                              Mathematical operation
 #                                  String 'found ''
 #                                  Addition operator (+)
-#                                  Special variable '*self'
+#                                  Special variable '*this'
 #                                  Addition operator (+)
 #                                  String '' length t...'
 #                                  Addition operator (+)
@@ -52,7 +52,7 @@
 #                              Mathematical operation
 #                                  String 'found ''
 #                                  Addition operator (+)
-#                                  Special variable '*self'
+#                                  Special variable '*this'
 #                                  Addition operator (+)
 #                                  String '' length t...'
 #                                  Addition operator (+)
@@ -76,6 +76,7 @@ BEGIN {
 
 use Ferret;
 
+my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello14.frt.pm'}++;
 
@@ -89,13 +90,14 @@ use Ferret::Core::Operations qw(add str);
         my $func = $funcs[0] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
             $scope->property('say')->call(
                 [
                     add(
                         $scope,
                         str( $f, "found '" ),
-                        $scope->{special}->property('self'),
+                        $scope->{special}->property('this'),
                         str( $f, "' length to be " ),
                         $scope->{special}->property('return')
                     )
@@ -111,13 +113,14 @@ use Ferret::Core::Operations qw(add str);
         my $func = $funcs[1] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
             $scope->property('say')->call(
                 [
                     add(
                         $scope,
                         str( $f, "found '" ),
-                        $scope->{special}->property('self'),
+                        $scope->{special}->property('this'),
                         str( $f, "' length to be " ),
                         $scope->{special}->property('return')
                     )
@@ -135,7 +138,8 @@ use Ferret::Core::Operations qw(add str);
     {
         my $on_func =
           do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
-        $scope->property('str')->property('length')->add_function($on_func);
+        $scope->property('str')->property('length')
+          ->add_function_with_self( $self, $on_func );
     }
     $scope->property('str')->property('length')->call( [], $scope );
     str( $f, "hello" )->property('length')->call( [], $scope );
@@ -145,7 +149,7 @@ use Ferret::Core::Operations qw(add str);
         my $on_func =
           do { $funcs[1]->inside_scope( +undef => $scope, $scope ); };
         $scope->property('String')->property('proto')->property('length')
-          ->add_function($on_func);
+          ->add_function_with_self( $self, $on_func );
     }
     str( $f, "hello" )->property('length')->call( [], $scope );
 }

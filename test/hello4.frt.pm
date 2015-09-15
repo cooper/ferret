@@ -90,6 +90,7 @@ BEGIN {
 
 use Ferret;
 
+my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello4.frt.pm'}++;
 
@@ -105,7 +106,8 @@ use Ferret::Core::Operations qw(add num str);
         $func->add_argument( name => 'y' );
         $func->add_argument( name => 'z', optional => 1 );
         $func->{code} = sub {
-            my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
             do {
                 return unless defined $arguments->{x};
                 $scope->set_property( x => $arguments->{x} );

@@ -1,11 +1,7 @@
 # --- DOM ---
-#  Document './test/hello.frt'
+#  Document './test/hello10/bot_test2.frt'
 #      Instruction
-#          Call
-#              Bareword 'say'
-#              Structural list [1 items]
-#                  Item 0
-#                      String 'Hello World!'
+#          Number '1'
 #      Include
 use warnings;
 use strict;
@@ -22,14 +18,14 @@ use Ferret;
 
 my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello.frt.pm'}++;
+$Ferret::tried_files{'bot_test2.frt.pm'}++;
 
-use Ferret::Core::Operations qw(str);
+use Ferret::Core::Operations qw(num);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    $scope->property('say')->call( [ str( $f, "Hello World!" ) ], $scope );
+    num( $f, 1 );
 }
 
 Ferret::runtime();

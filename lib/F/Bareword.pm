@@ -16,7 +16,7 @@ sub desc {
 sub after_adopt {
     my $el = shift;
     my $val = $el->{bareword_value};
-    
+
     # if it starts with a capital letter, it's a class or namespace.
     my @parts;
     foreach my $part (split /::/, $val) {
@@ -26,7 +26,7 @@ sub after_adopt {
         }
         last;
     }
-    
+
     $val = join '::', @parts;
     my $doc = $el->document;
     $doc->{required_spaces}{$val} = 1 if $val; # do not increment

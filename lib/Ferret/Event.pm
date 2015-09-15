@@ -25,9 +25,14 @@ sub new {
     return $event;
 }
 
+sub add_function_with_self {
+    my ($event, $self) = (shift, shift);
+    $event->{force_add_self} = $self;
+    return $event->add_function(@_);
+}
+
 sub add_function {
     my ($event, $obj, $func) = @_;
-
     # if $func is undefined, that means the $obj was omitted.
     # when $obj is omitted, the object is inferred by last_parent.
     #
@@ -40,6 +45,7 @@ sub add_function {
         $obj  = $event->{last_parent};
         $obj  = undef if $obj->{is_proto}; # adding to proto is for all objs
     }
+    my $self_maybe = delete $event->{force_add_self};
 
     # function name is basically callback name.
     my %opts;
@@ -62,9 +68,13 @@ sub add_function {
         $func->{outer_scope} ||= $outer_scope;
         $func->{is_method}     = $event->{is_method};
 
+        # *this is like *self except it's always the object
+        # from which the event is being fired
+        $func->{this} = $obj;
+
         # call the function.
         my $ret = $func->call_with_self(
-            $obj,
+            $self_maybe || $obj,
             $arguments,
             $from_scope,
             $fire->{override_return} // $return

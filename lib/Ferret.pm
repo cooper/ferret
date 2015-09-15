@@ -172,20 +172,6 @@ sub add_binding {
     return $class;
 }
 
-sub _parse_method_args {
-    my ($str, @args) = shift;
-    return if not defined $str;
-    foreach my $arg (split /\s+/, $str) {
-        my ($name, $type) = split /:/, $arg, 2;
-        $name =~ s/^\$//;
-        push @args, {
-            name => $name,
-            type => $type
-        };
-    }
-    return @args;
-}
-
 sub bind_constructor {
     my ($class, $f, %opts) = @_;
     # FIXME: this is stupid

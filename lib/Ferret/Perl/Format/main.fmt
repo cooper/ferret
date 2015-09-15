@@ -3,7 +3,7 @@ use strict;
 use utf8;
 use 5.010;
 
-BEGIN {    
+BEGIN {
     my $libs = do '/etc/ferret.conf';
     ref $libs eq 'ARRAY' or die "config error";
     unshift @INC, @$libs;
@@ -11,6 +11,7 @@ BEGIN {
 
 use Ferret;
 
+my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'<<base_name>>.pm'}++;
 

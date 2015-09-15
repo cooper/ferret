@@ -44,6 +44,7 @@ BEGIN {
 
 use Ferret;
 
+my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello9.frt.pm'}++;
 
@@ -57,7 +58,8 @@ use Ferret::Core::Operations qw(add str);
         my $func = Ferret::Function->new( $f, name => 'default' );
         $func->add_argument( name => 'who' );
         $func->{code} = sub {
-            my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
             do {
                 return unless defined $arguments->{who};
                 $scope->set_property( who => $arguments->{who} );

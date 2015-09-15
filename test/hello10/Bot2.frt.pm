@@ -1,6 +1,6 @@
 # --- DOM ---
 #  Document './test/hello10/Bot2.frt'
-#      Class 'Bot'
+#      Class 'Bot2'
 #          Main method '_init_'
 #              Instruction
 #                  Need
@@ -61,7 +61,7 @@
 #                                          String 'NICK '
 #                                          Addition operator (+)
 #                                          Instance variable '@nick'
-#      Include (Socket, Num, Socket::TCP, Str)
+#      Include (Socket, Socket::TCP, Str, Num)
 use warnings;
 use strict;
 use utf8;
@@ -75,6 +75,7 @@ BEGIN {
 
 use Ferret;
 
+my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Bot2.frt.pm'}++;
 
@@ -88,7 +89,8 @@ use Ferret::Core::Operations qw(add num str);
         my $func = $funcs[0] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
             $self->property('println')->call(
                 [
                     add(
@@ -107,20 +109,20 @@ use Ferret::Core::Operations qw(add num str);
         };
     }
 
-    # Class 'Bot'
+    # Class 'Bot2'
     {
         my @methods;
         my ( $class, $self );
-        if ( $context->has_property('Bot') ) {
-            $class = $self = $context->property('Bot');
+        if ( $context->has_property('Bot2') ) {
+            $class = $self = $context->property('Bot2');
         }
         else {
             $class = $self = Ferret::Class->new(
                 $f,
-                name    => 'Bot',
+                name    => 'Bot2',
                 version => undef
             );
-            $context->set_property( Bot => $class );
+            $context->set_property( Bot2 => $class );
         }
         my $proto = $class->prototype;
 
@@ -153,7 +155,6 @@ use Ferret::Core::Operations qw(add num str);
                     my $want_val = $arguments->{port};
                     $want_val ||= num( $f, 6667 );
                     $self->set_property( port => $want_val );
-                    $want_val;
                 };
                 $scope->property('Socket::TCP')->property('init')
                   ->call( [ $scope->{special}->property('self') ], $scope )
@@ -170,7 +171,8 @@ use Ferret::Core::Operations qw(add num str);
                     my $on_func = do {
                         $funcs[0]->inside_scope( +undef => $scope, $scope );
                     };
-                    $self->property('connected')->add_function($on_func);
+                    $self->property('connected')
+                      ->add_function_with_self( $self, $on_func );
                 }
                 return $return;
             };
@@ -182,7 +184,7 @@ use Ferret::Core::Operations qw(add num str);
         }
         $methods[0]->inside_scope( _init_ => $scope, $class, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Socket Num Socket::TCP Str);
+    Ferret::space( $context, $_ ) for qw(Socket Socket::TCP Str Num);
 }
 
 Ferret::runtime();
