@@ -14,6 +14,14 @@ sub new {
     my ($class, %opts) = @_;
     my $f = bless {}, $class;
 
+    # create the global object initializer.
+    $f->{object_initializer} = Ferret::Function->new($f, code => sub {
+        my (undef, $arguments) = @_;
+        my $new = Ferret::Object->new($f);
+        $new->set_property($_ => $arguments->{$_}) foreach keys %$arguments;
+        return $new;
+    });
+
     # create the core and main context objects.
     $f->{context}{core} ||=
         $core_context   ||= Ferret::Core::Context->new($f, %opts);
@@ -162,7 +170,7 @@ sub add_binding {
             bless $_[0], $opts{perl_package};
             $init->(@_);
             return $_[0];
-        });
+        }, need => $opts{init_need}, want => $opts{init_want});
     }
 
     # define the event in the context.

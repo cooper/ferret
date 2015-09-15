@@ -23,10 +23,17 @@ my @methods = (
 
 Ferret::bind_class(
     name      => 'Timer',
-    methods   => \@methods
+    methods   => \@methods,
+    init      => \&init,
+    init_need => '$delay:Num'
 );
 
 *new = *Ferret::bind_constructor;
+
+sub init {
+    my ($timer, $arguments) = @_;
+    $timer->{delay} = $arguments->{delay}{value};
+}
 
 sub run_once {
     my ($timer, $arguments, $from_scope, $scope, $return) = @_;
@@ -34,7 +41,7 @@ sub run_once {
     # create a countdown timer.
     require IO::Async::Timer::Countdown;
     my $t; $t = $timer->{t} = IO::Async::Timer::Countdown->new(
-        delay => $timer->{delay} // 5,
+        delay => $timer->{delay},
         on_expire => sub {
             return if $timer->{canceled};
             delete $timer->{t};

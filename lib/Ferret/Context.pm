@@ -15,6 +15,9 @@ sub new {
     # create a new scope.
     my $context = $class->SUPER::new($f, %opts);
 
+    # set the object initializer.
+    $context->set_property(Object => $f->{object_initializer});
+
     return $context;
 }
 

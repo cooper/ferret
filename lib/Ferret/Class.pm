@@ -137,7 +137,7 @@ sub _global_init {
         my ($class, $arguments) = @_;
         my $obj = delete $arguments->{obj};
         return Ferret::Function->new($f,
-            mimic => $class->property('_init_'),
+            mimic => $class->property('_init_') || undef,
             code  => sub {
                 my (undef, $arguments) = @_;
                 return $class->init($obj, $arguments);

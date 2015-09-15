@@ -103,7 +103,7 @@
 #                                          String 'send: '
 #                                          Addition operator (+)
 #                                          Lexical variable '$data'
-#      Include (Socket::TCP, Num, Socket, Str)
+#      Include (Num, Socket, Socket::TCP, Str)
 use warnings;
 use strict;
 use utf8;
@@ -297,7 +297,7 @@ use Ferret::Core::Operations qw(add num str);
         }
         $methods[0]->inside_scope( _init_ => $scope, $class, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Socket::TCP Num Socket Str);
+    Ferret::space( $context, $_ ) for qw(Num Socket Socket::TCP Str);
 }
 
 Ferret::runtime();

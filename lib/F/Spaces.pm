@@ -16,7 +16,7 @@ sub desc {
 
 sub spaces {
     my $doc = shift->document;
-    return keys %{ $doc->{required_spaces} };
+    return sort keys %{ $doc->{required_spaces} };
 }
 
 sub perl_fmt {

@@ -108,7 +108,7 @@
 #                      Structural list [1 items]
 #                          Item 0
 #                              Lexical variable '$line'
-#      Include (Socket::TCP, Socket, Num, Str)
+#      Include (Num, Socket, Socket::TCP, Str)
 use warnings;
 use strict;
 use utf8;
@@ -326,7 +326,7 @@ use Ferret::Core::Operations qw(add num str);
         $methods[1]->inside_scope( connect => $scope, $proto, $class );
         $methods[2]->inside_scope( send    => $scope, $proto, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Socket::TCP Socket Num Str);
+    Ferret::space( $context, $_ ) for qw(Num Socket Socket::TCP Str);
 }
 
 Ferret::runtime();
