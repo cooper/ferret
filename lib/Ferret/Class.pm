@@ -11,7 +11,7 @@ use Scalar::Util 'weaken';
 
 sub new {
     my ($class_name, $f, %opts) = @_;
-    $opts{prototype} ||= Ferret::Prototype->new($f, is_proto => 1);
+    $opts{prototype} ||= Ferret::Prototype->new($f);
     my $class = $class_name->SUPER::new($f, %opts);
     weaken($class->prototype->{proto_class} ||= $class);
     $class->add_parent(_global_class_prototype($f));
@@ -125,7 +125,7 @@ sub _parse_method_args {
 sub _global_class_prototype {
     my $f = shift;
     return $f->{class_proto} ||= do {
-        my $proto = Ferret::Object->new($f);
+        my $proto = Ferret::Prototype->new($f);
         $proto->set_property(init => _global_init($f));
         $proto;
     };
@@ -149,6 +149,12 @@ sub _global_init {
 }
 
 package Ferret::Prototype;
+
 use parent 'Ferret::Object';
+
+sub new {
+    my ($class, $f, %opts) = @_;
+    return $class->SUPER::new($f, is_proto => 1, %opts);
+}
 
 1

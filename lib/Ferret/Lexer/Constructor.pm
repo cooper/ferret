@@ -209,21 +209,12 @@ sub c_KEYWORD_FOR {
     my ($c, $value) = @_;
 
     # create a closure to be opened soon.
-    my $for = F::Node->new(type => 'For');
+    my $for = F::For->new(type => 'For');
     $c->{node}->adopt($for);
     $c->{clos_cap} = $for;
 
-    # create an expression.
-    # the expression is marked as the parameter to the for keyword.
-    # it is also marked as generated, so we know it can be terminated
-    # automatically by certain tokens.
-    my $exp = F::Expression->new(
-        parameter_for        => 'for',
-        generated_expression => 1,
-        no_instructions      => 1
-    );
-    $for->adopt($exp);
-    $c->{node} = $exp;
+    # set the node to the for parameter.
+    $c->{node} = $for->param_exp;
 
     return $for;
 }
@@ -235,20 +226,10 @@ sub c_KEYWORD_IN {
     return unexpected($c, "(where is 'for'?)") unless
         $c->{node}{parameter_for} && $c->{node}{parameter_for} eq 'for';
         # FIXME: if wrapped in parentheses, this will fail.
-    $c->{node} = $c->{node}->close;
 
-    # create an expression.
-    # the expression is marked as the parameter to the in keyword.
-    # it is also marked as generated, so we know it can be terminated
-    # automatically by certain tokens.
-    my $exp = F::Expression->new(
-        parameter_for        => 'in',
-        generated_expression => 1,
-        no_instructions      => 1
-    );
-    $c->{node} = $c->{node}->adopt($exp);
+    # set the node to the 'in' parameter.
+    return $c->{node} = $c->{node}->close->in_param_exp;
 
-    return $exp;
 }
 
 sub c_PAREN_S {

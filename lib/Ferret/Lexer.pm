@@ -43,6 +43,7 @@ use F::Spaces;
 use F::Inside;
 use F::On;
 use F::Boolean;
+use F::For;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (

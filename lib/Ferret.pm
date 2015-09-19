@@ -177,18 +177,26 @@ sub add_binding {
     $context->set_property($_ => $class)
         foreach ($class->{name}, split /\s+/, $opts{alias} || '');
 
-    return $class;
+    return $class_bindings{ $opts{perl_package} }{class} = $class;
 }
 
 sub bind_constructor {
-    my ($class, $f, %opts) = @_;
-    # FIXME: this is stupid
-    # consider: what if you want a different context?
-    # consider: what if you want constructor arguments?
-    my $class_name = $class_bindings{$class}{name};
-    my $obj = $f->main_context->property($class_name)->call([ ]);
-    %$obj = (%$obj, %opts);
-    return $obj;
+    my ($perl_class, $f, %opts) = @_;
+
+    # find the class object.
+    my $class = $class_bindings{$perl_class}{class} or return;
+
+    # find init arguments.
+    my $arguments = delete $opts{init_args} || {};
+
+    # create and bless an object.
+    my $obj = Ferret::Object->new($f, %opts);
+    bless $obj, $perl_class;
+
+    # initialize it; return the instance.
+    my $ret = $class->init($obj, $arguments);
+    return $ret->property('instance');
+
 }
 
 ###############

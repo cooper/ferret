@@ -20,7 +20,7 @@ sub new {
     );
 
     # mimic = copy the signature.
-    if (my $mimic = delete $opts{mimic}) {
+    if (my $mimic = delete $func->{mimic}) {
         ref $mimic or return $func;
         $mimic = $mimic->{function}{default} if $mimic->isa('Ferret::Event');
         ref $mimic && $mimic->isa('Ferret::Function') or return $func;

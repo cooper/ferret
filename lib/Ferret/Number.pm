@@ -37,15 +37,13 @@ my @methods = (
     }
 );
 
-*new = *Ferret::bind_constructor;
 Ferret::bind_class(
-  # package   => 'Some::Package',   # e.g. Math
-  # parent    => 'Object',          # space-separated list (default: Object)
     name      => 'Number',
-    alias     => 'Num',             # space-separated list
-  # functions => \@functions,
-    methods   => \@methods          # added as callbacks. do not overwrite each other.
+    alias     => 'Num',
+    methods   => \@methods
 );
+
+*new = *Ferret::bind_constructor;
 
 # number plus number
 sub op_add {
@@ -86,7 +84,7 @@ sub op_pow {
     my $new_value = $num->{value} ** $other->{value};
     return Ferret::Number->new($num->ferret, value => $new_value);
 }
-    
+
 sub _sum {
     # TODO: more than two arguments.
     my ($class, $arguments) = @_;

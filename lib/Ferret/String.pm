@@ -17,15 +17,13 @@ my @methods = (
     }
 );
 
-*new = *Ferret::bind_constructor;
 Ferret::bind_class(
-  # package   => 'Some::Package',   # e.g. Math
-  # parent    => 'Object',          # space-separated list (default: Object)
     name      => 'String',
-    alias     => 'Str',             # space-separated list
-  # functions => \@functions,
-    methods   => \@methods          # added as callbacks. do not overwrite each other.
+    alias     => 'Str',
+    methods   => \@methods
 );
+
+*new = *Ferret::bind_constructor;
 
 # string plus string
 sub op_add {
@@ -35,9 +33,14 @@ sub op_add {
     return Ferret::String->new($str->ferret, value => $new_value);
 }
 
+sub length : method {
+    my $str = shift;
+    return length $str->{value};
+}
+
 sub _length {
     my $str = shift;
-    return Ferret::Number->new($str->ferret, value => length $str->{value});
+    return Ferret::Number->new($str->ferret, value => $str->length);
 }
 
 1
