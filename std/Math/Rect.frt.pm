@@ -341,8 +341,8 @@ use Ferret::Core::Operations qw(add mul num);
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 return $scope->property('Line')->call(
                     [
-                        $self->property('bottomLeft')->call( [], $scope ),
-                        $self->property('bottomRight')->call( [], $scope )
+                        $self->property('bottomLeft')->call( {}, $scope ),
+                        $self->property('bottomRight')->call( {}, $scope )
                     ],
                     $scope
                 );
@@ -367,8 +367,8 @@ use Ferret::Core::Operations qw(add mul num);
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 return $scope->property('Line')->call(
                     [
-                        $self->property('topLeft')->call( [], $scope ),
-                        $self->property('topRight')->call( [], $scope )
+                        $self->property('topLeft')->call( {}, $scope ),
+                        $self->property('topRight')->call( {}, $scope )
                     ],
                     $scope
                 );

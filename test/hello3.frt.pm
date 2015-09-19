@@ -187,8 +187,8 @@ use Ferret::Core::Operations qw(add num str);
                 return unless defined $arguments->{name2};
                 $scope->set_property( name2 => $arguments->{name2} );
             };
-            $scope->property('hello1')->call( [], $scope );
-            $scope->property('hello2')->call( [], $scope );
+            $scope->property('hello1')->call( {}, $scope );
+            $scope->property('hello2')->call( {}, $scope );
             return $return;
         };
         $funcs[2] = Ferret::Event->new(

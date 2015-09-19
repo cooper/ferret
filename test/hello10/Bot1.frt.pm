@@ -279,7 +279,7 @@ use Ferret::Core::Operations qw(add num str);
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 $self->property('sock')->property('connect')
-                  ->call( [], $scope );
+                  ->call( {}, $scope );
                 return $return;
             };
             $methods[1] = Ferret::Event->new(

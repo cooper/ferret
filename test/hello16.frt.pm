@@ -55,7 +55,7 @@ use Ferret::Core::Operations qw(num str);
       ->call( [ num( $f, 1 ), num( $f, 1 ) ], $scope );
     $scope->property('say')
       ->call(
-        [ $scope->property('obj')->property('pretty')->call( [], $scope ) ],
+        [ $scope->property('obj')->property('pretty')->call( {}, $scope ) ],
         $scope );
 }
 

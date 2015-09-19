@@ -67,7 +67,7 @@ use Ferret::Core::Operations qw(num str);
     }
     Ferret::space( $context, $_ ) for qw(Object Timer);
     $scope->set_property(
-        obj => $scope->property('Object')->call( [], $scope ) );
+        obj => $scope->property('Object')->call( {}, $scope ) );
     $scope->property('Timer')->property('init')
       ->call( [ $scope->property('obj') ], $scope )
       ->call( [ num( $f, 5 ) ], $scope );
@@ -76,7 +76,7 @@ use Ferret::Core::Operations qw(num str);
     {
         my $on_func =
           do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
-        $scope->property('obj')->property('once')->call( [], $scope )
+        $scope->property('obj')->property('once')->call( {}, $scope )
           ->property('expire')->add_function_with_self( $self, $on_func );
     }
 }

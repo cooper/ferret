@@ -30,7 +30,8 @@ sub perl_fmt {
             $call->func_args;
     }
 
-    return ($call->named_args ? 'call_named' : 'call') => {
+    my $fmt = !length $arg_string || $call->named_args ? 'call_named' : 'call';
+    return $fmt => {
         coderef   => $func->perl_fmt_do,
         arguments => $arg_string
     };

@@ -349,13 +349,13 @@ use Ferret::Core::Operations qw(add div num str);
                     $scope,
                     str( $f, "Point" ),
                     $scope->property('pt')->property('pretty')
-                      ->call( [], $scope )
+                      ->call( {}, $scope )
                 )
             ],
             $scope
         );
         $scope->set_property( rpt =>
-              $scope->property('pt')->property('oneToRight')->call( [], $scope )
+              $scope->property('pt')->property('oneToRight')->call( {}, $scope )
         );
         $scope->property('say')->call(
             [
@@ -363,7 +363,7 @@ use Ferret::Core::Operations qw(add div num str);
                     $scope,
                     str( $f, "Right" ),
                     $scope->property('rpt')->property('pretty')
-                      ->call( [], $scope )
+                      ->call( {}, $scope )
                 )
             ],
             $scope
@@ -379,7 +379,7 @@ use Ferret::Core::Operations qw(add div num str);
                     $scope,
                     str( $f, "Midpoint" ),
                     $scope->property('mdpt')->property('pretty')
-                      ->call( [], $scope )
+                      ->call( {}, $scope )
                 )
             ],
             $scope

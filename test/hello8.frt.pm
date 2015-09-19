@@ -72,7 +72,7 @@ use Ferret::Core::Operations qw(add mul num str);
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 return mul(
                     $scope,
-                    $self->property('length')->call( [], $scope ),
+                    $self->property('length')->call( {}, $scope ),
                     num( $f, 2 )
                 );
                 return $return;
@@ -90,7 +90,7 @@ use Ferret::Core::Operations qw(add mul num str);
                     $scope,
                     str( $f, "Length times two: " ),
                     str( $f, "hi there" )->property('doubledLength')
-                      ->call( [], $scope )
+                      ->call( {}, $scope )
                 )
             ],
             $scope

@@ -63,7 +63,7 @@ use Ferret::Core::Operations qw(str);
     );
     $scope->property('say')
       ->call( [ $scope->property('bot')->property('address') ], $scope );
-    $scope->property('bot')->property('connect')->call( [], $scope );
+    $scope->property('bot')->property('connect')->call( {}, $scope );
 }
 
 Ferret::runtime();

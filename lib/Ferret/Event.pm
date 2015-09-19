@@ -109,6 +109,7 @@ sub call {
     my $obj = $event->{last_parent} or return;
 
     # arguments for the default function.
+    $arguments ||= {};
     if (ref $arguments eq 'ARRAY') {
         my $default = $event->{function}{default} or return;
         $arguments = $default->handle_arguments($arguments);

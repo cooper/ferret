@@ -1,4 +1,4 @@
-# create an empty object
+# create an arbitrary object
 $obj = "hi";
 
 # become a point

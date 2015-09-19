@@ -141,8 +141,8 @@ use Ferret::Core::Operations qw(add str);
         $scope->property('str')->property('length')
           ->add_function_with_self( $self, $on_func );
     }
-    $scope->property('str')->property('length')->call( [], $scope );
-    str( $f, "hello" )->property('length')->call( [], $scope );
+    $scope->property('str')->property('length')->call( {}, $scope );
+    str( $f, "hello" )->property('length')->call( {}, $scope );
 
     # On
     {
@@ -151,7 +151,7 @@ use Ferret::Core::Operations qw(add str);
         $scope->property('String')->property('proto')->property('length')
           ->add_function_with_self( $self, $on_func );
     }
-    str( $f, "hello" )->property('length')->call( [], $scope );
+    str( $f, "hello" )->property('length')->call( {}, $scope );
 }
 
 Ferret::runtime();

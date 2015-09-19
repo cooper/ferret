@@ -109,7 +109,7 @@ use Ferret::Core::Operations qw();
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
                 return $self->property('pt1')
                   ->create_set( $scope, $self->property('pt2') )
-                  ->property('midpoint')->call( [], $scope );
+                  ->property('midpoint')->call( {}, $scope );
                 return $return;
             };
             $methods[1] = Ferret::Event->new(

@@ -77,6 +77,7 @@ sub call {
     my ($func, $arguments, $from_scope, $return) = @_;
 
     # list of arguments. must use signature.
+    $arguments ||= {};
     if (ref $arguments eq 'ARRAY') {
         $arguments = $func->handle_arguments($arguments);
     }

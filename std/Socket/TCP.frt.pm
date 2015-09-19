@@ -70,7 +70,7 @@ sub _connect {
     Ferret::add_notifier($stream);
 
     # call connected event.
-    $sock->property('connected')->call([]);
+    $sock->property('connected')->call;
 
     return $return;
 }

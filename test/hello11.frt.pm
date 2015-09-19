@@ -186,7 +186,7 @@ use Ferret::Core::Operations qw(add bool num str);
                 $scope,
                 str( $f, "Point: " ),
                 $scope->property('point')->property('pretty')
-                  ->call( [], $scope )
+                  ->call( {}, $scope )
             )
         ],
         $scope

@@ -222,14 +222,14 @@ use Ferret::Core::Operations qw(add num str);
         $scope->property('sock')->property('connected')
           ->add_function_with_self( $self, $on_func );
     }
-    $scope->property('sock')->property('connect')->call( [], $scope );
+    $scope->property('sock')->property('connect')->call( {}, $scope );
 
     # On
     {
         my $on_func =
           do { $funcs[3]->inside_scope( +undef => $scope, $scope ); };
         $scope->property('Timer')->call( [ num( $f, 5 ) ], $scope )
-          ->property('once')->call( [], $scope )->property('expire')
+          ->property('once')->call( {}, $scope )->property('expire')
           ->add_function_with_self( $self, $on_func );
     }
 }

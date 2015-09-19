@@ -54,7 +54,7 @@ use Ferret::Core::Operations qw(str);
             $scope
         )
     );
-    $scope->property('bot')->property('connect')->call( [], $scope );
+    $scope->property('bot')->property('connect')->call( {}, $scope );
 }
 
 Ferret::runtime();

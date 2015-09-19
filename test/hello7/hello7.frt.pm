@@ -126,14 +126,14 @@ use Ferret::Core::Operations qw(add num str);
         )
     );
     $scope->set_property( center =>
-          $scope->property('rect')->property('center')->call( [], $scope ) );
+          $scope->property('rect')->property('center')->call( {}, $scope ) );
     $scope->property('say')->call(
         [
             add(
                 $scope,
                 str( $f, "Center of rect: " ),
                 $scope->property('center')->property('pretty')
-                  ->call( [], $scope )
+                  ->call( {}, $scope )
             )
         ],
         $scope
@@ -144,7 +144,7 @@ use Ferret::Core::Operations qw(add num str);
                 $scope,
                 str( $f, "Center distance from origin: " ),
                 $scope->property('center')->property('distanceFromOrigin')
-                  ->call( [], $scope )
+                  ->call( {}, $scope )
             )
         ],
         $scope
@@ -153,8 +153,8 @@ use Ferret::Core::Operations qw(add num str);
           ->call( [ num( $f, 9 ), num( $f, 2 ) ], $scope ) );
     $scope->set_property( midpoint => $scope->property('center')
           ->create_set( $scope, $scope->property('otherPt') )
-          ->property('midpoint')->call( [], $scope )->property('pretty')
-          ->call( [], $scope ) );
+          ->property('midpoint')->call( {}, $scope )->property('pretty')
+          ->call( {}, $scope ) );
     $scope->property('say')->call(
         [
             add(
