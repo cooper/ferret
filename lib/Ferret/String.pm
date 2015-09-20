@@ -7,10 +7,12 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
+use Ferret::Conversion qw(perl_string ferret_string);
+
 my @methods = (
-    op_add => {
+    opAdd => {
         code => \&op_add,
-        need => '$other:Str'
+        need => '$other'
     },
     length => {
         code => \&_length
@@ -29,8 +31,8 @@ Ferret::bind_class(
 sub op_add {
     my ($str, $arguments) = @_;
     my $other = $arguments->{other};
-    my $new_value = $str->{value}.$other->{value};
-    return Ferret::String->new($str->ferret, value => $new_value);
+    my $new_value = perl_string($str).perl_string($other);
+    return ferret_string($new_value);
 }
 
 sub length : method {

@@ -48,6 +48,12 @@
 #                                  Instance variable '@y'
 #                                  Addition operator (+)
 #                                  String ')'
+#          Method 'toString'
+#              Instruction
+#                  Return
+#                      Call
+#                          Instance variable '@pretty'
+#                          Structural list [0 items]
 #          Main method 'midpoint'
 #              Instruction
 #                  Need
@@ -104,9 +110,7 @@
 #                          Mathematical operation
 #                              String 'Point'
 #                              Addition operator (+)
-#                              Call
-#                                  Property 'pretty'
-#                                      Lexical variable '$pt'
+#                              Lexical variable '$pt'
 #          Instruction
 #              Assignment
 #                  Lexical variable '$rpt'
@@ -121,9 +125,7 @@
 #                          Mathematical operation
 #                              String 'Right'
 #                              Addition operator (+)
-#                              Call
-#                                  Property 'pretty'
-#                                      Lexical variable '$rpt'
+#                              Lexical variable '$rpt'
 #          Instruction
 #              Assignment
 #                  Lexical variable '$mdpt'
@@ -143,9 +145,7 @@
 #                          Mathematical operation
 #                              String 'Midpoint'
 #                              Addition operator (+)
-#                              Call
-#                                  Property 'pretty'
-#                                      Lexical variable '$mdpt'
+#                              Lexical variable '$mdpt'
 #          Instruction
 #              Assignment
 #                  Lexical variable '$nineteen'
@@ -287,6 +287,26 @@ use Ferret::Core::Operations qw(add div num str);
             );
         }
 
+        # Method event 'toString' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                return $self->property('pretty')->call( {}, $scope );
+                return $return;
+            };
+            $methods[3] = Ferret::Event->new(
+                $f,
+                name         => 'toString',
+                default_func => [ undef, $func ]
+            );
+        }
+
         # Method event 'midpoint' definition
         {
             my $func = Ferret::Function->new(
@@ -331,7 +351,7 @@ use Ferret::Core::Operations qw(add div num str);
                 );
                 return $return;
             };
-            $methods[3] = Ferret::Event->new(
+            $methods[4] = Ferret::Event->new(
                 $f,
                 name         => 'midpoint',
                 default_func => [ undef, $func ]
@@ -340,48 +360,27 @@ use Ferret::Core::Operations qw(add div num str);
         $methods[0]->inside_scope( _init_     => $scope, $class, $class );
         $methods[1]->inside_scope( oneToRight => $scope, $proto, $class );
         $methods[2]->inside_scope( pretty     => $scope, $proto, $class );
-        $methods[3]->inside_scope( midpoint   => $scope, $class, $class );
+        $methods[3]->inside_scope( toString   => $scope, $proto, $class );
+        $methods[4]->inside_scope( midpoint   => $scope, $class, $class );
         $scope->set_property( pt => $scope->property('Point')
               ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope ) );
-        $scope->property('say')->call(
-            [
-                add(
-                    $scope,
-                    str( $f, "Point" ),
-                    $scope->property('pt')->property('pretty')
-                      ->call( {}, $scope )
-                )
-            ],
-            $scope
-        );
+        $scope->property('say')
+          ->call( [ add( $scope, str( $f, "Point" ), $scope->property('pt') ) ],
+            $scope );
         $scope->set_property( rpt =>
               $scope->property('pt')->property('oneToRight')->call( {}, $scope )
         );
-        $scope->property('say')->call(
-            [
-                add(
-                    $scope,
-                    str( $f, "Right" ),
-                    $scope->property('rpt')->property('pretty')
-                      ->call( {}, $scope )
-                )
-            ],
-            $scope
-        );
+        $scope->property('say')
+          ->call(
+            [ add( $scope, str( $f, "Right" ), $scope->property('rpt') ) ],
+            $scope );
         $scope->set_property(
             mdpt => $scope->property('Point')->property('midpoint')->call(
                 [ $scope->property('pt'), $scope->property('rpt') ], $scope
             )
         );
         $scope->property('say')->call(
-            [
-                add(
-                    $scope,
-                    str( $f, "Midpoint" ),
-                    $scope->property('mdpt')->property('pretty')
-                      ->call( {}, $scope )
-                )
-            ],
+            [ add( $scope, str( $f, "Midpoint" ), $scope->property('mdpt') ) ],
             $scope
         );
         $scope->set_property(

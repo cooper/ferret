@@ -6,9 +6,11 @@ use strict;
 use utf8;
 use 5.010;
 
+use Ferret::Conversion qw(perl_string);
+
 sub _say {
     my ($self, $arguments, $from_scope, $scope, $return) = @_;
-    say $arguments->{message}{value} // $arguments->{message};
+    say perl_string($arguments->{message});
     return $return;
 }
 

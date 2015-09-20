@@ -70,6 +70,12 @@
 #                          Instance variable '@y'
 #                          Addition operator (+)
 #                          String ')'
+#          Method 'toString'
+#              Instruction
+#                  Return
+#                      Call
+#                          Instance variable '@pretty'
+#                          Structural list [0 items]
 #          Main method 'midpoint'
 #              Instruction
 #                  Need
@@ -108,6 +114,21 @@
 #                                                          Lexical variable '$pt2'
 #                                          Division operator (/)
 #                                          Number '2'
+#          Main method 'distanceBetween'
+#              Instruction
+#                  Need
+#                      Lexical variable '$pt1'
+#              Instruction
+#                  Need
+#                      Lexical variable '$pt2'
+#              Instruction
+#                  Return
+#                      Call
+#                          Property 'distanceTo'
+#                              Lexical variable '$pt1'
+#                          Structural list [1 items]
+#                              Item 0
+#                                  Lexical variable '$pt2'
 #      Include
 use warnings;
 use strict;
@@ -273,6 +294,26 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             );
         }
 
+        # Method event 'toString' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                return $self->property('pretty')->call( {}, $scope );
+                return $return;
+            };
+            $methods[4] = Ferret::Event->new(
+                $f,
+                name         => 'toString',
+                default_func => [ undef, $func ]
+            );
+        }
+
         # Method event 'midpoint' definition
         {
             my $func = Ferret::Function->new(
@@ -317,9 +358,39 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
                 );
                 return $return;
             };
-            $methods[4] = Ferret::Event->new(
+            $methods[5] = Ferret::Event->new(
                 $f,
                 name         => 'midpoint',
+                default_func => [ undef, $func ]
+            );
+        }
+
+        # Method event 'distanceBetween' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+            $func->add_argument( name => 'pt1' );
+            $func->add_argument( name => 'pt2' );
+            $func->{code} = sub {
+                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                do {
+                    return unless defined $arguments->{pt1};
+                    $scope->set_property( pt1 => $arguments->{pt1} );
+                };
+                do {
+                    return unless defined $arguments->{pt2};
+                    $scope->set_property( pt2 => $arguments->{pt2} );
+                };
+                return $scope->property('pt1')->property('distanceTo')
+                  ->call( [ $scope->property('pt2') ], $scope );
+                return $return;
+            };
+            $methods[6] = Ferret::Event->new(
+                $f,
+                name         => 'distanceBetween',
                 default_func => [ undef, $func ]
             );
         }
@@ -327,8 +398,10 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
         $methods[1]->inside_scope( distanceTo => $scope, $proto, $class );
         $methods[2]
           ->inside_scope( distanceFromOrigin => $scope, $proto, $class );
-        $methods[3]->inside_scope( pretty   => $scope, $proto, $class );
-        $methods[4]->inside_scope( midpoint => $scope, $class, $class );
+        $methods[3]->inside_scope( pretty          => $scope, $proto, $class );
+        $methods[4]->inside_scope( toString        => $scope, $proto, $class );
+        $methods[5]->inside_scope( midpoint        => $scope, $class, $class );
+        $methods[6]->inside_scope( distanceBetween => $scope, $class, $class );
     }
 }
 

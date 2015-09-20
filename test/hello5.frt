@@ -15,6 +15,10 @@ method pretty {
     return ("(@x, @y)");
 }
 
+method toString {
+    return @pretty();
+}
+
 main method midpoint {
     need $pt1, $pt2;
     return Point(
@@ -24,13 +28,13 @@ main method midpoint {
 }
 
 $pt = Point(5, 3);
-say("Point" + $pt.pretty!);
+say("Point$pt");
 
 $rpt = $pt.oneToRight!;
-say("Right" + $rpt.pretty!);
+say("Right$rpt");
 
 $mdpt = Point.midpoint($pt, $rpt);
-say("Midpoint" + $mdpt.pretty!);
+say("Midpoint$mdpt");
 
 $nineteen = 4 + 45 / 3;
 say("Nineteen: $nineteen");

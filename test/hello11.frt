@@ -10,7 +10,7 @@ inside $point {
     $y = 10;
 }
 
-say("Point: " + $point.pretty!);
+say("Point: $point");
 
 on say {
     need $twice, $message;

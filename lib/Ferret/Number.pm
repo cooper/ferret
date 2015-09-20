@@ -10,23 +10,23 @@ use parent 'Ferret::Object';
 use List::Util qw(sum);
 
 my @methods = (
-    op_add => {
+    opAdd => {
         code => \&op_add,
         need => '$other:Num'
     },
-    op_sub => {
+    opSub => {
         code => \&op_sub,
         need => '$other:Num'
     },
-    op_div => {
+    opDiv => {
         code => \&op_div,
         need => '$other:Num'
     },
-    op_mul => {
+    opMul => {
         code => \&op_mul,
         need => '$other:Num'
     },
-    op_pow => {
+    opPow => {
         code => \&op_pow,
         need => '$other:Num'
     },

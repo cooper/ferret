@@ -44,9 +44,7 @@
 #                      Mathematical operation
 #                          String 'Point: '
 #                          Addition operator (+)
-#                          Call
-#                              Property 'pretty'
-#                                  Lexical variable '$point'
+#                          Lexical variable '$point'
 #      On
 #          Expression ('on' parameter)
 #              Bareword 'say'
@@ -180,17 +178,10 @@ use Ferret::Core::Operations qw(add bool num str);
 
         $scope->remove_parent($outer_scope);
     }
-    $scope->property('say')->call(
-        [
-            add(
-                $scope,
-                str( $f, "Point: " ),
-                $scope->property('point')->property('pretty')
-                  ->call( {}, $scope )
-            )
-        ],
-        $scope
-    );
+    $scope->property('say')
+      ->call(
+        [ add( $scope, str( $f, "Point: " ), $scope->property('point') ) ],
+        $scope );
 
     # On
     {

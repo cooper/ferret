@@ -18,8 +18,9 @@ sub op_star {
     $star = 'sub' if $star eq '_sub';
 
     # TODO: errors.
-    my $op   = "op_$star";
-    @items   = grep { $_->has_property($op) } @items;
+    my $ucst = ucfirst $star;
+    my $op   = "op$ucst";
+    #@items   = grep { $_->has_property($op) } @items;
     my $left = shift @items or return;
 
     while (@items) {

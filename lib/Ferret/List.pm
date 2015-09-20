@@ -73,7 +73,6 @@ sub unshift : method {
 
 sub push : method {
     my ($list, $item) = @_;
-    # TODO: fire 'push' event
     push @{ $list->{list_items} }, $item;
 }
 
