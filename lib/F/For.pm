@@ -33,10 +33,18 @@ sub new {
 sub perl_fmt {
     my $for = shift;
     my ($var_exp, $collection) = $for->children;
-    my $var = ($var_exp->children)[0];
+    my $var1 = $var_exp->first_child;
+    my $var2;
+
+    # if it's a structural list, it's like a key-value type deal.
+    if ($var1->type eq 'List') {
+        ($var1, $var2) = map $_->item, $var1->children;
+        $var1 && $var2 or die;
+        $var2->type eq 'LexicalVariable' or die;
+    }
 
     # this is temporary.
-    $var->type eq 'LexicalVariable' or die;
+    $var1->type eq 'LexicalVariable' or die;
 
     # get content.
     my $content = '';
@@ -45,9 +53,10 @@ sub perl_fmt {
         $content .= $child->perl_fmt_do."\n";
     }
 
-    return for_each => {
+    return $var2 ? 'for_each_hash' : 'for_each_list' => {
         collection  => $collection->perl_fmt_do,
-        var_name    => $var->{var_name},
+        var1_name   => $var1->{var_name},
+        var2_name   => $var2->{var_name},
         body        => $content
     };
 }

@@ -12,7 +12,7 @@ sub desc {
 }
 
 sub key   { shift->{key} }          # a Perl string
-sub value { (shift->children)[0] }  # an element
+sub value { shift->first_child }  # an element
 
 sub perl_fmt {
     my $pair = shift;

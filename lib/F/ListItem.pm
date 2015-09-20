@@ -51,4 +51,6 @@ sub adopt {
     return $item->SUPER::adopt($el);
 }
 
+sub item { shift->first_child }
+
 1

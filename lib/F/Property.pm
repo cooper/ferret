@@ -15,7 +15,7 @@ sub perl_fmt {
     my $prop = shift;
     return property => {
         name => $prop->{prop_name},
-        left => ($prop->children)[0]->perl_fmt_do
+        left => $prop->first_child->perl_fmt_do
     };
 }
 

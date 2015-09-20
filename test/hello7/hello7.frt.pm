@@ -32,9 +32,7 @@
 #                      Mathematical operation
 #                          String 'Center of ...'
 #                          Addition operator (+)
-#                          Call
-#                              Property 'pretty'
-#                                  Lexical variable '$center'
+#                          Lexical variable '$center'
 #      Instruction
 #          Call
 #              Bareword 'say'
@@ -130,10 +128,8 @@ use Ferret::Core::Operations qw(add num str);
     $scope->property('say')->call(
         [
             add(
-                $scope,
-                str( $f, "Center of rect: " ),
-                $scope->property('center')->property('pretty')
-                  ->call( {}, $scope )
+                $scope, str( $f, "Center of rect: " ),
+                $scope->property('center')
             )
         ],
         $scope

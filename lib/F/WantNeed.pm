@@ -8,7 +8,7 @@ use parent 'F::Statement';
 sub type { 'WantNeed' }
 sub desc { shift->{arg_type} || 'argument declaration' }
 
-sub variables { (shift->children)[0] }
+sub variables { shift->first_child }
 
 sub adopt {
     my ($wn, $child) = @_;

@@ -15,7 +15,7 @@ sub perl_fmt_do {
     return $a->get_format("assign_$fmt_name" => $fmt_args);
 }
 
-sub assign_to    { (shift->children)[0] }
+sub assign_to    { shift->first_child }
 sub assign_value {
     my $a = shift;
     my @c = $a->children;

@@ -5,18 +5,14 @@ use warnings;
 use strict;
 use utf8;
 use 5.010;
-
 use parent 'Ferret::Object';
 
+use Ferret::Conversion qw(ferret_number);
+
 my @methods = (
-
-length => {
-    code => sub {
-        my $list = shift;
-        return Ferret::Number->new($list->ferret, value => $list->length);
+    length => {
+        code => sub { ferret_number(shift->length) }
     }
-}
-
 );
 
 push @methods, map { $_ => {

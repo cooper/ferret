@@ -12,6 +12,6 @@ sub desc {
 }
 
 sub key   { shift->{key} }
-sub value { (shift->children)[0] }
+sub value { shift->first_child }
 
 1
