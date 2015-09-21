@@ -1,4 +1,4 @@
-foreach (<<collection>>->iterate) {
+foreach (<<collection>>->iterate_pair) {
     my $scope = Ferret::Scope->new($f, parent => $scope);
     $scope->set_property(<<var1_name>> => $_->[0]);
     $scope->set_property(<<var2_name>> => $_->[1]);

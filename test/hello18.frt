@@ -1,5 +1,7 @@
 $list = [ "hi" ];
 $list.push("there");
+$list.setValue(5, "yeah");
+
 say("Length: " + $list.length!);
 
 for $item in $list {
@@ -7,7 +9,10 @@ for $item in $list {
 }
 
 $hash = [ hi: "there" ];
-$hash.setPair("whats", "up");
+$hash.setValue("whats", "up");
+$hash["thank"] = "you";
+
+say("whats " + $hash["whats"]);
 
 for ($key, $val) in $hash {
     say("pair: key=$key; value=$val");

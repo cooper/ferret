@@ -7,14 +7,20 @@ use utf8;
 use 5.010;
 
 use parent 'Ferret::Object';
-use Ferret::Conversion qw(perl_string ferret_number ferret_string);
+use Ferret::Conversion qw(perl_string ferret_number ferret_string ferret_list);
 
 my @methods = (
+    keys => {
+        code => \&_keys
+    },
+    values => {
+        code => \&_values
+    },
     length => {
         code => \&_length
     },
-    setPair => {
-        need => '$key $value',
+    setValue => {
+        need => '$index $value',
         code => \&_set_pair
     }
 );
@@ -45,6 +51,7 @@ sub set_pair {
 
 sub _set_pair {
     my ($hash, $arguments) = @_;
+    $arguments->{key} ||= $arguments->{index};
     $hash->set_pair(@$arguments{'key', 'value'});
     return $hash;
 }
@@ -62,11 +69,21 @@ sub keys : method {
     return keys %{ shift->{hash_values} };
 }
 
+sub _keys {
+    my $hash = shift;
+    my @keys = map ferret_string($_), $hash->keys;
+    return ferret_list(@keys);
+}
+
 sub values : method {
     return keys %{ shift->{hash_values} };
 }
 
-sub iterate {
+sub _values {
+    return ferret_list(shift->values);
+}
+
+sub iterate_pair {
     my $hash = shift;
     my %hash = %{ $hash->{hash_values} };
     return map [ ferret_string($_), $hash{$_} ], keys %hash;

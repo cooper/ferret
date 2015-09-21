@@ -7,11 +7,19 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Conversion qw(ferret_number);
+use Ferret::Conversion qw(ferret_number perl_number);
 
 my @methods = (
     length => {
-        code => sub { ferret_number(shift->length) }
+        code => \&_length
+    },
+    insert => {
+        need => '$index:Num $item',
+        code => \&_insert
+    },
+    setValue => {
+        need => '$index:Num $item',
+        code => \&_set_value
     }
 );
 
@@ -57,6 +65,10 @@ sub length : method {
     return scalar @{ $list->{list_items} };
 }
 
+sub _length {
+    return ferret_number(shift->length);
+}
+
 sub shift : method {
     my ($list, $item) = @_;
     shift @{ $list->{list_items} }, $item;
@@ -75,6 +87,30 @@ sub push : method {
 sub pop : method {
     my ($list, $item) = @_;
     pop @{ $list->{list_items} }, $item;
+}
+
+sub insert {
+    my ($list, $index, $item) = @_;
+    splice @{ $list->{list_items} }, $index, 0, $item;
+}
+
+sub _insert {
+    my ($list, $arguments) = @_;
+    my $index = perl_number($arguments->{index});
+    $list->insert($index, $arguments->{item});
+    return $list;
+}
+
+sub set_value {
+    my ($list, $index, $item) = @_;
+    $list->{list_items}[$index] = $item;
+}
+
+sub _set_value {
+    my ($list, $arguments) = @_;
+    my $index = perl_number($arguments->{index});
+    $list->set_value($index, $arguments->{value})
+    return $list;
 }
 
 sub iterate {

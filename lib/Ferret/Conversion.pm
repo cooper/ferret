@@ -94,5 +94,23 @@ sub perl_number {
     return ferret_number($val)->{value} // 0;
 }
 
+# return a ferret list object.
+# @vals must be ferret objects already.
+sub ferret_list {
+    my @vals = shift;
+
+    # already an object, probably a list.
+    if (@vals == 1 && blessed $vals[0]) {
+        return $vals[0] if $vals[0];
+    }
+
+    # array ref.
+    if (@vals == 1 && ref $vals[0] eq 'ARRAY') {
+        @vals = @{ $vals[0] };
+    }
+
+    return Ferret::List->new($Ferret::ferret, values => \@vals);
+}
+
 
 1
