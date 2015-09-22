@@ -214,6 +214,10 @@ sub best_common_class {
     # TODO: it eventually should never return undef but instead Object.
 }
 
+#####################
+### MISCELLANEOUS ###
+#####################
+
 # create an object that represents a set of objects.
 sub create_set {
     my ($obj, $from_scope, @other_objs) = @_;
@@ -224,6 +228,20 @@ sub create_set {
         set_class   => best_common_class($obj, @other_objs),
         set_scope   => $from_scope
     );
+}
+
+# call getValue.
+sub get_index_value {
+    my ($obj, $arguments, $from_scope) = @_;
+    return $obj->property('getValue')->call($arguments, $from_scope);
+}
+
+# call setValue.
+# because the number of indices can be variable, the value is always first.
+sub set_index_value {
+    my ($obj, $arguments, $value, $from_scope) = @_;
+    unshift @$arguments, $value;
+    return $obj->property('setValue')->call($arguments, $from_scope);
 }
 
 ################

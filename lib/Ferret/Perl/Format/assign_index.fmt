@@ -1,0 +1,1 @@
+<<collection>>->set_index_value([ <<arguments>> ], <<assign_value>>, $scope)

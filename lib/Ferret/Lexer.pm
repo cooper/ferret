@@ -44,6 +44,7 @@ use F::Inside;
 use F::On;
 use F::Boolean;
 use F::For;
+use F::Index;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (
@@ -57,8 +58,10 @@ our %pretty_tokens = (
     CLOSURE_S   => 'opening curly bracket "{"',
     CLOSURE_E   => 'closing curly bracket "}"',
     PAREN_S     => 'opening parenthesis "("',
+    PAREN_CALL  => 'call parenthesis "("',
     PAREN_E     => 'closing parenthesis ")"',
     BRACKET_S   => 'opening bracket "["',
+    BRACKET_IDX => 'index bracket "["',
     BRACKET_E   => 'closing bracket "]"',
     PROPERTY    => 'property accessor (.property)',
     OP_RETURN   => 'return operator (->)',
@@ -79,20 +82,19 @@ our %pretty_tokens = (
     #OP_PROP     => 'property operator (.)',
     OP_COMMA    => 'comma (,)',
     OP_PACK     => 'namespace operator (::)',
-    PROP_VALUE  => 'property assignment (property: ...)',
     OP_VALUE    => 'colon (:)',
+    OP_CALL     => 'zero-argument call operator (!)',
+    PROP_VALUE  => 'property assignment (property: ...)',
     BAREWORD    => 'bareword',
     NUMBER      => 'inline number',
     NEWLINE     => 'newline',
     SPACE       => 'whitespace',
-    PAREN_CALL  => 'call parenthesis "("',
     STRING      => 'string ("...")',
     REGEX       => 'regex (/.../)',
     CLASS_DEC   => 'class declaration',
     PKG_DEC     => 'package declaration',
     FUNCTION    => 'function declaration',
-    METHOD      => 'method declaration',
-    OP_CALL     => 'zero-argument call operator (!)'
+    METHOD      => 'method declaration'
 );
 
 sub pretty_token {

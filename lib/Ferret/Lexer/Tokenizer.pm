@@ -120,6 +120,20 @@ sub tok_PAREN_S {
     return [ PAREN_CALL => ];
 }
 
+# brackets can be lists or indices.
+sub tok_BRACKET_S {
+    my ($tokens, $value) = @_;
+
+    # if it starts with whitespace, it can't be an index.
+    return if $value =~ m/^\s/;
+
+    # this isn't a call, but it's similar in nature.
+    return unless possibly_call($tokens);
+
+    # this is an index.
+    return [ BRACKET_IDX => ];
+}
+
 sub possibly_call {
     my $tokens = shift;
 
@@ -131,7 +145,11 @@ sub possibly_call {
     return if grep {
         $last ne 'OP_MAYBE' && $last =~ $_
     } qr/^OP_(.*)$/, qr/^KEYWORD$/;
-    return if grep { $last eq $_ } qw(PAREN_S PAREN_CALL BRACKET_S CLOSURE_S);
+    return if grep { $last eq $_ } qw(
+        PAREN_S     PAREN_CALL
+        BRACKET_S   BRACKET_IDX
+        CLOSURE_S
+    );
 
     return 1;
 }

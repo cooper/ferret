@@ -20,8 +20,12 @@ my @methods = (
         code => \&_length
     },
     setValue => {
-        need => '$index $value',
-        code => \&_set_pair
+        need => '$value $index',
+        code => \&_set_value
+    },
+    getValue => {
+        need => '$index',
+        code => \&_get_value
     }
 );
 
@@ -37,23 +41,34 @@ sub init {
     my ($hash, $arguments) = @_;
     $hash->{hash_values} ||= {};
     if (my $pairs = delete $hash->{pairs}) {
-        $hash->set_pair($_ => $pairs->{$_}) foreach keys %$pairs;
+        $hash->set_value($_ => $pairs->{$_}) foreach keys %$pairs;
     }
-    $hash->set_pair($_ => $arguments->{$_}) foreach keys %$arguments;
+    $hash->set_value($_ => $arguments->{$_}) foreach keys %$arguments;
 }
 
-sub set_pair {
+sub set_value {
     my ($hash, $key, $value) = @_;
     # TODO: check for a hashValue function
     $key = perl_string($key);
     $hash->{hash_values}{$key} = $value;
 }
 
-sub _set_pair {
+sub _set_value {
     my ($hash, $arguments) = @_;
     $arguments->{key} ||= $arguments->{index};
-    $hash->set_pair(@$arguments{'key', 'value'});
+    $hash->set_value(@$arguments{'key', 'value'});
     return $hash;
+}
+
+sub get_value {
+    my ($hash, $key) = @_;
+    return $hash->{hash_values}{$key};
+}
+
+sub _get_value {
+    my ($hash, $arguments) = @_;
+    my $key = perl_string($arguments->{key} // $arguments->{index});
+    return $hash->get_value($key);
 }
 
 sub length : method {

@@ -1,6 +1,6 @@
 $list = [ "hi" ];
 $list.push("there");
-$list.setValue(5, "yeah");
+$list[4] = "yeah";
 
 say("Length: " + $list.length!);
 
@@ -9,7 +9,7 @@ for $item in $list {
 }
 
 $hash = [ hi: "there" ];
-$hash.setValue("whats", "up");
+$hash["whats"] = "up";
 $hash["thank"] = "you";
 
 say("whats " + $hash["whats"]);

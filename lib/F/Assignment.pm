@@ -18,10 +18,11 @@ sub perl_fmt_do {
 sub assign_to    { shift->first_child }
 sub assign_value {
     my $a = shift;
+    return $a->{assign_value} if $a->{assign_value};
     my @c = $a->children;
     my $exp = F::Expression->new(parent => $a->parent);
     $exp->adopt($_) foreach @c[1..$#c];
-    return $exp;
+    return $a->{assign_value} = $exp;
 }
 
 1

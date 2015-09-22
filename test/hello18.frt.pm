@@ -14,6 +14,14 @@
 #                  Item 0
 #                      String 'there'
 #      Instruction
+#          Assignment
+#              Index
+#                  Lexical variable '$list'
+#                  Structural list [1 items]
+#                      Item 0
+#                          Number '4'
+#              String 'yeah'
+#      Instruction
 #          Call
 #              Bareword 'say'
 #              Structural list [1 items]
@@ -46,14 +54,34 @@
 #                      Pair 'hi'
 #                          String 'there'
 #      Instruction
-#          Call
-#              Property 'setPair'
+#          Assignment
+#              Index
 #                  Lexical variable '$hash'
-#              Structural list [2 items]
+#                  Structural list [1 items]
+#                      Item 0
+#                          String 'whats'
+#              String 'up'
+#      Instruction
+#          Assignment
+#              Index
+#                  Lexical variable '$hash'
+#                  Structural list [1 items]
+#                      Item 0
+#                          String 'thank'
+#              String 'you'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
 #                  Item 0
-#                      String 'whats'
-#                  Item 1
-#                      String 'up'
+#                      Mathematical operation
+#                          String 'whats '
+#                          Addition operator (+)
+#                          Index
+#                              Lexical variable '$hash'
+#                              Structural list [1 items]
+#                                  Item 0
+#                                      String 'whats'
 #      On
 #          Expression ('for' parameter)
 #              Structural list [2 items]
@@ -94,7 +122,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello18.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add str);
+use Ferret::Core::Operations qw(add num str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -103,6 +131,8 @@ use Ferret::Core::Operations qw(add str);
         list => Ferret::List->new( $f, items => [ str( $f, "hi" ) ] ) );
     $scope->property('list')->property('push')
       ->call( [ str( $f, "there" ) ], $scope );
+    $scope->property('list')
+      ->set_index_value( [ num( $f, 4 ) ], str( $f, "yeah" ), $scope );
     $scope->property('say')->call(
         [
             add(
@@ -125,9 +155,22 @@ use Ferret::Core::Operations qw(add str);
     $scope->set_property(
         hash => Ferret::Hash->new( $f, pairs => { hi => str( $f, "there" ) } )
     );
-    $scope->property('hash')->property('setPair')
-      ->call( [ str( $f, "whats" ), str( $f, "up" ) ], $scope );
-    foreach ( $scope->property('hash')->iterate ) {
+    $scope->property('hash')
+      ->set_index_value( [ str( $f, "whats" ) ], str( $f, "up" ), $scope );
+    $scope->property('hash')
+      ->set_index_value( [ str( $f, "thank" ) ], str( $f, "you" ), $scope );
+    $scope->property('say')->call(
+        [
+            add(
+                $scope,
+                str( $f, "whats " ),
+                $scope->property('hash')
+                  ->get_index_value( [ str( $f, "whats" ) ], $scope )
+            )
+        ],
+        $scope
+    );
+    foreach ( $scope->property('hash')->iterate_pair ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
         $scope->set_property( key => $_->[0] );
         $scope->set_property( val => $_->[1] );

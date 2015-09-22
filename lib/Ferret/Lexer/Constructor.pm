@@ -246,6 +246,11 @@ sub c_BRACKET_S {
     return $list;
 }
 
+sub c_BRACKET_IDX {
+    my ($c, $value) = @_;
+    return handle_call($c, $value, 1, 1);
+}
+
 sub c_PAREN_CALL {
     my ($c, $value) = @_;
     return handle_call($c, $value, 1);
@@ -256,8 +261,12 @@ sub c_OP_CALL {
     return handle_call($c, $value);
 }
 
+# handle_call() is used for calls as well as indices.
 sub handle_call {
-    my ($c, $value, $is_paren) = @_;
+    my ($c, $value, $is_paren, $is_index) = @_;
+
+    my $terminator = $is_index ? 'BRACKET_E' : 'PAREN_E';
+    my $package    = $is_index ? 'F::Index'  : 'F::Call';
 
     # a call can only come after one of:
     #   a one-element list
@@ -279,12 +288,12 @@ sub handle_call {
     }
 
     # create a function call, adopting the last element.
-    my $call = $c->{node}->adopt(F::Call->new);
+    my $call = $c->{node}->adopt($package->new);
     $call->adopt($last_el);
 
     # handle the list, then adopt it.
     if ($is_paren) {
-        my $list = start_list($c, $value, 'PAREN_E');
+        my $list = start_list($c, $value, $terminator);
         $list->{is_call} = 1;
         $list->{collection} = 1; # pretend to be array/hash for checks.
         $call->adopt($list);
@@ -378,6 +387,13 @@ sub c_BRACKET_E {
     #
     return unexpected($c) if $c->{node}->parent != $c->{list};
     $c->{node} = $c->{node}->close->close;
+
+    # index.
+    #
+    #       as a special case, close indices here as well, since they are
+    #       terminated by the end of their argument list.
+    #
+    $c->{node} = $c->{node}->close if $c->{node}->type eq 'Index';
 
     # finally, the current list becomes the next list up in the tree.
     $c->{list} = $c->{list}{parent_list};
@@ -619,7 +635,9 @@ sub c_OP_ASSIGN {
     }
 
     my %allowed = map { $_ => 1 } qw(
-        Bareword LexicalVariable InstanceVariable Property
+        Bareword Property
+        LexicalVariable InstanceVariable
+        Index
     );
 
     my $last_el = $c->{last_element};
@@ -829,7 +847,7 @@ sub fatal {
 sub expected {
     my ($c, $what, $where) = @_;
     $where //= '';
-    fatal($c, "Expected $what $where");
+    fatal($c, "Expected $what $where.");
 }
 
 sub unexpected {

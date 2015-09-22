@@ -18,8 +18,12 @@ my @methods = (
         code => \&_insert
     },
     setValue => {
-        need => '$index:Num $item',
+        need => '$item $index:Num',
         code => \&_set_value
+    },
+    getValue => {
+        need => '$index:Num',
+        code => \&_get_value
     }
 );
 
@@ -109,8 +113,19 @@ sub set_value {
 sub _set_value {
     my ($list, $arguments) = @_;
     my $index = perl_number($arguments->{index});
-    $list->set_value($index, $arguments->{value})
+    $list->set_value($index, $arguments->{value});
     return $list;
+}
+
+sub get_value {
+    my ($list, $index) = @_;
+    return $list->{list_items}[$index];
+}
+
+sub _get_value {
+    my ($hash, $arguments) = @_;
+    my $index = perl_number($arguments->{index});
+    return $hash->get_value($index);
 }
 
 sub iterate {
