@@ -3,8 +3,8 @@
     my $outer_scope = $scope;
     my $scope = <<expression>>;
     $scope->add_parent($outer_scope);
-    
+
     <<content>>
-    
+
     $scope->remove_parent($outer_scope);
 }

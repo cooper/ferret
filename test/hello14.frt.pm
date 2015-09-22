@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello14.frt'
 #      Instruction
 #          Call
@@ -132,7 +132,7 @@ use Ferret::Core::Operations qw(add str);
     }
     Ferret::space( $context, $_ ) for qw(String);
     $scope->property('say')->call( [ str( $f, "test" ) ], $scope );
-    $scope->set_property( str => str( $f, "hi" ) );
+    $scope->set_property_ow( str => str( $f, "hi" ) );
 
     # On
     {

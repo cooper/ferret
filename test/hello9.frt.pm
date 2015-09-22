@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello9.frt'
 #      Function 'sayHello'
 #          Instruction

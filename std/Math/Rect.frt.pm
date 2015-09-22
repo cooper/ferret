@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './std/Math/Rect.frt'
 #      Package 'Math'
 #      Class 'Rect'
@@ -391,14 +391,14 @@ use Ferret::Core::Operations qw(add mul num);
 
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
-                $scope->set_property(
+                $scope->set_property_ow(
                     x => add(
                         $scope,
                         $self->property('origin')->property('x'),
                         mul( $scope, $self->property('width'), num( $f, 0.5 ) )
                     )
                 );
-                $scope->set_property(
+                $scope->set_property_ow(
                     y => add(
                         $scope,
                         $self->property('origin')->property('y'),

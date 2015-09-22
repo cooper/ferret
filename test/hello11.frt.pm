@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello11.frt'
 #      Instruction
 #          Assignment
@@ -157,7 +157,7 @@ use Ferret::Core::Operations qw(add bool num str);
         };
     }
     Ferret::space( $context, $_ ) for qw(Math Math::Point);
-    $scope->set_property( point => $scope->property('Math::Point')
+    $scope->set_property_ow( point => $scope->property('Math::Point')
           ->call( [ num( $f, 0 ), num( $f, 0 ) ], $scope ) );
     if ( bool( $scope->property('point') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -173,8 +173,8 @@ use Ferret::Core::Operations qw(add bool num str);
         my $scope       = $scope->property('point');
         $scope->add_parent($outer_scope);
 
-        $scope->set_property( x => num( $f, 5 ) );
-        $scope->set_property( y => num( $f, 10 ) );
+        $scope->set_property_ow( x => num( $f, 5 ) );
+        $scope->set_property_ow( y => num( $f, 10 ) );
 
         $scope->remove_parent($outer_scope);
     }
@@ -189,7 +189,7 @@ use Ferret::Core::Operations qw(add bool num str);
           do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
         $scope->property('say')->add_function_with_self( $self, $on_func );
     }
-    $scope->set_property(
+    $scope->set_property_ow(
         r => $scope->property('say')->call(
             { message => str( $f, "It was said" ), twice => Ferret::true },
             $scope

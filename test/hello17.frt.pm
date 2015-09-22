@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello17.frt'
 #      Instruction
 #          Assignment
@@ -66,7 +66,7 @@ use Ferret::Core::Operations qw(num str);
         };
     }
     Ferret::space( $context, $_ ) for qw(Object Timer);
-    $scope->set_property(
+    $scope->set_property_ow(
         obj => $scope->property('Object')->call( {}, $scope ) );
     $scope->property('Timer')->property('init')
       ->call( [ $scope->property('obj') ], $scope )

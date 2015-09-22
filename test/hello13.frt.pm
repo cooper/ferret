@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello13.frt'
 #      Instruction
 #          Call
@@ -107,7 +107,7 @@ use Ferret::Core::Operations qw(num str);
           ->property('once')->call( {}, $scope )->property('expire')
           ->add_function_with_self( $self, $on_func );
     }
-    $scope->set_property(
+    $scope->set_property_ow(
         t2 => $scope->property('Timer')->call( [ num( $f, 2 ) ], $scope ) );
 
     # On

@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './std/Math.frt'
 #      Package 'Math'
 #      Function 'sqrt'

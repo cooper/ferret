@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello4.frt'
 #      Function 'makePoint'
 #          Instruction
@@ -117,7 +117,7 @@ use Ferret::Core::Operations qw(add num str);
                 $scope->set_property( y => $arguments->{y} );
             };
             $scope->set_property( z => $arguments->{z} );
-            $scope->set_property(
+            $scope->set_property_ow(
                 point => Ferret::Hash->new(
                     $f,
                     pairs => {
@@ -137,7 +137,7 @@ use Ferret::Core::Operations qw(add num str);
     }
     $funcs[0]->inside_scope( makePoint => $scope, $scope );
 
-    $scope->set_property( pt => $scope->property('makePoint')
+    $scope->set_property_ow( pt => $scope->property('makePoint')
           ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope )->property('point') );
     $scope->property('say')->call(
         [
@@ -149,7 +149,7 @@ use Ferret::Core::Operations qw(add num str);
         ],
         $scope
     );
-    $scope->set_property(
+    $scope->set_property_ow(
         numbers => Ferret::List->new(
             $f,
             items => [
@@ -161,8 +161,10 @@ use Ferret::Core::Operations qw(add num str);
             ]
         )
     );
-    $scope->set_property( emptyArray => Ferret::List->new( $f, items => [] ) );
-    $scope->set_property( emptyHash  => Ferret::Hash->new( $f, pairs => {} ) );
+    $scope->set_property_ow(
+        emptyArray => Ferret::List->new( $f, items => [] ) );
+    $scope->set_property_ow(
+        emptyHash => Ferret::Hash->new( $f, pairs => {} ) );
 }
 
 Ferret::runtime();

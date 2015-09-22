@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './std/Math/Line.frt'
 #      Package 'Math'
 #      Class 'Line'

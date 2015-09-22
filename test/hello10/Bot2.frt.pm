@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello10/Bot2.frt'
 #      Class 'Bot2'
 #          Main method '_init_'

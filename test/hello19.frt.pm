@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello19.frt'
 #      Instruction
 #          Assignment
@@ -46,7 +46,8 @@ use Ferret::Core::Operations qw(add str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    $scope->set_property( words => str( $f, "how are you?" )->property('split')
+    $scope->set_property_ow(
+        words => str( $f, "how are you?" )->property('split')
           ->call( [ str( $f, " " ) ], $scope ) );
     foreach ( $scope->property('words')->iterate ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );

@@ -38,9 +38,10 @@ sub unexpected {
     my $el = shift;
     my $c = $Ferret::Lexer::Constructor::current;
     $c->{rule_el} = $el;
-    die ${ Ferret::Lexer::Constructor::unexpected($c, @_) }."\n";
+    $c->{err_caller} = [caller];
+    $Ferret::Lexer::Constructor::error =
+        Ferret::Lexer::Constructor::unexpected($c, @_);
     delete $c->{rule_el};
-    # FIXME: this is just ridiculous
 }
 
 sub first_self_or_parent {

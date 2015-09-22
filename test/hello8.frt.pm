@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello8.frt'
 #      Class 'String'
 #          Method 'doubledLength'

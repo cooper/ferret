@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello5.frt'
 #      Class 'Point' version 1.0
 #          Main method '_init_'
@@ -244,7 +244,7 @@ use Ferret::Core::Operations qw(add div num str);
 
             $func->{code} = sub {
                 my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
-                $scope->set_property(
+                $scope->set_property_ow(
                     pt => $scope->{special}->property('class')->call(
                         [
                             add( $scope, $self->property('x'), num( $f, 1 ) ),
@@ -362,19 +362,19 @@ use Ferret::Core::Operations qw(add div num str);
         $methods[2]->inside_scope( pretty     => $scope, $proto, $class );
         $methods[3]->inside_scope( toString   => $scope, $proto, $class );
         $methods[4]->inside_scope( midpoint   => $scope, $class, $class );
-        $scope->set_property( pt => $scope->property('Point')
+        $scope->set_property_ow( pt => $scope->property('Point')
               ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope ) );
         $scope->property('say')
           ->call( [ add( $scope, str( $f, "Point" ), $scope->property('pt') ) ],
             $scope );
-        $scope->set_property( rpt =>
+        $scope->set_property_ow( rpt =>
               $scope->property('pt')->property('oneToRight')->call( {}, $scope )
         );
         $scope->property('say')
           ->call(
             [ add( $scope, str( $f, "Right" ), $scope->property('rpt') ) ],
             $scope );
-        $scope->set_property(
+        $scope->set_property_ow(
             mdpt => $scope->property('Point')->property('midpoint')->call(
                 [ $scope->property('pt'), $scope->property('rpt') ], $scope
             )
@@ -383,7 +383,7 @@ use Ferret::Core::Operations qw(add div num str);
             [ add( $scope, str( $f, "Midpoint" ), $scope->property('mdpt') ) ],
             $scope
         );
-        $scope->set_property(
+        $scope->set_property_ow(
             nineteen => add(
                 $scope,
                 num( $f, 4 ),

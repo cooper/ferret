@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello7/hello7.frt'
 #      Instruction
 #          Assignment
@@ -112,7 +112,7 @@ use Ferret::Core::Operations qw(add num str);
     my $scope = my $context = $f->get_context('main');
 
     Ferret::space( $context, $_ ) for qw(Math Math::Point Math::Rect);
-    $scope->set_property(
+    $scope->set_property_ow(
         rect => $scope->property('Math::Rect')->call(
             {
                 x      => num( $f, 5 ),
@@ -123,7 +123,7 @@ use Ferret::Core::Operations qw(add num str);
             $scope
         )
     );
-    $scope->set_property( center =>
+    $scope->set_property_ow( center =>
           $scope->property('rect')->property('center')->call( {}, $scope ) );
     $scope->property('say')->call(
         [
@@ -145,9 +145,9 @@ use Ferret::Core::Operations qw(add num str);
         ],
         $scope
     );
-    $scope->set_property( otherPt => $scope->property('Math::Point')
+    $scope->set_property_ow( otherPt => $scope->property('Math::Point')
           ->call( [ num( $f, 9 ), num( $f, 2 ) ], $scope ) );
-    $scope->set_property( midpoint => $scope->property('center')
+    $scope->set_property_ow( midpoint => $scope->property('center')
           ->create_set( $scope, $scope->property('otherPt') )
           ->property('midpoint')->call( {}, $scope )->property('pretty')
           ->call( {}, $scope ) );

@@ -39,12 +39,12 @@ my ($o, $usage) = describe_options(
 print($usage->text) and exit if $o->help;
 
 # handle each file.
-do_file($_) foreach grep { substr($_, -3) eq 'frt' } @ARGV;
+do_file($_) foreach grep { substr($_, -4) eq '.frt' } @ARGV;
 
 my $fh;
 sub do_file {
     my $file = shift;
-    say $file;
+    say "[ $file ]";
 
     # open the output file.
     if ($o->stdout) { $fh = \*STDOUT }
@@ -56,19 +56,19 @@ sub do_file {
     # tokenize.
     my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize($str);
     if ($o->tokens) {
-        inter "--- Tokens ---\n";
+        inter "=== Tokenization ===\n";
         show_tok(@tok);
     }
-    die "Error: $$err\n" if $err;
+    die "\nError: $$err\n" if $err;
 
     # construct elements.
     my $doc = F::Document->new(name => $file);
     my $err = Ferret::Lexer::Constructor::construct($doc, @tok);
     if ($o->dom) {
-        inter "--- DOM ---\n";
+        inter "=== Document Model ===\n";
         show_dom($doc);
     }
-    die "Error: $$err\n" if $err;
+    die "\nError: $$err\n" if $err;
 
     # compile to Perl.
     my $compiled = Ferret::Perl::main($doc);

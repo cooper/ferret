@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello18.frt'
 #      Instruction
 #          Assignment
@@ -127,7 +127,7 @@ use Ferret::Core::Operations qw(add num str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    $scope->set_property(
+    $scope->set_property_ow(
         list => Ferret::List->new( $f, items => [ str( $f, "hi" ) ] ) );
     $scope->property('list')->property('push')
       ->call( [ str( $f, "there" ) ], $scope );
@@ -152,7 +152,7 @@ use Ferret::Core::Operations qw(add num str);
             [ add( $scope, str( $f, "item: " ), $scope->property('item') ) ],
             $scope );
     }
-    $scope->set_property(
+    $scope->set_property_ow(
         hash => Ferret::Hash->new( $f, pairs => { hi => str( $f, "there" ) } )
     );
     $scope->property('hash')

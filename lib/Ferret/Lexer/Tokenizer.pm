@@ -74,7 +74,7 @@ my @token_formats = (
     [ OP_MUL_A      => qr/\*=/                                              ],  # multiplication assignment
     [ OP_DIV_A      => qr/\/=/                                              ],  # division assignment
     [ OP_POW_A      => qr/\^=/                                              ],  # power assignment
-    [ OP_EQUAL_I    => qr/==/                                               ],  # object equality
+    [ OP_EQUAL_I    => qr/===/                                              ],  # object equality
     [ OP_EQUAL      => qr/==/                                               ],  # equality
     [ OP_ASSIGN     => qr/=/                                                ],  # assignment
     [ OP_ADD        => qr/\+/                                               ],  # addition

@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './std/Math/Point.frt'
 #      Package 'Math'
 #      Class 'Point'
@@ -211,14 +211,14 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
                     return unless defined $arguments->{pt2};
                     $scope->set_property( pt2 => $arguments->{pt2} );
                 };
-                $scope->set_property(
+                $scope->set_property_ow(
                     dx => _sub(
                         $scope,
                         $self->property('x'),
                         $scope->property('pt2')->property('x')
                     )
                 );
-                $scope->set_property(
+                $scope->set_property_ow(
                     dy => _sub(
                         $scope,
                         $self->property('y'),

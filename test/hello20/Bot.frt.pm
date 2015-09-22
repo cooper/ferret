@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello20/Bot.frt'
 #      Class 'Bot'
 #          Main method '_init_'
@@ -138,6 +138,23 @@
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Number '1'
+#              If
+#                  Expression ('if' parameter)
+#                      Equality
+#                          Index
+#                              Lexical variable '$s'
+#                              Structural list [1 items]
+#                                  Item 0
+#                                      Number '0'
+#                          String 'PING'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$command'
+#                          Index
+#                              Lexical variable '$s'
+#                              Structural list [1 items]
+#                                  Item 0
+#                                      Number '0'
 #              Instruction
 #                  Call
 #                      Bareword 'say'
@@ -435,11 +452,25 @@ use Ferret::Core::Operations qw(add bool num str);
                     return unless defined $arguments->{line};
                     $scope->set_property( line => $arguments->{line} );
                 };
-                $scope->set_property(
+                $scope->set_property_ow(
                     s => $scope->property('line')->property('split')
                       ->call( [ str( $f, " " ) ], $scope ) );
-                $scope->set_property( command => $scope->property('s')
+                $scope->set_property_ow( command => $scope->property('s')
                       ->get_index_value( [ num( $f, 1 ) ], $scope ) );
+                if (
+                    bool(
+                        $scope->property('s')
+                          ->get_index_value( [ num( $f, 0 ) ], $scope )
+                          ->create_set( $scope, str( $f, "PING" ) )
+                          ->property('equal')->call
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    $scope->set_property_ow( command => $scope->property('s')
+                          ->get_index_value( [ num( $f, 0 ) ], $scope ) );
+                }
                 $scope->property('say')->call(
                     [
                         add(

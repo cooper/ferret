@@ -46,6 +46,10 @@ method handleLine {
     $s = $line.split(" ");
     $command = $s[1];
 
+    # ping is special.
+    if $s[0] == "PING":
+        $command = $s[0];
+
     say("recv[$command]: $line");
 
     # handle command maybe.

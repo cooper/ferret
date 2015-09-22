@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello10/bot_test2.frt'
 #      Instruction
 #          Assignment
@@ -51,7 +51,7 @@ use Ferret::Core::Operations qw(str);
     my $scope = my $context = $f->get_context('main');
 
     Ferret::space( $context, $_ ) for qw(Bot2);
-    $scope->set_property(
+    $scope->set_property_ow(
         bot => $scope->property('Bot2')->call(
             {
                 address => str( $f, "k.notroll.net" ),

@@ -9,7 +9,13 @@ use Ferret::Lexer::Rules;
 use Scalar::Util qw(blessed);
 
 my $fatal = \0;
-our $current;
+our ($current, $error);
+
+my @expression_types = qw(
+    Bareword LexicalVariable InstanceVariable
+    Property List Expression Maybe
+    String Number Operation Call Index
+);
 
 sub construct {
     my @elements;
@@ -29,6 +35,7 @@ sub construct {
 
     while (my ($label, $value, $line) = @{ shift || [] }) {
         my $last_element = ($current->{node}->children)[-1] || $current->{node};
+        return $error if $error;
 
         # current info.
         @$current{ qw(label value line next_tok last_element) } = (
@@ -48,6 +55,7 @@ sub construct {
         # call a handler if one exists.
         if (my $code = __PACKAGE__->can("c_$label")) {
             my $el = $code->($current, $value);
+            return $error if $error;
             if (blessed $el) {
                 return $el if $el->isa('F::Error');
                 push @elements, $el;
@@ -123,6 +131,11 @@ sub c_CLOSURE_S {
 
     # there's nothing to capture the closure.
     return unexpected($c) unless $c->{clos_cap};
+
+    # a closure can terminate an equality.
+    if ($c->{node}->type eq 'Equality') {
+        $c->{node} = $c->{node}->close;
+    }
 
     # a closure can terminate a generated expression.
     # for instance, inside $something {}. the expression $something ends there.
@@ -336,6 +349,7 @@ sub c_PAREN_E {
     #       math operations must come first here because
     #       operations can be in pairs, but pairs can't be in operations
     #
+    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Equality';
     $c->{node} = $c->{node}->close while $c->{node}->type eq 'Operation';
     $c->{node} = $c->{node}->close if    $c->{node}->type eq 'Pair';
 
@@ -370,13 +384,14 @@ sub c_BRACKET_E {
     my $t = $c->{list}{list_terminator};
     my $p = Ferret::Lexer::pretty_token($t);
     return unexpected($c, "to close list (instead of $p)")
-    if $t ne 'BRACKET_E';
+        if $t ne 'BRACKET_E';
 
     # closes these things.
     #
     #       math operations must come first here because
     #       operations can be in pairs, but pairs can't be in operations
     #
+    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Equality';
     $c->{node} = $c->{node}->close while $c->{node}->type eq 'Operation';
     $c->{node} = $c->{node}->close if    $c->{node}->type eq 'Pair';
 
@@ -529,7 +544,7 @@ sub c_OP_SEMI {
         unless $c->{instruction};
 
     # end of instruction can terminate any of these nodes.
-    my @closes = qw(WantNeed Operation Assignment ReturnPair Return);
+    my @closes = qw(WantNeed Equality Operation Assignment ReturnPair Return);
     foreach (@closes) {
         $c->{node} = $c->{node}->close if $_ eq $c->{node}->type;
     }
@@ -589,6 +604,9 @@ sub c_KEYWORD_NEED {
 
 sub c_OP_VALUE {
     my $c = shift;
+
+    # inline if can terminate this.
+    $c->{node} = $c->{node}->close if $c->{node}->type eq 'Equality';
 
     # perhaps this is an inline if?
     if (($c->{node}{parameter_for} || '') eq 'if') {
@@ -653,6 +671,23 @@ sub c_OP_ASSIGN {
     return $a;
 }
 
+sub c_OP_EQUAL {
+    my ($c, $value) = @_;
+    my %allowed = map { $_ => 1 } @expression_types;
+
+    my $last_el = $c->{last_element};
+    return expected($c,
+        'an expression',
+        'at left of '.Ferret::Lexer::pretty_token($c->{label})
+    ) unless $allowed{ $last_el->type_or_tok };
+
+    # adopt the last element as the left side of the equality.
+    my $equality = $c->{node} = $c->{node}->adopt(F::Equality->new);
+    $equality->adopt($last_el);
+
+    return $equality;
+}
+
 *c_OP_ADD = *c_OP_SUB =
 *c_OP_MUL = *c_OP_DIV =
 *c_OP_POW = *c_math_operator;
@@ -660,10 +695,7 @@ sub c_OP_ASSIGN {
 sub c_math_operator {
     my ($c, $value) = @_;
 
-    my %allowed = map { $_ => 1 } qw(
-        Bareword LexicalVariable InstanceVariable Property List Expression
-        String Number Operation Call
-    );
+    my %allowed = map { $_ => 1 } @expression_types;
 
     my $last_el = $c->{last_element};
     return expected($c,
@@ -838,21 +870,25 @@ sub first_non_list_parent {
 sub fatal {
     my ($c, $err) = @_;
     my $near = last_el($c);
+    my @caller = @{ delete $c->{err_caller} || [caller] };
     $err .= "\n     File    -> $$c{file}";
     $err .= "\n     Line    -> $$c{line}";
     $err .= "\n     Near    -> $near";
     $err .= "\n     Parent  -> ".$c->{node}->desc if $c->{node};
+    $err .= "\n\nException raised by $caller[0] line $caller[2].";
     return Ferret::Lexer::fatal($err);
 }
 
 sub expected {
     my ($c, $what, $where) = @_;
+    $c->{err_caller} ||= [caller];
     $where //= '';
     fatal($c, "Expected $what $where.");
 }
 
 sub unexpected {
     my ($c, $reason, $err_desc) = @_[0, 1];
+    $c->{err_caller} ||= [caller];
 
     # if it's an arrayref, it's from a rule with a description.
     ($reason, $err_desc) = @$reason if ref $reason eq 'ARRAY';

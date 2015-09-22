@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello12.frt'
 #      Instruction
 #          Assignment
@@ -191,7 +191,7 @@ use Ferret::Core::Operations qw(add num str);
         };
     }
     Ferret::space( $context, $_ ) for qw(Socket Socket::TCP Timer);
-    $scope->set_property(
+    $scope->set_property_ow(
         sock => $scope->property('Socket::TCP')->call(
             { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },
             $scope

@@ -61,6 +61,14 @@ sub set_property {
 
 }
 
+# set a property or overwrite an inherited property.
+sub set_property_ow {
+    my ($obj, $prop_name, $value) = @_;
+    my $owner = $obj->has_property($prop_name) || $obj;
+    return $owner->set_property($prop_name => $value);
+    return
+}
+
 # deletes a property.
 # $obj->delete_property('someProperty')
 #
@@ -81,7 +89,11 @@ sub delete_property {
 # if the property exists but is undefined, returns Ferret::undefined.
 # if the property does not exist, returns Perl undef.
 #
-sub property {
+sub property { (&_property)[0] }
+
+# this should not be used directly.
+# it returns a property value and its owner.
+sub _property {
     my ($obj, $prop_name, $borrow_obj) = @_;
     $borrow_obj ||= $obj; # the object inheriting the property.
 
@@ -91,29 +103,31 @@ sub property {
     if (defined $obj->{properties}{$prop_name}) {
         my $p = $obj->{properties}{$prop_name};
         weaken($p->{last_parent} = $borrow_obj) if blessed $p;
-        return $p;
+        return ($p, $obj);
     }
 
     # try a different context.
     if (index($prop_name, '::') != -1) {
         my ($context, $real_prop_name) = ($prop_name =~ m/^(.+)::(.+?)$/);
         $context = $obj->ferret->get_context($context);
-        return $context->property($real_prop_name);
+        return $context->_property($real_prop_name);
     }
 
     # try inheritance.
     foreach my $o ($obj->parents) {
-        my $value = $o->property($prop_name, $obj);
-        return $value if defined $value;
+        my @v = $o->_property($prop_name, $obj);
+        return (@v) if @v;
     }
 
     return;
 }
 
 # has a property, either its own or inherited.
+# returns the owner of the property or Perl undef.
 sub has_property {
     my ($obj, $prop_name) = @_;
-    return defined $obj->property($prop_name);
+    my ($value, $owner) = $obj->_property($prop_name);
+    return $owner if defined $value;
 }
 
 # fetches a property.

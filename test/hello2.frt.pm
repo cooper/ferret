@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello2.frt'
 #      Instruction
 #          Structural list [1 items]

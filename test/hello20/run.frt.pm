@@ -1,4 +1,4 @@
-# --- DOM ---
+# === Document Model ===
 #  Document './test/hello20/run.frt'
 #      Instruction
 #          Assignment
@@ -11,7 +11,7 @@
 #                              String 'k.notroll.net'
 #                      Item 1
 #                          Pair 'nick'
-#                              String 'botttie'
+#                              String 'bottttie'
 #                      Item 2
 #                          Pair 'user'
 #                              String 'ferret'
@@ -44,11 +44,11 @@ use Ferret::Core::Operations qw(str);
     my $scope = my $context = $f->get_context('main');
 
     Ferret::space( $context, $_ ) for qw(Bot);
-    $scope->set_property(
+    $scope->set_property_ow(
         bot => $scope->property('Bot')->call(
             {
                 addr => str( $f, "k.notroll.net" ),
-                nick => str( $f, "botttie" ),
+                nick => str( $f, "bottttie" ),
                 user => str( $f, "ferret" )
             },
             $scope

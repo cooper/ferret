@@ -112,5 +112,9 @@ sub ferret_list {
     return Ferret::List->new($Ferret::ferret, values => \@vals);
 }
 
+sub ferret_boolean {
+    my $truth = !!shift();
+    return $truth ? Ferret::true : Ferret::false;
+}
 
 1

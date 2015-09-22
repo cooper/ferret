@@ -7,7 +7,11 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Conversion qw(perl_string perl_number ferret_string ferret_list);
+use Scalar::Util qw(blessed);
+use Ferret::Conversion qw(
+    perl_string perl_number
+    ferret_string ferret_list ferret_boolean
+);
 
 my @methods = (
     opAdd => {
@@ -24,10 +28,18 @@ my @methods = (
     }
 );
 
+my @functions = (
+    equal => {
+        need => '$str1:Str $str2:Str',
+        code => \&_equal
+    }
+);
+
 Ferret::bind_class(
     name      => 'String',
     alias     => 'Str',
-    methods   => \@methods
+    methods   => \@methods,
+    functions => \@functions
 );
 
 *new = *Ferret::bind_constructor;
@@ -57,6 +69,29 @@ sub _split {
     my $limit   = $arguments->{limit} ? perl_number($arguments->{limit}) : 0;
     my @strings = split /\Q$sep\E/, $str->{value}, $limit;
     return ferret_list(map ferret_string($_), @strings);
+}
+
+# any of these work
+#
+# Ferret::String->equal($str1, $str2)
+# $str1->equal($str2)
+# equal($str1, $str2)
+#
+# but usage from Ferret is
+#
+# String.equal($str1, $str2)
+# ($str1, $str2).equal()
+#
+sub equal {
+    shift if !blessed $_[0];
+    my ($str1, $str2) = @_;
+    return $str1->{value} eq $str2->{value};
+}
+
+sub _equal {
+    my ($str_class, $arguments) = @_;
+    my ($str1, $str2) = @$arguments{'str1', 'str2'};
+    return ferret_boolean(equal($str1, $str2));
 }
 
 1
