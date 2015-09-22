@@ -97,10 +97,10 @@ sub perl_number {
 # return a ferret list object.
 # @vals must be ferret objects already.
 sub ferret_list {
-    my @vals = shift;
+    my @vals = @_;
 
     # already an object, probably a list.
-    if (@vals == 1 && blessed $vals[0]) {
+    if (@vals == 1 && blessed $vals[0] && exists $vals[0]{list_items}) {
         return $vals[0] if $vals[0];
     }
 

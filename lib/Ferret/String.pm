@@ -7,15 +7,20 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Conversion qw(perl_string ferret_string);
+use Ferret::Conversion qw(perl_string perl_number ferret_string ferret_list);
 
 my @methods = (
     opAdd => {
-        code => \&op_add,
-        need => '$other'
+        need => '$other',
+        code => \&op_add
     },
     length => {
         code => \&_length
+    },
+    split => {
+        need => '$separator:Str|Reg',
+        want => '$limit:Num',
+        code => \&_split
     }
 );
 
@@ -43,6 +48,15 @@ sub length : method {
 sub _length {
     my $str = shift;
     return Ferret::Number->new($str->ferret, value => $str->length);
+}
+
+# for now, this only accepts strings.
+sub _split {
+    my ($str, $arguments) = @_;
+    my $sep     = perl_string($arguments->{separator});
+    my $limit   = $arguments->{limit} ? perl_number($arguments->{limit}) : 0;
+    my @strings = split /\Q$sep\E/, $str->{value}, $limit;
+    return ferret_list(map ferret_string($_), @strings);
 }
 
 1

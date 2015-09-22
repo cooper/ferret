@@ -45,7 +45,7 @@ sub init {
     $list->{list_items} ||= [];
 
     # initial items.
-    if (my $items = delete $list->{items}) {
+    if (my $items = (delete $list->{items} || delete $list->{values})) {
         return $list if ref $items ne 'ARRAY';
         $list->push($_) foreach @$items;
     }
