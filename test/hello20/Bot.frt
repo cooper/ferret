@@ -8,8 +8,9 @@ init {
         @real: Str = "Ferret IRC";
 
     @handlers = [
-        MODE: @joinChannels,
-        PING: @pong
+        MODE:    @joinChannels,
+        PING:    @pong,
+        PRIVMSG: @handleMessage
     ];
 
     # create a socket
@@ -61,6 +62,11 @@ method handleLine {
 
 }
 
+method privmsg {
+    need $channel, $message;
+    @send("PRIVMSG $channel :$message");
+}
+
 method joinChannels {
 
     # check if already joined.
@@ -74,4 +80,13 @@ method joinChannels {
 method pong {
     need $s;
     @send("PONG " + $s[1]);
+}
+
+method handleMessage {
+    need $s;
+    $nickname = $s[0].split(separator: "!", limit: 2)[0];
+    if $s[3] == ":hi" {
+        @privmsg($s[2], "hi $nickname! :^)");
+        saidHi -> true;
+    }
 }

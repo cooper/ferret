@@ -31,13 +31,16 @@
 #              Instruction
 #                  Assignment
 #                      Instance variable '@handlers'
-#                      Hash [2 items]
+#                      Hash [3 items]
 #                          Item 0
 #                              Pair 'MODE'
 #                                  Instance variable '@joinChannels'
 #                          Item 1
 #                              Pair 'PING'
 #                                  Instance variable '@pong'
+#                          Item 2
+#                              Pair 'PRIVMSG'
+#                                  Instance variable '@handleMessage'
 #              Instruction
 #                  Assignment
 #                      Instance variable '@sock'
@@ -186,6 +189,26 @@
 #                          Item 2
 #                              Pair 's'
 #                                  Lexical variable '$s'
+#          Method 'privmsg'
+#              Instruction
+#                  Need
+#                      Lexical variable '$channel'
+#              Instruction
+#                  Need
+#                      Lexical variable '$message'
+#              Instruction
+#                  Call
+#                      Instance variable '@send'
+#                      Structural list [1 items]
+#                          Item 0
+#                              Mathematical operation
+#                                  String 'PRIVMSG '
+#                                  Addition operator (+)
+#                                  Lexical variable '$channel'
+#                                  Addition operator (+)
+#                                  String ' :'
+#                                  Addition operator (+)
+#                                  Lexical variable '$message'
 #          Method 'joinChannels'
 #              If
 #                  Expression ('if' parameter)
@@ -219,6 +242,60 @@
 #                                      Structural list [1 items]
 #                                          Item 0
 #                                              Number '1'
+#          Method 'handleMessage'
+#              Instruction
+#                  Need
+#                      Lexical variable '$s'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$nickname'
+#                      Index
+#                          Call
+#                              Property 'split'
+#                                  Index
+#                                      Lexical variable '$s'
+#                                      Structural list [1 items]
+#                                          Item 0
+#                                              Number '0'
+#                              Hash [2 items]
+#                                  Item 0
+#                                      Pair 'separator'
+#                                          String '!'
+#                                  Item 1
+#                                      Pair 'limit'
+#                                          Number '2'
+#                          Structural list [1 items]
+#                              Item 0
+#                                  Number '0'
+#              If
+#                  Expression ('if' parameter)
+#                      Equality
+#                          Index
+#                              Lexical variable '$s'
+#                              Structural list [1 items]
+#                                  Item 0
+#                                      Number '3'
+#                          String ':hi'
+#                  Instruction
+#                      Call
+#                          Instance variable '@privmsg'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Index
+#                                      Lexical variable '$s'
+#                                      Structural list [1 items]
+#                                          Item 0
+#                                              Number '2'
+#                              Item 1
+#                                  Mathematical operation
+#                                      String 'hi '
+#                                      Addition operator (+)
+#                                      Lexical variable '$nickname'
+#                                      Addition operator (+)
+#                                      String '! :^)'
+#                  Instruction
+#                      Return pair 'saidHi'
+#                          Boolean true
 #      Include (Num, Socket, Socket::TCP, Str)
 use warnings;
 use strict;
@@ -342,8 +419,9 @@ use Ferret::Core::Operations qw(add bool num str);
                     handlers => Ferret::Hash->new(
                         $f,
                         pairs => {
-                            MODE => $self->property('joinChannels'),
-                            PING => $self->property('pong')
+                            MODE    => $self->property('joinChannels'),
+                            PING    => $self->property('pong'),
+                            PRIVMSG => $self->property('handleMessage')
                         }
                     )
                 );
@@ -506,6 +584,46 @@ use Ferret::Core::Operations qw(add bool num str);
             );
         }
 
+        # Method event 'privmsg' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+            $func->add_argument( name => 'channel' );
+            $func->add_argument( name => 'message' );
+            $func->{code} = sub {
+                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                do {
+                    return unless defined $arguments->{channel};
+                    $scope->set_property( channel => $arguments->{channel} );
+                };
+                do {
+                    return unless defined $arguments->{message};
+                    $scope->set_property( message => $arguments->{message} );
+                };
+                $self->property('send')->call(
+                    [
+                        add(
+                            $scope,
+                            str( $f, "PRIVMSG " ),
+                            $scope->property('channel'),
+                            str( $f, " :" ),
+                            $scope->property('message')
+                        )
+                    ],
+                    $scope
+                );
+                return $return;
+            };
+            $methods[4] = Ferret::Event->new(
+                $f,
+                name         => 'privmsg',
+                default_func => [ undef, $func ]
+            );
+        }
+
         # Method event 'joinChannels' definition
         {
             my $func = Ferret::Function->new(
@@ -526,7 +644,7 @@ use Ferret::Core::Operations qw(add bool num str);
                   ->call( [ str( $f, "JOIN #k" ) ], $scope );
                 return $return;
             };
-            $methods[4] = Ferret::Event->new(
+            $methods[5] = Ferret::Event->new(
                 $f,
                 name         => 'joinChannels',
                 default_func => [ undef, $func ]
@@ -560,18 +678,77 @@ use Ferret::Core::Operations qw(add bool num str);
                 );
                 return $return;
             };
-            $methods[5] = Ferret::Event->new(
+            $methods[6] = Ferret::Event->new(
                 $f,
                 name         => 'pong',
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_       => $scope, $class, $class );
-        $methods[1]->inside_scope( connect      => $scope, $proto, $class );
-        $methods[2]->inside_scope( send         => $scope, $proto, $class );
-        $methods[3]->inside_scope( handleLine   => $scope, $proto, $class );
-        $methods[4]->inside_scope( joinChannels => $scope, $proto, $class );
-        $methods[5]->inside_scope( pong         => $scope, $proto, $class );
+
+        # Method event 'handleMessage' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+            $func->add_argument( name => 's' );
+            $func->{code} = sub {
+                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                do {
+                    return unless defined $arguments->{s};
+                    $scope->set_property( s => $arguments->{s} );
+                };
+                $scope->set_property_ow(
+                    nickname => $scope->property('s')
+                      ->get_index_value( [ num( $f, 0 ) ], $scope )
+                      ->property('split')->call(
+                        { separator => str( $f, "!" ), limit => num( $f, 2 ) },
+                        $scope
+                      )->get_index_value( [ num( $f, 0 ) ], $scope )
+                );
+                if (
+                    bool(
+                        $scope->property('s')
+                          ->get_index_value( [ num( $f, 3 ) ], $scope )
+                          ->create_set( $scope, str( $f, ":hi" ) )
+                          ->property('equal')->call
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    $self->property('privmsg')->call(
+                        [
+                            $scope->property('s')
+                              ->get_index_value( [ num( $f, 2 ) ], $scope ),
+                            add(
+                                $scope,
+                                str( $f, "hi " ),
+                                $scope->property('nickname'),
+                                str( $f, "! :^)" )
+                            )
+                        ],
+                        $scope
+                    );
+                    $return->set_property( saidHi => Ferret::true );
+                }
+                return $return;
+            };
+            $methods[7] = Ferret::Event->new(
+                $f,
+                name         => 'handleMessage',
+                default_func => [ undef, $func ]
+            );
+        }
+        $methods[0]->inside_scope( _init_        => $scope, $class, $class );
+        $methods[1]->inside_scope( connect       => $scope, $proto, $class );
+        $methods[2]->inside_scope( send          => $scope, $proto, $class );
+        $methods[3]->inside_scope( handleLine    => $scope, $proto, $class );
+        $methods[4]->inside_scope( privmsg       => $scope, $proto, $class );
+        $methods[5]->inside_scope( joinChannels  => $scope, $proto, $class );
+        $methods[6]->inside_scope( pong          => $scope, $proto, $class );
+        $methods[7]->inside_scope( handleMessage => $scope, $proto, $class );
     }
     Ferret::space( $context, $_ ) for qw(Num Socket Socket::TCP Str);
 }
