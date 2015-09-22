@@ -48,7 +48,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello9.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add str);
+use Ferret::Core::Operations qw(add bool str);
 {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -85,13 +85,13 @@ use Ferret::Core::Operations qw(add str);
     Ferret::space( $context, $_ ) for qw(Str);
     {
         my $maybe_0 = $scope->property('sayHello');
-        if ($maybe_0) {
+        if ( bool($maybe_0) ) {
             $maybe_0->call( [ str( $f, "World" ) ], $scope );
         }
     }
     {
         my $maybe_0 = $scope->property('sayGoodbye');
-        if ($maybe_0) {
+        if ( bool($maybe_0) ) {
             $maybe_0->call( [ str( $f, "World" ) ], $scope );
         }
     }

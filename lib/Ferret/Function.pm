@@ -96,7 +96,7 @@ sub call {
             parent => $func->{outer_scope}
         );
 
-        $return ||= Ferret::Object->new($func->ferret);
+        $return ||= Ferret::Return->new($func->ferret);
 
         # find self.
         my $self = delete $func->{force_self};
@@ -116,7 +116,8 @@ sub call {
         $scope->{special}->set_property(return => $return);
 
         # call the function.
-        return $func->{code}($self, $arguments, $from_scope, $scope, $return);
+        my $ret = $func->{code}($self, $arguments, $from_scope, $scope, $return);
+        return $ret // Ferret::undefined;
 
     }
 
@@ -142,5 +143,8 @@ sub inside_scope {
 sub has_name      { length shift->{name}   }
 sub is_method     { shift->{is_method}     }
 sub is_class_func { shift->{is_class_func} }
+
+package Ferret::Return;
+use parent 'Ferret::Object';
 
 1

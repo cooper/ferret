@@ -744,6 +744,7 @@ sub c_OP_MAYBE {
     my %allowed = map { $_ => 1 } qw(
         List Expression Bareword Property Maybe
         LexicalVariable InstanceVariable SpecialVariable
+        Call Index
     );
 
     my $last_el = $c->{last_element};

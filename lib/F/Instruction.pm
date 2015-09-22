@@ -21,10 +21,12 @@ sub simple_fmt {
 sub maybe_fmt {
     my ($instr, $maybe_n) = (shift, 0);
     my @maybes = @{ $instr->{maybes} };
+    my $doc = $instr->document;
 
     # my $maybe...
     my $definitions = '';
     foreach my $maybe (@maybes) {
+        $doc->{required_operations}{bool}++;
         $maybe->{n} = $maybe_n++;
         $definitions .= sprintf "my %s = %s;\n",
             $maybe->perl_fmt_do,

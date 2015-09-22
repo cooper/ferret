@@ -54,13 +54,12 @@ sub do_file {
     my $str = eval { slurp($file) } or die "$!\n";
 
     # tokenize.
-    my @tok = Ferret::Lexer::Tokenizer::tokenize($str);
-    die "Error: ${$tok[0]}\n"
-        if blessed $tok[0] && $tok[0]->isa('F::Error');
+    my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize($str);
     if ($o->tokens) {
         inter "--- Tokens ---\n";
         show_tok(@tok);
     }
+    die "Error: $$err\n" if $err;
 
     # construct elements.
     my $doc = F::Document->new(name => $file);

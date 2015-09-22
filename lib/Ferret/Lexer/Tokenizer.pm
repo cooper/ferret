@@ -9,7 +9,7 @@ use Ferret::Lexer::Rules;
 use HOP::Lexer qw(string_lexer);
 use JSON::XS;
 my $json = JSON::XS->new->allow_nonref(1);
-my $current_line = 1;
+my $current_line;
 
 # keywords
 my $keyword_reg = '^('.join('|', qw{
@@ -228,7 +228,7 @@ sub tok_STR_REG {
     foreach my $part (@parts) { $i++;
         ref $part eq 'HASH' or next;
         my $code = "$$part{sigil}$$part{name}";
-        $parts[$i] = (tokenize($code))[0];
+        $parts[$i] = (tokenize($code))[1];
     }
 
     return $is_str ? [ STRING => \@parts ] : [ REGEX => \@parts ];
@@ -318,13 +318,14 @@ sub tokenize {
     my $string = shift;
     my $lexer  = string_lexer($string, @token_formats);
     my @tokens;
+    $current_line = 1;
     while (my $token = &$lexer) {
 
         # something wasn't tokenized.
-        return Ferret::Lexer::fatal(sprintf
-            "Not sure what to do with '%s' at line %d.",
+        return (Ferret::Lexer::fatal(sprintf
+            "Unable to tokenize '%s' at line %d.",
             $token, $current_line
-        ) unless ref $token eq 'ARRAY';
+        ), @tokens) if ref $token ne 'ARRAY';
 
         # additional tokenizing subroutine.
         my $code = __PACKAGE__->can("tok_$$token[0]");
@@ -340,7 +341,8 @@ sub tokenize {
 
         push @tokens, $token;
     }
-    return @tokens;
+
+    return (undef, @tokens);
 }
 
 1

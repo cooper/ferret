@@ -41,14 +41,15 @@ sub new {
 ##############
 
 # object constants.
-my $undefined = \'undefined';                # TODO
-sub true      () { state $true  = \'true'  } # TODO
-sub false     () { state $false = \'false' } # TODO
+my $undefined = Ferret::Object->new;
+sub true      () { state $true  = Ferret::Object->new } # TODO
+sub false     () { state $false = Ferret::Object->new } # TODO
 
 # fetch undefined value or test if a value is undefined.
 sub undefined(;$) {
+    return $undefined if !@_;
     my $test = shift;
-    return $undefined if not defined $test;
+    return 1 if !defined $test;
     return $test == $undefined;
 }
 
@@ -58,7 +59,7 @@ sub truth {
     my $val = shift;
     return if !defined $val;
     return if $val == false;
-    return if undefined($val);
+    return if undefined $val;
     return !!$val;
 }
 
