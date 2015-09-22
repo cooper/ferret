@@ -84,7 +84,10 @@ method pong {
 
 method handleMessage {
     need $s;
+
     $nickname = $s[0].split(separator: "!", limit: 2)[0];
+    $nickname.trimPrefix(":");
+
     if $s[3] == ":hi" {
         @privmsg($s[2], "hi $nickname! :^)");
         saidHi -> true;

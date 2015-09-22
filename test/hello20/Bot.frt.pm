@@ -267,6 +267,13 @@
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Number '0'
+#              Instruction
+#                  Call
+#                      Property 'trimPrefix'
+#                          Lexical variable '$nickname'
+#                      Structural list [1 items]
+#                          Item 0
+#                              String ':'
 #              If
 #                  Expression ('if' parameter)
 #                      Equality
@@ -707,6 +714,8 @@ use Ferret::Core::Operations qw(add bool num str);
                         $scope
                       )->get_index_value( [ num( $f, 0 ) ], $scope )
                 );
+                $scope->property('nickname')->property('trimPrefix')
+                  ->call( [ str( $f, ":" ) ], $scope );
                 if (
                     bool(
                         $scope->property('s')

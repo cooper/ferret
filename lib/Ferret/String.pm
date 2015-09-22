@@ -25,6 +25,10 @@ my @methods = (
         need => '$separator:Str|Reg',
         want => '$limit:Num',
         code => \&_split
+    },
+    trimPrefix => {
+        need => '$prefix:Str',
+        code => \&_trimPrefix
     }
 );
 
@@ -69,6 +73,19 @@ sub _split {
     my $limit   = $arguments->{limit} ? perl_number($arguments->{limit}) : 0;
     my @strings = split /\Q$sep\E/, $str->{value}, $limit;
     return ferret_list(map ferret_string($_), @strings);
+}
+
+sub trimPrefix {
+    my ($str, $prefix) = @_;
+    my $pfx = \substr($str->{value}, 0, length $prefix);
+    $$pfx = '' if $$pfx eq $prefix;
+    return $str;
+}
+
+sub _trimPrefix {
+    my ($str, $arguments) = @_;
+    my $pfx = perl_string($arguments->{prefix});
+    return $str->trimPrefix($pfx);
 }
 
 # any of these work
