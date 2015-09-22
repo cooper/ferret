@@ -64,7 +64,7 @@ sub perl_fmt {
 sub param_exp    { shift->{param_exp} }
 sub in_param_exp { shift->{in_param_exp} }
 sub is_closure   { 1 }
-sub type         { 'On' }
+sub type         { 'For' }
 
 
 1

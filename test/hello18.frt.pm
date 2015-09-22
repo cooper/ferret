@@ -32,7 +32,7 @@
 #                          Call
 #                              Property 'length'
 #                                  Lexical variable '$list'
-#      On
+#      For
 #          Expression ('for' parameter)
 #              Lexical variable '$item'
 #          Expression ('in' parameter)
@@ -82,7 +82,7 @@
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      String 'whats'
-#      On
+#      For
 #          Expression ('for' parameter)
 #              Structural list [2 items]
 #                  Item 0
