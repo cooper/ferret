@@ -38,6 +38,10 @@ sub ferret_string {
 
     }
 
+    return ferret_string("true")      if $val == Ferret::true;
+    return ferret_string("false")     if $val == Ferret::false;
+    return ferret_string("undefined") if Ferret::undefined($val);
+
     # it's an object with no string value.
     my $addr = $val + 0;
     return Ferret::String->new($f, value => "[object $addr]");

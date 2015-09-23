@@ -8,15 +8,18 @@ init {
         @real: Str = "Ferret IRC";
 
     @handlers = [
-        MODE:    @joinChannels,
-        PING:    @pong,
-        PRIVMSG: @handleMessage
+        MODE:       @joinChannels,
+        PING:       @pong,
+        PRIVMSG:    @handleMessage
     ];
 
     @commands = [
         hello:  @commandHello,
-        hi:     @commandHello
+        hi:     @commandHello,
+        add:    @commandAdd
     ];
+
+    @factoids = [:];
 
     # create a socket
     @sock = Socket::TCP(address: @addr, port: @port);
@@ -60,9 +63,9 @@ method handleLine {
 
     # handle command maybe
     @handlers[$command]?(
-        line: $line,
-        command: $command,
-        s: $s
+        line:       $line,
+        command:    $command,
+        s:          $s
     );
 
 }
@@ -90,40 +93,65 @@ method pong {
 method handleMessage {
     need $line, $s;
 
-    $nickname = $s[0].split(separator: "!", limit: 2)[0];
-    $nickname.trimPrefix(":");
-
     # handle a command
     $msg = getMessage($line);
 
     if $msg.command: @commands[ $msg.command ]?(
-        nickname: $nickname,
-        channel: $s[2]
+        line:   $line,
+        s:      $s,
+        msg:    $msg
     );
 
 }
 
 method commandHello {
-    need $channel, $nickname;
-    @privmsg($channel, "Hi $nickname!");
+    need $msg;
+    $nickname = $msg.nickname;
+    @privmsg($msg.channel, "Hi $nickname!");
+}
+
+method commandAdd {
+    need $msg;
+
+    # .add trigger(1) response (2)
+    $trigger  = $msg.parts[1];
+    $response = $msg.parts[2];
+
+    # remember this factoid
+    @factoids[$trigger] = $response;
+    @commands[$trigger] = @commandFactoid;
+
+    @privmsg($msg.channel, "alright, associating .$trigger with '$response'");
+}
+
+method commandFactoid {
+    need $msg;
+    $response = @factoids[$msg.command];
+    @privmsg($msg.channel, $response);
 }
 
 # get the sentinel-prefixed final parameter for a PRIVMSG
 func getMessage {
     need $line;
+    $lineSplit = $line.split(separator: " ", limit: 4);
+
+    # find nickname
+    $nickname = $lineSplit[0].split(separator: "!", limit: 2)[0];
+    $nickname.trimPrefix(":");
 
     # find message
-    $message = $line.split(separator: " ", limit: 4)[3];
+    $message   = $lineSplit[3];
     $message.trimPrefix(":");
 
     # split into parts
     $split = $message.split(" ");
 
-    message -> $message;
-    parts   -> $split;
-
-    # command
+    # find command
     if $split[0].hasPrefix("."):
         command -> $split[0].copy().trimPrefix(".");
 
+    nickname -> $nickname;
+    channel  -> $lineSplit[2];
+    message  -> $message;
+    parts    -> $split;
 }
