@@ -11,7 +11,7 @@
 #                              String 'k.notroll.net'
 #                      Item 1
 #                          Pair 'nick'
-#                              String 'bottttie'
+#                              String 'bottie'
 #                      Item 2
 #                          Pair 'user'
 #                              String 'ferret'
@@ -48,7 +48,7 @@ use Ferret::Core::Operations qw(str);
         bot => $scope->property('Bot')->call(
             {
                 addr => str( $f, "k.notroll.net" ),
-                nick => str( $f, "bottttie" ),
+                nick => str( $f, "bottie" ),
                 user => str( $f, "ferret" )
             },
             $scope

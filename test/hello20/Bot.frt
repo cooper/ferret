@@ -13,6 +13,11 @@ init {
         PRIVMSG: @handleMessage
     ];
 
+    @commands = [
+        hello:  @commandHello,
+        hi:     @commandHello
+    ];
+
     # create a socket
     @sock = Socket::TCP(address: @addr, port: @port);
 
@@ -43,17 +48,17 @@ method send {
 method handleLine {
     need $line;
 
-    # find command.
+    # find command
     $s = $line.split(" ");
     $command = $s[1];
 
-    # ping is special.
+    # ping is special
     if $s[0] == "PING":
         $command = $s[0];
 
     say("recv[$command]: $line");
 
-    # handle command maybe.
+    # handle command maybe
     @handlers[$command]?(
         line: $line,
         command: $command,
@@ -83,13 +88,42 @@ method pong {
 }
 
 method handleMessage {
-    need $s;
+    need $line, $s;
 
     $nickname = $s[0].split(separator: "!", limit: 2)[0];
     $nickname.trimPrefix(":");
 
-    if $s[3] == ":hi" {
-        @privmsg($s[2], "hi $nickname! :^)");
-        saidHi -> true;
-    }
+    # handle a command
+    $msg = getMessage($line);
+
+    if $msg.command: @commands[ $msg.command ]?(
+        nickname: $nickname,
+        channel: $s[2]
+    );
+
+}
+
+method commandHello {
+    need $channel, $nickname;
+    @privmsg($channel, "Hi $nickname!");
+}
+
+# get the sentinel-prefixed final parameter for a PRIVMSG
+func getMessage {
+    need $line;
+
+    # find message
+    $message = $line.split(separator: " ", limit: 4)[3];
+    $message.trimPrefix(":");
+
+    # split into parts
+    $split = $message.split(" ");
+
+    message -> $message;
+    parts   -> $split;
+
+    # command
+    if $split[0].hasPrefix("."):
+        command -> $split[0].copy().trimPrefix(".");
+
 }

@@ -1,2 +1,2 @@
-$bot = Bot(addr: "k.notroll.net", nick: "bottttie", user: "ferret");
+$bot = Bot(addr: "k.notroll.net", nick: "bottie", user: "ferret");
 $bot.connect();

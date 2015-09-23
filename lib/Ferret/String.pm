@@ -26,9 +26,16 @@ my @methods = (
         want => '$limit:Num',
         code => \&_split
     },
+    hasPrefix => {
+        need => '$prefix:Str',
+        code => \&_hasPrefix
+    },
     trimPrefix => {
         need => '$prefix:Str',
         code => \&_trimPrefix
+    },
+    copy => {
+        code => \&_copy
     }
 );
 
@@ -75,6 +82,18 @@ sub _split {
     return ferret_list(map ferret_string($_), @strings);
 }
 
+sub hasPrefix {
+    my ($str, $prefix) = @_;
+    my $pfx = \substr($str->{value}, 0, length $prefix);
+    return $$pfx eq $prefix;
+}
+
+sub _hasPrefix {
+    my ($str, $arguments) = @_;
+    my $pfx = perl_string($arguments->{prefix});
+    return ferret_boolean($str->trimPrefix($pfx));
+}
+
 sub trimPrefix {
     my ($str, $prefix) = @_;
     my $pfx = \substr($str->{value}, 0, length $prefix);
@@ -86,6 +105,12 @@ sub _trimPrefix {
     my ($str, $arguments) = @_;
     my $pfx = perl_string($arguments->{prefix});
     return $str->trimPrefix($pfx);
+}
+
+# TODO: copy will eventually be an Object method.
+sub _copy {
+    my $str = shift;
+    return ferret_string($str->{value});
 }
 
 # any of these work
