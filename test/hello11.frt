@@ -2,7 +2,7 @@ $point = Math::Point(0, 0);
 
 if $point {
     say("The point exists!");
-    dump($point);
+    inspect($point);
 }
 
 inside $point {

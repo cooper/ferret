@@ -21,7 +21,7 @@
 #                          String 'The point ...'
 #          Instruction
 #              Call
-#                  Bareword 'dump'
+#                  Bareword 'inspect'
 #                  Structural list [1 items]
 #                      Item 0
 #                          Lexical variable '$point'
@@ -164,7 +164,8 @@ use Ferret::Core::Operations qw(add bool num str);
 
         $scope->property('say')
           ->call( [ str( $f, "The point exists!" ) ], $scope );
-        $scope->property('dump')->call( [ $scope->property('point') ], $scope );
+        $scope->property('inspect')
+          ->call( [ $scope->property('point') ], $scope );
     }
 
     # Inside

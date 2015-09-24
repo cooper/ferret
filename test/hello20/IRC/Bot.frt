@@ -114,10 +114,9 @@ method commandHello {
 
 method commandAdd {
     need $msg;
-    say("yes");
-    dump($msg);
-    
-    # .add trigger(1) response (2-)
+    inspect($msg);
+
+    # .add (0) trigger (1) response (2-)
     $trigger  = $msg.parts[1];
     $response = $msg.fromWord(2);
 

@@ -159,6 +159,16 @@ sub set_property_weak {
     return $res;
 }
 
+# property names
+sub properties {
+    my ($obj, $include_inherited) = @_;
+    my @names = keys %{ $obj->{properties} };
+    if ($include_inherited) {
+        push @names, $_->properties foreach $obj->parents;
+    }
+    return @names;
+}
+
 ##########################
 ### SPECIAL PROPERTIES ###
 ##########################

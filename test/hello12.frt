@@ -1,5 +1,5 @@
 $sock = Socket::TCP(address: "k.notroll.net", port: 6667);
-dump($sock);
+inspect($sock);
 
 on $sock.gotLine {
     need $data;

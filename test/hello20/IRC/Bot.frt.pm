@@ -331,13 +331,7 @@
 #                      Lexical variable '$msg'
 #              Instruction
 #                  Call
-#                      Bareword 'say'
-#                      Structural list [1 items]
-#                          Item 0
-#                              String 'yes'
-#              Instruction
-#                  Call
-#                      Bareword 'dump'
+#                      Bareword 'inspect'
 #                      Structural list [1 items]
 #                          Item 0
 #                              Lexical variable '$msg'
@@ -925,8 +919,7 @@ use Ferret::Core::Operations qw(add bool num str);
                     return unless defined $arguments->{msg};
                     $scope->set_property( msg => $arguments->{msg} );
                 };
-                $scope->property('say')->call( [ str( $f, "yes" ) ], $scope );
-                $scope->property('dump')
+                $scope->property('inspect')
                   ->call( [ $scope->property('msg') ], $scope );
                 $scope->set_property_ow(
                     trigger => $scope->property('msg')->property('parts')

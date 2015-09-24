@@ -14,7 +14,7 @@
 #                              Number '6667'
 #      Instruction
 #          Call
-#              Bareword 'dump'
+#              Bareword 'inspect'
 #              Structural list [1 items]
 #                  Item 0
 #                      Lexical variable '$sock'
@@ -197,7 +197,7 @@ use Ferret::Core::Operations qw(add num str);
             $scope
         )
     );
-    $scope->property('dump')->call( [ $scope->property('sock') ], $scope );
+    $scope->property('inspect')->call( [ $scope->property('sock') ], $scope );
 
     # On
     {
