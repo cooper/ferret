@@ -41,11 +41,9 @@ init {
 
 method addCommand {
     need $command: Str, $callback: Func;
-    inspect(Object(commands: @commands));
     if @commands[$command]:
         overwrote -> true;
     @commands[$command] = $callback;
-    inspect(Object(commands: @commands));
     added -> true;
 }
 
@@ -108,9 +106,6 @@ method handleMessage {
     $msg = IRC::Message($line);
 
     # found a command
-    say("for " + $msg.command() + " I found " + @commands[$msg.command()]);
-    inspect(Object(function: @commands[$msg.command()]));
-
     if $msg.command(): @commands[ $msg.command() ]?(
         line:   $line,
         s:      $s,

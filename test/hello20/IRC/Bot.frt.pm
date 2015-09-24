@@ -121,17 +121,6 @@
 #                  Need
 #                      Lexical variable '$callback'
 #                      Bareword 'Func'
-#              Instruction
-#                  Call
-#                      Bareword 'inspect'
-#                      Structural list [1 items]
-#                          Item 0
-#                              Call
-#                                  Bareword 'Object'
-#                                  Hash [1 items]
-#                                      Item 0
-#                                          Pair 'commands'
-#                                              Instance variable '@commands'
 #              If
 #                  Expression ('if' parameter)
 #                      Index
@@ -150,17 +139,6 @@
 #                              Item 0
 #                                  Lexical variable '$command'
 #                      Lexical variable '$callback'
-#              Instruction
-#                  Call
-#                      Bareword 'inspect'
-#                      Structural list [1 items]
-#                          Item 0
-#                              Call
-#                                  Bareword 'Object'
-#                                  Hash [1 items]
-#                                      Item 0
-#                                          Pair 'commands'
-#                                              Instance variable '@commands'
 #              Instruction
 #                  Return pair 'added'
 #                      Boolean true
@@ -327,47 +305,6 @@
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Lexical variable '$line'
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Structural list [1 items]
-#                          Item 0
-#                              Mathematical operation
-#                                  String 'for '
-#                                  Addition operator (+)
-#                                  Call
-#                                      Property 'command'
-#                                          Lexical variable '$msg'
-#                                      Structural list [0 items]
-#                                  Addition operator (+)
-#                                  String ' I found '
-#                                  Addition operator (+)
-#                                  Index
-#                                      Instance variable '@commands'
-#                                      Structural list [1 items]
-#                                          Item 0
-#                                              Call
-#                                                  Property 'command'
-#                                                      Lexical variable '$msg'
-#                                                  Structural list [0 items]
-#              Instruction
-#                  Call
-#                      Bareword 'inspect'
-#                      Structural list [1 items]
-#                          Item 0
-#                              Call
-#                                  Bareword 'Object'
-#                                  Hash [1 items]
-#                                      Item 0
-#                                          Pair 'function'
-#                                              Index
-#                                                  Instance variable '@commands'
-#                                                  Structural list [1 items]
-#                                                      Item 0
-#                                                          Call
-#                                                              Property 'command'
-#                                                                  Lexical variable '$msg'
-#                                                              Structural list [0 items]
 #              If
 #                  Expression ('if' parameter)
 #                      Call
@@ -504,7 +441,7 @@
 #                                  Lexical variable '$msg'
 #                          Item 1
 #                              Lexical variable '$response'
-#      Include (Func, IRC, IRC::Message, Num, Object, Socket, Socket::TCP, Str)
+#      Include (Func, IRC, IRC::Message, Num, Socket, Socket::TCP, Str)
 use warnings;
 use strict;
 use utf8;
@@ -698,14 +635,6 @@ use Ferret::Core::Operations qw(add bool num str);
                     return unless defined $arguments->{callback};
                     $scope->set_property( callback => $arguments->{callback} );
                 };
-                $scope->property('inspect')->call(
-                    [
-                        $scope->property('Object')->call(
-                            { commands => $self->property('commands') }, $scope
-                        )
-                    ],
-                    $scope
-                );
                 if (
                     bool(
                         $self->property('commands')->get_index_value(
@@ -721,14 +650,6 @@ use Ferret::Core::Operations qw(add bool num str);
                 $self->property('commands')
                   ->set_index_value( [ $scope->property('command') ],
                     $scope->property('callback'), $scope );
-                $scope->property('inspect')->call(
-                    [
-                        $scope->property('Object')->call(
-                            { commands => $self->property('commands') }, $scope
-                        )
-                    ],
-                    $scope
-                );
                 $return->set_property( added => Ferret::true );
                 return $return;
             };
@@ -984,44 +905,6 @@ use Ferret::Core::Operations qw(add bool num str);
                 };
                 $scope->set_property_ow( msg => $scope->property('IRC::Message')
                       ->call( [ $scope->property('line') ], $scope ) );
-                $scope->property('say')->call(
-                    [
-                        add(
-                            $scope,
-                            str( $f, "for " ),
-                            $scope->property('msg')->property('command')
-                              ->call( {}, $scope ),
-                            str( $f, " I found " ),
-                            $self->property('commands')->get_index_value(
-                                [
-                                    $scope->property('msg')
-                                      ->property('command')->call( {}, $scope )
-                                ],
-                                $scope
-                            )
-                        )
-                    ],
-                    $scope
-                );
-                $scope->property('inspect')->call(
-                    [
-                        $scope->property('Object')->call(
-                            {
-                                function =>
-                                  $self->property('commands')->get_index_value(
-                                    [
-                                        $scope->property('msg')
-                                          ->property('command')
-                                          ->call( {}, $scope )
-                                    ],
-                                    $scope
-                                  )
-                            },
-                            $scope
-                        )
-                    ],
-                    $scope
-                );
                 if (
                     bool(
                         $scope->property('msg')->property('command')
@@ -1199,7 +1082,7 @@ use Ferret::Core::Operations qw(add bool num str);
         $methods[11]->inside_scope( commandFactoid => $scope, $proto, $class );
     }
     Ferret::space( $context, $_ )
-      for qw(Func IRC IRC::Message Num Object Socket Socket::TCP Str);
+      for qw(Func IRC IRC::Message Num Socket Socket::TCP Str);
 }
 
 Ferret::runtime();

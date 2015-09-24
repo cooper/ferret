@@ -5,10 +5,14 @@ use warnings;
 use strict;
 use 5.010;
 
+use utf8;
+use open ':std', ':encoding(UTF-8)';
+
 use File::Slurp  'slurp';
 use Scalar::Util 'blessed';
 use Getopt::Long::Descriptive;
 use JSON::XS;
+
 
 BEGIN {
     use FindBin;
@@ -107,11 +111,19 @@ sub show_dom {
     state $indent = 0;
     my $el = shift;
     return if $el->type eq 'Unknown' && !$o->show_all;
-    interf "%s %s\n", '    ' x $indent, ucfirst $el->desc;
+
+    # generate a description
+    my $desc = ucfirst $el->desc;
+    $desc =~ s/\r\n|\r|\n/\x{2424}/g;
+
+    interf "%s %s\n", '    ' x $indent, $desc;
+
+    # if it's a node, do the same for all children.
     return unless $el->is_node;
     $indent++;
         show_dom($_) foreach $el->children;
     $indent--;
+
 }
 
 sub inter (@) {
@@ -123,8 +135,7 @@ sub inter (@) {
 sub interf (@) {
     my $str = shift;
     $str = sprintf $str, @_;
-    print $fh "# $str";
-    print $str;
+    inter($str);
 }
 
 sub perltidy {

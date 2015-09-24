@@ -163,10 +163,9 @@ sub tok_STR_REG {
     for my $char (split //, $value) {
 
         # this char was escaped.
-        # TODO: escape codes like \n.
         # TODO: consider how this should be handled in regex.
         if ($escaped) {
-            $dat .= $char;
+            $dat .= _escape($char);
             undef $escaped;
             next;
         }
@@ -232,6 +231,14 @@ sub tok_STR_REG {
     }
 
     return $is_str ? [ STRING => \@parts ] : [ REGEX => \@parts ];
+}
+
+sub _escape {
+    my $char = shift;
+    # TODO: do this correctly
+    return "\n" if $char eq 'n';
+    return "\r" if $char eq 'r';
+    return $char;
 }
 
 sub tok_BAREWORD {
