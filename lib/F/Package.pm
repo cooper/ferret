@@ -6,6 +6,7 @@ use strict;
 use parent 'F::Statement';
 
 sub type { 'Package' }
+sub hold_instr { 1 }
 
 sub desc {
     my $pkg = shift;

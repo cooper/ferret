@@ -1,1 +1,1 @@
-$funcs[<<id>>]->inside_scope(<<name>> => $scope, $scope);
+$funcs[<<id>>]->inside_scope(<<name>> => $scope, $scope)<<semi>>

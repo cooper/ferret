@@ -74,8 +74,7 @@ use Ferret::Core::Operations qw(num str);
 
     # On
     {
-        my $on_func =
-          do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
+        my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
         $scope->property('obj')->property('once')->call( {}, $scope )
           ->property('expire')->add_function_with_self( $self, $on_func );
     }

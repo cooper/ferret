@@ -303,6 +303,17 @@ sub tok_OP_EXCLAM {
     return [ OP_CALL => ];
 }
 
+# opening curly bracket can start an anonymous function
+# or an empty for loop
+sub tok_CLOSURE_S {
+    my ($tokens, $value) = @_;
+    my $last = $tokens->[-1] or return;
+    if ($last->[0] eq 'KEYWORD_FUNC') {
+        $tokens->[-1] = [ FUNCTION => { anonymous => 1 } ];
+        return;
+    }
+}
+
 # common token modifiers.
 sub remove_first_char { [ $_[0], substr $_[1], 1     ] }
 sub remove_last_char  { [ $_[0], substr $_[1], 0, -1 ] }

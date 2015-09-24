@@ -28,23 +28,24 @@ sub new {
 
 sub perl_fmt {
     my $ins = shift;
-    
+
     # get content.
     my $content = '';
     foreach my $child ($ins->ordered_children) {
         next if $child == $ins->{param_exp};
         $content .= $child->perl_fmt_do."\n";
     }
-    
+
     return inside => {
         expression => $ins->{param_exp}->perl_fmt_do,
         content    => $content
     };
 }
 
-sub param_exp { shift->{param_exp} }
+sub param_exp  { shift->{param_exp} }
 sub is_closure { 1 }
-sub type { 'Inside' }
+sub hold_instr { 1 }
+sub type       { 'Inside' }
 
 
 1

@@ -136,8 +136,7 @@ use Ferret::Core::Operations qw(add str);
 
     # On
     {
-        my $on_func =
-          do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
+        my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
         $scope->property('str')->property('length')
           ->add_function_with_self( $self, $on_func );
     }
@@ -146,8 +145,7 @@ use Ferret::Core::Operations qw(add str);
 
     # On
     {
-        my $on_func =
-          do { $funcs[1]->inside_scope( +undef => $scope, $scope ); };
+        my $on_func = $funcs[1]->inside_scope( +undef => $scope, $scope );
         $scope->property('String')->property('proto')->property('length')
           ->add_function_with_self( $self, $on_func );
     }

@@ -150,12 +150,12 @@ func getMessage {
     if $split[0].hasPrefix("."):
         command -> $split[0].copy().trimPrefix(".");
 
-    func fromWord {
+    # provide a utility to extract phrases from the message
+    fromWord -> func {
         need $wordN: Num;
         return $message.split(separator: " ", limit: $wordN + 1)[$wordN];
-    }
+    };
 
-    fromWord -> fromWord;
     nickname -> $nickname;
     channel  -> $lineSplit[2];
     message  -> $message;

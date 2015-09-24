@@ -494,33 +494,32 @@
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      String '.'
-#              Function 'fromWord'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$wordN'
-#                          Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Index
-#                              Call
-#                                  Property 'split'
-#                                      Lexical variable '$message'
-#                                  Hash [2 items]
-#                                      Item 0
-#                                          Pair 'separator'
-#                                              String ' '
-#                                      Item 1
-#                                          Pair 'limit'
-#                                              Mathematical operation
-#                                                  Lexical variable '$wordN'
-#                                                  Addition operator (+)
-#                                                  Number '1'
-#                              Structural list [1 items]
-#                                  Item 0
-#                                      Lexical variable '$wordN'
 #              Instruction
 #                  Return pair 'fromWord'
-#                      Bareword 'fromWord'
+#                      Function '_anonymous_'
+#                          Instruction
+#                              Need
+#                                  Lexical variable '$wordN'
+#                                  Bareword 'Num'
+#                          Instruction
+#                              Return
+#                                  Index
+#                                      Call
+#                                          Property 'split'
+#                                              Lexical variable '$message'
+#                                          Hash [2 items]
+#                                              Item 0
+#                                                  Pair 'separator'
+#                                                      String ' '
+#                                              Item 1
+#                                                  Pair 'limit'
+#                                                      Mathematical operation
+#                                                          Lexical variable '$wordN'
+#                                                          Addition operator (+)
+#                                                          Number '1'
+#                                      Structural list [1 items]
+#                                          Item 0
+#                                              Lexical variable '$wordN'
 #              Instruction
 #                  Return pair 'nickname'
 #                      Lexical variable '$nickname'
@@ -602,7 +601,7 @@ use Ferret::Core::Operations qw(add bool num str);
         };
     }
 
-    # Function event 'fromWord' callback definition
+    # Function event '+undef' callback definition
     {
         my $func = Ferret::Function->new( $f, name => 'default' );
         $func->add_argument( name => 'wordN' );
@@ -625,7 +624,7 @@ use Ferret::Core::Operations qw(add bool num str);
         };
         $funcs[2] = Ferret::Event->new(
             $f,
-            name         => 'fromWord',
+            name         => '+undef',
             default_func => [ undef, $func ]
         );
     }
@@ -637,7 +636,6 @@ use Ferret::Core::Operations qw(add bool num str);
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $funcs[2]->inside_scope( fromWord => $scope, $scope );
             do {
                 return unless defined $arguments->{line};
                 $scope->set_property( line => $arguments->{line} );
@@ -682,7 +680,9 @@ use Ferret::Core::Operations qw(add bool num str);
                       ->property('trimPrefix')
                       ->call( [ str( $f, "." ) ], $scope ) );
             }
-            $return->set_property( fromWord => $scope->property('fromWord') );
+            $return->set_property(
+                fromWord => $funcs[2]->inside_scope( +undef => $scope, $scope )
+            );
             $return->set_property( nickname => $scope->property('nickname') );
             $return->set_property( channel => $scope->property('lineSplit')
                   ->get_index_value( [ num( $f, 2 ) ], $scope ) );
@@ -785,18 +785,16 @@ use Ferret::Core::Operations qw(add bool num str);
 
                 # On
                 {
-                    my $on_func = do {
-                        $funcs[0]->inside_scope( +undef => $scope, $scope );
-                    };
+                    my $on_func =
+                      $funcs[0]->inside_scope( +undef => $scope, $scope );
                     $self->property('sock')->property('connected')
                       ->add_function_with_self( $self, $on_func );
                 }
 
                 # On
                 {
-                    my $on_func = do {
-                        $funcs[1]->inside_scope( +undef => $scope, $scope );
-                    };
+                    my $on_func =
+                      $funcs[1]->inside_scope( +undef => $scope, $scope );
                     $self->property('sock')->property('gotLine')
                       ->add_function_with_self( $self, $on_func );
                 }

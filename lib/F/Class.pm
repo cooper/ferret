@@ -6,6 +6,7 @@ use strict;
 use parent 'F::Statement';
 
 sub type { 'Class' }
+sub hold_instr { 1 }
 
 sub desc {
     my $class = shift;

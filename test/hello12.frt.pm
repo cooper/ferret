@@ -201,24 +201,21 @@ use Ferret::Core::Operations qw(add num str);
 
     # On
     {
-        my $on_func =
-          do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
+        my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
         $scope->property('sock')->property('gotLine')
           ->add_function_with_self( $self, $on_func );
     }
 
     # On
     {
-        my $on_func =
-          do { $funcs[1]->inside_scope( +undef => $scope, $scope ); };
+        my $on_func = $funcs[1]->inside_scope( +undef => $scope, $scope );
         $scope->property('sock')->property('println')
           ->add_function_with_self( $self, $on_func );
     }
 
     # On
     {
-        my $on_func =
-          do { $funcs[2]->inside_scope( +undef => $scope, $scope ); };
+        my $on_func = $funcs[2]->inside_scope( +undef => $scope, $scope );
         $scope->property('sock')->property('connected')
           ->add_function_with_self( $self, $on_func );
     }
@@ -226,8 +223,7 @@ use Ferret::Core::Operations qw(add num str);
 
     # On
     {
-        my $on_func =
-          do { $funcs[3]->inside_scope( +undef => $scope, $scope ); };
+        my $on_func = $funcs[3]->inside_scope( +undef => $scope, $scope );
         $scope->property('Timer')->call( [ num( $f, 5 ) ], $scope )
           ->property('once')->call( {}, $scope )->property('expire')
           ->add_function_with_self( $self, $on_func );

@@ -185,8 +185,7 @@ use Ferret::Core::Operations qw(add bool num str);
 
     # On
     {
-        my $on_func =
-          do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
+        my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
         $scope->property('say')->add_function_with_self( $self, $on_func );
     }
     $scope->set_property_ow(

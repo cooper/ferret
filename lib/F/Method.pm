@@ -9,6 +9,7 @@ use parent 'F::Statement';
 sub type { 'Method' }
 sub desc { 'm'.($_[0]{main} ? 'ain m' : '')."ethod '$_[0]{name}'" }
 sub is_closure { 1 }
+sub hold_instr { 1 }
 
 sub perl_fmt {
     my $method = shift;

@@ -43,9 +43,10 @@ sub perl_fmt {
     };
 }
 
-sub param_exp { shift->{param_exp} }
+sub param_exp  { shift->{param_exp} }
 sub is_closure { 1 }
-sub type { 'If' }
+sub hold_instr { 1 }
+sub type       { 'If' }
 
 
 1

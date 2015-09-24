@@ -130,7 +130,8 @@ sub c_CLOSURE_S {
     my ($c, $value) = @_;
 
     # there's nothing to capture the closure.
-    return unexpected($c) unless $c->{clos_cap};
+    my $closure = delete $c->{clos_cap};
+    return unexpected($c) unless $closure;
 
     # a closure can terminate an equality.
     if ($c->{node}->type eq 'Equality') {
@@ -145,8 +146,8 @@ sub c_CLOSURE_S {
 
     # remember which closure this is inside; if any.
     # then, set this node as the current closure.
-    $c->{clos_cap}{containing_closure} = $c->{closure};
-    $c->{closure} = delete $c->{clos_cap};
+    $closure->{containing_closure} = $c->{closure};
+    $c->{closure} = $closure;
 
     return;
 }
@@ -157,7 +158,12 @@ sub c_CLOSURE_E {
 
     # no closure is open...
     return unexpected($c) unless $c->{closure};
-    c_OP_SEMI($c) if $c->{instruction};
+
+    # we used to simulate a semicolon for one-liners here,
+    # but for the sake of debugging instruction termination, it's disabled.
+    #c_OP_SEMI($c) if $c->{instruction};
+
+    # at this point, the current node must be the closure.
     return unexpected($c) unless $c->{node} == $c->{closure};
 
     # close the closure and the node.
@@ -800,10 +806,8 @@ sub c_OP_MAYBE {
 sub c_any {
     my ($label, $c, $value) = @_;
 
-    # at this point, we shouldn't have two instructions open.
-    # it may eventually become necessary to allow this, however
-    # (such as for inline anonymous functions, perhaps).
-    return if $c->{instruction};
+    # can the current node hold instructions?
+    return unless $c->{node}->hold_instr;
 
     # if the current node does not directly allow instructions,
     # do not start an instruction here. for example, the

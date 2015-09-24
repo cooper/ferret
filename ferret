@@ -63,7 +63,7 @@ sub do_file {
     else            { open $fh, '>', "$file.pm" }
 
     # parse the input file.
-    my $str = eval { slurp($file) } or die "$!\n";
+    my $str = eval { slurp($file) } or error($file, $!);
 
     # tokenize.
     my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize($str);
@@ -71,7 +71,7 @@ sub do_file {
         inter "=== Tokenization ===\n";
         show_tok(@tok);
     }
-    die "\nError: $$err\n" if $err;
+    error($file, $$err) if $err;
 
     # construct elements.
     my $doc = F::Document->new(name => $file);
@@ -80,7 +80,7 @@ sub do_file {
         inter "=== Document Model ===\n";
         show_dom($doc);
     }
-    die "\nError: $$err\n" if $err;
+    error($file, $$err) if $err;
 
     # compile to Perl.
     my $compiled = Ferret::Perl::main($doc);
@@ -147,4 +147,10 @@ sub minify {
     my $ref = shift;
     perltidy($ref, argv => '--mangle -dac');
     $$ref =~ s/\n//g;
+}
+
+sub error {
+    my ($file, $msg) = @_;
+    unlink "$file.pm";
+    die "\nError: $msg\n";
 }

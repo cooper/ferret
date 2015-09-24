@@ -19,7 +19,7 @@ $str.length();
 # it applies to all objects on which the length event is fired
 
 on String.proto.length {
-    say("found '*this' length to be *return")
+    say("found '*this' length to be *return");
 }
 
 "hello".length();

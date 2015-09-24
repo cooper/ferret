@@ -23,6 +23,7 @@ sub is_node     { }                                 # isn't a node
 sub type_or_tok { shift->type }
 sub t           { shift->type_or_tok }
 sub tok         { }
+sub hold_instr  { }                                 # can't hold an instruction
 sub perl_fmt    { }
 sub perl_fmt_do {
     my @args = shift->perl_fmt;

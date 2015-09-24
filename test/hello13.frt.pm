@@ -101,8 +101,7 @@ use Ferret::Core::Operations qw(num str);
 
     # On
     {
-        my $on_func =
-          do { $funcs[0]->inside_scope( +undef => $scope, $scope ); };
+        my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
         $scope->property('Timer')->call( [ num( $f, 5 ) ], $scope )
           ->property('once')->call( {}, $scope )->property('expire')
           ->add_function_with_self( $self, $on_func );
@@ -112,8 +111,7 @@ use Ferret::Core::Operations qw(num str);
 
     # On
     {
-        my $on_func =
-          do { $funcs[1]->inside_scope( +undef => $scope, $scope ); };
+        my $on_func = $funcs[1]->inside_scope( +undef => $scope, $scope );
         $scope->property('t2')->property('once')->call( {}, $scope )
           ->property('expire')->add_function_with_self( $self, $on_func );
     }

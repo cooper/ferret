@@ -9,7 +9,13 @@ use parent 'F::Statement';
 sub type { 'Function' }
 sub desc { "function '$_[0]{name}'" }
 sub is_closure { 1 }
+sub hold_instr { 1 }
 sub anonymous { shift->{anonymous} }
+
+sub new {
+    my ($class, %opts) = @_;
+    return $class->SUPER::new(name => '_anonymous_', %opts);
+}
 
 sub close : method {
     my $func = shift;
@@ -49,6 +55,7 @@ sub perl_fmt {
         event_cb   => $func->{event_cb},
         id         => $func->document->{function_cid}++,
         name       => $func->{anonymous} ? '+undef' : $func->{name},
+        semi       => $func->{anonymous} ? '' : ';', # probably temporary hack
         statements => $content,
         arguments  => $arguments
     };
