@@ -4,7 +4,7 @@
 #          Assignment
 #              Lexical variable '$bot'
 #              Call
-#                  Bareword 'Bot'
+#                  Bareword 'IRC::Bot'
 #                  Hash [3 items]
 #                      Item 0
 #                          Pair 'addr'
@@ -20,7 +20,7 @@
 #              Property 'connect'
 #                  Lexical variable '$bot'
 #              Structural list [0 items]
-#      Include (Bot)
+#      Include (IRC, IRC::Bot)
 use warnings;
 use strict;
 use utf8;
@@ -43,9 +43,9 @@ use Ferret::Core::Operations qw(str);
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    Ferret::space( $context, $_ ) for qw(Bot);
+    Ferret::space( $context, $_ ) for qw(IRC IRC::Bot);
     $scope->set_property_ow(
-        bot => $scope->property('Bot')->call(
+        bot => $scope->property('IRC::Bot')->call(
             {
                 addr => str( $f, "k.notroll.net" ),
                 nick => str( $f, "bottie" ),

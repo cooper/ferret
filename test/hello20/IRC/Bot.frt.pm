@@ -1,5 +1,6 @@
 # === Document Model ===
-#  Document './test/hello20/Bot.frt'
+#  Document './test/hello20/IRC/Bot.frt'
+#      Package 'IRC'
 #      Class 'Bot'
 #          Main method '_init_'
 #              Instruction
@@ -270,14 +271,16 @@
 #                  Assignment
 #                      Lexical variable '$msg'
 #                      Call
-#                          Bareword 'getMessage'
+#                          Bareword 'IRC::Message'
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Lexical variable '$line'
 #              If
 #                  Expression ('if' parameter)
-#                      Property 'command'
-#                          Lexical variable '$msg'
+#                      Call
+#                          Property 'command'
+#                              Lexical variable '$msg'
+#                          Structural list [0 items]
 #                  Instruction
 #                      Call
 #                          Maybe
@@ -285,8 +288,10 @@
 #                                  Instance variable '@commands'
 #                                  Structural list [1 items]
 #                                      Item 0
-#                                          Property 'command'
-#                                              Lexical variable '$msg'
+#                                          Call
+#                                              Property 'command'
+#                                                  Lexical variable '$msg'
+#                                              Structural list [0 items]
 #                          Hash [3 items]
 #                              Item 0
 #                                  Pair 'line'
@@ -324,6 +329,18 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Structural list [1 items]
+#                          Item 0
+#                              String 'yes'
+#              Instruction
+#                  Call
+#                      Bareword 'dump'
+#                      Structural list [1 items]
+#                          Item 0
+#                              Lexical variable '$msg'
 #              Instruction
 #                  Assignment
 #                      Lexical variable '$trigger'
@@ -387,8 +404,10 @@
 #                          Instance variable '@factoids'
 #                          Structural list [1 items]
 #                              Item 0
-#                                  Property 'command'
-#                                      Lexical variable '$msg'
+#                                  Call
+#                                      Property 'command'
+#                                          Lexical variable '$msg'
+#                                      Structural list [0 items]
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
@@ -398,145 +417,7 @@
 #                                  Lexical variable '$msg'
 #                          Item 1
 #                              Lexical variable '$response'
-#          Function 'getMessage'
-#              Instruction
-#                  Need
-#                      Lexical variable '$line'
-#              Instruction
-#                  Assignment
-#                      Lexical variable '$lineSplit'
-#                      Call
-#                          Property 'split'
-#                              Lexical variable '$line'
-#                          Hash [2 items]
-#                              Item 0
-#                                  Pair 'separator'
-#                                      String ' '
-#                              Item 1
-#                                  Pair 'limit'
-#                                      Number '4'
-#              Instruction
-#                  Assignment
-#                      Lexical variable '$nickname'
-#                      Index
-#                          Call
-#                              Property 'split'
-#                                  Index
-#                                      Lexical variable '$lineSplit'
-#                                      Structural list [1 items]
-#                                          Item 0
-#                                              Number '0'
-#                              Hash [2 items]
-#                                  Item 0
-#                                      Pair 'separator'
-#                                          String '!'
-#                                  Item 1
-#                                      Pair 'limit'
-#                                          Number '2'
-#                          Structural list [1 items]
-#                              Item 0
-#                                  Number '0'
-#              Instruction
-#                  Call
-#                      Property 'trimPrefix'
-#                          Lexical variable '$nickname'
-#                      Structural list [1 items]
-#                          Item 0
-#                              String ':'
-#              Instruction
-#                  Assignment
-#                      Lexical variable '$message'
-#                      Index
-#                          Lexical variable '$lineSplit'
-#                          Structural list [1 items]
-#                              Item 0
-#                                  Number '3'
-#              Instruction
-#                  Call
-#                      Property 'trimPrefix'
-#                          Lexical variable '$message'
-#                      Structural list [1 items]
-#                          Item 0
-#                              String ':'
-#              Instruction
-#                  Assignment
-#                      Lexical variable '$split'
-#                      Call
-#                          Property 'split'
-#                              Lexical variable '$message'
-#                          Structural list [1 items]
-#                              Item 0
-#                                  String ' '
-#              If
-#                  Expression ('if' parameter)
-#                      Call
-#                          Property 'hasPrefix'
-#                              Index
-#                                  Lexical variable '$split'
-#                                  Structural list [1 items]
-#                                      Item 0
-#                                          Number '0'
-#                          Structural list [1 items]
-#                              Item 0
-#                                  String '.'
-#                  Instruction
-#                      Return pair 'command'
-#                          Call
-#                              Property 'trimPrefix'
-#                                  Call
-#                                      Property 'copy'
-#                                          Index
-#                                              Lexical variable '$split'
-#                                              Structural list [1 items]
-#                                                  Item 0
-#                                                      Number '0'
-#                                      Structural list [0 items]
-#                              Structural list [1 items]
-#                                  Item 0
-#                                      String '.'
-#              Instruction
-#                  Return pair 'fromWord'
-#                      Function '_anonymous_'
-#                          Instruction
-#                              Need
-#                                  Lexical variable '$wordN'
-#                                  Bareword 'Num'
-#                          Instruction
-#                              Return
-#                                  Index
-#                                      Call
-#                                          Property 'split'
-#                                              Lexical variable '$message'
-#                                          Hash [2 items]
-#                                              Item 0
-#                                                  Pair 'separator'
-#                                                      String ' '
-#                                              Item 1
-#                                                  Pair 'limit'
-#                                                      Mathematical operation
-#                                                          Lexical variable '$wordN'
-#                                                          Addition operator (+)
-#                                                          Number '1'
-#                                      Structural list [1 items]
-#                                          Item 0
-#                                              Lexical variable '$wordN'
-#              Instruction
-#                  Return pair 'nickname'
-#                      Lexical variable '$nickname'
-#              Instruction
-#                  Return pair 'channel'
-#                      Index
-#                          Lexical variable '$lineSplit'
-#                          Structural list [1 items]
-#                              Item 0
-#                                  Number '2'
-#              Instruction
-#                  Return pair 'message'
-#                      Lexical variable '$message'
-#              Instruction
-#                  Return pair 'parts'
-#                      Lexical variable '$split'
-#      Include (Num, Socket, Socket::TCP, Str)
+#      Include (IRC, IRC::Message, Num, Socket, Socket::TCP, Str)
 use warnings;
 use strict;
 use utf8;
@@ -557,7 +438,7 @@ $Ferret::tried_files{'Bot.frt.pm'}++;
 use Ferret::Core::Operations qw(add bool num str);
 {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
+    my $scope = my $context = $f->get_context('IRC');
 
     # Function '+undef' definition
     {
@@ -599,102 +480,6 @@ use Ferret::Core::Operations qw(add bool num str);
               ->call( [ $scope->property('data') ], $scope );
             return $return;
         };
-    }
-
-    # Function event '+undef' callback definition
-    {
-        my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'wordN' );
-        $func->{code} = sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
-            my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{wordN};
-                $scope->set_property( wordN => $arguments->{wordN} );
-            };
-            return $scope->property('message')->property('split')->call(
-                {
-                    separator => str( $f, " " ),
-                    limit =>
-                      add( $scope, $scope->property('wordN'), num( $f, 1 ) )
-                },
-                $scope
-            )->get_index_value( [ $scope->property('wordN') ], $scope );
-            return $return;
-        };
-        $funcs[2] = Ferret::Event->new(
-            $f,
-            name         => '+undef',
-            default_func => [ undef, $func ]
-        );
-    }
-
-    # Function event 'getMessage' callback definition
-    {
-        my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'line' );
-        $func->{code} = sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
-            my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{line};
-                $scope->set_property( line => $arguments->{line} );
-            };
-            $scope->set_property_ow(
-                lineSplit => $scope->property('line')->property('split')->call(
-                    { separator => str( $f, " " ), limit => num( $f, 4 ) },
-                    $scope
-                )
-            );
-            $scope->set_property_ow(
-                nickname => $scope->property('lineSplit')
-                  ->get_index_value( [ num( $f, 0 ) ], $scope )
-                  ->property('split')
-                  ->call(
-                    { separator => str( $f, "!" ), limit => num( $f, 2 ) },
-                    $scope )->get_index_value( [ num( $f, 0 ) ], $scope )
-            );
-            $scope->property('nickname')->property('trimPrefix')
-              ->call( [ str( $f, ":" ) ], $scope );
-            $scope->set_property_ow( message => $scope->property('lineSplit')
-                  ->get_index_value( [ num( $f, 3 ) ], $scope ) );
-            $scope->property('message')->property('trimPrefix')
-              ->call( [ str( $f, ":" ) ], $scope );
-            $scope->set_property_ow(
-                split => $scope->property('message')->property('split')
-                  ->call( [ str( $f, " " ) ], $scope ) );
-            if (
-                bool(
-                    $scope->property('split')
-                      ->get_index_value( [ num( $f, 0 ) ], $scope )
-                      ->property('hasPrefix')
-                      ->call( [ str( $f, "." ) ], $scope )
-                )
-              )
-            {
-                my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                $return->set_property( command => $scope->property('split')
-                      ->get_index_value( [ num( $f, 0 ) ], $scope )
-                      ->property('copy')->call( {}, $scope )
-                      ->property('trimPrefix')
-                      ->call( [ str( $f, "." ) ], $scope ) );
-            }
-            $return->set_property(
-                fromWord => $funcs[2]->inside_scope( +undef => $scope, $scope )
-            );
-            $return->set_property( nickname => $scope->property('nickname') );
-            $return->set_property( channel => $scope->property('lineSplit')
-                  ->get_index_value( [ num( $f, 2 ) ], $scope ) );
-            $return->set_property( message => $scope->property('message') );
-            $return->set_property( parts   => $scope->property('split') );
-            return $return;
-        };
-        $funcs[3] = Ferret::Event->new(
-            $f,
-            name         => 'getMessage',
-            default_func => [ undef, $func ]
-        );
     }
 
     # Class 'Bot'
@@ -1050,17 +835,26 @@ use Ferret::Core::Operations qw(add bool num str);
                     return unless defined $arguments->{s};
                     $scope->set_property( s => $arguments->{s} );
                 };
-                $scope->set_property_ow( msg => $scope->property('getMessage')
+                $scope->set_property_ow( msg => $scope->property('IRC::Message')
                       ->call( [ $scope->property('line') ], $scope ) );
-                if ( bool( $scope->property('msg')->property('command') ) ) {
+                if (
+                    bool(
+                        $scope->property('msg')->property('command')
+                          ->call( {}, $scope )
+                    )
+                  )
+                {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     {
                         my $maybe_0 =
-                          $self->property('commands')
-                          ->get_index_value(
-                            [ $scope->property('msg')->property('command') ],
-                            $scope );
+                          $self->property('commands')->get_index_value(
+                            [
+                                $scope->property('msg')->property('command')
+                                  ->call( {}, $scope )
+                            ],
+                            $scope
+                          );
                         if ( bool($maybe_0) ) {
                             $maybe_0->call(
                                 {
@@ -1131,6 +925,9 @@ use Ferret::Core::Operations qw(add bool num str);
                     return unless defined $arguments->{msg};
                     $scope->set_property( msg => $arguments->{msg} );
                 };
+                $scope->property('say')->call( [ str( $f, "yes" ) ], $scope );
+                $scope->property('dump')
+                  ->call( [ $scope->property('msg') ], $scope );
                 $scope->set_property_ow(
                     trigger => $scope->property('msg')->property('parts')
                       ->get_index_value( [ num( $f, 1 ) ], $scope ) );
@@ -1182,7 +979,10 @@ use Ferret::Core::Operations qw(add bool num str);
                 };
                 $scope->set_property_ow(
                     response => $self->property('factoids')->get_index_value(
-                        [ $scope->property('msg')->property('command') ],
+                        [
+                            $scope->property('msg')->property('command')
+                              ->call( {}, $scope )
+                        ],
                         $scope
                     )
                 );
@@ -1212,9 +1012,9 @@ use Ferret::Core::Operations qw(add bool num str);
         $methods[8]->inside_scope( commandHello  => $scope, $proto, $class );
         $methods[9]->inside_scope( commandAdd    => $scope, $proto, $class );
         $methods[10]->inside_scope( commandFactoid => $scope, $proto, $class );
-        $funcs[3]->inside_scope( getMessage => $scope, $scope );
     }
-    Ferret::space( $context, $_ ) for qw(Num Socket Socket::TCP Str);
+    Ferret::space( $context, $_ )
+      for qw(IRC IRC::Message Num Socket Socket::TCP Str);
 }
 
 Ferret::runtime();

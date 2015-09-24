@@ -1,3 +1,4 @@
+package IRC
 class Bot
 
 init {
@@ -93,10 +94,11 @@ method pong {
 method handleMessage {
     need $line, $s;
 
-    # handle a command
-    $msg = getMessage($line);
+    # parse the message
+    $msg = IRC::Message($line);
 
-    if $msg.command: @commands[ $msg.command ]?(
+    # found a command
+    if $msg.command(): @commands[ $msg.command() ]?(
         line:   $line,
         s:      $s,
         msg:    $msg
@@ -112,7 +114,9 @@ method commandHello {
 
 method commandAdd {
     need $msg;
-
+    say("yes");
+    dump($msg);
+    
     # .add trigger(1) response (2-)
     $trigger  = $msg.parts[1];
     $response = $msg.fromWord(2);
@@ -126,38 +130,6 @@ method commandAdd {
 
 method commandFactoid {
     need $msg;
-    $response = @factoids[$msg.command];
+    $response = @factoids[ $msg.command() ];
     @privmsg($msg.channel, $response);
-}
-
-# get the sentinel-prefixed final parameter for a PRIVMSG
-func getMessage {
-    need $line;
-    $lineSplit = $line.split(separator: " ", limit: 4);
-
-    # find nickname
-    $nickname = $lineSplit[0].split(separator: "!", limit: 2)[0];
-    $nickname.trimPrefix(":");
-
-    # find message
-    $message = $lineSplit[3];
-    $message.trimPrefix(":");
-
-    # split into parts
-    $split = $message.split(" ");
-
-    # find command
-    if $split[0].hasPrefix("."):
-        command -> $split[0].copy().trimPrefix(".");
-
-    # provide a utility to extract phrases from the message
-    fromWord -> func {
-        need $wordN: Num;
-        return $message.split(separator: " ", limit: $wordN + 1)[$wordN];
-    };
-
-    nickname -> $nickname;
-    channel  -> $lineSplit[2];
-    message  -> $message;
-    parts    -> $split;
 }
