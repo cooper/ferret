@@ -108,7 +108,7 @@ sub call_with_self {
 
 sub call {
     my ($event, $arguments, $call_scope, $return) = @_;
-    my $obj = $event->{last_parent} or return;
+    my $obj = $event->{last_parent} or warn "no last parent" and return;
 
     # arguments for the default function.
     $arguments ||= {};

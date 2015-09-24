@@ -50,10 +50,16 @@ sub init {
     $obj->add_parent($class->prototype);
 
     # fetch or create return object.
-    my $ret = $class->has_property('_init_') ? do {
+    my $ret = Ferret::Return->new($class->ferret);
+    if ($class->has_property('_init_')) {
         my $init = $class->property('_init_');
-        $init->call_with_self($obj, $arguments, $class->{outer_scope}); # scope necessary?
-    } : Ferret::Object->new($class->ferret);
+        $init->call_with_self(
+            $obj,
+            $arguments,
+            $class->{outer_scope},
+            $ret
+        );
+    }
 
     # inject instance properties.
     $ret->set_property(instance => $obj);

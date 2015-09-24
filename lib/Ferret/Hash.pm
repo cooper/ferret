@@ -91,7 +91,7 @@ sub _keys {
 }
 
 sub values : method {
-    return keys %{ shift->{hash_values} };
+    return values %{ shift->{hash_values} };
 }
 
 sub _values {

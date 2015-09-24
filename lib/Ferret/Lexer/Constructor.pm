@@ -119,7 +119,11 @@ sub c_METHOD {
 
 sub c_FUNCTION {
     my ($c, $value) = @_;
-    my $function = F::Function->new(%$value, event_cb => 1);
+    my $function = F::Function->new(
+        %$value,
+        event_cb => !$value->{anonymous}
+        # anonymous functions are not implemented as events
+    );
     $c->{node}->adopt($function);
     @$c{ qw(node clos_cap function) } = ($function) x 3;
     return $function;

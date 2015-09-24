@@ -112,6 +112,58 @@
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$data'
+#          Method 'addCommand'
+#              Instruction
+#                  Need
+#                      Lexical variable '$command'
+#                      Bareword 'Str'
+#              Instruction
+#                  Need
+#                      Lexical variable '$callback'
+#                      Bareword 'Func'
+#              Instruction
+#                  Call
+#                      Bareword 'inspect'
+#                      Structural list [1 items]
+#                          Item 0
+#                              Call
+#                                  Bareword 'Object'
+#                                  Hash [1 items]
+#                                      Item 0
+#                                          Pair 'commands'
+#                                              Instance variable '@commands'
+#              If
+#                  Expression ('if' parameter)
+#                      Index
+#                          Instance variable '@commands'
+#                          Structural list [1 items]
+#                              Item 0
+#                                  Lexical variable '$command'
+#                  Instruction
+#                      Return pair 'overwrote'
+#                          Boolean true
+#              Instruction
+#                  Assignment
+#                      Index
+#                          Instance variable '@commands'
+#                          Structural list [1 items]
+#                              Item 0
+#                                  Lexical variable '$command'
+#                      Lexical variable '$callback'
+#              Instruction
+#                  Call
+#                      Bareword 'inspect'
+#                      Structural list [1 items]
+#                          Item 0
+#                              Call
+#                                  Bareword 'Object'
+#                                  Hash [1 items]
+#                                      Item 0
+#                                          Pair 'commands'
+#                                              Instance variable '@commands'
+#              Instruction
+#                  Return pair 'added'
+#                      Boolean true
 #          Method 'connect'
 #              Instruction
 #                  Call
@@ -275,6 +327,47 @@
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Lexical variable '$line'
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Structural list [1 items]
+#                          Item 0
+#                              Mathematical operation
+#                                  String 'for '
+#                                  Addition operator (+)
+#                                  Call
+#                                      Property 'command'
+#                                          Lexical variable '$msg'
+#                                      Structural list [0 items]
+#                                  Addition operator (+)
+#                                  String ' I found '
+#                                  Addition operator (+)
+#                                  Index
+#                                      Instance variable '@commands'
+#                                      Structural list [1 items]
+#                                          Item 0
+#                                              Call
+#                                                  Property 'command'
+#                                                      Lexical variable '$msg'
+#                                                  Structural list [0 items]
+#              Instruction
+#                  Call
+#                      Bareword 'inspect'
+#                      Structural list [1 items]
+#                          Item 0
+#                              Call
+#                                  Bareword 'Object'
+#                                  Hash [1 items]
+#                                      Item 0
+#                                          Pair 'function'
+#                                              Index
+#                                                  Instance variable '@commands'
+#                                                  Structural list [1 items]
+#                                                      Item 0
+#                                                          Call
+#                                                              Property 'command'
+#                                                                  Lexical variable '$msg'
+#                                                              Structural list [0 items]
 #              If
 #                  Expression ('if' parameter)
 #                      Call
@@ -411,7 +504,7 @@
 #                                  Lexical variable '$msg'
 #                          Item 1
 #                              Lexical variable '$response'
-#      Include (IRC, IRC::Message, Num, Socket, Socket::TCP, Str)
+#      Include (Func, IRC, IRC::Message, Num, Object, Socket, Socket::TCP, Str)
 use warnings;
 use strict;
 use utf8;
@@ -586,6 +679,66 @@ use Ferret::Core::Operations qw(add bool num str);
             );
         }
 
+        # Method event 'addCommand' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+            $func->add_argument( name => 'command' );
+            $func->add_argument( name => 'callback' );
+            $func->{code} = sub {
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                do {
+                    return unless defined $arguments->{command};
+                    $scope->set_property( command => $arguments->{command} );
+                };
+                do {
+                    return unless defined $arguments->{callback};
+                    $scope->set_property( callback => $arguments->{callback} );
+                };
+                $scope->property('inspect')->call(
+                    [
+                        $scope->property('Object')->call(
+                            { commands => $self->property('commands') }, $scope
+                        )
+                    ],
+                    $scope
+                );
+                if (
+                    bool(
+                        $self->property('commands')->get_index_value(
+                            [ $scope->property('command') ], $scope
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    $return->set_property( overwrote => Ferret::true );
+                }
+                $self->property('commands')
+                  ->set_index_value( [ $scope->property('command') ],
+                    $scope->property('callback'), $scope );
+                $scope->property('inspect')->call(
+                    [
+                        $scope->property('Object')->call(
+                            { commands => $self->property('commands') }, $scope
+                        )
+                    ],
+                    $scope
+                );
+                $return->set_property( added => Ferret::true );
+                return $return;
+            };
+            $methods[1] = Ferret::Event->new(
+                $f,
+                name         => 'addCommand',
+                default_func => [ undef, $func ]
+            );
+        }
+
         # Method event 'connect' definition
         {
             my $func = Ferret::Function->new(
@@ -600,7 +753,7 @@ use Ferret::Core::Operations qw(add bool num str);
                   ->call( {}, $scope );
                 return $return;
             };
-            $methods[1] = Ferret::Event->new(
+            $methods[2] = Ferret::Event->new(
                 $f,
                 name         => 'connect',
                 default_func => [ undef, $func ]
@@ -634,7 +787,7 @@ use Ferret::Core::Operations qw(add bool num str);
                   ->call( [ $scope->property('line') ], $scope );
                 return $return;
             };
-            $methods[2] = Ferret::Event->new(
+            $methods[3] = Ferret::Event->new(
                 $f,
                 name         => 'send',
                 default_func => [ undef, $func ]
@@ -702,7 +855,7 @@ use Ferret::Core::Operations qw(add bool num str);
                 }
                 return $return;
             };
-            $methods[3] = Ferret::Event->new(
+            $methods[4] = Ferret::Event->new(
                 $f,
                 name         => 'handleLine',
                 default_func => [ undef, $func ]
@@ -742,7 +895,7 @@ use Ferret::Core::Operations qw(add bool num str);
                 );
                 return $return;
             };
-            $methods[4] = Ferret::Event->new(
+            $methods[5] = Ferret::Event->new(
                 $f,
                 name         => 'privmsg',
                 default_func => [ undef, $func ]
@@ -769,7 +922,7 @@ use Ferret::Core::Operations qw(add bool num str);
                   ->call( [ str( $f, "JOIN #k" ) ], $scope );
                 return $return;
             };
-            $methods[5] = Ferret::Event->new(
+            $methods[6] = Ferret::Event->new(
                 $f,
                 name         => 'joinChannels',
                 default_func => [ undef, $func ]
@@ -803,7 +956,7 @@ use Ferret::Core::Operations qw(add bool num str);
                 );
                 return $return;
             };
-            $methods[6] = Ferret::Event->new(
+            $methods[7] = Ferret::Event->new(
                 $f,
                 name         => 'pong',
                 default_func => [ undef, $func ]
@@ -831,6 +984,44 @@ use Ferret::Core::Operations qw(add bool num str);
                 };
                 $scope->set_property_ow( msg => $scope->property('IRC::Message')
                       ->call( [ $scope->property('line') ], $scope ) );
+                $scope->property('say')->call(
+                    [
+                        add(
+                            $scope,
+                            str( $f, "for " ),
+                            $scope->property('msg')->property('command')
+                              ->call( {}, $scope ),
+                            str( $f, " I found " ),
+                            $self->property('commands')->get_index_value(
+                                [
+                                    $scope->property('msg')
+                                      ->property('command')->call( {}, $scope )
+                                ],
+                                $scope
+                            )
+                        )
+                    ],
+                    $scope
+                );
+                $scope->property('inspect')->call(
+                    [
+                        $scope->property('Object')->call(
+                            {
+                                function =>
+                                  $self->property('commands')->get_index_value(
+                                    [
+                                        $scope->property('msg')
+                                          ->property('command')
+                                          ->call( {}, $scope )
+                                    ],
+                                    $scope
+                                  )
+                            },
+                            $scope
+                        )
+                    ],
+                    $scope
+                );
                 if (
                     bool(
                         $scope->property('msg')->property('command')
@@ -863,7 +1054,7 @@ use Ferret::Core::Operations qw(add bool num str);
                 }
                 return $return;
             };
-            $methods[7] = Ferret::Event->new(
+            $methods[8] = Ferret::Event->new(
                 $f,
                 name         => 'handleMessage',
                 default_func => [ undef, $func ]
@@ -898,7 +1089,7 @@ use Ferret::Core::Operations qw(add bool num str);
                 );
                 return $return;
             };
-            $methods[8] = Ferret::Event->new(
+            $methods[9] = Ferret::Event->new(
                 $f,
                 name         => 'commandHello',
                 default_func => [ undef, $func ]
@@ -949,7 +1140,7 @@ use Ferret::Core::Operations qw(add bool num str);
                 );
                 return $return;
             };
-            $methods[9] = Ferret::Event->new(
+            $methods[10] = Ferret::Event->new(
                 $f,
                 name         => 'commandAdd',
                 default_func => [ undef, $func ]
@@ -988,26 +1179,27 @@ use Ferret::Core::Operations qw(add bool num str);
                 );
                 return $return;
             };
-            $methods[10] = Ferret::Event->new(
+            $methods[11] = Ferret::Event->new(
                 $f,
                 name         => 'commandFactoid',
                 default_func => [ undef, $func ]
             );
         }
         $methods[0]->inside_scope( _init_        => $scope, $class, $class );
-        $methods[1]->inside_scope( connect       => $scope, $proto, $class );
-        $methods[2]->inside_scope( send          => $scope, $proto, $class );
-        $methods[3]->inside_scope( handleLine    => $scope, $proto, $class );
-        $methods[4]->inside_scope( privmsg       => $scope, $proto, $class );
-        $methods[5]->inside_scope( joinChannels  => $scope, $proto, $class );
-        $methods[6]->inside_scope( pong          => $scope, $proto, $class );
-        $methods[7]->inside_scope( handleMessage => $scope, $proto, $class );
-        $methods[8]->inside_scope( commandHello  => $scope, $proto, $class );
-        $methods[9]->inside_scope( commandAdd    => $scope, $proto, $class );
-        $methods[10]->inside_scope( commandFactoid => $scope, $proto, $class );
+        $methods[1]->inside_scope( addCommand    => $scope, $proto, $class );
+        $methods[2]->inside_scope( connect       => $scope, $proto, $class );
+        $methods[3]->inside_scope( send          => $scope, $proto, $class );
+        $methods[4]->inside_scope( handleLine    => $scope, $proto, $class );
+        $methods[5]->inside_scope( privmsg       => $scope, $proto, $class );
+        $methods[6]->inside_scope( joinChannels  => $scope, $proto, $class );
+        $methods[7]->inside_scope( pong          => $scope, $proto, $class );
+        $methods[8]->inside_scope( handleMessage => $scope, $proto, $class );
+        $methods[9]->inside_scope( commandHello  => $scope, $proto, $class );
+        $methods[10]->inside_scope( commandAdd     => $scope, $proto, $class );
+        $methods[11]->inside_scope( commandFactoid => $scope, $proto, $class );
     }
     Ferret::space( $context, $_ )
-      for qw(IRC IRC::Message Num Socket Socket::TCP Str);
+      for qw(Func IRC IRC::Message Num Object Socket Socket::TCP Str);
 }
 
 Ferret::runtime();

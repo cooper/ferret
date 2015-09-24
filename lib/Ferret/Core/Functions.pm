@@ -60,6 +60,7 @@ sub _inspect_value {
     if ($value->isa('Ferret::Function')) {
         return "Function '$$value{name}'"
     }
+
     return perl_string($value);
 }
 
@@ -77,9 +78,9 @@ sub _inspect {
         $prop_name = "($prop_name)" if $owner != $obj;
 
         # indent lines
-        $value = join "\n    ", split /\n/, _inspect_value($value);
-
+        $value     = join "\n    ", split /\n/, _inspect_value($value);
         $prop_str .= '    '.$prop_name." = $value\n";
+
     }
 
     # create the string

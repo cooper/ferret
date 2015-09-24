@@ -170,7 +170,7 @@ sub add_binding {
         $class->bind_function('_init_', code => sub {
             bless $_[0], $opts{perl_package};
             $init->(@_);
-            return $_[0];
+            # return value is ignored here
         }, need => $opts{init_need}, want => $opts{init_want});
     }
 
