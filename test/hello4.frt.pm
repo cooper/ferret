@@ -106,7 +106,7 @@ use Ferret::Core::Operations qw(add num str);
         $func->add_argument( name => 'y' );
         $func->add_argument( name => 'z', optional => 1 );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             do {
                 return unless defined $arguments->{x};

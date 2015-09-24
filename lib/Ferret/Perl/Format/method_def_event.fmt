@@ -6,7 +6,7 @@
     );
     <<arguments>>
     $func->{code} = sub {
-        my ($self, $arguments, $from_scope, $scope, $return) = @_;
+        my ($self, $arguments, $call_scope, $scope, $return) = @_;
         <<statements>>
         return $return;
     };

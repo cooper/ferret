@@ -336,18 +336,9 @@
 #              Instruction
 #                  Assignment
 #                      Lexical variable '$response'
-#                      Index
-#                          Call
-#                              Property 'split'
-#                                  Property 'message'
-#                                      Lexical variable '$msg'
-#                              Hash [2 items]
-#                                  Item 0
-#                                      Pair 'separator'
-#                                          String ' '
-#                                  Item 1
-#                                      Pair 'limit'
-#                                          Number '3'
+#                      Call
+#                          Property 'fromWord'
+#                              Lexical variable '$msg'
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Number '2'
@@ -503,6 +494,33 @@
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      String '.'
+#              Function 'fromWord'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$wordN'
+#                          Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Index
+#                              Call
+#                                  Property 'split'
+#                                      Lexical variable '$message'
+#                                  Hash [2 items]
+#                                      Item 0
+#                                          Pair 'separator'
+#                                              String ' '
+#                                      Item 1
+#                                          Pair 'limit'
+#                                              Mathematical operation
+#                                                  Lexical variable '$wordN'
+#                                                  Addition operator (+)
+#                                                  Number '1'
+#                              Structural list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$wordN'
+#              Instruction
+#                  Return pair 'fromWord'
+#                      Bareword 'fromWord'
 #              Instruction
 #                  Return pair 'nickname'
 #                      Lexical variable '$nickname'
@@ -547,7 +565,7 @@ use Ferret::Core::Operations qw(add bool num str);
         my $func = $funcs[0] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $self->property('send')->call(
                 [
@@ -572,7 +590,7 @@ use Ferret::Core::Operations qw(add bool num str);
         my $func = $funcs[1] = Ferret::Function->new( $f, name => '+undef' );
         $func->add_argument( name => 'data' );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             do {
                 return unless defined $arguments->{data};
@@ -584,13 +602,42 @@ use Ferret::Core::Operations qw(add bool num str);
         };
     }
 
+    # Function event 'fromWord' callback definition
+    {
+        my $func = Ferret::Function->new( $f, name => 'default' );
+        $func->add_argument( name => 'wordN' );
+        $func->{code} = sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            do {
+                return unless defined $arguments->{wordN};
+                $scope->set_property( wordN => $arguments->{wordN} );
+            };
+            return $scope->property('message')->property('split')->call(
+                {
+                    separator => str( $f, " " ),
+                    limit =>
+                      add( $scope, $scope->property('wordN'), num( $f, 1 ) )
+                },
+                $scope
+            )->get_index_value( [ $scope->property('wordN') ], $scope );
+            return $return;
+        };
+        $funcs[2] = Ferret::Event->new(
+            $f,
+            name         => 'fromWord',
+            default_func => [ undef, $func ]
+        );
+    }
+
     # Function event 'getMessage' callback definition
     {
         my $func = Ferret::Function->new( $f, name => 'default' );
         $func->add_argument( name => 'line' );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
+            $funcs[2]->inside_scope( fromWord => $scope, $scope );
             do {
                 return unless defined $arguments->{line};
                 $scope->set_property( line => $arguments->{line} );
@@ -635,6 +682,7 @@ use Ferret::Core::Operations qw(add bool num str);
                       ->property('trimPrefix')
                       ->call( [ str( $f, "." ) ], $scope ) );
             }
+            $return->set_property( fromWord => $scope->property('fromWord') );
             $return->set_property( nickname => $scope->property('nickname') );
             $return->set_property( channel => $scope->property('lineSplit')
                   ->get_index_value( [ num( $f, 2 ) ], $scope ) );
@@ -642,7 +690,7 @@ use Ferret::Core::Operations qw(add bool num str);
             $return->set_property( parts   => $scope->property('split') );
             return $return;
         };
-        $funcs[2] = Ferret::Event->new(
+        $funcs[3] = Ferret::Event->new(
             $f,
             name         => 'getMessage',
             default_func => [ undef, $func ]
@@ -679,7 +727,7 @@ use Ferret::Core::Operations qw(add bool num str);
             $func->add_argument( name => 'user', optional => 1 );
             $func->add_argument( name => 'real', optional => 1 );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{addr};
                     $self->set_property( addr => $arguments->{addr} );
@@ -770,7 +818,7 @@ use Ferret::Core::Operations qw(add bool num str);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $self->property('sock')->property('connect')
                   ->call( {}, $scope );
                 return $return;
@@ -791,7 +839,7 @@ use Ferret::Core::Operations qw(add bool num str);
             );
             $func->add_argument( name => 'line' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{line};
                     $scope->set_property( line => $arguments->{line} );
@@ -825,7 +873,7 @@ use Ferret::Core::Operations qw(add bool num str);
             );
             $func->add_argument( name => 'line' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{line};
                     $scope->set_property( line => $arguments->{line} );
@@ -894,7 +942,7 @@ use Ferret::Core::Operations qw(add bool num str);
             $func->add_argument( name => 'channel' );
             $func->add_argument( name => 'message' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{channel};
                     $scope->set_property( channel => $arguments->{channel} );
@@ -933,7 +981,7 @@ use Ferret::Core::Operations qw(add bool num str);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 if ( bool( $self->property('joinedChannels') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -960,7 +1008,7 @@ use Ferret::Core::Operations qw(add bool num str);
             );
             $func->add_argument( name => 's' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{s};
                     $scope->set_property( s => $arguments->{s} );
@@ -995,7 +1043,7 @@ use Ferret::Core::Operations qw(add bool num str);
             $func->add_argument( name => 'line' );
             $func->add_argument( name => 's' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{line};
                     $scope->set_property( line => $arguments->{line} );
@@ -1045,7 +1093,7 @@ use Ferret::Core::Operations qw(add bool num str);
             );
             $func->add_argument( name => 'msg' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{msg};
                     $scope->set_property( msg => $arguments->{msg} );
@@ -1080,7 +1128,7 @@ use Ferret::Core::Operations qw(add bool num str);
             );
             $func->add_argument( name => 'msg' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{msg};
                     $scope->set_property( msg => $arguments->{msg} );
@@ -1089,12 +1137,8 @@ use Ferret::Core::Operations qw(add bool num str);
                     trigger => $scope->property('msg')->property('parts')
                       ->get_index_value( [ num( $f, 1 ) ], $scope ) );
                 $scope->set_property_ow(
-                    response => $scope->property('msg')->property('message')
-                      ->property('split')->call(
-                        { separator => str( $f, " " ), limit => num( $f, 3 ) },
-                        $scope
-                      )->get_index_value( [ num( $f, 2 ) ], $scope )
-                );
+                    response => $scope->property('msg')->property('fromWord')
+                      ->call( [ num( $f, 2 ) ], $scope ) );
                 $self->property('factoids')
                   ->set_index_value( [ $scope->property('trigger') ],
                     $scope->property('response'), $scope );
@@ -1133,7 +1177,7 @@ use Ferret::Core::Operations qw(add bool num str);
             );
             $func->add_argument( name => 'msg' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{msg};
                     $scope->set_property( msg => $arguments->{msg} );
@@ -1170,7 +1214,7 @@ use Ferret::Core::Operations qw(add bool num str);
         $methods[8]->inside_scope( commandHello  => $scope, $proto, $class );
         $methods[9]->inside_scope( commandAdd    => $scope, $proto, $class );
         $methods[10]->inside_scope( commandFactoid => $scope, $proto, $class );
-        $funcs[2]->inside_scope( getMessage => $scope, $scope );
+        $funcs[3]->inside_scope( getMessage => $scope, $scope );
     }
     Ferret::space( $context, $_ ) for qw(Num Socket Socket::TCP Str);
 }

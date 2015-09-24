@@ -36,7 +36,7 @@ sub init {
 }
 
 sub run_once {
-    my ($timer, $arguments, $from_scope, $scope, $return) = @_;
+    my ($timer, $arguments, $call_scope, $scope, $return) = @_;
 
     # create a countdown timer.
     require IO::Async::Timer::Countdown;
@@ -62,13 +62,13 @@ sub run_once {
 }
 
 sub expire_cb {
-    my ($timer, $arguments, $from_scope, $scope, $return) = @_;
+    my ($timer, $arguments, $call_scope, $scope, $return) = @_;
     $timer->{expired} = 1;
     return $return;
 }
 
 sub cancel {
-    my ($timer, $arguments, $from_scope, $scope, $return) = @_;
+    my ($timer, $arguments, $call_scope, $scope, $return) = @_;
     $timer->{canceled} = 1;
     my $t = delete $timer->{t} or return $return;
     $t->stop;

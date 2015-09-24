@@ -131,7 +131,7 @@ use Ferret::Core::Operations qw(add num str);
         my $func = $funcs[0] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $self->property('send')->call(
                 [
@@ -156,7 +156,7 @@ use Ferret::Core::Operations qw(add num str);
         my $func = $funcs[1] = Ferret::Function->new( $f, name => '+undef' );
         $func->add_argument( name => 'data' );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             do {
                 return unless defined $arguments->{data};
@@ -179,7 +179,7 @@ use Ferret::Core::Operations qw(add num str);
         my $func = $funcs[2] = Ferret::Function->new( $f, name => '+undef' );
         $func->add_argument( name => 'data' );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             do {
                 return unless defined $arguments->{data};
@@ -227,7 +227,7 @@ use Ferret::Core::Operations qw(add num str);
             $func->add_argument( name => 'port', optional => 1 );
             $func->add_argument( name => 'real', optional => 1 );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{address};
                     $self->set_property( address => $arguments->{address} );

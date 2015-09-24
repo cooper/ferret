@@ -179,7 +179,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             $func->add_argument( name => 'x' );
             $func->add_argument( name => 'y' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{x};
                     $self->set_property( x => $arguments->{x} );
@@ -206,7 +206,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             );
             $func->add_argument( name => 'pt2' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{pt2};
                     $scope->set_property( pt2 => $arguments->{pt2} );
@@ -253,7 +253,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property('distanceTo')->call(
                     [
                         $scope->{special}->property('class')
@@ -279,7 +279,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return add(
                     $scope,               str( $f, "(" ),
                     $self->property('x'), str( $f, ", " ),
@@ -303,7 +303,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property('pretty')->call( {}, $scope );
                 return $return;
             };
@@ -324,7 +324,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             $func->add_argument( name => 'pt1' );
             $func->add_argument( name => 'pt2' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{pt1};
                     $scope->set_property( pt1 => $arguments->{pt1} );
@@ -375,7 +375,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
             $func->add_argument( name => 'pt1' );
             $func->add_argument( name => 'pt2' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{pt1};
                     $scope->set_property( pt1 => $arguments->{pt1} );

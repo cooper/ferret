@@ -69,7 +69,7 @@ use Ferret::Core::Operations qw(add mul num str);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return mul(
                     $scope,
                     $self->property('length')->call( {}, $scope ),

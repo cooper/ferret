@@ -58,7 +58,7 @@ sub add_function {
     my $code = sub {
         my (
             $fire, $obj, $class, $outer_scope,
-            $arguments, $from_scope, $return
+            $arguments, $call_scope, $return
         ) = @_;
 
         # forward function scope variables.
@@ -67,6 +67,8 @@ sub add_function {
         $func->{class}       ||= $class;
         $func->{outer_scope} ||= $outer_scope;
         $func->{is_method}     = $event->{is_method};
+        $func->{event_name}    = $event->{name};
+
 
         # *this is like *self except it's always the object
         # from which the event is being fired
@@ -76,7 +78,7 @@ sub add_function {
         my $ret = $func->call_with_self(
             $self_maybe || $obj,
             $arguments,
-            $from_scope,
+            $call_scope,
             $fire->{override_return} // $return
             # call with override_return such that special property
             # *return will accurately represent the current return
@@ -105,7 +107,7 @@ sub call_with_self {
 }
 
 sub call {
-    my ($event, $arguments, $from_scope, $return) = @_;
+    my ($event, $arguments, $call_scope, $return) = @_;
     my $obj = $event->{last_parent} or return;
 
     # arguments for the default function.
@@ -123,7 +125,7 @@ sub call {
         $event->{class},
         $event->{outer_scope},
         $arguments,
-        $from_scope,
+        $call_scope,
         $return
     );
 

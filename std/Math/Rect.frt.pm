@@ -183,7 +183,7 @@ use Ferret::Core::Operations qw(add mul num);
             $func->add_argument( name => 'width' );
             $func->add_argument( name => 'height' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{x};
                     $scope->set_property( x => $arguments->{x} );
@@ -224,7 +224,7 @@ use Ferret::Core::Operations qw(add mul num);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property('origin');
                 return $return;
             };
@@ -244,7 +244,7 @@ use Ferret::Core::Operations qw(add mul num);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property('Point')->call(
                     [
                         add(
@@ -274,7 +274,7 @@ use Ferret::Core::Operations qw(add mul num);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property('Point')->call(
                     [
                         $self->property('origin')->property('x'),
@@ -304,7 +304,7 @@ use Ferret::Core::Operations qw(add mul num);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property('Point')->call(
                     [
                         add(
@@ -338,7 +338,7 @@ use Ferret::Core::Operations qw(add mul num);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property('Line')->call(
                     [
                         $self->property('bottomLeft')->call( {}, $scope ),
@@ -364,7 +364,7 @@ use Ferret::Core::Operations qw(add mul num);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property('Line')->call(
                     [
                         $self->property('topLeft')->call( {}, $scope ),
@@ -390,7 +390,7 @@ use Ferret::Core::Operations qw(add mul num);
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property_ow(
                     x => add(
                         $scope,

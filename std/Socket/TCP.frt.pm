@@ -40,12 +40,12 @@ Ferret::bind_class(
 
 # this is passed $sock which is preinitialized. return value is ignored.
 sub init {
-    my ($sock, $arguments, $from_scope, $scope) = @_;
+    my ($sock, $arguments, $call_scope, $scope) = @_;
     $sock->set_property($_ => $arguments->{$_}) for qw(address port);
 }
 
 sub _connect {
-    my ($sock, $arguments, $from_scope, $scope, $return) = @_;
+    my ($sock, $arguments, $call_scope, $scope, $return) = @_;
     require IO::Socket::IP;
     require IO::Async::Stream;
 
@@ -77,7 +77,7 @@ sub _connect {
 }
 
 sub println {
-    my ($sock, $arguments, $from_scope, $scope, $return) = @_;
+    my ($sock, $arguments, $call_scope, $scope, $return) = @_;
     my $line = $arguments->{data}{value};
     $sock->{stream}->write("$line\n");
 }

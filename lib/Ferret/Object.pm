@@ -234,28 +234,28 @@ sub best_common_class {
 
 # create an object that represents a set of objects.
 sub create_set {
-    my ($obj, $from_scope, @other_objs) = @_;
+    my ($obj, $call_scope, @other_objs) = @_;
     return Ferret::Set->new($obj->ferret,
         primary_obj => $obj,
         other_objs  => \@other_objs,
         all_objs    => [ $obj, @other_objs ],
         set_class   => best_common_class($obj, @other_objs),
-        set_scope   => $from_scope
+        set_scope   => $call_scope
     );
 }
 
 # call getValue.
 sub get_index_value {
-    my ($obj, $arguments, $from_scope) = @_;
-    return $obj->property('getValue')->call($arguments, $from_scope);
+    my ($obj, $arguments, $call_scope) = @_;
+    return $obj->property('getValue')->call($arguments, $call_scope);
 }
 
 # call setValue.
 # because the number of indices can be variable, the value is always first.
 sub set_index_value {
-    my ($obj, $arguments, $value, $from_scope) = @_;
+    my ($obj, $arguments, $value, $call_scope) = @_;
     unshift @$arguments, $value;
-    return $obj->property('setValue')->call($arguments, $from_scope);
+    return $obj->property('setValue')->call($arguments, $call_scope);
 }
 
 ################

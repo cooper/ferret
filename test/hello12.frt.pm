@@ -122,7 +122,7 @@ use Ferret::Core::Operations qw(add num str);
         my $func = $funcs[0] = Ferret::Function->new( $f, name => '+undef' );
         $func->add_argument( name => 'data' );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             do {
                 return unless defined $arguments->{data};
@@ -145,7 +145,7 @@ use Ferret::Core::Operations qw(add num str);
         my $func = $funcs[1] = Ferret::Function->new( $f, name => '+undef' );
         $func->add_argument( name => 'data' );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             do {
                 return unless defined $arguments->{data};
@@ -168,7 +168,7 @@ use Ferret::Core::Operations qw(add num str);
         my $func = $funcs[2] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property('sock')->property('println')
               ->call( [ str( $f, "NICK k" ) ], $scope );
@@ -183,7 +183,7 @@ use Ferret::Core::Operations qw(add num str);
         my $func = $funcs[3] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property('sock')->property('println')
               ->call( [ str( $f, "JOIN #k" ) ], $scope );

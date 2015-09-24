@@ -58,7 +58,7 @@ use Ferret::Core::Operations qw(add bool str);
         my $func = Ferret::Function->new( $f, name => 'default' );
         $func->add_argument( name => 'who' );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             do {
                 return unless defined $arguments->{who};

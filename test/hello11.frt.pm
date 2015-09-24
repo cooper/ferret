@@ -129,7 +129,7 @@ use Ferret::Core::Operations qw(add bool num str);
         $func->add_argument( name => 'twice' );
         $func->add_argument( name => 'message' );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             do {
                 return unless defined $arguments->{twice};

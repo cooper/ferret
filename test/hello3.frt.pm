@@ -119,7 +119,7 @@ use Ferret::Core::Operations qw(add num str);
         my $func = Ferret::Function->new( $f, name => 'default' );
 
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->set_property_ow( hello => str( $f, "Hello" ) );
             $scope->property('hello')
@@ -149,7 +149,7 @@ use Ferret::Core::Operations qw(add num str);
         my $func = Ferret::Function->new( $f, name => 'default' );
 
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property('say')->call(
                 [
@@ -175,7 +175,7 @@ use Ferret::Core::Operations qw(add num str);
         $func->add_argument( name => 'name1' );
         $func->add_argument( name => 'name2' );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $funcs[0]->inside_scope( hello1 => $scope, $scope );
             $funcs[1]->inside_scope( hello2 => $scope, $scope );

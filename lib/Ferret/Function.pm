@@ -74,7 +74,7 @@ sub call_with_self {
 }
 
 sub call {
-    my ($func, $arguments, $from_scope, $return) = @_;
+    my ($func, $arguments, $call_scope, $return) = @_;
 
     # list of arguments. must use signature.
     $arguments ||= {};
@@ -88,7 +88,7 @@ sub call {
 
         # create a scope which inherits from the outer scope.
         #
-        # $from_scope   = the scope where the function was called
+        # $call_scope   = the scope where the function was called
         # $scope        = the scope within the function
         # outer_scope   = the scope outside of the function definition
         #
@@ -116,7 +116,7 @@ sub call {
         $scope->{special}->set_property(return => $return);
 
         # call the function.
-        my $ret = $func->{code}($self, $arguments, $from_scope, $scope, $return);
+        my $ret = $func->{code}($self, $arguments, $call_scope, $scope, $return);
         return $ret // Ferret::undefined;
 
     }

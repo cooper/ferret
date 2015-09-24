@@ -115,7 +115,7 @@ method commandAdd {
 
     # .add trigger(1) response (2-)
     $trigger  = $msg.parts[1];
-    $response = $msg.message.split(separator: " ", limit: 3)[2];
+    $response = $msg.fromWord(2);
 
     # remember this factoid
     @factoids[$trigger] = $response;
@@ -150,6 +150,12 @@ func getMessage {
     if $split[0].hasPrefix("."):
         command -> $split[0].copy().trimPrefix(".");
 
+    func fromWord {
+        need $wordN: Num;
+        return $message.split(separator: " ", limit: $wordN + 1)[$wordN];
+    }
+
+    fromWord -> fromWord;
     nickname -> $nickname;
     channel  -> $lineSplit[2];
     message  -> $message;

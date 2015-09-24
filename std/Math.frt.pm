@@ -42,7 +42,7 @@ use Ferret::Core::Operations qw();
         my $func = Ferret::Function->new( $f, name => 'default' );
         $func->add_argument( name => 'num' );
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             do {
                 return unless defined $arguments->{num};

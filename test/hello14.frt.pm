@@ -90,7 +90,7 @@ use Ferret::Core::Operations qw(add str);
         my $func = $funcs[0] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property('say')->call(
                 [
@@ -113,7 +113,7 @@ use Ferret::Core::Operations qw(add str);
         my $func = $funcs[1] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property('say')->call(
                 [

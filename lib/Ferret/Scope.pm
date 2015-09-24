@@ -11,6 +11,7 @@ use parent 'Ferret::Object';
 sub new {
     my ($class, $f, %opts) = @_;
     $opts{parent_scope} ||= $opts{parent};
+    $opts{parent}       ||= $opts{parent_scope};
 
     # create a new object.
     my $scope = $class->SUPER::new($f, %opts);
@@ -31,7 +32,7 @@ sub new {
     $scope->{parent_scope} =
         $opts{parent_scope}     ||
         $scope->{parent_scope}  ||
-        $opts{is_core} ? undef : $f->main_context;
+        ($opts{is_core} ? undef : $f->main_context);
 
     return $scope;
 }

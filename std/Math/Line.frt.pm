@@ -79,7 +79,7 @@ use Ferret::Core::Operations qw();
             $func->add_argument( name => 'pt1' );
             $func->add_argument( name => 'pt2' );
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     return unless defined $arguments->{pt1};
                     $self->set_property( pt1 => $arguments->{pt1} );
@@ -106,7 +106,7 @@ use Ferret::Core::Operations qw();
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property('pt1')
                   ->create_set( $scope, $self->property('pt2') )
                   ->property('midpoint')->call( {}, $scope );
@@ -128,7 +128,7 @@ use Ferret::Core::Operations qw();
             );
 
             $func->{code} = sub {
-                my ( $self, $arguments, $from_scope, $scope, $return ) = @_;
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property('pt1')->property('distanceTo')
                   ->call( [ $self->property('pt2') ], $scope );
                 return $return;

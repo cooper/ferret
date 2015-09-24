@@ -76,7 +76,7 @@ use Ferret::Core::Operations qw(num str);
         my $func = $funcs[0] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property('say')
               ->call( [ str( $f, "five seconds up" ) ], $scope );
@@ -89,7 +89,7 @@ use Ferret::Core::Operations qw(num str);
         my $func = $funcs[1] = Ferret::Function->new( $f, name => '+undef' );
 
         $func->{code} = sub {
-            my ( $_self, $arguments, $from_scope, $scope, $return ) = @_;
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property('say')
               ->call( [ str( $f, "this shouldn't be said" ) ], $scope );
