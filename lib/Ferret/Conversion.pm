@@ -117,7 +117,7 @@ sub ferret_list {
 }
 
 sub ferret_boolean {
-    my $truth = !!shift();
+    my $truth = !!shift;
     return $truth ? Ferret::true : Ferret::false;
 }
 

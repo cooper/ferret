@@ -91,7 +91,7 @@ sub hasPrefix {
 sub _hasPrefix {
     my ($str, $arguments) = @_;
     my $pfx = perl_string($arguments->{prefix});
-    return ferret_boolean($str->trimPrefix($pfx));
+    return ferret_boolean($str->hasPrefix($pfx));
 }
 
 sub trimPrefix {

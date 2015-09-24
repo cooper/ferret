@@ -337,8 +337,17 @@
 #                  Assignment
 #                      Lexical variable '$response'
 #                      Index
-#                          Property 'parts'
-#                              Lexical variable '$msg'
+#                          Call
+#                              Property 'split'
+#                                  Property 'message'
+#                                      Lexical variable '$msg'
+#                              Hash [2 items]
+#                                  Item 0
+#                                      Pair 'separator'
+#                                          String ' '
+#                                  Item 1
+#                                      Pair 'limit'
+#                                          Number '3'
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Number '2'
@@ -1080,8 +1089,12 @@ use Ferret::Core::Operations qw(add bool num str);
                     trigger => $scope->property('msg')->property('parts')
                       ->get_index_value( [ num( $f, 1 ) ], $scope ) );
                 $scope->set_property_ow(
-                    response => $scope->property('msg')->property('parts')
-                      ->get_index_value( [ num( $f, 2 ) ], $scope ) );
+                    response => $scope->property('msg')->property('message')
+                      ->property('split')->call(
+                        { separator => str( $f, " " ), limit => num( $f, 3 ) },
+                        $scope
+                      )->get_index_value( [ num( $f, 2 ) ], $scope )
+                );
                 $self->property('factoids')
                   ->set_index_value( [ $scope->property('trigger') ],
                     $scope->property('response'), $scope );

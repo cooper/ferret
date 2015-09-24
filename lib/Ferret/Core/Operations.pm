@@ -25,7 +25,8 @@ sub op_star {
 
     while (@items) {
         my $right = shift @items;
-        $left = $left->property($op)->call({ other => $right }, $scope);
+        my $f = $left->property($op) or next;
+        $left = $f->call({ other => $right }, $scope);
     }
 
     return $left;

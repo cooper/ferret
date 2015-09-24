@@ -113,9 +113,9 @@ method commandHello {
 method commandAdd {
     need $msg;
 
-    # .add trigger(1) response (2)
+    # .add trigger(1) response (2-)
     $trigger  = $msg.parts[1];
-    $response = $msg.parts[2];
+    $response = $msg.message.split(separator: " ", limit: 3)[2];
 
     # remember this factoid
     @factoids[$trigger] = $response;
@@ -140,7 +140,7 @@ func getMessage {
     $nickname.trimPrefix(":");
 
     # find message
-    $message   = $lineSplit[3];
+    $message = $lineSplit[3];
     $message.trimPrefix(":");
 
     # split into parts

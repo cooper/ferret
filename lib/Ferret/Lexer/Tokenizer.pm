@@ -62,7 +62,7 @@ my @token_formats = (
     [ PAREN_S       => qr/\s*\(/                                            ],  # parentheses start
     [ PAREN_E       => qr/\)/                                               ],  # parentheses end
     [ BRACKET_S     => qr/\[/                                               ],  # bracket start
-    [ BRACKET_E     => qr/\]/                                               ],  # bracket start
+    [ BRACKET_E     => qr/\]/                                               ],  # bracket end
 
     # simple properties
     [ PROPERTY      => qr/\.$prop_reg/, \&remove_first_char                 ],  # simple .property
