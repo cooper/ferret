@@ -25,12 +25,13 @@ sub interf (@);
 
 my ($o, $usage) = describe_options(
     "$0 %o [file ...]",
+    [ 'no-skip|n'       => 'do not skip unchanged files'                ],
     [ 'tokens|t'        => 'show tokenization'                          ],
     [ 'dom|d'           => 'show lexer object tree (DOM)'               ],
     [ 'show-all'        => 'include unknown objects in DOM'             ],
     [ 'stdout|s'        => 'write to STDOUT instead of file'            ],
     [ 'comments|c'      => 'write tokens/DOM as comments (with -t/-d)'  ],
-    [ 'perltidy|p'      => 'beautify code with perltidy'                ],
+    [ 'beautify|p'      => 'beautify code with perltidy'                ],
     [ 'minify|m'        => 'minify code'                                ],
     [ 'help|h'          => 'show help'                                  ]
 );
@@ -44,7 +45,18 @@ do_file($_) foreach grep { substr($_, -4) eq '.frt' } @ARGV;
 my $fh;
 sub do_file {
     my $file = shift;
-    say "[ $file ]";
+    print "[ $file ]";
+
+    # check if it's been changed
+    if (!$o->no_skip) {
+        my @stat1 = stat "$file.pm";
+        my @stat2 = stat $file;
+        if (@stat1 && $stat1[9] > $stat2[9]) {
+            say " skipped";
+            return;
+        }
+    }
+    print "\n";
 
     # open the output file.
     if ($o->stdout) { $fh = \*STDOUT }
@@ -63,7 +75,7 @@ sub do_file {
 
     # construct elements.
     my $doc = F::Document->new(name => $file);
-    my $err = Ferret::Lexer::Constructor::construct($doc, @tok);
+       $err = Ferret::Lexer::Constructor::construct($doc, @tok);
     if ($o->dom) {
         inter "=== Document Model ===\n";
         show_dom($doc);
@@ -72,7 +84,7 @@ sub do_file {
 
     # compile to Perl.
     my $compiled = Ferret::Perl::main($doc);
-    beautify(\$compiled) if $o->perltidy;
+    beautify(\$compiled) if $o->beautify;
     minify(\$compiled)   if $o->minify;
 
     # write to file.
@@ -94,7 +106,7 @@ sub show_tok {
 sub show_dom {
     state $indent = 0;
     my $el = shift;
-    return if $el->type eq 'Unknown' && !$o->unknown;
+    return if $el->type eq 'Unknown' && !$o->show_all;
     interf "%s %s\n", '    ' x $indent, ucfirst $el->desc;
     return unless $el->is_node;
     $indent++;
