@@ -147,4 +147,12 @@ sub is_class_func { shift->{is_class_func} }
 package Ferret::Return;
 use parent 'Ferret::Object';
 
+sub new {
+    my ($class, $f, %opts) = @_;
+    return $class->SUPER::new($f,
+        faketype => 'Return',
+        %opts
+    );
+}
+
 1

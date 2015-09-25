@@ -7,6 +7,14 @@ use utf8;
 
 use parent 'Ferret::Object';
 
+sub new {
+    my ($class, $f, %opts) = @_;
+    return $class->SUPER::new($f,
+        faketype => 'Set',
+        %opts
+    );
+}
+
 sub property {
     my ($set, $prop_name) = @_;
     my $func = Ferret::Function->new($set->ferret,

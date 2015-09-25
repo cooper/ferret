@@ -204,6 +204,20 @@
 #                              Instruction
 #                                  Return
 #                          Instruction
+#                              Assignment
+#                                  Lexical variable '$string'
+#                                  Property 'string'
+#                                      Call
+#                                          Bareword 'inspect'
+#                                          Hash [2 items]
+#                                              Item 0
+#                                                  Pair 'value'
+#                                                      Property 'result'
+#                                                          Lexical variable '$res'
+#                                              Item 1
+#                                                  Pair 'quiet'
+#                                                      Boolean true
+#                          Instruction
 #                              Call
 #                                  Property 'privmsg'
 #                                      Lexical variable '$bot'
@@ -212,8 +226,7 @@
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
 #                                      Item 1
-#                                          Property 'stringResult'
-#                                              Lexical variable '$res'
+#                                          Lexical variable '$string'
 #      Instruction
 #          Call
 #              Property 'connect'
@@ -245,9 +258,9 @@ my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    # Function '+undef' definition
+    # Anonymous function definition
     {
-        my $func = $funcs[0] = Ferret::Function->new( $f, name => '+undef' );
+        my $func = $funcs[0] = Ferret::Function->new( $f, anonymous => 1 );
         $func->add_argument( name => 'msg' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -267,9 +280,9 @@ my $result = do {
         };
     }
 
-    # Function '+undef' definition
+    # Anonymous function definition
     {
-        my $func = $funcs[1] = Ferret::Function->new( $f, name => '+undef' );
+        my $func = $funcs[1] = Ferret::Function->new( $f, anonymous => 1 );
         $func->add_argument( name => 'msg' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -310,9 +323,9 @@ my $result = do {
         };
     }
 
-    # Function '+undef' definition
+    # Anonymous function definition
     {
-        my $func = $funcs[2] = Ferret::Function->new( $f, name => '+undef' );
+        my $func = $funcs[2] = Ferret::Function->new( $f, anonymous => 1 );
         $func->add_argument( name => 'msg' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -357,9 +370,9 @@ my $result = do {
         };
     }
 
-    # Function '+undef' definition
+    # Anonymous function definition
     {
-        my $func = $funcs[3] = Ferret::Function->new( $f, name => '+undef' );
+        my $func = $funcs[3] = Ferret::Function->new( $f, anonymous => 1 );
         $func->add_argument( name => 'msg' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -389,10 +402,19 @@ my $result = do {
                 );
                 return $return;
             }
+            $scope->set_property_ow(
+                string => $scope->property('inspect')->call(
+                    {
+                        value => $scope->property('res')->property('result'),
+                        quiet => Ferret::true
+                    },
+                    $scope
+                )->property('string')
+            );
             $scope->property('bot')->property('privmsg')->call(
                 [
                     $scope->property('msg')->property('channel'),
-                    $scope->property('res')->property('stringResult')
+                    $scope->property('string')
                 ],
                 $scope
             );

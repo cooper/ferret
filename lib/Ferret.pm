@@ -15,12 +15,15 @@ sub new {
     my $f = bless {}, $class;
 
     # create the global object initializer.
-    $f->{object_initializer} = Ferret::Function->new($f, code => sub {
-        my (undef, $arguments) = @_;
-        my $new = Ferret::Object->new($f);
-        $new->set_property($_ => $arguments->{$_}) foreach keys %$arguments;
-        return $new;
-    });
+    $f->{object_initializer} = Ferret::Function->new($f,
+        name => 'objectInitializer',
+        code => sub {
+            my (undef, $arguments) = @_;
+            my $new = Ferret::Object->new($f);
+            $new->set_property($_ => $arguments->{$_}) foreach keys %$arguments;
+            return $new;
+        }
+    );
 
     # create the core and main context objects.
     $f->{context}{core} ||=

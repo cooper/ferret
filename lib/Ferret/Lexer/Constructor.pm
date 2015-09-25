@@ -12,7 +12,7 @@ my $fatal = \0;
 our ($current, $error);
 
 my @expression_types = qw(
-    Bareword LexicalVariable InstanceVariable
+    Bareword LexicalVariable InstanceVariable SpecialVariable
     Property List Expression Maybe
     String Number Operation Call Index
 );

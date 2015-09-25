@@ -41,27 +41,39 @@ sub _parent_names {
         }
 
         # just an object
-        push @parents, join('|', _parent_names($parent));
+        my @p = grep $_ ne 'Prototype', _parent_names($parent);
+        push @parents, join('|', @p) if @p;
 
     }
-    push @parents, 'Object' if !@parents;
+    push @parents, ($obj->{faketype} // 'Object') if !@parents;
     return @parents;
 }
 
 sub _inspect_value {
-    my $value = shift;
-    if ($value->isa('Ferret::String')) {
-        $value = q(").$value->{value}.q(");
-        $value =~ s/\r\n|\r|\n/\x{2424}/g;
-        return $value;
+    my $obj = shift;
+
+    return 'undefined' if Ferret::undefined($obj);
+    return 'true'      if $obj == Ferret::true;
+    return 'false'     if $obj == Ferret::false;
+
+    if ($obj->isa('Ferret::String')) {
+        $obj = q(").$obj->{value}.q(");
+        $obj =~ s/\r\n|\r|\n/\x{2424}/g;
+        return $obj;
     }
-    if ($value->isa('Ferret::List')) {
-        my @values = map _inspect_value($_), @{ $value->{list_items} };
+
+    if ($obj->isa('Ferret::Number')) {
+        return $obj->{value};
+    }
+
+    if ($obj->isa('Ferret::List')) {
+        my @values = map _inspect_value($_), @{ $obj->{list_items} };
         return "(\n    ".join("\n    ", @values)."\n)";
     }
-    if ($value->isa('Ferret::Hash')) {
-        my @keys   = $value->keys;
-        my @values = map _inspect_value($_), $value->values;
+
+    if ($obj->isa('Ferret::Hash')) {
+        my @keys   = $obj->keys;
+        my @values = map _inspect_value($_), $obj->values;
         my $i = 0;
         foreach my $key (@keys) {
             $values[$i] = "$key: ".$values[$i];
@@ -69,23 +81,18 @@ sub _inspect_value {
         }
         return "(\n    ".join("\n    ", @values)."\n)";
     }
-    if ($value->isa('Ferret::Event')) {
-        return "Event '$$value{name}'";
-    }
-    if ($value->isa('Ferret::Function')) {
-        return "Function '$$value{name}'"
+
+    if ($obj->isa('Ferret::Event')) {
+        return "Event '$$obj{name}'";
     }
 
-    return perl_string($value);
-}
+    if ($obj->isa('Ferret::Function')) {
+        return "Function" if !length $obj->{name};
+        return "Function '$$obj{name}'";
+    }
 
-sub _inspect {
-    my ($self, $arguments, $call_scope, $scope, $return) = @_;
-    my $obj = $arguments->{value};
-    my @parents = _parent_names($obj);
-
-    # find properties
     my $prop_str = "\n";
+    my @parents = _parent_names($obj);
     foreach my $prop_name ($obj->properties(1)) {
         my ($value, $owner) = $obj->_property($prop_name);
 
@@ -98,8 +105,14 @@ sub _inspect {
 
     }
 
-    # create the string
-    my $str = sprintf '[ %s ](%s)', join(', ', @parents), $prop_str;
+    return sprintf '[ %s ](%s)', join(', ', @parents), $prop_str;
+}
+
+sub _inspect {
+    my ($self, $arguments, $call_scope, $scope, $return) = @_;
+    my $obj = $arguments->{value};
+
+    my $str = _inspect_value($obj);
     say $str unless $arguments->{quiet};
 
     $return->set_property(string => ferret_string($str));

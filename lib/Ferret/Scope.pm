@@ -14,7 +14,10 @@ sub new {
     $opts{parent}       ||= $opts{parent_scope};
 
     # create a new object.
-    my $scope = $class->SUPER::new($f, %opts);
+    my $scope = $class->SUPER::new($f,
+        faketype => 'Scope',
+        %opts
+    );
 
     # create a special variable object.
     my $spec;

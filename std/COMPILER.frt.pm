@@ -152,6 +152,7 @@ sub _eval {
     if (ref $res eq 'SCALAR') {
         $return->set_property(error => ferret_string($$res));
     }
+    $return->set_property(result => Ferret::valid_value($res) ? $res : Ferret::undefined);
     $return->set_property(stringResult => ferret_string($res));
     return $return;
 }

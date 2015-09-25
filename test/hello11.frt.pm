@@ -126,9 +126,9 @@ my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    # Function '+undef' definition
+    # Anonymous function definition
     {
-        my $func = $funcs[0] = Ferret::Function->new( $f, name => '+undef' );
+        my $func = $funcs[0] = Ferret::Function->new( $f, anonymous => 1 );
         $func->add_argument( name => 'twice' );
         $func->add_argument( name => 'message' );
         $func->{code} = sub {

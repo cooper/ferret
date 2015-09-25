@@ -1,6 +1,6 @@
-# Function '<<name>>' definition
+# Anonymous function definition
 {
-    my $func = $funcs[<<id>>] = Ferret::Function->new($f, name => '<<name>>');
+    my $func = $funcs[<<id>>] = Ferret::Function->new($f, anonymous => 1);
     <<arguments>>
     $func->{code} = sub {
         my ($_self, $arguments, $call_scope, $scope, $return) = @_;

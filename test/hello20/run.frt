@@ -34,7 +34,8 @@ $bot.addCommand("e", func {
         $bot.privmsg($msg.channel, $res.error);
         return;
     }
-    $bot.privmsg($msg.channel, $res.stringResult);
+    $string = inspect(value: $res.result, quiet: true).string;
+    $bot.privmsg($msg.channel, $string);
 });
 
 $bot.connect();

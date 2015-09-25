@@ -11,11 +11,21 @@ use Scalar::Util 'weaken';
 
 sub new {
     my ($class_name, $f, %opts) = @_;
+
+    # create a prototype if necessary
     $opts{prototype} ||= Ferret::Prototype->new($f);
-    my $class = $class_name->SUPER::new($f, %opts);
+
+    # create a class
+    my $class = $class_name->SUPER::new($f,
+        faketype => 'Class',
+        %opts
+    );
+
+    # class/prototype relations
     weaken($class->prototype->{proto_class} ||= $class);
     $class->add_parent(_global_class_prototype($f));
     $class->set_property_weak(proto => $class->prototype);
+
     return $class;
 }
 
@@ -139,17 +149,21 @@ sub _global_class_prototype {
 
 sub _global_init {
     my $f = shift;
-    my $func = Ferret::Function->new($f, is_method => 1, code => sub {
-        my ($class, $arguments) = @_;
-        my $obj = delete $arguments->{obj};
-        return Ferret::Function->new($f,
-            mimic => $class->property('_init_') || undef,
-            code  => sub {
-                my (undef, $arguments) = @_;
-                return $class->init($obj, $arguments);
-            }
-        );
-    });
+    my $func = Ferret::Function->new($f,
+        name        => 'init',
+        is_method   => 1,
+        code        => sub {
+            my ($class, $arguments) = @_;
+            my $obj = delete $arguments->{obj};
+            return Ferret::Function->new($f,
+                mimic => $class->property('_init_') || undef,
+                code  => sub {
+                    my (undef, $arguments) = @_;
+                    return $class->init($obj, $arguments);
+                }
+            );
+        }
+    );
     $func->add_argument(name => 'obj');
     return $func;
 }
@@ -160,7 +174,11 @@ use parent 'Ferret::Object';
 
 sub new {
     my ($class, $f, %opts) = @_;
-    return $class->SUPER::new($f, is_proto => 1, %opts);
+    return $class->SUPER::new($f,
+        is_proto => 1,
+        faketype => 'Prototype',
+        %opts
+    );
 }
 
 1
