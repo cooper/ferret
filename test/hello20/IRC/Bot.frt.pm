@@ -246,17 +246,33 @@
 #                      Lexical variable '$message'
 #              Instruction
 #                  Call
-#                      Instance variable '@send'
+#                      Bareword 'inspect'
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
-#                                  String 'PRIVMSG '
-#                                  Addition operator (+)
-#                                  Lexical variable '$channel'
-#                                  Addition operator (+)
-#                                  String ' :'
-#                                  Addition operator (+)
-#                                  Lexical variable '$message'
+#                              Lexical variable '$message'
+#              For
+#                  Expression ('for' parameter)
+#                      Lexical variable '$line'
+#                  Expression ('in' parameter)
+#                      Call
+#                          Property 'split'
+#                              Lexical variable '$message'
+#                          Structural list [1 items]
+#                              Item 0
+#                                  String '␤'
+#                  Instruction
+#                      Call
+#                          Instance variable '@send'
+#                          Structural list [1 items]
+#                              Item 0
+#                                  Mathematical operation
+#                                      String 'PRIVMSG '
+#                                      Addition operator (+)
+#                                      Lexical variable '$channel'
+#                                      Addition operator (+)
+#                                      String ' :'
+#                                      Addition operator (+)
+#                                      Lexical variable '$line'
 #          Method 'joinChannels'
 #              If
 #                  Expression ('if' parameter)
@@ -448,9 +464,12 @@ use utf8;
 use 5.010;
 
 BEGIN {
-    my $libs = do '/etc/ferret.conf';
-    ref $libs eq 'ARRAY' or die "config error";
-    unshift @INC, @$libs;
+    unless ( length $Ferret::ferret_root ) {
+        my $libs = do '/etc/ferret.conf';
+        ref $libs eq 'ARRAY' or die "config error";
+        $Ferret::ferret_root = shift @$libs;
+        unshift @INC, @$libs;
+    }
 }
 
 use Ferret;
@@ -460,7 +479,7 @@ my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Bot.frt.pm'}++;
 
 use Ferret::Core::Operations qw(add bool num str);
-{
+my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('IRC');
 
@@ -802,18 +821,27 @@ use Ferret::Core::Operations qw(add bool num str);
                     return unless defined $arguments->{message};
                     $scope->set_property( message => $arguments->{message} );
                 };
-                $self->property('send')->call(
-                    [
-                        add(
-                            $scope,
-                            str( $f, "PRIVMSG " ),
-                            $scope->property('channel'),
-                            str( $f, " :" ),
-                            $scope->property('message')
-                        )
-                    ],
-                    $scope
-                );
+                $scope->property('inspect')
+                  ->call( [ $scope->property('message') ], $scope );
+                foreach ( $scope->property('message')->property('split')
+                    ->call( [ str( $f, "\n" ) ], $scope )->iterate )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+                    $scope->set_property( line => $_ );
+
+                    $self->property('send')->call(
+                        [
+                            add(
+                                $scope,
+                                str( $f, "PRIVMSG " ),
+                                $scope->property('channel'),
+                                str( $f, " :" ),
+                                $scope->property('line')
+                            )
+                        ],
+                        $scope
+                    );
+                }
                 return $return;
             };
             $methods[5] = Ferret::Event->new(
@@ -1083,6 +1111,6 @@ use Ferret::Core::Operations qw(add bool num str);
     }
     Ferret::space( $context, $_ )
       for qw(Func IRC IRC::Message Num Socket Socket::TCP Str);
-}
+};
 
 Ferret::runtime();

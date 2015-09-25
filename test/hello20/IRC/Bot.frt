@@ -81,7 +81,9 @@ method handleLine {
 
 method privmsg {
     need $channel, $message;
-    @send("PRIVMSG $channel :$message");
+    for $line in $message.split("\n") {
+        @send("PRIVMSG $channel :$line");
+    }
 }
 
 method joinChannels {

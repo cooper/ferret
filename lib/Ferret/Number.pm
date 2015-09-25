@@ -31,6 +31,9 @@ my @methods = (
         code => \&op_pow,
         need => '$other:Num'
     },
+    toString => {
+        code => \&_to_string
+    },
     sum => {
         code => \&_sum,
         need => '$num1:Num num2:Num',
@@ -84,6 +87,11 @@ sub op_pow {
     my $other = $arguments->{other};
     my $new_value = perl_number($num) ** perl_number($other);
     return ferret_number($new_value);
+}
+
+sub _to_string {
+    my $num = shift;
+    return Ferret::String->new($num->ferret, value => $num->{value});
 }
 
 sub _sum {

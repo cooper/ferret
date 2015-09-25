@@ -35,7 +35,10 @@ sub construct {
 
     while (my ($label, $value, $line) = @{ shift || [] }) {
         my $last_element = ($current->{node}->children)[-1] || $current->{node};
-        return $error if $error;
+        if (my $err = $error) {
+            undef $error;
+            return $err;
+        }
 
         # current info.
         @$current{ qw(label value line next_tok last_element) } = (
@@ -55,7 +58,10 @@ sub construct {
         # call a handler if one exists.
         if (my $code = __PACKAGE__->can("c_$label")) {
             my $el = $code->($current, $value);
-            return $error if $error;
+            if (my $err = $error) {
+                undef $error;
+                return $err;
+            }
             if (blessed $el) {
                 return $el if $el->isa('F::Error');
                 push @elements, $el;

@@ -24,7 +24,7 @@ sub get_format {
     return '' if not defined $name;
     $name = lc $name;
 
-    open my $fh, '<', "$::bin/lib/Ferret/Perl/Format/$name.fmt"
+    open my $fh, '<', "$Ferret::ferret_root/lib/Ferret/Perl/Format/$name.fmt"
         or die "can't open Perl format $name: $!\n";
 
     # read line-by-line to preserve indentation.

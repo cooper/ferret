@@ -9,6 +9,7 @@ use parent 'Ferret::Context';
 
 my %functions = (
     say     => [ '_say',     qw(message) ],
+    dump    => [ '_dump',    qw(value)   ],
     inspect => [ '_inspect', qw(value)   ]
 );
 

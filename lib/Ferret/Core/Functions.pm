@@ -14,6 +14,21 @@ sub _say {
     return $return;
 }
 
+sub _dump {
+    my ($self, $arguments, $call_scope, $scope, $return) = @_;
+    my $obj     = $arguments->{value};
+    my @parents = map $_->{proto_class}{name}, $obj->parents;
+    my $type    = join(',', @parents);
+
+    require Data::Dumper;
+    Data::Dumper->import('Dumper');
+    $Data::Dumper::Maxdepth = 1;
+    $Data::Dumper::Terse = 1;
+
+    print Dumper($obj), " = [ $type ] $obj\n";
+    return $return;
+}
+
 sub _parent_names {
     my $obj = shift;
     my @parents;
@@ -87,7 +102,7 @@ sub _inspect {
     my $str = sprintf '[ %s ](%s)', join(', ', @parents), $prop_str;
     say $str unless $arguments->{quiet};
 
-    $return->{string} = ferret_string($str);
+    $return->set_property(string => ferret_string($str));
     return $return;
 }
 

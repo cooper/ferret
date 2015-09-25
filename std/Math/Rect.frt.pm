@@ -138,9 +138,12 @@ use utf8;
 use 5.010;
 
 BEGIN {
-    my $libs = do '/etc/ferret.conf';
-    ref $libs eq 'ARRAY' or die "config error";
-    unshift @INC, @$libs;
+    unless ( length $Ferret::ferret_root ) {
+        my $libs = do '/etc/ferret.conf';
+        ref $libs eq 'ARRAY' or die "config error";
+        $Ferret::ferret_root = shift @$libs;
+        unshift @INC, @$libs;
+    }
 }
 
 use Ferret;
@@ -150,7 +153,7 @@ my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Rect.frt.pm'}++;
 
 use Ferret::Core::Operations qw(add mul num);
-{
+my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
 
@@ -428,6 +431,6 @@ use Ferret::Core::Operations qw(add mul num);
         $methods[7]->inside_scope( center      => $scope, $proto, $class );
     }
     Ferret::space( $context, $_ ) for qw(Line Point);
-}
+};
 
 Ferret::runtime();

@@ -1,8 +1,8 @@
 use Ferret::Core::Operations qw(<<operations>>);
-{
+my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('<<package>>');
     <<includes>>
     <<upper_content>>
     <<lower_content>>
-}
+};

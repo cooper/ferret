@@ -107,9 +107,12 @@ use utf8;
 use 5.010;
 
 BEGIN {
-    my $libs = do '/etc/ferret.conf';
-    ref $libs eq 'ARRAY' or die "config error";
-    unshift @INC, @$libs;
+    unless ( length $Ferret::ferret_root ) {
+        my $libs = do '/etc/ferret.conf';
+        ref $libs eq 'ARRAY' or die "config error";
+        $Ferret::ferret_root = shift @$libs;
+        unshift @INC, @$libs;
+    }
 }
 
 use Ferret;
@@ -119,7 +122,7 @@ my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello11.frt.pm'}++;
 
 use Ferret::Core::Operations qw(add bool num str);
-{
+my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
@@ -205,6 +208,6 @@ use Ferret::Core::Operations qw(add bool num str);
         [ str( $f, "this should ignore the second parameter" ), Ferret::true ],
         $scope
     );
-}
+};
 
 Ferret::runtime();

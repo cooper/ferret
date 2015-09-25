@@ -26,14 +26,14 @@ sub ferret_string {
 
     if ($val->isa('Ferret::Object')) {
 
-        # maybe an unblessed string object.
-        if (defined $val->{value}) {
-            return $val;
-        }
-
         # it's an object with a string converter.
         if (my $to_str = $val->property('toString')) {
             return $to_str->call;
+        }
+
+        # maybe an unblessed string object.
+        if (defined $val->{value}) {
+            return $val;
         }
 
     }
@@ -113,12 +113,32 @@ sub ferret_list {
         @vals = @{ $vals[0] };
     }
 
+    @vals = map ferretize($_), @vals;
     return Ferret::List->new($Ferret::ferret, values => \@vals);
+}
+
+sub ferret_hash {
+
 }
 
 sub ferret_boolean {
     my $truth = !!shift;
     return $truth ? Ferret::true : Ferret::false;
+}
+
+sub ferretize {
+    my $val = shift;
+    return $val if blessed $val && $val->isa('Ferret::Object');
+    if (ref $val eq 'ARRAY') {
+        return ferret_list(@$val);
+    }
+    if (ref $val eq 'HASH') {
+        return ferret_hash(@$val);
+    }
+    if (looks_like_number($val)) {
+        return ferret_number($val);
+    }
+    return ferret_string($val);
 }
 
 1

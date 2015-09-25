@@ -67,6 +67,9 @@ sub truth {
 sub valid_value {
     defined(my $value = shift) or return;
 
+    # everything below this line is pending deletion
+    return blessed $value && $value->isa('Ferret::Object');
+
     # if it's one of these non-object values, it's good.
     if ($value == undefined || $value == true || $value == false) {
         return 1;
@@ -230,11 +233,15 @@ sub loop_connect {
     return $loop->connect(@_);
 }
 
+my $looping;
 sub runtime {
     return unless $loop;
+    return if $looping;
+    $looping = 1;
     while ($loop->notifiers || $keep_alive) {
         $loop->loop_once;
     }
+    undef $looping;
 }
 
 ################
