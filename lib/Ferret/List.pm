@@ -133,4 +133,10 @@ sub iterate {
     return @{ $list->{list_items} };
 }
 
+sub iterate_pair {
+    my $list = shift;
+    my $i = 0;
+    return map [ ferret_number($i++), $_ ], @{ $list->{list_items} };
+}
+
 1

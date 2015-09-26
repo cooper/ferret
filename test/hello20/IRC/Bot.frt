@@ -93,7 +93,11 @@ method joinChannels {
         return;
     @joinedChannels = true;
 
-    @send("JOIN #k");
+    if @autojoin {
+        for $chan in @autojoin {
+            @send("JOIN $chan");
+        }
+    }
 }
 
 method pong {

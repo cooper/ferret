@@ -277,12 +277,23 @@
 #                  Assignment
 #                      Instance variable '@joinedChannels'
 #                      Boolean true
-#              Instruction
-#                  Call
-#                      Instance variable '@send'
-#                      Structural list [1 items]
-#                          Item 0
-#                              String 'JOIN #k'
+#              If
+#                  Expression ('if' parameter)
+#                      Instance variable '@autojoin'
+#                  For
+#                      Expression ('for' parameter)
+#                          Lexical variable '$chan'
+#                      Expression ('in' parameter)
+#                          Instance variable '@autojoin'
+#                      Instruction
+#                          Call
+#                              Instance variable '@send'
+#                              Structural list [1 items]
+#                                  Item 0
+#                                      Operation
+#                                          String 'JOIN '
+#                                          Addition operator (+)
+#                                          Lexical variable '$chan'
 #          Method 'pong'
 #              Instruction
 #                  Need
@@ -610,7 +621,8 @@ my $result = do {
                     my $on_func =
                       $funcs[0]->inside_scope( +undef => $scope, $scope );
                     $self->property('sock')->property('connected')
-                      ->add_function_with_self( $self, $on_func );
+                      ->add_function_with_self_and_scope( $self, $scope,
+                        $on_func );
                 }
 
                 # On
@@ -618,7 +630,8 @@ my $result = do {
                     my $on_func =
                       $funcs[1]->inside_scope( +undef => $scope, $scope );
                     $self->property('sock')->property('gotLine')
-                      ->add_function_with_self( $self, $on_func );
+                      ->add_function_with_self_and_scope( $self, $scope,
+                        $on_func );
                 }
                 return $return;
             };
@@ -858,8 +871,25 @@ my $result = do {
                     return $return;
                 }
                 $self->set_property( joinedChannels => Ferret::true );
-                $self->property('send')
-                  ->call( [ str( $f, "JOIN #k" ) ], $scope );
+                if ( bool( $self->property('autojoin') ) ) {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    foreach ( $self->property('autojoin')->iterate ) {
+                        my $scope = Ferret::Scope->new( $f, parent => $scope );
+                        $scope->set_property( chan => $_ );
+
+                        $self->property('send')->call(
+                            [
+                                add(
+                                    $scope,
+                                    str( $f, "JOIN " ),
+                                    $scope->property('chan')
+                                )
+                            ],
+                            $scope
+                        );
+                    }
+                }
                 return $return;
             };
             $methods[6] = Ferret::Event->new(

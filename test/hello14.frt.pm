@@ -141,7 +141,7 @@ my $result = do {
     {
         my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
         $scope->property('str')->property('length')
-          ->add_function_with_self( $self, $on_func );
+          ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
     $scope->property('str')->property('length')->call( {}, $scope );
     str( $f, "hello" )->property('length')->call( {}, $scope );
@@ -150,7 +150,7 @@ my $result = do {
     {
         my $on_func = $funcs[1]->inside_scope( +undef => $scope, $scope );
         $scope->property('String')->property('proto')->property('length')
-          ->add_function_with_self( $self, $on_func );
+          ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
     str( $f, "hello" )->property('length')->call( {}, $scope );
 };

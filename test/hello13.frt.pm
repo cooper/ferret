@@ -107,7 +107,7 @@ my $result = do {
         my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
         $scope->property('Timer')->call( [ num( $f, 5 ) ], $scope )
           ->property('once')->call( {}, $scope )->property('expire')
-          ->add_function_with_self( $self, $on_func );
+          ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
     $scope->set_property_ow(
         t2 => $scope->property('Timer')->call( [ num( $f, 2 ) ], $scope ) );
@@ -116,7 +116,8 @@ my $result = do {
     {
         my $on_func = $funcs[1]->inside_scope( +undef => $scope, $scope );
         $scope->property('t2')->property('once')->call( {}, $scope )
-          ->property('expire')->add_function_with_self( $self, $on_func );
+          ->property('expire')
+          ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
     $scope->property('t2')->property('cancel')->call( {}, $scope );
 };

@@ -269,7 +269,8 @@ my $result = do {
                     my $on_func =
                       $funcs[0]->inside_scope( +undef => $scope, $scope );
                     $self->property('connected')
-                      ->add_function_with_self( $self, $on_func );
+                      ->add_function_with_self_and_scope( $self, $scope,
+                        $on_func );
                 }
 
                 # On
@@ -277,7 +278,8 @@ my $result = do {
                     my $on_func =
                       $funcs[1]->inside_scope( +undef => $scope, $scope );
                     $self->property('gotLine')
-                      ->add_function_with_self( $self, $on_func );
+                      ->add_function_with_self_and_scope( $self, $scope,
+                        $on_func );
                 }
 
                 # On
@@ -285,7 +287,8 @@ my $result = do {
                     my $on_func =
                       $funcs[2]->inside_scope( +undef => $scope, $scope );
                     $self->property('println')
-                      ->add_function_with_self( $self, $on_func );
+                      ->add_function_with_self_and_scope( $self, $scope,
+                        $on_func );
                 }
                 return $return;
             };

@@ -25,9 +25,10 @@ sub new {
     return $event;
 }
 
-sub add_function_with_self {
-    my ($event, $self) = (shift, shift);
+sub add_function_with_self_and_scope {
+    my ($event, $self, $outer_scope) = (shift, shift, shift);
     $event->{force_add_self} = $self;
+    $event->{force_add_outer_scope} = $outer_scope;
     return $event->add_function(@_);
 }
 
@@ -45,7 +46,9 @@ sub add_function {
         $obj  = $event->{last_parent};
         $obj  = undef if $obj->{is_proto}; # adding to proto is for all objs
     }
+
     my $self_maybe = delete $event->{force_add_self};
+    my $outer_scope_maybe = delete $event->{force_add_outer_scope};
 
     # function name is basically callback name.
     my %opts;
@@ -61,11 +64,15 @@ sub add_function {
             $arguments, $call_scope, $return
         ) = @_;
 
+        # force outer scope
+        $outer_scope = $outer_scope_maybe if $outer_scope_maybe;
+
         # forward function scope variables.
         # some of these are not overwritten intentionally.
         # outer_scope, for example, often differs for each callback.
         $func->{class}       ||= $class;
         $func->{outer_scope} ||= $outer_scope;
+        $func->{outer_scope}   = $outer_scope if $outer_scope_maybe;
         $func->{is_method}     = $event->{is_method};
         $func->{event_name}    = $event->{name};
 
@@ -145,7 +152,7 @@ sub inside_scope {
     my ($event, $name, $scope, $owner, $class) = @_;
     $event->{class} = $class;
     $event->{outer_scope} = $scope;
-    $owner->set_property($name => $event) if length $name;
+    $owner->set_property($name => $event) if defined $name;
     return $event;
 }
 

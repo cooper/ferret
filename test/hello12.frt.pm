@@ -206,21 +206,21 @@ my $result = do {
     {
         my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
         $scope->property('sock')->property('gotLine')
-          ->add_function_with_self( $self, $on_func );
+          ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
 
     # On
     {
         my $on_func = $funcs[1]->inside_scope( +undef => $scope, $scope );
         $scope->property('sock')->property('println')
-          ->add_function_with_self( $self, $on_func );
+          ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
 
     # On
     {
         my $on_func = $funcs[2]->inside_scope( +undef => $scope, $scope );
         $scope->property('sock')->property('connected')
-          ->add_function_with_self( $self, $on_func );
+          ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
     $scope->property('sock')->property('connect')->call( {}, $scope );
 
@@ -229,7 +229,7 @@ my $result = do {
         my $on_func = $funcs[3]->inside_scope( +undef => $scope, $scope );
         $scope->property('Timer')->call( [ num( $f, 5 ) ], $scope )
           ->property('once')->call( {}, $scope )->property('expire')
-          ->add_function_with_self( $self, $on_func );
+          ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
 };
 

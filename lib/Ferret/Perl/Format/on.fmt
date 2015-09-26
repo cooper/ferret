@@ -1,5 +1,5 @@
 # On
 {
     my $on_func = <<function>>;
-    <<expression>>->add_function_with_self($self, $on_func);
+    <<expression>>->add_function_with_self_and_scope($self, $scope, $on_func);
 }

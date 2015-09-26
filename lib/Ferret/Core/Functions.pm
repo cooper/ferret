@@ -42,11 +42,17 @@ sub _parent_names {
 
         # just an object
         my @p = grep $_ ne 'Prototype', _parent_names($parent);
-        push @parents, join('|', @p) if @p;
+        push @parents, @p if @p;
 
     }
-    push @parents, ($obj->{faketype} // 'Object') if !@parents;
-    return @parents;
+    unshift @parents, $obj->{faketype} if $obj->{faketype};
+    push @parents, 'Object' if !@parents;
+    return uniq(@parents);
+}
+
+sub uniq {
+    my %seen;
+    grep !$seen{$_}++, @_;
 }
 
 sub _inspect_value {

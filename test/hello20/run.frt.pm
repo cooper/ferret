@@ -8,13 +8,20 @@
 #                  Hash [3 items]
 #                      Item 0
 #                          Pair 'addr'
-#                              String 'k.notroll.net'
+#                              String 'irc.overdr...'
 #                      Item 1
 #                          Pair 'nick'
 #                              String 'bottie'
 #                      Item 2
 #                          Pair 'user'
 #                              String 'ferret'
+#      Instruction
+#          Assignment
+#              Property 'autojoin'
+#                  Lexical variable '$bot'
+#              Value list [1 items]
+#                  Item 0
+#                      String '#dev'
 #      Instruction
 #          Call
 #              Property 'addCommand'
@@ -425,13 +432,16 @@ my $result = do {
     $scope->set_property_ow(
         bot => $scope->property('IRC::Bot')->call(
             {
-                addr => str( $f, "k.notroll.net" ),
+                addr => str( $f, "irc.overdrive.pw" ),
                 nick => str( $f, "bottie" ),
                 user => str( $f, "ferret" )
             },
             $scope
         )
     );
+    $scope->property('bot')
+      ->set_property(
+        autojoin => Ferret::List->new( $f, items => [ str( $f, "#dev" ) ] ) );
     $scope->property('bot')->property('addCommand')->call(
         [
             str( $f, "info" ),
