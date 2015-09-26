@@ -179,10 +179,7 @@ my $result = do {
     {
         my @methods;
         my ( $class, $self );
-        if ( $context->has_property('Message') ) {
-            $class = $self = $context->property('Message');
-        }
-        else {
+        if ( not $class = $f->get_class( $context, 'Message' ) ) {
             $class = $self = Ferret::Class->new(
                 $f,
                 name    => 'Message',
@@ -207,6 +204,7 @@ my $result = do {
                     $self->set_property( line => $arguments->{line} );
                 };
                 $scope->set_property_ow(
+                    $context,
                     lineSplit =>
                       $self->property('line')->property('split')->call(
                         { separator => str( $f, " " ), limit => num( $f, 4 ) },

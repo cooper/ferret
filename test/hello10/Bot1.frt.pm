@@ -186,10 +186,7 @@ my $result = do {
     {
         my @methods;
         my ( $class, $self );
-        if ( $context->has_property('Bot1') ) {
-            $class = $self = $context->property('Bot1');
-        }
-        else {
+        if ( not $class = $f->get_class( $context, 'Bot1' ) ) {
             $class = $self = Ferret::Class->new(
                 $f,
                 name    => 'Bot1',

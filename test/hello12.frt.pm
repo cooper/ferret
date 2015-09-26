@@ -195,6 +195,7 @@ my $result = do {
     }
     Ferret::space( $context, $_ ) for qw(Socket Socket::TCP Timer);
     $scope->set_property_ow(
+        $context,
         sock => $scope->property('Socket::TCP')->call(
             { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },
             $scope

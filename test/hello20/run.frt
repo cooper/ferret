@@ -1,5 +1,5 @@
-$bot = IRC::Bot(addr: "irc.overdrive.pw", nick: "bottie", user: "ferret");
-$bot.autojoin = ["#dev"];
+$bot = IRC::Bot(addr: "k.notroll.net", nick: "bottie", user: "ferret");
+$bot.autojoin = ["#k"];
 
 $bot.addCommand("info", func {
     need $msg;

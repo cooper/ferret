@@ -52,7 +52,7 @@ my $result = do {
     my $scope = my $context = $f->get_context('main');
 
     Ferret::space( $context, $_ ) for qw(Math Math::Point);
-    $scope->set_property_ow( obj => str( $f, "hi" ) );
+    $scope->set_property_ow( $context, obj => str( $f, "hi" ) );
     $scope->property('Math::Point')->property('init')
       ->call( [ $scope->property('obj') ], $scope )
       ->call( [ num( $f, 1 ), num( $f, 1 ) ], $scope );

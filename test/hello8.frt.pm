@@ -50,10 +50,7 @@ my $result = do {
     {
         my @methods;
         my ( $class, $self );
-        if ( $context->has_property('String') ) {
-            $class = $self = $context->property('String');
-        }
-        else {
+        if ( not $class = $f->get_class( $context, 'String' ) ) {
             $class = $self = Ferret::Class->new(
                 $f,
                 name    => 'String',

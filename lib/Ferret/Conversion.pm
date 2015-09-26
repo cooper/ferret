@@ -126,6 +126,10 @@ sub ferret_boolean {
     return $truth ? Ferret::true : Ferret::false;
 }
 
+sub perl_boolean {
+    return Ferret::truth(@_);
+}
+
 sub ferretize {
     my $val = shift;
     return $val if blessed $val && $val->isa('Ferret::Object');

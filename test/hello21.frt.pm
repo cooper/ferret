@@ -107,7 +107,8 @@ my $result = do {
         };
     }
     Ferret::space( $context, $_ ) for qw(Timer);
-    $scope->set_property_ow( parts => str( $f, "s p a m" )->property('split')
+    $scope->set_property_ow( $context,
+        parts => str( $f, "s p a m" )->property('split')
           ->call( [ str( $f, " " ) ], $scope ) );
     foreach ( $scope->property('parts')->iterate_pair ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );

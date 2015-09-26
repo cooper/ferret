@@ -8,4 +8,4 @@ $otherPt  = Math::Point(9, 2);
 $midpoint = ($center, $otherPt).midpoint!.pretty!;
 say("Midpoint: $midpoint");
 
-say("Square root of four: " + Math::sqrt(4));
+say("Square root of four: " + Math.sqrt(4));

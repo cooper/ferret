@@ -18,9 +18,6 @@ sub new {
         %opts
     );
 
-    # set the object initializer.
-    $context->set_property(Object => $f->{object_initializer});
-
     return $context;
 }
 

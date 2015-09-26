@@ -69,7 +69,7 @@ my $result = do {
         };
     }
     Ferret::space( $context, $_ ) for qw(Object Timer);
-    $scope->set_property_ow(
+    $scope->set_property_ow( $context,
         obj => $scope->property('Object')->call( {}, $scope ) );
     $scope->property('Timer')->property('init')
       ->call( [ $scope->property('obj') ], $scope )

@@ -55,6 +55,7 @@ my $result = do {
 
     Ferret::space( $context, $_ ) for qw(Bot2);
     $scope->set_property_ow(
+        $context,
         bot => $scope->property('Bot2')->call(
             {
                 address => str( $f, "k.notroll.net" ),

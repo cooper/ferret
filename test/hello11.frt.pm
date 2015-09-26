@@ -160,7 +160,8 @@ my $result = do {
         };
     }
     Ferret::space( $context, $_ ) for qw(Math Math::Point);
-    $scope->set_property_ow( point => $scope->property('Math::Point')
+    $scope->set_property_ow( $context,
+        point => $scope->property('Math::Point')
           ->call( [ num( $f, 0 ), num( $f, 0 ) ], $scope ) );
     if ( bool( $scope->property('point') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -177,8 +178,8 @@ my $result = do {
         my $scope       = $scope->property('point');
         $scope->add_parent($outer_scope);
 
-        $scope->set_property_ow( x => num( $f, 5 ) );
-        $scope->set_property_ow( y => num( $f, 10 ) );
+        $scope->set_property_ow( $context, x => num( $f, 5 ) );
+        $scope->set_property_ow( $context, y => num( $f, 10 ) );
 
         $scope->remove_parent($outer_scope);
     }
@@ -194,6 +195,7 @@ my $result = do {
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
     $scope->set_property_ow(
+        $context,
         r => $scope->property('say')->call(
             { message => str( $f, "It was said" ), twice => Ferret::true },
             $scope

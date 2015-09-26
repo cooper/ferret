@@ -8,7 +8,7 @@
 #                  Hash [3 items]
 #                      Item 0
 #                          Pair 'addr'
-#                              String 'irc.overdr...'
+#                              String 'k.notroll.net'
 #                      Item 1
 #                          Pair 'nick'
 #                              String 'bottie'
@@ -21,7 +21,7 @@
 #                  Lexical variable '$bot'
 #              Value list [1 items]
 #                  Item 0
-#                      String '#dev'
+#                      String '#k'
 #      Instruction
 #          Call
 #              Property 'addCommand'
@@ -299,6 +299,7 @@ my $result = do {
                 $scope->set_property( msg => $arguments->{msg} );
             };
             $scope->set_property_ow(
+                $context,
                 res => $scope->property('COMPILER')->call(
                     [
                         $scope->property('msg')->property('fromWord')
@@ -342,6 +343,7 @@ my $result = do {
                 $scope->set_property( msg => $arguments->{msg} );
             };
             $scope->set_property_ow(
+                $context,
                 c => $scope->property('COMPILER')->call(
                     [
                         $scope->property('msg')->property('fromWord')
@@ -350,7 +352,8 @@ my $result = do {
                     $scope
                 )
             );
-            $scope->set_property_ow( res =>
+            $scope->set_property_ow( $context,
+                res =>
                   $scope->property('c')->property('compile')->call( {}, $scope )
             );
             $scope->property('dump')->call( [ $scope->property('c') ], $scope );
@@ -389,6 +392,7 @@ my $result = do {
                 $scope->set_property( msg => $arguments->{msg} );
             };
             $scope->set_property_ow(
+                $context,
                 res => $scope->property('COMPILER')->call(
                     [
                         $scope->property('msg')->property('fromWord')
@@ -410,6 +414,7 @@ my $result = do {
                 return $return;
             }
             $scope->set_property_ow(
+                $context,
                 string => $scope->property('inspect')->call(
                     {
                         value => $scope->property('res')->property('result'),
@@ -430,9 +435,10 @@ my $result = do {
     }
     Ferret::space( $context, $_ ) for qw(COMPILER IRC IRC::Bot);
     $scope->set_property_ow(
+        $context,
         bot => $scope->property('IRC::Bot')->call(
             {
-                addr => str( $f, "irc.overdrive.pw" ),
+                addr => str( $f, "k.notroll.net" ),
                 nick => str( $f, "bottie" ),
                 user => str( $f, "ferret" )
             },
@@ -441,7 +447,7 @@ my $result = do {
     );
     $scope->property('bot')
       ->set_property(
-        autojoin => Ferret::List->new( $f, items => [ str( $f, "#dev" ) ] ) );
+        autojoin => Ferret::List->new( $f, items => [ str( $f, "#k" ) ] ) );
     $scope->property('bot')->property('addCommand')->call(
         [
             str( $f, "info" ),

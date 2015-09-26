@@ -99,9 +99,33 @@ sub core_context { shift->{context}{core}   }
 sub get_context  {
     my ($f, $name) = @_;
     return $f->{context}{$name} if $f->{context}{$name};
-    # TODO: if the context is like A::B, B should inheit from A.
-    my $context = Ferret::Context->new($f, parent => $f->main_context);
+    my $context = Ferret::Context->new($f, parent => $f->core_context);
+    $f->core_context->set_property($name => $context);
     return $f->{context}{$name} = $context;
+}
+
+# determine whether to reuse or create a class.
+sub get_class {
+    my ($f, $context, $class_name) = @_;
+    my ($class, $owner) = $context->_property($class_name);
+    return unless $class && $class->isa('Ferret::Class');
+
+    # if the context owns the class, use it.
+    return $class if $owner == $context;
+
+    # if the owner is the core context
+    # and the class context is the main context,
+    # go ahead and use it.
+    #
+    # for example, from the main package:
+    # class String   will extend the CORE::String
+    #
+    return $class if $owner   == $f->core_context &&
+                     $context == $f->main_context;
+
+    # don't use this class
+    return;
+
 }
 
 ##################
@@ -149,7 +173,7 @@ sub add_binding {
     my ($f, %opts) = @_;
 
     # find the context.
-    my $context = $f->main_context;
+    my $context = $f->core_context;
     if (length $opts{package}) {
         $context = $f->get_context($opts{package});
     }

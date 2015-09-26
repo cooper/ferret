@@ -130,7 +130,7 @@ my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    $scope->set_property_ow(
+    $scope->set_property_ow( $context,
         list => Ferret::List->new( $f, items => [ str( $f, "hi" ) ] ) );
     $scope->property('list')->property('push')
       ->call( [ str( $f, "there" ) ], $scope );
@@ -155,7 +155,7 @@ my $result = do {
             [ add( $scope, str( $f, "item: " ), $scope->property('item') ) ],
             $scope );
     }
-    $scope->set_property_ow(
+    $scope->set_property_ow( $context,
         hash => Ferret::Hash->new( $f, pairs => { hi => str( $f, "there" ) } )
     );
     $scope->property('hash')

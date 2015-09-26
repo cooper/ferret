@@ -63,10 +63,29 @@ sub set_property {
 
 # set a property or overwrite an inherited property.
 sub set_property_ow {
-    my ($obj, $prop_name, $value) = @_;
+    my ($obj, $context, $prop_name, $value) = @_;
     my $owner = $obj->has_property($prop_name) || $obj;
+
+    # if the owner is a context, but not the call context,
+    # do not overwrite that value.
+    #
+    # for example, if you set a variable $x in the CORE context
+    #
+    # $x = "hi";
+    #
+    # then do
+    #
+    # package Hello
+    # $x = "hello";
+    #
+    # $x will not overwrite the original "hi", even though
+    # it would otherwise have been inherited from the main context.
+    #
+    if ($owner->isa('Ferret::Context') && $owner != $context) {
+        $owner = $obj;
+    }
+
     return $owner->set_property($prop_name => $value);
-    return
 }
 
 # deletes a property.

@@ -121,6 +121,7 @@ my $result = do {
             };
             $scope->set_property( z => $arguments->{z} );
             $scope->set_property_ow(
+                $context,
                 point => Ferret::Hash->new(
                     $f,
                     pairs => {
@@ -140,7 +141,8 @@ my $result = do {
     }
     $funcs[0]->inside_scope( makePoint => $scope, $scope );
 
-    $scope->set_property_ow( pt => $scope->property('makePoint')
+    $scope->set_property_ow( $context,
+        pt => $scope->property('makePoint')
           ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope )->property('point') );
     $scope->property('say')->call(
         [
@@ -153,6 +155,7 @@ my $result = do {
         $scope
     );
     $scope->set_property_ow(
+        $context,
         numbers => Ferret::List->new(
             $f,
             items => [
@@ -164,9 +167,9 @@ my $result = do {
             ]
         )
     );
-    $scope->set_property_ow(
+    $scope->set_property_ow( $context,
         emptyArray => Ferret::List->new( $f, items => [] ) );
-    $scope->set_property_ow(
+    $scope->set_property_ow( $context,
         emptyHash => Ferret::Hash->new( $f, pairs => {} ) );
 };
 

@@ -194,10 +194,7 @@ my $result = do {
     {
         my @methods;
         my ( $class, $self );
-        if ( $context->has_property('Point') ) {
-            $class = $self = $context->property('Point');
-        }
-        else {
+        if ( not $class = $f->get_class( $context, 'Point' ) ) {
             $class = $self = Ferret::Class->new(
                 $f,
                 name    => 'Point',
@@ -248,6 +245,7 @@ my $result = do {
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property_ow(
+                    $context,
                     pt => $scope->{special}->property('class')->call(
                         [
                             add( $scope, $self->property('x'), num( $f, 1 ) ),
@@ -365,12 +363,14 @@ my $result = do {
         $methods[2]->inside_scope( pretty     => $scope, $proto, $class );
         $methods[3]->inside_scope( toString   => $scope, $proto, $class );
         $methods[4]->inside_scope( midpoint   => $scope, $class, $class );
-        $scope->set_property_ow( pt => $scope->property('Point')
+        $scope->set_property_ow( $context,
+            pt => $scope->property('Point')
               ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope ) );
         $scope->property('say')
           ->call( [ add( $scope, str( $f, "Point" ), $scope->property('pt') ) ],
             $scope );
-        $scope->set_property_ow( rpt =>
+        $scope->set_property_ow( $context,
+            rpt =>
               $scope->property('pt')->property('oneToRight')->call( {}, $scope )
         );
         $scope->property('say')
@@ -378,6 +378,7 @@ my $result = do {
             [ add( $scope, str( $f, "Right" ), $scope->property('rpt') ) ],
             $scope );
         $scope->set_property_ow(
+            $context,
             mdpt => $scope->property('Point')->property('midpoint')->call(
                 [ $scope->property('pt'), $scope->property('rpt') ], $scope
             )
@@ -387,6 +388,7 @@ my $result = do {
             $scope
         );
         $scope->set_property_ow(
+            $context,
             nineteen => add(
                 $scope,
                 num( $f, 4 ),

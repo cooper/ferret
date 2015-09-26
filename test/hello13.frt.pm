@@ -109,7 +109,7 @@ my $result = do {
           ->property('once')->call( {}, $scope )->property('expire')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
-    $scope->set_property_ow(
+    $scope->set_property_ow( $context,
         t2 => $scope->property('Timer')->call( [ num( $f, 2 ) ], $scope ) );
 
     # On

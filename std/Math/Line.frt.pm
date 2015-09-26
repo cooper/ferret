@@ -59,10 +59,7 @@ my $result = do {
     {
         my @methods;
         my ( $class, $self );
-        if ( $context->has_property('Line') ) {
-            $class = $self = $context->property('Line');
-        }
-        else {
+        if ( not $class = $f->get_class( $context, 'Line' ) ) {
             $class = $self = Ferret::Class->new(
                 $f,
                 name    => 'Line',

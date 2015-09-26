@@ -161,10 +161,7 @@ my $result = do {
     {
         my @methods;
         my ( $class, $self );
-        if ( $context->has_property('Rect') ) {
-            $class = $self = $context->property('Rect');
-        }
-        else {
+        if ( not $class = $f->get_class( $context, 'Rect' ) ) {
             $class = $self = Ferret::Class->new(
                 $f,
                 name    => 'Rect',
@@ -395,6 +392,7 @@ my $result = do {
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property_ow(
+                    $context,
                     x => add(
                         $scope,
                         $self->property('origin')->property('x'),
@@ -402,6 +400,7 @@ my $result = do {
                     )
                 );
                 $scope->set_property_ow(
+                    $context,
                     y => add(
                         $scope,
                         $self->property('origin')->property('y'),

@@ -49,7 +49,7 @@ my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    $scope->set_property_ow(
+    $scope->set_property_ow( $context,
         words => str( $f, "how are you?" )->property('split')
           ->call( [ str( $f, " " ) ], $scope ) );
     foreach ( $scope->property('words')->iterate ) {

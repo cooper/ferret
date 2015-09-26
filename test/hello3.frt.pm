@@ -124,7 +124,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->set_property_ow( hello => str( $f, "Hello" ) );
+            $scope->set_property_ow( $context, hello => str( $f, "Hello" ) );
             $scope->property('hello')
               ->set_property( name => $scope->property('name1') );
             $scope->property('say')->call(
@@ -210,7 +210,7 @@ my $result = do {
         $scope );
     $scope->property('helloWorld')
       ->call( [ str( $f, "Benjamin" ), str( $f, "George" ) ], $scope );
-    $scope->set_property_ow(
+    $scope->set_property_ow( $context,
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ) );
     $scope->property('say')
       ->call( [ add( $scope, str( $f, "Pi = " ), $scope->property('pi') ) ],

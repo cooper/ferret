@@ -534,10 +534,7 @@ my $result = do {
     {
         my @methods;
         my ( $class, $self );
-        if ( $context->has_property('Bot') ) {
-            $class = $self = $context->property('Bot');
-        }
-        else {
+        if ( not $class = $f->get_class( $context, 'Bot' ) ) {
             $class = $self = Ferret::Class->new(
                 $f,
                 name    => 'Bot',
@@ -755,10 +752,11 @@ my $result = do {
                     return unless defined $arguments->{line};
                     $scope->set_property( line => $arguments->{line} );
                 };
-                $scope->set_property_ow(
+                $scope->set_property_ow( $context,
                     s => $scope->property('line')->property('split')
                       ->call( [ str( $f, " " ) ], $scope ) );
-                $scope->set_property_ow( command => $scope->property('s')
+                $scope->set_property_ow( $context,
+                    command => $scope->property('s')
                       ->get_index_value( [ num( $f, 1 ) ], $scope ) );
                 if (
                     bool(
@@ -770,7 +768,8 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $scope->set_property_ow( command => $scope->property('s')
+                    $scope->set_property_ow( $context,
+                        command => $scope->property('s')
                           ->get_index_value( [ num( $f, 0 ) ], $scope ) );
                 }
                 $scope->property('say')->call(
@@ -952,7 +951,8 @@ my $result = do {
                     return unless defined $arguments->{s};
                     $scope->set_property( s => $arguments->{s} );
                 };
-                $scope->set_property_ow( msg => $scope->property('IRC::Message')
+                $scope->set_property_ow( $context,
+                    msg => $scope->property('IRC::Message')
                       ->call( [ $scope->property('line') ], $scope ) );
                 if (
                     bool(
@@ -1007,7 +1007,7 @@ my $result = do {
                     return unless defined $arguments->{msg};
                     $scope->set_property( msg => $arguments->{msg} );
                 };
-                $scope->set_property_ow(
+                $scope->set_property_ow( $context,
                     nickname => $scope->property('msg')->property('nickname') );
                 $self->property('privmsg')->call(
                     [
@@ -1044,10 +1044,10 @@ my $result = do {
                 };
                 $scope->property('inspect')
                   ->call( [ $scope->property('msg') ], $scope );
-                $scope->set_property_ow(
+                $scope->set_property_ow( $context,
                     trigger => $scope->property('msg')->property('parts')
                       ->get_index_value( [ num( $f, 1 ) ], $scope ) );
-                $scope->set_property_ow(
+                $scope->set_property_ow( $context,
                     response => $scope->property('msg')->property('fromWord')
                       ->call( [ num( $f, 2 ) ], $scope ) );
                 $self->property('factoids')
@@ -1094,6 +1094,7 @@ my $result = do {
                     $scope->set_property( msg => $arguments->{msg} );
                 };
                 $scope->set_property_ow(
+                    $context,
                     response => $self->property('factoids')->get_index_value(
                         [
                             $scope->property('msg')->property('command')

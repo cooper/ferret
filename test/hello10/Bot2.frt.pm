@@ -204,10 +204,7 @@ my $result = do {
     {
         my @methods;
         my ( $class, $self );
-        if ( $context->has_property('Bot2') ) {
-            $class = $self = $context->property('Bot2');
-        }
-        else {
+        if ( not $class = $f->get_class( $context, 'Bot2' ) ) {
             $class = $self = Ferret::Class->new(
                 $f,
                 name    => 'Bot2',

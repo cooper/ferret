@@ -2,10 +2,7 @@
 {
     my @methods;
     my ($class, $self);
-    if ($context->has_property('<<name>>')) {
-        $class = $self = $context->property('<<name>>');
-    }
-    else {
+    if (not $class = $f->get_class($context, '<<name>>')) {
         $class = $self = Ferret::Class->new($f,
             name    => '<<name>>',
             version => <<version>>

@@ -84,7 +84,8 @@
 #                          String 'Square roo...'
 #                          Addition operator (+)
 #                          Call
-#                              Bareword 'Math::sqrt'
+#                              Property 'sqrt'
+#                                  Bareword 'Math'
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      Number '4'
@@ -116,6 +117,7 @@ my $result = do {
 
     Ferret::space( $context, $_ ) for qw(Math Math::Point Math::Rect);
     $scope->set_property_ow(
+        $context,
         rect => $scope->property('Math::Rect')->call(
             {
                 x      => num( $f, 5 ),
@@ -126,7 +128,8 @@ my $result = do {
             $scope
         )
     );
-    $scope->set_property_ow( center =>
+    $scope->set_property_ow( $context,
+        center =>
           $scope->property('rect')->property('center')->call( {}, $scope ) );
     $scope->property('say')->call(
         [
@@ -148,9 +151,11 @@ my $result = do {
         ],
         $scope
     );
-    $scope->set_property_ow( otherPt => $scope->property('Math::Point')
+    $scope->set_property_ow( $context,
+        otherPt => $scope->property('Math::Point')
           ->call( [ num( $f, 9 ), num( $f, 2 ) ], $scope ) );
-    $scope->set_property_ow( midpoint => $scope->property('center')
+    $scope->set_property_ow( $context,
+        midpoint => $scope->property('center')
           ->create_set( $scope, $scope->property('otherPt') )
           ->property('midpoint')->call( {}, $scope )->property('pretty')
           ->call( {}, $scope ) );
@@ -167,7 +172,8 @@ my $result = do {
             add(
                 $scope,
                 str( $f, "Square root of four: " ),
-                $scope->property('Math::sqrt')->call( [ num( $f, 4 ) ], $scope )
+                $scope->property('Math')->property('sqrt')
+                  ->call( [ num( $f, 4 ) ], $scope )
             )
         ],
         $scope

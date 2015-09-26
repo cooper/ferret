@@ -135,7 +135,7 @@ my $result = do {
     }
     Ferret::space( $context, $_ ) for qw(String);
     $scope->property('say')->call( [ str( $f, "test" ) ], $scope );
-    $scope->set_property_ow( str => str( $f, "hi" ) );
+    $scope->set_property_ow( $context, str => str( $f, "hi" ) );
 
     # On
     {
