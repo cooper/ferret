@@ -16,7 +16,7 @@
 #              Instruction
 #                  Assignment
 #                      Lexical variable '$dx'
-#                      Mathematical operation
+#                      Operation
 #                          Instance variable '@x'
 #                          Subtraction operator (-)
 #                          Property 'x'
@@ -24,7 +24,7 @@
 #              Instruction
 #                  Assignment
 #                      Lexical variable '$dy'
-#                      Mathematical operation
+#                      Operation
 #                          Instance variable '@y'
 #                          Subtraction operator (-)
 #                          Property 'y'
@@ -35,7 +35,7 @@
 #                          Bareword 'sqrt'
 #                          Structural list [1 items]
 #                              Item 0
-#                                  Mathematical operation
+#                                  Operation
 #                                      Lexical variable '$dx'
 #                                      OP_POW
 #                                      Number '2'
@@ -60,7 +60,7 @@
 #          Method 'pretty'
 #              Instruction
 #                  Return
-#                      Mathematical operation
+#                      Operation
 #                          String '('
 #                          Addition operator (+)
 #                          Instance variable '@x'
@@ -90,10 +90,10 @@
 #                          Hash [2 items]
 #                              Item 0
 #                                  Pair 'x'
-#                                      Mathematical operation
+#                                      Operation
 #                                          Structural list [1 items]
 #                                              Item 0
-#                                                  Mathematical operation
+#                                                  Operation
 #                                                      Property 'x'
 #                                                          Lexical variable '$pt1'
 #                                                      Addition operator (+)
@@ -103,10 +103,10 @@
 #                                          Number '2'
 #                              Item 1
 #                                  Pair 'y'
-#                                      Mathematical operation
+#                                      Operation
 #                                          Structural list [1 items]
 #                                              Item 0
-#                                                  Mathematical operation
+#                                                  Operation
 #                                                      Property 'y'
 #                                                          Lexical variable '$pt1'
 #                                                      Addition operator (+)

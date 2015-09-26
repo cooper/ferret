@@ -4,7 +4,7 @@
 #          Method 'doubledLength'
 #              Instruction
 #                  Return
-#                      Mathematical operation
+#                      Operation
 #                          Call
 #                              Instance variable '@length'
 #                          Multiplication operator (*)
@@ -14,7 +14,7 @@
 #                  Bareword 'say'
 #                  Structural list [1 items]
 #                      Item 0
-#                          Mathematical operation
+#                          Operation
 #                              String 'Length tim...'
 #                              Addition operator (+)
 #                              Call

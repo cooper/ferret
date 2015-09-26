@@ -29,7 +29,7 @@
 #              Bareword 'say'
 #              Structural list [1 items]
 #                  Item 0
-#                      Mathematical operation
+#                      Operation
 #                          String 'Center of ...'
 #                          Addition operator (+)
 #                          Lexical variable '$center'
@@ -38,7 +38,7 @@
 #              Bareword 'say'
 #              Structural list [1 items]
 #                  Item 0
-#                      Mathematical operation
+#                      Operation
 #                          String 'Center dis...'
 #                          Addition operator (+)
 #                          Call
@@ -71,7 +71,7 @@
 #              Bareword 'say'
 #              Structural list [1 items]
 #                  Item 0
-#                      Mathematical operation
+#                      Operation
 #                          String 'Midpoint: '
 #                          Addition operator (+)
 #                          Lexical variable '$midpoint'
@@ -80,7 +80,7 @@
 #              Bareword 'say'
 #              Structural list [1 items]
 #                  Item 0
-#                      Mathematical operation
+#                      Operation
 #                          String 'Square roo...'
 #                          Addition operator (+)
 #                          Call

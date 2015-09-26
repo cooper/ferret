@@ -1,1 +1,1 @@
-<<left_side>>->create_set($scope, <<right_side>>)->property('equal')->call
+<<left_side>>->equal_to(<<right_side>>, $scope)

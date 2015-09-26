@@ -19,7 +19,7 @@
 #                  Bareword 'say'
 #                  Structural list [1 items]
 #                      Item 0
-#                          Mathematical operation
+#                          Operation
 #                              String 'part: '
 #                              Addition operator (+)
 #                              Lexical variable '$word'

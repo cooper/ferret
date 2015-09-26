@@ -41,7 +41,7 @@
 #              Bareword 'say'
 #              Structural list [1 items]
 #                  Item 0
-#                      Mathematical operation
+#                      Operation
 #                          String 'Point: '
 #                          Addition operator (+)
 #                          Lexical variable '$point'
@@ -63,7 +63,7 @@
 #                          Bareword 'say'
 #                          Structural list [1 items]
 #                              Item 0
-#                                  Mathematical operation
+#                                  Operation
 #                                      Lexical variable '$message'
 #                                      Addition operator (+)
 #                                      String ' again'

@@ -39,7 +39,7 @@ sub bind_math_func {
             no strict;
             $value = *{"CORE::$name"}->(@args);
         }
-        return Ferret::Number->new($class->ferret, value => $value);
+        return Ferret::Number->new($class->f, value => $value);
     };
 
     push @functions, $name => {

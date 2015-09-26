@@ -36,7 +36,7 @@
 #                          Bareword 'Point'
 #                          Structural list [2 items]
 #                              Item 0
-#                                  Mathematical operation
+#                                  Operation
 #                                      Property 'x'
 #                                          Instance variable '@origin'
 #                                      Addition operator (+)
@@ -54,7 +54,7 @@
 #                                  Property 'x'
 #                                      Instance variable '@origin'
 #                              Item 1
-#                                  Mathematical operation
+#                                  Operation
 #                                      Property 'y'
 #                                          Instance variable '@origin'
 #                                      Addition operator (+)
@@ -66,13 +66,13 @@
 #                          Bareword 'Point'
 #                          Structural list [2 items]
 #                              Item 0
-#                                  Mathematical operation
+#                                  Operation
 #                                      Property 'x'
 #                                          Instance variable '@origin'
 #                                      Addition operator (+)
 #                                      Instance variable '@width'
 #                              Item 1
-#                                  Mathematical operation
+#                                  Operation
 #                                      Property 'y'
 #                                          Instance variable '@origin'
 #                                      Addition operator (+)
@@ -105,7 +105,7 @@
 #              Instruction
 #                  Assignment
 #                      Lexical variable '$x'
-#                      Mathematical operation
+#                      Operation
 #                          Property 'x'
 #                              Instance variable '@origin'
 #                          Addition operator (+)
@@ -115,7 +115,7 @@
 #              Instruction
 #                  Assignment
 #                      Lexical variable '$y'
-#                      Mathematical operation
+#                      Operation
 #                          Property 'y'
 #                              Instance variable '@origin'
 #                          Addition operator (+)

@@ -92,11 +92,11 @@ sub call {
         # $scope        = the scope within the function
         # outer_scope   = the scope outside of the function definition
         #
-        my $scope = Ferret::Scope->new($func->ferret,
+        my $scope = Ferret::Scope->new($func->f,
             parent => $func->{outer_scope}
         );
 
-        $return ||= Ferret::Return->new($func->ferret);
+        $return ||= Ferret::Return->new($func->f);
 
         # find self.
         my $self = delete $func->{force_self};

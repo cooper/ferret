@@ -44,7 +44,7 @@ sub call {
     my ($class, $arguments) = @_;
 
     # create a new object.
-    my $obj = Ferret::Object->new($class->ferret);
+    my $obj = Ferret::Object->new($class->f);
 
     # initialize it; return the instance.
     my $ret = $class->init($obj, $arguments);
@@ -60,7 +60,7 @@ sub init {
     $obj->add_parent($class->prototype);
 
     # fetch or create return object.
-    my $ret = Ferret::Return->new($class->ferret);
+    my $ret = Ferret::Return->new($class->f);
     if ($class->has_property('_init_')) {
         my $init = $class->property('_init_');
         $init->call_with_self(
@@ -84,7 +84,7 @@ sub bind_method   { _bind_function(1, @_) }
 
 sub _bind_function {
     my ($is_method, $class, $name, %opts) = @_;
-    my $f = $class->ferret;
+    my $f = $class->f;
 
     # fetch or create event.
     my $where = $is_method ? $class->prototype : $class;

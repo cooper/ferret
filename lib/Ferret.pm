@@ -45,8 +45,8 @@ sub new {
 
 # object constants.
 my $undefined = Ferret::Object->new;
-sub true      () { state $true  = Ferret::Object->new } # TODO
-sub false     () { state $false = Ferret::Object->new } # TODO
+sub true      () { state $true  = Ferret::Object->new($ferret) } # TODO
+sub false     () { state $false = Ferret::Object->new($ferret) } # TODO
 
 # fetch undefined value or test if a value is undefined.
 sub undefined(;$) {

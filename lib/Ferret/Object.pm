@@ -109,7 +109,7 @@ sub _property {
     # try a different context.
     if (index($prop_name, '::') != -1) {
         my ($context, $real_prop_name) = ($prop_name =~ m/^(.+)::(.+?)$/);
-        $context = $obj->ferret->get_context($context);
+        $context = $obj->f->get_context($context);
         return $context->_property($real_prop_name);
     }
 
@@ -229,13 +229,15 @@ sub best_common_class {
     my %found;
     my @classes_1 = $obj1->parent_classes;
     my @classes_2 = $obj2->parent_classes;
+
     while (@classes_1 || @classes_2) {
         my ($class_1, $class_2) = (shift @classes_1, shift @classes_2);
         $found{$class_1}++;
         return $class_2 if $found{$class_2};
     }
+
     return undef;
-    # TODO: it eventually should never return undef but instead Object.
+    # TODO: if ever implemented an Object prototype, return it here.
 }
 
 #####################
@@ -245,7 +247,7 @@ sub best_common_class {
 # create an object that represents a set of objects.
 sub create_set {
     my ($obj, $call_scope, @other_objs) = @_;
-    return Ferret::Set->new($obj->ferret,
+    return Ferret::Set->new($obj->f,
         primary_obj => $obj,
         other_objs  => \@other_objs,
         all_objs    => [ $obj, @other_objs ],
@@ -268,12 +270,25 @@ sub set_index_value {
     return $obj->property('setValue')->call($arguments, $call_scope);
 }
 
+# test object equality
+sub equal_to {
+    my ($left_obj, $right_obj, $scope) = @_;
+    # TODO: maybe check equality for each class implementing comparison?
+    return $left_obj->create_set($scope, $right_obj)->property('equal')->call;
+}
+
+# test exact object equality
+sub equal_to_exactly {
+    my ($left_obj, $right_obj, $scope) = @_;
+    return $left_obj == $right_obj;
+}
+
 ################
 ### FETCHERS ###
 ################
 
 # fetch the ferret.
-sub ferret {
+sub f {
     shift->{ferret};
 }
 

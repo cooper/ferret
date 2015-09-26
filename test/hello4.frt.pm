@@ -39,7 +39,7 @@
 #              Bareword 'say'
 #              Structural list [1 items]
 #                  Item 0
-#                      Mathematical operation
+#                      Operation
 #                          String 'Point('
 #                          Addition operator (+)
 #                          Property 'x'
@@ -64,7 +64,7 @@
 #                  Item 3
 #                      Number '4'
 #                  Item 4
-#                      Mathematical operation
+#                      Operation
 #                          Number '4'
 #                          Addition operator (+)
 #                          Number '1'

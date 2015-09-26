@@ -26,7 +26,7 @@
 #              Bareword 'say'
 #              Structural list [1 items]
 #                  Item 0
-#                      Mathematical operation
+#                      Operation
 #                          String 'Length: '
 #                          Addition operator (+)
 #                          Call
@@ -42,7 +42,7 @@
 #                  Bareword 'say'
 #                  Structural list [1 items]
 #                      Item 0
-#                          Mathematical operation
+#                          Operation
 #                              String 'item: '
 #                              Addition operator (+)
 #                              Lexical variable '$item'
@@ -74,7 +74,7 @@
 #              Bareword 'say'
 #              Structural list [1 items]
 #                  Item 0
-#                      Mathematical operation
+#                      Operation
 #                          String 'whats '
 #                          Addition operator (+)
 #                          Index
@@ -96,7 +96,7 @@
 #                  Bareword 'say'
 #                  Structural list [1 items]
 #                      Item 0
-#                          Mathematical operation
+#                          Operation
 #                              String 'pair: key='
 #                              Addition operator (+)
 #                              Lexical variable '$key'

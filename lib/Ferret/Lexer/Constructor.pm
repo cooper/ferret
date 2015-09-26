@@ -13,7 +13,7 @@ our ($current, $error);
 
 my @expression_types = qw(
     Bareword LexicalVariable InstanceVariable SpecialVariable
-    Property List Expression Maybe
+    Property List Expression Maybe Boolean
     String Number Operation Call Index
 );
 

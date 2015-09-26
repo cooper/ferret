@@ -20,7 +20,7 @@
 #                      Bareword 'say'
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
+#                              Operation
 #                                  String 'found ''
 #                                  Addition operator (+)
 #                                  Special variable '*this'
@@ -49,7 +49,7 @@
 #                      Bareword 'say'
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
+#                              Operation
 #                                  String 'found ''
 #                                  Addition operator (+)
 #                                  Special variable '*this'

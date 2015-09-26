@@ -56,7 +56,7 @@
 #                      Bareword 'say'
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
+#                              Operation
 #                                  Lexical variable '$hello'
 #                                  Addition operator (+)
 #                                  String ' '
@@ -69,14 +69,14 @@
 #                      Bareword 'say'
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
+#                              Operation
 #                                  String 'Hello '
 #                                  Addition operator (+)
 #                                  Lexical variable '$name2'
 #      Instruction
 #          Assignment
 #              Lexical variable '$pi'
-#              Mathematical operation
+#              Operation
 #                  Number '3'
 #                  Addition operator (+)
 #                  Number '0.1'
@@ -87,7 +87,7 @@
 #              Bareword 'say'
 #              Structural list [1 items]
 #                  Item 0
-#                      Mathematical operation
+#                      Operation
 #                          String 'Pi = '
 #                          Addition operator (+)
 #                          Lexical variable '$pi'

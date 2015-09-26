@@ -11,12 +11,6 @@ sub desc {
     return "boolean ".($b->{value} ? 'true' : 'false');
 }
 
-sub perl_fmt {
-    my $num = shift;
-    $num->document->{required_operations}{num}++;
-    return number => { num => $num->{value} };
-}
-
 sub perl_fmt_do {
     return shift->{value} ? 'Ferret::true' : 'Ferret::false';
 }

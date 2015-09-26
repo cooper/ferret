@@ -63,7 +63,7 @@ sub _connect {
             my ($self, $buffer, $eof) = @_;
             while ($$buffer =~ s/^(.*)\n//) {
                 (my $val = $1) =~ s/\0|\r//g;
-                my $str = Ferret::String->new($sock->ferret, value => $val);
+                my $str = Ferret::String->new($sock->f, value => $val);
                 $sock->property('gotLine')->call([ $str ]);
             }
         }

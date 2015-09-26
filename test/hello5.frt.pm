@@ -24,7 +24,7 @@
 #                          Special variable '*class'
 #                          Structural list [2 items]
 #                              Item 0
-#                                  Mathematical operation
+#                                  Operation
 #                                      Instance variable '@x'
 #                                      Addition operator (+)
 #                                      Number '1'
@@ -38,7 +38,7 @@
 #                  Return
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
+#                              Operation
 #                                  String '('
 #                                  Addition operator (+)
 #                                  Instance variable '@x'
@@ -68,10 +68,10 @@
 #                          Hash [2 items]
 #                              Item 0
 #                                  Pair 'x'
-#                                      Mathematical operation
+#                                      Operation
 #                                          Structural list [1 items]
 #                                              Item 0
-#                                                  Mathematical operation
+#                                                  Operation
 #                                                      Property 'x'
 #                                                          Lexical variable '$pt1'
 #                                                      Addition operator (+)
@@ -81,10 +81,10 @@
 #                                          Number '2'
 #                              Item 1
 #                                  Pair 'y'
-#                                      Mathematical operation
+#                                      Operation
 #                                          Structural list [1 items]
 #                                              Item 0
-#                                                  Mathematical operation
+#                                                  Operation
 #                                                      Property 'y'
 #                                                          Lexical variable '$pt1'
 #                                                      Addition operator (+)
@@ -107,7 +107,7 @@
 #                  Bareword 'say'
 #                  Structural list [1 items]
 #                      Item 0
-#                          Mathematical operation
+#                          Operation
 #                              String 'Point'
 #                              Addition operator (+)
 #                              Lexical variable '$pt'
@@ -122,7 +122,7 @@
 #                  Bareword 'say'
 #                  Structural list [1 items]
 #                      Item 0
-#                          Mathematical operation
+#                          Operation
 #                              String 'Right'
 #                              Addition operator (+)
 #                              Lexical variable '$rpt'
@@ -142,14 +142,14 @@
 #                  Bareword 'say'
 #                  Structural list [1 items]
 #                      Item 0
-#                          Mathematical operation
+#                          Operation
 #                              String 'Midpoint'
 #                              Addition operator (+)
 #                              Lexical variable '$mdpt'
 #          Instruction
 #              Assignment
 #                  Lexical variable '$nineteen'
-#                  Mathematical operation
+#                  Operation
 #                      Number '4'
 #                      Addition operator (+)
 #                      Number '45'
@@ -160,7 +160,7 @@
 #                  Bareword 'say'
 #                  Structural list [1 items]
 #                      Item 0
-#                          Mathematical operation
+#                          Operation
 #                              String 'Nineteen: '
 #                              Addition operator (+)
 #                              Lexical variable '$nineteen'

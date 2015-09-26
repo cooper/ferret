@@ -7,22 +7,19 @@ use utf8;
 
 use parent 'Ferret::Object';
 
-sub new {
-    my ($class, $f, %opts) = @_;
-    return $class->SUPER::new($f,
-        faketype => 'Set',
-        %opts
-    );
-}
+*new = *Ferret::bind_constructor;
+
+Ferret::bind_class(
+    name => 'Set'
+);
 
 sub property {
     my ($set, $prop_name) = @_;
-    my $func = Ferret::Function->new($set->ferret,
-        name => "$$set{set_class}{name}_setMethod_$prop_name"
-    );
+    my $func = Ferret::Function->new($set->f, name => 'setMethod');
     $func->{code} = sub {
         # consider: perhaps it should pass additional arguments to function.
-        return $set->{set_class}->property($prop_name)->call(
+        my $set_class = $set->{set_class} or return;
+        return $set_class->property($prop_name)->call(
             [ @{ $set->{all_objs} } ], # make a copy
             $set->{set_scope} # scope where set was created. good enough.
         );

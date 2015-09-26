@@ -119,7 +119,7 @@ sub call {
 
     # call each function. if the dependencies can't be satisfied,
     # ->call will do nothing.
-    $return ||= Ferret::Return->new($event->ferret);
+    $return ||= Ferret::Return->new($event->f);
     my @args = (
         $obj,
         $event->{class},

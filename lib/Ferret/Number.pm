@@ -91,7 +91,7 @@ sub op_pow {
 
 sub _to_string {
     my $num = shift;
-    return Ferret::String->new($num->ferret, value => $num->{value});
+    return Ferret::String->new($num->f, value => $num->{value});
 }
 
 sub _sum {

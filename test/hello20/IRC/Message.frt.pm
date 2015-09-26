@@ -142,7 +142,7 @@
 #                                          String ' '
 #                                  Item 1
 #                                      Pair 'limit'
-#                                          Mathematical operation
+#                                          Operation
 #                                              Lexical variable '$wordN'
 #                                              Addition operator (+)
 #                                              Number '1'

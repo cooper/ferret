@@ -70,7 +70,7 @@ sub length : method {
 
 sub _length {
     my $str = shift;
-    return Ferret::Number->new($str->ferret, value => $str->length);
+    return Ferret::Number->new($str->f, value => $str->length);
 }
 
 # for now, this only accepts strings.

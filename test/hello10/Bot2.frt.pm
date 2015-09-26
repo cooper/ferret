@@ -54,7 +54,7 @@
 #                              Instance variable '@send'
 #                              Structural list [1 items]
 #                                  Item 0
-#                                      Mathematical operation
+#                                      Operation
 #                                          String 'USER '
 #                                          Addition operator (+)
 #                                          Instance variable '@user'
@@ -67,7 +67,7 @@
 #                              Instance variable '@send'
 #                              Structural list [1 items]
 #                                  Item 0
-#                                      Mathematical operation
+#                                      Operation
 #                                          String 'NICK '
 #                                          Addition operator (+)
 #                                          Instance variable '@nick'
@@ -83,7 +83,7 @@
 #                              Bareword 'say'
 #                              Structural list [1 items]
 #                                  Item 0
-#                                      Mathematical operation
+#                                      Operation
 #                                          String 'recv: '
 #                                          Addition operator (+)
 #                                          Lexical variable '$data'
@@ -99,7 +99,7 @@
 #                              Bareword 'say'
 #                              Structural list [1 items]
 #                                  Item 0
-#                                      Mathematical operation
+#                                      Operation
 #                                          String 'send: '
 #                                          Addition operator (+)
 #                                          Lexical variable '$data'

@@ -31,7 +31,7 @@
 #                      Bareword 'say'
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
+#                              Operation
 #                                  String 'recv: '
 #                                  Addition operator (+)
 #                                  Lexical variable '$data'
@@ -48,7 +48,7 @@
 #                      Bareword 'say'
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
+#                              Operation
 #                                  String 'send: '
 #                                  Addition operator (+)
 #                                  Lexical variable '$data'

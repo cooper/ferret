@@ -81,7 +81,7 @@
 #                              Instance variable '@send'
 #                              Structural list [1 items]
 #                                  Item 0
-#                                      Mathematical operation
+#                                      Operation
 #                                          String 'USER '
 #                                          Addition operator (+)
 #                                          Instance variable '@user'
@@ -94,7 +94,7 @@
 #                              Instance variable '@send'
 #                              Structural list [1 items]
 #                                  Item 0
-#                                      Mathematical operation
+#                                      Operation
 #                                          String 'NICK '
 #                                          Addition operator (+)
 #                                          Instance variable '@nick'
@@ -157,7 +157,7 @@
 #                      Bareword 'say'
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
+#                              Operation
 #                                  String 'send: '
 #                                  Addition operator (+)
 #                                  Lexical variable '$line'
@@ -211,7 +211,7 @@
 #                      Bareword 'say'
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
+#                              Operation
 #                                  String 'recv['
 #                                  Addition operator (+)
 #                                  Lexical variable '$command'
@@ -259,7 +259,7 @@
 #                          Instance variable '@send'
 #                          Structural list [1 items]
 #                              Item 0
-#                                  Mathematical operation
+#                                  Operation
 #                                      String 'PRIVMSG '
 #                                      Addition operator (+)
 #                                      Lexical variable '$channel'
@@ -292,7 +292,7 @@
 #                      Instance variable '@send'
 #                      Structural list [1 items]
 #                          Item 0
-#                              Mathematical operation
+#                              Operation
 #                                  String 'PONG '
 #                                  Addition operator (+)
 #                                  Index
@@ -359,7 +359,7 @@
 #                              Property 'channel'
 #                                  Lexical variable '$msg'
 #                          Item 1
-#                              Mathematical operation
+#                              Operation
 #                                  String 'Hi '
 #                                  Addition operator (+)
 #                                  Lexical variable '$nickname'
@@ -417,7 +417,7 @@
 #                              Property 'channel'
 #                                  Lexical variable '$msg'
 #                          Item 1
-#                              Mathematical operation
+#                              Operation
 #                                  String 'alright, a...'
 #                                  Addition operator (+)
 #                                  Lexical variable '$trigger'
@@ -751,8 +751,7 @@ my $result = do {
                     bool(
                         $scope->property('s')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
-                          ->create_set( $scope, str( $f, "PING" ) )
-                          ->property('equal')->call
+                          ->equal_to( str( $f, "PING" ), $scope )
                     )
                   )
                 {
