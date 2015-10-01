@@ -50,16 +50,16 @@ my $result = do {
     my $scope = my $context = $f->get_context('main');
 
     $scope->set_property_ow( $context,
-        words => str( $f, "how are you?" )->property('split')
+        words => str( $f, "how are you?" )->property_u('split')
           ->call( [ str( $f, " " ) ], $scope ) );
-    foreach ( $scope->property('words')->iterate ) {
+    foreach ( $scope->property_u('words')->iterate ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
         $scope->set_property( word => $_ );
 
-        $scope->property('say')
-          ->call(
-            [ add( $scope, str( $f, "part: " ), $scope->property('word') ) ],
-            $scope );
+        $scope->property_u('say')->call(
+            [ add( $scope, str( $f, "part: " ), $scope->property_u('word') ) ],
+            $scope
+        );
     }
 };
 

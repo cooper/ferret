@@ -142,40 +142,41 @@ my $result = do {
                 return unless defined $arguments->{message};
                 $scope->set_property( message => $arguments->{message} );
             };
-            if ( bool( $scope->property('twice') ) ) {
+            if ( bool( $scope->property_u('twice') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $scope->property('say')->call(
+                $scope->property_u('say')->call(
                     [
                         add(
-                            $scope, $scope->property('message'),
+                            $scope,
+                            $scope->property_u('message'),
                             str( $f, " again" )
                         )
                     ],
                     $scope
                 );
             }
-            $return->set_property( didTwice => $scope->property('twice') );
+            $return->set_property( didTwice => $scope->property_u('twice') );
             return $return;
         };
     }
     Ferret::space( $context, $_ ) for qw(Math Math::Point);
     $scope->set_property_ow( $context,
-        point => $scope->property('Math::Point')
+        point => $scope->property_u('Math::Point')
           ->call( [ num( $f, 0 ), num( $f, 0 ) ], $scope ) );
-    if ( bool( $scope->property('point') ) ) {
+    if ( bool( $scope->property_u('point') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-        $scope->property('say')
+        $scope->property_u('say')
           ->call( [ str( $f, "The point exists!" ) ], $scope );
-        $scope->property('inspect')
-          ->call( [ $scope->property('point') ], $scope );
+        $scope->property_u('inspect')
+          ->call( [ $scope->property_u('point') ], $scope );
     }
 
     # Inside
     {
         my $outer_scope = $scope;
-        my $scope       = $scope->property('point');
+        my $scope       = $scope->property_u('point');
         $scope->add_parent($outer_scope);
 
         $scope->set_property_ow( $context, x => num( $f, 5 ) );
@@ -183,31 +184,31 @@ my $result = do {
 
         $scope->remove_parent($outer_scope);
     }
-    $scope->property('say')
+    $scope->property_u('say')
       ->call(
-        [ add( $scope, str( $f, "Point: " ), $scope->property('point') ) ],
+        [ add( $scope, str( $f, "Point: " ), $scope->property_u('point') ) ],
         $scope );
 
     # On
     {
         my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
-        $scope->property('say')
+        $scope->property_u('say')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
     $scope->set_property_ow(
         $context,
-        r => $scope->property('say')->call(
+        r => $scope->property_u('say')->call(
             { message => str( $f, "It was said" ), twice => Ferret::true },
             $scope
         )
     );
-    if ( bool( $scope->property('r')->property('didTwice') ) ) {
+    if ( bool( $scope->property_u('r')->property_u('didTwice') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-        $scope->property('say')
+        $scope->property_u('say')
           ->call( [ str( $f, "Did the first one twice!" ) ], $scope );
     }
-    $scope->property('say')->call(
+    $scope->property_u('say')->call(
         [ str( $f, "this should ignore the second parameter" ), Ferret::true ],
         $scope
     );

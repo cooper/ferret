@@ -29,32 +29,6 @@ sub _dump {
     return $return;
 }
 
-sub _parent_names {
-    my $obj = shift;
-    my @parents;
-    foreach my $parent ($obj->parents) {
-
-        # it's a prototype
-        if ($parent->{proto_class}) {
-            push @parents, $parent->{proto_class}{name};
-            next;
-        }
-
-        # just an object
-        my @p = grep $_ ne 'Prototype', _parent_names($parent);
-        push @parents, @p if @p;
-
-    }
-    unshift @parents, $obj->{faketype} if $obj->{faketype};
-    push @parents, 'Object' if !@parents;
-    return uniq(@parents);
-}
-
-sub uniq {
-    my %seen;
-    grep !$seen{$_}++, @_;
-}
-
 sub _inspect_value {
     my ($obj, $own_only) = @_;
 
@@ -98,7 +72,7 @@ sub _inspect_value {
     }
 
     my ($skipped, $prop_str) = (0, "\n");
-    my @parents = _parent_names($obj);
+    my @parents = $obj->parent_names;
     foreach my $prop_name ($obj->properties(1)) {
         my ($value, $owner) = $obj->_property($prop_name);
 

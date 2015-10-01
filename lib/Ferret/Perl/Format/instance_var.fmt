@@ -1,1 +1,1 @@
-$self->property('<<name>>')
+$self->property_u('<<name>>')

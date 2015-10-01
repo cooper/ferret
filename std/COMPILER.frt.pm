@@ -62,7 +62,6 @@ sub _tokenize {
     my $tokens = $compiler->tokenize;
     if (ref $tokens eq 'F::Error') {
         $return->set_property(error => ferret_string($$tokens));
-        print "ret: $return\n";
         return $return;
     }
 

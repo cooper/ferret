@@ -53,13 +53,13 @@ my $result = do {
 
     Ferret::space( $context, $_ ) for qw(Math Math::Point);
     $scope->set_property_ow( $context, obj => str( $f, "hi" ) );
-    $scope->property('Math::Point')->property('init')
-      ->call( [ $scope->property('obj') ], $scope )
+    $scope->property_u('Math::Point')->property_u('init')
+      ->call( [ $scope->property_u('obj') ], $scope )
       ->call( [ num( $f, 1 ), num( $f, 1 ) ], $scope );
-    $scope->property('say')
-      ->call(
-        [ $scope->property('obj')->property('pretty')->call( {}, $scope ) ],
-        $scope );
+    $scope->property_u('say')->call(
+        [ $scope->property_u('obj')->property_u('pretty')->call( {}, $scope ) ],
+        $scope
+    );
 };
 
 Ferret::runtime();

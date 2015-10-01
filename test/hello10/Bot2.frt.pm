@@ -136,18 +136,22 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $self->property('send')->call(
+            $self->property_u('send')->call(
                 [
                     add(
-                        $scope,                  str( $f, "USER " ),
-                        $self->property('user'), str( $f, " * * :" ),
-                        $self->property('real')
+                        $scope,                    str( $f, "USER " ),
+                        $self->property_u('user'), str( $f, " * * :" ),
+                        $self->property_u('real')
                     )
                 ],
                 $scope
             );
-            $self->property('send')->call(
-                [ add( $scope, str( $f, "NICK " ), $self->property('nick') ) ],
+            $self->property_u('send')->call(
+                [
+                    add(
+                        $scope, str( $f, "NICK " ), $self->property_u('nick')
+                    )
+                ],
                 $scope
             );
             return $return;
@@ -165,10 +169,11 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            $scope->property('say')->call(
+            $scope->property_u('say')->call(
                 [
                     add(
-                        $scope, str( $f, "recv: " ), $scope->property('data')
+                        $scope, str( $f, "recv: " ),
+                        $scope->property_u('data')
                     )
                 ],
                 $scope
@@ -188,10 +193,11 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            $scope->property('say')->call(
+            $scope->property_u('say')->call(
                 [
                     add(
-                        $scope, str( $f, "send: " ), $scope->property('data')
+                        $scope, str( $f, "send: " ),
+                        $scope->property_u('data')
                     )
                 ],
                 $scope
@@ -250,22 +256,22 @@ my $result = do {
                     $want_val ||= str( $f, "Ferret IRC" );
                     $self->set_property( real => $want_val );
                 };
-                $scope->property('Socket::TCP')->property('init')
-                  ->call( [ $scope->{special}->property('self') ], $scope )
+                $scope->property_u('Socket::TCP')->property_u('init')
+                  ->call( [ $scope->{special}->property_u('self') ], $scope )
                   ->call(
                     {
-                        addr => $self->property('address'),
-                        port => $self->property('port')
+                        addr => $self->property_u('address'),
+                        port => $self->property_u('port')
                     },
                     $scope
                   );
-                $self->set_property( send => $self->property('println') );
+                $self->set_property( send => $self->property_u('println') );
 
                 # On
                 {
                     my $on_func =
                       $funcs[0]->inside_scope( +undef => $scope, $scope );
-                    $self->property('connected')
+                    $self->property_u('connected')
                       ->add_function_with_self_and_scope( $self, $scope,
                         $on_func );
                 }
@@ -274,7 +280,7 @@ my $result = do {
                 {
                     my $on_func =
                       $funcs[1]->inside_scope( +undef => $scope, $scope );
-                    $self->property('gotLine')
+                    $self->property_u('gotLine')
                       ->add_function_with_self_and_scope( $self, $scope,
                         $on_func );
                 }
@@ -283,7 +289,7 @@ my $result = do {
                 {
                     my $on_func =
                       $funcs[2]->inside_scope( +undef => $scope, $scope );
-                    $self->property('println')
+                    $self->property_u('println')
                       ->add_function_with_self_and_scope( $self, $scope,
                         $on_func );
                 }

@@ -15,16 +15,27 @@ Ferret::bind_class(
 
 sub property {
     my ($set, $prop_name) = @_;
+
+    # find function
+    my $set_class = $set->{set_class} or return;
+    my $real_func = $set_class->property($prop_name) or return;
+
+    # return function
     my $func = Ferret::Function->new($set->f, name => 'setMethod');
     $func->{code} = sub {
         # consider: perhaps it should pass additional arguments to function.
-        my $set_class = $set->{set_class} or return;
-        return $set_class->property($prop_name)->call(
+        return $real_func->call(
             [ @{ $set->{all_objs} } ], # make a copy
             $set->{set_scope} # scope where set was created. good enough.
         );
     };
+
     return $func;
+}
+
+sub property_u {
+    my $value = &property;
+    return $value || Ferret::undefined;
 }
 
 sub set_property {

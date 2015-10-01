@@ -468,6 +468,18 @@ sub c_NUMBER {
     return $num;
 }
 
+sub c_KEYWORD_UNDEFINED {
+    my ($c, $value) = @_;
+
+    # create the bool...
+    my $b = F::Boolean->new(value => undef);
+
+    # add to the current node.
+    $c->{node}->adopt($b);
+
+    return $b;
+}
+
 sub c_KEYWORD_TRUE {
     my ($c, $value) = @_;
 
@@ -484,7 +496,7 @@ sub c_KEYWORD_FALSE {
     my ($c, $value) = @_;
 
     # create the bool...
-    my $b = F::Boolean->new(value => undef);
+    my $b = F::Boolean->new(value => 0);
 
     # add to the current node.
     $c->{node}->adopt($b);
@@ -676,7 +688,7 @@ sub c_OP_ASSIGN {
 
     my $last_el = $c->{last_element};
     return expected($c,
-        'an assignable statement',
+        'an assignable expression',
         'at left of assignment operator (=)'
     ) unless $allowed{ $last_el->type_or_tok };
 

@@ -67,11 +67,11 @@ my $result = do {
                 return unless defined $arguments->{who};
                 $scope->set_property( who => $arguments->{who} );
             };
-            $scope->property('say')->call(
+            $scope->property_u('say')->call(
                 [
                     add(
-                        $scope,                  str( $f, "Hello " ),
-                        $scope->property('who'), str( $f, "!" )
+                        $scope,                    str( $f, "Hello " ),
+                        $scope->property_u('who'), str( $f, "!" )
                     )
                 ],
                 $scope
@@ -87,13 +87,13 @@ my $result = do {
     $funcs[0]->inside_scope( sayHello => $scope, $scope );
     Ferret::space( $context, $_ ) for qw(Str);
     {
-        my $maybe_0 = $scope->property('sayHello');
+        my $maybe_0 = $scope->property_u('sayHello');
         if ( bool($maybe_0) ) {
             $maybe_0->call( [ str( $f, "World" ) ], $scope );
         }
     }
     {
-        my $maybe_0 = $scope->property('sayGoodbye');
+        my $maybe_0 = $scope->property_u('sayGoodbye');
         if ( bool($maybe_0) ) {
             $maybe_0->call( [ str( $f, "World" ) ], $scope );
         }

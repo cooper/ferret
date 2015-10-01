@@ -131,10 +131,11 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            $scope->property('say')->call(
+            $scope->property_u('say')->call(
                 [
                     add(
-                        $scope, str( $f, "recv: " ), $scope->property('data')
+                        $scope, str( $f, "recv: " ),
+                        $scope->property_u('data')
                     )
                 ],
                 $scope
@@ -154,10 +155,11 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            $scope->property('say')->call(
+            $scope->property_u('say')->call(
                 [
                     add(
-                        $scope, str( $f, "send: " ), $scope->property('data')
+                        $scope, str( $f, "send: " ),
+                        $scope->property_u('data')
                     )
                 ],
                 $scope
@@ -173,9 +175,9 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property('sock')->property('println')
+            $scope->property_u('sock')->property_u('println')
               ->call( [ str( $f, "NICK k" ) ], $scope );
-            $scope->property('sock')->property('println')
+            $scope->property_u('sock')->property_u('println')
               ->call( [ str( $f, "USER k * * :k" ) ], $scope );
             return $return;
         };
@@ -188,7 +190,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property('sock')->property('println')
+            $scope->property_u('sock')->property_u('println')
               ->call( [ str( $f, "JOIN #k" ) ], $scope );
             return $return;
         };
@@ -196,40 +198,41 @@ my $result = do {
     Ferret::space( $context, $_ ) for qw(Socket Socket::TCP Timer);
     $scope->set_property_ow(
         $context,
-        sock => $scope->property('Socket::TCP')->call(
+        sock => $scope->property_u('Socket::TCP')->call(
             { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },
             $scope
         )
     );
-    $scope->property('inspect')->call( [ $scope->property('sock') ], $scope );
+    $scope->property_u('inspect')
+      ->call( [ $scope->property_u('sock') ], $scope );
 
     # On
     {
         my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
-        $scope->property('sock')->property('gotLine')
+        $scope->property_u('sock')->property_u('gotLine')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
 
     # On
     {
         my $on_func = $funcs[1]->inside_scope( +undef => $scope, $scope );
-        $scope->property('sock')->property('println')
+        $scope->property_u('sock')->property_u('println')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
 
     # On
     {
         my $on_func = $funcs[2]->inside_scope( +undef => $scope, $scope );
-        $scope->property('sock')->property('connected')
+        $scope->property_u('sock')->property_u('connected')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
-    $scope->property('sock')->property('connect')->call( {}, $scope );
+    $scope->property_u('sock')->property_u('connect')->call( {}, $scope );
 
     # On
     {
         my $on_func = $funcs[3]->inside_scope( +undef => $scope, $scope );
-        $scope->property('Timer')->call( [ num( $f, 5 ) ], $scope )
-          ->property('once')->call( {}, $scope )->property('expire')
+        $scope->property_u('Timer')->call( [ num( $f, 5 ) ], $scope )
+          ->property_u('once')->call( {}, $scope )->property_u('expire')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
 };

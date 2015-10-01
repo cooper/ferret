@@ -44,12 +44,13 @@ sub new {
 ##############
 
 # object constants.
-my $undefined = Ferret::Object->new;
-sub true      () { state $true  = Ferret::Object->new($ferret) } # TODO
-sub false     () { state $false = Ferret::Object->new($ferret) } # TODO
+my $undefined;
+sub true  () { state $true  = Ferret::Object->new($ferret, faketype => 'Boolean') } # TODO
+sub false () { state $false = Ferret::Object->new($ferret, faketype => 'Boolean') } # TODO
 
 # fetch undefined value or test if a value is undefined.
 sub undefined(;$) {
+    $undefined ||= Ferret::Object->new($ferret, faketype => 'Undefined');
     return $undefined if !@_;
     my $test = shift;
     return 1 if !defined $test;
@@ -135,17 +136,18 @@ sub get_class {
 # fetch a class or namespace.
 # if necessary, load it.
 sub space {
-    my ($scope, $space) = @_;
+    my ($context, $space) = @_;
     my $file = c2s("$space.frt.pm");
 
     # already tried this file, or the namespace/class exists.
-    my $val = $scope->property($space);
-    return $val if $val || $tried_files{$file};
+    # ignore the value unless the owner is this context.
+    my ($val, $owner) = $context->_property($space);
+    return $val if $val && $owner == $context || $tried_files{$file};
 
     # load it.
     do $file or do { print "error in $file: $@\n" if $@ };
     $tried_files{$file} = 1;
-    return $scope->property($space);
+    return $context->property($space);
 
 }
 
@@ -285,8 +287,10 @@ use Ferret::Class;
 use Ferret::List;
 use Ferret::Hash;
 use Ferret::Set;
+
 use Ferret::Core::Functions;
 use Ferret::Core::Context;
+use Ferret::Core::Errors;
 
 use Evented::Object;
 

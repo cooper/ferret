@@ -118,7 +118,7 @@ my $result = do {
     Ferret::space( $context, $_ ) for qw(Math Math::Point Math::Rect);
     $scope->set_property_ow(
         $context,
-        rect => $scope->property('Math::Rect')->call(
+        rect => $scope->property_u('Math::Rect')->call(
             {
                 x      => num( $f, 5 ),
                 y      => num( $f, 4 ),
@@ -130,49 +130,51 @@ my $result = do {
     );
     $scope->set_property_ow( $context,
         center =>
-          $scope->property('rect')->property('center')->call( {}, $scope ) );
-    $scope->property('say')->call(
+          $scope->property_u('rect')->property_u('center')->call( {}, $scope )
+    );
+    $scope->property_u('say')->call(
         [
             add(
                 $scope, str( $f, "Center of rect: " ),
-                $scope->property('center')
+                $scope->property_u('center')
             )
         ],
         $scope
     );
-    $scope->property('say')->call(
+    $scope->property_u('say')->call(
         [
             add(
                 $scope,
                 str( $f, "Center distance from origin: " ),
-                $scope->property('center')->property('distanceFromOrigin')
+                $scope->property_u('center')->property_u('distanceFromOrigin')
                   ->call( {}, $scope )
             )
         ],
         $scope
     );
     $scope->set_property_ow( $context,
-        otherPt => $scope->property('Math::Point')
+        otherPt => $scope->property_u('Math::Point')
           ->call( [ num( $f, 9 ), num( $f, 2 ) ], $scope ) );
     $scope->set_property_ow( $context,
-        midpoint => $scope->property('center')
-          ->create_set( $scope, $scope->property('otherPt') )
-          ->property('midpoint')->call( {}, $scope )->property('pretty')
+        midpoint => $scope->property_u('center')
+          ->create_set( $scope, $scope->property_u('otherPt') )
+          ->property_u('midpoint')->call( {}, $scope )->property_u('pretty')
           ->call( {}, $scope ) );
-    $scope->property('say')->call(
+    $scope->property_u('say')->call(
         [
             add(
-                $scope, str( $f, "Midpoint: " ), $scope->property('midpoint')
+                $scope, str( $f, "Midpoint: " ),
+                $scope->property_u('midpoint')
             )
         ],
         $scope
     );
-    $scope->property('say')->call(
+    $scope->property_u('say')->call(
         [
             add(
                 $scope,
                 str( $f, "Square root of four: " ),
-                $scope->property('Math')->property('sqrt')
+                $scope->property_u('Math')->property_u('sqrt')
                   ->call( [ num( $f, 4 ) ], $scope )
             )
         ],

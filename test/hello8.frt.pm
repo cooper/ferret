@@ -72,7 +72,7 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return mul(
                     $scope,
-                    $self->property('length')->call( {}, $scope ),
+                    $self->property_u('length')->call( {}, $scope ),
                     num( $f, 2 )
                 );
                 return $return;
@@ -84,12 +84,12 @@ my $result = do {
             );
         }
         $methods[0]->inside_scope( doubledLength => $scope, $proto, $class );
-        $scope->property('say')->call(
+        $scope->property_u('say')->call(
             [
                 add(
                     $scope,
                     str( $f, "Length times two: " ),
-                    str( $f, "hi there" )->property('doubledLength')
+                    str( $f, "hi there" )->property_u('doubledLength')
                       ->call( {}, $scope )
                 )
             ],

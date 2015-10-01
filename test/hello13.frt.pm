@@ -81,7 +81,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property('say')
+            $scope->property_u('say')
               ->call( [ str( $f, "five seconds up" ) ], $scope );
             return $return;
         };
@@ -94,32 +94,32 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property('say')
+            $scope->property_u('say')
               ->call( [ str( $f, "this shouldn't be said" ) ], $scope );
             return $return;
         };
     }
     Ferret::space( $context, $_ ) for qw(Timer);
-    $scope->property('say')->call( [ str( $f, "hello" ) ], $scope );
+    $scope->property_u('say')->call( [ str( $f, "hello" ) ], $scope );
 
     # On
     {
         my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
-        $scope->property('Timer')->call( [ num( $f, 5 ) ], $scope )
-          ->property('once')->call( {}, $scope )->property('expire')
+        $scope->property_u('Timer')->call( [ num( $f, 5 ) ], $scope )
+          ->property_u('once')->call( {}, $scope )->property_u('expire')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
     $scope->set_property_ow( $context,
-        t2 => $scope->property('Timer')->call( [ num( $f, 2 ) ], $scope ) );
+        t2 => $scope->property_u('Timer')->call( [ num( $f, 2 ) ], $scope ) );
 
     # On
     {
         my $on_func = $funcs[1]->inside_scope( +undef => $scope, $scope );
-        $scope->property('t2')->property('once')->call( {}, $scope )
-          ->property('expire')
+        $scope->property_u('t2')->property_u('once')->call( {}, $scope )
+          ->property_u('expire')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
-    $scope->property('t2')->property('cancel')->call( {}, $scope );
+    $scope->property_u('t2')->property_u('cancel')->call( {}, $scope );
 };
 
 Ferret::runtime();

@@ -7,7 +7,8 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Conversion qw(ferret_number perl_number);
+use Ferret::Conversion qw(ferret_number perl_number ferret_boolean);
+use Scalar::Util qw(blessed);
 use List::Util qw(sum);
 
 my @methods = (
@@ -33,18 +34,25 @@ my @methods = (
     },
     toString => {
         code => \&_to_string
-    },
+    }
+);
+
+my @functions = (
     sum => {
-        code => \&_sum,
-        need => '$num1:Num num2:Num',
-        main => 1
+        need => '$num1:Num $num2:Num',
+        code => \&_sum
+    },
+    equal => {
+        need => '$num1:Num $num2:Num',
+        code => \&_equal
     }
 );
 
 Ferret::bind_class(
     name      => 'Number',
     alias     => 'Num',
-    methods   => \@methods
+    methods   => \@methods,
+    functions => \@functions
 );
 
 *new = *Ferret::bind_constructor;
@@ -99,6 +107,18 @@ sub _sum {
     my ($class, $arguments) = @_;
     my $sum = sum map { perl_number($_) } values %$arguments;
     return ferret_number($sum);
+}
+
+sub equal {
+    shift if !blessed $_[0];
+    my ($num1, $num2) = @_;
+    return $num1->{value} == $num2->{value};
+}
+
+sub _equal {
+    my ($num_class, $arguments) = @_;
+    my ($num1, $num2) = @$arguments{'num1', 'num2'};
+    return ferret_boolean(equal($num1, $num2));
 }
 
 1

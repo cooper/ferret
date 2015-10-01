@@ -107,9 +107,9 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $self->property('pt1')
-                  ->create_set( $scope, $self->property('pt2') )
-                  ->property('midpoint')->call( {}, $scope );
+                return $self->property_u('pt1')
+                  ->create_set( $scope, $self->property_u('pt2') )
+                  ->property_u('midpoint')->call( {}, $scope );
                 return $return;
             };
             $methods[1] = Ferret::Event->new(
@@ -129,8 +129,8 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $self->property('pt1')->property('distanceTo')
-                  ->call( [ $self->property('pt2') ], $scope );
+                return $self->property_u('pt1')->property_u('distanceTo')
+                  ->call( [ $self->property_u('pt2') ], $scope );
                 return $return;
             };
             $methods[2] = Ferret::Event->new(

@@ -93,7 +93,6 @@ sub set_property_ow {
 #
 # this is different from setting a value to undefined.
 # an undefined value is still a value. deleting a property makes it valueless.
-# if you
 #
 # returns true if something was deleted, false otherwise.
 #
@@ -108,7 +107,8 @@ sub delete_property {
 # if the property exists but is undefined, returns Ferret::undefined.
 # if the property does not exist, returns Perl undef.
 #
-sub property { (&_property)[0] }
+sub property   { (&_property)[0] }
+sub property_u { &property || Ferret::undefined }
 
 # this should not be used directly.
 # it returns a property value and its owner.
@@ -230,6 +230,34 @@ sub parents {
     return @parents;
 }
 
+# returns a flattened and simplified list of parent names as Perl strings.
+# this should be used only for debugging. it may not be consistent or reliable.
+sub parent_names {
+    my $obj = shift;
+    my @parents;
+    foreach my $parent ($obj->parents) {
+
+        # it's a prototype
+        if ($parent->{proto_class}) {
+            push @parents, $parent->{proto_class}{name};
+            next;
+        }
+
+        # just an object
+        my @p = grep $_ ne 'Prototype', $parent->parent_names;
+        push @parents, @p if @p;
+
+    }
+    unshift @parents, $obj->{faketype} if $obj->{faketype};
+    push @parents, 'Object' if !@parents;
+    return _uniq(@parents);
+}
+
+sub _uniq {
+    my %seen;
+    grep !$seen{$_}++, @_;
+}
+
 # returns a flattened and simplified list of parent classes.
 # basically, it searches all parents. if a parent is a prototype object,
 # it finds the class to which that prototype belongs.
@@ -289,17 +317,25 @@ sub set_index_value {
     return $obj->property('setValue')->call($arguments, $call_scope);
 }
 
-# test object equality
+# test object equality, return Ferret boolean
 sub equal_to {
     my ($left_obj, $right_obj, $scope) = @_;
+
+    # try normal equality first.
     # TODO: maybe check equality for each class implementing comparison?
-    return $left_obj->create_set($scope, $right_obj)->property('equal')->call;
+    if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('equal')) {
+        return $cmp->call;
+    }
+
+    # fallback to object equality.
+    return $left_obj->equal_to_exactly($right_obj, $scope);
+
 }
 
-# test exact object equality
+# test exact object equality, return Ferret boolean
 sub equal_to_exactly {
     my ($left_obj, $right_obj, $scope) = @_;
-    return $left_obj == $right_obj;
+    return $left_obj == $right_obj ? Ferret::true : Ferret::false;
 }
 
 ################

@@ -77,6 +77,7 @@ our %pretty_tokens = (
     OP_SUB      => 'subtraction operator (-)',
     OP_MUL      => 'multiplication operator (*)',
     OP_DIV      => 'division operator (/)',
+    OP_POW      => 'exponent operator (^)',
     OP_EXCLAM   => 'not operator (!)',
     OP_MAYBE    => 'inline if operator (?)',
     OP_SEMI     => 'semicolon (;)',

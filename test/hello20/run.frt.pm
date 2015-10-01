@@ -276,9 +276,9 @@ my $result = do {
                 return unless defined $arguments->{msg};
                 $scope->set_property( msg => $arguments->{msg} );
             };
-            $scope->property('bot')->property('privmsg')->call(
+            $scope->property_u('bot')->property_u('privmsg')->call(
                 [
-                    $scope->property('msg')->property('channel'),
+                    $scope->property_u('msg')->property_u('channel'),
                     str( $f, "Ferret IRC bot" )
                 ],
                 $scope
@@ -300,29 +300,29 @@ my $result = do {
             };
             $scope->set_property_ow(
                 $context,
-                res => $scope->property('COMPILER')->call(
+                res => $scope->property_u('COMPILER')->call(
                     [
-                        $scope->property('msg')->property('fromWord')
+                        $scope->property_u('msg')->property_u('fromWord')
                           ->call( [ num( $f, 1 ) ], $scope )
                     ],
                     $scope
-                )->property('tokenize')->call( {}, $scope )
+                )->property_u('tokenize')->call( {}, $scope )
             );
-            if ( bool( $scope->property('res')->property('error') ) ) {
+            if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $scope->property('bot')->property('privmsg')->call(
+                $scope->property_u('bot')->property_u('privmsg')->call(
                     [
-                        $scope->property('msg')->property('channel'),
-                        $scope->property('res')->property('error')
+                        $scope->property_u('msg')->property_u('channel'),
+                        $scope->property_u('res')->property_u('error')
                     ],
                     $scope
                 );
                 return $return;
             }
-            $scope->property('bot')->property('privmsg')->call(
+            $scope->property_u('bot')->property_u('privmsg')->call(
                 [
-                    $scope->property('msg')->property('channel'),
+                    $scope->property_u('msg')->property_u('channel'),
                     str( $f, "success" )
                 ],
                 $scope
@@ -344,35 +344,35 @@ my $result = do {
             };
             $scope->set_property_ow(
                 $context,
-                c => $scope->property('COMPILER')->call(
+                c => $scope->property_u('COMPILER')->call(
                     [
-                        $scope->property('msg')->property('fromWord')
+                        $scope->property_u('msg')->property_u('fromWord')
                           ->call( [ num( $f, 1 ) ], $scope )
                     ],
                     $scope
                 )
             );
             $scope->set_property_ow( $context,
-                res =>
-                  $scope->property('c')->property('compile')->call( {}, $scope )
-            );
-            $scope->property('dump')->call( [ $scope->property('c') ], $scope );
-            if ( bool( $scope->property('res')->property('error') ) ) {
+                res => $scope->property_u('c')->property_u('compile')
+                  ->call( {}, $scope ) );
+            $scope->property_u('dump')
+              ->call( [ $scope->property_u('c') ], $scope );
+            if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $scope->property('bot')->property('privmsg')->call(
+                $scope->property_u('bot')->property_u('privmsg')->call(
                     [
-                        $scope->property('msg')->property('channel'),
-                        $scope->property('res')->property('error')
+                        $scope->property_u('msg')->property_u('channel'),
+                        $scope->property_u('res')->property_u('error')
                     ],
                     $scope
                 );
                 return $return;
             }
-            $scope->property('bot')->property('privmsg')->call(
+            $scope->property_u('bot')->property_u('privmsg')->call(
                 [
-                    $scope->property('msg')->property('channel'),
-                    $scope->property('res')->property('perl')
+                    $scope->property_u('msg')->property_u('channel'),
+                    $scope->property_u('res')->property_u('perl')
                 ],
                 $scope
             );
@@ -393,21 +393,21 @@ my $result = do {
             };
             $scope->set_property_ow(
                 $context,
-                res => $scope->property('COMPILER')->call(
+                res => $scope->property_u('COMPILER')->call(
                     [
-                        $scope->property('msg')->property('fromWord')
+                        $scope->property_u('msg')->property_u('fromWord')
                           ->call( [ num( $f, 1 ) ], $scope )
                     ],
                     $scope
-                )->property('eval')->call( {}, $scope )
+                )->property_u('eval')->call( {}, $scope )
             );
-            if ( bool( $scope->property('res')->property('error') ) ) {
+            if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $scope->property('bot')->property('privmsg')->call(
+                $scope->property_u('bot')->property_u('privmsg')->call(
                     [
-                        $scope->property('msg')->property('channel'),
-                        $scope->property('res')->property('error')
+                        $scope->property_u('msg')->property_u('channel'),
+                        $scope->property_u('res')->property_u('error')
                     ],
                     $scope
                 );
@@ -415,18 +415,19 @@ my $result = do {
             }
             $scope->set_property_ow(
                 $context,
-                string => $scope->property('inspect')->call(
+                string => $scope->property_u('inspect')->call(
                     {
-                        value => $scope->property('res')->property('result'),
+                        value =>
+                          $scope->property_u('res')->property_u('result'),
                         quiet => Ferret::true
                     },
                     $scope
-                )->property('string')
+                )->property_u('string')
             );
-            $scope->property('bot')->property('privmsg')->call(
+            $scope->property_u('bot')->property_u('privmsg')->call(
                 [
-                    $scope->property('msg')->property('channel'),
-                    $scope->property('string')
+                    $scope->property_u('msg')->property_u('channel'),
+                    $scope->property_u('string')
                 ],
                 $scope
             );
@@ -436,7 +437,7 @@ my $result = do {
     Ferret::space( $context, $_ ) for qw(COMPILER IRC IRC::Bot);
     $scope->set_property_ow(
         $context,
-        bot => $scope->property('IRC::Bot')->call(
+        bot => $scope->property_u('IRC::Bot')->call(
             {
                 addr => str( $f, "k.notroll.net" ),
                 nick => str( $f, "bottie" ),
@@ -445,32 +446,32 @@ my $result = do {
             $scope
         )
     );
-    $scope->property('bot')
+    $scope->property_u('bot')
       ->set_property(
         autojoin => Ferret::List->new( $f, items => [ str( $f, "#k" ) ] ) );
-    $scope->property('bot')->property('addCommand')->call(
+    $scope->property_u('bot')->property_u('addCommand')->call(
         [
             str( $f, "info" ),
             $funcs[0]->inside_scope( +undef => $scope, $scope )
         ],
         $scope
     );
-    $scope->property('bot')->property('addCommand')->call(
+    $scope->property_u('bot')->property_u('addCommand')->call(
         [ str( $f, "t" ), $funcs[1]->inside_scope( +undef => $scope, $scope ) ],
         $scope
     );
-    $scope->property('bot')->property('addCommand')->call(
+    $scope->property_u('bot')->property_u('addCommand')->call(
         [
             str( $f, "compile" ),
             $funcs[2]->inside_scope( +undef => $scope, $scope )
         ],
         $scope
     );
-    $scope->property('bot')->property('addCommand')->call(
+    $scope->property_u('bot')->property_u('addCommand')->call(
         [ str( $f, "e" ), $funcs[3]->inside_scope( +undef => $scope, $scope ) ],
         $scope
     );
-    $scope->property('bot')->property('connect')->call( {}, $scope );
+    $scope->property_u('bot')->property_u('connect')->call( {}, $scope );
 };
 
 Ferret::runtime();

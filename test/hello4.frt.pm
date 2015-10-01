@@ -125,12 +125,12 @@ my $result = do {
                 point => Ferret::Hash->new(
                     $f,
                     pairs => {
-                        x => $scope->property('x'),
-                        y => $scope->property('y')
+                        x => $scope->property_u('x'),
+                        y => $scope->property_u('y')
                     }
                 )
             );
-            $return->set_property( point => $scope->property('point') );
+            $return->set_property( point => $scope->property_u('point') );
             return $return;
         };
         $funcs[0] = Ferret::Event->new(
@@ -142,14 +142,18 @@ my $result = do {
     $funcs[0]->inside_scope( makePoint => $scope, $scope );
 
     $scope->set_property_ow( $context,
-        pt => $scope->property('makePoint')
-          ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope )->property('point') );
-    $scope->property('say')->call(
+        pt => $scope->property_u('makePoint')
+          ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope )->property_u('point')
+    );
+    $scope->property_u('say')->call(
         [
             add(
-                $scope,                                str( $f, "Point(" ),
-                $scope->property('pt')->property('x'), str( $f, "," ),
-                $scope->property('pt')->property('y'), str( $f, ")" )
+                $scope,
+                str( $f, "Point(" ),
+                $scope->property_u('pt')->property_u('x'),
+                str( $f, "," ),
+                $scope->property_u('pt')->property_u('y'),
+                str( $f, ")" )
             )
         ],
         $scope

@@ -215,24 +215,30 @@ my $result = do {
                     $context,
                     dx => _sub(
                         $scope,
-                        $self->property('x'),
-                        $scope->property('pt2')->property('x')
+                        $self->property_u('x'),
+                        $scope->property_u('pt2')->property_u('x')
                     )
                 );
                 $scope->set_property_ow(
                     $context,
                     dy => _sub(
                         $scope,
-                        $self->property('y'),
-                        $scope->property('pt2')->property('y')
+                        $self->property_u('y'),
+                        $scope->property_u('pt2')->property_u('y')
                     )
                 );
-                return $scope->property('sqrt')->call(
+                return $scope->property_u('sqrt')->call(
                     [
                         add(
                             $scope,
-                            pow( $scope, $scope->property('dx'), num( $f, 2 ) ),
-                            pow( $scope, $scope->property('dy'), num( $f, 2 ) )
+                            pow(
+                                $scope, $scope->property_u('dx'),
+                                num( $f, 2 )
+                            ),
+                            pow(
+                                $scope, $scope->property_u('dy'),
+                                num( $f, 2 )
+                            )
                         )
                     ],
                     $scope
@@ -256,9 +262,9 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $self->property('distanceTo')->call(
+                return $self->property_u('distanceTo')->call(
                     [
-                        $scope->{special}->property('class')
+                        $scope->{special}->property_u('class')
                           ->call( [ num( $f, 0 ), num( $f, 0 ) ], $scope )
                     ],
                     $scope
@@ -283,9 +289,9 @@ my $result = do {
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return add(
-                    $scope,               str( $f, "(" ),
-                    $self->property('x'), str( $f, ", " ),
-                    $self->property('y'), str( $f, ")" )
+                    $scope,                 str( $f, "(" ),
+                    $self->property_u('x'), str( $f, ", " ),
+                    $self->property_u('y'), str( $f, ")" )
                 );
                 return $return;
             };
@@ -306,7 +312,7 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $self->property('pretty')->call( {}, $scope );
+                return $self->property_u('pretty')->call( {}, $scope );
                 return $return;
             };
             $methods[4] = Ferret::Event->new(
@@ -335,14 +341,14 @@ my $result = do {
                     return unless defined $arguments->{pt2};
                     $scope->set_property( pt2 => $arguments->{pt2} );
                 };
-                return $scope->{special}->property('class')->call(
+                return $scope->{special}->property_u('class')->call(
                     {
                         x => div(
                             $scope,
                             add(
                                 $scope,
-                                $scope->property('pt1')->property('x'),
-                                $scope->property('pt2')->property('x')
+                                $scope->property_u('pt1')->property_u('x'),
+                                $scope->property_u('pt2')->property_u('x')
                             ),
                             num( $f, 2 )
                         ),
@@ -350,8 +356,8 @@ my $result = do {
                             $scope,
                             add(
                                 $scope,
-                                $scope->property('pt1')->property('y'),
-                                $scope->property('pt2')->property('y')
+                                $scope->property_u('pt1')->property_u('y'),
+                                $scope->property_u('pt2')->property_u('y')
                             ),
                             num( $f, 2 )
                         )
@@ -386,8 +392,8 @@ my $result = do {
                     return unless defined $arguments->{pt2};
                     $scope->set_property( pt2 => $arguments->{pt2} );
                 };
-                return $scope->property('pt1')->property('distanceTo')
-                  ->call( [ $scope->property('pt2') ], $scope );
+                return $scope->property_u('pt1')->property_u('distanceTo')
+                  ->call( [ $scope->property_u('pt2') ], $scope );
                 return $return;
             };
             $methods[6] = Ferret::Event->new(

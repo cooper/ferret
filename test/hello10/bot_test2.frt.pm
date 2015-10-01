@@ -56,7 +56,7 @@ my $result = do {
     Ferret::space( $context, $_ ) for qw(Bot2);
     $scope->set_property_ow(
         $context,
-        bot => $scope->property('Bot2')->call(
+        bot => $scope->property_u('Bot2')->call(
             {
                 address => str( $f, "k.notroll.net" ),
                 nick    => str( $f, "ferret" ),
@@ -65,9 +65,9 @@ my $result = do {
             $scope
         )
     );
-    $scope->property('say')
-      ->call( [ $scope->property('bot')->property('address') ], $scope );
-    $scope->property('bot')->property('connect')->call( {}, $scope );
+    $scope->property_u('say')
+      ->call( [ $scope->property_u('bot')->property_u('address') ], $scope );
+    $scope->property_u('bot')->property_u('connect')->call( {}, $scope );
 };
 
 Ferret::runtime();

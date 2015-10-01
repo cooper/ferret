@@ -132,58 +132,59 @@ my $result = do {
 
     $scope->set_property_ow( $context,
         list => Ferret::List->new( $f, items => [ str( $f, "hi" ) ] ) );
-    $scope->property('list')->property('push')
+    $scope->property_u('list')->property_u('push')
       ->call( [ str( $f, "there" ) ], $scope );
-    $scope->property('list')
+    $scope->property_u('list')
       ->set_index_value( [ num( $f, 4 ) ], str( $f, "yeah" ), $scope );
-    $scope->property('say')->call(
+    $scope->property_u('say')->call(
         [
             add(
                 $scope,
                 str( $f, "Length: " ),
-                $scope->property('list')->property('length')->call( {}, $scope )
+                $scope->property_u('list')->property_u('length')
+                  ->call( {}, $scope )
             )
         ],
         $scope
     );
-    foreach ( $scope->property('list')->iterate ) {
+    foreach ( $scope->property_u('list')->iterate ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
         $scope->set_property( item => $_ );
 
-        $scope->property('say')
-          ->call(
-            [ add( $scope, str( $f, "item: " ), $scope->property('item') ) ],
-            $scope );
+        $scope->property_u('say')->call(
+            [ add( $scope, str( $f, "item: " ), $scope->property_u('item') ) ],
+            $scope
+        );
     }
     $scope->set_property_ow( $context,
         hash => Ferret::Hash->new( $f, pairs => { hi => str( $f, "there" ) } )
     );
-    $scope->property('hash')
+    $scope->property_u('hash')
       ->set_index_value( [ str( $f, "whats" ) ], str( $f, "up" ), $scope );
-    $scope->property('hash')
+    $scope->property_u('hash')
       ->set_index_value( [ str( $f, "thank" ) ], str( $f, "you" ), $scope );
-    $scope->property('say')->call(
+    $scope->property_u('say')->call(
         [
             add(
                 $scope,
                 str( $f, "whats " ),
-                $scope->property('hash')
+                $scope->property_u('hash')
                   ->get_index_value( [ str( $f, "whats" ) ], $scope )
             )
         ],
         $scope
     );
-    foreach ( $scope->property('hash')->iterate_pair ) {
+    foreach ( $scope->property_u('hash')->iterate_pair ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
         $scope->set_property( key => $_->[0] );
         $scope->set_property( val => $_->[1] );
 
-        $scope->property('say')->call(
+        $scope->property_u('say')->call(
             [
                 add(
-                    $scope,                  str( $f, "pair: key=" ),
-                    $scope->property('key'), str( $f, "; value=" ),
-                    $scope->property('val')
+                    $scope,                    str( $f, "pair: key=" ),
+                    $scope->property_u('key'), str( $f, "; value=" ),
+                    $scope->property_u('val')
                 )
             ],
             $scope

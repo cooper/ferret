@@ -141,18 +141,22 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $self->property('send')->call(
+            $self->property_u('send')->call(
                 [
                     add(
-                        $scope,                  str( $f, "USER " ),
-                        $self->property('user'), str( $f, " * * :" ),
-                        $self->property('real')
+                        $scope,                    str( $f, "USER " ),
+                        $self->property_u('user'), str( $f, " * * :" ),
+                        $self->property_u('real')
                     )
                 ],
                 $scope
             );
-            $self->property('send')->call(
-                [ add( $scope, str( $f, "NICK " ), $self->property('nick') ) ],
+            $self->property_u('send')->call(
+                [
+                    add(
+                        $scope, str( $f, "NICK " ), $self->property_u('nick')
+                    )
+                ],
                 $scope
             );
             return $return;
@@ -170,10 +174,11 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            $scope->property('say')->call(
+            $scope->property_u('say')->call(
                 [
                     add(
-                        $scope, str( $f, "recv: " ), $scope->property('data')
+                        $scope, str( $f, "recv: " ),
+                        $scope->property_u('data')
                     )
                 ],
                 $scope
@@ -233,10 +238,10 @@ my $result = do {
                     $self->set_property( real => $want_val );
                 };
                 $self->set_property(
-                    sock => $scope->property('Socket::TCP')->call(
+                    sock => $scope->property_u('Socket::TCP')->call(
                         {
-                            address => $self->property('addr'),
-                            port    => $self->property('port')
+                            address => $self->property_u('addr'),
+                            port    => $self->property_u('port')
                         },
                         $scope
                     )
@@ -246,7 +251,7 @@ my $result = do {
                 {
                     my $on_func =
                       $funcs[0]->inside_scope( +undef => $scope, $scope );
-                    $self->property('sock')->property('connected')
+                    $self->property_u('sock')->property_u('connected')
                       ->add_function_with_self_and_scope( $self, $scope,
                         $on_func );
                 }
@@ -255,7 +260,7 @@ my $result = do {
                 {
                     my $on_func =
                       $funcs[1]->inside_scope( +undef => $scope, $scope );
-                    $self->property('sock')->property('gotLine')
+                    $self->property_u('sock')->property_u('gotLine')
                       ->add_function_with_self_and_scope( $self, $scope,
                         $on_func );
                 }
@@ -278,7 +283,7 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $self->property('sock')->property('connect')
+                $self->property_u('sock')->property_u('connect')
                   ->call( {}, $scope );
                 return $return;
             };
@@ -303,17 +308,17 @@ my $result = do {
                     return unless defined $arguments->{line};
                     $scope->set_property( line => $arguments->{line} );
                 };
-                $scope->property('say')->call(
+                $scope->property_u('say')->call(
                     [
                         add(
                             $scope, str( $f, "send: " ),
-                            $scope->property('line')
+                            $scope->property_u('line')
                         )
                     ],
                     $scope
                 );
-                $self->property('sock')->property('println')
-                  ->call( [ $scope->property('line') ], $scope );
+                $self->property_u('sock')->property_u('println')
+                  ->call( [ $scope->property_u('line') ], $scope );
                 return $return;
             };
             $methods[2] = Ferret::Event->new(

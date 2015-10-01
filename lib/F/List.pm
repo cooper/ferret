@@ -73,6 +73,7 @@ sub perl_fmt {
     }
 
     # it's just one parenthesized value.
+    return unless $children[0];
     return expression => { content => $children[0]->perl_fmt_do };
 
 }

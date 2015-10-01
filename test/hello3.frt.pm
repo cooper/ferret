@@ -125,15 +125,15 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->set_property_ow( $context, hello => str( $f, "Hello" ) );
-            $scope->property('hello')
-              ->set_property( name => $scope->property('name1') );
-            $scope->property('say')->call(
+            $scope->property_u('hello')
+              ->set_property( name => $scope->property_u('name1') );
+            $scope->property_u('say')->call(
                 [
                     add(
                         $scope,
-                        $scope->property('hello'),
+                        $scope->property_u('hello'),
                         str( $f, " " ),
-                        $scope->property('hello')->property('name')
+                        $scope->property_u('hello')->property_u('name')
                     )
                 ],
                 $scope
@@ -154,11 +154,11 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property('say')->call(
+            $scope->property_u('say')->call(
                 [
                     add(
                         $scope, str( $f, "Hello " ),
-                        $scope->property('name2')
+                        $scope->property_u('name2')
                     )
                 ],
                 $scope
@@ -190,8 +190,8 @@ my $result = do {
                 return unless defined $arguments->{name2};
                 $scope->set_property( name2 => $arguments->{name2} );
             };
-            $scope->property('hello1')->call( {}, $scope );
-            $scope->property('hello2')->call( {}, $scope );
+            $scope->property_u('hello1')->call( {}, $scope );
+            $scope->property_u('hello2')->call( {}, $scope );
             return $return;
         };
         $funcs[2] = Ferret::Event->new(
@@ -202,18 +202,18 @@ my $result = do {
     }
     $funcs[2]->inside_scope( helloWorld => $scope, $scope );
 
-    $scope->property('helloWorld')
+    $scope->property_u('helloWorld')
       ->call( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
         $scope );
-    $scope->property('helloWorld')
+    $scope->property_u('helloWorld')
       ->call( { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
         $scope );
-    $scope->property('helloWorld')
+    $scope->property_u('helloWorld')
       ->call( [ str( $f, "Benjamin" ), str( $f, "George" ) ], $scope );
     $scope->set_property_ow( $context,
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ) );
-    $scope->property('say')
-      ->call( [ add( $scope, str( $f, "Pi = " ), $scope->property('pi') ) ],
+    $scope->property_u('say')
+      ->call( [ add( $scope, str( $f, "Pi = " ), $scope->property_u('pi') ) ],
         $scope );
 };
 

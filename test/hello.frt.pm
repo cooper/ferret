@@ -32,7 +32,7 @@ my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
 
-    $scope->property('say')->call( [ str( $f, "Hello World!" ) ], $scope );
+    $scope->property_u('say')->call( [ str( $f, "Hello World!" ) ], $scope );
 };
 
 Ferret::runtime();

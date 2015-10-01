@@ -223,8 +223,8 @@ my $result = do {
                     return unless defined $arguments->{y};
                     $scope->set_property( y => $arguments->{y} );
                 };
-                $self->set_property( x => $scope->property('x') );
-                $self->set_property( y => $scope->property('y') );
+                $self->set_property( x => $scope->property_u('x') );
+                $self->set_property( y => $scope->property_u('y') );
                 return $return;
             };
             $methods[0] = Ferret::Event->new(
@@ -246,15 +246,15 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property_ow(
                     $context,
-                    pt => $scope->{special}->property('class')->call(
+                    pt => $scope->{special}->property_u('class')->call(
                         [
-                            add( $scope, $self->property('x'), num( $f, 1 ) ),
-                            $self->property('y')
+                            add( $scope, $self->property_u('x'), num( $f, 1 ) ),
+                            $self->property_u('y')
                         ],
                         $scope
                     )
                 );
-                return $scope->property('pt');
+                return $scope->property_u('pt');
                 return $return;
             };
             $methods[1] = Ferret::Event->new(
@@ -275,9 +275,9 @@ my $result = do {
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return add(
-                    $scope,               str( $f, "(" ),
-                    $self->property('x'), str( $f, ", " ),
-                    $self->property('y'), str( $f, ")" )
+                    $scope,                 str( $f, "(" ),
+                    $self->property_u('x'), str( $f, ", " ),
+                    $self->property_u('y'), str( $f, ")" )
                 );
                 return $return;
             };
@@ -298,7 +298,7 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $self->property('pretty')->call( {}, $scope );
+                return $self->property_u('pretty')->call( {}, $scope );
                 return $return;
             };
             $methods[3] = Ferret::Event->new(
@@ -327,14 +327,14 @@ my $result = do {
                     return unless defined $arguments->{pt2};
                     $scope->set_property( pt2 => $arguments->{pt2} );
                 };
-                return $scope->property('Point')->call(
+                return $scope->property_u('Point')->call(
                     {
                         x => div(
                             $scope,
                             add(
                                 $scope,
-                                $scope->property('pt1')->property('x'),
-                                $scope->property('pt2')->property('x')
+                                $scope->property_u('pt1')->property_u('x'),
+                                $scope->property_u('pt2')->property_u('x')
                             ),
                             num( $f, 2 )
                         ),
@@ -342,8 +342,8 @@ my $result = do {
                             $scope,
                             add(
                                 $scope,
-                                $scope->property('pt1')->property('y'),
-                                $scope->property('pt2')->property('y')
+                                $scope->property_u('pt1')->property_u('y'),
+                                $scope->property_u('pt2')->property_u('y')
                             ),
                             num( $f, 2 )
                         )
@@ -364,27 +364,31 @@ my $result = do {
         $methods[3]->inside_scope( toString   => $scope, $proto, $class );
         $methods[4]->inside_scope( midpoint   => $scope, $class, $class );
         $scope->set_property_ow( $context,
-            pt => $scope->property('Point')
+            pt => $scope->property_u('Point')
               ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope ) );
-        $scope->property('say')
-          ->call( [ add( $scope, str( $f, "Point" ), $scope->property('pt') ) ],
+        $scope->property_u('say')
+          ->call(
+            [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
             $scope );
         $scope->set_property_ow( $context,
-            rpt =>
-              $scope->property('pt')->property('oneToRight')->call( {}, $scope )
-        );
-        $scope->property('say')
+            rpt => $scope->property_u('pt')->property_u('oneToRight')
+              ->call( {}, $scope ) );
+        $scope->property_u('say')
           ->call(
-            [ add( $scope, str( $f, "Right" ), $scope->property('rpt') ) ],
+            [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
             $scope );
         $scope->set_property_ow(
             $context,
-            mdpt => $scope->property('Point')->property('midpoint')->call(
-                [ $scope->property('pt'), $scope->property('rpt') ], $scope
+            mdpt => $scope->property_u('Point')->property_u('midpoint')->call(
+                [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope
             )
         );
-        $scope->property('say')->call(
-            [ add( $scope, str( $f, "Midpoint" ), $scope->property('mdpt') ) ],
+        $scope->property_u('say')->call(
+            [
+                add(
+                    $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt')
+                )
+            ],
             $scope
         );
         $scope->set_property_ow(
@@ -395,11 +399,11 @@ my $result = do {
                 div( $scope, num( $f, 45 ), num( $f, 3 ) )
             )
         );
-        $scope->property('say')->call(
+        $scope->property_u('say')->call(
             [
                 add(
                     $scope, str( $f, "Nineteen: " ),
-                    $scope->property('nineteen')
+                    $scope->property_u('nineteen')
                 )
             ],
             $scope
