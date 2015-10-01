@@ -9,15 +9,15 @@ init {
         @real: Str = "Ferret IRC";
 
     @handlers = [
-        MODE:       @joinChannels,
-        PING:       @pong,
-        PRIVMSG:    @handleMessage
+        MODE:       @_joinChannels,
+        PING:       @_pong,
+        PRIVMSG:    @_handleMessage
     ];
 
     @commands = [
-        hello:  @commandHello,
-        hi:     @commandHello,
-        add:    @commandAdd
+        hello:  @_commandHello,
+        hi:     @_commandHello,
+        add:    @_commandAdd
     ];
 
     @factoids = [:];
@@ -86,12 +86,12 @@ method privmsg {
     }
 }
 
-method joinChannels {
+method _joinChannels {
 
     # check if already joined.
-    if @joinedChannels:
+    if @_joinedChannels:
         return;
-    @joinedChannels = true;
+    @_joinedChannels = true;
 
     if @autojoin {
         for $chan in @autojoin {
@@ -100,12 +100,12 @@ method joinChannels {
     }
 }
 
-method pong {
+method _pong {
     need $s;
     @send("PONG " + $s[1]);
 }
 
-method handleMessage {
+method _handleMessage {
     need $line, $s;
 
     # parse the message
@@ -120,13 +120,13 @@ method handleMessage {
 
 }
 
-method commandHello {
+method _commandHello {
     need $msg;
     $nickname = $msg.nickname;
     @privmsg($msg.channel, "Hi $nickname!");
 }
 
-method commandAdd {
+method _commandAdd {
     need $msg;
     inspect($msg);
 
@@ -136,12 +136,12 @@ method commandAdd {
 
     # remember this factoid
     @factoids[$trigger] = $response;
-    @commands[$trigger] = @commandFactoid;
+    @commands[$trigger] = @_commandFactoid;
 
     @privmsg($msg.channel, "alright, associating .$trigger with '$response'");
 }
 
-method commandFactoid {
+method _commandFactoid {
     need $msg;
     $response = @factoids[ $msg.command() ];
     @privmsg($msg.channel, $response);

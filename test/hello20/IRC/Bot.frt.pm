@@ -35,26 +35,26 @@
 #                      Hash [3 items]
 #                          Item 0
 #                              Pair 'MODE'
-#                                  Instance variable '@joinChannels'
+#                                  Instance variable '@_joinChannels'
 #                          Item 1
 #                              Pair 'PING'
-#                                  Instance variable '@pong'
+#                                  Instance variable '@_pong'
 #                          Item 2
 #                              Pair 'PRIVMSG'
-#                                  Instance variable '@handleMessage'
+#                                  Instance variable '@_handleMessage'
 #              Instruction
 #                  Assignment
 #                      Instance variable '@commands'
 #                      Hash [3 items]
 #                          Item 0
 #                              Pair 'hello'
-#                                  Instance variable '@commandHello'
+#                                  Instance variable '@_commandHello'
 #                          Item 1
 #                              Pair 'hi'
-#                                  Instance variable '@commandHello'
+#                                  Instance variable '@_commandHello'
 #                          Item 2
 #                              Pair 'add'
-#                                  Instance variable '@commandAdd'
+#                                  Instance variable '@_commandAdd'
 #              Instruction
 #                  Assignment
 #                      Instance variable '@factoids'
@@ -267,15 +267,15 @@
 #                                      String ' :'
 #                                      Addition operator (+)
 #                                      Lexical variable '$line'
-#          Method 'joinChannels'
+#          Method '_joinChannels'
 #              If
 #                  Expression ('if' parameter)
-#                      Instance variable '@joinedChannels'
+#                      Instance variable '@_joinedChannels'
 #                  Instruction
 #                      Return
 #              Instruction
 #                  Assignment
-#                      Instance variable '@joinedChannels'
+#                      Instance variable '@_joinedChannels'
 #                      Boolean true
 #              If
 #                  Expression ('if' parameter)
@@ -294,7 +294,7 @@
 #                                          String 'JOIN '
 #                                          Addition operator (+)
 #                                          Lexical variable '$chan'
-#          Method 'pong'
+#          Method '_pong'
 #              Instruction
 #                  Need
 #                      Lexical variable '$s'
@@ -311,7 +311,7 @@
 #                                      Structural list [1 items]
 #                                          Item 0
 #                                              Number '1'
-#          Method 'handleMessage'
+#          Method '_handleMessage'
 #              Instruction
 #                  Need
 #                      Lexical variable '$line'
@@ -353,7 +353,7 @@
 #                              Item 2
 #                                  Pair 'msg'
 #                                      Lexical variable '$msg'
-#          Method 'commandHello'
+#          Method '_commandHello'
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -376,7 +376,7 @@
 #                                  Lexical variable '$nickname'
 #                                  Addition operator (+)
 #                                  String '!'
-#          Method 'commandAdd'
+#          Method '_commandAdd'
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -419,7 +419,7 @@
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Lexical variable '$trigger'
-#                      Instance variable '@commandFactoid'
+#                      Instance variable '@_commandFactoid'
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
@@ -438,7 +438,7 @@
 #                                  Lexical variable '$response'
 #                                  Addition operator (+)
 #                                  String '''
-#          Method 'commandFactoid'
+#          Method '_commandFactoid'
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -589,9 +589,9 @@ my $result = do {
                     handlers => Ferret::Hash->new(
                         $f,
                         pairs => {
-                            MODE    => $self->property_u('joinChannels'),
-                            PING    => $self->property_u('pong'),
-                            PRIVMSG => $self->property_u('handleMessage')
+                            MODE    => $self->property_u('_joinChannels'),
+                            PING    => $self->property_u('_pong'),
+                            PRIVMSG => $self->property_u('_handleMessage')
                         }
                     )
                 );
@@ -599,9 +599,9 @@ my $result = do {
                     commands => Ferret::Hash->new(
                         $f,
                         pairs => {
-                            hello => $self->property_u('commandHello'),
-                            hi    => $self->property_u('commandHello'),
-                            add   => $self->property_u('commandAdd')
+                            hello => $self->property_u('_commandHello'),
+                            hi    => $self->property_u('_commandHello'),
+                            add   => $self->property_u('_commandAdd')
                         }
                     )
                 );
@@ -858,7 +858,7 @@ my $result = do {
             );
         }
 
-        # Method event 'joinChannels' definition
+        # Method event '_joinChannels' definition
         {
             my $func = Ferret::Function->new(
                 $f,
@@ -868,12 +868,12 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                if ( bool( $self->property_u('joinedChannels') ) ) {
+                if ( bool( $self->property_u('_joinedChannels') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $return;
                 }
-                $self->set_property( joinedChannels => Ferret::true );
+                $self->set_property( _joinedChannels => Ferret::true );
                 if ( bool( $self->property_u('autojoin') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -897,12 +897,12 @@ my $result = do {
             };
             $methods[6] = Ferret::Event->new(
                 $f,
-                name         => 'joinChannels',
+                name         => '_joinChannels',
                 default_func => [ undef, $func ]
             );
         }
 
-        # Method event 'pong' definition
+        # Method event '_pong' definition
         {
             my $func = Ferret::Function->new(
                 $f,
@@ -931,12 +931,12 @@ my $result = do {
             };
             $methods[7] = Ferret::Event->new(
                 $f,
-                name         => 'pong',
+                name         => '_pong',
                 default_func => [ undef, $func ]
             );
         }
 
-        # Method event 'handleMessage' definition
+        # Method event '_handleMessage' definition
         {
             my $func = Ferret::Function->new(
                 $f,
@@ -992,12 +992,12 @@ my $result = do {
             };
             $methods[8] = Ferret::Event->new(
                 $f,
-                name         => 'handleMessage',
+                name         => '_handleMessage',
                 default_func => [ undef, $func ]
             );
         }
 
-        # Method event 'commandHello' definition
+        # Method event '_commandHello' definition
         {
             my $func = Ferret::Function->new(
                 $f,
@@ -1028,12 +1028,12 @@ my $result = do {
             };
             $methods[9] = Ferret::Event->new(
                 $f,
-                name         => 'commandHello',
+                name         => '_commandHello',
                 default_func => [ undef, $func ]
             );
         }
 
-        # Method event 'commandAdd' definition
+        # Method event '_commandAdd' definition
         {
             my $func = Ferret::Function->new(
                 $f,
@@ -1061,7 +1061,7 @@ my $result = do {
                     $scope->property_u('response'), $scope );
                 $self->property_u('commands')
                   ->set_index_value( [ $scope->property_u('trigger') ],
-                    $self->property_u('commandFactoid'), $scope );
+                    $self->property_u('_commandFactoid'), $scope );
                 $self->property_u('privmsg')->call(
                     [
                         $scope->property_u('msg')->property_u('channel'),
@@ -1080,12 +1080,12 @@ my $result = do {
             };
             $methods[10] = Ferret::Event->new(
                 $f,
-                name         => 'commandAdd',
+                name         => '_commandAdd',
                 default_func => [ undef, $func ]
             );
         }
 
-        # Method event 'commandFactoid' definition
+        # Method event '_commandFactoid' definition
         {
             my $func = Ferret::Function->new(
                 $f,
@@ -1120,22 +1120,22 @@ my $result = do {
             };
             $methods[11] = Ferret::Event->new(
                 $f,
-                name         => 'commandFactoid',
+                name         => '_commandFactoid',
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_        => $scope, $class, $class );
-        $methods[1]->inside_scope( addCommand    => $scope, $proto, $class );
-        $methods[2]->inside_scope( connect       => $scope, $proto, $class );
-        $methods[3]->inside_scope( send          => $scope, $proto, $class );
-        $methods[4]->inside_scope( handleLine    => $scope, $proto, $class );
-        $methods[5]->inside_scope( privmsg       => $scope, $proto, $class );
-        $methods[6]->inside_scope( joinChannels  => $scope, $proto, $class );
-        $methods[7]->inside_scope( pong          => $scope, $proto, $class );
-        $methods[8]->inside_scope( handleMessage => $scope, $proto, $class );
-        $methods[9]->inside_scope( commandHello  => $scope, $proto, $class );
-        $methods[10]->inside_scope( commandAdd     => $scope, $proto, $class );
-        $methods[11]->inside_scope( commandFactoid => $scope, $proto, $class );
+        $methods[0]->inside_scope( _init_         => $scope, $class, $class );
+        $methods[1]->inside_scope( addCommand     => $scope, $proto, $class );
+        $methods[2]->inside_scope( connect        => $scope, $proto, $class );
+        $methods[3]->inside_scope( send           => $scope, $proto, $class );
+        $methods[4]->inside_scope( handleLine     => $scope, $proto, $class );
+        $methods[5]->inside_scope( privmsg        => $scope, $proto, $class );
+        $methods[6]->inside_scope( _joinChannels  => $scope, $proto, $class );
+        $methods[7]->inside_scope( _pong          => $scope, $proto, $class );
+        $methods[8]->inside_scope( _handleMessage => $scope, $proto, $class );
+        $methods[9]->inside_scope( _commandHello  => $scope, $proto, $class );
+        $methods[10]->inside_scope( _commandAdd     => $scope, $proto, $class );
+        $methods[11]->inside_scope( _commandFactoid => $scope, $proto, $class );
     }
     Ferret::space( $context, $_ )
       for qw(Func IRC IRC::Message Num Socket Socket::TCP Str);

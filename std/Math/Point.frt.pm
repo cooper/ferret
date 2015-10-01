@@ -37,11 +37,11 @@
 #                              Item 0
 #                                  Operation
 #                                      Lexical variable '$dx'
-#                                      OP_POW
+#                                      Exponent operator (^)
 #                                      Number '2'
 #                                      Addition operator (+)
 #                                      Lexical variable '$dy'
-#                                      OP_POW
+#                                      Exponent operator (^)
 #                                      Number '2'
 #          Method 'distanceFromOrigin'
 #              Instruction

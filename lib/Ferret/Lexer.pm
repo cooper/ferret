@@ -81,6 +81,7 @@ our %pretty_tokens = (
     OP_EXCLAM   => 'not operator (!)',
     OP_MAYBE    => 'inline if operator (?)',
     OP_SEMI     => 'semicolon (;)',
+    OP_ELLIP    => 'ellipsis (...)',
     #OP_PROP     => 'property operator (.)',
     OP_COMMA    => 'comma (,)',
     OP_PACK     => 'namespace operator (::)',

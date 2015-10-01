@@ -36,7 +36,7 @@ my %no_value = map { $_ => 1 } qw(
 );
 
 # reused formats
-my $prop_reg    = qr/\b[A-Za-z][A-Za-z0-9]*/;
+my $prop_reg    = qr/\b[A-Za-z_][A-Za-z0-9]*/;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
 my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
 
@@ -86,6 +86,7 @@ my @token_formats = (
     [ OP_EXCLAM     => qr/!/                                                ],  # call without arguments
     [ OP_MAYBE      => qr/\?/                                               ],  # inline if operator
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
+    [ OP_ELLIP      => qr/\.\.\./                                           ],  # ellipsis
    #[ OP_PROP       => qr/\./                                               ],  # property
     [ OP_COMMA      => qr/,/                                                ],  # list separator
     [ OP_PACK       => qr/::/                                               ],  # package
@@ -93,7 +94,7 @@ my @token_formats = (
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other
-    [ BAREWORD      => qr/\b[A-Za-z][A-Za-z0-9:]*/                          ],  # bareword (and keywords)
+    [ BAREWORD      => qr/\b[A-Za-z_][A-Za-z0-9:]*/                         ],  # bareword (and keywords)
     [ NUMBER        => qr/[+-]?\d+(?:\.\d+(?:e\d+)?)?/                      ],  # number
     [ NEWLINE       => qr/\n/,          \&ignore_increment                  ],  # newline
     [ SPACE         => qr/\s*/,         \&ignore                            ],  # whitespace
@@ -228,7 +229,7 @@ sub tok_STR_REG {
     foreach my $part (@parts) { $i++;
         ref $part eq 'HASH' or next;
         my $code = "$$part{sigil}$$part{name}";
-        $parts[$i] = (tokenize($code))[1];
+        $parts[$i] = (tokenize_noinc($code))[1];
     }
 
     return $is_str ? [ STRING => \@parts ] : [ REGEX => \@parts ];
@@ -329,8 +330,16 @@ sub ignore            { }
 sub ignore_increment  { &increment_lines; () }
 sub increment_lines   {
     my ($l, $v) = @_;
-    $current_line++ for ($v =~ /\n/g);
+    $current_line += () = $v =~ /\n/g;
     return [ $l, $v ];
+}
+
+# tokenize but do not increment lines
+sub tokenize_noinc {
+    my $old_line = $current_line;
+    my @ret = &tokenize;
+    $current_line = $old_line;
+    return @ret;
 }
 
 sub tokenize {
@@ -338,6 +347,7 @@ sub tokenize {
     my $lexer  = string_lexer($string, @token_formats);
     my @tokens;
     $current_line = 1;
+
     while (my $token = &$lexer) {
 
         # something wasn't tokenized.
