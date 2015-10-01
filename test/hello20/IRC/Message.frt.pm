@@ -83,10 +83,10 @@
 #          Method 'command'
 #              If
 #                  Expression ('if' parameter)
-#                      Instance variable '@foundCommand'
+#                      Instance variable '@_foundCommand'
 #                  Instruction
 #                      Return
-#                          Instance variable '@foundCommand'
+#                          Instance variable '@_foundCommand'
 #              If
 #                  Expression ('if' parameter)
 #                      Call
@@ -101,7 +101,7 @@
 #                                  String '.'
 #                  Instruction
 #                      Assignment
-#                          Instance variable '@foundCommand'
+#                          Instance variable '@_foundCommand'
 #                          Call
 #                              Property 'trimPrefix'
 #                                  Call
@@ -117,14 +117,14 @@
 #                                      String '.'
 #                  Instruction
 #                      Return
-#                          Instance variable '@foundCommand'
+#                          Instance variable '@_foundCommand'
 #              Instruction
 #                  Assignment
-#                      Instance variable '@foundCommand'
+#                      Instance variable '@_foundCommand'
 #                      Boolean false
 #              Instruction
 #                  Return
-#                      Instance variable '@foundCommand'
+#                      Instance variable '@_foundCommand'
 #          Method 'fromWord'
 #              Instruction
 #                  Need
@@ -249,10 +249,10 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                if ( bool( $self->property_u('foundCommand') ) ) {
+                if ( bool( $self->property_u('_foundCommand') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return $self->property_u('foundCommand');
+                    return $self->property_u('_foundCommand');
                 }
                 if (
                     bool(
@@ -266,15 +266,15 @@ my $result = do {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $self->set_property(
-                        foundCommand => $self->property_u('parts')
+                        _foundCommand => $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
                           ->property_u('copy')->call( {}, $scope )
                           ->property_u('trimPrefix')
                           ->call( [ str( $f, "." ) ], $scope ) );
-                    return $self->property_u('foundCommand');
+                    return $self->property_u('_foundCommand');
                 }
-                $self->set_property( foundCommand => Ferret::false );
-                return $self->property_u('foundCommand');
+                $self->set_property( _foundCommand => Ferret::false );
+                return $self->property_u('_foundCommand');
                 return $return;
             };
             $methods[1] = Ferret::Event->new(

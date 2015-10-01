@@ -34,6 +34,7 @@ sub add_function_with_self_and_scope {
 
 sub add_function {
     my ($event, $obj, $func) = @_;
+    #
     # if $func is undefined, that means the $obj was omitted.
     # when $obj is omitted, the object is inferred by last_parent.
     #
@@ -83,7 +84,7 @@ sub add_function {
 
         # call the function.
         my $ret = $func->call_with_self(
-            $self_maybe || $obj,
+            $arguments->{_self} || $self_maybe || $obj,
             $arguments,
             $call_scope,
             $fire->{override_return} // $return
@@ -109,13 +110,12 @@ sub add_function {
 
 sub call_with_self {
     my ($event, $self) = (shift, shift);
-    $event->{last_parent} = $self;
+    $event->{force_self} = $self;
     return $event->call(@_);
 }
 
 sub call {
     my ($event, $arguments, $call_scope, $return) = @_;
-    my $obj = $event->{last_parent} or warn "no last parent" and return;
 
     # arguments for the default function.
     $arguments ||= {};
@@ -123,6 +123,14 @@ sub call {
         my $default = $event->{function}{default} or return;
         $arguments = $default->handle_arguments($arguments);
     }
+
+    # find the object
+    my $obj =
+        $arguments->{_self}         ||
+        delete $event->{force_self} ||
+        $event->{last_parent}
+    or warn "no last parent for $$event{name}" and return;
+
 
     # call each function. if the dependencies can't be satisfied,
     # ->call will do nothing.

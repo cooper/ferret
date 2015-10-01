@@ -20,7 +20,7 @@ sub after_adopt {
     # if it starts with a capital letter, it's a class or namespace.
     my @parts;
     foreach my $part (split /::/, $val) {
-        if (ucfirst $part eq $part) {
+        if ($part =~ m/^[A-Z]/) {
             push @parts, $part;
             next;
         }

@@ -284,6 +284,7 @@ use Ferret::Context;
 use Ferret::Function;
 use Ferret::Event;
 use Ferret::Class;
+use Ferret::Prototype;
 use Ferret::List;
 use Ferret::Hash;
 use Ferret::Set;

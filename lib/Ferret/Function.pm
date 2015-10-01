@@ -99,15 +99,11 @@ sub call {
         $return ||= Ferret::Return->new($func->f);
 
         # find self.
-        my $self = delete $func->{force_self};
-        if (!$self) {
-            if ($func->is_method) {
-                $self = $func->{last_parent};
-            }
-            elsif ($func->is_class_func) {
-                $self = $func->{class};
-            }
-        }
+        my $self =
+            ( delete $func->{force_self}                          ) ||
+            ( $arguments->{_self}                                 ) ||
+            ( $func->is_method     ? $func->{last_parent} : undef ) ||
+            ( $func->is_class_func ? $func->{class}       : undef ) ;
 
         # class/instance argument.
         $scope->{special}->set_property(self   => $self) if $self;

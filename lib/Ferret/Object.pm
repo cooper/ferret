@@ -107,11 +107,16 @@ sub delete_property {
 # if the property exists but is undefined, returns Ferret::undefined.
 # if the property does not exist, returns Perl undef.
 #
-sub property   { (&_property)[0] }
-sub property_u { &property || Ferret::undefined }
+sub property   { (shift->_property(@_))[0] }
+sub property_u { (shift->property(@_)) || Ferret::undefined }
 
 # this should not be used directly.
 # it returns a property value and its owner.
+#
+# some subclasses of Object may override this function, but
+# they must NOT override ->property or ->property_u, as those methods
+# only rely on whichever custom implemention of ->_property exists.
+#
 sub _property {
     my ($obj, $prop_name, $borrow_obj) = @_;
     $borrow_obj ||= $obj; # the object inheriting the property.
@@ -134,7 +139,7 @@ sub _property {
 
     # try inheritance.
     foreach my $o ($obj->parents) {
-        my @v = $o->_property($prop_name, $obj);
+        my @v = $o->_property($prop_name, $obj, $borrow_obj);
         return (@v) if @v;
     }
 

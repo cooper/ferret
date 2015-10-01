@@ -9,15 +9,15 @@ init {
         @real: Str = "Ferret IRC";
 
     @handlers = [
-        MODE:       @_joinChannels,
-        PING:       @_pong,
-        PRIVMSG:    @_handleMessage
+        MODE:       _joinChannels,
+        PING:       _pong,
+        PRIVMSG:    _handleMessage
     ];
 
     @commands = [
-        hello:  @_commandHello,
-        hi:     @_commandHello,
-        add:    @_commandAdd
+        hello:  _commandHello,
+        hi:     _commandHello,
+        add:    _commandAdd
     ];
 
     @factoids = [:];
@@ -72,6 +72,7 @@ method handleLine {
 
     # handle command maybe
     @handlers[$command]?(
+        _self:      *self,
         line:       $line,
         command:    $command,
         s:          $s
@@ -86,7 +87,7 @@ method privmsg {
     }
 }
 
-method _joinChannels {
+func _joinChannels {
 
     # check if already joined.
     if @_joinedChannels:
@@ -100,12 +101,12 @@ method _joinChannels {
     }
 }
 
-method _pong {
+func _pong {
     need $s;
     @send("PONG " + $s[1]);
 }
 
-method _handleMessage {
+func _handleMessage {
     need $line, $s;
 
     # parse the message
@@ -113,6 +114,7 @@ method _handleMessage {
 
     # found a command
     if $msg.command(): @commands[ $msg.command() ]?(
+        _self:  *self,
         line:   $line,
         s:      $s,
         msg:    $msg
@@ -120,13 +122,13 @@ method _handleMessage {
 
 }
 
-method _commandHello {
+func _commandHello {
     need $msg;
     $nickname = $msg.nickname;
     @privmsg($msg.channel, "Hi $nickname!");
 }
 
-method _commandAdd {
+func _commandAdd {
     need $msg;
     inspect($msg);
 
@@ -136,12 +138,12 @@ method _commandAdd {
 
     # remember this factoid
     @factoids[$trigger] = $response;
-    @commands[$trigger] = @_commandFactoid;
+    @commands[$trigger] = _commandFactoid;
 
     @privmsg($msg.channel, "alright, associating .$trigger with '$response'");
 }
 
-method _commandFactoid {
+func _commandFactoid {
     need $msg;
     $response = @factoids[ $msg.command() ];
     @privmsg($msg.channel, $response);

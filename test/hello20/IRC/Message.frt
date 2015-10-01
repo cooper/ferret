@@ -23,17 +23,17 @@ init {
 method command {
 
     # already found it
-    if @foundCommand:
-        return @foundCommand;
+    if @_foundCommand:
+        return @_foundCommand;
 
     # find it
     if @parts[0].hasPrefix(".") {
-        @foundCommand = @parts[0].copy().trimPrefix(".");
-        return @foundCommand;
+        @_foundCommand = @parts[0].copy().trimPrefix(".");
+        return @_foundCommand;
     }
 
-    @foundCommand = false;
-    return @foundCommand;
+    @_foundCommand = false;
+    return @_foundCommand;
 }
 
 # get a phrase starting with word N.

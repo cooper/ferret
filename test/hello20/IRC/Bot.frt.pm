@@ -35,26 +35,26 @@
 #                      Hash [3 items]
 #                          Item 0
 #                              Pair 'MODE'
-#                                  Instance variable '@_joinChannels'
+#                                  Bareword '_joinChannels'
 #                          Item 1
 #                              Pair 'PING'
-#                                  Instance variable '@_pong'
+#                                  Bareword '_pong'
 #                          Item 2
 #                              Pair 'PRIVMSG'
-#                                  Instance variable '@_handleMessage'
+#                                  Bareword '_handleMessage'
 #              Instruction
 #                  Assignment
 #                      Instance variable '@commands'
 #                      Hash [3 items]
 #                          Item 0
 #                              Pair 'hello'
-#                                  Instance variable '@_commandHello'
+#                                  Bareword '_commandHello'
 #                          Item 1
 #                              Pair 'hi'
-#                                  Instance variable '@_commandHello'
+#                                  Bareword '_commandHello'
 #                          Item 2
 #                              Pair 'add'
-#                                  Instance variable '@_commandAdd'
+#                                  Bareword '_commandAdd'
 #              Instruction
 #                  Assignment
 #                      Instance variable '@factoids'
@@ -227,14 +227,17 @@
 #                              Structural list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$command'
-#                      Hash [3 items]
+#                      Hash [4 items]
 #                          Item 0
 #                              Pair 'line'
 #                                  Lexical variable '$line'
 #                          Item 1
+#                              Pair '_self'
+#                                  Special variable '*self'
+#                          Item 2
 #                              Pair 'command'
 #                                  Lexical variable '$command'
-#                          Item 2
+#                          Item 3
 #                              Pair 's'
 #                                  Lexical variable '$s'
 #          Method 'privmsg'
@@ -267,7 +270,7 @@
 #                                      String ' :'
 #                                      Addition operator (+)
 #                                      Lexical variable '$line'
-#          Method '_joinChannels'
+#          Function '_joinChannels'
 #              If
 #                  Expression ('if' parameter)
 #                      Instance variable '@_joinedChannels'
@@ -294,7 +297,7 @@
 #                                          String 'JOIN '
 #                                          Addition operator (+)
 #                                          Lexical variable '$chan'
-#          Method '_pong'
+#          Function '_pong'
 #              Instruction
 #                  Need
 #                      Lexical variable '$s'
@@ -311,7 +314,7 @@
 #                                      Structural list [1 items]
 #                                          Item 0
 #                                              Number '1'
-#          Method '_handleMessage'
+#          Function '_handleMessage'
 #              Instruction
 #                  Need
 #                      Lexical variable '$line'
@@ -343,17 +346,20 @@
 #                                              Property 'command'
 #                                                  Lexical variable '$msg'
 #                                              Structural list [0 items]
-#                          Hash [3 items]
+#                          Hash [4 items]
 #                              Item 0
+#                                  Pair '_self'
+#                                      Special variable '*self'
+#                              Item 1
 #                                  Pair 'line'
 #                                      Lexical variable '$line'
-#                              Item 1
+#                              Item 2
 #                                  Pair 's'
 #                                      Lexical variable '$s'
-#                              Item 2
+#                              Item 3
 #                                  Pair 'msg'
 #                                      Lexical variable '$msg'
-#          Method '_commandHello'
+#          Function '_commandHello'
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -376,7 +382,7 @@
 #                                  Lexical variable '$nickname'
 #                                  Addition operator (+)
 #                                  String '!'
-#          Method '_commandAdd'
+#          Function '_commandAdd'
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -419,7 +425,7 @@
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Lexical variable '$trigger'
-#                      Instance variable '@_commandFactoid'
+#                      Bareword '_commandFactoid'
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
@@ -438,7 +444,7 @@
 #                                  Lexical variable '$response'
 #                                  Addition operator (+)
 #                                  String '''
-#          Method '_commandFactoid'
+#          Function '_commandFactoid'
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -534,6 +540,254 @@ my $result = do {
         };
     }
 
+    # Function event '_joinChannels' callback definition
+    {
+        my $func = Ferret::Function->new( $f, name => 'default' );
+
+        $func->{code} = sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            if ( bool( $self->property_u('_joinedChannels') ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                return $return;
+            }
+            $self->set_property( _joinedChannels => Ferret::true );
+            if ( bool( $self->property_u('autojoin') ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                foreach ( $self->property_u('autojoin')->iterate ) {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+                    $scope->set_property( chan => $_ );
+
+                    $self->property_u('send')->call(
+                        [
+                            add(
+                                $scope,
+                                str( $f, "JOIN " ),
+                                $scope->property_u('chan')
+                            )
+                        ],
+                        $scope
+                    );
+                }
+            }
+            return $return;
+        };
+        $funcs[2] = Ferret::Event->new(
+            $f,
+            name         => '_joinChannels',
+            default_func => [ undef, $func ]
+        );
+    }
+
+    # Function event '_pong' callback definition
+    {
+        my $func = Ferret::Function->new( $f, name => 'default' );
+        $func->add_argument( name => 's' );
+        $func->{code} = sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            do {
+                return unless defined $arguments->{s};
+                $scope->set_property( s => $arguments->{s} );
+            };
+            $self->property_u('send')->call(
+                [
+                    add(
+                        $scope,
+                        str( $f, "PONG " ),
+                        $scope->property_u('s')
+                          ->get_index_value( [ num( $f, 1 ) ], $scope )
+                    )
+                ],
+                $scope
+            );
+            return $return;
+        };
+        $funcs[3] = Ferret::Event->new(
+            $f,
+            name         => '_pong',
+            default_func => [ undef, $func ]
+        );
+    }
+
+    # Function event '_handleMessage' callback definition
+    {
+        my $func = Ferret::Function->new( $f, name => 'default' );
+        $func->add_argument( name => 'line' );
+        $func->add_argument( name => 's' );
+        $func->{code} = sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            do {
+                return unless defined $arguments->{line};
+                $scope->set_property( line => $arguments->{line} );
+            };
+            do {
+                return unless defined $arguments->{s};
+                $scope->set_property( s => $arguments->{s} );
+            };
+            $scope->set_property_ow( $context,
+                msg => $scope->property_u('IRC::Message')
+                  ->call( [ $scope->property_u('line') ], $scope ) );
+            if (
+                bool(
+                    $scope->property_u('msg')->property_u('command')
+                      ->call( {}, $scope )
+                )
+              )
+            {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                {
+                    my $maybe_0 =
+                      $self->property_u('commands')->get_index_value(
+                        [
+                            $scope->property_u('msg')->property_u('command')
+                              ->call( {}, $scope )
+                        ],
+                        $scope
+                      );
+                    if ( bool($maybe_0) ) {
+                        $maybe_0->call(
+                            {
+                                _self => $scope->{special}->property_u('self'),
+                                line  => $scope->property_u('line'),
+                                s     => $scope->property_u('s'),
+                                msg   => $scope->property_u('msg')
+                            },
+                            $scope
+                        );
+                    }
+                }
+            }
+            return $return;
+        };
+        $funcs[4] = Ferret::Event->new(
+            $f,
+            name         => '_handleMessage',
+            default_func => [ undef, $func ]
+        );
+    }
+
+    # Function event '_commandHello' callback definition
+    {
+        my $func = Ferret::Function->new( $f, name => 'default' );
+        $func->add_argument( name => 'msg' );
+        $func->{code} = sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            do {
+                return unless defined $arguments->{msg};
+                $scope->set_property( msg => $arguments->{msg} );
+            };
+            $scope->set_property_ow( $context,
+                nickname => $scope->property_u('msg')->property_u('nickname') );
+            $self->property_u('privmsg')->call(
+                [
+                    $scope->property_u('msg')->property_u('channel'),
+                    add(
+                        $scope,                         str( $f, "Hi " ),
+                        $scope->property_u('nickname'), str( $f, "!" )
+                    )
+                ],
+                $scope
+            );
+            return $return;
+        };
+        $funcs[5] = Ferret::Event->new(
+            $f,
+            name         => '_commandHello',
+            default_func => [ undef, $func ]
+        );
+    }
+
+    # Function event '_commandAdd' callback definition
+    {
+        my $func = Ferret::Function->new( $f, name => 'default' );
+        $func->add_argument( name => 'msg' );
+        $func->{code} = sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            do {
+                return unless defined $arguments->{msg};
+                $scope->set_property( msg => $arguments->{msg} );
+            };
+            $scope->property_u('inspect')
+              ->call( [ $scope->property_u('msg') ], $scope );
+            $scope->set_property_ow( $context,
+                trigger => $scope->property_u('msg')->property_u('parts')
+                  ->get_index_value( [ num( $f, 1 ) ], $scope ) );
+            $scope->set_property_ow( $context,
+                response => $scope->property_u('msg')->property_u('fromWord')
+                  ->call( [ num( $f, 2 ) ], $scope ) );
+            $self->property_u('factoids')
+              ->set_index_value( [ $scope->property_u('trigger') ],
+                $scope->property_u('response'), $scope );
+            $self->property_u('commands')
+              ->set_index_value( [ $scope->property_u('trigger') ],
+                $scope->property_u('_commandFactoid'), $scope );
+            $self->property_u('privmsg')->call(
+                [
+                    $scope->property_u('msg')->property_u('channel'),
+                    add(
+                        $scope,
+                        str( $f, "alright, associating ." ),
+                        $scope->property_u('trigger'),
+                        str( $f, " with '" ),
+                        $scope->property_u('response'),
+                        str( $f, "'" )
+                    )
+                ],
+                $scope
+            );
+            return $return;
+        };
+        $funcs[6] = Ferret::Event->new(
+            $f,
+            name         => '_commandAdd',
+            default_func => [ undef, $func ]
+        );
+    }
+
+    # Function event '_commandFactoid' callback definition
+    {
+        my $func = Ferret::Function->new( $f, name => 'default' );
+        $func->add_argument( name => 'msg' );
+        $func->{code} = sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            do {
+                return unless defined $arguments->{msg};
+                $scope->set_property( msg => $arguments->{msg} );
+            };
+            $scope->set_property_ow(
+                $context,
+                response => $self->property_u('factoids')->get_index_value(
+                    [
+                        $scope->property_u('msg')->property_u('command')
+                          ->call( {}, $scope )
+                    ],
+                    $scope
+                )
+            );
+            $self->property_u('privmsg')->call(
+                [
+                    $scope->property_u('msg')->property_u('channel'),
+                    $scope->property_u('response')
+                ],
+                $scope
+            );
+            return $return;
+        };
+        $funcs[7] = Ferret::Event->new(
+            $f,
+            name         => '_commandFactoid',
+            default_func => [ undef, $func ]
+        );
+    }
+
     # Class 'Bot'
     {
         my @methods;
@@ -589,9 +843,9 @@ my $result = do {
                     handlers => Ferret::Hash->new(
                         $f,
                         pairs => {
-                            MODE    => $self->property_u('_joinChannels'),
-                            PING    => $self->property_u('_pong'),
-                            PRIVMSG => $self->property_u('_handleMessage')
+                            MODE    => $scope->property_u('_joinChannels'),
+                            PING    => $scope->property_u('_pong'),
+                            PRIVMSG => $scope->property_u('_handleMessage')
                         }
                     )
                 );
@@ -599,9 +853,9 @@ my $result = do {
                     commands => Ferret::Hash->new(
                         $f,
                         pairs => {
-                            hello => $self->property_u('_commandHello'),
-                            hi    => $self->property_u('_commandHello'),
-                            add   => $self->property_u('_commandAdd')
+                            hello => $scope->property_u('_commandHello'),
+                            hi    => $scope->property_u('_commandHello'),
+                            add   => $scope->property_u('_commandAdd')
                         }
                     )
                 );
@@ -794,7 +1048,8 @@ my $result = do {
                     if ( bool($maybe_0) ) {
                         $maybe_0->call(
                             {
-                                line    => $scope->property_u('line'),
+                                line  => $scope->property_u('line'),
+                                _self => $scope->{special}->property_u('self'),
                                 command => $scope->property_u('command'),
                                 s       => $scope->property_u('s')
                             },
@@ -857,285 +1112,18 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-
-        # Method event '_joinChannels' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                if ( bool( $self->property_u('_joinedChannels') ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    return $return;
-                }
-                $self->set_property( _joinedChannels => Ferret::true );
-                if ( bool( $self->property_u('autojoin') ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    foreach ( $self->property_u('autojoin')->iterate ) {
-                        my $scope = Ferret::Scope->new( $f, parent => $scope );
-                        $scope->set_property( chan => $_ );
-
-                        $self->property_u('send')->call(
-                            [
-                                add(
-                                    $scope,
-                                    str( $f, "JOIN " ),
-                                    $scope->property_u('chan')
-                                )
-                            ],
-                            $scope
-                        );
-                    }
-                }
-                return $return;
-            };
-            $methods[6] = Ferret::Event->new(
-                $f,
-                name         => '_joinChannels',
-                default_func => [ undef, $func ]
-            );
-        }
-
-        # Method event '_pong' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument( name => 's' );
-            $func->{code} = sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{s};
-                    $scope->set_property( s => $arguments->{s} );
-                };
-                $self->property_u('send')->call(
-                    [
-                        add(
-                            $scope,
-                            str( $f, "PONG " ),
-                            $scope->property_u('s')
-                              ->get_index_value( [ num( $f, 1 ) ], $scope )
-                        )
-                    ],
-                    $scope
-                );
-                return $return;
-            };
-            $methods[7] = Ferret::Event->new(
-                $f,
-                name         => '_pong',
-                default_func => [ undef, $func ]
-            );
-        }
-
-        # Method event '_handleMessage' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument( name => 'line' );
-            $func->add_argument( name => 's' );
-            $func->{code} = sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{line};
-                    $scope->set_property( line => $arguments->{line} );
-                };
-                do {
-                    return unless defined $arguments->{s};
-                    $scope->set_property( s => $arguments->{s} );
-                };
-                $scope->set_property_ow( $context,
-                    msg => $scope->property_u('IRC::Message')
-                      ->call( [ $scope->property_u('line') ], $scope ) );
-                if (
-                    bool(
-                        $scope->property_u('msg')->property_u('command')
-                          ->call( {}, $scope )
-                    )
-                  )
-                {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    {
-                        my $maybe_0 =
-                          $self->property_u('commands')->get_index_value(
-                            [
-                                $scope->property_u('msg')
-                                  ->property_u('command')->call( {}, $scope )
-                            ],
-                            $scope
-                          );
-                        if ( bool($maybe_0) ) {
-                            $maybe_0->call(
-                                {
-                                    line => $scope->property_u('line'),
-                                    s    => $scope->property_u('s'),
-                                    msg  => $scope->property_u('msg')
-                                },
-                                $scope
-                            );
-                        }
-                    }
-                }
-                return $return;
-            };
-            $methods[8] = Ferret::Event->new(
-                $f,
-                name         => '_handleMessage',
-                default_func => [ undef, $func ]
-            );
-        }
-
-        # Method event '_commandHello' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument( name => 'msg' );
-            $func->{code} = sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{msg};
-                    $scope->set_property( msg => $arguments->{msg} );
-                };
-                $scope->set_property_ow( $context,
-                    nickname =>
-                      $scope->property_u('msg')->property_u('nickname') );
-                $self->property_u('privmsg')->call(
-                    [
-                        $scope->property_u('msg')->property_u('channel'),
-                        add(
-                            $scope,                         str( $f, "Hi " ),
-                            $scope->property_u('nickname'), str( $f, "!" )
-                        )
-                    ],
-                    $scope
-                );
-                return $return;
-            };
-            $methods[9] = Ferret::Event->new(
-                $f,
-                name         => '_commandHello',
-                default_func => [ undef, $func ]
-            );
-        }
-
-        # Method event '_commandAdd' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument( name => 'msg' );
-            $func->{code} = sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{msg};
-                    $scope->set_property( msg => $arguments->{msg} );
-                };
-                $scope->property_u('inspect')
-                  ->call( [ $scope->property_u('msg') ], $scope );
-                $scope->set_property_ow( $context,
-                    trigger => $scope->property_u('msg')->property_u('parts')
-                      ->get_index_value( [ num( $f, 1 ) ], $scope ) );
-                $scope->set_property_ow( $context,
-                    response =>
-                      $scope->property_u('msg')->property_u('fromWord')
-                      ->call( [ num( $f, 2 ) ], $scope ) );
-                $self->property_u('factoids')
-                  ->set_index_value( [ $scope->property_u('trigger') ],
-                    $scope->property_u('response'), $scope );
-                $self->property_u('commands')
-                  ->set_index_value( [ $scope->property_u('trigger') ],
-                    $self->property_u('_commandFactoid'), $scope );
-                $self->property_u('privmsg')->call(
-                    [
-                        $scope->property_u('msg')->property_u('channel'),
-                        add(
-                            $scope,
-                            str( $f, "alright, associating ." ),
-                            $scope->property_u('trigger'),
-                            str( $f, " with '" ),
-                            $scope->property_u('response'),
-                            str( $f, "'" )
-                        )
-                    ],
-                    $scope
-                );
-                return $return;
-            };
-            $methods[10] = Ferret::Event->new(
-                $f,
-                name         => '_commandAdd',
-                default_func => [ undef, $func ]
-            );
-        }
-
-        # Method event '_commandFactoid' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument( name => 'msg' );
-            $func->{code} = sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{msg};
-                    $scope->set_property( msg => $arguments->{msg} );
-                };
-                $scope->set_property_ow(
-                    $context,
-                    response => $self->property_u('factoids')->get_index_value(
-                        [
-                            $scope->property_u('msg')->property_u('command')
-                              ->call( {}, $scope )
-                        ],
-                        $scope
-                    )
-                );
-                $self->property_u('privmsg')->call(
-                    [
-                        $scope->property_u('msg')->property_u('channel'),
-                        $scope->property_u('response')
-                    ],
-                    $scope
-                );
-                return $return;
-            };
-            $methods[11] = Ferret::Event->new(
-                $f,
-                name         => '_commandFactoid',
-                default_func => [ undef, $func ]
-            );
-        }
-        $methods[0]->inside_scope( _init_         => $scope, $class, $class );
-        $methods[1]->inside_scope( addCommand     => $scope, $proto, $class );
-        $methods[2]->inside_scope( connect        => $scope, $proto, $class );
-        $methods[3]->inside_scope( send           => $scope, $proto, $class );
-        $methods[4]->inside_scope( handleLine     => $scope, $proto, $class );
-        $methods[5]->inside_scope( privmsg        => $scope, $proto, $class );
-        $methods[6]->inside_scope( _joinChannels  => $scope, $proto, $class );
-        $methods[7]->inside_scope( _pong          => $scope, $proto, $class );
-        $methods[8]->inside_scope( _handleMessage => $scope, $proto, $class );
-        $methods[9]->inside_scope( _commandHello  => $scope, $proto, $class );
-        $methods[10]->inside_scope( _commandAdd     => $scope, $proto, $class );
-        $methods[11]->inside_scope( _commandFactoid => $scope, $proto, $class );
+        $methods[0]->inside_scope( _init_     => $scope, $class, $class );
+        $methods[1]->inside_scope( addCommand => $scope, $proto, $class );
+        $methods[2]->inside_scope( connect    => $scope, $proto, $class );
+        $methods[3]->inside_scope( send       => $scope, $proto, $class );
+        $methods[4]->inside_scope( handleLine => $scope, $proto, $class );
+        $methods[5]->inside_scope( privmsg    => $scope, $proto, $class );
+        $funcs[2]->inside_scope( _joinChannels   => $scope, $scope );
+        $funcs[3]->inside_scope( _pong           => $scope, $scope );
+        $funcs[4]->inside_scope( _handleMessage  => $scope, $scope );
+        $funcs[5]->inside_scope( _commandHello   => $scope, $scope );
+        $funcs[6]->inside_scope( _commandAdd     => $scope, $scope );
+        $funcs[7]->inside_scope( _commandFactoid => $scope, $scope );
     }
     Ferret::space( $context, $_ )
       for qw(Func IRC IRC::Message Num Socket Socket::TCP Str);

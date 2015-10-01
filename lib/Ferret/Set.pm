@@ -13,7 +13,7 @@ Ferret::bind_class(
     name => 'Set'
 );
 
-sub property {
+sub _property {
     my ($set, $prop_name) = @_;
 
     # find function
@@ -30,12 +30,7 @@ sub property {
         );
     };
 
-    return $func;
-}
-
-sub property_u {
-    my $value = &property;
-    return $value || Ferret::undefined;
+    return ($func, $set);
 }
 
 sub set_property {
