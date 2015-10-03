@@ -156,6 +156,7 @@ use Ferret::Core::Operations qw(add mul num);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
+    undef;
 
     # Class 'Rect'
     {

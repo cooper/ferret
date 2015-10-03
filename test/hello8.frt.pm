@@ -20,7 +20,6 @@
 #                          Call
 #                              Property 'doubledLength'
 #                                  String 'hi there'
-#      Include
 use warnings;
 use strict;
 use utf8;
@@ -45,6 +44,7 @@ use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    undef;
 
     # Class 'String'
     {
@@ -85,7 +85,6 @@ my $result = do {
         }
         $methods[0]->inside_scope( doubledLength => $scope, $proto, $class );
     }
-
     $scope->property_u('say')->call(
         [
             add(

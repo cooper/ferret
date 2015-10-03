@@ -104,7 +104,6 @@
 #                              String '; value='
 #                              Addition operator (+)
 #                              Lexical variable '$val'
-#      Include
 use warnings;
 use strict;
 use utf8;
@@ -129,6 +128,7 @@ use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    undef;
 
     $scope->set_property_ow( $context,
         list => Ferret::List->new( $f, items => [ str( $f, "hi" ) ] ) );

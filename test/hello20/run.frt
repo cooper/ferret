@@ -8,19 +8,30 @@ $bot.addCommand("info", func {
 
 $bot.addCommand("t", func {
     need $msg;
-    $res = COMPILER($msg.fromWord(1)).tokenize();
+    $c = COMPILER($msg.fromWord(1));
+    $res = $c.tokenize(pretty: true);
     if $res.error {
         $bot.privmsg($msg.channel, $res.error);
         return;
     }
-    $bot.privmsg($msg.channel, "success");
+    $bot.privmsg($msg.channel, $res.pretty);
 });
 
-$bot.addCommand("compile", func {
+$bot.addCommand("c", func {
+    need $msg;
+    $c = COMPILER($msg.fromWord(1));
+    $res = $c.construct(pretty: true);
+    if $res.error {
+        $bot.privmsg($msg.channel, $res.error);
+        return;
+    }
+    $bot.privmsg($msg.channel, $res.pretty);
+});
+
+$bot.addCommand("p", func {
     need $msg;
     $c = COMPILER($msg.fromWord(1));
     $res = $c.compile();
-    dump($c);
     if $res.error {
         $bot.privmsg($msg.channel, $res.error);
         return;

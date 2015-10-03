@@ -8,7 +8,6 @@ use 5.010;
 use Ferret::Lexer::Rules;
 use Scalar::Util qw(blessed);
 
-my $fatal = \0;
 our ($current, $error);
 
 my @expression_types = qw(
@@ -84,14 +83,22 @@ sub construct {
 sub c_PKG_DEC {
     my ($c, $value) = @_;
 
+    # terminate current package.
+    return unexpected($c, '(multiple packages per file not yet implemented)')
+        if $c->{package};
+
     # must be in global scope.
-    unexpected($c, 'in non-global scope')
+    return unexpected($c, 'in non-global scope')
         unless $c->{node}->type eq 'Document';
 
     my $pkg = F::Package->new(%$value);
-    $pkg->{parent_package} = $c->{package};
-    $c->{node}->adopt($pkg);
     $c->{package} = $pkg;
+
+    # capture the end keyword.
+    $pkg->{parent_end_cap} = $c->{end_cap};
+    $c->{end_cap} = $pkg;
+
+    $c->{node}->adopt($pkg);
 
     return $pkg;
 }
@@ -99,13 +106,13 @@ sub c_PKG_DEC {
 sub c_CLASS_DEC {
     my ($c, $value) = @_;
 
-    # must be in global scope.
-    unexpected($c, 'in non-global scope')
-        unless $c->{node}->type eq 'Document';
-
     # terminate current class.
     $c->{node} = $c->{node}->close if $c->{node}->type eq 'Class';
     $c->{end_cap} = $c->{end_cap}{parent_end_cap} if $c->{end_cap};
+
+    # must be in global scope.
+    return unexpected($c, 'in non-global scope')
+        unless $c->{node}->type eq 'Document';
 
     # create class.
     my $class = F::Class->new(%$value);
@@ -116,7 +123,7 @@ sub c_CLASS_DEC {
     $c->{end_cap} = $class;
 
     # set as current node.
-    # will be terminated by another class declaration or end of file.
+    # will be terminated by another class declaration, 'end', or end of file.
     $c->{node} = $c->{node}->adopt($class);
 
     return $class;
@@ -128,20 +135,31 @@ sub c_KEYWORD_END {
 
     # must have something to capture it.
     my $class_or_pkg = $c->{end_cap};
-    unexpected($c, 'outside of class or package')
+    return unexpected($c, 'outside of class or package')
         unless $class_or_pkg;
 
     # the current node must be the package or class.
     my $type = $c->{node}->desc;
-    unexpected($c, "inside $type")
-        if $c->{node} != $class_or_pkg;
+    return unexpected(
+        $c,
+        "inside $type (direct parent must be a class or package)"
+    ) if $c->{node} != $class_or_pkg;
+
+    # end the class.
+    if ($c->{class} && $class_or_pkg == $c->{class}) {
+        delete $c->{class};
+    }
+
+    # return to the previous package.
+    elsif ($c->{package} && $class_or_pkg == $c->{package}) {
+        return unexpected(
+            $c,
+            '(multiple packages per file not yet implemented)'
+        );
+    }
 
     # close it.
-    delete $c->{class}
-        if $c->{class} && $class_or_pkg == $c->{class};
-    $c->{package} = $class_or_pkg->{parent_package}
-        if $c->{package} && $class_or_pkg == $c->{package};
-    $class_or_pkg->{end_cap} = $class_or_pkg->{end_cap}{parent_end_cap};
+    $c->{end_cap} = $c->{end_cap}{parent_end_cap};
     $c->{node} = $c->{node}->close;
 
     return;

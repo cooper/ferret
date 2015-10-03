@@ -18,6 +18,7 @@ my @methods = (
         code => \&_tokenize
     },
     construct => {
+        want => '$pretty:Bool',
         code => \&_construct
     },
     compile => {
@@ -56,13 +57,19 @@ sub tokenize {
 }
 
 sub _tokenize {
-    my ($compiler, undef, undef, undef, $return) = @_;
+    my ($compiler, $arguments, undef, undef, $return) = @_;
 
     # tokenize
     my $tokens = $compiler->tokenize;
     if (ref $tokens eq 'F::Error') {
         $return->set_property(error => ferret_string($$tokens));
         return $return;
+    }
+
+    # pretty
+    if ($arguments->{pretty}) {
+        my $pretty = Ferret::Lexer::show_tok(@$tokens);
+        $return->set_property(pretty => ferret_string($pretty));
     }
 
     $return->set_property(tokens => ferretize($tokens));
@@ -88,13 +95,19 @@ sub construct {
 }
 
 sub _construct {
-    my ($compiler, undef, undef, undef, $return) = @_;
+    my ($compiler, $arguments, undef, undef, $return) = @_;
 
     # construct
     my $doc = $compiler->construct();
     if (ref $doc eq 'F::Error') {
         $return->set_property(error => ferret_string($$doc));
         return $return;
+    }
+
+    # pretty
+    if ($arguments->{pretty}) {
+        my $pretty = Ferret::Lexer::show_dom($doc);
+        $return->set_property(pretty => ferret_string($pretty));
     }
 
     return $return;

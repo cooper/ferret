@@ -29,7 +29,6 @@
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Instance variable '@pt2'
-#      Include
 use warnings;
 use strict;
 use utf8;
@@ -54,6 +53,7 @@ use Ferret::Core::Operations qw();
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
+    undef;
 
     # Class 'Line'
     {

@@ -118,7 +118,8 @@ sub ferret_list {
 }
 
 sub ferret_hash {
-
+    return ferret_string("hash conversion not yet implemented");
+    # TODO
 }
 
 sub ferret_boolean {
@@ -137,7 +138,7 @@ sub ferretize {
         return ferret_list(@$val);
     }
     if (ref $val eq 'HASH') {
-        return ferret_hash(@$val);
+        return ferret_hash(%$val);
     }
     if (looks_like_number($val)) {
         return ferret_number($val);

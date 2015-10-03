@@ -129,7 +129,6 @@
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Lexical variable '$pt2'
-#      Include
 use warnings;
 use strict;
 use utf8;
@@ -154,6 +153,7 @@ use Ferret::Core::Operations qw(_sub add div num pow str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
+    undef;
 
     # Class 'Point'
     {

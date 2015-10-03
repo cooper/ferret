@@ -428,7 +428,7 @@
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Lexical variable '$trigger'
-#                      Instance variable '@_commandFactoid'
+#                      Instance variable '@commandFactoid'
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
@@ -447,7 +447,7 @@
 #                                  Lexical variable '$response'
 #                                  Addition operator (+)
 #                                  String '''
-#          Method '_commandFactoid'
+#          Method 'commandFactoid'
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -496,6 +496,7 @@ use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('IRC');
+    undef;
 
     # Anonymous function definition
     {
@@ -1074,7 +1075,7 @@ my $result = do {
                     $scope->property_u('response'), $scope );
                 $self->property_u('commands')
                   ->set_index_value( [ $scope->property_u('trigger') ],
-                    $self->property_u('_commandFactoid'), $scope );
+                    $self->property_u('commandFactoid'), $scope );
                 $self->property_u('privmsg')->call(
                     [
                         $scope->property_u('msg')->property_u('channel'),
@@ -1098,7 +1099,7 @@ my $result = do {
             );
         }
 
-        # Method event '_commandFactoid' definition
+        # Method event 'commandFactoid' definition
         {
             my $func = Ferret::Function->new(
                 $f,
@@ -1133,7 +1134,7 @@ my $result = do {
             };
             $methods[11] = Ferret::Event->new(
                 $f,
-                name         => '_commandFactoid',
+                name         => 'commandFactoid',
                 default_func => [ undef, $func ]
             );
         }
@@ -1147,8 +1148,8 @@ my $result = do {
         $methods[7]->inside_scope( pong          => $scope, $proto, $class );
         $methods[8]->inside_scope( handleMessage => $scope, $proto, $class );
         $methods[9]->inside_scope( commandHello  => $scope, $proto, $class );
-        $methods[10]->inside_scope( commandAdd      => $scope, $proto, $class );
-        $methods[11]->inside_scope( _commandFactoid => $scope, $proto, $class );
+        $methods[10]->inside_scope( commandAdd     => $scope, $proto, $class );
+        $methods[11]->inside_scope( commandFactoid => $scope, $proto, $class );
     }
     Ferret::space( $context, $_ )
       for qw(Func IRC IRC::Message Num Socket Socket::TCP Str);

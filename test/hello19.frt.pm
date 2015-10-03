@@ -23,7 +23,6 @@
 #                              String 'part: '
 #                              Addition operator (+)
 #                              Lexical variable '$word'
-#      Include
 use warnings;
 use strict;
 use utf8;
@@ -48,6 +47,7 @@ use Ferret::Core::Operations qw(add str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    undef;
 
     $scope->set_property_ow( $context,
         words => str( $f, "how are you?" )->property_u('split')

@@ -113,6 +113,43 @@ sub pretty_token {
     return $pretty_tokens{$tok} || $tok;
 }
 
+# $string = show_tok(@tokens)
+sub show_tok {
+    require JSON::XS;
+    state $json = JSON::XS->new->allow_nonref(1);
+    my $str = '';
+    foreach (@_) {
+        my ($label, $value) = @$_;
+        $str .= sprintf "%15s | %s\n",
+            $label,
+            defined $value ? $json->encode($value) : '';
+    }
+    return $str;
+}
+
+# $string = show_dom($document, $include_unknown)
+sub show_dom {
+    state $indent = 0;
+    my ($el, $include_unknown, $str) = @_;
+    $str ||= \(my $empty = "");
+
+    return if $el->type eq 'Unknown' && !$include_unknown;
+
+    # generate a description
+    my $desc = ucfirst $el->desc;
+    $desc =~ s/\r\n|\r|\n/\x{2424}/g;
+
+    $$str .= sprintf "%s %s\n", '    ' x $indent, $desc;
+
+    # if it's a node, do the same for all children.
+    return unless $el->is_node;
+    $indent++;
+        show_dom($_, $include_unknown, $str) foreach $el->children;
+    $indent--;
+
+    return $$str;
+}
+
 sub fatal($) {
     my $err = shift;
     return bless \$err, 'F::Error';

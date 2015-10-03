@@ -91,7 +91,6 @@
 #                          String 'Pi = '
 #                          Addition operator (+)
 #                          Lexical variable '$pi'
-#      Include
 use warnings;
 use strict;
 use utf8;
@@ -116,6 +115,7 @@ use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    undef;
 
     # Function event 'hello1' callback definition
     {
@@ -201,7 +201,6 @@ my $result = do {
         );
     }
     $funcs[2]->inside_scope( helloWorld => $scope, $scope );
-
     $scope->property_u('helloWorld')
       ->call( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
         $scope );

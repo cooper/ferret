@@ -45,6 +45,7 @@ use Ferret::Core::Operations qw(str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    undef;
 
     Ferret::space( $context, $_ ) for qw(Bot1);
     $scope->set_property_ow(

@@ -16,9 +16,10 @@ my $keyword_reg = '^('.join('|', qw{
     package     class       main        method
     need        want        inside      then
     if          else        return      after
-    for         in          func        __END__
+    for         in          func
     true        false       undefined
     init        on          end
+    __END__     __LINE__
 }).')$';
 $keyword_reg = qr/$keyword_reg/;
 
@@ -36,7 +37,7 @@ my %no_value = map { $_ => 1 } qw(
 );
 
 # reused formats
-my $prop_reg    = qr/\b[A-Za-z_][A-Za-z0-9]*/;
+my $prop_reg    = qr/\b[A-Za-z_][A-Za-z0-9_]*/;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
 my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
 
@@ -94,19 +95,12 @@ my @token_formats = (
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other
-    [ BAREWORD      => qr/\b[A-Za-z_][A-Za-z0-9:]*/                         ],  # bareword (and keywords)
+    [ BAREWORD      => qr/\b[A-Za-z_][A-Za-z0-9:_]*/                        ],  # bareword (and keywords)
     [ NUMBER        => qr/[+-]?\d+(?:\.\d+(?:e\d+)?)?/                      ],  # number
     [ NEWLINE       => qr/\n/,          \&ignore_increment                  ],  # newline
     [ SPACE         => qr/\s*/,         \&ignore                            ],  # whitespace
 
 );
-
-# separate keywords into individual tokens.
-sub tok_KEYWORD {
-    my ($tokens, $value) = @_;
-    $value = uc $value;
-    return [ "KEYWORD_$value" ]
-}
 
 # parentheses can be wrappers or function calls.
 sub tok_PAREN_S {
@@ -249,6 +243,11 @@ sub tok_BAREWORD {
     # init keyword = main method _init_.
     if ($value eq 'init') {
         return [ METHOD => { name => '_init_', main => 1 } ];
+    }
+
+    # line number.
+    if ($value eq '__LINE__') {
+        return [ NUMBER => $current_line ];
     }
 
     # other keyword.

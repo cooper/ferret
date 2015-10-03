@@ -10,7 +10,6 @@
 #                      Structural list [1 items]
 #                          Item 0
 #                              String 'Hello World!'
-#      Include
 use warnings;
 use strict;
 use utf8;
@@ -35,6 +34,7 @@ use Ferret::Core::Operations qw(str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    undef;
 
     $scope->property_u('say')->call( [ str( $f, "Hello World!" ) ], $scope );
 };

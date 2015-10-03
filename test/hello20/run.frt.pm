@@ -58,20 +58,27 @@
 #                                  Lexical variable '$msg'
 #                          Instruction
 #                              Assignment
+#                                  Lexical variable '$c'
+#                                  Call
+#                                      Bareword 'COMPILER'
+#                                      Structural list [1 items]
+#                                          Item 0
+#                                              Call
+#                                                  Property 'fromWord'
+#                                                      Lexical variable '$msg'
+#                                                  Structural list [1 items]
+#                                                      Item 0
+#                                                          Number '1'
+#                          Instruction
+#                              Assignment
 #                                  Lexical variable '$res'
 #                                  Call
 #                                      Property 'tokenize'
-#                                          Call
-#                                              Bareword 'COMPILER'
-#                                              Structural list [1 items]
-#                                                  Item 0
-#                                                      Call
-#                                                          Property 'fromWord'
-#                                                              Lexical variable '$msg'
-#                                                          Structural list [1 items]
-#                                                              Item 0
-#                                                                  Number '1'
-#                                      Structural list [0 items]
+#                                          Lexical variable '$c'
+#                                      Hash [1 items]
+#                                          Item 0
+#                                              Pair 'pretty'
+#                                                  Boolean true
 #                          If
 #                              Expression ('if' parameter)
 #                                  Property 'error'
@@ -98,14 +105,78 @@
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
 #                                      Item 1
-#                                          String 'success'
+#                                          Property 'pretty'
+#                                              Lexical variable '$res'
 #      Instruction
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
 #              Structural list [2 items]
 #                  Item 0
-#                      String 'compile'
+#                      String 'c'
+#                  Item 1
+#                      Function '_anonymous_'
+#                          Instruction
+#                              Need
+#                                  Lexical variable '$msg'
+#                          Instruction
+#                              Assignment
+#                                  Lexical variable '$c'
+#                                  Call
+#                                      Bareword 'COMPILER'
+#                                      Structural list [1 items]
+#                                          Item 0
+#                                              Call
+#                                                  Property 'fromWord'
+#                                                      Lexical variable '$msg'
+#                                                  Structural list [1 items]
+#                                                      Item 0
+#                                                          Number '1'
+#                          Instruction
+#                              Assignment
+#                                  Lexical variable '$res'
+#                                  Call
+#                                      Property 'construct'
+#                                          Lexical variable '$c'
+#                                      Hash [1 items]
+#                                          Item 0
+#                                              Pair 'pretty'
+#                                                  Boolean true
+#                          If
+#                              Expression ('if' parameter)
+#                                  Property 'error'
+#                                      Lexical variable '$res'
+#                              Instruction
+#                                  Call
+#                                      Property 'privmsg'
+#                                          Lexical variable '$bot'
+#                                      Structural list [2 items]
+#                                          Item 0
+#                                              Property 'channel'
+#                                                  Lexical variable '$msg'
+#                                          Item 1
+#                                              Property 'error'
+#                                                  Lexical variable '$res'
+#                              Instruction
+#                                  Return
+#                          Instruction
+#                              Call
+#                                  Property 'privmsg'
+#                                      Lexical variable '$bot'
+#                                  Structural list [2 items]
+#                                      Item 0
+#                                          Property 'channel'
+#                                              Lexical variable '$msg'
+#                                      Item 1
+#                                          Property 'pretty'
+#                                              Lexical variable '$res'
+#      Instruction
+#          Call
+#              Property 'addCommand'
+#                  Lexical variable '$bot'
+#              Structural list [2 items]
+#                  Item 0
+#                      String 'p'
 #                  Item 1
 #                      Function '_anonymous_'
 #                          Instruction
@@ -131,12 +202,6 @@
 #                                      Property 'compile'
 #                                          Lexical variable '$c'
 #                                      Structural list [0 items]
-#                          Instruction
-#                              Call
-#                                  Bareword 'dump'
-#                                  Structural list [1 items]
-#                                      Item 0
-#                                          Lexical variable '$c'
 #                          If
 #                              Expression ('if' parameter)
 #                                  Property 'error'
@@ -264,6 +329,7 @@ use Ferret::Core::Operations qw(bool num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    undef;
 
     # Anonymous function definition
     {
@@ -300,14 +366,17 @@ my $result = do {
             };
             $scope->set_property_ow(
                 $context,
-                res => $scope->property_u('COMPILER')->call(
+                c => $scope->property_u('COMPILER')->call(
                     [
                         $scope->property_u('msg')->property_u('fromWord')
                           ->call( [ num( $f, 1 ) ], $scope )
                     ],
                     $scope
-                )->property_u('tokenize')->call( {}, $scope )
+                )
             );
+            $scope->set_property_ow( $context,
+                res => $scope->property_u('c')->property_u('tokenize')
+                  ->call( { pretty => Ferret::true }, $scope ) );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -323,7 +392,7 @@ my $result = do {
             $scope->property_u('bot')->property_u('privmsg')->call(
                 [
                     $scope->property_u('msg')->property_u('channel'),
-                    str( $f, "success" )
+                    $scope->property_u('res')->property_u('pretty')
                 ],
                 $scope
             );
@@ -353,10 +422,55 @@ my $result = do {
                 )
             );
             $scope->set_property_ow( $context,
+                res => $scope->property_u('c')->property_u('construct')
+                  ->call( { pretty => Ferret::true }, $scope ) );
+            if ( bool( $scope->property_u('res')->property_u('error') ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                $scope->property_u('bot')->property_u('privmsg')->call(
+                    [
+                        $scope->property_u('msg')->property_u('channel'),
+                        $scope->property_u('res')->property_u('error')
+                    ],
+                    $scope
+                );
+                return $return;
+            }
+            $scope->property_u('bot')->property_u('privmsg')->call(
+                [
+                    $scope->property_u('msg')->property_u('channel'),
+                    $scope->property_u('res')->property_u('pretty')
+                ],
+                $scope
+            );
+            return $return;
+        };
+    }
+
+    # Anonymous function definition
+    {
+        my $func = $funcs[3] = Ferret::Function->new( $f, anonymous => 1 );
+        $func->add_argument( name => 'msg' );
+        $func->{code} = sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            do {
+                return unless defined $arguments->{msg};
+                $scope->set_property( msg => $arguments->{msg} );
+            };
+            $scope->set_property_ow(
+                $context,
+                c => $scope->property_u('COMPILER')->call(
+                    [
+                        $scope->property_u('msg')->property_u('fromWord')
+                          ->call( [ num( $f, 1 ) ], $scope )
+                    ],
+                    $scope
+                )
+            );
+            $scope->set_property_ow( $context,
                 res => $scope->property_u('c')->property_u('compile')
                   ->call( {}, $scope ) );
-            $scope->property_u('dump')
-              ->call( [ $scope->property_u('c') ], $scope );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -382,7 +496,7 @@ my $result = do {
 
     # Anonymous function definition
     {
-        my $func = $funcs[3] = Ferret::Function->new( $f, anonymous => 1 );
+        my $func = $funcs[4] = Ferret::Function->new( $f, anonymous => 1 );
         $func->add_argument( name => 'msg' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -461,14 +575,15 @@ my $result = do {
         $scope
     );
     $scope->property_u('bot')->property_u('addCommand')->call(
-        [
-            str( $f, "compile" ),
-            $funcs[2]->inside_scope( +undef => $scope, $scope )
-        ],
+        [ str( $f, "c" ), $funcs[2]->inside_scope( +undef => $scope, $scope ) ],
         $scope
     );
     $scope->property_u('bot')->property_u('addCommand')->call(
-        [ str( $f, "e" ), $funcs[3]->inside_scope( +undef => $scope, $scope ) ],
+        [ str( $f, "p" ), $funcs[3]->inside_scope( +undef => $scope, $scope ) ],
+        $scope
+    );
+    $scope->property_u('bot')->property_u('addCommand')->call(
+        [ str( $f, "e" ), $funcs[4]->inside_scope( +undef => $scope, $scope ) ],
         $scope
     );
     $scope->property_u('bot')->property_u('connect')->call( {}, $scope );

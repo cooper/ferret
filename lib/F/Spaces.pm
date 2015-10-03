@@ -19,6 +19,12 @@ sub spaces {
     return sort keys %{ $doc->{required_spaces} };
 }
 
+sub after_adopt {
+    my $spaces = shift;
+    my @spaces = $spaces->spaces;
+    $spaces->parent->abandon($spaces) if !@spaces;
+}
+
 sub perl_fmt {
     my @spaces = shift->spaces;
     return if !@spaces;

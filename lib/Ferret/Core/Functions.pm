@@ -48,18 +48,20 @@ sub _inspect_value {
 
     if ($obj->isa('Ferret::List')) {
         my @values = map _inspect_value($_, $own_only), @{ $obj->{list_items} };
-        return "(\n    ".join("\n    ", @values)."\n)";
+        return "[]" if !@values;
+        return "[\n    ".join("\n    ", @values)."\n]";
     }
 
     if ($obj->isa('Ferret::Hash')) {
         my @keys   = $obj->keys;
         my @values = map _inspect_value($_, $own_only), $obj->values;
         my $i = 0;
+        return "[:]" if !@keys;
         foreach my $key (@keys) {
             $values[$i] = "$key: ".$values[$i];
             $i++;
         }
-        return "(\n    ".join("\n    ", @values)."\n)";
+        return "[\n    ".join("\n    ", @values)."\n]";
     }
 
     if ($obj->isa('Ferret::Event')) {
@@ -71,7 +73,7 @@ sub _inspect_value {
         return "Function '$$obj{name}'";
     }
 
-    my ($skipped, $prop_str) = (0, "\n");
+    my ($skipped, $prop_str) = (0, '');
     my @parents = $obj->parent_names;
     foreach my $prop_name ($obj->properties(1)) {
         my ($value, $owner) = $obj->_property($prop_name);
@@ -87,6 +89,8 @@ sub _inspect_value {
             $skipped++;
             next;
         }
+
+        $prop_str ||= "\n";
 
         # indiciate it's inherited
         $prop_name = "($prop_name)" if $owner != $obj;

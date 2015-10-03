@@ -139,12 +139,12 @@ method commandAdd {
 
     # remember this factoid
     @factoids[$trigger] = $response;
-    @commands[$trigger] = @_commandFactoid;
+    @commands[$trigger] = @commandFactoid;
 
     @privmsg($msg.channel, "alright, associating .$trigger with '$response'");
 }
 
-method _commandFactoid {
+method commandFactoid {
     need $msg;
     $response = @factoids[ $msg.command() ];
     @privmsg($msg.channel, $response);

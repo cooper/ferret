@@ -58,8 +58,9 @@ sub _connect {
 
     # create a stream.
     my $stream = $sock->{stream} = IO::Async::Stream->new(
-        handle => $conn,
-        on_read => sub {
+        handle   => $conn,
+        encoding => 'utf8',
+        on_read  => sub {
             my ($self, $buffer, $eof) = @_;
             while ($$buffer =~ s/^(.*)\n//) {
                 (my $val = $1) =~ s/\0|\r//g;

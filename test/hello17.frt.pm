@@ -56,6 +56,7 @@ use Ferret::Core::Operations qw(num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    undef;
 
     # Anonymous function definition
     {

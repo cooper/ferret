@@ -170,6 +170,7 @@ use Ferret::Core::Operations qw(bool str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    undef;
 
     # Class 'Cow'
     {

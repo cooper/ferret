@@ -76,7 +76,6 @@
 #          Assignment
 #              Lexical variable '$emptyHash'
 #              Hash [0 items]
-#      Include
 use warnings;
 use strict;
 use utf8;
@@ -101,6 +100,7 @@ use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    undef;
 
     # Function event 'makePoint' callback definition
     {
@@ -140,7 +140,6 @@ my $result = do {
         );
     }
     $funcs[0]->inside_scope( makePoint => $scope, $scope );
-
     $scope->set_property_ow( $context,
         pt => $scope->property_u('makePoint')
           ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope )->property_u('point')

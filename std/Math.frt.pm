@@ -39,6 +39,7 @@ use Ferret::Core::Operations qw();
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
+    undef;
 
     # Function event 'sqrt' callback definition
     {
