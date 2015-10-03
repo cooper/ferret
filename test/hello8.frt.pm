@@ -9,17 +9,17 @@
 #                              Instance variable '@length'
 #                          Multiplication operator (*)
 #                          Number '2'
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Structural list [1 items]
-#                      Item 0
-#                          Operation
-#                              String 'Length tim...'
-#                              Addition operator (+)
-#                              Call
-#                                  Property 'doubledLength'
-#                                      String 'hi there'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Operation
+#                          String 'Length tim...'
+#                          Addition operator (+)
+#                          Call
+#                              Property 'doubledLength'
+#                                  String 'hi there'
 #      Include
 use warnings;
 use strict;
@@ -84,18 +84,19 @@ my $result = do {
             );
         }
         $methods[0]->inside_scope( doubledLength => $scope, $proto, $class );
-        $scope->property_u('say')->call(
-            [
-                add(
-                    $scope,
-                    str( $f, "Length times two: " ),
-                    str( $f, "hi there" )->property_u('doubledLength')
-                      ->call( {}, $scope )
-                )
-            ],
-            $scope
-        );
     }
+
+    $scope->property_u('say')->call(
+        [
+            add(
+                $scope,
+                str( $f, "Length times two: " ),
+                str( $f, "hi there" )->property_u('doubledLength')
+                  ->call( {}, $scope )
+            )
+        ],
+        $scope
+    );
 };
 
 Ferret::runtime();

@@ -53,6 +53,14 @@ my $ok;
 
 our %element_rules = (
 
+    Class => {
+        children_must_be => [
+            'Method',
+            'Class must only contain class functions, instance methods, '.
+            'and variable declarations'
+        ]
+    },
+
     WantNeed => {
 
         # WantNeed must always be a direct child of an instruction.
@@ -69,8 +77,8 @@ our %element_rules = (
             # inside a method, WantNeed can ONLY contain these things.
             children_must_be => [
                 'InstanceVariable LexicalVariable Expression Bareword',
-                'Argument declaration inside method can only contain lexical'.
-                ' or instance variables and their types'
+                'Argument declaration inside method can only contain lexical '.
+                'or instance variables and their types'
             ]
 
         },
@@ -80,8 +88,8 @@ our %element_rules = (
             # inside a function, WantNeed can ONLY contain these things.
             children_must_be => [
                 'LexicalVariable Expression Bareword',
-                'Argument declaration inside function can only contain lexical'.
-                ' variables and their types'
+                'Argument declaration inside function can only contain '.
+                'lexical variables and their types'
             ]
 
         },

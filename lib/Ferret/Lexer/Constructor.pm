@@ -89,8 +89,10 @@ sub c_PKG_DEC {
         unless $c->{node}->type eq 'Document';
 
     my $pkg = F::Package->new(%$value);
+    $pkg->{parent_package} = $c->{package};
     $c->{node}->adopt($pkg);
     $c->{package} = $pkg;
+
     return $pkg;
 }
 
@@ -103,16 +105,46 @@ sub c_CLASS_DEC {
 
     # terminate current class.
     $c->{node} = $c->{node}->close if $c->{node}->type eq 'Class';
+    $c->{end_cap} = $c->{end_cap}{parent_end_cap} if $c->{end_cap};
 
     # create class.
     my $class = F::Class->new(%$value);
     $c->{class} = $class;
+
+    # capture the end keyword.
+    $class->{parent_end_cap} = $c->{end_cap};
+    $c->{end_cap} = $class;
 
     # set as current node.
     # will be terminated by another class declaration or end of file.
     $c->{node} = $c->{node}->adopt($class);
 
     return $class;
+}
+
+# end a class or package.
+sub c_KEYWORD_END {
+    my ($c, $value) = @_;
+
+    # must have something to capture it.
+    my $class_or_pkg = $c->{end_cap};
+    unexpected($c, 'outside of class or package')
+        unless $class_or_pkg;
+
+    # the current node must be the package or class.
+    my $type = $c->{node}->desc;
+    unexpected($c, "inside $type")
+        if $c->{node} != $class_or_pkg;
+
+    # close it.
+    delete $c->{class}
+        if $c->{class} && $class_or_pkg == $c->{class};
+    $c->{package} = $class_or_pkg->{parent_package}
+        if $c->{package} && $class_or_pkg == $c->{package};
+    $class_or_pkg->{end_cap} = $class_or_pkg->{end_cap}{parent_end_cap};
+    $c->{node} = $c->{node}->close;
+
+    return;
 }
 
 sub c_METHOD {
@@ -843,7 +875,7 @@ sub c_any {
         ^FUNCTION$          ^METHOD$        ^CLASS_DEC$
         ^OP_.+$             ^CLOSURE_.+$    ^PKG_DEC$
         ^KEYWORD_INSIDE$    ^KEYWORD_FOR$   ^KEYWORD_IF$
-        ^KEYWORD_ON$
+        ^KEYWORD_ON$        ^KEYWORD_END$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

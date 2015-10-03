@@ -92,78 +92,78 @@
 #                                                          Lexical variable '$pt2'
 #                                          Division operator (/)
 #                                          Number '2'
-#          Instruction
-#              Assignment
-#                  Lexical variable '$pt'
-#                  Call
-#                      Bareword 'Point'
-#                      Structural list [2 items]
-#                          Item 0
-#                              Number '5'
-#                          Item 1
-#                              Number '3'
-#          Instruction
+#      Instruction
+#          Assignment
+#              Lexical variable '$pt'
 #              Call
-#                  Bareword 'say'
-#                  Structural list [1 items]
+#                  Bareword 'Point'
+#                  Structural list [2 items]
 #                      Item 0
-#                          Operation
-#                              String 'Point'
-#                              Addition operator (+)
-#                              Lexical variable '$pt'
-#          Instruction
-#              Assignment
-#                  Lexical variable '$rpt'
-#                  Call
-#                      Property 'oneToRight'
+#                          Number '5'
+#                      Item 1
+#                          Number '3'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Operation
+#                          String 'Point'
+#                          Addition operator (+)
 #                          Lexical variable '$pt'
-#          Instruction
+#      Instruction
+#          Assignment
+#              Lexical variable '$rpt'
 #              Call
-#                  Bareword 'say'
-#                  Structural list [1 items]
-#                      Item 0
-#                          Operation
-#                              String 'Right'
-#                              Addition operator (+)
-#                              Lexical variable '$rpt'
-#          Instruction
-#              Assignment
-#                  Lexical variable '$mdpt'
-#                  Call
-#                      Property 'midpoint'
-#                          Bareword 'Point'
-#                      Structural list [2 items]
-#                          Item 0
-#                              Lexical variable '$pt'
-#                          Item 1
-#                              Lexical variable '$rpt'
-#          Instruction
+#                  Property 'oneToRight'
+#                      Lexical variable '$pt'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Operation
+#                          String 'Right'
+#                          Addition operator (+)
+#                          Lexical variable '$rpt'
+#      Instruction
+#          Assignment
+#              Lexical variable '$mdpt'
 #              Call
-#                  Bareword 'say'
-#                  Structural list [1 items]
+#                  Property 'midpoint'
+#                      Bareword 'Point'
+#                  Structural list [2 items]
 #                      Item 0
-#                          Operation
-#                              String 'Midpoint'
-#                              Addition operator (+)
-#                              Lexical variable '$mdpt'
-#          Instruction
-#              Assignment
-#                  Lexical variable '$nineteen'
-#                  Operation
-#                      Number '4'
-#                      Addition operator (+)
-#                      Number '45'
-#                      Division operator (/)
-#                      Number '3'
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Structural list [1 items]
-#                      Item 0
-#                          Operation
-#                              String 'Nineteen: '
-#                              Addition operator (+)
-#                              Lexical variable '$nineteen'
+#                          Lexical variable '$pt'
+#                      Item 1
+#                          Lexical variable '$rpt'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Operation
+#                          String 'Midpoint'
+#                          Addition operator (+)
+#                          Lexical variable '$mdpt'
+#      Instruction
+#          Assignment
+#              Lexical variable '$nineteen'
+#              Operation
+#                  Number '4'
+#                  Addition operator (+)
+#                  Number '45'
+#                  Division operator (/)
+#                  Number '3'
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Operation
+#                          String 'Nineteen: '
+#                          Addition operator (+)
+#                          Lexical variable '$nineteen'
 #      Include (Point)
 use warnings;
 use strict;
@@ -363,53 +363,48 @@ my $result = do {
         $methods[2]->inside_scope( pretty     => $scope, $proto, $class );
         $methods[3]->inside_scope( toString   => $scope, $proto, $class );
         $methods[4]->inside_scope( midpoint   => $scope, $class, $class );
-        $scope->set_property_ow( $context,
-            pt => $scope->property_u('Point')
-              ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope ) );
-        $scope->property_u('say')
-          ->call(
-            [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
-            $scope );
-        $scope->set_property_ow( $context,
-            rpt => $scope->property_u('pt')->property_u('oneToRight')
-              ->call( {}, $scope ) );
-        $scope->property_u('say')
-          ->call(
-            [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
-            $scope );
-        $scope->set_property_ow(
-            $context,
-            mdpt => $scope->property_u('Point')->property_u('midpoint')->call(
-                [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope
-            )
-        );
-        $scope->property_u('say')->call(
-            [
-                add(
-                    $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt')
-                )
-            ],
-            $scope
-        );
-        $scope->set_property_ow(
-            $context,
-            nineteen => add(
-                $scope,
-                num( $f, 4 ),
-                div( $scope, num( $f, 45 ), num( $f, 3 ) )
-            )
-        );
-        $scope->property_u('say')->call(
-            [
-                add(
-                    $scope, str( $f, "Nineteen: " ),
-                    $scope->property_u('nineteen')
-                )
-            ],
-            $scope
-        );
     }
     Ferret::space( $context, $_ ) for qw(Point);
+    $scope->set_property_ow( $context,
+        pt => $scope->property_u('Point')
+          ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope ) );
+    $scope->property_u('say')
+      ->call( [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
+        $scope );
+    $scope->set_property_ow( $context,
+        rpt =>
+          $scope->property_u('pt')->property_u('oneToRight')->call( {}, $scope )
+    );
+    $scope->property_u('say')
+      ->call( [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
+        $scope );
+    $scope->set_property_ow(
+        $context,
+        mdpt => $scope->property_u('Point')->property_u('midpoint')->call(
+            [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope
+        )
+    );
+    $scope->property_u('say')
+      ->call(
+        [ add( $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt') ) ],
+        $scope );
+    $scope->set_property_ow(
+        $context,
+        nineteen => add(
+            $scope,
+            num( $f, 4 ),
+            div( $scope, num( $f, 45 ), num( $f, 3 ) )
+        )
+    );
+    $scope->property_u('say')->call(
+        [
+            add(
+                $scope, str( $f, "Nineteen: " ),
+                $scope->property_u('nineteen')
+            )
+        ],
+        $scope
+    );
 };
 
 Ferret::runtime();

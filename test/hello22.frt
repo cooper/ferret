@@ -44,6 +44,8 @@ main method fight {
     return "nice cats don't fight";
 }
 
+end
+
 # create a cow
 $animal = Cow();
 

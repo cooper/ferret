@@ -71,80 +71,80 @@
 #              Instruction
 #                  Return
 #                      String 'nice cats ...'
-#          Instruction
-#              Assignment
-#                  Lexical variable '$animal'
-#                  Call
-#                      Bareword 'Cow'
-#                      Structural list [0 items]
-#          Instruction
+#      Instruction
+#          Assignment
+#              Lexical variable '$animal'
 #              Call
-#                  Call
-#                      Property 'init'
-#                          Bareword 'Dog'
-#                      Structural list [1 items]
-#                          Item 0
-#                              Lexical variable '$animal'
+#                  Bareword 'Cow'
 #                  Structural list [0 items]
-#          Instruction
+#      Instruction
+#          Call
 #              Call
-#                  Bareword 'say'
-#                  Structural list [1 items]
-#                      Item 0
-#                          Call
-#                              Property 'moo'
-#                                  Lexical variable '$animal'
-#                              Structural list [0 items]
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Structural list [1 items]
-#                      Item 0
-#                          Call
-#                              Property 'bark'
-#                                  Lexical variable '$animal'
-#                              Structural list [0 items]
-#          Instruction
-#              Call
-#                  Call
-#                      Property 'init'
-#                          Bareword 'Cat'
-#                      Structural list [1 items]
-#                          Item 0
-#                              Lexical variable '$animal'
-#                  Hash [1 items]
-#                      Item 0
-#                          Pair 'mean'
-#                              Boolean true
-#          Instruction
-#              Call
-#                  Bareword 'inspect'
+#                  Property 'init'
+#                      Bareword 'Dog'
 #                  Structural list [1 items]
 #                      Item 0
 #                          Lexical variable '$animal'
-#          Instruction
-#              Assignment
-#                  Lexical variable '$cat'
-#                  Call
-#                      Bareword 'Cat'
-#                      Structural list [0 items]
-#          Instruction
-#              Assignment
-#                  Lexical variable '$aftermath'
-#                  Call
-#                      Property 'fight'
-#                          Structural list [2 items]
-#                              Item 0
-#                                  Lexical variable '$animal'
-#                              Item 1
-#                                  Lexical variable '$cat'
-#                      Structural list [0 items]
-#          Instruction
+#              Structural list [0 items]
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Call
+#                          Property 'moo'
+#                              Lexical variable '$animal'
+#                          Structural list [0 items]
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Call
+#                          Property 'bark'
+#                              Lexical variable '$animal'
+#                          Structural list [0 items]
+#      Instruction
+#          Call
 #              Call
-#                  Bareword 'say'
+#                  Property 'init'
+#                      Bareword 'Cat'
 #                  Structural list [1 items]
 #                      Item 0
-#                          Lexical variable '$aftermath'
+#                          Lexical variable '$animal'
+#              Hash [1 items]
+#                  Item 0
+#                      Pair 'mean'
+#                          Boolean true
+#      Instruction
+#          Call
+#              Bareword 'inspect'
+#              Structural list [1 items]
+#                  Item 0
+#                      Lexical variable '$animal'
+#      Instruction
+#          Assignment
+#              Lexical variable '$cat'
+#              Call
+#                  Bareword 'Cat'
+#                  Structural list [0 items]
+#      Instruction
+#          Assignment
+#              Lexical variable '$aftermath'
+#              Call
+#                  Property 'fight'
+#                      Structural list [2 items]
+#                          Item 0
+#                              Lexical variable '$animal'
+#                          Item 1
+#                              Lexical variable '$cat'
+#                  Structural list [0 items]
+#      Instruction
+#          Call
+#              Bareword 'say'
+#              Structural list [1 items]
+#                  Item 0
+#                      Lexical variable '$aftermath'
 #      Include (Cat, Cow, Dog)
 use warnings;
 use strict;
@@ -402,40 +402,35 @@ my $result = do {
         $methods[0]->inside_scope( _init_ => $scope, $class, $class );
         $methods[1]->inside_scope( meow   => $scope, $proto, $class );
         $methods[2]->inside_scope( fight  => $scope, $class, $class );
-        $scope->set_property_ow( $context,
-            animal => $scope->property_u('Cow')->call( {}, $scope ) );
-        $scope->property_u('Dog')->property_u('init')
-          ->call( [ $scope->property_u('animal') ], $scope )
-          ->call( {}, $scope );
-        $scope->property_u('say')->call(
-            [
-                $scope->property_u('animal')->property_u('moo')
-                  ->call( {}, $scope )
-            ],
-            $scope
-        );
-        $scope->property_u('say')->call(
-            [
-                $scope->property_u('animal')->property_u('bark')
-                  ->call( {}, $scope )
-            ],
-            $scope
-        );
-        $scope->property_u('Cat')->property_u('init')
-          ->call( [ $scope->property_u('animal') ], $scope )
-          ->call( { mean => Ferret::true }, $scope );
-        $scope->property_u('inspect')
-          ->call( [ $scope->property_u('animal') ], $scope );
-        $scope->set_property_ow( $context,
-            cat => $scope->property_u('Cat')->call( {}, $scope ) );
-        $scope->set_property_ow( $context,
-            aftermath => $scope->property_u('animal')
-              ->create_set( $scope, $scope->property_u('cat') )
-              ->property_u('fight')->call( {}, $scope ) );
-        $scope->property_u('say')
-          ->call( [ $scope->property_u('aftermath') ], $scope );
     }
     Ferret::space( $context, $_ ) for qw(Cat Cow Dog);
+    $scope->set_property_ow( $context,
+        animal => $scope->property_u('Cow')->call( {}, $scope ) );
+    $scope->property_u('Dog')->property_u('init')
+      ->call( [ $scope->property_u('animal') ], $scope )->call( {}, $scope );
+    $scope->property_u('say')->call(
+        [ $scope->property_u('animal')->property_u('moo')->call( {}, $scope ) ],
+        $scope
+    );
+    $scope->property_u('say')->call(
+        [
+            $scope->property_u('animal')->property_u('bark')->call( {}, $scope )
+        ],
+        $scope
+    );
+    $scope->property_u('Cat')->property_u('init')
+      ->call( [ $scope->property_u('animal') ], $scope )
+      ->call( { mean => Ferret::true }, $scope );
+    $scope->property_u('inspect')
+      ->call( [ $scope->property_u('animal') ], $scope );
+    $scope->set_property_ow( $context,
+        cat => $scope->property_u('Cat')->call( {}, $scope ) );
+    $scope->set_property_ow( $context,
+        aftermath => $scope->property_u('animal')
+          ->create_set( $scope, $scope->property_u('cat') )
+          ->property_u('fight')->call( {}, $scope ) );
+    $scope->property_u('say')
+      ->call( [ $scope->property_u('aftermath') ], $scope );
 };
 
 Ferret::runtime();

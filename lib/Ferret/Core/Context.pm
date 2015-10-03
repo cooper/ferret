@@ -35,8 +35,6 @@ sub new {
         );
 
         $event->inside_scope($name, $context, $context, undef);
-        #$context->set_property($name => $event);
-
     }
 
     # set the object initializer.

@@ -27,6 +27,8 @@ main method midpoint {
     );
 }
 
+end
+
 $pt = Point(5, 3);
 say("Point$pt");
 
