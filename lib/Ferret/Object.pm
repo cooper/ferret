@@ -7,6 +7,7 @@ use utf8;
 use parent 'Evented::Object';
 
 use Scalar::Util qw(blessed weaken);
+use Ferret::Conversion qw(perl_description);
 
 # create a new object.
 sub new {
@@ -308,6 +309,49 @@ sub create_set {
     );
 }
 
+sub description {
+    my ($obj, $own_only) = @_;
+
+    return 'undefined' if Ferret::undefined($obj);
+    return 'true'      if $obj == Ferret::true;
+    return 'false'     if $obj == Ferret::false;
+
+    my ($skipped, $prop_str) = (0, '');
+    my @parents = $obj->parent_names;
+    foreach my $prop_name ($obj->properties(1)) {
+        my ($value, $owner) = $obj->_property($prop_name);
+
+        # skip other contexts
+        if ($owner != $obj && $owner->isa('Ferret::Context')) {
+            $skipped++;
+            next;
+        }
+
+        # skipping all inherited
+        if ($owner != $obj && $own_only) {
+            $skipped++;
+            next;
+        }
+
+        $prop_str ||= "\n";
+
+        # indiciate it's inherited
+        $prop_name = "($prop_name)" if $owner != $obj;
+
+        # indent lines
+        $value     = join "\n    ", split /\n/, perl_description($value, $own_only);
+        $prop_str .= '    '.$prop_name." = $value\n";
+
+    }
+    $prop_str .= "    $skipped more inherited\n" if $skipped;
+
+    return sprintf '[ %s ](%s)', join(', ', @parents), $prop_str;
+}
+
+###############
+### INDICES ###
+###############
+
 # call getValue.
 sub get_index_value {
     my ($obj, $arguments, $call_scope) = @_;
@@ -321,6 +365,10 @@ sub set_index_value {
     unshift @$arguments, $value;
     return $obj->property('setValue')->call($arguments, $call_scope);
 }
+
+###############################
+### EQUALITY AND INEQUALITY ###
+###############################
 
 # test object equality, return Ferret boolean
 sub equal_to {

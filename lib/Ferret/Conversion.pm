@@ -36,16 +36,17 @@ sub ferret_string {
             return $val;
         }
 
+        # it's an object with a description converter.
+        if ($val->can('description')) {
+            return ferret_string($val->description);
+        }
+        if (my $to_desc = $val->property('description')) {
+            return $to_desc->call;
+        }
+
     }
 
-    return ferret_string("true")      if $val == Ferret::true;
-    return ferret_string("false")     if $val == Ferret::false;
-    return ferret_string("undefined") if Ferret::undefined($val);
-
-    # it's an object with no string value.
-    my $addr = $val + 0;
-    return Ferret::String->new($f, value => "[object $addr]");
-
+    return "$val";
 }
 
 # return a perl string value.
@@ -53,6 +54,13 @@ sub perl_string {
     my $val = shift;
     return $val if !blessed $val;
     return ferret_string($val)->{value} // '';
+}
+
+# return a perl object description.
+sub perl_description {
+    my ($val, $own_only) = @_;
+    return $val->description($own_only) if $val->can('description');
+    return perl_string($val);
 }
 
 # return a ferret number object.

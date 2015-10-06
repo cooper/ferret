@@ -53,7 +53,8 @@ Ferret::bind_class(
     alias     => 'Num',
     methods   => \@methods,
     functions => \@functions,
-    init      => \&init
+    init      => \&init,
+    desc      => \&description
 );
 
 *new = *Ferret::bind_constructor;
@@ -108,6 +109,10 @@ sub op_pow {
 sub _to_string {
     my $num = shift;
     return Ferret::String->new($num->f, value => $num->{value});
+}
+
+sub description {
+    return shift->{value};
 }
 
 sub _sum {

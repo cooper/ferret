@@ -60,7 +60,7 @@ sub compile {
     my ($i, $next, $last, @opers);
 
     # for each operator, while there are instances of that operator
-    foreach my $op_type (qw/pow mul div add sub/) { $i = -1;
+    foreach my $op_type (qw/pow mul div sub add/) { $i = -1;
     while (grep { is_op($_, $op_type) } @children) {
         my ($i, $left, $right) = -1;
 

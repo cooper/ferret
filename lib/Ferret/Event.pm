@@ -108,6 +108,12 @@ sub add_function {
 
 }
 
+sub description {
+    my $event = shift;
+    return "Event" if !length $event->{name};
+    return "Event '$$event{name}'";
+}
+
 sub call_with_self {
     my ($event, $self) = (shift, shift);
     $event->{force_self} = $self;

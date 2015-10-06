@@ -7,7 +7,11 @@ use utf8;
 use 5.010;
 
 use parent 'Ferret::Object';
-use Ferret::Conversion qw(perl_string ferret_number ferret_string ferret_list);
+use Ferret::Conversion qw(
+    perl_string ferret_number
+    ferret_string ferret_list
+    perl_description
+);
 
 my @methods = (
     keys => {
@@ -32,7 +36,8 @@ my @methods = (
 Ferret::bind_class(
     name      => 'Hash',
     methods   => \@methods,
-    init      => \&init
+    init      => \&init,
+    desc      => \&description
 );
 
 *new = *Ferret::bind_constructor;
@@ -96,6 +101,19 @@ sub values : method {
 
 sub _values {
     return ferret_list(shift->values);
+}
+
+sub description {
+    my ($hash, $own_only) = @_;
+    my @keys   = $hash->keys;
+    my @values = map perl_description($_, $own_only), $hash->values;
+    my $i = 0;
+    return "[:]" if !@keys;
+    foreach my $key (@keys) {
+        $values[$i] = "$key: ".$values[$i];
+        $i++;
+    }
+    return "[\n    ".join("\n    ", @values)."\n]";
 }
 
 sub iterate_pair {

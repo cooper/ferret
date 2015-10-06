@@ -7,7 +7,11 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Conversion qw(ferret_number perl_number);
+use Ferret::Conversion qw(
+    ferret_number perl_number
+    ferret_string perl_string
+    perl_description
+);
 
 my @methods = (
     length => {
@@ -16,6 +20,10 @@ my @methods = (
     insert => {
         need => '$index:Num $item',
         code => \&_insert
+    },
+    join => {
+        need => '$separator:Str',
+        code => \&_join
     },
     setValue => {
         need => '$item $index:Num',
@@ -35,7 +43,8 @@ push @methods, map { $_ => {
 Ferret::bind_class(
     name      => 'List',
     methods   => \@methods,
-    init      => \&init
+    init      => \&init,
+    desc      => \&description
 );
 
 *new = *Ferret::bind_constructor;
@@ -105,6 +114,18 @@ sub _insert {
     return $list;
 }
 
+sub join : method {
+    my ($list, $separator) = @_;
+    my @items = map perl_string($_), @{ $list->{list_items} };
+    return join $separator, @items;
+}
+
+sub _join {
+    my ($list, $arguments) = @_;
+    my $sep = perl_string($arguments->{separator});
+    return ferret_string($list->join($sep));
+}
+
 sub set_value {
     my ($list, $index, $item) = @_;
     $list->{list_items}[$index] = $item;
@@ -123,9 +144,16 @@ sub get_value {
 }
 
 sub _get_value {
-    my ($hash, $arguments) = @_;
+    my ($list, $arguments) = @_;
     my $index = perl_number($arguments->{index});
-    return $hash->get_value($index);
+    return $list->get_value($index);
+}
+
+sub description {
+    my ($list, $own_only) = @_;
+    my @values = map perl_description($_, $own_only), @{ $list->{list_items} };
+    return "[]" if !@values;
+    return "[\n    ".join("\n    ", @values)."\n]";
 }
 
 sub iterate {

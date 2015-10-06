@@ -50,7 +50,8 @@ Ferret::bind_class(
     name      => 'String',
     alias     => 'Str',
     methods   => \@methods,
-    functions => \@functions
+    functions => \@functions,
+    desc      => \&description
 );
 
 *new = *Ferret::bind_constructor;
@@ -105,6 +106,13 @@ sub _trimPrefix {
     my ($str, $arguments) = @_;
     my $pfx = perl_string($arguments->{prefix});
     return $str->trimPrefix($pfx);
+}
+
+sub description {
+    my ($str, $own_only) = @_;
+    $str = q(").$str->{value}.q(");
+    $str =~ s/\r\n|\r|\n/\x{2424}/g;
+    return $str;
 }
 
 # TODO: copy will eventually be an Object method.

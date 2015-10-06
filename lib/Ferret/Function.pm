@@ -73,6 +73,12 @@ sub call_with_self {
     return $ret;
 }
 
+sub description {
+    my $func = shift;
+    return "Function" if !length $func->{name};
+    return "Function '$$func{name}'";
+}
+
 sub call {
     my ($func, $arguments, $call_scope, $return) = @_;
 
