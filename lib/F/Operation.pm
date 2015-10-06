@@ -21,11 +21,30 @@ sub adopt {
     # two operators in a row.
     if (is_op($before) && is_op($maybe)) {
 
-        # it could be a sign.
-        my $allowed = is_op($maybe, 'add') || is_op($maybe, 'sub');
-        if ($allowed) {
+        # it could be a negation.
+        if (is_op($maybe, 'sub')) {
+
+            # two negatives = positive.
+            #
+            # note how this calls ->adopt again, rather than SUPER::adopt.
+            # this is because the below check is_op($maybe, 'add')
+            # may ignore it altogether.
+            #
+            if (is_op($before, 'sub')) {
+                $op->abandon($before);
+                return $op->adopt(F::Operator->new(
+                    op_type => 'add',
+                    token   => 'OP_ADD'
+                ));
+            }
+
             $op->SUPER::adopt(F::Number->new(value => 0));
             return $op->SUPER::adopt(@_);
+        }
+
+        # it's just a positive; do nothing.
+        if (is_op($maybe, 'add')) {
+            return;
         }
 
         # otherwise, not allowed.
@@ -56,7 +75,7 @@ sub compile {
 
             # FIXME: do something proper if there is no $right
             die 'no right side' if !$right;
-            
+
             # if the last is the same type of operation, combine.
             if (ref $left eq 'ARRAY' && $left->[0] eq $op_type) {
                 push @$a, @$left[1..$#$left], $right;
