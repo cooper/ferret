@@ -776,6 +776,13 @@ sub c_math_operator {
     my %allowed = map { $_ => 1 } @expression_types;
 
     my $last_el = $c->{last_element};
+
+    # if it's addition or subtraction, it might be a sign.
+    my %signs = (OP_ADD => 1, OP_SUB => 1);
+    if (!$allowed{ $last_el->type_or_tok } && $signs{ $c->{label} }) {
+        $last_el = F::Number->new(value => 0);
+    }
+
     return expected($c,
         'an expression',
         'at left of '.Ferret::Lexer::pretty_token($c->{label})

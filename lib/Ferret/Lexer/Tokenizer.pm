@@ -96,7 +96,7 @@ my @token_formats = (
 
     # other
     [ BAREWORD      => qr/\b[A-Za-z_][A-Za-z0-9:_]*/                        ],  # bareword (and keywords)
-    [ NUMBER        => qr/[+-]?\d+(?:\.\d+(?:e\d+)?)?/                      ],  # number
+    [ NUMBER        => qr/\d+(?:\.\d+(?:e\d+)?)?/                           ],  # number
     [ NEWLINE       => qr/\n/,          \&ignore_increment                  ],  # newline
     [ SPACE         => qr/\s*/,         \&ignore                            ],  # whitespace
 
@@ -226,6 +226,7 @@ sub tok_STR_REG {
         $parts[$i] = (tokenize_noinc($code))[1];
     }
 
+    @parts = "" if !@parts;
     return $is_str ? [ STRING => \@parts ] : [ REGEX => \@parts ];
 }
 

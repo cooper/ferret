@@ -52,10 +52,18 @@ Ferret::bind_class(
     name      => 'Number',
     alias     => 'Num',
     methods   => \@methods,
-    functions => \@functions
+    functions => \@functions,
+    init      => \&init
 );
 
 *new = *Ferret::bind_constructor;
+
+sub init {
+    my $num = shift;
+    my $odd = $num->{value} % 2;
+    $num->set_property(odd  => ferret_boolean($odd));
+    $num->set_property(even => ferret_boolean(!$odd));
+}
 
 # number plus number
 sub op_add {
