@@ -1,8 +1,7 @@
 # === Document Model ===
 #  Document './test/hello17.frt'
 #      Instruction
-#          Assignment
-#              Lexical variable '$obj'
+#          Assignment (lexical variable '$obj')
 #              Call
 #                  Bareword 'Object'
 #                  Structural list [0 items]

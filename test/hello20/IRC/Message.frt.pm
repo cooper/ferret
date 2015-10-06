@@ -8,8 +8,7 @@
 #                      Instance variable '@line'
 #                      Bareword 'Str'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$lineSplit'
+#                  Assignment (lexical variable '$lineSplit')
 #                      Call
 #                          Property 'split'
 #                              Instance variable '@line'
@@ -21,16 +20,14 @@
 #                                  Pair 'limit'
 #                                      Number '4'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@channel'
+#                  Assignment (instance variable '@channel')
 #                      Index
 #                          Lexical variable '$lineSplit'
 #                          Structural list [1 items]
 #                              Item 0
 #                                  Number '2'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@nickname'
+#                  Assignment (instance variable '@nickname')
 #                      Index
 #                          Call
 #                              Property 'split'
@@ -57,8 +54,7 @@
 #                          Item 0
 #                              String ':'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@message'
+#                  Assignment (instance variable '@message')
 #                      Index
 #                          Lexical variable '$lineSplit'
 #                          Structural list [1 items]
@@ -72,8 +68,7 @@
 #                          Item 0
 #                              String ':'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@parts'
+#                  Assignment (instance variable '@parts')
 #                      Call
 #                          Property 'split'
 #                              Instance variable '@message'
@@ -100,8 +95,7 @@
 #                              Item 0
 #                                  String '.'
 #                  Instruction
-#                      Assignment
-#                          Instance variable '@_foundCommand'
+#                      Assignment (instance variable '@_foundCommand')
 #                          Call
 #                              Property 'trimPrefix'
 #                                  Call
@@ -119,8 +113,7 @@
 #                      Return
 #                          Instance variable '@_foundCommand'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@_foundCommand'
+#                  Assignment (instance variable '@_foundCommand')
 #                      Boolean false
 #              Instruction
 #                  Return

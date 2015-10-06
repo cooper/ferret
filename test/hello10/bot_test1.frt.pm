@@ -1,8 +1,7 @@
 # === Document Model ===
 #  Document './test/hello10/bot_test1.frt'
 #      Instruction
-#          Assignment
-#              Lexical variable '$bot'
+#          Assignment (lexical variable '$bot')
 #              Call
 #                  Bareword 'Bot1'
 #                  Hash [3 items]

@@ -27,8 +27,7 @@
 #                          String 'Ferret IRC'
 #                      Bareword 'Str'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@sock'
+#                  Assignment (instance variable '@sock')
 #                      Call
 #                          Bareword 'Socket::TCP'
 #                          Hash [2 items]

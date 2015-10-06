@@ -1,8 +1,7 @@
 # === Document Model ===
 #  Document './test/hello19.frt'
 #      Instruction
-#          Assignment
-#              Lexical variable '$words'
+#          Assignment (lexical variable '$words')
 #              Call
 #                  Property 'split'
 #                      String 'how are you?'

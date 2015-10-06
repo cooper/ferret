@@ -30,8 +30,7 @@
 #                          String 'Ferret IRC'
 #                      Bareword 'Str'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@handlers'
+#                  Assignment (instance variable '@handlers')
 #                      Hash [3 items]
 #                          Item 0
 #                              Pair 'MODE'
@@ -43,8 +42,7 @@
 #                              Pair 'PRIVMSG'
 #                                  Instance variable '@handleMessage'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@commands'
+#                  Assignment (instance variable '@commands')
 #                      Hash [3 items]
 #                          Item 0
 #                              Pair 'hello'
@@ -56,12 +54,10 @@
 #                              Pair 'add'
 #                                  Instance variable '@commandAdd'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@factoids'
+#                  Assignment (instance variable '@factoids')
 #                      Hash [0 items]
 #              Instruction
-#                  Assignment
-#                      Instance variable '@sock'
+#                  Assignment (instance variable '@sock')
 #                      Call
 #                          Bareword 'Socket::TCP'
 #                          Hash [2 items]
@@ -132,12 +128,7 @@
 #                      Return pair 'overwrote'
 #                          Boolean true
 #              Instruction
-#                  Assignment
-#                      Index
-#                          Instance variable '@commands'
-#                          Structural list [1 items]
-#                              Item 0
-#                                  Lexical variable '$command'
+#                  Assignment (index)
 #                      Lexical variable '$callback'
 #              Instruction
 #                  Return pair 'added'
@@ -173,8 +164,7 @@
 #                  Need
 #                      Lexical variable '$line'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$s'
+#                  Assignment (lexical variable '$s')
 #                      Call
 #                          Property 'split'
 #                              Lexical variable '$line'
@@ -182,8 +172,7 @@
 #                              Item 0
 #                                  String ' '
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$command'
+#                  Assignment (lexical variable '$command')
 #                      Index
 #                          Lexical variable '$s'
 #                          Structural list [1 items]
@@ -199,8 +188,7 @@
 #                                      Number '0'
 #                          String 'PING'
 #                  Instruction
-#                      Assignment
-#                          Lexical variable '$command'
+#                      Assignment (lexical variable '$command')
 #                          Index
 #                              Lexical variable '$s'
 #                              Structural list [1 items]
@@ -277,8 +265,7 @@
 #                  Instruction
 #                      Return
 #              Instruction
-#                  Assignment
-#                      Instance variable '@_joinedChannels'
+#                  Assignment (instance variable '@_joinedChannels')
 #                      Boolean true
 #              If
 #                  Expression ('if' parameter)
@@ -322,8 +309,7 @@
 #                  Need
 #                      Lexical variable '$s'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$msg'
+#                  Assignment (lexical variable '$msg')
 #                      Call
 #                          Bareword 'IRC::Message'
 #                          Structural list [1 items]
@@ -367,8 +353,7 @@
 #                  Need
 #                      Lexical variable '$msg'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$nickname'
+#                  Assignment (lexical variable '$nickname')
 #                      Property 'nickname'
 #                          Lexical variable '$msg'
 #              Instruction
@@ -396,8 +381,7 @@
 #                          Item 0
 #                              Lexical variable '$msg'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$trigger'
+#                  Assignment (lexical variable '$trigger')
 #                      Index
 #                          Property 'parts'
 #                              Lexical variable '$msg'
@@ -405,8 +389,7 @@
 #                              Item 0
 #                                  Number '1'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$response'
+#                  Assignment (lexical variable '$response')
 #                      Call
 #                          Property 'fromWord'
 #                              Lexical variable '$msg'
@@ -414,20 +397,10 @@
 #                              Item 0
 #                                  Number '2'
 #              Instruction
-#                  Assignment
-#                      Index
-#                          Instance variable '@factoids'
-#                          Structural list [1 items]
-#                              Item 0
-#                                  Lexical variable '$trigger'
+#                  Assignment (index)
 #                      Lexical variable '$response'
 #              Instruction
-#                  Assignment
-#                      Index
-#                          Instance variable '@commands'
-#                          Structural list [1 items]
-#                              Item 0
-#                                  Lexical variable '$trigger'
+#                  Assignment (index)
 #                      Instance variable '@commandFactoid'
 #              Instruction
 #                  Call
@@ -452,8 +425,7 @@
 #                  Need
 #                      Lexical variable '$msg'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$response'
+#                  Assignment (lexical variable '$response')
 #                      Index
 #                          Instance variable '@factoids'
 #                          Structural list [1 items]

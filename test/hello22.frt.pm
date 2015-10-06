@@ -72,8 +72,7 @@
 #                  Return
 #                      String 'nice cats ...'
 #      Instruction
-#          Assignment
-#              Lexical variable '$animal'
+#          Assignment (lexical variable '$animal')
 #              Call
 #                  Bareword 'Cow'
 #                  Structural list [0 items]
@@ -123,14 +122,12 @@
 #                  Item 0
 #                      Lexical variable '$animal'
 #      Instruction
-#          Assignment
-#              Lexical variable '$cat'
+#          Assignment (lexical variable '$cat')
 #              Call
 #                  Bareword 'Cat'
 #                  Structural list [0 items]
 #      Instruction
-#          Assignment
-#              Lexical variable '$aftermath'
+#          Assignment (lexical variable '$aftermath')
 #              Call
 #                  Property 'fight'
 #                      Structural list [2 items]

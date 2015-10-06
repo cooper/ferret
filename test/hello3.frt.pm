@@ -43,13 +43,10 @@
 #                  Bareword 'hello2'
 #          Function 'hello1'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$hello'
+#                  Assignment (lexical variable '$hello')
 #                      String 'Hello'
 #              Instruction
-#                  Assignment
-#                      Property 'name'
-#                          Lexical variable '$hello'
+#                  Assignment (property 'name')
 #                      Lexical variable '$name1'
 #              Instruction
 #                  Call
@@ -74,8 +71,7 @@
 #                                  Addition operator (+)
 #                                  Lexical variable '$name2'
 #      Instruction
-#          Assignment
-#              Lexical variable '$pi'
+#          Assignment (lexical variable '$pi')
 #              Operation
 #                  Number '3'
 #                  Addition operator (+)

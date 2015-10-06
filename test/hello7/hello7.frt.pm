@@ -1,8 +1,7 @@
 # === Document Model ===
 #  Document './test/hello7/hello7.frt'
 #      Instruction
-#          Assignment
-#              Lexical variable '$rect'
+#          Assignment (lexical variable '$rect')
 #              Call
 #                  Bareword 'Math::Rect'
 #                  Hash [4 items]
@@ -19,8 +18,7 @@
 #                          Pair 'height'
 #                              Number '10'
 #      Instruction
-#          Assignment
-#              Lexical variable '$center'
+#          Assignment (lexical variable '$center')
 #              Call
 #                  Property 'center'
 #                      Lexical variable '$rect'
@@ -45,8 +43,7 @@
 #                              Property 'distanceFromOrigin'
 #                                  Lexical variable '$center'
 #      Instruction
-#          Assignment
-#              Lexical variable '$otherPt'
+#          Assignment (lexical variable '$otherPt')
 #              Call
 #                  Bareword 'Math::Point'
 #                  Structural list [2 items]
@@ -55,8 +52,7 @@
 #                      Item 1
 #                          Number '2'
 #      Instruction
-#          Assignment
-#              Lexical variable '$midpoint'
+#          Assignment (lexical variable '$midpoint')
 #              Call
 #                  Property 'pretty'
 #                      Call

@@ -16,8 +16,7 @@
 #                  Need
 #                      Instance variable '@height'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@origin'
+#                  Assignment (instance variable '@origin')
 #                      Call
 #                          Bareword 'Point'
 #                          Structural list [2 items]
@@ -103,8 +102,7 @@
 #                                      Instance variable '@topRight'
 #          Method 'center'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$x'
+#                  Assignment (lexical variable '$x')
 #                      Operation
 #                          Property 'x'
 #                              Instance variable '@origin'
@@ -113,8 +111,7 @@
 #                          Multiplication operator (*)
 #                          Number '0.5'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$y'
+#                  Assignment (lexical variable '$y')
 #                      Operation
 #                          Property 'y'
 #                              Instance variable '@origin'

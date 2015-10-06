@@ -742,9 +742,10 @@ sub c_OP_ASSIGN {
         'at left of assignment operator (=)'
     ) unless $allowed{ $last_el->type_or_tok };
 
-    # adopt the last element as the left side of the assignment.
+    # remember the last element as the left side of the assignment.
     my $a = $c->{node} = $c->{node}->adopt(F::Assignment->new);
-    $a->adopt($last_el);
+    $a->{left_side} = $last_el;
+    $last_el->parent->abandon($last_el);
 
     return $a;
 }

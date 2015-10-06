@@ -24,8 +24,7 @@
 #                          Item 0
 #                              String 'five secon...'
 #      Instruction
-#          Assignment
-#              Lexical variable '$t2'
+#          Assignment (lexical variable '$t2')
 #              Call
 #                  Bareword 'Timer'
 #                  Structural list [1 items]

@@ -1,8 +1,7 @@
 # === Document Model ===
 #  Document './test/hello11.frt'
 #      Instruction
-#          Assignment
-#              Lexical variable '$point'
+#          Assignment (lexical variable '$point')
 #              Call
 #                  Bareword 'Math::Point'
 #                  Structural list [2 items]
@@ -29,12 +28,10 @@
 #          Expression ('inside' parameter)
 #              Lexical variable '$point'
 #          Instruction
-#              Assignment
-#                  Lexical variable '$x'
+#              Assignment (lexical variable '$x')
 #                  Number '5'
 #          Instruction
-#              Assignment
-#                  Lexical variable '$y'
+#              Assignment (lexical variable '$y')
 #                  Number '10'
 #      Instruction
 #          Call
@@ -71,8 +68,7 @@
 #                  Return pair 'didTwice'
 #                      Lexical variable '$twice'
 #      Instruction
-#          Assignment
-#              Lexical variable '$r'
+#          Assignment (lexical variable '$r')
 #              Call
 #                  Bareword 'say'
 #                  Hash [2 items]

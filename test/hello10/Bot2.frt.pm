@@ -42,8 +42,7 @@
 #                              Pair 'port'
 #                                  Instance variable '@port'
 #              Instruction
-#                  Assignment
-#                      Instance variable '@send'
+#                  Assignment (instance variable '@send')
 #                      Instance variable '@println'
 #              On
 #                  Expression ('on' parameter)

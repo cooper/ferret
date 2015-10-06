@@ -1,8 +1,7 @@
 # === Document Model ===
 #  Document './test/hello20/run.frt'
 #      Instruction
-#          Assignment
-#              Lexical variable '$bot'
+#          Assignment (lexical variable '$bot')
 #              Call
 #                  Bareword 'IRC::Bot'
 #                  Hash [3 items]
@@ -16,9 +15,7 @@
 #                          Pair 'user'
 #                              String 'ferret'
 #      Instruction
-#          Assignment
-#              Property 'autojoin'
-#                  Lexical variable '$bot'
+#          Assignment (property 'autojoin')
 #              Value list [1 items]
 #                  Item 0
 #                      String '#k'
@@ -57,8 +54,7 @@
 #                              Need
 #                                  Lexical variable '$msg'
 #                          Instruction
-#                              Assignment
-#                                  Lexical variable '$c'
+#                              Assignment (lexical variable '$c')
 #                                  Call
 #                                      Bareword 'COMPILER'
 #                                      Structural list [1 items]
@@ -70,8 +66,7 @@
 #                                                      Item 0
 #                                                          Number '1'
 #                          Instruction
-#                              Assignment
-#                                  Lexical variable '$res'
+#                              Assignment (lexical variable '$res')
 #                                  Call
 #                                      Property 'tokenize'
 #                                          Lexical variable '$c'
@@ -120,8 +115,7 @@
 #                              Need
 #                                  Lexical variable '$msg'
 #                          Instruction
-#                              Assignment
-#                                  Lexical variable '$c'
+#                              Assignment (lexical variable '$c')
 #                                  Call
 #                                      Bareword 'COMPILER'
 #                                      Structural list [1 items]
@@ -133,8 +127,7 @@
 #                                                      Item 0
 #                                                          Number '1'
 #                          Instruction
-#                              Assignment
-#                                  Lexical variable '$res'
+#                              Assignment (lexical variable '$res')
 #                                  Call
 #                                      Property 'construct'
 #                                          Lexical variable '$c'
@@ -183,8 +176,7 @@
 #                              Need
 #                                  Lexical variable '$msg'
 #                          Instruction
-#                              Assignment
-#                                  Lexical variable '$c'
+#                              Assignment (lexical variable '$c')
 #                                  Call
 #                                      Bareword 'COMPILER'
 #                                      Structural list [1 items]
@@ -196,8 +188,7 @@
 #                                                      Item 0
 #                                                          Number '1'
 #                          Instruction
-#                              Assignment
-#                                  Lexical variable '$res'
+#                              Assignment (lexical variable '$res')
 #                                  Call
 #                                      Property 'compile'
 #                                          Lexical variable '$c'
@@ -243,8 +234,7 @@
 #                              Need
 #                                  Lexical variable '$msg'
 #                          Instruction
-#                              Assignment
-#                                  Lexical variable '$res'
+#                              Assignment (lexical variable '$res')
 #                                  Call
 #                                      Property 'eval'
 #                                          Call
@@ -276,8 +266,7 @@
 #                              Instruction
 #                                  Return
 #                          Instruction
-#                              Assignment
-#                                  Lexical variable '$string'
+#                              Assignment (lexical variable '$string')
 #                                  Property 'string'
 #                                      Call
 #                                          Bareword 'inspect'

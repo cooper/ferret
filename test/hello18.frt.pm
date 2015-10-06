@@ -1,8 +1,7 @@
 # === Document Model ===
 #  Document './test/hello18.frt'
 #      Instruction
-#          Assignment
-#              Lexical variable '$list'
+#          Assignment (lexical variable '$list')
 #              Value list [1 items]
 #                  Item 0
 #                      String 'hi'
@@ -14,12 +13,7 @@
 #                  Item 0
 #                      String 'there'
 #      Instruction
-#          Assignment
-#              Index
-#                  Lexical variable '$list'
-#                  Structural list [1 items]
-#                      Item 0
-#                          Number '4'
+#          Assignment (index)
 #              String 'yeah'
 #      Instruction
 #          Call
@@ -47,27 +41,16 @@
 #                              Addition operator (+)
 #                              Lexical variable '$item'
 #      Instruction
-#          Assignment
-#              Lexical variable '$hash'
+#          Assignment (lexical variable '$hash')
 #              Hash [1 items]
 #                  Item 0
 #                      Pair 'hi'
 #                          String 'there'
 #      Instruction
-#          Assignment
-#              Index
-#                  Lexical variable '$hash'
-#                  Structural list [1 items]
-#                      Item 0
-#                          String 'whats'
+#          Assignment (index)
 #              String 'up'
 #      Instruction
-#          Assignment
-#              Index
-#                  Lexical variable '$hash'
-#                  Structural list [1 items]
-#                      Item 0
-#                          String 'thank'
+#          Assignment (index)
 #              String 'you'
 #      Instruction
 #          Call
@@ -124,7 +107,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello18.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add num str);
+use Ferret::Core::Operations qw(add str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');

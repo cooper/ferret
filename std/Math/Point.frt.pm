@@ -14,16 +14,14 @@
 #                  Need
 #                      Lexical variable '$pt2'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$dx'
+#                  Assignment (lexical variable '$dx')
 #                      Operation
 #                          Instance variable '@x'
 #                          Subtraction operator (-)
 #                          Property 'x'
 #                              Lexical variable '$pt2'
 #              Instruction
-#                  Assignment
-#                      Lexical variable '$dy'
+#                  Assignment (lexical variable '$dy')
 #                      Operation
 #                          Instance variable '@y'
 #                          Subtraction operator (-)

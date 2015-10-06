@@ -1,8 +1,7 @@
 # === Document Model ===
 #  Document './test/hello16.frt'
 #      Instruction
-#          Assignment
-#              Lexical variable '$obj'
+#          Assignment (lexical variable '$obj')
 #              String 'hi'
 #      Instruction
 #          Call

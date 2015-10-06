@@ -18,7 +18,8 @@ sub desc {
 
 sub perl_fmt {
     my $str = shift;
-    $str->document->{required_operations}{str}++;
+    my $doc = $str->document;
+    $doc->{required_operations}{str}++;
     return string => { string => dump($str->{value}) };
 }
 
