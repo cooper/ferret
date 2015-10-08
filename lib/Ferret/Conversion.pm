@@ -108,7 +108,7 @@ sub perl_number {
 }
 
 # return a ferret list object.
-# @vals must be ferret objects already.
+# if @vals are not ferret objects, they will be ferretized.
 sub ferret_list {
     my @vals = @_;
 
@@ -126,9 +126,30 @@ sub ferret_list {
     return Ferret::List->new($Ferret::ferret, values => \@vals);
 }
 
+sub perl_listref {
+    return [ ];
+    # TODO
+}
+
 sub ferret_hash {
     return ferret_string("hash conversion not yet implemented");
     # TODO
+}
+
+# $recursive indicates whether to perlize values.
+sub perl_hashref {
+    my ($hash, $recursive) = @_;
+
+    # can't do anything with this.
+    return { } if !blessed $hash || !$hash->{hash_values};
+
+    my %hash;
+    foreach my $key (keys %{ $hash->{hash_values} }) {
+        my $value = $hash->{hash_values}{$key};
+        $hash{$key} = $recursive ? perlize($value) : $value;
+    }
+
+    return \%hash;
 }
 
 sub ferret_boolean {
@@ -153,6 +174,16 @@ sub ferretize {
         return ferret_number($val);
     }
     return ferret_string($val);
+}
+
+# for lists and hashes, references are returned.
+sub perlize {
+    my $val = shift;
+    return $val if !blessed $val || !$val->isa('Ferret::Object');
+    return perl_listef($val)    if $val->{list_items};
+    return perl_hashref($val)   if $val->{hash_values};
+    return $val->{value}        if defined $val->{value};
+    return perl_string($val);
 }
 
 1

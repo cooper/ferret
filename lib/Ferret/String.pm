@@ -9,7 +9,7 @@ use parent 'Ferret::Object';
 
 use Scalar::Util qw(blessed);
 use Ferret::Conversion qw(
-    perl_string perl_number
+    perl_string perl_number perl_hashref
     ferret_string ferret_list ferret_boolean
 );
 
@@ -32,6 +32,12 @@ my @methods = (
     trimPrefix => {
         need => '$prefix:Str',
         code => \&_trimPrefix
+    },
+    fillPlaceholders => {
+        # all passed parameters are placeholder values,
+        # or a single hash can be passed with values.
+        want => '$valueHash:Hash',
+        code => \&_fillPlaceholders
     },
     copy => {
         code => \&_copy
@@ -105,6 +111,41 @@ sub _trimPrefix {
     my ($str, $arguments) = @_;
     my $pfx = perl_string($arguments->{prefix});
     return $str->trimPrefix($pfx);
+}
+
+sub fillPlaceholders {
+    my ($str, $info) = @_;
+
+    # fill.
+    my @lines;
+    foreach my $line (split /\n/, $str->{value}) {
+        chomp $line;
+        my ($indent) = ($line =~ m/^(\s*).*$/);
+        my $add_indent = sub {
+            defined(my $key = $info->{+shift}) or return;
+            my @lines = split "\n", $key;
+            return join "\n$indent", @lines;
+        };
+        $line =~ s/<<\s*(\w+)\s*>>/@{[ $add_indent->($1) ]}/g;
+        push @lines, $line;
+    }
+
+    # join.
+    $str->{value} = join "\n", @lines;
+
+    return $str;
+}
+
+sub _fillPlaceholders {
+    my ($str, $arguments) = @_;
+    my %info;
+    if (my $hash = $arguments->{valueHash}) {
+        %info = %{ perl_hashref($hash, 1) };
+    }
+    else {
+        %info = map { $_ => perl_string($arguments->{$_}) } keys %$arguments;
+    }
+    return $str->fillPlaceholders(\%info);
 }
 
 sub description {
