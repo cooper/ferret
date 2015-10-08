@@ -45,8 +45,8 @@ sub new {
 
 # object constants.
 my $undefined;
-sub true  () { state $true  = Ferret::Object->new($ferret, faketype => 'Boolean') } # TODO
-sub false () { state $false = Ferret::Object->new($ferret, faketype => 'Boolean') } # TODO
+sub true  () { state $true  = Ferret::Boolean->new($ferret, bool_value => 1, real => 1) }
+sub false () { state $false = Ferret::Boolean->new($ferret, bool_value => 0, real => 1) }
 
 # fetch undefined value or test if a value is undefined.
 sub undefined(;$) {
@@ -288,6 +288,7 @@ use Ferret::Prototype;
 use Ferret::List;
 use Ferret::Hash;
 use Ferret::Set;
+use Ferret::Boolean;
 
 use Ferret::Core::Functions;
 use Ferret::Core::Context;

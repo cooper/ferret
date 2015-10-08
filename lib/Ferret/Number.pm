@@ -54,16 +54,26 @@ Ferret::bind_class(
     methods   => \@methods,
     functions => \@functions,
     init      => \&init,
+    init_want => '$from',
     desc      => \&description
 );
 
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my $num = shift;
+    my ($num, $arguments) = @_;
+
+    # from other value.
+    if (my $from = $arguments->{from}) {
+        $num->{value} = perl_number($from);
+    }
+    $num->{value} = 0 if !defined $num->{value};
+
+    # evenness.
     my $odd = $num->{value} % 2;
     $num->set_property(odd  => ferret_boolean($odd));
     $num->set_property(even => ferret_boolean(!$odd));
+
 }
 
 # number plus number

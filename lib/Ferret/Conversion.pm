@@ -83,7 +83,9 @@ sub ferret_number {
     if ($val->isa('Ferret::Object')) {
 
         # maybe an unblessed number object.
-        if (defined $val->{value}) {
+        # note that this will also work for converting strings
+        # holding number-looking values to numbers.
+        if (defined $val->{value} && looks_like_number($val->{value})) {
             return $val;
         }
 
@@ -95,15 +97,14 @@ sub ferret_number {
     }
 
     # it's an object with no number value.
-    my $addr = $val + 0;
-    return Ferret::Number->new($f, value => $addr);
+    return Ferret::Number->new($f, value => 0);
 
 }
 
 # return a perl string value.
 sub perl_number {
     my $val = shift;
-    return $val if !blessed $val;
+    return $val if !blessed $val && looks_like_number($val);
     return ferret_number($val)->{value} // 0;
 }
 
@@ -153,7 +154,9 @@ sub perl_hashref {
 }
 
 sub ferret_boolean {
-    my $truth = !!shift;
+    my $val = shift;
+    return $val if blessed $val && defined $val->{bool_value};
+    my $truth = !!$val;
     return $truth ? Ferret::true : Ferret::false;
 }
 

@@ -56,10 +56,20 @@ Ferret::bind_class(
     alias     => 'Str',
     methods   => \@methods,
     functions => \@functions,
+    init      => \&init,
+    init_want => '$from',
     desc      => \&description
 );
 
 *new = *Ferret::bind_constructor;
+
+sub init {
+    my ($str, $arguments) = @_;
+    if ($arguments->{from}) {
+        $str->{value} = perl_string($arguments->{from});
+    }
+    $str->{value} = '' if !exists $str->{value};
+}
 
 # string plus string
 sub op_add {

@@ -71,6 +71,9 @@ sub init {
         );
     }
 
+    # strong override.
+    $obj = $obj->{override_init_obj} if $obj->{override_init_obj};
+
     # inject instance properties.
     $ret->set_property(instance => $obj);
     $ret->set_property(lc $class->{name} => $obj);

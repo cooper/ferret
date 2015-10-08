@@ -10,7 +10,7 @@ init {
 # bool($a) === true
 method trueValue {
     want $a;
-    return @_test(Bool(from: $a), "Value must be true");
+    return @_test(Bool($a), "Value must be true");
 }
 
 # $a === true
@@ -48,6 +48,7 @@ method objectsNotEqual {
 method review {
     $failed = @tested - @passed;
     say("[@name] @tested tests; @passed passed; $failed failed");
+
     tests   -> @tested;
     fails   -> $failed;
     passes  -> @passed;
@@ -56,13 +57,17 @@ method review {
 
 method _test {
     want $yes, $message;
+
     @tested = @tested + 1;
+    pass -> $yes;
+
     if $yes {
         @passed = @passed + 1;
-        pass -> true;
         return;
     }
+
     if @fatal:
         Error($message).panic();
+
     message -> $message;
 }

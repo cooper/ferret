@@ -30,10 +30,9 @@
 #                              Item 0
 #                                  Call
 #                                      Bareword 'Bool'
-#                                      Hash [1 items]
+#                                      Structural list [1 items]
 #                                          Item 0
-#                                              Pair 'from'
-#                                                  Lexical variable '$a'
+#                                              Lexical variable '$a'
 #                              Item 1
 #                                  String 'Value must...'
 #          Method 'veryTrue'
@@ -133,6 +132,9 @@
 #                          Instance variable '@tested'
 #                          Addition operator (+)
 #                          Number '1'
+#              Instruction
+#                  Return pair 'pass'
+#                      Lexical variable '$yes'
 #              If
 #                  Expression ('if' parameter)
 #                      Lexical variable '$yes'
@@ -142,9 +144,6 @@
 #                              Instance variable '@passed'
 #                              Addition operator (+)
 #                              Number '1'
-#                  Instruction
-#                      Return pair 'pass'
-#                          Boolean true
 #                  Instruction
 #                      Return
 #              If
@@ -249,7 +248,7 @@ my $result = do {
                 return $self->property_u('_test')->call(
                     [
                         $scope->property_u('Bool')
-                          ->call( { from => $scope->property_u('a') }, $scope ),
+                          ->call( [ $scope->property_u('a') ], $scope ),
                         str( $f, "Value must be true" )
                     ],
                     $scope
@@ -444,6 +443,7 @@ my $result = do {
                 $self->set_property( tested =>
                       add( $scope, $self->property_u('tested'), num( $f, 1 ) )
                 );
+                $return->set_property( pass => $scope->property_u('yes') );
                 if ( bool( $scope->property_u('yes') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -453,7 +453,6 @@ my $result = do {
                             num( $f, 1 )
                         )
                     );
-                    $return->set_property( pass => Ferret::true );
                     return $return;
                 }
                 if ( bool( $self->property_u('fatal') ) ) {
