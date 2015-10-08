@@ -52,6 +52,7 @@ sub ferret_string {
 # return a perl string value.
 sub perl_string {
     my $val = shift;
+    return ''   if !defined $val;
     return $val if !blessed $val;
     return ferret_string($val)->{value} // '';
 }

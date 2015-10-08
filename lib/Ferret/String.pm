@@ -22,8 +22,7 @@ my @methods = (
         code => \&_length
     },
     split => {
-        need => '$separator:Str|Reg',
-        want => '$limit:Num',
+        want => '$separator:Str|Reg $limit:Num',
         code => \&_split
     },
     hasPrefix => {
@@ -77,7 +76,7 @@ sub _length {
 # for now, this only accepts strings.
 sub _split {
     my ($str, $arguments) = @_;
-    my $sep     = perl_string($arguments->{separator});
+    my $sep     = perl_string($arguments->{separator}); # undef returns ''
     my $limit   = $arguments->{limit} ? perl_number($arguments->{limit}) : 0;
     my @strings = split /\Q$sep\E/, $str->{value}, $limit;
     return ferret_list(map ferret_string($_), @strings);
