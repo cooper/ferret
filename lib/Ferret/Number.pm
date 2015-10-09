@@ -65,12 +65,12 @@ sub init {
 
     # from other value.
     if (my $from = $arguments->{from}) {
-        $num->{value} = perl_number($from);
+        $num->{num_value} = perl_number($from);
     }
-    $num->{value} = 0 if !defined $num->{value};
+    $num->{num_value} = 0 if !defined $num->{num_value};
 
     # evenness.
-    my $odd = $num->{value} % 2;
+    my $odd = $num->{num_value} % 2;
     $num->set_property(odd  => ferret_boolean($odd));
     $num->set_property(even => ferret_boolean(!$odd));
 
@@ -118,11 +118,11 @@ sub op_pow {
 
 sub _to_string {
     my $num = shift;
-    return Ferret::String->new($num->f, value => $num->{value});
+    return Ferret::String->new($num->f, str_value => $num->{num_value});
 }
 
 sub description {
-    return shift->{value};
+    return shift->{num_value};
 }
 
 sub _sum {
@@ -135,7 +135,7 @@ sub _sum {
 sub equal {
     shift if !blessed $_[0];
     my ($num1, $num2) = @_;
-    return $num1->{value} == $num2->{value};
+    return $num1->{num_value} == $num2->{num_value};
 }
 
 sub _equal {

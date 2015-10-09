@@ -11,6 +11,8 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
+use Ferret::Conversion qw(perl_string perl_number);
+
 my @methods = (
     connect => {
         code => \&_connect
@@ -51,8 +53,8 @@ sub _connect {
 
     # create a connection.
     my $conn = IO::Socket::IP->new(
-        PeerHost => $sock->property('address')->{value},
-        PeerPort => $sock->property('port')->{value},
+        PeerHost => perl_string($sock->property('address')),
+        PeerPort => perl_number($sock->property('port')),
         Type     => Socket::SOCK_STREAM()
     ) or return;
 
@@ -64,7 +66,7 @@ sub _connect {
             my ($self, $buffer, $eof) = @_;
             while ($$buffer =~ s/^(.*)\n//) {
                 (my $val = $1) =~ s/\0|\r//g;
-                my $str = Ferret::String->new($sock->f, value => $val);
+                my $str = Ferret::String->new($sock->f, str_value => $val);
                 $sock->property('gotLine')->call([ $str ]);
             }
         }
@@ -79,7 +81,7 @@ sub _connect {
 
 sub println {
     my ($sock, $arguments, $call_scope, $scope, $return) = @_;
-    my $line = $arguments->{data}{value};
+    my $line = perl_string($arguments->{data});
     $sock->{stream}->write("$line\n");
 }
 

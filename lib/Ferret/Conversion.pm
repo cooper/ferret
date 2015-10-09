@@ -16,7 +16,7 @@ sub ferret_string {
 
     # not blessed.
     if (!blessed $val) {
-        return Ferret::String->new($f, value => $val);
+        return Ferret::String->new($f, str_value => $val);
     }
 
     # already a blessed string.
@@ -32,7 +32,7 @@ sub ferret_string {
         }
 
         # maybe an unblessed string object.
-        if (defined $val->{value}) {
+        if (defined $val->{str_value}) {
             return $val;
         }
 
@@ -54,7 +54,7 @@ sub perl_string {
     my $val = shift;
     return ''   if !defined $val;
     return $val if !blessed $val;
-    return ferret_string($val)->{value} // '';
+    return ferret_string($val)->{str_value} // '';
 }
 
 # return a perl object description.
@@ -72,7 +72,7 @@ sub ferret_number {
     # not blessed.
     if (!blessed $val) {
         $val = 0 if !looks_like_number($val);
-        return Ferret::Number->new($f, value => $val);
+        return Ferret::Number->new($f, num_value => $val);
     }
 
     # already a blessed number.
@@ -83,9 +83,7 @@ sub ferret_number {
     if ($val->isa('Ferret::Object')) {
 
         # maybe an unblessed number object.
-        # note that this will also work for converting strings
-        # holding number-looking values to numbers.
-        if (defined $val->{value} && looks_like_number($val->{value})) {
+        if (defined $val->{num_value}) {
             return $val;
         }
 
@@ -97,7 +95,7 @@ sub ferret_number {
     }
 
     # it's an object with no number value.
-    return Ferret::Number->new($f, value => 0);
+    return Ferret::Number->new($f, num_value => 0);
 
 }
 
@@ -105,7 +103,7 @@ sub ferret_number {
 sub perl_number {
     my $val = shift;
     return $val if !blessed $val && looks_like_number($val);
-    return ferret_number($val)->{value} // 0;
+    return ferret_number($val)->{num_value} // 0;
 }
 
 # return a ferret list object.
@@ -185,7 +183,7 @@ sub perlize {
     return $val if !blessed $val || !$val->isa('Ferret::Object');
     return perl_listef($val)    if $val->{list_items};
     return perl_hashref($val)   if $val->{hash_values};
-    return $val->{value}        if defined $val->{value};
+    return $val->{num_value}    if defined $val->{num_value};
     return perl_string($val);
 }
 

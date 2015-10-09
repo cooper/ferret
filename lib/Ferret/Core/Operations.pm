@@ -43,7 +43,7 @@ sub import {
     *{ "${package}::$_" } = *{ "${this_package}::$_" } foreach @_;
 }
 
-sub num { Ferret::Number->new(shift, value => shift) }
-sub str { Ferret::String->new(shift, value => shift) }
+sub num { Ferret::Number->new(shift, num_value => shift) }
+sub str { Ferret::String->new(shift, str_value => shift) }
 
 1

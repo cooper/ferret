@@ -33,13 +33,13 @@ sub bind_math_func {
     my $code = sub {
         my ($class, $arguments) = @_;
 
-        my @args = map { $arguments->{"num$_"}{value} } 1..$n_args;
+        my @args = map { $arguments->{"num$_"}{num_value} } 1..$n_args;
         my $value;
         {
             no strict;
             $value = *{"CORE::$name"}->(@args);
         }
-        return Ferret::Number->new($class->f, value => $value);
+        return Ferret::Number->new($class->f, num_value => $value);
     };
 
     push @functions, $name => {

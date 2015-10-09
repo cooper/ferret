@@ -7,6 +7,8 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
+use Ferret::Conversion qw(perl_number);
+
 my @methods = (
     once => {
         code => \&run_once
@@ -32,7 +34,7 @@ Ferret::bind_class(
 
 sub init {
     my ($timer, $arguments) = @_;
-    $timer->{delay} = $arguments->{delay}{value};
+    $timer->{delay} = perl_number($arguments->{delay});
 }
 
 sub run_once {

@@ -7,10 +7,10 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed looks_like_number);
 use Ferret::Conversion qw(
     perl_string perl_number perl_hashref
-    ferret_string ferret_list ferret_boolean
+    ferret_string ferret_list ferret_boolean ferret_number
 );
 
 my @methods = (
@@ -39,6 +39,9 @@ my @methods = (
         want => '$valueHash:Hash',
         code => \&_fillPlaceholders
     },
+    toNumber => {
+        code => \&_to_number
+    },
     copy => {
         code => \&_copy
     }
@@ -66,9 +69,9 @@ Ferret::bind_class(
 sub init {
     my ($str, $arguments) = @_;
     if ($arguments->{from}) {
-        $str->{value} = perl_string($arguments->{from});
+        $str->{str_value} = perl_string($arguments->{from});
     }
-    $str->{value} = '' if !exists $str->{value};
+    $str->{str_value} = '' if !defined $str->{str_value};
 }
 
 # string plus string
@@ -81,12 +84,12 @@ sub op_add {
 
 sub length : method {
     my $str = shift;
-    return length $str->{value};
+    return length $str->{str_value};
 }
 
 sub _length {
     my $str = shift;
-    return Ferret::Number->new($str->f, value => $str->length);
+    return Ferret::Number->new($str->f, num_value => $str->length);
 }
 
 # for now, this only accepts strings.
@@ -94,13 +97,13 @@ sub _split {
     my ($str, $arguments) = @_;
     my $sep     = perl_string($arguments->{separator}); # undef returns ''
     my $limit   = $arguments->{limit} ? perl_number($arguments->{limit}) : 0;
-    my @strings = split /\Q$sep\E/, $str->{value}, $limit;
+    my @strings = split /\Q$sep\E/, $str->{str_value}, $limit;
     return ferret_list(map ferret_string($_), @strings);
 }
 
 sub hasPrefix {
     my ($str, $prefix) = @_;
-    my $pfx = \substr($str->{value}, 0, length $prefix);
+    my $pfx = \substr($str->{str_value}, 0, length $prefix);
     return $$pfx eq $prefix;
 }
 
@@ -112,7 +115,7 @@ sub _hasPrefix {
 
 sub trimPrefix {
     my ($str, $prefix) = @_;
-    my $pfx = \substr($str->{value}, 0, length $prefix);
+    my $pfx = \substr($str->{str_value}, 0, length $prefix);
     $$pfx = '' if $$pfx eq $prefix;
     return $str;
 }
@@ -128,7 +131,7 @@ sub fillPlaceholders {
 
     # fill.
     my @lines;
-    foreach my $line (split /\n/, $str->{value}) {
+    foreach my $line (split /\n/, $str->{str_value}) {
         chomp $line;
         my ($indent) = ($line =~ m/^(\s*).*$/);
         my $add_indent = sub {
@@ -141,7 +144,7 @@ sub fillPlaceholders {
     }
 
     # join.
-    $str->{value} = join "\n", @lines;
+    $str->{str_value} = join "\n", @lines;
 
     return $str;
 }
@@ -158,9 +161,16 @@ sub _fillPlaceholders {
     return $str->fillPlaceholders(\%info);
 }
 
+sub _to_number {
+    my $str = shift;
+    return ferret_number($str->{str_value} + 0)
+        if looks_like_number($str->{str_value});
+    return ferret_number(0);
+}
+
 sub description {
     my ($str, $own_only) = @_;
-    $str = q(").$str->{value}.q(");
+    $str = q(").$str->{str_value}.q(");
     $str =~ s/\r\n|\r|\n/\x{2424}/g;
     return $str;
 }
@@ -168,7 +178,7 @@ sub description {
 # TODO: copy will eventually be an Object method.
 sub _copy {
     my $str = shift;
-    return ferret_string($str->{value});
+    return ferret_string($str->{str_value});
 }
 
 # any of these work
@@ -185,7 +195,7 @@ sub _copy {
 sub equal {
     shift if !blessed $_[0];
     my ($str1, $str2) = @_;
-    return $str1->{value} eq $str2->{value};
+    return $str1->{str_value} eq $str2->{str_value};
 }
 
 sub _equal {
