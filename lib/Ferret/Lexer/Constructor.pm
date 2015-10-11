@@ -750,12 +750,13 @@ sub c_OP_ASSIGN {
     return $a;
 }
 
-sub c_OP_EQUAL_I {
-    return c_OP_EQUAL(@_[0..1], 1);
-}
+sub c_OP_EQUAL      { handle_equality(shift, 0, 0) }
+sub c_OP_EQUAL_I    { handle_equality(shift, 0, 1) }
+sub c_OP_NEQUAL     { handle_equality(shift, 1, 0) }
+sub c_OP_NEQUAL_I   { handle_equality(shift, 1, 1) }
 
-sub c_OP_EQUAL {
-    my ($c, $value, $obj_equality) = @_;
+sub handle_equality {
+    my ($c, $negated, $obj_equality) = @_;
     my %allowed = map { $_ => 1 } @expression_types;
 
     my $last_el = $c->{last_element};
@@ -766,7 +767,10 @@ sub c_OP_EQUAL {
 
     # adopt the last element as the left side of the equality.
     my $equality = $c->{node} = $c->{node}->adopt(
-        F::Equality->new(obj_equality => $obj_equality)
+        F::Equality->new(
+            negated      => $negated,
+            obj_equality => $obj_equality
+        )
     );
     $equality->adopt($last_el);
 

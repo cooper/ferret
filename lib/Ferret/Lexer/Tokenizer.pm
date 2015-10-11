@@ -30,8 +30,8 @@ my %no_value = map { $_ => 1 } qw(
     BRACKET_S   BRACKET_E   OP_ADD_A    OP_SUB_A
     OP_ADD      OP_SUB      OP_CALL     OP_PROP
     OP_DIV      OP_DIV_A    OP_MUL      OP_MUL_A
-    OP_POW      OP_POW_A
-    OP_VALUE    OP_PACK     OP_EQUAL    OP_EQUAL_I
+    OP_POW      OP_POW_A    OP_VALUE    OP_PACK
+    OP_EQUAL    OP_EQUAL_I  OP_NEQUAL   OP_NEQUAL_I
     OP_ASSIGN   OP_COMMA    OP_RETURN   OP_SEMI
     OP_EXCLAM   OP_MAYBE
 );
@@ -77,7 +77,9 @@ my @token_formats = (
     [ OP_DIV_A      => qr/\/=/                                              ],  # division assignment
     [ OP_POW_A      => qr/\^=/                                              ],  # power assignment
     [ OP_EQUAL_I    => qr/===/                                              ],  # object equality
+    [ OP_NEQUAL_I   => qr/!==/                                              ],  # negated object equality
     [ OP_EQUAL      => qr/==/                                               ],  # equality
+    [ OP_NEQUAL     => qr/!=/                                               ],  # negated equality
     [ OP_ASSIGN     => qr/=/                                                ],  # assignment
     [ OP_ADD        => qr/\+/                                               ],  # addition
     [ OP_SUB        => qr/\-/                                               ],  # subtraction

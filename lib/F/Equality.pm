@@ -11,6 +11,11 @@ sub type { 'Equality' }
 sub perl_fmt {
    my $eq = shift;
    my $type = $eq->{obj_equality} ? 'equality_obj' : 'equality';
+   if ($eq->{negated}) {
+       my $doc = $eq->document;
+       $doc->{required_operations}{_not}++;
+       $type .= '_neg';
+   }
    return $type => {
        left_side  => $eq->left_side->perl_fmt_do,
        right_side => $eq->right_side->perl_fmt_do

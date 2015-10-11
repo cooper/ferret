@@ -36,6 +36,20 @@
 #                              Item 1
 #                                  String 'Value must...'
 #          Method 'veryTrue'
+#              Instruction
+#                  Want
+#                      Lexical variable '$a'
+#              Instruction
+#                  Return
+#                      Call
+#                          Instance variable '@_test'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Equality
+#                                      Lexical variable '$a'
+#                                      Boolean true
+#                              Item 1
+#                                  String 'Value must...'
 #          Method 'equal'
 #              Instruction
 #                  Want
@@ -61,6 +75,17 @@
 #              Instruction
 #                  Want
 #                      Lexical variable '$b'
+#              Instruction
+#                  Return
+#                      Call
+#                          Instance variable '@_test'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Equality
+#                                      Lexical variable '$a'
+#                                      Lexical variable '$b'
+#                              Item 1
+#                                  String 'Objects mu...'
 #          Method 'notEqual'
 #              Instruction
 #                  Want
@@ -68,6 +93,17 @@
 #              Instruction
 #                  Want
 #                      Lexical variable '$b'
+#              Instruction
+#                  Return
+#                      Call
+#                          Instance variable '@_test'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Equality
+#                                      Lexical variable '$a'
+#                                      Lexical variable '$b'
+#                              Item 1
+#                                  String 'Values mus...'
 #          Method 'objectsNotEqual'
 #              Instruction
 #                  Want
@@ -75,6 +111,17 @@
 #              Instruction
 #                  Want
 #                      Lexical variable '$b'
+#              Instruction
+#                  Return
+#                      Call
+#                          Instance variable '@_test'
+#                          Structural list [2 items]
+#                              Item 0
+#                                  Equality
+#                                      Lexical variable '$a'
+#                                      Lexical variable '$b'
+#                              Item 1
+#                                  String 'Objects mu...'
 #          Method 'review'
 #              Instruction
 #                  Assignment (lexical variable '$failed')
@@ -182,7 +229,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Test.frt.pm'}++;
 
-use Ferret::Core::Operations qw(_sub add bool num str);
+use Ferret::Core::Operations qw(_not _sub add bool num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -269,10 +316,18 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-
+            $func->add_argument( name => 'a', optional => 1 );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-
+                $scope->set_property( a => $arguments->{a} );
+                return $self->property_u('_test')->call(
+                    [
+                        $scope->property_u('a')
+                          ->equal_to_exactly( Ferret::true, $scope ),
+                        str( $f, "Value must be exactly true" )
+                    ],
+                    $scope
+                );
                 return $return;
             };
             $methods[2] = Ferret::Event->new(
@@ -325,6 +380,14 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
+                return $self->property_u('_test')->call(
+                    [
+                        $scope->property_u('a')
+                          ->equal_to_exactly( $scope->property_u('b'), $scope ),
+                        str( $f, "Objects must be exactly equal" )
+                    ],
+                    $scope
+                );
                 return $return;
             };
             $methods[4] = Ferret::Event->new(
@@ -347,6 +410,16 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
+                return $self->property_u('_test')->call(
+                    [
+                        _not(
+                            $scope->property_u('a')
+                              ->equal_to( $scope->property_u('b'), $scope )
+                        ),
+                        str( $f, "Values must not be equal" )
+                    ],
+                    $scope
+                );
                 return $return;
             };
             $methods[5] = Ferret::Event->new(
@@ -369,6 +442,17 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
+                return $self->property_u('_test')->call(
+                    [
+                        _not(
+                            $scope->property_u('a')->equal_to_exactly(
+                                $scope->property_u('b'), $scope
+                            )
+                        ),
+                        str( $f, "Objects must not be equal" )
+                    ],
+                    $scope
+                );
                 return $return;
             };
             $methods[6] = Ferret::Event->new(

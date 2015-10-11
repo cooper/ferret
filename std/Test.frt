@@ -15,7 +15,8 @@ method trueValue {
 
 # $a === true
 method veryTrue {
-
+    want $a;
+    return @_test($a === true, "Value must be exactly true");
 }
 
 # $a == $b
@@ -27,22 +28,19 @@ method equal {
 # $a === $b
 method objectsEqual {
     want $a, $b;
-    # return @_test($a === $b, Objects must be equal);
-    # TODO
+    return @_test($a === $b, "Objects must be exactly equal");
 }
 
 # $a != $b
 method notEqual {
     want $a, $b;
-    # return @_test($a != $b, Values must not be equal);
-    # TODO
+    return @_test($a != $b, "Values must not be equal");
 }
 
 # $a !== $b
 method objectsNotEqual {
     want $a, $b;
-    # return @_test($a !== $b, Objects must not be equal);
-    # TODO
+    return @_test($a !== $b, "Objects must not be equal");
 }
 
 method review {

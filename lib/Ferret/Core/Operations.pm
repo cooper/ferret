@@ -36,6 +36,11 @@ sub bool {
     return Ferret::truth(@_);
 }
 
+sub _not {
+    my $val = shift;
+    return $val == Ferret::true ? Ferret::false : Ferret::true;
+}
+
 sub import {
     my $this_package = shift;
     my $package = caller;
