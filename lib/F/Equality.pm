@@ -10,7 +10,8 @@ sub type { 'Equality' }
 
 sub perl_fmt {
    my $eq = shift;
-   return equality => {
+   my $type = $eq->{obj_equality} ? 'equality_obj' : 'equality';
+   return $type => {
        left_side  => $eq->left_side->perl_fmt_do,
        right_side => $eq->right_side->perl_fmt_do
    };
