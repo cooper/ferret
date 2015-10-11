@@ -9,8 +9,6 @@ use parent qw(F::Node F::Statement);
 use Scalar::Util 'blessed';
 
 sub type { 'Operation' }
-sub desc { 'operation' }
-
 sub left_side { shift->first_child }
 
 # handle signs.
@@ -18,8 +16,17 @@ sub adopt {
     my ($op, $maybe) = (shift, @_);
     my $before = $op->last_child;
 
+    # first element is an operator.
+    # don't worry about anything except signs (+/-)
+    # because the constructor will not allow that to happen.
+    if (!$before && is_op($maybe)) {
+        $before = F::Number->new(value => 0, zero => 1);
+        $op->SUPER::adopt($before);
+        $maybe->{token} = 'OP_S'.uc($maybe->op_type); # super sub
+    }
+
     # two operators in a row.
-    if (is_op($before) && is_op($maybe)) {
+    elsif (is_op($before) && is_op($maybe)) {
 
         # it could be a negation.
         if (is_op($maybe, 'sub')) {
@@ -30,15 +37,18 @@ sub adopt {
             # this is because the below check is_op($maybe, 'add')
             # may ignore it altogether.
             #
-            if (is_op($before, 'sub')) {
+            my $super = is_op($before, 'ssub');
+            if (is_op($before, 'sub') || $super) {
                 $op->abandon($before);
-                return $op->adopt(F::Operator->new(
-                    op_type => 'add',
-                    token   => 'OP_ADD'
+                return $op->adopt(F::Operator->new(token =>
+                    $super ? 'OP_SADD' : 'OP_ADD' # super add
                 ));
             }
 
-            $op->SUPER::adopt(F::Number->new(value => 0));
+            # otherwise it's just a normal negation.
+            $op->SUPER::adopt(F::Number->new(value => 0, zero => 1));
+            $maybe->{token} = 'OP_S'.uc($maybe->op_type); # super sub
+
             return $op->SUPER::adopt(@_);
         }
 
@@ -51,16 +61,16 @@ sub adopt {
         return $maybe->unexpected();
 
     }
+
     return $op->SUPER::adopt(@_);
 }
 
 sub compile {
     my $op = shift;
     my @children = $op->children;
-    my ($i, $next, $last, @opers);
 
     # for each operator, while there are instances of that operator
-    foreach my $op_type (qw/pow mul div sub add/) { $i = -1;
+    foreach my $op_type (qw/ssub sadd pow mul div sub add/) {
     while (grep { is_op($_, $op_type) } @children) {
         my ($i, $left, $right) = -1;
 
@@ -93,7 +103,11 @@ sub compile {
 
 sub op_fmt {
     my ($op, $op_name, @items) = (shift, @{ +shift });
+
     $op_name = '_sub' if $op_name eq 'sub';
+    $op_name = '_sub' if $op_name eq 'ssub';
+    $op_name = 'add'  if $op_name eq 'sadd';
+
     $op->document->{required_operations}{$op_name}++;
     return operation => {
         operation => $op_name,

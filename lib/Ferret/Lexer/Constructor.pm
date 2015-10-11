@@ -781,13 +781,13 @@ sub c_math_operator {
     # if it's addition or subtraction, it might be a sign.
     my %signs = (OP_ADD => 1, OP_SUB => 1);
     if (!$allowed{ $last_el->type_or_tok } && $signs{ $c->{label} }) {
-        $last_el = F::Number->new(value => 0);
+        undef $last_el;
     }
 
     return expected($c,
         'an expression',
         'at left of '.Ferret::Lexer::pretty_token($c->{label})
-    ) unless $allowed{ $last_el->type_or_tok };
+    ) if $last_el && !$allowed{ $last_el->type_or_tok };
 
     # if the current node is an operation, just add another thing.
     my $operator = F::Operator->new(token => $c->{label});
@@ -798,7 +798,7 @@ sub c_math_operator {
 
     # adopt the last element as the left side of the operation.
     my $op = $c->{node} = $c->{node}->adopt(F::Operation->new);
-    $op->adopt($last_el);
+    $op->adopt($last_el) if $last_el;
     $op->adopt($operator);
 
     return $op;

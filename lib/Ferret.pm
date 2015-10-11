@@ -89,6 +89,14 @@ sub valid_value {
 
 }
 
+sub zero {
+    my $f = shift;
+    return $f->{zero} ||= Ferret::Number->new($f,
+        num_value => 0,
+        zero => 1
+    );
+}
+
 ################
 ### CONTEXTS ###
 ################

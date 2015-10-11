@@ -29,9 +29,17 @@ my @methods = (
     }
 );
 
+my @functions = (
+    prettyToken => {
+        want => '$token:Str',
+        code => \&_prettyToken
+    }
+);
+
 Ferret::bind_class(
     name      => 'COMPILER',
     methods   => \@methods,
+    functions => \@functions,
     init_need => '$string:Str',
     init      => \&init
 );
@@ -164,9 +172,18 @@ sub _eval {
     if (ref $res eq 'SCALAR') {
         $return->set_property(error => ferret_string($$res));
     }
-    $return->set_property(result => Ferret::valid_value($res) ? $res : Ferret::undefined);
+    $return->set_property(result =>
+        Ferret::valid_value($res) ? $res : Ferret::undefined
+    );
     $return->set_property(stringResult => ferret_string($res));
     return $return;
+}
+
+sub _prettyToken {
+    my ($class, $arguments) = @_;
+    my $tok = perl_string($arguments->{token});
+       $tok = Ferret::Lexer::pretty_token($tok);
+    return $tok ? ferret_string($tok) : Ferret::undefined;
 }
 
 sub _ferret_code {
