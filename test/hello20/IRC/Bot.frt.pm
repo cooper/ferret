@@ -602,7 +602,7 @@ my $result = do {
                 # On
                 {
                     my $on_func =
-                      $funcs[0]->inside_scope( +undef => $scope, $scope );
+                      $funcs[0]->inside_scope( (undef) => $scope, $scope );
                     $self->property_u('sock')->property_u('connected')
                       ->add_function_with_self_and_scope( $self, $scope,
                         $on_func );
@@ -611,7 +611,7 @@ my $result = do {
                 # On
                 {
                     my $on_func =
-                      $funcs[1]->inside_scope( +undef => $scope, $scope );
+                      $funcs[1]->inside_scope( (undef) => $scope, $scope );
                     $self->property_u('sock')->property_u('gotLine')
                       ->add_function_with_self_and_scope( $self, $scope,
                         $on_func );

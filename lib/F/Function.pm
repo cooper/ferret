@@ -54,7 +54,7 @@ sub perl_fmt {
     my $info = {
         event_cb   => $func->{event_cb},
         id         => $func->document->{function_cid}++,
-        name       => $func->{anonymous} ? '+undef' : $func->{name},
+        name       => $func->{anonymous} ? '(undef)' : $func->{name},
         semi       => $func->{anonymous} ? '' : ';', # probably temporary hack
         statements => $content,
         arguments  => $arguments

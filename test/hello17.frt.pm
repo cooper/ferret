@@ -78,7 +78,7 @@ my $result = do {
 
     # On
     {
-        my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
+        my $on_func = $funcs[0]->inside_scope( (undef) => $scope, $scope );
         $scope->property_u('obj')->property_u('once')->call( {}, $scope )
           ->property_u('expire')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );

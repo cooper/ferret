@@ -555,24 +555,32 @@ my $result = do {
     $scope->property_u('bot')->property_u('addCommand')->call(
         [
             str( $f, "info" ),
-            $funcs[0]->inside_scope( +undef => $scope, $scope )
+            $funcs[0]->inside_scope( (undef) => $scope, $scope )
         ],
         $scope
     );
     $scope->property_u('bot')->property_u('addCommand')->call(
-        [ str( $f, "t" ), $funcs[1]->inside_scope( +undef => $scope, $scope ) ],
+        [
+            str( $f, "t" ), $funcs[1]->inside_scope( (undef) => $scope, $scope )
+        ],
         $scope
     );
     $scope->property_u('bot')->property_u('addCommand')->call(
-        [ str( $f, "c" ), $funcs[2]->inside_scope( +undef => $scope, $scope ) ],
+        [
+            str( $f, "c" ), $funcs[2]->inside_scope( (undef) => $scope, $scope )
+        ],
         $scope
     );
     $scope->property_u('bot')->property_u('addCommand')->call(
-        [ str( $f, "p" ), $funcs[3]->inside_scope( +undef => $scope, $scope ) ],
+        [
+            str( $f, "p" ), $funcs[3]->inside_scope( (undef) => $scope, $scope )
+        ],
         $scope
     );
     $scope->property_u('bot')->property_u('addCommand')->call(
-        [ str( $f, "e" ), $funcs[4]->inside_scope( +undef => $scope, $scope ) ],
+        [
+            str( $f, "e" ), $funcs[4]->inside_scope( (undef) => $scope, $scope )
+        ],
         $scope
     );
     $scope->property_u('bot')->property_u('connect')->call( {}, $scope );

@@ -154,7 +154,12 @@ sub _get_value {
 
 sub description {
     my ($list, $own_only) = @_;
-    my @values = map perl_description($_, $own_only), @{ $list->{list_items} };
+
+    # handle indents
+    my @values = map {
+        join "\n    ", split /\n/, perl_description($_, $own_only)
+    } @{ $list->{list_items} };
+
     return "[]" if !@values;
     return "[\n    ".join("\n    ", @values)."\n]";
 }

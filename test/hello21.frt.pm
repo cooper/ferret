@@ -117,7 +117,7 @@ my $result = do {
 
         # On
         {
-            my $on_func = $funcs[0]->inside_scope( +undef => $scope, $scope );
+            my $on_func = $funcs[0]->inside_scope( (undef) => $scope, $scope );
             $scope->property_u('Timer')
               ->call( [ $scope->property_u('i') ], $scope )->property_u('once')
               ->call( {}, $scope )->property_u('expire')

@@ -135,6 +135,7 @@ sub _property {
     my $first = \substr($prop_name, 0, 1);
     if ($$first eq '*') {
         $$first = '';
+        $borrow_obj = $obj; # pretend the property belongs to the object
         $obj = $obj->{special} or return;
     }
 
@@ -146,7 +147,7 @@ sub _property {
     if (defined $obj->{properties}{$prop_name}) {
         my $p = $obj->{properties}{$prop_name};
         weaken($p->{last_parent} = $borrow_obj) if blessed $p;
-        $p = $p->(@_) if ref $p eq 'CODE'; # computed property
+        $p = $p->($borrow_obj) if ref $p eq 'CODE'; # computed property
         return ($p, $obj);
     }
 
@@ -159,7 +160,7 @@ sub _property {
 
     # try inheritance.
     foreach my $o ($obj->parents) {
-        my @v = $o->_property($prop_name, $obj, $borrow_obj);
+        my @v = $o->_property($prop_name, $borrow_obj);
         return (@v) if @v;
     }
 
