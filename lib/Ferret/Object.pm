@@ -25,6 +25,10 @@ sub new {
             [ ]
     };
 
+    # set special, if available.
+    weaken($obj->{special} = $f->{special})
+        if !$obj->{special} && $f->{special};
+
     return $obj;
 }
 
@@ -48,6 +52,12 @@ sub new {
 #
 sub set_property {
     my ($obj, $prop_name, $value) = @_;
+
+    # special properties can never be assigned to from Ferret.
+    if (substr($prop_name, 0, 1) eq '*') {
+        # FIXME: this needs to raise a runtime error.
+        die "no assignment to special variables";
+    }
 
     # ensure that it is a valid Ferret value.
     if (ref $value ne 'CODE' && !Ferret::valid_value($value)) {
@@ -120,6 +130,14 @@ sub property_u { (shift->property(@_)) || Ferret::undefined }
 #
 sub _property {
     my ($obj, $prop_name, $borrow_obj) = @_;
+
+    # if the prop name starts with asterisk, it's a special property.
+    my $first = \substr($prop_name, 0, 1);
+    if ($$first eq '*') {
+        $$first = '';
+        $obj = $obj->{special} or return;
+    }
+
     $borrow_obj ||= $obj; # the object inheriting the property.
 
     # try the local property first.
@@ -128,6 +146,7 @@ sub _property {
     if (defined $obj->{properties}{$prop_name}) {
         my $p = $obj->{properties}{$prop_name};
         weaken($p->{last_parent} = $borrow_obj) if blessed $p;
+        $p = $p->(@_) if ref $p eq 'CODE'; # computed property
         return ($p, $obj);
     }
 

@@ -20,13 +20,10 @@ sub new {
     );
 
     # create a special variable object.
-    my $spec;
-    if (not $spec = $scope->{special}) {
-        my $p_spec = $opts{parent_scope}{special} if $opts{parent_scope};
-        $spec = $scope->{special} = Ferret::Object->new($f,
-            parent => $p_spec
-        );
-    }
+    my $p_spec = $opts{parent_scope}{special} if $opts{parent_scope};
+    my $spec = $scope->{special} = Ferret::Object->new($f,
+        parent => $p_spec
+    );
 
     # set default special variables.
     $spec->set_property_weak(scope => $scope);

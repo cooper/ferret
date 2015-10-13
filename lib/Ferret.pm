@@ -7,12 +7,17 @@ use utf8;
 use 5.010;
 
 use Scalar::Util 'blessed';
-our ($ferret, $core_context, %tried_files, %class_bindings);
+our ($ferret, $core_context, %tried_files, %class_bindings, %specials);
 
 # create a new ferret.
 sub new {
     my ($class, %opts) = @_;
     my $f = bless {}, $class;
+
+    # create the global special object.
+    $f->{special} = Ferret::Object->new($f);
+    $f->{special}->set_property($_ => $specials{$_})
+        foreach keys %specials;
 
     # create the global object initializer.
     $f->{object_initializer} = Ferret::Function->new($f,
@@ -20,7 +25,8 @@ sub new {
         code => sub {
             my (undef, $arguments) = @_;
             my $new = Ferret::Object->new($f);
-            $new->set_property($_ => $arguments->{$_}) foreach keys %$arguments;
+            $new->set_property($_ => $arguments->{$_})
+                foreach keys %$arguments;
             return $new;
         }
     );
@@ -299,6 +305,7 @@ use Ferret::Set;
 use Ferret::Boolean;
 
 use Ferret::Core::Functions;
+use Ferret::Core::Specials;
 use Ferret::Core::Context;
 use Ferret::Core::Errors;
 

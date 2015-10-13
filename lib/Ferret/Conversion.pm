@@ -122,7 +122,14 @@ sub ferret_list {
     }
 
     @vals = map ferretize($_), @vals;
-    return Ferret::List->new($Ferret::ferret, values => \@vals);
+    return Ferret::List->new($Ferret::ferret, values => [ @vals ]); # make copy
+}
+
+# returns a Ferret list which updates a Perl array reference.
+sub ferret_list_wrap {
+    my $ref = shift;
+    return if ref $ref ne 'ARRAY';
+    return Ferret::List->new($Ferret::ferret, values => $ref);
 }
 
 sub perl_listref {

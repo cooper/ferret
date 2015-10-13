@@ -37,7 +37,7 @@ my %no_value = map { $_ => 1 } qw(
 );
 
 # reused formats
-my $prop_reg    = qr/\b[A-Za-z_][A-Za-z0-9_]*/;
+my $prop_reg    = qr/[\*]?[A-Za-z_]+[A-Za-z0-9_]*/;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
 my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
 
@@ -53,10 +53,15 @@ my @token_formats = (
     # comments don't really work
     # I need to fix it by making comment start and end
 
+
+    # simple properties
+    [ PROPERTY      => qr/\.$prop_reg/, \&remove_first_char                 ],  # simple .property
+
+
     # variables
-    [ VAR_LEX       => qr/\$+$prop_reg+/,   \&remove_first_char             ],  # lexical variable
-    [ VAR_THIS      => qr/\@+$prop_reg+/,   \&remove_first_char             ],  # object variable
-    [ VAR_SPEC      => qr/\*+$prop_reg+/,   \&remove_first_char             ],  # special variable
+    [ VAR_LEX       => qr/\$+$prop_reg/,   \&remove_first_char              ],  # lexical variable
+    [ VAR_THIS      => qr/\@+$prop_reg/,   \&remove_first_char              ],  # object variable
+    [ VAR_SPEC      => qr/\*+$prop_reg/,   \&remove_first_char              ],  # special variable
 
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start
@@ -65,9 +70,6 @@ my @token_formats = (
     [ PAREN_E       => qr/\)/                                               ],  # parentheses end
     [ BRACKET_S     => qr/\[/                                               ],  # bracket start
     [ BRACKET_E     => qr/\]/                                               ],  # bracket end
-
-    # simple properties
-    [ PROPERTY      => qr/\.$prop_reg/, \&remove_first_char                 ],  # simple .property
 
     # operators
     [ OP_RETURN     => qr/->/                                               ],  # return property
@@ -97,7 +99,7 @@ my @token_formats = (
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other
-    [ BAREWORD      => qr/\b[A-Za-z_][A-Za-z0-9:_]*/                        ],  # bareword (and keywords)
+    [ BAREWORD      => qr/[A-Za-z_]+[A-Za-z0-9:_]*/                        ],  # bareword (and keywords)
     [ NUMBER        => qr/\d+(?:\.\d+(?:e\d+)?)?/                           ],  # number
     [ NEWLINE       => qr/\n/,          \&ignore_increment                  ],  # newline
     [ SPACE         => qr/\s*/,         \&ignore                            ],  # whitespace
