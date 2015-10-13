@@ -208,7 +208,8 @@ sub properties {
     my ($obj, $include_inherited) = @_;
     my @names = keys %{ $obj->{properties} };
     if ($include_inherited) {
-        push @names, $_->properties foreach $obj->parents;
+        push @names, $_->properties($include_inherited)
+            foreach $obj->parents;
     }
     return @names;
 }

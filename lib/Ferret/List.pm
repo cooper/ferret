@@ -53,6 +53,9 @@ sub init {
     my ($list, $arguments) = @_;
     $list->{list_items} ||= [];
 
+    # reference items.
+    $list->{list_items} = delete $list->{ref_values} if $list->{ref_values};
+
     # initial items.
     if (my $items = (delete $list->{items} || delete $list->{values})) {
         return $list if ref $items ne 'ARRAY';
