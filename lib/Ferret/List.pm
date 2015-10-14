@@ -32,13 +32,22 @@ my @methods = (
     getValue => {
         need => '$index:Num',
         code => \&_get_value
-    }
+    },
+    shift => {
+        code => \&_item_method
+    },
+    pop => {
+        code => \&_item_method
+    },
+    unshift => {
+        need => '$item',
+        code => \&_item_method
+    },
+    push => {
+        need => '$item',
+        code => \&_item_method
+    },
 );
-
-push @methods, map { $_ => {
-    need => '$item',
-    code => _item_method($_)
-} } qw(shift unshift push pop);
 
 Ferret::bind_class(
     name      => 'List',
@@ -67,13 +76,10 @@ sub init {
 # wrapper for generic method bindings.
 # all of them return the list.
 sub _item_method {
-    my $method_name = shift;
-    return sub {
-        my ($list, $arguments) = @_;
-        my $code = $list->can($method_name) or return;
-        $code->($list, $arguments->{item});
-        return $list;
-    }
+    my ($list, $arguments, undef, undef, undef, $func) = @_;
+    my $code = $list->can($func->{event_name}) or return;
+    $code->($list, $arguments->{item});
+    return $list;
 }
 
 sub length : method {

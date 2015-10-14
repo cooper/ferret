@@ -6,14 +6,14 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Core::Conversion qw(ferret_list_wrap ferret_list);
+use Ferret::Core::Conversion qw(ferret_list_wrap ferret_list ferret_boolean);
 
 my %specials = (
     self            => \&_self,
     isa             => \&_isa,
     classes         => \&_classes,
-    ownProperties   => \&_own_properties,
-    allProperties   => \&_all_properties,
+    ownProperties   => \&_ownProperties,
+    allProperties   => \&_allProperties,
     instanceOf      => _function('instanceOf', '$class:Class')
 );
 
@@ -46,7 +46,16 @@ sub _self {
 # returns mutable ISA list.
 sub _isa {
     my $obj = shift;
-    return ferret_list_wrap($obj->{isa});
+    return $obj->{_isa_ferret} if $obj->{_isa_ferret};
+    my $list = ferret_list_wrap($obj->{isa});
+
+    # as a function, it tests whether it's an instance of a class
+    $list->set_property(toFunction => Ferret::Function->new($obj->f,
+        name => 'toFunction',
+        code => sub { $specials{instanceOf}($obj) }
+    ));
+
+    return $obj->{_isa_ferret} = $list;
 }
 
 # returns immutable class list.
@@ -55,12 +64,12 @@ sub _classes {
     return ferret_list($obj->parent_classes);
 }
 
-sub _all_properties {
+sub _allProperties {
     my $obj = shift;
     return ferret_list($obj->properties(1));
 }
 
-sub _own_properties {
+sub _ownProperties {
     my $obj = shift;
     return ferret_list($obj->properties);
 }
@@ -68,10 +77,7 @@ sub _own_properties {
 sub _instanceOf {
     my ($obj, $arguments) = @_;
     my $class = $arguments->{class};
-    foreach my $c ($obj->parent_classes) {
-        return Ferret::true if $class == $c;
-    }
-    return Ferret::false;
+    return ferret_boolean($obj->instance_of($class));
 }
 
 1

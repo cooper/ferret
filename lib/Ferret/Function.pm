@@ -31,8 +31,8 @@ sub new {
     # add needs from string.
     if (my $need = delete $func->{need}) {
         $func->add_argument(
-            name   => $_->{name}
-            # type => $_->{type} TODO
+            name   => $_->{name},
+            type   => $_->{type}
         ) foreach _parse_method_args($need);
     }
 
@@ -40,7 +40,7 @@ sub new {
     if (my $want = delete $func->{want}) {
         $func->add_argument(
             name     => $_->{name},
-            # type   => $_->{type}, TODO
+            type     => $_->{type},
             optional => 1
         ) foreach _parse_method_args($want);
     }
@@ -58,6 +58,9 @@ sub add_argument {
     #   type        the type, which should be a Perl string
     #   optional    true if it's a want, not a need
     #
+    foreach (qw(name type)) {
+        delete $opts{$_} if !length $opts{$_};
+    }
     $func->{signature}{ $opts{name} } = \%opts;
     push @{ $func->{signatures} }, \%opts;
 }
@@ -76,8 +79,22 @@ sub arguments_satisfy_signature {
     my ($func, $arguments) = @_;
     foreach my $sig (@{ $func->{signatures} }) {
         next if $sig->{optional};
-        return if not exists $arguments->{ $sig->{name} };
-        # TODO: check types here.
+
+        # it's a need. must be present.
+        my $arg = $arguments->{ $sig->{name} };
+        return if !$arg;
+        next if !length $sig->{type};
+
+        # find scope of interest.
+        my $soi = $func->{outer_scope} || $func->f->main_context;
+        $soi = $soi->closest_context;
+
+        # check that it works.
+        my $class_maybe = $soi->property($sig->{type});
+        print "is ", $arg->description," a $$class_maybe{name}?\n";
+        return if !$arg->instance_of($class_maybe);
+        print "yeah\n";
+
     }
     return 1;
 }
@@ -164,6 +181,7 @@ sub inside_scope {
     return $func;
 }
 
+sub name          { shift->{name}          }
 sub has_name      { length shift->{name}   }
 sub is_method     { shift->{is_method}     }
 sub is_class_func { shift->{is_class_func} }

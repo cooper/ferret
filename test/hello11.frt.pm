@@ -126,8 +126,8 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[0] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'twice' );
-        $func->add_argument( name => 'message' );
+        $func->add_argument( name => 'twice',   type => '' );
+        $func->add_argument( name => 'message', type => '' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;

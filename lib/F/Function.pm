@@ -42,10 +42,10 @@ sub perl_fmt {
         # add wants/needs.
         next unless $wn && $wn->type eq 'WantNeed';
         foreach my $var ($wn->variables) {
-            my $var_name = $var->{var_name};
             my $fmt = "func_arg_$$wn{arg_type}";
             $arguments .= $func->get_format($fmt => {
-                name => $var_name
+                name => $var->{var_name},
+                type => $wn->var_type || ''
             }).";\n";
         }
 

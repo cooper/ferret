@@ -9,6 +9,7 @@ sub type { 'WantNeed' }
 sub desc { shift->{arg_type} || 'argument declaration' }
 
 sub variables { shift->first_child }
+sub var_type  { shift->{bareword_type}{bareword_value} }
 
 sub adopt {
     my ($wn, $child) = @_;

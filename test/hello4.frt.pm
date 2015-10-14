@@ -103,9 +103,9 @@ my $result = do {
     # Function event 'makePoint' callback definition
     {
         my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'x' );
-        $func->add_argument( name => 'y' );
-        $func->add_argument( name => 'z', optional => 1 );
+        $func->add_argument( name => 'x', type => '' );
+        $func->add_argument( name => 'y', type => '' );
+        $func->add_argument( name => 'z', type => '', optional => 1 );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;

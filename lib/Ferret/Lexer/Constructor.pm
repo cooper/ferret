@@ -718,7 +718,15 @@ sub c_PROPERTY {
     my ($c, $value) = @_;
     # TODO: check if last element is allowed.
     my $prop = F::Property->new(prop_name => $value);
-    $prop->adopt($c->{last_element});
+
+    my %allowed = map { $_ => 1 } @expression_types;
+    my $last_el = $c->{last_element};
+    return expected($c,
+        'an expression',
+        'at left of '.Ferret::Lexer::pretty_token($c->{label})
+    ) unless $allowed{ $last_el->type_or_tok };
+
+    $prop->adopt($last_el);
     return $c->{node}->adopt($prop);
 }
 

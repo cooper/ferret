@@ -507,7 +507,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[1] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'data' );
+        $func->add_argument( name => 'data', type => '' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -542,11 +542,11 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'addr' );
-            $func->add_argument( name => 'nick' );
-            $func->add_argument( name => 'port', optional => 1 );
-            $func->add_argument( name => 'user', optional => 1 );
-            $func->add_argument( name => 'real', optional => 1 );
+            $func->add_argument( name => 'addr', type => 'Str' );
+            $func->add_argument( name => 'nick', type => 'Str' );
+            $func->add_argument( name => 'port', type => 'Num', optional => 1 );
+            $func->add_argument( name => 'user', type => 'Str', optional => 1 );
+            $func->add_argument( name => 'real', type => 'Str', optional => 1 );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -639,8 +639,8 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'command' );
-            $func->add_argument( name => 'callback' );
+            $func->add_argument( name => 'command',  type => 'Str' );
+            $func->add_argument( name => 'callback', type => 'Func' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -704,7 +704,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'line' );
+            $func->add_argument( name => 'line', type => '' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -741,7 +741,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'line' );
+            $func->add_argument( name => 'line', type => '' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -822,8 +822,8 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'channel' );
-            $func->add_argument( name => 'message' );
+            $func->add_argument( name => 'channel', type => '' );
+            $func->add_argument( name => 'message', type => '' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -921,7 +921,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 's' );
+            $func->add_argument( name => 's', type => '' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -957,8 +957,8 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'line' );
-            $func->add_argument( name => 's' );
+            $func->add_argument( name => 'line', type => '' );
+            $func->add_argument( name => 's',    type => '' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -1032,7 +1032,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'msg' );
+            $func->add_argument( name => 'msg', type => '' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -1072,7 +1072,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'msg' );
+            $func->add_argument( name => 'msg', type => '' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -1129,7 +1129,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'msg' );
+            $func->add_argument( name => 'msg', type => '' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {

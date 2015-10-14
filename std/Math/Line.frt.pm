@@ -76,8 +76,8 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'pt1' );
-            $func->add_argument( name => 'pt2' );
+            $func->add_argument( name => 'pt1', type => '' );
+            $func->add_argument( name => 'pt2', type => '' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {

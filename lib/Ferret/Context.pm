@@ -21,4 +21,6 @@ sub new {
     return $context;
 }
 
+sub closest_context { shift }
+
 1

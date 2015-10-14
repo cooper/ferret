@@ -323,7 +323,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[0] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg' );
+        $func->add_argument( name => 'msg', type => '' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -347,7 +347,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[1] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg' );
+        $func->add_argument( name => 'msg', type => '' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -407,7 +407,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[2] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg' );
+        $func->add_argument( name => 'msg', type => '' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -467,7 +467,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[3] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg' );
+        $func->add_argument( name => 'msg', type => '' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -527,7 +527,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[4] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg' );
+        $func->add_argument( name => 'msg', type => '' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;

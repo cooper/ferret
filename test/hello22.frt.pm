@@ -190,7 +190,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'moos', optional => 1 );
+            $func->add_argument( name => 'moos', type => '', optional => 1 );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -256,7 +256,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'barks', optional => 1 );
+            $func->add_argument( name => 'barks', type => '', optional => 1 );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -322,7 +322,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'mean', optional => 1 );
+            $func->add_argument( name => 'mean', type => '', optional => 1 );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -366,8 +366,8 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'cat1' );
-            $func->add_argument( name => 'cat2' );
+            $func->add_argument( name => 'cat1', type => 'Cat' );
+            $func->add_argument( name => 'cat2', type => 'Cat' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {

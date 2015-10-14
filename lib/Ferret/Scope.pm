@@ -6,6 +6,7 @@ use strict;
 use utf8;
 
 use parent 'Ferret::Object';
+use List::Util 'first';
 
 # creates a new scope.
 sub new {
@@ -35,6 +36,11 @@ sub new {
         ($opts{is_core} ? undef : $f->main_context);
 
     return $scope;
+}
+
+sub closest_context {
+    my $scope = shift;
+    return first { $_->isa('Ferret::Context') } $scope, $scope->parents;
 }
 
 1

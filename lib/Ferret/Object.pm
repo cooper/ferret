@@ -7,7 +7,10 @@ use utf8;
 use parent 'Evented::Object';
 
 use Scalar::Util qw(blessed weaken);
+use List::Util qw(first);
+
 use Ferret::Core::Conversion qw(perl_description);
+use Ferret::Core::Errors qw(throw);
 
 # create a new object.
 sub new {
@@ -314,6 +317,11 @@ sub best_common_class {
     # TODO: if ever implemented an Object prototype, return it here.
 }
 
+sub instance_of {
+    my ($obj, $class_maybe) = @_;
+    return defined first { $_ == $class_maybe } $obj->parent_classes;
+}
+
 #####################
 ### MISCELLANEOUS ###
 #####################
@@ -367,6 +375,20 @@ sub description {
     $prop_str .= "    $skipped more inherited\n" if $skipped;
 
     return sprintf '[ %s ](%s)', join(', ', @parents), $prop_str;
+}
+
+# calling a non-function.
+sub call {
+    my $obj = shift;
+
+    # try to convert to a function.
+    if (my $to_func = $obj->property('toFunction')) {
+        return ($to_func->call || Ferret::undefined)->call(@_);
+    }
+
+    # throw an error.
+    throw(CallOnNonFunction => [caller], join(', ', $obj->parent_names));
+
 }
 
 ###############

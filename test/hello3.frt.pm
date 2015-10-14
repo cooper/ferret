@@ -175,8 +175,8 @@ my $result = do {
     # Function event 'helloWorld' callback definition
     {
         my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'name1' );
-        $func->add_argument( name => 'name2' );
+        $func->add_argument( name => 'name1', type => '' );
+        $func->add_argument( name => 'name2', type => '' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;

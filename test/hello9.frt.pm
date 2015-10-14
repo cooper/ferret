@@ -60,7 +60,7 @@ my $result = do {
     # Function event 'sayHello' callback definition
     {
         my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'who' );
+        $func->add_argument( name => 'who', type => 'Str' );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
