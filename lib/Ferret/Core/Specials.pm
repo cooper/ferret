@@ -13,10 +13,42 @@ my %specials = (
     isa             => \&_isa,
     classes         => \&_classes,
     ownProperties   => \&_own_properties,
-    allProperties   => \&_all_properties
+    allProperties   => \&_all_properties,
+    instanceOf      => _function('instanceOf', '$class:Class')
 );
 
 @Ferret::specials{keys %specials} = values %specials;
+
+sub _function {
+    my ($name, $need, $want) = @_;
+    return sub {
+        my $obj = shift;
+        my $f   = $obj->f;
+        my $func = $f->{_specials}{$name};
+        if (!$func) {
+            $func = $f->{_specials}{$name} = Ferret::Function->new($f,
+                name => $name,
+                code => __PACKAGE__->can("_$name")
+            );
+
+            # add needs
+            $func->add_argument(
+                name => $_->{name},
+                # type   => $_->{type}, TODO
+            ) foreach Ferret::Class::_parse_method_args($need);
+
+            # add wants.
+            $func->add_argument(
+                name     => $_->{name},
+                # type   => $_->{type}, TODO
+                optional => 1
+            ) foreach Ferret::Class::_parse_method_args($want);
+
+        }
+        $f->{_specials}{$name}{force_self} = $obj;
+        return $f->{_specials}{$name};
+    };
+}
 
 sub _self {
     my $obj = shift;
@@ -42,9 +74,16 @@ sub _all_properties {
 
 sub _own_properties {
     my $obj = shift;
-    print "OBJ($obj)\n";
-    print "OH NO!\n" if $obj == $obj->f->{special};
     return ferret_list($obj->properties);
+}
+
+sub _instanceOf {
+    my ($obj, $arguments) = @_;
+    my $class = $arguments->{class};
+    foreach my $c ($obj->parent_classes) {
+        return Ferret::true if $class == $c;
+    }
+    return Ferret::false;
 }
 
 1

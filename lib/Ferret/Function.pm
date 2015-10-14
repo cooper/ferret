@@ -68,9 +68,7 @@ sub arguments_satisfy_signature {
 sub call_with_self {
     my ($func, $self) = (shift, shift);
     $func->{force_self} = $self;
-    my $ret = $func->call(@_);
-    delete $func->{force_self};
-    return $ret;
+    return $func->call(@_);
 }
 
 sub description {
@@ -118,7 +116,14 @@ sub call {
         $scope->{special}->set_property(return => $return);
 
         # call the function.
-        my $ret = $func->{code}($self, $arguments, $call_scope, $scope, $return);
+        my $ret = $func->{code}(
+            $self,
+            $arguments,
+            $call_scope,
+            $scope,
+            $return,
+            $func
+        );
         return $ret // Ferret::undefined;
 
     }
