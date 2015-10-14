@@ -69,6 +69,7 @@ sub set_property {
 
     # store the value.
     $obj->{properties}{$prop_name} = $value;
+    delete $obj->{properties}{$prop_name} if !defined $value;
 
     # good.
     return 1;
@@ -319,6 +320,7 @@ sub best_common_class {
 
 sub instance_of {
     my ($obj, $class_maybe) = @_;
+    return if !$class_maybe;
     return defined first { $_ == $class_maybe } $obj->parent_classes;
 }
 

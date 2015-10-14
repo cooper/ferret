@@ -78,12 +78,13 @@ sub handle_arguments {
 sub arguments_satisfy_signature {
     my ($func, $arguments) = @_;
     foreach my $sig (@{ $func->{signatures} }) {
-        next if $sig->{optional};
+        next if $sig->{optional} && !length $sig->{type};
 
-        # it's a need. must be present.
+        # check things.
         my $arg = $arguments->{ $sig->{name} };
-        return if !$arg;
-        next if !length $sig->{type};
+        return if !$arg && !$sig->{optional};   # need must be present
+        next   if !$arg;                        # want with no value
+        next   if !length $sig->{type};         # want/need with no type check
 
         # find scope of interest.
         my $soi = $func->{outer_scope} || $func->f->main_context;
@@ -91,9 +92,11 @@ sub arguments_satisfy_signature {
 
         # check that it works.
         my $class_maybe = $soi->property($sig->{type});
-        print "is ", $arg->description," a $$class_maybe{name}?\n";
-        return if !$arg->instance_of($class_maybe);
-        print "yeah\n";
+        next if $arg->instance_of($class_maybe);
+
+        # bad news.
+        return if !$sig->{optional};            # bad type for need
+        delete $arguments->{ $sig->{name} };    # bad type for want
 
     }
     return 1;

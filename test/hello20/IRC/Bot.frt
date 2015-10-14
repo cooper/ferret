@@ -40,7 +40,7 @@ init {
 }
 
 method addCommand {
-    need $command: Str, $callback: Func;
+    need $command: Str, $callback;
     if @commands[$command]:
         overwrote -> true;
     @commands[$command] = $callback;

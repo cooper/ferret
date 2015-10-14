@@ -116,7 +116,6 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$callback'
-#                      Bareword 'Func'
 #              If
 #                  Expression ('if' parameter)
 #                      Index
@@ -443,7 +442,7 @@
 #                                  Lexical variable '$msg'
 #                          Item 1
 #                              Lexical variable '$response'
-#      Include (Func, IRC, IRC::Message, Num, Socket, Socket::TCP, Str)
+#      Include (IRC, IRC::Message, Num, Socket, Socket::TCP, Str)
 use warnings;
 use strict;
 use utf8;
@@ -640,7 +639,7 @@ my $result = do {
                 is_method => 1
             );
             $func->add_argument( name => 'command',  type => 'Str' );
-            $func->add_argument( name => 'callback', type => 'Func' );
+            $func->add_argument( name => 'callback', type => '' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -1179,7 +1178,7 @@ my $result = do {
         $methods[11]->inside_scope( commandFactoid => $scope, $proto, $class );
     }
     Ferret::space( $context, $_ )
-      for qw(Func IRC IRC::Message Num Socket Socket::TCP Str);
+      for qw(IRC IRC::Message Num Socket Socket::TCP Str);
 };
 
 Ferret::runtime();

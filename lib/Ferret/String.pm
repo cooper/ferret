@@ -22,7 +22,7 @@ my @methods = (
         code => \&_length
     },
     split => {
-        want => '$separator:Str|Reg $limit:Num',
+        want => '$separator:Str $limit:Num', # TODO: $separator:Str|Reg
         code => \&_split
     },
     hasPrefix => {
