@@ -6,7 +6,7 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Conversion qw(ferret_list_wrap ferret_list);
+use Ferret::Core::Conversion qw(ferret_list_wrap ferret_list);
 
 my %specials = (
     self            => \&_self,

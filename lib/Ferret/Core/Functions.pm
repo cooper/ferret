@@ -6,7 +6,7 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Conversion qw(
+use Ferret::Core::Conversion qw(
     perl_string ferret_string
     perl_boolean perl_description
 );

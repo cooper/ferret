@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 use Ferret::Core::Errors qw(throw);
-use Ferret::Conversion qw(ferret_string perl_string);
+use Ferret::Core::Conversion qw(ferret_string perl_string);
 
 sub Ferret::Object::call {
     my $obj = shift;

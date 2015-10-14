@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 use parent 'Ferret::Object';
-use Ferret::Conversion qw(
+use Ferret::Core::Conversion qw(
     perl_string ferret_number
     ferret_string ferret_list
     perl_description

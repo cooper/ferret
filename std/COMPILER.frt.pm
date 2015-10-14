@@ -8,7 +8,7 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(looks_like_number);
-use Ferret::Conversion qw(perl_string ferret_string ferretize);
+use Ferret::Core::Conversion qw(perl_string ferret_string ferretize);
 
 use Ferret::Lexer;
 use Ferret::Perl;

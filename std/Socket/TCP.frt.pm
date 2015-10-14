@@ -11,7 +11,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Conversion qw(perl_string perl_number);
+use Ferret::Core::Conversion qw(perl_string perl_number);
 
 my @methods = (
     connect => {

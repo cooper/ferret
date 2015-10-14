@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Conversion qw(ferret_number perl_number ferret_boolean);
+use Ferret::Core::Conversion qw(ferret_number perl_number ferret_boolean);
 use Scalar::Util qw(blessed);
 use List::Util qw(sum);
 

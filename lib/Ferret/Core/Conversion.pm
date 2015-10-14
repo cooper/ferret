@@ -1,5 +1,5 @@
 # Copyright (c) 2015, Mitchell Cooper
-package Ferret::Conversion;
+package Ferret::Core::Conversion;
 
 use warnings;
 use strict;

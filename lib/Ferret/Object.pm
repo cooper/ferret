@@ -7,7 +7,7 @@ use utf8;
 use parent 'Evented::Object';
 
 use Scalar::Util qw(blessed weaken);
-use Ferret::Conversion qw(perl_description);
+use Ferret::Core::Conversion qw(perl_description);
 
 # create a new object.
 sub new {
