@@ -106,38 +106,14 @@ sub _bind_function {
     my $func = Ferret::Function->new($f,
         name      => $opts{callback} || 'default',
         code      => $opts{code},
+        need      => $opts{need},
+        want      => $opts{want},
         is_method => $is_method
     );
 
-    # add needs.
-    $func->add_argument(
-        name   => $_->{name}
-        # type => $_->{type}
-    ) foreach _parse_method_args($opts{need});
-
-    # add wants.
-    $func->add_argument(
-        name     => $_->{name},
-        # type   => $_->{type},
-        optional => 1
-    ) foreach _parse_method_args($opts{want});
-
     # add the function.
     $event->add_function(undef, $func);
-}
 
-sub _parse_method_args {
-    my ($str, @args) = shift;
-    return if not defined $str;
-    foreach my $arg (split /\s+/, $str) {
-        my ($name, $type) = split /:/, $arg, 2;
-        $name =~ s/^\$//;
-        push @args, {
-            name => $name,
-            type => $type
-        };
-    }
-    return @args;
 }
 
 # return the global ferret protocol from which all classes inherit.

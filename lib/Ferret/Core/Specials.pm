@@ -28,22 +28,10 @@ sub _function {
         if (!$func) {
             $func = $f->{_specials}{$name} = Ferret::Function->new($f,
                 name => $name,
+                need => $need,
+                want => $want,
                 code => __PACKAGE__->can("_$name")
             );
-
-            # add needs
-            $func->add_argument(
-                name => $_->{name},
-                # type   => $_->{type}, TODO
-            ) foreach Ferret::Class::_parse_method_args($need);
-
-            # add wants.
-            $func->add_argument(
-                name     => $_->{name},
-                # type   => $_->{type}, TODO
-                optional => 1
-            ) foreach Ferret::Class::_parse_method_args($want);
-
         }
         $f->{_specials}{$name}{force_self} = $obj;
         return $f->{_specials}{$name};

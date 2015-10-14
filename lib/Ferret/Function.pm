@@ -28,6 +28,23 @@ sub new {
         @$mimic {'signature', 'signatures'};
     }
 
+    # add needs from string.
+    if (my $need = delete $func->{need}) {
+        $func->add_argument(
+            name   => $_->{name}
+            # type => $_->{type} TODO
+        ) foreach _parse_method_args($need);
+    }
+
+    # add wants from string.
+    if (my $want = delete $func->{want}) {
+        $func->add_argument(
+            name     => $_->{name},
+            # type   => $_->{type}, TODO
+            optional => 1
+        ) foreach _parse_method_args($want);
+    }
+
     return $func;
 }
 
@@ -150,6 +167,20 @@ sub inside_scope {
 sub has_name      { length shift->{name}   }
 sub is_method     { shift->{is_method}     }
 sub is_class_func { shift->{is_class_func} }
+
+sub _parse_method_args {
+    my ($str, @args) = shift;
+    return if not defined $str;
+    foreach my $arg (split /\s+/, $str) {
+        my ($name, $type) = split /:/, $arg, 2;
+        $name =~ s/^\$//;
+        push @args, {
+            name => $name,
+            type => $type
+        };
+    }
+    return @args;
+}
 
 package Ferret::Return;
 use parent 'Ferret::Object';
