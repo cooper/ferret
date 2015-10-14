@@ -49,7 +49,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Line.frt.pm'}++;
 
-use Ferret::Core::Operations qw();
+use Ferret::Core::Operations qw(U);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
@@ -107,9 +107,9 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $self->property_u('pt1')
-                  ->create_set( $scope, $self->property_u('pt2') )
-                  ->property_u('midpoint')->call( {}, $scope );
+                return U( $self->property_u('pt1')
+                      ->create_set( $scope, $self->property_u('pt2') )
+                      ->property_u('midpoint')->call( {}, $scope ) );
                 return $return;
             };
             $methods[1] = Ferret::Event->new(
@@ -129,8 +129,8 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $self->property_u('pt1')->property_u('distanceTo')
-                  ->call( [ $self->property_u('pt2') ], $scope );
+                return U( $self->property_u('pt1')->property_u('distanceTo')
+                      ->call( [ $self->property_u('pt2') ], $scope ) );
                 return $return;
             };
             $methods[2] = Ferret::Event->new(

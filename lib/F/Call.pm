@@ -13,6 +13,9 @@ sub perl_fmt {
     my $func = $call->function;
     my $arg_string = '';
 
+    my $doc = $call->document;
+    $doc->{required_operations}{U}++;
+
     # named.
     if ($call->named_args) {
         foreach my $pair (map $_->first_child, $call->func_args) {

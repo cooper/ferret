@@ -40,7 +40,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'bot_test1.frt.pm'}++;
 
-use Ferret::Core::Operations qw(str);
+use Ferret::Core::Operations qw(U str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -49,16 +49,18 @@ my $result = do {
     Ferret::space( $context, $_ ) for qw(Bot1);
     $scope->set_property_ow(
         $context,
-        bot => $scope->property_u('Bot1')->call(
-            {
-                addr => str( $f, "k.notroll.net" ),
-                nick => str( $f, "ferret" ),
-                user => str( $f, "bot" )
-            },
-            $scope
+        bot => U(
+            $scope->property_u('Bot1')->call(
+                {
+                    addr => str( $f, "k.notroll.net" ),
+                    nick => str( $f, "ferret" ),
+                    user => str( $f, "bot" )
+                },
+                $scope
+            )
         )
     );
-    $scope->property_u('bot')->property_u('connect')->call( {}, $scope );
+    U( $scope->property_u('bot')->property_u('connect')->call( {}, $scope ) );
 };
 
 Ferret::runtime();

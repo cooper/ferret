@@ -42,22 +42,33 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello19.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add str);
+use Ferret::Core::Operations qw(U add str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
     undef;
 
-    $scope->set_property_ow( $context,
-        words => str( $f, "how are you?" )->property_u('split')
-          ->call( [ str( $f, " " ) ], $scope ) );
+    $scope->set_property_ow(
+        $context,
+        words => U(
+            str( $f, "how are you?" )->property_u('split')
+              ->call( [ str( $f, " " ) ], $scope )
+        )
+    );
     foreach ( $scope->property_u('words')->iterate ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
         $scope->set_property( word => $_ );
 
-        $scope->property_u('say')->call(
-            [ add( $scope, str( $f, "part: " ), $scope->property_u('word') ) ],
-            $scope
+        U(
+            $scope->property_u('say')->call(
+                [
+                    add(
+                        $scope, str( $f, "part: " ),
+                        $scope->property_u('word')
+                    )
+                ],
+                $scope
+            )
         );
     }
 };

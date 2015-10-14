@@ -107,7 +107,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello3.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add num str);
+use Ferret::Core::Operations qw(U add num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -123,16 +123,18 @@ my $result = do {
             $scope->set_property_ow( $context, hello => str( $f, "Hello" ) );
             $scope->property_u('hello')
               ->set_property( name => $scope->property_u('name1') );
-            $scope->property_u('say')->call(
-                [
-                    add(
-                        $scope,
-                        $scope->property_u('hello'),
-                        str( $f, " " ),
-                        $scope->property_u('hello')->property_u('name')
-                    )
-                ],
-                $scope
+            U(
+                $scope->property_u('say')->call(
+                    [
+                        add(
+                            $scope,
+                            $scope->property_u('hello'),
+                            str( $f, " " ),
+                            $scope->property_u('hello')->property_u('name')
+                        )
+                    ],
+                    $scope
+                )
             );
             return $return;
         };
@@ -150,14 +152,16 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property_u('say')->call(
-                [
-                    add(
-                        $scope, str( $f, "Hello " ),
-                        $scope->property_u('name2')
-                    )
-                ],
-                $scope
+            U(
+                $scope->property_u('say')->call(
+                    [
+                        add(
+                            $scope, str( $f, "Hello " ),
+                            $scope->property_u('name2')
+                        )
+                    ],
+                    $scope
+                )
             );
             return $return;
         };
@@ -186,8 +190,8 @@ my $result = do {
                 return unless defined $arguments->{name2};
                 $scope->set_property( name2 => $arguments->{name2} );
             };
-            $scope->property_u('hello1')->call( {}, $scope );
-            $scope->property_u('hello2')->call( {}, $scope );
+            U( $scope->property_u('hello1')->call( {}, $scope ) );
+            U( $scope->property_u('hello2')->call( {}, $scope ) );
             return $return;
         };
         $funcs[2] = Ferret::Event->new(
@@ -197,19 +201,27 @@ my $result = do {
         );
     }
     $funcs[2]->inside_scope( helloWorld => $scope, $scope );
-    $scope->property_u('helloWorld')
-      ->call( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
-        $scope );
-    $scope->property_u('helloWorld')
-      ->call( { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
-        $scope );
-    $scope->property_u('helloWorld')
-      ->call( [ str( $f, "Benjamin" ), str( $f, "George" ) ], $scope );
+    U(
+        $scope->property_u('helloWorld')->call(
+            { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) }, $scope
+        )
+    );
+    U(
+        $scope->property_u('helloWorld')->call(
+            { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
+            $scope
+        )
+    );
+    U( $scope->property_u('helloWorld')
+          ->call( [ str( $f, "Benjamin" ), str( $f, "George" ) ], $scope ) );
     $scope->set_property_ow( $context,
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ) );
-    $scope->property_u('say')
-      ->call( [ add( $scope, str( $f, "Pi = " ), $scope->property_u('pi') ) ],
-        $scope );
+    U(
+        $scope->property_u('say')->call(
+            [ add( $scope, str( $f, "Pi = " ), $scope->property_u('pi') ) ],
+            $scope
+        )
+    );
 };
 
 Ferret::runtime();

@@ -41,6 +41,11 @@ sub _not {
     return $val == Ferret::true ? Ferret::false : Ferret::true;
 }
 
+sub U {
+    my $val = shift;
+    return $val || Ferret::undefined;
+}
+
 sub import {
     my $this_package = shift;
     my $package = caller;

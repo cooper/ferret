@@ -149,7 +149,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Rect.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add mul num);
+use Ferret::Core::Operations qw(U add mul num);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
@@ -199,9 +199,13 @@ my $result = do {
                     $self->set_property( height => $arguments->{height} );
                 };
                 $self->set_property(
-                    origin => $scope->property_u('Point')->call(
-                        [ $scope->property_u('x'), $scope->property_u('y') ],
-                        $scope
+                    origin => U(
+                        $scope->property_u('Point')->call(
+                            [
+                                $scope->property_u('x'), $scope->property_u('y')
+                            ],
+                            $scope
+                        )
                     )
                 );
                 return $return;
@@ -243,16 +247,18 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $scope->property_u('Point')->call(
-                    [
-                        add(
-                            $scope,
-                            $self->property_u('origin')->property_u('x'),
-                            $self->property_u('width')
-                        ),
-                        $self->property_u('origin')->property_u('y')
-                    ],
-                    $scope
+                return U(
+                    $scope->property_u('Point')->call(
+                        [
+                            add(
+                                $scope,
+                                $self->property_u('origin')->property_u('x'),
+                                $self->property_u('width')
+                            ),
+                            $self->property_u('origin')->property_u('y')
+                        ],
+                        $scope
+                    )
                 );
                 return $return;
             };
@@ -273,16 +279,18 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $scope->property_u('Point')->call(
-                    [
-                        $self->property_u('origin')->property_u('x'),
-                        add(
-                            $scope,
-                            $self->property_u('origin')->property_u('y'),
-                            $self->property_u('height')
-                        )
-                    ],
-                    $scope
+                return U(
+                    $scope->property_u('Point')->call(
+                        [
+                            $self->property_u('origin')->property_u('x'),
+                            add(
+                                $scope,
+                                $self->property_u('origin')->property_u('y'),
+                                $self->property_u('height')
+                            )
+                        ],
+                        $scope
+                    )
                 );
                 return $return;
             };
@@ -303,20 +311,22 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $scope->property_u('Point')->call(
-                    [
-                        add(
-                            $scope,
-                            $self->property_u('origin')->property_u('x'),
-                            $self->property_u('width')
-                        ),
-                        add(
-                            $scope,
-                            $self->property_u('origin')->property_u('y'),
-                            $self->property_u('height')
-                        )
-                    ],
-                    $scope
+                return U(
+                    $scope->property_u('Point')->call(
+                        [
+                            add(
+                                $scope,
+                                $self->property_u('origin')->property_u('x'),
+                                $self->property_u('width')
+                            ),
+                            add(
+                                $scope,
+                                $self->property_u('origin')->property_u('y'),
+                                $self->property_u('height')
+                            )
+                        ],
+                        $scope
+                    )
                 );
                 return $return;
             };
@@ -337,12 +347,20 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $scope->property_u('Line')->call(
-                    [
-                        $self->property_u('bottomLeft')->call( {}, $scope ),
-                        $self->property_u('bottomRight')->call( {}, $scope )
-                    ],
-                    $scope
+                return U(
+                    $scope->property_u('Line')->call(
+                        [
+                            U(
+                                $self->property_u('bottomLeft')
+                                  ->call( {}, $scope )
+                            ),
+                            U(
+                                $self->property_u('bottomRight')
+                                  ->call( {}, $scope )
+                            )
+                        ],
+                        $scope
+                    )
                 );
                 return $return;
             };
@@ -363,12 +381,19 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $scope->property_u('Line')->call(
-                    [
-                        $self->property_u('topLeft')->call( {}, $scope ),
-                        $self->property_u('topRight')->call( {}, $scope )
-                    ],
-                    $scope
+                return U(
+                    $scope->property_u('Line')->call(
+                        [
+                            U(
+                                $self->property_u('topLeft')->call( {}, $scope )
+                            ),
+                            U(
+                                $self->property_u('topRight')
+                                  ->call( {}, $scope )
+                            )
+                        ],
+                        $scope
+                    )
                 );
                 return $return;
             };
@@ -411,9 +436,12 @@ my $result = do {
                         )
                     )
                 );
-                return $scope->property_u('Point')
-                  ->call( [ $scope->property_u('x'), $scope->property_u('y') ],
-                    $scope );
+                return U(
+                    $scope->property_u('Point')->call(
+                        [ $scope->property_u('x'), $scope->property_u('y') ],
+                        $scope
+                    )
+                );
                 return $return;
             };
             $methods[7] = Ferret::Event->new(

@@ -80,7 +80,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello21.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add num str);
+use Ferret::Core::Operations qw(U add num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -93,23 +93,29 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property_u('say')->call(
-                [
-                    add(
-                        $scope,                  str( $f, "(" ),
-                        $scope->property_u('i'), str( $f, ") " ),
-                        $scope->property_u('part')
-                    )
-                ],
-                $scope
+            U(
+                $scope->property_u('say')->call(
+                    [
+                        add(
+                            $scope,                  str( $f, "(" ),
+                            $scope->property_u('i'), str( $f, ") " ),
+                            $scope->property_u('part')
+                        )
+                    ],
+                    $scope
+                )
             );
             return $return;
         };
     }
     Ferret::space( $context, $_ ) for qw(Timer);
-    $scope->set_property_ow( $context,
-        parts => str( $f, "s p a m" )->property_u('split')
-          ->call( [ str( $f, " " ) ], $scope ) );
+    $scope->set_property_ow(
+        $context,
+        parts => U(
+            str( $f, "s p a m" )->property_u('split')
+              ->call( [ str( $f, " " ) ], $scope )
+        )
+    );
     foreach ( $scope->property_u('parts')->iterate_pair ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
         $scope->set_property( i    => $_->[0] );
@@ -118,9 +124,12 @@ my $result = do {
         # On
         {
             my $on_func = $funcs[0]->inside_scope( (undef) => $scope, $scope );
-            $scope->property_u('Timer')
-              ->call( [ $scope->property_u('i') ], $scope )->property_u('once')
-              ->call( {}, $scope )->property_u('expire')
+            U(
+                U(
+                    $scope->property_u('Timer')
+                      ->call( [ $scope->property_u('i') ], $scope )
+                )->property_u('once')->call( {}, $scope )
+              )->property_u('expire')
               ->add_function_with_self_and_scope( $self, $scope, $on_func );
         }
     }
@@ -132,8 +141,8 @@ my $result = do {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
         $scope->set_property( part => $_ );
 
-        $scope->property_u('say')
-          ->call( [ $scope->property_u('part') ], $scope );
+        U( $scope->property_u('say')
+              ->call( [ $scope->property_u('part') ], $scope ) );
     }
 };
 

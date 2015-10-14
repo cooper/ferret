@@ -82,7 +82,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello14.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add str);
+use Ferret::Core::Operations qw(U add str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -95,17 +95,19 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property_u('say')->call(
-                [
-                    add(
-                        $scope,
-                        str( $f, "found '" ),
-                        $scope->{special}->property_u('this'),
-                        str( $f, "' length to be " ),
-                        $scope->{special}->property_u('return')
-                    )
-                ],
-                $scope
+            U(
+                $scope->property_u('say')->call(
+                    [
+                        add(
+                            $scope,
+                            str( $f, "found '" ),
+                            $scope->{special}->property_u('this'),
+                            str( $f, "' length to be " ),
+                            $scope->{special}->property_u('return')
+                        )
+                    ],
+                    $scope
+                )
             );
             return $return;
         };
@@ -118,23 +120,25 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property_u('say')->call(
-                [
-                    add(
-                        $scope,
-                        str( $f, "found '" ),
-                        $scope->{special}->property_u('this'),
-                        str( $f, "' length to be " ),
-                        $scope->{special}->property_u('return')
-                    )
-                ],
-                $scope
+            U(
+                $scope->property_u('say')->call(
+                    [
+                        add(
+                            $scope,
+                            str( $f, "found '" ),
+                            $scope->{special}->property_u('this'),
+                            str( $f, "' length to be " ),
+                            $scope->{special}->property_u('return')
+                        )
+                    ],
+                    $scope
+                )
             );
             return $return;
         };
     }
     Ferret::space( $context, $_ ) for qw(String);
-    $scope->property_u('say')->call( [ str( $f, "test" ) ], $scope );
+    U( $scope->property_u('say')->call( [ str( $f, "test" ) ], $scope ) );
     $scope->set_property_ow( $context, str => str( $f, "hi" ) );
 
     # On
@@ -143,8 +147,8 @@ my $result = do {
         $scope->property_u('str')->property_u('length')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
-    $scope->property_u('str')->property_u('length')->call( {}, $scope );
-    str( $f, "hello" )->property_u('length')->call( {}, $scope );
+    U( $scope->property_u('str')->property_u('length')->call( {}, $scope ) );
+    U( str( $f, "hello" )->property_u('length')->call( {}, $scope ) );
 
     # On
     {
@@ -152,7 +156,7 @@ my $result = do {
         $scope->property_u('String')->property_u('proto')->property_u('length')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
-    str( $f, "hello" )->property_u('length')->call( {}, $scope );
+    U( str( $f, "hello" )->property_u('length')->call( {}, $scope ) );
 };
 
 Ferret::runtime();

@@ -22,8 +22,8 @@ my %specials = (
 sub _function {
     my ($name, $need, $want) = @_;
     return sub {
-        my $obj = shift;
-        my $f   = $obj->f;
+        my $obj  = shift;
+        my $f    = $obj->f;
         my $func = $f->{_specials}{$name};
         if (!$func) {
             $func = $f->{_specials}{$name} = Ferret::Function->new($f,

@@ -123,7 +123,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Bot2.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add num str);
+use Ferret::Core::Operations qw(U add num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -136,23 +136,28 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $self->property_u('send')->call(
-                [
-                    add(
-                        $scope,                    str( $f, "USER " ),
-                        $self->property_u('user'), str( $f, " * * :" ),
-                        $self->property_u('real')
-                    )
-                ],
-                $scope
+            U(
+                $self->property_u('send')->call(
+                    [
+                        add(
+                            $scope,                    str( $f, "USER " ),
+                            $self->property_u('user'), str( $f, " * * :" ),
+                            $self->property_u('real')
+                        )
+                    ],
+                    $scope
+                )
             );
-            $self->property_u('send')->call(
-                [
-                    add(
-                        $scope, str( $f, "NICK " ), $self->property_u('nick')
-                    )
-                ],
-                $scope
+            U(
+                $self->property_u('send')->call(
+                    [
+                        add(
+                            $scope, str( $f, "NICK " ),
+                            $self->property_u('nick')
+                        )
+                    ],
+                    $scope
+                )
             );
             return $return;
         };
@@ -169,14 +174,16 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            $scope->property_u('say')->call(
-                [
-                    add(
-                        $scope, str( $f, "recv: " ),
-                        $scope->property_u('data')
-                    )
-                ],
-                $scope
+            U(
+                $scope->property_u('say')->call(
+                    [
+                        add(
+                            $scope, str( $f, "recv: " ),
+                            $scope->property_u('data')
+                        )
+                    ],
+                    $scope
+                )
             );
             return $return;
         };
@@ -193,14 +200,16 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            $scope->property_u('say')->call(
-                [
-                    add(
-                        $scope, str( $f, "send: " ),
-                        $scope->property_u('data')
-                    )
-                ],
-                $scope
+            U(
+                $scope->property_u('say')->call(
+                    [
+                        add(
+                            $scope, str( $f, "send: " ),
+                            $scope->property_u('data')
+                        )
+                    ],
+                    $scope
+                )
             );
             return $return;
         };
@@ -256,15 +265,20 @@ my $result = do {
                     $want_val ||= str( $f, "Ferret IRC" );
                     $self->set_property( real => $want_val );
                 };
-                $scope->property_u('Socket::TCP')->property_u('init')
-                  ->call( [ $scope->{special}->property_u('self') ], $scope )
-                  ->call(
-                    {
-                        addr => $self->property_u('address'),
-                        port => $self->property_u('port')
-                    },
-                    $scope
-                  );
+                U(
+                    U(
+                        $scope->property_u('Socket::TCP')->property_u('init')
+                          ->call(
+                            [ $scope->{special}->property_u('self') ], $scope
+                          )
+                      )->call(
+                        {
+                            addr => $self->property_u('address'),
+                            port => $self->property_u('port')
+                        },
+                        $scope
+                      )
+                );
                 $self->set_property( send => $self->property_u('println') );
 
                 # On

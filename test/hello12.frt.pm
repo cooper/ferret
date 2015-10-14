@@ -114,7 +114,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello12.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add num str);
+use Ferret::Core::Operations qw(U add num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -131,14 +131,16 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            $scope->property_u('say')->call(
-                [
-                    add(
-                        $scope, str( $f, "recv: " ),
-                        $scope->property_u('data')
-                    )
-                ],
-                $scope
+            U(
+                $scope->property_u('say')->call(
+                    [
+                        add(
+                            $scope, str( $f, "recv: " ),
+                            $scope->property_u('data')
+                        )
+                    ],
+                    $scope
+                )
             );
             return $return;
         };
@@ -155,14 +157,16 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            $scope->property_u('say')->call(
-                [
-                    add(
-                        $scope, str( $f, "send: " ),
-                        $scope->property_u('data')
-                    )
-                ],
-                $scope
+            U(
+                $scope->property_u('say')->call(
+                    [
+                        add(
+                            $scope, str( $f, "send: " ),
+                            $scope->property_u('data')
+                        )
+                    ],
+                    $scope
+                )
             );
             return $return;
         };
@@ -175,10 +179,10 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property_u('sock')->property_u('println')
-              ->call( [ str( $f, "NICK k" ) ], $scope );
-            $scope->property_u('sock')->property_u('println')
-              ->call( [ str( $f, "USER k * * :k" ) ], $scope );
+            U( $scope->property_u('sock')->property_u('println')
+                  ->call( [ str( $f, "NICK k" ) ], $scope ) );
+            U( $scope->property_u('sock')->property_u('println')
+                  ->call( [ str( $f, "USER k * * :k" ) ], $scope ) );
             return $return;
         };
     }
@@ -190,21 +194,26 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property_u('sock')->property_u('println')
-              ->call( [ str( $f, "JOIN #k" ) ], $scope );
+            U( $scope->property_u('sock')->property_u('println')
+                  ->call( [ str( $f, "JOIN #k" ) ], $scope ) );
             return $return;
         };
     }
     Ferret::space( $context, $_ ) for qw(Socket Socket::TCP Timer);
     $scope->set_property_ow(
         $context,
-        sock => $scope->property_u('Socket::TCP')->call(
-            { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },
-            $scope
+        sock => U(
+            $scope->property_u('Socket::TCP')->call(
+                {
+                    address => str( $f, "k.notroll.net" ),
+                    port    => num( $f, 6667 )
+                },
+                $scope
+            )
         )
     );
-    $scope->property_u('inspect')
-      ->call( [ $scope->property_u('sock') ], $scope );
+    U( $scope->property_u('inspect')
+          ->call( [ $scope->property_u('sock') ], $scope ) );
 
     # On
     {
@@ -226,13 +235,13 @@ my $result = do {
         $scope->property_u('sock')->property_u('connected')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
-    $scope->property_u('sock')->property_u('connect')->call( {}, $scope );
+    U( $scope->property_u('sock')->property_u('connect')->call( {}, $scope ) );
 
     # On
     {
         my $on_func = $funcs[3]->inside_scope( (undef) => $scope, $scope );
-        $scope->property_u('Timer')->call( [ num( $f, 5 ) ], $scope )
-          ->property_u('once')->call( {}, $scope )->property_u('expire')
+        U( U( $scope->property_u('Timer')->call( [ num( $f, 5 ) ], $scope ) )
+              ->property_u('once')->call( {}, $scope ) )->property_u('expire')
           ->add_function_with_self_and_scope( $self, $scope, $on_func );
     }
 };

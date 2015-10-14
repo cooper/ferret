@@ -35,7 +35,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Math.frt.pm'}++;
 
-use Ferret::Core::Operations qw();
+use Ferret::Core::Operations qw(U);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
@@ -52,8 +52,8 @@ my $result = do {
                 return unless defined $arguments->{num};
                 $scope->set_property( num => $arguments->{num} );
             };
-            return $scope->property_u('NATIVE::Math')->property_u('sqrt')
-              ->call( [ $scope->property_u('num') ], $scope );
+            return U( $scope->property_u('NATIVE::Math')->property_u('sqrt')
+                  ->call( [ $scope->property_u('num') ], $scope ) );
             return $return;
         };
         $funcs[0] = Ferret::Event->new(
