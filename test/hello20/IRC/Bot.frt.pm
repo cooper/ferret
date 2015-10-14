@@ -463,7 +463,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Bot.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U add bool num str);
+use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('IRC');
@@ -476,28 +476,23 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            U(
-                $self->property_u('send')->call(
-                    [
-                        add(
-                            $scope,                    str( $f, "USER " ),
-                            $self->property_u('user'), str( $f, " * * :" ),
-                            $self->property_u('real')
-                        )
-                    ],
-                    $scope
-                )
+            $self->property_u('send')->call_u(
+                [
+                    add(
+                        $scope,                    str( $f, "USER " ),
+                        $self->property_u('user'), str( $f, " * * :" ),
+                        $self->property_u('real')
+                    )
+                ],
+                $scope
             );
-            U(
-                $self->property_u('send')->call(
-                    [
-                        add(
-                            $scope, str( $f, "NICK " ),
-                            $self->property_u('nick')
-                        )
-                    ],
-                    $scope
-                )
+            $self->property_u('send')->call_u(
+                [
+                    add(
+                        $scope, str( $f, "NICK " ), $self->property_u('nick')
+                    )
+                ],
+                $scope
             );
             return $return;
         };
@@ -514,8 +509,8 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            U( $self->property_u('handleLine')
-                  ->call( [ $scope->property_u('data') ], $scope ) );
+            $self->property_u('handleLine')
+              ->call_u( [ $scope->property_u('data') ], $scope );
             return $return;
         };
     }
@@ -594,14 +589,12 @@ my $result = do {
                 $self->set_property(
                     factoids => Ferret::Hash->new( $f, pairs => {} ) );
                 $self->set_property(
-                    sock => U(
-                        $scope->property_u('Socket::TCP')->call(
-                            {
-                                address => $self->property_u('addr'),
-                                port    => $self->property_u('port')
-                            },
-                            $scope
-                        )
+                    sock => $scope->property_u('Socket::TCP')->call_u(
+                        {
+                            address => $self->property_u('addr'),
+                            port    => $self->property_u('port')
+                        },
+                        $scope
                     )
                 );
 
@@ -685,8 +678,8 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                U( $self->property_u('sock')->property_u('connect')
-                      ->call( {}, $scope ) );
+                $self->property_u('sock')->property_u('connect')
+                  ->call_u( {}, $scope );
                 return $return;
             };
             $methods[2] = Ferret::Event->new(
@@ -710,20 +703,17 @@ my $result = do {
                     return unless defined $arguments->{line};
                     $scope->set_property( line => $arguments->{line} );
                 };
-                U(
-                    $scope->property_u('say')->call(
-                        [
-                            add(
-                                $scope,
-                                str( $f, "send: " ),
-                                $scope->property_u('line')
-                            )
-                        ],
-                        $scope
-                    )
+                $scope->property_u('say')->call_u(
+                    [
+                        add(
+                            $scope, str( $f, "send: " ),
+                            $scope->property_u('line')
+                        )
+                    ],
+                    $scope
                 );
-                U( $self->property_u('sock')->property_u('println')
-                      ->call( [ $scope->property_u('line') ], $scope ) );
+                $self->property_u('sock')->property_u('println')
+                  ->call_u( [ $scope->property_u('line') ], $scope );
                 return $return;
             };
             $methods[3] = Ferret::Event->new(
@@ -747,13 +737,9 @@ my $result = do {
                     return unless defined $arguments->{line};
                     $scope->set_property( line => $arguments->{line} );
                 };
-                $scope->set_property_ow(
-                    $context,
-                    s => U(
-                        $scope->property_u('line')->property_u('split')
-                          ->call( [ str( $f, " " ) ], $scope )
-                    )
-                );
+                $scope->set_property_ow( $context,
+                    s => $scope->property_u('line')->property_u('split')
+                      ->call_u( [ str( $f, " " ) ], $scope ) );
                 $scope->set_property_ow( $context,
                     command => $scope->property_u('s')
                       ->get_index_value( [ num( $f, 1 ) ], $scope ) );
@@ -771,19 +757,15 @@ my $result = do {
                         command => $scope->property_u('s')
                           ->get_index_value( [ num( $f, 0 ) ], $scope ) );
                 }
-                U(
-                    $scope->property_u('say')->call(
-                        [
-                            add(
-                                $scope,
-                                str( $f, "recv[" ),
-                                $scope->property_u('command'),
-                                str( $f, "]: " ),
-                                $scope->property_u('line')
-                            )
-                        ],
-                        $scope
-                    )
+                $scope->property_u('say')->call_u(
+                    [
+                        add(
+                            $scope,                        str( $f, "recv[" ),
+                            $scope->property_u('command'), str( $f, "]: " ),
+                            $scope->property_u('line')
+                        )
+                    ],
+                    $scope
                 );
                 {
                     my $maybe_0 =
@@ -791,17 +773,14 @@ my $result = do {
                       ->get_index_value( [ $scope->property_u('command') ],
                         $scope );
                     if ( bool($maybe_0) ) {
-                        U(
-                            $maybe_0->call(
-                                {
-                                    _self =>
-                                      $scope->{special}->property_u('self'),
-                                    line    => $scope->property_u('line'),
-                                    command => $scope->property_u('command'),
-                                    s       => $scope->property_u('s')
-                                },
-                                $scope
-                            )
+                        $maybe_0->call_u(
+                            {
+                                _self => $scope->{special}->property_u('self'),
+                                line  => $scope->property_u('line'),
+                                command => $scope->property_u('command'),
+                                s       => $scope->property_u('s')
+                            },
+                            $scope
                         );
                     }
                 }
@@ -833,29 +812,23 @@ my $result = do {
                     return unless defined $arguments->{message};
                     $scope->set_property( message => $arguments->{message} );
                 };
-                foreach (
-                    U(
-                        $scope->property_u('message')->property_u('split')
-                          ->call( [ str( $f, "\n" ) ], $scope )
-                    )->iterate
-                  )
+                foreach ( $scope->property_u('message')->property_u('split')
+                    ->call_u( [ str( $f, "\n" ) ], $scope )->iterate )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
                     $scope->set_property( line => $_ );
 
-                    U(
-                        $self->property_u('send')->call(
-                            [
-                                add(
-                                    $scope,
-                                    str( $f, "PRIVMSG " ),
-                                    $scope->property_u('channel'),
-                                    str( $f, " :" ),
-                                    $scope->property_u('line')
-                                )
-                            ],
-                            $scope
-                        )
+                    $self->property_u('send')->call_u(
+                        [
+                            add(
+                                $scope,
+                                str( $f, "PRIVMSG " ),
+                                $scope->property_u('channel'),
+                                str( $f, " :" ),
+                                $scope->property_u('line')
+                            )
+                        ],
+                        $scope
                     );
                 }
                 return $return;
@@ -890,17 +863,15 @@ my $result = do {
                         my $scope = Ferret::Scope->new( $f, parent => $scope );
                         $scope->set_property( chan => $_ );
 
-                        U(
-                            $self->property_u('send')->call(
-                                [
-                                    add(
-                                        $scope,
-                                        str( $f, "JOIN " ),
-                                        $scope->property_u('chan')
-                                    )
-                                ],
-                                $scope
-                            )
+                        $self->property_u('send')->call_u(
+                            [
+                                add(
+                                    $scope,
+                                    str( $f, "JOIN " ),
+                                    $scope->property_u('chan')
+                                )
+                            ],
+                            $scope
                         );
                     }
                 }
@@ -927,18 +898,16 @@ my $result = do {
                     return unless defined $arguments->{s};
                     $scope->set_property( s => $arguments->{s} );
                 };
-                U(
-                    $self->property_u('send')->call(
-                        [
-                            add(
-                                $scope,
-                                str( $f, "PONG " ),
-                                $scope->property_u('s')
-                                  ->get_index_value( [ num( $f, 1 ) ], $scope )
-                            )
-                        ],
-                        $scope
-                    )
+                $self->property_u('send')->call_u(
+                    [
+                        add(
+                            $scope,
+                            str( $f, "PONG " ),
+                            $scope->property_u('s')
+                              ->get_index_value( [ num( $f, 1 ) ], $scope )
+                        )
+                    ],
+                    $scope
                 );
                 return $return;
             };
@@ -968,20 +937,14 @@ my $result = do {
                     return unless defined $arguments->{s};
                     $scope->set_property( s => $arguments->{s} );
                 };
-                $scope->set_property_ow(
-                    $context,
-                    msg => U(
-                        $scope->property_u('IRC::Message')
-                          ->call( [ $scope->property_u('line') ], $scope )
-                    )
-                );
+                $scope->set_property_ow( $context,
+                    msg => $scope->property_u('IRC::Message')
+                      ->call_u( [ $scope->property_u('line') ], $scope ) );
                 $return->set_property( msg => $scope->property_u('msg') );
                 if (
                     bool(
-                        U(
-                            $scope->property_u('msg')->property_u('command')
-                              ->call( {}, $scope )
-                        )
+                        $scope->property_u('msg')->property_u('command')
+                          ->call_u( {}, $scope )
                     )
                   )
                 {
@@ -991,26 +954,21 @@ my $result = do {
                         my $maybe_0 =
                           $self->property_u('commands')->get_index_value(
                             [
-                                U(
-                                    $scope->property_u('msg')
-                                      ->property_u('command')
-                                      ->call( {}, $scope )
-                                )
+                                $scope->property_u('msg')
+                                  ->property_u('command')->call_u( {}, $scope )
                             ],
                             $scope
                           );
                         if ( bool($maybe_0) ) {
-                            U(
-                                $maybe_0->call(
-                                    {
-                                        _self =>
-                                          $scope->{special}->property_u('self'),
-                                        line => $scope->property_u('line'),
-                                        s    => $scope->property_u('s'),
-                                        msg  => $scope->property_u('msg')
-                                    },
-                                    $scope
-                                )
+                            $maybe_0->call_u(
+                                {
+                                    _self =>
+                                      $scope->{special}->property_u('self'),
+                                    line => $scope->property_u('line'),
+                                    s    => $scope->property_u('s'),
+                                    msg  => $scope->property_u('msg')
+                                },
+                                $scope
                             );
                         }
                     }
@@ -1041,19 +999,15 @@ my $result = do {
                 $scope->set_property_ow( $context,
                     nickname =>
                       $scope->property_u('msg')->property_u('nickname') );
-                U(
-                    $self->property_u('privmsg')->call(
-                        [
-                            $scope->property_u('msg')->property_u('channel'),
-                            add(
-                                $scope,
-                                str( $f, "Hi " ),
-                                $scope->property_u('nickname'),
-                                str( $f, "!" )
-                            )
-                        ],
-                        $scope
-                    )
+                $self->property_u('privmsg')->call_u(
+                    [
+                        $scope->property_u('msg')->property_u('channel'),
+                        add(
+                            $scope,                         str( $f, "Hi " ),
+                            $scope->property_u('nickname'), str( $f, "!" )
+                        )
+                    ],
+                    $scope
                 );
                 return $return;
             };
@@ -1078,39 +1032,34 @@ my $result = do {
                     return unless defined $arguments->{msg};
                     $scope->set_property( msg => $arguments->{msg} );
                 };
-                U( $scope->property_u('inspect')
-                      ->call( [ $scope->property_u('msg') ], $scope ) );
+                $scope->property_u('inspect')
+                  ->call_u( [ $scope->property_u('msg') ], $scope );
                 $scope->set_property_ow( $context,
                     trigger => $scope->property_u('msg')->property_u('parts')
                       ->get_index_value( [ num( $f, 1 ) ], $scope ) );
-                $scope->set_property_ow(
-                    $context,
-                    response => U(
-                        $scope->property_u('msg')->property_u('fromWord')
-                          ->call( [ num( $f, 2 ) ], $scope )
-                    )
-                );
+                $scope->set_property_ow( $context,
+                    response =>
+                      $scope->property_u('msg')->property_u('fromWord')
+                      ->call_u( [ num( $f, 2 ) ], $scope ) );
                 $self->property_u('factoids')
                   ->set_index_value( [ $scope->property_u('trigger') ],
                     $scope->property_u('response'), $scope );
                 $self->property_u('commands')
                   ->set_index_value( [ $scope->property_u('trigger') ],
                     $self->property_u('commandFactoid'), $scope );
-                U(
-                    $self->property_u('privmsg')->call(
-                        [
-                            $scope->property_u('msg')->property_u('channel'),
-                            add(
-                                $scope,
-                                str( $f, "alright, associating ." ),
-                                $scope->property_u('trigger'),
-                                str( $f, " with '" ),
-                                $scope->property_u('response'),
-                                str( $f, "'" )
-                            )
-                        ],
-                        $scope
-                    )
+                $self->property_u('privmsg')->call_u(
+                    [
+                        $scope->property_u('msg')->property_u('channel'),
+                        add(
+                            $scope,
+                            str( $f, "alright, associating ." ),
+                            $scope->property_u('trigger'),
+                            str( $f, " with '" ),
+                            $scope->property_u('response'),
+                            str( $f, "'" )
+                        )
+                    ],
+                    $scope
                 );
                 return $return;
             };
@@ -1139,22 +1088,18 @@ my $result = do {
                     $context,
                     response => $self->property_u('factoids')->get_index_value(
                         [
-                            U(
-                                $scope->property_u('msg')
-                                  ->property_u('command')->call( {}, $scope )
-                            )
+                            $scope->property_u('msg')->property_u('command')
+                              ->call_u( {}, $scope )
                         ],
                         $scope
                     )
                 );
-                U(
-                    $self->property_u('privmsg')->call(
-                        [
-                            $scope->property_u('msg')->property_u('channel'),
-                            $scope->property_u('response')
-                        ],
-                        $scope
-                    )
+                $self->property_u('privmsg')->call_u(
+                    [
+                        $scope->property_u('msg')->property_u('channel'),
+                        $scope->property_u('response')
+                    ],
+                    $scope
                 );
                 return $return;
             };

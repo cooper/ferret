@@ -128,7 +128,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Bot1.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U add num str);
+use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -141,28 +141,23 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            U(
-                $self->property_u('send')->call(
-                    [
-                        add(
-                            $scope,                    str( $f, "USER " ),
-                            $self->property_u('user'), str( $f, " * * :" ),
-                            $self->property_u('real')
-                        )
-                    ],
-                    $scope
-                )
+            $self->property_u('send')->call_u(
+                [
+                    add(
+                        $scope,                    str( $f, "USER " ),
+                        $self->property_u('user'), str( $f, " * * :" ),
+                        $self->property_u('real')
+                    )
+                ],
+                $scope
             );
-            U(
-                $self->property_u('send')->call(
-                    [
-                        add(
-                            $scope, str( $f, "NICK " ),
-                            $self->property_u('nick')
-                        )
-                    ],
-                    $scope
-                )
+            $self->property_u('send')->call_u(
+                [
+                    add(
+                        $scope, str( $f, "NICK " ), $self->property_u('nick')
+                    )
+                ],
+                $scope
             );
             return $return;
         };
@@ -179,16 +174,14 @@ my $result = do {
                 return unless defined $arguments->{data};
                 $scope->set_property( data => $arguments->{data} );
             };
-            U(
-                $scope->property_u('say')->call(
-                    [
-                        add(
-                            $scope, str( $f, "recv: " ),
-                            $scope->property_u('data')
-                        )
-                    ],
-                    $scope
-                )
+            $scope->property_u('say')->call_u(
+                [
+                    add(
+                        $scope, str( $f, "recv: " ),
+                        $scope->property_u('data')
+                    )
+                ],
+                $scope
             );
             return $return;
         };
@@ -245,14 +238,12 @@ my $result = do {
                     $self->set_property( real => $want_val );
                 };
                 $self->set_property(
-                    sock => U(
-                        $scope->property_u('Socket::TCP')->call(
-                            {
-                                address => $self->property_u('addr'),
-                                port    => $self->property_u('port')
-                            },
-                            $scope
-                        )
+                    sock => $scope->property_u('Socket::TCP')->call_u(
+                        {
+                            address => $self->property_u('addr'),
+                            port    => $self->property_u('port')
+                        },
+                        $scope
                     )
                 );
 
@@ -292,8 +283,8 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                U( $self->property_u('sock')->property_u('connect')
-                      ->call( {}, $scope ) );
+                $self->property_u('sock')->property_u('connect')
+                  ->call_u( {}, $scope );
                 return $return;
             };
             $methods[1] = Ferret::Event->new(
@@ -317,20 +308,17 @@ my $result = do {
                     return unless defined $arguments->{line};
                     $scope->set_property( line => $arguments->{line} );
                 };
-                U(
-                    $scope->property_u('say')->call(
-                        [
-                            add(
-                                $scope,
-                                str( $f, "send: " ),
-                                $scope->property_u('line')
-                            )
-                        ],
-                        $scope
-                    )
+                $scope->property_u('say')->call_u(
+                    [
+                        add(
+                            $scope, str( $f, "send: " ),
+                            $scope->property_u('line')
+                        )
+                    ],
+                    $scope
                 );
-                U( $self->property_u('sock')->property_u('println')
-                      ->call( [ $scope->property_u('line') ], $scope ) );
+                $self->property_u('sock')->property_u('println')
+                  ->call_u( [ $scope->property_u('line') ], $scope );
                 return $return;
             };
             $methods[2] = Ferret::Event->new(

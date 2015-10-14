@@ -1,1 +1,1 @@
-U(<<coderef>>->call([ <<arguments>> ], $scope))
+<<coderef>>->call_u([ <<arguments>> ], $scope)

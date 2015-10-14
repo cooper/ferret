@@ -163,7 +163,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Message.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U add bool num str);
+use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('IRC');
@@ -199,43 +199,31 @@ my $result = do {
                 };
                 $scope->set_property_ow(
                     $context,
-                    lineSplit => U(
-                        $self->property_u('line')->property_u('split')->call(
-                            {
-                                separator => str( $f, " " ),
-                                limit     => num( $f, 4 )
-                            },
-                            $scope
-                        )
-                    )
+                    lineSplit =>
+                      $self->property_u('line')->property_u('split')->call_u(
+                        { separator => str( $f, " " ), limit => num( $f, 4 ) },
+                        $scope
+                      )
                 );
                 $self->set_property( channel => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 2 ) ], $scope ) );
                 $self->set_property(
-                    nickname => U(
-                        $scope->property_u('lineSplit')
-                          ->get_index_value( [ num( $f, 0 ) ], $scope )
-                          ->property_u('split')->call(
-                            {
-                                separator => str( $f, "!" ),
-                                limit     => num( $f, 2 )
-                            },
-                            $scope
-                          )
-                    )->get_index_value( [ num( $f, 0 ) ], $scope )
+                    nickname => $scope->property_u('lineSplit')
+                      ->get_index_value( [ num( $f, 0 ) ], $scope )
+                      ->property_u('split')->call_u(
+                        { separator => str( $f, "!" ), limit => num( $f, 2 ) },
+                        $scope
+                      )->get_index_value( [ num( $f, 0 ) ], $scope )
                 );
-                U( $self->property_u('nickname')->property_u('trimPrefix')
-                      ->call( [ str( $f, ":" ) ], $scope ) );
+                $self->property_u('nickname')->property_u('trimPrefix')
+                  ->call_u( [ str( $f, ":" ) ], $scope );
                 $self->set_property( message => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 3 ) ], $scope ) );
-                U( $self->property_u('message')->property_u('trimPrefix')
-                      ->call( [ str( $f, ":" ) ], $scope ) );
+                $self->property_u('message')->property_u('trimPrefix')
+                  ->call_u( [ str( $f, ":" ) ], $scope );
                 $self->set_property(
-                    parts => U(
-                        $self->property_u('message')->property_u('split')
-                          ->call( [ str( $f, " " ) ], $scope )
-                    )
-                );
+                    parts => $self->property_u('message')->property_u('split')
+                      ->call_u( [ str( $f, " " ) ], $scope ) );
                 return $return;
             };
             $methods[0] = Ferret::Event->new(
@@ -262,27 +250,21 @@ my $result = do {
                 }
                 if (
                     bool(
-                        U(
-                            $self->property_u('parts')
-                              ->get_index_value( [ num( $f, 0 ) ], $scope )
-                              ->property_u('hasPrefix')
-                              ->call( [ str( $f, "." ) ], $scope )
-                        )
+                        $self->property_u('parts')
+                          ->get_index_value( [ num( $f, 0 ) ], $scope )
+                          ->property_u('hasPrefix')
+                          ->call_u( [ str( $f, "." ) ], $scope )
                     )
                   )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $self->set_property(
-                        _foundCommand => U(
-                            U(
-                                $self->property_u('parts')
-                                  ->get_index_value( [ num( $f, 0 ) ], $scope )
-                                  ->property_u('copy')->call( {}, $scope )
-                              )->property_u('trimPrefix')
-                              ->call( [ str( $f, "." ) ], $scope )
-                        )
-                    );
+                        _foundCommand => $self->property_u('parts')
+                          ->get_index_value( [ num( $f, 0 ) ], $scope )
+                          ->property_u('copy')->call_u( {}, $scope )
+                          ->property_u('trimPrefix')
+                          ->call_u( [ str( $f, "." ) ], $scope ) );
                     return $self->property_u('_foundCommand');
                 }
                 $self->set_property( _foundCommand => Ferret::false );
@@ -310,18 +292,17 @@ my $result = do {
                     return unless defined $arguments->{wordN};
                     $scope->set_property( wordN => $arguments->{wordN} );
                 };
-                return U(
-                    $self->property_u('message')->property_u('split')->call(
-                        {
-                            separator => str( $f, " " ),
-                            limit     => add(
-                                $scope, $scope->property_u('wordN'),
-                                num( $f, 1 )
-                            )
-                        },
-                        $scope
-                    )
-                )->get_index_value( [ $scope->property_u('wordN') ], $scope );
+                return $self->property_u('message')->property_u('split')
+                  ->call_u(
+                    {
+                        separator => str( $f, " " ),
+                        limit     => add(
+                            $scope, $scope->property_u('wordN'),
+                            num( $f, 1 )
+                        )
+                    },
+                    $scope
+                  )->get_index_value( [ $scope->property_u('wordN') ], $scope );
                 return $return;
             };
             $methods[2] = Ferret::Event->new(

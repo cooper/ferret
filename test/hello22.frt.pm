@@ -163,7 +163,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello22.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U bool str);
+use Ferret::Core::Operations qw(bool str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -403,55 +403,37 @@ my $result = do {
     }
     Ferret::space( $context, $_ ) for qw(Cat Cow Dog);
     $scope->set_property_ow( $context,
-        animal => U( $scope->property_u('Cow')->call( {}, $scope ) ) );
-    U(
-        U(
-            $scope->property_u('Dog')->property_u('init')
-              ->call( [ $scope->property_u('animal') ], $scope )
-        )->call( {}, $scope )
+        animal => $scope->property_u('Cow')->call_u( {}, $scope ) );
+    $scope->property_u('Dog')->property_u('init')
+      ->call_u( [ $scope->property_u('animal') ], $scope )
+      ->call_u( {}, $scope );
+    $scope->property_u('say')->call_u(
+        [
+            $scope->property_u('animal')->property_u('moo')
+              ->call_u( {}, $scope )
+        ],
+        $scope
     );
-    U(
-        $scope->property_u('say')->call(
-            [
-                U(
-                    $scope->property_u('animal')->property_u('moo')
-                      ->call( {}, $scope )
-                )
-            ],
-            $scope
-        )
+    $scope->property_u('say')->call_u(
+        [
+            $scope->property_u('animal')->property_u('bark')
+              ->call_u( {}, $scope )
+        ],
+        $scope
     );
-    U(
-        $scope->property_u('say')->call(
-            [
-                U(
-                    $scope->property_u('animal')->property_u('bark')
-                      ->call( {}, $scope )
-                )
-            ],
-            $scope
-        )
-    );
-    U(
-        U(
-            $scope->property_u('Cat')->property_u('init')
-              ->call( [ $scope->property_u('animal') ], $scope )
-        )->call( { mean => Ferret::true }, $scope )
-    );
-    U( $scope->property_u('inspect')
-          ->call( [ $scope->property_u('animal') ], $scope ) );
+    $scope->property_u('Cat')->property_u('init')
+      ->call_u( [ $scope->property_u('animal') ], $scope )
+      ->call_u( { mean => Ferret::true }, $scope );
+    $scope->property_u('inspect')
+      ->call_u( [ $scope->property_u('animal') ], $scope );
     $scope->set_property_ow( $context,
-        cat => U( $scope->property_u('Cat')->call( {}, $scope ) ) );
-    $scope->set_property_ow(
-        $context,
-        aftermath => U(
-            $scope->property_u('animal')
-              ->create_set( $scope, $scope->property_u('cat') )
-              ->property_u('fight')->call( {}, $scope )
-        )
-    );
-    U( $scope->property_u('say')
-          ->call( [ $scope->property_u('aftermath') ], $scope ) );
+        cat => $scope->property_u('Cat')->call_u( {}, $scope ) );
+    $scope->set_property_ow( $context,
+        aftermath => $scope->property_u('animal')
+          ->create_set( $scope, $scope->property_u('cat') )
+          ->property_u('fight')->call_u( {}, $scope ) );
+    $scope->property_u('say')
+      ->call_u( [ $scope->property_u('aftermath') ], $scope );
 };
 
 Ferret::runtime();

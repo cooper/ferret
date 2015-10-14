@@ -45,7 +45,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello16.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U num str);
+use Ferret::Core::Operations qw(num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -53,22 +53,15 @@ my $result = do {
 
     Ferret::space( $context, $_ ) for qw(Math Math::Point);
     $scope->set_property_ow( $context, obj => str( $f, "hi" ) );
-    U(
-        U(
-            $scope->property_u('Math::Point')->property_u('init')
-              ->call( [ $scope->property_u('obj') ], $scope )
-        )->call( [ num( $f, 1 ), num( $f, 1 ) ], $scope )
-    );
-    U(
-        $scope->property_u('say')->call(
-            [
-                U(
-                    $scope->property_u('obj')->property_u('pretty')
-                      ->call( {}, $scope )
-                )
-            ],
-            $scope
-        )
+    $scope->property_u('Math::Point')->property_u('init')
+      ->call_u( [ $scope->property_u('obj') ], $scope )
+      ->call_u( [ num( $f, 1 ), num( $f, 1 ) ], $scope );
+    $scope->property_u('say')->call_u(
+        [
+            $scope->property_u('obj')->property_u('pretty')
+              ->call_u( {}, $scope )
+        ],
+        $scope
     );
 };
 

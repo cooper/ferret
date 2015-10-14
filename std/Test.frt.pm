@@ -229,7 +229,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Test.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U _not _sub add bool num str);
+use Ferret::Core::Operations qw(_not _sub add bool num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -292,17 +292,13 @@ my $result = do {
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
-                return U(
-                    $self->property_u('_test')->call(
-                        [
-                            U(
-                                $scope->property_u('Bool')
-                                  ->call( [ $scope->property_u('a') ], $scope )
-                            ),
-                            str( $f, "Value must be true" )
-                        ],
-                        $scope
-                    )
+                return $self->property_u('_test')->call_u(
+                    [
+                        $scope->property_u('Bool')
+                          ->call_u( [ $scope->property_u('a') ], $scope ),
+                        str( $f, "Value must be true" )
+                    ],
+                    $scope
                 );
                 return $return;
             };
@@ -324,15 +320,13 @@ my $result = do {
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
-                return U(
-                    $self->property_u('_test')->call(
-                        [
-                            $scope->property_u('a')
-                              ->equal_to_exactly( Ferret::true, $scope ),
-                            str( $f, "Value must be exactly true" )
-                        ],
-                        $scope
-                    )
+                return $self->property_u('_test')->call_u(
+                    [
+                        $scope->property_u('a')
+                          ->equal_to_exactly( Ferret::true, $scope ),
+                        str( $f, "Value must be exactly true" )
+                    ],
+                    $scope
                 );
                 return $return;
             };
@@ -356,15 +350,13 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
-                return U(
-                    $self->property_u('_test')->call(
-                        [
-                            $scope->property_u('a')
-                              ->equal_to( $scope->property_u('b'), $scope ),
-                            str( $f, "Values must be equal" )
-                        ],
-                        $scope
-                    )
+                return $self->property_u('_test')->call_u(
+                    [
+                        $scope->property_u('a')
+                          ->equal_to( $scope->property_u('b'), $scope ),
+                        str( $f, "Values must be equal" )
+                    ],
+                    $scope
                 );
                 return $return;
             };
@@ -388,16 +380,13 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
-                return U(
-                    $self->property_u('_test')->call(
-                        [
-                            $scope->property_u('a')->equal_to_exactly(
-                                $scope->property_u('b'), $scope
-                            ),
-                            str( $f, "Objects must be exactly equal" )
-                        ],
-                        $scope
-                    )
+                return $self->property_u('_test')->call_u(
+                    [
+                        $scope->property_u('a')
+                          ->equal_to_exactly( $scope->property_u('b'), $scope ),
+                        str( $f, "Objects must be exactly equal" )
+                    ],
+                    $scope
                 );
                 return $return;
             };
@@ -421,17 +410,15 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
-                return U(
-                    $self->property_u('_test')->call(
-                        [
-                            _not(
-                                $scope->property_u('a')
-                                  ->equal_to( $scope->property_u('b'), $scope )
-                            ),
-                            str( $f, "Values must not be equal" )
-                        ],
-                        $scope
-                    )
+                return $self->property_u('_test')->call_u(
+                    [
+                        _not(
+                            $scope->property_u('a')
+                              ->equal_to( $scope->property_u('b'), $scope )
+                        ),
+                        str( $f, "Values must not be equal" )
+                    ],
+                    $scope
                 );
                 return $return;
             };
@@ -455,18 +442,16 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
-                return U(
-                    $self->property_u('_test')->call(
-                        [
-                            _not(
-                                $scope->property_u('a')->equal_to_exactly(
-                                    $scope->property_u('b'), $scope
-                                )
-                            ),
-                            str( $f, "Objects must not be equal" )
-                        ],
-                        $scope
-                    )
+                return $self->property_u('_test')->call_u(
+                    [
+                        _not(
+                            $scope->property_u('a')->equal_to_exactly(
+                                $scope->property_u('b'), $scope
+                            )
+                        ),
+                        str( $f, "Objects must not be equal" )
+                    ],
+                    $scope
                 );
                 return $return;
             };
@@ -495,24 +480,22 @@ my $result = do {
                         $self->property_u('passed')
                     )
                 );
-                U(
-                    $scope->property_u('say')->call(
-                        [
-                            add(
-                                $scope,
-                                str( $f, "[" ),
-                                $self->property_u('name'),
-                                str( $f, "] " ),
-                                $self->property_u('tested'),
-                                str( $f, " tests; " ),
-                                $self->property_u('passed'),
-                                str( $f, " passed; " ),
-                                $scope->property_u('failed'),
-                                str( $f, " failed" )
-                            )
-                        ],
-                        $scope
-                    )
+                $scope->property_u('say')->call_u(
+                    [
+                        add(
+                            $scope,
+                            str( $f, "[" ),
+                            $self->property_u('name'),
+                            str( $f, "] " ),
+                            $self->property_u('tested'),
+                            str( $f, " tests; " ),
+                            $self->property_u('passed'),
+                            str( $f, " passed; " ),
+                            $scope->property_u('failed'),
+                            str( $f, " failed" )
+                        )
+                    ],
+                    $scope
                 );
                 $return->set_property( tests  => $self->property_u('tested') );
                 $return->set_property( fails  => $scope->property_u('failed') );
@@ -559,13 +542,9 @@ my $result = do {
                 if ( bool( $self->property_u('fatal') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    U(
-                        U(
-                            $scope->property_u('Error')->call(
-                                [ $scope->property_u('message') ], $scope
-                            )
-                        )->property_u('panic')->call( {}, $scope )
-                    );
+                    $scope->property_u('Error')
+                      ->call_u( [ $scope->property_u('message') ], $scope )
+                      ->property_u('panic')->call_u( {}, $scope );
                 }
                 $return->set_property(
                     message => $scope->property_u('message') );

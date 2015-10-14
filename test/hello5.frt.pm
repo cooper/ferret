@@ -178,7 +178,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello5.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U add div num str);
+use Ferret::Core::Operations qw(add div num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -240,17 +240,12 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property_ow(
                     $context,
-                    pt => U(
-                        $scope->{special}->property_u('class')->call(
-                            [
-                                add(
-                                    $scope, $self->property_u('x'),
-                                    num( $f, 1 )
-                                ),
-                                $self->property_u('y')
-                            ],
-                            $scope
-                        )
+                    pt => $scope->{special}->property_u('class')->call_u(
+                        [
+                            add( $scope, $self->property_u('x'), num( $f, 1 ) ),
+                            $self->property_u('y')
+                        ],
+                        $scope
                     )
                 );
                 return $scope->property_u('pt');
@@ -297,7 +292,7 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return U( $self->property_u('pretty')->call( {}, $scope ) );
+                return $self->property_u('pretty')->call_u( {}, $scope );
                 return $return;
             };
             $methods[3] = Ferret::Event->new(
@@ -326,30 +321,28 @@ my $result = do {
                     return unless defined $arguments->{pt2};
                     $scope->set_property( pt2 => $arguments->{pt2} );
                 };
-                return U(
-                    $scope->property_u('Point')->call(
-                        {
-                            x => div(
+                return $scope->property_u('Point')->call_u(
+                    {
+                        x => div(
+                            $scope,
+                            add(
                                 $scope,
-                                add(
-                                    $scope,
-                                    $scope->property_u('pt1')->property_u('x'),
-                                    $scope->property_u('pt2')->property_u('x')
-                                ),
-                                num( $f, 2 )
+                                $scope->property_u('pt1')->property_u('x'),
+                                $scope->property_u('pt2')->property_u('x')
                             ),
-                            y => div(
+                            num( $f, 2 )
+                        ),
+                        y => div(
+                            $scope,
+                            add(
                                 $scope,
-                                add(
-                                    $scope,
-                                    $scope->property_u('pt1')->property_u('y'),
-                                    $scope->property_u('pt2')->property_u('y')
-                                ),
-                                num( $f, 2 )
-                            )
-                        },
-                        $scope
-                    )
+                                $scope->property_u('pt1')->property_u('y'),
+                                $scope->property_u('pt2')->property_u('y')
+                            ),
+                            num( $f, 2 )
+                        )
+                    },
+                    $scope
                 );
                 return $return;
             };
@@ -366,50 +359,29 @@ my $result = do {
         $methods[4]->inside_scope( midpoint   => $scope, $class, $class );
     }
     Ferret::space( $context, $_ ) for qw(Point);
+    $scope->set_property_ow( $context,
+        pt => $scope->property_u('Point')
+          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope ) );
+    $scope->property_u('say')
+      ->call_u( [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
+        $scope );
+    $scope->set_property_ow( $context,
+        rpt => $scope->property_u('pt')->property_u('oneToRight')
+          ->call_u( {}, $scope ) );
+    $scope->property_u('say')
+      ->call_u(
+        [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
+        $scope );
     $scope->set_property_ow(
         $context,
-        pt => U(
-            $scope->property_u('Point')
-              ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope )
+        mdpt => $scope->property_u('Point')->property_u('midpoint')->call_u(
+            [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope
         )
     );
-    U(
-        $scope->property_u('say')->call(
-            [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
-            $scope
-        )
-    );
-    $scope->set_property_ow(
-        $context,
-        rpt => U(
-            $scope->property_u('pt')->property_u('oneToRight')
-              ->call( {}, $scope )
-        )
-    );
-    U(
-        $scope->property_u('say')->call(
-            [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
-            $scope
-        )
-    );
-    $scope->set_property_ow(
-        $context,
-        mdpt => U(
-            $scope->property_u('Point')->property_u('midpoint')->call(
-                [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope
-            )
-        )
-    );
-    U(
-        $scope->property_u('say')->call(
-            [
-                add(
-                    $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt')
-                )
-            ],
-            $scope
-        )
-    );
+    $scope->property_u('say')
+      ->call_u(
+        [ add( $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt') ) ],
+        $scope );
     $scope->set_property_ow(
         $context,
         nineteen => add(
@@ -418,16 +390,14 @@ my $result = do {
             div( $scope, num( $f, 45 ), num( $f, 3 ) )
         )
     );
-    U(
-        $scope->property_u('say')->call(
-            [
-                add(
-                    $scope, str( $f, "Nineteen: " ),
-                    $scope->property_u('nineteen')
-                )
-            ],
-            $scope
-        )
+    $scope->property_u('say')->call_u(
+        [
+            add(
+                $scope, str( $f, "Nineteen: " ),
+                $scope->property_u('nineteen')
+            )
+        ],
+        $scope
     );
 };
 

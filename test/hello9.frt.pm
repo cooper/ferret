@@ -51,7 +51,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello9.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U add bool str);
+use Ferret::Core::Operations qw(add bool str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -68,16 +68,14 @@ my $result = do {
                 return unless defined $arguments->{who};
                 $scope->set_property( who => $arguments->{who} );
             };
-            U(
-                $scope->property_u('say')->call(
-                    [
-                        add(
-                            $scope,                    str( $f, "Hello " ),
-                            $scope->property_u('who'), str( $f, "!" )
-                        )
-                    ],
-                    $scope
-                )
+            $scope->property_u('say')->call_u(
+                [
+                    add(
+                        $scope,                    str( $f, "Hello " ),
+                        $scope->property_u('who'), str( $f, "!" )
+                    )
+                ],
+                $scope
             );
             return $return;
         };
@@ -92,13 +90,13 @@ my $result = do {
     {
         my $maybe_0 = $scope->property_u('sayHello');
         if ( bool($maybe_0) ) {
-            U( $maybe_0->call( [ str( $f, "World" ) ], $scope ) );
+            $maybe_0->call_u( [ str( $f, "World" ) ], $scope );
         }
     }
     {
         my $maybe_0 = $scope->property_u('sayGoodbye');
         if ( bool($maybe_0) ) {
-            U( $maybe_0->call( [ str( $f, "World" ) ], $scope ) );
+            $maybe_0->call_u( [ str( $f, "World" ) ], $scope );
         }
     }
 };

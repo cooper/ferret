@@ -30,14 +30,13 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello2.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U str);
+use Ferret::Core::Operations qw(str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
     undef;
 
-    U( $scope->property_u('say')->call( [ str( $f, "Hello World!" ) ], $scope )
-    );
+    $scope->property_u('say')->call_u( [ str( $f, "Hello World!" ) ], $scope );
 };
 
 Ferret::runtime();

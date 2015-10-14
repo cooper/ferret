@@ -94,7 +94,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello4.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U add num str);
+use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -120,14 +120,12 @@ my $result = do {
             $scope->set_property( z => $arguments->{z} );
             $scope->set_property_ow(
                 $context,
-                point => U(
-                    $scope->property_u('Object')->call(
-                        {
-                            x => $scope->property_u('x'),
-                            y => $scope->property_u('y')
-                        },
-                        $scope
-                    )
+                point => $scope->property_u('Object')->call_u(
+                    {
+                        x => $scope->property_u('x'),
+                        y => $scope->property_u('y')
+                    },
+                    $scope
                 )
             );
             $return->set_property( point => $scope->property_u('point') );
@@ -141,27 +139,22 @@ my $result = do {
     }
     $funcs[0]->inside_scope( makePoint => $scope, $scope );
     Ferret::space( $context, $_ ) for qw(Object);
-    $scope->set_property_ow(
-        $context,
-        pt => U(
-            $scope->property_u('makePoint')
-              ->call( [ num( $f, 5 ), num( $f, 3 ) ], $scope )
-        )->property_u('point')
-    );
-    U(
-        $scope->property_u('say')->call(
-            [
-                add(
-                    $scope,
-                    str( $f, "Point(" ),
-                    $scope->property_u('pt')->property_u('x'),
-                    str( $f, ", " ),
-                    $scope->property_u('pt')->property_u('y'),
-                    str( $f, ")" )
-                )
-            ],
-            $scope
-        )
+    $scope->set_property_ow( $context,
+        pt => $scope->property_u('makePoint')
+          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope )
+          ->property_u('point') );
+    $scope->property_u('say')->call_u(
+        [
+            add(
+                $scope,
+                str( $f, "Point(" ),
+                $scope->property_u('pt')->property_u('x'),
+                str( $f, ", " ),
+                $scope->property_u('pt')->property_u('y'),
+                str( $f, ")" )
+            )
+        ],
+        $scope
     );
     $scope->set_property_ow(
         $context,

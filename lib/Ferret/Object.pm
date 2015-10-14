@@ -393,6 +393,10 @@ sub call {
 
 }
 
+sub call_u {
+    return shift->call(@_) || Ferret::undefined;
+}
+
 ###############
 ### INDICES ###
 ###############

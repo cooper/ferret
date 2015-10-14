@@ -40,7 +40,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello8.frt.pm'}++;
 
-use Ferret::Core::Operations qw(U add mul num str);
+use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -72,7 +72,7 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return mul(
                     $scope,
-                    U( $self->property_u('length')->call( {}, $scope ) ),
+                    $self->property_u('length')->call_u( {}, $scope ),
                     num( $f, 2 )
                 );
                 return $return;
@@ -85,20 +85,16 @@ my $result = do {
         }
         $methods[0]->inside_scope( doubledLength => $scope, $proto, $class );
     }
-    U(
-        $scope->property_u('say')->call(
-            [
-                add(
-                    $scope,
-                    str( $f, "Length times two: " ),
-                    U(
-                        str( $f, "hi there" )->property_u('doubledLength')
-                          ->call( {}, $scope )
-                    )
-                )
-            ],
-            $scope
-        )
+    $scope->property_u('say')->call_u(
+        [
+            add(
+                $scope,
+                str( $f, "Length times two: " ),
+                str( $f, "hi there" )->property_u('doubledLength')
+                  ->call_u( {}, $scope )
+            )
+        ],
+        $scope
     );
 };
 
