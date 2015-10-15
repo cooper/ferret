@@ -5,6 +5,8 @@ use warnings;
 use strict;
 use 5.010;
 
+use List::Util 'first';
+
 my $ok;
 
 # Unexpected something <...>
@@ -14,27 +16,103 @@ our %error_reasons = (
     previous_not_allowed    => 'after %s',
     expected_before         => 'without previous element at same level',
     expected_after          => 'without following element at same level',
-    must_be_inside          => 'outside of a containing %s'
+    must_be_inside          => 'outside of a containing %s',
+    must_be_set             => "without a current '%s'"
 );
 
 sub err { sprintf $error_reasons{+shift}, @_ }
 
-sub final_check {
-    my $main_el = shift;
-    my $check; $check = sub {
-        my $el = shift;
-
-        # do tests.
-        my $err = $el->parent->can_adopt($el, 1) if $el->parent;
-        $err  ||= $el->can_close                 if $el->is_node;
-        $el->unexpected($err) if $err;
-
-        # now do the same for each child.
-        if ($el->is_node) { $check->($_, $el) foreach $el->children }
-
-    };
-    $check->($main_el);
+sub _hashify {
+    my $a = shift;
+    return ([ keys %$a ], $a) if ref $a eq 'HASH';
+    if (ref $a eq 'ARRAY') {
+        my @a     = @$a;
+        my @keys  = @a[ grep { not $_ % 2 } 0..$#a ];
+        return (\@keys, { @a });
+    }
+    die;
 }
+
+###################
+### TOKEN RULES ###
+###################
+
+sub tok_rule_hash {
+    my @levels = @_;
+    my $h = \%Ferret::Lexer::Rules::token_rules;
+    my $k = [];
+    for my $level (@levels) {
+        return unless $h->{$level};
+        $h = $h->{$level};
+        ($k, $h) = _hashify($h);
+    }
+    return ($k, $h);
+}
+
+sub tok_rule_set {
+    my $label = shift;
+    my ($keys, $rules) = tok_rule_hash($label);
+    return if !$rules;
+    my $set = Ferret::Lexer::RuleSet->new(%$rules);
+    $set->{keys_in_order} = $keys;
+    return $set;
+}
+
+my %token_checkers = (
+    upper_nodes_must_have   => \&t_upper_nodes_must_have,
+    current_must_have       => \&t_current_must_have
+);
+
+# token check.
+sub token_check {
+    my ($label, $c, $value) = @_;
+    my $set = tok_rule_set($label) or return;
+    my $e;
+
+    # check each rule in order.
+    foreach my $key ($set->keys_in_order) {
+        my $code = $token_checkers{$key};
+        die 'bad code' if !$code || ref $code ne 'CODE';
+        $e ||= $code->($label, $c, $value, $set);
+        last if $e;
+    }
+
+    return $c->{unknown_el}->unexpected($e) if $e;
+}
+
+sub t_upper_nodes_must_have {
+    my ($label, $c, $value, $set) = @_;
+
+    # upper nodes must have one of the items in the list.
+    my ($err_type, $pass);
+    foreach my $type ($set->list_items('upper_nodes_must_have')) {
+        $err_type ||= $type;
+        $pass = scalar first { $_ eq $type } $c->{node}->types_upward;
+        last if $pass;
+    }
+
+    return $ok if $pass;
+    return $set->err(must_be_inside => lc $err_type);
+}
+
+sub t_current_must_have {
+    my ($label, $c, $value, $set) = @_;
+
+    # one of the items in the list must exist in $current.
+    my ($err_type, $pass);
+    foreach my $type ($set->list_items('current_must_have')) {
+        $err_type ||= $type;
+        $pass = defined $c->{$type};
+        last if $pass;
+    }
+
+    return $ok if $pass;
+    return $set->err(must_be_set => $err_type);
+}
+
+#####################
+### ELEMENT RULES ###
+#####################
 
 # returns a hash of rules from a section of the rule tree.
 #
@@ -46,8 +124,29 @@ sub rule_hash {
     for my $level (@levels) {
         return unless $h->{$level};
         $h = $h->{$level};
+        $h = _hashify($h);
     }
     return %$h;
+}
+
+# final element check.
+sub final_check {
+    my $main_el = shift;
+    my $check; $check = sub {
+        my $el = shift;
+
+        # do tests.
+        my $err = $el->parent->can_adopt($el, 1) if $el->parent;
+        $err  ||= $el->can_close                 if $el->is_node;
+        $el->unexpected($err) if $err;
+
+        # now do the same for each child.
+        if ($el->is_node) {
+            $check->($_, $el) foreach $el->children;
+        }
+
+    };
+    $check->($main_el);
 }
 
 # returns a rule set object for an element.

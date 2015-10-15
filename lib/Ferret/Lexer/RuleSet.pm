@@ -18,6 +18,10 @@ sub merge_in {
     return bless { %$set1, %$set2 };
 }
 
+sub keys_in_order {
+    return @{ shift->{keys_in_order} };
+}
+
 # returns true if a list contains an item.
 sub list_contains {
     my ($set, $list, $what) = @_;

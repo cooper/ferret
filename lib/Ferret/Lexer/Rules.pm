@@ -7,6 +7,21 @@ use 5.010;
 use Ferret::Lexer::RuleFunctions;
 use Ferret::Lexer::RuleSet;
 
+our %token_rules = (
+    KEYWORD_END => [
+
+        # the current node must be somewhere inside a Package or Class.
+        upper_nodes_must_have => [                                              # KEYWORD_END[0]
+            'Package Class',
+            'End keyword must terminate a class or package declaration'
+        ],
+
+        # $c->{end_cap} (the class or package to capture 'end') must exist
+        current_must_have => 'end_cap'                                          # KEYWORD_END[1]
+
+    ]
+);
+
 our %element_rules = (
 
     Package => {
@@ -50,8 +65,8 @@ our %element_rules = (
             Method => {
                 children_must_be => [                                           # WantNeed[2]
                     'InstanceVariable LexicalVariable Expression Bareword',
-                    'Argument declaration inside method can only contain lexical '.
-                    'or instance variables and their types'
+                    'Argument declaration inside method can only contain '.
+                    'lexical or instance variables and their types'
                 ]
             },
 
@@ -119,9 +134,7 @@ our %element_rules = (
     },
 
     Token => {
-
         parent_must_be => 'NONE'                                                # Token[0]
-
     }
 
 );

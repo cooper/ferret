@@ -51,6 +51,10 @@ sub construct {
             token_value => $value
         );
 
+        # check token rules.
+        Ferret::Lexer::RuleFunctions::token_check($label, $current, $value);
+        return $error if $error;
+
         # call the handler for all.
         c_any($label, $current, $value);
 
@@ -77,7 +81,7 @@ sub construct {
     c_eof($current, $main_node);
     Ferret::Lexer::RuleFunctions::final_check($main_node);
 
-    return;
+    return $error;
 }
 
 sub c_PKG_DEC {
@@ -133,10 +137,13 @@ sub c_CLASS_DEC {
 sub c_KEYWORD_END {
     my ($c, $value) = @_;
 
-    # must have something to capture it.
+    # Rule KEYWORD_END[0]:
+    #   Upper nodes must contain a class or package.
+
+    # Rule KEYWORD_END[1]:
+    #   The current 'end_cap' (package or class to capture 'end') must exist.
+
     my $class_or_pkg = $c->{end_cap};
-    return unexpected($c, 'outside of class or package')
-        unless $class_or_pkg;
 
     # the current node must be the package or class.
     my $type = $c->{node}->desc;
