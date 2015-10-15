@@ -17,7 +17,8 @@ our %error_reasons = (
     expected_before         => 'without previous element at same level',
     expected_after          => 'without following element at same level',
     must_be_inside          => 'outside of a containing %s',
-    must_be_set             => "without a current '%s'"
+    must_be_set             => "without a current '%s'",
+    must_not_be_set         => "with already a current '%s'"
 );
 
 sub err { sprintf $error_reasons{+shift}, @_ }
@@ -60,7 +61,9 @@ sub tok_rule_set {
 
 my %token_checkers = (
     upper_nodes_must_have   => \&t_upper_nodes_must_have,
-    current_must_have       => \&t_current_must_have
+    current_must_have       => \&t_current_must_have,
+    current_must_not_have   => \&t_current_must_not_have,
+    current_node_must_be    => \&t_current_node_must_be
 );
 
 # token check.
@@ -109,6 +112,35 @@ sub t_current_must_have {
     return $ok if $pass;
     return $set->err(must_be_set => $err_type);
 }
+
+
+sub t_current_must_not_have {
+    my ($label, $c, $value, $set) = @_;
+
+    # one of the items in the list must exist in $current.
+    foreach my $type ($set->list_items('current_must_not_have')) {
+        return $set->err(must_not_be_set => $type) if defined $c->{$type};
+    }
+
+    return $ok;
+}
+
+sub t_current_node_must_be {
+    my ($label, $c, $value, $set) = @_;
+
+    # current node must be one of the types in the list.
+    my ($good, $err_type);
+    foreach my $type ($set->list_items('current_node_must_be')) {
+        $good = $c->{node}->t eq $type;
+        last if $good;
+        $err_type ||= $type;
+    }
+
+    return $ok if $good;
+    return $set->err(must_be_inside => lc $err_type);
+}
+
+
 
 #####################
 ### ELEMENT RULES ###

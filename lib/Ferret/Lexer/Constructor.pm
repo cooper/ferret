@@ -87,10 +87,7 @@ sub construct {
 sub c_PKG_DEC {
     my ($c, $value) = @_;
 
-    # terminate current package.
-    return unexpected($c, '(multiple packages per file not yet implemented)')
-        if $c->{package};
-
+    # create a package.
     my $pkg = F::Package->new(%$value);
     $c->{package} = $pkg;
 
@@ -138,21 +135,16 @@ sub c_KEYWORD_END {
     my ($c, $value) = @_;
 
     # Rule KEYWORD_END[0]:
-    #   Upper nodes must contain a class or package.
+    #   Upper nodes must contain a Class or Package.
 
     # Rule KEYWORD_END[1]:
     #   The current 'end_cap' (package or class to capture 'end') must exist.
 
-    my $class_or_pkg = $c->{end_cap};
-
-    # the current node must be the package or class.
-    my $type = $c->{node}->desc;
-    return unexpected(
-        $c,
-        "inside $type (direct parent must be a class or package)"
-    ) if $c->{node} != $class_or_pkg;
+    # Rule KEYWORD_END[2]:
+    #   The current node must be a Class or Package.
 
     # end the class.
+    my $class_or_pkg = $c->{end_cap};
     if ($c->{class} && $class_or_pkg == $c->{class}) {
         delete $c->{class};
     }
@@ -196,10 +188,10 @@ sub c_FUNCTION {
 sub c_CLOSURE_S {
     my ($c, $value) = @_;
 
-    # there's nothing to capture the closure.
+    # Rule CLOSURE_S[0]:
+    #   The current 'clos_cap' must exist.
+
     my $closure = delete $c->{clos_cap};
-    return unexpected($c, 'without a preceding structure to capture a closure')
-        unless $closure;
 
     # a closure can terminate an equality.
     if ($c->{node}->type eq 'Equality') {
@@ -224,12 +216,11 @@ sub c_CLOSURE_S {
 sub c_CLOSURE_E {
     my ($c, $value) = @_;
 
-    # no closure is open...
-    return unexpected($c) unless $c->{closure};
+    # Rule CLOSURE_E[0]:
+    #   The current 'closure' must exist.
 
-    # we used to simulate a semicolon for one-liners here,
-    # but for the sake of debugging instruction termination, it's disabled.
-    #c_OP_SEMI($c) if $c->{instruction};
+    # simulate a semicolon for one-liners
+    # c_OP_SEMI($c) if $c->{instruction} && $c->{node} == $c->{instruction};
 
     # at this point, the current node must be the closure.
     return unexpected($c) unless $c->{node} == $c->{closure};
@@ -409,8 +400,8 @@ sub start_list {
 sub c_PAREN_E {
     my ($c, $value) = @_;
 
-    # the current node must be a list.
-    return unexpected($c) if !$c->{list};
+    # Rule PAREN_E[0]:
+    #   The current 'list' must exist.
 
     # this must be the expected list terminator.
     my $t = $c->{list}{list_terminator};
@@ -451,8 +442,8 @@ sub c_PAREN_E {
 sub c_BRACKET_E {
     my ($c, $value) = @_;
 
-    # the current node must be a list.
-    return unexpected($c) if !$c->{list};
+    # Rule BRACKET_E[0]:
+    #   The current 'list' must exist.
 
     # this must be the expected list terminator.
     my $t = $c->{list}{list_terminator};
@@ -565,9 +556,6 @@ sub c_KEYWORD_FALSE {
 sub c_OP_COMMA {
     my ($c, $value) = @_;
 
-    # must be in a list.
-    # hmm, should we terminate ListItem or pair, etc?
-
     # we're in a list.
     if ($c->{list}) {
 
@@ -625,9 +613,8 @@ sub c_BAREWORD {
 sub c_OP_SEMI {
     my ($c, $value) = @_;
 
-    # no instruction open?
-    return unexpected($c, 'outside of instruction statement')
-        unless $c->{instruction};
+    # Rule OP_SEMI[0]:
+    #   The current 'instruction' must exist.
 
     # end of instruction can terminate any of these nodes.
     my @closes = qw(
