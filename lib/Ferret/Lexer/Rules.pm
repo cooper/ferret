@@ -83,27 +83,27 @@ our %element_rules = (
             'Argument declaration must be within a function or method'
         ],
 
-        inside_Method => {
+        directly_inside_rules => {
 
-            # inside a method, WantNeed can ONLY contain these things.
-            children_must_be => [
-                'InstanceVariable LexicalVariable Expression Bareword',
-                'Argument declaration inside method can only contain lexical '.
-                'or instance variables and their types'
-            ]
+            # directly inside a method, WantNeed can ONLY contain these things.
+            Method => {
+                children_must_be => [
+                    'InstanceVariable LexicalVariable Expression Bareword',
+                    'Argument declaration inside method can only contain lexical '.
+                    'or instance variables and their types'
+                ]
+            },
 
-        },
+            # directly inside a function, WantNeed can ONLY contain these things.
+            Function => {
+                children_must_be => [
+                    'LexicalVariable Expression Bareword',
+                    'Argument declaration inside function can only contain '.
+                    'lexical variables and their types'
+                ]
+            },
 
-        inside_Function => {
-
-            # inside a function, WantNeed can ONLY contain these things.
-            children_must_be => [
-                'LexicalVariable Expression Bareword',
-                'Argument declaration inside function can only contain '.
-                'lexical variables and their types'
-            ]
-
-        },
+        } # end directly_inside_rules
 
     },
 
@@ -204,6 +204,8 @@ sub F::Element::rule_set {
         # rules from parent and upper nodes.
 
         # lower rules.
+        #
+        #
         my @rules = map {
             my   @a = rule_hash($_, 'lower_rules', $el->type);
             push @a,  rule_hash($_, 'lower_rules', $el->tok) if $el->tok;
@@ -211,17 +213,24 @@ sub F::Element::rule_set {
         } reverse $parent->types_upward;
 
         # child rules.
+        #
+        #
         push @rules, rule_hash($parent->t, 'child_rules', $el->type);
         push @rules, rule_hash($parent->t, 'child_rules', $el->tok) if $el->tok;
 
         $set2 = Ferret::Lexer::RuleSet->new(@rules);
 
-        # rules from self while inside a certain type of node.
+        # rules from self while inside a certain type of node at any level.
+        #
+        #
         @rules = map {
-            my   @a = rule_hash($el->type, "inside_$_");
-            push @a,  rule_hash($el->tok,  "inside_$_") if $el->tok;
-            @a;
+            rule_hash($el->type, 'anywhere_inside_rules', $_)
         } reverse $parent->types_upward;
+
+        # rules from self while directly inside a certain type of node.
+        #
+        push @rules, rule_hash($el->type, 'directly_inside_rules', $el->type);
+        push @rules, rule_hash($el->type, 'directly_inside_rules', $el->tok) if $el->tok
 
         $set3 = Ferret::Lexer::RuleSet->new(@rules);
     }
@@ -340,7 +349,7 @@ sub F::Element::allows_upper_nodes {
         last;
     }
 
-    return $set->err(must_be_inside => $bad);
+    return $set->err(must_be_inside => lc $bad);
 }
 
 # checks if the previous element at the same level is allowed.
