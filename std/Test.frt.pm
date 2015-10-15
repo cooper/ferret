@@ -26,11 +26,11 @@
 #                  Return
 #                      Call
 #                          Instance variable '@_test'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Call
 #                                      Bareword 'Bool'
-#                                      Structural list [1 items]
+#                                      Single value [1 items]
 #                                          Item 0
 #                                              Lexical variable '$a'
 #                              Item 1
@@ -43,7 +43,7 @@
 #                  Return
 #                      Call
 #                          Instance variable '@_test'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Equality
 #                                      Lexical variable '$a'
@@ -61,7 +61,7 @@
 #                  Return
 #                      Call
 #                          Instance variable '@_test'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Equality
 #                                      Lexical variable '$a'
@@ -79,7 +79,7 @@
 #                  Return
 #                      Call
 #                          Instance variable '@_test'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Equality
 #                                      Lexical variable '$a'
@@ -97,7 +97,7 @@
 #                  Return
 #                      Call
 #                          Instance variable '@_test'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Equality
 #                                      Lexical variable '$a'
@@ -115,7 +115,7 @@
 #                  Return
 #                      Call
 #                          Instance variable '@_test'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Equality
 #                                      Lexical variable '$a'
@@ -132,7 +132,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String '['
@@ -201,7 +201,7 @@
 #                          Property 'panic'
 #                              Call
 #                                  Bareword 'Error'
-#                                  Structural list [1 items]
+#                                  Single value [1 items]
 #                                      Item 0
 #                                          Lexical variable '$message'
 #                          Structural list [0 items]

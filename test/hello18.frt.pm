@@ -9,7 +9,7 @@
 #          Call
 #              Property 'push'
 #                  Lexical variable '$list'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      String 'there'
 #      Instruction
@@ -18,7 +18,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Length: '
@@ -34,7 +34,7 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          Operation
 #                              String 'item: '
@@ -55,19 +55,19 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'whats '
 #                          Addition operator (+)
 #                          Index
 #                              Lexical variable '$hash'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      String 'whats'
 #      For
 #          Expression ('for' parameter)
-#              Structural list [2 items]
+#              Set [2 items]
 #                  Item 0
 #                      Lexical variable '$key'
 #                  Item 1
@@ -77,7 +77,7 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          Operation
 #                              String 'pair: key='

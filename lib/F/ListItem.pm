@@ -14,7 +14,7 @@ sub adopt {
 
     # first item --
     # if this is a collection, determine whether value list or hash.
-    if ($list->children == 1 && $list->{collection}) {
+    if ($list->children == 1) {
 
         # if the element is a pair, it's a hash.
         # otherwise, it's an array.

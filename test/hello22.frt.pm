@@ -81,14 +81,14 @@
 #              Call
 #                  Property 'init'
 #                      Bareword 'Dog'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          Lexical variable '$animal'
 #              Structural list [0 items]
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Call
 #                          Property 'moo'
@@ -97,7 +97,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Call
 #                          Property 'bark'
@@ -108,7 +108,7 @@
 #              Call
 #                  Property 'init'
 #                      Bareword 'Cat'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          Lexical variable '$animal'
 #              Hash [1 items]
@@ -118,7 +118,7 @@
 #      Instruction
 #          Call
 #              Bareword 'inspect'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Lexical variable '$animal'
 #      Instruction
@@ -130,7 +130,7 @@
 #          Assignment (lexical variable '$aftermath')
 #              Call
 #                  Property 'fight'
-#                      Structural list [2 items]
+#                      Set [2 items]
 #                          Item 0
 #                              Lexical variable '$animal'
 #                          Item 1
@@ -139,7 +139,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Lexical variable '$aftermath'
 #      Include (Cat, Cow, Dog)

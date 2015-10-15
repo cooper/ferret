@@ -31,6 +31,7 @@ sub new {
         }
     );
 
+
     # create the core and main context objects.
     $f->{context}{core} ||=
         $core_context   ||= Ferret::Core::Context->new($f, %opts);

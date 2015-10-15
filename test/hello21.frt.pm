@@ -5,12 +5,12 @@
 #              Call
 #                  Property 'split'
 #                      String 's p a m'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          String ' '
 #      For
 #          Expression ('for' parameter)
-#              Structural list [2 items]
+#              Set [2 items]
 #                  Item 0
 #                      Lexical variable '$i'
 #                  Item 1
@@ -24,7 +24,7 @@
 #                          Property 'once'
 #                              Call
 #                                  Bareword 'Timer'
-#                                  Structural list [1 items]
+#                                  Single value [1 items]
 #                                      Item 0
 #                                          Lexical variable '$i'
 #                          Structural list [0 items]
@@ -32,7 +32,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Operation
 #                                      String '('
@@ -56,7 +56,7 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          Lexical variable '$part'
 #      Include (Timer)

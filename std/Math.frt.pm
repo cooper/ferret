@@ -11,7 +11,7 @@
 #                  Call
 #                      Property 'sqrt'
 #                          Bareword 'NATIVE::Math'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Lexical variable '$num'
 #      Include (NATIVE, NATIVE::Math, Num)

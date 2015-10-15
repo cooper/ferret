@@ -25,7 +25,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Center of ...'
@@ -34,7 +34,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Center dis...'
@@ -46,7 +46,7 @@
 #          Assignment (lexical variable '$otherPt')
 #              Call
 #                  Bareword 'Math::Point'
-#                  Structural list [2 items]
+#                  Set [2 items]
 #                      Item 0
 #                          Number '9'
 #                      Item 1
@@ -57,7 +57,7 @@
 #                  Property 'pretty'
 #                      Call
 #                          Property 'midpoint'
-#                              Structural list [2 items]
+#                              Set [2 items]
 #                                  Item 0
 #                                      Lexical variable '$center'
 #                                  Item 1
@@ -65,7 +65,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Midpoint: '
@@ -74,7 +74,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Square roo...'
@@ -82,7 +82,7 @@
 #                          Call
 #                              Property 'sqrt'
 #                                  Bareword 'Math'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Number '4'
 #      Include (Math, Math::Point, Math::Rect)

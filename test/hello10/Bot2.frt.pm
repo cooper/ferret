@@ -31,7 +31,7 @@
 #                      Call
 #                          Property 'init'
 #                              Bareword 'Socket::TCP'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Special variable '*self'
 #                      Hash [2 items]
@@ -51,7 +51,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'USER '
@@ -64,7 +64,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'NICK '
@@ -80,7 +80,7 @@
 #                      Instruction
 #                          Call
 #                              Bareword 'say'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'recv: '
@@ -96,7 +96,7 @@
 #                      Instruction
 #                          Call
 #                              Bareword 'say'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'send: '

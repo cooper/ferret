@@ -4,7 +4,7 @@
 #          Assignment (lexical variable '$point')
 #              Call
 #                  Bareword 'Math::Point'
-#                  Structural list [2 items]
+#                  Set [2 items]
 #                      Item 0
 #                          Number '0'
 #                      Item 1
@@ -15,13 +15,13 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          String 'The point ...'
 #          Instruction
 #              Call
 #                  Bareword 'inspect'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          Lexical variable '$point'
 #      Inside
@@ -36,7 +36,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Point: '
@@ -58,7 +58,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Operation
 #                                      Lexical variable '$message'
@@ -85,13 +85,13 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          String 'Did the fi...'
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [2 items]
+#              Set [2 items]
 #                  Item 0
 #                      String 'this shoul...'
 #                  Item 1

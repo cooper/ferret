@@ -32,6 +32,11 @@ sub new {
     weaken($obj->{special} = $f->{special})
         if !$obj->{special} && $f->{special};
 
+    # set initial properties.
+    if (my $pairs = delete $obj->{initial_props}) {
+        $obj->set_property($_ => $pairs->{$_}) foreach keys %$pairs;
+    }
+
     return $obj;
 }
 
@@ -58,8 +63,7 @@ sub set_property {
 
     # special properties can never be assigned to from Ferret.
     if (substr($prop_name, 0, 1) eq '*') {
-        # FIXME: this needs to raise a runtime error.
-        die "no assignment to special variables";
+        throw(AssignmentToSpecialProperty => [caller], $prop_name);
     }
 
     # ensure that it is a valid Ferret value.
@@ -321,6 +325,7 @@ sub best_common_class {
 sub instance_of {
     my ($obj, $class_maybe) = @_;
     return if !$class_maybe;
+    return 1 if $class_maybe == $obj->f->{object_initializer}; # i.e. $o.*isa(Obj)
     return defined first { $_ == $class_maybe } $obj->parent_classes;
 }
 

@@ -31,7 +31,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'sqrt'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Operation
 #                                      Lexical variable '$dx'
@@ -46,11 +46,11 @@
 #                  Return
 #                      Call
 #                          Instance variable '@distanceTo'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Call
 #                                      Special variable '*class'
-#                                      Structural list [2 items]
+#                                      Set [2 items]
 #                                          Item 0
 #                                              Number '0'
 #                                          Item 1
@@ -89,7 +89,7 @@
 #                              Item 0
 #                                  Pair 'x'
 #                                      Operation
-#                                          Structural list [1 items]
+#                                          Single value [1 items]
 #                                              Item 0
 #                                                  Operation
 #                                                      Property 'x'
@@ -102,7 +102,7 @@
 #                              Item 1
 #                                  Pair 'y'
 #                                      Operation
-#                                          Structural list [1 items]
+#                                          Single value [1 items]
 #                                              Item 0
 #                                                  Operation
 #                                                      Property 'y'
@@ -124,7 +124,7 @@
 #                      Call
 #                          Property 'distanceTo'
 #                              Lexical variable '$pt1'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Lexical variable '$pt2'
 use warnings;

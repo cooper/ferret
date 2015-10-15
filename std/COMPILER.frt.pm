@@ -58,7 +58,7 @@ sub tokenize {
 
     # tokenize
     my $code = $compiler->_ferret_code;
-    my ($err, @tokens) = Ferret::Lexer::Tokenizer::tokenize($code);
+    my ($err, @tokens) = Ferret::Lexer::Tokenizer::tokenize("$code\n");
     return $err if $err;
 
     return $compiler->{tokens} = \@tokens;

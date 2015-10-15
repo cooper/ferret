@@ -14,7 +14,7 @@
 #      Instruction
 #          Call
 #              Bareword 'inspect'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Lexical variable '$sock'
 #      On
@@ -28,7 +28,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'recv: '
@@ -45,7 +45,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'send: '
@@ -60,14 +60,14 @@
 #                  Call
 #                      Property 'println'
 #                          Lexical variable '$sock'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              String 'NICK k'
 #              Instruction
 #                  Call
 #                      Property 'println'
 #                          Lexical variable '$sock'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              String 'USER k * * :k'
 #      Instruction
@@ -82,7 +82,7 @@
 #                      Property 'once'
 #                          Call
 #                              Bareword 'Timer'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Number '5'
 #          Function 'callback'
@@ -90,7 +90,7 @@
 #                  Call
 #                      Property 'println'
 #                          Lexical variable '$sock'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              String 'JOIN #k'
 #      Include (Socket, Socket::TCP, Timer)

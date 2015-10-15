@@ -1,7 +1,7 @@
 func makePoint {
     need $x, $y;
     want $z;
-    $point = Object(
+    $point = (
         x: $x,
         y: $y
     );

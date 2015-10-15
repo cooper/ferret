@@ -19,7 +19,7 @@
 #                  Assignment (instance variable '@origin')
 #                      Call
 #                          Bareword 'Point'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Lexical variable '$x'
 #                              Item 1
@@ -33,7 +33,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Point'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Operation
 #                                      Property 'x'
@@ -48,7 +48,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Point'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Property 'x'
 #                                      Instance variable '@origin'
@@ -63,7 +63,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Point'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Operation
 #                                      Property 'x'
@@ -81,7 +81,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Line'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Call
 #                                      Instance variable '@bottomLeft'
@@ -93,7 +93,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Line'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Call
 #                                      Instance variable '@topLeft'
@@ -123,7 +123,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Point'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Lexical variable '$x'
 #                              Item 1

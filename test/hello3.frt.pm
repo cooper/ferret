@@ -23,7 +23,7 @@
 #      Instruction
 #          Call
 #              Bareword 'helloWorld'
-#              Structural list [2 items]
+#              Set [2 items]
 #                  Item 0
 #                      String 'Benjamin'
 #                  Item 1
@@ -51,7 +51,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  Lexical variable '$hello'
@@ -64,7 +64,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'Hello '
@@ -81,7 +81,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Pi = '

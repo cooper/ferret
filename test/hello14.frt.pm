@@ -3,7 +3,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      String 'test'
 #      Instruction
@@ -17,7 +17,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'found ''
@@ -46,7 +46,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'found ''

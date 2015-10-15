@@ -45,7 +45,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'USER '
@@ -58,7 +58,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'NICK '
@@ -75,7 +75,7 @@
 #                      Instruction
 #                          Call
 #                              Bareword 'say'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'recv: '
@@ -94,7 +94,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'send: '
@@ -104,7 +104,7 @@
 #                  Call
 #                      Property 'println'
 #                          Instance variable '@sock'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Lexical variable '$line'
 #      Include (Num, Socket, Socket::TCP, Str)

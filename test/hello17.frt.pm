@@ -2,18 +2,16 @@
 #  Document './test/hello17.frt'
 #      Instruction
 #          Assignment (lexical variable '$obj')
-#              Call
-#                  Bareword 'Object'
-#                  Structural list [0 items]
+#              Object [0 items]
 #      Instruction
 #          Call
 #              Call
 #                  Property 'init'
 #                      Bareword 'Timer'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          Lexical variable '$obj'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Number '5'
 #      On
@@ -27,10 +25,10 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              String 'it works!'
-#      Include (Object, Timer)
+#      Include (Timer)
 use warnings;
 use strict;
 use utf8;
@@ -69,9 +67,9 @@ my $result = do {
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Object Timer);
+    Ferret::space( $context, $_ ) for qw(Timer);
     $scope->set_property_ow( $context,
-        obj => $scope->property_u('Object')->call_u( {}, $scope ) );
+        obj => Ferret::Object->new( $f, initial_props => {} ) );
     $scope->property_u('Timer')->property_u('init')
       ->call_u( [ $scope->property_u('obj') ], $scope )
       ->call_u( [ num( $f, 5 ) ], $scope );

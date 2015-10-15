@@ -75,7 +75,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'USER '
@@ -88,7 +88,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'NICK '
@@ -105,7 +105,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@handleLine'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Lexical variable '$data'
 #          Method 'addCommand'
@@ -120,7 +120,7 @@
 #                  Expression ('if' parameter)
 #                      Index
 #                          Instance variable '@commands'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Lexical variable '$command'
 #                  Instruction
@@ -145,7 +145,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'send: '
@@ -155,7 +155,7 @@
 #                  Call
 #                      Property 'println'
 #                          Instance variable '@sock'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Lexical variable '$line'
 #          Method 'handleLine'
@@ -167,14 +167,14 @@
 #                      Call
 #                          Property 'split'
 #                              Lexical variable '$line'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  String ' '
 #              Instruction
 #                  Assignment (lexical variable '$command')
 #                      Index
 #                          Lexical variable '$s'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Number '1'
 #              If
@@ -182,7 +182,7 @@
 #                      Equality
 #                          Index
 #                              Lexical variable '$s'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Number '0'
 #                          String 'PING'
@@ -190,13 +190,13 @@
 #                      Assignment (lexical variable '$command')
 #                          Index
 #                              Lexical variable '$s'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Number '0'
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'recv['
@@ -211,7 +211,7 @@
 #                      Maybe
 #                          Index
 #                              Instance variable '@handlers'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Lexical variable '$command'
 #                      Hash [4 items]
@@ -243,13 +243,13 @@
 #                      Call
 #                          Property 'split'
 #                              Lexical variable '$message'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  String '␤'
 #                  Instruction
 #                      Call
 #                          Instance variable '@send'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Operation
 #                                      String 'PRIVMSG '
@@ -279,7 +279,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'JOIN '
@@ -292,14 +292,14 @@
 #              Instruction
 #                  Call
 #                      Instance variable '@send'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'PONG '
 #                                  Addition operator (+)
 #                                  Index
 #                                      Lexical variable '$s'
-#                                      Structural list [1 items]
+#                                      Single value [1 items]
 #                                          Item 0
 #                                              Number '1'
 #          Method 'handleMessage'
@@ -313,7 +313,7 @@
 #                  Assignment (lexical variable '$msg')
 #                      Call
 #                          Bareword 'IRC::Message'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Lexical variable '$line'
 #              Instruction
@@ -330,7 +330,7 @@
 #                          Maybe
 #                              Index
 #                                  Instance variable '@commands'
-#                                  Structural list [1 items]
+#                                  Single value [1 items]
 #                                      Item 0
 #                                          Call
 #                                              Property 'command'
@@ -360,7 +360,7 @@
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
-#                      Structural list [2 items]
+#                      Set [2 items]
 #                          Item 0
 #                              Property 'channel'
 #                                  Lexical variable '$msg'
@@ -378,7 +378,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'inspect'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Lexical variable '$msg'
 #              Instruction
@@ -386,7 +386,7 @@
 #                      Index
 #                          Property 'parts'
 #                              Lexical variable '$msg'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Number '1'
 #              Instruction
@@ -394,7 +394,7 @@
 #                      Call
 #                          Property 'fromWord'
 #                              Lexical variable '$msg'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Number '2'
 #              Instruction
@@ -406,7 +406,7 @@
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
-#                      Structural list [2 items]
+#                      Set [2 items]
 #                          Item 0
 #                              Property 'channel'
 #                                  Lexical variable '$msg'
@@ -429,7 +429,7 @@
 #                  Assignment (lexical variable '$response')
 #                      Index
 #                          Instance variable '@factoids'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Call
 #                                      Property 'command'
@@ -438,7 +438,7 @@
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
-#                      Structural list [2 items]
+#                      Set [2 items]
 #                          Item 0
 #                              Property 'channel'
 #                                  Lexical variable '$msg'

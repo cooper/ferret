@@ -23,7 +23,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Structural list [2 items]
+#              Set [2 items]
 #                  Item 0
 #                      String 'info'
 #                  Item 1
@@ -35,7 +35,7 @@
 #                              Call
 #                                  Property 'privmsg'
 #                                      Lexical variable '$bot'
-#                                  Structural list [2 items]
+#                                  Set [2 items]
 #                                      Item 0
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
@@ -45,7 +45,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Structural list [2 items]
+#              Set [2 items]
 #                  Item 0
 #                      String 't'
 #                  Item 1
@@ -57,12 +57,12 @@
 #                              Assignment (lexical variable '$c')
 #                                  Call
 #                                      Bareword 'COMPILER'
-#                                      Structural list [1 items]
+#                                      Single value [1 items]
 #                                          Item 0
 #                                              Call
 #                                                  Property 'fromWord'
 #                                                      Lexical variable '$msg'
-#                                                  Structural list [1 items]
+#                                                  Single value [1 items]
 #                                                      Item 0
 #                                                          Number '1'
 #                          Instruction
@@ -82,7 +82,7 @@
 #                                  Call
 #                                      Property 'privmsg'
 #                                          Lexical variable '$bot'
-#                                      Structural list [2 items]
+#                                      Set [2 items]
 #                                          Item 0
 #                                              Property 'channel'
 #                                                  Lexical variable '$msg'
@@ -95,7 +95,7 @@
 #                              Call
 #                                  Property 'privmsg'
 #                                      Lexical variable '$bot'
-#                                  Structural list [2 items]
+#                                  Set [2 items]
 #                                      Item 0
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
@@ -106,7 +106,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Structural list [2 items]
+#              Set [2 items]
 #                  Item 0
 #                      String 'c'
 #                  Item 1
@@ -118,12 +118,12 @@
 #                              Assignment (lexical variable '$c')
 #                                  Call
 #                                      Bareword 'COMPILER'
-#                                      Structural list [1 items]
+#                                      Single value [1 items]
 #                                          Item 0
 #                                              Call
 #                                                  Property 'fromWord'
 #                                                      Lexical variable '$msg'
-#                                                  Structural list [1 items]
+#                                                  Single value [1 items]
 #                                                      Item 0
 #                                                          Number '1'
 #                          Instruction
@@ -143,7 +143,7 @@
 #                                  Call
 #                                      Property 'privmsg'
 #                                          Lexical variable '$bot'
-#                                      Structural list [2 items]
+#                                      Set [2 items]
 #                                          Item 0
 #                                              Property 'channel'
 #                                                  Lexical variable '$msg'
@@ -156,7 +156,7 @@
 #                              Call
 #                                  Property 'privmsg'
 #                                      Lexical variable '$bot'
-#                                  Structural list [2 items]
+#                                  Set [2 items]
 #                                      Item 0
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
@@ -167,7 +167,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Structural list [2 items]
+#              Set [2 items]
 #                  Item 0
 #                      String 'p'
 #                  Item 1
@@ -179,12 +179,12 @@
 #                              Assignment (lexical variable '$c')
 #                                  Call
 #                                      Bareword 'COMPILER'
-#                                      Structural list [1 items]
+#                                      Single value [1 items]
 #                                          Item 0
 #                                              Call
 #                                                  Property 'fromWord'
 #                                                      Lexical variable '$msg'
-#                                                  Structural list [1 items]
+#                                                  Single value [1 items]
 #                                                      Item 0
 #                                                          Number '1'
 #                          Instruction
@@ -201,7 +201,7 @@
 #                                  Call
 #                                      Property 'privmsg'
 #                                          Lexical variable '$bot'
-#                                      Structural list [2 items]
+#                                      Set [2 items]
 #                                          Item 0
 #                                              Property 'channel'
 #                                                  Lexical variable '$msg'
@@ -214,7 +214,7 @@
 #                              Call
 #                                  Property 'privmsg'
 #                                      Lexical variable '$bot'
-#                                  Structural list [2 items]
+#                                  Set [2 items]
 #                                      Item 0
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
@@ -225,7 +225,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Structural list [2 items]
+#              Set [2 items]
 #                  Item 0
 #                      String 'e'
 #                  Item 1
@@ -239,12 +239,12 @@
 #                                      Property 'eval'
 #                                          Call
 #                                              Bareword 'COMPILER'
-#                                              Structural list [1 items]
+#                                              Single value [1 items]
 #                                                  Item 0
 #                                                      Call
 #                                                          Property 'fromWord'
 #                                                              Lexical variable '$msg'
-#                                                          Structural list [1 items]
+#                                                          Single value [1 items]
 #                                                              Item 0
 #                                                                  Number '1'
 #                                      Structural list [0 items]
@@ -256,7 +256,7 @@
 #                                  Call
 #                                      Property 'privmsg'
 #                                          Lexical variable '$bot'
-#                                      Structural list [2 items]
+#                                      Set [2 items]
 #                                          Item 0
 #                                              Property 'channel'
 #                                                  Lexical variable '$msg'
@@ -282,7 +282,7 @@
 #                              Call
 #                                  Property 'privmsg'
 #                                      Lexical variable '$bot'
-#                                  Structural list [2 items]
+#                                  Set [2 items]
 #                                      Item 0
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'

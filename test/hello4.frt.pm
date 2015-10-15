@@ -12,15 +12,13 @@
 #                  Lexical variable '$z'
 #          Instruction
 #              Assignment (lexical variable '$point')
-#                  Call
-#                      Bareword 'Object'
-#                      Hash [2 items]
-#                          Item 0
-#                              Pair 'x'
-#                                  Lexical variable '$x'
-#                          Item 1
-#                              Pair 'y'
-#                                  Lexical variable '$y'
+#                  Object [2 items]
+#                      Item 0
+#                          Pair 'x'
+#                              Lexical variable '$x'
+#                      Item 1
+#                          Pair 'y'
+#                              Lexical variable '$y'
 #          Instruction
 #              Return pair 'point'
 #                  Lexical variable '$point'
@@ -29,7 +27,7 @@
 #              Property 'point'
 #                  Call
 #                      Bareword 'makePoint'
-#                      Structural list [2 items]
+#                      Set [2 items]
 #                          Item 0
 #                              Number '5'
 #                          Item 1
@@ -37,7 +35,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Point('
@@ -73,7 +71,6 @@
 #      Instruction
 #          Assignment (lexical variable '$emptyHash')
 #              Hash [0 items]
-#      Include (Object)
 use warnings;
 use strict;
 use utf8;
@@ -120,12 +117,12 @@ my $result = do {
             $scope->set_property( z => $arguments->{z} );
             $scope->set_property_ow(
                 $context,
-                point => $scope->property_u('Object')->call_u(
-                    {
+                point => Ferret::Object->new(
+                    $f,
+                    initial_props => {
                         x => $scope->property_u('x'),
                         y => $scope->property_u('y')
-                    },
-                    $scope
+                    }
                 )
             );
             $return->set_property( point => $scope->property_u('point') );
@@ -138,7 +135,6 @@ my $result = do {
         );
     }
     $funcs[0]->inside_scope( makePoint => $scope, $scope );
-    Ferret::space( $context, $_ ) for qw(Object);
     $scope->set_property_ow( $context,
         pt => $scope->property_u('makePoint')
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope )

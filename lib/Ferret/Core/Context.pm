@@ -39,6 +39,7 @@ sub new {
 
     # set the object initializer.
     $context->set_property(Object => $f->{object_initializer});
+    $context->set_property(Obj    => $f->{object_initializer});
 
     return $context;
 }

@@ -8,7 +8,7 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          Operation
 #                              String 'Hello '
@@ -20,14 +20,14 @@
 #          Call
 #              Maybe
 #                  Bareword 'sayHello'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      String 'World'
 #      Instruction
 #          Call
 #              Maybe
 #                  Bareword 'sayGoodbye'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      String 'World'
 #      Include (Str)

@@ -14,7 +14,7 @@
 #                  Return
 #                      Call
 #                          Property 'midpoint'
-#                              Structural list [2 items]
+#                              Set [2 items]
 #                                  Item 0
 #                                      Instance variable '@pt1'
 #                                  Item 1
@@ -26,7 +26,7 @@
 #                      Call
 #                          Property 'distanceTo'
 #                              Instance variable '@pt1'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Instance variable '@pt2'
 use warnings;

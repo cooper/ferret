@@ -3,7 +3,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      String 'hello'
 #      On
@@ -13,21 +13,21 @@
 #                      Property 'once'
 #                          Call
 #                              Bareword 'Timer'
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      Number '5'
 #          Function 'callback'
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              String 'five secon...'
 #      Instruction
 #          Assignment (lexical variable '$t2')
 #              Call
 #                  Bareword 'Timer'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          Number '2'
 #      On
@@ -40,7 +40,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              String 'this shoul...'
 #      Instruction

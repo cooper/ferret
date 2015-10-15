@@ -14,14 +14,26 @@ sub desc {
 
 sub list_type {
     my $list = shift;
-    return
-    $list->{hash}  ? 'hash'         :
-    $list->{array} ? 'value list'   :
-    'structural list';
+    if ($list->is_collection) {
+        return 'hash'       if $list->is_hash;
+        return 'value list' if $list->is_array;
+    }
+    return 'object'         if $list->is_hash;
+    return 'set'            if $list->children > 1;
+    return 'single value'   if $list->children;
+    return 'structural list';
 }
 
-sub is_array { shift->{array} }
-sub is_hash  { shift->{hash}  }
+# type      Example     is_array    is_hash     is_collection
+# -----------------------------------------------------------
+# Sets      ()          true        false       false
+# Objects   (:)         false       true        false
+# Hashes    [:]         false       true        true
+# Lists     []          true        false       true
+#
+sub is_array      { shift->{array}      }
+sub is_hash       { shift->{hash}       }
+sub is_collection { shift->{collection} }
 
 sub new_item {
     my $list = shift;
@@ -36,31 +48,28 @@ sub perl_fmt {
     my $list = shift;
     my @children = $list->children;
 
-    # it's a hash.
-    if ($list->is_hash) {
-
-        # create the Perl hash pairs.
-        my $pairs_str = join ', ', map {
+    my $get_pairs = sub {
+        join ', ', map {
             my $key = $_->first_child->key;
             my $val = $_->first_child->value->perl_fmt_do;
             "$key => $val"
         } @children;
+    };
 
-        # curly brackets are in the format.
-        return hash => { pairs => $pairs_str };
+    my $get_items = sub {
+        join ', ', map $_->perl_fmt_do, @children;
+    };
 
+    # it's either an array or a hash.
+    if ($list->is_collection) {
+        return hash => { pairs => $get_pairs->() } if $list->is_hash;
+        return list => { items => $get_items->() } if $list->is_array;
     }
 
-    # it's an array.
-    elsif ($list->is_array) {
+    # it's either a set or an object.
 
-        # brackets are in the format.
-        my $items_str = join ', ', map $_->perl_fmt_do, @children;
-        return list => { items => $items_str };
-
-    }
-
-    # it's a structural list.
+    # it has pairs but is not a collection, so it's an object.
+    return object => { pairs => $get_pairs->() } if $list->is_hash;
 
     # it has more than one value. therefore it's a set.
     if (@children > 1) {
@@ -72,8 +81,10 @@ sub perl_fmt {
         };
     }
 
+    # it's an empty set ().
+    return expression => { content => 'Ferret::undefined' } if !$children[0];
+
     # it's just one parenthesized value.
-    return unless $children[0];
     return expression => { content => $children[0]->perl_fmt_do };
 
 }

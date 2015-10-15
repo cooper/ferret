@@ -23,7 +23,7 @@
 #                  Assignment (instance variable '@channel')
 #                      Index
 #                          Lexical variable '$lineSplit'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Number '2'
 #              Instruction
@@ -33,7 +33,7 @@
 #                              Property 'split'
 #                                  Index
 #                                      Lexical variable '$lineSplit'
-#                                      Structural list [1 items]
+#                                      Single value [1 items]
 #                                          Item 0
 #                                              Number '0'
 #                              Hash [2 items]
@@ -43,28 +43,28 @@
 #                                  Item 1
 #                                      Pair 'limit'
 #                                          Number '2'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Number '0'
 #              Instruction
 #                  Call
 #                      Property 'trimPrefix'
 #                          Instance variable '@nickname'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              String ':'
 #              Instruction
 #                  Assignment (instance variable '@message')
 #                      Index
 #                          Lexical variable '$lineSplit'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Number '3'
 #              Instruction
 #                  Call
 #                      Property 'trimPrefix'
 #                          Instance variable '@message'
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              String ':'
 #              Instruction
@@ -72,7 +72,7 @@
 #                      Call
 #                          Property 'split'
 #                              Instance variable '@message'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  String ' '
 #          Method 'command'
@@ -88,10 +88,10 @@
 #                          Property 'hasPrefix'
 #                              Index
 #                                  Instance variable '@parts'
-#                                  Structural list [1 items]
+#                                  Single value [1 items]
 #                                      Item 0
 #                                          Number '0'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  String '.'
 #                  Instruction
@@ -102,11 +102,11 @@
 #                                      Property 'copy'
 #                                          Index
 #                                              Instance variable '@parts'
-#                                              Structural list [1 items]
+#                                              Single value [1 items]
 #                                                  Item 0
 #                                                      Number '0'
 #                                      Structural list [0 items]
-#                              Structural list [1 items]
+#                              Single value [1 items]
 #                                  Item 0
 #                                      String '.'
 #                  Instruction
@@ -139,7 +139,7 @@
 #                                              Lexical variable '$wordN'
 #                                              Addition operator (+)
 #                                              Number '1'
-#                          Structural list [1 items]
+#                          Single value [1 items]
 #                              Item 0
 #                                  Lexical variable '$wordN'
 #      Include (Num, Str)

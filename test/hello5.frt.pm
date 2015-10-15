@@ -19,7 +19,7 @@
 #                  Assignment (lexical variable '$pt')
 #                      Call
 #                          Special variable '*class'
-#                          Structural list [2 items]
+#                          Set [2 items]
 #                              Item 0
 #                                  Operation
 #                                      Instance variable '@x'
@@ -33,7 +33,7 @@
 #          Method 'pretty'
 #              Instruction
 #                  Return
-#                      Structural list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Operation
 #                                  String '('
@@ -66,7 +66,7 @@
 #                              Item 0
 #                                  Pair 'x'
 #                                      Operation
-#                                          Structural list [1 items]
+#                                          Single value [1 items]
 #                                              Item 0
 #                                                  Operation
 #                                                      Property 'x'
@@ -79,7 +79,7 @@
 #                              Item 1
 #                                  Pair 'y'
 #                                      Operation
-#                                          Structural list [1 items]
+#                                          Single value [1 items]
 #                                              Item 0
 #                                                  Operation
 #                                                      Property 'y'
@@ -93,7 +93,7 @@
 #          Assignment (lexical variable '$pt')
 #              Call
 #                  Bareword 'Point'
-#                  Structural list [2 items]
+#                  Set [2 items]
 #                      Item 0
 #                          Number '5'
 #                      Item 1
@@ -101,7 +101,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Point'
@@ -115,7 +115,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Right'
@@ -126,7 +126,7 @@
 #              Call
 #                  Property 'midpoint'
 #                      Bareword 'Point'
-#                  Structural list [2 items]
+#                  Set [2 items]
 #                      Item 0
 #                          Lexical variable '$pt'
 #                      Item 1
@@ -134,7 +134,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Midpoint'
@@ -151,7 +151,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Structural list [1 items]
+#              Single value [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Nineteen: '

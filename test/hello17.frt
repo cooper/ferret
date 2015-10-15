@@ -1,5 +1,5 @@
-# create an empty object using the global object initializer
-$obj = Object();
+# create an empty object
+$obj = (:);
 
 # become a timer
 Timer.init($obj)(5);

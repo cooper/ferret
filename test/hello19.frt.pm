@@ -5,7 +5,7 @@
 #              Call
 #                  Property 'split'
 #                      String 'how are you?'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          String ' '
 #      For
@@ -16,7 +16,7 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Structural list [1 items]
+#                  Single value [1 items]
 #                      Item 0
 #                          Operation
 #                              String 'part: '
