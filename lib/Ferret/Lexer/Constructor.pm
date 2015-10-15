@@ -75,7 +75,7 @@ sub construct {
 
     c_spaces($current, $main_node);
     c_eof($current, $main_node);
-    Ferret::Lexer::Rules::final_check($main_node);
+    Ferret::Lexer::RuleFunctions::final_check($main_node);
 
     return;
 }
