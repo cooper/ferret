@@ -20,10 +20,10 @@ our %element_rules = (
     WantNeed => {
 
         # WantNeed must always be a direct child of an instruction.
-        parent_must_be => 'Instruction',
+        parent_must_be => 'Instruction',                                        # WantNeed[0]
 
         # WantNeed must always be inside one of these.
-        must_be_inside_one => [
+        must_be_somewhere_inside => [                                           # WantNeed[1]
             'Function Method',
             'Argument declaration must be within a function or method'
         ],
@@ -32,7 +32,7 @@ our %element_rules = (
 
             # directly inside a method, WantNeed can ONLY contain these things.
             Method => {
-                children_must_be => [
+                children_must_be => [                                           # WantNeed[2]
                     'InstanceVariable LexicalVariable Expression Bareword',
                     'Argument declaration inside method can only contain lexical '.
                     'or instance variables and their types'
@@ -41,7 +41,7 @@ our %element_rules = (
 
             # directly inside a function, WantNeed can ONLY contain these things.
             Function => {
-                children_must_be => [
+                children_must_be => [                                           # WantNeed[3]
                     'LexicalVariable Expression Bareword',
                     'Argument declaration inside function can only contain '.
                     'lexical variables and their types'
@@ -54,18 +54,18 @@ our %element_rules = (
 
     PropertyModifier => {
 
-        parent_must_be => 'Instruction',
+        parent_must_be => 'Instruction',                                        # PropertyModifier[0]
 
         # it can be variables or properties.
         # however, it cannot be a special variable.
-        children_must_be => [
+        children_must_be => [                                                   # PropertyModifier[1]
             'LexicalVariable InstanceVariable Property',
             'Property modifier can only capture non-special variables '.
             'or properties'
         ],
 
         # if it's a property, it cannot be a special one.
-        children_must_satisfy => [
+        children_must_satisfy => [                                              # PropertyModifier[2]
             sub {
                 my $el = shift;
                 return 1 if $el->type ne 'Property';
@@ -75,12 +75,19 @@ our %element_rules = (
         ],
 
         # there can only be one child.
-        max_children => 1
+        max_children => 1                                                       # PropertyModifier[3]
 
     },
 
+    InstanceVariable => {
+        must_be_somewhere_inside => [                                           # InstanceVariable[0]
+            'Class',
+            'Instance variables must be inside a class'
+        ]
+    },
+
     Token => {
-        parent_must_be => 'NONE'
+        parent_must_be => 'NONE'                                                # Token[0]
     }
 
 );

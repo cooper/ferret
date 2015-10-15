@@ -200,22 +200,25 @@ sub F::Element::allows_upper_nodes {
     my $set = $child_maybe->rule_set($parent_maybe);
 
     # there's no rule, so it allows everything.
-    return $ok if !$set->{must_be_inside_one} && !$set->{must_be_inside_all};
+    return $ok if
+        !$set->{must_be_somewhere_inside} &&
+        !$set->{must_be_somewhere_inside_all};
 
     # any of these can work.
     my $bad;
-    foreach my $type ($set->list_items('must_be_inside_one')) {
+    foreach my $type ($set->list_items('must_be_somewhere_inside')) {
         return $ok if $parent_maybe->first_self_or_parent($type);
         $bad ||= $type;
     }
 
     # all of these must work.
-    foreach my $type ($set->list_items('must_be_inside_all')) {
+    foreach my $type ($set->list_items('must_be_somewhere_inside_all')) {
         next if $parent_maybe->first_self_or_parent($type);
         $bad = $type;
         last;
     }
 
+    return $ok if !$bad;
     return $set->err(must_be_inside => lc $bad);
 }
 

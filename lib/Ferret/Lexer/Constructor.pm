@@ -656,10 +656,8 @@ sub c_VAR_LEX {
 sub c_VAR_THIS {
     my ($c, $value) = @_;
 
+    # Rule InstanceVariable[0]:
     # if there's no current class, this can't be here.
-    # if there's no current method, this can't be here either.
-    return unexpected($c, 'outside of class')  unless $c->{class};
-    #return unexpected($c, 'outside of method') unless $c->{method};
 
     my $var = F::InstanceVariable->new(var_name => $value);
     return $c->{node}->adopt($var);
@@ -673,12 +671,44 @@ sub c_VAR_SPEC {
 
 sub c_KEYWORD_WANT {
     my ($c, $value) = @_;
+
+    # Rule WantNeed[0]:
+    #   Must be a direct child of an Instruction.
+
+    # Rule WantNeed[1]:
+    #   Must be somewhere inside a Function or a Method.
+
+    # Rule WantNeed[2]:
+    #   When directly inside a method, WantNeed can only directly contain
+    #   children of the following types:
+    #
+    #       Instance variable   (e.g. need @x)
+    #       Lexical variable    (e.g. need $x)
+    #       Expression          (i.e. the want parameter for fallback value)
+    #       Bareword            (i.e. the bareword variable type)
+    #
+
+    # Rule WantNeed[3]:
+    #   When directly inside a function, WantNeed can only directly contain
+    #   children of the following types:
+    #
+    #       Lexical variable    (e.g. need $x)
+    #       Expression          (i.e. the want parameter for fallback value)
+    #       Bareword            (i.e. the bareword variable type)
+    #
+
+    # Manually implemented rules:
+    #   See F/WantNeed.pm for more rules which are implemented in ->adopt().
+
     my $want = F::WantNeed->new(arg_type => 'want');
     return $c->{node} = $c->{want} = $c->{node}->adopt($want);
 }
 
 sub c_KEYWORD_NEED {
     my ($c, $value) = @_;
+
+    # same rules as in c_KEYWORD_WANT above.
+
     my $need = F::WantNeed->new(arg_type => 'need');
     return $c->{node} = $c->{need} = $c->{node}->adopt($need);
 }
@@ -729,8 +759,10 @@ sub c_PROPERTY {
         'at left of '.Ferret::Lexer::pretty_token($c->{label})
     ) unless $allowed{ $last_el->type_or_tok };
 
+    $c->{node}->adopt($prop);
     $prop->adopt($last_el);
-    return $c->{node}->adopt($prop);
+
+    return $prop;
 }
 
 sub c_OP_ASSIGN {
@@ -906,6 +938,28 @@ sub c_OP_MAYBE {
 
 sub start_modifier {
     my ($c, $type) = @_;
+
+    # Rule PropertyModifier[0]:
+    #   Must be a direct child of an Instruction.
+
+    # Rule PropertyModifier[1]:
+    #   Direct children must be one of the following types:
+    #
+    #       Lexical variable
+    #       Instance variable
+    #       Property
+    #
+
+    # Rule PropertyModifier[2]:
+    #   Direct children must satisfy the following condition:
+    #
+    #       if (child is a Property)
+    #           Property must not be special
+    #
+
+    # Rule PropertyModifier[3]:
+    #   Number of direct children must not exceed one (1).
+
     my $mod = F::PropertyModifier->new(mod_type => $type);
     $c->{node} = $c->{node}->adopt($mod);
     return $mod;
@@ -913,11 +967,13 @@ sub start_modifier {
 
 sub c_KEYWORD_DELETE {
     my ($c, $value) = @_;
+    # see start_modifier() for rules.
     return start_modifier($c, 'delete');
 }
 
 sub c_KEYWORD_WEAKEN {
     my ($c, $value) = @_;
+    # see start_modifier() for rules.
     return start_modifier($c, 'weaken');
 }
 

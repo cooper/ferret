@@ -1,5 +1,5 @@
 # === Document Model ===
-#  Document './Second.frt'
+#  Document './test/hello23/Second.frt'
 #      Instruction
 #          Weaken modifier
 #              Lexical variable '$x'
@@ -29,6 +29,7 @@ my $result = do {
     my $scope = my $context = $f->get_context('main');
     undef;
 
+    $scope->weaken_property('x');
 };
 
 Ferret::runtime();

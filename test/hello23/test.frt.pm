@@ -1,5 +1,5 @@
 # === Document Model ===
-#  Document './test.frt'
+#  Document './test/hello23/test.frt'
 #      Instruction
 #          Delete modifier
 #              Lexical variable '$x'
@@ -33,6 +33,7 @@ my $result = do {
     undef;
 
     Ferret::space( $context, $_ ) for qw(Second);
+    $scope->delete_property('x');
     $scope->property_u('Second');
 };
 
