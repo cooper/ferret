@@ -14,7 +14,7 @@ my %specials = (
     classes         => \&_classes,
     ownProperties   => \&_ownProperties,
     allProperties   => \&_allProperties,
-    instanceOf      => _function('instanceOf', '$class:Class')
+    instanceOf      => _function('instanceOf', '$class')
 );
 
 @Ferret::specials{keys %specials} = values %specials;

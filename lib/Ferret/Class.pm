@@ -9,6 +9,23 @@ use parent 'Ferret::Object';
 
 use Scalar::Util 'weaken';
 
+Ferret::bind_class(
+    name => 'Class',
+
+    # this relates to the class called Class.
+    # it emulates a real class, but it's not truly such.
+    #
+    # explicitly setting the proto and proto class allows
+    # functions such as Str.*isa(Class) to behave as expected.
+    #
+    on_bind => sub {
+        my $class = shift;
+        my $proto = _global_class_prototype($class->f);
+        $class->set_property_weak(proto => $proto);
+        weaken($proto->{proto_class} = $class);
+    }
+);
+
 sub new {
     my ($class_name, $f, %opts) = @_;
 

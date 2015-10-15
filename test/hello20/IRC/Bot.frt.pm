@@ -231,9 +231,11 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$channel'
+#                      Bareword 'Str'
 #              Instruction
 #                  Need
 #                      Lexical variable '$message'
+#                      Bareword 'Str'
 #              For
 #                  Expression ('for' parameter)
 #                      Lexical variable '$line'
@@ -800,8 +802,8 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'channel', type => '' );
-            $func->add_argument( name => 'message', type => '' );
+            $func->add_argument( name => 'channel', type => 'Str' );
+            $func->add_argument( name => 'message', type => 'Str' );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {

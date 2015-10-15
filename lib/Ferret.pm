@@ -224,6 +224,9 @@ sub add_binding {
     $context->set_property($_ => $class)
         foreach ($class->{name}, split /\s+/, $opts{alias} || '');
 
+    # on_bind callback with class object.
+    $opts{on_bind}($class) if $opts{on_bind};
+
     return $class_bindings{ $opts{perl_package} }{class} = $class;
 }
 

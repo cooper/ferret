@@ -17,6 +17,8 @@ Ferret::bind_class(
     desc      => \&description
 );
 
+*new = *Ferret::bind_constructor;
+
 sub init {
     my ($bool, $arguments) = @_;
 

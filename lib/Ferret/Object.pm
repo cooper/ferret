@@ -385,16 +385,18 @@ sub call {
 
     # try to convert to a function.
     if (my $to_func = $obj->property('toFunction')) {
-        return ($to_func->call || Ferret::undefined)->call(@_);
+        return $to_func->call_u->call(@_);
     }
 
     # throw an error.
-    throw(CallOnNonFunction => [caller], join(', ', $obj->parent_names));
+    my $caller = [caller 0];
+    $caller = [caller 1] if $caller->[0] eq __PACKAGE__;
+    throw(CallOnNonFunction => $caller, $obj->description);
 
 }
 
 sub call_u {
-    return shift->call(@_) || Ferret::undefined;
+    return (shift->call(@_)) || Ferret::undefined;
 }
 
 ###############
