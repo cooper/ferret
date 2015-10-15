@@ -135,7 +135,7 @@ our %element_rules = (
             'Argument declaration must be within a function or method'
         ],
 
-        directly_inside_rules => {
+        instruction_inside_rules => {
 
             # directly inside a method, WantNeed can ONLY contain these things.
             Method => {

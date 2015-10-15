@@ -200,10 +200,7 @@ sub F::Element::rule_set {
     my ($set2, $set3);
     if ($parent) {
 
-        # rules from parent and upper nodes.
-
-        # lower rules.
-        #
+        # rules from parent or any node above parent.
         #
         my @rules = map {
             my   @a = rule_hash($_, 'lower_rules', $el->type);
@@ -211,8 +208,7 @@ sub F::Element::rule_set {
             @a;
         } reverse $parent->types_upward;
 
-        # child rules.
-        #
+        # rules directly from parent.
         #
         push @rules, rule_hash($parent->t, 'child_rules', $el->type);
         push @rules, rule_hash($parent->t, 'child_rules', $el->tok) if $el->tok;
@@ -226,10 +222,17 @@ sub F::Element::rule_set {
             rule_hash($el->type, 'anywhere_inside_rules', $_)
         } reverse $parent->types_upward;
 
+        # if the parent is an instruction, check instruction_inside_rules.
+        if ($parent->type eq 'Instruction') {
+            my $p = $parent->parent;
+            push @rules, rule_hash($el->type, 'instruction_inside_rules', $p->type) if $p;
+            push @rules, rule_hash($el->type, 'instruction_inside_rules', $p->tok)  if $p && $p->tok;
+        }
+
         # rules from self while directly inside a certain type of node.
         #
-        push @rules, rule_hash($el->type, 'directly_inside_rules', $el->type);
-        push @rules, rule_hash($el->type, 'directly_inside_rules', $el->tok) if $el->tok;
+        push @rules, rule_hash($el->type, 'directly_inside_rules', $parent->type);
+        push @rules, rule_hash($el->type, 'directly_inside_rules', $parent->tok) if $parent->tok;
 
         $set3 = Ferret::Lexer::RuleSet->new(@rules);
     }
