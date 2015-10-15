@@ -21,7 +21,7 @@
 #          Expression ('on' parameter)
 #              Property 'gotLine'
 #                  Lexical variable '$sock'
-#          Function 'callback'
+#          Anonymous function
 #              Instruction
 #                  Need
 #                      Lexical variable '$data'
@@ -38,7 +38,7 @@
 #          Expression ('on' parameter)
 #              Property 'println'
 #                  Lexical variable '$sock'
-#          Function 'callback'
+#          Anonymous function
 #              Instruction
 #                  Need
 #                      Lexical variable '$data'
@@ -55,7 +55,7 @@
 #          Expression ('on' parameter)
 #              Property 'connected'
 #                  Lexical variable '$sock'
-#          Function 'callback'
+#          Anonymous function
 #              Instruction
 #                  Call
 #                      Property 'println'
@@ -85,7 +85,7 @@
 #                              Single value [1 items]
 #                                  Item 0
 #                                      Number '5'
-#          Function 'callback'
+#          Anonymous function
 #              Instruction
 #                  Call
 #                      Property 'println'

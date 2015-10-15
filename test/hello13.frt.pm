@@ -16,7 +16,7 @@
 #                              Single value [1 items]
 #                                  Item 0
 #                                      Number '5'
-#          Function 'callback'
+#          Anonymous function
 #              Instruction
 #                  Call
 #                      Bareword 'say'
@@ -36,7 +36,7 @@
 #                  Call
 #                      Property 'once'
 #                          Lexical variable '$t2'
-#          Function 'callback'
+#          Anonymous function
 #              Instruction
 #                  Call
 #                      Bareword 'say'

@@ -27,7 +27,7 @@
 #                  Item 0
 #                      String 'info'
 #                  Item 1
-#                      Function '_anonymous_'
+#                      Anonymous function
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$msg'
@@ -49,7 +49,7 @@
 #                  Item 0
 #                      String 't'
 #                  Item 1
-#                      Function '_anonymous_'
+#                      Anonymous function
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$msg'
@@ -110,7 +110,7 @@
 #                  Item 0
 #                      String 'c'
 #                  Item 1
-#                      Function '_anonymous_'
+#                      Anonymous function
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$msg'
@@ -171,7 +171,7 @@
 #                  Item 0
 #                      String 'p'
 #                  Item 1
-#                      Function '_anonymous_'
+#                      Anonymous function
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$msg'
@@ -229,7 +229,7 @@
 #                  Item 0
 #                      String 'e'
 #                  Item 1
-#                      Function '_anonymous_'
+#                      Anonymous function
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$msg'

@@ -41,7 +41,7 @@
 #                  Expression ('on' parameter)
 #                      Property 'connected'
 #                          Instance variable '@sock'
-#                  Function 'callback'
+#                  Anonymous function
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
@@ -68,7 +68,7 @@
 #                  Expression ('on' parameter)
 #                      Property 'gotLine'
 #                          Instance variable '@sock'
-#                  Function 'callback'
+#                  Anonymous function
 #                      Instruction
 #                          Need
 #                              Lexical variable '$data'

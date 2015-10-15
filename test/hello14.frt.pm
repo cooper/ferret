@@ -13,7 +13,7 @@
 #          Expression ('on' parameter)
 #              Property 'length'
 #                  Lexical variable '$str'
-#          Function 'callback'
+#          Anonymous function
 #              Instruction
 #                  Call
 #                      Bareword 'say'
@@ -42,7 +42,7 @@
 #              Property 'length'
 #                  Property 'proto'
 #                      Bareword 'String'
-#          Function 'callback'
+#          Anonymous function
 #              Instruction
 #                  Call
 #                      Bareword 'say'

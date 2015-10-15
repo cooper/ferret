@@ -21,7 +21,7 @@
 #                      Property 'once'
 #                          Lexical variable '$obj'
 #                      Structural list [0 items]
-#          Function 'callback'
+#          Anonymous function
 #              Instruction
 #                  Call
 #                      Bareword 'say'

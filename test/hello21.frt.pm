@@ -28,7 +28,7 @@
 #                                      Item 0
 #                                          Lexical variable '$i'
 #                          Structural list [0 items]
-#              Function 'callback'
+#              Anonymous function
 #                  Instruction
 #                      Call
 #                          Bareword 'say'

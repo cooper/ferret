@@ -7,10 +7,15 @@ use 5.010;
 use parent 'F::Statement';
 
 sub type { 'Function' }
-sub desc { "function '$_[0]{name}'" }
 sub is_closure { 1 }
 sub hold_instr { 1 }
 sub anonymous { shift->{anonymous} }
+
+sub desc {
+    my $func = shift;
+    return 'anonymous function' if $func->anonymous;
+    return "function '$$func{name}'";
+}
 
 sub new {
     my ($class, %opts) = @_;

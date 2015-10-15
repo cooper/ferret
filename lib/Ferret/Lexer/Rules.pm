@@ -9,12 +9,28 @@ use Ferret::Lexer::RuleSet;
 
 our %element_rules = (
 
+    Package => {
+
+        parent_must_be => [                                                     # Package[0]
+            'Document',
+            'Package declaration must be in the global scope'
+        ]
+
+    },
+
     Class => {
-        children_must_be => [
+
+        parent_must_be => [                                                     # Class[0]
+            'Document',
+            'Class declaration must be in the global scope'
+        ],
+
+        children_must_be => [                                                   # Class[1]
             'Method',
             'Class must only contain class functions, instance methods, '.
             'and variable declarations'
         ]
+
     },
 
     WantNeed => {
@@ -80,14 +96,32 @@ our %element_rules = (
     },
 
     InstanceVariable => {
+
         must_be_somewhere_inside => [                                           # InstanceVariable[0]
             'Class',
             'Instance variables must be inside a class'
         ]
+
+    },
+
+    Pair => {
+
+        must_be_somewhere_inside => [                                           # Pair[0]
+            'List',
+            'Pair must be inside a list'
+        ],
+
+        parent_must_be => [                                                     # Pair[1]
+            'ListItem',
+            'Pair must be a direct child of a list item'
+        ]
+
     },
 
     Token => {
+
         parent_must_be => 'NONE'                                                # Token[0]
+
     }
 
 );

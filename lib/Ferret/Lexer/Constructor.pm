@@ -87,10 +87,6 @@ sub c_PKG_DEC {
     return unexpected($c, '(multiple packages per file not yet implemented)')
         if $c->{package};
 
-    # must be in global scope.
-    return unexpected($c, 'in non-global scope')
-        unless $c->{node}->type eq 'Document';
-
     my $pkg = F::Package->new(%$value);
     $c->{package} = $pkg;
 
@@ -98,8 +94,10 @@ sub c_PKG_DEC {
     $pkg->{parent_end_cap} = $c->{end_cap};
     $c->{end_cap} = $pkg;
 
-    $c->{node}->adopt($pkg);
+    # Rule Package[0]:
+    #   Must be a direct child of a Document.
 
+    $c->{node}->adopt($pkg);
     return $pkg;
 }
 
@@ -110,10 +108,6 @@ sub c_CLASS_DEC {
     $c->{node} = $c->{node}->close if $c->{node}->type eq 'Class';
     $c->{end_cap} = $c->{end_cap}{parent_end_cap} if $c->{end_cap};
 
-    # must be in global scope.
-    return unexpected($c, 'in non-global scope')
-        unless $c->{node}->type eq 'Document';
-
     # create class.
     my $class = F::Class->new(%$value);
     $c->{class} = $class;
@@ -122,9 +116,15 @@ sub c_CLASS_DEC {
     $class->{parent_end_cap} = $c->{end_cap};
     $c->{end_cap} = $class;
 
+    # Rule Class[0]:
+    #   Must be a direct child of a Document.
+
     # set as current node.
     # will be terminated by another class declaration, 'end', or end of file.
     $c->{node} = $c->{node}->adopt($class);
+
+    # Rule Class[1]:
+    #   Direct children must be of type Method.
 
     return $class;
 }
@@ -191,7 +191,8 @@ sub c_CLOSURE_S {
 
     # there's nothing to capture the closure.
     my $closure = delete $c->{clos_cap};
-    return unexpected($c) unless $closure;
+    return unexpected($c, 'without a preceding structure to capture a closure')
+        unless $closure;
 
     # a closure can terminate an equality.
     if ($c->{node}->type eq 'Equality') {
@@ -734,11 +735,11 @@ sub c_OP_VALUE {
 sub c_PROP_VALUE {
     my ($c, $value) = @_;
 
-    # property pair must be a DIRECT descendent of a list item.
-    return unexpected($c, 'outside of list')
-        if !$c->{list};
-    return unexpected($c, 'outside of list item')
-        if $c->{node}->type ne 'ListItem';
+    # Rule Pair[0]:
+    #   Must be somewhere inside a List.
+
+    # Rule Pair[1]:
+    #   Must be a direct child of a List item.
 
     # create a new node which is a pair.
     my $pair = F::Pair->new(key => $value);

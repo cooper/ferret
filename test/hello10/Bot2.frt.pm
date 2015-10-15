@@ -47,7 +47,7 @@
 #              On
 #                  Expression ('on' parameter)
 #                      Instance variable '@connected'
-#                  Function 'callback'
+#                  Anonymous function
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
@@ -73,7 +73,7 @@
 #              On
 #                  Expression ('on' parameter)
 #                      Instance variable '@gotLine'
-#                  Function 'callback'
+#                  Anonymous function
 #                      Instruction
 #                          Need
 #                              Lexical variable '$data'
@@ -89,7 +89,7 @@
 #              On
 #                  Expression ('on' parameter)
 #                      Instance variable '@println'
-#                  Function 'callback'
+#                  Anonymous function
 #                      Instruction
 #                          Need
 #                              Lexical variable '$data'

@@ -45,7 +45,7 @@
 #      On
 #          Expression ('on' parameter)
 #              Bareword 'say'
-#          Function 'callback'
+#          Anonymous function
 #              Instruction
 #                  Need
 #                      Lexical variable '$twice'
