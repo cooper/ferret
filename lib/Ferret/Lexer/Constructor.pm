@@ -622,7 +622,10 @@ sub c_OP_SEMI {
         unless $c->{instruction};
 
     # end of instruction can terminate any of these nodes.
-    my @closes = qw(WantNeed Equality Operation Assignment ReturnPair Return);
+    my @closes = qw(
+        WantNeed Equality Operation Assignment
+        ReturnPair Return PropertyModifier
+    );
     foreach (@closes) {
         $c->{node} = $c->{node}->close if $_ eq $c->{node}->type;
     }
@@ -899,6 +902,23 @@ sub c_OP_MAYBE {
     $c->{instruction}->add_maybe($maybe);
 
     return $maybe;
+}
+
+sub start_modifier {
+    my ($c, $type) = @_;
+    my $mod = F::PropertyModifier->new(mod_type => $type);
+    $c->{node} = $c->{node}->adopt($mod);
+    return $mod;
+}
+
+sub c_KEYWORD_DELETE {
+    my ($c, $value) = @_;
+    return start_modifier($c, 'delete');
+}
+
+sub c_KEYWORD_WEAKEN {
+    my ($c, $value) = @_;
+    return start_modifier($c, 'weaken');
 }
 
 sub c_any {

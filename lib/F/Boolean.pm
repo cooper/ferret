@@ -8,6 +8,7 @@ use parent 'F::Expression';
 sub type { 'Boolean' }
 sub desc {
     my $b = shift;
+    return 'undefined' if !defined $b->{value};
     return "boolean ".($b->{value} ? 'true' : 'false');
 }
 

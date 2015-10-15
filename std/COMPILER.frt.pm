@@ -99,7 +99,7 @@ sub construct {
     my $err = Ferret::Lexer::Constructor::construct($doc, @tokens);
 
     return $err if $err;
-    return $compiler->{document} = $doc;
+    return $doc;
 }
 
 sub _construct {

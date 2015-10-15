@@ -35,6 +35,17 @@ sub list_items {
     return split /\s+/, $list_str;
 }
 
+# returns code reference or undef if there isn't one.
+sub rule_code {
+    my ($set, $name) = @_;
+    my $code = $set->{$name} or return;
+    if (ref $code eq 'ARRAY') {
+        ($code, $set->{last_error}) = @$code;
+    }
+    return if ref $code ne 'CODE';
+    return $code;
+}
+
 sub err {
     my ($set, @err) = @_;
     my $err_str = Ferret::Lexer::Rules::err(@err);
@@ -96,6 +107,33 @@ our %element_rules = (
 
     },
 
+    PropertyModifier => {
+
+        parent_must_be => 'Instruction',
+
+        # it can be variables or properties.
+        # however, it cannot be a special variable.
+        children_must_be => [
+            'LexicalVariable InstanceVariable Property',
+            'Property modifier can only capture non-special variables '.
+            'or properties'
+        ],
+
+        # if it's a property, it cannot be a special one.
+        children_must_satisfy => [
+            sub {
+                my $el = shift;
+                return 1 if $el->type ne 'Property';
+                return !$el->is_special;
+            },
+            'Property modifier cannot capture special properties'
+        ],
+
+        # there can only be one child.
+        max_children => 1
+
+    },
+
     Token => {
         parent_must_be => 'NONE'
     }
@@ -105,6 +143,7 @@ our %element_rules = (
 # Unexpected something <...>
 our %error_reasons = (
     child_not_allowed       => 'inside %s',
+    parent_maxed_out        => 'inside %s, which can only contain %d element(s)',
     previous_not_allowed    => 'after %s',
     expected_before         => 'without previous element at same level',
     expected_after          => 'without following element at same level',
@@ -194,8 +233,11 @@ sub F::Element::rule_set {
 sub F::Node::can_adopt {
     my ($parent_maybe, $child_maybe) = @_;
 
+    # check that the parent is not maxed out.
+    my $e = $parent_maybe->has_room();
+
     # check that the parent allows this type of child.
-    my $e = $parent_maybe->allows_child($child_maybe);
+    $e ||= $parent_maybe->allows_child($child_maybe);
 
     # check that the child allows this type of parent.
     $e ||= $child_maybe->allows_parent($parent_maybe);
@@ -242,17 +284,21 @@ sub F::Node::can_close {
 # checks if a child can be in a parent.
 sub F::Element::allows_child {
     my ($parent_maybe, $child_maybe) = @_;
-    my $set = $parent_maybe->rule_set(undef, $child_maybe);
+    my $set = $parent_maybe->rule_set(undef);
 
-    # there's no rule, so it allows everything.
-    return $ok if !$set->{children_must_be};
+    # children must be of a certain type.
+    if ($set->{children_must_be}) {
+        return $set->err(child_not_allowed => $parent_maybe->desc)
+            if !$set->list_contains(children_must_be => $child_maybe->t);
+    }
 
-    # it's in the list.
-    return $ok if $set->list_contains(children_must_be => $child_maybe->t);
+    # children must match a subroutine.
+    if (my $code = $set->rule_code('children_must_satisfy')) {
+        return $set->err(child_not_allowed => $parent_maybe->desc)
+            if !$code->($child_maybe, $parent_maybe);
+    }
 
-    # not allowed.
-    return $set->err(child_not_allowed => $parent_maybe->desc);
-
+    return $ok;
 }
 
 # checks if a parent can provide for a child.
@@ -347,6 +393,24 @@ sub F::Element::previous_allows {
     # this type doesn't work.
     return $set->err(previous_not_allowed => $previous_maybe->desc);
 
+}
+
+# check that a node has not reached its limit
+sub F::Node::has_room {
+    my $parent_maybe = shift;
+    my $set = $parent_maybe->rule_set;
+
+    # no limit.
+    my $max = $set->{max_children};
+    return $ok if !defined $max;
+
+    # surpassing the limit.
+    my $current = scalar $parent_maybe->children;
+    return $set->err(
+        parent_maxed_out => $parent_maybe->desc, $max
+    ) if $current >= $max;
+
+    return $ok;
 }
 
 1

@@ -19,6 +19,7 @@ my $keyword_reg = '^('.join('|', qw{
     for         in          func
     true        false       undefined
     init        on          end
+    delete      weaken
     __END__     __LINE__
 }).')$';
 $keyword_reg = qr/$keyword_reg/;

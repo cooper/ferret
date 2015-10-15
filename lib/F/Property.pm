@@ -8,7 +8,11 @@ use parent qw(F::Node F::Structure F::Expression);
 sub type { 'Property' }
 sub desc {
     my $prop = shift;
-    return "property '$$prop{prop_name}'";
+    return ($prop->is_special ? 'special ' : '')."property '$$prop{prop_name}'";
+}
+
+sub is_special {
+    return substr(shift->{prop_name}, 0, 1) eq '*';
 }
 
 sub perl_fmt {
