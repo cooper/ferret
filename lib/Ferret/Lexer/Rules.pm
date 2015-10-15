@@ -158,8 +158,8 @@ sub final_check {
         my $el = shift;
 
         # do tests.
-        my $err = $el->parent->can_adopt($el) if $el->parent;
-        $err  ||= $el->can_close              if $el->is_node;
+        my $err = $el->parent->can_adopt($el, 1) if $el->parent;
+        $err  ||= $el->can_close                 if $el->is_node;
         $el->unexpected($err) if $err;
 
         # now do the same for each child.
@@ -230,11 +230,12 @@ sub F::Element::rule_set {
 }
 
 # checks if an element should be adopted.
+# if $after_check is true, it's part of the final check.
 sub F::Node::can_adopt {
-    my ($parent_maybe, $child_maybe) = @_;
+    my ($parent_maybe, $child_maybe, $after_check) = @_;
 
     # check that the parent is not maxed out.
-    my $e = $parent_maybe->has_room();
+    my $e = $parent_maybe->has_room($after_check);
 
     # check that the parent allows this type of child.
     $e ||= $parent_maybe->allows_child($child_maybe);
@@ -397,7 +398,7 @@ sub F::Element::previous_allows {
 
 # check that a node has not reached its limit
 sub F::Node::has_room {
-    my $parent_maybe = shift;
+    my ($parent_maybe, $after_check) = @_;
     my $set = $parent_maybe->rule_set;
 
     # no limit.
@@ -406,9 +407,10 @@ sub F::Node::has_room {
 
     # surpassing the limit.
     my $current = scalar $parent_maybe->children;
+    my $bad = $after_check ? $current > $max : $current >= $max;
     return $set->err(
         parent_maxed_out => $parent_maybe->desc, $max
-    ) if $current >= $max;
+    ) if $bad;
 
     return $ok;
 }

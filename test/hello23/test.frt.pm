@@ -1,11 +1,11 @@
 # === Document Model ===
-#  Document './test/hello23.frt'
+#  Document './test.frt'
 #      Instruction
 #          Delete modifier
 #              Lexical variable '$x'
 #      Instruction
-#          Delete modifier
-#              Lexical variable '$x'
+#          Bareword 'Second'
+#      Include (Second)
 use warnings;
 use strict;
 use utf8;
@@ -24,7 +24,7 @@ use Ferret;
 
 my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello23.frt.pm'}++;
+$Ferret::tried_files{'test.frt.pm'}++;
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -32,6 +32,8 @@ my $result = do {
     my $scope = my $context = $f->get_context('main');
     undef;
 
+    Ferret::space( $context, $_ ) for qw(Second);
+    $scope->property_u('Second');
 };
 
 Ferret::runtime();
