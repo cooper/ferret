@@ -10,7 +10,7 @@ sub type { 'Assignment' }
 sub desc {
     my $a = shift;
     my $left = $a->assign_to->desc;
-    return "Assignment ($left)";
+    return "assignment ($left)";
 }
 
 sub perl_fmt_do {

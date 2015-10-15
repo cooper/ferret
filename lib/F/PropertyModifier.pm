@@ -12,7 +12,27 @@ sub desc {
 }
 
 sub perl_fmt {
+    my $mod = shift;
+    my $c = $mod->first_child;
+    my ($left, $name);
 
+    if ($c->type eq 'Property') {
+        $left = $c->first_child->perl_fmt_do;
+        $name = $c->{prop_name};
+    }
+    elsif ($c->type eq 'InstanceVariable') {
+        $left = '$self';
+        $name = $c->{var_name};
+    }
+    elsif ($c->type eq 'LexicalVariable') {
+        $left = '$scope';
+        $name = $c->{var_name};
+    }
+
+    return "mod_$$mod{mod_type}" => {
+        left => $left,
+        name => $name
+    };
 }
 
 1

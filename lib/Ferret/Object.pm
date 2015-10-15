@@ -199,7 +199,9 @@ sub own_property {
 #
 sub weaken_property {
     my ($obj, $prop_name) = @_;
+    return if !defined $obj->{properties}{$prop_name};
     weaken($obj->{properties}{$prop_name});
+    return 1;
 }
 
 # convenience method:
@@ -215,7 +217,8 @@ sub set_property_weak {
 # property names
 sub properties {
     my ($obj, $include_inherited) = @_;
-    my @names = keys %{ $obj->{properties} };
+    my @names = grep { defined $obj->{properties}{$_} }
+        keys %{ $obj->{properties} };
     if ($include_inherited) {
         push @names, $_->properties($include_inherited)
             foreach $obj->parents;
