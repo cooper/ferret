@@ -652,7 +652,7 @@ sub c_VAR_THIS {
     my ($c, $value) = @_;
 
     # Rule InstanceVariable[0]:
-    # if there's no current class, this can't be here.
+    #   Must be somewhere inside a Class.
 
     my $var = F::InstanceVariable->new(var_name => $value);
     return $c->{node}->adopt($var);

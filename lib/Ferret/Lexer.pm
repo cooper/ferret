@@ -105,6 +105,25 @@ our %pretty_tokens = (
     METHOD      => 'method declaration'
 );
 
+our %pretty_currents = (
+    node            => 'node',                  # node
+    rule_el         => 'rule element',          # element for which rules are being applied
+    err_caller      => 'error caller',          # caller for error functions
+    package         => 'package',               # package
+    end_cap         => 'end keyword capturer',  # structure capturing end keyword
+    class           => 'class',                 # clas
+    clos_cap        => 'closure capturer',      # upcoming structure to capture closure
+    closure         => 'closure',               # closure
+    instruction     => 'instruction',           # instruction
+    last_element    => 'previous element',      # previous element at same level
+    list            => 'list',                  # innermost list
+    want            => 'want declaration',      # innermost want
+    need            => 'need declaration',      # innermost need
+    label           => 'token label',           # most recent label
+    unknown_el      => 'unknown element',       # F::Unknown for current token
+    elements        => 'element list'           # list of elements
+);
+
 sub pretty_token {
     my $tok = shift;
     return 'beginning of file' if not defined $tok;
@@ -116,6 +135,11 @@ sub pretty_token {
     }
 
     return $pretty_tokens{$tok} || $tok;
+}
+
+sub pretty_current {
+    my $c = shift;
+    return $pretty_currents{$c} || $c;
 }
 
 # $string = show_tok(@tokens)

@@ -17,7 +17,7 @@ our %error_reasons = (
     expected_before         => 'without previous element at same level',
     expected_after          => 'without following element at same level',
     must_be_inside          => 'outside of a containing %s',
-    must_be_set             => "without a current '%s'",
+    must_be_set             => "without a current %s",
     must_not_be_set         => "with already a current '%s'"
 );
 
@@ -110,7 +110,7 @@ sub t_current_must_have {
     }
 
     return $ok if $pass;
-    return $set->err(must_be_set => $err_type);
+    return $set->err(must_be_set => Ferret::Lexer::pretty_current($err_type));
 }
 
 
@@ -119,7 +119,8 @@ sub t_current_must_not_have {
 
     # one of the items in the list must exist in $current.
     foreach my $type ($set->list_items('current_must_not_have')) {
-        return $set->err(must_not_be_set => $type) if defined $c->{$type};
+        return $set->err(must_not_be_set => Ferret::Lexer::pretty_current($type))
+            if defined $c->{$type};
     }
 
     return $ok;
