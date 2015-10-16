@@ -108,7 +108,9 @@ sub op_fmt {
     $op_name = '_sub' if $op_name eq 'ssub';
     $op_name = 'add'  if $op_name eq 'sadd';
 
-    $op->document->{required_operations}{$op_name}++;
+    my $doc = $op->document;
+    $doc->{required_operations}{$op_name}++;
+
     return operation => {
         operation => $op_name,
         items     => join ', ', map {

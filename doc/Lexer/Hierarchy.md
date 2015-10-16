@@ -10,10 +10,10 @@
                 * Function
                 * Method
                 * For
+            * __Instruction__
             * Class
             * Package
             * WantNeed
-            * Instruction
             * Assignment
             * Return
             * ReturnPair

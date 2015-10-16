@@ -18,7 +18,8 @@ our %error_reasons = (
     expected_after          => 'without following element at same level',
     must_be_inside          => 'outside of a containing %s',
     must_be_set             => "without a current %s",
-    must_not_be_set         => "with already a current '%s'"
+    must_not_be_set         => "with already a current '%s'",
+    must_be_equal           => "with mismatching current %s and current %s"
 );
 
 sub err { sprintf $error_reasons{+shift}, @_ }
@@ -63,7 +64,9 @@ my %token_checkers = (
     upper_nodes_must_have   => \&t_upper_nodes_must_have,
     current_must_have       => \&t_current_must_have,
     current_must_not_have   => \&t_current_must_not_have,
-    current_node_must_be    => \&t_current_node_must_be
+    current_node_must_be    => \&t_current_node_must_be,
+    current_must_be_equal   => \&t_current_must_be_equal,
+    current_must_satisfy    => \&t_current_must_satisfy
 );
 
 # token check.
@@ -141,7 +144,22 @@ sub t_current_node_must_be {
     return $set->err(must_be_inside => lc $err_type);
 }
 
+sub t_current_must_be_equal {
+    my ($label, $c, $value, $set) = @_;
+    my @items = $set->list_items('current_must_be_equal');
 
+    # some of them didn't pass.
+    my $first = shift @items;
+    if (my $bad = first { $c->{$_} ne $c->{$first} } @items) {
+        return $set->err(must_be_equal => $first, $bad);
+    }
+
+    return $ok;
+}
+
+sub t_current_must_satisfy {
+    my ($label, $c, $value, $set) = @_;
+}
 
 #####################
 ### ELEMENT RULES ###

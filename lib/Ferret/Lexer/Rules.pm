@@ -59,6 +59,12 @@ our %token_rules = (
         current_must_have => [                                                  # CLOSURE_E[0]
             'closure',
             'Attempted to terminate a closure, but no closure is open'
+        ],
+
+        # $c->{node} must be equal to $c->{node} at this point.
+        current_must_be_equal => [                                              # CLOSURE_E[1]
+            'closure node',
+            'Attempted to terminate a closure, but it is not the current node'
         ]
 
     ],

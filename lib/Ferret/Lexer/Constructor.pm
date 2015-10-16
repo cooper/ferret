@@ -213,11 +213,8 @@ sub c_CLOSURE_E {
     # Rule CLOSURE_E[0]:
     #   The current 'closure' must exist.
 
-    # simulate a semicolon for one-liners
-    # c_OP_SEMI($c) if $c->{instruction} && $c->{node} == $c->{instruction};
-
-    # at this point, the current node must be the closure.
-    return unexpected($c) unless $c->{node} == $c->{closure};
+    # Rule CLOSURE_E[1]:
+    #   The current 'node' must be equal to the current 'closure'.
 
     # close the closure and the node.
     $c->{closure} = delete $c->{closure}{containing_closure};
