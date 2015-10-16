@@ -3,7 +3,7 @@ package F::Index;
 
 use warnings;
 use strict;
-use parent qw(F::Node F::Expression);
+use parent qw(F::Node F::Expression F::Assignable);
 
 sub type { 'Index' }
 sub fake { 1 }

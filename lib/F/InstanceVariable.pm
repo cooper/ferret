@@ -3,7 +3,7 @@ package F::InstanceVariable;
 
 use warnings;
 use strict;
-use parent 'F::Expression';
+use parent qw(F::Expression F::Assignable);
 
 sub type { 'InstanceVariable' }
 

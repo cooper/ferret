@@ -4,7 +4,7 @@ package F::Bareword;
 use warnings;
 use strict;
 use 5.010;
-use parent 'F::Expression';
+use parent qw(F::Expression F::Assignable);
 
 sub type { 'Bareword' }
 sub desc {

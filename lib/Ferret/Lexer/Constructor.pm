@@ -752,16 +752,11 @@ sub c_OP_ASSIGN {
         return $c->{node}->adopt($c->{unknown_el});
     }
 
-    my %allowed = map { $_ => 1 } qw(
-        Bareword Property Index
-        LexicalVariable InstanceVariable
-    );
-
     my $last_el = $c->{last_element};
     return expected($c,
         'an assignable expression',
         'at left of assignment operator (=)'
-    ) unless $allowed{ $last_el->type_or_tok };
+    ) unless $last_el->is_type('Assignable');
 
     # remember the last element as the left side of the assignment.
     my $a = $c->{node} = $c->{node}->adopt(F::Assignment->new);
