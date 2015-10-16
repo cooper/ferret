@@ -3,7 +3,7 @@ package F::Instruction;
 
 use warnings;
 use strict;
-use parent qw(F::Structure F::Statement);
+use parent qw(F::Statement);
 
 sub type { 'Instruction' }
 

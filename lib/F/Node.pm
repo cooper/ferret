@@ -113,7 +113,7 @@ sub close : method {
 }
 
 
-sub type        { shift->{type} || 'Node' } # element type
+sub type        { 'Node'                  } # element type
 sub is_node     { 1                       } # is a node
 sub is_closure  {                         } # isn't a closure
 sub children    { @{ shift->{children} }  } # all child elements

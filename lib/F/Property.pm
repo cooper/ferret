@@ -3,7 +3,7 @@ package F::Property;
 
 use warnings;
 use strict;
-use parent qw(F::Node F::Structure F::Expression);
+use parent qw(F::Node F::Expression);
 
 sub type { 'Property' }
 sub desc {

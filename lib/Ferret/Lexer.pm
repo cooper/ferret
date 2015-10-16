@@ -25,7 +25,6 @@ use F::Number;
 use F::LexicalVariable;
 use F::InstanceVariable;
 use F::SpecialVariable;
-use F::Structure;
 use F::Instruction;
 use F::List;
 use F::ListItem;

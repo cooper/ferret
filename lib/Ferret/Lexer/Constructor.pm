@@ -10,12 +10,6 @@ use Scalar::Util qw(blessed);
 
 our ($current, $error);
 
-my @expression_types = qw(
-    Bareword LexicalVariable InstanceVariable SpecialVariable
-    Property List Expression Maybe Boolean
-    String Number Operation Call Index
-);
-
 sub construct {
     my @elements;
     my $main_node = shift;
@@ -346,18 +340,9 @@ sub handle_call {
     my $terminator = $is_index ? 'BRACKET_E' : 'PAREN_E';
     my $package    = $is_index ? 'F::Index'  : 'F::Call';
 
-    # a call can only come after one of:
-    #   a one-element list
-    #   an expression
-    #   a bareword
-    #   a variable
-    my %allowed = map { $_ => 1 } qw(
-        List Expression Bareword Property Maybe Call
-        LexicalVariable InstanceVariable SpecialVariable
-    );
-
+    # a call can only come after an expression.
     my $last_el = $c->{last_element};
-    return unexpected($c) unless $allowed{ $last_el->type_or_tok };
+    return unexpected($c) unless $last_el->is_type('Expression');
 
     # if this is a list, it can only have one item.
     if ($last_el->isa('F::List')
@@ -747,12 +732,11 @@ sub c_PROPERTY {
     # TODO: check if last element is allowed.
     my $prop = F::Property->new(prop_name => $value);
 
-    my %allowed = map { $_ => 1 } @expression_types;
     my $last_el = $c->{last_element};
     return expected($c,
         'an expression',
         'at left of '.Ferret::Lexer::pretty_token($c->{label})
-    ) unless $allowed{ $last_el->type_or_tok };
+    ) unless $last_el->is_type('Expression');
 
     $c->{node}->adopt($prop);
     $prop->adopt($last_el);
@@ -769,9 +753,8 @@ sub c_OP_ASSIGN {
     }
 
     my %allowed = map { $_ => 1 } qw(
-        Bareword Property
+        Bareword Property Index
         LexicalVariable InstanceVariable
-        Index
     );
 
     my $last_el = $c->{last_element};
@@ -795,13 +778,12 @@ sub c_OP_NEQUAL_I   { handle_equality(shift, 1, 1) }
 
 sub handle_equality {
     my ($c, $negated, $obj_equality) = @_;
-    my %allowed = map { $_ => 1 } @expression_types;
 
     my $last_el = $c->{last_element};
     return expected($c,
         'an expression',
         'at left of '.Ferret::Lexer::pretty_token($c->{label})
-    ) unless $allowed{ $last_el->type_or_tok };
+    ) unless $last_el->is_type('Expression');
 
     # adopt the last element as the left side of the equality.
     my $equality = $c->{node} = $c->{node}->adopt(
@@ -821,21 +803,18 @@ sub handle_equality {
 
 sub c_math_operator {
     my ($c, $value) = @_;
-
-    my %allowed = map { $_ => 1 } @expression_types;
-
     my $last_el = $c->{last_element};
 
     # if it's addition or subtraction, it might be a sign.
     my %signs = (OP_ADD => 1, OP_SUB => 1);
-    if (!$allowed{ $last_el->type_or_tok } && $signs{ $c->{label} }) {
+    if (!$last_el->is_type('Expression') && $signs{ $c->{label} }) {
         undef $last_el;
     }
 
     return expected($c,
         'an expression',
         'at left of '.Ferret::Lexer::pretty_token($c->{label})
-    ) if $last_el && !$allowed{ $last_el->type_or_tok };
+    ) if $last_el && !$last_el->is_type('Expression');
 
     # if the current node is an operation, just add another thing.
     my $operator = F::Operator->new(token => $c->{label});
@@ -902,19 +881,9 @@ sub c_OP_PACK {
 sub c_OP_MAYBE {
     my ($c, $value) = @_;
 
-    # a maybe can only come after one of:
-    #   a one-element list
-    #   an expression
-    #   a bareword
-    #   a variable
-    my %allowed = map { $_ => 1 } qw(
-        List Expression Bareword Property Maybe
-        LexicalVariable InstanceVariable SpecialVariable
-        Call Index
-    );
-
+    # must come after expression.
     my $last_el = $c->{last_element};
-    return unexpected($c) unless $allowed{ $last_el->type_or_tok };
+    return unexpected($c) unless $last_el->is_type('Expression');
 
     # if this is a list, it can only have one item.
     if ($last_el->isa('F::List') && $last_el->children > 1) {

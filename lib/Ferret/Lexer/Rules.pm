@@ -33,6 +33,7 @@ our %token_rules = (
             'Class or package must capture end keyword'
         ],
 
+        # the current node at this time must be a Package or Class.
         current_node_must_be => [                                               # KEYWORD_END[2]
             'Package Class',
             'Package or class must be the current node to capture end keyword'

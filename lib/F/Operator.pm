@@ -4,7 +4,7 @@ package F::Operator;
 use warnings;
 use strict;
 use 5.010;
-use parent qw(F::Structure);
+use parent qw(F::Node F::Node);
 
 sub type { 'Operator' }
 sub desc {

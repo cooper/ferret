@@ -5,7 +5,9 @@ use warnings;
 use strict;
 use 5.010;
 
+use Evented::Object::Hax;
 use Scalar::Util 'blessed';
+use List::Util 'first';
 
 sub new {
     my ($class, %opts) = @_;
@@ -15,16 +17,29 @@ sub new {
     return bless \%opts, $class;
 }
 
-sub parent      { shift->{parent} }                 # parent element
-sub type        { shift->{type} || 'Element' }      # element type
-sub desc        { lcfirst shift->type }             # description string
-sub fake        { shift->{fake} }
-sub is_node     { }                                 # isn't a node
-sub type_or_tok { shift->type }
-sub t           { shift->type_or_tok }
-sub tok         { }
-sub hold_instr  { }                                 # can't hold an instruction
+sub all_types {
+    my ($el, $method, @types) = (shift, 'type');
+    my $base = blessed $el;
+    my @isa  = Evented::Object::Hax::get_symbol($base, '@ISA');
+    return map $_->type, @isa;
+}
+
+sub is_type {
+    my ($el, $type) = @_;
+    return scalar first { $_ eq $type } $el->all_types;
+}
+
+sub parent      { shift->{parent}           }       # parent element
+sub type        { 'Element'                 }       # element type
+sub desc        { lcfirst shift->type       }       # description string
+sub fake        { shift->{fake}             }       # is it fake
+sub type_or_tok { shift->type               }       # type
+sub t           { shift->type_or_tok        }       # shorthand type
+sub is_node     { } # isn't a node
+sub hold_instr  { } # can't hold an instruction
+sub tok         { } # has no token label
 sub perl_fmt    { }
+
 sub perl_fmt_do {
     my @args = shift->perl_fmt;
     my @fmts;

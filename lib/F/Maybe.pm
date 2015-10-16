@@ -3,7 +3,7 @@ package F::Maybe;
 
 use warnings;
 use strict;
-use parent qw(F::Structure F::Expression);
+use parent qw(F::Node F::Expression);
 
 sub type { 'Maybe' }
 sub fake { 1 }
