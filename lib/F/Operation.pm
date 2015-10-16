@@ -4,7 +4,7 @@ package F::Operation;
 use warnings;
 use strict;
 use 5.010;
-use parent qw(F::Node F::Statement);
+use parent qw(F::Node F::Expression);
 
 use Scalar::Util 'blessed';
 

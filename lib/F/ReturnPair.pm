@@ -3,7 +3,7 @@ package F::ReturnPair;
 
 use warnings;
 use strict;
-use parent qw(F::Node);
+use parent qw(F::Statement);
 
 sub type { 'ReturnPair' }
 sub desc {

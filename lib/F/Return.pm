@@ -3,7 +3,7 @@ package F::Return;
 
 use warnings;
 use strict;
-use parent qw(F::Node);
+use parent qw(F::Statement);
 
 sub type  { 'Return' }
 sub value { shift->first_child }

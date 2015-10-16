@@ -46,6 +46,7 @@ use F::For;
 use F::Index;
 use F::Equality;
 use F::PropertyModifier;
+use F::Assignable;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (
