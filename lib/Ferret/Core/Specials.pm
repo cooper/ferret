@@ -6,7 +6,10 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Core::Conversion qw(ferret_list_wrap ferret_list ferret_boolean);
+use Ferret::Core::Conversion qw(
+    ferret_list_wrap ferret_list ferret_boolean
+    perl_string
+);
 
 my %specials = (
     self            => \&_self,
@@ -14,7 +17,10 @@ my %specials = (
     classes         => \&_classes,
     ownProperties   => \&_ownProperties,
     allProperties   => \&_allProperties,
-    instanceOf      => _function('instanceOf', '$class')
+    instanceOf      => _function('instanceOf', '$class'),
+    get             => _function('get', '$property:Str'),
+    getOwn          => _function('getOwn', '$property:Str'),
+    set             => _function('set', '$property:Str $value')
 );
 
 @Ferret::specials{keys %specials} = values %specials;
@@ -78,6 +84,30 @@ sub _instanceOf {
     my ($obj, $arguments) = @_;
     my $class = $arguments->{class};
     return ferret_boolean($obj->instance_of($class));
+}
+
+sub _get {
+    my ($obj, $arguments) = @_;
+    my $prop_name = perl_string($arguments->{property});
+    return $obj->simple_property_u($prop_name);
+}
+
+sub _getOwn {
+    my ($obj, $arguments) = @_;
+    my $prop_name = perl_string($arguments->{property});
+    return $obj->own_property_u($prop_name);
+}
+
+sub _set {
+    my ($obj, $arguments) = @_;
+    my $key   = perl_string($arguments->{property});
+    my $value = $arguments->{value};
+    # FIXME: check that it's not special,
+    #        that it is valid,
+    #        that it's not a namespace,
+    #        etc.
+    $obj->set_property($key => $value);
+    return Ferret::true;
 }
 
 1

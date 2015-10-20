@@ -137,11 +137,11 @@ sub property_u { (shift->property(@_)) || Ferret::undefined }
 # only rely on whichever custom implemention of ->_property exists.
 #
 sub _property {
-    my ($obj, $prop_name, $borrow_obj) = @_;
+    my ($obj, $prop_name, $borrow_obj, $simple_only) = @_;
 
     # if the prop name starts with asterisk, it's a special property.
     my $first = \substr($prop_name, 0, 1);
-    if ($$first eq '*') {
+    if (!$simple_only && $$first eq '*') {
         $$first = '';
         $borrow_obj = $obj; # pretend the property belongs to the object
         $obj = $obj->{special} or return;
@@ -160,15 +160,15 @@ sub _property {
     }
 
     # try a different context.
-    if (index($prop_name, '::') != -1) {
+    if (!$simple_only && index($prop_name, '::') != -1) {
         my ($context, $real_prop_name) = ($prop_name =~ m/^(.+)::(.+?)$/);
         $context = $obj->f->get_context($context);
-        return $context->_property($real_prop_name);
+        return $context->_property($real_prop_name, undef, $simple_only);
     }
 
     # try inheritance.
     foreach my $o ($obj->parents) {
-        my @v = $o->_property($prop_name, $borrow_obj);
+        my @v = $o->_property($prop_name, $borrow_obj, $simple_only);
         return (@v) if @v;
     }
 
@@ -183,6 +183,15 @@ sub has_property {
     return $owner if defined $value;
 }
 
+# fetches a property, either its own or inherited,
+# ignoring special properties and namespace accessors.
+sub simple_property {
+    my ($obj, $prop_name) = @_;
+    return $obj->property($prop_name, undef, 1);
+}
+
+sub simple_property_u { (shift->simple_property(@_)) || Ferret::undefined }
+
 # fetches a property.
 # does not take inheritance into account.
 #
@@ -193,6 +202,8 @@ sub own_property {
     # TODO: this needs to do the same extras as ->property.
     shift->{properties}{+shift};
 }
+
+sub own_property_u { (shift->own_property(@_)) || Ferret::undefined }
 
 # weaken a property.
 # this only applies to local properties.

@@ -8,13 +8,15 @@ use parent qw(F::Statement);
 sub type { 'PropertyModifier' }
 sub desc {
     my $mod = shift;
-    return "$$mod{mod_type} modifier"
+    return "$$mod{mod_type} modifier";
 }
 
 sub perl_fmt {
     my $mod = shift;
     my $c = $mod->first_child;
     my ($left, $name);
+
+    # TODO: delete $hash["x"] and delete $list[0]
 
     if ($c->type eq 'Property') {
         $left = $c->first_child->perl_fmt_do;

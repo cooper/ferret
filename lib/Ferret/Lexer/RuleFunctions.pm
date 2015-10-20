@@ -159,6 +159,8 @@ sub t_current_must_be_equal {
 
 sub t_current_must_satisfy {
     my ($label, $c, $value, $set) = @_;
+    my $code = $set->rule_code('current_must_satisfy');
+    return $set->err() if !$code->($c);
 }
 
 #####################
