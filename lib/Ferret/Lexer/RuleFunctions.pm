@@ -264,9 +264,11 @@ sub F::Element::rule_set {
 # if $after_check is true, it's part of the final check.
 sub F::Node::can_adopt {
     my ($parent_maybe, $child_maybe, $after_check) = @_;
+    my $e;
 
     # check that the parent is not maxed out.
-    my $e = $parent_maybe->has_room($after_check);
+    # only check after all is done.
+    $e ||= $parent_maybe->has_room($after_check) if $after_check;
 
     # check that the parent allows this type of child.
     $e ||= $parent_maybe->allows_child($child_maybe);

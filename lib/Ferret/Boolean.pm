@@ -21,6 +21,7 @@ Ferret::bind_class(
 
 sub init {
     my ($bool, $arguments) = @_;
+    $bool->{ro_properties} = 1;
 
     # from another value
     if (my $from = $arguments->{from}) {

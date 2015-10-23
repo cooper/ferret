@@ -15,6 +15,9 @@ our %errors = (
     },
     AssignmentToSpecialProperty => {
         message => "Cannot assign to special property '%s'"
+    },
+    AlterationOfReadOnlyProperty => {
+        message => "Cannot alter read-only property '%s'"
     }
 );
 

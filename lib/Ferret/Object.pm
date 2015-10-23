@@ -60,6 +60,7 @@ sub new {
 #
 sub set_property {
     my ($obj, $prop_name, $value) = @_;
+    $obj->_check_prop_alteration($prop_name, [caller]);
 
     # special properties can never be assigned to from Ferret.
     if (substr($prop_name, 0, 1) eq '*') {
@@ -83,6 +84,8 @@ sub set_property {
 # set a property or overwrite an inherited property.
 sub set_property_ow {
     my ($obj, $context, $prop_name, $value) = @_;
+    $obj->_check_prop_alteration($prop_name, [caller]);
+
     my $owner = $obj->has_property($prop_name) || $obj;
 
     # if the owner is a context, but not the call context,
@@ -117,6 +120,7 @@ sub set_property_ow {
 #
 sub delete_property {
     my ($obj, $prop_name) = @_;
+    $obj->_check_prop_alteration($prop_name, [caller]);
     return defined delete $obj->{properties}{$prop_name};
 }
 
@@ -210,6 +214,7 @@ sub own_property_u { (shift->own_property(@_)) || Ferret::undefined }
 #
 sub weaken_property {
     my ($obj, $prop_name) = @_;
+    $obj->_check_prop_alteration($prop_name, [caller]);
     return if !defined $obj->{properties}{$prop_name};
     weaken($obj->{properties}{$prop_name});
     return 1;
@@ -220,6 +225,7 @@ sub weaken_property {
 #
 sub set_property_weak {
     my ($obj, $prop_name, $value) = @_;
+    $obj->_check_prop_alteration($prop_name, [caller]);
     my $res = $obj->set_property($prop_name => $value);
     $obj->weaken_property($prop_name);
     return $res;
@@ -235,6 +241,12 @@ sub properties {
             foreach $obj->parents;
     }
     return @names;
+}
+
+sub _check_prop_alteration {
+    my ($obj, $prop_name, $caller) = @_;
+    return 1 unless $obj->{ro_properties};
+    throw(AlterationOfReadOnlyProperty => $caller, $prop_name);
 }
 
 ##########################
