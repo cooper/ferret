@@ -8,9 +8,11 @@ use 5.010;
 use parent 'Ferret::Context';
 
 my %functions = (
-    say     => [ '_say',     qw(message) ],
-    dump    => [ '_dump',    qw(value)   ],
-    inspect => [ '_inspect', qw(value)   ]
+    say     => [ '_say',     qw(message)   ],
+    dump    => [ '_dump',    qw(value)     ],
+    inspect => [ '_inspect', qw(value)     ],
+    any     => [ '_any', qw(value1 value2) ],    # FIXME: values...
+    all     => [ '_all', qw(value1 value2) ]
 );
 
 # creates a new context.

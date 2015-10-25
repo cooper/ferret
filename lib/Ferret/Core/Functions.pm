@@ -6,9 +6,12 @@ use strict;
 use utf8;
 use 5.010;
 
+use List::Util qw(any all);
+
 use Ferret::Core::Conversion qw(
-    perl_string ferret_string
-    perl_boolean perl_description
+    perl_string     ferret_string
+    perl_boolean    ferret_boolean
+    perl_description
 );
 
 sub _say {
@@ -41,6 +44,16 @@ sub _inspect {
 
     $return->set_property(string => ferret_string($str));
     return $return;
+}
+
+sub _any {
+    my (undef, $arguments) = @_;
+    return ferret_boolean(any { perl_boolean($_) } values %$arguments);
+}
+
+sub _all {
+    my (undef, $arguments) = @_;
+    return ferret_boolean(all { perl_boolean($_) } values %$arguments);
 }
 
 1
