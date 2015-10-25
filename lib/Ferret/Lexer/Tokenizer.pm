@@ -34,7 +34,7 @@ my %no_value = map { $_ => 1 } qw(
     OP_POW      OP_POW_A    OP_VALUE    OP_PACK
     OP_EQUAL    OP_EQUAL_I  OP_NEQUAL   OP_NEQUAL_I
     OP_ASSIGN   OP_COMMA    OP_RETURN   OP_SEMI
-    OP_EXCLAM   OP_MAYBE
+    OP_NOT      OP_MAYBE
 );
 
 # reused formats
@@ -89,7 +89,7 @@ my @token_formats = (
     [ OP_MUL        => qr/\*/                                               ],  # multiplication
     [ OP_DIV        => qr/\//                                               ],  # division
     [ OP_POW        => qr/\^/                                               ],  # power
-    [ OP_EXCLAM     => qr/!/                                                ],  # call without arguments
+    [ OP_NOT        => qr/!/                                                ],  # call without arguments
     [ OP_MAYBE      => qr/\?/                                               ],  # inline if operator
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
     [ OP_ELLIP      => qr/\.\.\./                                           ],  # ellipsis
@@ -308,7 +308,7 @@ sub tok_NUMBER {
 
 }
 
-sub tok_OP_EXCLAM {
+sub tok_OP_NOT {
     my ($tokens, $value) = @_;
 
     # can the previous item be a function value?

@@ -28,6 +28,8 @@ sub construct {
 
     while (my ($label, $value, $line) = @{ shift || [] }) {
         my $last_element = ($current->{node}->children)[-1] || $current->{node};
+
+        # check for error.
         if (my $err = $error) {
             undef $error;
             return $err;
@@ -51,6 +53,7 @@ sub construct {
 
         # call the handler for all.
         c_any($label, $current, $value);
+        redo if delete $current->{redo};
 
         # call a handler if one exists.
         if (my $code = __PACKAGE__->can("c_$label")) {
@@ -892,6 +895,12 @@ sub c_OP_MAYBE {
     return $maybe;
 }
 
+sub c_OP_NOT {
+    my ($c, $value) = @_;
+    my $not = F::Negation->new;
+    $c->{node} = $c->{node}->adopt($not);
+}
+
 sub start_modifier {
     my ($c, $type) = @_;
 
@@ -936,6 +945,15 @@ sub c_KEYWORD_WEAKEN {
 sub c_any {
     my ($label, $c, $value) = @_;
 
+    ### TERMINATE A NEGATION ###
+    # TODO: I would like to implement auto-closing of some sort.
+    if ($c->{node}->type eq 'Negation' && $c->{node}->children) {
+        $c->{node} = $c->{node}->close;
+        $c->{redo} = 1;
+    }
+
+    ### START AN INSTRUCTION ###
+
     # can the current node hold instructions?
     return unless $c->{node}->hold_instr;
 
@@ -948,10 +966,10 @@ sub c_any {
     # these things cannot start an instruction.
     # (tokens only) (this is horrendous)
     my @ignore = qw(
-        ^FUNCTION$          ^METHOD$        ^CLASS_DEC$
-        ^OP_.+$             ^CLOSURE_.+$    ^PKG_DEC$
-        ^KEYWORD_INSIDE$    ^KEYWORD_FOR$   ^KEYWORD_IF$
-        ^KEYWORD_ON$        ^KEYWORD_END$
+        ^FUNCTION$          ^METHOD$        ^CLOSURE_.+$
+        ^PKG_DEC$           ^CLASS_DEC$
+        ^KEYWORD_INSIDE$    ^KEYWORD_FOR$
+        ^KEYWORD_ON$        ^KEYWORD_END$   ^KEYWORD_IF$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

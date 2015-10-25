@@ -47,6 +47,7 @@ use F::Index;
 use F::Equality;
 use F::PropertyModifier;
 use F::Assignable;
+use F::Negation;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (
@@ -83,7 +84,7 @@ our %pretty_tokens = (
     OP_MUL      => 'multiplication operator (*)',
     OP_DIV      => 'division operator (/)',
     OP_POW      => 'exponent operator (^)',
-    OP_EXCLAM   => 'not operator (!)',
+    OP_NOT      => 'not operator (!)',
     OP_MAYBE    => 'inline if operator (?)',
     OP_SEMI     => 'semicolon (;)',
     OP_ELLIP    => 'ellipsis (...)',
