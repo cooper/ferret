@@ -68,7 +68,8 @@ sub set_property {
     }
 
     # ensure that it is a valid Ferret value.
-    if (ref $value ne 'CODE' && !Ferret::valid_value($value)) {
+    my $r = ref $value;
+    if ($r ne 'CODE' && $r ne 'ARRAY' && !Ferret::valid_value($value)) {
         return;
     }
 
@@ -159,7 +160,19 @@ sub _property {
     if (defined $obj->{properties}{$prop_name}) {
         my $p = $obj->{properties}{$prop_name};
         weaken($p->{last_parent} = $borrow_obj) if blessed $p;
-        $p = $p->($borrow_obj) if ref $p eq 'CODE'; # computed property
+
+        # array ref containing code means
+        my $setting;
+        if (ref $p eq 'ARRAY') {
+            $setting = 1;
+            $p = shift @$p;
+            die unless ref $p eq 'CODE'; # FIXME: lazy
+        }
+        if (ref $p eq 'CODE') {
+            $p = $p->($borrow_obj);
+            $obj->set_property($prop_name => $p) if $setting;
+        }
+
         return ($p, $obj);
     }
 

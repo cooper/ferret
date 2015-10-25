@@ -7,6 +7,8 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Context';
 
+use Ferret::Core::Conversion qw(ferret_list);
+
 my %functions = (
     say     => [ '_say',     qw(message)   ],
     dump    => [ '_dump',    qw(value)     ],
@@ -19,6 +21,8 @@ my %functions = (
 sub new {
     my ($class, $f, %opts) = @_;
     my $context = $class->SUPER::new($f, %opts, is_core => 1);
+
+    # add global functions.
     foreach my $name (keys %functions) {
         my ($code, @args) = @{ $functions{$name} };
         $code = Ferret::Core::Functions->can($code) or next;
@@ -42,6 +46,9 @@ sub new {
     # set the object initializer.
     $context->set_property(Object => $f->{object_initializer});
     $context->set_property(Obj    => $f->{object_initializer});
+
+    # global special variables.
+    $context->{special}->set_property(argv => [ sub { ferret_list(\@ARGV) }]);
 
     return $context;
 }
