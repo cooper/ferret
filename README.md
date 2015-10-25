@@ -33,32 +33,32 @@ $two = COMPILER($code).eval().result;
 Ferret was originally titled __EOPRJ__, an acronym in which each letter represents
 a fundamental idea.
 
-* [ __E__ ]  Evented.
+* [__E__]vented -
     Ferret makes extensive use of
     [Evented::Object](https://github.com/cooper/evented-object).
     All functions and methods in Ferret are implemented as events.
-* [ __O__ ] Objective.
+* [__O__]bjective -
     All Ferret data types are objects. Yeah, that sounds
     cliché these days, but Ferret's inheritance system makes it unique.
-* [ __P__ ] Perl.
+* [__P__]erl -
     If Ferret resembles one language more than all others, that
     language is probably Perl. Just look at all its sigils, brackets, and
     parentheses. And although Perl's basic datatypes are value types,
     its extensive use of references influenced the fact that all Ferret values
     are referential. And Perl happens to be the language to which Ferret
     compiles, as well as the one in which its compiler and runtime are written.
-* [ __R__ ] Ruby.
+* [__R__]uby -
     The original EOPRJ syntax looked a lot like Ruby, without many curly
     brackets or parentheses, but it has since evolved into a more Perlish look.
     However, Ferret shares with Ruby the "everything is an object" concept, a
     similar type of class definition, and a symbol datatype
     (:symbol in Ruby is ~symbol in Ferret).
-* [ __J__ ] JavaScript.
+* [__J__]avaScript -
     Ferret's properties are similar to those of JavaScript.
     Any object may or may not have a value for a string key, and properties are
     not considered at compile time. Ferret also has JavaScript-style prototypes.
 
-### inheritance
+### Inheritance
 
 Perhaps Ferret's most unique feature is its ISA inheritance system. The name
 ISA is borrowed from Perl, where package variables `@ISA` consist of parent
