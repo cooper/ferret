@@ -18,7 +18,6 @@ sub is_special {
 sub perl_fmt {
     my $prop = shift;
     my $name = $prop->{prop_name};
-       $name = "'$name'" if $prop->is_special;
     return property => {
         name => $name,
         left => $prop->first_child->perl_fmt_do

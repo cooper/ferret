@@ -17,6 +17,12 @@ sub perl_fmt_do {
     my $a = shift;
     my ($fmt_name, $fmt_args) = $a->assign_to->perl_fmt;
     $fmt_args->{assign_value} = $a->assign_value->perl_fmt_do;
+
+    # fix *special properties
+    # consider: will it ever even be allowed to assign to special property?
+    $fmt_args->{name} = "'$$fmt_args{name}'"
+        if ($fmt_args->{name} // '') =~ m/^\*/;
+
     return $a->get_format("assign_$fmt_name" => $fmt_args);
 }
 

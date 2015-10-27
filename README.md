@@ -30,33 +30,96 @@ $two = COMPILER($code).eval().result;
 
 ### Concepts
 
-Ferret was originally titled __EOPRJ__, an acronym in which each letter represents
-a fundamental idea.
+Ferret was originally titled
+[__EOPRJ__](https://github.com/cooper/evented-objective-perl-ruby-javascript),
+an acronym in which each letter represents a fundamental idea.
 
-* [__E__]vented -
-    Ferret makes extensive use of
-    [Evented::Object](https://github.com/cooper/evented-object).
-    All functions and methods in Ferret are implemented as events.
-* [__O__]bjective -
-    All Ferret data types are objects. Yeah, that sounds
-    cliché these days, but Ferret's inheritance system makes it unique.
-* [__P__]erl -
-    If Ferret resembles one language more than all others, that
-    language is probably Perl. Just look at all its sigils, brackets, and
-    parentheses. And although Perl's basic datatypes are value types,
-    its extensive use of references influenced the fact that all Ferret values
-    are referential. And Perl happens to be the language to which Ferret
-    compiles, as well as the one in which its compiler and runtime are written.
-* [__R__]uby -
-    The original EOPRJ syntax looked a lot like Ruby, without many curly
-    brackets or parentheses, but it has since evolved into a more Perlish look.
-    However, Ferret shares with Ruby the "everything is an object" concept, a
-    similar type of class definition, and a symbol datatype
-    (:symbol in Ruby is ~symbol in Ferret).
-* [__J__]avaScript -
-    Ferret's properties are similar to those of JavaScript.
-    Any object may or may not have a value for a string key, and properties are
-    not considered at compile time. Ferret also has JavaScript-style prototypes.
+#### Evented
+
+Ferret makes extensive use of
+[Evented::Object](https://github.com/cooper/evented-object).
+All functions and methods in Ferret are implemented as events.
+
+```
+class Person
+
+init {
+    need @name: Str, @age: Num;
+}
+
+# all methods are implemented as events
+method haveBirthday {
+    $old = @age;
+    @age = $old + 1;
+    oldAge -> $old;
+    newAge -> @age;
+}
+
+```
+
+Example use of event
+
+```
+# create a person
+$person = Person(name: "Jake", age: 22);
+
+# add an event callback for haveBirthday
+on $person.haveBirthday {
+    say("Happy Birthday Jake!");
+}
+```
+
+It is also possible to respond to events regardless of object.
+
+```
+on Person.proto.haveBirthday {
+    $name = *this.name;
+    say("Happy Birthday $name!");
+}
+```
+
+#### Objective
+
+All Ferret data types are objects. Yeah, that sounds pretty cliché nowadays,
+but Ferret's inheritance system makes it unique (see "Inheritance").
+
+```
+"hello".length()                        # 5
+1.odd                                   # true
+(test: "hello").test                    # "hello"
+Math::Rect(10, 10, 10, 10).center()     # Math::Point(10, 10)
+```
+
+#### Perl
+
+If Ferret resembles one language more than all others, that
+language is probably Perl. Just look at all its sigils, brackets, and
+parentheses. And although Perl's basic datatypes are value types,
+its extensive use of references influenced the fact that all Ferret values
+are referential. And Perl happens to be the language to which Ferret
+compiles, as well as the one in which its compiler and runtime are written.
+
+```
+(hello: "world")
+```
+
+```perl
+Ferret::Object->new($f, initial_props => { hello => str($f, "world") })
+```
+
+#### Ruby
+
+The original EOPRJ syntax looked a lot like Ruby, without many curly
+brackets or parentheses, but it has since evolved into a more Perlish look.
+However, Ferret shares with Ruby the "everything is an object" concept, a
+similar type of class definition, and a symbol datatype
+(:symbol in Ruby is ~symbol in Ferret).
+
+#### JavaScript
+
+Ferret's properties are similar to those of JavaScript.
+Any object may or may not have a value for a string key, and properties are
+not considered at compile time. Ferret also has JavaScript-style prototypes.__ __
 
 ### Inheritance
 
@@ -71,6 +134,8 @@ objects.
 
 If an object is an instance of the String class, for instance, its `*isa`
 (list of parent objects) would include the `String.proto` object.
+
+#### Example class
 
 Below is an example of a Ferret class from the standard library.
 
@@ -128,7 +193,16 @@ Math::Point.init($obj)(0, 0);
 
 # The object is now a Point representing the origin.
 # Therefore, $obj.*isa includes Math::Point.proto.
-inspect($obj); # Prints: [ Point ](x = 0, y = 0)
+inspect($obj);
+```
+
+Output
+
+```
+[ Point ](
+    x = 0
+    y = 0
+)
 ```
 
 This is equivalent to below, as calling a class create an empty object and
@@ -136,6 +210,35 @@ initializes it in one step.
 
 ```
 $obj = Math::Point(0, 0);
+```
+
+#### Example of basic inheritance
+
+Because Ferret objects can inherit from any objects, a class is not required
+for inheritance. Below is an example of basic inheritance without a class.
+
+```
+
+# create a standard object representing a male being.
+$male = (gender: "male");
+
+# create standard object representing a specific person.
+$person = (name: "Jake", age: 22);
+
+# add $male to $person's *isa list
+$person.*isa.push($male);
+
+inspect($person);
+```
+
+Output
+
+```
+[ Object ](
+    age = 22
+    name = "Jake"
+    (gender) = "male"
+)
 ```
 
 ### Runtime
@@ -157,7 +260,7 @@ say("starting timer...");
 ### Stages
 
 The Ferret compiler is also written entirely in Perl. Compilation is a
-multi-stage process:
+multi-stage process.
 
 #### 1. Tokenizer
 
@@ -166,7 +269,7 @@ involves very minimal error checking. In fact, the only error that can occur
 during this process is a failure to tokenize a certain byte or string.
 
 ```
-# --- Tokens ---
+# === Tokens ===
 #         PKG_DEC | {"name":"Math"}
 #       CLASS_DEC | {"name":"Line"}
 #          METHOD | {"name":"_init_","main":1}
