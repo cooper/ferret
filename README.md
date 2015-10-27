@@ -113,13 +113,13 @@ The original EOPRJ syntax looked a lot like Ruby, without many curly
 brackets or parentheses, but it has since evolved into a more Perlish look.
 However, Ferret shares with Ruby the "everything is an object" concept, a
 similar type of class definition, and a symbol datatype
-(:symbol in Ruby is ~symbol in Ferret).
+(`:symbol` in Ruby is `~symbol` in Ferret).
 
 #### JavaScript
 
 Ferret's properties are similar to those of JavaScript.
 Any object may or may not have a value for a string key, and properties are
-not considered at compile time. Ferret also has JavaScript-style prototypes.__ __
+not considered at compile time. Ferret also has JavaScript-style prototypes.
 
 ### Inheritance
 
@@ -205,7 +205,7 @@ Output
 )
 ```
 
-This is equivalent to below, as calling a class create an empty object and
+This is equivalent to below, as calling a class creates an empty object and
 initializes it in one step.
 
 ```
@@ -218,11 +218,10 @@ Because Ferret objects can inherit from any objects, a class is not required
 for inheritance. Below is an example of basic inheritance without a class.
 
 ```
-
-# create a standard object representing a male being.
+# create a basic object representing a male being.
 $male = (gender: "male");
 
-# create standard object representing a specific person.
+# create a basic object representing a specific person.
 $person = (name: "Jake", age: 22);
 
 # add $male to $person's *isa list
@@ -243,7 +242,7 @@ Output
 
 ### Runtime
 
-Ferret features a transparent runtime based on a Perl I/O framework. If any
+Ferret features a transparent runtime based on an I/O framework. If
 asynchronous operations are occurring at any given moment, a Ferret program
 will continue processing until all operations are complete. It is not necessary
 to create custom run loops, and Ferret will effortlessly make use of
@@ -257,7 +256,7 @@ on Timer(5).once().expire {
 say("starting timer...");
 ```
 
-### Stages
+### Compilation
 
 The Ferret compiler is also written entirely in Perl. Compilation is a
 multi-stage process.
@@ -269,40 +268,40 @@ involves very minimal error checking. In fact, the only error that can occur
 during this process is a failure to tokenize a certain byte or string.
 
 ```
-# === Tokens ===
-#         PKG_DEC | {"name":"Math"}
-#       CLASS_DEC | {"name":"Line"}
-#          METHOD | {"name":"_init_","main":1}
-#       CLOSURE_S |
-#    KEYWORD_NEED |
-#        VAR_THIS | "pt1"
-#        OP_COMMA |
-#        VAR_THIS | "pt2"
-#         OP_SEMI |
-#       CLOSURE_E |
-#          METHOD | {"name":"midpoint","main":null}
-#       CLOSURE_S |
-#  KEYWORD_RETURN |
-#         PAREN_S |
-#        VAR_THIS | "pt1"
-#        OP_COMMA |
-#        VAR_THIS | "pt2"
-#         PAREN_E |
-#        PROPERTY | "midpoint"
-#      PAREN_CALL |
-#         PAREN_E |
-#         OP_SEMI |
-#       CLOSURE_E |
-#          METHOD | {"name":"length","main":null}
-#       CLOSURE_S |
-#  KEYWORD_RETURN |
-#        VAR_THIS | "pt1"
-#        PROPERTY | "distanceTo"
-#      PAREN_CALL |
-#        VAR_THIS | "pt2"
-#         PAREN_E |
-#         OP_SEMI |
-#       CLOSURE_E |
+=== Tokens ===
+        PKG_DEC | {"name":"Math"}
+      CLASS_DEC | {"name":"Line"}
+         METHOD | {"name":"_init_","main":1}
+      CLOSURE_S |
+   KEYWORD_NEED |
+       VAR_THIS | "pt1"
+       OP_COMMA |
+       VAR_THIS | "pt2"
+        OP_SEMI |
+      CLOSURE_E |
+         METHOD | {"name":"midpoint","main":null}
+      CLOSURE_S |
+ KEYWORD_RETURN |
+        PAREN_S |
+       VAR_THIS | "pt1"
+       OP_COMMA |
+       VAR_THIS | "pt2"
+        PAREN_E |
+       PROPERTY | "midpoint"
+     PAREN_CALL |
+        PAREN_E |
+        OP_SEMI |
+      CLOSURE_E |
+         METHOD | {"name":"length","main":null}
+      CLOSURE_S |
+ KEYWORD_RETURN |
+       VAR_THIS | "pt1"
+       PROPERTY | "distanceTo"
+     PAREN_CALL |
+       VAR_THIS | "pt2"
+        PAREN_E |
+        OP_SEMI |
+      CLOSURE_E |
 ```
 
 #### 2. Constructor
@@ -315,81 +314,81 @@ checking that grammatical rules are met and aborts compilation if it
 encounters nonsense.
 
 ```
-# === Document Model ===
-#  Document './test/hello20/IRC/Bot.frt'
-#      Package 'IRC'
-#      Class 'Bot'
-#          Main method '_init_'
-#              Instruction
-#                  Need
-#                      Instance variable '@addr'
-#                      Bareword 'Str'
-#              Instruction
-#                  Need
-#                      Instance variable '@nick'
-#                      Bareword 'Str'
-#              Instruction
-#                  Want
-#                      Instance variable '@port'
-#                      Expression ('want' parameter)
-#                          Number '6667'
-#                      Bareword 'Num'
-#              Instruction
-#                  Assignment (instance variable '@handlers')
-#                      Hash [3 items]
-#                          Item 0
-#                              Pair 'MODE'
-#                                  Instance variable '@joinChannels'
-#                          Item 1
-#                              Pair 'PING'
-#                                  Instance variable '@pong'
-#                          Item 2
-#                              Pair 'PRIVMSG'
-#                                  Instance variable '@handleMessage'
-#              Instruction
-#                  Assignment (instance variable '@sock')
-#                      Call
-#                          Bareword 'Socket::TCP'
-#                          Hash [2 items]
-#                              Item 0
-#                                  Pair 'address'
-#                                      Instance variable '@addr'
-#                              Item 1
-#                                  Pair 'port'
-#                                      Instance variable '@port'
-#              On
-#                  Expression ('on' parameter)
-#                      Property 'connected'
-#                          Instance variable '@sock'
-#                  Anonymous function
-#                      Instruction
-#                          Call
-#                              Instance variable '@send'
-#                              Single value [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String 'USER '
-#                                          Addition operator (+)
-#                                          Instance variable '@user'
-#                                          Addition operator (+)
-#                                          String ' * * :'
-#                                          Addition operator (+)
-#                                          Instance variable '@real'
-#                      Instruction
-#                          Call
-#                              Instance variable '@send'
-#                              Single value [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String 'NICK '
-#                                          Addition operator (+)
-#                                          Instance variable '@nick'
-#          Method 'connect'
-#              Instruction
-#                  Call
-#                      Property 'connect'
-#                          Instance variable '@sock'
-#                      Structural list [0 items]
+=== Document Model ===
+ Document './test/hello20/IRC/Bot.frt'
+     Package 'IRC'
+     Class 'Bot'
+         Main method '_init_'
+             Instruction
+                 Need
+                     Instance variable '@addr'
+                     Bareword 'Str'
+             Instruction
+                 Need
+                     Instance variable '@nick'
+                     Bareword 'Str'
+             Instruction
+                 Want
+                     Instance variable '@port'
+                     Expression ('want' parameter)
+                         Number '6667'
+                     Bareword 'Num'
+             Instruction
+                 Assignment (instance variable '@handlers')
+                     Hash [3 items]
+                         Item 0
+                             Pair 'MODE'
+                                 Instance variable '@joinChannels'
+                         Item 1
+                             Pair 'PING'
+                                 Instance variable '@pong'
+                         Item 2
+                             Pair 'PRIVMSG'
+                                 Instance variable '@handleMessage'
+             Instruction
+                 Assignment (instance variable '@sock')
+                     Call
+                         Bareword 'Socket::TCP'
+                         Hash [2 items]
+                             Item 0
+                                 Pair 'address'
+                                     Instance variable '@addr'
+                             Item 1
+                                 Pair 'port'
+                                     Instance variable '@port'
+             On
+                 Expression ('on' parameter)
+                     Property 'connected'
+                         Instance variable '@sock'
+                 Anonymous function
+                     Instruction
+                         Call
+                             Instance variable '@send'
+                             Single value [1 items]
+                                 Item 0
+                                     Operation
+                                         String 'USER '
+                                         Addition operator (+)
+                                         Instance variable '@user'
+                                         Addition operator (+)
+                                         String ' * * :'
+                                         Addition operator (+)
+                                         Instance variable '@real'
+                     Instruction
+                         Call
+                             Instance variable '@send'
+                             Single value [1 items]
+                                 Item 0
+                                     Operation
+                                         String 'NICK '
+                                         Addition operator (+)
+                                         Instance variable '@nick'
+         Method 'connect'
+             Instruction
+                 Call
+                     Property 'connect'
+                         Instance variable '@sock'
+                     Structural list [0 items]
 ```
 
 #### 3. Verifier
