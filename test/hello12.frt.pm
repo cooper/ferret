@@ -206,19 +206,19 @@ my $result = do {
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('sock') ], $scope );
     on( $scope->property_u('sock'),
-        "gotLine", $self, $scope,
+        'gotLine', $self, $scope,
         $funcs[0]->inside_scope( (undef) => $scope, $scope ) );
     on( $scope->property_u('sock'),
-        "println", $self, $scope,
+        'println', $self, $scope,
         $funcs[1]->inside_scope( (undef) => $scope, $scope ) );
     on( $scope->property_u('sock'),
-        "connected", $self, $scope,
+        'connected', $self, $scope,
         $funcs[2]->inside_scope( (undef) => $scope, $scope ) );
     $scope->property_u('sock')->property_u('connect')->call_u( {}, $scope );
     on(
         $scope->property_u('Timer')->call_u( [ num( $f, 5 ) ], $scope )
           ->property_u('once')->call_u( {}, $scope ),
-        "expire",
+        'expire',
         $self,
         $scope,
         $funcs[3]->inside_scope( (undef) => $scope, $scope )

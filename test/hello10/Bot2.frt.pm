@@ -266,11 +266,11 @@ my $result = do {
                     $scope
                   );
                 $self->set_property( send => $self->property_u('println') );
-                on( $self, "connected", $self, $scope,
+                on( $self, 'connected', $self, $scope,
                     $funcs[0]->inside_scope( (undef) => $scope, $scope ) );
-                on( $self, "gotLine", $self, $scope,
+                on( $self, 'gotLine', $self, $scope,
                     $funcs[1]->inside_scope( (undef) => $scope, $scope ) );
-                on( $self, "println", $self, $scope,
+                on( $self, 'println', $self, $scope,
                     $funcs[2]->inside_scope( (undef) => $scope, $scope ) );
                 return $return;
             };

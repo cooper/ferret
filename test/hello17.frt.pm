@@ -75,7 +75,7 @@ my $result = do {
       ->call_u( [ num( $f, 5 ) ], $scope );
     on(
         $scope->property_u('obj')->property_u('once')->call_u( {}, $scope ),
-        "expire",
+        'expire',
         $self,
         $scope,
         $funcs[0]->inside_scope( (undef) => $scope, $scope )

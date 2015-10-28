@@ -224,12 +224,24 @@ our %element_rules = (
 
         after_rules => {
 
+            # children can only be non-special variables or properties.
             children_must_be => [                                               # OnExpression[0]
                 'Property LexicalVariable InstanceVariable Bareword',
                 "'On' parameter can only be a non-special variable or property"
             ],
 
-            max_children => 1                                                   # OnExpression[1]
+            # if it's a property, it cannot be a special one.
+            children_must_satisfy => [                                          # OnExpression[1]
+                sub {
+                    my $el = shift;
+                    return 1 if $el->type ne 'Property';
+                    return !$el->is_special;
+                },
+                "'On' parameter cannot be a special property"
+            ],
+
+            # it can only contain one property or variable.
+            max_children => 1                                                   # OnExpression[2]
 
         }
 

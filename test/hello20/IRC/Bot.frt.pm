@@ -600,10 +600,10 @@ my $result = do {
                     )
                 );
                 on( $self->property_u('sock'),
-                    "connected", $self, $scope,
+                    'connected', $self, $scope,
                     $funcs[0]->inside_scope( (undef) => $scope, $scope ) );
                 on( $self->property_u('sock'),
-                    "gotLine", $self, $scope,
+                    'gotLine', $self, $scope,
                     $funcs[1]->inside_scope( (undef) => $scope, $scope ) );
                 return $return;
             };

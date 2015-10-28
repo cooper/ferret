@@ -119,7 +119,7 @@ my $result = do {
             $scope->property_u('Timer')
               ->call_u( [ $scope->property_u('i') ], $scope )
               ->property_u('once')->call_u( {}, $scope ),
-            "expire",
+            'expire',
             $self,
             $scope,
             $funcs[0]->inside_scope( (undef) => $scope, $scope )
