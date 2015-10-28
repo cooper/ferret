@@ -68,7 +68,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello13.frt.pm'}++;
 
-use Ferret::Core::Operations qw(num str);
+use Ferret::Core::Operations qw(num on str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -101,24 +101,23 @@ my $result = do {
     }
     Ferret::space( $context, $_ ) for qw(Timer);
     $scope->property_u('say')->call_u( [ str( $f, "hello" ) ], $scope );
-
-    # On
-    {
-        my $on_func = $funcs[0]->inside_scope( (undef) => $scope, $scope );
+    on(
         $scope->property_u('Timer')->call_u( [ num( $f, 5 ) ], $scope )
-          ->property_u('once')->call_u( {}, $scope )->property_u('expire')
-          ->add_function_with_self_and_scope( $self, $scope, $on_func );
-    }
+          ->property_u('once')->call_u( {}, $scope ),
+        "expire",
+        $self,
+        $scope,
+        $funcs[0]->inside_scope( (undef) => $scope, $scope )
+    );
     $scope->set_property_ow( $context,
         t2 => $scope->property_u('Timer')->call_u( [ num( $f, 2 ) ], $scope ) );
-
-    # On
-    {
-        my $on_func = $funcs[1]->inside_scope( (undef) => $scope, $scope );
-        $scope->property_u('t2')->property_u('once')->call_u( {}, $scope )
-          ->property_u('expire')
-          ->add_function_with_self_and_scope( $self, $scope, $on_func );
-    }
+    on(
+        $scope->property_u('t2')->property_u('once')->call_u( {}, $scope ),
+        "expire",
+        $self,
+        $scope,
+        $funcs[1]->inside_scope( (undef) => $scope, $scope )
+    );
     $scope->property_u('t2')->property_u('cancel')->call_u( {}, $scope );
 };
 

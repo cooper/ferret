@@ -7,6 +7,11 @@ use parent 'F::Closure';
 
 use Scalar::Util 'weaken';
 
+sub type        { 'On' }
+sub function    { shift->{function}  }
+sub param_exp   { shift->{param_exp} }
+sub is_closure  { 1 }
+
 sub new {
     my ($class, %opts) = @_;
     my $on = $class->SUPER::new(%opts);
@@ -15,11 +20,7 @@ sub new {
     # the expression is marked as the parameter to the on keyword.
     # it is also marked as generated, so we know it can be terminated
     # automatically by certain tokens.
-    my $exp = F::Expression->new(
-        parameter_for        => 'on',
-        generated_expression => 1,
-        no_instructions      => 1
-    );
+    my $exp = F::OnExpression->new;
     $on->adopt($exp);
     weaken($on->{param_exp} = $exp);
 
@@ -39,19 +40,54 @@ sub new {
     return $on;
 }
 
+sub event_object {
+    my $on = shift;
+    my $c  = $on->param_exp->first_child;
+    return '$scope' if $c->type eq 'LexicalVariable';
+    return '$scope' if $c->type eq 'Bareword';
+    return '$self'  if $c->type eq 'InstanceVariable';
+    return $c->left if $c->type eq 'Property';
+    die;
+}
+
+sub event_name {
+    my $on = shift;
+    my $c  = $on->param_exp->first_child;
+    return $c->{var_name}       if substr($c->type, -8) eq 'Variable';
+    return $c->{bareword_value} if $c->type eq 'Bareword';
+    return $c->prop_name        if $c->type eq 'Property';
+    die;
+}
+
 sub perl_fmt {
     my $on = shift;
 
+    my $doc = $on->document;
+    $doc->{required_operations}{on}++;
+
     return on => {
-        expression => $on->{param_exp}->perl_fmt_do,
+        event_name => $on->event_name,
+        object     => $on->event_object,
         function   => $on->{function}->perl_fmt_do
     };
 }
 
-sub function  { shift->{function}  }
-sub param_exp { shift->{param_exp} }
-sub is_closure { 1 }
-sub type { 'On' }
+package F::OnExpression;
 
+use warnings;
+use strict;
+use parent 'F::Expression';
+
+sub type { 'OnExpression' }
+
+sub new {
+    my ($class, %opts) = @_;
+    return $class->SUPER::new(
+        parameter_for        => 'on',
+        generated_expression => 1,
+        no_instructions      => 1,
+        %opts
+    );
+}
 
 1

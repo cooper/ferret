@@ -49,7 +49,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello17.frt.pm'}++;
 
-use Ferret::Core::Operations qw(num str);
+use Ferret::Core::Operations qw(num on str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -73,14 +73,13 @@ my $result = do {
     $scope->property_u('Timer')->property_u('init')
       ->call_u( [ $scope->property_u('obj') ], $scope )
       ->call_u( [ num( $f, 5 ) ], $scope );
-
-    # On
-    {
-        my $on_func = $funcs[0]->inside_scope( (undef) => $scope, $scope );
-        $scope->property_u('obj')->property_u('once')->call_u( {}, $scope )
-          ->property_u('expire')
-          ->add_function_with_self_and_scope( $self, $scope, $on_func );
-    }
+    on(
+        $scope->property_u('obj')->property_u('once')->call_u( {}, $scope ),
+        "expire",
+        $self,
+        $scope,
+        $funcs[0]->inside_scope( (undef) => $scope, $scope )
+    );
 };
 
 Ferret::runtime();

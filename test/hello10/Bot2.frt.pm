@@ -123,7 +123,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Bot2.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add num str);
+use Ferret::Core::Operations qw(add num on str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -266,33 +266,12 @@ my $result = do {
                     $scope
                   );
                 $self->set_property( send => $self->property_u('println') );
-
-                # On
-                {
-                    my $on_func =
-                      $funcs[0]->inside_scope( (undef) => $scope, $scope );
-                    $self->property_u('connected')
-                      ->add_function_with_self_and_scope( $self, $scope,
-                        $on_func );
-                }
-
-                # On
-                {
-                    my $on_func =
-                      $funcs[1]->inside_scope( (undef) => $scope, $scope );
-                    $self->property_u('gotLine')
-                      ->add_function_with_self_and_scope( $self, $scope,
-                        $on_func );
-                }
-
-                # On
-                {
-                    my $on_func =
-                      $funcs[2]->inside_scope( (undef) => $scope, $scope );
-                    $self->property_u('println')
-                      ->add_function_with_self_and_scope( $self, $scope,
-                        $on_func );
-                }
+                on( $self, "connected", $self, $scope,
+                    $funcs[0]->inside_scope( (undef) => $scope, $scope ) );
+                on( $self, "gotLine", $self, $scope,
+                    $funcs[1]->inside_scope( (undef) => $scope, $scope ) );
+                on( $self, "println", $self, $scope,
+                    $funcs[2]->inside_scope( (undef) => $scope, $scope ) );
                 return $return;
             };
             $methods[0] = Ferret::Event->new(

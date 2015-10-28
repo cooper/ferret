@@ -117,7 +117,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello11.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add bool num str);
+use Ferret::Core::Operations qw(add bool num on str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -185,13 +185,8 @@ my $result = do {
       ->call_u(
         [ add( $scope, str( $f, "Point: " ), $scope->property_u('point') ) ],
         $scope );
-
-    # On
-    {
-        my $on_func = $funcs[0]->inside_scope( (undef) => $scope, $scope );
-        $scope->property_u('say')
-          ->add_function_with_self_and_scope( $self, $scope, $on_func );
-    }
+    on( $scope, "say", $self, $scope,
+        $funcs[0]->inside_scope( (undef) => $scope, $scope ) );
     $scope->set_property_ow(
         $context,
         r => $scope->property_u('say')->call_u(

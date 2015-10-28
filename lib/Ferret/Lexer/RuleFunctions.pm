@@ -208,11 +208,19 @@ sub final_check {
 #   $parent_t will fall back to the element's parent if it has one already.
 #
 sub F::Element::rule_set {
-    my ($el, $parent) = @_;
+    my ($el, $parent, $after) = @_;
     $parent ||= $el->parent;
+
+    # after_rules
+    my @after;
+    if ($after) {
+        push @after, rule_hash($el->type, 'after_rules');
+        push @after, rule_hash($el->tok,  'after_rules');
+    }
 
     # local rules.
     my $set1 = Ferret::Lexer::RuleSet->new(
+        @after,
         rule_hash($el->type),
         rule_hash($el->tok)
     );
@@ -271,13 +279,13 @@ sub F::Node::can_adopt {
     $e ||= $parent_maybe->has_room($after_check) if $after_check;
 
     # check that the parent allows this type of child.
-    $e ||= $parent_maybe->allows_child($child_maybe);
+    $e ||= $parent_maybe->allows_child($child_maybe, $after_check);
 
     # check that the child allows this type of parent.
-    $e ||= $child_maybe->allows_parent($parent_maybe);
+    $e ||= $child_maybe->allows_parent($parent_maybe, $after_check);
 
     # check that the upper hierarchy is satisfactory.
-    $e ||= $child_maybe->allows_upper_nodes($parent_maybe);
+    $e ||= $child_maybe->allows_upper_nodes($parent_maybe, $after_check);
 
     # determine the previous element.
     my $previous_maybe = $child_maybe->parent   ?
@@ -287,13 +295,15 @@ sub F::Node::can_adopt {
     # check that the child allows the previous element type.
     $e ||= $child_maybe->allows_previous(
         $parent_maybe,
-        $previous_maybe
+        $previous_maybe,
+        $after_check
     );
 
     # check that the previous element allows the new child to follow it.
     $e ||= $child_maybe->previous_allows(
         $parent_maybe,
-        $previous_maybe
+        $previous_maybe,
+        $after_check
     );
 
     return $e || $ok;
@@ -317,8 +327,8 @@ sub F::Node::can_close {
 
 # checks if a child can be in a parent.
 sub F::Element::allows_child {
-    my ($parent_maybe, $child_maybe) = @_;
-    my $set = $parent_maybe->rule_set(undef);
+    my ($parent_maybe, $child_maybe, $after_check) = @_;
+    my $set = $parent_maybe->rule_set(undef, $after_check);
 
     # children must be of a certain type.
     if ($set->{children_must_be}) {
@@ -337,8 +347,8 @@ sub F::Element::allows_child {
 
 # checks if a parent can provide for a child.
 sub F::Element::allows_parent {
-    my ($child_maybe, $parent_maybe) = @_;
-    my $set = $child_maybe->rule_set($parent_maybe);
+    my ($child_maybe, $parent_maybe, $after_check) = @_;
+    my $set = $child_maybe->rule_set($parent_maybe, $after_check);
 
     # there's no rule, so it allows everything.
     return $ok if !$set->{parent_must_be};
@@ -353,8 +363,8 @@ sub F::Element::allows_parent {
 
 # check if somewhere in an upper level is a certain node type.
 sub F::Element::allows_upper_nodes {
-    my ($child_maybe, $parent_maybe) = @_;
-    my $set = $child_maybe->rule_set($parent_maybe);
+    my ($child_maybe, $parent_maybe, $after_check) = @_;
+    my $set = $child_maybe->rule_set($parent_maybe, $after_check);
 
     # there's no rule, so it allows everything.
     return $ok if
@@ -381,8 +391,8 @@ sub F::Element::allows_upper_nodes {
 
 # checks if the previous element at the same level is allowed.
 sub F::Element::allows_previous {
-    my ($child_maybe, $parent_maybe, $previous_maybe) = @_;
-    my $set = $child_maybe->rule_set($parent_maybe);
+    my ($child_maybe, $parent_maybe, $previous_maybe, $after_check) = @_;
+    my $set = $child_maybe->rule_set($parent_maybe, $after_check);
 
     # there's no rule, so it allows everything.
     return $ok if !$set->{must_come_after}; # allow everything.
@@ -409,11 +419,11 @@ sub F::Element::allows_previous {
 # by checking in the ->close method of the parent node.
 #
 sub F::Element::previous_allows {
-    my ($child_maybe, $parent_maybe, $previous_maybe) = @_;
+    my ($child_maybe, $parent_maybe, $previous_maybe, $after_check) = @_;
 
     # no previous element, no rules.
     return $ok if !$previous_maybe;
-    my $set = $previous_maybe->rule_set; # in actual parent.
+    my $set = $previous_maybe->rule_set(undef, $after_check); # in actual parent.
 
     # there's no rule, so it allows everything.
     return $ok if !$set->{must_come_before}; # allow everything.
@@ -435,7 +445,7 @@ sub F::Element::previous_allows {
 # check that a node has not reached its limit
 sub F::Node::has_room {
     my ($parent_maybe, $after_check) = @_;
-    my $set = $parent_maybe->rule_set;
+    my $set = $parent_maybe->rule_set(undef, $after_check);
 
     # no limit.
     my $max = $set->{max_children};

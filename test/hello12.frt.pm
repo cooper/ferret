@@ -114,7 +114,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello12.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add num str);
+use Ferret::Core::Operations qw(add num on str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -205,36 +205,24 @@ my $result = do {
     );
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('sock') ], $scope );
-
-    # On
-    {
-        my $on_func = $funcs[0]->inside_scope( (undef) => $scope, $scope );
-        $scope->property_u('sock')->property_u('gotLine')
-          ->add_function_with_self_and_scope( $self, $scope, $on_func );
-    }
-
-    # On
-    {
-        my $on_func = $funcs[1]->inside_scope( (undef) => $scope, $scope );
-        $scope->property_u('sock')->property_u('println')
-          ->add_function_with_self_and_scope( $self, $scope, $on_func );
-    }
-
-    # On
-    {
-        my $on_func = $funcs[2]->inside_scope( (undef) => $scope, $scope );
-        $scope->property_u('sock')->property_u('connected')
-          ->add_function_with_self_and_scope( $self, $scope, $on_func );
-    }
+    on( $scope->property_u('sock'),
+        "gotLine", $self, $scope,
+        $funcs[0]->inside_scope( (undef) => $scope, $scope ) );
+    on( $scope->property_u('sock'),
+        "println", $self, $scope,
+        $funcs[1]->inside_scope( (undef) => $scope, $scope ) );
+    on( $scope->property_u('sock'),
+        "connected", $self, $scope,
+        $funcs[2]->inside_scope( (undef) => $scope, $scope ) );
     $scope->property_u('sock')->property_u('connect')->call_u( {}, $scope );
-
-    # On
-    {
-        my $on_func = $funcs[3]->inside_scope( (undef) => $scope, $scope );
+    on(
         $scope->property_u('Timer')->call_u( [ num( $f, 5 ) ], $scope )
-          ->property_u('once')->call_u( {}, $scope )->property_u('expire')
-          ->add_function_with_self_and_scope( $self, $scope, $on_func );
-    }
+          ->property_u('once')->call_u( {}, $scope ),
+        "expire",
+        $self,
+        $scope,
+        $funcs[3]->inside_scope( (undef) => $scope, $scope )
+    );
 };
 
 Ferret::runtime();

@@ -80,7 +80,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'hello21.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add num str);
+use Ferret::Core::Operations qw(add num on str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -115,14 +115,15 @@ my $result = do {
         $scope->set_property( i    => $_->[0] );
         $scope->set_property( part => $_->[1] );
 
-        # On
-        {
-            my $on_func = $funcs[0]->inside_scope( (undef) => $scope, $scope );
+        on(
             $scope->property_u('Timer')
               ->call_u( [ $scope->property_u('i') ], $scope )
-              ->property_u('once')->call_u( {}, $scope )->property_u('expire')
-              ->add_function_with_self_and_scope( $self, $scope, $on_func );
-        }
+              ->property_u('once')->call_u( {}, $scope ),
+            "expire",
+            $self,
+            $scope,
+            $funcs[0]->inside_scope( (undef) => $scope, $scope )
+        );
     }
     foreach (
         Ferret::List->new( $f,
