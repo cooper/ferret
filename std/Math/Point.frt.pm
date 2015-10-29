@@ -74,6 +74,15 @@
 #                      Call
 #                          Instance variable '@pretty'
 #                          Structural list [0 items]
+#          Method 'description'
+#              Instruction
+#                  Return
+#                      Operation
+#                          String 'Point'
+#                          Addition operator (+)
+#                          Call
+#                              Instance variable '@pretty'
+#                              Structural list [0 items]
 #          Main method 'midpoint'
 #              Instruction
 #                  Need
@@ -320,6 +329,30 @@ my $result = do {
             );
         }
 
+        # Method event 'description' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                return add(
+                    $scope,
+                    str( $f, "Point" ),
+                    $self->property_u('pretty')->call_u( {}, $scope )
+                );
+                return $return;
+            };
+            $methods[5] = Ferret::Event->new(
+                $f,
+                name         => 'description',
+                default_func => [ undef, $func ]
+            );
+        }
+
         # Method event 'midpoint' definition
         {
             my $func = Ferret::Function->new(
@@ -364,7 +397,7 @@ my $result = do {
                 );
                 return $return;
             };
-            $methods[5] = Ferret::Event->new(
+            $methods[6] = Ferret::Event->new(
                 $f,
                 name         => 'midpoint',
                 default_func => [ undef, $func ]
@@ -394,7 +427,7 @@ my $result = do {
                   ->call_u( [ $scope->property_u('pt2') ], $scope );
                 return $return;
             };
-            $methods[6] = Ferret::Event->new(
+            $methods[7] = Ferret::Event->new(
                 $f,
                 name         => 'distanceBetween',
                 default_func => [ undef, $func ]
@@ -406,8 +439,9 @@ my $result = do {
           ->inside_scope( distanceFromOrigin => $scope, $proto, $class );
         $methods[3]->inside_scope( pretty          => $scope, $proto, $class );
         $methods[4]->inside_scope( toString        => $scope, $proto, $class );
-        $methods[5]->inside_scope( midpoint        => $scope, $class, $class );
-        $methods[6]->inside_scope( distanceBetween => $scope, $class, $class );
+        $methods[5]->inside_scope( description     => $scope, $proto, $class );
+        $methods[6]->inside_scope( midpoint        => $scope, $class, $class );
+        $methods[7]->inside_scope( distanceBetween => $scope, $class, $class );
     }
 };
 

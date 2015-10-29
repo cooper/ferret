@@ -9,7 +9,7 @@ use parent 'Evented::Object';
 use Scalar::Util qw(blessed weaken);
 use List::Util qw(first);
 
-use Ferret::Core::Conversion qw(perl_description);
+use Ferret::Core::Conversion qw(perl_description perl_string);
 use Ferret::Core::Errors qw(throw);
 
 # create a new object.
@@ -358,7 +358,7 @@ sub best_common_class {
     }
 
     return undef;
-    # TODO: if ever implemented an Object prototype, return it here.
+    # TODO: if ever implemented an Object class, return it here.
 }
 
 sub instance_of {
@@ -390,6 +390,11 @@ sub description {
     return 'undefined' if Ferret::undefined($obj);
     return 'true'      if $obj == Ferret::true;
     return 'false'     if $obj == Ferret::false;
+
+    # description method
+    if (my $d_func = $obj->property('description')) {
+        return perl_string($d_func->call);
+    }
 
     my ($skipped, $prop_str) = (0, '');
     my @parents = $obj->parent_names;

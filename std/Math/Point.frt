@@ -24,6 +24,10 @@ method toString {
     return @pretty();
 }
 
+method description {
+    return "Point" + @pretty();
+}
+
 main method midpoint {
     need $pt1, $pt2;
     return *class(

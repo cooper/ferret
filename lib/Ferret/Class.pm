@@ -43,6 +43,11 @@ sub new {
     $class->add_parent(_global_class_prototype($f));
     $class->set_property_weak(proto => $class->prototype);
 
+    # class name
+    $class->set_property(name => [ sub {
+        Ferret::String->new($f, str_value => $class->{name})
+    }]);
+
     return $class;
 }
 

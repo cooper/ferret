@@ -6,11 +6,13 @@ use strict;
 use utf8;
 
 use parent 'Ferret::Object';
+use Ferret::Core::Conversion qw(perl_description);
 
 *new = *Ferret::bind_constructor;
 
 Ferret::bind_class(
-    name => 'Set'
+    name => 'Set',
+    desc => \&description
 );
 
 sub _property {
@@ -41,6 +43,18 @@ sub set_property {
 
 sub to_list {
 
+}
+
+sub description {
+    my ($set, $own_only) = @_;
+    my $class_name = $set->{set_class} ? $set->{set_class}{name} : 'Object';
+
+    # handle indents
+    my @values = map {
+        join "\n    ", split /\n/, perl_description($_, $own_only)
+    } @{ $set->{all_objs} };
+
+    return "<$class_name>(\n    ".join("\n    ", @values)."\n)";
 }
 
 1

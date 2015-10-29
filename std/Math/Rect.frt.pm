@@ -128,6 +128,56 @@
 #                                  Lexical variable '$x'
 #                              Item 1
 #                                  Lexical variable '$y'
+#          Method 'description'
+#              Instruction
+#                  Assignment (lexical variable '$ox')
+#                      Property 'x'
+#                          Instance variable '@origin'
+#              Instruction
+#                  Assignment (lexical variable '$oy')
+#                      Property 'y'
+#                          Instance variable '@origin'
+#              Instruction
+#                  Assignment (lexical variable '$c')
+#                      Call
+#                          Instance variable '@center'
+#                          Structural list [0 items]
+#              Instruction
+#                  Assignment (lexical variable '$cx')
+#                      Property 'x'
+#                          Lexical variable '$c'
+#              Instruction
+#                  Assignment (lexical variable '$cy')
+#                      Property 'y'
+#                          Lexical variable '$c'
+#              Instruction
+#                  Return
+#                      Operation
+#                          String 'Rect( Origin('
+#                          Addition operator (+)
+#                          Lexical variable '$ox'
+#                          Addition operator (+)
+#                          String ', '
+#                          Addition operator (+)
+#                          Lexical variable '$oy'
+#                          Addition operator (+)
+#                          String '); Center('
+#                          Addition operator (+)
+#                          Lexical variable '$cx'
+#                          Addition operator (+)
+#                          String ', '
+#                          Addition operator (+)
+#                          Lexical variable '$cy'
+#                          Addition operator (+)
+#                          String '); Width = '
+#                          Addition operator (+)
+#                          Instance variable '@width'
+#                          Addition operator (+)
+#                          String '; Height = '
+#                          Addition operator (+)
+#                          Instance variable '@height'
+#                          Addition operator (+)
+#                          String ' )'
 #      Include (Line, Point)
 use warnings;
 use strict;
@@ -149,7 +199,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Rect.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add mul num);
+use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
@@ -423,6 +473,44 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
+
+        # Method event 'description' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                $scope->set_property_ow( $context,
+                    ox => $self->property_u('origin')->property_u('x') );
+                $scope->set_property_ow( $context,
+                    oy => $self->property_u('origin')->property_u('y') );
+                $scope->set_property_ow( $context,
+                    c => $self->property_u('center')->call_u( {}, $scope ) );
+                $scope->set_property_ow( $context,
+                    cx => $scope->property_u('c')->property_u('x') );
+                $scope->set_property_ow( $context,
+                    cy => $scope->property_u('c')->property_u('y') );
+                return add(
+                    $scope,                      str( $f, "Rect( Origin(" ),
+                    $scope->property_u('ox'),    str( $f, ", " ),
+                    $scope->property_u('oy'),    str( $f, "); Center(" ),
+                    $scope->property_u('cx'),    str( $f, ", " ),
+                    $scope->property_u('cy'),    str( $f, "); Width = " ),
+                    $self->property_u('width'),  str( $f, "; Height = " ),
+                    $self->property_u('height'), str( $f, " )" )
+                );
+                return $return;
+            };
+            $methods[8] = Ferret::Event->new(
+                $f,
+                name         => 'description',
+                default_func => [ undef, $func ]
+            );
+        }
         $methods[0]->inside_scope( _init_      => $scope, $class, $class );
         $methods[1]->inside_scope( bottomLeft  => $scope, $proto, $class );
         $methods[2]->inside_scope( bottomRight => $scope, $proto, $class );
@@ -431,6 +519,7 @@ my $result = do {
         $methods[5]->inside_scope( bottomLine  => $scope, $proto, $class );
         $methods[6]->inside_scope( topLine     => $scope, $proto, $class );
         $methods[7]->inside_scope( center      => $scope, $proto, $class );
+        $methods[8]->inside_scope( description => $scope, $proto, $class );
     }
     Ferret::space( $context, $_ ) for qw(Line Point);
 };

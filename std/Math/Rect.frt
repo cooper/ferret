@@ -35,3 +35,12 @@ method center {
     $y = @origin.y + @height * 0.5;
     return Point($x, $y);
 }
+
+method description {
+    $ox = @origin.x;
+    $oy = @origin.y;
+    $c  = @center();
+    $cx = $c.x;
+    $cy = $c.y;
+    return "Rect( Origin($ox, $oy); Center($cx, $cy); Width = @width; Height = @height )";
+}

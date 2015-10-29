@@ -33,11 +33,11 @@ my @methods = (
         need => '$prefix:Str',
         code => \&_trimPrefix
     },
-    fillPlaceholders => {
+    fill => {
         # all passed parameters are placeholder values,
         # or a single hash can be passed with values.
         want => '$valueHash:Hash',
-        code => \&_fillPlaceholders
+        code => \&_fill
     },
     toNumber => {
         code => \&_to_number
@@ -126,7 +126,7 @@ sub _trimPrefix {
     return $str->trimPrefix($pfx);
 }
 
-sub fillPlaceholders {
+sub fill {
     my ($str, $info) = @_;
 
     # fill.
@@ -149,7 +149,7 @@ sub fillPlaceholders {
     return $str;
 }
 
-sub _fillPlaceholders {
+sub _fill {
     my ($str, $arguments) = @_;
     my %info;
     if (my $hash = $arguments->{valueHash}) {
@@ -158,7 +158,7 @@ sub _fillPlaceholders {
     else {
         %info = map { $_ => perl_string($arguments->{$_}) } keys %$arguments;
     }
-    return $str->fillPlaceholders(\%info);
+    return $str->fill(\%info);
 }
 
 sub _to_number {

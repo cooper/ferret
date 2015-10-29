@@ -20,7 +20,8 @@ my %specials = (
     instanceOf      => _function('instanceOf', '$class'),
     get             => _function('get', '$property:Str'),
     getOwn          => _function('getOwn', '$property:Str'),
-    set             => _function('set', '$property:Str $value')
+    set             => _function('set', '$property:Str $value'),
+    commonClass     => _function('commonClass', '$other:Object')
 );
 
 @Ferret::specials{keys %specials} = values %specials;
@@ -108,6 +109,13 @@ sub _set {
     #        etc.
     $obj->set_property($key => $value);
     return Ferret::true;
+}
+
+sub _commonClass {
+    my ($obj, $arguments) = @_;
+    my $other = $arguments->{other};
+    return $obj->best_common_class($other) || $obj->f->{object_initializer};
+    # note: best_common_class() will eventually return Object
 }
 
 1
