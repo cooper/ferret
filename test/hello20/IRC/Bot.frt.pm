@@ -1113,7 +1113,8 @@ my $result = do {
         $methods[11]->inside_scope( commandFactoid => $scope, $proto, $class );
     }
     Ferret::space( $context, $_ )
-      for qw(IRC IRC::Message Num Socket Socket::TCP Str);
+      for
+      qw(IRC::Num IRC::Socket IRC::Socket::TCP IRC::Str IRC IRC::Message Num Socket Socket::TCP Str);
 };
 
 Ferret::runtime();

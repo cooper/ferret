@@ -63,7 +63,8 @@ my $result = do {
         );
     }
     $funcs[0]->inside_scope( sqrt => $scope, $scope );
-    Ferret::space( $context, $_ ) for qw(NATIVE NATIVE::Math Num);
+    Ferret::space( $context, $_ )
+      for qw(Math::NATIVE Math::NATIVE::Math Math::Num NATIVE NATIVE::Math Num);
 };
 
 Ferret::runtime();

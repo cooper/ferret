@@ -85,7 +85,7 @@ sub c_PKG_DEC {
     my ($c, $value) = @_;
 
     # create a package.
-    my $pkg = F::Package->new(%$value);
+    my $pkg = F::Package->new(pkg_name => $value->{name});
     $c->{package} = $pkg;
 
     # capture the end keyword.

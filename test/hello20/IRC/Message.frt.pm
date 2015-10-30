@@ -315,7 +315,7 @@ my $result = do {
         $methods[1]->inside_scope( command  => $scope, $proto, $class );
         $methods[2]->inside_scope( fromWord => $scope, $proto, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Num Str);
+    Ferret::space( $context, $_ ) for qw(IRC::Num IRC::Str Num Str);
 };
 
 Ferret::runtime();

@@ -521,7 +521,7 @@ my $result = do {
         $methods[7]->inside_scope( center      => $scope, $proto, $class );
         $methods[8]->inside_scope( description => $scope, $proto, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Line Point);
+    Ferret::space( $context, $_ ) for qw(Math::Line Math::Point Line Point);
 };
 
 Ferret::runtime();

@@ -392,7 +392,7 @@ sub description {
     return 'false'     if $obj == Ferret::false;
 
     # description method
-    if (my $d_func = $obj->property('description')) {
+    if (!$obj->{is_proto} and my $d_func = $obj->property('description')) {
         return perl_string($d_func->call);
     }
 
