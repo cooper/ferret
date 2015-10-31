@@ -43,6 +43,11 @@ sub new {
         ) foreach _parse_method_args($want);
     }
 
+    $func->set_property(signature => [ sub {
+        my $func = $_[1];
+        Ferret::String->new($f, str_value => $func->signature_string)
+    } ]);
+
     return $func;
 }
 
@@ -123,6 +128,18 @@ sub arguments_satisfy_signature {
 
     }
     return 1;
+}
+
+sub signature_string {
+    my ($func, @parts) = shift;
+    foreach my $sig (@{ $func->{signatures} }) {
+        my $s =
+            ($sig->{optional} ? '?'              : '') . '$' . $sig->{name} .
+            ($sig->{type}     ? ':'.$sig->{type} : '') .
+            ($sig->{more}     ? '...'            : '');
+        push @parts, $s;
+    }
+    return join ' ', @parts;
 }
 
 sub call_with_self {

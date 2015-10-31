@@ -22,6 +22,11 @@ sub new {
         $event->add_function(@$func);
     }
 
+    $event->set_property(signature => [ sub {
+        my $event = $_[1];
+        Ferret::String->new($f, str_value => $event->signature_string)
+    } ]);
+
     return $event;
 }
 
@@ -156,6 +161,12 @@ sub call {
     );
 
     return $fire->{override_return} // $return;
+}
+
+sub signature_string {
+    my $event = shift;
+    my $default = $event->{function}{default} or return '';
+    return $default->signature_string;
 }
 
 sub inside_scope {

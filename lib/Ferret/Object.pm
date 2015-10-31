@@ -169,7 +169,7 @@ sub _property {
             die unless ref $p eq 'CODE'; # FIXME: lazy
         }
         if (ref $p eq 'CODE') {
-            $p = $p->($borrow_obj);
+            $p = $p->($borrow_obj, $obj); # (obj inheriting, obj owner)
             $obj->set_property($prop_name => $p) if $setting;
         }
 

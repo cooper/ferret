@@ -44,8 +44,9 @@ sub new {
     $class->set_property_weak(proto => $class->prototype);
 
     # class name
+    my $name = $class->{name};
     $class->set_property(name => [ sub {
-        Ferret::String->new($f, str_value => $class->{name})
+        Ferret::String->new($f, str_value => $name)
     }]);
 
     return $class;
