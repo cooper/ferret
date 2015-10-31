@@ -31,16 +31,14 @@ sub new {
     # add needs from string.
     if (my $need = delete $func->{need}) {
         $func->add_argument(
-            name   => $_->{name},
-            type   => $_->{type}
+            %$_
         ) foreach _parse_method_args($need);
     }
 
     # add wants from string.
     if (my $want = delete $func->{want}) {
         $func->add_argument(
-            name     => $_->{name},
-            type     => $_->{type},
+            %$_,
             optional => 1
         ) foreach _parse_method_args($want);
     }
@@ -51,16 +49,21 @@ sub new {
 # add an argument to the signature.
 sub add_argument {
     my ($func, %opts) = @_;
-    #
+
     # possible options:
     #
     #   name        the name of the argument (required)
     #   type        the type, which should be a Perl string
     #   optional    true if it's a want, not a need
+    #   more        true if the argument consumes multiple values; i.e. ellipsis
     #
-    foreach (qw(name type)) {
+    foreach (qw(name type more)) {
         delete $opts{$_} if !length $opts{$_};
     }
+
+    # for optimization, remember if the function has an ellipsis.
+    $func->{hungry} ||= $opts{name} if $opts{more};
+
     $func->{signature}{ $opts{name} } = \%opts;
     push @{ $func->{signatures} }, \%opts;
 }
@@ -70,7 +73,20 @@ sub add_argument {
 sub handle_arguments {
     my ($func, @args, %args) = (shift, @{ +shift });
     my @sigs = @{ $func->{signatures} };
-    $args{ (shift @sigs)->{name} } = shift @args while @sigs && @args;
+
+    while (@sigs) {
+        my $sig = shift @sigs;
+
+        # ellipsis
+        if ($sig->{more}) {
+            $args{ $sig->{name} } = Ferret::List->new($func->f, values => \@args);
+            last;
+        }
+
+        my $val = shift @args;
+        $args{ $sig->{name} } = $val if $val;
+    }
+
     return \%args;
 }
 
@@ -78,21 +94,28 @@ sub handle_arguments {
 sub arguments_satisfy_signature {
     my ($func, $arguments) = @_;
     foreach my $sig (@{ $func->{signatures} }) {
-        next if $sig->{optional} && !length $sig->{type};
+
+        # if it's an ellipsis, the actual type of the arg must be List.
+        my $type = $sig->{more} ? 'List' : $sig->{type};
+        next if $sig->{optional} && !length $type;
 
         # check things.
         my $arg = $arguments->{ $sig->{name} };
         return if !$arg && !$sig->{optional};   # need must be present
         next   if !$arg;                        # want with no value
-        next   if !length $sig->{type};         # want/need with no type check
+        next   if !length $type;                # want/need with no type check
 
         # find scope of interest.
         my $soi = $func->{outer_scope} || $func->f->main_context;
         $soi = $soi->closest_context;
 
         # check that it works.
-        my $class_maybe = $soi->property($sig->{type});
+        my $class_maybe = $soi->property($type);
         next if $arg->instance_of($class_maybe);
+
+        # TODO: check if ellipsis satisfies type
+        #       if not, want will make it an empty list,
+        #       and need will unsatisfy the function.
 
         # bad news.
         return if !$sig->{optional};            # bad type for need
@@ -126,6 +149,13 @@ sub call {
     # hash ref of arguments.
     if (ref $arguments eq 'HASH') {
         return unless $func->arguments_satisfy_signature($arguments);
+
+        # at this point, invalid wants have been deleted.
+        # if this function has an ellipsis variable, that deleted
+        # argument's value must be replaced with an empty list.
+        if (my $elp = $func->{hungry}) {
+            $arguments->{$elp} ||= Ferret::List->new($func->f);
+        }
 
         # create a scope which inherits from the outer scope.
         #
@@ -193,11 +223,23 @@ sub _parse_method_args {
     my ($str, @args) = shift;
     return if not defined $str;
     foreach my $arg (split /\s+/, $str) {
+        my $more;
+
+        # ellipsis
+        my $last_three = \substr($arg, -3);
+        if ($$last_three eq '...') {
+            $$last_three = '';
+            $more = 1;
+        }
+
+        # split $name:type
         my ($name, $type) = split /:/, $arg, 2;
         $name =~ s/^\$//;
+
         push @args, {
             name => $name,
-            type => $type
+            type => $type,
+            more => $more
         };
     }
     return @args;

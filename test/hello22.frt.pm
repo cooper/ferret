@@ -191,7 +191,12 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'moos', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'moos',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -257,7 +262,12 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'barks', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'barks',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -323,7 +333,12 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'mean', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'mean',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -367,8 +382,8 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'cat1', type => 'Cat' );
-            $func->add_argument( name => 'cat2', type => 'Cat' );
+            $func->add_argument( name => 'cat1', type => 'Cat', more => undef );
+            $func->add_argument( name => 'cat2', type => 'Cat', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {

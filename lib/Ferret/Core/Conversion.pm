@@ -132,9 +132,14 @@ sub ferret_list_wrap {
     return Ferret::List->new($Ferret::ferret, ref_values => $ref);
 }
 
+sub perl_list {
+    return @{ &perl_listref };
+}
+
 sub perl_listref {
-    return [ ];
-    # TODO
+    my $list = shift;
+    return [ ] if !blessed $list || !$list->isa('Ferret::List');
+    return [ @{ $list->{list_items} || [] } ]; # make a copy
 }
 
 sub ferret_hash {

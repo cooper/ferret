@@ -6,7 +6,12 @@ use strict;
 use parent 'F::Statement';
 
 sub type { 'WantNeed' }
-sub desc { shift->{arg_type} || 'argument declaration' }
+sub desc {
+    my $wn = shift;
+    my $t  = $wn->{arg_type} || 'argument declaration';
+    $t    .= ' (...)' if $wn->{ellipsis};
+    return $t;
+}
 
 sub variables { shift->first_child }
 sub var_type  { shift->{bareword_type}{bareword_value} }
@@ -24,6 +29,10 @@ sub adopt {
         return $wn->SUPER::adopt($child);
     }
 
+    # if we've already gotten an ellipsis,
+    # no other elements can be contained past it.
+    return $child->unexpected() if $wn->{ellipsis};
+
     # if we're inside the type, this must be a bareword.
     # we don't actually insert the bareword.
     # just remember its value for later.
@@ -35,14 +44,24 @@ sub adopt {
     }
 
     # this is the second arg.
+    #
     # it may be a colon, prefixing a type,
+    # it may be an ellipsis, suffixing a variable,
     # or it may be an assignment operator.
+    #
     if (@children == 1) {
 
         # we don't actually insert the colon.
         # just remember that we're in the type now.
         if ($child->type_or_tok eq 'OP_VALUE') {
             $wn->{inside_type} = 1;
+            return $child;
+        }
+
+        # we don't actually insert the ellipsis.
+        # just remember that this want need is complete.
+        if ($child->type_or_tok eq 'OP_ELLIP') {
+            $wn->{ellipsis} = 1;
             return $child;
         }
 
@@ -61,7 +80,10 @@ sub adopt {
     }
 
     # if there are two children, they are
-    # (1) the variable (2) the value expression
+    #
+    # (1) the variable
+    # (2) the value expression
+    #
     # meaning that this is part of the value expression
     if (@children == 2) {
         return $wn->{value_exp}->adopt($child);

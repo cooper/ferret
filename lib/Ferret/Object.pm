@@ -423,7 +423,7 @@ sub description {
         $prop_str .= '    '.$prop_name." = $value\n";
 
     }
-    $prop_str .= "    $skipped more inherited\n" if $skipped;
+    $prop_str .= "\n    $skipped more inherited\n" if $skipped;
 
     return sprintf '[ %s ](%s)', join(', ', @parents), $prop_str;
 }

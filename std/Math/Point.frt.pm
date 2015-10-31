@@ -6,13 +6,16 @@
 #              Instruction
 #                  Need
 #                      Instance variable '@x'
+#                      Bareword 'Num'
 #              Instruction
 #                  Need
 #                      Instance variable '@y'
+#                      Bareword 'Num'
 #          Method 'distanceTo'
 #              Instruction
 #                  Need
 #                      Lexical variable '$pt2'
+#                      Bareword 'Point'
 #              Instruction
 #                  Assignment (lexical variable '$dx')
 #                      Operation
@@ -87,9 +90,11 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$pt1'
+#                      Bareword 'Point'
 #              Instruction
 #                  Need
 #                      Lexical variable '$pt2'
+#                      Bareword 'Point'
 #              Instruction
 #                  Return
 #                      Call
@@ -125,9 +130,11 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$pt1'
+#                      Bareword 'Point'
 #              Instruction
 #                  Need
 #                      Lexical variable '$pt2'
+#                      Bareword 'Point'
 #              Instruction
 #                  Return
 #                      Call
@@ -136,6 +143,7 @@
 #                          Single value [1 items]
 #                              Item 0
 #                                  Lexical variable '$pt2'
+#      Include (Num, Point)
 use warnings;
 use strict;
 use utf8;
@@ -184,8 +192,8 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'x', type => '' );
-            $func->add_argument( name => 'y', type => '' );
+            $func->add_argument( name => 'x', type => 'Num', more => undef );
+            $func->add_argument( name => 'y', type => 'Num', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -212,7 +220,11 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'pt2', type => '' );
+            $func->add_argument(
+                name => 'pt2',
+                type => 'Point',
+                more => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -361,8 +373,16 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'pt1', type => '' );
-            $func->add_argument( name => 'pt2', type => '' );
+            $func->add_argument(
+                name => 'pt1',
+                type => 'Point',
+                more => undef
+            );
+            $func->add_argument(
+                name => 'pt2',
+                type => 'Point',
+                more => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -412,8 +432,16 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'pt1', type => '' );
-            $func->add_argument( name => 'pt2', type => '' );
+            $func->add_argument(
+                name => 'pt1',
+                type => 'Point',
+                more => undef
+            );
+            $func->add_argument(
+                name => 'pt2',
+                type => 'Point',
+                more => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -444,6 +472,7 @@ my $result = do {
         $methods[6]->inside_scope( midpoint        => $scope, $class, $class );
         $methods[7]->inside_scope( distanceBetween => $scope, $class, $class );
     }
+    Ferret::space( $context, $_ ) for qw(Math::Num Math::Point Num Point);
 };
 
 Ferret::runtime();

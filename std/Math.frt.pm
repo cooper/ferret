@@ -45,7 +45,7 @@ my $result = do {
     # Function event 'sqrt' callback definition
     {
         my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'num', type => 'Num' );
+        $func->add_argument( name => 'num', type => 'Num', more => undef );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;

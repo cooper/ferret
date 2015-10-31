@@ -2,7 +2,7 @@ package Math
 class Line
 
 init {
-    need @pt1, @pt2;
+    need @pt1: Point, @pt2: Point;
 }
 
 method midpoint {

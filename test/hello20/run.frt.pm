@@ -341,7 +341,7 @@ my $result = do {
     # Function event 'handlePerl' callback definition
     {
         my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'msg', type => '' );
+        $func->add_argument( name => 'msg', type => '', more => undef );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -401,7 +401,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[1] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg', type => '' );
+        $func->add_argument( name => 'msg', type => '', more => undef );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -423,7 +423,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[2] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg', type => '' );
+        $func->add_argument( name => 'msg', type => '', more => undef );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -470,7 +470,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[3] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg', type => '' );
+        $func->add_argument( name => 'msg', type => '', more => undef );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -517,7 +517,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[4] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg', type => '' );
+        $func->add_argument( name => 'msg', type => '', more => undef );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;

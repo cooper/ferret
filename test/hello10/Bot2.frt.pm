@@ -162,7 +162,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[1] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'data', type => '' );
+        $func->add_argument( name => 'data', type => '', more => undef );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -186,7 +186,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[2] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'data', type => '' );
+        $func->add_argument( name => 'data', type => '', more => undef );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -228,11 +228,25 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'address', type => 'Str' );
-            $func->add_argument( name => 'nick',    type => 'Str' );
-            $func->add_argument( name => 'user',    type => 'Str' );
-            $func->add_argument( name => 'port', type => 'Num', optional => 1 );
-            $func->add_argument( name => 'real', type => 'Str', optional => 1 );
+            $func->add_argument(
+                name => 'address',
+                type => 'Str',
+                more => undef
+            );
+            $func->add_argument( name => 'nick', type => 'Str', more => undef );
+            $func->add_argument( name => 'user', type => 'Str', more => undef );
+            $func->add_argument(
+                name     => 'port',
+                type     => 'Num',
+                optional => 1,
+                more     => undef
+            );
+            $func->add_argument(
+                name     => 'real',
+                type     => 'Str',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {

@@ -6,15 +6,19 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$x'
+#                      Bareword 'Num'
 #              Instruction
 #                  Need
 #                      Lexical variable '$y'
+#                      Bareword 'Num'
 #              Instruction
 #                  Need
 #                      Instance variable '@width'
+#                      Bareword 'Num'
 #              Instruction
 #                  Need
 #                      Instance variable '@height'
+#                      Bareword 'Num'
 #              Instruction
 #                  Assignment (instance variable '@origin')
 #                      Call
@@ -178,7 +182,7 @@
 #                          Instance variable '@height'
 #                          Addition operator (+)
 #                          String ' )'
-#      Include (Line, Point)
+#      Include (Line, Num, Point)
 use warnings;
 use strict;
 use utf8;
@@ -227,10 +231,18 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'x',      type => '' );
-            $func->add_argument( name => 'y',      type => '' );
-            $func->add_argument( name => 'width',  type => '' );
-            $func->add_argument( name => 'height', type => '' );
+            $func->add_argument( name => 'x', type => 'Num', more => undef );
+            $func->add_argument( name => 'y', type => 'Num', more => undef );
+            $func->add_argument(
+                name => 'width',
+                type => 'Num',
+                more => undef
+            );
+            $func->add_argument(
+                name => 'height',
+                type => 'Num',
+                more => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -522,7 +534,8 @@ my $result = do {
         $methods[7]->inside_scope( center      => $scope, $proto, $class );
         $methods[8]->inside_scope( description => $scope, $proto, $class );
     }
-    Ferret::space( $context, $_ ) for qw(Math::Line Math::Point Line Point);
+    Ferret::space( $context, $_ )
+      for qw(Math::Line Math::Num Math::Point Line Num Point);
 };
 
 Ferret::runtime();

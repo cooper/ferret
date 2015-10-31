@@ -246,19 +246,27 @@
 #                          Single value [1 items]
 #                              Item 0
 #                                  String '␤'
-#                  Instruction
-#                      Call
-#                          Instance variable '@send'
-#                          Single value [1 items]
-#                              Item 0
-#                                  Operation
-#                                      String 'PRIVMSG '
-#                                      Addition operator (+)
-#                                      Lexical variable '$channel'
-#                                      Addition operator (+)
-#                                      String ' :'
-#                                      Addition operator (+)
+#                  If
+#                      Expression ('if' parameter)
+#                          Equality
+#                              Call
+#                                  Property 'length'
 #                                      Lexical variable '$line'
+#                                  Structural list [0 items]
+#                              Number '0'
+#                      Instruction
+#                          Call
+#                              Instance variable '@send'
+#                              Single value [1 items]
+#                                  Item 0
+#                                      Operation
+#                                          String 'PRIVMSG '
+#                                          Addition operator (+)
+#                                          Lexical variable '$channel'
+#                                          Addition operator (+)
+#                                          String ' :'
+#                                          Addition operator (+)
+#                                          Lexical variable '$line'
 #          Method 'joinChannels'
 #              If
 #                  Expression ('if' parameter)
@@ -465,7 +473,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Bot.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add bool num on str);
+use Ferret::Core::Operations qw(_not add bool num on str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('IRC');
@@ -504,7 +512,7 @@ my $result = do {
     # Anonymous function definition
     {
         my $func = $funcs[1] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'data', type => '' );
+        $func->add_argument( name => 'data', type => '', more => undef );
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -539,11 +547,26 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'addr', type => 'Str' );
-            $func->add_argument( name => 'nick', type => 'Str' );
-            $func->add_argument( name => 'port', type => 'Num', optional => 1 );
-            $func->add_argument( name => 'user', type => 'Str', optional => 1 );
-            $func->add_argument( name => 'real', type => 'Str', optional => 1 );
+            $func->add_argument( name => 'addr', type => 'Str', more => undef );
+            $func->add_argument( name => 'nick', type => 'Str', more => undef );
+            $func->add_argument(
+                name     => 'port',
+                type     => 'Num',
+                optional => 1,
+                more     => undef
+            );
+            $func->add_argument(
+                name     => 'user',
+                type     => 'Str',
+                optional => 1,
+                more     => undef
+            );
+            $func->add_argument(
+                name     => 'real',
+                type     => 'Str',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -622,8 +645,16 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'command',  type => 'Str' );
-            $func->add_argument( name => 'callback', type => '' );
+            $func->add_argument(
+                name => 'command',
+                type => 'Str',
+                more => undef
+            );
+            $func->add_argument(
+                name => 'callback',
+                type => '',
+                more => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -687,7 +718,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'line', type => '' );
+            $func->add_argument( name => 'line', type => '', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -721,7 +752,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'line', type => '' );
+            $func->add_argument( name => 'line', type => '', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -791,8 +822,16 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'channel', type => 'Str' );
-            $func->add_argument( name => 'message', type => 'Str' );
+            $func->add_argument(
+                name => 'channel',
+                type => 'Str',
+                more => undef
+            );
+            $func->add_argument(
+                name => 'message',
+                type => 'Str',
+                more => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -809,18 +848,31 @@ my $result = do {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
                     $scope->set_property( line => $_ );
 
-                    $self->property_u('send')->call_u(
-                        [
-                            add(
-                                $scope,
-                                str( $f, "PRIVMSG " ),
-                                $scope->property_u('channel'),
-                                str( $f, " :" ),
+                    if (
+                        bool(
+                            _not(
                                 $scope->property_u('line')
+                                  ->property_u('length')->call_u( {}, $scope )
+                                  ->equal_to( num( $f, 0 ), $scope )
                             )
-                        ],
-                        $scope
-                    );
+                        )
+                      )
+                    {
+                        my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                        $self->property_u('send')->call_u(
+                            [
+                                add(
+                                    $scope,
+                                    str( $f, "PRIVMSG " ),
+                                    $scope->property_u('channel'),
+                                    str( $f, " :" ),
+                                    $scope->property_u('line')
+                                )
+                            ],
+                            $scope
+                        );
+                    }
                 }
                 return $return;
             };
@@ -882,7 +934,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 's', type => '' );
+            $func->add_argument( name => 's', type => '', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -916,8 +968,8 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'line', type => '' );
-            $func->add_argument( name => 's',    type => '' );
+            $func->add_argument( name => 'line', type => '', more => undef );
+            $func->add_argument( name => 's',    type => '', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -980,7 +1032,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'msg', type => '' );
+            $func->add_argument( name => 'msg', type => '', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -1016,7 +1068,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'msg', type => '' );
+            $func->add_argument( name => 'msg', type => '', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -1068,7 +1120,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'msg', type => '' );
+            $func->add_argument( name => 'msg', type => '', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {

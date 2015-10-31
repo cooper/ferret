@@ -7,9 +7,13 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(ferret_number perl_number ferret_boolean);
 use Scalar::Util qw(blessed);
 use List::Util qw(sum);
+
+use Ferret::Core::Conversion qw(
+    ferret_number perl_number
+    ferret_boolean perl_list
+);
 
 my @methods = (
     opAdd => {
@@ -39,7 +43,7 @@ my @methods = (
 
 my @functions = (
     sum => {
-        need => '$num1:Num $num2:Num',
+        need => '$nums:Num...',
         code => \&_sum
     },
     equal => {
@@ -126,9 +130,8 @@ sub description {
 }
 
 sub _sum {
-    # TODO: more than two arguments.
     my ($class, $arguments) = @_;
-    my $sum = sum map { perl_number($_) } values %$arguments;
+    my $sum = sum map { perl_number($_) } perl_list($arguments->{nums});
     return ferret_number($sum);
 }
 

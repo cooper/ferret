@@ -257,8 +257,18 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'name',  type => '', optional => 1 );
-            $func->add_argument( name => 'fatal', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'name',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
+            $func->add_argument(
+                name     => 'fatal',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -289,7 +299,12 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'a', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'a',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
@@ -317,7 +332,12 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'a', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'a',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
@@ -345,8 +365,18 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'a', type => '', optional => 1 );
-            $func->add_argument( name => 'b', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'a',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
+            $func->add_argument(
+                name     => 'b',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
@@ -375,8 +405,18 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'a', type => '', optional => 1 );
-            $func->add_argument( name => 'b', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'a',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
+            $func->add_argument(
+                name     => 'b',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
@@ -405,8 +445,18 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'a', type => '', optional => 1 );
-            $func->add_argument( name => 'b', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'a',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
+            $func->add_argument(
+                name     => 'b',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
@@ -437,8 +487,18 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'a', type => '', optional => 1 );
-            $func->add_argument( name => 'b', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'a',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
+            $func->add_argument(
+                name     => 'b',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
@@ -519,8 +579,18 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'yes',     type => '', optional => 1 );
-            $func->add_argument( name => 'message', type => '', optional => 1 );
+            $func->add_argument(
+                name     => 'yes',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
+            $func->add_argument(
+                name     => 'message',
+                type     => '',
+                optional => 1,
+                more     => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( yes     => $arguments->{yes} );

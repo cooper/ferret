@@ -191,7 +191,7 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'line', type => 'Str' );
+            $func->add_argument( name => 'line', type => 'Str', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -286,7 +286,11 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'wordN', type => 'Num' );
+            $func->add_argument(
+                name => 'wordN',
+                type => 'Num',
+                more => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {

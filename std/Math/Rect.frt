@@ -2,7 +2,7 @@ package Math
 class Rect
 
 init {
-    need $x, $y, @width, @height;
+    need $x: Num, $y: Num, @width: Num, @height: Num;
     @origin = Point($x, $y);
 }
 

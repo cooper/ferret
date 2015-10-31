@@ -83,7 +83,8 @@ method handleLine {
 method privmsg {
     need $channel: Str, $message: Str;
     for $line in $message.split("\n") {
-        @send("PRIVMSG $channel :$line");
+        if $line.length() != 0:
+            @send("PRIVMSG $channel :$line");
     }
 }
 

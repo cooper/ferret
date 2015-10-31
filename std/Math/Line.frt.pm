@@ -6,9 +6,11 @@
 #              Instruction
 #                  Need
 #                      Instance variable '@pt1'
+#                      Bareword 'Point'
 #              Instruction
 #                  Need
 #                      Instance variable '@pt2'
+#                      Bareword 'Point'
 #          Method 'midpoint'
 #              Instruction
 #                  Return
@@ -29,6 +31,7 @@
 #                          Single value [1 items]
 #                              Item 0
 #                                  Instance variable '@pt2'
+#      Include (Point)
 use warnings;
 use strict;
 use utf8;
@@ -77,8 +80,16 @@ my $result = do {
                 name      => 'default',
                 is_method => 1
             );
-            $func->add_argument( name => 'pt1', type => '' );
-            $func->add_argument( name => 'pt2', type => '' );
+            $func->add_argument(
+                name => 'pt1',
+                type => 'Point',
+                more => undef
+            );
+            $func->add_argument(
+                name => 'pt2',
+                type => 'Point',
+                more => undef
+            );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -144,6 +155,7 @@ my $result = do {
         $methods[1]->inside_scope( midpoint => $scope, $proto, $class );
         $methods[2]->inside_scope( length   => $scope, $proto, $class );
     }
+    Ferret::space( $context, $_ ) for qw(Math::Point Point);
 };
 
 Ferret::runtime();

@@ -50,7 +50,8 @@ sub perl_fmt {
             my $fmt = "func_arg_$$wn{arg_type}";
             $arguments .= $func->get_format($fmt => {
                 name => $var->{var_name},
-                type => $wn->var_type || ''
+                type => $wn->var_type  || '',
+                more => $wn->{ellipsis} ? '1' : 'undef'
             }).";\n";
         }
 
