@@ -143,8 +143,10 @@ sub perl_listref {
 }
 
 sub ferret_hash {
-    return ferret_string("hash conversion not yet implemented");
-    # TODO
+    my $hashref = shift;
+    return unless ref $hashref eq 'HASH';
+    $hashref = { %$hashref }; # make a copy
+    return Ferret::Hash->new($Ferret::ferret, pairs => $hashref);
 }
 
 # $recursive indicates whether to perlize values.
@@ -172,6 +174,18 @@ sub ferret_boolean {
 
 sub perl_boolean {
     return Ferret::truth(@_);
+}
+
+sub ferret_function {
+    my $code = shift;
+    return unless ref $code eq 'CODE';
+    return Ferret::Function->new($Ferret::ferret, code => $code);
+}
+
+sub ferret_method {
+    my $func = &ferret_function;
+    $func->{is_method} = 1;
+    return $func;
 }
 
 sub ferretize {

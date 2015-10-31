@@ -159,7 +159,6 @@ sub _property {
     # we won't even need to generate ->parents.
     if (defined $obj->{properties}{$prop_name}) {
         my $p = $obj->{properties}{$prop_name};
-        weaken($p->{last_parent} = $borrow_obj) if blessed $p;
 
         # array ref containing code means
         my $setting;
@@ -173,6 +172,7 @@ sub _property {
             $obj->set_property($prop_name => $p) if $setting;
         }
 
+        weaken($p->{last_parent} = $borrow_obj) if blessed $p;
         return ($p, $obj);
     }
 

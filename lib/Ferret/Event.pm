@@ -9,6 +9,7 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken);
+use Ferret::Core::Conversion qw(ferret_method ferret_hash);
 
 Ferret::bind_class(
     name => 'Event',
@@ -32,7 +33,10 @@ sub new {
     my ($class, $f, %opts) = @_;
 
     # create a new object.
-    my $event = $class->SUPER::new($f, %opts);
+    my $event = $class->SUPER::new($f,
+        function => {},
+        %opts
+    );
 
     # make the event inherit from the global event prototype.
     $event->add_parent(_global_event_prototype($f));
@@ -80,11 +84,9 @@ sub add_function {
 
     # function name is basically callback name.
     my %opts;
-    if ($func->has_name) {
-        $opts{name} = $func->{name};
-        $event->{function}{ $opts{name} } = $func; # weaken?
-        $opts{priority} = 100 if $opts{name} eq 'default';
-    }
+    $opts{name} = $func->{name} ||= 'F'.($func + 0);
+    $event->{function}{ $opts{name} } = $func; # consider: weaken?
+    $opts{priority} = 100 if $opts{name} eq 'default';
 
     my $code = sub {
         my (
@@ -208,6 +210,12 @@ sub _global_event_prototype {
     my $f = shift;
     return $f->{event_proto} ||= do {
         my $proto = Ferret::Prototype->new($f);
+        $proto->set_property(callbacks => [ sub {
+            ferret_method(sub {
+                my $event = shift;
+                return ferret_hash($event->{function});
+            })
+        } ]);
         $proto;
     };
 }
