@@ -8,12 +8,34 @@ use 5.010;
 
 use parent 'Ferret::Object';
 
+use Scalar::Util qw(weaken);
+
+Ferret::bind_class(
+    name => 'Event',
+
+    # this relates to the class called Event.
+    # it emulates a real class, but it's not truly such.
+    #
+    # explicitly setting the proto and proto class allows
+    # functions such as say.*isa(Event) to behave as expected.
+    #
+    on_bind => sub {
+        my $class = shift;
+        my $proto = _global_event_prototype($class->f);
+        $class->set_property_weak(proto => $proto);
+        weaken($proto->{proto_class} = $class);
+    }
+);
+
 # creates a new event.
 sub new {
     my ($class, $f, %opts) = @_;
 
     # create a new object.
     my $event = $class->SUPER::new($f, %opts);
+
+    # make the event inherit from the global event prototype.
+    $event->add_parent(_global_event_prototype($f));
 
     # conveniently create an event with a function.
     # [ obj, func ]
@@ -179,6 +201,15 @@ sub inside_scope {
     $event->{outer_scope} = $scope;
     $owner->set_property($name => $event) if defined $name;
     return $event;
+}
+
+# return the global ferret prototype from which all events inherit.
+sub _global_event_prototype {
+    my $f = shift;
+    return $f->{event_proto} ||= do {
+        my $proto = Ferret::Prototype->new($f);
+        $proto;
+    };
 }
 
 sub is_method { shift->{is_method} }

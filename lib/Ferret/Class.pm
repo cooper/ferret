@@ -139,7 +139,7 @@ sub _bind_function {
 
 }
 
-# return the global ferret protocol from which all classes inherit.
+# return the global ferret prototype from which all classes inherit.
 sub _global_class_prototype {
     my $f = shift;
     return $f->{class_proto} ||= do {

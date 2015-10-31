@@ -23,6 +23,20 @@ sub new {
     my ($class, $f, %opts) = @_;
     my $context = $class->SUPER::new($f, %opts, is_core => 1);
 
+    # set the object initializer.
+    $context->set_property(Object => $f->{object_initializer});
+    $context->set_property(Obj    => $f->{object_initializer});
+
+    # global special variables.
+    $context->{special}->set_property(argv => [ sub { ferret_list(\@ARGV) }]);
+
+    return $context;
+}
+
+sub add_global_functions {
+    my $context = shift;
+    my $f = $context->f;
+
     # add global functions.
     foreach my $name (keys %functions) {
         my ($code, @args) = @{ $functions{$name} };
@@ -43,15 +57,6 @@ sub new {
 
         $event->inside_scope($name, $context, $context, undef);
     }
-
-    # set the object initializer.
-    $context->set_property(Object => $f->{object_initializer});
-    $context->set_property(Obj    => $f->{object_initializer});
-
-    # global special variables.
-    $context->{special}->set_property(argv => [ sub { ferret_list(\@ARGV) }]);
-
-    return $context;
 }
 
 1

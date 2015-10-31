@@ -8,7 +8,7 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(blessed);
-use List::Util qw(sum);
+use List::Util qw(sum product);
 
 use Ferret::Core::Conversion qw(
     ferret_number perl_number
@@ -45,6 +45,10 @@ my @functions = (
     sum => {
         need => '$nums:Num...',
         code => \&_sum
+    },
+    product => {
+        need => '$nums:Num...',
+        code => \&_product
     },
     equal => {
         need => '$num1:Num $num2:Num',
@@ -132,6 +136,12 @@ sub description {
 sub _sum {
     my ($class, $arguments) = @_;
     my $sum = sum map { perl_number($_) } perl_list($arguments->{nums});
+    return ferret_number($sum);
+}
+
+sub _product {
+    my ($class, $arguments) = @_;
+    my $sum = product map { perl_number($_) } perl_list($arguments->{nums});
     return ferret_number($sum);
 }
 

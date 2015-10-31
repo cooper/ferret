@@ -19,6 +19,14 @@ sub new {
     $f->{special}->set_property($_ => $specials{$_})
         foreach keys %specials;
 
+    # create the core and main context objects.
+    $f->{context}{core} ||=
+        $core_context   ||= Ferret::Core::Context->new($f, %opts);
+    $f->{context}{main} ||= Ferret::Context->new($f,
+        %opts,
+        parent => $f->{context}{core}
+    );
+
     # create the global object initializer.
     $f->{object_initializer} = Ferret::Function->new($f,
         name => 'objectInitializer',
@@ -31,16 +39,8 @@ sub new {
         }
     );
 
-
-    # create the core and main context objects.
-    $f->{context}{core} ||=
-        $core_context   ||= Ferret::Core::Context->new($f, %opts);
-    $f->{context}{main} ||= Ferret::Context->new($f,
-        %opts,
-        parent => $f->{context}{core}
-    );
-
-    # add Perl bindings.
+    # add the Perl bindings.
+    $f->{context}{core}->add_global_functions();
     $f->add_bindings(%class_bindings) unless $f->{no_bindings};
 
     return $f;
@@ -188,6 +188,10 @@ sub add_bindings {
 
 sub add_binding {
     my ($f, %opts) = @_;
+
+    # already bound.
+    my $exists = $class_bindings{ $opts{perl_package} }{class};
+    return $exists if $exists;
 
     # find the context.
     my $context = $f->core_context;

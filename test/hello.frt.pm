@@ -33,7 +33,13 @@ my $result = do {
     undef;
     Ferret::space( $context, 'CORE' ) or die 'CORE error';
 
-    $scope->property_u('say')->call_u( [ str( $f, "Hello World!" ) ], $scope );
+use Data::Dumper;
+$Data::Dumper::Maxdepth = 1;
+print Dumper($scope->property_u('say')), "\n";
+print Dumper($scope->property_u('say')->{default_func}), "\n";
+$scope->property('dump')->call($scope->property_u('say'));
+    print "res: ",
+    $scope->property_u('say')->call_u( [ str( $f, "Hello World!" ) ], $scope ), "\n";
 };
 
 Ferret::runtime();
