@@ -8,8 +8,15 @@ use 5.010;
 use File::Basename 'basename';
 
 sub main {
-    my $doc = shift;
+    my ($doc, $mini) = @_;
     my $doc_perl = $doc->perl_fmt_do;
+
+    # mini means just the content of the document.
+    if ($mini) {
+        my $doc_data = $doc->perl_fmt;
+        return $doc_data->{all_content};
+    }
+
     return get_format(main => {
         content   => $doc_perl,
         file_name => $doc->{name},

@@ -28,17 +28,6 @@ $bot.addCommand("c", func {
     $bot.privmsg($msg.channel, $res.pretty);
 });
 
-$bot.addCommand("p", func {
-    need $msg;
-    $c = COMPILER($msg.fromWord(1));
-    $res = $c.compile();
-    if $res.error {
-        $bot.privmsg($msg.channel, $res.error);
-        return;
-    }
-    $bot.privmsg($msg.channel, $res.perl);
-});
-
 $bot.addCommand("e", func {
     need $msg;
     $res = COMPILER($msg.fromWord(1)).eval();
@@ -49,5 +38,19 @@ $bot.addCommand("e", func {
     $string = inspect(value: $res.result, quiet: true).string;
     $bot.privmsg($msg.channel, $string);
 });
+
+$bot.addCommand("p", handlePerl);
+$bot.addCommand("pp", handlePerl);
+
+func handlePerl {
+    need $msg;
+    $c = COMPILER($msg.fromWord(1));
+    $res = $c.compile($msg.command() == "p");
+    if $res.error {
+        $bot.privmsg($msg.channel, $res.error);
+        return;
+    }
+    $bot.privmsg($msg.channel, $res.perl);
+}
 
 $bot.connect();

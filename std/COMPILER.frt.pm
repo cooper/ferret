@@ -8,7 +8,7 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(looks_like_number);
-use Ferret::Core::Conversion qw(perl_string ferret_string ferretize);
+use Ferret::Core::Conversion qw(perl_string perl_boolean ferret_string ferretize);
 
 use Ferret::Lexer;
 use Ferret::Perl;
@@ -22,6 +22,7 @@ my @methods = (
         code => \&_construct
     },
     compile => {
+        want => '$mini:Bool',
         code => \&_compile
     },
     eval => {
@@ -122,22 +123,23 @@ sub _construct {
 }
 
 sub compile {
-    my $compiler = shift;
+    my ($compiler, $mini) = @_;
 
     # construct
     my $doc = $compiler->construct;
     return \"$$doc" if ref $doc eq 'F::Error';
 
     # compile
-    return eval { Ferret::Perl::main($doc) } // \"$@";
+    return eval { Ferret::Perl::main($doc, $mini) } // \"$@";
 
 }
 
 sub _compile {
-    my ($compiler, undef, undef, undef, $return) = @_;
+    my ($compiler, $arguments, undef, undef, $return) = @_;
+    my $mini = perl_boolean($arguments->{mini});
 
     # compile
-    my $code = $compiler->compile;
+    my $code = $compiler->compile($mini);
     if (ref $code eq 'SCALAR') {
         $return->set_property(error => ferret_string($$code));
         return $return;
