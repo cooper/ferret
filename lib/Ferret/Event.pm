@@ -183,6 +183,7 @@ sub call {
         [ $event, call      => @args ],
         [ $obj,   "$event"  => @args ]
     );
+    $event->{most_recent_fire} = $fire;
 
     return $fire->{override_return} // $return;
 }

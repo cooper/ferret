@@ -71,7 +71,7 @@ sub call {
 
     # initialize it; return the instance.
     my $ret = $class->init($obj, $arguments);
-    return $ret->property('instance');
+    return $ret->property(lc $class->{name});
 
 }
 
@@ -83,6 +83,7 @@ sub init {
     $obj->add_parent($class->prototype);
 
     # fetch or create return object.
+    my $fire;
     my $ret = Ferret::Return->new($class->f);
     if ($class->has_property('_init_')) {
         my $init = $class->property('_init_');
@@ -92,6 +93,7 @@ sub init {
             $class->{outer_scope},
             $ret
         );
+        $fire = $init->{most_recent_fire};
     }
 
     # strong override.
@@ -100,6 +102,14 @@ sub init {
     # inject instance properties.
     $ret->set_property(instance => $obj);
     $ret->set_property(lc $class->{name} => $obj);
+
+    # if init's default func failed (returned undef),
+    # a need was not satisfied. in this case, we will return instance as
+    # the empty object. therefore a class call will return undef.
+    if ($fire && !defined $fire->return_of('default')) {
+        $ret->delete_property(lc $class->{name});
+        $obj->remove_parent($class->prototype);
+    }
 
     return $ret;
 }
@@ -151,23 +161,25 @@ sub _global_class_prototype {
 
 sub _global_init {
     my $f = shift;
-    my $func = Ferret::Function->new($f,
-        name        => 'init',
-        is_method   => 1,
-        code        => sub {
-            my ($class, $arguments) = @_;
-            my $obj = delete $arguments->{obj};
-            return Ferret::Function->new($f,
-                mimic => $class->property('_init_') || undef,
-                code  => sub {
-                    my (undef, $arguments) = @_;
-                    return $class->init($obj, $arguments);
-                }
-            );
-        }
-    );
-    $func->add_argument(name => 'obj');
-    return $func;
+    return $f->{_global_class_init} ||= do {
+        my $func = Ferret::Function->new($f,
+            name        => 'init',
+            is_method   => 1,
+            code        => sub {
+                my ($class, $arguments) = @_;
+                my $obj = delete $arguments->{obj};
+                return Ferret::Function->new($f,
+                    mimic => $class->property('_init_') || undef,
+                    code  => sub {
+                        my (undef, $arguments) = @_;
+                        return $class->init($obj, $arguments);
+                    }
+                );
+            }
+        );
+        $func->add_argument(name => 'obj');
+        $func;
+    };
 }
 
 1
