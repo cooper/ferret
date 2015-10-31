@@ -56,4 +56,10 @@ sub _all {
     return ferret_boolean(all { perl_boolean($_) } values %$arguments);
 }
 
+sub _require {
+    my ($undef, $arguments) = @_;
+    return Ferret::true if perl_boolean($arguments->{test});
+    die; # FIXME: throw
+}
+
 1

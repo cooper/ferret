@@ -160,10 +160,10 @@ sub space {
     return $val if $val && $owner == $context || $tried_files{$file};
 
     # load it.
-    do $file or do { print "error in $file: $@\n" if $@ };
     $tried_files{$file} = 1;
-    return $context->property($space);
+    do $file or do { print "error in $file: $@" and return if $@ };
 
+    return $context->property($space);
 }
 
 sub c2s { my $c = shift; $c =~ s/::/\//g; $c }

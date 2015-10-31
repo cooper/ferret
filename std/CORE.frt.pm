@@ -1,11 +1,6 @@
 # === Document Model ===
-#  Document './test/hello.frt'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Single value [1 items]
-#                  Item 0
-#                      String 'Hello World!'
+#  Document './std/CORE.frt'
+#      Package 'CORE'
 use warnings;
 use strict;
 use utf8;
@@ -24,16 +19,15 @@ use Ferret;
 
 my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello.frt.pm'}++;
+$Ferret::tried_files{'CORE.frt.pm'}++;
 
-use Ferret::Core::Operations qw(str);
+use Ferret::Core::Operations qw();
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
+    my $scope = my $context = $f->get_context('CORE');
     undef;
     Ferret::space( $context, 'CORE' ) or die 'CORE error';
 
-    $scope->property_u('say')->call_u( [ str( $f, "Hello World!" ) ], $scope );
 };
 
 Ferret::runtime();

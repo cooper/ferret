@@ -79,7 +79,7 @@ use 5.010;
 BEGIN {
     unless ( length $Ferret::ferret_root ) {
         my $libs = do '/etc/ferret.conf';
-        ref $libs eq 'ARRAY' or die "config error";
+        ref $libs eq 'ARRAY' or die 'config error';
         $Ferret::ferret_root = shift @$libs;
         unshift @INC, @$libs;
     }
@@ -96,6 +96,7 @@ my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
     undef;
+    Ferret::space( $context, 'CORE' ) or die 'CORE error';
 
     # Function event 'makePoint' callback definition
     {
