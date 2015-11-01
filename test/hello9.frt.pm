@@ -55,8 +55,8 @@ use Ferret::Core::Operations qw(add bool str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
     undef;
-    Ferret::space( $context, 'CORE' ) or die 'CORE error';
 
     # Function event 'sayHello' callback definition
     {

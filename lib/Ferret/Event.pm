@@ -53,6 +53,11 @@ sub new {
         Ferret::String->new($f, str_value => $event->signature_string)
     } ]);
 
+    $event->set_property(name => [ sub {
+        my $event = $_[1];
+        Ferret::String->new($f, str_value => $event->{name})
+    } ]);
+
     return $event;
 }
 

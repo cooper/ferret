@@ -30,16 +30,10 @@ use Ferret::Core::Operations qw(str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
     undef;
-    Ferret::space( $context, 'CORE' ) or die 'CORE error';
 
-use Data::Dumper;
-$Data::Dumper::Maxdepth = 1;
-print Dumper($scope->property_u('say')), "\n";
-print Dumper($scope->property_u('say')->{default_func}), "\n";
-$scope->property('dump')->call($scope->property_u('say'));
-    print "res: ",
-    $scope->property_u('say')->call_u( [ str( $f, "Hello World!" ) ], $scope ), "\n";
+    $scope->property_u('say')->call_u( [ str( $f, "Hello World!" ) ], $scope );
 };
 
 Ferret::runtime();

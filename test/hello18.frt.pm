@@ -111,8 +111,8 @@ use Ferret::Core::Operations qw(add str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
+    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
     undef;
-    Ferret::space( $context, 'CORE' ) or die 'CORE error';
 
     $scope->set_property_ow( $context,
         list => Ferret::List->new( $f, items => [ str( $f, "hi" ) ] ) );

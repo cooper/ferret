@@ -26,7 +26,7 @@ sub desc {
 
 sub perl_fmt {
     my $doc = shift;
-    my ($before_c, $after_c, $includes) = ('') x 3;
+    my ($before_c, $after_c) = ('') x 2;
 
     my @ordered_children = $doc->filter_children(
         order => 'Class Function Spaces rest'
@@ -44,7 +44,6 @@ sub perl_fmt {
 
     return document => {
         'package'      => $doc->{package} // 'main',
-        includes       => $includes,
         operations     => join(' ', sort keys %{ $doc->{required_operations} }),
         upper_content  => $before_c,    # function declarations
         lower_content  => $after_c,     # all other children

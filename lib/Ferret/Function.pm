@@ -48,6 +48,11 @@ sub new {
         Ferret::String->new($f, str_value => $func->signature_string)
     } ]);
 
+    $func->set_property(name => [ sub {
+        my $func = $_[1];
+        Ferret::String->new($f, str_value => $func->{name})
+    } ]);
+
     return $func;
 }
 

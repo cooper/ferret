@@ -39,8 +39,8 @@ use Ferret::Core::Operations qw();
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
+    do 'CORE.frt.pm' or die "Core error: $@" unless 'Math' eq 'CORE';
     undef;
-    Ferret::space( $context, 'CORE' ) or die 'CORE error';
 
     # Function event 'sqrt' callback definition
     {

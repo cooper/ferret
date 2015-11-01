@@ -477,8 +477,8 @@ use Ferret::Core::Operations qw(_not add bool num on str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('IRC');
+    do 'CORE.frt.pm' or die "Core error: $@" unless 'IRC' eq 'CORE';
     undef;
-    Ferret::space( $context, 'CORE' ) or die 'CORE error';
 
     # Anonymous function definition
     {

@@ -207,8 +207,8 @@ use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
+    do 'CORE.frt.pm' or die "Core error: $@" unless 'Math' eq 'CORE';
     undef;
-    Ferret::space( $context, 'CORE' ) or die 'CORE error';
 
     # Class 'Rect'
     {

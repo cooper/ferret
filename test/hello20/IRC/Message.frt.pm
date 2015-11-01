@@ -167,8 +167,8 @@ use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('IRC');
+    do 'CORE.frt.pm' or die "Core error: $@" unless 'IRC' eq 'CORE';
     undef;
-    Ferret::space( $context, 'CORE' ) or die 'CORE error';
 
     # Class 'Message'
     {

@@ -20,11 +20,11 @@ sub new {
         foreach keys %specials;
 
     # create the core and main context objects.
-    $f->{context}{core} ||=
+    $f->{context}{CORE} ||=
         $core_context   ||= Ferret::Core::Context->new($f, %opts);
     $f->{context}{main} ||= Ferret::Context->new($f,
         %opts,
-        parent => $f->{context}{core}
+        parent => $f->{context}{CORE}
     );
 
     # create the global object initializer.
@@ -40,7 +40,7 @@ sub new {
     );
 
     # add the Perl bindings.
-    $f->{context}{core}->add_global_functions();
+    $f->{context}{CORE}->add_global_functions();
     $f->add_bindings(%class_bindings) unless $f->{no_bindings};
 
     return $f;
@@ -109,7 +109,7 @@ sub zero {
 ################
 
 sub main_context { shift->{context}{main}   }
-sub core_context { shift->{context}{core}   }
+sub core_context { shift->{context}{CORE}   }
 
 # fetch a context or create it.
 sub get_context  {
@@ -286,13 +286,14 @@ sub loop_connect {
 
 my $looping;
 sub runtime {
-    return unless $loop;
-    return if $looping;
+    return 1 unless $loop;
+    return 1 if $looping;
     $looping = 1;
     while ($loop->notifiers || $keep_alive) {
         $loop->loop_once;
     }
     undef $looping;
+    return 1;
 }
 
 ################
