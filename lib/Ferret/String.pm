@@ -51,6 +51,10 @@ my @functions = (
     equal => {
         need => '$strs:Str...',
         code => \&_equal
+    },
+    join => {
+        need => '$strs:Str...',
+        code => \&_join
     }
 );
 
@@ -199,12 +203,18 @@ sub equal {
 }
 
 sub _equal {
-    my ($num_class, $arguments) = @_;
+    my (undef, $arguments) = @_;
     my ($first_str, @rest_strs) = perl_list($arguments->{strs});
     foreach (@rest_strs) {
         return Ferret::false if !$first_str->equal($_);
     }
     return Ferret::true;
+}
+
+sub _join {
+    my (undef, $arguments) = @_;
+    my $list = ferret_list(delete $arguments->{strs});
+    return ferret_string($list->join(''));
 }
 
 1

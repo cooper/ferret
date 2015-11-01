@@ -36,6 +36,9 @@ my @methods = (
     shift => {
         code => \&_item_method
     },
+    toSet => {
+        code => \&_to_set
+    },
     pop => {
         code => \&_item_method
     },
@@ -156,6 +159,18 @@ sub _get_value {
     my ($list, $arguments) = @_;
     my $index = perl_number($arguments->{index});
     return $list->get_value($index);
+}
+
+sub _to_set {
+    my ($list, $arguments, $call_scope) = @_;
+    my ($first_obj, @other_objs) = @{ $list->{list_items} };
+
+    # set must have at least two items.
+    if (!$first_obj || !@other_objs) {
+        return Ferret::undefined;
+    }
+
+    return $first_obj->create_set($call_scope, @other_objs);
 }
 
 sub description {

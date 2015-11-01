@@ -1,4 +1,4 @@
-# Copyright (c) 2013, Mitchell Cooper
+# Copyright (c) 2015, Mitchell Cooper
 package Ferret::Set;
 
 use warnings;
@@ -6,14 +6,64 @@ use strict;
 use utf8;
 
 use parent 'Ferret::Object';
-use Ferret::Core::Conversion qw(perl_description ferret_list);
+use Ferret::Core::Conversion qw(perl_description ferret_list perl_list);
 
 *new = *Ferret::bind_constructor;
 
-Ferret::bind_class(
-    name => 'Set',
-    desc => \&description
+my @methods = (
+    methods => {
+        code => \&_methods
+    },
+    toList => {
+        code => \&_to_list
+    }
 );
+
+Ferret::bind_class(
+    name    => 'Set',
+    desc    => \&description,
+    methods => \@methods,
+    init    => \&init
+);
+
+sub init {
+    my $set = shift;
+    $set->set_property_weak(class => $set->{set_class});
+    $set->{set_done} = 1;
+}
+
+sub _property {
+    my ($set, $prop_name) = @_;
+
+    # find function
+    my $set_class = $set->{set_class} or return;
+    my $real_func = $set_class->property($prop_name);
+
+    # special property or not found in class
+    return $set->SUPER::_property($prop_name)
+        if index($prop_name, '*') != -1 || !$real_func;
+
+    # return function
+    my $func = Ferret::Function->new($set->f, name => $prop_name);
+    $func->{code} = sub {
+        #my (undef, $arguments) = @_;
+        #my @args = perl_list($arguments->{args});
+        return $real_func->call(
+            [ @{ $set->{all_objs} } ], # make a copy
+            $set->{set_scope} # scope where set was created. good enough.
+        );
+    };
+    #$func->add_argument(name => 'args', optional => 1, more => 1);
+
+    return ($func, $set);
+}
+
+sub set_property {
+    my $set = shift;
+    # probably just raise an error.
+    die if $set->{set_done}; # FIXME
+    return $set->SUPER::set_property(@_);
+}
 
 sub _methods {
     my $set = shift;
@@ -46,35 +96,9 @@ sub _methods {
     return ferret_list(@good);
 }
 
-sub _property {
-    my ($set, $prop_name) = @_;
-
-    return $set->_methods if $prop_name eq 'methods';
-
-    # find function
-    my $set_class = $set->{set_class} or return;
-    my $real_func = $set_class->property($prop_name) or return;
-
-    # return function
-    my $func = Ferret::Function->new($set->f, name => $prop_name);
-    $func->{code} = sub {
-        # consider: perhaps it should pass additional arguments to function.
-        return $real_func->call(
-            [ @{ $set->{all_objs} } ], # make a copy
-            $set->{set_scope} # scope where set was created. good enough.
-        );
-    };
-
-    return ($func, $set);
-}
-
-sub set_property {
-    # probably just raise an error.
-    die; # FIXME
-}
-
-sub to_list {
-
+sub _to_list {
+    my $set = shift;
+    ferret_list(@{ $set->{all_objs} });
 }
 
 sub description {

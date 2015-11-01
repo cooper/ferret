@@ -1,18 +1,6 @@
 # === Document Model ===
 #  Document './std/CORE.frt'
 #      Package 'CORE'
-#      Function 'say2'
-#          Instruction
-#              Need
-#                  Lexical variable '$msg'
-#                  Bareword 'Str'
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Single value [1 items]
-#                      Item 0
-#                          Lexical variable '$msg'
-#      Include (Str)
 use warnings;
 use strict;
 use utf8;
@@ -40,29 +28,6 @@ my $result = do {
     do 'CORE.frt.pm' or die "Core error: $@" unless 'CORE' eq 'CORE';
     undef;
 
-    # Function event 'say2' callback definition
-    {
-        my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'msg', type => 'Str', more => undef );
-        $func->{code} = sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
-            my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{msg};
-                $scope->set_property( msg => $arguments->{msg} );
-            };
-            $scope->property_u('say')
-              ->call_u( [ $scope->property_u('msg') ], $scope );
-            return $return;
-        };
-        $funcs[0] = Ferret::Event->new(
-            $f,
-            name         => 'say2',
-            default_func => [ undef, $func ]
-        );
-    }
-    $funcs[0]->inside_scope( say2 => $scope, $scope );
-    Ferret::space( $context, $_ ) for qw(CORE::Str Str);
 };
 
 Ferret::runtime();
