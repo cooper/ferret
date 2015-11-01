@@ -9,7 +9,7 @@ use parent 'Ferret::Object';
 
 use Scalar::Util qw(blessed looks_like_number);
 use Ferret::Core::Conversion qw(
-    perl_string perl_number perl_hashref
+    perl_string perl_number perl_hashref perl_list
     ferret_string ferret_list ferret_boolean ferret_number
 );
 
@@ -49,7 +49,7 @@ my @methods = (
 
 my @functions = (
     equal => {
-        need => '$str1:Str $str2:Str',
+        need => '$strs:Str...',
         code => \&_equal
     }
 );
@@ -199,9 +199,12 @@ sub equal {
 }
 
 sub _equal {
-    my ($str_class, $arguments) = @_;
-    my ($str1, $str2) = @$arguments{'str1', 'str2'};
-    return ferret_boolean(equal($str1, $str2));
+    my ($num_class, $arguments) = @_;
+    my ($first_str, @rest_strs) = perl_list($arguments->{strs});
+    foreach (@rest_strs) {
+        return Ferret::false if !$first_str->equal($_);
+    }
+    return Ferret::true;
 }
 
 1

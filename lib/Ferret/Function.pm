@@ -22,10 +22,10 @@ sub new {
     # mimic = copy the signature.
     if (my $mimic = delete $func->{mimic}) {
         ref $mimic or return $func;
-        $mimic = $mimic->{function}{default} if $mimic->isa('Ferret::Event');
-        ref $mimic && $mimic->isa('Ferret::Function') or return $func;
+        $mimic = $mimic->default_func if $mimic->isa('Ferret::Event');
         @$func  {'signature', 'signatures'} =
-        @$mimic {'signature', 'signatures'};
+        @$mimic {'signature', 'signatures'}
+            if ref $mimic && $mimic->isa('Ferret::Function');
     }
 
     # add needs from string.
@@ -115,13 +115,8 @@ sub arguments_satisfy_signature {
         next   if !$arg;                        # want with no value
         next   if !length $type;                # want/need with no type check
 
-        # find scope of interest.
-        my $soi = $func->{outer_scope} || $func->f->main_context;
-        $soi = $soi->closest_context;
-
         # check that it works.
-        my $class_maybe = $soi->property($type);
-        next if $arg->instance_of($class_maybe);
+        next if $func->obj_type_works($arg, $type);
 
         # TODO: check if ellipsis satisfies type
         #       if not, want will make it an empty list,
@@ -133,6 +128,19 @@ sub arguments_satisfy_signature {
 
     }
     return 1;
+}
+
+sub obj_type_works {
+    my ($func, $obj, $type) = @_;
+
+    # find scope of interest.
+    my $soi = $func->{outer_scope} || $func->f->main_context;
+    $soi = $soi->closest_context;
+
+    # check that it works.
+    my $class_maybe = $soi->property($type);
+    return $obj->instance_of($class_maybe);
+
 }
 
 sub signature_string {

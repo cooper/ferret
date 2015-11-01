@@ -51,7 +51,7 @@ my @functions = (
         code => \&_product
     },
     equal => {
-        need => '$num1:Num $num2:Num',
+        need => '$nums:Num...',
         code => \&_equal
     }
 );
@@ -153,8 +153,11 @@ sub equal {
 
 sub _equal {
     my ($num_class, $arguments) = @_;
-    my ($num1, $num2) = @$arguments{'num1', 'num2'};
-    return ferret_boolean(equal($num1, $num2));
+    my ($first_num, @rest_nums) = perl_list($arguments->{nums});
+    foreach (@rest_nums) {
+        return Ferret::false if !$first_num->equal($_);
+    }
+    return Ferret::true;
 }
 
 1

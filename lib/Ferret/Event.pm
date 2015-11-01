@@ -160,7 +160,7 @@ sub call {
     # arguments for the default function.
     $arguments ||= {};
     if (ref $arguments eq 'ARRAY') {
-        my $default = $event->{function}{default} or return;
+        my $default = $event->default_func or return;
         $arguments = $default->handle_arguments($arguments);
     }
 
@@ -195,7 +195,7 @@ sub call {
 
 sub signature_string {
     my $event = shift;
-    my $default = $event->{function}{default} or return '';
+    my $default = $event->default_func or return '';
     return $default->signature_string;
 }
 
@@ -226,6 +226,7 @@ sub _global_event_prototype {
     };
 }
 
-sub is_method { shift->{is_method} }
+sub default_func { shift->{function}{default} }
+sub is_method    { shift->{is_method} }
 
 1
