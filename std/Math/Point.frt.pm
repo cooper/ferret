@@ -74,18 +74,14 @@
 #          Method 'toString'
 #              Instruction
 #                  Return
-#                      Call
-#                          Instance variable '@pretty'
-#                          Structural list [0 items]
+#                      Instance variable '@pretty'
 #          Method 'description'
 #              Instruction
 #                  Return
 #                      Operation
 #                          String 'Point'
 #                          Addition operator (+)
-#                          Call
-#                              Instance variable '@pretty'
-#                              Structural list [0 items]
+#                          Instance variable '@pretty'
 #          Main method 'midpoint'
 #              Instruction
 #                  Need
@@ -332,7 +328,7 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $self->property_u('pretty')->call_u( {}, $scope );
+                return $self->property_u('pretty');
                 return $return;
             };
             $methods[4] = Ferret::Event->new(
@@ -352,11 +348,8 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return add(
-                    $scope,
-                    str( $f, "Point" ),
-                    $self->property_u('pretty')->call_u( {}, $scope )
-                );
+                return add( $scope, str( $f, "Point" ),
+                    $self->property_u('pretty') );
                 return $return;
             };
             $methods[5] = Ferret::Event->new(
@@ -462,15 +455,18 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_     => $scope, $class, $class );
-        $methods[1]->inside_scope( distanceTo => $scope, $proto, $class );
+        $methods[0]->inside_scope( _init_ => $scope, $class, $class, undef );
+        $methods[1]
+          ->inside_scope( distanceTo => $scope, $proto, $class, undef );
         $methods[2]
-          ->inside_scope( distanceFromOrigin => $scope, $proto, $class );
-        $methods[3]->inside_scope( pretty          => $scope, $proto, $class );
-        $methods[4]->inside_scope( toString        => $scope, $proto, $class );
-        $methods[5]->inside_scope( description     => $scope, $proto, $class );
-        $methods[6]->inside_scope( midpoint        => $scope, $class, $class );
-        $methods[7]->inside_scope( distanceBetween => $scope, $class, $class );
+          ->inside_scope( distanceFromOrigin => $scope, $proto, $class, 1 );
+        $methods[3]->inside_scope( pretty   => $scope, $proto, $class, 1 );
+        $methods[4]->inside_scope( toString => $scope, $proto, $class, undef );
+        $methods[5]
+          ->inside_scope( description => $scope, $proto, $class, undef );
+        $methods[6]->inside_scope( midpoint => $scope, $class, $class, undef );
+        $methods[7]
+          ->inside_scope( distanceBetween => $scope, $class, $class, undef );
     }
     Ferret::space( $context, $_ ) for qw(Math::Num Math::Point Num Point);
 };

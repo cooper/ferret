@@ -18,6 +18,7 @@ sub new {
         signatures => [],
         %opts
     );
+    $func->{id} = 'F'.($func + 0);
 
     # mimic = copy the signature.
     if (my $mimic = delete $func->{mimic}) {
@@ -51,6 +52,11 @@ sub new {
     $func->set_property(name => [ sub {
         my $func = $_[1];
         Ferret::String->new($f, str_value => $func->{name})
+    } ]);
+
+    $func->set_property(id => [ sub {
+        my $func = $_[1];
+        Ferret::String->new($f, str_value => $func->{id})
     } ]);
 
     return $func;
@@ -235,12 +241,16 @@ sub inside_scope {
     # $scope    =   the containing scope of the function definition
     # $owner    =   the owner of the function: a scope, class, or prototype
     # $class    =   the containing class of the function (if any)
-    my ($func, $name, $scope, $owner, $class) = @_;
+    # $is_prop  =   the function is a computed property
+    my ($func, $name, $scope, $owner, $class, $is_prop) = @_;
     $func->{class} = $class;
     $func->{outer_scope} = $scope;
     $func->{is_class_func} = 1 if $owner && $owner->isa('Ferret::Class');
     $func->{is_method}     = 1 if $owner && $owner->{is_proto};
-    $owner->set_property($name => $func) if defined $name;
+    $owner->set_property($name => $is_prop ? sub {
+        $func->{last_parent} = shift;
+        return [ $func->call, $func ];
+    } : $func) if defined $name;
     return $func;
 }
 

@@ -160,15 +160,31 @@ sub _property {
     if (defined $obj->{properties}{$prop_name}) {
         my $p = $obj->{properties}{$prop_name};
 
-        # array ref containing code means
+        # array ref containing code means that after computing the value,
+        # we should actually set the property to that value.
         my $setting;
         if (ref $p eq 'ARRAY') {
             $setting = 1;
             $p = shift @$p;
             die unless ref $p eq 'CODE'; # FIXME: lazy
         }
+
+        # code reference is a computed property.
         if (ref $p eq 'CODE') {
             $p = $p->($borrow_obj, $obj); # (obj inheriting, obj owner)
+
+            # if the code returns an array ref, the second arg is the "real"
+            # value of the property. this is used for computed properties.
+            # in such a case, $p is the result of a function of the computation,
+            # and $f is the function itself.
+            #
+            my $f;
+            ($p, $f) = @$p if ref $p eq 'ARRAY';
+            if ($f) {
+                weaken($borrow_obj->{actual_inherited}{$prop_name} = $f);
+                weaken($obj->{actual_props}{$prop_name} = $f);
+            }
+
             $obj->set_property($prop_name => $p) if $setting;
         }
 

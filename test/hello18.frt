@@ -2,7 +2,7 @@ $list = [ "hi" ];
 $list.push("there");
 $list[4] = "yeah";
 
-say("Length: " + $list.length!);
+say("Length: " + $list.length);
 
 for $item in $list {
     say("item: $item");

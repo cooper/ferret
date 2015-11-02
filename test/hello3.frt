@@ -10,8 +10,8 @@ helloWorld("Benjamin", "George");
 func helloWorld {
     need $name1, $name2;
 
-    hello1!;
-    hello2!;
+    hello1();
+    hello2();
 
     func hello1 {
         $hello = "Hello";

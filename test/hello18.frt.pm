@@ -23,9 +23,8 @@
 #                      Operation
 #                          String 'Length: '
 #                          Addition operator (+)
-#                          Call
-#                              Property 'length'
-#                                  Lexical variable '$list'
+#                          Property 'length'
+#                              Lexical variable '$list'
 #      For
 #          Expression ('for' parameter)
 #              Lexical variable '$item'
@@ -126,7 +125,6 @@ my $result = do {
                 $scope,
                 str( $f, "Length: " ),
                 $scope->property_u('list')->property_u('length')
-                  ->call_u( {}, $scope )
             )
         ],
         $scope

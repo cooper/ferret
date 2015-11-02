@@ -28,6 +28,18 @@
 #                                  Lexical variable '$x'
 #                              Item 1
 #                                  Lexical variable '$y'
+#          Method 'vertices'
+#              Instruction
+#                  Return
+#                      Value list [4 items]
+#                          Item 0
+#                              Instance variable '@topLeft'
+#                          Item 1
+#                              Instance variable '@topRight'
+#                          Item 2
+#                              Instance variable '@bottomLeft'
+#                          Item 3
+#                              Instance variable '@bottomRight'
 #          Method 'bottomLeft'
 #              Instruction
 #                  Return
@@ -87,11 +99,9 @@
 #                          Bareword 'Line'
 #                          Set [2 items]
 #                              Item 0
-#                                  Call
-#                                      Instance variable '@bottomLeft'
+#                                  Instance variable '@bottomLeft'
 #                              Item 1
-#                                  Call
-#                                      Instance variable '@bottomRight'
+#                                  Instance variable '@bottomRight'
 #          Method 'topLine'
 #              Instruction
 #                  Return
@@ -99,11 +109,9 @@
 #                          Bareword 'Line'
 #                          Set [2 items]
 #                              Item 0
-#                                  Call
-#                                      Instance variable '@topLeft'
+#                                  Instance variable '@topLeft'
 #                              Item 1
-#                                  Call
-#                                      Instance variable '@topRight'
+#                                  Instance variable '@topRight'
 #          Method 'center'
 #              Instruction
 #                  Assignment (lexical variable '$x')
@@ -143,9 +151,7 @@
 #                          Instance variable '@origin'
 #              Instruction
 #                  Assignment (lexical variable '$c')
-#                      Call
-#                          Instance variable '@center'
-#                          Structural list [0 items]
+#                      Instance variable '@center'
 #              Instruction
 #                  Assignment (lexical variable '$cx')
 #                      Property 'x'
@@ -276,6 +282,34 @@ my $result = do {
             );
         }
 
+        # Method event 'vertices' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                return Ferret::List->new(
+                    $f,
+                    items => [
+                        $self->property_u('topLeft'),
+                        $self->property_u('topRight'),
+                        $self->property_u('bottomLeft'),
+                        $self->property_u('bottomRight')
+                    ]
+                );
+                return $return;
+            };
+            $methods[1] = Ferret::Event->new(
+                $f,
+                name         => 'vertices',
+                default_func => [ undef, $func ]
+            );
+        }
+
         # Method event 'bottomLeft' definition
         {
             my $func = Ferret::Function->new(
@@ -289,7 +323,7 @@ my $result = do {
                 return $self->property_u('origin');
                 return $return;
             };
-            $methods[1] = Ferret::Event->new(
+            $methods[2] = Ferret::Event->new(
                 $f,
                 name         => 'bottomLeft',
                 default_func => [ undef, $func ]
@@ -319,7 +353,7 @@ my $result = do {
                 );
                 return $return;
             };
-            $methods[2] = Ferret::Event->new(
+            $methods[3] = Ferret::Event->new(
                 $f,
                 name         => 'bottomRight',
                 default_func => [ undef, $func ]
@@ -349,7 +383,7 @@ my $result = do {
                 );
                 return $return;
             };
-            $methods[3] = Ferret::Event->new(
+            $methods[4] = Ferret::Event->new(
                 $f,
                 name         => 'topLeft',
                 default_func => [ undef, $func ]
@@ -383,7 +417,7 @@ my $result = do {
                 );
                 return $return;
             };
-            $methods[4] = Ferret::Event->new(
+            $methods[5] = Ferret::Event->new(
                 $f,
                 name         => 'topRight',
                 default_func => [ undef, $func ]
@@ -402,14 +436,14 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property_u('Line')->call_u(
                     [
-                        $self->property_u('bottomLeft')->call_u( {}, $scope ),
-                        $self->property_u('bottomRight')->call_u( {}, $scope )
+                        $self->property_u('bottomLeft'),
+                        $self->property_u('bottomRight')
                     ],
                     $scope
                 );
                 return $return;
             };
-            $methods[5] = Ferret::Event->new(
+            $methods[6] = Ferret::Event->new(
                 $f,
                 name         => 'bottomLine',
                 default_func => [ undef, $func ]
@@ -428,14 +462,14 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property_u('Line')->call_u(
                     [
-                        $self->property_u('topLeft')->call_u( {}, $scope ),
-                        $self->property_u('topRight')->call_u( {}, $scope )
+                        $self->property_u('topLeft'),
+                        $self->property_u('topRight')
                     ],
                     $scope
                 );
                 return $return;
             };
-            $methods[6] = Ferret::Event->new(
+            $methods[7] = Ferret::Event->new(
                 $f,
                 name         => 'topLine',
                 default_func => [ undef, $func ]
@@ -480,7 +514,7 @@ my $result = do {
                     $scope );
                 return $return;
             };
-            $methods[7] = Ferret::Event->new(
+            $methods[8] = Ferret::Event->new(
                 $f,
                 name         => 'center',
                 default_func => [ undef, $func ]
@@ -502,7 +536,7 @@ my $result = do {
                 $scope->set_property_ow( $context,
                     oy => $self->property_u('origin')->property_u('y') );
                 $scope->set_property_ow( $context,
-                    c => $self->property_u('center')->call_u( {}, $scope ) );
+                    c => $self->property_u('center') );
                 $scope->set_property_ow( $context,
                     cx => $scope->property_u('c')->property_u('x') );
                 $scope->set_property_ow( $context,
@@ -518,21 +552,23 @@ my $result = do {
                 );
                 return $return;
             };
-            $methods[8] = Ferret::Event->new(
+            $methods[9] = Ferret::Event->new(
                 $f,
                 name         => 'description',
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_      => $scope, $class, $class );
-        $methods[1]->inside_scope( bottomLeft  => $scope, $proto, $class );
-        $methods[2]->inside_scope( bottomRight => $scope, $proto, $class );
-        $methods[3]->inside_scope( topLeft     => $scope, $proto, $class );
-        $methods[4]->inside_scope( topRight    => $scope, $proto, $class );
-        $methods[5]->inside_scope( bottomLine  => $scope, $proto, $class );
-        $methods[6]->inside_scope( topLine     => $scope, $proto, $class );
-        $methods[7]->inside_scope( center      => $scope, $proto, $class );
-        $methods[8]->inside_scope( description => $scope, $proto, $class );
+        $methods[0]->inside_scope( _init_   => $scope, $class, $class, undef );
+        $methods[1]->inside_scope( vertices => $scope, $proto, $class, 1 );
+        $methods[2]->inside_scope( bottomLeft  => $scope, $proto, $class, 1 );
+        $methods[3]->inside_scope( bottomRight => $scope, $proto, $class, 1 );
+        $methods[4]->inside_scope( topLeft     => $scope, $proto, $class, 1 );
+        $methods[5]->inside_scope( topRight    => $scope, $proto, $class, 1 );
+        $methods[6]->inside_scope( bottomLine  => $scope, $proto, $class, 1 );
+        $methods[7]->inside_scope( topLine     => $scope, $proto, $class, 1 );
+        $methods[8]->inside_scope( center      => $scope, $proto, $class, 1 );
+        $methods[9]
+          ->inside_scope( description => $scope, $proto, $class, undef );
     }
     Ferret::space( $context, $_ )
       for qw(Math::Line Math::Num Math::Point Line Num Point);

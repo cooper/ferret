@@ -249,10 +249,8 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Equality
-#                              Call
-#                                  Property 'length'
-#                                      Lexical variable '$line'
-#                                  Structural list [0 items]
+#                              Property 'length'
+#                                  Lexical variable '$line'
 #                              Number '0'
 #                      Instruction
 #                          Call
@@ -623,12 +621,14 @@ my $result = do {
                         $scope
                     )
                 );
-                on( $self->property_u('sock'),
-                    'connected', $self, $scope,
-                    $funcs[0]->inside_scope( (undef) => $scope, $scope ) );
-                on( $self->property_u('sock'),
-                    'gotLine', $self, $scope,
-                    $funcs[1]->inside_scope( (undef) => $scope, $scope ) );
+                on( $self->property_u('sock'), 'connected', $self, $scope,
+                    $funcs[0]
+                      ->inside_scope( (undef) => $scope, $scope, undef, undef )
+                );
+                on( $self->property_u('sock'), 'gotLine', $self, $scope,
+                    $funcs[1]
+                      ->inside_scope( (undef) => $scope, $scope, undef, undef )
+                );
                 return $return;
             };
             $methods[0] = Ferret::Event->new(
@@ -852,7 +852,7 @@ my $result = do {
                         bool(
                             _not(
                                 $scope->property_u('line')
-                                  ->property_u('length')->call_u( {}, $scope )
+                                  ->property_u('length')
                                   ->equal_to( num( $f, 0 ), $scope )
                             )
                         )
@@ -1152,18 +1152,25 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_        => $scope, $class, $class );
-        $methods[1]->inside_scope( addCommand    => $scope, $proto, $class );
-        $methods[2]->inside_scope( connect       => $scope, $proto, $class );
-        $methods[3]->inside_scope( send          => $scope, $proto, $class );
-        $methods[4]->inside_scope( handleLine    => $scope, $proto, $class );
-        $methods[5]->inside_scope( privmsg       => $scope, $proto, $class );
-        $methods[6]->inside_scope( joinChannels  => $scope, $proto, $class );
-        $methods[7]->inside_scope( pong          => $scope, $proto, $class );
-        $methods[8]->inside_scope( handleMessage => $scope, $proto, $class );
-        $methods[9]->inside_scope( commandHello  => $scope, $proto, $class );
-        $methods[10]->inside_scope( commandAdd     => $scope, $proto, $class );
-        $methods[11]->inside_scope( commandFactoid => $scope, $proto, $class );
+        $methods[0]->inside_scope( _init_ => $scope, $class, $class, undef );
+        $methods[1]
+          ->inside_scope( addCommand => $scope, $proto, $class, undef );
+        $methods[2]->inside_scope( connect => $scope, $proto, $class, undef );
+        $methods[3]->inside_scope( send    => $scope, $proto, $class, undef );
+        $methods[4]
+          ->inside_scope( handleLine => $scope, $proto, $class, undef );
+        $methods[5]->inside_scope( privmsg => $scope, $proto, $class, undef );
+        $methods[6]
+          ->inside_scope( joinChannels => $scope, $proto, $class, undef );
+        $methods[7]->inside_scope( pong => $scope, $proto, $class, undef );
+        $methods[8]
+          ->inside_scope( handleMessage => $scope, $proto, $class, undef );
+        $methods[9]
+          ->inside_scope( commandHello => $scope, $proto, $class, undef );
+        $methods[10]
+          ->inside_scope( commandAdd => $scope, $proto, $class, undef );
+        $methods[11]
+          ->inside_scope( commandFactoid => $scope, $proto, $class, undef );
     }
     Ferret::space( $context, $_ )
       for

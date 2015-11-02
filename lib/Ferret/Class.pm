@@ -131,16 +131,16 @@ sub _bind_function {
             is_method => $is_method,
             class     => $class
         );
-        $where->set_property($name => $e);
+        $e->inside_scope($name => undef, $where, $class, $opts{prop});
         $e;
     };
 
     # create function.
     my $func = Ferret::Function->new($f,
-        name      => $opts{callback} || 'default',
-        code      => $opts{code},
-        need      => $opts{need},
-        want      => $opts{want},
+        name => $opts{callback} || 'default',
+        code => $opts{code},
+        need => $opts{need},
+        want => $opts{want},
         is_method => $is_method
     );
 

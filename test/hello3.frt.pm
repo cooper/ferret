@@ -177,8 +177,8 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $funcs[0]->inside_scope( hello1 => $scope, $scope );
-            $funcs[1]->inside_scope( hello2 => $scope, $scope );
+            $funcs[0]->inside_scope( hello1 => $scope, $scope, undef, undef );
+            $funcs[1]->inside_scope( hello2 => $scope, $scope, undef, undef );
             do {
                 return unless defined $arguments->{name1};
                 $scope->set_property( name1 => $arguments->{name1} );
@@ -197,7 +197,7 @@ my $result = do {
             default_func => [ undef, $func ]
         );
     }
-    $funcs[2]->inside_scope( helloWorld => $scope, $scope );
+    $funcs[2]->inside_scope( helloWorld => $scope, $scope, undef, undef );
     $scope->property_u('helloWorld')
       ->call_u( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
         $scope );

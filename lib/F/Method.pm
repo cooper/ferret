@@ -42,6 +42,7 @@ sub perl_fmt {
         name       => $method->{name},
         statements => $content,
         arguments  => $arguments,
+        is_prop    => $method->{is_prop} ? '1' : 'undef',
         owner      => $method->{main} ? 'class' : 'proto'
     };
 

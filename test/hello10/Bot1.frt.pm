@@ -257,12 +257,14 @@ my $result = do {
                         $scope
                     )
                 );
-                on( $self->property_u('sock'),
-                    'connected', $self, $scope,
-                    $funcs[0]->inside_scope( (undef) => $scope, $scope ) );
-                on( $self->property_u('sock'),
-                    'gotLine', $self, $scope,
-                    $funcs[1]->inside_scope( (undef) => $scope, $scope ) );
+                on( $self->property_u('sock'), 'connected', $self, $scope,
+                    $funcs[0]
+                      ->inside_scope( (undef) => $scope, $scope, undef, undef )
+                );
+                on( $self->property_u('sock'), 'gotLine', $self, $scope,
+                    $funcs[1]
+                      ->inside_scope( (undef) => $scope, $scope, undef, undef )
+                );
                 return $return;
             };
             $methods[0] = Ferret::Event->new(
@@ -326,9 +328,9 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_  => $scope, $class, $class );
-        $methods[1]->inside_scope( connect => $scope, $proto, $class );
-        $methods[2]->inside_scope( send    => $scope, $proto, $class );
+        $methods[0]->inside_scope( _init_  => $scope, $class, $class, undef );
+        $methods[1]->inside_scope( connect => $scope, $proto, $class, undef );
+        $methods[2]->inside_scope( send    => $scope, $proto, $class, undef );
     }
     Ferret::space( $context, $_ ) for qw(Num Socket Socket::TCP Str);
 };

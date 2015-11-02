@@ -139,12 +139,16 @@ my $result = do {
     $scope->set_property_ow( $context, str => str( $f, "hi" ) );
     on( $scope->property_u('str'),
         'length', $self, $scope,
-        $funcs[0]->inside_scope( (undef) => $scope, $scope ) );
+        $funcs[0]->inside_scope( (undef) => $scope, $scope, undef, undef ) );
     $scope->property_u('str')->property_u('length')->call_u( {}, $scope );
     str( $f, "hello" )->property_u('length')->call_u( {}, $scope );
-    on( $scope->property_u('String')->property_u('proto'),
-        'length', $self, $scope,
-        $funcs[1]->inside_scope( (undef) => $scope, $scope ) );
+    on(
+        $scope->property_u('String')->property_u('proto'),
+        'length',
+        $self,
+        $scope,
+        $funcs[1]->inside_scope( (undef) => $scope, $scope, undef, undef )
+    );
     str( $f, "hello" )->property_u('length')->call_u( {}, $scope );
 };
 

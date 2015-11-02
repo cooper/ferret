@@ -169,6 +169,12 @@ sub c_METHOD {
     return $method;
 }
 
+sub c_COMPUTED {
+    my $method = &c_METHOD;
+    $method->{is_prop} = 1;
+    return $method;
+}
+
 sub c_FUNCTION {
     my ($c, $value) = @_;
     my $function = F::Function->new(
@@ -966,7 +972,8 @@ sub c_any {
     # these things cannot start an instruction.
     # (tokens only) (this is horrendous)
     my @ignore = qw(
-        ^FUNCTION$          ^METHOD$        ^CLOSURE_.+$
+        ^FUNCTION$          ^CLOSURE_.+$
+        ^METHOD$            ^COMPUTED$
         ^PKG_DEC$           ^CLASS_DEC$
         ^KEYWORD_INSIDE$    ^KEYWORD_FOR$
         ^KEYWORD_ON$        ^KEYWORD_END$   ^KEYWORD_IF$

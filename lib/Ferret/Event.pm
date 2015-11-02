@@ -37,6 +37,7 @@ sub new {
         function => {},
         %opts
     );
+    $event->{id} = 'E'.($event + 0);
 
     # make the event inherit from the global event prototype.
     $event->add_parent(_global_event_prototype($f));
@@ -48,6 +49,7 @@ sub new {
         $event->add_function(@$func);
     }
 
+    # consider: this could change if default func changes.
     $event->set_property(signature => [ sub {
         my $event = $_[1];
         Ferret::String->new($f, str_value => $event->signature_string)
@@ -56,6 +58,11 @@ sub new {
     $event->set_property(name => [ sub {
         my $event = $_[1];
         Ferret::String->new($f, str_value => $event->{name})
+    } ]);
+
+    $event->set_property(id => [ sub {
+        my $event = $_[1];
+        Ferret::String->new($f, str_value => $event->{id})
     } ]);
 
     return $event;
@@ -89,7 +96,7 @@ sub add_function {
 
     # function name is basically callback name.
     my %opts;
-    $opts{name} = $func->{name} ||= 'F'.($func + 0);
+    $opts{name} = $func->{name} ||= $func->{id};
     $event->{function}{ $opts{name} } = $func; # consider: weaken?
     $opts{priority} = 100 if $opts{name} eq 'default';
 
@@ -134,7 +141,7 @@ sub add_function {
 
     # choose the appropriate target.
     if ($obj) {
-        $obj->on("$event" => $code, %opts);
+        $obj->on($event->{id} => $code, %opts);
     }
     else {
         $event->on(call => $code, %opts);
@@ -185,8 +192,8 @@ sub call {
     );
 
     my $fire = Evented::Object::fire_events_together(
-        [ $event, call      => @args ],
-        [ $obj,   "$event"  => @args ]
+        [ $event, call         => @args ],
+        [ $obj,   $event->{id} => @args ]
     );
     $event->{most_recent_fire} = $fire;
 
@@ -204,10 +211,14 @@ sub inside_scope {
     # $scope    =   the containing scope of the function definition
     # $owner    =   the owner of the function: a scope, class, or prototype
     # $class    =   the containing class of the function (if any)
-    my ($event, $name, $scope, $owner, $class) = @_;
+    # $is_prop  =   the event is a computed property
+    my ($event, $name, $scope, $owner, $class, $is_prop) = @_;
     $event->{class} = $class;
     $event->{outer_scope} = $scope;
-    $owner->set_property($name => $event) if defined $name;
+    $owner->set_property($name => $is_prop ? sub {
+        $event->{last_parent} = shift;
+        return [ $event->call, $event ];
+    } : $event) if defined $name;
     return $event;
 }
 

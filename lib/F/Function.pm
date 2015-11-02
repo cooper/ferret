@@ -62,6 +62,7 @@ sub perl_fmt {
         id         => $func->document->{function_cid}++,
         name       => $func->{anonymous} ? '(undef)' : $func->{name},
         semi       => $func->{anonymous} ? '' : ';', # probably temporary hack
+        is_prop    => $func->{is_prop} ? '1' : 'undef',
         statements => $content,
         arguments  => $arguments
     };

@@ -86,7 +86,7 @@ my $result = do {
             default_func => [ undef, $func ]
         );
     }
-    $funcs[0]->inside_scope( sayHello => $scope, $scope );
+    $funcs[0]->inside_scope( sayHello => $scope, $scope, undef, undef );
     Ferret::space( $context, $_ ) for qw(Str);
     {
         my $maybe_0 = $scope->property_u('sayHello');

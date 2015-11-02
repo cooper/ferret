@@ -12,20 +12,20 @@ method distanceTo {
     return sqrt($dx ^ 2 + $dy ^ 2);
 }
 
-method distanceFromOrigin {
+prop distanceFromOrigin {
     return @distanceTo(*class(0, 0));
 }
 
-method pretty {
+prop pretty {
     return "(@x, @y)";
 }
 
 method toString {
-    return @pretty();
+    return @pretty;
 }
 
 method description {
-    return "Point" + @pretty();
+    return "Point" + @pretty;
 }
 
 main method midpoint {

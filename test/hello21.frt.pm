@@ -123,7 +123,7 @@ my $result = do {
             'expire',
             $self,
             $scope,
-            $funcs[0]->inside_scope( (undef) => $scope, $scope )
+            $funcs[0]->inside_scope( (undef) => $scope, $scope, undef, undef )
         );
     }
     foreach (

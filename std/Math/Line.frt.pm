@@ -11,6 +11,78 @@
 #                  Need
 #                      Instance variable '@pt2'
 #                      Bareword 'Point'
+#          Method 'endpoints'
+#              Instruction
+#                  Return
+#                      Value list [2 items]
+#                          Item 0
+#                              Instance variable '@pt1'
+#                          Item 1
+#                              Instance variable '@pt2'
+#          Method 'pretty'
+#              Instruction
+#                  Assignment (lexical variable '$mp')
+#                      Instance variable '@midpoint'
+#              Instruction
+#                  Assignment (lexical variable '$pox')
+#                      Property 'x'
+#                          Instance variable '@pt1'
+#              Instruction
+#                  Assignment (lexical variable '$poy')
+#                      Property 'y'
+#                          Instance variable '@pt1'
+#              Instruction
+#                  Assignment (lexical variable '$ptx')
+#                      Property 'x'
+#                          Instance variable '@pt2'
+#              Instruction
+#                  Assignment (lexical variable '$pty')
+#                      Property 'y'
+#                          Instance variable '@pt2'
+#              Instruction
+#                  Assignment (lexical variable '$mx')
+#                      Property 'x'
+#                          Lexical variable '$mp'
+#              Instruction
+#                  Assignment (lexical variable '$my')
+#                      Property 'y'
+#                          Lexical variable '$mp'
+#              Instruction
+#                  Return
+#                      Operation
+#                          String 'Segment( |('
+#                          Addition operator (+)
+#                          Lexical variable '$pox'
+#                          Addition operator (+)
+#                          String ', '
+#                          Addition operator (+)
+#                          Lexical variable '$poy'
+#                          Addition operator (+)
+#                          String ')---('
+#                          Addition operator (+)
+#                          Lexical variable '$mx'
+#                          Addition operator (+)
+#                          String ', '
+#                          Addition operator (+)
+#                          Lexical variable '$my'
+#                          Addition operator (+)
+#                          String ')---('
+#                          Addition operator (+)
+#                          Lexical variable '$ptx'
+#                          Addition operator (+)
+#                          String ', '
+#                          Addition operator (+)
+#                          Lexical variable '$pty'
+#                          Addition operator (+)
+#                          String ')|; Length = '
+#                          Addition operator (+)
+#                          Instance variable '@length'
+#                          Addition operator (+)
+#                          String ' )'
+#          Method 'description'
+#              Instruction
+#                  Return
+#                      Instance variable '@pretty'
 #          Method 'midpoint'
 #              Instruction
 #                  Return
@@ -52,7 +124,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Line.frt.pm'}++;
 
-use Ferret::Core::Operations qw();
+use Ferret::Core::Operations qw(add str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('Math');
@@ -109,6 +181,91 @@ my $result = do {
             );
         }
 
+        # Method event 'endpoints' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                return Ferret::List->new( $f,
+                    items =>
+                      [ $self->property_u('pt1'), $self->property_u('pt2') ] );
+                return $return;
+            };
+            $methods[1] = Ferret::Event->new(
+                $f,
+                name         => 'endpoints',
+                default_func => [ undef, $func ]
+            );
+        }
+
+        # Method event 'pretty' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                $scope->set_property_ow( $context,
+                    mp => $self->property_u('midpoint') );
+                $scope->set_property_ow( $context,
+                    pox => $self->property_u('pt1')->property_u('x') );
+                $scope->set_property_ow( $context,
+                    poy => $self->property_u('pt1')->property_u('y') );
+                $scope->set_property_ow( $context,
+                    ptx => $self->property_u('pt2')->property_u('x') );
+                $scope->set_property_ow( $context,
+                    pty => $self->property_u('pt2')->property_u('y') );
+                $scope->set_property_ow( $context,
+                    mx => $scope->property_u('mp')->property_u('x') );
+                $scope->set_property_ow( $context,
+                    my => $scope->property_u('mp')->property_u('y') );
+                return add(
+                    $scope,                      str( $f, "Segment( |(" ),
+                    $scope->property_u('pox'),   str( $f, ", " ),
+                    $scope->property_u('poy'),   str( $f, ")---(" ),
+                    $scope->property_u('mx'),    str( $f, ", " ),
+                    $scope->property_u('my'),    str( $f, ")---(" ),
+                    $scope->property_u('ptx'),   str( $f, ", " ),
+                    $scope->property_u('pty'),   str( $f, ")|; Length = " ),
+                    $self->property_u('length'), str( $f, " )" )
+                );
+                return $return;
+            };
+            $methods[2] = Ferret::Event->new(
+                $f,
+                name         => 'pretty',
+                default_func => [ undef, $func ]
+            );
+        }
+
+        # Method event 'description' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                return $self->property_u('pretty');
+                return $return;
+            };
+            $methods[3] = Ferret::Event->new(
+                $f,
+                name         => 'description',
+                default_func => [ undef, $func ]
+            );
+        }
+
         # Method event 'midpoint' definition
         {
             my $func = Ferret::Function->new(
@@ -124,7 +281,7 @@ my $result = do {
                   ->property_u('midpoint')->call_u( {}, $scope );
                 return $return;
             };
-            $methods[1] = Ferret::Event->new(
+            $methods[4] = Ferret::Event->new(
                 $f,
                 name         => 'midpoint',
                 default_func => [ undef, $func ]
@@ -145,15 +302,19 @@ my $result = do {
                   ->call_u( [ $self->property_u('pt2') ], $scope );
                 return $return;
             };
-            $methods[2] = Ferret::Event->new(
+            $methods[5] = Ferret::Event->new(
                 $f,
                 name         => 'length',
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_   => $scope, $class, $class );
-        $methods[1]->inside_scope( midpoint => $scope, $proto, $class );
-        $methods[2]->inside_scope( length   => $scope, $proto, $class );
+        $methods[0]->inside_scope( _init_    => $scope, $class, $class, undef );
+        $methods[1]->inside_scope( endpoints => $scope, $proto, $class, 1 );
+        $methods[2]->inside_scope( pretty    => $scope, $proto, $class, 1 );
+        $methods[3]
+          ->inside_scope( description => $scope, $proto, $class, undef );
+        $methods[4]->inside_scope( midpoint => $scope, $proto, $class, 1 );
+        $methods[5]->inside_scope( length   => $scope, $proto, $class, 1 );
     }
     Ferret::space( $context, $_ ) for qw(Math::Point Point);
 };

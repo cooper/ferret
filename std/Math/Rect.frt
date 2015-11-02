@@ -6,31 +6,40 @@ init {
     @origin = Point($x, $y);
 }
 
-method bottomLeft {
+prop vertices {
+    return [
+        @topLeft,
+        @topRight,
+        @bottomLeft,
+        @bottomRight
+    ];
+}
+
+prop bottomLeft {
     return @origin;
 }
 
-method bottomRight {
+prop bottomRight {
     return Point(@origin.x + @width, @origin.y);
 }
 
-method topLeft {
+prop topLeft {
     return Point(@origin.x, @origin.y + @height);
 }
 
-method topRight {
+prop topRight {
     return Point(@origin.x + @width, @origin.y + @height);
 }
 
-method bottomLine {
-    return Line(@bottomLeft!, @bottomRight!);
+prop bottomLine {
+    return Line(@bottomLeft, @bottomRight);
 }
 
-method topLine {
-    return Line(@topLeft!, @topRight!);
+prop topLine {
+    return Line(@topLeft, @topRight);
 }
 
-method center {
+prop center {
     $x = @origin.x + @width  * 0.5;
     $y = @origin.y + @height * 0.5;
     return Point($x, $y);
@@ -39,7 +48,7 @@ method center {
 method description {
     $ox = @origin.x;
     $oy = @origin.y;
-    $c  = @center();
+    $c  = @center;
     $cx = $c.x;
     $cy = $c.y;
     return "Rect( Origin($ox, $oy); Center($cx, $cy); Width = @width; Height = @height )";

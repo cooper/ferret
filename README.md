@@ -84,10 +84,10 @@ All Ferret data types are objects. Yeah, that sounds pretty cliché nowadays,
 but Ferret's inheritance system makes it unique (see "Inheritance").
 
 ```
-"hello".length()                        # 5
+"hello".length                          # 5
 1.odd                                   # true
 (test: "hello").test                    # "hello"
-Math::Rect(10, 10, 10, 10).center()     # Math::Point(10, 10)
+Math::Rect(10, 10, 10, 10).center       # Math::Point(10, 10)
 ```
 
 #### Perl

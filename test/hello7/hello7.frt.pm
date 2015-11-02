@@ -19,9 +19,8 @@
 #                              Number '10'
 #      Instruction
 #          Assignment (lexical variable '$center')
-#              Call
-#                  Property 'center'
-#                      Lexical variable '$rect'
+#              Property 'center'
+#                  Lexical variable '$rect'
 #      Instruction
 #          Call
 #              Bareword 'say'
@@ -39,9 +38,8 @@
 #                      Operation
 #                          String 'Center dis...'
 #                          Addition operator (+)
-#                          Call
-#                              Property 'distanceFromOrigin'
-#                                  Lexical variable '$center'
+#                          Property 'distanceFromOrigin'
+#                              Lexical variable '$center'
 #      Instruction
 #          Assignment (lexical variable '$otherPt')
 #              Call
@@ -62,6 +60,7 @@
 #                                      Lexical variable '$center'
 #                                  Item 1
 #                                      Lexical variable '$otherPt'
+#                          Structural list [0 items]
 #      Instruction
 #          Call
 #              Bareword 'say'
@@ -127,9 +126,7 @@ my $result = do {
         )
     );
     $scope->set_property_ow( $context,
-        center =>
-          $scope->property_u('rect')->property_u('center')->call_u( {}, $scope )
-    );
+        center => $scope->property_u('rect')->property_u('center') );
     $scope->property_u('say')->call_u(
         [
             add(
@@ -145,7 +142,6 @@ my $result = do {
                 $scope,
                 str( $f, "Center distance from origin: " ),
                 $scope->property_u('center')->property_u('distanceFromOrigin')
-                  ->call_u( {}, $scope )
             )
         ],
         $scope

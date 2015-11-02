@@ -19,7 +19,8 @@ my @methods = (
         code => \&op_add
     },
     length => {
-        code => \&_length
+        code => \&_length,
+        prop => 1
     },
     split => {
         want => '$separator:Str $limit:Num', # TODO: $separator:Str|Reg

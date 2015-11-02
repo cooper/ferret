@@ -568,7 +568,7 @@ my $result = do {
             return $return;
         };
     }
-    $funcs[0]->inside_scope( handlePerl => $scope, $scope );
+    $funcs[0]->inside_scope( handlePerl => $scope, $scope, undef, undef );
     Ferret::space( $context, $_ ) for qw(COMPILER IRC IRC::Bot);
     $scope->set_property_ow(
         $context,
@@ -587,25 +587,28 @@ my $result = do {
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
             str( $f, "info" ),
-            $funcs[1]->inside_scope( (undef) => $scope, $scope )
+            $funcs[1]->inside_scope( (undef) => $scope, $scope, undef, undef )
         ],
         $scope
     );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
-            str( $f, "t" ), $funcs[2]->inside_scope( (undef) => $scope, $scope )
+            str( $f, "t" ),
+            $funcs[2]->inside_scope( (undef) => $scope, $scope, undef, undef )
         ],
         $scope
     );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
-            str( $f, "c" ), $funcs[3]->inside_scope( (undef) => $scope, $scope )
+            str( $f, "c" ),
+            $funcs[3]->inside_scope( (undef) => $scope, $scope, undef, undef )
         ],
         $scope
     );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
-            str( $f, "e" ), $funcs[4]->inside_scope( (undef) => $scope, $scope )
+            str( $f, "e" ),
+            $funcs[4]->inside_scope( (undef) => $scope, $scope, undef, undef )
         ],
         $scope
     );

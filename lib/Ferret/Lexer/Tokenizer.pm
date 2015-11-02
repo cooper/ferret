@@ -13,12 +13,12 @@ my $current_line;
 
 # keywords
 my $keyword_reg = '^('.join('|', qw{
-    package     class       main        method
+    package     class       end
+    main        method      func        prop
     need        want        inside      then
     if          else        return      after
-    for         in          func
+    for         in          init        on
     true        false       undefined
-    init        on          end
     delete      weaken
     __END__     __LINE__
 }).')$';
@@ -280,6 +280,12 @@ sub tok_BAREWORD {
     if ($last->[0] eq 'KEYWORD_FUNC') {
         delete $tokens->[-1];
         return [ FUNCTION => { name => $value } ];
+    }
+
+    # property.
+    if ($last->[0] eq 'KEYWORD_PROP') {
+        delete $tokens->[-1];
+        return [ COMPUTED => { name => $value } ];
     }
 
     # method.
