@@ -247,10 +247,11 @@ sub inside_scope {
     $func->{outer_scope} = $scope;
     $func->{is_class_func} = 1 if $owner && $owner->isa('Ferret::Class');
     $func->{is_method}     = 1 if $owner && $owner->{is_proto};
+
     $owner->set_property($name => $is_prop ? sub {
-        $func->{last_parent} = shift;
-        return [ $func->call, $func ];
+        _handle_property($func, @_);
     } : $func) if defined $name;
+
     return $func;
 }
 
@@ -283,6 +284,23 @@ sub _parse_method_args {
         };
     }
     return @args;
+}
+
+sub _handle_property {
+    my ($func_or_event, $borrow_obj) = @_;
+
+    # if the object is not an instance of the class,
+    # simply return the getter itself.
+    my $class = $func_or_event->{class};
+    if (!$class || !$borrow_obj->instance_of($class)) {
+        return $func_or_event;
+    }
+
+    # otherwise, set the last_parent (self) to the borrow object.
+    # return both the call result and the function itself.
+    $func_or_event->{last_parent} = $borrow_obj;
+    return [ $func_or_event->call, $func_or_event ];
+
 }
 
 package Ferret::Return;

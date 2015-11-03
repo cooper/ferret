@@ -215,10 +215,11 @@ sub inside_scope {
     my ($event, $name, $scope, $owner, $class, $is_prop) = @_;
     $event->{class} = $class;
     $event->{outer_scope} = $scope;
+
     $owner->set_property($name => $is_prop ? sub {
-        $event->{last_parent} = shift;
-        return [ $event->call, $event ];
+        Ferret::Function::_handle_property($event, @_);
     } : $event) if defined $name;
+
     return $event;
 }
 
