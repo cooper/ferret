@@ -294,7 +294,11 @@ sub tok_BAREWORD {
             $set = 1;
         }
 
-        return [ COMPUTED => { name => $value, set => $set } ];
+        return [ METHOD => {
+            name    => $value,
+            p_set   => $set,
+            is_prop => 1
+        } ];
     }
 
     # method.

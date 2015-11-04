@@ -220,7 +220,15 @@ our %element_rules = (
 
     },
 
-    # METHOD
+    Method => {
+
+        # direct parent must be a class.
+        parent_must_be => [                                                     # Method[0]
+            'Class',
+            'Methods and computed properties must be directly inside a class'
+        ]
+
+    },
 
     OnExpression => {
 

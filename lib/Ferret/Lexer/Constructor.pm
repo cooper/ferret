@@ -163,18 +163,13 @@ sub c_KEYWORD_END {
 
 sub c_METHOD {
     my ($c, $value) = @_;
-    my $method = F::Method->new(%$value,
-        p_set    => $value->{set}, # set property?
-        event_cb => 1
-    );
+
+    # Rule Method[0]:
+    #   Must be a direct child of a Class.
+
+    my $method = F::Method->new(%$value, event_cb => 1);
     $c->{node}->adopt($method);
     @$c{ qw(node clos_cap method) } = ($method) x 3;
-    return $method;
-}
-
-sub c_COMPUTED {
-    my $method = &c_METHOD;
-    $method->{is_prop} = 1;
     return $method;
 }
 
