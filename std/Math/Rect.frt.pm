@@ -558,17 +558,25 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_   => $scope, $class, $class, undef );
-        $methods[1]->inside_scope( vertices => $scope, $proto, $class, 1 );
-        $methods[2]->inside_scope( bottomLeft  => $scope, $proto, $class, 1 );
-        $methods[3]->inside_scope( bottomRight => $scope, $proto, $class, 1 );
-        $methods[4]->inside_scope( topLeft     => $scope, $proto, $class, 1 );
-        $methods[5]->inside_scope( topRight    => $scope, $proto, $class, 1 );
-        $methods[6]->inside_scope( bottomLine  => $scope, $proto, $class, 1 );
-        $methods[7]->inside_scope( topLine     => $scope, $proto, $class, 1 );
-        $methods[8]->inside_scope( center      => $scope, $proto, $class, 1 );
+        $methods[0]
+          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
+        $methods[1]
+          ->inside_scope( vertices => $scope, $proto, $class, 1, undef );
+        $methods[2]
+          ->inside_scope( bottomLeft => $scope, $proto, $class, 1, undef );
+        $methods[3]
+          ->inside_scope( bottomRight => $scope, $proto, $class, 1, undef );
+        $methods[4]
+          ->inside_scope( topLeft => $scope, $proto, $class, 1, undef );
+        $methods[5]
+          ->inside_scope( topRight => $scope, $proto, $class, 1, undef );
+        $methods[6]
+          ->inside_scope( bottomLine => $scope, $proto, $class, 1, undef );
+        $methods[7]
+          ->inside_scope( topLine => $scope, $proto, $class, 1, undef );
+        $methods[8]->inside_scope( center => $scope, $proto, $class, 1, undef );
         $methods[9]
-          ->inside_scope( description => $scope, $proto, $class, undef );
+          ->inside_scope( description => $scope, $proto, $class, undef, undef );
     }
     Ferret::space( $context, $_ )
       for qw(Math::Line Math::Num Math::Point Line Num Point);

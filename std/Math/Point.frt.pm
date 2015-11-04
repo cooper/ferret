@@ -455,18 +455,25 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_ => $scope, $class, $class, undef );
+        $methods[0]
+          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
         $methods[1]
-          ->inside_scope( distanceTo => $scope, $proto, $class, undef );
-        $methods[2]
-          ->inside_scope( distanceFromOrigin => $scope, $proto, $class, 1 );
-        $methods[3]->inside_scope( pretty   => $scope, $proto, $class, 1 );
-        $methods[4]->inside_scope( toString => $scope, $proto, $class, undef );
+          ->inside_scope( distanceTo => $scope, $proto, $class, undef, undef );
+        $methods[2]->inside_scope(
+            distanceFromOrigin => $scope,
+            $proto, $class, 1, undef
+        );
+        $methods[3]->inside_scope( pretty => $scope, $proto, $class, 1, undef );
+        $methods[4]
+          ->inside_scope( toString => $scope, $proto, $class, undef, undef );
         $methods[5]
-          ->inside_scope( description => $scope, $proto, $class, undef );
-        $methods[6]->inside_scope( midpoint => $scope, $class, $class, undef );
-        $methods[7]
-          ->inside_scope( distanceBetween => $scope, $class, $class, undef );
+          ->inside_scope( description => $scope, $proto, $class, undef, undef );
+        $methods[6]
+          ->inside_scope( midpoint => $scope, $class, $class, undef, undef );
+        $methods[7]->inside_scope(
+            distanceBetween => $scope,
+            $class, $class, undef, undef
+        );
     }
     Ferret::space( $context, $_ ) for qw(Math::Num Math::Point Num Point);
 };

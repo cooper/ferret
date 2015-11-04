@@ -187,7 +187,8 @@ my $result = do {
         [ add( $scope, str( $f, "Point: " ), $scope->property_u('point') ) ],
         $scope );
     on( $scope, 'say', $self, $scope,
-        $funcs[0]->inside_scope( (undef) => $scope, $scope, undef, undef ) );
+        $funcs[0]
+          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
     $scope->set_property_ow(
         $context,
         r => $scope->property_u('say')->call_u(

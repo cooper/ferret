@@ -1,1 +1,1 @@
-$funcs[<<id>>]->inside_scope(<<name>> => $scope, $scope, undef, <<is_prop>>)<<semi>>
+$funcs[<<id>>]->inside_scope(<<name>> => $scope, $scope, undef, <<is_prop>>, <<p_set>>)<<semi>>

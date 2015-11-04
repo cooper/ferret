@@ -627,17 +627,28 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_    => $scope, $class, $class, undef );
-        $methods[1]->inside_scope( trueValue => $scope, $proto, $class, undef );
-        $methods[2]->inside_scope( veryTrue  => $scope, $proto, $class, undef );
-        $methods[3]->inside_scope( equal     => $scope, $proto, $class, undef );
-        $methods[4]
-          ->inside_scope( objectsEqual => $scope, $proto, $class, undef );
-        $methods[5]->inside_scope( notEqual => $scope, $proto, $class, undef );
-        $methods[6]
-          ->inside_scope( objectsNotEqual => $scope, $proto, $class, undef );
-        $methods[7]->inside_scope( review => $scope, $proto, $class, undef );
-        $methods[8]->inside_scope( _test  => $scope, $proto, $class, undef );
+        $methods[0]
+          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
+        $methods[1]
+          ->inside_scope( trueValue => $scope, $proto, $class, undef, undef );
+        $methods[2]
+          ->inside_scope( veryTrue => $scope, $proto, $class, undef, undef );
+        $methods[3]
+          ->inside_scope( equal => $scope, $proto, $class, undef, undef );
+        $methods[4]->inside_scope(
+            objectsEqual => $scope,
+            $proto, $class, undef, undef
+        );
+        $methods[5]
+          ->inside_scope( notEqual => $scope, $proto, $class, undef, undef );
+        $methods[6]->inside_scope(
+            objectsNotEqual => $scope,
+            $proto, $class, undef, undef
+        );
+        $methods[7]
+          ->inside_scope( review => $scope, $proto, $class, undef, undef );
+        $methods[8]
+          ->inside_scope( _test => $scope, $proto, $class, undef, undef );
     }
     Ferret::space( $context, $_ ) for qw(Bool Error);
 };

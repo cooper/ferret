@@ -281,17 +281,32 @@ my $result = do {
                     $scope
                   );
                 $self->set_property( send => $self->property_u('println') );
-                on( $self, 'connected', $self, $scope,
-                    $funcs[0]
-                      ->inside_scope( (undef) => $scope, $scope, undef, undef )
+                on(
+                    $self,
+                    'connected',
+                    $self, $scope,
+                    $funcs[0]->inside_scope(
+                        (undef) => $scope,
+                        $scope, undef, undef, undef
+                    )
                 );
-                on( $self, 'gotLine', $self, $scope,
-                    $funcs[1]
-                      ->inside_scope( (undef) => $scope, $scope, undef, undef )
+                on(
+                    $self,
+                    'gotLine',
+                    $self, $scope,
+                    $funcs[1]->inside_scope(
+                        (undef) => $scope,
+                        $scope, undef, undef, undef
+                    )
                 );
-                on( $self, 'println', $self, $scope,
-                    $funcs[2]
-                      ->inside_scope( (undef) => $scope, $scope, undef, undef )
+                on(
+                    $self,
+                    'println',
+                    $self, $scope,
+                    $funcs[2]->inside_scope(
+                        (undef) => $scope,
+                        $scope, undef, undef, undef
+                    )
                 );
                 return $return;
             };
@@ -301,7 +316,8 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_ => $scope, $class, $class, undef );
+        $methods[0]
+          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
     }
     Ferret::space( $context, $_ ) for qw(Num Socket Socket::TCP Str);
 };

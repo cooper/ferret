@@ -316,9 +316,12 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_   => $scope, $class, $class, undef );
-        $methods[1]->inside_scope( command  => $scope, $proto, $class, undef );
-        $methods[2]->inside_scope( fromWord => $scope, $proto, $class, undef );
+        $methods[0]
+          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
+        $methods[1]
+          ->inside_scope( command => $scope, $proto, $class, undef, undef );
+        $methods[2]
+          ->inside_scope( fromWord => $scope, $proto, $class, undef, undef );
     }
     Ferret::space( $context, $_ ) for qw(IRC::Num IRC::Str Num Str);
 };

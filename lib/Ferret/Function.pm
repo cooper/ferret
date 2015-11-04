@@ -237,19 +237,22 @@ sub call {
 }
 
 sub inside_scope {
+    #
     # $name     =   the name of the function within the containing scope, or undef if anonymous
     # $scope    =   the containing scope of the function definition
     # $owner    =   the owner of the function: a scope, class, or prototype
     # $class    =   the containing class of the function (if any)
     # $is_prop  =   the function is a computed property
-    my ($func, $name, $scope, $owner, $class, $is_prop) = @_;
+    # $p_set    =   the computed property should be set after evaluating
+    #
+    my ($func, $name, $scope, $owner, $class, $is_prop, $p_set) = @_;
     $func->{class} = $class;
     $func->{outer_scope} = $scope;
     $func->{is_class_func} = 1 if $owner && $owner->isa('Ferret::Class');
     $func->{is_method}     = 1 if $owner && $owner->{is_proto};
 
     $owner->set_property($name => $is_prop ? sub {
-        _handle_property($func, @_);
+        _handle_property($func, $p_set ? $name : undef, @_);
     } : $func) if defined $name;
 
     return $func;
@@ -287,7 +290,7 @@ sub _parse_method_args {
 }
 
 sub _handle_property {
-    my ($func_or_event, $borrow_obj) = @_;
+    my ($func_or_event, $p_set, $borrow_obj) = @_;
 
     # if the object is not an instance of the class,
     # simply return the getter itself.
@@ -296,10 +299,16 @@ sub _handle_property {
         return $func_or_event;
     }
 
-    # otherwise, set the last_parent (self) to the borrow object.
-    # return both the call result and the function itself.
+    # otherwise, set the last_parent (self) to the borrow object and call.
     $func_or_event->{last_parent} = $borrow_obj;
-    return [ $func_or_event->call, $func_or_event ];
+    my $res = $func_or_event->call;
+
+    # if setting the property, do so.
+    print "SETTING $borrow_obj\'s $p_set TO $res\n" if $p_set;
+    $borrow_obj->set_property($p_set => $res) if $p_set;
+
+    # return both the call result and the function itself.
+    return [ $res, $func_or_event ];
 
 }
 

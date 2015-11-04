@@ -140,7 +140,7 @@ my $result = do {
             default_func => [ undef, $func ]
         );
     }
-    $funcs[0]->inside_scope( makePoint => $scope, $scope, undef, undef );
+    $funcs[0]->inside_scope( makePoint => $scope, $scope, undef, undef, undef );
     $scope->set_property_ow( $context,
         pt => $scope->property_u('makePoint')
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope )

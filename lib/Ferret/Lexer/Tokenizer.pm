@@ -18,7 +18,7 @@ my $keyword_reg = '^('.join('|', qw{
     need        want        inside      then
     if          else        return      after
     for         in          init        on
-    true        false       undefined
+    true        false       undefined   set
     delete      weaken
     __END__     __LINE__
 }).')$';
@@ -285,7 +285,16 @@ sub tok_BAREWORD {
     # property.
     if ($last->[0] eq 'KEYWORD_PROP') {
         delete $tokens->[-1];
-        return [ COMPUTED => { name => $value } ];
+
+        # 'set prop'
+        my $set;
+        my $last_last = $tokens->[-1];
+        if ($last_last->[0] eq 'KEYWORD_SET') {
+            delete $tokens->[-1];
+            $set = 1;
+        }
+
+        return [ COMPUTED => { name => $value, set => $set } ];
     }
 
     # method.

@@ -84,8 +84,10 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]
-          ->inside_scope( doubledLength => $scope, $proto, $class, undef );
+        $methods[0]->inside_scope(
+            doubledLength => $scope,
+            $proto, $class, undef, undef
+        );
     }
     $scope->property_u('say')->call_u(
         [

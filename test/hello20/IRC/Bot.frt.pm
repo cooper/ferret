@@ -621,13 +621,23 @@ my $result = do {
                         $scope
                     )
                 );
-                on( $self->property_u('sock'), 'connected', $self, $scope,
-                    $funcs[0]
-                      ->inside_scope( (undef) => $scope, $scope, undef, undef )
+                on(
+                    $self->property_u('sock'),
+                    'connected',
+                    $self, $scope,
+                    $funcs[0]->inside_scope(
+                        (undef) => $scope,
+                        $scope, undef, undef, undef
+                    )
                 );
-                on( $self->property_u('sock'), 'gotLine', $self, $scope,
-                    $funcs[1]
-                      ->inside_scope( (undef) => $scope, $scope, undef, undef )
+                on(
+                    $self->property_u('sock'),
+                    'gotLine',
+                    $self, $scope,
+                    $funcs[1]->inside_scope(
+                        (undef) => $scope,
+                        $scope, undef, undef, undef
+                    )
                 );
                 return $return;
             };
@@ -1152,25 +1162,38 @@ my $result = do {
                 default_func => [ undef, $func ]
             );
         }
-        $methods[0]->inside_scope( _init_ => $scope, $class, $class, undef );
+        $methods[0]
+          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
         $methods[1]
-          ->inside_scope( addCommand => $scope, $proto, $class, undef );
-        $methods[2]->inside_scope( connect => $scope, $proto, $class, undef );
-        $methods[3]->inside_scope( send    => $scope, $proto, $class, undef );
+          ->inside_scope( addCommand => $scope, $proto, $class, undef, undef );
+        $methods[2]
+          ->inside_scope( connect => $scope, $proto, $class, undef, undef );
+        $methods[3]
+          ->inside_scope( send => $scope, $proto, $class, undef, undef );
         $methods[4]
-          ->inside_scope( handleLine => $scope, $proto, $class, undef );
-        $methods[5]->inside_scope( privmsg => $scope, $proto, $class, undef );
-        $methods[6]
-          ->inside_scope( joinChannels => $scope, $proto, $class, undef );
-        $methods[7]->inside_scope( pong => $scope, $proto, $class, undef );
-        $methods[8]
-          ->inside_scope( handleMessage => $scope, $proto, $class, undef );
-        $methods[9]
-          ->inside_scope( commandHello => $scope, $proto, $class, undef );
+          ->inside_scope( handleLine => $scope, $proto, $class, undef, undef );
+        $methods[5]
+          ->inside_scope( privmsg => $scope, $proto, $class, undef, undef );
+        $methods[6]->inside_scope(
+            joinChannels => $scope,
+            $proto, $class, undef, undef
+        );
+        $methods[7]
+          ->inside_scope( pong => $scope, $proto, $class, undef, undef );
+        $methods[8]->inside_scope(
+            handleMessage => $scope,
+            $proto, $class, undef, undef
+        );
+        $methods[9]->inside_scope(
+            commandHello => $scope,
+            $proto, $class, undef, undef
+        );
         $methods[10]
-          ->inside_scope( commandAdd => $scope, $proto, $class, undef );
-        $methods[11]
-          ->inside_scope( commandFactoid => $scope, $proto, $class, undef );
+          ->inside_scope( commandAdd => $scope, $proto, $class, undef, undef );
+        $methods[11]->inside_scope(
+            commandFactoid => $scope,
+            $proto, $class, undef, undef
+        );
     }
     Ferret::space( $context, $_ )
       for

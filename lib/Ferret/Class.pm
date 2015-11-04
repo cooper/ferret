@@ -131,7 +131,13 @@ sub _bind_function {
             is_method => $is_method,
             class     => $class
         );
-        $e->inside_scope($name => undef, $where, $class, $opts{prop});
+        $e->inside_scope($name =>
+            undef,          # outer scope
+            $where,         # owner
+            $class,         # class
+            $opts{prop},    # is computer property?
+            $opts{pset}     # set property after evaluating?
+        );
         $e;
     };
 

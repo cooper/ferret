@@ -7,9 +7,16 @@ use 5.010;
 use parent 'F::Statement';
 
 sub type { 'Method' }
-sub desc { 'm'.($_[0]{main} ? 'ain m' : '')."ethod '$_[0]{name}'" }
 sub is_closure { 1 }
 sub hold_instr { 1 }
+
+sub desc {
+    my $method = shift;
+    my $main = $method->{main}    ? 'main '             : '';
+    my $type = $method->{is_prop} ? 'computed property' : 'method';
+    my $lazy = $method->{p_set}   ? ' (lazy)'           : '';
+    return "$main$type '$$method{name}'$lazy";
+}
 
 sub perl_fmt {
     my $method = shift;
@@ -43,6 +50,7 @@ sub perl_fmt {
         statements => $content,
         arguments  => $arguments,
         is_prop    => $method->{is_prop} ? '1' : 'undef',
+        p_set      => $method->{p_set}   ? '1' : 'undef',
         owner      => $method->{main} ? 'class' : 'proto'
     };
 

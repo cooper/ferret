@@ -38,6 +38,16 @@ my @methods = (
     },
     toString => {
         code => \&_to_string
+    },
+    even => {
+        code => \&_even,
+        prop => 1,
+        pset => 1
+    },
+    odd => {
+        code => \&_odd,
+        prop => 1,
+        pset => 1
     }
 );
 
@@ -76,11 +86,6 @@ sub init {
         $num->{num_value} = perl_number($from);
     }
     $num->{num_value} = 0 if !defined $num->{num_value};
-
-    # evenness.
-    my $odd = $num->{num_value} % 2;
-    $num->set_property(odd  => ferret_boolean($odd));
-    $num->set_property(even => ferret_boolean(!$odd));
 
 }
 
@@ -122,6 +127,14 @@ sub op_pow {
     my $other = $arguments->{other};
     my $new_value = perl_number($num) ** perl_number($other);
     return ferret_number($new_value);
+}
+
+sub _odd {
+    return ferret_boolean(shift->{num_value} % 2);
+}
+
+sub _even {
+    return ferret_boolean(not shift->{num_value} % 2);
 }
 
 sub _to_string {

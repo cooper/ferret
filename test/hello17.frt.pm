@@ -79,7 +79,8 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $funcs[0]->inside_scope( (undef) => $scope, $scope, undef, undef )
+        $funcs[0]
+          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
 };
 

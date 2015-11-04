@@ -1,1 +1,1 @@
-$methods[<<id>>]->inside_scope(<<name>> => $scope, $<<owner>>, $class, <<is_prop>>);
+$methods[<<id>>]->inside_scope(<<name>> => $scope, $<<owner>>, $class, <<is_prop>>, <<p_set>>);

@@ -63,7 +63,7 @@ my $result = do {
             default_func => [ undef, $func ]
         );
     }
-    $funcs[0]->inside_scope( sqrt => $scope, $scope, undef, undef );
+    $funcs[0]->inside_scope( sqrt => $scope, $scope, undef, undef, undef );
     Ferret::space( $context, $_ )
       for qw(Math::NATIVE Math::NATIVE::Math Math::Num NATIVE NATIVE::Math Num);
 };

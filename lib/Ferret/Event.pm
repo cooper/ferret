@@ -207,17 +207,20 @@ sub signature_string {
 }
 
 sub inside_scope {
+    #
     # $name     =   the name of the event within the containing scope, or undef if anonymous
     # $scope    =   the containing scope of the function definition
     # $owner    =   the owner of the function: a scope, class, or prototype
     # $class    =   the containing class of the function (if any)
     # $is_prop  =   the event is a computed property
-    my ($event, $name, $scope, $owner, $class, $is_prop) = @_;
+    # $p_set    =   the computed property should be set after evaluating
+    #
+    my ($event, $name, $scope, $owner, $class, $is_prop, $p_set) = @_;
     $event->{class} = $class;
     $event->{outer_scope} = $scope;
 
     $owner->set_property($name => $is_prop ? sub {
-        Ferret::Function::_handle_property($event, @_);
+        Ferret::Function::_handle_property($event, $p_set ? $name : undef, @_);
     } : $event) if defined $name;
 
     return $event;

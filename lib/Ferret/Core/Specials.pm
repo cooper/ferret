@@ -90,6 +90,7 @@ sub _instanceOf {
 sub _get {
     my ($obj, $arguments) = @_;
     my $prop_name = perl_string($arguments->{property});
+    delete $obj->{actual_inherited}{$prop_name};
     my $val = $obj->simple_property_u($prop_name);
     return $obj->{actual_inherited}{$prop_name} || $val;
 }
@@ -97,6 +98,7 @@ sub _get {
 sub _getOwn {
     my ($obj, $arguments) = @_;
     my $prop_name = perl_string($arguments->{property});
+    delete $obj->{actual_props}{$prop_name};
     my $val = $obj->own_property_u($prop_name);
     return $obj->{actual_props}{$prop_name} || $val;
 }

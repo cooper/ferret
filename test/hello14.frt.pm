@@ -137,9 +137,9 @@ my $result = do {
     Ferret::space( $context, $_ ) for qw(String);
     $scope->property_u('say')->call_u( [ str( $f, "test" ) ], $scope );
     $scope->set_property_ow( $context, str => str( $f, "hi" ) );
-    on( $scope->property_u('str'),
-        'length', $self, $scope,
-        $funcs[0]->inside_scope( (undef) => $scope, $scope, undef, undef ) );
+    on( $scope->property_u('str'), 'length', $self, $scope,
+        $funcs[0]
+          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
     $scope->property_u('str')->property_u('length')->call_u( {}, $scope );
     str( $f, "hello" )->property_u('length')->call_u( {}, $scope );
     on(
@@ -147,7 +147,8 @@ my $result = do {
         'length',
         $self,
         $scope,
-        $funcs[1]->inside_scope( (undef) => $scope, $scope, undef, undef )
+        $funcs[1]
+          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
     str( $f, "hello" )->property_u('length')->call_u( {}, $scope );
 };

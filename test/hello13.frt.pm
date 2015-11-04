@@ -108,7 +108,8 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $funcs[0]->inside_scope( (undef) => $scope, $scope, undef, undef )
+        $funcs[0]
+          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
     $scope->set_property_ow( $context,
         t2 => $scope->property_u('Timer')->call_u( [ num( $f, 2 ) ], $scope ) );
@@ -117,7 +118,8 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $funcs[1]->inside_scope( (undef) => $scope, $scope, undef, undef )
+        $funcs[1]
+          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
     $scope->property_u('t2')->property_u('cancel')->call_u( {}, $scope );
 };

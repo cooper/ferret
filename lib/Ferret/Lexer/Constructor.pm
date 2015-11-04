@@ -163,7 +163,10 @@ sub c_KEYWORD_END {
 
 sub c_METHOD {
     my ($c, $value) = @_;
-    my $method = F::Method->new(%$value, event_cb => 1);
+    my $method = F::Method->new(%$value,
+        p_set    => $value->{set}, # set property?
+        event_cb => 1
+    );
     $c->{node}->adopt($method);
     @$c{ qw(node clos_cap method) } = ($method) x 3;
     return $method;
