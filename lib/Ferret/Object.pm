@@ -263,10 +263,11 @@ sub set_property_weak {
 # property names
 sub properties {
     my ($obj, $include_inherited) = @_;
-    my @names = grep { defined $obj->{properties}{$_} }
+    my %done;
+    my @names = grep { defined $obj->{properties}{$_} and $done{$_} = 1 }
         keys %{ $obj->{properties} };
     if ($include_inherited) {
-        push @names, $_->properties($include_inherited)
+        push @names, grep !$done{$_}++, $_->properties($include_inherited)
             foreach $obj->parents;
     }
     return @names;

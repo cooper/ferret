@@ -304,7 +304,6 @@ sub _handle_property {
     my $res = $func_or_event->call;
 
     # if setting the property, do so.
-    print "SETTING $borrow_obj\'s $p_set TO $res\n" if $p_set;
     $borrow_obj->set_property($p_set => $res) if $p_set;
 
     # return both the call result and the function itself.
