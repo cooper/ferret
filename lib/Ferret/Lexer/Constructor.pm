@@ -798,7 +798,7 @@ sub handle_equality {
 
 *c_OP_ADD = *c_OP_SUB =
 *c_OP_MUL = *c_OP_DIV =
-*c_OP_POW = *c_math_operator;
+*c_OP_POW = *c_OP_MOD = *c_OP_RANGE = *c_math_operator;
 
 sub c_math_operator {
     my ($c, $value) = @_;

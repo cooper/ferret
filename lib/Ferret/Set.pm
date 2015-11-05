@@ -12,7 +12,8 @@ use Ferret::Core::Conversion qw(perl_description ferret_list perl_list);
 
 my @methods = (
     methods => {
-        code => \&_methods
+        code => \&_methods,
+        prop => 1
     },
     toList => {
         code => \&_to_list
@@ -46,14 +47,10 @@ sub _property {
     # return function
     my $func = Ferret::Function->new($set->f, name => $prop_name);
     $func->{code} = sub {
-        #my (undef, $arguments) = @_;
-        #my @args = perl_list($arguments->{args});
         return $real_func->call(
-            [ @{ $set->{all_objs} } ], # make a copy
-            $set->{set_scope} # scope where set was created. good enough.
+            [ @{ $set->{all_objs} } ] # make a copy
         );
     };
-    #$func->add_argument(name => 'args', optional => 1, more => 1);
 
     return ($func, $set);
 }

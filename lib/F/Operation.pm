@@ -70,7 +70,7 @@ sub compile {
     my @children = $op->children;
 
     # for each operator, while there are instances of that operator
-    foreach my $op_type (qw/ssub sadd pow mul div sub add/) {
+    foreach my $op_type (qw/ssub sadd range pow mod mul div sub add/) {
     while (grep { is_op($_, $op_type) } @children) {
         my ($i, $left, $right) = -1;
 

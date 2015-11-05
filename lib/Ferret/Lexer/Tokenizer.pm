@@ -34,7 +34,8 @@ my %no_value = map { $_ => 1 } qw(
     OP_POW      OP_POW_A    OP_VALUE    OP_PACK
     OP_EQUAL    OP_EQUAL_I  OP_NEQUAL   OP_NEQUAL_I
     OP_ASSIGN   OP_COMMA    OP_RETURN   OP_SEMI
-    OP_NOT      OP_MAYBE    OP_ELLIP
+    OP_NOT      OP_MAYBE    OP_ELLIP    OP_RANGE
+    OP_MOD
 );
 
 # reused formats
@@ -90,9 +91,11 @@ my @token_formats = (
     [ OP_DIV        => qr/\//                                               ],  # division
     [ OP_POW        => qr/\^/                                               ],  # power
     [ OP_NOT        => qr/!/                                                ],  # call without arguments
+    [ OP_MOD        => qr/%/                                                ],  # modulus operator
     [ OP_MAYBE      => qr/\?/                                               ],  # inline if operator
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
     [ OP_ELLIP      => qr/\.\.\./                                           ],  # ellipsis
+    [ OP_RANGE      => qr/\.\./                                             ],  # range
    #[ OP_PROP       => qr/\./                                               ],  # property
     [ OP_COMMA      => qr/,/                                                ],  # list separator
     [ OP_PACK       => qr/::/                                               ],  # package

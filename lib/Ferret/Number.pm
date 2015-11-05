@@ -12,7 +12,8 @@ use List::Util qw(sum product);
 
 use Ferret::Core::Conversion qw(
     ferret_number perl_number
-    ferret_boolean perl_list
+    perl_list ferret_list
+    ferret_boolean
 );
 
 my @methods = (
@@ -34,6 +35,14 @@ my @methods = (
     },
     opPow => {
         code => \&op_pow,
+        need => '$other:Num'
+    },
+    opMod => {
+        code => \&op_mod,
+        need => '$other:Num'
+    },
+    opRange => {
+        code => \&op_range,
         need => '$other:Num'
     },
     toString => {
@@ -127,6 +136,29 @@ sub op_pow {
     my $other = $arguments->{other};
     my $new_value = perl_number($num) ** perl_number($other);
     return ferret_number($new_value);
+}
+
+sub op_mod {
+    my ($num, $arguments) = @_;
+    my $other = $arguments->{other};
+    my $new_value = perl_number($num) % perl_number($other);
+    return ferret_number($new_value);
+}
+
+sub op_range {
+    my ($num, $arguments, $call_scope) = @_;
+    my $other = $arguments->{other};
+
+    my @range = perl_number($num)..perl_number($other);
+       @range = map ferret_number($_), @range;
+
+    # if there's only one number, return a list containing only that number.
+    return ferret_list(@range) if @range == 1;
+
+    # otherwise, there must be two numbers.
+    return Ferret::undefined if @range < 2;
+
+    return $range[0]->create_set($call_scope, @range[1..$#range]);
 }
 
 sub _odd {

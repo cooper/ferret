@@ -8,7 +8,7 @@ use 5.010;
 
 BEGIN {
     no strict 'refs';
-    foreach my $star (qw/pow mul div add _sub/) {
+    foreach my $star (qw/range pow mod mul div add _sub/) {
         *$star = sub { op_star($star, @_) };
     }
 }
