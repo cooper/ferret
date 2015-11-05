@@ -392,10 +392,12 @@ sub instance_of {
 # create an object that represents a set of objects.
 sub create_set {
     my ($obj, $call_scope, @other_objs) = @_;
+    my $items = [ $obj, @other_objs ];
     return Ferret::Set->new($obj->f,
         primary_obj => $obj,
         other_objs  => \@other_objs,
-        all_objs    => [ $obj, @other_objs ],
+        all_objs    => $items,
+        list_items  => $items,
         set_class   => best_common_class($obj, @other_objs),
         set_scope   => $call_scope
     );

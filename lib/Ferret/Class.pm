@@ -32,6 +32,12 @@ sub new {
     # create a prototype if necessary
     $opts{prototype} ||= Ferret::Prototype->new($f);
 
+    # add class parents' prototypes
+    if (my $classes = delete $opts{parent_class} || delete $opts{parent_classes}) {
+        my @classes = ref $classes eq 'ARRAY' ? @$classes : ($classes);
+        $opts{prototype}->add_parent($_) for map $_->prototype, @classes;
+    }
+
     # create a class
     my $class = $class_name->SUPER::new($f,
         faketype => 'Class',

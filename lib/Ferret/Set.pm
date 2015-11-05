@@ -22,6 +22,7 @@ my @methods = (
 
 Ferret::bind_class(
     name    => 'Set',
+    #parent  => 'List',          # maybe someday
     desc    => \&description,
     methods => \@methods,
     init    => \&init

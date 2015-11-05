@@ -7,7 +7,12 @@ use utf8;
 use 5.010;
 
 use Scalar::Util 'blessed';
-our ($ferret, $core_context, %tried_files, %class_bindings, %specials);
+
+our (
+    $ferret,            $core_context,
+    %tried_files,       %specials,
+    %class_bindings,    %delay_class_bindings
+);
 
 # create a new ferret.
 sub new {
@@ -199,11 +204,24 @@ sub add_binding {
         $context = $f->get_context($opts{package});
     }
 
+    # find parent class.
+    my $parent_class;
+    if (length $opts{parent}) {
+        $parent_class = $f->_get_class($opts{parent});
+
+        # not yet available.
+        if (!$parent_class) {
+            push @{ $delay_class_bindings{ $opts{parent} } ||= [] }, \%opts;
+            return;
+        }
+    }
+
     # create a class.
     my $class = Ferret::Class->new($f,
         name         => $opts{name},
         version      => $opts{version},
-        perl_package => $opts{perl_package}
+        perl_package => $opts{perl_package},
+        parent_class => $parent_class
     );
 
     # add functions.
@@ -232,6 +250,12 @@ sub add_binding {
     # on_bind callback with class object.
     $opts{on_bind}($class) if $opts{on_bind};
 
+    # other binding was delayed.
+    if (my $delayed = $delay_class_bindings{ $class->{name} }) {
+        $f->add_binding(%$_) foreach @$delayed;
+        delete $delay_class_bindings{ $class->{name} };
+    }
+
     return $class_bindings{ $opts{perl_package} }{class} = $class;
 }
 
@@ -252,6 +276,21 @@ sub bind_constructor {
     my $ret = $class->init($obj, $arguments);
     return $ret->property('instance');
 
+}
+
+sub _get_class {
+    my ($f, $name) = @_;
+    return undef if !length $name;
+
+    # find context.
+    # FIXME: if $name has a namespace, respect that.
+    my $context = $f->core_context; # temporary.
+
+    # find class.
+    my $class_maybe = $context->property($name);
+    return $class_maybe if $class_maybe && $class_maybe->isa('Ferret::Class');
+
+    return undef;
 }
 
 ###############
