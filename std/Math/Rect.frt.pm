@@ -28,7 +28,7 @@
 #                                  Lexical variable '$x'
 #                              Item 1
 #                                  Lexical variable '$y'
-#          Method 'vertices'
+#          Computed property 'vertices'
 #              Instruction
 #                  Return
 #                      Value list [4 items]
@@ -40,11 +40,11 @@
 #                              Instance variable '@bottomLeft'
 #                          Item 3
 #                              Instance variable '@bottomRight'
-#          Method 'bottomLeft'
+#          Computed property 'bottomLeft'
 #              Instruction
 #                  Return
 #                      Instance variable '@origin'
-#          Method 'bottomRight'
+#          Computed property 'bottomRight'
 #              Instruction
 #                  Return
 #                      Call
@@ -59,7 +59,7 @@
 #                              Item 1
 #                                  Property 'y'
 #                                      Instance variable '@origin'
-#          Method 'topLeft'
+#          Computed property 'topLeft'
 #              Instruction
 #                  Return
 #                      Call
@@ -74,7 +74,7 @@
 #                                          Instance variable '@origin'
 #                                      Addition operator (+)
 #                                      Instance variable '@height'
-#          Method 'topRight'
+#          Computed property 'topRight'
 #              Instruction
 #                  Return
 #                      Call
@@ -92,7 +92,7 @@
 #                                          Instance variable '@origin'
 #                                      Addition operator (+)
 #                                      Instance variable '@height'
-#          Method 'bottomLine'
+#          Computed property 'bottomLine'
 #              Instruction
 #                  Return
 #                      Call
@@ -102,7 +102,7 @@
 #                                  Instance variable '@bottomLeft'
 #                              Item 1
 #                                  Instance variable '@bottomRight'
-#          Method 'topLine'
+#          Computed property 'topLine'
 #              Instruction
 #                  Return
 #                      Call
@@ -112,7 +112,7 @@
 #                                  Instance variable '@topLeft'
 #                              Item 1
 #                                  Instance variable '@topRight'
-#          Method 'center'
+#          Computed property 'center'
 #              Instruction
 #                  Assignment (lexical variable '$x')
 #                      Operation

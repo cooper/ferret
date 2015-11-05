@@ -11,7 +11,7 @@
 #                  Need
 #                      Instance variable '@pt2'
 #                      Bareword 'Point'
-#          Method 'endpoints'
+#          Computed property 'endpoints'
 #              Instruction
 #                  Return
 #                      Value list [2 items]
@@ -19,7 +19,7 @@
 #                              Instance variable '@pt1'
 #                          Item 1
 #                              Instance variable '@pt2'
-#          Method 'pretty'
+#          Computed property 'pretty'
 #              Instruction
 #                  Assignment (lexical variable '$mp')
 #                      Instance variable '@midpoint'
@@ -83,7 +83,7 @@
 #              Instruction
 #                  Return
 #                      Instance variable '@pretty'
-#          Method 'midpoint'
+#          Computed property 'midpoint'
 #              Instruction
 #                  Return
 #                      Call
@@ -94,7 +94,7 @@
 #                                  Item 1
 #                                      Instance variable '@pt2'
 #                          Structural list [0 items]
-#          Method 'length'
+#          Computed property 'length'
 #              Instruction
 #                  Return
 #                      Call

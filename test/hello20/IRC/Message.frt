@@ -20,20 +20,20 @@ init {
 }
 
 # find the command
-method command {
-
-    # already found it
-    if @_foundCommand:
-        return @_foundCommand;
+set prop command {
 
     # find it
     if @parts[0].hasPrefix(".") {
-        @_foundCommand = @parts[0].copy().trimPrefix(".");
-        return @_foundCommand;
+        $cmd = @parts[0].copy().trimPrefix(".");
+        if $cmd.length:
+            return $cmd;
     }
 
-    @_foundCommand = false;
-    return @_foundCommand;
+    return false;
+}
+
+set prop commandHasParameters {
+    return @parts.length != 1; # ge once implemented
 }
 
 # get a phrase starting with word N.

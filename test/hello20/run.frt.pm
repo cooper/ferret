@@ -53,6 +53,13 @@
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$msg'
+#                          If
+#                              Expression ('if' parameter)
+#                                  Negation
+#                                      Property 'commandHasParameters'
+#                                          Lexical variable '$msg'
+#                              Instruction
+#                                  Return
 #                          Instruction
 #                              Assignment (lexical variable '$c')
 #                                  Call
@@ -114,6 +121,13 @@
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$msg'
+#                          If
+#                              Expression ('if' parameter)
+#                                  Negation
+#                                      Property 'commandHasParameters'
+#                                          Lexical variable '$msg'
+#                              Instruction
+#                                  Return
 #                          Instruction
 #                              Assignment (lexical variable '$c')
 #                                  Call
@@ -175,6 +189,13 @@
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$msg'
+#                          If
+#                              Expression ('if' parameter)
+#                                  Negation
+#                                      Property 'commandHasParameters'
+#                                          Lexical variable '$msg'
+#                              Instruction
+#                                  Return
 #                          Instruction
 #                              Assignment (lexical variable '$res')
 #                                  Call
@@ -252,6 +273,13 @@
 #          Instruction
 #              Need
 #                  Lexical variable '$msg'
+#          If
+#              Expression ('if' parameter)
+#                  Negation
+#                      Property 'commandHasParameters'
+#                          Lexical variable '$msg'
+#              Instruction
+#                  Return
 #          Instruction
 #              Assignment (lexical variable '$c')
 #                  Call
@@ -272,10 +300,8 @@
 #                      Single value [1 items]
 #                          Item 0
 #                              Equality
-#                                  Call
-#                                      Property 'command'
-#                                          Lexical variable '$msg'
-#                                      Structural list [0 items]
+#                                  Property 'command'
+#                                      Lexical variable '$msg'
 #                                  String 'p'
 #          If
 #              Expression ('if' parameter)
@@ -331,7 +357,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'run.frt.pm'}++;
 
-use Ferret::Core::Operations qw(bool num str);
+use Ferret::Core::Operations qw(_not bool num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('main');
@@ -349,6 +375,19 @@ my $result = do {
                 return unless defined $arguments->{msg};
                 $scope->set_property( msg => $arguments->{msg} );
             };
+            if (
+                bool(
+                    _not(
+                        $scope->property_u('msg')
+                          ->property_u('commandHasParameters')
+                    )
+                )
+              )
+            {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                return $return;
+            }
             $scope->set_property_ow(
                 $context,
                 c => $scope->property_u('COMPILER')->call_u(
@@ -364,7 +403,6 @@ my $result = do {
                 res => $scope->property_u('c')->property_u('compile')->call_u(
                     [
                         $scope->property_u('msg')->property_u('command')
-                          ->call_u( {}, $scope )
                           ->equal_to( str( $f, "p" ), $scope )
                     ],
                     $scope
@@ -431,6 +469,19 @@ my $result = do {
                 return unless defined $arguments->{msg};
                 $scope->set_property( msg => $arguments->{msg} );
             };
+            if (
+                bool(
+                    _not(
+                        $scope->property_u('msg')
+                          ->property_u('commandHasParameters')
+                    )
+                )
+              )
+            {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                return $return;
+            }
             $scope->set_property_ow(
                 $context,
                 c => $scope->property_u('COMPILER')->call_u(
@@ -478,6 +529,19 @@ my $result = do {
                 return unless defined $arguments->{msg};
                 $scope->set_property( msg => $arguments->{msg} );
             };
+            if (
+                bool(
+                    _not(
+                        $scope->property_u('msg')
+                          ->property_u('commandHasParameters')
+                    )
+                )
+              )
+            {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                return $return;
+            }
             $scope->set_property_ow(
                 $context,
                 c => $scope->property_u('COMPILER')->call_u(
@@ -525,6 +589,19 @@ my $result = do {
                 return unless defined $arguments->{msg};
                 $scope->set_property( msg => $arguments->{msg} );
             };
+            if (
+                bool(
+                    _not(
+                        $scope->property_u('msg')
+                          ->property_u('commandHasParameters')
+                    )
+                )
+              )
+            {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                return $return;
+            }
             $scope->set_property_ow(
                 $context,
                 res => $scope->property_u('COMPILER')->call_u(

@@ -44,7 +44,7 @@
 #                                      Lexical variable '$dy'
 #                                      Exponent operator (^)
 #                                      Number '2'
-#          Method 'distanceFromOrigin'
+#          Computed property 'distanceFromOrigin'
 #              Instruction
 #                  Return
 #                      Call
@@ -58,7 +58,7 @@
 #                                              Number '0'
 #                                          Item 1
 #                                              Number '0'
-#          Method 'pretty'
+#          Computed property 'pretty'
 #              Instruction
 #                  Return
 #                      Operation

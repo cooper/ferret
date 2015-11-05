@@ -8,6 +8,8 @@ $bot.addCommand("info", func {
 
 $bot.addCommand("t", func {
     need $msg;
+    if !$msg.commandHasParameters:
+        return;
     $c = COMPILER($msg.fromWord(1));
     $res = $c.tokenize(pretty: true);
     if $res.error {
@@ -19,6 +21,8 @@ $bot.addCommand("t", func {
 
 $bot.addCommand("c", func {
     need $msg;
+    if !$msg.commandHasParameters:
+        return;
     $c = COMPILER($msg.fromWord(1));
     $res = $c.construct(pretty: true);
     if $res.error {
@@ -30,6 +34,8 @@ $bot.addCommand("c", func {
 
 $bot.addCommand("e", func {
     need $msg;
+    if !$msg.commandHasParameters:
+        return;
     $res = COMPILER($msg.fromWord(1)).eval();
     if $res.error {
         $bot.privmsg($msg.channel, $res.error);
@@ -44,8 +50,10 @@ $bot.addCommand("pp", handlePerl);
 
 func handlePerl {
     need $msg;
+    if !$msg.commandHasParameters:
+        return;
     $c = COMPILER($msg.fromWord(1));
-    $res = $c.compile($msg.command() == "p");
+    $res = $c.compile($msg.command == "p");
     if $res.error {
         $bot.privmsg($msg.channel, $res.error);
         return;

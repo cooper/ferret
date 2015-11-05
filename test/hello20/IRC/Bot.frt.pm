@@ -327,10 +327,8 @@
 #                      Lexical variable '$msg'
 #              If
 #                  Expression ('if' parameter)
-#                      Call
-#                          Property 'command'
-#                              Lexical variable '$msg'
-#                          Structural list [0 items]
+#                      Property 'command'
+#                          Lexical variable '$msg'
 #                  Instruction
 #                      Call
 #                          Maybe
@@ -338,10 +336,8 @@
 #                                  Instance variable '@commands'
 #                                  Single value [1 items]
 #                                      Item 0
-#                                          Call
-#                                              Property 'command'
-#                                                  Lexical variable '$msg'
-#                                              Structural list [0 items]
+#                                          Property 'command'
+#                                              Lexical variable '$msg'
 #                          Hash [4 items]
 #                              Item 0
 #                                  Pair '_self'
@@ -437,10 +433,8 @@
 #                          Instance variable '@factoids'
 #                          Single value [1 items]
 #                              Item 0
-#                                  Call
-#                                      Property 'command'
-#                                          Lexical variable '$msg'
-#                                      Structural list [0 items]
+#                                  Property 'command'
+#                                      Lexical variable '$msg'
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
@@ -994,12 +988,7 @@ my $result = do {
                     msg => $scope->property_u('IRC::Message')
                       ->call_u( [ $scope->property_u('line') ], $scope ) );
                 $return->set_property( msg => $scope->property_u('msg') );
-                if (
-                    bool(
-                        $scope->property_u('msg')->property_u('command')
-                          ->call_u( {}, $scope )
-                    )
-                  )
+                if ( bool( $scope->property_u('msg')->property_u('command') ) )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -1007,8 +996,7 @@ my $result = do {
                         my $maybe_0 =
                           $self->property_u('commands')->get_index_value(
                             [
-                                $scope->property_u('msg')
-                                  ->property_u('command')->call_u( {}, $scope )
+                                $scope->property_u('msg')->property_u('command')
                             ],
                             $scope
                           );
@@ -1140,10 +1128,7 @@ my $result = do {
                 $scope->set_property_ow(
                     $context,
                     response => $self->property_u('factoids')->get_index_value(
-                        [
-                            $scope->property_u('msg')->property_u('command')
-                              ->call_u( {}, $scope )
-                        ],
+                        [ $scope->property_u('msg')->property_u('command') ],
                         $scope
                     )
                 );

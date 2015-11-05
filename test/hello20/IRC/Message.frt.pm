@@ -75,13 +75,7 @@
 #                          Single value [1 items]
 #                              Item 0
 #                                  String ' '
-#          Method 'command'
-#              If
-#                  Expression ('if' parameter)
-#                      Instance variable '@_foundCommand'
-#                  Instruction
-#                      Return
-#                          Instance variable '@_foundCommand'
+#          Computed property 'command' (lazy)
 #              If
 #                  Expression ('if' parameter)
 #                      Call
@@ -95,7 +89,7 @@
 #                              Item 0
 #                                  String '.'
 #                  Instruction
-#                      Assignment (instance variable '@_foundCommand')
+#                      Assignment (lexical variable '$cmd')
 #                          Call
 #                              Property 'trimPrefix'
 #                                  Call
@@ -109,15 +103,23 @@
 #                              Single value [1 items]
 #                                  Item 0
 #                                      String '.'
-#                  Instruction
-#                      Return
-#                          Instance variable '@_foundCommand'
-#              Instruction
-#                  Assignment (instance variable '@_foundCommand')
-#                      Boolean false
+#                  If
+#                      Expression ('if' parameter)
+#                          Property 'length'
+#                              Lexical variable '$cmd'
+#                      Instruction
+#                          Return
+#                              Lexical variable '$cmd'
 #              Instruction
 #                  Return
-#                      Instance variable '@_foundCommand'
+#                      Boolean false
+#          Computed property 'commandHasParameters' (lazy)
+#              Instruction
+#                  Return
+#                      Equality
+#                          Property 'length'
+#                              Instance variable '@parts'
+#                          Number '1'
 #          Method 'fromWord'
 #              Instruction
 #                  Need
@@ -163,7 +165,7 @@ my $self;
 my $f = $Ferret::ferret ||= Ferret->new;
 $Ferret::tried_files{'Message.frt.pm'}++;
 
-use Ferret::Core::Operations qw(add bool num str);
+use Ferret::Core::Operations qw(_not add bool num str);
 my $result = do {
     my @funcs;
     my $scope = my $context = $f->get_context('IRC');
@@ -244,11 +246,6 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                if ( bool( $self->property_u('_foundCommand') ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    return $self->property_u('_foundCommand');
-                }
                 if (
                     bool(
                         $self->property_u('parts')
@@ -260,21 +257,47 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $self->set_property(
-                        _foundCommand => $self->property_u('parts')
+                    $scope->set_property_ow( $context,
+                        cmd => $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
                           ->property_u('copy')->call_u( {}, $scope )
                           ->property_u('trimPrefix')
                           ->call_u( [ str( $f, "." ) ], $scope ) );
-                    return $self->property_u('_foundCommand');
+                    if ( bool( $scope->property_u('cmd')->property_u('length') )
+                      )
+                    {
+                        my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                        return $scope->property_u('cmd');
+                    }
                 }
-                $self->set_property( _foundCommand => Ferret::false );
-                return $self->property_u('_foundCommand');
+                return Ferret::false;
                 return $return;
             };
             $methods[1] = Ferret::Event->new(
                 $f,
                 name         => 'command',
+                default_func => [ undef, $func ]
+            );
+        }
+
+        # Method event 'commandHasParameters' definition
+        {
+            my $func = Ferret::Function->new(
+                $f,
+                name      => 'default',
+                is_method => 1
+            );
+
+            $func->{code} = sub {
+                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                return _not( $self->property_u('parts')->property_u('length')
+                      ->equal_to( num( $f, 1 ), $scope ) );
+                return $return;
+            };
+            $methods[2] = Ferret::Event->new(
+                $f,
+                name         => 'commandHasParameters',
                 default_func => [ undef, $func ]
             );
         }
@@ -310,7 +333,7 @@ my $result = do {
                   )->get_index_value( [ $scope->property_u('wordN') ], $scope );
                 return $return;
             };
-            $methods[2] = Ferret::Event->new(
+            $methods[3] = Ferret::Event->new(
                 $f,
                 name         => 'fromWord',
                 default_func => [ undef, $func ]
@@ -318,9 +341,12 @@ my $result = do {
         }
         $methods[0]
           ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
-        $methods[1]
-          ->inside_scope( command => $scope, $proto, $class, undef, undef );
-        $methods[2]
+        $methods[1]->inside_scope( command => $scope, $proto, $class, 1, 1 );
+        $methods[2]->inside_scope(
+            commandHasParameters => $scope,
+            $proto, $class, 1, 1
+        );
+        $methods[3]
           ->inside_scope( fromWord => $scope, $proto, $class, undef, undef );
     }
     Ferret::space( $context, $_ ) for qw(IRC::Num IRC::Str Num Str);

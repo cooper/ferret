@@ -15,7 +15,8 @@ use Ferret::Core::Conversion qw(
 
 my @methods = (
     length => {
-        code => \&_length
+        code => \&_length,
+        prop => 1
     },
     insert => {
         need => '$index:Num $item',

@@ -115,7 +115,7 @@ method handleMessage {
     msg -> $msg;
 
     # found a command
-    if $msg.command(): @commands[ $msg.command() ]?(
+    if $msg.command: @commands[ $msg.command ]?(
         _self:  *self,
         line:   $line,
         s:      $s,
@@ -147,6 +147,6 @@ method commandAdd {
 
 method commandFactoid {
     need $msg;
-    $response = @factoids[ $msg.command() ];
+    $response = @factoids[ $msg.command ];
     @privmsg($msg.channel, $response);
 }

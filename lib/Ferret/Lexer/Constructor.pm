@@ -405,6 +405,7 @@ sub c_PAREN_E {
     #
     $c->{node} = $c->{node}->close while $c->{node}->type eq 'Equality';
     $c->{node} = $c->{node}->close while $c->{node}->type eq 'Operation';
+    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Negation';
     $c->{node} = $c->{node}->close if    $c->{node}->type eq 'Pair';
 
     # close the list itself.
@@ -608,7 +609,7 @@ sub c_OP_SEMI {
     # end of instruction can terminate any of these nodes.
     my @closes = qw(
         WantNeed Equality Operation Assignment
-        ReturnPair Return PropertyModifier
+        ReturnPair Return PropertyModifier Negation
     );
     foreach (@closes) {
         $c->{node} = $c->{node}->close if $_ eq $c->{node}->type;
@@ -701,7 +702,8 @@ sub c_OP_VALUE {
     my $c = shift;
 
     # inline if can terminate this.
-    $c->{node} = $c->{node}->close if $c->{node}->type eq 'Equality';
+    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Negation';
+    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Equality';
 
     # perhaps this is an inline if?
     if (($c->{node}{parameter_for} || '') eq 'if') {
@@ -948,13 +950,6 @@ sub c_KEYWORD_WEAKEN {
 
 sub c_any {
     my ($label, $c, $value) = @_;
-
-    ### TERMINATE A NEGATION ###
-    # TODO: I would like to implement auto-closing of some sort.
-    if ($c->{node}->type eq 'Negation' && $c->{node}->children) {
-        $c->{node} = $c->{node}->close;
-        $c->{redo} = 1;
-    }
 
     ### START AN INSTRUCTION ###
 
