@@ -38,7 +38,7 @@ sub bool {
 
 sub _not {
     my $val = shift;
-    return $val == Ferret::true ? Ferret::false : Ferret::true;
+    return $val == Ferret::false ? Ferret::true : Ferret::false;
 }
 
 sub U {

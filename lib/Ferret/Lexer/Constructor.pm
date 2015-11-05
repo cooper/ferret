@@ -53,6 +53,7 @@ sub construct {
 
         # call the handler for all.
         c_any($label, $current, $value);
+
         redo if delete $current->{redo};
 
         # call a handler if one exists.
@@ -66,6 +67,7 @@ sub construct {
                 return $el if $el->isa('F::Error');
                 push @elements, $el;
             }
+            redo if delete $current->{redo};
             next;
         }
 
@@ -779,6 +781,16 @@ sub c_OP_NEQUAL_I   { handle_equality(shift, 1, 1) }
 
 sub handle_equality {
     my ($c, $negated, $obj_equality) = @_;
+
+    # equality closes these.
+    my $redo;
+    $c->{node} = $c->{node}->close, $redo = 1
+        while $c->{node}->type eq 'Negation';
+    $c->{node} = $c->{node}->close, $redo = 1
+        while $c->{node}->type eq 'Equality';
+
+    # if we closed something, redo to update last_element.
+    return $c->{redo} = 1 if $redo;
 
     my $last_el = $c->{last_element};
     return expected($c,
