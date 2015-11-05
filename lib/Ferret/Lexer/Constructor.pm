@@ -401,14 +401,8 @@ sub c_PAREN_E {
         if $t ne 'PAREN_E';
 
     # closes these things.
-    #
-    #       math operations must come first here because
-    #       operations can be in pairs, but pairs can't be in operations
-    #
-    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Equality';
-    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Operation';
-    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Negation';
-    $c->{node} = $c->{node}->close if    $c->{node}->type eq 'Pair';
+    my @closes = qw(Negation Operation Equality Pair);
+    close_nodes($c, @closes);
 
     # close the list itself.
     #
@@ -444,13 +438,7 @@ sub c_BRACKET_E {
         if $t ne 'BRACKET_E';
 
     # closes these things.
-    #
-    #       math operations must come first here because
-    #       operations can be in pairs, but pairs can't be in operations
-    #
-    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Equality';
-    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Operation';
-    $c->{node} = $c->{node}->close if    $c->{node}->type eq 'Pair';
+    close_nodes($c, qw(Equality Operation Pair));
 
     # close the list itself.
     #
@@ -608,14 +596,11 @@ sub c_OP_SEMI {
     # Rule OP_SEMI[0]:
     #   The current 'instruction' must exist.
 
-    # end of instruction can terminate any of these nodes.
     my @closes = qw(
-        WantNeed Equality Operation Assignment
-        ReturnPair Return PropertyModifier Negation
+        WantNeed PropertyModifier Negation Operation
+        Equality Assignment Return ReturnPair
     );
-    foreach (@closes) {
-        $c->{node} = $c->{node}->close if $_ eq $c->{node}->type;
-    }
+    close_nodes($c, @closes);
 
     # at this point, the instruction must be the current node.
     if ($c->{node} != $c->{instruction}) {
@@ -704,8 +689,7 @@ sub c_OP_VALUE {
     my $c = shift;
 
     # inline if can terminate this.
-    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Negation';
-    $c->{node} = $c->{node}->close while $c->{node}->type eq 'Equality';
+    close_nodes($c, qw(Negation Equality));
 
     # perhaps this is an inline if?
     if (($c->{node}{parameter_for} || '') eq 'if') {
@@ -783,11 +767,7 @@ sub handle_equality {
     my ($c, $negated, $obj_equality) = @_;
 
     # equality closes these.
-    my $redo;
-    $c->{node} = $c->{node}->close, $redo = 1
-        while $c->{node}->type eq 'Negation';
-    $c->{node} = $c->{node}->close, $redo = 1
-        while $c->{node}->type eq 'Equality';
+    my $redo = close_nodes($c, qw(Negation Equality));
 
     # if we closed something, redo to update last_element.
     return $c->{redo} = 1 if $redo;
@@ -1018,6 +998,90 @@ sub c_eof {
             'before reaching end of file'
         );
     }
+}
+
+# Nodes terminated by instructions
+# ================================
+#
+#   WantNeed
+#
+#       need $x;
+#
+#       WantNeeds cannot contain anything special to terminate.
+#
+#   PropertyModifier
+#
+#       delete $x.prop;
+#
+#       PropertyModifiers cannot contain special to terminate.
+#
+#   List with Pair
+#
+#       (hi: 10 == 5 + !5)
+#
+#       Close in order
+#       1. Negation     (!)
+#       2. Operation    (+)
+#       3. Equality     (==)
+#       4. Pair         (:)
+#       5. List item
+#       6. List
+#
+#
+#   Return
+#
+#       return 10 == 5 + !5;
+#
+#       Close in order
+#       1. Negation     (!)
+#       2. Operation    (+)
+#       3. Equality     (==)
+#       4. Return
+#
+#   ReturnPair
+#
+#       x -> 10 == 5 + !5;
+#
+#       Same as Return above.
+#
+# Node groups
+# ================================
+#
+#   1. Special nodes that have their own specific rules.
+#   2. Normal nodes, usually expressions.
+#   3. Statement nodes which are direct descendants of instructions.
+#
+my (@closes, %precedence);
+{
+    @closes = (
+        qw( WantNeed PropertyModifier ),                                        # 1
+        qw( Negation Operation Equality Pair ListItem List Call ),              # 2
+        qw( Assignment Return ReturnPair )                                      # 3
+    );
+    my $i = 0;
+    %precedence = map { $_ => $i++ } @closes;
+}
+
+sub sort_precedence {
+    my @types = @_;
+
+    # find the others and sort.
+    my @orders = sort { $a <=> $b } map $precedence{$_}, @types;
+
+    # return the names.
+    return map $closes[$_], @orders;
+
+}
+
+sub close_nodes {
+    my ($c, @nodes) = @_;
+    my $count = 0;
+    foreach (sort_precedence(@nodes)) {
+        next unless $_ eq $c->{node}->type;
+        $c->{node} = $c->{node}->close;
+        $count++;
+    }
+    return $count;
 }
 
 # returns the first parent node which is not a list or a list item.
