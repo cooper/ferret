@@ -39,7 +39,7 @@ my %no_value = map { $_ => 1 } qw(
 );
 
 # reused formats
-my $prop_reg    = qr/[\*]?[A-Za-z_]+[A-Za-z0-9_]*/;
+my $prop_reg    = qr/[A-Za-z_]+[A-Za-z0-9_]*/;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
 my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
 
@@ -57,7 +57,7 @@ my @token_formats = (
 
 
     # simple properties
-    [ PROPERTY      => qr/\.$prop_reg/, \&remove_first_char                 ],  # simple .property
+    [ PROPERTY      => qr/\.[\*]?$prop_reg/, \&remove_first_char            ],  # simple .property
 
 
     # variables
@@ -163,6 +163,12 @@ sub tok_STR_REG {
     my ($tokens, $value) = @_;
     my ($dat, $is_str, $in_str, $in_exp, $escaped, $var, @parts) = '';
 
+    my $next_works = sub {
+        my ($var, $char) = @_;
+        return 1 if "$$var{name}$char" =~ m/^$prop_reg$/;
+        return;
+    };
+
     # TODO: interpolation
     for my $char (split //, $value) {
 
@@ -194,7 +200,7 @@ sub tok_STR_REG {
         }
 
         # if interpolating.
-        if ($is_str && 1) {
+        if ($is_str) {
 
             # start of a variable.
             if ($char =~ m/[\$\@\*]/) {
@@ -205,15 +211,21 @@ sub tok_STR_REG {
             }
 
             # add to the variable.
-            if ($var && $char =~ m/$prop_reg/) {
+            if ($var && $next_works->($var, $char)) {
                 $var->{name} .= $char;
                 next;
             }
 
             # end of variable.
-            elsif ($var) {
+            if ($var) {
                 push @parts, $var;
                 undef $var;
+            }
+
+            # start of a property.
+            if ($char eq '.' && !length $dat && ref $parts[-1] eq 'HASH') {
+                $var = { sigil => $char, name => '' };
+                next;
             }
 
         }
@@ -230,6 +242,13 @@ sub tok_STR_REG {
     my $i = -1;
     foreach my $part (@parts) { $i++;
         ref $part eq 'HASH' or next;
+
+        # no length for the variable. just insert the sigil.
+        if (!$part->{name}) {
+            $parts[$i] = $part->{sigil};
+            next;
+        }
+
         my $code = "$$part{sigil}$$part{name}";
         $parts[$i] = (tokenize_noinc($code))[1];
     }

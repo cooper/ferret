@@ -52,7 +52,15 @@
 #                                          Addition operator (+)
 #                                          Instance variable '@user'
 #                                          Addition operator (+)
-#                                          String ' * * :'
+#                                          String ' '
+#                                          Addition operator (+)
+#                                          String '*'
+#                                          Addition operator (+)
+#                                          String ' '
+#                                          Addition operator (+)
+#                                          String '*'
+#                                          Addition operator (+)
+#                                          String ' :'
 #                                          Addition operator (+)
 #                                          Instance variable '@real'
 #                      Instruction
@@ -145,8 +153,14 @@ my $result = do {
             $self->property_u('send')->call_u(
                 [
                     add(
-                        $scope,                    str( $f, "USER " ),
-                        $self->property_u('user'), str( $f, " * * :" ),
+                        $scope,
+                        str( $f, "USER " ),
+                        $self->property_u('user'),
+                        str( $f, " " ),
+                        str( $f, "*" ),
+                        str( $f, " " ),
+                        str( $f, "*" ),
+                        str( $f, " :" ),
                         $self->property_u('real')
                     )
                 ],

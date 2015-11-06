@@ -11,7 +11,7 @@ init {
 
     # connect event
     on @connected {
-        @send("USER @user \* \* :@real");
+        @send("USER @user * * :@real");
         @send("NICK @nick");
     }
 

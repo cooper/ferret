@@ -13,7 +13,7 @@ on $sock.println {
 
 on $sock.connected {
     $sock.println("NICK k");
-    $sock.println("USER k \* \* :k");
+    $sock.println("USER k * * :k");
 }
 
 $sock.connect();

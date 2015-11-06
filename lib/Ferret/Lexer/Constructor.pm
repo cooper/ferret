@@ -1,4 +1,4 @@
-# Copyright (c) 2014 Mitchell Cooper
+# Copyright (c) 2015, Mitchell Cooper
 package Ferret::Lexer::Constructor;
 
 use warnings;
@@ -11,13 +11,12 @@ use Scalar::Util qw(blessed);
 our ($current, $error);
 
 sub construct {
-    my @elements;
     my $main_node = shift;
     $current = {
         main_node => $main_node,
         file      => $main_node->{name} || 'unknown',
         node      => $main_node,
-        elements  => \@elements,
+        elements  => [],
         upcoming  => \@_
         # package
         # class
@@ -27,53 +26,7 @@ sub construct {
     };
 
     while (my ($label, $value, $line) = @{ shift || [] }) {
-        my $last_element = ($current->{node}->children)[-1] || $current->{node};
-
-        # check for error.
-        if (my $err = $error) {
-            undef $error;
-            return $err;
-        }
-
-        # current info.
-        @$current{ qw(label value line next_tok last_element) } = (
-            $label, $value,
-            $line,  $_[0],
-            $last_element
-        );
-
-        $current->{unknown_el} = F::Unknown->new(
-            token_label => $label,
-            token_value => $value
-        );
-
-        # check token rules.
-        Ferret::Lexer::RuleFunctions::token_check($label, $current, $value);
-        return $error if $error;
-
-        # call the handler for all.
-        c_any($label, $current, $value);
-
-        redo if delete $current->{redo};
-
-        # call a handler if one exists.
-        if (my $code = __PACKAGE__->can("c_$label")) {
-            my $el = $code->($current, $value);
-            if (my $err = $error) {
-                undef $error;
-                return $err;
-            }
-            if (blessed $el) {
-                return $el if $el->isa('F::Error');
-                push @elements, $el;
-            }
-            redo if delete $current->{redo};
-            next;
-        }
-
-        # otherwise, throw in an unknown element.
-        $current->{node}->adopt($current->{unknown_el});
-
+        handle_label($label, $value, $line);
     }
 
     c_spaces($current, $main_node);
@@ -81,6 +34,59 @@ sub construct {
     Ferret::Lexer::RuleFunctions::final_check($main_node);
 
     return $error;
+}
+
+sub handle_label {
+    my ($label, $value, $line) = @_;
+    my $redo = sub { handle_label($label, $value, $line) };
+    my $last_element = ($current->{node}->children)[-1] || $current->{node};
+    $line //= 0;
+
+    # check for error.
+    if (my $err = $error) {
+        undef $error;
+        return $err;
+    }
+
+    # current info.
+    @$current{ qw(label value line next_tok last_element) } = (
+        $label, $value,
+        $line,  $current->{upcoming}[0],
+        $last_element
+    );
+
+    $current->{unknown_el} = F::Unknown->new(
+        token_label => $label,
+        token_value => $value
+    );
+
+    # check token rules.
+    Ferret::Lexer::RuleFunctions::token_check($label, $current, $value);
+    return $error if $error;
+
+    # call the handler for all.
+    c_any($label, $current, $value);
+
+    return $redo->() if delete $current->{redo};
+
+    # call a handler if one exists.
+    if (my $code = __PACKAGE__->can("c_$label")) {
+        my $el = $code->($current, $value);
+        if (my $err = $error) {
+            undef $error;
+            return $err;
+        }
+        if (blessed $el) {
+            return $el if $el->isa('F::Error');
+            push @{ $current->{elements} }, $el;
+        }
+        return $redo->() if delete $current->{redo};
+        return;
+    }
+
+    # otherwise, throw in an unknown element.
+    $current->{node}->adopt($current->{unknown_el});
+
 }
 
 sub c_PKG_DEC {
@@ -401,8 +407,7 @@ sub c_PAREN_E {
         if $t ne 'PAREN_E';
 
     # closes these things.
-    my @closes = qw(Negation Operation Equality Pair);
-    close_nodes($c, @closes);
+    close_nodes($c, qw(Negation Operation Equality Pair));
 
     # close the list itself.
     #
@@ -474,11 +479,23 @@ sub c_STRING {
     # more than one part. contains variables.
     my $op = $c->{node} = $c->{node}->adopt(F::Operation->new);
     while (my $part = shift @parts) {
+        my $is_prop = ref $part && $part->[0] eq 'PROPERTY';
+
+        # add an addition operator unless it's a property.
+        $op->adopt(F::Operator->new(token => 'OP_ADD'))
+            if $op->last_child && !$is_prop &&
+               $op->last_child->type ne 'Operator';
+
+        # variable or property part.
         if (ref $part) {
-            __PACKAGE__->can("c_$$part[0]")->($c, @$part[1..$#$part]);
+            handle_label(@$part);
         }
-        else { $op->adopt(F::String->new(value => $part)) }
-        $op->adopt(F::Operator->new(token => 'OP_ADD')) if @parts;
+
+        # just a string part.
+        else {
+            $op->adopt(F::String->new(value => $part));
+        }
+
     }
     $c->{node} = $op->close;
 
@@ -596,11 +613,11 @@ sub c_OP_SEMI {
     # Rule OP_SEMI[0]:
     #   The current 'instruction' must exist.
 
-    my @closes = qw(
+    # close these things.
+    close_nodes($c, qw(
         WantNeed PropertyModifier Negation Operation
         Equality Assignment Return ReturnPair
-    );
-    close_nodes($c, @closes);
+    ));
 
     # at this point, the instruction must be the current node.
     if ($c->{node} != $c->{instruction}) {
@@ -721,7 +738,6 @@ sub c_PROP_VALUE {
 
 sub c_PROPERTY {
     my ($c, $value) = @_;
-    # TODO: check if last element is allowed.
     my $prop = F::Property->new(prop_name => $value);
 
     my $last_el = $c->{last_element};

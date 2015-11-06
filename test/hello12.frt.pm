@@ -69,7 +69,16 @@
 #                          Lexical variable '$sock'
 #                      Single value [1 items]
 #                          Item 0
-#                              String 'USER k * * :k'
+#                              Operation
+#                                  String 'USER k '
+#                                  Addition operator (+)
+#                                  String '*'
+#                                  Addition operator (+)
+#                                  String ' '
+#                                  Addition operator (+)
+#                                  String '*'
+#                                  Addition operator (+)
+#                                  String ' :k'
 #      Instruction
 #          Call
 #              Property 'connect'
@@ -178,8 +187,19 @@ my $result = do {
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
               ->call_u( [ str( $f, "NICK k" ) ], $scope );
-            $scope->property_u('sock')->property_u('println')
-              ->call_u( [ str( $f, "USER k * * :k" ) ], $scope );
+            $scope->property_u('sock')->property_u('println')->call_u(
+                [
+                    add(
+                        $scope,
+                        str( $f, "USER k " ),
+                        str( $f, "*" ),
+                        str( $f, " " ),
+                        str( $f, "*" ),
+                        str( $f, " :k" )
+                    )
+                ],
+                $scope
+            );
             return $return;
         };
     }

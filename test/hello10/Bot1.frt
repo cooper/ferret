@@ -9,7 +9,7 @@ init {
 
     # connect event
     on @sock.connected {
-        @send("USER @user \* \* :@real");
+        @send("USER @user * * :@real");
         @send("NICK @nick");
     }
 
