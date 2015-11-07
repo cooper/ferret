@@ -38,12 +38,11 @@ FF::before_content('Math.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'Math' );
     FF::load_core('Math');
 
     # Function event 'sqrt' callback definition
-    $funcs[0] = FF::function_event_def(
+    my $func_0 = FF::function_event_def(
         $f, $scope, 'sqrt',
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         sub {
@@ -55,7 +54,7 @@ my $result = do {
             return $return;
         }
     );
-    $funcs[0]->inside_scope( sqrt => $scope, $scope, undef, undef, undef );
+    $func_0->inside_scope( sqrt => $scope, $scope, undef, undef, undef );
     FF::load_namespaces( $context,
         qw(Math::NATIVE Math::NATIVE::Math Math::Num NATIVE NATIVE::Math Num) );
 };

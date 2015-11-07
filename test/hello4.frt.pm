@@ -94,12 +94,11 @@ FF::before_content('hello4.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Function event 'makePoint' callback definition
-    $funcs[0] = FF::function_event_def(
+    my $func_0 = FF::function_event_def(
         $f, $scope,
         'makePoint',
         [
@@ -127,7 +126,7 @@ my $result = do {
             return $return;
         }
     );
-    $funcs[0]->inside_scope( makePoint => $scope, $scope, undef, undef, undef );
+    $func_0->inside_scope( makePoint => $scope, $scope, undef, undef, undef );
     $scope->set_property_ow( $context,
         pt => $scope->property_u('makePoint')
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope )

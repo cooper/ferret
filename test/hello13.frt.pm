@@ -71,12 +71,11 @@ FF::before_content('hello13.frt');
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
-    $funcs[0] = FF::function_def(
+    my $func_0 = FF::function_def(
         $f, $scope,
         '(undef)',
         [],
@@ -90,7 +89,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    $funcs[1] = FF::function_def(
+    my $func_1 = FF::function_def(
         $f, $scope,
         '(undef)',
         [],
@@ -110,8 +109,7 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $funcs[0]
-          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
     $scope->set_property_ow( $context,
         t2 => $scope->property_u('Timer')->call_u( [ num( $f, 2 ) ], $scope ) );
@@ -120,8 +118,7 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $funcs[1]
-          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
     $scope->property_u('t2')->property_u('cancel')->call_u( {}, $scope );
 };

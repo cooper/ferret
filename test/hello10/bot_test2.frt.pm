@@ -50,7 +50,6 @@ FF::before_content('bot_test2.frt');
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 

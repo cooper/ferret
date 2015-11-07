@@ -24,7 +24,6 @@ FF::before_content('CORE.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'CORE' );
     FF::load_core('CORE');
 

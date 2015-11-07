@@ -43,13 +43,11 @@ FF::before_content('hello8.frt');
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Class 'String'
     {
-        my @methods;
         my ( $class, $self );
         if ( not $class = $f->get_class( $context, 'String' ) ) {
             $class = $self = Ferret::Class->new(
@@ -62,7 +60,7 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event 'doubledLength' definition
-        $methods[0] = FF::method_event_def(
+        my $method_0 = FF::method_event_def(
             $f, $scope,
             'doubledLength',
             [],
@@ -76,7 +74,7 @@ my $result = do {
                 return $return;
             }
         );
-        $methods[0]->inside_scope(
+        $method_0->inside_scope(
             doubledLength => $scope,
             $proto, $class, undef, undef
         );

@@ -1,6 +1,5 @@
 # Class '<<name>>'
 {
-    my @methods;
     my ($class, $self);
     if (not $class = $f->get_class($context, '<<name>>')) {
         $class = $self = Ferret::Class->new($f,

@@ -134,12 +134,11 @@ FF::before_content('Bot2.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
-    $funcs[0] = FF::function_def(
+    my $func_0 = FF::function_def(
         $f, $scope,
         '(undef)',
         [],
@@ -175,7 +174,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    $funcs[1] = FF::function_def(
+    my $func_1 = FF::function_def(
         $f, $scope,
         '(undef)',
         [ { name => 'data', type => '', optional => undef, more => undef } ],
@@ -197,7 +196,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    $funcs[2] = FF::function_def(
+    my $func_2 = FF::function_def(
         $f, $scope,
         '(undef)',
         [ { name => 'data', type => '', optional => undef, more => undef } ],
@@ -220,7 +219,6 @@ my $result = do {
 
     # Class 'Bot2'
     {
-        my @methods;
         my ( $class, $self );
         if ( not $class = $f->get_class( $context, 'Bot2' ) ) {
             $class = $self = Ferret::Class->new(
@@ -233,7 +231,7 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        $methods[0] = FF::method_event_def(
+        my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
             [
                 {
@@ -286,7 +284,7 @@ my $result = do {
                     $self,
                     'connected',
                     $self, $scope,
-                    $funcs[0]->inside_scope(
+                    $func_0->inside_scope(
                         (undef) => $scope,
                         $scope, undef, undef, undef
                     )
@@ -295,7 +293,7 @@ my $result = do {
                     $self,
                     'gotLine',
                     $self, $scope,
-                    $funcs[1]->inside_scope(
+                    $func_1->inside_scope(
                         (undef) => $scope,
                         $scope, undef, undef, undef
                     )
@@ -304,7 +302,7 @@ my $result = do {
                     $self,
                     'println',
                     $self, $scope,
-                    $funcs[2]->inside_scope(
+                    $func_2->inside_scope(
                         (undef) => $scope,
                         $scope, undef, undef, undef
                     )
@@ -312,8 +310,10 @@ my $result = do {
                 return $return;
             }
         );
-        $methods[0]
-          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
+        $method_0->inside_scope(
+            _init_ => $scope,
+            $class, $class, undef, undef
+        );
     }
     FF::load_namespaces( $context, qw(Num Socket Socket::TCP Str) );
 };

@@ -83,12 +83,11 @@ FF::before_content('hello21.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
-    $funcs[0] = FF::function_def(
+    my $func_0 = FF::function_def(
         $f, $scope,
         '(undef)',
         [],
@@ -123,7 +122,7 @@ my $result = do {
                   ->call_u( [ $scope->property_u('i') ], $scope )
                   ->property_u('once')->call_u( {}, $scope ),
                 'expire', $self, $scope,
-                $funcs[0]->inside_scope(
+                $func_0->inside_scope(
                     (undef) => $scope,
                     $scope, undef, undef, undef
                 )

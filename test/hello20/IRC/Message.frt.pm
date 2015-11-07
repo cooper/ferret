@@ -168,13 +168,11 @@ FF::before_content('Message.frt');
 
 use Ferret::Core::Operations qw(_not add bool num str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'IRC' );
     FF::load_core('IRC');
 
     # Class 'Message'
     {
-        my @methods;
         my ( $class, $self );
         if ( not $class = $f->get_class( $context, 'Message' ) ) {
             $class = $self = Ferret::Class->new(
@@ -187,7 +185,7 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        $methods[0] = FF::method_event_def(
+        my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
             [
                 {
@@ -232,7 +230,7 @@ my $result = do {
         );
 
         # Method event 'command' definition
-        $methods[1] = FF::method_event_def(
+        my $method_1 = FF::method_event_def(
             $f, $scope,
             'command',
             [],
@@ -269,7 +267,7 @@ my $result = do {
         );
 
         # Method event 'commandHasParameters' definition
-        $methods[2] = FF::method_event_def(
+        my $method_2 = FF::method_event_def(
             $f, $scope,
             'commandHasParameters',
             [],
@@ -282,7 +280,7 @@ my $result = do {
         );
 
         # Method event 'fromWord' definition
-        $methods[3] = FF::method_event_def(
+        my $method_3 = FF::method_event_def(
             $f, $scope,
             'fromWord',
             [
@@ -310,15 +308,19 @@ my $result = do {
                 return $return;
             }
         );
-        $methods[0]
-          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
-        $methods[1]->inside_scope( command => $scope, $proto, $class, 1, 1 );
-        $methods[2]->inside_scope(
+        $method_0->inside_scope(
+            _init_ => $scope,
+            $class, $class, undef, undef
+        );
+        $method_1->inside_scope( command => $scope, $proto, $class, 1, 1 );
+        $method_2->inside_scope(
             commandHasParameters => $scope,
             $proto, $class, 1, 1
         );
-        $methods[3]
-          ->inside_scope( fromWord => $scope, $proto, $class, undef, undef );
+        $method_3->inside_scope(
+            fromWord => $scope,
+            $proto, $class, undef, undef
+        );
     }
     FF::load_namespaces( $context, qw(IRC::Num IRC::Str Num Str) );
 };

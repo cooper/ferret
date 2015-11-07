@@ -1,6 +1,5 @@
 use Ferret::Core::Operations qw(<<operations>>);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context($f, '<<package>>');
     FF::load_core('<<package>>');
 

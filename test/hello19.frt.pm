@@ -45,7 +45,6 @@ FF::before_content('hello19.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 

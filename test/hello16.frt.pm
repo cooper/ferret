@@ -48,7 +48,6 @@ FF::before_content('hello16.frt');
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 

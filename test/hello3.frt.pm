@@ -112,12 +112,11 @@ FF::before_content('hello3.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Function event 'hello1' callback definition
-    $funcs[0] = FF::function_event_def(
+    my $func_0 = FF::function_event_def(
         $f, $scope, 'hello1',
         [],
         sub {
@@ -142,7 +141,7 @@ my $result = do {
     );
 
     # Function event 'hello2' callback definition
-    $funcs[1] = FF::function_event_def(
+    my $func_1 = FF::function_event_def(
         $f, $scope, 'hello2',
         [],
         sub {
@@ -162,7 +161,7 @@ my $result = do {
     );
 
     # Function event 'helloWorld' callback definition
-    $funcs[2] = FF::function_event_def(
+    my $func_2 = FF::function_event_def(
         $f, $scope,
         'helloWorld',
         [
@@ -172,10 +171,14 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $funcs[0]
-              ->inside_scope( hello1 => $scope, $scope, undef, undef, undef );
-            $funcs[1]
-              ->inside_scope( hello2 => $scope, $scope, undef, undef, undef );
+            $func_0->inside_scope(
+                hello1 => $scope,
+                $scope, undef, undef, undef
+            );
+            $func_1->inside_scope(
+                hello2 => $scope,
+                $scope, undef, undef, undef
+            );
             FF::need( $scope, $arguments, 'name1' ) or return;
             FF::need( $scope, $arguments, 'name2' ) or return;
             $scope->property_u('hello1')->call_u( {}, $scope );
@@ -183,8 +186,7 @@ my $result = do {
             return $return;
         }
     );
-    $funcs[2]
-      ->inside_scope( helloWorld => $scope, $scope, undef, undef, undef );
+    $func_2->inside_scope( helloWorld => $scope, $scope, undef, undef, undef );
     $scope->property_u('helloWorld')
       ->call_u( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
         $scope );

@@ -476,12 +476,11 @@ FF::before_content('Bot.frt');
 
 use Ferret::Core::Operations qw(_not add bool num str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'IRC' );
     FF::load_core('IRC');
 
     # Anonymous function definition
-    $funcs[0] = FF::function_def(
+    my $func_0 = FF::function_def(
         $f, $scope,
         '(undef)',
         [],
@@ -517,7 +516,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    $funcs[1] = FF::function_def(
+    my $func_1 = FF::function_def(
         $f, $scope,
         '(undef)',
         [ { name => 'data', type => '', optional => undef, more => undef } ],
@@ -533,7 +532,6 @@ my $result = do {
 
     # Class 'Bot'
     {
-        my @methods;
         my ( $class, $self );
         if ( not $class = $f->get_class( $context, 'Bot' ) ) {
             $class = $self = Ferret::Class->new(
@@ -546,7 +544,7 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        $methods[0] = FF::method_event_def(
+        my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
             [
                 {
@@ -618,7 +616,7 @@ my $result = do {
                     $self->property_u('sock'),
                     'connected',
                     $self, $scope,
-                    $funcs[0]->inside_scope(
+                    $func_0->inside_scope(
                         (undef) => $scope,
                         $scope, undef, undef, undef
                     )
@@ -627,7 +625,7 @@ my $result = do {
                     $self->property_u('sock'),
                     'gotLine',
                     $self, $scope,
-                    $funcs[1]->inside_scope(
+                    $func_1->inside_scope(
                         (undef) => $scope,
                         $scope, undef, undef, undef
                     )
@@ -637,7 +635,7 @@ my $result = do {
         );
 
         # Method event 'addCommand' definition
-        $methods[1] = FF::method_event_def(
+        my $method_1 = FF::method_event_def(
             $f, $scope,
             'addCommand',
             [
@@ -679,7 +677,7 @@ my $result = do {
         );
 
         # Method event 'connect' definition
-        $methods[2] = FF::method_event_def(
+        my $method_2 = FF::method_event_def(
             $f, $scope,
             'connect',
             [],
@@ -692,7 +690,7 @@ my $result = do {
         );
 
         # Method event 'send' definition
-        $methods[3] = FF::method_event_def(
+        my $method_3 = FF::method_event_def(
             $f, $scope, 'send',
             [
                 {
@@ -721,7 +719,7 @@ my $result = do {
         );
 
         # Method event 'handleLine' definition
-        $methods[4] = FF::method_event_def(
+        my $method_4 = FF::method_event_def(
             $f, $scope,
             'handleLine',
             [
@@ -787,7 +785,7 @@ my $result = do {
         );
 
         # Method event 'privmsg' definition
-        $methods[5] = FF::method_event_def(
+        my $method_5 = FF::method_event_def(
             $f, $scope,
             'privmsg',
             [
@@ -848,7 +846,7 @@ my $result = do {
         );
 
         # Method event 'joinChannels' definition
-        $methods[6] = FF::method_event_def(
+        my $method_6 = FF::method_event_def(
             $f, $scope,
             'joinChannels',
             [],
@@ -887,7 +885,7 @@ my $result = do {
         );
 
         # Method event 'pong' definition
-        $methods[7] = FF::method_event_def(
+        my $method_7 = FF::method_event_def(
             $f, $scope, 'pong',
             [ { name => 's', type => '', optional => undef, more => undef } ],
             sub {
@@ -909,7 +907,7 @@ my $result = do {
         );
 
         # Method event 'handleMessage' definition
-        $methods[8] = FF::method_event_def(
+        my $method_8 = FF::method_event_def(
             $f, $scope,
             'handleMessage',
             [
@@ -960,7 +958,7 @@ my $result = do {
         );
 
         # Method event 'commandHello' definition
-        $methods[9] = FF::method_event_def(
+        my $method_9 = FF::method_event_def(
             $f, $scope,
             'commandHello',
             [ { name => 'msg', type => '', optional => undef, more => undef } ],
@@ -985,7 +983,7 @@ my $result = do {
         );
 
         # Method event 'commandAdd' definition
-        $methods[10] = FF::method_event_def(
+        my $method_10 = FF::method_event_def(
             $f, $scope,
             'commandAdd',
             [ { name => 'msg', type => '', optional => undef, more => undef } ],
@@ -1026,7 +1024,7 @@ my $result = do {
         );
 
         # Method event 'commandFactoid' definition
-        $methods[11] = FF::method_event_def(
+        my $method_11 = FF::method_event_def(
             $f, $scope,
             'commandFactoid',
             [ { name => 'msg', type => '', optional => undef, more => undef } ],
@@ -1050,35 +1048,45 @@ my $result = do {
                 return $return;
             }
         );
-        $methods[0]
-          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
-        $methods[1]
-          ->inside_scope( addCommand => $scope, $proto, $class, undef, undef );
-        $methods[2]
-          ->inside_scope( connect => $scope, $proto, $class, undef, undef );
-        $methods[3]
-          ->inside_scope( send => $scope, $proto, $class, undef, undef );
-        $methods[4]
-          ->inside_scope( handleLine => $scope, $proto, $class, undef, undef );
-        $methods[5]
-          ->inside_scope( privmsg => $scope, $proto, $class, undef, undef );
-        $methods[6]->inside_scope(
+        $method_0->inside_scope(
+            _init_ => $scope,
+            $class, $class, undef, undef
+        );
+        $method_1->inside_scope(
+            addCommand => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_2->inside_scope(
+            connect => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_3->inside_scope( send => $scope, $proto, $class, undef, undef );
+        $method_4->inside_scope(
+            handleLine => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_5->inside_scope(
+            privmsg => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_6->inside_scope(
             joinChannels => $scope,
             $proto, $class, undef, undef
         );
-        $methods[7]
-          ->inside_scope( pong => $scope, $proto, $class, undef, undef );
-        $methods[8]->inside_scope(
+        $method_7->inside_scope( pong => $scope, $proto, $class, undef, undef );
+        $method_8->inside_scope(
             handleMessage => $scope,
             $proto, $class, undef, undef
         );
-        $methods[9]->inside_scope(
+        $method_9->inside_scope(
             commandHello => $scope,
             $proto, $class, undef, undef
         );
-        $methods[10]
-          ->inside_scope( commandAdd => $scope, $proto, $class, undef, undef );
-        $methods[11]->inside_scope(
+        $method_10->inside_scope(
+            commandAdd => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_11->inside_scope(
             commandFactoid => $scope,
             $proto, $class, undef, undef
         );

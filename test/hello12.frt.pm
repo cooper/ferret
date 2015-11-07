@@ -126,12 +126,11 @@ FF::before_content('hello12.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
-    $funcs[0] = FF::function_def(
+    my $func_0 = FF::function_def(
         $f, $scope,
         '(undef)',
         [ { name => 'data', type => '', optional => undef, more => undef } ],
@@ -153,7 +152,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    $funcs[1] = FF::function_def(
+    my $func_1 = FF::function_def(
         $f, $scope,
         '(undef)',
         [ { name => 'data', type => '', optional => undef, more => undef } ],
@@ -175,7 +174,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    $funcs[2] = FF::function_def(
+    my $func_2 = FF::function_def(
         $f, $scope,
         '(undef)',
         [],
@@ -202,7 +201,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    $funcs[3] = FF::function_def(
+    my $func_3 = FF::function_def(
         $f, $scope,
         '(undef)',
         [],
@@ -225,14 +224,14 @@ my $result = do {
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('sock') ], $scope );
     FF::on( $scope->property_u('sock'), 'gotLine', $self, $scope,
-        $funcs[0]
-          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
+        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+    );
     FF::on( $scope->property_u('sock'), 'println', $self, $scope,
-        $funcs[1]
-          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
+        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+    );
     FF::on( $scope->property_u('sock'), 'connected', $self, $scope,
-        $funcs[2]
-          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
+        $func_2->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+    );
     $scope->property_u('sock')->property_u('connect')->call_u( {}, $scope );
     FF::on(
         $scope->property_u('Timer')->call_u( [ num( $f, 5 ) ], $scope )
@@ -240,8 +239,7 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $funcs[3]
-          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+        $func_3->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
 };
 

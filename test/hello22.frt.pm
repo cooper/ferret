@@ -166,13 +166,11 @@ FF::before_content('hello22.frt');
 
 use Ferret::Core::Operations qw(bool str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Class 'Cow'
     {
-        my @methods;
         my ( $class, $self );
         if ( not $class = $f->get_class( $context, 'Cow' ) ) {
             $class = $self = Ferret::Class->new(
@@ -185,7 +183,7 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        $methods[0] = FF::method_event_def(
+        my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
             [ { name => 'moos', type => '', optional => 1, more => undef } ],
             sub {
@@ -200,7 +198,7 @@ my $result = do {
         );
 
         # Method event 'moo' definition
-        $methods[1] = FF::method_event_def(
+        my $method_1 = FF::method_event_def(
             $f, $scope, 'moo',
             [],
             sub {
@@ -214,15 +212,15 @@ my $result = do {
                 return $return;
             }
         );
-        $methods[0]
-          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
-        $methods[1]
-          ->inside_scope( moo => $scope, $proto, $class, undef, undef );
+        $method_0->inside_scope(
+            _init_ => $scope,
+            $class, $class, undef, undef
+        );
+        $method_1->inside_scope( moo => $scope, $proto, $class, undef, undef );
     }
 
     # Class 'Dog'
     {
-        my @methods;
         my ( $class, $self );
         if ( not $class = $f->get_class( $context, 'Dog' ) ) {
             $class = $self = Ferret::Class->new(
@@ -235,7 +233,7 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        $methods[0] = FF::method_event_def(
+        my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
             [ { name => 'barks', type => '', optional => 1, more => undef } ],
             sub {
@@ -250,7 +248,7 @@ my $result = do {
         );
 
         # Method event 'bark' definition
-        $methods[1] = FF::method_event_def(
+        my $method_1 = FF::method_event_def(
             $f, $scope, 'bark',
             [],
             sub {
@@ -264,15 +262,15 @@ my $result = do {
                 return $return;
             }
         );
-        $methods[0]
-          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
-        $methods[1]
-          ->inside_scope( bark => $scope, $proto, $class, undef, undef );
+        $method_0->inside_scope(
+            _init_ => $scope,
+            $class, $class, undef, undef
+        );
+        $method_1->inside_scope( bark => $scope, $proto, $class, undef, undef );
     }
 
     # Class 'Cat'
     {
-        my @methods;
         my ( $class, $self );
         if ( not $class = $f->get_class( $context, 'Cat' ) ) {
             $class = $self = Ferret::Class->new(
@@ -285,7 +283,7 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        $methods[0] = FF::method_event_def(
+        my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
             [ { name => 'mean', type => '', optional => 1, more => undef } ],
             sub {
@@ -300,7 +298,7 @@ my $result = do {
         );
 
         # Method event 'meow' definition
-        $methods[1] = FF::method_event_def(
+        my $method_1 = FF::method_event_def(
             $f, $scope, 'meow',
             [],
             sub {
@@ -311,7 +309,7 @@ my $result = do {
         );
 
         # Method event 'fight' definition
-        $methods[2] = FF::method_event_def(
+        my $method_2 = FF::method_event_def(
             $f, $scope, 'fight',
             [
                 {
@@ -345,12 +343,15 @@ my $result = do {
                 return $return;
             }
         );
-        $methods[0]
-          ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
-        $methods[1]
-          ->inside_scope( meow => $scope, $proto, $class, undef, undef );
-        $methods[2]
-          ->inside_scope( fight => $scope, $class, $class, undef, undef );
+        $method_0->inside_scope(
+            _init_ => $scope,
+            $class, $class, undef, undef
+        );
+        $method_1->inside_scope( meow => $scope, $proto, $class, undef, undef );
+        $method_2->inside_scope(
+            fight => $scope,
+            $class, $class, undef, undef
+        );
     }
     FF::load_namespaces( $context, qw(Cat Cow Dog) );
     $scope->set_property_ow( $context,

@@ -85,12 +85,11 @@ FF::before_content('hello14.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my @funcs;
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
-    $funcs[0] = FF::function_def(
+    my $func_0 = FF::function_def(
         $f, $scope,
         '(undef)',
         [],
@@ -114,7 +113,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    $funcs[1] = FF::function_def(
+    my $func_1 = FF::function_def(
         $f, $scope,
         '(undef)',
         [],
@@ -140,8 +139,8 @@ my $result = do {
     $scope->property_u('say')->call_u( [ str( $f, "test" ) ], $scope );
     $scope->set_property_ow( $context, str => str( $f, "hi" ) );
     FF::on( $scope->property_u('str'), 'length', $self, $scope,
-        $funcs[0]
-          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
+        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+    );
     $scope->property_u('str')->property_u('length')->call_u( {}, $scope );
     str( $f, "hello" )->property_u('length')->call_u( {}, $scope );
     FF::on(
@@ -149,8 +148,7 @@ my $result = do {
         'length',
         $self,
         $scope,
-        $funcs[1]
-          ->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
     str( $f, "hello" )->property_u('length')->call_u( {}, $scope );
 };
