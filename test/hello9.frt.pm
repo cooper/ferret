@@ -59,10 +59,11 @@ my $result = do {
     FF::load_core('main');
 
     # Function event 'sayHello' callback definition
-    {
-        my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'who', type => 'Str', more => undef );
-        $func->{code} = sub {
+    $funcs[0] = FF::function_event_def(
+        $f, $scope,
+        'sayHello',
+        [ { name => 'who', type => 'Str', optional => undef, more => undef } ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'who' ) or return;
@@ -76,13 +77,8 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-        $funcs[0] = Ferret::Event->new(
-            $f,
-            name         => 'sayHello',
-            default_func => [ undef, $func ]
-        );
-    }
+        }
+    );
     $funcs[0]->inside_scope( sayHello => $scope, $scope, undef, undef, undef );
     FF::load_namespaces( $context, qw(Str) );
     {

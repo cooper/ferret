@@ -131,10 +131,11 @@ my $result = do {
     FF::load_core('main');
 
     # Anonymous function definition
-    {
-        my $func = $funcs[0] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'data', type => '', more => undef );
-        $func->{code} = sub {
+    $funcs[0] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [ { name => 'data', type => '', optional => undef, more => undef } ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'data' ) or return;
@@ -148,14 +149,15 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-    }
+        }
+    );
 
     # Anonymous function definition
-    {
-        my $func = $funcs[1] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'data', type => '', more => undef );
-        $func->{code} = sub {
+    $funcs[1] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [ { name => 'data', type => '', optional => undef, more => undef } ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'data' ) or return;
@@ -169,14 +171,15 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-    }
+        }
+    );
 
     # Anonymous function definition
-    {
-        my $func = $funcs[2] = Ferret::Function->new( $f, anonymous => 1 );
-
-        $func->{code} = sub {
+    $funcs[2] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
@@ -195,21 +198,22 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-    }
+        }
+    );
 
     # Anonymous function definition
-    {
-        my $func = $funcs[3] = Ferret::Function->new( $f, anonymous => 1 );
-
-        $func->{code} = sub {
+    $funcs[3] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
               ->call_u( [ str( $f, "JOIN #k" ) ], $scope );
             return $return;
-        };
-    }
+        }
+    );
     FF::load_namespaces( $context, qw(Socket Socket::TCP Timer) );
     $scope->set_property_ow(
         $context,

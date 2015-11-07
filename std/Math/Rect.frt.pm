@@ -222,25 +222,35 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument( name => 'x', type => 'Num', more => undef );
-            $func->add_argument( name => 'y', type => 'Num', more => undef );
-            $func->add_argument(
-                name => 'width',
-                type => 'Num',
-                more => undef
-            );
-            $func->add_argument(
-                name => 'height',
-                type => 'Num',
-                more => undef
-            );
-            $func->{code} = sub {
+        $methods[0] = FF::method_event_def(
+            $f, $scope, '_init_',
+            [
+                {
+                    name     => 'x',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'y',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'width',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'height',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'x' )      or return;
                 FF::need( $scope, $arguments, 'y' )      or return;
@@ -253,23 +263,15 @@ my $result = do {
                     )
                 );
                 return $return;
-            };
-            $methods[0] = Ferret::Event->new(
-                $f,
-                name         => '_init_',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'vertices' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[1] = FF::method_event_def(
+            $f, $scope,
+            'vertices',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return FF::create_list(
                     $f,
@@ -281,43 +283,27 @@ my $result = do {
                     ]
                 );
                 return $return;
-            };
-            $methods[1] = Ferret::Event->new(
-                $f,
-                name         => 'vertices',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'bottomLeft' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[2] = FF::method_event_def(
+            $f, $scope,
+            'bottomLeft',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property_u('origin');
                 return $return;
-            };
-            $methods[2] = Ferret::Event->new(
-                $f,
-                name         => 'bottomLeft',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'bottomRight' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[3] = FF::method_event_def(
+            $f, $scope,
+            'bottomRight',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property_u('Point')->call_u(
                     [
@@ -331,23 +317,15 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[3] = Ferret::Event->new(
-                $f,
-                name         => 'bottomRight',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'topLeft' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[4] = FF::method_event_def(
+            $f, $scope,
+            'topLeft',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property_u('Point')->call_u(
                     [
@@ -361,23 +339,15 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[4] = Ferret::Event->new(
-                $f,
-                name         => 'topLeft',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'topRight' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[5] = FF::method_event_def(
+            $f, $scope,
+            'topRight',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property_u('Point')->call_u(
                     [
@@ -395,23 +365,15 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[5] = Ferret::Event->new(
-                $f,
-                name         => 'topRight',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'bottomLine' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[6] = FF::method_event_def(
+            $f, $scope,
+            'bottomLine',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property_u('Line')->call_u(
                     [
@@ -421,23 +383,15 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[6] = Ferret::Event->new(
-                $f,
-                name         => 'bottomLine',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'topLine' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[7] = FF::method_event_def(
+            $f, $scope,
+            'topLine',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $scope->property_u('Line')->call_u(
                     [
@@ -447,23 +401,14 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[7] = Ferret::Event->new(
-                $f,
-                name         => 'topLine',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'center' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[8] = FF::method_event_def(
+            $f, $scope, 'center',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property_ow(
                     $context,
@@ -492,23 +437,15 @@ my $result = do {
                     [ $scope->property_u('x'), $scope->property_u('y') ],
                     $scope );
                 return $return;
-            };
-            $methods[8] = Ferret::Event->new(
-                $f,
-                name         => 'center',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'description' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[9] = FF::method_event_def(
+            $f, $scope,
+            'description',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property_ow( $context,
                     o => $self->property_u('origin') );
@@ -531,13 +468,8 @@ my $result = do {
                     str( $f, " )" )
                 );
                 return $return;
-            };
-            $methods[9] = Ferret::Event->new(
-                $f,
-                name         => 'description',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
         $methods[0]
           ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
         $methods[1]

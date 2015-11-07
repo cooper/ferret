@@ -62,14 +62,11 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event 'doubledLength' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[0] = FF::method_event_def(
+            $f, $scope,
+            'doubledLength',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return mul(
                     $scope,
@@ -77,13 +74,8 @@ my $result = do {
                     num( $f, 2 )
                 );
                 return $return;
-            };
-            $methods[0] = Ferret::Event->new(
-                $f,
-                name         => 'doubledLength',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
         $methods[0]->inside_scope(
             doubledLength => $scope,
             $proto, $class, undef, undef

@@ -143,4 +143,82 @@ sub need {
     return $value;
 }
 
+# set any object as scope.
+sub inside {
+    my ($f, $outer_scope, $obj, $code) = @_;
+
+    # add the outer scope to the object's parents.
+    $obj->add_parent($outer_scope);
+
+    # call with $obj as scope.
+    $code->($obj);
+
+    # remove from parents.
+    $obj->remove_parent($outer_scope);
+
+    return;
+}
+
+# anonymous function definition.
+sub function_def {
+    my ($f, $scope, $name, $arg_ref, $code) = @_;
+
+    # create a default function.
+    my $func = Ferret::Function->new($f,
+        name => $name,
+        code => $code,
+        anonymous => 1
+    );
+
+    # add arguments.
+    $func->add_argument(%$_) foreach @$arg_ref;
+
+    return $func;
+}
+
+# function definition as event.
+sub function_event_def {
+    my ($f, $scope, $name, $arg_ref, $code) = @_;
+
+    # create a default function.
+    my $func = Ferret::Function->new($f,
+        name => 'default',
+        code => $code
+    );
+
+    # add arguments.
+    $func->add_argument(%$_) foreach @$arg_ref;
+
+    # create the event.
+    my $event = Ferret::Event->new($f,
+        name => $name,
+        default_func => [ undef, $func ]
+    );
+
+    return $event;
+}
+
+# method definition as event.
+sub method_event_def {
+    my ($f, $scope, $name, $arg_ref, $code) = @_;
+
+    # create a default function.
+    my $func = Ferret::Function->new($f,
+        name => 'default',
+        code => $code,
+        is_method => 1
+    );
+
+    # add arguments.
+    $func->add_argument(%$_) foreach @$arg_ref;
+
+    # create the event.
+    my $event = Ferret::Event->new($f,
+        name => $name,
+        default_func => [ undef, $func ]
+    );
+
+    return $event;
+}
+
 1

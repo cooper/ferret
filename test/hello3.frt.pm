@@ -117,10 +117,10 @@ my $result = do {
     FF::load_core('main');
 
     # Function event 'hello1' callback definition
-    {
-        my $func = Ferret::Function->new( $f, name => 'default' );
-
-        $func->{code} = sub {
+    $funcs[0] = FF::function_event_def(
+        $f, $scope, 'hello1',
+        [],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->set_property_ow( $context, hello => str( $f, "Hello" ) );
@@ -138,19 +138,14 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-        $funcs[0] = Ferret::Event->new(
-            $f,
-            name         => 'hello1',
-            default_func => [ undef, $func ]
-        );
-    }
+        }
+    );
 
     # Function event 'hello2' callback definition
-    {
-        my $func = Ferret::Function->new( $f, name => 'default' );
-
-        $func->{code} = sub {
+    $funcs[1] = FF::function_event_def(
+        $f, $scope, 'hello2',
+        [],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')->call_u(
@@ -163,20 +158,18 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-        $funcs[1] = Ferret::Event->new(
-            $f,
-            name         => 'hello2',
-            default_func => [ undef, $func ]
-        );
-    }
+        }
+    );
 
     # Function event 'helloWorld' callback definition
-    {
-        my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'name1', type => '', more => undef );
-        $func->add_argument( name => 'name2', type => '', more => undef );
-        $func->{code} = sub {
+    $funcs[2] = FF::function_event_def(
+        $f, $scope,
+        'helloWorld',
+        [
+            { name => 'name1', type => '', optional => undef, more => undef },
+            { name => 'name2', type => '', optional => undef, more => undef }
+        ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $funcs[0]
@@ -188,13 +181,8 @@ my $result = do {
             $scope->property_u('hello1')->call_u( {}, $scope );
             $scope->property_u('hello2')->call_u( {}, $scope );
             return $return;
-        };
-        $funcs[2] = Ferret::Event->new(
-            $f,
-            name         => 'helloWorld',
-            default_func => [ undef, $func ]
-        );
-    }
+        }
+    );
     $funcs[2]
       ->inside_scope( helloWorld => $scope, $scope, undef, undef, undef );
     $scope->property_u('helloWorld')

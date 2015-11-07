@@ -35,7 +35,7 @@ sub close : method {
 
 sub perl_fmt {
     my $func = shift;
-    my ($content, $arguments) = ('', '');
+    my ($content, @arguments) = '';
 
     foreach my $child ($func->ordered_children) {
         $content .= $child->perl_fmt_do."\n";
@@ -47,12 +47,12 @@ sub perl_fmt {
         # add wants/needs.
         next unless $wn && $wn->type eq 'WantNeed';
         foreach my $var ($wn->variables) {
-            my $fmt = "func_arg_$$wn{arg_type}";
-            $arguments .= $func->get_format($fmt => {
+            push @arguments, $func->get_format(func_arg => {
                 name => $var->{var_name},
+                want => $wn->{arg_type} eq 'want' ? '1' : 'undef',
                 type => $wn->var_type  || '',
                 more => $wn->{ellipsis} ? '1' : 'undef'
-            }).";\n";
+            });
         }
 
     }
@@ -65,7 +65,7 @@ sub perl_fmt {
         is_prop    => $func->{is_prop} ? '1' : 'undef',
         p_set      => $func->{p_set}   ? '1' : 'undef',
         statements => $content,
-        arguments  => $arguments
+        arguments  => join(', ', @arguments)
     };
 
     # add the function definition.

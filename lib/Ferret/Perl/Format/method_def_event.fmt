@@ -1,17 +1,6 @@
 # Method event '<<name>>' definition
-{
-    my $func = Ferret::Function->new($f,
-        name      => 'default',
-        is_method => 1
-    );
-    <<arguments>>
-    $func->{code} = sub {
-        my ($self, $arguments, $call_scope, $scope, $return) = @_;
-        <<statements>>
-        return $return;
-    };
-    $methods[<<id>>] = Ferret::Event->new($f,
-        name         => '<<name>>',
-        default_func => [ undef, $func ]
-    );
-}
+$methods[<<id>>] = FF::method_event_def($f, $scope, '<<name>>', [ <<arguments>> ], sub {
+    my ($self, $arguments, $call_scope, $scope, $return) = @_;
+    <<statements>>
+    return $return;
+});

@@ -1,11 +1,7 @@
 # Anonymous function definition
-{
-    my $func = $funcs[<<id>>] = Ferret::Function->new($f, anonymous => 1);
-    <<arguments>>
-    $func->{code} = sub {
-        my ($_self, $arguments, $call_scope, $scope, $return) = @_;
-        my $self = $_self || $self;
-        <<statements>>
-        return $return;
-    };
-}
+$funcs[<<id>>] = FF::function_def($f, $scope, '<<name>>', [ <<arguments>> ], sub {
+    my ($_self, $arguments, $call_scope, $scope, $return) = @_;
+    my $self = $_self || $self;
+    <<statements>>
+    return $return;
+});

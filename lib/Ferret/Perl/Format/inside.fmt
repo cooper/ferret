@@ -1,10 +1,5 @@
 # Inside
-{
-    my $outer_scope = $scope;
-    my $scope = <<expression>>;
-    $scope->add_parent($outer_scope);
-
+FF::inside($f, $scope, <<expression>>, sub {
+    my $scope = shift;
     <<content>>
-
-    $scope->remove_parent($outer_scope);
-}
+});

@@ -57,17 +57,18 @@ my $result = do {
     FF::load_core('main');
 
     # Anonymous function definition
-    {
-        my $func = $funcs[0] = Ferret::Function->new( $f, anonymous => 1 );
-
-        $func->{code} = sub {
+    $funcs[0] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "it works!" ) ], $scope );
             return $return;
-        };
-    }
+        }
+    );
     FF::load_namespaces( $context, qw(Timer) );
     $scope->set_property_ow( $context, obj => FF::create_object( $f, {} ) );
     $scope->property_u('Timer')->property_u('init')

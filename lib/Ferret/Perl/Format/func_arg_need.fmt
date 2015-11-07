@@ -1,1 +1,0 @@
-$func->add_argument(name => '<<name>>', type => '<<type>>', more => <<more>>)

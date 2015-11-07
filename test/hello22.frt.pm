@@ -185,19 +185,10 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'moos',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[0] = FF::method_event_def(
+            $f, $scope, '_init_',
+            [ { name => 'moos', type => '', optional => 1, more => undef } ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     my $want_val = $arguments->{moos};
@@ -205,23 +196,14 @@ my $result = do {
                     $self->set_property( moos => $want_val );
                 };
                 return $return;
-            };
-            $methods[0] = Ferret::Event->new(
-                $f,
-                name         => '_init_',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'moo' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[1] = FF::method_event_def(
+            $f, $scope, 'moo',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 if ( bool( $self->property_u('moos') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -230,13 +212,8 @@ my $result = do {
                 }
                 return str( $f, "I am a nonverbal cow" );
                 return $return;
-            };
-            $methods[1] = Ferret::Event->new(
-                $f,
-                name         => 'moo',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
         $methods[0]
           ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
         $methods[1]
@@ -258,19 +235,10 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'barks',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[0] = FF::method_event_def(
+            $f, $scope, '_init_',
+            [ { name => 'barks', type => '', optional => 1, more => undef } ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     my $want_val = $arguments->{barks};
@@ -278,23 +246,14 @@ my $result = do {
                     $self->set_property( barks => $want_val );
                 };
                 return $return;
-            };
-            $methods[0] = Ferret::Event->new(
-                $f,
-                name         => '_init_',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'bark' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[1] = FF::method_event_def(
+            $f, $scope, 'bark',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 if ( bool( $self->property_u('barks') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -303,13 +262,8 @@ my $result = do {
                 }
                 return str( $f, "I had my bark box bred out of me" );
                 return $return;
-            };
-            $methods[1] = Ferret::Event->new(
-                $f,
-                name         => 'bark',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
         $methods[0]
           ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
         $methods[1]
@@ -331,19 +285,10 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'mean',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[0] = FF::method_event_def(
+            $f, $scope, '_init_',
+            [ { name => 'mean', type => '', optional => 1, more => undef } ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     my $want_val = $arguments->{mean};
@@ -351,44 +296,38 @@ my $result = do {
                     $self->set_property( mean => $want_val );
                 };
                 return $return;
-            };
-            $methods[0] = Ferret::Event->new(
-                $f,
-                name         => '_init_',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'meow' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[1] = FF::method_event_def(
+            $f, $scope, 'meow',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return str( $f, "meow" );
                 return $return;
-            };
-            $methods[1] = Ferret::Event->new(
-                $f,
-                name         => 'meow',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'fight' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument( name => 'cat1', type => 'Cat', more => undef );
-            $func->add_argument( name => 'cat2', type => 'Cat', more => undef );
-            $func->{code} = sub {
+        $methods[2] = FF::method_event_def(
+            $f, $scope, 'fight',
+            [
+                {
+                    name     => 'cat1',
+                    type     => 'Cat',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'cat2',
+                    type     => 'Cat',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'cat1' ) or return;
                 FF::need( $scope, $arguments, 'cat2' ) or return;
@@ -404,13 +343,8 @@ my $result = do {
                 }
                 return str( $f, "nice cats don't fight" );
                 return $return;
-            };
-            $methods[2] = Ferret::Event->new(
-                $f,
-                name         => 'fight',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
         $methods[0]
           ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
         $methods[1]

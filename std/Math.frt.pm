@@ -43,23 +43,18 @@ my $result = do {
     FF::load_core('Math');
 
     # Function event 'sqrt' callback definition
-    {
-        my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'num', type => 'Num', more => undef );
-        $func->{code} = sub {
+    $funcs[0] = FF::function_event_def(
+        $f, $scope, 'sqrt',
+        [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'num' ) or return;
             return $scope->property_u('NATIVE::Math')->property_u('sqrt')
               ->call_u( [ $scope->property_u('num') ], $scope );
             return $return;
-        };
-        $funcs[0] = Ferret::Event->new(
-            $f,
-            name         => 'sqrt',
-            default_func => [ undef, $func ]
-        );
-    }
+        }
+    );
     $funcs[0]->inside_scope( sqrt => $scope, $scope, undef, undef, undef );
     FF::load_namespaces( $context,
         qw(Math::NATIVE Math::NATIVE::Math Math::Num NATIVE NATIVE::Math Num) );

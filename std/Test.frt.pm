@@ -251,25 +251,13 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'name',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->add_argument(
-                name     => 'fatal',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[0] = FF::method_event_def(
+            $f, $scope, '_init_',
+            [
+                { name => 'name',  type => '', optional => 1, more => undef },
+                { name => 'fatal', type => '', optional => 1, more => undef }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     my $want_val = $arguments->{name};
@@ -284,28 +272,15 @@ my $result = do {
                 $self->set_property( tested => num( $f, 0 ) );
                 $self->set_property( passed => num( $f, 0 ) );
                 return $return;
-            };
-            $methods[0] = Ferret::Event->new(
-                $f,
-                name         => '_init_',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'trueValue' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'a',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[1] = FF::method_event_def(
+            $f, $scope,
+            'trueValue',
+            [ { name => 'a', type => '', optional => 1, more => undef } ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 return $self->property_u('_test')->call_u(
@@ -317,28 +292,15 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[1] = Ferret::Event->new(
-                $f,
-                name         => 'trueValue',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'veryTrue' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'a',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[2] = FF::method_event_def(
+            $f, $scope,
+            'veryTrue',
+            [ { name => 'a', type => '', optional => 1, more => undef } ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 return $self->property_u('_test')->call_u(
@@ -350,34 +312,17 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[2] = Ferret::Event->new(
-                $f,
-                name         => 'veryTrue',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'equal' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'a',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->add_argument(
-                name     => 'b',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[3] = FF::method_event_def(
+            $f, $scope, 'equal',
+            [
+                { name => 'a', type => '', optional => 1, more => undef },
+                { name => 'b', type => '', optional => 1, more => undef }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
@@ -390,34 +335,18 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[3] = Ferret::Event->new(
-                $f,
-                name         => 'equal',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'objectsEqual' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'a',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->add_argument(
-                name     => 'b',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[4] = FF::method_event_def(
+            $f, $scope,
+            'objectsEqual',
+            [
+                { name => 'a', type => '', optional => 1, more => undef },
+                { name => 'b', type => '', optional => 1, more => undef }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
@@ -430,34 +359,18 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[4] = Ferret::Event->new(
-                $f,
-                name         => 'objectsEqual',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'notEqual' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'a',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->add_argument(
-                name     => 'b',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[5] = FF::method_event_def(
+            $f, $scope,
+            'notEqual',
+            [
+                { name => 'a', type => '', optional => 1, more => undef },
+                { name => 'b', type => '', optional => 1, more => undef }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
@@ -472,34 +385,18 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[5] = Ferret::Event->new(
-                $f,
-                name         => 'notEqual',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'objectsNotEqual' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'a',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->add_argument(
-                name     => 'b',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[6] = FF::method_event_def(
+            $f, $scope,
+            'objectsNotEqual',
+            [
+                { name => 'a', type => '', optional => 1, more => undef },
+                { name => 'b', type => '', optional => 1, more => undef }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
                 $scope->set_property( b => $arguments->{b} );
@@ -515,23 +412,14 @@ my $result = do {
                     $scope
                 );
                 return $return;
-            };
-            $methods[6] = Ferret::Event->new(
-                $f,
-                name         => 'objectsNotEqual',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'review' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[7] = FF::method_event_def(
+            $f, $scope, 'review',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property_ow(
                     $context,
@@ -564,34 +452,17 @@ my $result = do {
                 $return->set_property( allOK => $self->property_u('passed')
                       ->equal_to( $self->property_u('tested'), $scope ) );
                 return $return;
-            };
-            $methods[7] = Ferret::Event->new(
-                $f,
-                name         => 'review',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event '_test' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name     => 'yes',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->add_argument(
-                name     => 'message',
-                type     => '',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[8] = FF::method_event_def(
+            $f, $scope, '_test',
+            [
+                { name => 'yes',     type => '', optional => 1, more => undef },
+                { name => 'message', type => '', optional => 1, more => undef }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( yes     => $arguments->{yes} );
                 $scope->set_property( message => $arguments->{message} );
@@ -620,13 +491,8 @@ my $result = do {
                 $return->set_property(
                     message => $scope->property_u('message') );
                 return $return;
-            };
-            $methods[8] = Ferret::Event->new(
-                $f,
-                name         => '_test',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
         $methods[0]
           ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
         $methods[1]

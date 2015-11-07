@@ -125,11 +125,14 @@ my $result = do {
     FF::load_core('main');
 
     # Anonymous function definition
-    {
-        my $func = $funcs[0] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'twice',   type => '', more => undef );
-        $func->add_argument( name => 'message', type => '', more => undef );
-        $func->{code} = sub {
+    $funcs[0] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [
+            { name => 'twice',   type => '', optional => undef, more => undef },
+            { name => 'message', type => '', optional => undef, more => undef }
+        ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'twice' )   or return;
@@ -150,8 +153,8 @@ my $result = do {
             }
             $return->set_property( didTwice => $scope->property_u('twice') );
             return $return;
-        };
-    }
+        }
+    );
     FF::load_namespaces( $context, qw(Math Math::Point) );
     $scope->set_property_ow( $context,
         point => $scope->property_u('Math::Point')
@@ -166,16 +169,15 @@ my $result = do {
     }
 
     # Inside
-    {
-        my $outer_scope = $scope;
-        my $scope       = $scope->property_u('point');
-        $scope->add_parent($outer_scope);
-
-        $scope->set_property_ow( $context, x => num( $f, 5 ) );
-        $scope->set_property_ow( $context, y => num( $f, 10 ) );
-
-        $scope->remove_parent($outer_scope);
-    }
+    FF::inside(
+        $f, $scope,
+        $scope->property_u('point'),
+        sub {
+            my $scope = shift;
+            $scope->set_property_ow( $context, x => num( $f, 5 ) );
+            $scope->set_property_ow( $context, y => num( $f, 10 ) );
+        }
+    );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Point: " ), $scope->property_u('point') ) ],

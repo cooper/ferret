@@ -365,10 +365,11 @@ my $result = do {
     FF::load_core('main');
 
     # Function event 'handlePerl' callback definition
-    {
-        my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'msg', type => '', more => undef );
-        $func->{code} = sub {
+    $funcs[0] = FF::function_event_def(
+        $f, $scope,
+        'handlePerl',
+        [ { name => 'msg', type => '', optional => undef, more => undef } ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'msg' ) or return;
@@ -425,19 +426,15 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-        $funcs[0] = Ferret::Event->new(
-            $f,
-            name         => 'handlePerl',
-            default_func => [ undef, $func ]
-        );
-    }
+        }
+    );
 
     # Anonymous function definition
-    {
-        my $func = $funcs[1] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg', type => '', more => undef );
-        $func->{code} = sub {
+    $funcs[1] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [ { name => 'msg', type => '', optional => undef, more => undef } ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'msg' ) or return;
@@ -449,14 +446,15 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-    }
+        }
+    );
 
     # Anonymous function definition
-    {
-        my $func = $funcs[2] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg', type => '', more => undef );
-        $func->{code} = sub {
+    $funcs[2] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [ { name => 'msg', type => '', optional => undef, more => undef } ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'msg' ) or return;
@@ -506,14 +504,15 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-    }
+        }
+    );
 
     # Anonymous function definition
-    {
-        my $func = $funcs[3] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg', type => '', more => undef );
-        $func->{code} = sub {
+    $funcs[3] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [ { name => 'msg', type => '', optional => undef, more => undef } ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'msg' ) or return;
@@ -563,14 +562,15 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-    }
+        }
+    );
 
     # Anonymous function definition
-    {
-        my $func = $funcs[4] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'msg', type => '', more => undef );
-        $func->{code} = sub {
+    $funcs[4] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [ { name => 'msg', type => '', optional => undef, more => undef } ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'msg' ) or return;
@@ -628,8 +628,8 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-    }
+        }
+    );
     $funcs[0]
       ->inside_scope( handlePerl => $scope, $scope, undef, undef, undef );
     FF::load_namespaces( $context, qw(COMPILER IRC IRC::Bot) );

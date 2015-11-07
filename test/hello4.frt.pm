@@ -99,17 +99,15 @@ my $result = do {
     FF::load_core('main');
 
     # Function event 'makePoint' callback definition
-    {
-        my $func = Ferret::Function->new( $f, name => 'default' );
-        $func->add_argument( name => 'x', type => '', more => undef );
-        $func->add_argument( name => 'y', type => '', more => undef );
-        $func->add_argument(
-            name     => 'z',
-            type     => '',
-            optional => 1,
-            more     => undef
-        );
-        $func->{code} = sub {
+    $funcs[0] = FF::function_event_def(
+        $f, $scope,
+        'makePoint',
+        [
+            { name => 'x', type => '', optional => undef, more => undef },
+            { name => 'y', type => '', optional => undef, more => undef },
+            { name => 'z', type => '', optional => 1,     more => undef }
+        ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'x' ) or return;
@@ -127,13 +125,8 @@ my $result = do {
             );
             $return->set_property( point => $scope->property_u('point') );
             return $return;
-        };
-        $funcs[0] = Ferret::Event->new(
-            $f,
-            name         => 'makePoint',
-            default_func => [ undef, $func ]
-        );
-    }
+        }
+    );
     $funcs[0]->inside_scope( makePoint => $scope, $scope, undef, undef, undef );
     $scope->set_property_ow( $context,
         pt => $scope->property_u('makePoint')

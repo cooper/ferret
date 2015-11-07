@@ -187,14 +187,17 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument( name => 'line', type => 'Str', more => undef );
-            $func->{code} = sub {
+        $methods[0] = FF::method_event_def(
+            $f, $scope, '_init_',
+            [
+                {
+                    name     => 'line',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $self, $arguments, 'line' ) or return;
                 $scope->set_property_ow(
@@ -225,23 +228,15 @@ my $result = do {
                     parts => $self->property_u('message')->property_u('split')
                       ->call_u( [ str( $f, " " ) ], $scope ) );
                 return $return;
-            };
-            $methods[0] = Ferret::Event->new(
-                $f,
-                name         => '_init_',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'command' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[1] = FF::method_event_def(
+            $f, $scope,
+            'command',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 if (
                     bool(
@@ -270,48 +265,35 @@ my $result = do {
                 }
                 return Ferret::false;
                 return $return;
-            };
-            $methods[1] = Ferret::Event->new(
-                $f,
-                name         => 'command',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'commandHasParameters' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[2] = FF::method_event_def(
+            $f, $scope,
+            'commandHasParameters',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return _not( $self->property_u('parts')->property_u('length')
                       ->equal_to( num( $f, 1 ), $scope ) );
                 return $return;
-            };
-            $methods[2] = Ferret::Event->new(
-                $f,
-                name         => 'commandHasParameters',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'fromWord' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument(
-                name => 'wordN',
-                type => 'Num',
-                more => undef
-            );
-            $func->{code} = sub {
+        $methods[3] = FF::method_event_def(
+            $f, $scope,
+            'fromWord',
+            [
+                {
+                    name     => 'wordN',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'wordN' ) or return;
                 return $self->property_u('message')->property_u('split')
@@ -326,13 +308,8 @@ my $result = do {
                     $scope
                   )->get_index_value( [ $scope->property_u('wordN') ], $scope );
                 return $return;
-            };
-            $methods[3] = Ferret::Event->new(
-                $f,
-                name         => 'fromWord',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
         $methods[0]
           ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
         $methods[1]->inside_scope( command => $scope, $proto, $class, 1, 1 );

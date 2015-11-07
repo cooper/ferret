@@ -144,10 +144,11 @@ my $result = do {
     FF::load_core('main');
 
     # Anonymous function definition
-    {
-        my $func = $funcs[0] = Ferret::Function->new( $f, anonymous => 1 );
-
-        $func->{code} = sub {
+    $funcs[0] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $self->property_u('send')->call_u(
@@ -175,14 +176,15 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-    }
+        }
+    );
 
     # Anonymous function definition
-    {
-        my $func = $funcs[1] = Ferret::Function->new( $f, anonymous => 1 );
-        $func->add_argument( name => 'data', type => '', more => undef );
-        $func->{code} = sub {
+    $funcs[1] = FF::function_def(
+        $f, $scope,
+        '(undef)',
+        [ { name => 'data', type => '', optional => undef, more => undef } ],
+        sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'data' ) or return;
@@ -196,8 +198,8 @@ my $result = do {
                 $scope
             );
             return $return;
-        };
-    }
+        }
+    );
 
     # Class 'Bot1'
     {
@@ -214,28 +216,31 @@ my $result = do {
         my $proto = $class->prototype;
 
         # Method event '_init_' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument( name => 'addr', type => 'Str', more => undef );
-            $func->add_argument( name => 'nick', type => 'Str', more => undef );
-            $func->add_argument( name => 'user', type => 'Str', more => undef );
-            $func->add_argument(
-                name     => 'port',
-                type     => 'Num',
-                optional => 1,
-                more     => undef
-            );
-            $func->add_argument(
-                name     => 'real',
-                type     => 'Str',
-                optional => 1,
-                more     => undef
-            );
-            $func->{code} = sub {
+        $methods[0] = FF::method_event_def(
+            $f, $scope, '_init_',
+            [
+                {
+                    name     => 'addr',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'nick',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'user',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                },
+                { name => 'port', type => 'Num', optional => 1, more => undef },
+                { name => 'real', type => 'Str', optional => 1, more => undef }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $self, $arguments, 'addr' ) or return;
                 FF::need( $self, $arguments, 'nick' ) or return;
@@ -278,44 +283,34 @@ my $result = do {
                     )
                 );
                 return $return;
-            };
-            $methods[0] = Ferret::Event->new(
-                $f,
-                name         => '_init_',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'connect' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-
-            $func->{code} = sub {
+        $methods[1] = FF::method_event_def(
+            $f, $scope,
+            'connect',
+            [],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $self->property_u('sock')->property_u('connect')
                   ->call_u( {}, $scope );
                 return $return;
-            };
-            $methods[1] = Ferret::Event->new(
-                $f,
-                name         => 'connect',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
 
         # Method event 'send' definition
-        {
-            my $func = Ferret::Function->new(
-                $f,
-                name      => 'default',
-                is_method => 1
-            );
-            $func->add_argument( name => 'line', type => '', more => undef );
-            $func->{code} = sub {
+        $methods[2] = FF::method_event_def(
+            $f, $scope, 'send',
+            [
+                {
+                    name     => 'line',
+                    type     => '',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'line' ) or return;
                 $scope->property_u('say')->call_u(
@@ -330,13 +325,8 @@ my $result = do {
                 $self->property_u('sock')->property_u('println')
                   ->call_u( [ $scope->property_u('line') ], $scope );
                 return $return;
-            };
-            $methods[2] = Ferret::Event->new(
-                $f,
-                name         => 'send',
-                default_func => [ undef, $func ]
-            );
-        }
+            }
+        );
         $methods[0]
           ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
         $methods[1]

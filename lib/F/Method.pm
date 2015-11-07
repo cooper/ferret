@@ -20,7 +20,7 @@ sub desc {
 
 sub perl_fmt {
     my $method = shift;
-    my ($content, $arguments) = ('', '');
+    my ($content, @arguments) = '';
 
     foreach my $child ($method->ordered_children) {
         $content .= $child->perl_fmt_do."\n";
@@ -32,12 +32,12 @@ sub perl_fmt {
         # add wants/needs.
         next unless $wn && $wn->type eq 'WantNeed';
         foreach my $var ($wn->variables) {
-            my $fmt = "func_arg_$$wn{arg_type}";
-            $arguments .= $method->get_format($fmt => {
+            push @arguments, $method->get_format(func_arg => {
                 name => $var->{var_name},
+                want => $wn->{arg_type} eq 'want' ? '1' : 'undef',
                 type => $wn->var_type  || '',
                 more => $wn->{ellipsis} ? '1' : 'undef'
-            }).";\n";
+            });
         }
 
     }
@@ -48,7 +48,7 @@ sub perl_fmt {
         id         => $class->{method_cid}++,
         name       => $method->{name},
         statements => $content,
-        arguments  => $arguments,
+        arguments  => join(', ', @arguments),
         is_prop    => $method->{is_prop} ? '1' : 'undef',
         p_set      => $method->{p_set}   ? '1' : 'undef',
         owner      => $method->{main} ? 'class' : 'proto'
