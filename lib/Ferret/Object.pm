@@ -9,7 +9,7 @@ use parent 'Evented::Object';
 use Scalar::Util qw(blessed weaken);
 use List::Util qw(first);
 
-use Ferret::Core::Conversion qw(perl_description perl_string);
+use Ferret::Core::Conversion qw(perl_description perl_string ferret_list);
 use Ferret::Core::Errors qw(throw);
 
 # create a new object.
@@ -195,7 +195,7 @@ sub _property {
     # try a different context.
     if (!$simple_only && index($prop_name, '::') != -1) {
         my ($context, $real_prop_name) = ($prop_name =~ m/^(.+)::(.+?)$/);
-        $context = $obj->f->get_context($context);
+        $context = $obj->f->get_context($context) or return;
         return $context->_property($real_prop_name, undef, $simple_only);
     }
 
@@ -302,6 +302,11 @@ sub remove_parent {
     @{ $obj->{isa} } = grep { $_ != $old_parent } @{ $obj->{isa} };
 }
 
+sub has_parent {
+    my ($obj, $parent_maybe) = @_;
+    return 1 if first { $_ == $parent_maybe } $obj->parents;
+}
+
 # returns a flattened and simplified list of parents.
 sub parents {
     my $obj = shift;
@@ -326,6 +331,10 @@ sub parents {
 sub parent_names {
     my $obj = shift;
     my @parents;
+
+    # only say Prototype for prototypes.
+    return 'Prototype' if $obj->{is_proto};
+
     foreach my $parent ($obj->parents) {
 
         # it's a prototype
@@ -370,6 +379,7 @@ sub best_common_class {
 
     while (@classes_1 || @classes_2) {
         my ($class_1, $class_2) = (shift @classes_1, shift @classes_2);
+        return if !$class_1;
         $found{$class_1}++;
         return $class_2 if $found{$class_2};
     }
@@ -392,15 +402,11 @@ sub instance_of {
 # create an object that represents a set of objects.
 sub create_set {
     my ($obj, $call_scope, @other_objs) = @_;
-    my $items = [ $obj, @other_objs ];
-    return Ferret::Set->new($obj->f,
-        primary_obj => $obj,
-        other_objs  => \@other_objs,
-        all_objs    => $items,
-        list_items  => $items,
-        set_class   => best_common_class($obj, @other_objs),
-        set_scope   => $call_scope
-    );
+    my $class = $obj->best_common_class(@other_objs);
+    my $new = $class                ?
+        $class->property_u('Set')   :
+        $obj->f->get_class($obj->f->core_context, 'Set');
+    return $new->call([ $obj, @other_objs ], $call_scope);
 }
 
 sub description {

@@ -174,7 +174,7 @@ my $result = do {
     # Class 'Message'
     {
         my ( $class, $self, $proto ) =
-          FF::class_def( $f, $context, 'Message', undef );
+          FF::get_class( $f, $context, 'Message', undef );
 
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(

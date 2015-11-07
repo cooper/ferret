@@ -25,6 +25,7 @@ use F::Number;
 use F::LexicalVariable;
 use F::InstanceVariable;
 use F::SpecialVariable;
+use F::SetTypeVariable;
 use F::Instruction;
 use F::List;
 use F::ListItem;
@@ -58,6 +59,7 @@ our %pretty_tokens = (
     VAR_LEX     => 'lexical variable ($)',
     VAR_THIS    => 'instance variable (@)',
     VAR_SPEC    => 'special variable (*)',
+    VAR_SET     => 'set type variable (<>)',
     CLOSURE_S   => 'opening curly bracket "{"',
     CLOSURE_E   => 'closing curly bracket "}"',
     PAREN_S     => 'opening parenthesis "("',

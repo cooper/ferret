@@ -20,17 +20,35 @@ my @methods = (
     }
 );
 
+my @functions = (
+    fromList => {
+        need => '$list:List',
+        code => \&_from_list
+    }
+);
+
 Ferret::bind_class(
-    name    => 'Set',
-    #parent  => 'List',          # maybe someday
-    desc    => \&description,
-    methods => \@methods,
-    init    => \&init
+    name      => 'Set',
+    desc      => \&description,
+    methods   => \@methods,
+    functions => \@functions,
+    init      => \&init,
+    init_need => '$item1 $items...'
 );
 
 sub init {
-    my $set = shift;
-    $set->set_property_weak(class => $set->{set_class});
+    my ($set, $arguments, $call_scope) = @_;
+    $set->{set_scope} = $call_scope;
+
+    # add objects.
+    my @others          = perl_list($arguments->{items});
+    $set->{primary_obj} = delete $arguments->{item1};
+    $set->{other_objs}  = \@others;
+    $set->{all_objs}    = [ $set->{primary_obj}, @others ];
+
+    # determine class.
+    $set->{set_class} = $set->{primary_obj}->best_common_class(@others);
+
     $set->{set_done} = 1;
 }
 
@@ -97,6 +115,12 @@ sub _methods {
 sub _to_list {
     my $set = shift;
     ferret_list(@{ $set->{all_objs} });
+}
+
+sub _from_list {
+    my ($set_class, $arguments, $call_scope) = @_;
+    my @items = perl_list($arguments->{list});
+    return $set_class->call([ @items ], $call_scope);
 }
 
 sub description {

@@ -172,7 +172,7 @@ my $result = do {
     # Class 'Cow'
     {
         my ( $class, $self, $proto ) =
-          FF::class_def( $f, $context, 'Cow', undef );
+          FF::get_class( $f, $context, 'Cow', undef );
 
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(
@@ -214,7 +214,7 @@ my $result = do {
     # Class 'Dog'
     {
         my ( $class, $self, $proto ) =
-          FF::class_def( $f, $context, 'Dog', undef );
+          FF::get_class( $f, $context, 'Dog', undef );
 
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(
@@ -256,7 +256,7 @@ my $result = do {
     # Class 'Cat'
     {
         my ( $class, $self, $proto ) =
-          FF::class_def( $f, $context, 'Cat', undef );
+          FF::get_class( $f, $context, 'Cat', undef );
 
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(

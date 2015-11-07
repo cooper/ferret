@@ -120,8 +120,17 @@ sub core_context { shift->{context}{CORE}   }
 sub get_context  {
     my ($f, $name) = @_;
     return $f->{context}{$name} if $f->{context}{$name};
+
+    # something exists here which is not a context.
+    if (my $c = $f->core_context->property($name)) {
+        return $c if $c->isa('Ferret::Context');
+        return;
+    }
+
+    # create a context.
     my $context = Ferret::Context->new($f, parent => $f->core_context);
     $f->core_context->set_property($name => $context);
+
     return $f->{context}{$name} = $context;
 }
 

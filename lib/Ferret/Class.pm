@@ -7,7 +7,8 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Scalar::Util 'weaken';
+use Ferret::Core::Conversion qw(perl_list);
+use Scalar::Util qw(weaken);
 
 Ferret::bind_class(
     name => 'Class',
@@ -53,7 +54,11 @@ sub new {
     my $name = $class->{name};
     $class->set_property(name => [ sub {
         Ferret::String->new($f, str_value => $name)
-    }]);
+    } ]);
+
+    # set type.
+    $class->set_property(Set => [ \&_get_set_type ])
+        unless $class->{name} eq 'Set';
 
     return $class;
 }
@@ -86,7 +91,8 @@ sub init {
     my ($class, $obj, $arguments) = @_;
 
     # add the class prototype to the object.
-    $obj->add_parent($class->prototype);
+    $obj->add_parent($class->prototype)
+        unless $obj->has_parent($class->prototype);
 
     # fetch or create return object.
     my $fire;
@@ -149,11 +155,12 @@ sub _bind_function {
 
     # create function.
     my $func = Ferret::Function->new($f,
-        name => $opts{callback} || 'default',
-        code => $opts{code},
-        need => $opts{need},
-        want => $opts{want},
-        is_method => $is_method
+        name        => $opts{callback} || 'default',
+        code        => $opts{code},
+        need        => $opts{need},
+        want        => $opts{want},
+        mimic       => $opts{mimic},
+        is_method   => $is_method
     );
 
     # add the function.
@@ -192,6 +199,38 @@ sub _global_init {
         $func->add_argument(name => 'obj');
         $func;
     };
+}
+
+sub _get_set_type {
+    my ($class, $f) = ($_[1], $_[1]->f);
+    my $global_set_class = $f->get_class($f->core_context, 'Set');
+
+    # create a class for the set type.
+    my $set_type = Ferret::Class->new($f,
+        name => 'Set',
+        parent_class => $global_set_class
+    );
+
+    # create an initializer.
+    $set_type->bind_function('_init_', code => sub {
+        my ($set, $arguments) = @_;
+
+        # call the normal Set initializer.
+        $global_set_class->init($set, $arguments);
+
+        # force the set class.
+        $set->{set_class} = $class;
+
+        return $set;
+    }, mimic => $global_set_class->property('_init_'));
+
+    $set_type->bind_function('fromList', code => sub {
+        my ($set_class, $arguments, $call_scope) = @_;
+        my @items = perl_list($arguments->{list});
+        return $set_class->call([ @items ], $call_scope);
+    }, need => '$list:List');
+
+    return $set_type;
 }
 
 1

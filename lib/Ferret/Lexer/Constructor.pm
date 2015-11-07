@@ -660,6 +660,12 @@ sub c_VAR_SPEC {
     return $c->{node}->adopt($var);
 }
 
+sub c_VAR_SET {
+    my ($c, $value) = @_;
+    my $var = F::SetTypeVariable->new(var_name => $value);
+    return $c->{node}->adopt($var);
+}
+
 sub c_KEYWORD_WANT {
     my ($c, $value) = @_;
 

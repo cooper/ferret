@@ -55,15 +55,14 @@ my @token_formats = (
     # comments don't really work
     # I need to fix it by making comment start and end
 
-
     # simple properties
     [ PROPERTY      => qr/\.[\*]?$prop_reg/, \&remove_first_char            ],  # simple .property
-
 
     # variables
     [ VAR_LEX       => qr/\$+$prop_reg/,   \&remove_first_char              ],  # lexical variable
     [ VAR_THIS      => qr/\@+$prop_reg/,   \&remove_first_char              ],  # object variable
     [ VAR_SPEC      => qr/\*+$prop_reg/,   \&remove_first_char              ],  # special variable
+    [ VAR_SET       => qr/\<[A-Za-z_]+[A-Za-z0-9:_]*\>/, \&remove_firstlast ],  # set type variable
 
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start
@@ -103,7 +102,7 @@ my @token_formats = (
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other
-    [ BAREWORD      => qr/[A-Za-z_]+[A-Za-z0-9:_]*/                        ],  # bareword (and keywords)
+    [ BAREWORD      => qr/[A-Za-z_]+[A-Za-z0-9:_]*/                         ],  # bareword (and keywords)
     [ NUMBER        => qr/\d+(?:\.\d+(?:e\d+)?)?/                           ],  # number
     [ NEWLINE       => qr/\n/,          \&ignore_increment                  ],  # newline
     [ SPACE         => qr/\s*/,         \&ignore                            ],  # whitespace
@@ -372,6 +371,7 @@ sub tok_CLOSURE_S {
 # common token modifiers.
 sub remove_first_char { [ $_[0], substr $_[1], 1     ] }
 sub remove_last_char  { [ $_[0], substr $_[1], 0, -1 ] }
+sub remove_firstlast  { [ $_[0], substr(substr($_[1], 0, -1), 1) ] }
 sub ignore            { }
 sub ignore_increment  { &increment_lines; () }
 sub increment_lines   {

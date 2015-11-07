@@ -187,7 +187,7 @@ my $result = do {
     # Class 'Point'
     {
         my ( $class, $self, $proto ) =
-          FF::class_def( $f, $context, 'Point', 1.0 );
+          FF::get_class( $f, $context, 'Point', 1.0 );
 
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(

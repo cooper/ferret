@@ -49,7 +49,7 @@ my $result = do {
     # Class 'String'
     {
         my ( $class, $self, $proto ) =
-          FF::class_def( $f, $context, 'String', undef );
+          FF::get_class( $f, $context, 'String', undef );
 
         # Method event 'doubledLength' definition
         my $method_0 = FF::method_event_def(

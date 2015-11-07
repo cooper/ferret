@@ -80,6 +80,19 @@ sub create_set {
     return $first_item->create_set($scope, @other_items);
 }
 
+# get a set type.
+sub get_set_type {
+    my ($f, $scope, $type_name) = @_;
+
+    # the type class does not exist.
+    my $class_maybe = $scope->property($type_name);
+    if (!$class_maybe || !$class_maybe->isa('Ferret::Class')) {
+        return Ferret::undefined;
+    }
+
+    return $class_maybe->property_u('Set');
+}
+
 # attach an event callback.
 sub on {
     my ($obj, $event_name, $self, $scope, $on_func) = @_;
@@ -159,8 +172,8 @@ sub inside {
     return;
 }
 
-# class definition.
-sub class_def {
+# class definition or extension.
+sub get_class {
     my ($f, $context, $name, $version) = @_;
     my $class;
 
