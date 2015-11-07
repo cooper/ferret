@@ -102,17 +102,17 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello7.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('hello7.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
-    Ferret::space( $context, $_ ) for qw(Math Math::Point Math::Rect);
+    FF::load_namespaces( $context, qw(Math Math::Point Math::Rect) );
     $scope->set_property_ow(
         $context,
         rect => $scope->property_u('Math::Rect')->call_u(
@@ -149,11 +149,14 @@ my $result = do {
     $scope->set_property_ow( $context,
         otherPt => $scope->property_u('Math::Point')
           ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope ) );
-    $scope->set_property_ow( $context,
-        midpoint => $scope->property_u('center')
-          ->create_set( $scope, $scope->property_u('otherPt') )
-          ->property_u('midpoint')->call_u( {}, $scope )->property_u('pretty')
-          ->call_u( {}, $scope ) );
+    $scope->set_property_ow(
+        $context,
+        midpoint => FF::create_set(
+            $scope, $scope->property_u('center'),
+            $scope->property_u('otherPt')
+          )->property_u('midpoint')->call_u( {}, $scope )->property_u('pretty')
+          ->call_u( {}, $scope )
+    );
     $scope->property_u('say')->call_u(
         [
             add(
@@ -176,4 +179,4 @@ my $result = do {
     );
 };
 
-Ferret::runtime();
+FF::after_content();

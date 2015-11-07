@@ -1,1 +1,1 @@
-on(<<object>>, '<<event_name>>', $self, $scope, <<function>>);
+FF::on(<<object>>, '<<event_name>>', $self, $scope, <<function>>);

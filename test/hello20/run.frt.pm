@@ -354,15 +354,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'run.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('run.frt');
 
 use Ferret::Core::Operations qw(_not bool num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Function event 'handlePerl' callback definition
     {
@@ -371,10 +371,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{msg};
-                $scope->set_property( msg => $arguments->{msg} );
-            };
+            FF::need( $scope, $arguments, 'msg' ) or return;
             if (
                 bool(
                     _not(
@@ -443,10 +440,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{msg};
-                $scope->set_property( msg => $arguments->{msg} );
-            };
+            FF::need( $scope, $arguments, 'msg' ) or return;
             $scope->property_u('bot')->property_u('privmsg')->call_u(
                 [
                     $scope->property_u('msg')->property_u('channel'),
@@ -465,10 +459,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{msg};
-                $scope->set_property( msg => $arguments->{msg} );
-            };
+            FF::need( $scope, $arguments, 'msg' ) or return;
             if (
                 bool(
                     _not(
@@ -525,10 +516,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{msg};
-                $scope->set_property( msg => $arguments->{msg} );
-            };
+            FF::need( $scope, $arguments, 'msg' ) or return;
             if (
                 bool(
                     _not(
@@ -585,10 +573,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{msg};
-                $scope->set_property( msg => $arguments->{msg} );
-            };
+            FF::need( $scope, $arguments, 'msg' ) or return;
             if (
                 bool(
                     _not(
@@ -647,7 +632,7 @@ my $result = do {
     }
     $funcs[0]
       ->inside_scope( handlePerl => $scope, $scope, undef, undef, undef );
-    Ferret::space( $context, $_ ) for qw(COMPILER IRC IRC::Bot);
+    FF::load_namespaces( $context, qw(COMPILER IRC IRC::Bot) );
     $scope->set_property_ow(
         $context,
         bot => $scope->property_u('IRC::Bot')->call_u(
@@ -660,8 +645,7 @@ my $result = do {
         )
     );
     $scope->property_u('bot')
-      ->set_property(
-        autojoin => Ferret::List->new( $f, items => [ str( $f, "#k" ) ] ) );
+      ->set_property( autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ) );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
             str( $f, "info" ),
@@ -701,4 +685,4 @@ my $result = do {
     $scope->property_u('bot')->property_u('connect')->call_u( {}, $scope );
 };
 
-Ferret::runtime();
+FF::after_content();

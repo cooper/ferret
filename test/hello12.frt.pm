@@ -120,15 +120,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello12.frt.pm'}++;
+my $f = FF::get_ferret();
 
-use Ferret::Core::Operations qw(add num on str);
+FF::before_content('hello12.frt');
+
+use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Anonymous function definition
     {
@@ -137,10 +137,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{data};
-                $scope->set_property( data => $arguments->{data} );
-            };
+            FF::need( $scope, $arguments, 'data' ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -161,10 +158,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{data};
-                $scope->set_property( data => $arguments->{data} );
-            };
+            FF::need( $scope, $arguments, 'data' ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -216,7 +210,7 @@ my $result = do {
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Socket Socket::TCP Timer);
+    FF::load_namespaces( $context, qw(Socket Socket::TCP Timer) );
     $scope->set_property_ow(
         $context,
         sock => $scope->property_u('Socket::TCP')->call_u(
@@ -226,17 +220,17 @@ my $result = do {
     );
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('sock') ], $scope );
-    on( $scope->property_u('sock'), 'gotLine', $self, $scope,
+    FF::on( $scope->property_u('sock'), 'gotLine', $self, $scope,
         $funcs[0]
           ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
-    on( $scope->property_u('sock'), 'println', $self, $scope,
+    FF::on( $scope->property_u('sock'), 'println', $self, $scope,
         $funcs[1]
           ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
-    on( $scope->property_u('sock'), 'connected', $self, $scope,
+    FF::on( $scope->property_u('sock'), 'connected', $self, $scope,
         $funcs[2]
           ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
     $scope->property_u('sock')->property_u('connect')->call_u( {}, $scope );
-    on(
+    FF::on(
         $scope->property_u('Timer')->call_u( [ num( $f, 5 ) ], $scope )
           ->property_u('once')->call_u( {}, $scope ),
         'expire',
@@ -247,4 +241,4 @@ my $result = do {
     );
 };
 
-Ferret::runtime();
+FF::after_content();

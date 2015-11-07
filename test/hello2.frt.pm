@@ -27,17 +27,17 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello2.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('hello2.frt');
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     $scope->property_u('say')->call_u( [ str( $f, "Hello World!" ) ], $scope );
 };
 
-Ferret::runtime();
+FF::after_content();

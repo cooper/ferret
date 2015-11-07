@@ -48,15 +48,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello9.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('hello9.frt');
 
 use Ferret::Core::Operations qw(add bool str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Function event 'sayHello' callback definition
     {
@@ -65,10 +65,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{who};
-                $scope->set_property( who => $arguments->{who} );
-            };
+            FF::need( $scope, $arguments, 'who' ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -87,7 +84,7 @@ my $result = do {
         );
     }
     $funcs[0]->inside_scope( sayHello => $scope, $scope, undef, undef, undef );
-    Ferret::space( $context, $_ ) for qw(Str);
+    FF::load_namespaces( $context, qw(Str) );
     {
         my $maybe_0 = $scope->property_u('sayHello');
         if ( bool($maybe_0) ) {
@@ -102,4 +99,4 @@ my $result = do {
     }
 };
 
-Ferret::runtime();
+FF::after_content();

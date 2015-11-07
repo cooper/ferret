@@ -103,18 +103,18 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello18.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('hello18.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     $scope->set_property_ow( $context,
-        list => Ferret::List->new( $f, items => [ str( $f, "hi" ) ] ) );
+        list => FF::create_list( $f, [ str( $f, "hi" ) ] ) );
     $scope->property_u('list')->property_u('push')
       ->call_u( [ str( $f, "there" ) ], $scope );
     $scope->property_u('list')
@@ -129,19 +129,25 @@ my $result = do {
         ],
         $scope
     );
-
-    foreach ( $scope->property_u('list')->iterate ) {
-        my $scope = Ferret::Scope->new( $f, parent => $scope );
-        $scope->set_property( item => $_ );
-
-        $scope->property_u('say')->call_u(
-            [ add( $scope, str( $f, "item: " ), $scope->property_u('item') ) ],
-            $scope
-        );
-    }
-    $scope->set_property_ow( $context,
-        hash => Ferret::Hash->new( $f, pairs => { hi => str( $f, "there" ) } )
+    FF::iterate(
+        $f, $scope,
+        $scope->property_u('list'),
+        'item',
+        sub {
+            my $scope = shift;
+            $scope->property_u('say')->call_u(
+                [
+                    add(
+                        $scope, str( $f, "item: " ),
+                        $scope->property_u('item')
+                    )
+                ],
+                $scope
+            );
+        }
     );
+    $scope->set_property_ow( $context,
+        hash => FF::create_hash( $f, { hi => str( $f, "there" ) } ) );
     $scope->property_u('hash')
       ->set_index_value( [ str( $f, "whats" ) ], str( $f, "up" ), $scope );
     $scope->property_u('hash')
@@ -157,22 +163,24 @@ my $result = do {
         ],
         $scope
     );
-    foreach ( $scope->property_u('hash')->iterate_pair ) {
-        my $scope = Ferret::Scope->new( $f, parent => $scope );
-        $scope->set_property( key => $_->[0] );
-        $scope->set_property( val => $_->[1] );
-
-        $scope->property_u('say')->call_u(
-            [
-                add(
-                    $scope,                    str( $f, "pair: key=" ),
-                    $scope->property_u('key'), str( $f, "; value=" ),
-                    $scope->property_u('val')
-                )
-            ],
-            $scope
-        );
-    }
+    FF::iterate_pair(
+        $f, $scope,
+        $scope->property_u('hash'),
+        'key', 'val',
+        sub {
+            my $scope = shift;
+            $scope->property_u('say')->call_u(
+                [
+                    add(
+                        $scope,                    str( $f, "pair: key=" ),
+                        $scope->property_u('key'), str( $f, "; value=" ),
+                        $scope->property_u('val')
+                    )
+                ],
+                $scope
+            );
+        }
+    );
 };
 
-Ferret::runtime();
+FF::after_content();

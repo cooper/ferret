@@ -114,15 +114,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello11.frt.pm'}++;
+my $f = FF::get_ferret();
 
-use Ferret::Core::Operations qw(add bool num on str);
+FF::before_content('hello11.frt');
+
+use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Anonymous function definition
     {
@@ -132,14 +132,8 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{twice};
-                $scope->set_property( twice => $arguments->{twice} );
-            };
-            do {
-                return unless defined $arguments->{message};
-                $scope->set_property( message => $arguments->{message} );
-            };
+            FF::need( $scope, $arguments, 'twice' )   or return;
+            FF::need( $scope, $arguments, 'message' ) or return;
             if ( bool( $scope->property_u('twice') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -158,7 +152,7 @@ my $result = do {
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Math Math::Point);
+    FF::load_namespaces( $context, qw(Math Math::Point) );
     $scope->set_property_ow( $context,
         point => $scope->property_u('Math::Point')
           ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope ) );
@@ -186,7 +180,7 @@ my $result = do {
       ->call_u(
         [ add( $scope, str( $f, "Point: " ), $scope->property_u('point') ) ],
         $scope );
-    on( $scope, 'say', $self, $scope,
+    FF::on( $scope, 'say', $self, $scope,
         $funcs[0]
           ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
     $scope->set_property_ow(
@@ -208,4 +202,4 @@ my $result = do {
     );
 };
 
-Ferret::runtime();
+FF::after_content();

@@ -18,16 +18,16 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'CORE.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('CORE.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('CORE');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'CORE' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'CORE' );
+    FF::load_core('CORE');
 
 };
 
-Ferret::runtime();
+FF::after_content();

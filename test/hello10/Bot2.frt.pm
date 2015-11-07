@@ -128,15 +128,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'Bot2.frt.pm'}++;
+my $f = FF::get_ferret();
 
-use Ferret::Core::Operations qw(add num on str);
+FF::before_content('Bot2.frt');
+
+use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Anonymous function definition
     {
@@ -180,10 +180,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{data};
-                $scope->set_property( data => $arguments->{data} );
-            };
+            FF::need( $scope, $arguments, 'data' ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -204,10 +201,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{data};
-                $scope->set_property( data => $arguments->{data} );
-            };
+            FF::need( $scope, $arguments, 'data' ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -263,18 +257,9 @@ my $result = do {
             );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{address};
-                    $self->set_property( address => $arguments->{address} );
-                };
-                do {
-                    return unless defined $arguments->{nick};
-                    $self->set_property( nick => $arguments->{nick} );
-                };
-                do {
-                    return unless defined $arguments->{user};
-                    $self->set_property( user => $arguments->{user} );
-                };
+                FF::need( $self, $arguments, 'address' ) or return;
+                FF::need( $self, $arguments, 'nick' )    or return;
+                FF::need( $self, $arguments, 'user' )    or return;
                 do {
                     my $want_val = $arguments->{port};
                     $want_val ||= num( $f, 6667 );
@@ -295,7 +280,7 @@ my $result = do {
                     $scope
                   );
                 $self->set_property( send => $self->property_u('println') );
-                on(
+                FF::on(
                     $self,
                     'connected',
                     $self, $scope,
@@ -304,7 +289,7 @@ my $result = do {
                         $scope, undef, undef, undef
                     )
                 );
-                on(
+                FF::on(
                     $self,
                     'gotLine',
                     $self, $scope,
@@ -313,7 +298,7 @@ my $result = do {
                         $scope, undef, undef, undef
                     )
                 );
-                on(
+                FF::on(
                     $self,
                     'println',
                     $self, $scope,
@@ -333,7 +318,7 @@ my $result = do {
         $methods[0]
           ->inside_scope( _init_ => $scope, $class, $class, undef, undef );
     }
-    Ferret::space( $context, $_ ) for qw(Num Socket Socket::TCP Str);
+    FF::load_namespaces( $context, qw(Num Socket Socket::TCP Str) );
 };
 
-Ferret::runtime();
+FF::after_content();

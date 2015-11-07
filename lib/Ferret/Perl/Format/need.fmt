@@ -1,4 +1,1 @@
-do {
-    return unless defined $arguments->{<<var_name>>};
-    $scope->set_property(<<var_name>> => $arguments->{<<var_name>>});
-};
+FF::need($scope, $arguments, '<<var_name>>') or return

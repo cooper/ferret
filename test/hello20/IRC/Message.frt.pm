@@ -162,15 +162,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'Message.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('Message.frt');
 
 use Ferret::Core::Operations qw(_not add bool num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('IRC');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'IRC' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'IRC' );
+    FF::load_core('IRC');
 
     # Class 'Message'
     {
@@ -196,10 +196,7 @@ my $result = do {
             $func->add_argument( name => 'line', type => 'Str', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{line};
-                    $self->set_property( line => $arguments->{line} );
-                };
+                FF::need( $self, $arguments, 'line' ) or return;
                 $scope->set_property_ow(
                     $context,
                     lineSplit =>
@@ -316,10 +313,7 @@ my $result = do {
             );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{wordN};
-                    $scope->set_property( wordN => $arguments->{wordN} );
-                };
+                FF::need( $scope, $arguments, 'wordN' ) or return;
                 return $self->property_u('message')->property_u('split')
                   ->call_u(
                     {
@@ -349,7 +343,7 @@ my $result = do {
         $methods[3]
           ->inside_scope( fromWord => $scope, $proto, $class, undef, undef );
     }
-    Ferret::space( $context, $_ ) for qw(IRC::Num IRC::Str Num Str);
+    FF::load_namespaces( $context, qw(IRC::Num IRC::Str Num Str) );
 };
 
-Ferret::runtime();
+FF::after_content();

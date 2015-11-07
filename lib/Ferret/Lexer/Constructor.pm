@@ -470,8 +470,10 @@ sub c_STRING {
     my ($c, $value) = @_;
     my @parts = @$value;
 
-    # just one part, a plain string.
+    # just one part.
     if (@parts == 1) {
+        # FIXME: probably force string context of variables here
+        return handle_label(@{ $parts[0] }) if ref $parts[0];
         my $string = F::String->new(value => $parts[0]);
         return $c->{node}->adopt($string);
     }

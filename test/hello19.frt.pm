@@ -39,28 +39,36 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello19.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('hello19.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     $scope->set_property_ow( $context,
         words => str( $f, "how are you?" )->property_u('split')
           ->call_u( [ str( $f, " " ) ], $scope ) );
-    foreach ( $scope->property_u('words')->iterate ) {
-        my $scope = Ferret::Scope->new( $f, parent => $scope );
-        $scope->set_property( word => $_ );
-
-        $scope->property_u('say')->call_u(
-            [ add( $scope, str( $f, "part: " ), $scope->property_u('word') ) ],
-            $scope
-        );
-    }
+    FF::iterate(
+        $f, $scope,
+        $scope->property_u('words'),
+        'word',
+        sub {
+            my $scope = shift;
+            $scope->property_u('say')->call_u(
+                [
+                    add(
+                        $scope, str( $f, "part: " ),
+                        $scope->property_u('word')
+                    )
+                ],
+                $scope
+            );
+        }
+    );
 };
 
-Ferret::runtime();
+FF::after_content();

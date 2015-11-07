@@ -46,29 +46,6 @@ sub U {
     return $val || Ferret::undefined;
 }
 
-sub on {
-    my ($obj, $event_name, $self, $scope, $on_func) = @_;
-    my $event = $obj->property($event_name);
-
-    # if $event exists and is not an event, runtime error.
-    if ($event && !$event->isa('Ferret::Event')) { # TODO: proper type checking
-        die; # FIXME
-        throw();
-    }
-
-    # create the event if it doesn't exist.
-    if (!$event) {
-        $obj->set_property($event_name =>
-            Ferret::Event->new($obj->f, name => $event_name)
-        );
-        $event = $obj->property($event_name); # set last_parent.
-    }
-
-    # add the function.
-    $event->add_function_with_self_and_scope($self, $scope, $on_func);
-
-}
-
 sub import {
     my $this_package = shift;
     my $package = caller;

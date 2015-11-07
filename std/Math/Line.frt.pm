@@ -121,15 +121,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'Line.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('Line.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('Math');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'Math' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'Math' );
+    FF::load_core('Math');
 
     # Class 'Line'
     {
@@ -164,14 +164,8 @@ my $result = do {
             );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{pt1};
-                    $self->set_property( pt1 => $arguments->{pt1} );
-                };
-                do {
-                    return unless defined $arguments->{pt2};
-                    $self->set_property( pt2 => $arguments->{pt2} );
-                };
+                FF::need( $self, $arguments, 'pt1' ) or return;
+                FF::need( $self, $arguments, 'pt2' ) or return;
                 return $return;
             };
             $methods[0] = Ferret::Event->new(
@@ -191,9 +185,8 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return Ferret::List->new( $f,
-                    items =>
-                      [ $self->property_u('pt1'), $self->property_u('pt2') ] );
+                return FF::create_list( $f,
+                    [ $self->property_u('pt1'), $self->property_u('pt2') ] );
                 return $return;
             };
             $methods[1] = Ferret::Event->new(
@@ -276,9 +269,11 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $self->property_u('pt1')
-                  ->create_set( $scope, $self->property_u('pt2') )
-                  ->property_u('midpoint')->call_u( {}, $scope );
+                return FF::create_set(
+                    $scope,
+                    $self->property_u('pt1'),
+                    $self->property_u('pt2')
+                )->property_u('midpoint')->call_u( {}, $scope );
                 return $return;
             };
             $methods[4] = Ferret::Event->new(
@@ -319,7 +314,7 @@ my $result = do {
           ->inside_scope( midpoint => $scope, $proto, $class, 1, undef );
         $methods[5]->inside_scope( length => $scope, $proto, $class, 1, undef );
     }
-    Ferret::space( $context, $_ ) for qw(Math::Point Point);
+    FF::load_namespaces( $context, qw(Math::Point Point) );
 };
 
-Ferret::runtime();
+FF::after_content();

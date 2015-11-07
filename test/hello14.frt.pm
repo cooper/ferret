@@ -79,15 +79,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello14.frt.pm'}++;
+my $f = FF::get_ferret();
 
-use Ferret::Core::Operations qw(add on str);
+FF::before_content('hello14.frt');
+
+use Ferret::Core::Operations qw(add str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Anonymous function definition
     {
@@ -134,15 +134,15 @@ my $result = do {
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(String);
+    FF::load_namespaces( $context, qw(String) );
     $scope->property_u('say')->call_u( [ str( $f, "test" ) ], $scope );
     $scope->set_property_ow( $context, str => str( $f, "hi" ) );
-    on( $scope->property_u('str'), 'length', $self, $scope,
+    FF::on( $scope->property_u('str'), 'length', $self, $scope,
         $funcs[0]
           ->inside_scope( (undef) => $scope, $scope, undef, undef, undef ) );
     $scope->property_u('str')->property_u('length')->call_u( {}, $scope );
     str( $f, "hello" )->property_u('length')->call_u( {}, $scope );
-    on(
+    FF::on(
         $scope->property_u('String')->property_u('proto'),
         'length',
         $self,
@@ -153,4 +153,4 @@ my $result = do {
     str( $f, "hello" )->property_u('length')->call_u( {}, $scope );
 };
 
-Ferret::runtime();
+FF::after_content();

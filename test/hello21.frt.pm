@@ -77,15 +77,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello21.frt.pm'}++;
+my $f = FF::get_ferret();
 
-use Ferret::Core::Operations qw(add num on str);
+FF::before_content('hello21.frt');
+
+use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Anonymous function definition
     {
@@ -107,37 +107,38 @@ my $result = do {
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Timer);
+    FF::load_namespaces( $context, qw(Timer) );
     $scope->set_property_ow( $context,
         parts => str( $f, "s p a m" )->property_u('split')
           ->call_u( [ str( $f, " " ) ], $scope ) );
-    foreach ( $scope->property_u('parts')->iterate_pair ) {
-        my $scope = Ferret::Scope->new( $f, parent => $scope );
-        $scope->set_property( i    => $_->[0] );
-        $scope->set_property( part => $_->[1] );
-
-        on(
-            $scope->property_u('Timer')
-              ->call_u( [ $scope->property_u('i') ], $scope )
-              ->property_u('once')->call_u( {}, $scope ),
-            'expire',
-            $self,
-            $scope,
-            $funcs[0]
-              ->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
-        );
-    }
-    foreach (
-        Ferret::List->new( $f,
-            items => [ num( $f, 1 ), num( $f, 2 ), num( $f, 3 ) ] )->iterate
-      )
-    {
-        my $scope = Ferret::Scope->new( $f, parent => $scope );
-        $scope->set_property( part => $_ );
-
-        $scope->property_u('say')
-          ->call_u( [ $scope->property_u('part') ], $scope );
-    }
+    FF::iterate_pair(
+        $f, $scope,
+        $scope->property_u('parts'),
+        'i', 'part',
+        sub {
+            my $scope = shift;
+            FF::on(
+                $scope->property_u('Timer')
+                  ->call_u( [ $scope->property_u('i') ], $scope )
+                  ->property_u('once')->call_u( {}, $scope ),
+                'expire', $self, $scope,
+                $funcs[0]->inside_scope(
+                    (undef) => $scope,
+                    $scope, undef, undef, undef
+                )
+            );
+        }
+    );
+    FF::iterate(
+        $f, $scope,
+        FF::create_list( $f, [ num( $f, 1 ), num( $f, 2 ), num( $f, 3 ) ] ),
+        'part',
+        sub {
+            my $scope = shift;
+            $scope->property_u('say')
+              ->call_u( [ $scope->property_u('part') ], $scope );
+        }
+    );
 };
 
-Ferret::runtime();
+FF::after_content();

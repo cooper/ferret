@@ -142,42 +142,33 @@
 #                                  Lexical variable '$y'
 #          Method 'description'
 #              Instruction
-#                  Assignment (lexical variable '$ox')
-#                      Property 'x'
-#                          Instance variable '@origin'
-#              Instruction
-#                  Assignment (lexical variable '$oy')
-#                      Property 'y'
-#                          Instance variable '@origin'
+#                  Assignment (lexical variable '$o')
+#                      Instance variable '@origin'
 #              Instruction
 #                  Assignment (lexical variable '$c')
 #                      Instance variable '@center'
-#              Instruction
-#                  Assignment (lexical variable '$cx')
-#                      Property 'x'
-#                          Lexical variable '$c'
-#              Instruction
-#                  Assignment (lexical variable '$cy')
-#                      Property 'y'
-#                          Lexical variable '$c'
 #              Instruction
 #                  Return
 #                      Operation
 #                          String 'Rect( Origin('
 #                          Addition operator (+)
-#                          Lexical variable '$ox'
+#                          Property 'x'
+#                              Lexical variable '$o'
 #                          Addition operator (+)
 #                          String ', '
 #                          Addition operator (+)
-#                          Lexical variable '$oy'
+#                          Property 'y'
+#                              Lexical variable '$o'
 #                          Addition operator (+)
 #                          String '); Center('
 #                          Addition operator (+)
-#                          Lexical variable '$cx'
+#                          Property 'x'
+#                              Lexical variable '$c'
 #                          Addition operator (+)
 #                          String ', '
 #                          Addition operator (+)
-#                          Lexical variable '$cy'
+#                          Property 'y'
+#                              Lexical variable '$c'
 #                          Addition operator (+)
 #                          String '); Width = '
 #                          Addition operator (+)
@@ -206,15 +197,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'Rect.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('Rect.frt');
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('Math');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'Math' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'Math' );
+    FF::load_core('Math');
 
     # Class 'Rect'
     {
@@ -251,22 +242,10 @@ my $result = do {
             );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{x};
-                    $scope->set_property( x => $arguments->{x} );
-                };
-                do {
-                    return unless defined $arguments->{y};
-                    $scope->set_property( y => $arguments->{y} );
-                };
-                do {
-                    return unless defined $arguments->{width};
-                    $self->set_property( width => $arguments->{width} );
-                };
-                do {
-                    return unless defined $arguments->{height};
-                    $self->set_property( height => $arguments->{height} );
-                };
+                FF::need( $scope, $arguments, 'x' )      or return;
+                FF::need( $scope, $arguments, 'y' )      or return;
+                FF::need( $self,  $arguments, 'width' )  or return;
+                FF::need( $self,  $arguments, 'height' ) or return;
                 $self->set_property(
                     origin => $scope->property_u('Point')->call_u(
                         [ $scope->property_u('x'), $scope->property_u('y') ],
@@ -292,9 +271,9 @@ my $result = do {
 
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return Ferret::List->new(
+                return FF::create_list(
                     $f,
-                    items => [
+                    [
                         $self->property_u('topLeft'),
                         $self->property_u('topRight'),
                         $self->property_u('bottomLeft'),
@@ -532,23 +511,24 @@ my $result = do {
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property_ow( $context,
-                    ox => $self->property_u('origin')->property_u('x') );
-                $scope->set_property_ow( $context,
-                    oy => $self->property_u('origin')->property_u('y') );
+                    o => $self->property_u('origin') );
                 $scope->set_property_ow( $context,
                     c => $self->property_u('center') );
-                $scope->set_property_ow( $context,
-                    cx => $scope->property_u('c')->property_u('x') );
-                $scope->set_property_ow( $context,
-                    cy => $scope->property_u('c')->property_u('y') );
                 return add(
-                    $scope,                      str( $f, "Rect( Origin(" ),
-                    $scope->property_u('ox'),    str( $f, ", " ),
-                    $scope->property_u('oy'),    str( $f, "); Center(" ),
-                    $scope->property_u('cx'),    str( $f, ", " ),
-                    $scope->property_u('cy'),    str( $f, "); Width = " ),
-                    $self->property_u('width'),  str( $f, "; Height = " ),
-                    $self->property_u('height'), str( $f, " )" )
+                    $scope,
+                    str( $f, "Rect( Origin(" ),
+                    $scope->property_u('o')->property_u('x'),
+                    str( $f, ", " ),
+                    $scope->property_u('o')->property_u('y'),
+                    str( $f, "); Center(" ),
+                    $scope->property_u('c')->property_u('x'),
+                    str( $f, ", " ),
+                    $scope->property_u('c')->property_u('y'),
+                    str( $f, "); Width = " ),
+                    $self->property_u('width'),
+                    str( $f, "; Height = " ),
+                    $self->property_u('height'),
+                    str( $f, " )" )
                 );
                 return $return;
             };
@@ -578,8 +558,8 @@ my $result = do {
         $methods[9]
           ->inside_scope( description => $scope, $proto, $class, undef, undef );
     }
-    Ferret::space( $context, $_ )
-      for qw(Math::Line Math::Num Math::Point Line Num Point);
+    FF::load_namespaces( $context,
+        qw(Math::Line Math::Num Math::Point Line Num Point) );
 };
 
-Ferret::runtime();
+FF::after_content();

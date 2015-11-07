@@ -106,15 +106,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello3.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('hello3.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Function event 'hello1' callback definition
     {
@@ -183,14 +183,8 @@ my $result = do {
               ->inside_scope( hello1 => $scope, $scope, undef, undef, undef );
             $funcs[1]
               ->inside_scope( hello2 => $scope, $scope, undef, undef, undef );
-            do {
-                return unless defined $arguments->{name1};
-                $scope->set_property( name1 => $arguments->{name1} );
-            };
-            do {
-                return unless defined $arguments->{name2};
-                $scope->set_property( name2 => $arguments->{name2} );
-            };
+            FF::need( $scope, $arguments, 'name1' ) or return;
+            FF::need( $scope, $arguments, 'name2' ) or return;
             $scope->property_u('hello1')->call_u( {}, $scope );
             $scope->property_u('hello2')->call_u( {}, $scope );
             return $return;
@@ -218,4 +212,4 @@ my $result = do {
         $scope );
 };
 
-Ferret::runtime();
+FF::after_content();

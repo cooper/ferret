@@ -1,1 +1,1 @@
-Ferret::List->new($f, items => [ <<items>> ])
+FF::create_list($f, [ <<items>> ])

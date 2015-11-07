@@ -160,15 +160,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello22.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('hello22.frt');
 
 use Ferret::Core::Operations qw(bool str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Class 'Cow'
     {
@@ -390,14 +390,8 @@ my $result = do {
             $func->add_argument( name => 'cat2', type => 'Cat', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{cat1};
-                    $scope->set_property( cat1 => $arguments->{cat1} );
-                };
-                do {
-                    return unless defined $arguments->{cat2};
-                    $scope->set_property( cat2 => $arguments->{cat2} );
-                };
+                FF::need( $scope, $arguments, 'cat1' ) or return;
+                FF::need( $scope, $arguments, 'cat2' ) or return;
                 if ( bool( $scope->property_u('cat1')->property_u('mean') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -424,7 +418,7 @@ my $result = do {
         $methods[2]
           ->inside_scope( fight => $scope, $class, $class, undef, undef );
     }
-    Ferret::space( $context, $_ ) for qw(Cat Cow Dog);
+    FF::load_namespaces( $context, qw(Cat Cow Dog) );
     $scope->set_property_ow( $context,
         animal => $scope->property_u('Cow')->call_u( {}, $scope ) );
     $scope->property_u('Dog')->property_u('init')
@@ -451,12 +445,16 @@ my $result = do {
       ->call_u( [ $scope->property_u('animal') ], $scope );
     $scope->set_property_ow( $context,
         cat => $scope->property_u('Cat')->call_u( {}, $scope ) );
-    $scope->set_property_ow( $context,
-        aftermath => $scope->property_u('animal')
-          ->create_set( $scope, $scope->property_u('cat') )
-          ->property_u('fight')->call_u( {}, $scope ) );
+    $scope->set_property_ow(
+        $context,
+        aftermath => FF::create_set(
+            $scope,
+            $scope->property_u('animal'),
+            $scope->property_u('cat')
+        )->property_u('fight')->call_u( {}, $scope )
+    );
     $scope->property_u('say')
       ->call_u( [ $scope->property_u('aftermath') ], $scope );
 };
 
-Ferret::runtime();
+FF::after_content();

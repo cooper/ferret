@@ -37,17 +37,17 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'bot_test1.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('bot_test1.frt');
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
-    Ferret::space( $context, $_ ) for qw(Bot1);
+    FF::load_namespaces( $context, qw(Bot1) );
     $scope->set_property_ow(
         $context,
         bot => $scope->property_u('Bot1')->call_u(
@@ -62,4 +62,4 @@ my $result = do {
     $scope->property_u('bot')->property_u('connect')->call_u( {}, $scope );
 };
 
-Ferret::runtime();
+FF::after_content();

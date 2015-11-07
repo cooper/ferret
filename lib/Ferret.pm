@@ -356,6 +356,7 @@ use Ferret::Core::Functions;
 use Ferret::Core::Specials;
 use Ferret::Core::Context;
 use Ferret::Core::Errors;
+use Ferret::Core::FF;
 
 use Evented::Object;
 

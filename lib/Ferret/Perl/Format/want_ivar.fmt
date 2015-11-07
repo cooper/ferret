@@ -1,1 +1,1 @@
-$self->set_property(<<var_name>> => $arguments->{<<var_name>>});
+$self->set_property(<<var_name>> => $arguments->{<<var_name>>})

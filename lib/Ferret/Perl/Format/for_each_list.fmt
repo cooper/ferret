@@ -1,6 +1,4 @@
-foreach (<<collection>>->iterate) {
-    my $scope = Ferret::Scope->new($f, parent => $scope);
-    $scope->set_property(<<var1_name>> => $_);
-
+FF::iterate($f, $scope, <<collection>>, '<<var1_name>>', sub {
+    my $scope = shift;
     <<body>>
-}
+});

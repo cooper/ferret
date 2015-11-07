@@ -1,1 +1,1 @@
-Ferret::space($context, $_) for qw(<<spaces>>);
+FF::load_namespaces($context, qw(<<spaces>>));

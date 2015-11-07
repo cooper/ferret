@@ -175,15 +175,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello5.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('hello5.frt');
 
 use Ferret::Core::Operations qw(add div num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Class 'Point'
     {
@@ -210,14 +210,8 @@ my $result = do {
             $func->add_argument( name => 'y', type => '', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{x};
-                    $scope->set_property( x => $arguments->{x} );
-                };
-                do {
-                    return unless defined $arguments->{y};
-                    $scope->set_property( y => $arguments->{y} );
-                };
+                FF::need( $scope, $arguments, 'x' ) or return;
+                FF::need( $scope, $arguments, 'y' ) or return;
                 $self->set_property( x => $scope->property_u('x') );
                 $self->set_property( y => $scope->property_u('y') );
                 return $return;
@@ -314,14 +308,8 @@ my $result = do {
             $func->add_argument( name => 'pt2', type => '', more => undef );
             $func->{code} = sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    return unless defined $arguments->{pt1};
-                    $scope->set_property( pt1 => $arguments->{pt1} );
-                };
-                do {
-                    return unless defined $arguments->{pt2};
-                    $scope->set_property( pt2 => $arguments->{pt2} );
-                };
+                FF::need( $scope, $arguments, 'pt1' ) or return;
+                FF::need( $scope, $arguments, 'pt2' ) or return;
                 return $scope->property_u('Point')->call_u(
                     {
                         x => div(
@@ -364,7 +352,7 @@ my $result = do {
         $methods[4]
           ->inside_scope( midpoint => $scope, $class, $class, undef, undef );
     }
-    Ferret::space( $context, $_ ) for qw(Point);
+    FF::load_namespaces( $context, qw(Point) );
     $scope->set_property_ow( $context,
         pt => $scope->property_u('Point')
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope ) );
@@ -407,4 +395,4 @@ my $result = do {
     );
 };
 
-Ferret::runtime();
+FF::after_content();

@@ -46,15 +46,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello17.frt.pm'}++;
+my $f = FF::get_ferret();
 
-use Ferret::Core::Operations qw(num on str);
+FF::before_content('hello17.frt');
+
+use Ferret::Core::Operations qw(num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Anonymous function definition
     {
@@ -68,13 +68,12 @@ my $result = do {
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Timer);
-    $scope->set_property_ow( $context,
-        obj => Ferret::Object->new( $f, initial_props => {} ) );
+    FF::load_namespaces( $context, qw(Timer) );
+    $scope->set_property_ow( $context, obj => FF::create_object( $f, {} ) );
     $scope->property_u('Timer')->property_u('init')
       ->call_u( [ $scope->property_u('obj') ], $scope )
       ->call_u( [ num( $f, 5 ) ], $scope );
-    on(
+    FF::on(
         $scope->property_u('obj')->property_u('once')->call_u( {}, $scope ),
         'expire',
         $self,
@@ -84,4 +83,4 @@ my $result = do {
     );
 };
 
-Ferret::runtime();
+FF::after_content();

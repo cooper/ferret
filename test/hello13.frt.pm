@@ -65,15 +65,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello13.frt.pm'}++;
+my $f = FF::get_ferret();
 
-use Ferret::Core::Operations qw(num on str);
+FF::before_content('hello13.frt');
+
+use Ferret::Core::Operations qw(num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Anonymous function definition
     {
@@ -100,9 +100,9 @@ my $result = do {
             return $return;
         };
     }
-    Ferret::space( $context, $_ ) for qw(Timer);
+    FF::load_namespaces( $context, qw(Timer) );
     $scope->property_u('say')->call_u( [ str( $f, "hello" ) ], $scope );
-    on(
+    FF::on(
         $scope->property_u('Timer')->call_u( [ num( $f, 5 ) ], $scope )
           ->property_u('once')->call_u( {}, $scope ),
         'expire',
@@ -113,7 +113,7 @@ my $result = do {
     );
     $scope->set_property_ow( $context,
         t2 => $scope->property_u('Timer')->call_u( [ num( $f, 2 ) ], $scope ) );
-    on(
+    FF::on(
         $scope->property_u('t2')->property_u('once')->call_u( {}, $scope ),
         'expire',
         $self,
@@ -124,4 +124,4 @@ my $result = do {
     $scope->property_u('t2')->property_u('cancel')->call_u( {}, $scope );
 };
 
-Ferret::runtime();
+FF::after_content();

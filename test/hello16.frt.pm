@@ -42,17 +42,17 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello16.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('hello16.frt');
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
-    Ferret::space( $context, $_ ) for qw(Math Math::Point);
+    FF::load_namespaces( $context, qw(Math Math::Point) );
     $scope->set_property_ow( $context, obj => str( $f, "hi" ) );
     $scope->property_u('Math::Point')->property_u('init')
       ->call_u( [ $scope->property_u('obj') ], $scope )
@@ -66,4 +66,4 @@ my $result = do {
     );
 };
 
-Ferret::runtime();
+FF::after_content();

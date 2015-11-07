@@ -23,19 +23,19 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'test.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('test.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
-    Ferret::space( $context, $_ ) for qw(Second);
+    FF::load_namespaces( $context, qw(Second) );
     $scope->delete_property('x');
     $scope->property_u('Second');
 };
 
-Ferret::runtime();
+FF::after_content();

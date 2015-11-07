@@ -62,9 +62,6 @@ sub event_name {
 sub perl_fmt {
     my $on = shift;
 
-    my $doc = $on->document;
-    $doc->{required_operations}{on}++;
-
     return on => {
         event_name => $on->event_name,
         object     => $on->event_object,

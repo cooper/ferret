@@ -46,10 +46,7 @@ prop center {
 }
 
 method description {
-    $ox = @origin.x;
-    $oy = @origin.y;
-    $c  = @center;
-    $cx = $c.x;
-    $cy = $c.y;
-    return "Rect( Origin($ox, $oy); Center($cx, $cy); Width = @width; Height = @height )";
+    $o = @origin;
+    $c = @center;
+    return "Rect( Origin($o.x, $o.y); Center($c.x, $c.y); Width = @width; Height = @height )";
 }

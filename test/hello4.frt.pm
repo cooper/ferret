@@ -88,15 +88,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'hello4.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('hello4.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('main');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'main' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'main' );
+    FF::load_core('main');
 
     # Function event 'makePoint' callback definition
     {
@@ -112,20 +112,14 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{x};
-                $scope->set_property( x => $arguments->{x} );
-            };
-            do {
-                return unless defined $arguments->{y};
-                $scope->set_property( y => $arguments->{y} );
-            };
+            FF::need( $scope, $arguments, 'x' ) or return;
+            FF::need( $scope, $arguments, 'y' ) or return;
             $scope->set_property( z => $arguments->{z} );
             $scope->set_property_ow(
                 $context,
-                point => Ferret::Object->new(
+                point => FF::create_object(
                     $f,
-                    initial_props => {
+                    {
                         x => $scope->property_u('x'),
                         y => $scope->property_u('y')
                     }
@@ -160,9 +154,9 @@ my $result = do {
     );
     $scope->set_property_ow(
         $context,
-        numbers => Ferret::List->new(
+        numbers => FF::create_list(
             $f,
-            items => [
+            [
                 num( $f, 1 ),
                 num( $f, 2 ),
                 num( $f, 3 ),
@@ -172,9 +166,8 @@ my $result = do {
         )
     );
     $scope->set_property_ow( $context,
-        emptyArray => Ferret::List->new( $f, items => [] ) );
-    $scope->set_property_ow( $context,
-        emptyHash => Ferret::Hash->new( $f, pairs => {} ) );
+        emptyArray => FF::create_list( $f, [] ) );
+    $scope->set_property_ow( $context, emptyHash => FF::create_hash( $f, {} ) );
 };
 
-Ferret::runtime();
+FF::after_content();

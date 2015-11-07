@@ -32,15 +32,15 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'Math.frt.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('Math.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('Math');
-    do 'CORE.frt.pm' or die "Core error: $@" unless 'Math' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context( $f, 'Math' );
+    FF::load_core('Math');
 
     # Function event 'sqrt' callback definition
     {
@@ -49,10 +49,7 @@ my $result = do {
         $func->{code} = sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            do {
-                return unless defined $arguments->{num};
-                $scope->set_property( num => $arguments->{num} );
-            };
+            FF::need( $scope, $arguments, 'num' ) or return;
             return $scope->property_u('NATIVE::Math')->property_u('sqrt')
               ->call_u( [ $scope->property_u('num') ], $scope );
             return $return;
@@ -64,8 +61,8 @@ my $result = do {
         );
     }
     $funcs[0]->inside_scope( sqrt => $scope, $scope, undef, undef, undef );
-    Ferret::space( $context, $_ )
-      for qw(Math::NATIVE Math::NATIVE::Math Math::Num NATIVE NATIVE::Math Num);
+    FF::load_namespaces( $context,
+        qw(Math::NATIVE Math::NATIVE::Math Math::Num NATIVE NATIVE::Math Num) );
 };
 
-Ferret::runtime();
+FF::after_content();

@@ -15,9 +15,10 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = $Ferret::ferret ||= Ferret->new;
-$Ferret::tried_files{'<<base_name>>.pm'}++;
+my $f = FF::get_ferret();
+
+FF::before_content('<<base_name>>');
 
 <<content>>
 
-Ferret::runtime();
+FF::after_content();

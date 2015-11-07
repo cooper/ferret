@@ -1,9 +1,8 @@
 use Ferret::Core::Operations qw(<<operations>>);
 my $result = do {
     my @funcs;
-    my $scope = my $context = $f->get_context('<<package>>');
-    do 'CORE.frt.pm' or die "Core error: $@" unless '<<package>>' eq 'CORE';
-    undef;
+    my $scope = my $context = FF::get_context($f, '<<package>>');
+    FF::load_core('<<package>>');
 
     <<upper_content>>
     <<lower_content>>
