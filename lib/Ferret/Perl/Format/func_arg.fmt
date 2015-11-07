@@ -1,1 +1,1 @@
-{ name => '<<name>>', type => '<<type>>', optional => <<want>>, more => <<more>> }
+{ name => '<<name>>', type => <<type>>, optional => <<want>>, more => <<more>> }

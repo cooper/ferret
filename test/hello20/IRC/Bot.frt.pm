@@ -519,7 +519,7 @@ my $result = do {
     my $func_1 = FF::function_def(
         $f, $scope,
         '(undef)',
-        [ { name => 'data', type => '', optional => undef, more => undef } ],
+        [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -639,7 +639,7 @@ my $result = do {
                 },
                 {
                     name     => 'callback',
-                    type     => '',
+                    type     => undef,
                     optional => undef,
                     more     => undef
                 }
@@ -687,7 +687,7 @@ my $result = do {
             [
                 {
                     name     => 'line',
-                    type     => '',
+                    type     => undef,
                     optional => undef,
                     more     => undef
                 }
@@ -717,7 +717,7 @@ my $result = do {
             [
                 {
                     name     => 'line',
-                    type     => '',
+                    type     => undef,
                     optional => undef,
                     more     => undef
                 }
@@ -879,7 +879,14 @@ my $result = do {
         # Method event 'pong' definition
         my $method_7 = FF::method_event_def(
             $f, $scope, 'pong',
-            [ { name => 's', type => '', optional => undef, more => undef } ],
+            [
+                {
+                    name     => 's',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 's' ) or return;
@@ -905,11 +912,16 @@ my $result = do {
             [
                 {
                     name     => 'line',
-                    type     => '',
+                    type     => undef,
                     optional => undef,
                     more     => undef
                 },
-                { name => 's', type => '', optional => undef, more => undef }
+                {
+                    name     => 's',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -953,7 +965,14 @@ my $result = do {
         my $method_9 = FF::method_event_def(
             $f, $scope,
             'commandHello',
-            [ { name => 'msg', type => '', optional => undef, more => undef } ],
+            [
+                {
+                    name     => 'msg',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'msg' ) or return;
@@ -978,7 +997,14 @@ my $result = do {
         my $method_10 = FF::method_event_def(
             $f, $scope,
             'commandAdd',
-            [ { name => 'msg', type => '', optional => undef, more => undef } ],
+            [
+                {
+                    name     => 'msg',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'msg' ) or return;
@@ -1019,7 +1045,14 @@ my $result = do {
         my $method_11 = FF::method_event_def(
             $f, $scope,
             'commandFactoid',
-            [ { name => 'msg', type => '', optional => undef, more => undef } ],
+            [
+                {
+                    name     => 'msg',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'msg' ) or return;

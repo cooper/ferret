@@ -128,8 +128,18 @@ my $result = do {
         $f, $scope,
         '(undef)',
         [
-            { name => 'twice',   type => '', optional => undef, more => undef },
-            { name => 'message', type => '', optional => undef, more => undef }
+            {
+                name     => 'twice',
+                type     => undef,
+                optional => undef,
+                more     => undef
+            },
+            {
+                name     => 'message',
+                type     => undef,
+                optional => undef,
+                more     => undef
+            }
         ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;

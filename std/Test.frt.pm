@@ -244,8 +244,13 @@ my $result = do {
         my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
             [
-                { name => 'name',  type => '', optional => 1, more => undef },
-                { name => 'fatal', type => '', optional => 1, more => undef }
+                { name => 'name', type => undef, optional => 1, more => undef },
+                {
+                    name     => 'fatal',
+                    type     => undef,
+                    optional => 1,
+                    more     => undef
+                }
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -269,7 +274,7 @@ my $result = do {
         my $method_1 = FF::method_event_def(
             $f, $scope,
             'trueValue',
-            [ { name => 'a', type => '', optional => 1, more => undef } ],
+            [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
@@ -289,7 +294,7 @@ my $result = do {
         my $method_2 = FF::method_event_def(
             $f, $scope,
             'veryTrue',
-            [ { name => 'a', type => '', optional => 1, more => undef } ],
+            [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->set_property( a => $arguments->{a} );
@@ -309,8 +314,8 @@ my $result = do {
         my $method_3 = FF::method_event_def(
             $f, $scope, 'equal',
             [
-                { name => 'a', type => '', optional => 1, more => undef },
-                { name => 'b', type => '', optional => 1, more => undef }
+                { name => 'a', type => undef, optional => 1, more => undef },
+                { name => 'b', type => undef, optional => 1, more => undef }
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -333,8 +338,8 @@ my $result = do {
             $f, $scope,
             'objectsEqual',
             [
-                { name => 'a', type => '', optional => 1, more => undef },
-                { name => 'b', type => '', optional => 1, more => undef }
+                { name => 'a', type => undef, optional => 1, more => undef },
+                { name => 'b', type => undef, optional => 1, more => undef }
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -357,8 +362,8 @@ my $result = do {
             $f, $scope,
             'notEqual',
             [
-                { name => 'a', type => '', optional => 1, more => undef },
-                { name => 'b', type => '', optional => 1, more => undef }
+                { name => 'a', type => undef, optional => 1, more => undef },
+                { name => 'b', type => undef, optional => 1, more => undef }
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -383,8 +388,8 @@ my $result = do {
             $f, $scope,
             'objectsNotEqual',
             [
-                { name => 'a', type => '', optional => 1, more => undef },
-                { name => 'b', type => '', optional => 1, more => undef }
+                { name => 'a', type => undef, optional => 1, more => undef },
+                { name => 'b', type => undef, optional => 1, more => undef }
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -449,8 +454,13 @@ my $result = do {
         my $method_8 = FF::method_event_def(
             $f, $scope, '_test',
             [
-                { name => 'yes',     type => '', optional => 1, more => undef },
-                { name => 'message', type => '', optional => 1, more => undef }
+                { name => 'yes', type => undef, optional => 1, more => undef },
+                {
+                    name     => 'message',
+                    type     => undef,
+                    optional => 1,
+                    more     => undef
+                }
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;

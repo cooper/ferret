@@ -147,7 +147,7 @@ our %element_rules = (
             # directly inside a method, WantNeed can ONLY contain these things.
             Method => {
                 children_must_be => [                                           # WantNeed[2]
-                    'InstanceVariable LexicalVariable Expression Bareword',
+                    'InstanceVariable LexicalVariable Expression Bareword SetTypeVariable',
                     'Argument declaration inside method can only contain '.
                     'lexical or instance variables and their types'
                 ]
@@ -156,7 +156,7 @@ our %element_rules = (
             # directly inside a function, WantNeed can ONLY contain these things.
             Function => {
                 children_must_be => [                                           # WantNeed[3]
-                    'LexicalVariable Expression Bareword',
+                    'LexicalVariable Expression Bareword SetTypeVariable',
                     'Argument declaration inside function can only contain '.
                     'lexical variables and their types'
                 ]

@@ -26,7 +26,8 @@ sub construct {
     };
 
     while (my ($label, $value, $line) = @{ shift || [] }) {
-        handle_label($label, $value, $line);
+        my $e = handle_label($label, $value, $line);
+        return $e if $e;
     }
 
     c_spaces($current, $main_node);
@@ -87,6 +88,7 @@ sub handle_label {
     # otherwise, throw in an unknown element.
     $current->{node}->adopt($current->{unknown_el});
 
+    return $error;
 }
 
 sub c_PKG_DEC {
@@ -682,7 +684,8 @@ sub c_KEYWORD_WANT {
     #       Instance variable   (e.g. need @x)
     #       Lexical variable    (e.g. need $x)
     #       Expression          (i.e. the want parameter for fallback value)
-    #       Bareword            (i.e. the bareword variable type)
+    #       Bareword            (i.e. bareword variable type; need $x: Str)
+    #       Set type variable   (i.e. set type variable type; need $x: <Str>)
     #
 
     # Rule WantNeed[3]:
@@ -691,7 +694,8 @@ sub c_KEYWORD_WANT {
     #
     #       Lexical variable    (e.g. need $x)
     #       Expression          (i.e. the want parameter for fallback value)
-    #       Bareword            (i.e. the bareword variable type)
+    #       Bareword            (i.e. bareword variable type; need $x: Str)
+    #       Set type variable   (i.e. set type variable type; need $x: <Str>)
     #
 
     # Manually implemented rules:

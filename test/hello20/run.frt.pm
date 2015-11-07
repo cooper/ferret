@@ -367,7 +367,7 @@ my $result = do {
     my $func_0 = FF::function_event_def(
         $f, $scope,
         'handlePerl',
-        [ { name => 'msg', type => '', optional => undef, more => undef } ],
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -432,7 +432,7 @@ my $result = do {
     my $func_1 = FF::function_def(
         $f, $scope,
         '(undef)',
-        [ { name => 'msg', type => '', optional => undef, more => undef } ],
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -452,7 +452,7 @@ my $result = do {
     my $func_2 = FF::function_def(
         $f, $scope,
         '(undef)',
-        [ { name => 'msg', type => '', optional => undef, more => undef } ],
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -510,7 +510,7 @@ my $result = do {
     my $func_3 = FF::function_def(
         $f, $scope,
         '(undef)',
-        [ { name => 'msg', type => '', optional => undef, more => undef } ],
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -568,7 +568,7 @@ my $result = do {
     my $func_4 = FF::function_def(
         $f, $scope,
         '(undef)',
-        [ { name => 'msg', type => '', optional => undef, more => undef } ],
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;

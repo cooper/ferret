@@ -177,7 +177,7 @@ my $result = do {
     my $func_1 = FF::function_def(
         $f, $scope,
         '(undef)',
-        [ { name => 'data', type => '', optional => undef, more => undef } ],
+        [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
@@ -199,7 +199,7 @@ my $result = do {
     my $func_2 = FF::function_def(
         $f, $scope,
         '(undef)',
-        [ { name => 'data', type => '', optional => undef, more => undef } ],
+        [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;

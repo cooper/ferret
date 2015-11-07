@@ -102,9 +102,9 @@ my $result = do {
         $f, $scope,
         'makePoint',
         [
-            { name => 'x', type => '', optional => undef, more => undef },
-            { name => 'y', type => '', optional => undef, more => undef },
-            { name => 'z', type => '', optional => 1,     more => undef }
+            { name => 'x', type => undef, optional => undef, more => undef },
+            { name => 'y', type => undef, optional => undef, more => undef },
+            { name => 'z', type => undef, optional => 1,     more => undef }
         ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;

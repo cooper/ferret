@@ -16,6 +16,14 @@ sub desc {
 sub variables { shift->first_child }
 sub var_type  { shift->{bareword_type}{bareword_value} }
 
+sub type_string {
+    my $wn = shift;
+    my ($a, $b) = @$wn{'bareword_type', 'set_type_var'};
+    return q/'/.$a->{bareword_value}.q/'/   if $a;
+    return $b->perl_fmt_do                  if $b;
+    return 'undef';
+}
+
 sub adopt {
     my ($wn, $child) = @_;
     my @children = $wn->children;
@@ -33,14 +41,30 @@ sub adopt {
     # no other elements can be contained past it.
     return $child->unexpected() if $wn->{ellipsis};
 
-    # if we're inside the type, this must be a bareword.
+    # if we're inside the type, this must be a bareword or set type var.
     # we don't actually insert the bareword.
     # just remember its value for later.
     if ($wn->{inside_type}) {
-        return $child->unexpected() unless $child->type eq 'Bareword';
-        $wn->{bareword_type} = $child;
-        delete $wn->{inside_type};
-        return $child;
+
+        # bareword.
+        if ($child->type eq 'Bareword') {
+            $wn->{bareword_type} = $child;
+            delete $wn->{inside_type};
+            return $child;
+        }
+
+        # set type variable.
+        elsif ($child->type eq 'SetTypeVariable') {
+            $wn->{set_type_var} = $child;
+            delete $wn->{inside_type};
+            return $child;
+        }
+
+        # neither.
+        else {
+            return $child->unexpected();
+        }
+
     }
 
     # this is the second arg.
@@ -106,14 +130,13 @@ sub close {
 sub perl_fmt {
     my ($arg, @fmt) = shift;
     my ($var, $exp, $bw) = $arg->children;
-    if ($exp && $exp->type eq 'Bareword') {
+    if ($exp and $exp->type eq 'Bareword' || $exp->type eq 'SetTypeVariable') {
         $bw = $exp;
         undef $exp;
     }
 
-    my $info       = { var_name => $var->{var_name} };
-    $info->{type}  = $bw->{bareword_value}  if $bw;
-    $info->{value} = $exp->perl_fmt_do      if $exp;
+    my $info = { var_name => $var->{var_name} };
+    $info->{value} = $exp->perl_fmt_do if $exp;
 
     # set the variable for each function argument.
     my $typ = $var->type eq 'InstanceVariable' ? '_ivar': '';

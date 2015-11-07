@@ -165,8 +165,18 @@ my $result = do {
         $f, $scope,
         'helloWorld',
         [
-            { name => 'name1', type => '', optional => undef, more => undef },
-            { name => 'name2', type => '', optional => undef, more => undef }
+            {
+                name     => 'name1',
+                type     => undef,
+                optional => undef,
+                more     => undef
+            },
+            {
+                name     => 'name2',
+                type     => undef,
+                optional => undef,
+                more     => undef
+            }
         ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;

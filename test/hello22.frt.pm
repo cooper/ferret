@@ -177,7 +177,7 @@ my $result = do {
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
-            [ { name => 'moos', type => '', optional => 1, more => undef } ],
+            [ { name => 'moos', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -219,7 +219,14 @@ my $result = do {
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
-            [ { name => 'barks', type => '', optional => 1, more => undef } ],
+            [
+                {
+                    name     => 'barks',
+                    type     => undef,
+                    optional => 1,
+                    more     => undef
+                }
+            ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
@@ -261,7 +268,7 @@ my $result = do {
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
-            [ { name => 'mean', type => '', optional => 1, more => undef } ],
+            [ { name => 'mean', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {

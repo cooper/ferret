@@ -50,7 +50,7 @@ sub perl_fmt {
             push @arguments, $func->get_format(func_arg => {
                 name => $var->{var_name},
                 want => $wn->{arg_type} eq 'want' ? '1' : 'undef',
-                type => $wn->var_type  || '',
+                type => $wn->type_string,
                 more => $wn->{ellipsis} ? '1' : 'undef'
             });
         }

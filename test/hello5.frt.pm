@@ -193,8 +193,18 @@ my $result = do {
         my $method_0 = FF::method_event_def(
             $f, $scope, '_init_',
             [
-                { name => 'x', type => '', optional => undef, more => undef },
-                { name => 'y', type => '', optional => undef, more => undef }
+                {
+                    name     => 'x',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'y',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -260,8 +270,18 @@ my $result = do {
             $f, $scope,
             'midpoint',
             [
-                { name => 'pt1', type => '', optional => undef, more => undef },
-                { name => 'pt2', type => '', optional => undef, more => undef }
+                {
+                    name     => 'pt1',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'pt2',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;

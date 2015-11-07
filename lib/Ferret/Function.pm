@@ -8,6 +8,8 @@ use 5.010;
 
 use parent 'Ferret::Object';
 
+use Scalar::Util 'blessed';
+
 # creates a new function.
 sub new {
     my ($class, $f, %opts) = @_;
@@ -138,6 +140,11 @@ sub arguments_satisfy_signature {
 
 sub obj_type_works {
     my ($func, $obj, $type) = @_;
+
+    # if the type is an object, we only have to check instance of.
+    if (blessed $type && $type->isa('Ferret::Object')) {
+        return $obj->instance_of($type);
+    }
 
     # find scope of interest.
     my $soi = $func->{outer_scope} || $func->f->main_context;
