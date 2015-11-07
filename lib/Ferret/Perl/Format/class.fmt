@@ -1,14 +1,6 @@
 # Class '<<name>>'
 {
-    my ($class, $self);
-    if (not $class = $f->get_class($context, '<<name>>')) {
-        $class = $self = Ferret::Class->new($f,
-            name    => '<<name>>',
-            version => <<version>>
-        );
-        $context->set_property(<<name>> => $class);
-    }
-    my $proto = $class->prototype;
+    my ($class, $self, $proto) = FF::class_def($f, $context, '<<name>>', <<version>>);
 
     <<upper_content>>
     <<lower_content>>

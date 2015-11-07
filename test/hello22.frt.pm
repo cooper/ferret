@@ -171,16 +171,8 @@ my $result = do {
 
     # Class 'Cow'
     {
-        my ( $class, $self );
-        if ( not $class = $f->get_class( $context, 'Cow' ) ) {
-            $class = $self = Ferret::Class->new(
-                $f,
-                name    => 'Cow',
-                version => undef
-            );
-            $context->set_property( Cow => $class );
-        }
-        my $proto = $class->prototype;
+        my ( $class, $self, $proto ) =
+          FF::class_def( $f, $context, 'Cow', undef );
 
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(
@@ -221,16 +213,8 @@ my $result = do {
 
     # Class 'Dog'
     {
-        my ( $class, $self );
-        if ( not $class = $f->get_class( $context, 'Dog' ) ) {
-            $class = $self = Ferret::Class->new(
-                $f,
-                name    => 'Dog',
-                version => undef
-            );
-            $context->set_property( Dog => $class );
-        }
-        my $proto = $class->prototype;
+        my ( $class, $self, $proto ) =
+          FF::class_def( $f, $context, 'Dog', undef );
 
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(
@@ -271,16 +255,8 @@ my $result = do {
 
     # Class 'Cat'
     {
-        my ( $class, $self );
-        if ( not $class = $f->get_class( $context, 'Cat' ) ) {
-            $class = $self = Ferret::Class->new(
-                $f,
-                name    => 'Cat',
-                version => undef
-            );
-            $context->set_property( Cat => $class );
-        }
-        my $proto = $class->prototype;
+        my ( $class, $self, $proto ) =
+          FF::class_def( $f, $context, 'Cat', undef );
 
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(

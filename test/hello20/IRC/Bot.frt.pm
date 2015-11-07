@@ -532,16 +532,8 @@ my $result = do {
 
     # Class 'Bot'
     {
-        my ( $class, $self );
-        if ( not $class = $f->get_class( $context, 'Bot' ) ) {
-            $class = $self = Ferret::Class->new(
-                $f,
-                name    => 'Bot',
-                version => undef
-            );
-            $context->set_property( Bot => $class );
-        }
-        my $proto = $class->prototype;
+        my ( $class, $self, $proto ) =
+          FF::class_def( $f, $context, 'Bot', undef );
 
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(

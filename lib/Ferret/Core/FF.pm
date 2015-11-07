@@ -159,6 +159,23 @@ sub inside {
     return;
 }
 
+# class definition.
+sub class_def {
+    my ($f, $context, $name, $version) = @_;
+    my $class;
+
+    # create the class only if it does not exist.
+    if (not $class = $f->get_class($context, $name)) {
+        $class = Ferret::Class->new($f,
+            name    => $name,
+            version => $version
+        );
+        $context->set_property($name => $class);
+    }
+
+    return ($class, $class, $class->prototype);
+}
+
 # anonymous function definition.
 sub function_def {
     my ($f, $scope, $name, $arg_ref, $code) = @_;
