@@ -73,8 +73,7 @@ It is also possible to respond to events regardless of object.
 
 ```
 on Person.proto.haveBirthday {
-    $name = *this.name;
-    say("Happy Birthday $name!");
+    say("Happy Birthday *this.name!");
 }
 ```
 
@@ -87,7 +86,7 @@ but Ferret's inheritance system makes it unique (see "Inheritance").
 "hello".length                          # 5
 1.odd                                   # true
 (test: "hello").test                    # "hello"
-Math::Rect(10, 10, 10, 10).center       # Math::Point(10, 10)
+Math::Rect(10, 10, 10, 10).center       # Point(10, 10)
 ```
 
 #### Perl
@@ -104,7 +103,7 @@ compiles, as well as the one in which its compiler and runtime are written.
 ```
 
 ```perl
-Ferret::Object->new($f, initial_props => { hello => str($f, "world") })
+FF::create_object($f, { hello => str($f, "world") })
 ```
 
 #### Ruby
@@ -144,30 +143,34 @@ package Math
 class Point
 
 init {
-    need @x, @y;
+    need @x: Num, @y: Num;
 }
 
 method distanceTo {
-    need $pt2;
+    need $pt2: Point;
     $dx = @x - $pt2.x;
     $dy = @y - $pt2.y;
     return sqrt($dx ^ 2 + $dy ^ 2);
 }
 
-method distanceFromOrigin {
+prop distanceFromOrigin {
     return @distanceTo(*class(0, 0));
 }
 
-method pretty {
+prop pretty {
     return "(@x, @y)";
 }
 
 method toString {
-    return @pretty();
+    return @pretty;
+}
+
+method description {
+    return "Point" + @pretty;
 }
 
 main method midpoint {
-    need $pt1, $pt2;
+    need $pt1: Point, $pt2: Point;
     return *class(
         x: ($pt1.x + $pt2.x) / 2,
         y: ($pt1.y + $pt2.y) / 2
@@ -175,7 +178,7 @@ main method midpoint {
 }
 
 main method distanceBetween {
-    need $pt1, $pt2;
+    need $pt1: Point, $pt2: Point;
     return $pt1.distanceTo($pt2);
 }
 ```
@@ -249,9 +252,9 @@ to create custom run loops, and Ferret will effortlessly make use of
 system-specific polling methods.
 
 ```
-on Timer(5).once().expire {
-    say("it's been five seconds!");
-}
+delay(5) {
+    say("it's been five seconds!");    
+};
 
 say("starting timer...");
 ```
@@ -349,7 +352,7 @@ encounters nonsense.
                  Assignment (instance variable '@sock')
                      Call
                          Bareword 'Socket::TCP'
-                         Hash [2 items]
+                         Named argument list [2 items]
                              Item 0
                                  Pair 'address'
                                      Instance variable '@addr'
@@ -377,7 +380,7 @@ encounters nonsense.
                      Instruction
                          Call
                              Instance variable '@send'
-                             Single value [1 items]
+                             Argument list [1 items]
                                  Item 0
                                      Operation
                                          String 'NICK '
@@ -388,7 +391,7 @@ encounters nonsense.
                  Call
                      Property 'connect'
                          Instance variable '@sock'
-                     Structural list [0 items]
+                     Argument list [0 items]
 ```
 
 #### 3. Verifier
@@ -440,24 +443,13 @@ error checking is complete. The object model is converted to Perl source code.
 
 ```perl
 # Method event 'center' definition
-{
-    my $func = Ferret::Function->new($f,
-        name      => 'default',
-        is_method => 1
-    );
-
-    $func->{code} = sub {
-        my ($self, $arguments, $call_scope, $scope, $return) = @_;
-        $scope->set_property_ow($context, x => add($scope, $self->property_u('origin')->property_u('x'), mul($scope, $self->property_u('width'), num($f, 0.5))));
-        $scope->set_property_ow($context, y => add($scope, $self->property_u('origin')->property_u('y'), mul($scope, $self->property_u('height'), num($f, 0.5))));
-        return $scope->property_u('Point')->call_u([ $scope->property_u('x'), $scope->property_u('y') ], $scope);
-        return $return;
-    };
-    $methods[7] = Ferret::Event->new($f,
-        name         => 'center',
-        default_func => [ undef, $func ]
-    );
-}
+my $method_8 = FF::method_event_def($f, $scope, 'center', [  ], sub {
+    my ($self, $arguments, $call_scope, $scope, $return) = @_;
+    $scope->set_property_ow($context, x => add($scope, $self->property_u('origin')->property_u('x'), mul($scope, $self->property_u('width'), num($f, 0.5))));
+    $scope->set_property_ow($context, y => add($scope, $self->property_u('origin')->property_u('y'), mul($scope, $self->property_u('height'), num($f, 0.5))));
+    return $scope->property_u('Point')->call_u([ $scope->property_u('x'), $scope->property_u('y') ], $scope);
+    return $return;
+});
 ```
 
 #### 5. Beautifier
@@ -467,14 +459,10 @@ beautiful, but it does help when the lines begin to exceed 1,000 characters.
 
 ```perl
 # Method event 'center' definition
-{
-    my $func = Ferret::Function->new(
-        $f,
-        name      => 'default',
-        is_method => 1
-    );
-
-    $func->{code} = sub {
+my $method_8 = FF::method_event_def(
+    $f, $scope, 'center',
+    [],
+    sub {
         my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
         $scope->set_property_ow(
             $context,
@@ -503,11 +491,6 @@ beautiful, but it does help when the lines begin to exceed 1,000 characters.
             [ $scope->property_u('x'), $scope->property_u('y') ],
             $scope );
         return $return;
-    };
-    $methods[7] = Ferret::Event->new(
-        $f,
-        name         => 'center',
-        default_func => [ undef, $func ]
-    );
-}
+    }
+);
 ```
