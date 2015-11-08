@@ -19,7 +19,7 @@
 #                  Assignment (lexical variable '$pt')
 #                      Call
 #                          Special variable '*class'
-#                          Set [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Operation
 #                                      Instance variable '@x'
@@ -50,7 +50,7 @@
 #                  Return
 #                      Call
 #                          Instance variable '@pretty'
-#                          Structural list [0 items]
+#                          Argument list [0 items]
 #          Main method 'midpoint'
 #              Instruction
 #                  Need
@@ -62,7 +62,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Point'
-#                          Hash [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Pair 'x'
 #                                      Operation
@@ -93,7 +93,7 @@
 #          Assignment (lexical variable '$pt')
 #              Call
 #                  Bareword 'Point'
-#                  Set [2 items]
+#                  Argument list [2 items]
 #                      Item 0
 #                          Number '5'
 #                      Item 1
@@ -101,7 +101,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Point'
@@ -115,7 +115,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Right'
@@ -126,7 +126,7 @@
 #              Call
 #                  Property 'midpoint'
 #                      Bareword 'Point'
-#                  Set [2 items]
+#                  Argument list [2 items]
 #                      Item 0
 #                          Lexical variable '$pt'
 #                      Item 1
@@ -134,7 +134,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Midpoint'
@@ -151,7 +151,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Nineteen: '

@@ -12,7 +12,7 @@
 #                      Call
 #                          Property 'split'
 #                              Instance variable '@line'
-#                          Hash [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Pair 'separator'
 #                                      String ' '
@@ -36,7 +36,7 @@
 #                                      Single value [1 items]
 #                                          Item 0
 #                                              Number '0'
-#                              Hash [2 items]
+#                              Argument list [2 items]
 #                                  Item 0
 #                                      Pair 'separator'
 #                                          String '!'
@@ -50,7 +50,7 @@
 #                  Call
 #                      Property 'trimPrefix'
 #                          Instance variable '@nickname'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              String ':'
 #              Instruction
@@ -64,7 +64,7 @@
 #                  Call
 #                      Property 'trimPrefix'
 #                          Instance variable '@message'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              String ':'
 #              Instruction
@@ -72,7 +72,7 @@
 #                      Call
 #                          Property 'split'
 #                              Instance variable '@message'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  String ' '
 #          Computed property 'command' (lazy)
@@ -85,7 +85,7 @@
 #                                  Single value [1 items]
 #                                      Item 0
 #                                          Number '0'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  String '.'
 #                  Instruction
@@ -99,8 +99,8 @@
 #                                              Single value [1 items]
 #                                                  Item 0
 #                                                      Number '0'
-#                                      Structural list [0 items]
-#                              Single value [1 items]
+#                                      Argument list [0 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      String '.'
 #                  If
@@ -131,7 +131,7 @@
 #                          Call
 #                              Property 'split'
 #                                  Instance variable '@message'
-#                              Hash [2 items]
+#                              Argument list [2 items]
 #                                  Item 0
 #                                      Pair 'separator'
 #                                          String ' '

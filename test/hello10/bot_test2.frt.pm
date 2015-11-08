@@ -4,7 +4,7 @@
 #          Assignment (lexical variable '$bot')
 #              Call
 #                  Bareword 'Bot2'
-#                  Hash [3 items]
+#                  Argument list [3 items]
 #                      Item 0
 #                          Pair 'address'
 #                              String 'k.notroll.net'
@@ -17,7 +17,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Property 'address'
 #                          Lexical variable '$bot'
@@ -25,7 +25,7 @@
 #          Call
 #              Property 'connect'
 #                  Lexical variable '$bot'
-#              Structural list [0 items]
+#              Argument list [0 items]
 #      Include (Bot2)
 use warnings;
 use strict;

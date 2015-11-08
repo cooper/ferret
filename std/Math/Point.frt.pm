@@ -34,7 +34,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'sqrt'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  Operation
 #                                      Lexical variable '$dx'
@@ -49,11 +49,11 @@
 #                  Return
 #                      Call
 #                          Instance variable '@distanceTo'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  Call
 #                                      Special variable '*class'
-#                                      Set [2 items]
+#                                      Argument list [2 items]
 #                                          Item 0
 #                                              Number '0'
 #                                          Item 1
@@ -95,7 +95,7 @@
 #                  Return
 #                      Call
 #                          Special variable '*class'
-#                          Hash [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Pair 'x'
 #                                      Operation
@@ -136,7 +136,7 @@
 #                      Call
 #                          Property 'distanceTo'
 #                              Lexical variable '$pt1'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  Lexical variable '$pt2'
 #      Include (Num, Point)

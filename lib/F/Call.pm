@@ -37,8 +37,9 @@ sub perl_fmt {
     };
 }
 
-sub function   { shift->first_child }
-sub func_args  { my $l = (shift->children)[1]; $l ? $l->ordered_children : () }
-sub named_args { my $l = (shift->children)[1]; $l ? $l->is_hash : undef       }
+sub function   { shift->first_child   }
+sub arg_list   { (shift->children)[1] }
+sub func_args  { my $l = shift->arg_list; $l ? $l->ordered_children : () }
+sub named_args { my $l = shift->arg_list; $l ? $l->is_hash : undef       }
 
 1

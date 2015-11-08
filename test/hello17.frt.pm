@@ -8,10 +8,10 @@
 #              Call
 #                  Property 'init'
 #                      Bareword 'Timer'
-#                  Single value [1 items]
+#                  Argument list [1 items]
 #                      Item 0
 #                          Lexical variable '$obj'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Number '5'
 #      On
@@ -20,12 +20,12 @@
 #                  Call
 #                      Property 'once'
 #                          Lexical variable '$obj'
-#                      Structural list [0 items]
+#                      Argument list [0 items]
 #          Anonymous function
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              String 'it works!'
 #      Include (Timer)

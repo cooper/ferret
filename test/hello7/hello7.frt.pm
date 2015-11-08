@@ -4,7 +4,7 @@
 #          Assignment (lexical variable '$rect')
 #              Call
 #                  Bareword 'Math::Rect'
-#                  Hash [4 items]
+#                  Argument list [4 items]
 #                      Item 0
 #                          Pair 'x'
 #                              Number '5'
@@ -24,7 +24,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Center of ...'
@@ -33,7 +33,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Center dis...'
@@ -44,7 +44,7 @@
 #          Assignment (lexical variable '$otherPt')
 #              Call
 #                  Bareword 'Math::Point'
-#                  Set [2 items]
+#                  Argument list [2 items]
 #                      Item 0
 #                          Number '9'
 #                      Item 1
@@ -60,11 +60,11 @@
 #                                      Lexical variable '$center'
 #                                  Item 1
 #                                      Lexical variable '$otherPt'
-#                          Structural list [0 items]
+#                          Argument list [0 items]
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Midpoint: '
@@ -73,7 +73,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Square roo...'
@@ -81,7 +81,7 @@
 #                          Call
 #                              Property 'sqrt'
 #                                  Bareword 'Math'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Number '4'
 #      Include (Math, Math::Point, Math::Rect)

@@ -4,7 +4,7 @@
 #          Assignment (lexical variable '$sock')
 #              Call
 #                  Bareword 'Socket::TCP'
-#                  Hash [2 items]
+#                  Argument list [2 items]
 #                      Item 0
 #                          Pair 'address'
 #                              String 'k.notroll.net'
@@ -14,7 +14,7 @@
 #      Instruction
 #          Call
 #              Bareword 'inspect'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Lexical variable '$sock'
 #      On
@@ -28,7 +28,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'recv: '
@@ -45,7 +45,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'send: '
@@ -60,14 +60,14 @@
 #                  Call
 #                      Property 'println'
 #                          Lexical variable '$sock'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              String 'NICK k'
 #              Instruction
 #                  Call
 #                      Property 'println'
 #                          Lexical variable '$sock'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'USER k '
@@ -83,7 +83,7 @@
 #          Call
 #              Property 'connect'
 #                  Lexical variable '$sock'
-#              Structural list [0 items]
+#              Argument list [0 items]
 #      On
 #          Expression ('on' parameter)
 #              Property 'expire'
@@ -91,7 +91,7 @@
 #                      Property 'once'
 #                          Call
 #                              Bareword 'Timer'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Number '5'
 #          Anonymous function
@@ -99,7 +99,7 @@
 #                  Call
 #                      Property 'println'
 #                          Lexical variable '$sock'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              String 'JOIN #k'
 #      Include (Socket, Socket::TCP, Timer)

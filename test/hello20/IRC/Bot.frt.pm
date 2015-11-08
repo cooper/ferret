@@ -60,7 +60,7 @@
 #                  Assignment (instance variable '@sock')
 #                      Call
 #                          Bareword 'Socket::TCP'
-#                          Hash [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Pair 'address'
 #                                      Instance variable '@addr'
@@ -75,7 +75,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'USER '
@@ -96,7 +96,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'NICK '
@@ -113,7 +113,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@handleLine'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$data'
 #          Method 'addCommand'
@@ -145,7 +145,7 @@
 #                  Call
 #                      Property 'connect'
 #                          Instance variable '@sock'
-#                      Structural list [0 items]
+#                      Argument list [0 items]
 #          Method 'send'
 #              Instruction
 #                  Need
@@ -153,7 +153,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'send: '
@@ -163,7 +163,7 @@
 #                  Call
 #                      Property 'println'
 #                          Instance variable '@sock'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Lexical variable '$line'
 #          Method 'handleLine'
@@ -175,7 +175,7 @@
 #                      Call
 #                          Property 'split'
 #                              Lexical variable '$line'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  String ' '
 #              Instruction
@@ -204,7 +204,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'recv['
@@ -222,7 +222,7 @@
 #                              Single value [1 items]
 #                                  Item 0
 #                                      Lexical variable '$command'
-#                      Hash [4 items]
+#                      Argument list [4 items]
 #                          Item 0
 #                              Pair '_self'
 #                                  Special variable '*self'
@@ -251,7 +251,7 @@
 #                      Call
 #                          Property 'split'
 #                              Lexical variable '$message'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  String '␤'
 #                  If
@@ -263,7 +263,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'PRIVMSG '
@@ -293,7 +293,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'JOIN '
@@ -306,7 +306,7 @@
 #              Instruction
 #                  Call
 #                      Instance variable '@send'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'PONG '
@@ -327,7 +327,7 @@
 #                  Assignment (lexical variable '$msg')
 #                      Call
 #                          Bareword 'IRC::Message'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  Lexical variable '$line'
 #              Instruction
@@ -346,7 +346,7 @@
 #                                      Item 0
 #                                          Property 'command'
 #                                              Lexical variable '$msg'
-#                          Hash [4 items]
+#                          Argument list [4 items]
 #                              Item 0
 #                                  Pair '_self'
 #                                      Special variable '*self'
@@ -370,7 +370,7 @@
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
-#                      Set [2 items]
+#                      Argument list [2 items]
 #                          Item 0
 #                              Property 'channel'
 #                                  Lexical variable '$msg'
@@ -388,7 +388,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'inspect'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Lexical variable '$msg'
 #              Instruction
@@ -404,7 +404,7 @@
 #                      Call
 #                          Property 'fromWord'
 #                              Lexical variable '$msg'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  Number '2'
 #              Instruction
@@ -416,7 +416,7 @@
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
-#                      Set [2 items]
+#                      Argument list [2 items]
 #                          Item 0
 #                              Property 'channel'
 #                                  Lexical variable '$msg'
@@ -446,7 +446,7 @@
 #              Instruction
 #                  Call
 #                      Instance variable '@privmsg'
-#                      Set [2 items]
+#                      Argument list [2 items]
 #                          Item 0
 #                              Property 'channel'
 #                                  Lexical variable '$msg'

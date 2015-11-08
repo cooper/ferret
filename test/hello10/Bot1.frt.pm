@@ -30,7 +30,7 @@
 #                  Assignment (instance variable '@sock')
 #                      Call
 #                          Bareword 'Socket::TCP'
-#                          Hash [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Pair 'address'
 #                                      Instance variable '@addr'
@@ -45,7 +45,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'USER '
@@ -66,7 +66,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'NICK '
@@ -83,7 +83,7 @@
 #                      Instruction
 #                          Call
 #                              Bareword 'say'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'recv: '
@@ -94,7 +94,7 @@
 #                  Call
 #                      Property 'connect'
 #                          Instance variable '@sock'
-#                      Structural list [0 items]
+#                      Argument list [0 items]
 #          Method 'send'
 #              Instruction
 #                  Need
@@ -102,7 +102,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'send: '
@@ -112,7 +112,7 @@
 #                  Call
 #                      Property 'println'
 #                          Instance variable '@sock'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Lexical variable '$line'
 #      Include (Num, Socket, Socket::TCP, Str)

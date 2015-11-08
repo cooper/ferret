@@ -75,57 +75,57 @@
 #          Assignment (lexical variable '$animal')
 #              Call
 #                  Bareword 'Cow'
-#                  Structural list [0 items]
+#                  Argument list [0 items]
 #      Instruction
 #          Call
 #              Call
 #                  Property 'init'
 #                      Bareword 'Dog'
-#                  Single value [1 items]
+#                  Argument list [1 items]
 #                      Item 0
 #                          Lexical variable '$animal'
-#              Structural list [0 items]
+#              Argument list [0 items]
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Call
 #                          Property 'moo'
 #                              Lexical variable '$animal'
-#                          Structural list [0 items]
+#                          Argument list [0 items]
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Call
 #                          Property 'bark'
 #                              Lexical variable '$animal'
-#                          Structural list [0 items]
+#                          Argument list [0 items]
 #      Instruction
 #          Call
 #              Call
 #                  Property 'init'
 #                      Bareword 'Cat'
-#                  Single value [1 items]
+#                  Argument list [1 items]
 #                      Item 0
 #                          Lexical variable '$animal'
-#              Hash [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Pair 'mean'
 #                          Boolean true
 #      Instruction
 #          Call
 #              Bareword 'inspect'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Lexical variable '$animal'
 #      Instruction
 #          Assignment (lexical variable '$cat')
 #              Call
 #                  Bareword 'Cat'
-#                  Structural list [0 items]
+#                  Argument list [0 items]
 #      Instruction
 #          Assignment (lexical variable '$aftermath')
 #              Call
@@ -135,11 +135,11 @@
 #                              Lexical variable '$animal'
 #                          Item 1
 #                              Lexical variable '$cat'
-#                  Structural list [0 items]
+#                  Argument list [0 items]
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Lexical variable '$aftermath'
 #      Include (Cat, Cow, Dog)

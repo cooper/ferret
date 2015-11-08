@@ -3,7 +3,7 @@
 #      Instruction
 #          Call
 #              Bareword 'helloWorld'
-#              Hash [2 items]
+#              Argument list [2 items]
 #                  Item 0
 #                      Pair 'name2'
 #                          String 'USA'
@@ -13,7 +13,7 @@
 #      Instruction
 #          Call
 #              Bareword 'helloWorld'
-#              Hash [2 items]
+#              Argument list [2 items]
 #                  Item 0
 #                      Pair 'name1'
 #                          String 'Earth'
@@ -23,7 +23,7 @@
 #      Instruction
 #          Call
 #              Bareword 'helloWorld'
-#              Set [2 items]
+#              Argument list [2 items]
 #                  Item 0
 #                      String 'Benjamin'
 #                  Item 1
@@ -38,11 +38,11 @@
 #          Instruction
 #              Call
 #                  Bareword 'hello1'
-#                  Structural list [0 items]
+#                  Argument list [0 items]
 #          Instruction
 #              Call
 #                  Bareword 'hello2'
-#                  Structural list [0 items]
+#                  Argument list [0 items]
 #          Function 'hello1'
 #              Instruction
 #                  Assignment (lexical variable '$hello')
@@ -53,7 +53,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  Lexical variable '$hello'
@@ -66,7 +66,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'Hello '
@@ -83,7 +83,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Pi = '

@@ -4,7 +4,7 @@
 #          Assignment (lexical variable '$bot')
 #              Call
 #                  Bareword 'IRC::Bot'
-#                  Hash [3 items]
+#                  Argument list [3 items]
 #                      Item 0
 #                          Pair 'addr'
 #                              String 'k.notroll.net'
@@ -23,7 +23,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Set [2 items]
+#              Argument list [2 items]
 #                  Item 0
 #                      String 'info'
 #                  Item 1
@@ -35,7 +35,7 @@
 #                              Call
 #                                  Property 'privmsg'
 #                                      Lexical variable '$bot'
-#                                  Set [2 items]
+#                                  Argument list [2 items]
 #                                      Item 0
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
@@ -45,7 +45,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Set [2 items]
+#              Argument list [2 items]
 #                  Item 0
 #                      String 't'
 #                  Item 1
@@ -64,12 +64,12 @@
 #                              Assignment (lexical variable '$c')
 #                                  Call
 #                                      Bareword 'COMPILER'
-#                                      Single value [1 items]
+#                                      Argument list [1 items]
 #                                          Item 0
 #                                              Call
 #                                                  Property 'fromWord'
 #                                                      Lexical variable '$msg'
-#                                                  Single value [1 items]
+#                                                  Argument list [1 items]
 #                                                      Item 0
 #                                                          Number '1'
 #                          Instruction
@@ -77,7 +77,7 @@
 #                                  Call
 #                                      Property 'tokenize'
 #                                          Lexical variable '$c'
-#                                      Hash [1 items]
+#                                      Argument list [1 items]
 #                                          Item 0
 #                                              Pair 'pretty'
 #                                                  Boolean true
@@ -89,7 +89,7 @@
 #                                  Call
 #                                      Property 'privmsg'
 #                                          Lexical variable '$bot'
-#                                      Set [2 items]
+#                                      Argument list [2 items]
 #                                          Item 0
 #                                              Property 'channel'
 #                                                  Lexical variable '$msg'
@@ -102,7 +102,7 @@
 #                              Call
 #                                  Property 'privmsg'
 #                                      Lexical variable '$bot'
-#                                  Set [2 items]
+#                                  Argument list [2 items]
 #                                      Item 0
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
@@ -113,7 +113,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Set [2 items]
+#              Argument list [2 items]
 #                  Item 0
 #                      String 'c'
 #                  Item 1
@@ -132,12 +132,12 @@
 #                              Assignment (lexical variable '$c')
 #                                  Call
 #                                      Bareword 'COMPILER'
-#                                      Single value [1 items]
+#                                      Argument list [1 items]
 #                                          Item 0
 #                                              Call
 #                                                  Property 'fromWord'
 #                                                      Lexical variable '$msg'
-#                                                  Single value [1 items]
+#                                                  Argument list [1 items]
 #                                                      Item 0
 #                                                          Number '1'
 #                          Instruction
@@ -145,7 +145,7 @@
 #                                  Call
 #                                      Property 'construct'
 #                                          Lexical variable '$c'
-#                                      Hash [1 items]
+#                                      Argument list [1 items]
 #                                          Item 0
 #                                              Pair 'pretty'
 #                                                  Boolean true
@@ -157,7 +157,7 @@
 #                                  Call
 #                                      Property 'privmsg'
 #                                          Lexical variable '$bot'
-#                                      Set [2 items]
+#                                      Argument list [2 items]
 #                                          Item 0
 #                                              Property 'channel'
 #                                                  Lexical variable '$msg'
@@ -170,7 +170,7 @@
 #                              Call
 #                                  Property 'privmsg'
 #                                      Lexical variable '$bot'
-#                                  Set [2 items]
+#                                  Argument list [2 items]
 #                                      Item 0
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
@@ -181,7 +181,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Set [2 items]
+#              Argument list [2 items]
 #                  Item 0
 #                      String 'e'
 #                  Item 1
@@ -202,15 +202,15 @@
 #                                      Property 'eval'
 #                                          Call
 #                                              Bareword 'COMPILER'
-#                                              Single value [1 items]
+#                                              Argument list [1 items]
 #                                                  Item 0
 #                                                      Call
 #                                                          Property 'fromWord'
 #                                                              Lexical variable '$msg'
-#                                                          Single value [1 items]
+#                                                          Argument list [1 items]
 #                                                              Item 0
 #                                                                  Number '1'
-#                                      Structural list [0 items]
+#                                      Argument list [0 items]
 #                          If
 #                              Expression ('if' parameter)
 #                                  Property 'error'
@@ -219,7 +219,7 @@
 #                                  Call
 #                                      Property 'privmsg'
 #                                          Lexical variable '$bot'
-#                                      Set [2 items]
+#                                      Argument list [2 items]
 #                                          Item 0
 #                                              Property 'channel'
 #                                                  Lexical variable '$msg'
@@ -233,7 +233,7 @@
 #                                  Property 'string'
 #                                      Call
 #                                          Bareword 'inspect'
-#                                          Hash [2 items]
+#                                          Argument list [2 items]
 #                                              Item 0
 #                                                  Pair 'value'
 #                                                      Property 'result'
@@ -245,7 +245,7 @@
 #                              Call
 #                                  Property 'privmsg'
 #                                      Lexical variable '$bot'
-#                                  Set [2 items]
+#                                  Argument list [2 items]
 #                                      Item 0
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
@@ -255,7 +255,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Set [2 items]
+#              Argument list [2 items]
 #                  Item 0
 #                      String 'p'
 #                  Item 1
@@ -264,7 +264,7 @@
 #          Call
 #              Property 'addCommand'
 #                  Lexical variable '$bot'
-#              Set [2 items]
+#              Argument list [2 items]
 #                  Item 0
 #                      String 'pp'
 #                  Item 1
@@ -284,12 +284,12 @@
 #              Assignment (lexical variable '$c')
 #                  Call
 #                      Bareword 'COMPILER'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Call
 #                                  Property 'fromWord'
 #                                      Lexical variable '$msg'
-#                                  Single value [1 items]
+#                                  Argument list [1 items]
 #                                      Item 0
 #                                          Number '1'
 #          Instruction
@@ -297,7 +297,7 @@
 #                  Call
 #                      Property 'compile'
 #                          Lexical variable '$c'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Equality
 #                                  Property 'command'
@@ -311,7 +311,7 @@
 #                  Call
 #                      Property 'privmsg'
 #                          Lexical variable '$bot'
-#                      Set [2 items]
+#                      Argument list [2 items]
 #                          Item 0
 #                              Property 'channel'
 #                                  Lexical variable '$msg'
@@ -324,7 +324,7 @@
 #              Call
 #                  Property 'privmsg'
 #                      Lexical variable '$bot'
-#                  Set [2 items]
+#                  Argument list [2 items]
 #                      Item 0
 #                          Property 'channel'
 #                              Lexical variable '$msg'
@@ -335,7 +335,7 @@
 #          Call
 #              Property 'connect'
 #                  Lexical variable '$bot'
-#              Structural list [0 items]
+#              Argument list [0 items]
 #      Include (COMPILER, IRC, IRC::Bot)
 use warnings;
 use strict;

@@ -4,10 +4,10 @@
 #          Single value [1 items]
 #              Item 0
 #                  Call
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              String 'Hello World!'
 use warnings;

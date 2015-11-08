@@ -8,10 +8,10 @@
 #              Call
 #                  Property 'init'
 #                      Bareword 'Math::Point'
-#                  Single value [1 items]
+#                  Argument list [1 items]
 #                      Item 0
 #                          Lexical variable '$obj'
-#              Set [2 items]
+#              Argument list [2 items]
 #                  Item 0
 #                      Number '1'
 #                  Item 1
@@ -19,7 +19,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Call
 #                          Property 'pretty'

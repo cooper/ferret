@@ -14,10 +14,12 @@ sub desc {
 
 sub list_type {
     my $list = shift;
-    if ($list->is_collection) {
+    my $is_call = $list->parent->type eq 'Call';
+    if ($list->is_collection && !$is_call) {
         return 'hash'       if $list->is_hash;
         return 'value list' if $list->is_array;
     }
+    return 'argument list'  if $is_call;
     return 'object'         if $list->is_hash;
     return 'set'            if $list->children > 1;
     return 'single value'   if $list->children;

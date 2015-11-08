@@ -31,10 +31,10 @@
 #                      Call
 #                          Property 'init'
 #                              Bareword 'Socket::TCP'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  Special variable '*self'
-#                      Hash [2 items]
+#                      Argument list [2 items]
 #                          Item 0
 #                              Pair 'addr'
 #                                  Instance variable '@address'
@@ -51,7 +51,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'USER '
@@ -72,7 +72,7 @@
 #                      Instruction
 #                          Call
 #                              Instance variable '@send'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'NICK '
@@ -88,7 +88,7 @@
 #                      Instruction
 #                          Call
 #                              Bareword 'say'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'recv: '
@@ -104,7 +104,7 @@
 #                      Instruction
 #                          Call
 #                              Bareword 'say'
-#                              Single value [1 items]
+#                              Argument list [1 items]
 #                                  Item 0
 #                                      Operation
 #                                          String 'send: '

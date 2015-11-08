@@ -9,7 +9,7 @@
 #          Call
 #              Property 'push'
 #                  Lexical variable '$list'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      String 'there'
 #      Instruction
@@ -18,7 +18,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Length: '
@@ -33,7 +33,7 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Single value [1 items]
+#                  Argument list [1 items]
 #                      Item 0
 #                          Operation
 #                              String 'item: '
@@ -54,7 +54,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'whats '
@@ -76,7 +76,7 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Single value [1 items]
+#                  Argument list [1 items]
 #                      Item 0
 #                          Operation
 #                              String 'pair: key='

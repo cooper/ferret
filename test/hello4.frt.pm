@@ -27,7 +27,7 @@
 #              Property 'point'
 #                  Call
 #                      Bareword 'makePoint'
-#                      Set [2 items]
+#                      Argument list [2 items]
 #                          Item 0
 #                              Number '5'
 #                          Item 1
@@ -35,7 +35,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      Operation
 #                          String 'Point('

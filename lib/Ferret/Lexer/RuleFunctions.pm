@@ -151,6 +151,7 @@ sub t_current_must_be_equal {
     # some of them didn't pass.
     my $first = shift @items;
     if (my $bad = first { $c->{$_} ne $c->{$first} } @items) {
+        print "$$c{$first} != $$c{$bad}\n";
         return $set->err(must_be_equal => $first, $bad);
     }
 

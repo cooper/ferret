@@ -5,7 +5,7 @@
 #              Call
 #                  Property 'split'
 #                      String 's p a m'
-#                  Single value [1 items]
+#                  Argument list [1 items]
 #                      Item 0
 #                          String ' '
 #      For
@@ -24,15 +24,15 @@
 #                          Property 'once'
 #                              Call
 #                                  Bareword 'Timer'
-#                                  Single value [1 items]
+#                                  Argument list [1 items]
 #                                      Item 0
 #                                          Lexical variable '$i'
-#                          Structural list [0 items]
+#                          Argument list [0 items]
 #              Anonymous function
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  Operation
 #                                      String '('
@@ -56,7 +56,7 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Single value [1 items]
+#                  Argument list [1 items]
 #                      Item 0
 #                          Lexical variable '$part'
 #      Include (Timer)

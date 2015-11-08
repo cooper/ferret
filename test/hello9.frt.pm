@@ -8,7 +8,7 @@
 #          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Single value [1 items]
+#                  Argument list [1 items]
 #                      Item 0
 #                          Operation
 #                              String 'Hello '
@@ -20,14 +20,14 @@
 #          Call
 #              Maybe
 #                  Bareword 'sayHello'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      String 'World'
 #      Instruction
 #          Call
 #              Maybe
 #                  Bareword 'sayGoodbye'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      String 'World'
 #      Include (Str)

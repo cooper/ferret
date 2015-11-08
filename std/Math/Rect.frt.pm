@@ -23,7 +23,7 @@
 #                  Assignment (instance variable '@origin')
 #                      Call
 #                          Bareword 'Point'
-#                          Set [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Lexical variable '$x'
 #                              Item 1
@@ -49,7 +49,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Point'
-#                          Set [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Operation
 #                                      Property 'x'
@@ -64,7 +64,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Point'
-#                          Set [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Property 'x'
 #                                      Instance variable '@origin'
@@ -79,7 +79,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Point'
-#                          Set [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Operation
 #                                      Property 'x'
@@ -97,7 +97,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Line'
-#                          Set [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Instance variable '@bottomLeft'
 #                              Item 1
@@ -107,7 +107,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Line'
-#                          Set [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Instance variable '@topLeft'
 #                              Item 1
@@ -135,7 +135,7 @@
 #                  Return
 #                      Call
 #                          Bareword 'Point'
-#                          Set [2 items]
+#                          Argument list [2 items]
 #                              Item 0
 #                                  Lexical variable '$x'
 #                              Item 1

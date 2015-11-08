@@ -3,7 +3,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Single value [1 items]
+#              Argument list [1 items]
 #                  Item 0
 #                      String 'test'
 #      Instruction
@@ -17,7 +17,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'found ''
@@ -31,12 +31,12 @@
 #          Call
 #              Property 'length'
 #                  Lexical variable '$str'
-#              Structural list [0 items]
+#              Argument list [0 items]
 #      Instruction
 #          Call
 #              Property 'length'
 #                  String 'hello'
-#              Structural list [0 items]
+#              Argument list [0 items]
 #      On
 #          Expression ('on' parameter)
 #              Property 'length'
@@ -46,7 +46,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Single value [1 items]
+#                      Argument list [1 items]
 #                          Item 0
 #                              Operation
 #                                  String 'found ''
@@ -60,7 +60,7 @@
 #          Call
 #              Property 'length'
 #                  String 'hello'
-#              Structural list [0 items]
+#              Argument list [0 items]
 #      Include (String)
 use warnings;
 use strict;

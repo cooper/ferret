@@ -93,14 +93,14 @@
 #                                      Instance variable '@pt1'
 #                                  Item 1
 #                                      Instance variable '@pt2'
-#                          Structural list [0 items]
+#                          Argument list [0 items]
 #          Computed property 'length'
 #              Instruction
 #                  Return
 #                      Call
 #                          Property 'distanceTo'
 #                              Instance variable '@pt1'
-#                          Single value [1 items]
+#                          Argument list [1 items]
 #                              Item 0
 #                                  Instance variable '@pt2'
 #      Include (Point)
