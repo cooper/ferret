@@ -125,8 +125,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_0 = FF::function_def(
-        $f, $scope,
-        '(undef)',
+        $f, $scope, undef,
         [
             {
                 name     => 'twice',

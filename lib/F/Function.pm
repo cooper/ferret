@@ -58,12 +58,13 @@ sub perl_fmt {
     }
 
     my $info = {
+        anonymous  => $func->{anonymous},
         event_cb   => $func->{event_cb},
         id         => $func->document->{function_cid}++,
         name       => $func->{anonymous} ? '(undef)' : $func->{name},
-        semi       => $func->{anonymous} ? '' : ';', # probably temporary hack
-        is_prop    => $func->{is_prop} ? '1' : 'undef',
-        p_set      => $func->{p_set}   ? '1' : 'undef',
+        semi       => $func->{anonymous} ? ''        : ';', # probably temporary hack
+        is_prop    => $func->{is_prop}   ? '1'       : 'undef',
+        p_set      => $func->{p_set}     ? '1'       : 'undef',
         statements => $content,
         arguments  => join(', ', @arguments)
     };

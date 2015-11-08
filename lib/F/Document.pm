@@ -38,7 +38,11 @@ sub perl_fmt {
 
     # add each function definition.
     $before_c .= "$_\n" foreach map {
-        my $fmt   = $_->{event_cb} ? 'function_def_event' : 'function_def';
+        my $info = $_;
+        my $fmt  = $_->{event_cb} ? 'function_def_event' : 'function_def';
+
+        $info->{name} = $info->{anonymous} ? 'undef' : "'$$info{name}'";
+
         $doc->get_format($fmt => $_);
     } @{ $doc->{function_defs} };
 

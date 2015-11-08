@@ -192,6 +192,7 @@ sub get_class {
 # anonymous function definition.
 sub function_def {
     my ($f, $scope, $name, $arg_ref, $code) = @_;
+    undef $name if !length $name;
 
     # create a default function.
     my $func = Ferret::Function->new($f,
@@ -209,6 +210,7 @@ sub function_def {
 # function definition as event.
 sub function_event_def {
     my ($f, $scope, $name, $arg_ref, $code) = @_;
+    undef $name if !length $name;
 
     # create a default function.
     my $func = Ferret::Function->new($f,
