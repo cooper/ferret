@@ -4,7 +4,7 @@
 #          Assignment (lexical variable '$bot')
 #              Call
 #                  Bareword 'IRC::Bot'
-#                  Argument list [3 items]
+#                  Named argument list [3 items]
 #                      Item 0
 #                          Pair 'addr'
 #                              String 'k.notroll.net'
@@ -77,7 +77,7 @@
 #                                  Call
 #                                      Property 'tokenize'
 #                                          Lexical variable '$c'
-#                                      Argument list [1 items]
+#                                      Named argument list [1 items]
 #                                          Item 0
 #                                              Pair 'pretty'
 #                                                  Boolean true
@@ -145,7 +145,7 @@
 #                                  Call
 #                                      Property 'construct'
 #                                          Lexical variable '$c'
-#                                      Argument list [1 items]
+#                                      Named argument list [1 items]
 #                                          Item 0
 #                                              Pair 'pretty'
 #                                                  Boolean true
@@ -233,7 +233,7 @@
 #                                  Property 'string'
 #                                      Call
 #                                          Bareword 'inspect'
-#                                          Argument list [2 items]
+#                                          Named argument list [2 items]
 #                                              Item 0
 #                                                  Pair 'value'
 #                                                      Property 'result'

@@ -4,7 +4,7 @@
 #          Assignment (lexical variable '$rect')
 #              Call
 #                  Bareword 'Math::Rect'
-#                  Argument list [4 items]
+#                  Named argument list [4 items]
 #                      Item 0
 #                          Pair 'x'
 #                              Number '5'

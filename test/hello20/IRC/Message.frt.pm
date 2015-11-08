@@ -12,7 +12,7 @@
 #                      Call
 #                          Property 'split'
 #                              Instance variable '@line'
-#                          Argument list [2 items]
+#                          Named argument list [2 items]
 #                              Item 0
 #                                  Pair 'separator'
 #                                      String ' '
@@ -36,7 +36,7 @@
 #                                      Single value [1 items]
 #                                          Item 0
 #                                              Number '0'
-#                              Argument list [2 items]
+#                              Named argument list [2 items]
 #                                  Item 0
 #                                      Pair 'separator'
 #                                          String '!'
@@ -131,7 +131,7 @@
 #                          Call
 #                              Property 'split'
 #                                  Instance variable '@message'
-#                              Argument list [2 items]
+#                              Named argument list [2 items]
 #                                  Item 0
 #                                      Pair 'separator'
 #                                          String ' '

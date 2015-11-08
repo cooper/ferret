@@ -14,6 +14,37 @@ use Ferret::Core::Conversion qw(
     perl_description
 );
 
+our %functions = (
+    say => {
+        need => '$message',
+        code => \&_say
+    },
+    dump => {
+        need => '$value',
+        code => \&_dump
+    },
+    inspect => {
+        need => '$value',
+        code => \&_inspect
+    },
+    require => {
+        need => '$test',
+        code => \&_require
+    },
+    all => {
+        need => '$value1 $value2',
+        code => \&_all
+    },
+    any => {
+        need => '$value1 $value2',
+        code => \&_any
+    },
+    delay => {
+        need => '$timeout:Num $callback',
+        code => \&_delay
+    }
+);
+
 sub _say {
     my ($self, $arguments, $call_scope, $scope, $return) = @_;
     say perl_string($arguments->{message});
@@ -57,9 +88,28 @@ sub _all {
 }
 
 sub _require {
-    my ($undef, $arguments) = @_;
+    my (undef, $arguments) = @_;
     return Ferret::true if perl_boolean($arguments->{test});
     die; # FIXME: throw
+}
+
+sub _delay {
+    my (undef, $arguments, $call_scope, $scope, $return) = @_;
+    my ($num, $func) = @$arguments{'timeout', 'callback'};
+
+    # load Timer and create a timer.
+    my $timer_class = Ferret::space($num->f->core_context, 'Timer');
+    my $timer = $timer_class->call({ delay => $num });
+
+    # attach the callback.
+    # the undef is $self, so it will fallback to $_self.
+    FF::on($timer, 'expire', undef, $call_scope, $func);
+
+    # start the timer.
+    $timer->property('once')->call(undef, $call_scope);
+
+    $return->set_property(timer => $timer);
+    return $return;
 }
 
 1

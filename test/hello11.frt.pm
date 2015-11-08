@@ -71,7 +71,7 @@
 #          Assignment (lexical variable '$r')
 #              Call
 #                  Bareword 'say'
-#                  Argument list [2 items]
+#                  Named argument list [2 items]
 #                      Item 0
 #                          Pair 'message'
 #                              String 'It was said'

@@ -111,7 +111,7 @@
 #                  Argument list [1 items]
 #                      Item 0
 #                          Lexical variable '$animal'
-#              Argument list [1 items]
+#              Named argument list [1 items]
 #                  Item 0
 #                      Pair 'mean'
 #                          Boolean true

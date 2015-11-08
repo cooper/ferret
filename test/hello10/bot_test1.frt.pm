@@ -4,7 +4,7 @@
 #          Assignment (lexical variable '$bot')
 #              Call
 #                  Bareword 'Bot1'
-#                  Argument list [3 items]
+#                  Named argument list [3 items]
 #                      Item 0
 #                          Pair 'addr'
 #                              String 'k.notroll.net'

@@ -30,7 +30,7 @@
 #                  Assignment (instance variable '@sock')
 #                      Call
 #                          Bareword 'Socket::TCP'
-#                          Argument list [2 items]
+#                          Named argument list [2 items]
 #                              Item 0
 #                                  Pair 'address'
 #                                      Instance variable '@addr'

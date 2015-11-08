@@ -34,7 +34,7 @@
 #                          Argument list [1 items]
 #                              Item 0
 #                                  Special variable '*self'
-#                      Argument list [2 items]
+#                      Named argument list [2 items]
 #                          Item 0
 #                              Pair 'addr'
 #                                  Instance variable '@address'

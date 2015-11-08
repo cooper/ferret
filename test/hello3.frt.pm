@@ -3,7 +3,7 @@
 #      Instruction
 #          Call
 #              Bareword 'helloWorld'
-#              Argument list [2 items]
+#              Named argument list [2 items]
 #                  Item 0
 #                      Pair 'name2'
 #                          String 'USA'
@@ -13,7 +13,7 @@
 #      Instruction
 #          Call
 #              Bareword 'helloWorld'
-#              Argument list [2 items]
+#              Named argument list [2 items]
 #                  Item 0
 #                      Pair 'name1'
 #                          String 'Earth'

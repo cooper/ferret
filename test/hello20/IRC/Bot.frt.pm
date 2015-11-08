@@ -60,7 +60,7 @@
 #                  Assignment (instance variable '@sock')
 #                      Call
 #                          Bareword 'Socket::TCP'
-#                          Argument list [2 items]
+#                          Named argument list [2 items]
 #                              Item 0
 #                                  Pair 'address'
 #                                      Instance variable '@addr'
@@ -222,7 +222,7 @@
 #                              Single value [1 items]
 #                                  Item 0
 #                                      Lexical variable '$command'
-#                      Argument list [4 items]
+#                      Named argument list [4 items]
 #                          Item 0
 #                              Pair '_self'
 #                                  Special variable '*self'
@@ -346,7 +346,7 @@
 #                                      Item 0
 #                                          Property 'command'
 #                                              Lexical variable '$msg'
-#                          Argument list [4 items]
+#                          Named argument list [4 items]
 #                              Item 0
 #                                  Pair '_self'
 #                                      Special variable '*self'

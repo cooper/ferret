@@ -4,7 +4,7 @@
 #          Assignment (lexical variable '$sock')
 #              Call
 #                  Bareword 'Socket::TCP'
-#                  Argument list [2 items]
+#                  Named argument list [2 items]
 #                      Item 0
 #                          Pair 'address'
 #                              String 'k.notroll.net'

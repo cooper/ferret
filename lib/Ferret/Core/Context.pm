@@ -9,15 +9,6 @@ use parent 'Ferret::Context';
 
 use Ferret::Core::Conversion qw(ferret_list);
 
-my %functions = (
-    say     => [ '_say',     qw(message)   ],
-    dump    => [ '_dump',    qw(value)     ],
-    inspect => [ '_inspect', qw(value)     ],
-    require => [ '_require', qw(test)      ],
-    any     => [ '_any', qw(value1 value2) ],    # FIXME: values...
-    all     => [ '_all', qw(value1 value2) ],
-);
-
 # creates a new context.
 sub new {
     my ($class, $f, %opts) = @_;
@@ -38,20 +29,21 @@ sub add_global_functions {
     my $f = $context->f;
 
     # add global functions.
-    foreach my $name (keys %functions) {
-        my ($code, @args) = @{ $functions{$name} };
-        $code = Ferret::Core::Functions->can($code) or next;
+    my %funcs = %Ferret::Core::Functions::functions;
+    foreach my $name (keys %funcs) {
+        my %opts = %{ $funcs{$name} };
 
         # create function with proper requirements.
         my $func = Ferret::Function->new($f,
             name => 'default',
-            code => $code
+            code => $opts{code},
+            need => $opts{need},
+            want => $opts{want}
         );
-        $func->add_argument(name => $_) foreach @args;
 
         # create and bind an event for the function.
         my $event = Ferret::Event->new($f,
-            name         => $name,
+            name => $name,
             default_func => [ undef, $func ]
         );
 

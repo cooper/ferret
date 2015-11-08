@@ -210,9 +210,10 @@ sub c_CLOSURE_S {
     # if it's a call, the closure is a function being passed.
     if ($closure->type eq 'Call') {
         my $call = $closure;
+        $call->{call_capturing_closure} = 1;
 
         # create a function.
-        my $func = F::Function->new(anonymous => 1);
+        my $func = F::Function->new(anonymous => 1, call_closure => 1);
         $c->{node} = $c->{function} = $func;
 
         # make it an argument to the call.
@@ -251,8 +252,15 @@ sub c_CLOSURE_E {
     #   The current 'node' must be equal to the current 'closure'.
 
     # close the closure and the node.
-    $c->{closure} = delete $c->{closure}{parent_closure};
+    my $closure = $c->{closure};
+    $c->{closure} = delete $closure->{parent_closure};
     $c->{node} = $c->{node}->close;
+
+    # this is a closure-capturing function call. terminate the call.
+    my $upper_call = $c->{node}->first_self_or_parent('Call');
+    if ($closure->{call_closure} && $upper_call->{call_capturing_closure}) {
+        $c->{node} = $c->{node}->close until $c->{node} == $upper_call->parent;
+    }
 
     return;
 }
