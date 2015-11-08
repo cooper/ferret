@@ -37,17 +37,21 @@ sub construct {
     return $error;
 }
 
+sub check_error {
+    my $err = $error;
+    undef $error;
+    return $err;
+}
+
 sub handle_label {
     my ($label, $value, $line) = @_;
     my $redo = sub { handle_label($label, $value, $line) };
     my $last_element = ($current->{node}->children)[-1] || $current->{node};
     $line //= 0;
+    my $err;
 
     # check for error.
-    if (my $err = $error) {
-        undef $error;
-        return $err;
-    }
+    return $err if $err = check_error();
 
     # current info.
     @$current{ qw(label value line next_tok last_element) } = (
@@ -63,32 +67,40 @@ sub handle_label {
 
     # check token rules.
     Ferret::Lexer::RuleFunctions::token_check($label, $current, $value);
-    return $error if $error;
+    return $err if $err = check_error();
 
     # call the handler for all.
     c_any($label, $current, $value);
 
+    # redo.
     return $redo->() if delete $current->{redo};
 
     # call a handler if one exists.
     if (my $code = __PACKAGE__->can("c_$label")) {
         my $el = $code->($current, $value);
-        if (my $err = $error) {
-            undef $error;
-            return $err;
-        }
+
+        # check error.
+        return $err if $err = check_error();
         if (blessed $el) {
             return $el if $el->isa('F::Error');
             push @{ $current->{elements} }, $el;
         }
+
+        # redo.
         return $redo->() if delete $current->{redo};
+
+        # all is good.
         return;
+
     }
 
-    # otherwise, throw in an unknown element.
+    # nothing to handle it. throw in an unknown element.
     $current->{node}->adopt($current->{unknown_el});
 
-    return $error;
+    # final error check.
+    return $err if $err = check_error();
+
+    return;
 }
 
 sub c_PKG_DEC {

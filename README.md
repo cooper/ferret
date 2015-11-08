@@ -5,8 +5,8 @@ Ferret is a hobby programming language.
 ### Compiled
 
 Ferret currently compiles exclusively to Perl, a high-level language. It might
-therefore be considered a very-high-level language (VHLL). In other words, it
-probably has a lot of useless overhead.
+therefore be classified as a very-high-level language (VHLL). In other words,
+Ferret has many features at the cost of considerable overhead.
 
 ```
 say("Hello World!");
@@ -21,7 +21,7 @@ $scope->property_u('say')->call_u( [ str( $f, "Hello World!" ) ], $scope );
 While Ferret is a compiled language, its compiler and
 runtime are both written in an interpreted language. Therefore, it offers some
 features of interpreted languages such as compilation and evaluation during
-runtime.
+runtime
 
 ```
 $code = "sqrt(4)";
