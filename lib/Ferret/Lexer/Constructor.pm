@@ -5,25 +5,23 @@ use warnings;
 use strict;
 use 5.010;
 
-use Ferret::Lexer::Rules;
 use Scalar::Util qw(blessed);
+
+use Ferret::Lexer::Current;
+use Ferret::Lexer::Rules;
 
 our ($current, $error);
 
 sub construct {
     my $main_node = shift;
-    $current = {
+
+    $current = Ferret::Lexer::Current->new(
         main_node => $main_node,
         file      => $main_node->{name} || 'unknown',
         node      => $main_node,
         elements  => [],
         upcoming  => \@_
-        # package
-        # class
-        # clos_cap      something that intends tp capture an upcoming closure
-        # closure       the node capturing a closure currently
-        # list          the innermost list
-    };
+    );
 
     while (my ($label, $value, $line) = @{ shift || [] }) {
         my $e = handle_label($label, $value, $line);
@@ -46,7 +44,7 @@ sub check_error {
 sub handle_label {
     my ($label, $value, $line) = @_;
     my $redo = sub { handle_label($label, $value, $line) };
-    my $last_element = ($current->{node}->children)[-1] || $current->{node};
+    my $last_element = ($current->node->children)[-1] || $current->node;
     $line //= 0;
     my $err;
 
@@ -95,7 +93,7 @@ sub handle_label {
     }
 
     # nothing to handle it. throw in an unknown element.
-    $current->{node}->adopt($current->{unknown_el});
+    $current->node->adopt($current->{unknown_el});
 
     # final error check.
     return $err if $err = check_error();
@@ -117,7 +115,7 @@ sub c_PKG_DEC {
     # Rule Package[0]:
     #   Must be a direct child of a Document.
 
-    $c->{node}->adopt($pkg);
+    $c->node->adopt($pkg);
     return $pkg;
 }
 
@@ -125,7 +123,7 @@ sub c_CLASS_DEC {
     my ($c, $value) = @_;
 
     # terminate current class.
-    $c->{node} = $c->{node}->close if $c->{node}->type eq 'Class';
+    $c->close_node_maybe('Class');
     $c->{end_cap} = $c->{end_cap}{parent_end_cap} if $c->{end_cap};
 
     # create class.
@@ -141,7 +139,7 @@ sub c_CLASS_DEC {
 
     # set as current node.
     # will be terminated by another class declaration, 'end', or end of file.
-    $c->{node} = $c->{node}->adopt($class);
+    $c->adopt_and_set_node($class);
 
     # Rule Class[1]:
     #   Direct children must be of type Method.
@@ -178,7 +176,7 @@ sub c_KEYWORD_END {
 
     # close it.
     $c->{end_cap} = $c->{end_cap}{parent_end_cap};
-    $c->{node} = $c->{node}->close;
+    $c->close_node;
 
     return;
 }
@@ -190,9 +188,9 @@ sub c_METHOD {
     #   Must be a direct child of a Class.
 
     my $method = F::Method->new(%$value, event_cb => 1);
-    $c->{node}->adopt($method);
+    $c->adopt_and_set_node($method);
     $method->{parent_clos_cap} = $c->{clos_cap};
-    @$c{ qw(node clos_cap method) } = ($method) x 3;
+    @$c{ qw(clos_cap method) } = ($method) x 2;
     return $method;
 }
 
@@ -203,9 +201,9 @@ sub c_FUNCTION {
         event_cb => !$value->{anonymous}
         # anonymous functions are not implemented as events
     );
-    $c->{node}->adopt($function);
+    $c->adopt_and_set_node($function);
     $function->{parent_clos_cap} = $c->{clos_cap};
-    @$c{ qw(node clos_cap function) } = ($function) x 3;
+    @$c{ qw(clos_cap function) } = ($function) x 2;
     return $function;
 }
 
@@ -226,7 +224,8 @@ sub c_CLOSURE_S {
 
         # create a function.
         my $func = F::Function->new(anonymous => 1, call_closure => 1);
-        $c->{node} = $c->{function} = $func;
+        $c->{function} = $func;
+        $c->set_node($func);
 
         # make it an argument to the call.
         $call->arg_list->new_item->adopt($func);
@@ -235,14 +234,12 @@ sub c_CLOSURE_S {
     }
 
     # a closure can terminate an equality.
-    if ($c->{node}->type eq 'Equality') {
-        $c->{node} = $c->{node}->close;
-    }
+    $c->close_node_maybe('Equality');
 
     # a closure can terminate a generated expression.
     # for instance, inside $something {}. the expression $something ends there.
-    if ($c->{node}{generated_expression}) {
-        $c->{node} = $c->{node}->close;
+    if ($c->node->{generated_expression}) {
+        $c->close_node;
     }
 
     # remember which closure this is inside; if any.
@@ -266,12 +263,12 @@ sub c_CLOSURE_E {
     # close the closure and the node.
     my $closure = $c->{closure};
     $c->{closure} = delete $closure->{parent_closure};
-    $c->{node} = $c->{node}->close;
+    $c->close_node;
 
     # this is a closure-capturing function call. terminate the call.
-    my $upper_call = $c->{node}->first_self_or_parent('Call');
+    my $upper_call = $c->node->first_self_or_parent('Call');
     if ($closure->{call_closure} && $upper_call->{call_capturing_closure}) {
-        $c->{node} = $c->{node}->close until $c->{node} == $upper_call->parent;
+        $c->close_node_until($upper_call->parent);
     }
 
     return;
@@ -283,10 +280,11 @@ sub c_KEYWORD_INSIDE {
     # create a closure to be opened soon.
     my $inside = F::Inside->new(type => 'Inside');
     $inside->{parent_clos_cap} = $c->{clos_cap};
-    $c->{clos_cap} = $c->{node}->adopt($inside);
+    $c->{clos_cap} = $inside;
+    $c->node->adopt($inside);
 
     # set the current node to the inside expression.
-    $c->{node} = $inside->param_exp;
+    $c->set_node($inside->param_exp);
 
     return $inside;
 }
@@ -300,10 +298,10 @@ sub c_KEYWORD_ON {
     # set the closure to the function of on.
     $on->function->{parent_clos_cap} = $c->{clos_cap};
     $c->{clos_cap} = $on->function;
-    $c->{node}->adopt($on);
+    $c->node->adopt($on);
 
     # set the current node to the on expression.
-    $c->{node} = $on->param_exp;
+    $c->set_node($on->param_exp);
 
     return $on;
 }
@@ -313,22 +311,25 @@ sub c_KEYWORD_IF {
 
     # create an if statement which expects a closure to be opened soon.
     my $if = F::If->new(type => 'If');
-    $c->{node}->adopt($if);
+    $c->node->adopt($if);
     $if->{parent_clos_cap} = $c->{clos_cap};
     $c->{clos_cap} = $if;
 
     # set the current node to the conditional expression.
-    $c->{node} = $if->param_exp;
+    $c->set_node($if->param_exp);
 
     return $if;
 }
 
 sub c_KEYWORD_THEN {
     my ($c, $value) = @_;
+
     my $then = F::Node->new(type => 'Then');
-    $c->{node}->adopt($then);
+    $c->adopt_and_set_node($then);
+
     $then->{parent_clos_cap} = $c->{clos_cap};
-    @$c{ qw(node clos_cap) } = ($then) x 2;
+    $c->{clos_cap} = $then;
+
     return $then;
 }
 
@@ -337,12 +338,13 @@ sub c_KEYWORD_FOR {
 
     # create a closure to be opened soon.
     my $for = F::For->new(type => 'For');
-    $c->{node}->adopt($for);
+    $c->node->adopt($for);
+
     $for->{parent_clos_cap} = $c->{clos_cap};
     $c->{clos_cap} = $for;
 
     # set the node to the for parameter.
-    $c->{node} = $for->param_exp;
+    $c->set_node($for->param_exp);
 
     return $for;
 }
@@ -352,11 +354,12 @@ sub c_KEYWORD_IN {
 
     # 'in' must terminate a generated expression for 'for'.
     return unexpected($c, "(where is 'for'?)") unless
-        $c->{node}{parameter_for} && $c->{node}{parameter_for} eq 'for';
+        $c->node->{parameter_for} && $c->node->{parameter_for} eq 'for';
         # FIXME: if wrapped in parentheses, this will fail.
 
     # set the node to the 'in' parameter.
-    return $c->{node} = $c->{node}->close->in_param_exp;
+    my $for = $c->close_node;
+    return $c->set_node($for->in_param_exp);
 
 }
 
@@ -407,7 +410,7 @@ sub handle_call {
     }
 
     # create a function call, adopting the last element.
-    my $call = $c->{node}->adopt($package->new);
+    my $call = $c->node->adopt($package->new);
     $call->adopt($last_el);
 
     # handle the list, then adopt it.
@@ -434,8 +437,9 @@ sub start_list {
     $list->{no_instructions} = 1;
 
     # set the current list and the current node to the list's first item.
-    $c->{list} = $c->{node}->adopt($list);
-    $c->{node} = $list->new_item;
+    $c->{list} = $list;
+    $c->node->adopt($list);
+    $c->set_node($list->new_item);
 
     return $list;
 }
@@ -460,15 +464,15 @@ sub c_PAREN_E {
     #       the current node becomes
     #       the current node (list item)'s parent (list)'s parent
     #
-    return unexpected($c) if $c->{node}->parent != $c->{list};
-    $c->{node} = $c->{node}->close->close;
+    return unexpected($c) if $c->node->parent != $c->{list};
+    $c->close_node(2);
 
     # function call.
     #
     #       as a special case, close function calls here as well, since they are
     #       terminated by the end of their argument list.
     #
-    $c->{node} = $c->{node}->close if $c->{node}->type eq 'Call';
+    $c->close_node_maybe('Call');
 
     # finally, the current list becomes the next list up in the tree.
     $c->{list} = $c->{list}{parent_list};
@@ -496,15 +500,15 @@ sub c_BRACKET_E {
     #       the current node becomes
     #       the current node (list item)'s parent (list)'s parent
     #
-    return unexpected($c) if $c->{node}->parent != $c->{list};
-    $c->{node} = $c->{node}->close->close;
+    return unexpected($c) if $c->node->parent != $c->{list};
+    $c->close_node(2);
 
     # index.
     #
     #       as a special case, close indices here as well, since they are
     #       terminated by the end of their argument list.
     #
-    $c->{node} = $c->{node}->close if $c->{node}->type eq 'Index';
+    $c->close_node_maybe('Index');
 
     # finally, the current list becomes the next list up in the tree.
     $c->{list} = $c->{list}{parent_list};
@@ -521,11 +525,13 @@ sub c_STRING {
         # FIXME: probably force string context of variables here
         return handle_label(@{ $parts[0] }) if ref $parts[0];
         my $string = F::String->new(value => $parts[0]);
-        return $c->{node}->adopt($string);
+        return $c->node->adopt($string);
     }
 
     # more than one part. contains variables.
-    my $op = $c->{node} = $c->{node}->adopt(F::Operation->new);
+    my $op = F::Operation->new;
+    $c->adopt_and_set_node($op);
+
     while (my $part = shift @parts) {
         my $is_prop = ref $part && $part->[0] eq 'PROPERTY';
 
@@ -545,7 +551,7 @@ sub c_STRING {
         }
 
     }
-    $c->{node} = $op->close;
+    $c->close_node;
 
     return $op;
 }
@@ -557,7 +563,7 @@ sub c_NUMBER {
     my $num = F::Number->new(value => $value);
 
     # add to the current node.
-    $c->{node}->adopt($num);
+    $c->node->adopt($num);
 
     return $num;
 }
@@ -569,7 +575,7 @@ sub c_KEYWORD_UNDEFINED {
     my $b = F::Boolean->new(value => undef);
 
     # add to the current node.
-    $c->{node}->adopt($b);
+    $c->node->adopt($b);
 
     return $b;
 }
@@ -581,7 +587,7 @@ sub c_KEYWORD_TRUE {
     my $b = F::Boolean->new(value => 1);
 
     # add to the current node.
-    $c->{node}->adopt($b);
+    $c->node->adopt($b);
 
     return $b;
 }
@@ -593,7 +599,7 @@ sub c_KEYWORD_FALSE {
     my $b = F::Boolean->new(value => 0);
 
     # add to the current node.
-    $c->{node}->adopt($b);
+    $c->node->adopt($b);
 
     return $b;
 }
@@ -605,14 +611,14 @@ sub c_OP_COMMA {
     if ($c->{list}) {
 
         # set the current node to a new list item.
-        $c->{node} = $c->{list}->new_item;
+        $c->set_node($c->{list}->new_item);
 
-        return $c->{node};
+        return $c->node;
     }
 
     # we're in a want/need. this starts another.
-    if ($c->{node}->type eq 'WantNeed') {
-        my $old_wn = $c->{node};
+    if ($c->node->type eq 'WantNeed') {
+        my $old_wn = $c->node;
 
         # fake a semicolon to terminate the instruction
         # wrapping the previous WantNeed.
@@ -626,9 +632,9 @@ sub c_OP_COMMA {
         my $instr = F::Instruction->new;
         $instr->{parent_instruction} = $c->{instruction};
         $c->{instruction} = $instr;
-        $c->{node} = $c->{node}->adopt($instr);
+        $c->adopt_and_set_node($instr);
 
-        return $c->{node} = $instr->adopt($wn);
+        return $c->adopt_and_set_node($wn);
     }
 
     return unexpected($c, 'outside of list') if !$c->{list};
@@ -649,7 +655,7 @@ sub c_BAREWORD {
 
     # otherwise, create a new bareword.
     my $word = F::Bareword->new(bareword_value => $value);
-    $c->{node}->adopt($word);
+    $c->node->adopt($word);
 
     # not yet in function call at this point.
     return $word;
@@ -668,18 +674,18 @@ sub c_OP_SEMI {
     ));
 
     # at this point, the instruction must be the current node.
-    if ($c->{node} != $c->{instruction}) {
-        my $type = $c->{node}->desc;
+    if ($c->node != $c->{instruction}) {
+        my $type = $c->node->desc;
         return unexpected($c, "inside $type");
     }
 
     # close the instruction.
-    $c->{node} = $c->{node}->close;
+    $c->close_node;
     $c->{instruction} = $c->{instruction}{parent_instruction};
 
     # maybe now we can terminate an inline If.
-    $c->{node} = $c->{node}->close
-        if $c->{node}->type eq 'If' && $c->{node}{inline};
+    $c->close_node
+        if $c->node->type eq 'If' && $c->node->{inline};
 
     return;
 }
@@ -687,7 +693,7 @@ sub c_OP_SEMI {
 sub c_VAR_LEX {
     my ($c, $value) = @_;
     my $var = F::LexicalVariable->new(var_name => $value);
-    return $c->{node}->adopt($var);
+    return $c->node->adopt($var);
 }
 
 sub c_VAR_THIS {
@@ -697,19 +703,19 @@ sub c_VAR_THIS {
     #   Must be somewhere inside a Class.
 
     my $var = F::InstanceVariable->new(var_name => $value);
-    return $c->{node}->adopt($var);
+    return $c->node->adopt($var);
 }
 
 sub c_VAR_SPEC {
     my ($c, $value) = @_;
     my $var = F::SpecialVariable->new(var_name => $value);
-    return $c->{node}->adopt($var);
+    return $c->node->adopt($var);
 }
 
 sub c_VAR_SET {
     my ($c, $value) = @_;
     my $var = F::SetTypeVariable->new(var_name => $value);
-    return $c->{node}->adopt($var);
+    return $c->node->adopt($var);
 }
 
 sub c_KEYWORD_WANT {
@@ -745,8 +751,8 @@ sub c_KEYWORD_WANT {
     # Manually implemented rules:
     #   See F/WantNeed.pm for more rules which are implemented in ->adopt().
 
-    my $want = F::WantNeed->new(arg_type => 'want');
-    return $c->{node} = $c->{want} = $c->{node}->adopt($want);
+    my $want = $c->{want} = F::WantNeed->new(arg_type => 'want');
+    return $c->adopt_and_set_node($want);
 }
 
 sub c_KEYWORD_NEED {
@@ -754,8 +760,8 @@ sub c_KEYWORD_NEED {
 
     # same rules as in c_KEYWORD_WANT above.
 
-    my $need = F::WantNeed->new(arg_type => 'need');
-    return $c->{node} = $c->{need} = $c->{node}->adopt($need);
+    my $need = $c->{need} = F::WantNeed->new(arg_type => 'need');
+    return $c->adopt_and_set_node($need);
 }
 
 sub c_OP_VALUE {
@@ -765,14 +771,14 @@ sub c_OP_VALUE {
     close_nodes($c, qw(Negation Equality));
 
     # perhaps this is an inline if?
-    if (($c->{node}{parameter_for} || '') eq 'if') {
-        my $if = $c->{node} = $c->{node}->close;
+    if (($c->node->{parameter_for} || '') eq 'if') {
+        my $if = $c->close_node;
         $if->{inline} = 1;
         return $if;
     }
 
     # otherwise just throw the token back in.
-    $current->{node}->adopt($current->{unknown_el});
+    $c->node->adopt($c->{unknown_el});
 
 }
 
@@ -787,7 +793,7 @@ sub c_PROP_VALUE {
 
     # create a new node which is a pair.
     my $pair = F::Pair->new(key => $value);
-    $c->{node} = $c->{node}->adopt($pair);
+    $c->adopt_and_set_node($pair);
 
     return $pair;
 }
@@ -802,7 +808,7 @@ sub c_PROPERTY {
         'at left of '.Ferret::Lexer::pretty_token($c->{label})
     ) unless $last_el->is_type('Expression');
 
-    $c->{node}->adopt($prop);
+    $c->node->adopt($prop);
     $prop->adopt($last_el);
 
     return $prop;
@@ -812,8 +818,8 @@ sub c_OP_ASSIGN {
     my ($c, $value) = @_;
 
     # if we're in a WantNeed, it's not a real assignment.
-    if ($c->{node}->type eq 'WantNeed') {
-        return $c->{node}->adopt($c->{unknown_el});
+    if ($c->node->type eq 'WantNeed') {
+        return $c->node->adopt($c->{unknown_el});
     }
 
     my $last_el = $c->{last_element};
@@ -823,7 +829,8 @@ sub c_OP_ASSIGN {
     ) unless $last_el->is_type('Assignable');
 
     # remember the last element as the left side of the assignment.
-    my $a = $c->{node} = $c->{node}->adopt(F::Assignment->new);
+    my $a = F::Assignment->new;
+    $c->adopt_and_set_node($a);
     $a->{left_side} = $last_el;
     $last_el->parent->abandon($last_el);
 
@@ -851,12 +858,11 @@ sub handle_equality {
     ) unless $last_el->is_type('Expression');
 
     # adopt the last element as the left side of the equality.
-    my $equality = $c->{node} = $c->{node}->adopt(
-        F::Equality->new(
-            negated      => $negated,
-            obj_equality => $obj_equality
-        )
+    my $equality = F::Equality->new(
+        negated      => $negated,
+        obj_equality => $obj_equality
     );
+    $c->adopt_and_set_node($equality);
     $equality->adopt($last_el);
 
     return $equality;
@@ -883,13 +889,14 @@ sub c_math_operator {
 
     # if the current node is an operation, just add another thing.
     my $operator = F::Operator->new(token => $c->{label});
-    if ($c->{node}->type eq 'Operation') {
-        $c->{node}->adopt($operator);
+    if ($c->node->type eq 'Operation') {
+        $c->node->adopt($operator);
         return $operator;
     }
 
     # adopt the last element as the left side of the operation.
-    my $op = $c->{node} = $c->{node}->adopt(F::Operation->new);
+    my $op = F::Operation->new;
+    $c->adopt_and_set_node($op);
     $op->adopt($last_el) if $last_el;
     $op->adopt($operator);
 
@@ -911,7 +918,7 @@ sub c_OP_RETURN {
 
     # create a return pair with the proper key.
     my $pair = F::ReturnPair->new(key => $word->{bareword_value});
-    $c->{node} = $c->{node}->adopt($pair);
+    $c->adopt_and_set_node($pair);
 
     return $pair;
 }
@@ -919,7 +926,7 @@ sub c_OP_RETURN {
 sub c_KEYWORD_RETURN {
     my ($c, $value) = @_;
     my $ret = F::Return->new;
-    return $c->{node} = $c->{node}->adopt($ret);
+    return $c->adopt_and_set_node($ret);
 }
 
 sub c_OP_PACK {
@@ -956,7 +963,7 @@ sub c_OP_MAYBE {
     }
 
     # create a maybe, adopting the last element.
-    my $maybe = $c->{node}->adopt(F::Maybe->new);
+    my $maybe = $c->node->adopt(F::Maybe->new);
     $maybe->adopt($last_el);
 
     # add the maybe to the instruction.
@@ -968,7 +975,7 @@ sub c_OP_MAYBE {
 sub c_OP_NOT {
     my ($c, $value) = @_;
     my $not = F::Negation->new;
-    $c->{node} = $c->{node}->adopt($not);
+    $c->adopt_and_set_node($not);
 }
 
 sub start_modifier {
@@ -996,8 +1003,7 @@ sub start_modifier {
     #   Number of direct children must not exceed one (1).
 
     my $mod = F::PropertyModifier->new(mod_type => $type);
-    $c->{node} = $c->{node}->adopt($mod);
-    return $mod;
+    return $c->adopt_and_set_node($mod);
 }
 
 sub c_KEYWORD_DELETE {
@@ -1018,13 +1024,13 @@ sub c_any {
     ### START AN INSTRUCTION ###
 
     # can the current node hold instructions?
-    return unless $c->{node}->hold_instr;
+    return unless $c->node->hold_instr;
 
     # if the current node does not directly allow instructions,
     # do not start an instruction here. for example, the
     # expression representing the condition of an if block
     # does not allow instructions.
-    return if $c->{node}{no_instructions};
+    return if $c->node->{no_instructions};
 
     # these things cannot start an instruction.
     # (tokens only) (this is horrendous)
@@ -1038,8 +1044,11 @@ sub c_any {
     foreach (@ignore) { return if $label =~ $_ }
 
     my $instruction = F::Instruction->new;
+
     $instruction->{parent_instruction} = $c->{instruction};
-    @$c{ qw(node instruction) } = ($c->{node}->adopt($instruction)) x 2;
+    $c->{instruction} = $instruction;
+
+    $c->adopt_and_set_node($instruction);
 }
 
 sub c_spaces {
@@ -1053,19 +1062,19 @@ sub c_eof {
     my ($c, $main_node) = @_;
 
     # end of file can terminate a class.
-    $c->{node} = $c->{node}->close if $c->{node}->type eq 'Class';
+    $c->close_node_maybe('Class');
 
     # when all is said and done, the current node should be the main node.
-    if ($current->{node} != $main_node) {
-        my $node = $current->{node};
+    if ($c->node != $main_node) {
+        my $node = $c->node;
         my $desc = $node->desc;
 
         # if the node started on a different line than current,
         # mention where it started.
-        my $started = $node->{create_line} == $current->{line} ?
+        my $started = $node->{create_line} == $c->{line} ?
             '' : " (which started on line $$node{create_line})";
 
-        return expected($current,
+        return expected($c,
             "termination of $desc$started",
             'before reaching end of file'
         );
@@ -1149,8 +1158,8 @@ sub close_nodes {
     my ($c, @nodes) = @_;
     my $count = 0;
     foreach (sort_precedence(@nodes)) {
-        next unless $_ eq $c->{node}->type;
-        $c->{node} = $c->{node}->close;
+        next unless $_ eq $c->node->type;
+        $c->close_node;
         $count++;
     }
     return $count;
@@ -1174,7 +1183,7 @@ sub fatal {
     $err .= "\n     File    -> $$c{file}";
     $err .= "\n     Line    -> $$c{line}";
     $err .= "\n     Near    -> $near";
-    $err .= "\n     Parent  -> ".$c->{node}->desc if $c->{node};
+    $err .= "\n     Parent  -> ".$c->node->desc if $c->node;
     $err .= "\n\nException raised by $caller[0] line $caller[2].";
     return Ferret::Lexer::fatal($err);
 }
@@ -1197,8 +1206,8 @@ sub unexpected {
 
     # if we're processing element rules, use the actual element if possible.
     # otherwise, use the pretty representation of the token.
-    my $what = $current->{rule_el} ?
-        $current->{rule_el}->desc  :
+    my $what = $c->{rule_el} ?
+        $c->{rule_el}->desc  :
         Ferret::Lexer::pretty_token($c->{label});
 
     fatal($c, "Unexpected $what$reason.$err_desc");
