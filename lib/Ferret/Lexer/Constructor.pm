@@ -188,22 +188,25 @@ sub c_METHOD {
     #   Must be a direct child of a Class.
 
     my $method = F::Method->new(%$value, event_cb => 1);
+
     $c->adopt_and_set_node($method);
-    $method->{parent_clos_cap} = $c->{clos_cap};
-    @$c{ qw(clos_cap method) } = ($method) x 2;
+    $c->capture_closure_with($method);
+
     return $method;
 }
 
 sub c_FUNCTION {
     my ($c, $value) = @_;
+
     my $function = F::Function->new(
         %$value,
         event_cb => !$value->{anonymous}
         # anonymous functions are not implemented as events
     );
+
     $c->adopt_and_set_node($function);
-    $function->{parent_clos_cap} = $c->{clos_cap};
-    @$c{ qw(clos_cap function) } = ($function) x 2;
+    $c->capture_closure_with($function);
+
     return $function;
 }
 
@@ -214,8 +217,7 @@ sub c_CLOSURE_S {
     # Rule CLOSURE_S[0]:
     #   The current 'clos_cap' must exist.
 
-    my $closure = delete $c->{clos_cap};
-    $c->{clos_cap} = delete $closure->{parent_clos_cap};
+    my $closure = $c->get_closure;
 
     # if it's a call, the closure is a function being passed.
     if ($closure->type eq 'Call') {
@@ -244,8 +246,7 @@ sub c_CLOSURE_S {
 
     # remember which closure this is inside; if any.
     # then, set this node as the current closure.
-    $closure->{parent_closure} = $c->{closure};
-    $c->{closure} = $closure;
+    $c->set_closure($closure);
 
     return;
 }
@@ -261,8 +262,8 @@ sub c_CLOSURE_E {
     #   The current 'node' must be equal to the current 'closure'.
 
     # close the closure and the node.
-    my $closure = $c->{closure};
-    $c->{closure} = delete $closure->{parent_closure};
+    my $closure = $c->closure;
+    $c->close_closure;
     $c->close_node;
 
     # this is a closure-capturing function call. terminate the call.
@@ -279,8 +280,7 @@ sub c_KEYWORD_INSIDE {
 
     # create a closure to be opened soon.
     my $inside = F::Inside->new(type => 'Inside');
-    $inside->{parent_clos_cap} = $c->{clos_cap};
-    $c->{clos_cap} = $inside;
+    $c->capture_closure_with($inside);
     $c->node->adopt($inside);
 
     # set the current node to the inside expression.
@@ -296,8 +296,7 @@ sub c_KEYWORD_ON {
     my $on = F::On->new(type => 'On');
 
     # set the closure to the function of on.
-    $on->function->{parent_clos_cap} = $c->{clos_cap};
-    $c->{clos_cap} = $on->function;
+    $c->capture_closure_with($on->function);
     $c->node->adopt($on);
 
     # set the current node to the on expression.
@@ -312,8 +311,7 @@ sub c_KEYWORD_IF {
     # create an if statement which expects a closure to be opened soon.
     my $if = F::If->new(type => 'If');
     $c->node->adopt($if);
-    $if->{parent_clos_cap} = $c->{clos_cap};
-    $c->{clos_cap} = $if;
+    $c->capture_closure_with($if);
 
     # set the current node to the conditional expression.
     $c->set_node($if->param_exp);
@@ -325,10 +323,9 @@ sub c_KEYWORD_THEN {
     my ($c, $value) = @_;
 
     my $then = F::Node->new(type => 'Then');
-    $c->adopt_and_set_node($then);
 
-    $then->{parent_clos_cap} = $c->{clos_cap};
-    $c->{clos_cap} = $then;
+    $c->adopt_and_set_node($then);
+    $c->capture_closure_with($then);
 
     return $then;
 }
@@ -338,10 +335,9 @@ sub c_KEYWORD_FOR {
 
     # create a closure to be opened soon.
     my $for = F::For->new(type => 'For');
-    $c->node->adopt($for);
 
-    $for->{parent_clos_cap} = $c->{clos_cap};
-    $c->{clos_cap} = $for;
+    $c->node->adopt($for);
+    $c->capture_closure_with($for);
 
     # set the node to the for parameter.
     $c->set_node($for->param_exp);
@@ -420,7 +416,7 @@ sub handle_call {
         $list->{collection} = 1; # pretend to be array/hash for checks.
         $call->adopt($list);
 
-        $c->{clos_cap} = $call if !$is_index && !$c->{clos_cap};
+        $c->capture_closure_with($call) if !$is_index && !$c->clos_cap;
     }
 
     return $call;

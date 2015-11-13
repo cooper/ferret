@@ -10,6 +10,10 @@ sub new {
     return bless \%opts, $class;
 }
 
+#############
+### NODES ###
+#############
+
 sub node { shift->{node} }
 
 sub set_node {
@@ -43,6 +47,36 @@ sub close_node_maybe {
 sub close_node_until {
     my ($c, $wanted_node) = @_;
     $c->close_node until $c->node == $wanted_node;
+}
+
+### CLOSURES ###
+
+sub clos_cap { shift->{clos_cap} }
+sub closure  { shift->{closure}  }
+
+sub capture_closure_with {
+    my ($c, $capturer) = @_;
+    $capturer->{parent_clos_cap} = $c->{clos_cap};
+    $c->{clos_cap} = $capturer;
+}
+
+sub get_closure {
+    my $c = shift;
+    my $closure = delete $c->{clos_cap};
+    $c->{clos_cap} = delete $closure->{parent_clos_cap};
+    return $closure;
+}
+
+sub set_closure {
+    my ($c, $closure) = @_;
+    $closure->{parent_closure} = $c->{closure};
+    $c->{closure} = $closure;
+}
+
+sub close_closure {
+    my $c = shift;
+    my $closure = $c->{closure};
+    $c->{closure} = delete $closure->{parent_closure};
 }
 
 1
