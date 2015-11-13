@@ -49,6 +49,18 @@ sub close_node_until {
     $c->close_node until $c->node == $wanted_node;
 }
 
+# close nodes in the proper order.
+sub close_nodes {
+    my ($c, @nodes) = @_;
+    my $count = 0;
+    foreach (Ferret::Lexer::Constructor::sort_precedence(@nodes)) {
+        next unless $_ eq $c->node->type;
+        $c->close_node;
+        $count++;
+    }
+    return $count;
+}
+
 ### CLOSURES ###
 
 sub clos_cap { shift->{clos_cap} }

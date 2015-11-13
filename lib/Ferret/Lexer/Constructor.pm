@@ -226,7 +226,6 @@ sub c_CLOSURE_S {
 
         # create a function.
         my $func = F::Function->new(anonymous => 1, call_closure => 1);
-        $c->{function} = $func;
         $c->set_node($func);
 
         # make it an argument to the call.
@@ -453,7 +452,7 @@ sub c_PAREN_E {
         if $t ne 'PAREN_E';
 
     # closes these things.
-    close_nodes($c, qw(Negation Operation Equality Pair));
+    $c->close_nodes(qw(Negation Operation Equality Pair));
 
     # close the list itself.
     #
@@ -489,7 +488,7 @@ sub c_BRACKET_E {
         if $t ne 'BRACKET_E';
 
     # closes these things.
-    close_nodes($c, qw(Equality Operation Pair));
+    $c->close_nodes(qw(Equality Operation Pair));
 
     # close the list itself.
     #
@@ -664,7 +663,7 @@ sub c_OP_SEMI {
     #   The current 'instruction' must exist.
 
     # close these things.
-    close_nodes($c, qw(
+    $c->close_nodes(qw(
         WantNeed PropertyModifier Negation Operation
         Equality Assignment Return ReturnPair
     ));
@@ -764,7 +763,7 @@ sub c_OP_VALUE {
     my $c = shift;
 
     # inline if can terminate this.
-    close_nodes($c, qw(Negation Equality));
+    $c->close_nodes(qw(Negation Equality));
 
     # perhaps this is an inline if?
     if (($c->node->{parameter_for} || '') eq 'if') {
@@ -842,7 +841,7 @@ sub handle_equality {
     my ($c, $negated, $obj_equality) = @_;
 
     # equality closes these.
-    my $redo = close_nodes($c, qw(Negation Equality));
+    my $redo = $c->close_nodes(qw(Negation Equality));
 
     # if we closed something, redo to update last_element.
     return $c->{redo} = 1 if $redo;
@@ -1077,6 +1076,10 @@ sub c_eof {
     }
 }
 
+##################
+### PRECEDENCE ###
+##################
+
 # Nodes terminated by instructions
 # ================================
 #
@@ -1150,27 +1153,9 @@ sub sort_precedence {
 
 }
 
-sub close_nodes {
-    my ($c, @nodes) = @_;
-    my $count = 0;
-    foreach (sort_precedence(@nodes)) {
-        next unless $_ eq $c->node->type;
-        $c->close_node;
-        $count++;
-    }
-    return $count;
-}
-
-# returns the first parent node which is not a list or a list item.
-sub first_non_list_parent {
-    my $node = shift;
-    while ($node = $node->parent) {
-        next if $node->isa('F::List');
-        next if $node->isa('F::ListItem');
-        return $node;
-    }
-    return;
-}
+##############
+### ERRORS ###
+##############
 
 sub fatal {
     my ($c, $err) = @_;
