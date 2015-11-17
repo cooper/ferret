@@ -44,7 +44,7 @@ sub check_error {
 sub handle_label {
     my ($label, $value, $line) = @_;
     my $redo = sub { handle_label($label, $value, $line) };
-    my $last_element = ($current->node->children)[-1] || $current->node;
+    my $last_el = ($current->node->children)[-1] || $current->node;
     $line //= 0;
     my $err;
 
@@ -52,10 +52,10 @@ sub handle_label {
     return $err if $err = check_error();
 
     # current info.
-    @$current{ qw(label value line next_tok last_element) } = (
+    @$current{ qw(label value line next_tok last_el) } = (
         $label, $value,
         $line,  $current->{upcoming}[0],
-        $last_element
+        $last_el
     );
 
     $current->{unknown_el} = F::Unknown->new(
@@ -71,7 +71,7 @@ sub handle_label {
     c_any($label, $current, $value);
 
     # redo.
-    return $redo->() if delete $current->{redo};
+    return $redo->() if $current->should_redo;
 
     # call a handler if one exists.
     if (my $code = __PACKAGE__->can("c_$label")) {
@@ -85,7 +85,7 @@ sub handle_label {
         }
 
         # redo.
-        return $redo->() if delete $current->{redo};
+        return $redo->() if $current->should_redo;
 
         # all is good.
         return;
@@ -93,7 +93,7 @@ sub handle_label {
     }
 
     # nothing to handle it. throw in an unknown element.
-    $current->node->adopt($current->{unknown_el});
+    $current->node->adopt($current->unknown_el);
 
     # final error check.
     return $err if $err = check_error();
@@ -106,11 +106,7 @@ sub c_PKG_DEC {
 
     # create a package.
     my $pkg = F::Package->new(pkg_name => $value->{name});
-    $c->{package} = $pkg;
-
-    # capture the end keyword.
-    $pkg->{parent_end_cap} = $c->{end_cap};
-    $c->{end_cap} = $pkg;
+    $c->set_package($pkg);
 
     # Rule Package[0]:
     #   Must be a direct child of a Document.
@@ -124,15 +120,10 @@ sub c_CLASS_DEC {
 
     # terminate current class.
     $c->close_node_maybe('Class');
-    $c->{end_cap} = $c->{end_cap}{parent_end_cap} if $c->{end_cap};
 
     # create class.
     my $class = F::Class->new(%$value);
-    $c->{class} = $class;
-
-    # capture the end keyword.
-    $class->{parent_end_cap} = $c->{end_cap};
-    $c->{end_cap} = $class;
+    $c->set_class($class);
 
     # Rule Class[0]:
     #   Must be a direct child of a Document.
@@ -161,13 +152,13 @@ sub c_KEYWORD_END {
     #   The current node must be a Class or Package.
 
     # end the class.
-    my $class_or_pkg = $c->{end_cap};
-    if ($c->{class} && $class_or_pkg == $c->{class}) {
-        delete $c->{class};
+    my $class_or_pkg = $c->end_cap;
+    if ($c->class && $class_or_pkg == $c->class) {
+        $c->close_class;
     }
 
     # return to the previous package.
-    elsif ($c->{package} && $class_or_pkg == $c->{package}) {
+    elsif ($c->package && $class_or_pkg == $c->package) {
         return unexpected(
             $c,
             '(multiple packages per file not yet implemented)'
@@ -175,7 +166,7 @@ sub c_KEYWORD_END {
     }
 
     # close it.
-    $c->{end_cap} = $c->{end_cap}{parent_end_cap};
+    $c->close_end_cap;
     $c->close_node;
 
     return;
@@ -360,13 +351,13 @@ sub c_KEYWORD_IN {
 
 sub c_PAREN_S {
     my ($c, $value) = @_;
-    my $list = start_list($c, $value, 'PAREN_E');
+    my $list = $c->start_list('PAREN_E');
     return $list;
 }
 
 sub c_BRACKET_S {
     my ($c, $value) = @_;
-    my $list = start_list($c, $value, 'BRACKET_E');
+    my $list = $c->start_list('BRACKET_E');
     $list->{collection} = 1; # define as a value list or hash.
     $list->{array} = 1;      # default
     return $list;
@@ -395,7 +386,7 @@ sub handle_call {
     my $package    = $is_index ? 'F::Index'  : 'F::Call';
 
     # a call can only come after an expression.
-    my $last_el = $c->{last_element};
+    my $last_el = $c->last_el;
     return unexpected($c) unless $last_el->is_type('Expression');
 
     # if this is a list, it can only have one item.
@@ -410,7 +401,7 @@ sub handle_call {
 
     # handle the list, then adopt it.
     if ($has_list) {
-        my $list = start_list($c, $value, $terminator);
+        my $list = $c->start_list($terminator);
         $list->{is_call} = 1;
         $list->{collection} = 1; # pretend to be array/hash for checks.
         $call->adopt($list);
@@ -421,24 +412,6 @@ sub handle_call {
     return $call;
 }
 
-# used for both parenthesis and bracket lists.
-sub start_list {
-    my ($c, $value, $terminator) = @_;
-
-    # for any of PAREN_S, PAREN_CALL, ... create a list.
-    my $list = F::List->new;
-    $list->{parent_list} = $c->{list};
-    $list->{list_terminator} = $terminator;
-    $list->{no_instructions} = 1;
-
-    # set the current list and the current node to the list's first item.
-    $c->{list} = $list;
-    $c->node->adopt($list);
-    $c->set_node($list->new_item);
-
-    return $list;
-}
-
 sub c_PAREN_E {
     my ($c, $value) = @_;
 
@@ -446,7 +419,7 @@ sub c_PAREN_E {
     #   The current 'list' must exist.
 
     # this must be the expected list terminator.
-    my $t = $c->{list}{list_terminator};
+    my $t = $c->list->{list_terminator};
     my $p = Ferret::Lexer::pretty_token($t);
     return unexpected($c, "to close list (instead of $p)")
         if $t ne 'PAREN_E';
@@ -459,7 +432,7 @@ sub c_PAREN_E {
     #       the current node becomes
     #       the current node (list item)'s parent (list)'s parent
     #
-    return unexpected($c) if $c->node->parent != $c->{list};
+    return unexpected($c) if $c->node->parent != $c->list;
     $c->close_node(2);
 
     # function call.
@@ -470,9 +443,8 @@ sub c_PAREN_E {
     $c->close_node_maybe('Call');
 
     # finally, the current list becomes the next list up in the tree.
-    $c->{list} = $c->{list}{parent_list};
 
-    return $c->{list};
+    return $c->close_list;
 }
 
 sub c_BRACKET_E {
@@ -482,7 +454,7 @@ sub c_BRACKET_E {
     #   The current 'list' must exist.
 
     # this must be the expected list terminator.
-    my $t = $c->{list}{list_terminator};
+    my $t = $c->list->{list_terminator};
     my $p = Ferret::Lexer::pretty_token($t);
     return unexpected($c, "to close list (instead of $p)")
         if $t ne 'BRACKET_E';
@@ -495,7 +467,7 @@ sub c_BRACKET_E {
     #       the current node becomes
     #       the current node (list item)'s parent (list)'s parent
     #
-    return unexpected($c) if $c->node->parent != $c->{list};
+    return unexpected($c) if $c->node->parent != $c->list;
     $c->close_node(2);
 
     # index.
@@ -506,9 +478,8 @@ sub c_BRACKET_E {
     $c->close_node_maybe('Index');
 
     # finally, the current list becomes the next list up in the tree.
-    $c->{list} = $c->{list}{parent_list};
 
-    return $c->{list};
+    return $c->close_list;
 }
 
 sub c_STRING {
@@ -603,10 +574,10 @@ sub c_OP_COMMA {
     my ($c, $value) = @_;
 
     # we're in a list.
-    if ($c->{list}) {
+    if ($c->list) {
 
         # set the current node to a new list item.
-        $c->set_node($c->{list}->new_item);
+        $c->set_node($c->list->new_item);
 
         return $c->node;
     }
@@ -621,18 +592,16 @@ sub c_OP_COMMA {
 
         # create new want/need.
         my $wn = F::WantNeed->new(arg_type => $old_wn->{arg_type});
-        $c->{ $old_wn->{arg_type} } = $wn;
 
         # wrap it with an instruction.
         my $instr = F::Instruction->new;
-        $instr->{parent_instruction} = $c->{instruction};
-        $c->{instruction} = $instr;
+        $c->set_instruction($instr);
         $c->adopt_and_set_node($instr);
 
         return $c->adopt_and_set_node($wn);
     }
 
-    return unexpected($c, 'outside of list') if !$c->{list};
+    return unexpected($c, 'outside of list') if !$c->list;
 }
 
 sub c_BAREWORD {
@@ -641,7 +610,7 @@ sub c_BAREWORD {
     # if the last element is a bareword, combine them.
     # ex: Math :: Point == Math::Point
     # ex: A B = AB
-    my $l_word = $c->{last_element};
+    my $l_word = $c->last_el;
     if ($l_word->type eq 'Bareword') {
         $l_word->{bareword_value} .= $value;
         $l_word->{parent}->adopt($l_word); # to redo after_adopt()
@@ -669,14 +638,14 @@ sub c_OP_SEMI {
     ));
 
     # at this point, the instruction must be the current node.
-    if ($c->node != $c->{instruction}) {
+    if ($c->node != $c->instruction) {
         my $type = $c->node->desc;
         return unexpected($c, "inside $type");
     }
 
     # close the instruction.
     $c->close_node;
-    $c->{instruction} = $c->{instruction}{parent_instruction};
+    $c->close_instruction;
 
     # maybe now we can terminate an inline If.
     $c->close_node
@@ -746,7 +715,7 @@ sub c_KEYWORD_WANT {
     # Manually implemented rules:
     #   See F/WantNeed.pm for more rules which are implemented in ->adopt().
 
-    my $want = $c->{want} = F::WantNeed->new(arg_type => 'want');
+    my $want = F::WantNeed->new(arg_type => 'want');
     return $c->adopt_and_set_node($want);
 }
 
@@ -755,7 +724,7 @@ sub c_KEYWORD_NEED {
 
     # same rules as in c_KEYWORD_WANT above.
 
-    my $need = $c->{need} = F::WantNeed->new(arg_type => 'need');
+    my $need = F::WantNeed->new(arg_type => 'need');
     return $c->adopt_and_set_node($need);
 }
 
@@ -773,7 +742,7 @@ sub c_OP_VALUE {
     }
 
     # otherwise just throw the token back in.
-    $c->node->adopt($c->{unknown_el});
+    $c->node->adopt($c->unknown_el);
 
 }
 
@@ -797,10 +766,10 @@ sub c_PROPERTY {
     my ($c, $value) = @_;
     my $prop = F::Property->new(prop_name => $value);
 
-    my $last_el = $c->{last_element};
+    my $last_el = $c->last_el;
     return expected($c,
         'an expression',
-        'at left of '.Ferret::Lexer::pretty_token($c->{label})
+        'at left of '.Ferret::Lexer::pretty_token($c->label)
     ) unless $last_el->is_type('Expression');
 
     $c->node->adopt($prop);
@@ -814,10 +783,10 @@ sub c_OP_ASSIGN {
 
     # if we're in a WantNeed, it's not a real assignment.
     if ($c->node->type eq 'WantNeed') {
-        return $c->node->adopt($c->{unknown_el});
+        return $c->node->adopt($c->unknown_el);
     }
 
-    my $last_el = $c->{last_element};
+    my $last_el = $c->last_el;
     return expected($c,
         'an assignable expression',
         'at left of assignment operator (=)'
@@ -843,13 +812,13 @@ sub handle_equality {
     # equality closes these.
     my $redo = $c->close_nodes(qw(Negation Equality));
 
-    # if we closed something, redo to update last_element.
-    return $c->{redo} = 1 if $redo;
+    # if we closed something, redo to update last_el.
+    return $c->redo if $redo;
 
-    my $last_el = $c->{last_element};
+    my $last_el = $c->last_el;
     return expected($c,
         'an expression',
-        'at left of '.Ferret::Lexer::pretty_token($c->{label})
+        'at left of '.Ferret::Lexer::pretty_token($c->label)
     ) unless $last_el->is_type('Expression');
 
     # adopt the last element as the left side of the equality.
@@ -869,21 +838,21 @@ sub handle_equality {
 
 sub c_math_operator {
     my ($c, $value) = @_;
-    my $last_el = $c->{last_element};
+    my $last_el = $c->last_el;
 
     # if it's addition or subtraction, it might be a sign.
     my %signs = (OP_ADD => 1, OP_SUB => 1);
-    if (!$last_el->is_type('Expression') && $signs{ $c->{label} }) {
+    if (!$last_el->is_type('Expression') && $signs{ $c->label }) {
         undef $last_el;
     }
 
     return expected($c,
         'an expression',
-        'at left of '.Ferret::Lexer::pretty_token($c->{label})
+        'at left of '.Ferret::Lexer::pretty_token($c->label)
     ) if $last_el && !$last_el->is_type('Expression');
 
     # if the current node is an operation, just add another thing.
-    my $operator = F::Operator->new(token => $c->{label});
+    my $operator = F::Operator->new(token => $c->label);
     if ($c->node->type eq 'Operation') {
         $c->node->adopt($operator);
         return $operator;
@@ -902,7 +871,7 @@ sub c_OP_RETURN {
     my ($c, $value) = @_;
 
     # the previous element MUST be a bareword.
-    my $word = $c->{last_element};
+    my $word = $c->last_el;
     return expected($c,
         'a bareword key',
         'at left of return operator (->)'
@@ -926,7 +895,7 @@ sub c_KEYWORD_RETURN {
 
 sub c_OP_PACK {
     my ($c, $value) = @_;
-    my $l_word = $c->{last_element};
+    my $l_word = $c->last_el;
 
     # left side must be bareword.
     return expected($c,
@@ -938,7 +907,7 @@ sub c_OP_PACK {
     return expected($c,
         'a bareword',
         'at right of namespace operator (::)'
-    ) unless $c->{next_tok}[0] eq 'BAREWORD';
+    ) unless $c->next_tok eq 'BAREWORD';
 
     $l_word->{bareword_value} .= '::';
     return $l_word;
@@ -949,7 +918,7 @@ sub c_OP_MAYBE {
     my ($c, $value) = @_;
 
     # must come after expression.
-    my $last_el = $c->{last_element};
+    my $last_el = $c->last_el;
     return unexpected($c) unless $last_el->is_type('Expression');
 
     # if this is a list, it can only have one item.
@@ -962,7 +931,7 @@ sub c_OP_MAYBE {
     $maybe->adopt($last_el);
 
     # add the maybe to the instruction.
-    $c->{instruction}->add_maybe($maybe);
+    $c->instruction->add_maybe($maybe);
 
     return $maybe;
 }
@@ -1038,12 +1007,9 @@ sub c_any {
     );
     foreach (@ignore) { return if $label =~ $_ }
 
-    my $instruction = F::Instruction->new;
-
-    $instruction->{parent_instruction} = $c->{instruction};
-    $c->{instruction} = $instruction;
-
-    $c->adopt_and_set_node($instruction);
+    my $instr = F::Instruction->new;
+    $c->set_instruction($instr);
+    $c->adopt_and_set_node($instr);
 }
 
 sub c_spaces {
@@ -1066,7 +1032,7 @@ sub c_eof {
 
         # if the node started on a different line than current,
         # mention where it started.
-        my $started = $node->{create_line} == $c->{line} ?
+        my $started = $node->{create_line} == $c->line ?
             '' : " (which started on line $$node{create_line})";
 
         return expected($c,
@@ -1187,16 +1153,16 @@ sub unexpected {
 
     # if we're processing element rules, use the actual element if possible.
     # otherwise, use the pretty representation of the token.
-    my $what = $c->{rule_el} ?
-        $c->{rule_el}->desc  :
-        Ferret::Lexer::pretty_token($c->{label});
+    my $what = $c->rule_el ?
+        $c->rule_el->desc  :
+        Ferret::Lexer::pretty_token($c->label);
 
     fatal($c, "Unexpected $what$reason.$err_desc");
 }
 
 sub last_el {
     my $c = shift;
-    return $c->{elements}[-1]->desc if $c->{elements}[-1];
+    return $c->elements->[-1]->desc if $c->elements->[-1];
     return 'beginning of file';
 }
 

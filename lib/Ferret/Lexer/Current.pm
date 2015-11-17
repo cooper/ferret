@@ -10,6 +10,16 @@ sub new {
     return bless \%opts, $class;
 }
 
+sub unknown_el      { shift->{unknown_el}           }
+sub last_el         { shift->{last_el}              }
+sub rule_el         { shift->{rule_el}              }
+sub label           { shift->{label}                }
+sub line            { shift->{line}                 }
+sub redo            { shift->{redo} = 1             }
+sub elements        { shift->{elements}             }
+sub should_redo     { delete shift->{redo}          }
+sub next_tok        { shift->{next_tok}[shift || 0] }
+
 #############
 ### NODES ###
 #############
@@ -89,6 +99,93 @@ sub close_closure {
     my $c = shift;
     my $closure = $c->{closure};
     $c->{closure} = delete $closure->{parent_closure};
+}
+
+#############
+### LISTS ###
+#############
+
+sub list { shift->{list} }
+
+# used for both parenthesis and bracket lists.
+sub start_list {
+    my ($c, $terminator) = @_;
+
+    # for any of PAREN_S, PAREN_CALL, ... create a list.
+    my $list = F::List->new;
+    $list->{parent_list} = $c->{list};
+    $list->{list_terminator} = $terminator;
+    $list->{no_instructions} = 1;
+
+    # set the current list and the current node to the list's first item.
+    $c->{list} = $list;
+    $c->node->adopt($list);
+    $c->set_node($list->new_item);
+
+    return $list;
+}
+
+sub close_list {
+    my $c = shift;
+    return $c->{list} = $c->{list}{parent_list};
+}
+
+####################
+### INSTRUCTIONS ###
+####################
+
+sub instruction { shift->{instruction} }
+
+sub set_instruction {
+    my ($c, $instr) = @_;
+    $instr->{parent_instruction} = $c->{instruction};
+    return $c->{instruction} = $instr;
+}
+
+sub close_instruction {
+    my $c = shift;
+    return $c->{instruction} = $c->{instruction}{parent_instruction};
+}
+
+############################
+### PACKAGES AND CLASSES ###
+############################
+
+sub package { shift->{package} }
+sub class   { shift->{class}   }
+sub end_cap { shift->{end_cap} }
+
+sub set_package {
+    my ($c, $pkg) = @_;
+
+    # capture end.
+    $pkg->{parent_end_cap} = $c->{end_cap};
+    $c->{end_cap} = $pkg;
+
+    return $c->{package} = $pkg;
+}
+
+sub set_class {
+    my ($c, $class) = @_;
+
+    # close the previous class without end keyword.
+    $c->{end_cap} = $c->{end_cap}{parent_end_cap} if $c->{end_cap};
+
+    # capture end.
+    $class->{parent_end_cap} = $c->{end_cap};
+    $c->{end_cap} = $class;
+
+    return $c->{class} = $class;
+}
+
+sub close_class {
+    my $c = shift;
+    return delete $c->{class};
+}
+
+sub close_end_cap {
+    my $c = shift;
+    $c->{end_cap} = $c->{end_cap}{parent_end_cap};
 }
 
 1
