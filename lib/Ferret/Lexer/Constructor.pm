@@ -159,8 +159,7 @@ sub c_KEYWORD_END {
 
     # return to the previous package.
     elsif ($c->package && $class_or_pkg == $c->package) {
-        return unexpected(
-            $c,
+        return $c->unexpected(
             '(multiple packages per file not yet implemented)'
         );
     }
@@ -339,7 +338,7 @@ sub c_KEYWORD_IN {
     my ($c, $value) = @_;
 
     # 'in' must terminate a generated expression for 'for'.
-    return unexpected($c, "(where is 'for'?)") unless
+    return $c->unexpected("(where is 'for'?)") unless
         $c->node->{parameter_for} && $c->node->{parameter_for} eq 'for';
         # FIXME: if wrapped in parentheses, this will fail.
 
@@ -387,12 +386,12 @@ sub handle_call {
 
     # a call can only come after an expression.
     my $last_el = $c->last_el;
-    return unexpected($c) unless $last_el->is_type('Expression');
+    return $c->unexpected unless $last_el->is_type('Expression');
 
     # if this is a list, it can only have one item.
     if ($last_el->isa('F::List')
      && $last_el->children > 1) {
-        return expected($c, 'a single-element list', 'before');
+        return $c->expected('a single-element list', 'before');
     }
 
     # create a function call, adopting the last element.
@@ -421,7 +420,7 @@ sub c_PAREN_E {
     # this must be the expected list terminator.
     my $t = $c->list->{list_terminator};
     my $p = Ferret::Lexer::pretty_token($t);
-    return unexpected($c, "to close list (instead of $p)")
+    return $c->unexpected("to close list (instead of $p)")
         if $t ne 'PAREN_E';
 
     # closes these things.
@@ -432,7 +431,7 @@ sub c_PAREN_E {
     #       the current node becomes
     #       the current node (list item)'s parent (list)'s parent
     #
-    return unexpected($c) if $c->node->parent != $c->list;
+    return $c->unexpected if $c->node->parent != $c->list;
     $c->close_node(2);
 
     # function call.
@@ -456,7 +455,7 @@ sub c_BRACKET_E {
     # this must be the expected list terminator.
     my $t = $c->list->{list_terminator};
     my $p = Ferret::Lexer::pretty_token($t);
-    return unexpected($c, "to close list (instead of $p)")
+    return $c->unexpected("to close list (instead of $p)")
         if $t ne 'BRACKET_E';
 
     # closes these things.
@@ -467,7 +466,7 @@ sub c_BRACKET_E {
     #       the current node becomes
     #       the current node (list item)'s parent (list)'s parent
     #
-    return unexpected($c) if $c->node->parent != $c->list;
+    return $c->unexpected if $c->node->parent != $c->list;
     $c->close_node(2);
 
     # index.
@@ -601,7 +600,7 @@ sub c_OP_COMMA {
         return $c->adopt_and_set_node($wn);
     }
 
-    return unexpected($c, 'outside of list') if !$c->list;
+    return $c->unexpected('outside of list') if !$c->list;
 }
 
 sub c_BAREWORD {
@@ -640,7 +639,7 @@ sub c_OP_SEMI {
     # at this point, the instruction must be the current node.
     if ($c->node != $c->instruction) {
         my $type = $c->node->desc;
-        return unexpected($c, "inside $type");
+        return $c->unexpected("inside $type");
     }
 
     # close the instruction.
@@ -767,7 +766,7 @@ sub c_PROPERTY {
     my $prop = F::Property->new(prop_name => $value);
 
     my $last_el = $c->last_el;
-    return expected($c,
+    return $c->expected(
         'an expression',
         'at left of '.Ferret::Lexer::pretty_token($c->label)
     ) unless $last_el->is_type('Expression');
@@ -787,7 +786,7 @@ sub c_OP_ASSIGN {
     }
 
     my $last_el = $c->last_el;
-    return expected($c,
+    return $c->expected(
         'an assignable expression',
         'at left of assignment operator (=)'
     ) unless $last_el->is_type('Assignable');
@@ -816,7 +815,7 @@ sub handle_equality {
     return $c->redo if $redo;
 
     my $last_el = $c->last_el;
-    return expected($c,
+    return $c->expected(
         'an expression',
         'at left of '.Ferret::Lexer::pretty_token($c->label)
     ) unless $last_el->is_type('Expression');
@@ -846,7 +845,7 @@ sub c_math_operator {
         undef $last_el;
     }
 
-    return expected($c,
+    return $c->expected(
         'an expression',
         'at left of '.Ferret::Lexer::pretty_token($c->label)
     ) if $last_el && !$last_el->is_type('Expression');
@@ -872,7 +871,7 @@ sub c_OP_RETURN {
 
     # the previous element MUST be a bareword.
     my $word = $c->last_el;
-    return expected($c,
+    return $c->expected(
         'a bareword key',
         'at left of return operator (->)'
     ) unless $word->type eq 'Bareword';
@@ -898,13 +897,13 @@ sub c_OP_PACK {
     my $l_word = $c->last_el;
 
     # left side must be bareword.
-    return expected($c,
+    return $c->expected(
         'a bareword',
         'at left of namespace operator (::)'
     ) unless $l_word->type eq 'Bareword';
 
     # right side must be bareword.
-    return expected($c,
+    return $c->expected(
         'a bareword',
         'at right of namespace operator (::)'
     ) unless $c->next_tok eq 'BAREWORD';
@@ -919,11 +918,11 @@ sub c_OP_MAYBE {
 
     # must come after expression.
     my $last_el = $c->last_el;
-    return unexpected($c) unless $last_el->is_type('Expression');
+    return $c->unexpected unless $last_el->is_type('Expression');
 
     # if this is a list, it can only have one item.
     if ($last_el->isa('F::List') && $last_el->children > 1) {
-        return expected($c, 'a single-element list', 'before');
+        return $c->expected('a single-element list', 'before');
     }
 
     # create a maybe, adopting the last element.
@@ -1035,135 +1034,11 @@ sub c_eof {
         my $started = $node->{create_line} == $c->line ?
             '' : " (which started on line $$node{create_line})";
 
-        return expected($c,
+        return $c->expected(
             "termination of $desc$started",
             'before reaching end of file'
         );
     }
-}
-
-##################
-### PRECEDENCE ###
-##################
-
-# Nodes terminated by instructions
-# ================================
-#
-#   WantNeed
-#
-#       need $x;
-#
-#       WantNeeds cannot contain anything special to terminate.
-#
-#   PropertyModifier
-#
-#       delete $x.prop;
-#
-#       PropertyModifiers cannot contain special to terminate.
-#
-#   List with Pair
-#
-#       (hi: 10 == 5 + !5)
-#
-#       Close in order
-#       1. Negation     (!)
-#       2. Operation    (+)
-#       3. Equality     (==)
-#       4. Pair         (:)
-#       5. List item
-#       6. List
-#
-#
-#   Return
-#
-#       return 10 == 5 + !5;
-#
-#       Close in order
-#       1. Negation     (!)
-#       2. Operation    (+)
-#       3. Equality     (==)
-#       4. Return
-#
-#   ReturnPair
-#
-#       x -> 10 == 5 + !5;
-#
-#       Same as Return above.
-#
-# Node groups
-# ================================
-#
-#   1. Special nodes that have their own specific rules.
-#   2. Normal nodes, usually expressions.
-#   3. Statement nodes which are direct descendants of instructions.
-#
-my (@closes, %precedence);
-{
-    @closes = (
-        qw( WantNeed PropertyModifier ),                                        # 1
-        qw( Negation Operation Equality Pair ListItem List Call ),              # 2
-        qw( Assignment Return ReturnPair )                                      # 3
-    );
-    my $i = 0;
-    %precedence = map { $_ => $i++ } @closes;
-}
-
-sub sort_precedence {
-    my @types = @_;
-
-    # find the others and sort.
-    my @orders = sort { $a <=> $b } map $precedence{$_}, @types;
-
-    # return the names.
-    return map $closes[$_], @orders;
-
-}
-
-##############
-### ERRORS ###
-##############
-
-sub fatal {
-    my ($c, $err) = @_;
-    my $near = last_el($c);
-    my @caller = @{ delete $c->{err_caller} || [caller] };
-    $err .= "\n     File    -> $$c{file}";
-    $err .= "\n     Line    -> $$c{line}";
-    $err .= "\n     Near    -> $near";
-    $err .= "\n     Parent  -> ".$c->node->desc if $c->node;
-    $err .= "\n\nException raised by $caller[0] line $caller[2].";
-    return Ferret::Lexer::fatal($err);
-}
-
-sub expected {
-    my ($c, $what, $where) = @_;
-    $c->{err_caller} ||= [caller];
-    $where //= '';
-    fatal($c, "Expected $what $where.");
-}
-
-sub unexpected {
-    my ($c, $reason, $err_desc) = @_[0, 1];
-    $c->{err_caller} ||= [caller];
-
-    # if it's an arrayref, it's from a rule with a description.
-    ($reason, $err_desc) = @$reason if ref $reason eq 'ARRAY';
-    $err_desc = length $err_desc ? "\n$err_desc." : '';
-    $reason   = length $reason   ? " $reason"     : '';
-
-    # if we're processing element rules, use the actual element if possible.
-    # otherwise, use the pretty representation of the token.
-    my $what = $c->rule_el ?
-        $c->rule_el->desc  :
-        Ferret::Lexer::pretty_token($c->label);
-
-    fatal($c, "Unexpected $what$reason.$err_desc");
-}
-
-sub last_el {
-    my $c = shift;
-    return $c->elements->[-1]->desc if $c->elements->[-1];
-    return 'beginning of file';
 }
 
 1

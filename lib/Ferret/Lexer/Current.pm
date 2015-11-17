@@ -63,7 +63,7 @@ sub close_node_until {
 sub close_nodes {
     my ($c, @nodes) = @_;
     my $count = 0;
-    foreach (Ferret::Lexer::Constructor::sort_precedence(@nodes)) {
+    foreach (sort_precedence(@nodes)) {
         next unless $_ eq $c->node->type;
         $c->close_node;
         $count++;
@@ -71,7 +71,9 @@ sub close_nodes {
     return $count;
 }
 
+################
 ### CLOSURES ###
+################
 
 sub clos_cap { shift->{clos_cap} }
 sub closure  { shift->{closure}  }
@@ -186,6 +188,130 @@ sub close_class {
 sub close_end_cap {
     my $c = shift;
     $c->{end_cap} = $c->{end_cap}{parent_end_cap};
+}
+
+##################
+### PRECEDENCE ###
+##################
+
+# Nodes terminated by instructions
+# ================================
+#
+#   WantNeed
+#
+#       need $x;
+#
+#       WantNeeds cannot contain anything special to terminate.
+#
+#   PropertyModifier
+#
+#       delete $x.prop;
+#
+#       PropertyModifiers cannot contain special to terminate.
+#
+#   List with Pair
+#
+#       (hi: 10 == 5 + !5)
+#
+#       Close in order
+#       1. Negation     (!)
+#       2. Operation    (+)
+#       3. Equality     (==)
+#       4. Pair         (:)
+#       5. List item
+#       6. List
+#
+#
+#   Return
+#
+#       return 10 == 5 + !5;
+#
+#       Close in order
+#       1. Negation     (!)
+#       2. Operation    (+)
+#       3. Equality     (==)
+#       4. Return
+#
+#   ReturnPair
+#
+#       x -> 10 == 5 + !5;
+#
+#       Same as Return above.
+#
+# Node groups
+# ================================
+#
+#   1. Special nodes that have their own specific rules.
+#   2. Normal nodes, usually expressions.
+#   3. Statement nodes which are direct descendants of instructions.
+#
+my (@closes, %precedence);
+{
+    @closes = (
+        qw( WantNeed PropertyModifier ),                                        # 1
+        qw( Negation Operation Equality Pair ListItem List Call ),              # 2
+        qw( Assignment Return ReturnPair )                                      # 3
+    );
+    my $i = 0;
+    %precedence = map { $_ => $i++ } @closes;
+}
+
+sub sort_precedence {
+    my @types = @_;
+
+    # find the others and sort.
+    my @orders = sort { $a <=> $b } map $precedence{$_}, @types;
+
+    # return the names.
+    return map $closes[$_], @orders;
+
+}
+
+##############
+### ERRORS ###
+##############
+
+sub fatal {
+    my ($c, $err) = @_;
+    my $near = $c->last_el_desc;
+    my @caller = @{ delete $c->{err_caller} || [caller] };
+    $err .= "\n     File    -> $$c{file}";
+    $err .= "\n     Line    -> $$c{line}";
+    $err .= "\n     Near    -> $near";
+    $err .= "\n     Parent  -> ".$c->node->desc if $c->node;
+    $err .= "\n\nException raised by $caller[0] line $caller[2].";
+    return Ferret::Lexer::fatal($err);
+}
+
+sub expected {
+    my ($c, $what, $where) = @_;
+    $c->{err_caller} ||= [caller];
+    $where //= '';
+    fatal($c, "Expected $what $where.");
+}
+
+sub unexpected {
+    my ($c, $reason, $err_desc) = @_[0, 1];
+    $c->{err_caller} ||= [caller];
+
+    # if it's an arrayref, it's from a rule with a description.
+    ($reason, $err_desc) = @$reason if ref $reason eq 'ARRAY';
+    $err_desc = length $err_desc ? "\n$err_desc." : '';
+    $reason   = length $reason   ? " $reason"     : '';
+
+    # if we're processing element rules, use the actual element if possible.
+    # otherwise, use the pretty representation of the token.
+    my $what = $c->rule_el ?
+        $c->rule_el->desc  :
+        Ferret::Lexer::pretty_token($c->label);
+
+    fatal($c, "Unexpected $what$reason.$err_desc");
+}
+
+sub last_el_desc {
+    my $c = shift;
+    return $c->elements->[-1]->desc if $c->elements->[-1];
+    return 'beginning of file';
 }
 
 1
