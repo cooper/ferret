@@ -29,7 +29,8 @@ sub construct {
     }
 
     c_spaces($current, $main_node);
-    c_eof($current, $main_node);
+    my $e = c_eof($current, $main_node);
+    return $e if $e;
     Ferret::Lexer::RuleFunctions::final_check($main_node);
 
     return $error;
@@ -625,7 +626,7 @@ sub c_BAREWORD {
 }
 
 sub c_OP_SEMI {
-    my ($c, $value) = @_;
+    my $c = shift;
 
     # Rule OP_SEMI[0]:
     #   The current 'instruction' must exist.
@@ -1021,7 +1022,12 @@ sub c_spaces {
 sub c_eof {
     my ($c, $main_node) = @_;
 
-    # end of file can terminate a class.
+    # if there's a current instruction, fake a semicolon.
+    if ($c->instruction) {
+        c_OP_SEMI($c);
+    }
+
+    # end of file can terminate these.
     $c->close_node_maybe('Class');
 
     # when all is said and done, the current node should be the main node.
@@ -1039,6 +1045,8 @@ sub c_eof {
             'before reaching end of file'
         );
     }
+
+    return;
 }
 
 1

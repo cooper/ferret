@@ -250,7 +250,8 @@ my (@closes, %precedence);
     @closes = (
         qw( WantNeed PropertyModifier ),                                        # 1
         qw( Negation Operation Equality Pair ListItem List Call ),              # 2
-        qw( Assignment Return ReturnPair )                                      # 3
+        qw( Assignment Return ReturnPair ),                                     # 3
+        qw( Instruction )
     );
     my $i = 0;
     %precedence = map { $_ => $i++ } @closes;

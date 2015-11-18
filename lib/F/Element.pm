@@ -55,8 +55,7 @@ sub unexpected {
     my $c = $Ferret::Lexer::Constructor::current;
     $c->{rule_el} = $el;
     $c->{err_caller} = [caller];
-    $Ferret::Lexer::Constructor::error =
-        Ferret::Lexer::Constructor::unexpected($c, @_);
+    $Ferret::Lexer::Constructor::error = $c->unexpected(@_);
     delete $c->{rule_el};
 }
 
