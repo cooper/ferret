@@ -6,6 +6,8 @@ use strict;
 use utf8;
 use 5.010;
 
+use Ferret::Core::Conversion qw(ferret_string);
+
 # fetch the global Ferret.
 sub get_ferret {
     return $Ferret::ferret ||= Ferret->new;
@@ -91,6 +93,13 @@ sub get_set_type {
     }
 
     return $class_maybe->property_u('Set');
+}
+
+sub get_symbol {
+    my ($f, $name) = @_;
+    return $f->{symbols}{$name} || Ferret::Symbol->new($f, init_args => {
+        from => ferret_string($name)
+    });
 }
 
 # attach an event callback.

@@ -99,6 +99,7 @@ my @token_formats = (
     [ OP_COMMA      => qr/,/                                                ],  # list separator
     [ OP_PACK       => qr/::/                                               ],  # package
     [ PROP_VALUE    => qr/$prop_reg:/,  \&remove_last_char                  ],  # property: value
+    [ SYMBOL        => qr/~$prop_reg/,  \&remove_first_char                 ],
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other

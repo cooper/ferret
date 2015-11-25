@@ -570,6 +570,18 @@ sub c_KEYWORD_FALSE {
     return $b;
 }
 
+sub c_SYMBOL {
+    my ($c, $value) = @_;
+
+    # create the symbol...
+    my $b = F::Symbol->new(sym_value => $value);
+
+    # add to the current node.
+    $c->node->adopt($b);
+
+    return $b;
+}
+
 sub c_OP_COMMA {
     my ($c, $value) = @_;
 

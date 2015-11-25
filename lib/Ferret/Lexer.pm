@@ -49,6 +49,7 @@ use F::Equality;
 use F::PropertyModifier;
 use F::Assignable;
 use F::Negation;
+use F::Symbol;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (

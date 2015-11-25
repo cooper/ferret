@@ -360,6 +360,7 @@ use Ferret::List;
 use Ferret::Hash;
 use Ferret::Set;
 use Ferret::Boolean;
+use Ferret::Symbol;
 
 use Ferret::Core::Functions;
 use Ferret::Core::Specials;
