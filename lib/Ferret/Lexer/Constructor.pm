@@ -69,7 +69,7 @@ sub handle_label {
     return $err if $err = check_error();
 
     # call the handler for all.
-    c_any($label, $current, $value);
+    my $started_instr = c_any($label, $current, $value);
 
     # redo.
     return $redo->() if $current->should_redo;
@@ -84,6 +84,9 @@ sub handle_label {
             return $el if $el->isa('F::Error');
             push @{ $current->{elements} }, $el;
         }
+
+        # started an instruction.
+        $el->{started_instr} = 1 if $started_instr;
 
         # redo.
         return $redo->() if $current->should_redo;
@@ -265,8 +268,13 @@ sub c_CLOSURE_E {
             $c->close_node_until($upper_call->parent);
         }
 
-        # simulate a semicolon.
-        c_OP_SEMI($c);
+        # simulate a semicolon
+        # only if the call started the instruction.
+        #
+        # $blah = something() { };  # do not simulate semicolon
+        # something () { }          # simulate semicolon
+        #
+        c_OP_SEMI($c) if $upper_call->{started_instr};
 
     }
 
@@ -406,6 +414,7 @@ sub handle_call {
     # create a function call, adopting the last element.
     my $call = $c->node->adopt($package->new);
     $call->adopt($last_el);
+    $call->{started_instr} = $last_el->{started_instr};
 
     # handle the list, then adopt it.
     if ($has_list) {
@@ -414,7 +423,14 @@ sub handle_call {
         $list->{collection} = 1; # pretend to be array/hash for checks.
         $call->adopt($list);
 
-        $c->capture_closure_with($call) if !$is_index && !$c->clos_cap;
+        # found a more likely thing to capture a closure -
+        # something that's not a call like an if or on.
+        my $more_likely = $c->clos_cap
+            if $c->clos_cap && $c->clos_cap->type ne 'Call';
+
+        # clos_cap is just a call or nothing; use this call as the new clos_cap.
+        $c->capture_closure_with($call) if !$is_index && !$more_likely;
+
     }
 
     return $call;
@@ -1030,6 +1046,8 @@ sub c_any {
     my $instr = F::Instruction->new;
     $c->set_instruction($instr);
     $c->adopt_and_set_node($instr);
+
+    return 1; # true = started an instruction
 }
 
 sub c_spaces {
