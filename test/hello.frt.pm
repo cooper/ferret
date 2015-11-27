@@ -32,7 +32,8 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
-    $scope->property_u('say')->call_u( [ str( $f, "Hello World!" ) ], $scope );
+    $scope->property_u('say')
+      ->call_u( [ str( $f, "Hello World!" ) ], $scope, undef, 1 );
 };
 
 FF::after_content();

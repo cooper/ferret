@@ -230,7 +230,7 @@ my $result = do {
                     $scope,
                     $self->property_u('pt1'),
                     $self->property_u('pt2')
-                )->property_u('midpoint')->call_u( {}, $scope );
+                )->property_u('midpoint')->call_u( {}, $scope, undef, 25 );
                 return $return;
             }
         );
@@ -242,7 +242,7 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property_u('pt1')->property_u('distanceTo')
-                  ->call_u( [ $self->property_u('pt2') ], $scope );
+                  ->call_u( [ $self->property_u('pt2') ], $scope, undef, 29 );
                 return $return;
             }
         );

@@ -254,7 +254,7 @@ system-specific polling methods.
 ```
 delay(5) {
     say("it's been five seconds!");    
-};
+}
 
 say("starting timer...");
 ```

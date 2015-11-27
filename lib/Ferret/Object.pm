@@ -455,7 +455,8 @@ sub description {
 
 # calling a non-function.
 sub call {
-    my $obj = shift;
+    my ($obj, undef, undef, undef, $line) = @_;
+
 
     # try to convert to a function.
     if (my $to_func = $obj->property('toFunction')) {
@@ -465,7 +466,7 @@ sub call {
     # throw an error.
     my $caller = [caller 0];
     $caller = [caller 1] if $caller->[0] eq __PACKAGE__;
-    throw(CallOnNonFunction => $caller, $obj->description);
+    throw(CallOnNonFunction => $caller, $obj->description, $line // -1);
 
 }
 

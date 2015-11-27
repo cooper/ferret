@@ -156,7 +156,7 @@ my $result = do {
                             str( $f, " again" )
                         )
                     ],
-                    $scope
+                    $scope, undef, 18
                 );
             }
             $return->set_property( didTwice => $scope->property_u('twice') );
@@ -166,14 +166,14 @@ my $result = do {
     FF::load_namespaces( $context, qw(Math Math::Point) );
     $scope->set_property_ow( $context,
         point => $scope->property_u('Math::Point')
-          ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope ) );
+          ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1 ) );
     if ( bool( $scope->property_u('point') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
         $scope->property_u('say')
-          ->call_u( [ str( $f, "The point exists!" ) ], $scope );
+          ->call_u( [ str( $f, "The point exists!" ) ], $scope, undef, 4 );
         $scope->property_u('inspect')
-          ->call_u( [ $scope->property_u('point') ], $scope );
+          ->call_u( [ $scope->property_u('point') ], $scope, undef, 5 );
     }
 
     # Inside
@@ -189,7 +189,7 @@ my $result = do {
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Point: " ), $scope->property_u('point') ) ],
-        $scope );
+        $scope, undef, 13 );
     FF::on( $scope, 'say', $self, $scope,
         $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
@@ -197,18 +197,19 @@ my $result = do {
         $context,
         r => $scope->property_u('say')->call_u(
             { message => str( $f, "It was said" ), twice => Ferret::true },
-            $scope
+            $scope, undef, 22
         )
     );
     if ( bool( $scope->property_u('r')->property_u('didTwice') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
         $scope->property_u('say')
-          ->call_u( [ str( $f, "Did the first one twice!" ) ], $scope );
+          ->call_u( [ str( $f, "Did the first one twice!" ) ],
+            $scope, undef, 25 );
     }
     $scope->property_u('say')->call_u(
         [ str( $f, "this should ignore the second parameter" ), Ferret::true ],
-        $scope
+        $scope, undef, 27
     );
 };
 

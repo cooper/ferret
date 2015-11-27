@@ -158,7 +158,7 @@ my $result = do {
                         $self->property_u('real')
                     )
                 ],
-                $scope
+                $scope, undef, 14
             );
             $self->property_u('send')->call_u(
                 [
@@ -166,7 +166,7 @@ my $result = do {
                         $scope, str( $f, "NICK " ), $self->property_u('nick')
                     )
                 ],
-                $scope
+                $scope, undef, 15
             );
             return $return;
         }
@@ -187,7 +187,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope
+                $scope, undef, 21
             );
             return $return;
         }
@@ -208,7 +208,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope
+                $scope, undef, 26
             );
             return $return;
         }
@@ -260,14 +260,14 @@ my $result = do {
                     $self->set_property( real => $want_val );
                 };
                 $scope->property_u('Socket::TCP')->property_u('init')
-                  ->call_u( [ $scope->{special}->property_u('self') ], $scope )
-                  ->call_u(
+                  ->call_u( [ $scope->{special}->property_u('self') ],
+                    $scope, undef, 9 )->call_u(
                     {
                         addr => $self->property_u('address'),
                         port => $self->property_u('port')
                     },
-                    $scope
-                  );
+                    $scope, undef, 9
+                    );
                 $self->set_property( send => $self->property_u('println') );
                 FF::on(
                     $self,

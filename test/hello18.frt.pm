@@ -115,7 +115,7 @@ my $result = do {
     $scope->set_property_ow( $context,
         list => FF::create_list( $f, [ str( $f, "hi" ) ] ) );
     $scope->property_u('list')->property_u('push')
-      ->call_u( [ str( $f, "there" ) ], $scope );
+      ->call_u( [ str( $f, "there" ) ], $scope, undef, 2 );
     $scope->property_u('list')
       ->set_index_value( [ num( $f, 4 ) ], str( $f, "yeah" ), $scope );
     $scope->property_u('say')->call_u(
@@ -126,7 +126,7 @@ my $result = do {
                 $scope->property_u('list')->property_u('length')
             )
         ],
-        $scope
+        $scope, undef, 5
     );
     FF::iterate(
         $f, $scope,
@@ -141,7 +141,7 @@ my $result = do {
                         $scope->property_u('item')
                     )
                 ],
-                $scope
+                $scope, undef, 8
             );
         }
     );
@@ -160,7 +160,7 @@ my $result = do {
                   ->get_index_value( [ str( $f, "whats" ) ], $scope )
             )
         ],
-        $scope
+        $scope, undef, 15
     );
     FF::iterate_pair(
         $f, $scope,
@@ -176,7 +176,7 @@ my $result = do {
                         $scope->property_u('val')
                     )
                 ],
-                $scope
+                $scope, undef, 18
             );
         }
     );

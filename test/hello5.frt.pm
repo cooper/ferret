@@ -230,7 +230,7 @@ my $result = do {
                             add( $scope, $self->property_u('x'), num( $f, 1 ) ),
                             $self->property_u('y')
                         ],
-                        $scope
+                        $scope, undef, 10
                     )
                 );
                 return $scope->property_u('pt');
@@ -260,7 +260,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return $self->property_u('pretty')->call_u( {}, $scope );
+                return $self->property_u('pretty')
+                  ->call_u( {}, $scope, undef, 19 );
                 return $return;
             }
         );
@@ -308,7 +309,7 @@ my $result = do {
                             num( $f, 2 )
                         )
                     },
-                    $scope
+                    $scope, undef, 24
                 );
                 return $return;
             }
@@ -337,27 +338,28 @@ my $result = do {
     FF::load_namespaces( $context, qw(Point) );
     $scope->set_property_ow( $context,
         pt => $scope->property_u('Point')
-          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope ) );
+          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32 ) );
     $scope->property_u('say')
       ->call_u( [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
-        $scope );
+        $scope, undef, 33 );
     $scope->set_property_ow( $context,
         rpt => $scope->property_u('pt')->property_u('oneToRight')
-          ->call_u( {}, $scope ) );
+          ->call_u( {}, $scope, undef, 35 ) );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
-        $scope );
+        $scope, undef, 36 );
     $scope->set_property_ow(
         $context,
         mdpt => $scope->property_u('Point')->property_u('midpoint')->call_u(
-            [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope
+            [ $scope->property_u('pt'), $scope->property_u('rpt') ],
+            $scope, undef, 38
         )
     );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt') ) ],
-        $scope );
+        $scope, undef, 39 );
     $scope->set_property_ow(
         $context,
         nineteen => add(
@@ -373,7 +375,7 @@ my $result = do {
                 $scope->property_u('nineteen')
             )
         ],
-        $scope
+        $scope, undef, 42
     );
 };
 

@@ -73,7 +73,7 @@ my $result = do {
                         $scope->property_u('who'), str( $f, "!" )
                     )
                 ],
-                $scope
+                $scope, undef, 3
             );
             return $return;
         }
@@ -83,13 +83,13 @@ my $result = do {
     {
         my $maybe_0 = $scope->property_u('sayHello');
         if ( bool($maybe_0) ) {
-            $maybe_0->call_u( [ str( $f, "World" ) ], $scope );
+            $maybe_0->call_u( [ str( $f, "World" ) ], $scope, undef, 6 );
         }
     }
     {
         my $maybe_0 = $scope->property_u('sayGoodbye');
         if ( bool($maybe_0) ) {
-            $maybe_0->call_u( [ str( $f, "World" ) ], $scope );
+            $maybe_0->call_u( [ str( $f, "World" ) ], $scope, undef, 7 );
         }
     }
 };

@@ -121,7 +121,7 @@ my $result = do {
                 width  => num( $f, 12 ),
                 height => num( $f, 10 )
             },
-            $scope
+            $scope, undef, 1
         )
     );
     $scope->set_property_ow( $context,
@@ -133,7 +133,7 @@ my $result = do {
                 $scope->property_u('center')
             )
         ],
-        $scope
+        $scope, undef, 4
     );
     $scope->property_u('say')->call_u(
         [
@@ -143,18 +143,18 @@ my $result = do {
                 $scope->property_u('center')->property_u('distanceFromOrigin')
             )
         ],
-        $scope
+        $scope, undef, 5
     );
     $scope->set_property_ow( $context,
         otherPt => $scope->property_u('Math::Point')
-          ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope ) );
+          ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7 ) );
     $scope->set_property_ow(
         $context,
         midpoint => FF::create_set(
             $scope, $scope->property_u('center'),
             $scope->property_u('otherPt')
-          )->property_u('midpoint')->call_u( {}, $scope )->property_u('pretty')
-          ->call_u( {}, $scope )
+          )->property_u('midpoint')->call_u( {}, $scope, undef, 8 )
+          ->property_u('pretty')->call_u( {}, $scope, undef, 8 )
     );
     $scope->property_u('say')->call_u(
         [
@@ -163,7 +163,7 @@ my $result = do {
                 $scope->property_u('midpoint')
             )
         ],
-        $scope
+        $scope, undef, 9
     );
     $scope->property_u('say')->call_u(
         [
@@ -171,10 +171,10 @@ my $result = do {
                 $scope,
                 str( $f, "Square root of four: " ),
                 $scope->property_u('Math')->property_u('sqrt')
-                  ->call_u( [ num( $f, 4 ) ], $scope )
+                  ->call_u( [ num( $f, 4 ) ], $scope, undef, 11 )
             )
         ],
-        $scope
+        $scope, undef, 11
     );
 };
 

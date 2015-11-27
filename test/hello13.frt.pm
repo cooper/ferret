@@ -82,7 +82,7 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
-              ->call_u( [ str( $f, "five seconds up" ) ], $scope );
+              ->call_u( [ str( $f, "five seconds up" ) ], $scope, undef, 4 );
             return $return;
         }
     );
@@ -95,30 +95,36 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
-              ->call_u( [ str( $f, "this shouldn't be said" ) ], $scope );
+              ->call_u( [ str( $f, "this shouldn't be said" ) ],
+                $scope, undef, 9 );
             return $return;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $scope->property_u('say')->call_u( [ str( $f, "hello" ) ], $scope );
+    $scope->property_u('say')
+      ->call_u( [ str( $f, "hello" ) ], $scope, undef, 1 );
     FF::on(
-        $scope->property_u('Timer')->call_u( [ num( $f, 5 ) ], $scope )
-          ->property_u('once')->call_u( {}, $scope ),
+        $scope->property_u('Timer')
+          ->call_u( [ num( $f, 5 ) ], $scope, undef, 3 )->property_u('once')
+          ->call_u( {}, $scope, undef, 3 ),
         'expire',
         $self,
         $scope,
         $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
     $scope->set_property_ow( $context,
-        t2 => $scope->property_u('Timer')->call_u( [ num( $f, 2 ) ], $scope ) );
+        t2 => $scope->property_u('Timer')
+          ->call_u( [ num( $f, 2 ) ], $scope, undef, 7 ) );
     FF::on(
-        $scope->property_u('t2')->property_u('once')->call_u( {}, $scope ),
+        $scope->property_u('t2')->property_u('once')
+          ->call_u( {}, $scope, undef, 8 ),
         'expire',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
-    $scope->property_u('t2')->property_u('cancel')->call_u( {}, $scope );
+    $scope->property_u('t2')->property_u('cancel')
+      ->call_u( {}, $scope, undef, 12 );
 };
 
 FF::after_content();

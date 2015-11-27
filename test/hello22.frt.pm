@@ -338,41 +338,41 @@ my $result = do {
     }
     FF::load_namespaces( $context, qw(Cat Cow Dog) );
     $scope->set_property_ow( $context,
-        animal => $scope->property_u('Cow')->call_u( {}, $scope ) );
+        animal => $scope->property_u('Cow')->call_u( {}, $scope, undef, 58 ) );
     $scope->property_u('Dog')->property_u('init')
-      ->call_u( [ $scope->property_u('animal') ], $scope )
-      ->call_u( {}, $scope );
+      ->call_u( [ $scope->property_u('animal') ], $scope, undef, 60 )
+      ->call_u( {}, $scope, undef, 60 );
     $scope->property_u('say')->call_u(
         [
             $scope->property_u('animal')->property_u('moo')
-              ->call_u( {}, $scope )
+              ->call_u( {}, $scope, undef, 62 )
         ],
-        $scope
+        $scope, undef, 62
     );
     $scope->property_u('say')->call_u(
         [
             $scope->property_u('animal')->property_u('bark')
-              ->call_u( {}, $scope )
+              ->call_u( {}, $scope, undef, 63 )
         ],
-        $scope
+        $scope, undef, 63
     );
     $scope->property_u('Cat')->property_u('init')
-      ->call_u( [ $scope->property_u('animal') ], $scope )
-      ->call_u( { mean => Ferret::true }, $scope );
+      ->call_u( [ $scope->property_u('animal') ], $scope, undef, 65 )
+      ->call_u( { mean => Ferret::true }, $scope, undef, 65 );
     $scope->property_u('inspect')
-      ->call_u( [ $scope->property_u('animal') ], $scope );
+      ->call_u( [ $scope->property_u('animal') ], $scope, undef, 67 );
     $scope->set_property_ow( $context,
-        cat => $scope->property_u('Cat')->call_u( {}, $scope ) );
+        cat => $scope->property_u('Cat')->call_u( {}, $scope, undef, 69 ) );
     $scope->set_property_ow(
         $context,
         aftermath => FF::create_set(
             $scope,
             $scope->property_u('animal'),
             $scope->property_u('cat')
-        )->property_u('fight')->call_u( {}, $scope )
+        )->property_u('fight')->call_u( {}, $scope, undef, 71 )
     );
     $scope->property_u('say')
-      ->call_u( [ $scope->property_u('aftermath') ], $scope );
+      ->call_u( [ $scope->property_u('aftermath') ], $scope, undef, 72 );
 };
 
 FF::after_content();

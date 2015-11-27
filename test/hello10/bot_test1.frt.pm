@@ -55,10 +55,11 @@ my $result = do {
                 nick => str( $f, "ferret" ),
                 user => str( $f, "bot" )
             },
-            $scope
+            $scope, undef, 1
         )
     );
-    $scope->property_u('bot')->property_u('connect')->call_u( {}, $scope );
+    $scope->property_u('bot')->property_u('connect')
+      ->call_u( {}, $scope, undef, 2 );
 };
 
 FF::after_content();

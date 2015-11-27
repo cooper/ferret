@@ -163,7 +163,7 @@ my $result = do {
                         $self->property_u('real')
                     )
                 ],
-                $scope
+                $scope, undef, 12
             );
             $self->property_u('send')->call_u(
                 [
@@ -171,7 +171,7 @@ my $result = do {
                         $scope, str( $f, "NICK " ), $self->property_u('nick')
                     )
                 ],
-                $scope
+                $scope, undef, 13
             );
             return $return;
         }
@@ -192,7 +192,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope
+                $scope, undef, 19
             );
             return $return;
         }
@@ -249,7 +249,7 @@ my $result = do {
                             address => $self->property_u('addr'),
                             port    => $self->property_u('port')
                         },
-                        $scope
+                        $scope, undef, 9
                     )
                 );
                 FF::on(
@@ -282,7 +282,7 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $self->property_u('sock')->property_u('connect')
-                  ->call_u( {}, $scope );
+                  ->call_u( {}, $scope, undef, 25 );
                 return $return;
             }
         );
@@ -308,10 +308,10 @@ my $result = do {
                             $scope->property_u('line')
                         )
                     ],
-                    $scope
+                    $scope, undef, 30
                 );
                 $self->property_u('sock')->property_u('println')
-                  ->call_u( [ $scope->property_u('line') ], $scope );
+                  ->call_u( [ $scope->property_u('line') ], $scope, undef, 31 );
                 return $return;
             }
         );

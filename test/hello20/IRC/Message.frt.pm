@@ -195,7 +195,9 @@ my $result = do {
                     lineSplit =>
                       $self->property_u('line')->property_u('split')->call_u(
                         { separator => str( $f, " " ), limit => num( $f, 4 ) },
-                        $scope
+                        $scope,
+                        undef,
+                        6
                       )
                 );
                 $self->set_property( channel => $scope->property_u('lineSplit')
@@ -205,18 +207,20 @@ my $result = do {
                       ->get_index_value( [ num( $f, 0 ) ], $scope )
                       ->property_u('split')->call_u(
                         { separator => str( $f, "!" ), limit => num( $f, 2 ) },
-                        $scope
+                        $scope,
+                        undef,
+                        10
                       )->get_index_value( [ num( $f, 0 ) ], $scope )
                 );
                 $self->property_u('nickname')->property_u('trimPrefix')
-                  ->call_u( [ str( $f, ":" ) ], $scope );
+                  ->call_u( [ str( $f, ":" ) ], $scope, undef, 11 );
                 $self->set_property( message => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 3 ) ], $scope ) );
                 $self->property_u('message')->property_u('trimPrefix')
-                  ->call_u( [ str( $f, ":" ) ], $scope );
+                  ->call_u( [ str( $f, ":" ) ], $scope, undef, 15 );
                 $self->set_property(
                     parts => $self->property_u('message')->property_u('split')
-                      ->call_u( [ str( $f, " " ) ], $scope ) );
+                      ->call_u( [ str( $f, " " ) ], $scope, undef, 18 ) );
                 return $return;
             }
         );
@@ -233,7 +237,7 @@ my $result = do {
                         $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
                           ->property_u('hasPrefix')
-                          ->call_u( [ str( $f, "." ) ], $scope )
+                          ->call_u( [ str( $f, "." ) ], $scope, undef, 26 )
                     )
                   )
                 {
@@ -242,9 +246,9 @@ my $result = do {
                     $scope->set_property_ow( $context,
                         cmd => $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
-                          ->property_u('copy')->call_u( {}, $scope )
+                          ->property_u('copy')->call_u( {}, $scope, undef, 27 )
                           ->property_u('trimPrefix')
-                          ->call_u( [ str( $f, "." ) ], $scope ) );
+                          ->call_u( [ str( $f, "." ) ], $scope, undef, 27 ) );
                     if ( bool( $scope->property_u('cmd')->property_u('length') )
                       )
                     {
@@ -295,7 +299,7 @@ my $result = do {
                             num( $f, 1 )
                         )
                     },
-                    $scope
+                    $scope, undef, 42
                   )->get_index_value( [ $scope->property_u('wordN') ], $scope );
                 return $return;
             }

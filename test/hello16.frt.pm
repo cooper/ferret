@@ -54,14 +54,14 @@ my $result = do {
     FF::load_namespaces( $context, qw(Math Math::Point) );
     $scope->set_property_ow( $context, obj => str( $f, "hi" ) );
     $scope->property_u('Math::Point')->property_u('init')
-      ->call_u( [ $scope->property_u('obj') ], $scope )
-      ->call_u( [ num( $f, 1 ), num( $f, 1 ) ], $scope );
+      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 9 )
+      ->call_u( [ num( $f, 1 ), num( $f, 1 ) ], $scope, undef, 9 );
     $scope->property_u('say')->call_u(
         [
             $scope->property_u('obj')->property_u('pretty')
-              ->call_u( {}, $scope )
+              ->call_u( {}, $scope, undef, 11 )
         ],
-        $scope
+        $scope, undef, 11
     );
 };
 

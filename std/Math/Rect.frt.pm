@@ -249,7 +249,7 @@ my $result = do {
                 $self->set_property(
                     origin => $scope->property_u('Point')->call_u(
                         [ $scope->property_u('x'), $scope->property_u('y') ],
-                        $scope
+                        $scope, undef, 6
                     )
                 );
                 return $return;
@@ -304,7 +304,7 @@ my $result = do {
                         ),
                         $self->property_u('origin')->property_u('y')
                     ],
-                    $scope
+                    $scope, undef, 23
                 );
                 return $return;
             }
@@ -326,7 +326,7 @@ my $result = do {
                             $self->property_u('height')
                         )
                     ],
-                    $scope
+                    $scope, undef, 27
                 );
                 return $return;
             }
@@ -352,7 +352,7 @@ my $result = do {
                             $self->property_u('height')
                         )
                     ],
-                    $scope
+                    $scope, undef, 31
                 );
                 return $return;
             }
@@ -370,7 +370,7 @@ my $result = do {
                         $self->property_u('bottomLeft'),
                         $self->property_u('bottomRight')
                     ],
-                    $scope
+                    $scope, undef, 35
                 );
                 return $return;
             }
@@ -388,7 +388,7 @@ my $result = do {
                         $self->property_u('topLeft'),
                         $self->property_u('topRight')
                     ],
-                    $scope
+                    $scope, undef, 39
                 );
                 return $return;
             }
@@ -425,7 +425,7 @@ my $result = do {
                 return $scope->property_u('Point')
                   ->call_u(
                     [ $scope->property_u('x'), $scope->property_u('y') ],
-                    $scope );
+                    $scope, undef, 45 );
                 return $return;
             }
         );

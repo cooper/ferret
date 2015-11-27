@@ -72,7 +72,9 @@ sub get_value {
 
 sub _get_value {
     my ($hash, $arguments) = @_;
-    my $key = perl_string($arguments->{key} // $arguments->{index});
+    my $key = $arguments->{key} // $arguments->{index};
+    $key = $key->{sym_value} if length $key->{sym_value};
+    $key = perl_string($key);
     return $hash->get_value($key);
 }
 

@@ -35,10 +35,10 @@ sub desc        { lcfirst shift->type       }       # description string
 sub fake        { shift->{fake}             }       # is it fake
 sub type_or_tok { shift->type               }       # type
 sub t           { shift->type_or_tok        }       # shorthand type
-sub is_node     { } # isn't a node
-sub hold_instr  { } # can't hold an instruction
-sub tok         { } # has no token label
-sub perl_fmt    { }
+sub is_node     { }     # isn't a node
+sub hold_instr  { }     # can't hold an instruction
+sub tok         { }     # has no token label
+sub perl_fmt    { }     # must be overriden
 
 sub perl_fmt_do {
     my @args = shift->perl_fmt;

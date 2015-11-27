@@ -256,10 +256,18 @@ sub c_CLOSURE_E {
     $c->close_closure;
     $c->close_node;
 
-    # this is a closure-capturing function call. terminate the call.
-    my $upper_call = $c->node->first_self_or_parent('Call');
-    if ($closure->{call_closure} && $upper_call->{call_capturing_closure}) {
-        $c->close_node_until($upper_call->parent);
+    # this is a closure-capturing function call.
+    if ($closure->{call_closure}) {
+
+        # terminate the call.
+        my $upper_call = $c->node->first_self_or_parent('Call');
+        if ($upper_call->{call_capturing_closure}) {
+            $c->close_node_until($upper_call->parent);
+        }
+
+        # simulate a semicolon.
+        c_OP_SEMI($c);
+
     }
 
     return;

@@ -11,7 +11,7 @@ use Ferret::Core::ErrorSubs;
 
 our %errors = (
     CallOnNonFunction => {
-        message => "Cannot call non-function value (%s)"
+        message => "Cannot call non-function value (%s) line %s"
     },
     AssignmentToSpecialProperty => {
         message => "Cannot assign to special property '%s'"

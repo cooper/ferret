@@ -144,7 +144,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope
+                $scope, undef, 6
             );
             return $return;
         }
@@ -165,7 +165,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope
+                $scope, undef, 11
             );
             return $return;
         }
@@ -179,7 +179,7 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
-              ->call_u( [ str( $f, "NICK k" ) ], $scope );
+              ->call_u( [ str( $f, "NICK k" ) ], $scope, undef, 15 );
             $scope->property_u('sock')->property_u('println')->call_u(
                 [
                     add(
@@ -191,7 +191,7 @@ my $result = do {
                         str( $f, " :k" )
                     )
                 ],
-                $scope
+                $scope, undef, 16
             );
             return $return;
         }
@@ -205,7 +205,7 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
-              ->call_u( [ str( $f, "JOIN #k" ) ], $scope );
+              ->call_u( [ str( $f, "JOIN #k" ) ], $scope, undef, 22 );
             return $return;
         }
     );
@@ -214,11 +214,13 @@ my $result = do {
         $context,
         sock => $scope->property_u('Socket::TCP')->call_u(
             { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },
-            $scope
+            $scope,
+            undef,
+            1
         )
     );
     $scope->property_u('inspect')
-      ->call_u( [ $scope->property_u('sock') ], $scope );
+      ->call_u( [ $scope->property_u('sock') ], $scope, undef, 2 );
     FF::on( $scope->property_u('sock'), 'gotLine', $self, $scope,
         $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
@@ -228,10 +230,12 @@ my $result = do {
     FF::on( $scope->property_u('sock'), 'connected', $self, $scope,
         $func_2->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
-    $scope->property_u('sock')->property_u('connect')->call_u( {}, $scope );
+    $scope->property_u('sock')->property_u('connect')
+      ->call_u( {}, $scope, undef, 19 );
     FF::on(
-        $scope->property_u('Timer')->call_u( [ num( $f, 5 ) ], $scope )
-          ->property_u('once')->call_u( {}, $scope ),
+        $scope->property_u('Timer')
+          ->call_u( [ num( $f, 5 ) ], $scope, undef, 21 )->property_u('once')
+          ->call_u( {}, $scope, undef, 21 ),
         'expire',
         $self,
         $scope,

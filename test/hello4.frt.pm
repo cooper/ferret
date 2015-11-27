@@ -129,7 +129,7 @@ my $result = do {
     $func_0->inside_scope( makePoint => $scope, $scope, undef, undef, undef );
     $scope->set_property_ow( $context,
         pt => $scope->property_u('makePoint')
-          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope )
+          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11 )
           ->property_u('point') );
     $scope->property_u('say')->call_u(
         [
@@ -142,7 +142,7 @@ my $result = do {
                 str( $f, ")" )
             )
         ],
-        $scope
+        $scope, undef, 12
     );
     $scope->set_property_ow(
         $context,

@@ -241,7 +241,7 @@ my $result = do {
                             )
                         )
                     ],
-                    $scope
+                    $scope, undef, 12
                 );
                 return $return;
             }
@@ -256,10 +256,12 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property_u('distanceTo')->call_u(
                     [
-                        $scope->{special}->property_u('class')
-                          ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope )
+                        $scope->{special}->property_u('class')->call_u(
+                            [ num( $f, 0 ), num( $f, 0 ) ], $scope,
+                            undef, 16
+                        )
                     ],
-                    $scope
+                    $scope, undef, 16
                 );
                 return $return;
             }
@@ -348,7 +350,7 @@ my $result = do {
                             num( $f, 2 )
                         )
                     },
-                    $scope
+                    $scope, undef, 33
                 );
                 return $return;
             }
@@ -377,7 +379,7 @@ my $result = do {
                 FF::need( $scope, $arguments, 'pt1' ) or return;
                 FF::need( $scope, $arguments, 'pt2' ) or return;
                 return $scope->property_u('pt1')->property_u('distanceTo')
-                  ->call_u( [ $scope->property_u('pt2') ], $scope );
+                  ->call_u( [ $scope->property_u('pt2') ], $scope, undef, 41 );
                 return $return;
             }
         );
