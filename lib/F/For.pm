@@ -27,6 +27,11 @@ sub new {
     );
     $for->adopt($exp);
 
+    # create the body.
+    my $body = F::FunctionBody->new;
+    weaken($for->{body} = $body);
+    $for->adopt($body);
+
     return $for;
 }
 
@@ -47,11 +52,7 @@ sub perl_fmt {
     $var1->type eq 'LexicalVariable' or die;
 
     # get content.
-    my $content = '';
-    foreach my $child ($for->ordered_children) {
-        next if $child == $var_exp || $child == $collection;
-        $content .= $child->perl_fmt_do."\n";
-    }
+    my $content = $for->body->body_fmt_do;
 
     return $var2 ? 'for_each_hash' : 'for_each_list' => {
         collection  => $collection->perl_fmt_do,
@@ -62,7 +63,8 @@ sub perl_fmt {
 }
 
 sub hold_instr   { 1 }
-sub param_exp    { shift->{param_exp} }
+sub body         { shift->{body}         }
+sub param_exp    { shift->{param_exp}    }
 sub in_param_exp { shift->{in_param_exp} }
 sub is_closure   { 1 }
 sub type         { 'For' }

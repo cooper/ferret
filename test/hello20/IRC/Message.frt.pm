@@ -90,28 +90,30 @@
 #                              Argument list [1 items]
 #                                  Item 0
 #                                      String '.'
-#                      Instruction
-#                          Assignment (lexical variable '$cmd')
-#                              Call
-#                                  Property 'trimPrefix'
-#                                      Call
-#                                          Property 'copy'
-#                                              Index
-#                                                  Instance variable '@parts'
-#                                                  Single value [1 items]
-#                                                      Item 0
-#                                                          Number '0'
-#                                          Argument list [0 items]
-#                                  Argument list [1 items]
-#                                      Item 0
-#                                          String '.'
-#                      If
-#                          Expression ('if' parameter)
-#                              Property 'length'
-#                                  Lexical variable '$cmd'
+#                      Function body
 #                          Instruction
-#                              Return
-#                                  Lexical variable '$cmd'
+#                              Assignment (lexical variable '$cmd')
+#                                  Call
+#                                      Property 'trimPrefix'
+#                                          Call
+#                                              Property 'copy'
+#                                                  Index
+#                                                      Instance variable '@parts'
+#                                                      Single value [1 items]
+#                                                          Item 0
+#                                                              Number '0'
+#                                              Argument list [0 items]
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              String '.'
+#                          If
+#                              Expression ('if' parameter)
+#                                  Property 'length'
+#                                      Lexical variable '$cmd'
+#                              Function body
+#                                  Instruction
+#                                      Return
+#                                          Lexical variable '$cmd'
 #                  Instruction
 #                      Return
 #                          Boolean false

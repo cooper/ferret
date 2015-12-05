@@ -34,7 +34,7 @@ sub body_fmt_do {
         }
 
     }
-    return ($content, \@arguments);
+    return wantarray ? ($content, @arguments) : $content;
 }
 
 1

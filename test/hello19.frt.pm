@@ -13,15 +13,16 @@
 #              Lexical variable '$word'
 #          Expression ('in' parameter)
 #              Lexical variable '$words'
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Argument list [1 items]
-#                      Item 0
-#                          Operation
-#                              String 'part: '
-#                              Addition operator (+)
-#                              Lexical variable '$word'
+#          Function body
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Argument list [1 items]
+#                          Item 0
+#                              Operation
+#                                  String 'part: '
+#                                  Addition operator (+)
+#                                  Lexical variable '$word'
 use warnings;
 use strict;
 use utf8;

@@ -13,9 +13,10 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@moos'
-#                      Instruction
-#                          Return
-#                              String 'moo'
+#                      Function body
+#                          Instruction
+#                              Return
+#                                  String 'moo'
 #                  Instruction
 #                      Return
 #                          String 'I am a non...'
@@ -32,9 +33,10 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@barks'
-#                      Instruction
-#                          Return
-#                              String 'bark'
+#                      Function body
+#                          Instruction
+#                              Return
+#                                  String 'bark'
 #                  Instruction
 #                      Return
 #                          String 'I had my b...'
@@ -65,16 +67,18 @@
 #                      Expression ('if' parameter)
 #                          Property 'mean'
 #                              Lexical variable '$cat1'
-#                      Instruction
-#                          Return
-#                              String 'Cat 1 star...'
+#                      Function body
+#                          Instruction
+#                              Return
+#                                  String 'Cat 1 star...'
 #                  If
 #                      Expression ('if' parameter)
 #                          Property 'mean'
 #                              Lexical variable '$cat2'
-#                      Instruction
-#                          Return
-#                              String 'Cat 2 star...'
+#                      Function body
+#                          Instruction
+#                              Return
+#                                  String 'Cat 2 star...'
 #                  Instruction
 #                      Return
 #                          String 'nice cats ...'

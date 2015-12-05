@@ -291,10 +291,11 @@ sub c_KEYWORD_INSIDE {
 
     # create a closure to be opened soon.
     my $inside = F::Inside->new(type => 'Inside');
-    $c->capture_closure_with($inside);
+    $c->capture_closure_with($inside->body);
     $c->node->adopt($inside);
 
     # set the current node to the inside expression.
+    $inside->param_exp->{set_body} = $inside->body;
     $c->set_node($inside->param_exp);
 
     return $inside;
@@ -323,24 +324,25 @@ sub c_KEYWORD_IF {
     # create an if statement which expects a closure to be opened soon.
     my $if = F::If->new(type => 'If');
     $c->node->adopt($if);
-    $c->capture_closure_with($if);
+    $c->capture_closure_with($if->body);
 
     # set the current node to the conditional expression.
+    $if->param_exp->{set_body} = $if->body;
     $c->set_node($if->param_exp);
 
     return $if;
 }
 
-sub c_KEYWORD_THEN {
-    my ($c, $value) = @_;
-
-    my $then = F::Node->new(type => 'Then');
-
-    $c->adopt_and_set_node($then);
-    $c->capture_closure_with($then);
-
-    return $then;
-}
+# sub c_KEYWORD_THEN {
+#     my ($c, $value) = @_;
+#
+#     my $then = F::Node->new(type => 'Then');
+#
+#     $c->adopt_and_set_node($then);
+#     $c->capture_closure_with($then);
+#
+#     return $then;
+# }
 
 sub c_KEYWORD_FOR {
     my ($c, $value) = @_;
@@ -349,9 +351,10 @@ sub c_KEYWORD_FOR {
     my $for = F::For->new(type => 'For');
 
     $c->node->adopt($for);
-    $c->capture_closure_with($for);
+    $c->capture_closure_with($for->body);
 
     # set the node to the for parameter.
+    $for->param_exp->{set_body} = $for->body;
     $c->set_node($for->param_exp);
 
     return $for;
@@ -365,8 +368,12 @@ sub c_KEYWORD_IN {
         $c->node->{parameter_for} && $c->node->{parameter_for} eq 'for';
         # FIXME: if wrapped in parentheses, this will fail.
 
+    my $for_exp = $c->node;
+    delete $for_exp->{set_body};
+
     # set the node to the 'in' parameter.
     my $for = $c->close_node;
+    $for->in_param_exp->{set_body} = $for->body;
     return $c->set_node($for->in_param_exp);
 
 }
@@ -690,8 +697,9 @@ sub c_OP_SEMI {
     $c->close_instruction;
 
     # maybe now we can terminate an inline If.
-    $c->close_node
-        if $c->node->type eq 'If' && $c->node->{inline};
+    my ($n, $p) = ($c->node, $c->node->parent);
+    $c->close_node(2)
+        if $p && $n->type eq 'FunctionBody' && $p->type eq 'If' && $p->{inline};
 
     return;
 }
@@ -780,6 +788,7 @@ sub c_OP_VALUE {
     if (($c->node->{parameter_for} || '') eq 'if') {
         my $if = $c->close_node;
         $if->{inline} = 1;
+        $c->set_node($if->body);
         return $if;
     }
 

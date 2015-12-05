@@ -30,15 +30,16 @@
 #              Lexical variable '$item'
 #          Expression ('in' parameter)
 #              Lexical variable '$list'
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Argument list [1 items]
-#                      Item 0
-#                          Operation
-#                              String 'item: '
-#                              Addition operator (+)
-#                              Lexical variable '$item'
+#          Function body
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Argument list [1 items]
+#                          Item 0
+#                              Operation
+#                                  String 'item: '
+#                                  Addition operator (+)
+#                                  Lexical variable '$item'
 #      Instruction
 #          Assignment (lexical variable '$hash')
 #              Hash [1 items]
@@ -73,19 +74,20 @@
 #                      Lexical variable '$val'
 #          Expression ('in' parameter)
 #              Lexical variable '$hash'
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Argument list [1 items]
-#                      Item 0
-#                          Operation
-#                              String 'pair: key='
-#                              Addition operator (+)
-#                              Lexical variable '$key'
-#                              Addition operator (+)
-#                              String '; value='
-#                              Addition operator (+)
-#                              Lexical variable '$val'
+#          Function body
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Argument list [1 items]
+#                          Item 0
+#                              Operation
+#                                  String 'pair: key='
+#                                  Addition operator (+)
+#                                  Lexical variable '$key'
+#                                  Addition operator (+)
+#                                  String '; value='
+#                                  Addition operator (+)
+#                                  Lexical variable '$val'
 use warnings;
 use strict;
 use utf8;

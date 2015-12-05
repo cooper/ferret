@@ -31,9 +31,7 @@ sub new {
 
 sub perl_fmt {
     my $method = shift;
-
-    my ($content, $arguments) = $method->body->body_fmt_do;
-    my @arguments = @$arguments;
+    my ($content, @arguments) = $method->body->body_fmt_do;
 
     my $class = $method->class;
     my $info = {

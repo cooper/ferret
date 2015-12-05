@@ -12,27 +12,29 @@
 #      If
 #          Expression ('if' parameter)
 #              Lexical variable '$point'
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Argument list [1 items]
-#                      Item 0
-#                          String 'The point ...'
-#          Instruction
-#              Call
-#                  Bareword 'inspect'
-#                  Argument list [1 items]
-#                      Item 0
-#                          Lexical variable '$point'
+#          Function body
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Argument list [1 items]
+#                          Item 0
+#                              String 'The point ...'
+#              Instruction
+#                  Call
+#                      Bareword 'inspect'
+#                      Argument list [1 items]
+#                          Item 0
+#                              Lexical variable '$point'
 #      Inside
 #          Expression ('inside' parameter)
 #              Lexical variable '$point'
-#          Instruction
-#              Assignment (lexical variable '$x')
-#                  Number '5'
-#          Instruction
-#              Assignment (lexical variable '$y')
-#                  Number '10'
+#          Function body
+#              Instruction
+#                  Assignment (lexical variable '$x')
+#                      Number '5'
+#              Instruction
+#                  Assignment (lexical variable '$y')
+#                      Number '10'
 #      Instruction
 #          Call
 #              Bareword 'say'
@@ -56,15 +58,16 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Lexical variable '$twice'
-#                      Instruction
-#                          Call
-#                              Bareword 'say'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$message'
-#                                          Addition operator (+)
-#                                          String ' again'
+#                      Function body
+#                          Instruction
+#                              Call
+#                                  Bareword 'say'
+#                                  Argument list [1 items]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$message'
+#                                              Addition operator (+)
+#                                              String ' again'
 #                  Instruction
 #                      Return pair 'didTwice'
 #                          Lexical variable '$twice'
@@ -83,12 +86,13 @@
 #          Expression ('if' parameter)
 #              Property 'didTwice'
 #                  Lexical variable '$r'
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Argument list [1 items]
-#                      Item 0
-#                          String 'Did the fi...'
+#          Function body
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Argument list [1 items]
+#                          Item 0
+#                              String 'Did the fi...'
 #      Instruction
 #          Call
 #              Bareword 'say'

@@ -23,19 +23,17 @@ sub new {
     $ins->adopt($exp);
     weaken($ins->{param_exp} = $exp);
 
+    # create the body.
+    my $body = F::FunctionBody->new;
+    weaken($ins->{body} = $body);
+    $ins->adopt($body);
+
     return $ins;
 }
 
 sub perl_fmt {
     my $ins = shift;
-
-    # get content.
-    my $content = '';
-    foreach my $child ($ins->ordered_children) {
-        next if $child == $ins->{param_exp};
-        $content .= $child->perl_fmt_do."\n";
-    }
-
+    my $content = $ins->body->body_fmt_do;
     return inside => {
         expression => $ins->{param_exp}->perl_fmt_do,
         content    => $content
@@ -43,6 +41,7 @@ sub perl_fmt {
 }
 
 sub param_exp  { shift->{param_exp} }
+sub body       { shift->{body}      }
 sub is_closure { 1 }
 sub hold_instr { 1 }
 sub type       { 'Inside' }

@@ -41,9 +41,7 @@ sub close : method {
 
 sub perl_fmt {
     my $func = shift;
-
-    my ($content, $arguments) = $func->body->body_fmt_do;
-    my @arguments = @$arguments;
+    my ($content, @arguments) = $func->body->body_fmt_do;
 
     my $info = {
         anonymous  => $func->{anonymous},

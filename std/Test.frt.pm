@@ -194,26 +194,28 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Lexical variable '$yes'
-#                      Instruction
-#                          Assignment (instance variable '@passed')
-#                              Operation
-#                                  Instance variable '@passed'
-#                                  Addition operator (+)
-#                                  Number '1'
-#                      Instruction
-#                          Return
+#                      Function body
+#                          Instruction
+#                              Assignment (instance variable '@passed')
+#                                  Operation
+#                                      Instance variable '@passed'
+#                                      Addition operator (+)
+#                                      Number '1'
+#                          Instruction
+#                              Return
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@fatal'
-#                      Instruction
-#                          Call
-#                              Property 'panic'
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [1 items]
-#                                          Item 0
-#                                              Lexical variable '$message'
-#                              Argument list [0 items]
+#                      Function body
+#                          Instruction
+#                              Call
+#                                  Property 'panic'
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [1 items]
+#                                              Item 0
+#                                                  Lexical variable '$message'
+#                                  Argument list [0 items]
 #                  Instruction
 #                      Return pair 'message'
 #                          Lexical variable '$message'

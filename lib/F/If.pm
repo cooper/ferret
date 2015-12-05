@@ -23,6 +23,11 @@ sub new {
     $if->adopt($exp);
     weaken($if->{param_exp} = $exp);
 
+    # body.
+    my $body = F::FunctionBody->new;
+    weaken($if->{body} = $body);
+    $if->adopt($body);
+
     return $if;
 }
 
@@ -31,12 +36,8 @@ sub perl_fmt {
     $if->document->{required_operations}{bool}++;
 
     # get content.
-    my $content = '';
-    foreach my $child ($if->ordered_children) {
-        next if $child == $if->{param_exp};
-        $content .= $child->perl_fmt_do."\n";
-    }
-
+    my $content = $if->body->body_fmt_do;
+    
     return if => {
         condition => $if->{param_exp}->perl_fmt_do,
         content   => $content
@@ -44,6 +45,7 @@ sub perl_fmt {
 }
 
 sub param_exp  { shift->{param_exp} }
+sub body       { shift->{body}      }
 sub is_closure { 1 }
 sub hold_instr { 1 }
 sub type       { 'If' }

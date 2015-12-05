@@ -17,32 +17,33 @@
 #                      Lexical variable '$part'
 #          Expression ('in' parameter)
 #              Lexical variable '$parts'
-#          On
-#              Expression ('on' parameter)
-#                  Property 'expire'
-#                      Call
-#                          Property 'once'
+#          Function body
+#              On
+#                  Expression ('on' parameter)
+#                      Property 'expire'
+#                          Call
+#                              Property 'once'
+#                                  Call
+#                                      Bareword 'Timer'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Lexical variable '$i'
+#                              Argument list [0 items]
+#                  Anonymous function
+#                      Function body
+#                          Instruction
 #                              Call
-#                                  Bareword 'Timer'
+#                                  Bareword 'say'
 #                                  Argument list [1 items]
 #                                      Item 0
-#                                          Lexical variable '$i'
-#                          Argument list [0 items]
-#              Anonymous function
-#                  Function body
-#                      Instruction
-#                          Call
-#                              Bareword 'say'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String '('
-#                                          Addition operator (+)
-#                                          Lexical variable '$i'
-#                                          Addition operator (+)
-#                                          String ') '
-#                                          Addition operator (+)
-#                                          Lexical variable '$part'
+#                                          Operation
+#                                              String '('
+#                                              Addition operator (+)
+#                                              Lexical variable '$i'
+#                                              Addition operator (+)
+#                                              String ') '
+#                                              Addition operator (+)
+#                                              Lexical variable '$part'
 #      For
 #          Expression ('for' parameter)
 #              Lexical variable '$part'
@@ -54,12 +55,13 @@
 #                      Number '2'
 #                  Item 2
 #                      Number '3'
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Argument list [1 items]
-#                      Item 0
-#                          Lexical variable '$part'
+#          Function body
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Argument list [1 items]
+#                          Item 0
+#                              Lexical variable '$part'
 #      Include (Timer)
 use warnings;
 use strict;
