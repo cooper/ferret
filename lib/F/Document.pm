@@ -4,7 +4,7 @@ package F::Document;
 use warnings;
 use strict;
 use 5.010;
-use parent 'F::Node';
+use parent 'F::ScopeOwner';
 
 sub new {
     my ($class, %opts) = @_;

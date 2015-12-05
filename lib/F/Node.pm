@@ -56,11 +56,21 @@ sub ordered_children {
 
 sub filter_children {
     my ($node, %rules) = @_;
-    my @children = $node->children;
-    my %ignore  = map { $_ => 1 } split /\s+/, $rules{ignore} || '';
-    my %types   = map { $_ => 1 } split /\s+/, $rules{type}   || '';
-    my @order   =                 split /\s+/, $rules{order}  || '';
-    my %order   = map { $_ => 1 } @order;
+    return _filter_children($node, [ $node->children ], %rules);
+}
+
+sub filter_descendants {
+    my ($node, %rules) = @_;
+    return _filter_children($node, [ $node->descendants ], %rules);
+}
+
+sub _filter_children {
+    my ($node, $children, %rules) = @_;
+    my @children = @$children;
+    my %ignore   = map { $_ => 1 } split /\s+/, $rules{ignore} || '';
+    my %types    = map { $_ => 1 } split /\s+/, $rules{type}   || '';
+    my @order    =                 split /\s+/, $rules{order}  || '';
+    my %order    = map { $_ => 1 } @order;
 
     # separate by types for ordering.
     my (%ordered, @ordered);
@@ -112,6 +122,17 @@ sub close : method {
     return $node->{return_on_close} || $node->{parent};
 }
 
+sub descendants {
+    my ($node, @children) = shift;
+    my $add; $add = sub {
+        my $el = shift;
+        push @children, $el unless $el == $node;
+        return unless $el->isa('F::Node');
+        $add->($_) foreach $el->children;
+    };
+    $add->($node);
+    return @children;
+}
 
 sub type        { 'Node'                  } # element type
 sub is_node     { 1                       } # is a node

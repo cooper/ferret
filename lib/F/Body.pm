@@ -4,7 +4,7 @@ package F::Body;
 use warnings;
 use strict;
 use 5.010;
-use parent 'F::Node';#'F::Scope';
+use parent 'F::ScopeOwner';
 
 sub type { 'Body'  }
 sub desc {

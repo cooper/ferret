@@ -9,12 +9,17 @@ use Scalar::Util qw(blessed);
 
 use Ferret::Lexer::Current;
 use Ferret::Lexer::Rules;
+use Ferret::Lexer::Scope;
+use Ferret::Lexer::Verifier;
 
 our ($current, $error);
 
 sub construct {
     my $main_node = shift;
+    my $err;
 
+    # CONSTRUCTOR
+    # ===========
     $current = Ferret::Lexer::Current->new(
         main_node => $main_node,
         file      => $main_node->{name} || 'unknown',
@@ -24,16 +29,24 @@ sub construct {
     );
 
     while (my ($label, $value, $line) = @{ shift || [] }) {
-        my $e = handle_label($label, $value, $line);
-        return $e if $e;
+        return $err if $err = handle_label($label, $value, $line);
     }
 
+    # inject includes and EOF.
     c_spaces($current, $main_node);
-    my $e = c_eof($current, $main_node);
-    return $e if $e;
-    Ferret::Lexer::RuleFunctions::final_check($main_node);
+    return $err if $err = c_eof($current, $main_node);
 
-    return $error;
+    # ENFORCER
+    # ========
+    Ferret::Lexer::RuleFunctions::final_check($main_node);
+    return $err if $err = check_error();
+
+    # VERIFIER
+    # ========
+    Ferret::Lexer::Verifier::verify($main_node);
+    return $err if $err = check_error();
+
+    return;
 }
 
 sub check_error {

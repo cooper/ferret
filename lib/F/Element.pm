@@ -59,11 +59,35 @@ sub unexpected {
     delete $c->{rule_el};
 }
 
+sub first_parent {
+    my ($el, $type) = @_;
+    while ($el = $el->{parent}) {
+        return $el if _check_type($el, $type);
+    }
+    return;
+}
+
 sub first_self_or_parent {
     my ($el, $type) = @_;
     do {
-        return $el if $el->type eq $type;
+        return $el if _check_type($el, $type);
     } while $el = $el->{parent};
+    return;
+}
+
+sub _check_type {
+    my ($el, $type) = @_;
+    my $use_isa;
+
+    # if it starts with @, it's a class, so use ->is_type
+    my $first = \substr($type, 0, 1);
+    if ($$first eq '@') {
+        $use_isa = 1;
+        $$first = '';
+    }
+
+    return $el->is_type($type) if $use_isa;
+    return $el->type eq $type;
     return;
 }
 
