@@ -193,6 +193,12 @@ sub c_METHOD {
 sub c_FUNCTION {
     my ($c, $value) = @_;
 
+    # if the current node is a class, it's a class method.
+    if ($c->node->type eq 'Class') {
+        $value->{main} = 1;
+        return c_METHOD($c, $value);
+    }
+
     my $function = F::Function->new(
         %$value,
         event_cb => !$value->{anonymous}

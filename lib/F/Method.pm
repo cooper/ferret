@@ -13,7 +13,7 @@ sub body { shift->{body} }
 
 sub desc {
     my $method = shift;
-    my $main = $method->{main}    ? 'main '             : '';
+    my $main = $method->{main}    ? 'class '            : '';
     my $type = $method->{is_prop} ? 'computed property' : 'method';
     my $lazy = $method->{p_set}   ? ' (lazy)'           : '';
     return "$main$type '$$method{name}'$lazy";

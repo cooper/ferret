@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/hello10/Bot1.frt'
 #      Class 'Bot1'
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need

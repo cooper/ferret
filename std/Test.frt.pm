@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './std/Test.frt'
 #      Class 'Test'
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Want

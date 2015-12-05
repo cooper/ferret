@@ -328,13 +328,7 @@ sub tok_BAREWORD {
     # method.
     if ($last->[0] eq 'KEYWORD_METHOD') {
         delete $tokens->[-1];
-
-        # is this a main method?
-        $last = $tokens->[-1];
-        my $main = $last && $last->[0] eq 'KEYWORD_MAIN' ?
-            !!delete $tokens->[-1] : undef;
-
-        return [ METHOD => { name => $value, main => $main } ]
+        return [ METHOD => { name => $value } ]
     }
 
 }

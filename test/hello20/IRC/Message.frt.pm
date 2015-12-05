@@ -2,7 +2,7 @@
 #  Document './test/hello20/IRC/Message.frt'
 #      Package 'IRC'
 #      Class 'Message'
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need

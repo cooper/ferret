@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/hello5.frt'
 #      Class 'Point' version 1.0
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
@@ -55,7 +55,7 @@
 #                          Call
 #                              Instance variable '@pretty'
 #                              Argument list [0 items]
-#          Main method 'midpoint'
+#          Class method 'midpoint'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need

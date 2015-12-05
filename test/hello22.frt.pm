@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/hello22.frt'
 #      Class 'Cow'
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Want
@@ -21,7 +21,7 @@
 #                      Return
 #                          String 'I am a non...'
 #      Class 'Dog'
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Want
@@ -41,7 +41,7 @@
 #                      Return
 #                          String 'I had my b...'
 #      Class 'Cat'
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Want
@@ -53,7 +53,7 @@
 #                  Instruction
 #                      Return
 #                          String 'meow'
-#          Main method 'fight'
+#          Class method 'fight'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need

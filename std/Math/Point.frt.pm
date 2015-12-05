@@ -2,7 +2,7 @@
 #  Document './std/Math/Point.frt'
 #      Package 'Math'
 #      Class 'Point'
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
@@ -88,7 +88,7 @@
 #                              String 'Point'
 #                              Addition operator (+)
 #                              Instance variable '@pretty'
-#          Main method 'midpoint'
+#          Class method 'midpoint'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
@@ -129,7 +129,7 @@
 #                                                              Lexical variable '$pt2'
 #                                              Division operator (/)
 #                                              Number '2'
-#          Main method 'distanceBetween'
+#          Class method 'distanceBetween'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need

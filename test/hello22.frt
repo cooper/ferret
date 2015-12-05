@@ -35,7 +35,7 @@ method meow {
 }
 
 # usage: (cat, othercat).fight()
-main method fight {
+func fight {
     need $cat1: Cat, $cat2: Cat;
     if $cat1.mean:
         return "Cat 1 started a catfight!";

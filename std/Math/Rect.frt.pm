@@ -2,7 +2,7 @@
 #  Document './std/Math/Rect.frt'
 #      Package 'Math'
 #      Class 'Rect'
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need

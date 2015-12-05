@@ -19,7 +19,7 @@ method toString {
     return @pretty();
 }
 
-main method midpoint {
+func midpoint {
     need $pt1, $pt2;
     return Point(
         x: ($pt1.x + $pt2.x) / 2,

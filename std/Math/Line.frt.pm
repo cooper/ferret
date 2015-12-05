@@ -2,7 +2,7 @@
 #  Document './std/Math/Line.frt'
 #      Package 'Math'
 #      Class 'Line'
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need

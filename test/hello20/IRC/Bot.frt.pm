@@ -2,7 +2,7 @@
 #  Document './test/hello20/IRC/Bot.frt'
 #      Package 'IRC'
 #      Class 'Bot'
-#          Main method '_init_'
+#          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
