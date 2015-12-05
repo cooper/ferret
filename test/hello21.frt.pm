@@ -17,7 +17,7 @@
 #                      Lexical variable '$part'
 #          Expression ('in' parameter)
 #              Lexical variable '$parts'
-#          Function body
+#          Body ('for' scope)
 #              On
 #                  Expression ('on' parameter)
 #                      Property 'expire'
@@ -30,7 +30,7 @@
 #                                              Lexical variable '$i'
 #                              Argument list [0 items]
 #                  Anonymous function
-#                      Function body
+#                      Body ('function' scope)
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'
@@ -55,7 +55,7 @@
 #                      Number '2'
 #                  Item 2
 #                      Number '3'
-#          Function body
+#          Body ('for' scope)
 #              Instruction
 #                  Call
 #                      Bareword 'say'

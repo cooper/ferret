@@ -24,7 +24,7 @@ sub new {
     weaken($ins->{param_exp} = $exp);
 
     # create the body.
-    my $body = F::FunctionBody->new;
+    my $body = F::Body->new;
     weaken($ins->{body} = $body);
     $ins->adopt($body);
 

@@ -29,7 +29,7 @@
 #                  Item 1
 #                      String 'George'
 #      Function 'helloWorld'
-#          Function body
+#          Body ('function' scope)
 #              Instruction
 #                  Need
 #                      Lexical variable '$name1'
@@ -45,7 +45,7 @@
 #                      Bareword 'hello2'
 #                      Argument list [0 items]
 #              Function 'hello1'
-#                  Function body
+#                  Body ('function' scope)
 #                      Instruction
 #                          Assignment (lexical variable '$hello')
 #                              String 'Hello'
@@ -65,7 +65,7 @@
 #                                          Property 'name'
 #                                              Lexical variable '$hello'
 #              Function 'hello2'
-#                  Function body
+#                  Body ('function' scope)
 #                      Instruction
 #                          Call
 #                              Bareword 'say'

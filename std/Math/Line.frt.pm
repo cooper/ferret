@@ -3,7 +3,7 @@
 #      Package 'Math'
 #      Class 'Line'
 #          Main method '_init_'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@pt1'
@@ -13,7 +13,7 @@
 #                          Instance variable '@pt2'
 #                          Bareword 'Point'
 #          Computed property 'endpoints'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Value list [2 items]
@@ -22,7 +22,7 @@
 #                              Item 1
 #                                  Instance variable '@pt2'
 #          Computed property 'pretty'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Assignment (lexical variable '$mp')
 #                          Instance variable '@midpoint'
@@ -83,12 +83,12 @@
 #                              Addition operator (+)
 #                              String ' )'
 #          Method 'description'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Instance variable '@pretty'
 #          Computed property 'midpoint'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -100,7 +100,7 @@
 #                                          Instance variable '@pt2'
 #                              Argument list [0 items]
 #          Computed property 'length'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Call

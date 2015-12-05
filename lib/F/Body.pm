@@ -1,13 +1,16 @@
 # Copyright 2015, Mitchell Cooper
-package F::FunctionBody;
+package F::Body;
 
 use warnings;
 use strict;
 use 5.010;
 use parent 'F::Node';#'F::Scope';
 
-sub type { 'FunctionBody'  }
-sub desc { 'function body' }
+sub type { 'Body'  }
+sub desc {
+    my $t = lcfirst shift->parent->type;
+    return "body ('$t' scope)";
+}
 
 sub hold_instr { 1 }
 sub is_closure { 1 }

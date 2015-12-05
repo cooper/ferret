@@ -262,7 +262,7 @@ sub c_CLOSURE_E {
     # close the closure and the node.
     my $closure = $c->closure;
     $c->close_closure;
-    $c->close_node($closure->type eq 'FunctionBody' ? 2 : 1);
+    $c->close_node($closure->type eq 'Body' ? 2 : 1);
 
     # this is a closure-capturing function call.
     if ($closure->{call_closure}) {
@@ -699,7 +699,7 @@ sub c_OP_SEMI {
     # maybe now we can terminate an inline If.
     my ($n, $p) = ($c->node, $c->node->parent);
     $c->close_node(2)
-        if $p && $n->type eq 'FunctionBody' && $p->type eq 'If' && $p->{inline};
+        if $p && $n->type eq 'Body' && $p->type eq 'If' && $p->{inline};
 
     return;
 }

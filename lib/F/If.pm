@@ -24,7 +24,7 @@ sub new {
     weaken($if->{param_exp} = $exp);
 
     # body.
-    my $body = F::FunctionBody->new;
+    my $body = F::Body->new;
     weaken($if->{body} = $body);
     $if->adopt($body);
 

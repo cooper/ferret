@@ -2,18 +2,18 @@
 #  Document './test/hello22.frt'
 #      Class 'Cow'
 #          Main method '_init_'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Want
 #                          Instance variable '@moos'
 #                          Expression ('want' parameter)
 #                              Boolean true
 #          Method 'moo'
-#              Function body
+#              Body ('method' scope)
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@moos'
-#                      Function body
+#                      Body ('if' scope)
 #                          Instruction
 #                              Return
 #                                  String 'moo'
@@ -22,18 +22,18 @@
 #                          String 'I am a non...'
 #      Class 'Dog'
 #          Main method '_init_'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Want
 #                          Instance variable '@barks'
 #                          Expression ('want' parameter)
 #                              Boolean false
 #          Method 'bark'
-#              Function body
+#              Body ('method' scope)
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@barks'
-#                      Function body
+#                      Body ('if' scope)
 #                          Instruction
 #                              Return
 #                                  String 'bark'
@@ -42,19 +42,19 @@
 #                          String 'I had my b...'
 #      Class 'Cat'
 #          Main method '_init_'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Want
 #                          Instance variable '@mean'
 #                          Expression ('want' parameter)
 #                              Boolean false
 #          Method 'meow'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          String 'meow'
 #          Main method 'fight'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$cat1'
@@ -67,7 +67,7 @@
 #                      Expression ('if' parameter)
 #                          Property 'mean'
 #                              Lexical variable '$cat1'
-#                      Function body
+#                      Body ('if' scope)
 #                          Instruction
 #                              Return
 #                                  String 'Cat 1 star...'
@@ -75,7 +75,7 @@
 #                      Expression ('if' parameter)
 #                          Property 'mean'
 #                              Lexical variable '$cat2'
-#                      Function body
+#                      Body ('if' scope)
 #                          Instruction
 #                              Return
 #                                  String 'Cat 2 star...'

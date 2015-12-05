@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'Message'
 #          Main method '_init_'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@line'
@@ -77,7 +77,7 @@
 #                                  Item 0
 #                                      String ' '
 #          Computed property 'command' (lazy)
-#              Function body
+#              Body ('method' scope)
 #                  If
 #                      Expression ('if' parameter)
 #                          Call
@@ -90,7 +90,7 @@
 #                              Argument list [1 items]
 #                                  Item 0
 #                                      String '.'
-#                      Function body
+#                      Body ('if' scope)
 #                          Instruction
 #                              Assignment (lexical variable '$cmd')
 #                                  Call
@@ -110,7 +110,7 @@
 #                              Expression ('if' parameter)
 #                                  Property 'length'
 #                                      Lexical variable '$cmd'
-#                              Function body
+#                              Body ('if' scope)
 #                                  Instruction
 #                                      Return
 #                                          Lexical variable '$cmd'
@@ -118,7 +118,7 @@
 #                      Return
 #                          Boolean false
 #          Computed property 'commandHasParameters' (lazy)
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Equality
@@ -126,7 +126,7 @@
 #                                  Instance variable '@parts'
 #                              Number '1'
 #          Method 'fromWord'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$wordN'

@@ -28,7 +28,7 @@ sub new {
     $for->adopt($exp);
 
     # create the body.
-    my $body = F::FunctionBody->new;
+    my $body = F::Body->new;
     weaken($for->{body} = $body);
     $for->adopt($body);
 

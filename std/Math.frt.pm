@@ -2,7 +2,7 @@
 #  Document './std/Math.frt'
 #      Package 'Math'
 #      Function 'sqrt'
-#          Function body
+#          Body ('function' scope)
 #              Instruction
 #                  Need
 #                      Lexical variable '$num'

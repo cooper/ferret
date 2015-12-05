@@ -3,7 +3,7 @@
 #      Package 'Math'
 #      Class 'Point'
 #          Main method '_init_'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@x'
@@ -13,7 +13,7 @@
 #                          Instance variable '@y'
 #                          Bareword 'Num'
 #          Method 'distanceTo'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt2'
@@ -47,7 +47,7 @@
 #                                          Exponent operator (^)
 #                                          Number '2'
 #          Computed property 'distanceFromOrigin'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -62,7 +62,7 @@
 #                                              Item 1
 #                                                  Number '0'
 #          Computed property 'pretty'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -76,12 +76,12 @@
 #                              Addition operator (+)
 #                              String ')'
 #          Method 'toString'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Instance variable '@pretty'
 #          Method 'description'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -89,7 +89,7 @@
 #                              Addition operator (+)
 #                              Instance variable '@pretty'
 #          Main method 'midpoint'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt1'
@@ -130,7 +130,7 @@
 #                                              Division operator (/)
 #                                              Number '2'
 #          Main method 'distanceBetween'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt1'

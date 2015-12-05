@@ -2,7 +2,7 @@
 #  Document './test/hello8.frt'
 #      Class 'String'
 #          Method 'doubledLength'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Operation

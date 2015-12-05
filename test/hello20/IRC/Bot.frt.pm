@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'Bot'
 #          Main method '_init_'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@addr'
@@ -73,7 +73,7 @@
 #                          Property 'connected'
 #                              Instance variable '@sock'
 #                      Anonymous function
-#                          Function body
+#                          Body ('function' scope)
 #                              Instruction
 #                                  Call
 #                                      Instance variable '@send'
@@ -109,7 +109,7 @@
 #                          Property 'gotLine'
 #                              Instance variable '@sock'
 #                      Anonymous function
-#                          Function body
+#                          Body ('function' scope)
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$data'
@@ -120,7 +120,7 @@
 #                                          Item 0
 #                                              Lexical variable '$data'
 #          Method 'addCommand'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$command'
@@ -135,7 +135,7 @@
 #                              Single value [1 items]
 #                                  Item 0
 #                                      Lexical variable '$command'
-#                      Function body
+#                      Body ('if' scope)
 #                          Instruction
 #                              Return pair 'overwrote'
 #                                  Boolean true
@@ -146,14 +146,14 @@
 #                      Return pair 'added'
 #                          Boolean true
 #          Method 'connect'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Call
 #                          Property 'connect'
 #                              Instance variable '@sock'
 #                          Argument list [0 items]
 #          Method 'send'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -174,7 +174,7 @@
 #                              Item 0
 #                                  Lexical variable '$line'
 #          Method 'handleLine'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -202,7 +202,7 @@
 #                                      Item 0
 #                                          Number '0'
 #                              String 'PING'
-#                      Function body
+#                      Body ('if' scope)
 #                          Instruction
 #                              Assignment (lexical variable '$command')
 #                                  Index
@@ -245,7 +245,7 @@
 #                                  Pair 's'
 #                                      Lexical variable '$s'
 #          Method 'privmsg'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$channel'
@@ -264,14 +264,14 @@
 #                              Argument list [1 items]
 #                                  Item 0
 #                                      String '␤'
-#                      Function body
+#                      Body ('for' scope)
 #                          If
 #                              Expression ('if' parameter)
 #                                  Equality
 #                                      Property 'length'
 #                                          Lexical variable '$line'
 #                                      Number '0'
-#                              Function body
+#                              Body ('if' scope)
 #                                  Instruction
 #                                      Call
 #                                          Instance variable '@send'
@@ -286,11 +286,11 @@
 #                                                      Addition operator (+)
 #                                                      Lexical variable '$line'
 #          Method 'joinChannels'
-#              Function body
+#              Body ('method' scope)
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@_joinedChannels'
-#                      Function body
+#                      Body ('if' scope)
 #                          Instruction
 #                              Return
 #                  Instruction
@@ -299,13 +299,13 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@autojoin'
-#                      Function body
+#                      Body ('if' scope)
 #                          For
 #                              Expression ('for' parameter)
 #                                  Lexical variable '$chan'
 #                              Expression ('in' parameter)
 #                                  Instance variable '@autojoin'
-#                              Function body
+#                              Body ('for' scope)
 #                                  Instruction
 #                                      Call
 #                                          Instance variable '@send'
@@ -316,7 +316,7 @@
 #                                                      Addition operator (+)
 #                                                      Lexical variable '$chan'
 #          Method 'pong'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$s'
@@ -334,7 +334,7 @@
 #                                              Item 0
 #                                                  Number '1'
 #          Method 'handleMessage'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -355,7 +355,7 @@
 #                      Expression ('if' parameter)
 #                          Property 'command'
 #                              Lexical variable '$msg'
-#                      Function body
+#                      Body ('if' scope)
 #                          Instruction
 #                              Call
 #                                  Maybe
@@ -379,7 +379,7 @@
 #                                          Pair 'msg'
 #                                              Lexical variable '$msg'
 #          Method 'commandHello'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -402,7 +402,7 @@
 #                                      Addition operator (+)
 #                                      String '!'
 #          Method 'commandAdd'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -453,7 +453,7 @@
 #                                      Addition operator (+)
 #                                      String '''
 #          Method 'commandFactoid'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'

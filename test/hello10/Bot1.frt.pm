@@ -2,7 +2,7 @@
 #  Document './test/hello10/Bot1.frt'
 #      Class 'Bot1'
 #          Main method '_init_'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@addr'
@@ -43,7 +43,7 @@
 #                          Property 'connected'
 #                              Instance variable '@sock'
 #                      Anonymous function
-#                          Function body
+#                          Body ('function' scope)
 #                              Instruction
 #                                  Call
 #                                      Instance variable '@send'
@@ -79,7 +79,7 @@
 #                          Property 'gotLine'
 #                              Instance variable '@sock'
 #                      Anonymous function
-#                          Function body
+#                          Body ('function' scope)
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$data'
@@ -93,14 +93,14 @@
 #                                                  Addition operator (+)
 #                                                  Lexical variable '$data'
 #          Method 'connect'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Call
 #                          Property 'connect'
 #                              Instance variable '@sock'
 #                          Argument list [0 items]
 #          Method 'send'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'

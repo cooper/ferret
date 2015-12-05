@@ -16,7 +16,7 @@ use F::Statement;
 use F::Class;
 use F::Package;
 use F::Function;
-use F::FunctionBody;
+use F::Body;
 use F::Method;
 use F::If;
 use F::WantNeed;

@@ -22,7 +22,7 @@
 #              Property 'gotLine'
 #                  Lexical variable '$sock'
 #          Anonymous function
-#              Function body
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$data'
@@ -40,7 +40,7 @@
 #              Property 'println'
 #                  Lexical variable '$sock'
 #          Anonymous function
-#              Function body
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$data'
@@ -58,7 +58,7 @@
 #              Property 'connected'
 #                  Lexical variable '$sock'
 #          Anonymous function
-#              Function body
+#              Body ('function' scope)
 #                  Instruction
 #                      Call
 #                          Property 'println'
@@ -98,7 +98,7 @@
 #                                  Item 0
 #                                      Number '5'
 #          Anonymous function
-#              Function body
+#              Body ('function' scope)
 #                  Instruction
 #                      Call
 #                          Property 'println'

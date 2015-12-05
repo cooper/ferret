@@ -21,7 +21,7 @@ sub new {
     my ($class, %opts) = @_;
     my $func = $class->SUPER::new(
         name => '_anonymous_',
-        body => F::FunctionBody->new,
+        body => F::Body->new,
         %opts
     );
     $func->adopt($func->body);

@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/hello9.frt'
 #      Function 'sayHello'
-#          Function body
+#          Body ('function' scope)
 #              Instruction
 #                  Need
 #                      Lexical variable '$who'

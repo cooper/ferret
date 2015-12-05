@@ -3,7 +3,7 @@
 #      Package 'Math'
 #      Class 'Rect'
 #          Main method '_init_'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$x'
@@ -30,7 +30,7 @@
 #                                  Item 1
 #                                      Lexical variable '$y'
 #          Computed property 'vertices'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Value list [4 items]
@@ -43,12 +43,12 @@
 #                              Item 3
 #                                  Instance variable '@bottomRight'
 #          Computed property 'bottomLeft'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Instance variable '@origin'
 #          Computed property 'bottomRight'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -64,7 +64,7 @@
 #                                      Property 'y'
 #                                          Instance variable '@origin'
 #          Computed property 'topLeft'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -80,7 +80,7 @@
 #                                          Addition operator (+)
 #                                          Instance variable '@height'
 #          Computed property 'topRight'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -99,7 +99,7 @@
 #                                          Addition operator (+)
 #                                          Instance variable '@height'
 #          Computed property 'bottomLine'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -110,7 +110,7 @@
 #                                  Item 1
 #                                      Instance variable '@bottomRight'
 #          Computed property 'topLine'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -121,7 +121,7 @@
 #                                  Item 1
 #                                      Instance variable '@topRight'
 #          Computed property 'center'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Assignment (lexical variable '$x')
 #                          Operation
@@ -150,7 +150,7 @@
 #                                  Item 1
 #                                      Lexical variable '$y'
 #          Method 'description'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Assignment (lexical variable '$o')
 #                          Instance variable '@origin'

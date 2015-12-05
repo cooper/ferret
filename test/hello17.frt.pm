@@ -22,7 +22,7 @@
 #                          Lexical variable '$obj'
 #                      Argument list [0 items]
 #          Anonymous function
-#              Function body
+#              Body ('function' scope)
 #                  Instruction
 #                      Call
 #                          Bareword 'say'

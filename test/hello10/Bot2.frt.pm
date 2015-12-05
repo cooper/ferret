@@ -2,7 +2,7 @@
 #  Document './test/hello10/Bot2.frt'
 #      Class 'Bot2'
 #          Main method '_init_'
-#              Function body
+#              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@address'
@@ -49,7 +49,7 @@
 #                      Expression ('on' parameter)
 #                          Instance variable '@connected'
 #                      Anonymous function
-#                          Function body
+#                          Body ('function' scope)
 #                              Instruction
 #                                  Call
 #                                      Instance variable '@send'
@@ -84,7 +84,7 @@
 #                      Expression ('on' parameter)
 #                          Instance variable '@gotLine'
 #                      Anonymous function
-#                          Function body
+#                          Body ('function' scope)
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$data'
@@ -101,7 +101,7 @@
 #                      Expression ('on' parameter)
 #                          Instance variable '@println'
 #                      Anonymous function
-#                          Function body
+#                          Body ('function' scope)
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$data'

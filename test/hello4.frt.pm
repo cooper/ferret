@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/hello4.frt'
 #      Function 'makePoint'
-#          Function body
+#          Body ('function' scope)
 #              Instruction
 #                  Need
 #                      Lexical variable '$x'

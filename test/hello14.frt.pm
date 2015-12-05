@@ -14,7 +14,7 @@
 #              Property 'length'
 #                  Lexical variable '$str'
 #          Anonymous function
-#              Function body
+#              Body ('function' scope)
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
@@ -44,7 +44,7 @@
 #                  Property 'proto'
 #                      Bareword 'String'
 #          Anonymous function
-#              Function body
+#              Body ('function' scope)
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
