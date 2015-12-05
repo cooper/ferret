@@ -2,18 +2,19 @@
 #  Document './std/Math.frt'
 #      Package 'Math'
 #      Function 'sqrt'
-#          Instruction
-#              Need
-#                  Lexical variable '$num'
-#                  Bareword 'Num'
-#          Instruction
-#              Return
-#                  Call
-#                      Property 'sqrt'
-#                          Bareword 'NATIVE::Math'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Lexical variable '$num'
+#          Function body
+#              Instruction
+#                  Need
+#                      Lexical variable '$num'
+#                      Bareword 'Num'
+#              Instruction
+#                  Return
+#                      Call
+#                          Property 'sqrt'
+#                              Bareword 'NATIVE::Math'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Lexical variable '$num'
 #      Include (NATIVE, NATIVE::Math, Num)
 use warnings;
 use strict;

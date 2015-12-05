@@ -3,349 +3,232 @@
 #      Package 'IRC'
 #      Class 'Bot'
 #          Main method '_init_'
-#              Instruction
-#                  Need
-#                      Instance variable '@addr'
-#                      Bareword 'Str'
-#              Instruction
-#                  Need
-#                      Instance variable '@nick'
-#                      Bareword 'Str'
-#              Instruction
-#                  Want
-#                      Instance variable '@port'
-#                      Expression ('want' parameter)
-#                          Number '6667'
-#                      Bareword 'Num'
-#              Instruction
-#                  Want
-#                      Instance variable '@user'
-#                      Expression ('want' parameter)
-#                          String 'ferret'
-#                      Bareword 'Str'
-#              Instruction
-#                  Want
-#                      Instance variable '@real'
-#                      Expression ('want' parameter)
-#                          String 'Ferret IRC'
-#                      Bareword 'Str'
-#              Instruction
-#                  Assignment (instance variable '@handlers')
-#                      Hash [3 items]
-#                          Item 0
-#                              Pair 'MODE'
-#                                  Instance variable '@joinChannels'
-#                          Item 1
-#                              Pair 'PING'
-#                                  Instance variable '@pong'
-#                          Item 2
-#                              Pair 'PRIVMSG'
-#                                  Instance variable '@handleMessage'
-#              Instruction
-#                  Assignment (instance variable '@commands')
-#                      Hash [3 items]
-#                          Item 0
-#                              Pair 'hello'
-#                                  Instance variable '@commandHello'
-#                          Item 1
-#                              Pair 'hi'
-#                                  Instance variable '@commandHello'
-#                          Item 2
-#                              Pair 'add'
-#                                  Instance variable '@commandAdd'
-#              Instruction
-#                  Assignment (instance variable '@factoids')
-#                      Hash [0 items]
-#              Instruction
-#                  Assignment (instance variable '@sock')
-#                      Call
-#                          Bareword 'Socket::TCP'
-#                          Named argument list [2 items]
-#                              Item 0
-#                                  Pair 'address'
-#                                      Instance variable '@addr'
-#                              Item 1
-#                                  Pair 'port'
-#                                      Instance variable '@port'
-#              On
-#                  Expression ('on' parameter)
-#                      Property 'connected'
-#                          Instance variable '@sock'
-#                  Anonymous function
-#                      Instruction
-#                          Call
-#                              Instance variable '@send'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String 'USER '
-#                                          Addition operator (+)
-#                                          Instance variable '@user'
-#                                          Addition operator (+)
-#                                          String ' '
-#                                          Addition operator (+)
-#                                          String '*'
-#                                          Addition operator (+)
-#                                          String ' '
-#                                          Addition operator (+)
-#                                          String '*'
-#                                          Addition operator (+)
-#                                          String ' :'
-#                                          Addition operator (+)
-#                                          Instance variable '@real'
-#                      Instruction
-#                          Call
-#                              Instance variable '@send'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String 'NICK '
-#                                          Addition operator (+)
-#                                          Instance variable '@nick'
-#              On
-#                  Expression ('on' parameter)
-#                      Property 'gotLine'
-#                          Instance variable '@sock'
-#                  Anonymous function
-#                      Instruction
-#                          Need
-#                              Lexical variable '$data'
-#                      Instruction
-#                          Call
-#                              Instance variable '@handleLine'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Lexical variable '$data'
-#          Method 'addCommand'
-#              Instruction
-#                  Need
-#                      Lexical variable '$command'
-#                      Bareword 'Str'
-#              Instruction
-#                  Need
-#                      Lexical variable '$callback'
-#              If
-#                  Expression ('if' parameter)
-#                      Index
-#                          Instance variable '@commands'
-#                          Single value [1 items]
-#                              Item 0
-#                                  Lexical variable '$command'
+#              Function body
 #                  Instruction
-#                      Return pair 'overwrote'
-#                          Boolean true
-#              Instruction
-#                  Assignment (index)
-#                      Lexical variable '$callback'
-#              Instruction
-#                  Return pair 'added'
-#                      Boolean true
-#          Method 'connect'
-#              Instruction
-#                  Call
-#                      Property 'connect'
-#                          Instance variable '@sock'
-#                      Argument list [0 items]
-#          Method 'send'
-#              Instruction
-#                  Need
-#                      Lexical variable '$line'
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  String 'send: '
-#                                  Addition operator (+)
-#                                  Lexical variable '$line'
-#              Instruction
-#                  Call
-#                      Property 'println'
-#                          Instance variable '@sock'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Lexical variable '$line'
-#          Method 'handleLine'
-#              Instruction
-#                  Need
-#                      Lexical variable '$line'
-#              Instruction
-#                  Assignment (lexical variable '$s')
-#                      Call
-#                          Property 'split'
-#                              Lexical variable '$line'
-#                          Argument list [1 items]
+#                      Need
+#                          Instance variable '@addr'
+#                          Bareword 'Str'
+#                  Instruction
+#                      Need
+#                          Instance variable '@nick'
+#                          Bareword 'Str'
+#                  Instruction
+#                      Want
+#                          Instance variable '@port'
+#                          Expression ('want' parameter)
+#                              Number '6667'
+#                          Bareword 'Num'
+#                  Instruction
+#                      Want
+#                          Instance variable '@user'
+#                          Expression ('want' parameter)
+#                              String 'ferret'
+#                          Bareword 'Str'
+#                  Instruction
+#                      Want
+#                          Instance variable '@real'
+#                          Expression ('want' parameter)
+#                              String 'Ferret IRC'
+#                          Bareword 'Str'
+#                  Instruction
+#                      Assignment (instance variable '@handlers')
+#                          Hash [3 items]
 #                              Item 0
-#                                  String ' '
-#              Instruction
-#                  Assignment (lexical variable '$command')
-#                      Index
-#                          Lexical variable '$s'
-#                          Single value [1 items]
+#                                  Pair 'MODE'
+#                                      Instance variable '@joinChannels'
+#                              Item 1
+#                                  Pair 'PING'
+#                                      Instance variable '@pong'
+#                              Item 2
+#                                  Pair 'PRIVMSG'
+#                                      Instance variable '@handleMessage'
+#                  Instruction
+#                      Assignment (instance variable '@commands')
+#                          Hash [3 items]
 #                              Item 0
-#                                  Number '1'
-#              If
-#                  Expression ('if' parameter)
-#                      Equality
+#                                  Pair 'hello'
+#                                      Instance variable '@commandHello'
+#                              Item 1
+#                                  Pair 'hi'
+#                                      Instance variable '@commandHello'
+#                              Item 2
+#                                  Pair 'add'
+#                                      Instance variable '@commandAdd'
+#                  Instruction
+#                      Assignment (instance variable '@factoids')
+#                          Hash [0 items]
+#                  Instruction
+#                      Assignment (instance variable '@sock')
+#                          Call
+#                              Bareword 'Socket::TCP'
+#                              Named argument list [2 items]
+#                                  Item 0
+#                                      Pair 'address'
+#                                          Instance variable '@addr'
+#                                  Item 1
+#                                      Pair 'port'
+#                                          Instance variable '@port'
+#                  On
+#                      Expression ('on' parameter)
+#                          Property 'connected'
+#                              Instance variable '@sock'
+#                      Anonymous function
+#                          Function body
+#                              Instruction
+#                                  Call
+#                                      Instance variable '@send'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Operation
+#                                                  String 'USER '
+#                                                  Addition operator (+)
+#                                                  Instance variable '@user'
+#                                                  Addition operator (+)
+#                                                  String ' '
+#                                                  Addition operator (+)
+#                                                  String '*'
+#                                                  Addition operator (+)
+#                                                  String ' '
+#                                                  Addition operator (+)
+#                                                  String '*'
+#                                                  Addition operator (+)
+#                                                  String ' :'
+#                                                  Addition operator (+)
+#                                                  Instance variable '@real'
+#                              Instruction
+#                                  Call
+#                                      Instance variable '@send'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Operation
+#                                                  String 'NICK '
+#                                                  Addition operator (+)
+#                                                  Instance variable '@nick'
+#                  On
+#                      Expression ('on' parameter)
+#                          Property 'gotLine'
+#                              Instance variable '@sock'
+#                      Anonymous function
+#                          Function body
+#                              Instruction
+#                                  Need
+#                                      Lexical variable '$data'
+#                              Instruction
+#                                  Call
+#                                      Instance variable '@handleLine'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Lexical variable '$data'
+#          Method 'addCommand'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$command'
+#                          Bareword 'Str'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$callback'
+#                  If
+#                      Expression ('if' parameter)
 #                          Index
-#                              Lexical variable '$s'
+#                              Instance variable '@commands'
 #                              Single value [1 items]
 #                                  Item 0
-#                                      Number '0'
-#                          String 'PING'
+#                                      Lexical variable '$command'
+#                      Instruction
+#                          Return pair 'overwrote'
+#                              Boolean true
+#                  Instruction
+#                      Assignment (index)
+#                          Lexical variable '$callback'
+#                  Instruction
+#                      Return pair 'added'
+#                          Boolean true
+#          Method 'connect'
+#              Function body
+#                  Instruction
+#                      Call
+#                          Property 'connect'
+#                              Instance variable '@sock'
+#                          Argument list [0 items]
+#          Method 'send'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$line'
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String 'send: '
+#                                      Addition operator (+)
+#                                      Lexical variable '$line'
+#                  Instruction
+#                      Call
+#                          Property 'println'
+#                              Instance variable '@sock'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Lexical variable '$line'
+#          Method 'handleLine'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$line'
+#                  Instruction
+#                      Assignment (lexical variable '$s')
+#                          Call
+#                              Property 'split'
+#                                  Lexical variable '$line'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      String ' '
 #                  Instruction
 #                      Assignment (lexical variable '$command')
 #                          Index
 #                              Lexical variable '$s'
 #                              Single value [1 items]
 #                                  Item 0
-#                                      Number '0'
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  String 'recv['
-#                                  Addition operator (+)
-#                                  Lexical variable '$command'
-#                                  Addition operator (+)
-#                                  String ']: '
-#                                  Addition operator (+)
-#                                  Lexical variable '$line'
-#              Instruction
-#                  Call
-#                      Maybe
-#                          Index
-#                              Instance variable '@handlers'
-#                              Single value [1 items]
-#                                  Item 0
-#                                      Lexical variable '$command'
-#                      Named argument list [4 items]
-#                          Item 0
-#                              Pair '_self'
-#                                  Special variable '*self'
-#                          Item 1
-#                              Pair 'line'
-#                                  Lexical variable '$line'
-#                          Item 2
-#                              Pair 'command'
-#                                  Lexical variable '$command'
-#                          Item 3
-#                              Pair 's'
-#                                  Lexical variable '$s'
-#          Method 'privmsg'
-#              Instruction
-#                  Need
-#                      Lexical variable '$channel'
-#                      Bareword 'Str'
-#              Instruction
-#                  Need
-#                      Lexical variable '$message'
-#                      Bareword 'Str'
-#              For
-#                  Expression ('for' parameter)
-#                      Lexical variable '$line'
-#                  Expression ('in' parameter)
-#                      Call
-#                          Property 'split'
-#                              Lexical variable '$message'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  String '␤'
+#                                      Number '1'
 #                  If
 #                      Expression ('if' parameter)
 #                          Equality
-#                              Property 'length'
-#                                  Lexical variable '$line'
-#                              Number '0'
+#                              Index
+#                                  Lexical variable '$s'
+#                                  Single value [1 items]
+#                                      Item 0
+#                                          Number '0'
+#                              String 'PING'
 #                      Instruction
-#                          Call
-#                              Instance variable '@send'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String 'PRIVMSG '
-#                                          Addition operator (+)
-#                                          Lexical variable '$channel'
-#                                          Addition operator (+)
-#                                          String ' :'
-#                                          Addition operator (+)
-#                                          Lexical variable '$line'
-#          Method 'joinChannels'
-#              If
-#                  Expression ('if' parameter)
-#                      Instance variable '@_joinedChannels'
+#                          Assignment (lexical variable '$command')
+#                              Index
+#                                  Lexical variable '$s'
+#                                  Single value [1 items]
+#                                      Item 0
+#                                          Number '0'
 #                  Instruction
-#                      Return
-#              Instruction
-#                  Assignment (instance variable '@_joinedChannels')
-#                      Boolean true
-#              If
-#                  Expression ('if' parameter)
-#                      Instance variable '@autojoin'
-#                  For
-#                      Expression ('for' parameter)
-#                          Lexical variable '$chan'
-#                      Expression ('in' parameter)
-#                          Instance variable '@autojoin'
-#                      Instruction
-#                          Call
-#                              Instance variable '@send'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String 'JOIN '
-#                                          Addition operator (+)
-#                                          Lexical variable '$chan'
-#          Method 'pong'
-#              Instruction
-#                  Need
-#                      Lexical variable '$s'
-#              Instruction
-#                  Call
-#                      Instance variable '@send'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  String 'PONG '
-#                                  Addition operator (+)
-#                                  Index
-#                                      Lexical variable '$s'
-#                                      Single value [1 items]
-#                                          Item 0
-#                                              Number '1'
-#          Method 'handleMessage'
-#              Instruction
-#                  Need
-#                      Lexical variable '$line'
-#              Instruction
-#                  Need
-#                      Lexical variable '$s'
-#              Instruction
-#                  Assignment (lexical variable '$msg')
 #                      Call
-#                          Bareword 'IRC::Message'
+#                          Bareword 'say'
 #                          Argument list [1 items]
 #                              Item 0
-#                                  Lexical variable '$line'
-#              Instruction
-#                  Return pair 'msg'
-#                      Lexical variable '$msg'
-#              If
-#                  Expression ('if' parameter)
-#                      Property 'command'
-#                          Lexical variable '$msg'
+#                                  Operation
+#                                      String 'recv['
+#                                      Addition operator (+)
+#                                      Lexical variable '$command'
+#                                      Addition operator (+)
+#                                      String ']: '
+#                                      Addition operator (+)
+#                                      Lexical variable '$line'
 #                  Instruction
 #                      Call
 #                          Maybe
 #                              Index
-#                                  Instance variable '@commands'
+#                                  Instance variable '@handlers'
 #                                  Single value [1 items]
 #                                      Item 0
-#                                          Property 'command'
-#                                              Lexical variable '$msg'
+#                                          Lexical variable '$command'
 #                          Named argument list [4 items]
 #                              Item 0
 #                                  Pair '_self'
@@ -354,104 +237,235 @@
 #                                  Pair 'line'
 #                                      Lexical variable '$line'
 #                              Item 2
+#                                  Pair 'command'
+#                                      Lexical variable '$command'
+#                              Item 3
 #                                  Pair 's'
 #                                      Lexical variable '$s'
-#                              Item 3
-#                                  Pair 'msg'
-#                                      Lexical variable '$msg'
-#          Method 'commandHello'
-#              Instruction
-#                  Need
-#                      Lexical variable '$msg'
-#              Instruction
-#                  Assignment (lexical variable '$nickname')
-#                      Property 'nickname'
-#                          Lexical variable '$msg'
-#              Instruction
-#                  Call
-#                      Instance variable '@privmsg'
-#                      Argument list [2 items]
-#                          Item 0
-#                              Property 'channel'
-#                                  Lexical variable '$msg'
-#                          Item 1
-#                              Operation
-#                                  String 'Hi '
-#                                  Addition operator (+)
-#                                  Lexical variable '$nickname'
-#                                  Addition operator (+)
-#                                  String '!'
-#          Method 'commandAdd'
-#              Instruction
-#                  Need
-#                      Lexical variable '$msg'
-#              Instruction
-#                  Call
-#                      Bareword 'inspect'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Lexical variable '$msg'
-#              Instruction
-#                  Assignment (lexical variable '$trigger')
-#                      Index
-#                          Property 'parts'
-#                              Lexical variable '$msg'
-#                          Single value [1 items]
-#                              Item 0
-#                                  Number '1'
-#              Instruction
-#                  Assignment (lexical variable '$response')
+#          Method 'privmsg'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$channel'
+#                          Bareword 'Str'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$message'
+#                          Bareword 'Str'
+#                  For
+#                      Expression ('for' parameter)
+#                          Lexical variable '$line'
+#                      Expression ('in' parameter)
+#                          Call
+#                              Property 'split'
+#                                  Lexical variable '$message'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      String '␤'
+#                      If
+#                          Expression ('if' parameter)
+#                              Equality
+#                                  Property 'length'
+#                                      Lexical variable '$line'
+#                                  Number '0'
+#                          Instruction
+#                              Call
+#                                  Instance variable '@send'
+#                                  Argument list [1 items]
+#                                      Item 0
+#                                          Operation
+#                                              String 'PRIVMSG '
+#                                              Addition operator (+)
+#                                              Lexical variable '$channel'
+#                                              Addition operator (+)
+#                                              String ' :'
+#                                              Addition operator (+)
+#                                              Lexical variable '$line'
+#          Method 'joinChannels'
+#              Function body
+#                  If
+#                      Expression ('if' parameter)
+#                          Instance variable '@_joinedChannels'
+#                      Instruction
+#                          Return
+#                  Instruction
+#                      Assignment (instance variable '@_joinedChannels')
+#                          Boolean true
+#                  If
+#                      Expression ('if' parameter)
+#                          Instance variable '@autojoin'
+#                      For
+#                          Expression ('for' parameter)
+#                              Lexical variable '$chan'
+#                          Expression ('in' parameter)
+#                              Instance variable '@autojoin'
+#                          Instruction
+#                              Call
+#                                  Instance variable '@send'
+#                                  Argument list [1 items]
+#                                      Item 0
+#                                          Operation
+#                                              String 'JOIN '
+#                                              Addition operator (+)
+#                                              Lexical variable '$chan'
+#          Method 'pong'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$s'
+#                  Instruction
 #                      Call
-#                          Property 'fromWord'
-#                              Lexical variable '$msg'
+#                          Instance variable '@send'
 #                          Argument list [1 items]
 #                              Item 0
-#                                  Number '2'
-#              Instruction
-#                  Assignment (index)
-#                      Lexical variable '$response'
-#              Instruction
-#                  Assignment (index)
-#                      Instance variable '@commandFactoid'
-#              Instruction
-#                  Call
-#                      Instance variable '@privmsg'
-#                      Argument list [2 items]
-#                          Item 0
-#                              Property 'channel'
-#                                  Lexical variable '$msg'
-#                          Item 1
-#                              Operation
-#                                  String 'alright, a...'
-#                                  Addition operator (+)
-#                                  Lexical variable '$trigger'
-#                                  Addition operator (+)
-#                                  String ' with ''
-#                                  Addition operator (+)
-#                                  Lexical variable '$response'
-#                                  Addition operator (+)
-#                                  String '''
-#          Method 'commandFactoid'
-#              Instruction
-#                  Need
-#                      Lexical variable '$msg'
-#              Instruction
-#                  Assignment (lexical variable '$response')
-#                      Index
-#                          Instance variable '@factoids'
-#                          Single value [1 items]
+#                                  Operation
+#                                      String 'PONG '
+#                                      Addition operator (+)
+#                                      Index
+#                                          Lexical variable '$s'
+#                                          Single value [1 items]
+#                                              Item 0
+#                                                  Number '1'
+#          Method 'handleMessage'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$line'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$s'
+#                  Instruction
+#                      Assignment (lexical variable '$msg')
+#                          Call
+#                              Bareword 'IRC::Message'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$line'
+#                  Instruction
+#                      Return pair 'msg'
+#                          Lexical variable '$msg'
+#                  If
+#                      Expression ('if' parameter)
+#                          Property 'command'
+#                              Lexical variable '$msg'
+#                      Instruction
+#                          Call
+#                              Maybe
+#                                  Index
+#                                      Instance variable '@commands'
+#                                      Single value [1 items]
+#                                          Item 0
+#                                              Property 'command'
+#                                                  Lexical variable '$msg'
+#                              Named argument list [4 items]
+#                                  Item 0
+#                                      Pair '_self'
+#                                          Special variable '*self'
+#                                  Item 1
+#                                      Pair 'line'
+#                                          Lexical variable '$line'
+#                                  Item 2
+#                                      Pair 's'
+#                                          Lexical variable '$s'
+#                                  Item 3
+#                                      Pair 'msg'
+#                                          Lexical variable '$msg'
+#          Method 'commandHello'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  Instruction
+#                      Assignment (lexical variable '$nickname')
+#                          Property 'nickname'
+#                              Lexical variable '$msg'
+#                  Instruction
+#                      Call
+#                          Instance variable '@privmsg'
+#                          Argument list [2 items]
 #                              Item 0
-#                                  Property 'command'
+#                                  Property 'channel'
 #                                      Lexical variable '$msg'
-#              Instruction
-#                  Call
-#                      Instance variable '@privmsg'
-#                      Argument list [2 items]
-#                          Item 0
-#                              Property 'channel'
+#                              Item 1
+#                                  Operation
+#                                      String 'Hi '
+#                                      Addition operator (+)
+#                                      Lexical variable '$nickname'
+#                                      Addition operator (+)
+#                                      String '!'
+#          Method 'commandAdd'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  Instruction
+#                      Call
+#                          Bareword 'inspect'
+#                          Argument list [1 items]
+#                              Item 0
 #                                  Lexical variable '$msg'
-#                          Item 1
-#                              Lexical variable '$response'
+#                  Instruction
+#                      Assignment (lexical variable '$trigger')
+#                          Index
+#                              Property 'parts'
+#                                  Lexical variable '$msg'
+#                              Single value [1 items]
+#                                  Item 0
+#                                      Number '1'
+#                  Instruction
+#                      Assignment (lexical variable '$response')
+#                          Call
+#                              Property 'fromWord'
+#                                  Lexical variable '$msg'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Number '2'
+#                  Instruction
+#                      Assignment (index)
+#                          Lexical variable '$response'
+#                  Instruction
+#                      Assignment (index)
+#                          Instance variable '@commandFactoid'
+#                  Instruction
+#                      Call
+#                          Instance variable '@privmsg'
+#                          Argument list [2 items]
+#                              Item 0
+#                                  Property 'channel'
+#                                      Lexical variable '$msg'
+#                              Item 1
+#                                  Operation
+#                                      String 'alright, a...'
+#                                      Addition operator (+)
+#                                      Lexical variable '$trigger'
+#                                      Addition operator (+)
+#                                      String ' with ''
+#                                      Addition operator (+)
+#                                      Lexical variable '$response'
+#                                      Addition operator (+)
+#                                      String '''
+#          Method 'commandFactoid'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  Instruction
+#                      Assignment (lexical variable '$response')
+#                          Index
+#                              Instance variable '@factoids'
+#                              Single value [1 items]
+#                                  Item 0
+#                                      Property 'command'
+#                                          Lexical variable '$msg'
+#                  Instruction
+#                      Call
+#                          Instance variable '@privmsg'
+#                          Argument list [2 items]
+#                              Item 0
+#                                  Property 'channel'
+#                                      Lexical variable '$msg'
+#                              Item 1
+#                                  Lexical variable '$response'
 #      Include (IRC, IRC::Message, Num, Socket, Socket::TCP, Str)
 use warnings;
 use strict;

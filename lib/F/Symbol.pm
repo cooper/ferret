@@ -8,7 +8,7 @@ use parent 'F::Expression';
 sub type { 'Symbol' }
 sub desc {
     my $sym = shift;
-    return 'symbol ~'.$sym->{sym_value};
+    return 'symbol :'.$sym->{sym_value};
 }
 
 sub perl_fmt {

@@ -22,12 +22,13 @@
 #                          Lexical variable '$obj'
 #                      Argument list [0 items]
 #          Anonymous function
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              String 'it works!'
+#              Function body
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  String 'it works!'
 #      Include (Timer)
 use warnings;
 use strict;

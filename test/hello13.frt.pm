@@ -17,12 +17,13 @@
 #                                  Item 0
 #                                      Number '5'
 #          Anonymous function
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              String 'five secon...'
+#              Function body
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  String 'five secon...'
 #      Instruction
 #          Assignment (lexical variable '$t2')
 #              Call
@@ -37,12 +38,13 @@
 #                      Property 'once'
 #                          Lexical variable '$t2'
 #          Anonymous function
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              String 'this shoul...'
+#              Function body
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  String 'this shoul...'
 #      Instruction
 #          Call
 #              Property 'cancel'

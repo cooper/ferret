@@ -42,7 +42,7 @@ sub get_sym {
 }
 
 sub description {
-    return '~'.(shift->{sym_value});
+    return ':'.(shift->{sym_value});
 }
 
 1

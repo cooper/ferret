@@ -8,12 +8,13 @@
 #                      Number '5'
 #                  Item 1
 #                      Anonymous function
-#                          Instruction
-#                              Call
-#                                  Bareword 'say'
-#                                  Argument list [1 items]
-#                                      Item 0
-#                                          String 'been five ...'
+#                          Function body
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              String 'been five ...'
 #      Instruction
 #          Call
 #              Bareword 'say'
@@ -31,18 +32,20 @@
 #                              Argument list [1 items]
 #                                  Item 1
 #                                      Anonymous function
-#                                          Instruction
-#                                              Return
-#                                                  String 'any second...'
+#                                          Function body
+#                                              Instruction
+#                                                  Return
+#                                                      String 'any second...'
 #      Function 'something'
-#          Instruction
-#              Need
-#                  Lexical variable '$code'
-#          Instruction
-#              Return pair 'message'
-#                  Call
+#          Function body
+#              Instruction
+#                  Need
 #                      Lexical variable '$code'
-#                      Argument list [0 items]
+#              Instruction
+#                  Return pair 'message'
+#                      Call
+#                          Lexical variable '$code'
+#                          Argument list [0 items]
 use warnings;
 use strict;
 use utf8;

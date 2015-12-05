@@ -46,27 +46,28 @@
 #          Expression ('on' parameter)
 #              Bareword 'say'
 #          Anonymous function
-#              Instruction
-#                  Need
-#                      Lexical variable '$twice'
-#              Instruction
-#                  Need
-#                      Lexical variable '$message'
-#              If
-#                  Expression ('if' parameter)
-#                      Lexical variable '$twice'
+#              Function body
 #                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  Operation
-#                                      Lexical variable '$message'
-#                                      Addition operator (+)
-#                                      String ' again'
-#              Instruction
-#                  Return pair 'didTwice'
-#                      Lexical variable '$twice'
+#                      Need
+#                          Lexical variable '$twice'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$message'
+#                  If
+#                      Expression ('if' parameter)
+#                          Lexical variable '$twice'
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Operation
+#                                          Lexical variable '$message'
+#                                          Addition operator (+)
+#                                          String ' again'
+#                  Instruction
+#                      Return pair 'didTwice'
+#                          Lexical variable '$twice'
 #      Instruction
 #          Assignment (lexical variable '$r')
 #              Call

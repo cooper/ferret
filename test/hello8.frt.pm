@@ -2,13 +2,14 @@
 #  Document './test/hello8.frt'
 #      Class 'String'
 #          Method 'doubledLength'
-#              Instruction
-#                  Return
-#                      Operation
-#                          Call
-#                              Instance variable '@length'
-#                          Multiplication operator (*)
-#                          Number '2'
+#              Function body
+#                  Instruction
+#                      Return
+#                          Operation
+#                              Call
+#                                  Instance variable '@length'
+#                              Multiplication operator (*)
+#                              Number '2'
 #      Instruction
 #          Call
 #              Bareword 'say'

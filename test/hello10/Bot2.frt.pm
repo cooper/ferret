@@ -2,114 +2,118 @@
 #  Document './test/hello10/Bot2.frt'
 #      Class 'Bot2'
 #          Main method '_init_'
-#              Instruction
-#                  Need
-#                      Instance variable '@address'
-#                      Bareword 'Str'
-#              Instruction
-#                  Need
-#                      Instance variable '@nick'
-#                      Bareword 'Str'
-#              Instruction
-#                  Need
-#                      Instance variable '@user'
-#                      Bareword 'Str'
-#              Instruction
-#                  Want
-#                      Instance variable '@port'
-#                      Expression ('want' parameter)
-#                          Number '6667'
-#                      Bareword 'Num'
-#              Instruction
-#                  Want
-#                      Instance variable '@real'
-#                      Expression ('want' parameter)
-#                          String 'Ferret IRC'
-#                      Bareword 'Str'
-#              Instruction
-#                  Call
+#              Function body
+#                  Instruction
+#                      Need
+#                          Instance variable '@address'
+#                          Bareword 'Str'
+#                  Instruction
+#                      Need
+#                          Instance variable '@nick'
+#                          Bareword 'Str'
+#                  Instruction
+#                      Need
+#                          Instance variable '@user'
+#                          Bareword 'Str'
+#                  Instruction
+#                      Want
+#                          Instance variable '@port'
+#                          Expression ('want' parameter)
+#                              Number '6667'
+#                          Bareword 'Num'
+#                  Instruction
+#                      Want
+#                          Instance variable '@real'
+#                          Expression ('want' parameter)
+#                              String 'Ferret IRC'
+#                          Bareword 'Str'
+#                  Instruction
 #                      Call
-#                          Property 'init'
-#                              Bareword 'Socket::TCP'
-#                          Argument list [1 items]
+#                          Call
+#                              Property 'init'
+#                                  Bareword 'Socket::TCP'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Special variable '*self'
+#                          Named argument list [2 items]
 #                              Item 0
-#                                  Special variable '*self'
-#                      Named argument list [2 items]
-#                          Item 0
-#                              Pair 'addr'
-#                                  Instance variable '@address'
-#                          Item 1
-#                              Pair 'port'
-#                                  Instance variable '@port'
-#              Instruction
-#                  Assignment (instance variable '@send')
-#                      Instance variable '@println'
-#              On
-#                  Expression ('on' parameter)
-#                      Instance variable '@connected'
-#                  Anonymous function
-#                      Instruction
-#                          Call
-#                              Instance variable '@send'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String 'USER '
-#                                          Addition operator (+)
-#                                          Instance variable '@user'
-#                                          Addition operator (+)
-#                                          String ' '
-#                                          Addition operator (+)
-#                                          String '*'
-#                                          Addition operator (+)
-#                                          String ' '
-#                                          Addition operator (+)
-#                                          String '*'
-#                                          Addition operator (+)
-#                                          String ' :'
-#                                          Addition operator (+)
-#                                          Instance variable '@real'
-#                      Instruction
-#                          Call
-#                              Instance variable '@send'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String 'NICK '
-#                                          Addition operator (+)
-#                                          Instance variable '@nick'
-#              On
-#                  Expression ('on' parameter)
-#                      Instance variable '@gotLine'
-#                  Anonymous function
-#                      Instruction
-#                          Need
-#                              Lexical variable '$data'
-#                      Instruction
-#                          Call
-#                              Bareword 'say'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String 'recv: '
-#                                          Addition operator (+)
-#                                          Lexical variable '$data'
-#              On
-#                  Expression ('on' parameter)
-#                      Instance variable '@println'
-#                  Anonymous function
-#                      Instruction
-#                          Need
-#                              Lexical variable '$data'
-#                      Instruction
-#                          Call
-#                              Bareword 'say'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Operation
-#                                          String 'send: '
-#                                          Addition operator (+)
-#                                          Lexical variable '$data'
+#                                  Pair 'addr'
+#                                      Instance variable '@address'
+#                              Item 1
+#                                  Pair 'port'
+#                                      Instance variable '@port'
+#                  Instruction
+#                      Assignment (instance variable '@send')
+#                          Instance variable '@println'
+#                  On
+#                      Expression ('on' parameter)
+#                          Instance variable '@connected'
+#                      Anonymous function
+#                          Function body
+#                              Instruction
+#                                  Call
+#                                      Instance variable '@send'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Operation
+#                                                  String 'USER '
+#                                                  Addition operator (+)
+#                                                  Instance variable '@user'
+#                                                  Addition operator (+)
+#                                                  String ' '
+#                                                  Addition operator (+)
+#                                                  String '*'
+#                                                  Addition operator (+)
+#                                                  String ' '
+#                                                  Addition operator (+)
+#                                                  String '*'
+#                                                  Addition operator (+)
+#                                                  String ' :'
+#                                                  Addition operator (+)
+#                                                  Instance variable '@real'
+#                              Instruction
+#                                  Call
+#                                      Instance variable '@send'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Operation
+#                                                  String 'NICK '
+#                                                  Addition operator (+)
+#                                                  Instance variable '@nick'
+#                  On
+#                      Expression ('on' parameter)
+#                          Instance variable '@gotLine'
+#                      Anonymous function
+#                          Function body
+#                              Instruction
+#                                  Need
+#                                      Lexical variable '$data'
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Operation
+#                                                  String 'recv: '
+#                                                  Addition operator (+)
+#                                                  Lexical variable '$data'
+#                  On
+#                      Expression ('on' parameter)
+#                          Instance variable '@println'
+#                      Anonymous function
+#                          Function body
+#                              Instruction
+#                                  Need
+#                                      Lexical variable '$data'
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Operation
+#                                                  String 'send: '
+#                                                  Addition operator (+)
+#                                                  Lexical variable '$data'
 #      Include (Num, Socket, Socket::TCP, Str)
 use warnings;
 use strict;

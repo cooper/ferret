@@ -109,10 +109,9 @@ FF::create_object($f, { hello => str($f, "world") })
 #### Ruby
 
 The original EOPRJ syntax looked a lot like Ruby, without many curly
-brackets or parentheses, but it has since evolved into a more Perlish look.
-However, Ferret shares with Ruby the "everything is an object" concept, a
-similar type of class definition, and a symbol datatype
-(`:symbol` in Ruby is `~symbol` in Ferret).
+brackets or parentheses, but it has since evolved into a more C/Perlish look.
+However, Ferret still shares with Ruby the "everything is an object" concept, a
+similar type of class definition, and a symbol datatype (`:symbol`).
 
 #### JavaScript
 

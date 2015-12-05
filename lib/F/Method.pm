@@ -9,6 +9,7 @@ use parent 'F::Statement';
 sub type { 'Method' }
 sub is_closure { 1 }
 sub hold_instr { 1 }
+sub body { shift->{body} }
 
 sub desc {
     my $method = shift;
@@ -18,29 +19,21 @@ sub desc {
     return "$main$type '$$method{name}'$lazy";
 }
 
+sub new {
+    my ($class, %opts) = @_;
+    my $method = $class->SUPER::new(
+        body => F::FunctionBody->new,
+        %opts
+    );
+    $method->adopt($method->body);
+    return $method;
+}
+
 sub perl_fmt {
     my $method = shift;
-    my ($content, @arguments) = '';
 
-    foreach my $child ($method->ordered_children) {
-        $content .= $child->perl_fmt_do."\n";
-
-        # wants or needs would be the first child of a child
-        # because the child is likely an instruction.
-        my $wn = ($child->ordered_children)[0];
-
-        # add wants/needs.
-        next unless $wn && $wn->type eq 'WantNeed';
-        foreach my $var ($wn->variables) {
-            push @arguments, $method->get_format(func_arg => {
-                name => $var->{var_name},
-                want => $wn->{arg_type} eq 'want' ? '1' : 'undef',
-                type => $wn->type_string,
-                more => $wn->{ellipsis} ? '1' : 'undef'
-            });
-        }
-
-    }
+    my ($content, $arguments) = $method->body->body_fmt_do;
+    my @arguments = @$arguments;
 
     my $class = $method->class;
     my $info = {

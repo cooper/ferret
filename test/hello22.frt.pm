@@ -2,75 +2,82 @@
 #  Document './test/hello22.frt'
 #      Class 'Cow'
 #          Main method '_init_'
-#              Instruction
-#                  Want
-#                      Instance variable '@moos'
-#                      Expression ('want' parameter)
-#                          Boolean true
+#              Function body
+#                  Instruction
+#                      Want
+#                          Instance variable '@moos'
+#                          Expression ('want' parameter)
+#                              Boolean true
 #          Method 'moo'
-#              If
-#                  Expression ('if' parameter)
-#                      Instance variable '@moos'
+#              Function body
+#                  If
+#                      Expression ('if' parameter)
+#                          Instance variable '@moos'
+#                      Instruction
+#                          Return
+#                              String 'moo'
 #                  Instruction
 #                      Return
-#                          String 'moo'
-#              Instruction
-#                  Return
-#                      String 'I am a non...'
+#                          String 'I am a non...'
 #      Class 'Dog'
 #          Main method '_init_'
-#              Instruction
-#                  Want
-#                      Instance variable '@barks'
-#                      Expression ('want' parameter)
-#                          Boolean false
+#              Function body
+#                  Instruction
+#                      Want
+#                          Instance variable '@barks'
+#                          Expression ('want' parameter)
+#                              Boolean false
 #          Method 'bark'
-#              If
-#                  Expression ('if' parameter)
-#                      Instance variable '@barks'
+#              Function body
+#                  If
+#                      Expression ('if' parameter)
+#                          Instance variable '@barks'
+#                      Instruction
+#                          Return
+#                              String 'bark'
 #                  Instruction
 #                      Return
-#                          String 'bark'
-#              Instruction
-#                  Return
-#                      String 'I had my b...'
+#                          String 'I had my b...'
 #      Class 'Cat'
 #          Main method '_init_'
-#              Instruction
-#                  Want
-#                      Instance variable '@mean'
-#                      Expression ('want' parameter)
-#                          Boolean false
+#              Function body
+#                  Instruction
+#                      Want
+#                          Instance variable '@mean'
+#                          Expression ('want' parameter)
+#                              Boolean false
 #          Method 'meow'
-#              Instruction
-#                  Return
-#                      String 'meow'
+#              Function body
+#                  Instruction
+#                      Return
+#                          String 'meow'
 #          Main method 'fight'
-#              Instruction
-#                  Need
-#                      Lexical variable '$cat1'
-#                      Bareword 'Cat'
-#              Instruction
-#                  Need
-#                      Lexical variable '$cat2'
-#                      Bareword 'Cat'
-#              If
-#                  Expression ('if' parameter)
-#                      Property 'mean'
+#              Function body
+#                  Instruction
+#                      Need
 #                          Lexical variable '$cat1'
+#                          Bareword 'Cat'
 #                  Instruction
-#                      Return
-#                          String 'Cat 1 star...'
-#              If
-#                  Expression ('if' parameter)
-#                      Property 'mean'
+#                      Need
 #                          Lexical variable '$cat2'
+#                          Bareword 'Cat'
+#                  If
+#                      Expression ('if' parameter)
+#                          Property 'mean'
+#                              Lexical variable '$cat1'
+#                      Instruction
+#                          Return
+#                              String 'Cat 1 star...'
+#                  If
+#                      Expression ('if' parameter)
+#                          Property 'mean'
+#                              Lexical variable '$cat2'
+#                      Instruction
+#                          Return
+#                              String 'Cat 2 star...'
 #                  Instruction
 #                      Return
-#                          String 'Cat 2 star...'
-#              Instruction
-#                  Return
-#                      String 'nice cats ...'
+#                          String 'nice cats ...'
 #      Instruction
 #          Assignment (lexical variable '$animal')
 #              Call

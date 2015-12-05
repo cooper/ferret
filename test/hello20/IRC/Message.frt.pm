@@ -3,147 +3,151 @@
 #      Package 'IRC'
 #      Class 'Message'
 #          Main method '_init_'
-#              Instruction
-#                  Need
-#                      Instance variable '@line'
-#                      Bareword 'Str'
-#              Instruction
-#                  Assignment (lexical variable '$lineSplit')
-#                      Call
-#                          Property 'split'
-#                              Instance variable '@line'
-#                          Named argument list [2 items]
-#                              Item 0
-#                                  Pair 'separator'
-#                                      String ' '
-#                              Item 1
-#                                  Pair 'limit'
-#                                      Number '4'
-#              Instruction
-#                  Assignment (instance variable '@channel')
-#                      Index
-#                          Lexical variable '$lineSplit'
-#                          Single value [1 items]
-#                              Item 0
-#                                  Number '2'
-#              Instruction
-#                  Assignment (instance variable '@nickname')
-#                      Index
-#                          Call
-#                              Property 'split'
-#                                  Index
-#                                      Lexical variable '$lineSplit'
-#                                      Single value [1 items]
-#                                          Item 0
-#                                              Number '0'
-#                              Named argument list [2 items]
-#                                  Item 0
-#                                      Pair 'separator'
-#                                          String '!'
-#                                  Item 1
-#                                      Pair 'limit'
-#                                          Number '2'
-#                          Single value [1 items]
-#                              Item 0
-#                                  Number '0'
-#              Instruction
-#                  Call
-#                      Property 'trimPrefix'
-#                          Instance variable '@nickname'
-#                      Argument list [1 items]
-#                          Item 0
-#                              String ':'
-#              Instruction
-#                  Assignment (instance variable '@message')
-#                      Index
-#                          Lexical variable '$lineSplit'
-#                          Single value [1 items]
-#                              Item 0
-#                                  Number '3'
-#              Instruction
-#                  Call
-#                      Property 'trimPrefix'
-#                          Instance variable '@message'
-#                      Argument list [1 items]
-#                          Item 0
-#                              String ':'
-#              Instruction
-#                  Assignment (instance variable '@parts')
-#                      Call
-#                          Property 'split'
-#                              Instance variable '@message'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  String ' '
-#          Computed property 'command' (lazy)
-#              If
-#                  Expression ('if' parameter)
-#                      Call
-#                          Property 'hasPrefix'
-#                              Index
-#                                  Instance variable '@parts'
-#                                  Single value [1 items]
-#                                      Item 0
-#                                          Number '0'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  String '.'
+#              Function body
 #                  Instruction
-#                      Assignment (lexical variable '$cmd')
-#                          Call
-#                              Property 'trimPrefix'
-#                                  Call
-#                                      Property 'copy'
-#                                          Index
-#                                              Instance variable '@parts'
-#                                              Single value [1 items]
-#                                                  Item 0
-#                                                      Number '0'
-#                                      Argument list [0 items]
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      String '.'
-#                  If
-#                      Expression ('if' parameter)
-#                          Property 'length'
-#                              Lexical variable '$cmd'
-#                      Instruction
-#                          Return
-#                              Lexical variable '$cmd'
-#              Instruction
-#                  Return
-#                      Boolean false
-#          Computed property 'commandHasParameters' (lazy)
-#              Instruction
-#                  Return
-#                      Equality
-#                          Property 'length'
-#                              Instance variable '@parts'
-#                          Number '1'
-#          Method 'fromWord'
-#              Instruction
-#                  Need
-#                      Lexical variable '$wordN'
-#                      Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Index
+#                      Need
+#                          Instance variable '@line'
+#                          Bareword 'Str'
+#                  Instruction
+#                      Assignment (lexical variable '$lineSplit')
 #                          Call
 #                              Property 'split'
-#                                  Instance variable '@message'
+#                                  Instance variable '@line'
 #                              Named argument list [2 items]
 #                                  Item 0
 #                                      Pair 'separator'
 #                                          String ' '
 #                                  Item 1
 #                                      Pair 'limit'
-#                                          Operation
-#                                              Lexical variable '$wordN'
-#                                              Addition operator (+)
-#                                              Number '1'
-#                          Single value [1 items]
+#                                          Number '4'
+#                  Instruction
+#                      Assignment (instance variable '@channel')
+#                          Index
+#                              Lexical variable '$lineSplit'
+#                              Single value [1 items]
+#                                  Item 0
+#                                      Number '2'
+#                  Instruction
+#                      Assignment (instance variable '@nickname')
+#                          Index
+#                              Call
+#                                  Property 'split'
+#                                      Index
+#                                          Lexical variable '$lineSplit'
+#                                          Single value [1 items]
+#                                              Item 0
+#                                                  Number '0'
+#                                  Named argument list [2 items]
+#                                      Item 0
+#                                          Pair 'separator'
+#                                              String '!'
+#                                      Item 1
+#                                          Pair 'limit'
+#                                              Number '2'
+#                              Single value [1 items]
+#                                  Item 0
+#                                      Number '0'
+#                  Instruction
+#                      Call
+#                          Property 'trimPrefix'
+#                              Instance variable '@nickname'
+#                          Argument list [1 items]
 #                              Item 0
-#                                  Lexical variable '$wordN'
+#                                  String ':'
+#                  Instruction
+#                      Assignment (instance variable '@message')
+#                          Index
+#                              Lexical variable '$lineSplit'
+#                              Single value [1 items]
+#                                  Item 0
+#                                      Number '3'
+#                  Instruction
+#                      Call
+#                          Property 'trimPrefix'
+#                              Instance variable '@message'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  String ':'
+#                  Instruction
+#                      Assignment (instance variable '@parts')
+#                          Call
+#                              Property 'split'
+#                                  Instance variable '@message'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      String ' '
+#          Computed property 'command' (lazy)
+#              Function body
+#                  If
+#                      Expression ('if' parameter)
+#                          Call
+#                              Property 'hasPrefix'
+#                                  Index
+#                                      Instance variable '@parts'
+#                                      Single value [1 items]
+#                                          Item 0
+#                                              Number '0'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      String '.'
+#                      Instruction
+#                          Assignment (lexical variable '$cmd')
+#                              Call
+#                                  Property 'trimPrefix'
+#                                      Call
+#                                          Property 'copy'
+#                                              Index
+#                                                  Instance variable '@parts'
+#                                                  Single value [1 items]
+#                                                      Item 0
+#                                                          Number '0'
+#                                          Argument list [0 items]
+#                                  Argument list [1 items]
+#                                      Item 0
+#                                          String '.'
+#                      If
+#                          Expression ('if' parameter)
+#                              Property 'length'
+#                                  Lexical variable '$cmd'
+#                          Instruction
+#                              Return
+#                                  Lexical variable '$cmd'
+#                  Instruction
+#                      Return
+#                          Boolean false
+#          Computed property 'commandHasParameters' (lazy)
+#              Function body
+#                  Instruction
+#                      Return
+#                          Equality
+#                              Property 'length'
+#                                  Instance variable '@parts'
+#                              Number '1'
+#          Method 'fromWord'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$wordN'
+#                          Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Index
+#                              Call
+#                                  Property 'split'
+#                                      Instance variable '@message'
+#                                  Named argument list [2 items]
+#                                      Item 0
+#                                          Pair 'separator'
+#                                              String ' '
+#                                      Item 1
+#                                          Pair 'limit'
+#                                              Operation
+#                                                  Lexical variable '$wordN'
+#                                                  Addition operator (+)
+#                                                  Number '1'
+#                              Single value [1 items]
+#                                  Item 0
+#                                      Lexical variable '$wordN'
 #      Include (Num, Str)
 use warnings;
 use strict;

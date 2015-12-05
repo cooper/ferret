@@ -1,21 +1,22 @@
 # === Document Model ===
 #  Document './test/hello9.frt'
 #      Function 'sayHello'
-#          Instruction
-#              Need
-#                  Lexical variable '$who'
-#                  Bareword 'Str'
-#          Instruction
-#              Call
-#                  Bareword 'say'
-#                  Argument list [1 items]
-#                      Item 0
-#                          Operation
-#                              String 'Hello '
-#                              Addition operator (+)
-#                              Lexical variable '$who'
-#                              Addition operator (+)
-#                              String '!'
+#          Function body
+#              Instruction
+#                  Need
+#                      Lexical variable '$who'
+#                      Bareword 'Str'
+#              Instruction
+#                  Call
+#                      Bareword 'say'
+#                      Argument list [1 items]
+#                          Item 0
+#                              Operation
+#                                  String 'Hello '
+#                                  Addition operator (+)
+#                                  Lexical variable '$who'
+#                                  Addition operator (+)
+#                                  String '!'
 #      Instruction
 #          Call
 #              Maybe

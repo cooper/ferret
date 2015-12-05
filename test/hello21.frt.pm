@@ -29,19 +29,20 @@
 #                                          Lexical variable '$i'
 #                          Argument list [0 items]
 #              Anonymous function
-#                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  Operation
-#                                      String '('
-#                                      Addition operator (+)
-#                                      Lexical variable '$i'
-#                                      Addition operator (+)
-#                                      String ') '
-#                                      Addition operator (+)
-#                                      Lexical variable '$part'
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Operation
+#                                          String '('
+#                                          Addition operator (+)
+#                                          Lexical variable '$i'
+#                                          Addition operator (+)
+#                                          String ') '
+#                                          Addition operator (+)
+#                                          Lexical variable '$part'
 #      For
 #          Expression ('for' parameter)
 #              Lexical variable '$part'

@@ -3,142 +3,150 @@
 #      Package 'Math'
 #      Class 'Point'
 #          Main method '_init_'
-#              Instruction
-#                  Need
-#                      Instance variable '@x'
-#                      Bareword 'Num'
-#              Instruction
-#                  Need
-#                      Instance variable '@y'
-#                      Bareword 'Num'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Instance variable '@x'
+#                          Bareword 'Num'
+#                  Instruction
+#                      Need
+#                          Instance variable '@y'
+#                          Bareword 'Num'
 #          Method 'distanceTo'
-#              Instruction
-#                  Need
-#                      Lexical variable '$pt2'
-#                      Bareword 'Point'
-#              Instruction
-#                  Assignment (lexical variable '$dx')
-#                      Operation
-#                          Instance variable '@x'
-#                          Subtraction operator (-)
-#                          Property 'x'
-#                              Lexical variable '$pt2'
-#              Instruction
-#                  Assignment (lexical variable '$dy')
-#                      Operation
-#                          Instance variable '@y'
-#                          Subtraction operator (-)
-#                          Property 'y'
-#                              Lexical variable '$pt2'
-#              Instruction
-#                  Return
-#                      Call
-#                          Bareword 'sqrt'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  Operation
-#                                      Lexical variable '$dx'
-#                                      Exponent operator (^)
-#                                      Number '2'
-#                                      Addition operator (+)
-#                                      Lexical variable '$dy'
-#                                      Exponent operator (^)
-#                                      Number '2'
-#          Computed property 'distanceFromOrigin'
-#              Instruction
-#                  Return
-#                      Call
-#                          Instance variable '@distanceTo'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  Call
-#                                      Special variable '*class'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Number '0'
-#                                          Item 1
-#                                              Number '0'
-#          Computed property 'pretty'
-#              Instruction
-#                  Return
-#                      Operation
-#                          String '('
-#                          Addition operator (+)
-#                          Instance variable '@x'
-#                          Addition operator (+)
-#                          String ', '
-#                          Addition operator (+)
-#                          Instance variable '@y'
-#                          Addition operator (+)
-#                          String ')'
-#          Method 'toString'
-#              Instruction
-#                  Return
-#                      Instance variable '@pretty'
-#          Method 'description'
-#              Instruction
-#                  Return
-#                      Operation
-#                          String 'Point'
-#                          Addition operator (+)
-#                          Instance variable '@pretty'
-#          Main method 'midpoint'
-#              Instruction
-#                  Need
-#                      Lexical variable '$pt1'
-#                      Bareword 'Point'
-#              Instruction
-#                  Need
-#                      Lexical variable '$pt2'
-#                      Bareword 'Point'
-#              Instruction
-#                  Return
-#                      Call
-#                          Special variable '*class'
-#                          Named argument list [2 items]
-#                              Item 0
-#                                  Pair 'x'
-#                                      Operation
-#                                          Single value [1 items]
-#                                              Item 0
-#                                                  Operation
-#                                                      Property 'x'
-#                                                          Lexical variable '$pt1'
-#                                                      Addition operator (+)
-#                                                      Property 'x'
-#                                                          Lexical variable '$pt2'
-#                                          Division operator (/)
-#                                          Number '2'
-#                              Item 1
-#                                  Pair 'y'
-#                                      Operation
-#                                          Single value [1 items]
-#                                              Item 0
-#                                                  Operation
-#                                                      Property 'y'
-#                                                          Lexical variable '$pt1'
-#                                                      Addition operator (+)
-#                                                      Property 'y'
-#                                                          Lexical variable '$pt2'
-#                                          Division operator (/)
-#                                          Number '2'
-#          Main method 'distanceBetween'
-#              Instruction
-#                  Need
-#                      Lexical variable '$pt1'
-#                      Bareword 'Point'
-#              Instruction
-#                  Need
-#                      Lexical variable '$pt2'
-#                      Bareword 'Point'
-#              Instruction
-#                  Return
-#                      Call
-#                          Property 'distanceTo'
-#                              Lexical variable '$pt1'
-#                          Argument list [1 items]
-#                              Item 0
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$pt2'
+#                          Bareword 'Point'
+#                  Instruction
+#                      Assignment (lexical variable '$dx')
+#                          Operation
+#                              Instance variable '@x'
+#                              Subtraction operator (-)
+#                              Property 'x'
 #                                  Lexical variable '$pt2'
+#                  Instruction
+#                      Assignment (lexical variable '$dy')
+#                          Operation
+#                              Instance variable '@y'
+#                              Subtraction operator (-)
+#                              Property 'y'
+#                                  Lexical variable '$pt2'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'sqrt'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Operation
+#                                          Lexical variable '$dx'
+#                                          Exponent operator (^)
+#                                          Number '2'
+#                                          Addition operator (+)
+#                                          Lexical variable '$dy'
+#                                          Exponent operator (^)
+#                                          Number '2'
+#          Computed property 'distanceFromOrigin'
+#              Function body
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@distanceTo'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Call
+#                                          Special variable '*class'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Number '0'
+#                                              Item 1
+#                                                  Number '0'
+#          Computed property 'pretty'
+#              Function body
+#                  Instruction
+#                      Return
+#                          Operation
+#                              String '('
+#                              Addition operator (+)
+#                              Instance variable '@x'
+#                              Addition operator (+)
+#                              String ', '
+#                              Addition operator (+)
+#                              Instance variable '@y'
+#                              Addition operator (+)
+#                              String ')'
+#          Method 'toString'
+#              Function body
+#                  Instruction
+#                      Return
+#                          Instance variable '@pretty'
+#          Method 'description'
+#              Function body
+#                  Instruction
+#                      Return
+#                          Operation
+#                              String 'Point'
+#                              Addition operator (+)
+#                              Instance variable '@pretty'
+#          Main method 'midpoint'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$pt1'
+#                          Bareword 'Point'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$pt2'
+#                          Bareword 'Point'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Special variable '*class'
+#                              Named argument list [2 items]
+#                                  Item 0
+#                                      Pair 'x'
+#                                          Operation
+#                                              Single value [1 items]
+#                                                  Item 0
+#                                                      Operation
+#                                                          Property 'x'
+#                                                              Lexical variable '$pt1'
+#                                                          Addition operator (+)
+#                                                          Property 'x'
+#                                                              Lexical variable '$pt2'
+#                                              Division operator (/)
+#                                              Number '2'
+#                                  Item 1
+#                                      Pair 'y'
+#                                          Operation
+#                                              Single value [1 items]
+#                                                  Item 0
+#                                                      Operation
+#                                                          Property 'y'
+#                                                              Lexical variable '$pt1'
+#                                                          Addition operator (+)
+#                                                          Property 'y'
+#                                                              Lexical variable '$pt2'
+#                                              Division operator (/)
+#                                              Number '2'
+#          Main method 'distanceBetween'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$pt1'
+#                          Bareword 'Point'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$pt2'
+#                          Bareword 'Point'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Property 'distanceTo'
+#                                  Lexical variable '$pt1'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$pt2'
 #      Include (Num, Point)
 use warnings;
 use strict;

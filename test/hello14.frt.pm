@@ -14,19 +14,20 @@
 #              Property 'length'
 #                  Lexical variable '$str'
 #          Anonymous function
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  String 'found ''
-#                                  Addition operator (+)
-#                                  Special variable '*this'
-#                                  Addition operator (+)
-#                                  String '' length t...'
-#                                  Addition operator (+)
-#                                  Special variable '*return'
+#              Function body
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String 'found ''
+#                                      Addition operator (+)
+#                                      Special variable '*this'
+#                                      Addition operator (+)
+#                                      String '' length t...'
+#                                      Addition operator (+)
+#                                      Special variable '*return'
 #      Instruction
 #          Call
 #              Property 'length'
@@ -43,19 +44,20 @@
 #                  Property 'proto'
 #                      Bareword 'String'
 #          Anonymous function
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  String 'found ''
-#                                  Addition operator (+)
-#                                  Special variable '*this'
-#                                  Addition operator (+)
-#                                  String '' length t...'
-#                                  Addition operator (+)
-#                                  Special variable '*return'
+#              Function body
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String 'found ''
+#                                      Addition operator (+)
+#                                      Special variable '*this'
+#                                      Addition operator (+)
+#                                      String '' length t...'
+#                                      Addition operator (+)
+#                                      Special variable '*return'
 #      Instruction
 #          Call
 #              Property 'length'

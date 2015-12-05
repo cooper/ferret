@@ -2,212 +2,221 @@
 #  Document './std/Test.frt'
 #      Class 'Test'
 #          Main method '_init_'
-#              Instruction
-#                  Want
-#                      Instance variable '@name'
-#                      Expression ('want' parameter)
-#                          String 'Test'
-#              Instruction
-#                  Want
-#                      Instance variable '@fatal'
-#                      Expression ('want' parameter)
-#                          Boolean true
-#              Instruction
-#                  Assignment (instance variable '@tested')
-#                      Number '0'
-#              Instruction
-#                  Assignment (instance variable '@passed')
-#                      Number '0'
-#          Method 'trueValue'
-#              Instruction
-#                  Want
-#                      Lexical variable '$a'
-#              Instruction
-#                  Return
-#                      Call
-#                          Instance variable '@_test'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Call
-#                                      Bareword 'Bool'
-#                                      Argument list [1 items]
-#                                          Item 0
-#                                              Lexical variable '$a'
-#                              Item 1
-#                                  String 'Value must...'
-#          Method 'veryTrue'
-#              Instruction
-#                  Want
-#                      Lexical variable '$a'
-#              Instruction
-#                  Return
-#                      Call
-#                          Instance variable '@_test'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Equality
-#                                      Lexical variable '$a'
-#                                      Boolean true
-#                              Item 1
-#                                  String 'Value must...'
-#          Method 'equal'
-#              Instruction
-#                  Want
-#                      Lexical variable '$a'
-#              Instruction
-#                  Want
-#                      Lexical variable '$b'
-#              Instruction
-#                  Return
-#                      Call
-#                          Instance variable '@_test'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Equality
-#                                      Lexical variable '$a'
-#                                      Lexical variable '$b'
-#                              Item 1
-#                                  String 'Values mus...'
-#          Method 'objectsEqual'
-#              Instruction
-#                  Want
-#                      Lexical variable '$a'
-#              Instruction
-#                  Want
-#                      Lexical variable '$b'
-#              Instruction
-#                  Return
-#                      Call
-#                          Instance variable '@_test'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Equality
-#                                      Lexical variable '$a'
-#                                      Lexical variable '$b'
-#                              Item 1
-#                                  String 'Objects mu...'
-#          Method 'notEqual'
-#              Instruction
-#                  Want
-#                      Lexical variable '$a'
-#              Instruction
-#                  Want
-#                      Lexical variable '$b'
-#              Instruction
-#                  Return
-#                      Call
-#                          Instance variable '@_test'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Equality
-#                                      Lexical variable '$a'
-#                                      Lexical variable '$b'
-#                              Item 1
-#                                  String 'Values mus...'
-#          Method 'objectsNotEqual'
-#              Instruction
-#                  Want
-#                      Lexical variable '$a'
-#              Instruction
-#                  Want
-#                      Lexical variable '$b'
-#              Instruction
-#                  Return
-#                      Call
-#                          Instance variable '@_test'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Equality
-#                                      Lexical variable '$a'
-#                                      Lexical variable '$b'
-#                              Item 1
-#                                  String 'Objects mu...'
-#          Method 'review'
-#              Instruction
-#                  Assignment (lexical variable '$failed')
-#                      Operation
-#                          Instance variable '@tested'
-#                          Subtraction operator (-)
-#                          Instance variable '@passed'
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  String '['
-#                                  Addition operator (+)
-#                                  Instance variable '@name'
-#                                  Addition operator (+)
-#                                  String '] '
-#                                  Addition operator (+)
-#                                  Instance variable '@tested'
-#                                  Addition operator (+)
-#                                  String ' tests; '
-#                                  Addition operator (+)
-#                                  Instance variable '@passed'
-#                                  Addition operator (+)
-#                                  String ' passed; '
-#                                  Addition operator (+)
-#                                  Lexical variable '$failed'
-#                                  Addition operator (+)
-#                                  String ' failed'
-#              Instruction
-#                  Return pair 'tests'
-#                      Instance variable '@tested'
-#              Instruction
-#                  Return pair 'fails'
-#                      Lexical variable '$failed'
-#              Instruction
-#                  Return pair 'passes'
-#                      Instance variable '@passed'
-#              Instruction
-#                  Return pair 'allOK'
-#                      Equality
-#                          Instance variable '@passed'
-#                          Instance variable '@tested'
-#          Method '_test'
-#              Instruction
-#                  Want
-#                      Lexical variable '$yes'
-#              Instruction
-#                  Want
-#                      Lexical variable '$message'
-#              Instruction
-#                  Assignment (instance variable '@tested')
-#                      Operation
-#                          Instance variable '@tested'
-#                          Addition operator (+)
-#                          Number '1'
-#              Instruction
-#                  Return pair 'pass'
-#                      Lexical variable '$yes'
-#              If
-#                  Expression ('if' parameter)
-#                      Lexical variable '$yes'
+#              Function body
+#                  Instruction
+#                      Want
+#                          Instance variable '@name'
+#                          Expression ('want' parameter)
+#                              String 'Test'
+#                  Instruction
+#                      Want
+#                          Instance variable '@fatal'
+#                          Expression ('want' parameter)
+#                              Boolean true
+#                  Instruction
+#                      Assignment (instance variable '@tested')
+#                          Number '0'
 #                  Instruction
 #                      Assignment (instance variable '@passed')
+#                          Number '0'
+#          Method 'trueValue'
+#              Function body
+#                  Instruction
+#                      Want
+#                          Lexical variable '$a'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@_test'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Call
+#                                          Bareword 'Bool'
+#                                          Argument list [1 items]
+#                                              Item 0
+#                                                  Lexical variable '$a'
+#                                  Item 1
+#                                      String 'Value must...'
+#          Method 'veryTrue'
+#              Function body
+#                  Instruction
+#                      Want
+#                          Lexical variable '$a'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@_test'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Equality
+#                                          Lexical variable '$a'
+#                                          Boolean true
+#                                  Item 1
+#                                      String 'Value must...'
+#          Method 'equal'
+#              Function body
+#                  Instruction
+#                      Want
+#                          Lexical variable '$a'
+#                  Instruction
+#                      Want
+#                          Lexical variable '$b'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@_test'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Equality
+#                                          Lexical variable '$a'
+#                                          Lexical variable '$b'
+#                                  Item 1
+#                                      String 'Values mus...'
+#          Method 'objectsEqual'
+#              Function body
+#                  Instruction
+#                      Want
+#                          Lexical variable '$a'
+#                  Instruction
+#                      Want
+#                          Lexical variable '$b'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@_test'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Equality
+#                                          Lexical variable '$a'
+#                                          Lexical variable '$b'
+#                                  Item 1
+#                                      String 'Objects mu...'
+#          Method 'notEqual'
+#              Function body
+#                  Instruction
+#                      Want
+#                          Lexical variable '$a'
+#                  Instruction
+#                      Want
+#                          Lexical variable '$b'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@_test'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Equality
+#                                          Lexical variable '$a'
+#                                          Lexical variable '$b'
+#                                  Item 1
+#                                      String 'Values mus...'
+#          Method 'objectsNotEqual'
+#              Function body
+#                  Instruction
+#                      Want
+#                          Lexical variable '$a'
+#                  Instruction
+#                      Want
+#                          Lexical variable '$b'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@_test'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Equality
+#                                          Lexical variable '$a'
+#                                          Lexical variable '$b'
+#                                  Item 1
+#                                      String 'Objects mu...'
+#          Method 'review'
+#              Function body
+#                  Instruction
+#                      Assignment (lexical variable '$failed')
 #                          Operation
+#                              Instance variable '@tested'
+#                              Subtraction operator (-)
 #                              Instance variable '@passed'
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String '['
+#                                      Addition operator (+)
+#                                      Instance variable '@name'
+#                                      Addition operator (+)
+#                                      String '] '
+#                                      Addition operator (+)
+#                                      Instance variable '@tested'
+#                                      Addition operator (+)
+#                                      String ' tests; '
+#                                      Addition operator (+)
+#                                      Instance variable '@passed'
+#                                      Addition operator (+)
+#                                      String ' passed; '
+#                                      Addition operator (+)
+#                                      Lexical variable '$failed'
+#                                      Addition operator (+)
+#                                      String ' failed'
+#                  Instruction
+#                      Return pair 'tests'
+#                          Instance variable '@tested'
+#                  Instruction
+#                      Return pair 'fails'
+#                          Lexical variable '$failed'
+#                  Instruction
+#                      Return pair 'passes'
+#                          Instance variable '@passed'
+#                  Instruction
+#                      Return pair 'allOK'
+#                          Equality
+#                              Instance variable '@passed'
+#                              Instance variable '@tested'
+#          Method '_test'
+#              Function body
+#                  Instruction
+#                      Want
+#                          Lexical variable '$yes'
+#                  Instruction
+#                      Want
+#                          Lexical variable '$message'
+#                  Instruction
+#                      Assignment (instance variable '@tested')
+#                          Operation
+#                              Instance variable '@tested'
 #                              Addition operator (+)
 #                              Number '1'
 #                  Instruction
-#                      Return
-#              If
-#                  Expression ('if' parameter)
-#                      Instance variable '@fatal'
+#                      Return pair 'pass'
+#                          Lexical variable '$yes'
+#                  If
+#                      Expression ('if' parameter)
+#                          Lexical variable '$yes'
+#                      Instruction
+#                          Assignment (instance variable '@passed')
+#                              Operation
+#                                  Instance variable '@passed'
+#                                  Addition operator (+)
+#                                  Number '1'
+#                      Instruction
+#                          Return
+#                  If
+#                      Expression ('if' parameter)
+#                          Instance variable '@fatal'
+#                      Instruction
+#                          Call
+#                              Property 'panic'
+#                                  Call
+#                                      Bareword 'Error'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Lexical variable '$message'
+#                              Argument list [0 items]
 #                  Instruction
-#                      Call
-#                          Property 'panic'
-#                              Call
-#                                  Bareword 'Error'
-#                                  Argument list [1 items]
-#                                      Item 0
-#                                          Lexical variable '$message'
-#                          Argument list [0 items]
-#              Instruction
-#                  Return pair 'message'
-#                      Lexical variable '$message'
+#                      Return pair 'message'
+#                          Lexical variable '$message'
 #      Include (Bool, Error)
 use warnings;
 use strict;

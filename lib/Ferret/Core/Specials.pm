@@ -8,7 +8,7 @@ use 5.010;
 
 use Ferret::Core::Conversion qw(
     ferret_list_wrap ferret_list ferret_boolean
-    perl_string
+    perl_string ferret_number
 );
 
 my %specials = (
@@ -21,7 +21,8 @@ my %specials = (
     get             => _function('get', '$property:Str'),
     getOwn          => _function('getOwn', '$property:Str'),
     set             => _function('set', '$property:Str $value'),
-    commonClass     => _function('commonClass', '$other:Object')
+    commonClass     => _function('commonClass', '$other:Object'),
+    addr            => \&_addr
 );
 
 @Ferret::specials{keys %specials} = values %specials;
@@ -120,6 +121,11 @@ sub _commonClass {
     my $other = $arguments->{other};
     return $obj->best_common_class($other) || $obj->f->{object_initializer};
     # note: best_common_class() will eventually return Object
+}
+
+sub _addr {
+    my $obj = shift;
+    return ferret_number($obj + 0);
 }
 
 1

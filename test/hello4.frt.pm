@@ -1,27 +1,28 @@
 # === Document Model ===
 #  Document './test/hello4.frt'
 #      Function 'makePoint'
-#          Instruction
-#              Need
-#                  Lexical variable '$x'
-#          Instruction
-#              Need
-#                  Lexical variable '$y'
-#          Instruction
-#              Want
-#                  Lexical variable '$z'
-#          Instruction
-#              Assignment (lexical variable '$point')
-#                  Object [2 items]
-#                      Item 0
-#                          Pair 'x'
-#                              Lexical variable '$x'
-#                      Item 1
-#                          Pair 'y'
-#                              Lexical variable '$y'
-#          Instruction
-#              Return pair 'point'
-#                  Lexical variable '$point'
+#          Function body
+#              Instruction
+#                  Need
+#                      Lexical variable '$x'
+#              Instruction
+#                  Need
+#                      Lexical variable '$y'
+#              Instruction
+#                  Want
+#                      Lexical variable '$z'
+#              Instruction
+#                  Assignment (lexical variable '$point')
+#                      Object [2 items]
+#                          Item 0
+#                              Pair 'x'
+#                                  Lexical variable '$x'
+#                          Item 1
+#                              Pair 'y'
+#                                  Lexical variable '$y'
+#              Instruction
+#                  Return pair 'point'
+#                      Lexical variable '$point'
 #      Instruction
 #          Assignment (lexical variable '$pt')
 #              Property 'point'

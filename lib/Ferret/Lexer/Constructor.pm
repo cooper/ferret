@@ -183,8 +183,9 @@ sub c_METHOD {
 
     my $method = F::Method->new(%$value, event_cb => 1);
 
-    $c->adopt_and_set_node($method);
-    $c->capture_closure_with($method);
+    $c->node->adopt($method);
+    $c->set_node($method->body);
+    $c->capture_closure_with($method->body);
 
     return $method;
 }
@@ -198,8 +199,9 @@ sub c_FUNCTION {
         # anonymous functions are not implemented as events
     );
 
-    $c->adopt_and_set_node($function);
-    $c->capture_closure_with($function);
+    $c->node->adopt($function);
+    $c->set_node($function->body);
+    $c->capture_closure_with($function->body);
 
     return $function;
 }
@@ -220,12 +222,13 @@ sub c_CLOSURE_S {
 
         # create a function.
         my $func = F::Function->new(anonymous => 1, call_closure => 1);
-        $c->set_node($func);
+        $func->body->{call_closure} = 1;
+        $c->set_node($func->body);
 
         # make it an argument to the call.
         $call->arg_list->new_item->adopt($func);
 
-        $closure = $func;
+        $closure = $func->body;
     }
 
     # a closure can terminate an equality.
@@ -233,8 +236,10 @@ sub c_CLOSURE_S {
 
     # a closure can terminate a generated expression.
     # for instance, inside $something {}. the expression $something ends there.
-    if ($c->node->{generated_expression}) {
+    my $node = $c->node;
+    if ($node->{generated_expression}) {
         $c->close_node;
+        $c->set_node(delete $node->{set_body}) if $node->{set_body};
     }
 
     # remember which closure this is inside; if any.
@@ -257,7 +262,7 @@ sub c_CLOSURE_E {
     # close the closure and the node.
     my $closure = $c->closure;
     $c->close_closure;
-    $c->close_node;
+    $c->close_node($closure->type eq 'FunctionBody' ? 2 : 1);
 
     # this is a closure-capturing function call.
     if ($closure->{call_closure}) {
@@ -302,10 +307,11 @@ sub c_KEYWORD_ON {
     my $on = F::On->new(type => 'On');
 
     # set the closure to the function of on.
-    $c->capture_closure_with($on->function);
+    $c->capture_closure_with($on->function->body);
     $c->node->adopt($on);
 
     # set the current node to the on expression.
+    $on->param_exp->{set_body} = $on->function->body;
     $c->set_node($on->param_exp);
 
     return $on;
@@ -594,7 +600,7 @@ sub c_KEYWORD_FALSE {
     return $b;
 }
 
-sub c_SYMBOL {
+sub c_VAR_SYM {
     my ($c, $value) = @_;
 
     # create the symbol...

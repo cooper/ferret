@@ -58,10 +58,14 @@ my @token_formats = (
     # simple properties
     [ PROPERTY      => qr/\.[\*]?$prop_reg/, \&remove_first_char            ],  # simple .property
 
+    # this is way up here because it must be above VAR_SYM and OP_VALUE.
+    [ OP_PACK       => qr/::/                                               ],  # package
+
     # variables
-    [ VAR_LEX       => qr/\$+$prop_reg/,   \&remove_first_char              ],  # lexical variable
-    [ VAR_THIS      => qr/\@+$prop_reg/,   \&remove_first_char              ],  # object variable
-    [ VAR_SPEC      => qr/\*+$prop_reg/,   \&remove_first_char              ],  # special variable
+    [ VAR_LEX       => qr/\$$prop_reg/,   \&remove_first_char               ],  # lexical variable
+    [ VAR_THIS      => qr/\@$prop_reg/,   \&remove_first_char               ],  # object variable
+    [ VAR_SPEC      => qr/\*$prop_reg/,   \&remove_first_char               ],  # special variable
+    [ VAR_SYM       => qr/\:$prop_reg/,   \&remove_first_char               ],  # symbol variable
     [ VAR_SET       => qr/\<[A-Za-z_]+[A-Za-z0-9:_]*\>/, \&remove_firstlast ],  # set type variable
 
     # wrappers
@@ -97,9 +101,7 @@ my @token_formats = (
     [ OP_RANGE      => qr/\.\./                                             ],  # range
    #[ OP_PROP       => qr/\./                                               ],  # property
     [ OP_COMMA      => qr/,/                                                ],  # list separator
-    [ OP_PACK       => qr/::/                                               ],  # package
     [ PROP_VALUE    => qr/$prop_reg:/,  \&remove_last_char                  ],  # property: value
-    [ SYMBOL        => qr/~$prop_reg/,  \&remove_first_char                 ],
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other

@@ -29,49 +29,52 @@
 #                  Item 1
 #                      String 'George'
 #      Function 'helloWorld'
-#          Instruction
-#              Need
-#                  Lexical variable '$name1'
-#          Instruction
-#              Need
-#                  Lexical variable '$name2'
-#          Instruction
-#              Call
-#                  Bareword 'hello1'
-#                  Argument list [0 items]
-#          Instruction
-#              Call
-#                  Bareword 'hello2'
-#                  Argument list [0 items]
-#          Function 'hello1'
+#          Function body
 #              Instruction
-#                  Assignment (lexical variable '$hello')
-#                      String 'Hello'
-#              Instruction
-#                  Assignment (property 'name')
+#                  Need
 #                      Lexical variable '$name1'
 #              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  Lexical variable '$hello'
-#                                  Addition operator (+)
-#                                  String ' '
-#                                  Addition operator (+)
-#                                  Property 'name'
-#                                      Lexical variable '$hello'
-#          Function 'hello2'
+#                  Need
+#                      Lexical variable '$name2'
 #              Instruction
 #                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  String 'Hello '
-#                                  Addition operator (+)
-#                                  Lexical variable '$name2'
+#                      Bareword 'hello1'
+#                      Argument list [0 items]
+#              Instruction
+#                  Call
+#                      Bareword 'hello2'
+#                      Argument list [0 items]
+#              Function 'hello1'
+#                  Function body
+#                      Instruction
+#                          Assignment (lexical variable '$hello')
+#                              String 'Hello'
+#                      Instruction
+#                          Assignment (property 'name')
+#                              Lexical variable '$name1'
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Operation
+#                                          Lexical variable '$hello'
+#                                          Addition operator (+)
+#                                          String ' '
+#                                          Addition operator (+)
+#                                          Property 'name'
+#                                              Lexical variable '$hello'
+#              Function 'hello2'
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Operation
+#                                          String 'Hello '
+#                                          Addition operator (+)
+#                                          Lexical variable '$name2'
 #      Instruction
 #          Assignment (lexical variable '$pi')
 #              Operation

@@ -28,19 +28,20 @@
 #                      String 'info'
 #                  Item 1
 #                      Anonymous function
-#                          Instruction
-#                              Need
-#                                  Lexical variable '$msg'
-#                          Instruction
-#                              Call
-#                                  Property 'privmsg'
-#                                      Lexical variable '$bot'
-#                                  Argument list [2 items]
-#                                      Item 0
-#                                          Property 'channel'
-#                                              Lexical variable '$msg'
-#                                      Item 1
-#                                          String 'Ferret IRC...'
+#                          Function body
+#                              Instruction
+#                                  Need
+#                                      Lexical variable '$msg'
+#                              Instruction
+#                                  Call
+#                                      Property 'privmsg'
+#                                          Lexical variable '$bot'
+#                                      Argument list [2 items]
+#                                          Item 0
+#                                              Property 'channel'
+#                                                  Lexical variable '$msg'
+#                                          Item 1
+#                                              String 'Ferret IRC...'
 #      Instruction
 #          Call
 #              Property 'addCommand'
@@ -50,41 +51,55 @@
 #                      String 't'
 #                  Item 1
 #                      Anonymous function
-#                          Instruction
-#                              Need
-#                                  Lexical variable '$msg'
-#                          If
-#                              Expression ('if' parameter)
-#                                  Negation
-#                                      Property 'commandHasParameters'
-#                                          Lexical variable '$msg'
+#                          Function body
 #                              Instruction
-#                                  Return
-#                          Instruction
-#                              Assignment (lexical variable '$c')
-#                                  Call
-#                                      Bareword 'COMPILER'
-#                                      Argument list [1 items]
-#                                          Item 0
-#                                              Call
-#                                                  Property 'fromWord'
+#                                  Need
+#                                      Lexical variable '$msg'
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Negation
+#                                          Property 'commandHasParameters'
+#                                              Lexical variable '$msg'
+#                                  Instruction
+#                                      Return
+#                              Instruction
+#                                  Assignment (lexical variable '$c')
+#                                      Call
+#                                          Bareword 'COMPILER'
+#                                          Argument list [1 items]
+#                                              Item 0
+#                                                  Call
+#                                                      Property 'fromWord'
+#                                                          Lexical variable '$msg'
+#                                                      Argument list [1 items]
+#                                                          Item 0
+#                                                              Number '1'
+#                              Instruction
+#                                  Assignment (lexical variable '$res')
+#                                      Call
+#                                          Property 'tokenize'
+#                                              Lexical variable '$c'
+#                                          Named argument list [1 items]
+#                                              Item 0
+#                                                  Pair 'pretty'
+#                                                      Boolean true
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Property 'error'
+#                                          Lexical variable '$res'
+#                                  Instruction
+#                                      Call
+#                                          Property 'privmsg'
+#                                              Lexical variable '$bot'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Property 'channel'
 #                                                      Lexical variable '$msg'
-#                                                  Argument list [1 items]
-#                                                      Item 0
-#                                                          Number '1'
-#                          Instruction
-#                              Assignment (lexical variable '$res')
-#                                  Call
-#                                      Property 'tokenize'
-#                                          Lexical variable '$c'
-#                                      Named argument list [1 items]
-#                                          Item 0
-#                                              Pair 'pretty'
-#                                                  Boolean true
-#                          If
-#                              Expression ('if' parameter)
-#                                  Property 'error'
-#                                      Lexical variable '$res'
+#                                              Item 1
+#                                                  Property 'error'
+#                                                      Lexical variable '$res'
+#                                  Instruction
+#                                      Return
 #                              Instruction
 #                                  Call
 #                                      Property 'privmsg'
@@ -94,21 +109,8 @@
 #                                              Property 'channel'
 #                                                  Lexical variable '$msg'
 #                                          Item 1
-#                                              Property 'error'
+#                                              Property 'pretty'
 #                                                  Lexical variable '$res'
-#                              Instruction
-#                                  Return
-#                          Instruction
-#                              Call
-#                                  Property 'privmsg'
-#                                      Lexical variable '$bot'
-#                                  Argument list [2 items]
-#                                      Item 0
-#                                          Property 'channel'
-#                                              Lexical variable '$msg'
-#                                      Item 1
-#                                          Property 'pretty'
-#                                              Lexical variable '$res'
 #      Instruction
 #          Call
 #              Property 'addCommand'
@@ -118,41 +120,55 @@
 #                      String 'c'
 #                  Item 1
 #                      Anonymous function
-#                          Instruction
-#                              Need
-#                                  Lexical variable '$msg'
-#                          If
-#                              Expression ('if' parameter)
-#                                  Negation
-#                                      Property 'commandHasParameters'
-#                                          Lexical variable '$msg'
+#                          Function body
 #                              Instruction
-#                                  Return
-#                          Instruction
-#                              Assignment (lexical variable '$c')
-#                                  Call
-#                                      Bareword 'COMPILER'
-#                                      Argument list [1 items]
-#                                          Item 0
-#                                              Call
-#                                                  Property 'fromWord'
+#                                  Need
+#                                      Lexical variable '$msg'
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Negation
+#                                          Property 'commandHasParameters'
+#                                              Lexical variable '$msg'
+#                                  Instruction
+#                                      Return
+#                              Instruction
+#                                  Assignment (lexical variable '$c')
+#                                      Call
+#                                          Bareword 'COMPILER'
+#                                          Argument list [1 items]
+#                                              Item 0
+#                                                  Call
+#                                                      Property 'fromWord'
+#                                                          Lexical variable '$msg'
+#                                                      Argument list [1 items]
+#                                                          Item 0
+#                                                              Number '1'
+#                              Instruction
+#                                  Assignment (lexical variable '$res')
+#                                      Call
+#                                          Property 'construct'
+#                                              Lexical variable '$c'
+#                                          Named argument list [1 items]
+#                                              Item 0
+#                                                  Pair 'pretty'
+#                                                      Boolean true
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Property 'error'
+#                                          Lexical variable '$res'
+#                                  Instruction
+#                                      Call
+#                                          Property 'privmsg'
+#                                              Lexical variable '$bot'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Property 'channel'
 #                                                      Lexical variable '$msg'
-#                                                  Argument list [1 items]
-#                                                      Item 0
-#                                                          Number '1'
-#                          Instruction
-#                              Assignment (lexical variable '$res')
-#                                  Call
-#                                      Property 'construct'
-#                                          Lexical variable '$c'
-#                                      Named argument list [1 items]
-#                                          Item 0
-#                                              Pair 'pretty'
-#                                                  Boolean true
-#                          If
-#                              Expression ('if' parameter)
-#                                  Property 'error'
-#                                      Lexical variable '$res'
+#                                              Item 1
+#                                                  Property 'error'
+#                                                      Lexical variable '$res'
+#                                  Instruction
+#                                      Return
 #                              Instruction
 #                                  Call
 #                                      Property 'privmsg'
@@ -162,21 +178,8 @@
 #                                              Property 'channel'
 #                                                  Lexical variable '$msg'
 #                                          Item 1
-#                                              Property 'error'
+#                                              Property 'pretty'
 #                                                  Lexical variable '$res'
-#                              Instruction
-#                                  Return
-#                          Instruction
-#                              Call
-#                                  Property 'privmsg'
-#                                      Lexical variable '$bot'
-#                                  Argument list [2 items]
-#                                      Item 0
-#                                          Property 'channel'
-#                                              Lexical variable '$msg'
-#                                      Item 1
-#                                          Property 'pretty'
-#                                              Lexical variable '$res'
 #      Instruction
 #          Call
 #              Property 'addCommand'
@@ -186,35 +189,62 @@
 #                      String 'e'
 #                  Item 1
 #                      Anonymous function
-#                          Instruction
-#                              Need
-#                                  Lexical variable '$msg'
-#                          If
-#                              Expression ('if' parameter)
-#                                  Negation
-#                                      Property 'commandHasParameters'
-#                                          Lexical variable '$msg'
+#                          Function body
 #                              Instruction
-#                                  Return
-#                          Instruction
-#                              Assignment (lexical variable '$res')
-#                                  Call
-#                                      Property 'eval'
+#                                  Need
+#                                      Lexical variable '$msg'
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Negation
+#                                          Property 'commandHasParameters'
+#                                              Lexical variable '$msg'
+#                                  Instruction
+#                                      Return
+#                              Instruction
+#                                  Assignment (lexical variable '$res')
+#                                      Call
+#                                          Property 'eval'
+#                                              Call
+#                                                  Bareword 'COMPILER'
+#                                                  Argument list [1 items]
+#                                                      Item 0
+#                                                          Call
+#                                                              Property 'fromWord'
+#                                                                  Lexical variable '$msg'
+#                                                              Argument list [1 items]
+#                                                                  Item 0
+#                                                                      Number '1'
+#                                          Argument list [0 items]
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Property 'error'
+#                                          Lexical variable '$res'
+#                                  Instruction
+#                                      Call
+#                                          Property 'privmsg'
+#                                              Lexical variable '$bot'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Property 'channel'
+#                                                      Lexical variable '$msg'
+#                                              Item 1
+#                                                  Property 'error'
+#                                                      Lexical variable '$res'
+#                                  Instruction
+#                                      Return
+#                              Instruction
+#                                  Assignment (lexical variable '$string')
+#                                      Property 'string'
 #                                          Call
-#                                              Bareword 'COMPILER'
-#                                              Argument list [1 items]
+#                                              Bareword 'inspect'
+#                                              Named argument list [2 items]
 #                                                  Item 0
-#                                                      Call
-#                                                          Property 'fromWord'
-#                                                              Lexical variable '$msg'
-#                                                          Argument list [1 items]
-#                                                              Item 0
-#                                                                  Number '1'
-#                                      Argument list [0 items]
-#                          If
-#                              Expression ('if' parameter)
-#                                  Property 'error'
-#                                      Lexical variable '$res'
+#                                                      Pair 'value'
+#                                                          Property 'result'
+#                                                              Lexical variable '$res'
+#                                                  Item 1
+#                                                      Pair 'quiet'
+#                                                          Boolean true
 #                              Instruction
 #                                  Call
 #                                      Property 'privmsg'
@@ -224,33 +254,7 @@
 #                                              Property 'channel'
 #                                                  Lexical variable '$msg'
 #                                          Item 1
-#                                              Property 'error'
-#                                                  Lexical variable '$res'
-#                              Instruction
-#                                  Return
-#                          Instruction
-#                              Assignment (lexical variable '$string')
-#                                  Property 'string'
-#                                      Call
-#                                          Bareword 'inspect'
-#                                          Named argument list [2 items]
-#                                              Item 0
-#                                                  Pair 'value'
-#                                                      Property 'result'
-#                                                          Lexical variable '$res'
-#                                              Item 1
-#                                                  Pair 'quiet'
-#                                                      Boolean true
-#                          Instruction
-#                              Call
-#                                  Property 'privmsg'
-#                                      Lexical variable '$bot'
-#                                  Argument list [2 items]
-#                                      Item 0
-#                                          Property 'channel'
-#                                              Lexical variable '$msg'
-#                                      Item 1
-#                                          Lexical variable '$string'
+#                                              Lexical variable '$string'
 #      Instruction
 #          Call
 #              Property 'addCommand'
@@ -270,43 +274,57 @@
 #                  Item 1
 #                      Bareword 'handlePerl'
 #      Function 'handlePerl'
-#          Instruction
-#              Need
-#                  Lexical variable '$msg'
-#          If
-#              Expression ('if' parameter)
-#                  Negation
-#                      Property 'commandHasParameters'
-#                          Lexical variable '$msg'
+#          Function body
 #              Instruction
-#                  Return
-#          Instruction
-#              Assignment (lexical variable '$c')
-#                  Call
-#                      Bareword 'COMPILER'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Call
-#                                  Property 'fromWord'
+#                  Need
+#                      Lexical variable '$msg'
+#              If
+#                  Expression ('if' parameter)
+#                      Negation
+#                          Property 'commandHasParameters'
+#                              Lexical variable '$msg'
+#                  Instruction
+#                      Return
+#              Instruction
+#                  Assignment (lexical variable '$c')
+#                      Call
+#                          Bareword 'COMPILER'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Call
+#                                      Property 'fromWord'
+#                                          Lexical variable '$msg'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Number '1'
+#              Instruction
+#                  Assignment (lexical variable '$res')
+#                      Call
+#                          Property 'compile'
+#                              Lexical variable '$c'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Equality
+#                                      Property 'command'
+#                                          Lexical variable '$msg'
+#                                      String 'p'
+#              If
+#                  Expression ('if' parameter)
+#                      Property 'error'
+#                          Lexical variable '$res'
+#                  Instruction
+#                      Call
+#                          Property 'privmsg'
+#                              Lexical variable '$bot'
+#                          Argument list [2 items]
+#                              Item 0
+#                                  Property 'channel'
 #                                      Lexical variable '$msg'
-#                                  Argument list [1 items]
-#                                      Item 0
-#                                          Number '1'
-#          Instruction
-#              Assignment (lexical variable '$res')
-#                  Call
-#                      Property 'compile'
-#                          Lexical variable '$c'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Equality
-#                                  Property 'command'
-#                                      Lexical variable '$msg'
-#                                  String 'p'
-#          If
-#              Expression ('if' parameter)
-#                  Property 'error'
-#                      Lexical variable '$res'
+#                              Item 1
+#                                  Property 'error'
+#                                      Lexical variable '$res'
+#                  Instruction
+#                      Return
 #              Instruction
 #                  Call
 #                      Property 'privmsg'
@@ -316,21 +334,8 @@
 #                              Property 'channel'
 #                                  Lexical variable '$msg'
 #                          Item 1
-#                              Property 'error'
+#                              Property 'perl'
 #                                  Lexical variable '$res'
-#              Instruction
-#                  Return
-#          Instruction
-#              Call
-#                  Property 'privmsg'
-#                      Lexical variable '$bot'
-#                  Argument list [2 items]
-#                      Item 0
-#                          Property 'channel'
-#                              Lexical variable '$msg'
-#                      Item 1
-#                          Property 'perl'
-#                              Lexical variable '$res'
 #      Instruction
 #          Call
 #              Property 'connect'

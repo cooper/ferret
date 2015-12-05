@@ -22,63 +22,66 @@
 #              Property 'gotLine'
 #                  Lexical variable '$sock'
 #          Anonymous function
-#              Instruction
-#                  Need
-#                      Lexical variable '$data'
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  String 'recv: '
-#                                  Addition operator (+)
-#                                  Lexical variable '$data'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$data'
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String 'recv: '
+#                                      Addition operator (+)
+#                                      Lexical variable '$data'
 #      On
 #          Expression ('on' parameter)
 #              Property 'println'
 #                  Lexical variable '$sock'
 #          Anonymous function
-#              Instruction
-#                  Need
-#                      Lexical variable '$data'
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  String 'send: '
-#                                  Addition operator (+)
-#                                  Lexical variable '$data'
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$data'
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String 'send: '
+#                                      Addition operator (+)
+#                                      Lexical variable '$data'
 #      On
 #          Expression ('on' parameter)
 #              Property 'connected'
 #                  Lexical variable '$sock'
 #          Anonymous function
-#              Instruction
-#                  Call
-#                      Property 'println'
-#                          Lexical variable '$sock'
-#                      Argument list [1 items]
-#                          Item 0
-#                              String 'NICK k'
-#              Instruction
-#                  Call
-#                      Property 'println'
-#                          Lexical variable '$sock'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Operation
-#                                  String 'USER k '
-#                                  Addition operator (+)
-#                                  String '*'
-#                                  Addition operator (+)
-#                                  String ' '
-#                                  Addition operator (+)
-#                                  String '*'
-#                                  Addition operator (+)
-#                                  String ' :k'
+#              Function body
+#                  Instruction
+#                      Call
+#                          Property 'println'
+#                              Lexical variable '$sock'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  String 'NICK k'
+#                  Instruction
+#                      Call
+#                          Property 'println'
+#                              Lexical variable '$sock'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String 'USER k '
+#                                      Addition operator (+)
+#                                      String '*'
+#                                      Addition operator (+)
+#                                      String ' '
+#                                      Addition operator (+)
+#                                      String '*'
+#                                      Addition operator (+)
+#                                      String ' :k'
 #      Instruction
 #          Call
 #              Property 'connect'
@@ -95,13 +98,14 @@
 #                                  Item 0
 #                                      Number '5'
 #          Anonymous function
-#              Instruction
-#                  Call
-#                      Property 'println'
-#                          Lexical variable '$sock'
-#                      Argument list [1 items]
-#                          Item 0
-#                              String 'JOIN #k'
+#              Function body
+#                  Instruction
+#                      Call
+#                          Property 'println'
+#                              Lexical variable '$sock'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  String 'JOIN #k'
 #      Include (Socket, Socket::TCP, Timer)
 use warnings;
 use strict;
