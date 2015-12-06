@@ -206,10 +206,14 @@ my $result = do {
                         $scope,
                         undef,
                         6
-                      )
+                      ),
+                    6
                 );
-                $self->set_property( channel => $scope->property_u('lineSplit')
-                      ->get_index_value( [ num( $f, 2 ) ], $scope ) );
+                $self->set_property(
+                    channel => $scope->property_u('lineSplit')
+                      ->get_index_value( [ num( $f, 2 ) ], $scope ),
+                    8
+                );
                 $self->set_property(
                     nickname => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 0 ) ], $scope )
@@ -218,17 +222,23 @@ my $result = do {
                         $scope,
                         undef,
                         10
-                      )->get_index_value( [ num( $f, 0 ) ], $scope )
+                      )->get_index_value( [ num( $f, 0 ) ], $scope ),
+                    10
                 );
                 $self->property_u('nickname')->property_u('trimPrefix')
                   ->call_u( [ str( $f, ":" ) ], $scope, undef, 11 );
-                $self->set_property( message => $scope->property_u('lineSplit')
-                      ->get_index_value( [ num( $f, 3 ) ], $scope ) );
+                $self->set_property(
+                    message => $scope->property_u('lineSplit')
+                      ->get_index_value( [ num( $f, 3 ) ], $scope ),
+                    14
+                );
                 $self->property_u('message')->property_u('trimPrefix')
                   ->call_u( [ str( $f, ":" ) ], $scope, undef, 15 );
                 $self->set_property(
                     parts => $self->property_u('message')->property_u('split')
-                      ->call_u( [ str( $f, " " ) ], $scope, undef, 18 ) );
+                      ->call_u( [ str( $f, " " ) ], $scope, undef, 18 ),
+                    18
+                );
                 return $return;
             }
         );
@@ -251,12 +261,15 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $scope->set_property_ow( $context,
+                    $scope->set_property_ow(
+                        $context,
                         cmd => $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
                           ->property_u('copy')->call_u( {}, $scope, undef, 27 )
                           ->property_u('trimPrefix')
-                          ->call_u( [ str( $f, "." ) ], $scope, undef, 27 ) );
+                          ->call_u( [ str( $f, "." ) ], $scope, undef, 27 ),
+                        27
+                    );
                     if ( bool( $scope->property_u('cmd')->property_u('length') )
                       )
                     {

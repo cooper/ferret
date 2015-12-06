@@ -451,7 +451,8 @@ my $result = do {
                         )
                     ],
                     $scope, undef, 55
-                )
+                ),
+                55
             );
             $scope->set_property_ow(
                 $context,
@@ -461,7 +462,8 @@ my $result = do {
                           ->equal_to( str( $f, "p" ), $scope )
                     ],
                     $scope, undef, 56
-                )
+                ),
+                56
             );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -566,11 +568,15 @@ my $result = do {
                         )
                     ],
                     $scope, undef, 13
-                )
+                ),
+                13
             );
-            $scope->set_property_ow( $context,
+            $scope->set_property_ow(
+                $context,
                 res => $scope->property_u('c')->property_u('tokenize')
-                  ->call_u( { pretty => Ferret::true }, $scope, undef, 14 ) );
+                  ->call_u( { pretty => Ferret::true }, $scope, undef, 14 ),
+                14
+            );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -631,11 +637,15 @@ my $result = do {
                         )
                     ],
                     $scope, undef, 26
-                )
+                ),
+                26
             );
-            $scope->set_property_ow( $context,
+            $scope->set_property_ow(
+                $context,
                 res => $scope->property_u('c')->property_u('construct')
-                  ->call_u( { pretty => Ferret::true }, $scope, undef, 27 ) );
+                  ->call_u( { pretty => Ferret::true }, $scope, undef, 27 ),
+                27
+            );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -696,7 +706,8 @@ my $result = do {
                         )
                     ],
                     $scope, undef, 39
-                )->property_u('eval')->call_u( {}, $scope, undef, 39 )
+                  )->property_u('eval')->call_u( {}, $scope, undef, 39 ),
+                39
             );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -719,7 +730,8 @@ my $result = do {
                         quiet => Ferret::true
                     },
                     $scope, undef, 44
-                )->property_u('string')
+                  )->property_u('string'),
+                44
             );
             $scope->property_u('bot')->property_u('privmsg')->call_u(
                 [
@@ -746,10 +758,13 @@ my $result = do {
                 user => str( $f, "ferret" )
             },
             $scope, undef, 1
-        )
+        ),
+        1
     );
-    $scope->property_u('bot')
-      ->set_property( autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ) );
+    $scope->property_u('bot')->set_property(
+        autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ),
+        2
+    );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
             str( $f, "info" ),

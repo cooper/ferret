@@ -83,8 +83,11 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'code' ) or return;
-            $return->set_property( message =>
-                  $scope->property_u('code')->call_u( {}, $scope, undef, 18 ) );
+            $return->set_property(
+                message =>
+                  $scope->property_u('code')->call_u( {}, $scope, undef, 18 ),
+                18
+            );
             return $return;
         }
     );

@@ -217,8 +217,8 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'x' ) or return;
                 FF::need( $scope, $arguments, 'y' ) or return;
-                $self->set_property( x => $scope->property_u('x') );
-                $self->set_property( y => $scope->property_u('y') );
+                $self->set_property( x => $scope->property_u('x'), 5 );
+                $self->set_property( y => $scope->property_u('y'), 6 );
                 return $return;
             }
         );
@@ -238,7 +238,8 @@ my $result = do {
                             $self->property_u('y')
                         ],
                         $scope, undef, 10
-                    )
+                    ),
+                    10
                 );
                 return $scope->property_u('pt');
                 return $return;
@@ -343,15 +344,21 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context, qw(Point) );
-    $scope->set_property_ow( $context,
+    $scope->set_property_ow(
+        $context,
         pt => $scope->property_u('Point')
-          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32 ) );
+          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32 ),
+        32
+    );
     $scope->property_u('say')
       ->call_u( [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
         $scope, undef, 33 );
-    $scope->set_property_ow( $context,
+    $scope->set_property_ow(
+        $context,
         rpt => $scope->property_u('pt')->property_u('oneToRight')
-          ->call_u( {}, $scope, undef, 35 ) );
+          ->call_u( {}, $scope, undef, 35 ),
+        35
+    );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
@@ -361,7 +368,8 @@ my $result = do {
         mdpt => $scope->property_u('Point')->property_u('midpoint')->call_u(
             [ $scope->property_u('pt'), $scope->property_u('rpt') ],
             $scope, undef, 38
-        )
+        ),
+        38
     );
     $scope->property_u('say')
       ->call_u(
@@ -373,7 +381,8 @@ my $result = do {
             $scope,
             num( $f, 4 ),
             div( $scope, num( $f, 45 ), num( $f, 3 ) )
-        )
+        ),
+        41
     );
     $scope->property_u('say')->call_u(
         [

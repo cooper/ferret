@@ -6,12 +6,14 @@ use strict;
 use utf8;
 use 5.010;
 
+use List::Util 'max';
+
 use Ferret::Core::Operations 'import';
 use Ferret::Core::ErrorSubs;
 
 our %errors = (
     CallOnNonFunction => {
-        message => "Cannot call non-function value (%s) line %s"
+        message => "Cannot call non-function value"
     },
     AssignmentToSpecialProperty => {
         message => "Cannot assign to special property '%s'"
@@ -22,10 +24,26 @@ our %errors = (
 );
 
 sub throw {
-    my ($fmt, $caller, @args) = (shift, shift, @_);
-    return $fmt if !exists $errors{$fmt};
+    my ($fmt, $caller, $hints, @args) = @_;
+    my @hints = @$hints;
     my (undef, $file, $line) = @$caller;
-    die "Runtime error: ".sprintf($errors{$fmt}{message}, @_)." at $file line $line.\n";
+    return $fmt if !exists $errors{$fmt};
+
+    # main error.
+    my $err = "Runtime error: ".sprintf($errors{$fmt}{message}, @args).".\n";
+
+    # hints.
+    my %hints = @hints;
+    my $max = 2 + max(map length($_), keys %hints);
+    while (@hints) {
+        my ($key, $value) = (shift @hints, shift @hints);
+        $value     = join "\n    ", split /\n/, $value;
+        my $spaces = ' ' x ($max - length $key);
+        $err      .= "    $key$spaces-> $value\n";
+    }
+
+    $err .= "Exception raised at $file line $line.\n";
+    die $err;
 }
 
 1

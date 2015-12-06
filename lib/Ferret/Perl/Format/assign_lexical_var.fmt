@@ -1,1 +1,1 @@
-$scope->set_property_ow($context, <<name>> => <<assign_value>>)
+$scope->set_property_ow($context, <<name>> => <<assign_value>>, <<line>>)

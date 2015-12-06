@@ -223,7 +223,8 @@ my $result = do {
             $scope,
             undef,
             1
-        )
+        ),
+        1
     );
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('sock') ], $scope, undef, 2 );

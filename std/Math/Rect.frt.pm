@@ -262,7 +262,8 @@ my $result = do {
                     origin => $scope->property_u('Point')->call_u(
                         [ $scope->property_u('x'), $scope->property_u('y') ],
                         $scope, undef, 6
-                    )
+                    ),
+                    6
                 );
                 return $return;
             }
@@ -421,7 +422,8 @@ my $result = do {
                             $scope, $self->property_u('width'),
                             num( $f, 0.5 )
                         )
-                    )
+                    ),
+                    43
                 );
                 $scope->set_property_ow(
                     $context,
@@ -432,7 +434,8 @@ my $result = do {
                             $scope, $self->property_u('height'),
                             num( $f, 0.5 )
                         )
-                    )
+                    ),
+                    44
                 );
                 return $scope->property_u('Point')
                   ->call_u(
@@ -449,10 +452,16 @@ my $result = do {
             [],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property_ow( $context,
-                    o => $self->property_u('origin') );
-                $scope->set_property_ow( $context,
-                    c => $self->property_u('center') );
+                $scope->set_property_ow(
+                    $context,
+                    o => $self->property_u('origin'),
+                    49
+                );
+                $scope->set_property_ow(
+                    $context,
+                    c => $self->property_u('center'),
+                    50
+                );
                 return add(
                     $scope,
                     str( $f, "Rect( Origin(" ),

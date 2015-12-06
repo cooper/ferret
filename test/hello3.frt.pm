@@ -127,9 +127,13 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->set_property_ow( $context, hello => str( $f, "Hello" ) );
+            $scope->set_property_ow(
+                $context,
+                hello => str( $f, "Hello" ),
+                17
+            );
             $scope->property_u('hello')
-              ->set_property( name => $scope->property_u('name1') );
+              ->set_property( name => $scope->property_u('name1'), 18 );
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -211,8 +215,11 @@ my $result = do {
     $scope->property_u('helloWorld')
       ->call_u( [ str( $f, "Benjamin" ), str( $f, "George" ) ],
         $scope, undef, 8 );
-    $scope->set_property_ow( $context,
-        pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ) );
+    $scope->set_property_ow(
+        $context,
+        pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ),
+        28
+    );
     $scope->property_u('say')
       ->call_u( [ add( $scope, str( $f, "Pi = " ), $scope->property_u('pi') ) ],
         $scope, undef, 29 );

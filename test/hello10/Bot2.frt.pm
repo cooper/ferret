@@ -258,12 +258,12 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{port};
                     $want_val ||= num( $f, 6667 );
-                    $self->set_property( port => $want_val );
+                    $self->set_property( port => $want_val, 5 );
                 };
                 do {
                     my $want_val = $arguments->{real};
                     $want_val ||= str( $f, "Ferret IRC" );
-                    $self->set_property( real => $want_val );
+                    $self->set_property( real => $want_val, 5 );
                 };
                 $scope->property_u('Socket::TCP')->property_u('init')
                   ->call_u( [ $scope->{special}->property_u('self') ],
@@ -274,7 +274,7 @@ my $result = do {
                     },
                     $scope, undef, 9
                     );
-                $self->set_property( send => $self->property_u('println') );
+                $self->set_property( send => $self->property_u('println'), 11 );
                 FF::on(
                     $self,
                     'connected',

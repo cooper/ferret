@@ -116,8 +116,11 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
-    $scope->set_property_ow( $context,
-        list => FF::create_list( $f, [ str( $f, "hi" ) ] ) );
+    $scope->set_property_ow(
+        $context,
+        list => FF::create_list( $f, [ str( $f, "hi" ) ] ),
+        1
+    );
     $scope->property_u('list')->property_u('push')
       ->call_u( [ str( $f, "there" ) ], $scope, undef, 2 );
     $scope->property_u('list')
@@ -149,8 +152,11 @@ my $result = do {
             );
         }
     );
-    $scope->set_property_ow( $context,
-        hash => FF::create_hash( $f, { hi => str( $f, "there" ) } ) );
+    $scope->set_property_ow(
+        $context,
+        hash => FF::create_hash( $f, { hi => str( $f, "there" ) } ),
+        11
+    );
     $scope->property_u('hash')
       ->set_index_value( [ str( $f, "whats" ) ], str( $f, "up" ), $scope );
     $scope->property_u('hash')

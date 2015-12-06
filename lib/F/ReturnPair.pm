@@ -17,6 +17,7 @@ sub value { shift->first_child }  # an element
 sub perl_fmt {
     my $pair = shift;
     return return_pair => {
+        line  => $pair->{create_line},
         key   => $pair->key,
         value => $pair->value->perl_fmt_do
     };

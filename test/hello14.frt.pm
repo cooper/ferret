@@ -140,7 +140,7 @@ my $result = do {
     FF::load_namespaces( $context, qw(String) );
     $scope->property_u('say')
       ->call_u( [ str( $f, "test" ) ], $scope, undef, 1 );
-    $scope->set_property_ow( $context, str => str( $f, "hi" ) );
+    $scope->set_property_ow( $context, str => str( $f, "hi" ), 3 );
     FF::on( $scope->property_u('str'), 'length', $self, $scope,
         $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );

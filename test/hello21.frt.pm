@@ -112,9 +112,12 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $scope->set_property_ow( $context,
+    $scope->set_property_ow(
+        $context,
         parts => str( $f, "s p a m" )->property_u('split')
-          ->call_u( [ str( $f, " " ) ], $scope, undef, 1 ) );
+          ->call_u( [ str( $f, " " ) ], $scope, undef, 1 ),
+        1
+    );
     FF::iterate_pair(
         $f, $scope,
         $scope->property_u('parts'),

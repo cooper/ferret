@@ -270,15 +270,15 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{name};
                     $want_val ||= str( $f, "Test" );
-                    $self->set_property( name => $want_val );
+                    $self->set_property( name => $want_val, 4 );
                 };
                 do {
                     my $want_val = $arguments->{fatal};
                     $want_val ||= Ferret::true;
-                    $self->set_property( fatal => $want_val );
+                    $self->set_property( fatal => $want_val, 6 );
                 };
-                $self->set_property( tested => num( $f, 0 ) );
-                $self->set_property( passed => num( $f, 0 ) );
+                $self->set_property( tested => num( $f, 0 ), 7 );
+                $self->set_property( passed => num( $f, 0 ), 8 );
                 return $return;
             }
         );
@@ -290,7 +290,7 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a} );
+                $scope->set_property( a => $arguments->{a}, 12 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('Bool')->call_u(
@@ -312,7 +312,7 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a} );
+                $scope->set_property( a => $arguments->{a}, 18 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
@@ -334,8 +334,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a} );
-                $scope->set_property( b => $arguments->{b} );
+                $scope->set_property( a => $arguments->{a}, 24 );
+                $scope->set_property( b => $arguments->{b}, 24 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
@@ -358,8 +358,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a} );
-                $scope->set_property( b => $arguments->{b} );
+                $scope->set_property( a => $arguments->{a}, 30 );
+                $scope->set_property( b => $arguments->{b}, 30 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
@@ -382,8 +382,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a} );
-                $scope->set_property( b => $arguments->{b} );
+                $scope->set_property( a => $arguments->{a}, 36 );
+                $scope->set_property( b => $arguments->{b}, 36 );
                 return $self->property_u('_test')->call_u(
                     [
                         _not(
@@ -408,8 +408,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a} );
-                $scope->set_property( b => $arguments->{b} );
+                $scope->set_property( a => $arguments->{a}, 42 );
+                $scope->set_property( b => $arguments->{b}, 42 );
                 return $self->property_u('_test')->call_u(
                     [
                         _not(
@@ -437,7 +437,8 @@ my $result = do {
                         $scope,
                         $self->property_u('tested'),
                         $self->property_u('passed')
-                    )
+                    ),
+                    47
                 );
                 $scope->property_u('say')->call_u(
                     [
@@ -456,11 +457,23 @@ my $result = do {
                     ],
                     $scope, undef, 48
                 );
-                $return->set_property( tests  => $self->property_u('tested') );
-                $return->set_property( fails  => $scope->property_u('failed') );
-                $return->set_property( passes => $self->property_u('passed') );
-                $return->set_property( allOK => $self->property_u('passed')
-                      ->equal_to( $self->property_u('tested'), $scope ) );
+                $return->set_property(
+                    tests => $self->property_u('tested'),
+                    50
+                );
+                $return->set_property(
+                    fails => $scope->property_u('failed'),
+                    51
+                );
+                $return->set_property(
+                    passes => $self->property_u('passed'),
+                    52
+                );
+                $return->set_property(
+                    allOK => $self->property_u('passed')
+                      ->equal_to( $self->property_u('tested'), $scope ),
+                    53
+                );
                 return $return;
             }
         );
@@ -479,12 +492,14 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( yes     => $arguments->{yes} );
-                $scope->set_property( message => $arguments->{message} );
-                $self->set_property( tested =>
-                      add( $scope, $self->property_u('tested'), num( $f, 1 ) )
+                $scope->set_property( yes     => $arguments->{yes},     57 );
+                $scope->set_property( message => $arguments->{message}, 57 );
+                $self->set_property(
+                    tested =>
+                      add( $scope, $self->property_u('tested'), num( $f, 1 ) ),
+                    59
                 );
-                $return->set_property( pass => $scope->property_u('yes') );
+                $return->set_property( pass => $scope->property_u('yes'), 60 );
                 if ( bool( $scope->property_u('yes') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -492,7 +507,8 @@ my $result = do {
                         passed => add(
                             $scope, $self->property_u('passed'),
                             num( $f, 1 )
-                        )
+                        ),
+                        63
                     );
                     return $return;
                 }
@@ -505,7 +521,9 @@ my $result = do {
                       ->call_u( {}, $scope, undef, 68 );
                 }
                 $return->set_property(
-                    message => $scope->property_u('message') );
+                    message => $scope->property_u('message'),
+                    70
+                );
                 return $return;
             }
         );

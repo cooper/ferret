@@ -114,7 +114,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'x' ) or return;
             FF::need( $scope, $arguments, 'y' ) or return;
-            $scope->set_property( z => $arguments->{z} );
+            $scope->set_property( z => $arguments->{z}, 3 );
             $scope->set_property_ow(
                 $context,
                 point => FF::create_object(
@@ -123,17 +123,21 @@ my $result = do {
                         x => $scope->property_u('x'),
                         y => $scope->property_u('y')
                     }
-                )
+                ),
+                4
             );
-            $return->set_property( point => $scope->property_u('point') );
+            $return->set_property( point => $scope->property_u('point'), 8 );
             return $return;
         }
     );
     $func_0->inside_scope( makePoint => $scope, $scope, undef, undef, undef );
-    $scope->set_property_ow( $context,
+    $scope->set_property_ow(
+        $context,
         pt => $scope->property_u('makePoint')
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11 )
-          ->property_u('point') );
+          ->property_u('point'),
+        11
+    );
     $scope->property_u('say')->call_u(
         [
             add(
@@ -158,11 +162,19 @@ my $result = do {
                 num( $f, 4 ),
                 add( $scope, num( $f, 4 ), num( $f, 1 ) )
             ]
-        )
+        ),
+        14
     );
-    $scope->set_property_ow( $context,
-        emptyArray => FF::create_list( $f, [] ) );
-    $scope->set_property_ow( $context, emptyHash => FF::create_hash( $f, {} ) );
+    $scope->set_property_ow(
+        $context,
+        emptyArray => FF::create_list( $f, [] ),
+        16
+    );
+    $scope->set_property_ow(
+        $context,
+        emptyHash => FF::create_hash( $f, {} ),
+        17
+    );
 };
 
 FF::after_content();

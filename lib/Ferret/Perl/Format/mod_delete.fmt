@@ -1,1 +1,1 @@
-<<left>>->delete_property('<<name>>')
+<<left>>->delete_property('<<name>>', <<line>>)

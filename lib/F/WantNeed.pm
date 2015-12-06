@@ -136,7 +136,10 @@ sub perl_fmt {
         undef $exp;
     }
 
-    my $info = { var_name => $var->{var_name} };
+    my $info = {
+        var_name => $var->{var_name},
+        line     => $arg->{create_line}
+    };
     $info->{value} = $exp->perl_fmt_do if $exp;
 
     # set the variable for each function argument.

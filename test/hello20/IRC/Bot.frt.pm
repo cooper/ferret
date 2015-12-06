@@ -584,17 +584,17 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{port};
                     $want_val ||= num( $f, 6667 );
-                    $self->set_property( port => $want_val );
+                    $self->set_property( port => $want_val, 6 );
                 };
                 do {
                     my $want_val = $arguments->{user};
                     $want_val ||= str( $f, "ferret" );
-                    $self->set_property( user => $want_val );
+                    $self->set_property( user => $want_val, 7 );
                 };
                 do {
                     my $want_val = $arguments->{real};
                     $want_val ||= str( $f, "Ferret IRC" );
-                    $self->set_property( real => $want_val );
+                    $self->set_property( real => $want_val, 8 );
                 };
                 $self->set_property(
                     handlers => FF::create_hash(
@@ -604,7 +604,8 @@ my $result = do {
                             PING    => $self->property_u('pong'),
                             PRIVMSG => $self->property_u('handleMessage')
                         }
-                    )
+                    ),
+                    13
                 );
                 $self->set_property(
                     commands => FF::create_hash(
@@ -614,9 +615,13 @@ my $result = do {
                             hi    => $self->property_u('commandHello'),
                             add   => $self->property_u('commandAdd')
                         }
-                    )
+                    ),
+                    19
                 );
-                $self->set_property( factoids => FF::create_hash( $f, {} ) );
+                $self->set_property(
+                    factoids => FF::create_hash( $f, {} ),
+                    25
+                );
                 $self->set_property(
                     sock => $scope->property_u('Socket::TCP')->call_u(
                         {
@@ -624,7 +629,8 @@ my $result = do {
                             port    => $self->property_u('port')
                         },
                         $scope, undef, 27
-                    )
+                    ),
+                    27
                 );
                 FF::on(
                     $self->property_u('sock'),
@@ -680,12 +686,12 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $return->set_property( overwrote => Ferret::true );
+                    $return->set_property( overwrote => Ferret::true, 45 );
                 }
                 $self->property_u('commands')
                   ->set_index_value( [ $scope->property_u('command') ],
                     $scope->property_u('callback'), $scope );
-                $return->set_property( added => Ferret::true );
+                $return->set_property( added => Ferret::true, 47 );
                 return $return;
             }
         );
@@ -747,12 +753,18 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'line' ) or return;
-                $scope->set_property_ow( $context,
+                $scope->set_property_ow(
+                    $context,
                     s => $scope->property_u('line')->property_u('split')
-                      ->call_u( [ str( $f, " " ) ], $scope, undef, 64 ) );
-                $scope->set_property_ow( $context,
+                      ->call_u( [ str( $f, " " ) ], $scope, undef, 64 ),
+                    64
+                );
+                $scope->set_property_ow(
+                    $context,
                     command => $scope->property_u('s')
-                      ->get_index_value( [ num( $f, 1 ) ], $scope ) );
+                      ->get_index_value( [ num( $f, 1 ) ], $scope ),
+                    66
+                );
                 if (
                     bool(
                         $scope->property_u('s')
@@ -763,9 +775,12 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $scope->set_property_ow( $context,
+                    $scope->set_property_ow(
+                        $context,
                         command => $scope->property_u('s')
-                          ->get_index_value( [ num( $f, 0 ) ], $scope ) );
+                          ->get_index_value( [ num( $f, 0 ) ], $scope ),
+                        69
+                    );
                 }
                 $scope->property_u('say')->call_u(
                     [
@@ -871,7 +886,7 @@ my $result = do {
 
                     return $return;
                 }
-                $self->set_property( _joinedChannels => Ferret::true );
+                $self->set_property( _joinedChannels => Ferret::true, 96 );
                 if ( bool( $self->property_u('autojoin') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -954,9 +969,10 @@ my $result = do {
                     msg => $scope->property_u('IRC::Message')->call_u(
                         [ $scope->property_u('line') ],
                         $scope, undef, 115
-                    )
+                    ),
+                    115
                 );
-                $return->set_property( msg => $scope->property_u('msg') );
+                $return->set_property( msg => $scope->property_u('msg'), 116 );
                 if ( bool( $scope->property_u('msg')->property_u('command') ) )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -1002,9 +1018,12 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'msg' ) or return;
-                $scope->set_property_ow( $context,
+                $scope->set_property_ow(
+                    $context,
                     nickname =>
-                      $scope->property_u('msg')->property_u('nickname') );
+                      $scope->property_u('msg')->property_u('nickname'),
+                    129
+                );
                 $self->property_u('privmsg')->call_u(
                     [
                         $scope->property_u('msg')->property_u('channel'),
@@ -1036,13 +1055,19 @@ my $result = do {
                 FF::need( $scope, $arguments, 'msg' ) or return;
                 $scope->property_u('inspect')
                   ->call_u( [ $scope->property_u('msg') ], $scope, undef, 137 );
-                $scope->set_property_ow( $context,
+                $scope->set_property_ow(
+                    $context,
                     trigger => $scope->property_u('msg')->property_u('parts')
-                      ->get_index_value( [ num( $f, 1 ) ], $scope ) );
-                $scope->set_property_ow( $context,
+                      ->get_index_value( [ num( $f, 1 ) ], $scope ),
+                    139
+                );
+                $scope->set_property_ow(
+                    $context,
                     response =>
                       $scope->property_u('msg')->property_u('fromWord')
-                      ->call_u( [ num( $f, 2 ) ], $scope, undef, 140 ) );
+                      ->call_u( [ num( $f, 2 ) ], $scope, undef, 140 ),
+                    140
+                );
                 $self->property_u('factoids')
                   ->set_index_value( [ $scope->property_u('trigger') ],
                     $scope->property_u('response'), $scope );
@@ -1087,7 +1112,8 @@ my $result = do {
                     response => $self->property_u('factoids')->get_index_value(
                         [ $scope->property_u('msg')->property_u('command') ],
                         $scope
-                    )
+                    ),
+                    150
                 );
                 $self->property_u('privmsg')->call_u(
                     [

@@ -51,9 +51,12 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
-    $scope->set_property_ow( $context,
+    $scope->set_property_ow(
+        $context,
         words => str( $f, "how are you?" )->property_u('split')
-          ->call_u( [ str( $f, " " ) ], $scope, undef, 1 ) );
+          ->call_u( [ str( $f, " " ) ], $scope, undef, 1 ),
+        1
+    );
     FF::iterate(
         $f, $scope,
         $scope->property_u('words'),

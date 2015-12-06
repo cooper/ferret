@@ -58,7 +58,8 @@ my $result = do {
                 user => str( $f, "bot" )
             },
             $scope, undef, 1
-        )
+        ),
+        1
     );
     $scope->property_u('bot')->property_u('connect')
       ->call_u( {}, $scope, undef, 2 );

@@ -10,8 +10,9 @@ use Scalar::Util 'blessed';
 
 our (
     $ferret,            $core_context,
-    %tried_files,       %specials,
-    %class_bindings,    %delay_class_bindings
+    %tried_files,       %file_map,
+    %class_bindings,    %delay_class_bindings,
+    %specials
 );
 
 # create a new ferret.

@@ -35,6 +35,7 @@ sub before_content {
     my $base = shift;
 
     # remember we tried this file.
+    $Ferret::file_map{ (caller)[1] } = $base;
     $Ferret::tried_files{"$base.pm"}++;
 
     return;

@@ -196,7 +196,7 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{moos};
                     $want_val ||= Ferret::true;
-                    $self->set_property( moos => $want_val );
+                    $self->set_property( moos => $want_val, 6 );
                 };
                 return $return;
             }
@@ -245,7 +245,7 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{barks};
                     $want_val ||= Ferret::false;
-                    $self->set_property( barks => $want_val );
+                    $self->set_property( barks => $want_val, 18 );
                 };
                 return $return;
             }
@@ -287,7 +287,7 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{mean};
                     $want_val ||= Ferret::false;
-                    $self->set_property( mean => $want_val );
+                    $self->set_property( mean => $want_val, 30 );
                 };
                 return $return;
             }
@@ -350,8 +350,11 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context, qw(Cat Cow Dog) );
-    $scope->set_property_ow( $context,
-        animal => $scope->property_u('Cow')->call_u( {}, $scope, undef, 58 ) );
+    $scope->set_property_ow(
+        $context,
+        animal => $scope->property_u('Cow')->call_u( {}, $scope, undef, 58 ),
+        58
+    );
     $scope->property_u('Dog')->property_u('init')
       ->call_u( [ $scope->property_u('animal') ], $scope, undef, 60 )
       ->call_u( {}, $scope, undef, 60 );
@@ -374,15 +377,19 @@ my $result = do {
       ->call_u( { mean => Ferret::true }, $scope, undef, 65 );
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('animal') ], $scope, undef, 67 );
-    $scope->set_property_ow( $context,
-        cat => $scope->property_u('Cat')->call_u( {}, $scope, undef, 69 ) );
+    $scope->set_property_ow(
+        $context,
+        cat => $scope->property_u('Cat')->call_u( {}, $scope, undef, 69 ),
+        69
+    );
     $scope->set_property_ow(
         $context,
         aftermath => FF::create_set(
             $scope,
             $scope->property_u('animal'),
             $scope->property_u('cat')
-        )->property_u('fight')->call_u( {}, $scope, undef, 71 )
+          )->property_u('fight')->call_u( {}, $scope, undef, 71 ),
+        71
     );
     $scope->property_u('say')
       ->call_u( [ $scope->property_u('aftermath') ], $scope, undef, 72 );

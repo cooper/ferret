@@ -65,7 +65,8 @@ my $result = do {
                 user    => str( $f, "bot" )
             },
             $scope, undef, 1
-        )
+        ),
+        1
     );
     $scope->property_u('say')
       ->call_u( [ $scope->property_u('bot')->property_u('address') ],

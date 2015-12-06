@@ -32,6 +32,7 @@ sub perl_fmt {
     }
 
     return "mod_$$mod{mod_type}" => {
+        line => $mod->{create_line},
         left => $left,
         name => $name
     };

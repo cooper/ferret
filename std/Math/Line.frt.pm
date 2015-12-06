@@ -187,20 +187,41 @@ my $result = do {
             [],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property_ow( $context,
-                    mp => $self->property_u('midpoint') );
-                $scope->set_property_ow( $context,
-                    pox => $self->property_u('pt1')->property_u('x') );
-                $scope->set_property_ow( $context,
-                    poy => $self->property_u('pt1')->property_u('y') );
-                $scope->set_property_ow( $context,
-                    ptx => $self->property_u('pt2')->property_u('x') );
-                $scope->set_property_ow( $context,
-                    pty => $self->property_u('pt2')->property_u('y') );
-                $scope->set_property_ow( $context,
-                    mx => $scope->property_u('mp')->property_u('x') );
-                $scope->set_property_ow( $context,
-                    my => $scope->property_u('mp')->property_u('y') );
+                $scope->set_property_ow(
+                    $context,
+                    mp => $self->property_u('midpoint'),
+                    13
+                );
+                $scope->set_property_ow(
+                    $context,
+                    pox => $self->property_u('pt1')->property_u('x'),
+                    14
+                );
+                $scope->set_property_ow(
+                    $context,
+                    poy => $self->property_u('pt1')->property_u('y'),
+                    14
+                );
+                $scope->set_property_ow(
+                    $context,
+                    ptx => $self->property_u('pt2')->property_u('x'),
+                    15
+                );
+                $scope->set_property_ow(
+                    $context,
+                    pty => $self->property_u('pt2')->property_u('y'),
+                    15
+                );
+                $scope->set_property_ow(
+                    $context,
+                    mx => $scope->property_u('mp')->property_u('x'),
+                    16
+                );
+                $scope->set_property_ow(
+                    $context,
+                    my => $scope->property_u('mp')->property_u('y'),
+                    16
+                );
                 return add(
                     $scope,                      str( $f, "Segment( |(" ),
                     $scope->property_u('pox'),   str( $f, ", " ),

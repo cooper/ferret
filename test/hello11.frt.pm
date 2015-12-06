@@ -166,14 +166,20 @@ my $result = do {
                     $scope, undef, 18
                 );
             }
-            $return->set_property( didTwice => $scope->property_u('twice') );
+            $return->set_property(
+                didTwice => $scope->property_u('twice'),
+                19
+            );
             return $return;
         }
     );
     FF::load_namespaces( $context, qw(Math Math::Point) );
-    $scope->set_property_ow( $context,
+    $scope->set_property_ow(
+        $context,
         point => $scope->property_u('Math::Point')
-          ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1 ) );
+          ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1 ),
+        1
+    );
     if ( bool( $scope->property_u('point') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -189,8 +195,8 @@ my $result = do {
         $scope->property_u('point'),
         sub {
             my $scope = shift;
-            $scope->set_property_ow( $context, x => num( $f, 5 ) );
-            $scope->set_property_ow( $context, y => num( $f, 10 ) );
+            $scope->set_property_ow( $context, x => num( $f, 5 ),  9 );
+            $scope->set_property_ow( $context, y => num( $f, 10 ), 10 );
         }
     );
     $scope->property_u('say')
@@ -205,7 +211,8 @@ my $result = do {
         r => $scope->property_u('say')->call_u(
             { message => str( $f, "It was said" ), twice => Ferret::true },
             $scope, undef, 22
-        )
+        ),
+        22
     );
     if ( bool( $scope->property_u('r')->property_u('didTwice') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );

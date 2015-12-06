@@ -227,7 +227,8 @@ my $result = do {
                         $scope,
                         $self->property_u('x'),
                         $scope->property_u('pt2')->property_u('x')
-                    )
+                    ),
+                    10
                 );
                 $scope->set_property_ow(
                     $context,
@@ -235,7 +236,8 @@ my $result = do {
                         $scope,
                         $self->property_u('y'),
                         $scope->property_u('pt2')->property_u('y')
-                    )
+                    ),
+                    11
                 );
                 return $scope->property_u('sqrt')->call_u(
                     [

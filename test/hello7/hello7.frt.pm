@@ -124,10 +124,14 @@ my $result = do {
                 height => num( $f, 10 )
             },
             $scope, undef, 1
-        )
+        ),
+        1
     );
-    $scope->set_property_ow( $context,
-        center => $scope->property_u('rect')->property_u('center') );
+    $scope->set_property_ow(
+        $context,
+        center => $scope->property_u('rect')->property_u('center'),
+        3
+    );
     $scope->property_u('say')->call_u(
         [
             add(
@@ -147,16 +151,20 @@ my $result = do {
         ],
         $scope, undef, 5
     );
-    $scope->set_property_ow( $context,
+    $scope->set_property_ow(
+        $context,
         otherPt => $scope->property_u('Math::Point')
-          ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7 ) );
+          ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7 ),
+        7
+    );
     $scope->set_property_ow(
         $context,
         midpoint => FF::create_set(
             $scope, $scope->property_u('center'),
             $scope->property_u('otherPt')
           )->property_u('midpoint')->call_u( {}, $scope, undef, 8 )
-          ->property_u('pretty')->call_u( {}, $scope, undef, 8 )
+          ->property_u('pretty')->call_u( {}, $scope, undef, 8 ),
+        8
     );
     $scope->property_u('say')->call_u(
         [
