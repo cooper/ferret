@@ -10,7 +10,8 @@ my $error;
 our %errors = (
     UndeclaredVariableReference => {
         message => "Reference to lexical variable '\$%s' without previous declaration",
-        hint_0  => "Note that '\$%s' is later declared in this scope on line %d"
+        hint_0  => "Note that '\$%s' is later declared in this scope on line %d",
+        hint_1  => "Note that '\$%s' is the variable being assigned to. It cannot be referenced within its own assignment value"
     }
 );
 
@@ -21,6 +22,7 @@ sub error_string {
     my @hints = @$hints;
     my @hint_msgs;
     for my $i (keys @hints) {
+        next unless $hints[$i];
         my $hint_msg = sprintf $errors{$type}{"hint_$i"}, @{ $hints[$i] };
         push @hint_msgs, $hint_msg;
     }
@@ -109,6 +111,7 @@ sub identify_lexical_variable_declarations {
     @assignments = grep {
         $_->assign_to->type eq 'LexicalVariable'
     } @assignments;
+    $v->{assignments}{ $_->{close_pos} } = $_ for @assignments;
 
     foreach my $a (@assignments) {
 
@@ -177,6 +180,12 @@ sub verify_lexical_variables {
         my ($this_line, $other_line) = ($var->{create_line}, int $earliest);
         if (defined $earliest) {
             $hints[0] = [ $var->{var_name}, $other_line ];
+        }
+
+        # maybe if the variable is within the assignment, that's helpful.
+        if (my $a = $v->{assignments}{$earliest}) {
+            delete $hints[0];
+            $hints[1] = [ $var->{var_name} ];
         }
 
         # throw an exception.
