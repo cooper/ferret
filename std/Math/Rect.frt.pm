@@ -261,9 +261,9 @@ my $result = do {
                 $self->set_property(
                     origin => $scope->property_u('Point')->call_u(
                         [ $scope->property_u('x'), $scope->property_u('y') ],
-                        $scope, undef, 33.1472392638037
+                        $scope, undef, 6.14723926380368
                     ),
-                    31.1349693251534
+                    6.13496932515337
                 );
                 return $return;
             }
@@ -318,7 +318,7 @@ my $result = do {
                         $self->property_u('origin')->property_u('y')
                     ],
                     $scope, undef,
-                    84.3374233128834
+                    23.3374233128834
                 );
                 return $return;
             }
@@ -341,7 +341,7 @@ my $result = do {
                         )
                     ],
                     $scope, undef,
-                    104.429447852761
+                    27.4294478527607
                 );
                 return $return;
             }
@@ -368,7 +368,7 @@ my $result = do {
                         )
                     ],
                     $scope, undef,
-                    124.521472392638
+                    31.521472392638
                 );
                 return $return;
             }
@@ -387,7 +387,7 @@ my $result = do {
                         $self->property_u('bottomRight')
                     ],
                     $scope, undef,
-                    146.625766871166
+                    35.6257668711656
                 );
                 return $return;
             }
@@ -406,7 +406,7 @@ my $result = do {
                         $self->property_u('topRight')
                     ],
                     $scope, undef,
-                    162.693251533742
+                    39.6932515337423
                 );
                 return $return;
             }
@@ -428,7 +428,7 @@ my $result = do {
                             num( $f, 0.5 )
                         )
                     ),
-                    177.754601226994
+                    43.7546012269939
                 );
                 $scope->set_property_ow(
                     $context,
@@ -440,12 +440,12 @@ my $result = do {
                             num( $f, 0.5 )
                         )
                     ),
-                    187.80981595092
+                    44.8098159509202
                 );
                 return $scope->property_u('Point')
                   ->call_u(
                     [ $scope->property_u('x'), $scope->property_u('y') ],
-                    $scope, undef, 198.871165644172 );
+                    $scope, undef, 45.8711656441718 );
                 return $return;
             }
         );
@@ -460,12 +460,12 @@ my $result = do {
                 $scope->set_property_ow(
                     $context,
                     o => $self->property_u('origin'),
-                    213.932515337423
+                    49.9325153374233
                 );
                 $scope->set_property_ow(
                     $context,
                     c => $self->property_u('center'),
-                    218.957055214724
+                    50.9570552147239
                 );
                 return add(
                     $scope,

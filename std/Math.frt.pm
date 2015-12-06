@@ -54,7 +54,7 @@ my $result = do {
             FF::need( $scope, $arguments, 'num' ) or return;
             return $scope->property_u('NATIVE::Math')->property_u('sqrt')
               ->call_u( [ $scope->property_u('num') ],
-                $scope, undef, 21.7222222222222 );
+                $scope, undef, 5.72222222222222 );
             return $return;
         }
     );

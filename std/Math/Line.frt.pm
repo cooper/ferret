@@ -190,37 +190,37 @@ my $result = do {
                 $scope->set_property_ow(
                     $context,
                     mp => $self->property_u('midpoint'),
-                    45.2903225806452
+                    13.2903225806452
                 );
                 $scope->set_property_ow(
                     $context,
                     pox => $self->property_u('pt1')->property_u('x'),
-                    50.3333333333333
+                    14.3333333333333
                 );
                 $scope->set_property_ow(
                     $context,
                     poy => $self->property_u('pt1')->property_u('y'),
-                    55.3870967741936
+                    14.3870967741935
                 );
                 $scope->set_property_ow(
                     $context,
                     ptx => $self->property_u('pt2')->property_u('x'),
-                    61.4408602150538
+                    15.4408602150538
                 );
                 $scope->set_property_ow(
                     $context,
                     pty => $self->property_u('pt2')->property_u('y'),
-                    66.494623655914
+                    15.494623655914
                 );
                 $scope->set_property_ow(
                     $context,
                     mx => $scope->property_u('mp')->property_u('x'),
-                    72.5483870967742
+                    16.5483870967742
                 );
                 $scope->set_property_ow(
                     $context,
                     my => $scope->property_u('mp')->property_u('y'),
-                    77.6021505376344
+                    16.6021505376344
                 );
                 return add(
                     $scope,                      str( $f, "Segment( |(" ),
@@ -260,7 +260,7 @@ my $result = do {
                     $self->property_u('pt1'),
                     $self->property_u('pt2')
                   )->property_u('midpoint')
-                  ->call_u( {}, $scope, undef, 118.849462365591 );
+                  ->call_u( {}, $scope, undef, 25.8494623655914 );
                 return $return;
             }
         );
@@ -273,7 +273,7 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property_u('pt1')->property_u('distanceTo')
                   ->call_u( [ $self->property_u('pt2') ],
-                    $scope, undef, 132.94623655914 );
+                    $scope, undef, 29.9462365591398 );
                 return $return;
             }
         );

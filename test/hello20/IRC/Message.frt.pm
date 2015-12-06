@@ -205,14 +205,14 @@ my $result = do {
                         { separator => str( $f, " " ), limit => num( $f, 4 ) },
                         $scope,
                         undef,
-                        22.0896551724138
+                        6.08965517241379
                       ),
-                    19.0689655172414
+                    6.06896551724138
                 );
                 $self->set_property(
                     channel => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 2 ) ], $scope ),
-                    33.151724137931
+                    8.15172413793104
                 );
                 $self->set_property(
                     nickname => $scope->property_u('lineSplit')
@@ -221,28 +221,28 @@ my $result = do {
                         { separator => str( $f, "!" ), limit => num( $f, 2 ) },
                         $scope,
                         undef,
-                        48.2413793103448
+                        10.2413793103448
                       )->get_index_value( [ num( $f, 0 ) ], $scope ),
-                    42.2
+                    10.2
                 );
                 $self->property_u('nickname')->property_u('trimPrefix')
                   ->call_u( [ str( $f, ":" ) ],
-                    $scope, undef, 62.3310344827586 );
+                    $scope, undef, 11.3310344827586 );
                 $self->set_property(
                     message => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 3 ) ], $scope ),
-                    70.3655172413793
+                    14.3655172413793
                 );
                 $self->property_u('message')->property_u('trimPrefix')
                   ->call_u( [ str( $f, ":" ) ],
-                    $scope, undef, 79.4206896551724 );
+                    $scope, undef, 15.4206896551724 );
                 $self->set_property(
                     parts => $self->property_u('message')->property_u('split')
                       ->call_u(
                         [ str( $f, " " ) ],
-                        $scope, undef, 90.4758620689655
+                        $scope, undef, 18.4758620689655
                       ),
-                    87.4551724137931
+                    18.4551724137931
                 );
                 return $return;
             }
@@ -261,7 +261,7 @@ my $result = do {
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
                           ->property_u('hasPrefix')->call_u(
                             [ str( $f, "." ) ], $scope,
-                            undef, 113.565517241379
+                            undef, 26.5655172413793
                           )
                     )
                   )
@@ -273,12 +273,12 @@ my $result = do {
                         cmd => $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
                           ->property_u('copy')
-                          ->call_u( {}, $scope, undef, 125.641379310345 )
+                          ->call_u( {}, $scope, undef, 27.6413793103448 )
                           ->property_u('trimPrefix')->call_u(
                             [ str( $f, "." ) ], $scope,
-                            undef, 128.662068965517
+                            undef, 27.6620689655172
                           ),
-                        119.6
+                        27.6
                     );
                     if ( bool( $scope->property_u('cmd')->property_u('length') )
                       )
@@ -331,7 +331,7 @@ my $result = do {
                         )
                     },
                     $scope, undef,
-                    181.903448275862
+                    42.9034482758621
                   )->get_index_value( [ $scope->property_u('wordN') ], $scope );
                 return $return;
             }

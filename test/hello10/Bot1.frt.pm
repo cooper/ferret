@@ -171,7 +171,7 @@ my $result = do {
                     )
                 ],
                 $scope, undef,
-                61.4895833333333
+                12.4895833333333
             );
             $self->property_u('send')->call_u(
                 [
@@ -180,7 +180,7 @@ my $result = do {
                     )
                 ],
                 $scope, undef,
-                69.5416666666667
+                13.5416666666667
             );
             return $return;
         }
@@ -202,7 +202,7 @@ my $result = do {
                     )
                 ],
                 $scope, undef,
-                89.6770833333333
+                19.6770833333333
             );
             return $return;
         }
@@ -246,12 +246,12 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{port};
                     $want_val ||= num( $f, 6667 );
-                    $self->set_property( port => $want_val, 23.1666666666667 );
+                    $self->set_property( port => $want_val, 5.16666666666667 );
                 };
                 do {
                     my $want_val = $arguments->{real};
                     $want_val ||= str( $f, "Ferret IRC" );
-                    $self->set_property( real => $want_val, 29.2291666666667 );
+                    $self->set_property( real => $want_val, 5.22916666666667 );
                 };
                 $self->set_property(
                     sock => $scope->property_u('Socket::TCP')->call_u(
@@ -260,9 +260,9 @@ my $result = do {
                             port    => $self->property_u('port')
                         },
                         $scope, undef,
-                        45.3541666666667
+                        9.35416666666667
                     ),
-                    41.3125
+                    9.3125
                 );
                 FF::on(
                     $self->property_u('sock'),
@@ -294,7 +294,7 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $self->property_u('sock')->property_u('connect')
-                  ->call_u( {}, $scope, undef, 107.78125 );
+                  ->call_u( {}, $scope, undef, 25.78125 );
                 return $return;
             }
         );
@@ -321,11 +321,11 @@ my $result = do {
                         )
                     ],
                     $scope, undef,
-                    123.885416666667
+                    30.8854166666667
                 );
                 $self->property_u('sock')->property_u('println')
                   ->call_u( [ $scope->property_u('line') ],
-                    $scope, undef, 131.947916666667 );
+                    $scope, undef, 31.9479166666667 );
                 return $return;
             }
         );

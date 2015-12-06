@@ -119,10 +119,10 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         list => FF::create_list( $f, [ str( $f, "hi" ) ] ),
-        3.01190476190476
+        1.01190476190476
     );
     $scope->property_u('list')->property_u('push')
-      ->call_u( [ str( $f, "there" ) ], $scope, undef, 11.0952380952381 );
+      ->call_u( [ str( $f, "there" ) ], $scope, undef, 2.0952380952381 );
     $scope->property_u('list')
       ->set_index_value( [ num( $f, 4 ) ], str( $f, "yeah" ), $scope );
     $scope->property_u('say')->call_u(
@@ -134,7 +134,7 @@ my $result = do {
             )
         ],
         $scope, undef,
-        26.2380952380952
+        5.23809523809524
     );
     FF::iterate(
         $f, $scope,
@@ -150,14 +150,14 @@ my $result = do {
                     )
                 ],
                 $scope, undef,
-                42.3928571428571
+                8.39285714285714
             );
         }
     );
     $scope->set_property_ow(
         $context,
         hash => FF::create_hash( $f, { hi => str( $f, "there" ) } ),
-        52.4642857142857
+        11.4642857142857
     );
     $scope->property_u('hash')
       ->set_index_value( [ str( $f, "whats" ) ], str( $f, "up" ), $scope );
@@ -173,7 +173,7 @@ my $result = do {
             )
         ],
         $scope, undef,
-        77.7142857142857
+        15.7142857142857
     );
     FF::iterate_pair(
         $f, $scope,
@@ -190,7 +190,7 @@ my $result = do {
                     )
                 ],
                 $scope, undef,
-                99.9404761904762
+                18.9404761904762
             );
         }
     );

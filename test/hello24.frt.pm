@@ -85,8 +85,8 @@ my $result = do {
             FF::need( $scope, $arguments, 'code' ) or return;
             $return->set_property(
                 message => $scope->property_u('code')
-                  ->call_u( {}, $scope, undef, 57.9024390243902 ),
-                55.8536585365854
+                  ->call_u( {}, $scope, undef, 18.9024390243902 ),
+                18.8536585365854
             );
             return $return;
         }
@@ -101,7 +101,7 @@ my $result = do {
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "been five seconds" ) ],
-                $scope, undef, 11.1463414634146 );
+                $scope, undef, 4.14634146341463 );
             return $return;
         }
     );
@@ -127,10 +127,10 @@ my $result = do {
             )
         ],
         $scope, undef,
-        5.02439024390244
+        3.02439024390244
     );
     $scope->property_u('say')
-      ->call_u( [ str( $f, "waiting..." ) ], $scope, undef, 20.2926829268293 );
+      ->call_u( [ str( $f, "waiting..." ) ], $scope, undef, 7.29268292682927 );
     $scope->property_u('say')->call_u(
         [
             $scope->property_u('something')->call_u(
@@ -141,11 +141,11 @@ my $result = do {
                     )
                 ],
                 $scope, undef,
-                32.4634146341463
+                12.4634146341463
             )->property_u('message')
         ],
         $scope, undef,
-        30.4146341463415
+        12.4146341463415
     );
 };
 

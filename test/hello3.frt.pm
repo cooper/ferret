@@ -130,11 +130,11 @@ my $result = do {
             $scope->set_property_ow(
                 $context,
                 hello => str( $f, "Hello" ),
-                63.5
+                17.5
             );
             $scope->property_u('hello')->set_property(
                 name => $scope->property_u('name1'),
-                69.5581395348837
+                18.5581395348837
             );
             $scope->property_u('say')->call_u(
                 [
@@ -146,7 +146,7 @@ my $result = do {
                     )
                 ],
                 $scope, undef,
-                74.6046511627907
+                19.6046511627907
             );
             return $return;
         }
@@ -167,7 +167,7 @@ my $result = do {
                     )
                 ],
                 $scope, undef,
-                92.7558139534884
+                23.7558139534884
             );
             return $return;
         }
@@ -205,30 +205,30 @@ my $result = do {
             FF::need( $scope, $arguments, 'name1' ) or return;
             FF::need( $scope, $arguments, 'name2' ) or return;
             $scope->property_u('hello1')
-              ->call_u( {}, $scope, undef, 48.3837209302326 );
+              ->call_u( {}, $scope, undef, 13.3837209302326 );
             $scope->property_u('hello2')
-              ->call_u( {}, $scope, undef, 53.4302325581395 );
+              ->call_u( {}, $scope, undef, 14.4302325581395 );
             return $return;
         }
     );
     $func_2->inside_scope( helloWorld => $scope, $scope, undef, undef, undef );
     $scope->property_u('helloWorld')
       ->call_u( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
-        $scope, undef, 3.01162790697674 );
+        $scope, undef, 1.01162790697674 );
     $scope->property_u('helloWorld')
       ->call_u( { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
-        $scope, undef, 14.1162790697674 );
+        $scope, undef, 3.11627906976744 );
     $scope->property_u('helloWorld')
       ->call_u( [ str( $f, "Benjamin" ), str( $f, "George" ) ],
-        $scope, undef, 28.2209302325581 );
+        $scope, undef, 8.22093023255814 );
     $scope->set_property_ow(
         $context,
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ),
-        106.860465116279
+        28.8604651162791
     );
     $scope->property_u('say')
       ->call_u( [ add( $scope, str( $f, "Pi = " ), $scope->property_u('pi') ) ],
-        $scope, undef, 115.953488372093 );
+        $scope, undef, 29.953488372093 );
 };
 
 FF::after_content();

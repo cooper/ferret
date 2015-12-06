@@ -37,9 +37,9 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         x => FF::create_object( $f, {} ),
-        3.11111111111111
+        1.11111111111111
     );
-    $scope->weaken_property( 'x', 9.66666666666667 );
+    $scope->weaken_property( 'x', 2.66666666666667 );
 };
 
 FF::after_content();

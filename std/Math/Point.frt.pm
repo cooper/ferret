@@ -228,7 +228,7 @@ my $result = do {
                         $self->property_u('x'),
                         $scope->property_u('pt2')->property_u('x')
                     ),
-                    36.158273381295
+                    10.158273381295
                 );
                 $scope->set_property_ow(
                     $context,
@@ -237,7 +237,7 @@ my $result = do {
                         $self->property_u('y'),
                         $scope->property_u('pt2')->property_u('y')
                     ),
-                    44.2086330935252
+                    11.2086330935252
                 );
                 return $scope->property_u('sqrt')->call_u(
                     [
@@ -254,7 +254,7 @@ my $result = do {
                         )
                     ],
                     $scope, undef,
-                    53.2661870503597
+                    12.2661870503597
                 );
                 return $return;
             }
@@ -271,11 +271,11 @@ my $result = do {
                     [
                         $scope->{special}->property_u('class')->call_u(
                             [ num( $f, 0 ), num( $f, 0 ) ], $scope,
-                            undef, 75.3884892086331
+                            undef, 16.3884892086331
                         )
                     ],
                     $scope, undef,
-                    73.3741007194245
+                    16.3741007194245
                 );
                 return $return;
             }
@@ -365,7 +365,7 @@ my $result = do {
                         )
                     },
                     $scope, undef,
-                    139.68345323741
+                    33.6834532374101
                 );
                 return $return;
             }
@@ -395,7 +395,7 @@ my $result = do {
                 FF::need( $scope, $arguments, 'pt2' ) or return;
                 return $scope->property_u('pt1')->property_u('distanceTo')
                   ->call_u( [ $scope->property_u('pt2') ],
-                    $scope, undef, 187.964028776978 );
+                    $scope, undef, 41.9640287769784 );
                 return $return;
             }
         );

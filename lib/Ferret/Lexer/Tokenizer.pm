@@ -359,7 +359,7 @@ sub tok_CLOSURE_S {
     my ($tokens, $value) = @_;
     my $last = $tokens->[-1] or return;
     if ($last->[0] eq 'KEYWORD_FUNC') {
-        $tokens->[-1] = [ FUNCTION => { anonymous => 1 }, undef, $position ];
+        $tokens->[-1] = [ FUNCTION => { anonymous => 1 }, $position ];
         return;
     }
 }
@@ -389,7 +389,6 @@ sub _tokenize {
     my @tokens;
 
     while (my $token = &$lexer) {
-        $position += 1;
 
         # something wasn't tokenized.
         return (Ferret::Lexer::fatal(sprintf
@@ -416,8 +415,7 @@ sub _tokenize {
     my $count = scalar @tokens;
     my $i = 0;
     for my $token (@tokens) {
-        my $part = $i / $count;
-        $token->[2] = int($token->[2]) + $part;
+        $token->[2] = int($token->[2]) + $i / $count;
         $i++;
     }
 

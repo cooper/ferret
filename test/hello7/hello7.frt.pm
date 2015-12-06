@@ -124,14 +124,14 @@ my $result = do {
                 height => num( $f, 10 )
             },
             $scope, undef,
-            7.06493506493506
+            1.06493506493506
         ),
-        3.01298701298701
+        1.01298701298701
     );
     $scope->set_property_ow(
         $context,
         center => $scope->property_u('rect')->property_u('center'),
-        24.2597402597403
+        3.25974025974026
     );
     $scope->property_u('say')->call_u(
         [
@@ -141,7 +141,7 @@ my $result = do {
             )
         ],
         $scope, undef,
-        30.3246753246753
+        4.32467532467532
     );
     $scope->property_u('say')->call_u(
         [
@@ -152,15 +152,15 @@ my $result = do {
             )
         ],
         $scope, undef,
-        37.3896103896104
+        5.38961038961039
     );
     $scope->set_property_ow(
         $context,
         otherPt => $scope->property_u('Math::Point')->call_u(
             [ num( $f, 9 ), num( $f, 2 ) ],
-            $scope, undef, 51.5454545454545
+            $scope, undef, 7.54545454545454
         ),
-        47.4935064935065
+        7.49350649350649
     );
     $scope->set_property_ow(
         $context,
@@ -168,9 +168,9 @@ my $result = do {
             $scope, $scope->property_u('center'),
             $scope->property_u('otherPt')
           )->property_u('midpoint')
-          ->call_u( {}, $scope, undef, 66.7272727272727 )->property_u('pretty')
-          ->call_u( {}, $scope, undef, 69.7662337662338 ),
-        59.6363636363636
+          ->call_u( {}, $scope, undef, 8.72727272727273 )->property_u('pretty')
+          ->call_u( {}, $scope, undef, 8.76623376623377 ),
+        8.63636363636364
     );
     $scope->property_u('say')->call_u(
         [
@@ -180,7 +180,7 @@ my $result = do {
             )
         ],
         $scope, undef,
-        73.8051948051948
+        9.80519480519481
     );
     $scope->property_u('say')->call_u(
         [
@@ -188,11 +188,11 @@ my $result = do {
                 $scope,
                 str( $f, "Square root of four: " ),
                 $scope->property_u('Math')->property_u('sqrt')
-                  ->call_u( [ num( $f, 4 ) ], $scope, undef, 86.9350649350649 )
+                  ->call_u( [ num( $f, 4 ) ], $scope, undef, 11.9350649350649 )
             )
         ],
         $scope, undef,
-        81.8701298701299
+        11.8701298701299
     );
 };
 
