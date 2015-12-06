@@ -306,6 +306,16 @@ during this process is a failure to tokenize a certain byte or string.
       CLOSURE_E |
 ```
 
+Example of an error raised during the tokenization stage
+
+```
+1 + 2 @ 3
+```
+
+```
+Unable to tokenize '@' at line 1.
+```
+
 #### 2. Constructor
 
 The most significant step is the construction of the document model. The
@@ -393,7 +403,24 @@ encounters nonsense.
                      Argument list [0 items]
 ```
 
-#### 3. Verifier
+Example of an error raised during the construction stage
+
+```
+$x in (1, 2, 3) {
+    say("Number: $x");
+}
+```
+
+```
+Unexpected keyword 'in' (where is 'for'?).
+     File    -> (stdin)
+     Line    -> 1
+     Near    -> lexical variable '$x'
+     Parent  -> document '(stdin)'
+Exception raised by Ferret::Lexer::Constructor line 387.
+```
+
+#### 3. Enforcer
 
 After the entire document tree is constructed, a final check ensures that all
 grammatical rules are met. Below is an example of an element rule definition.
@@ -435,7 +462,57 @@ WantNeed => {
 }
 ```
 
-#### 4. Compiler
+Example of an error raised during the enforcement stage
+
+```
+func add {
+    need $x, $y;
+    $z = $x + $y;
+    say("$x + $y = $z");
+}
+
+need $x;
+```
+
+```
+Unexpected need outside of a containing function.
+Argument declaration must be within a function or method.
+     File    -> (stdin)
+     Line    -> 7
+     Near    -> operation
+     Parent  -> document '(stdin)'
+Exception raised by F::Node line 24.
+```
+
+#### 4. Verifier
+
+Following document tree construction and grammatical rule enforcement, the
+verifier stage raises compile-time exceptions for anything that is grammatically
+correct but logically incorrect. This stage includes compile-time scope and
+variable tracking, type and protocol conformance checks, and more.
+
+Example of an error raised by during the verification stage
+
+```
+for ($a, $b) in [color: "blue", mood: "sad"] {
+    $x;
+    $x = true;
+}
+```
+
+```
+Reference to lexical variable '$x' without previous declaration.
+Note that '$x' is later declared in this scope on line 3.
+     Error   -> UndeclaredVariableReference
+     File    -> (stdin)
+     Line    -> 2
+     Element -> lexical variable '$x'
+     Near    -> instruction
+     Parent  -> body ('for' scope)
+Exception raised by Ferret::Lexer::Verifier line 150.
+```
+
+#### 5. Compiler
 
 At this point in the process, the document tree is fully constructed, and all
 error checking is complete. The object model is converted to Perl source code.
@@ -451,7 +528,7 @@ my $method_8 = FF::method_event_def($f, $scope, 'center', [  ], sub {
 });
 ```
 
-#### 5. Beautifier
+#### 6. Beautifier
 
 Finally, the code is beautified using perltidy. Well, I wouldn't call it
 beautiful, but it does help when the lines begin to exceed 1,000 characters.
