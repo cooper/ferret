@@ -45,14 +45,12 @@ sub is_lex_reference_ok {
     }
 
     # if we own no vars by this name, check upper scopes.
-    else {
-        my $parent_scope = $scope->parent_scope or return;
-        return $parent_scope->is_lex_reference_ok($var_name, $pos);
-    }
-
-    # if we own the var, and the reference occurs before it's defined in
+    #
+    # OR if we own the var, and the reference occurs before it's defined in
     # this scope, check if it was defined earlier in a parent scope somewhere.
-    die "$var_name $pos";
+    #
+    my $parent_scope = $scope->parent_scope or return;
+    return $parent_scope->is_lex_reference_ok($var_name, $pos);
 
     return 1;
 }
