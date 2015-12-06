@@ -70,11 +70,15 @@
 #                                          Argument list [1 items]
 #                                              Item 0
 #                                                  Call
-#                                                      Property 'fromWord'
-#                                                          Lexical variable '$msg'
+#                                                      Bareword 'convertNewlines'
 #                                                      Argument list [1 items]
 #                                                          Item 0
-#                                                              Number '1'
+#                                                              Call
+#                                                                  Property 'fromWord'
+#                                                                      Lexical variable '$msg'
+#                                                                  Argument list [1 items]
+#                                                                      Item 0
+#                                                                          Number '1'
 #                              Instruction
 #                                  Assignment (lexical variable '$res')
 #                                      Call
@@ -141,11 +145,15 @@
 #                                          Argument list [1 items]
 #                                              Item 0
 #                                                  Call
-#                                                      Property 'fromWord'
-#                                                          Lexical variable '$msg'
+#                                                      Bareword 'convertNewlines'
 #                                                      Argument list [1 items]
 #                                                          Item 0
-#                                                              Number '1'
+#                                                              Call
+#                                                                  Property 'fromWord'
+#                                                                      Lexical variable '$msg'
+#                                                                  Argument list [1 items]
+#                                                                      Item 0
+#                                                                          Number '1'
 #                              Instruction
 #                                  Assignment (lexical variable '$res')
 #                                      Call
@@ -214,11 +222,15 @@
 #                                                  Argument list [1 items]
 #                                                      Item 0
 #                                                          Call
-#                                                              Property 'fromWord'
-#                                                                  Lexical variable '$msg'
+#                                                              Bareword 'convertNewlines'
 #                                                              Argument list [1 items]
 #                                                                  Item 0
-#                                                                      Number '1'
+#                                                                      Call
+#                                                                          Property 'fromWord'
+#                                                                              Lexical variable '$msg'
+#                                                                          Argument list [1 items]
+#                                                                              Item 0
+#                                                                                  Number '1'
 #                                          Argument list [0 items]
 #                              If
 #                                  Expression ('if' parameter)
@@ -299,11 +311,15 @@
 #                          Argument list [1 items]
 #                              Item 0
 #                                  Call
-#                                      Property 'fromWord'
-#                                          Lexical variable '$msg'
+#                                      Bareword 'convertNewlines'
 #                                      Argument list [1 items]
 #                                          Item 0
-#                                              Number '1'
+#                                              Call
+#                                                  Property 'fromWord'
+#                                                      Lexical variable '$msg'
+#                                                  Argument list [1 items]
+#                                                      Item 0
+#                                                          Number '1'
 #              Instruction
 #                  Assignment (lexical variable '$res')
 #                      Call
@@ -344,12 +360,31 @@
 #                          Item 1
 #                              Property 'perl'
 #                                  Lexical variable '$res'
+#      Function 'convertNewlines'
+#          Body ('function' scope)
+#              Instruction
+#                  Need
+#                      Lexical variable '$string'
+#                      Bareword 'Str'
+#              Instruction
+#                  Return
+#                      Call
+#                          Property 'join'
+#                              Call
+#                                  Property 'split'
+#                                      Lexical variable '$string'
+#                                  Argument list [1 items]
+#                                      Item 0
+#                                          String '_NL_'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  String '␤'
 #      Instruction
 #          Call
 #              Property 'connect'
 #                  Lexical variable '$bot'
 #              Argument list [0 items]
-#      Include (COMPILER, IRC, IRC::Bot)
+#      Include (COMPILER, IRC, IRC::Bot, Str)
 use warnings;
 use strict;
 use utf8;
@@ -402,8 +437,16 @@ my $result = do {
                 $context,
                 c => $scope->property_u('COMPILER')->call_u(
                     [
-                        $scope->property_u('msg')->property_u('fromWord')
-                          ->call_u( [ num( $f, 1 ) ], $scope, undef, 55 )
+                        $scope->property_u('convertNewlines')->call_u(
+                            [
+                                $scope->property_u('msg')
+                                  ->property_u('fromWord')->call_u(
+                                    [ num( $f, 1 ) ],
+                                    $scope, undef, 55
+                                  )
+                            ],
+                            $scope, undef, 55
+                        )
                     ],
                     $scope, undef, 55
                 )
@@ -441,8 +484,32 @@ my $result = do {
         }
     );
 
+    # Function event 'convertNewlines' callback definition
+    my $func_1 = FF::function_event_def(
+        $f, $scope,
+        'convertNewlines',
+        [
+            {
+                name     => 'string',
+                type     => 'Str',
+                optional => undef,
+                more     => undef
+            }
+        ],
+        sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            FF::need( $scope, $arguments, 'string' ) or return;
+            return $scope->property_u('string')->property_u('split')
+              ->call_u( [ str( $f, "_NL_" ) ], $scope, undef, 66 )
+              ->property_u('join')
+              ->call_u( [ str( $f, "\n" ) ], $scope, undef, 66 );
+            return $return;
+        }
+    );
+
     # Anonymous function definition
-    my $func_1 = FF::function_def(
+    my $func_2 = FF::function_def(
         $f, $scope, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
@@ -461,7 +528,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_2 = FF::function_def(
+    my $func_3 = FF::function_def(
         $f, $scope, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
@@ -485,8 +552,16 @@ my $result = do {
                 $context,
                 c => $scope->property_u('COMPILER')->call_u(
                     [
-                        $scope->property_u('msg')->property_u('fromWord')
-                          ->call_u( [ num( $f, 1 ) ], $scope, undef, 13 )
+                        $scope->property_u('convertNewlines')->call_u(
+                            [
+                                $scope->property_u('msg')
+                                  ->property_u('fromWord')->call_u(
+                                    [ num( $f, 1 ) ],
+                                    $scope, undef, 13
+                                  )
+                            ],
+                            $scope, undef, 13
+                        )
                     ],
                     $scope, undef, 13
                 )
@@ -518,7 +593,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_3 = FF::function_def(
+    my $func_4 = FF::function_def(
         $f, $scope, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
@@ -542,8 +617,16 @@ my $result = do {
                 $context,
                 c => $scope->property_u('COMPILER')->call_u(
                     [
-                        $scope->property_u('msg')->property_u('fromWord')
-                          ->call_u( [ num( $f, 1 ) ], $scope, undef, 26 )
+                        $scope->property_u('convertNewlines')->call_u(
+                            [
+                                $scope->property_u('msg')
+                                  ->property_u('fromWord')->call_u(
+                                    [ num( $f, 1 ) ],
+                                    $scope, undef, 26
+                                  )
+                            ],
+                            $scope, undef, 26
+                        )
                     ],
                     $scope, undef, 26
                 )
@@ -575,7 +658,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_4 = FF::function_def(
+    my $func_5 = FF::function_def(
         $f, $scope, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
@@ -599,8 +682,16 @@ my $result = do {
                 $context,
                 res => $scope->property_u('COMPILER')->call_u(
                     [
-                        $scope->property_u('msg')->property_u('fromWord')
-                          ->call_u( [ num( $f, 1 ) ], $scope, undef, 39 )
+                        $scope->property_u('convertNewlines')->call_u(
+                            [
+                                $scope->property_u('msg')
+                                  ->property_u('fromWord')->call_u(
+                                    [ num( $f, 1 ) ],
+                                    $scope, undef, 39
+                                  )
+                            ],
+                            $scope, undef, 39
+                        )
                     ],
                     $scope, undef, 39
                 )->property_u('eval')->call_u( {}, $scope, undef, 39 )
@@ -639,7 +730,11 @@ my $result = do {
         }
     );
     $func_0->inside_scope( handlePerl => $scope, $scope, undef, undef, undef );
-    FF::load_namespaces( $context, qw(COMPILER IRC IRC::Bot) );
+    $func_1->inside_scope(
+        convertNewlines => $scope,
+        $scope, undef, undef, undef
+    );
+    FF::load_namespaces( $context, qw(COMPILER IRC IRC::Bot Str) );
     $scope->set_property_ow(
         $context,
         bot => $scope->property_u('IRC::Bot')->call_u(
@@ -656,7 +751,7 @@ my $result = do {
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
             str( $f, "info" ),
-            $func_1->inside_scope(
+            $func_2->inside_scope(
                 (undef) => $scope,
                 $scope, undef, undef, undef
             )
@@ -666,7 +761,7 @@ my $result = do {
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
             str( $f, "t" ),
-            $func_2->inside_scope(
+            $func_3->inside_scope(
                 (undef) => $scope,
                 $scope, undef, undef, undef
             )
@@ -676,7 +771,7 @@ my $result = do {
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
             str( $f, "c" ),
-            $func_3->inside_scope(
+            $func_4->inside_scope(
                 (undef) => $scope,
                 $scope, undef, undef, undef
             )
@@ -686,7 +781,7 @@ my $result = do {
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
             str( $f, "e" ),
-            $func_4->inside_scope(
+            $func_5->inside_scope(
                 (undef) => $scope,
                 $scope, undef, undef, undef
             )
@@ -700,7 +795,7 @@ my $result = do {
       ->call_u( [ str( $f, "pp" ), $scope->property_u('handlePerl') ],
         $scope, undef, 49 );
     $scope->property_u('bot')->property_u('connect')
-      ->call_u( {}, $scope, undef, 64 );
+      ->call_u( {}, $scope, undef, 69 );
 };
 
 FF::after_content();

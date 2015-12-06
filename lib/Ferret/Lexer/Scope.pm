@@ -27,20 +27,28 @@ sub parent_scope {
     return;
 }
 
-# remember the lines on which lexical var assignments/wantneeds occurred.
+# remember the positions at which lexical var assignments/wantneeds occurred.
 sub process_lex_declaration {
     my ($scope, $var_name, $create_pos) = @_;
     push @{ $scope->{lex_vars}{$var_name} ||= [] }, $create_pos;
 }
 
-# returns true if it's ok to reference a lexical var on this line.
+# returns the position of the earliest declaration in this scope.
+sub earliest_lex_declaration {
+    my ($scope, $var_name) = @_;
+    if (my $list = $scope->{lex_vars}{$var_name}) {
+        return min @$list;
+    }
+    return;
+}
+
+# returns true if it's ok to reference a lexical var at this position.
 sub is_lex_reference_ok {
     my ($scope, $var_name, $pos) = @_;
 
     # if we own vars by this name, check that at least one was defined
-    # before it is referenced
-    if (my $list = $scope->{lex_vars}{$var_name}) {
-        my $earliest = min @$list;
+    # before it is referenced.
+    if (defined(my $earliest = $scope->earliest_lex_declaration($var_name))) {
         return 1 if $pos > $earliest;
     }
 

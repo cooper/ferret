@@ -331,13 +331,24 @@ sub throw {
     my ($c, $el, $type, @args) = @_;
     $c->{err_caller} ||= [caller];
 
+    # hints provided.
+    my @hints;
+    if (ref $type && ref $type eq 'ARRAY') {
+        @hints = @$type;
+        $type = shift @args;
+    }
+
     # if we're processing element rules, use the actual element if possible.
     # otherwise, use the pretty representation of the token.
     my $what = $c->rule_el ?
         $c->rule_el->desc  :
         Ferret::Lexer::pretty_token($c->label);
 
-    my $err_string = Ferret::Lexer::Verifier::error_string($el, $type, @args);
+    # stringify.
+    my $err_string = Ferret::Lexer::Verifier::error_string(
+        $el, $type, \@hints, @args
+    );
+
     fatal($c, "$err_string.", $el,
         err_type => $type,
         el_desc  => $el->desc

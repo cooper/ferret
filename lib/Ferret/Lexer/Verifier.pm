@@ -9,13 +9,26 @@ my $error;
 
 our %errors = (
     UndeclaredVariableReference => {
-        message => "Reference to lexical variable '\$%s' without previous declaration"
+        message => "Reference to lexical variable '\$%s' without previous declaration",
+        hint_0  => "Note that '\$%s' is later declared in this scope on line %d"
     }
 );
 
 sub error_string {
-    my ($el, $type, @args) = @_;
-    return sprintf $errors{$type}{message}, @args;
+    my ($el, $type, $hints, @args) = @_;
+
+    # hints provided.
+    my @hints = @$hints;
+    my @hint_msgs;
+    for my $i (keys @hints) {
+        my $hint_msg = sprintf $errors{$type}{"hint_$i"}, @{ $hints[$i] };
+        push @hint_msgs, $hint_msg;
+    }
+
+    my $msg = sprintf $errors{$type}{message}, @args;
+    $msg .= ".\n$_" foreach @hint_msgs;
+
+    return $msg;
 }
 
 sub verify {
@@ -124,7 +137,19 @@ sub verify_lexical_variables {
         next if $soi->is_lex_reference_ok($var->{var_name}, $var->{create_pos});
 
         # oh no. it's not ok.
-        return $var->throw(UndeclaredVariableReference => $var->{var_name});
+        my @hints;
+
+        # maybe we can provide useful info on when it was first declared.
+        my $earliest = $soi->earliest_lex_declaration($var->{var_name});
+        my ($this_line, $other_line) = ($var->{create_line}, int $earliest);
+        if (defined $earliest) {
+            $hints[0] = [ $var->{var_name}, $other_line ];
+        }
+
+        # throw an exception.
+        return $var->throw(\@hints,
+            UndeclaredVariableReference => $var->{var_name}
+        );
 
     }
 

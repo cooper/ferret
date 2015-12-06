@@ -10,7 +10,7 @@ $bot.addCommand("t", func {
     need $msg;
     if !$msg.commandHasParameters:
         return;
-    $c = COMPILER($msg.fromWord(1));
+    $c = COMPILER(convertNewlines($msg.fromWord(1)));
     $res = $c.tokenize(pretty: true);
     if $res.error {
         $bot.privmsg($msg.channel, $res.error);
@@ -23,7 +23,7 @@ $bot.addCommand("c", func {
     need $msg;
     if !$msg.commandHasParameters:
         return;
-    $c = COMPILER($msg.fromWord(1));
+    $c = COMPILER(convertNewlines($msg.fromWord(1)));
     $res = $c.construct(pretty: true);
     if $res.error {
         $bot.privmsg($msg.channel, $res.error);
@@ -36,7 +36,7 @@ $bot.addCommand("e", func {
     need $msg;
     if !$msg.commandHasParameters:
         return;
-    $res = COMPILER($msg.fromWord(1)).eval();
+    $res = COMPILER(convertNewlines($msg.fromWord(1))).eval();
     if $res.error {
         $bot.privmsg($msg.channel, $res.error);
         return;
@@ -52,13 +52,18 @@ func handlePerl {
     need $msg;
     if !$msg.commandHasParameters:
         return;
-    $c = COMPILER($msg.fromWord(1));
+    $c = COMPILER(convertNewlines($msg.fromWord(1)));
     $res = $c.compile($msg.command == "p");
     if $res.error {
         $bot.privmsg($msg.channel, $res.error);
         return;
     }
     $bot.privmsg($msg.channel, $res.perl);
+}
+
+func convertNewlines {
+    need $string: Str;
+    return $string.split("_NL_").join("\n");
 }
 
 $bot.connect();
