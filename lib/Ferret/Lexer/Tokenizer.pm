@@ -9,7 +9,7 @@ use Ferret::Lexer::Rules;
 use HOP::Lexer qw(string_lexer);
 use JSON::XS;
 my $json = JSON::XS->new->allow_nonref(1);
-my $current_line;
+my $position;
 
 # keywords
 my $keyword_reg = '^('.join('|', qw{
@@ -252,7 +252,7 @@ sub tok_STR_REG {
         }
 
         my $code = "$$part{sigil}$$part{name}";
-        $parts[$i] = (tokenize_noinc($code))[1];
+        $parts[$i] = (_tokenize($code))[1];
     }
 
     @parts = "" if !@parts;
@@ -277,7 +277,7 @@ sub tok_BAREWORD {
 
     # line number.
     if ($value eq '__LINE__') {
-        return [ NUMBER => $current_line ];
+        return [ NUMBER => $position ];
     }
 
     # other keyword.
@@ -373,30 +373,31 @@ sub ignore            { }
 sub ignore_increment  { &increment_lines; () }
 sub increment_lines   {
     my ($l, $v) = @_;
-    $current_line += () = $v =~ /\n/g;
+    $position += () = $v =~ /\n/g;
     return [ $l, $v ];
 }
 
-# tokenize but do not increment lines
-sub tokenize_noinc {
-    my $old_line = $current_line;
-    my @ret = &tokenize;
-    $current_line = $old_line;
-    return @ret;
+sub tokenize {
+    $position = 1;
+    _tokenize(@_);
 }
 
-sub tokenize {
+sub _tokenize {
     my $string = shift;
     my $lexer  = string_lexer($string, @token_formats);
     my @tokens;
-    $current_line = 1;
 
     while (my $token = &$lexer) {
+
+        # TODO: do something less stupid. keep it numeric, but like
+        # if we reach 1.99, for instance, go to 1.991.
+        # also, start fresh on each new line.
+        $position += 0.00000001;
 
         # something wasn't tokenized.
         return (Ferret::Lexer::fatal(sprintf
             "Unable to tokenize '%s' at line %d.",
-            $token, $current_line
+            $token, $position
         ), @tokens) if ref $token ne 'ARRAY';
 
         # additional tokenizing subroutine.
@@ -409,7 +410,7 @@ sub tokenize {
 
         # we don't care about the value for this type of token.
         undef $token->[1] if $no_value{ $token->[0] };
-        $token->[2] = $current_line;
+        $token->[2] = $position;
 
         push @tokens, $token;
     }

@@ -1,6 +1,9 @@
 # === Document Model ===
 #  Document './test/hello23/test.frt'
 #      Instruction
+#          Assignment (lexical variable '$x')
+#              Object [0 items]
+#      Instruction
 #          Delete modifier
 #              Lexical variable '$x'
 #      Instruction
@@ -33,6 +36,7 @@ my $result = do {
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Second) );
+    $scope->set_property_ow( $context, x => FF::create_object( $f, {} ) );
     $scope->delete_property('x');
     $scope->property_u('Second');
 };

@@ -1,6 +1,9 @@
 # === Document Model ===
 #  Document './test/hello23/Second.frt'
 #      Instruction
+#          Assignment (lexical variable '$x')
+#              Object [0 items]
+#      Instruction
 #          Weaken modifier
 #              Lexical variable '$x'
 use warnings;
@@ -29,6 +32,7 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
+    $scope->set_property_ow( $context, x => FF::create_object( $f, {} ) );
     $scope->weaken_property('x');
 };
 

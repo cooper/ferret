@@ -11,6 +11,9 @@ sub new {
     my ($class, %opts) = @_;
     my $for = $class->SUPER::new(%opts);
 
+    # TODO: currently, the only 'for_type' is 'iteration'
+    $for->{for_type} = 'iteration';
+
     # create 'for' parameter.
     my $exp = $for->{param_exp} = F::Expression->new(
         parameter_for        => 'for',
@@ -37,19 +40,7 @@ sub new {
 
 sub perl_fmt {
     my $for = shift;
-    my ($var_exp, $collection) = $for->children;
-    my $var1 = $var_exp->first_child;
-    my $var2;
-
-    # if it's a structural list, it's like a key-value type deal.
-    if ($var1->type eq 'List') {
-        ($var1, $var2) = map $_->item, $var1->children;
-        $var1 && $var2 or die;
-        $var2->type eq 'LexicalVariable' or die;
-    }
-
-    # this is temporary.
-    $var1->type eq 'LexicalVariable' or die;
+    my ($var1, $var2, $collection) = $for->handle_vars;
 
     # get content.
     my $content = $for->body->body_fmt_do;
@@ -61,6 +52,32 @@ sub perl_fmt {
         body        => $content
     };
 }
+
+sub handle_vars {
+    my $for = shift;
+    my ($var_exp, $collection) = $for->children;
+    my $var1 = $var_exp->first_child;
+    my $var2;
+
+    # if it's a structural list, it's like a key-value type deal.
+    if ($var1->type eq 'List') {
+        ($var1, $var2) = map $_->item, $var1->children;
+        $var1 && $var2 or die;
+        $var2->type eq 'LexicalVariable' or die; # FIXME: bad
+    }
+
+    # this is temporary.
+    $var1->type eq 'LexicalVariable' or die; # FIXME: bad
+
+    # store the variables.
+    $for->{value_var} = $var2 || $var1;
+    $for->{key_var}   = $var1 if $var2;
+
+    return ($var1, $var2, $collection);
+}
+
+sub value_var { shift->{value_var} }
+sub key_var   { shift->{key_var}   }
 
 sub hold_instr   { 1 }
 sub body         { shift->{body}         }

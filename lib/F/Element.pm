@@ -13,6 +13,7 @@ sub new {
     my ($class, %opts) = @_;
     my $c = $Ferret::Lexer::Constructor::current;
     $opts{create_line} = $c->{line};
+    $opts{create_pos}  = $c->{position};
     $opts{create_c}    = { %$c };
     return bless \%opts, $class;
 }
@@ -50,12 +51,22 @@ sub perl_fmt_do {
 }
 
 sub get_format { Ferret::Perl::get_format(@_[1..$#_]) }
+
 sub unexpected {
     my $el = shift;
     my $c = $Ferret::Lexer::Constructor::current;
     $c->{rule_el} = $el;
     $c->{err_caller} = [caller];
-    $Ferret::Lexer::Constructor::error = $c->unexpected(@_);
+    $Ferret::Lexer::Constructor::error = $c->unexpected(shift, $el);
+    delete $c->{rule_el};
+}
+
+sub throw {
+    my $el = shift;
+    my $c = $Ferret::Lexer::Constructor::current;
+    $c->{rule_el} = $el;
+    $c->{err_caller} = [caller];
+    $Ferret::Lexer::Constructor::error = $c->throw($el, @_);
     delete $c->{rule_el};
 }
 
@@ -89,6 +100,12 @@ sub _check_type {
     return $el->is_type($type) if $use_isa;
     return $el->type eq $type;
     return;
+}
+
+sub first_upper_scope {
+    my $el = shift;
+    my $owner_el = $el->first_parent('@ScopeOwner') or return;
+    return $owner_el->scope;
 }
 
 # returns a list of all the types of the current element and parents.

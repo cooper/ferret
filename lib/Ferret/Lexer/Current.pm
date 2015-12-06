@@ -273,14 +273,31 @@ sub sort_precedence {
 ##############
 
 sub fatal {
-    my ($c, $err) = @_;
-    my $near = $c->last_el_desc;
+    my ($c, $err, $el, %opts) = @_;
+
+    # use the "current" info if no element is provided.
+    my ($parent, $last_el, $line) = ($c->node, $c->elements->[-1], $c->{line});
+
+    # if we actually have an element, we can use its real position.
+    if ($el && $el->parent) {
+        $line    = $el->{create_line};
+        $parent  = $el->parent;
+        $last_el = $el->previous_element || $parent;
+    }
+
+    # if $last_el is not defined at this point, we are at the beginning.
+    my $near = $last_el ? $last_el->desc : 'beginning of file';
+    $parent  = $parent->parent while $parent->type eq 'Instruction';
+
     my @caller = @{ delete $c->{err_caller} || [caller] };
+    $err .= "\n     Error   -> $opts{err_type}" if length $opts{err_type};
     $err .= "\n     File    -> $$c{file}";
-    $err .= "\n     Line    -> $$c{line}";
+    $err .= "\n     Line    -> $line";
+    $err .= "\n     Element -> $opts{el_desc}"  if length $opts{el_desc};
     $err .= "\n     Near    -> $near";
-    $err .= "\n     Parent  -> ".$c->node->desc if $c->node;
+    $err .= "\n     Parent  -> ".$parent->desc  if $parent;
     $err .= "\n\nException raised by $caller[0] line $caller[2].";
+
     return Ferret::Lexer::fatal($err);
 }
 
@@ -292,10 +309,11 @@ sub expected {
 }
 
 sub unexpected {
-    my ($c, $reason, $err_desc) = @_[0, 1];
+    my ($c, $reason, $el) = @_;
     $c->{err_caller} ||= [caller];
 
     # if it's an arrayref, it's from a rule with a description.
+    my $err_desc;
     ($reason, $err_desc) = @$reason if ref $reason eq 'ARRAY';
     $err_desc = length $err_desc ? "\n$err_desc." : '';
     $reason   = length $reason   ? " $reason"     : '';
@@ -306,13 +324,24 @@ sub unexpected {
         $c->rule_el->desc  :
         Ferret::Lexer::pretty_token($c->label);
 
-    fatal($c, "Unexpected $what$reason.$err_desc");
+    fatal($c, "Unexpected $what$reason.$err_desc", $el);
 }
 
-sub last_el_desc {
-    my $c = shift;
-    return $c->elements->[-1]->desc if $c->elements->[-1];
-    return 'beginning of file';
+sub throw {
+    my ($c, $el, $type, @args) = @_;
+    $c->{err_caller} ||= [caller];
+
+    # if we're processing element rules, use the actual element if possible.
+    # otherwise, use the pretty representation of the token.
+    my $what = $c->rule_el ?
+        $c->rule_el->desc  :
+        Ferret::Lexer::pretty_token($c->label);
+
+    my $err_string = Ferret::Lexer::Verifier::error_string($el, $type, @args);
+    fatal($c, "$err_string.", $el,
+        err_type => $type,
+        el_desc  => $el->desc
+    );
 }
 
 1

@@ -1,2 +1,3 @@
+$x = (:);
 delete $x;
 Second;

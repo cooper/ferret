@@ -28,8 +28,8 @@ sub construct {
         upcoming  => \@_
     );
 
-    while (my ($label, $value, $line) = @{ shift || [] }) {
-        return $err if $err = handle_label($label, $value, $line);
+    while (my ($label, $value, $position) = @{ shift || [] }) {
+        return $err if $err = handle_label($label, $value, $position);
     }
 
     # inject includes and EOF.
@@ -56,19 +56,20 @@ sub check_error {
 }
 
 sub handle_label {
-    my ($label, $value, $line) = @_;
-    my $redo = sub { handle_label($label, $value, $line) };
+    my ($label, $value, $position) = @_;
+    my $redo = sub { handle_label($label, $value, $position) };
     my $last_el = ($current->node->children)[-1] || $current->node;
-    $line //= 0;
+    $position //= 0;
     my $err;
 
     # check for error.
     return $err if $err = check_error();
 
     # current info.
-    @$current{ qw(label value line next_tok last_el) } = (
+    @$current{ qw(label value line position next_tok last_el) } = (
         $label, $value,
-        $line,  $current->{upcoming}[0],
+        int $position, $position,
+        $current->{upcoming}[0],
         $last_el
     );
 

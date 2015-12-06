@@ -13,7 +13,8 @@ sub desc {
     return $t;
 }
 
-sub variables { shift->first_child }
+sub variable  { shift->first_child }
+sub variables { shift->variable }
 sub var_type  { shift->{bareword_type}{bareword_value} }
 
 sub type_string {
