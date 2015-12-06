@@ -443,16 +443,18 @@ my $result = do {
                             [
                                 $scope->property_u('msg')
                                   ->property_u('fromWord')->call_u(
-                                    [ num( $f, 1 ) ],
-                                    $scope, undef, 55
+                                    [ num( $f, 1 ) ], $scope,
+                                    undef, 55.0052754982415
                                   )
                             ],
-                            $scope, undef, 55
+                            $scope, undef,
+                            55.0035169988277
                         )
                     ],
-                    $scope, undef, 55
+                    $scope, undef,
+                    55.0023446658851
                 ),
-                55
+                55.0011723329426
             );
             $scope->set_property_ow(
                 $context,
@@ -461,9 +463,10 @@ my $result = do {
                         $scope->property_u('msg')->property_u('command')
                           ->equal_to( str( $f, "p" ), $scope )
                     ],
-                    $scope, undef, 56
+                    $scope, undef,
+                    56.0029308323564
                 ),
-                56
+                56.0011723329426
             );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -473,7 +476,8 @@ my $result = do {
                         $scope->property_u('msg')->property_u('channel'),
                         $scope->property_u('res')->property_u('error')
                     ],
-                    $scope, undef, 58
+                    $scope, undef,
+                    58.0017584994138
                 );
                 return $return;
             }
@@ -482,7 +486,8 @@ my $result = do {
                     $scope->property_u('msg')->property_u('channel'),
                     $scope->property_u('res')->property_u('perl')
                 ],
-                $scope, undef, 61
+                $scope, undef,
+                61.0017584994138
             );
             return $return;
         }
@@ -505,9 +510,9 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'string' ) or return;
             return $scope->property_u('string')->property_u('split')
-              ->call_u( [ str( $f, "_NL_" ) ], $scope, undef, 66 )
+              ->call_u( [ str( $f, "_NL_" ) ], $scope, undef, 66.0023446658851 )
               ->property_u('join')
-              ->call_u( [ str( $f, "\n" ) ], $scope, undef, 66 );
+              ->call_u( [ str( $f, "\n" ) ], $scope, undef, 66.0046893317702 );
             return $return;
         }
     );
@@ -525,7 +530,8 @@ my $result = do {
                     $scope->property_u('msg')->property_u('channel'),
                     str( $f, "Ferret IRC bot" )
                 ],
-                $scope, undef, 6
+                $scope, undef,
+                6.00175849941383
             );
             return $return;
         }
@@ -560,22 +566,26 @@ my $result = do {
                             [
                                 $scope->property_u('msg')
                                   ->property_u('fromWord')->call_u(
-                                    [ num( $f, 1 ) ],
-                                    $scope, undef, 13
+                                    [ num( $f, 1 ) ], $scope,
+                                    undef, 13.0052754982415
                                   )
                             ],
-                            $scope, undef, 13
+                            $scope, undef,
+                            13.0035169988277
                         )
                     ],
-                    $scope, undef, 13
+                    $scope, undef,
+                    13.0023446658851
                 ),
-                13
+                13.0011723329426
             );
             $scope->set_property_ow(
                 $context,
-                res => $scope->property_u('c')->property_u('tokenize')
-                  ->call_u( { pretty => Ferret::true }, $scope, undef, 14 ),
-                14
+                res => $scope->property_u('c')->property_u('tokenize')->call_u(
+                    { pretty => Ferret::true }, $scope,
+                    undef, 14.0029308323564
+                ),
+                14.0011723329426
             );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -585,7 +595,8 @@ my $result = do {
                         $scope->property_u('msg')->property_u('channel'),
                         $scope->property_u('res')->property_u('error')
                     ],
-                    $scope, undef, 16
+                    $scope, undef,
+                    16.0017584994138
                 );
                 return $return;
             }
@@ -594,7 +605,8 @@ my $result = do {
                     $scope->property_u('msg')->property_u('channel'),
                     $scope->property_u('res')->property_u('pretty')
                 ],
-                $scope, undef, 19
+                $scope, undef,
+                19.0017584994138
             );
             return $return;
         }
@@ -629,22 +641,26 @@ my $result = do {
                             [
                                 $scope->property_u('msg')
                                   ->property_u('fromWord')->call_u(
-                                    [ num( $f, 1 ) ],
-                                    $scope, undef, 26
+                                    [ num( $f, 1 ) ], $scope,
+                                    undef, 26.0052754982415
                                   )
                             ],
-                            $scope, undef, 26
+                            $scope, undef,
+                            26.0035169988277
                         )
                     ],
-                    $scope, undef, 26
+                    $scope, undef,
+                    26.0023446658851
                 ),
-                26
+                26.0011723329426
             );
             $scope->set_property_ow(
                 $context,
-                res => $scope->property_u('c')->property_u('construct')
-                  ->call_u( { pretty => Ferret::true }, $scope, undef, 27 ),
-                27
+                res => $scope->property_u('c')->property_u('construct')->call_u(
+                    { pretty => Ferret::true }, $scope,
+                    undef, 27.0029308323564
+                ),
+                27.0011723329426
             );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -654,7 +670,8 @@ my $result = do {
                         $scope->property_u('msg')->property_u('channel'),
                         $scope->property_u('res')->property_u('error')
                     ],
-                    $scope, undef, 29
+                    $scope, undef,
+                    29.0017584994138
                 );
                 return $return;
             }
@@ -663,7 +680,8 @@ my $result = do {
                     $scope->property_u('msg')->property_u('channel'),
                     $scope->property_u('res')->property_u('pretty')
                 ],
-                $scope, undef, 32
+                $scope, undef,
+                32.0017584994138
             );
             return $return;
         }
@@ -698,16 +716,19 @@ my $result = do {
                             [
                                 $scope->property_u('msg')
                                   ->property_u('fromWord')->call_u(
-                                    [ num( $f, 1 ) ],
-                                    $scope, undef, 39
+                                    [ num( $f, 1 ) ], $scope,
+                                    undef, 39.0052754982415
                                   )
                             ],
-                            $scope, undef, 39
+                            $scope, undef,
+                            39.0035169988277
                         )
                     ],
-                    $scope, undef, 39
-                  )->property_u('eval')->call_u( {}, $scope, undef, 39 ),
-                39
+                    $scope, undef,
+                    39.0023446658851
+                  )->property_u('eval')
+                  ->call_u( {}, $scope, undef, 39.0087924970692 ),
+                39.0011723329426
             );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -717,7 +738,8 @@ my $result = do {
                         $scope->property_u('msg')->property_u('channel'),
                         $scope->property_u('res')->property_u('error')
                     ],
-                    $scope, undef, 41
+                    $scope, undef,
+                    41.0017584994138
                 );
                 return $return;
             }
@@ -729,16 +751,18 @@ my $result = do {
                           $scope->property_u('res')->property_u('result'),
                         quiet => Ferret::true
                     },
-                    $scope, undef, 44
+                    $scope, undef,
+                    44.0023446658851
                   )->property_u('string'),
-                44
+                44.0011723329426
             );
             $scope->property_u('bot')->property_u('privmsg')->call_u(
                 [
                     $scope->property_u('msg')->property_u('channel'),
                     $scope->property_u('string')
                 ],
-                $scope, undef, 45
+                $scope, undef,
+                45.0017584994138
             );
             return $return;
         }
@@ -757,13 +781,14 @@ my $result = do {
                 nick => str( $f, "bottie" ),
                 user => str( $f, "ferret" )
             },
-            $scope, undef, 1
+            $scope, undef,
+            1.00351699882767
         ),
-        1
+        1.00117233294256
     );
     $scope->property_u('bot')->set_property(
         autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ),
-        2
+        2.00175849941383
     );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
@@ -773,7 +798,8 @@ my $result = do {
                 $scope, undef, undef, undef
             )
         ],
-        $scope, undef, 4
+        $scope, undef,
+        4.00175849941383
     );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
@@ -783,7 +809,8 @@ my $result = do {
                 $scope, undef, undef, undef
             )
         ],
-        $scope, undef, 9
+        $scope, undef,
+        9.00175849941383
     );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
@@ -793,7 +820,8 @@ my $result = do {
                 $scope, undef, undef, undef
             )
         ],
-        $scope, undef, 22
+        $scope, undef,
+        22.0017584994138
     );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
@@ -803,16 +831,17 @@ my $result = do {
                 $scope, undef, undef, undef
             )
         ],
-        $scope, undef, 35
+        $scope, undef,
+        35.0017584994138
     );
     $scope->property_u('bot')->property_u('addCommand')
       ->call_u( [ str( $f, "p" ), $scope->property_u('handlePerl') ],
-        $scope, undef, 48 );
+        $scope, undef, 48.0017584994138 );
     $scope->property_u('bot')->property_u('addCommand')
       ->call_u( [ str( $f, "pp" ), $scope->property_u('handlePerl') ],
-        $scope, undef, 49 );
+        $scope, undef, 49.0017584994138 );
     $scope->property_u('bot')->property_u('connect')
-      ->call_u( {}, $scope, undef, 69 );
+      ->call_u( {}, $scope, undef, 69.0017584994138 );
 };
 
 FF::after_content();

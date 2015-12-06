@@ -9,7 +9,8 @@ use Ferret::Lexer::Rules;
 use HOP::Lexer qw(string_lexer);
 use JSON::XS;
 my $json = JSON::XS->new->allow_nonref(1);
-my $position;
+
+my ($position, $increment);
 
 # keywords
 my $keyword_reg = '^('.join('|', qw{
@@ -171,7 +172,6 @@ sub tok_STR_REG {
         return;
     };
 
-    # TODO: interpolation
     for my $char (split //, $value) {
 
         # this char was escaped.
@@ -373,13 +373,22 @@ sub ignore            { }
 sub ignore_increment  { &increment_lines; () }
 sub increment_lines   {
     my ($l, $v) = @_;
+    my $old = $position;
     $position += () = $v =~ /\n/g;
+    $position = int $position if $position > $old;
     return [ $l, $v ];
 }
 
 sub tokenize {
+
+    # reset the position.
     $position = 1;
-    _tokenize(@_);
+
+    # determine the increment.
+    my $length = length $_[0];
+    $increment = 1 / $length;
+
+    return _tokenize(@_);
 }
 
 sub _tokenize {
@@ -388,11 +397,7 @@ sub _tokenize {
     my @tokens;
 
     while (my $token = &$lexer) {
-
-        # TODO: do something less stupid. keep it numeric, but like
-        # if we reach 1.99, for instance, go to 1.991.
-        # also, start fresh on each new line.
-        $position += 0.00000001;
+        $position += $increment;
 
         # something wasn't tokenized.
         return (Ferret::Lexer::fatal(sprintf

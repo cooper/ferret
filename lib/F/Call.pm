@@ -34,7 +34,7 @@ sub perl_fmt {
     return $fmt => {
         coderef   => $func->perl_fmt_do,
         arguments => $arg_string,
-        line      => $call->{create_line}
+        pos       => $call->{create_pos}
     };
 }
 

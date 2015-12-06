@@ -106,7 +106,8 @@ my $result = do {
                         $scope->property_u('part')
                     )
                 ],
-                $scope, undef, 5
+                $scope, undef,
+                5.01156069364162
             );
             return $return;
         }
@@ -115,8 +116,8 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         parts => str( $f, "s p a m" )->property_u('split')
-          ->call_u( [ str( $f, " " ) ], $scope, undef, 1 ),
-        1
+          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.02890173410405 ),
+        1.01156069364162
     );
     FF::iterate_pair(
         $f, $scope,
@@ -125,9 +126,11 @@ my $result = do {
         sub {
             my $scope = shift;
             FF::on(
-                $scope->property_u('Timer')
-                  ->call_u( [ $scope->property_u('i') ], $scope, undef, 4 )
-                  ->property_u('once')->call_u( {}, $scope, undef, 4 ),
+                $scope->property_u('Timer')->call_u(
+                    [ $scope->property_u('i') ], $scope,
+                    undef,                       4.01734104046243
+                  )->property_u('once')
+                  ->call_u( {}, $scope, undef, 4.04046242774566 ),
                 'expire', $self, $scope,
                 $func_0->inside_scope(
                     (undef) => $scope,
@@ -142,8 +145,8 @@ my $result = do {
         'part',
         sub {
             my $scope = shift;
-            $scope->property_u('say')
-              ->call_u( [ $scope->property_u('part') ], $scope, undef, 10 );
+            $scope->property_u('say')->call_u( [ $scope->property_u('part') ],
+                $scope, undef, 10.0115606936416 );
         }
     );
 };

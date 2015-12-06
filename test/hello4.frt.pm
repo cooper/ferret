@@ -114,7 +114,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'x' ) or return;
             FF::need( $scope, $arguments, 'y' ) or return;
-            $scope->set_property( z => $arguments->{z}, 3 );
+            $scope->set_property( z => $arguments->{z}, 3.00373134328358 );
             $scope->set_property_ow(
                 $context,
                 point => FF::create_object(
@@ -124,9 +124,12 @@ my $result = do {
                         y => $scope->property_u('y')
                     }
                 ),
-                4
+                4.00746268656716
             );
-            $return->set_property( point => $scope->property_u('point'), 8 );
+            $return->set_property(
+                point => $scope->property_u('point'),
+                8.00746268656716
+            );
             return $return;
         }
     );
@@ -134,9 +137,9 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         pt => $scope->property_u('makePoint')
-          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11 )
-          ->property_u('point'),
-        11
+          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ],
+            $scope, undef, 11.0149253731343 )->property_u('point'),
+        11.0074626865672
     );
     $scope->property_u('say')->call_u(
         [
@@ -149,7 +152,8 @@ my $result = do {
                 str( $f, ")" )
             )
         ],
-        $scope, undef, 12
+        $scope, undef,
+        12.0074626865672
     );
     $scope->set_property_ow(
         $context,
@@ -163,17 +167,17 @@ my $result = do {
                 add( $scope, num( $f, 4 ), num( $f, 1 ) )
             ]
         ),
-        14
+        14.0074626865672
     );
     $scope->set_property_ow(
         $context,
         emptyArray => FF::create_list( $f, [] ),
-        16
+        16.0074626865672
     );
     $scope->set_property_ow(
         $context,
         emptyHash => FF::create_hash( $f, {} ),
-        17
+        17.0074626865672
     );
 };
 

@@ -138,7 +138,7 @@ sub perl_fmt {
 
     my $info = {
         var_name => $var->{var_name},
-        line     => $arg->{create_line}
+        pos      => $arg->{create_pos}
     };
     $info->{value} = $exp->perl_fmt_do if $exp;
 

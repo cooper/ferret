@@ -228,7 +228,7 @@ my $result = do {
                         $self->property_u('x'),
                         $scope->property_u('pt2')->property_u('x')
                     ),
-                    10
+                    10.0031545741325
                 );
                 $scope->set_property_ow(
                     $context,
@@ -237,7 +237,7 @@ my $result = do {
                         $self->property_u('y'),
                         $scope->property_u('pt2')->property_u('y')
                     ),
-                    11
+                    11.0031545741325
                 );
                 return $scope->property_u('sqrt')->call_u(
                     [
@@ -253,7 +253,8 @@ my $result = do {
                             )
                         )
                     ],
-                    $scope, undef, 12
+                    $scope, undef,
+                    12.0047318611987
                 );
                 return $return;
             }
@@ -270,10 +271,11 @@ my $result = do {
                     [
                         $scope->{special}->property_u('class')->call_u(
                             [ num( $f, 0 ), num( $f, 0 ) ], $scope,
-                            undef, 16
+                            undef, 16.0078864353312
                         )
                     ],
-                    $scope, undef, 16
+                    $scope, undef,
+                    16.0047318611987
                 );
                 return $return;
             }
@@ -362,7 +364,8 @@ my $result = do {
                             num( $f, 2 )
                         )
                     },
-                    $scope, undef, 33
+                    $scope, undef,
+                    33.0047318611987
                 );
                 return $return;
             }
@@ -391,7 +394,8 @@ my $result = do {
                 FF::need( $scope, $arguments, 'pt1' ) or return;
                 FF::need( $scope, $arguments, 'pt2' ) or return;
                 return $scope->property_u('pt1')->property_u('distanceTo')
-                  ->call_u( [ $scope->property_u('pt2') ], $scope, undef, 41 );
+                  ->call_u( [ $scope->property_u('pt2') ],
+                    $scope, undef, 41.006309148265 );
                 return $return;
             }
         );

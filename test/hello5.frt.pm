@@ -217,8 +217,14 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'x' ) or return;
                 FF::need( $scope, $arguments, 'y' ) or return;
-                $self->set_property( x => $scope->property_u('x'), 5 );
-                $self->set_property( y => $scope->property_u('y'), 6 );
+                $self->set_property(
+                    x => $scope->property_u('x'),
+                    5.00361010830325
+                );
+                $self->set_property(
+                    y => $scope->property_u('y'),
+                    6.00361010830325
+                );
                 return $return;
             }
         );
@@ -237,9 +243,10 @@ my $result = do {
                             add( $scope, $self->property_u('x'), num( $f, 1 ) ),
                             $self->property_u('y')
                         ],
-                        $scope, undef, 10
+                        $scope, undef,
+                        10.0072202166065
                     ),
-                    10
+                    10.0036101083032
                 );
                 return $scope->property_u('pt');
                 return $return;
@@ -269,7 +276,7 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property_u('pretty')
-                  ->call_u( {}, $scope, undef, 19 );
+                  ->call_u( {}, $scope, undef, 19.0054151624549 );
                 return $return;
             }
         );
@@ -317,7 +324,8 @@ my $result = do {
                             num( $f, 2 )
                         )
                     },
-                    $scope, undef, 24
+                    $scope, undef,
+                    24.0054151624549
                 );
                 return $return;
             }
@@ -346,35 +354,37 @@ my $result = do {
     FF::load_namespaces( $context, qw(Point) );
     $scope->set_property_ow(
         $context,
-        pt => $scope->property_u('Point')
-          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32 ),
-        32
+        pt => $scope->property_u('Point')->call_u(
+            [ num( $f, 5 ), num( $f, 3 ) ],
+            $scope, undef, 32.0072202166065
+        ),
+        32.0036101083032
     );
     $scope->property_u('say')
       ->call_u( [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
-        $scope, undef, 33 );
+        $scope, undef, 33.0036101083032 );
     $scope->set_property_ow(
         $context,
         rpt => $scope->property_u('pt')->property_u('oneToRight')
-          ->call_u( {}, $scope, undef, 35 ),
-        35
+          ->call_u( {}, $scope, undef, 35.0090252707581 ),
+        35.0036101083032
     );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
-        $scope, undef, 36 );
+        $scope, undef, 36.0036101083032 );
     $scope->set_property_ow(
         $context,
         mdpt => $scope->property_u('Point')->property_u('midpoint')->call_u(
             [ $scope->property_u('pt'), $scope->property_u('rpt') ],
-            $scope, undef, 38
+            $scope, undef, 38.0090252707581
         ),
-        38
+        38.0036101083032
     );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt') ) ],
-        $scope, undef, 39 );
+        $scope, undef, 39.0036101083032 );
     $scope->set_property_ow(
         $context,
         nineteen => add(
@@ -382,7 +392,7 @@ my $result = do {
             num( $f, 4 ),
             div( $scope, num( $f, 45 ), num( $f, 3 ) )
         ),
-        41
+        41.0036101083032
     );
     $scope->property_u('say')->call_u(
         [
@@ -391,7 +401,8 @@ my $result = do {
                 $scope->property_u('nineteen')
             )
         ],
-        $scope, undef, 42
+        $scope, undef,
+        42.0036101083032
     );
 };
 

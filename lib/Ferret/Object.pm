@@ -59,9 +59,9 @@ sub new {
 # returns true if set successfully, false otherwise.
 #
 sub set_property {
-    my ($obj, $prop_name, $value, $line) = @_;
+    my ($obj, $prop_name, $value, $pos) = @_;
     my $caller = [caller];
-    $obj->_check_prop_alteration($prop_name, $caller, $line);
+    $obj->_check_prop_alteration($prop_name, $caller, $pos);
 
     # special properties can never be assigned to from Ferret.
     if (substr($prop_name, 0, 1) eq '*') {
@@ -69,7 +69,7 @@ sub set_property {
             Object   => $obj->description,
             Property => $prop_name,
             File     => $Ferret::file_map{ $caller->[1] } || 'unknown file',
-            Line     => $line // -1
+            Line     => int $pos
         ], $prop_name);
     }
 
@@ -90,8 +90,8 @@ sub set_property {
 
 # set a property or overwrite an inherited property.
 sub set_property_ow {
-    my ($obj, $context, $prop_name, $value, $line) = @_;
-    $obj->_check_prop_alteration($prop_name, [caller], $line);
+    my ($obj, $context, $prop_name, $value, $pos) = @_;
+    $obj->_check_prop_alteration($prop_name, [caller], $pos);
 
     my $owner = $obj->has_property($prop_name) || $obj;
 
@@ -126,8 +126,8 @@ sub set_property_ow {
 # returns true if something was deleted, false otherwise.
 #
 sub delete_property {
-    my ($obj, $prop_name, $line) = @_;
-    $obj->_check_prop_alteration($prop_name, [caller], $line);
+    my ($obj, $prop_name, $pos) = @_;
+    $obj->_check_prop_alteration($prop_name, [caller], $pos);
     return defined delete $obj->{properties}{$prop_name};
 }
 
@@ -248,8 +248,8 @@ sub own_property_u { (shift->own_property(@_)) || Ferret::undefined }
 # this only applies to local properties.
 #
 sub weaken_property {
-    my ($obj, $prop_name, $line) = @_;
-    $obj->_check_prop_alteration($prop_name, [caller], $line);
+    my ($obj, $prop_name, $pos) = @_;
+    $obj->_check_prop_alteration($prop_name, [caller], $pos);
     return if !defined $obj->{properties}{$prop_name};
     weaken($obj->{properties}{$prop_name});
     return 1;
@@ -259,8 +259,8 @@ sub weaken_property {
 # sets a property, then weakens it.
 #
 sub set_property_weak {
-    my ($obj, $prop_name, $value, $line) = @_;
-    $obj->_check_prop_alteration($prop_name, [caller], $line);
+    my ($obj, $prop_name, $value, $pos) = @_;
+    $obj->_check_prop_alteration($prop_name, [caller], $pos);
     my $res = $obj->set_property($prop_name => $value);
     $obj->weaken_property($prop_name);
     return $res;
@@ -280,13 +280,13 @@ sub properties {
 }
 
 sub _check_prop_alteration {
-    my ($obj, $prop_name, $caller, $line) = @_;
+    my ($obj, $prop_name, $caller, $pos) = @_;
     return 1 unless $obj->{ro_properties};
     throw(AlterationOfReadOnlyProperty => $caller, [
         Object   => $obj->description,
         Property => $prop_name,
         File     => $Ferret::file_map{ $caller->[1] } || 'unknown file',
-        Line     => $line // -1
+        Line     => int $pos
     ], $prop_name);
 }
 
@@ -466,7 +466,7 @@ sub description {
 
 # calling a non-function.
 sub call {
-    my ($obj, undef, undef, undef, $line) = @_;
+    my ($obj, undef, undef, undef, $pos) = @_;
 
 
     # try to convert to a function.
@@ -481,7 +481,7 @@ sub call {
     throw(CallOnNonFunction => $caller, [
         Value => $obj->description,
         File  => $Ferret::file_map{ $caller->[1] } || 'unknown file',
-        Line  => $line // -1
+        Line  => int $pos
     ]);
 
 }

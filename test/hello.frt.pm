@@ -35,7 +35,8 @@ my $result = do {
     FF::load_core('main');
 
     $scope->property_u('say')
-      ->call_u( [ str( $f, "Hello World!" ) ], $scope, undef, 1 );
+      ->call_u( [ str( $f, "Hello World!" ) ], $scope, undef,
+        1.09090909090909 );
 };
 
 FF::after_content();

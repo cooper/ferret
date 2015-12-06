@@ -196,7 +196,7 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{moos};
                     $want_val ||= Ferret::true;
-                    $self->set_property( moos => $want_val, 6 );
+                    $self->set_property( moos => $want_val, 6.00081967213115 );
                 };
                 return $return;
             }
@@ -245,7 +245,7 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{barks};
                     $want_val ||= Ferret::false;
-                    $self->set_property( barks => $want_val, 18 );
+                    $self->set_property( barks => $want_val, 18.0008196721311 );
                 };
                 return $return;
             }
@@ -287,7 +287,7 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{mean};
                     $want_val ||= Ferret::false;
-                    $self->set_property( mean => $want_val, 30 );
+                    $self->set_property( mean => $want_val, 30.0008196721311 );
                 };
                 return $return;
             }
@@ -352,35 +352,41 @@ my $result = do {
     FF::load_namespaces( $context, qw(Cat Cow Dog) );
     $scope->set_property_ow(
         $context,
-        animal => $scope->property_u('Cow')->call_u( {}, $scope, undef, 58 ),
-        58
+        animal => $scope->property_u('Cow')
+          ->call_u( {}, $scope, undef, 58.0032786885246 ),
+        58.0016393442623
     );
     $scope->property_u('Dog')->property_u('init')
-      ->call_u( [ $scope->property_u('animal') ], $scope, undef, 60 )
-      ->call_u( {}, $scope, undef, 60 );
+      ->call_u( [ $scope->property_u('animal') ],
+        $scope, undef, 60.0024590163935 )
+      ->call_u( {}, $scope, undef, 60.0049180327869 );
     $scope->property_u('say')->call_u(
         [
             $scope->property_u('animal')->property_u('moo')
-              ->call_u( {}, $scope, undef, 62 )
+              ->call_u( {}, $scope, undef, 62.0040983606558 )
         ],
-        $scope, undef, 62
+        $scope, undef,
+        62.0016393442623
     );
     $scope->property_u('say')->call_u(
         [
             $scope->property_u('animal')->property_u('bark')
-              ->call_u( {}, $scope, undef, 63 )
+              ->call_u( {}, $scope, undef, 63.0040983606558 )
         ],
-        $scope, undef, 63
+        $scope, undef,
+        63.0016393442623
     );
     $scope->property_u('Cat')->property_u('init')
-      ->call_u( [ $scope->property_u('animal') ], $scope, undef, 65 )
-      ->call_u( { mean => Ferret::true }, $scope, undef, 65 );
-    $scope->property_u('inspect')
-      ->call_u( [ $scope->property_u('animal') ], $scope, undef, 67 );
+      ->call_u( [ $scope->property_u('animal') ],
+        $scope, undef, 65.0024590163934 )
+      ->call_u( { mean => Ferret::true }, $scope, undef, 65.0049180327869 );
+    $scope->property_u('inspect')->call_u( [ $scope->property_u('animal') ],
+        $scope, undef, 67.0016393442623 );
     $scope->set_property_ow(
         $context,
-        cat => $scope->property_u('Cat')->call_u( {}, $scope, undef, 69 ),
-        69
+        cat => $scope->property_u('Cat')
+          ->call_u( {}, $scope, undef, 69.0032786885246 ),
+        69.0016393442623
     );
     $scope->set_property_ow(
         $context,
@@ -388,11 +394,11 @@ my $result = do {
             $scope,
             $scope->property_u('animal'),
             $scope->property_u('cat')
-          )->property_u('fight')->call_u( {}, $scope, undef, 71 ),
-        71
+          )->property_u('fight')->call_u( {}, $scope, undef, 71.0073770491803 ),
+        71.0016393442623
     );
-    $scope->property_u('say')
-      ->call_u( [ $scope->property_u('aftermath') ], $scope, undef, 72 );
+    $scope->property_u('say')->call_u( [ $scope->property_u('aftermath') ],
+        $scope, undef, 72.0016393442623 );
 };
 
 FF::after_content();

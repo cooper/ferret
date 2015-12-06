@@ -1,1 +1,1 @@
-$self->set_property(<<name>> => <<assign_value>>, <<line>>)
+$self->set_property(<<name>> => <<assign_value>>, <<pos>>)

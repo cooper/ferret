@@ -38,8 +38,12 @@ my $result = do {
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Second) );
-    $scope->set_property_ow( $context, x => FF::create_object( $f, {} ), 1 );
-    $scope->delete_property( 'x', 2 );
+    $scope->set_property_ow(
+        $context,
+        x => FF::create_object( $f, {} ),
+        1.06666666666667
+    );
+    $scope->delete_property( 'x', 2.03333333333333 );
     $scope->property_u('Second');
 };
 

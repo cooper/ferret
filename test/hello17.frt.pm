@@ -65,19 +65,23 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property_u('say')
-              ->call_u( [ str( $f, "it works!" ) ], $scope, undef, 8 );
+            $scope->property_u('say')->call_u( [ str( $f, "it works!" ) ],
+                $scope, undef, 8.01587301587302 );
             return $return;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $scope->set_property_ow( $context, obj => FF::create_object( $f, {} ), 3 );
+    $scope->set_property_ow(
+        $context,
+        obj => FF::create_object( $f, {} ),
+        3.01587301587302
+    );
     $scope->property_u('Timer')->property_u('init')
-      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 5 )
-      ->call_u( [ num( $f, 5 ) ], $scope, undef, 5 );
+      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 5.02380952380952 )
+      ->call_u( [ num( $f, 5 ) ], $scope, undef, 5.04761904761905 );
     FF::on(
         $scope->property_u('obj')->property_u('once')
-          ->call_u( {}, $scope, undef, 7 ),
+          ->call_u( {}, $scope, undef, 7.03174603174603 ),
         'expire',
         $self,
         $scope,

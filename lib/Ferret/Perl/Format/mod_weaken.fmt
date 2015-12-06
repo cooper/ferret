@@ -1,1 +1,1 @@
-<<left>>->weaken_property('<<name>>', <<line>>)
+<<left>>->weaken_property('<<name>>', <<pos>>)

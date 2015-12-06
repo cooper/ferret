@@ -150,7 +150,8 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope, undef, 6
+                $scope, undef,
+                6.00544959128065
             );
             return $return;
         }
@@ -171,7 +172,8 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope, undef, 11
+                $scope, undef,
+                11.0054495912807
             );
             return $return;
         }
@@ -185,7 +187,8 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
-              ->call_u( [ str( $f, "NICK k" ) ], $scope, undef, 15 );
+              ->call_u( [ str( $f, "NICK k" ) ],
+                $scope, undef, 15.008174386921 );
             $scope->property_u('sock')->property_u('println')->call_u(
                 [
                     add(
@@ -197,7 +200,8 @@ my $result = do {
                         str( $f, " :k" )
                     )
                 ],
-                $scope, undef, 16
+                $scope, undef,
+                16.008174386921
             );
             return $return;
         }
@@ -211,7 +215,8 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
-              ->call_u( [ str( $f, "JOIN #k" ) ], $scope, undef, 22 );
+              ->call_u( [ str( $f, "JOIN #k" ) ],
+                $scope, undef, 22.008174386921 );
             return $return;
         }
     );
@@ -222,12 +227,12 @@ my $result = do {
             { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },
             $scope,
             undef,
-            1
+            1.01634877384196
         ),
-        1
+        1.00544959128065
     );
-    $scope->property_u('inspect')
-      ->call_u( [ $scope->property_u('sock') ], $scope, undef, 2 );
+    $scope->property_u('inspect')->call_u( [ $scope->property_u('sock') ],
+        $scope, undef, 2.00544959128065 );
     FF::on( $scope->property_u('sock'), 'gotLine', $self, $scope,
         $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
@@ -238,11 +243,11 @@ my $result = do {
         $func_2->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
     $scope->property_u('sock')->property_u('connect')
-      ->call_u( {}, $scope, undef, 19 );
+      ->call_u( {}, $scope, undef, 19.008174386921 );
     FF::on(
         $scope->property_u('Timer')
-          ->call_u( [ num( $f, 5 ) ], $scope, undef, 21 )->property_u('once')
-          ->call_u( {}, $scope, undef, 21 ),
+          ->call_u( [ num( $f, 5 ) ], $scope, undef, 21.008174386921 )
+          ->property_u('once')->call_u( {}, $scope, undef, 21.0190735694823 ),
         'expire',
         $self,
         $scope,
