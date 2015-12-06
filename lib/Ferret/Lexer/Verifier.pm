@@ -11,7 +11,7 @@ our %errors = (
     UndeclaredVariableReference => {
         message => "Reference to lexical variable '\$%s' without previous declaration",
         hint_0  => "Note that '\$%s' is later declared in this scope on line %d",
-        hint_1  => "Note that '\$%s' is the variable being assigned to. It cannot be referenced within its own assignment value"
+        hint_1  => "Note that '\$%s' is the variable being assigned to; it cannot be referenced within its own assignment value"
     }
 );
 

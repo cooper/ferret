@@ -289,14 +289,15 @@ sub fatal {
     # if $last_el is not defined at this point, we are at the beginning.
     my $near = $last_el ? $last_el->desc : 'beginning of file';
     $parent  = $parent->parent while $parent->type eq 'Instruction';
-
+    $parent  = $parent->desc if $parent;
+    
     my @caller = @{ delete $c->{err_caller} || [caller] };
     $err .= "\n     Error   -> $opts{err_type}" if length $opts{err_type};
     $err .= "\n     File    -> $$c{file}";
     $err .= "\n     Line    -> $line";
     $err .= "\n     Element -> $opts{el_desc}"  if length $opts{el_desc};
-    $err .= "\n     Near    -> $near";
-    $err .= "\n     Parent  -> ".$parent->desc  if $parent;
+    $err .= "\n     Near    -> $near"           if !$parent || $parent ne $near;
+    $err .= "\n     Parent  -> ".$parent        if $parent;
     $err .= "\n\nException raised by $caller[0] line $caller[2].";
 
     return Ferret::Lexer::fatal($err);
