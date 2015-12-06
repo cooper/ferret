@@ -110,6 +110,7 @@ sub _filter_children {
 
 sub close : method {
     my $node = shift;
+    $node->{close_pos} ||= $Ferret::Lexer::Constructor::current->{position};
 
     # check if this makes sense.
     my $err = $node->can_close;

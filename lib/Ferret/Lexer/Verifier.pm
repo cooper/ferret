@@ -61,7 +61,7 @@ sub identify_lexical_variable_declarations {
         # process the declaration.
         my $var = $wn->variable;
         $var->{could_be_declaration} = 1;
-        $soi->process_lex_declaration($var->{var_name}, $var->{create_pos});
+        $soi->process_lex_declaration($var->{var_name}, $wn->{close_pos});
 
     }
 
@@ -78,7 +78,7 @@ sub identify_lexical_variable_declarations {
         # process the declaration.
         my $var = $share->variable;
         $var->{could_be_declaration} = 1;
-        $soi->process_lex_declaration($var->{var_name}, $var->{create_pos});
+        $soi->process_lex_declaration($var->{var_name}, $share->{close_pos});
 
     }
 
@@ -95,7 +95,7 @@ sub identify_lexical_variable_declarations {
         # process the declaration.
         my $var = $local->variable;
         $var->{could_be_declaration} = 1;
-        $soi->process_lex_declaration($var->{var_name}, $var->{create_pos});
+        $soi->process_lex_declaration($var->{var_name}, $local->{close_pos});
 
     }
 
@@ -118,7 +118,7 @@ sub identify_lexical_variable_declarations {
         # process the assignment.
         my $var = $a->assign_to;
         $var->{could_be_declaration} = 1;
-        $soi->process_lex_declaration($var->{var_name}, $var->{create_pos});
+        $soi->process_lex_declaration($var->{var_name}, $a->{close_pos});
 
     }
 
@@ -136,18 +136,17 @@ sub identify_lexical_variable_declarations {
     foreach my $for (@fors) {
         my ($var1, $var2) = $for->handle_vars;
 
-        # the scope of interest is the one containing the for loop,
-        # NOT the body of the loop. use the first var. it always exists.
-        my $soi = $var1->first_upper_scope;
+        # the scope of interest is the body of the loop.
+        my $soi = $for->body->scope;
 
         # process the assignment.
         $var1->{could_be_declaration} = 1;
-        $soi->process_lex_declaration($var1->{var_name}, $var1->{create_pos});
+        $soi->process_lex_declaration($var1->{var_name}, $for->body->{create_pos});
 
         # there may or may not be a second variable.
         if ($var2) {
             $var2->{could_be_declaration} = 1;
-            $soi->process_lex_declaration($var2->{var_name}, $var2->{create_pos});
+            $soi->process_lex_declaration($var2->{var_name}, $for->body->{create_pos});
         }
 
     }
