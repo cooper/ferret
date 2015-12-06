@@ -57,19 +57,18 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         obj => str( $f, "hi" ),
-        2.01047120418848
+        4.04166666666667
     );
     $scope->property_u('Math::Point')->property_u('init')
-      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 9.0261780104712 )
+      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 18.3333333333333 )
       ->call_u( [ num( $f, 1 ), num( $f, 1 ) ],
-        $scope, undef, 9.04188481675392 );
+        $scope, undef, 21.4583333333333 );
     $scope->property_u('say')->call_u(
         [
             $scope->property_u('obj')->property_u('pretty')
-              ->call_u( {}, $scope, undef, 11.0261780104712 )
+              ->call_u( {}, $scope, undef, 33.875 )
         ],
-        $scope, undef,
-        11.0104712041885
+        $scope, undef, 30.75
     );
 };
 

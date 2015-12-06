@@ -66,7 +66,7 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')->call_u( [ str( $f, "it works!" ) ],
-                $scope, undef, 8.01587301587302 );
+                $scope, undef, 32.8214285714286 );
             return $return;
         }
     );
@@ -74,14 +74,14 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         obj => FF::create_object( $f, {} ),
-        3.01587301587302
+        5.03571428571429
     );
     $scope->property_u('Timer')->property_u('init')
-      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 5.02380952380952 )
-      ->call_u( [ num( $f, 5 ) ], $scope, undef, 5.04761904761905 );
+      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 14.2857142857143 )
+      ->call_u( [ num( $f, 5 ) ], $scope, undef, 17.3928571428571 );
     FF::on(
         $scope->property_u('obj')->property_u('once')
-          ->call_u( {}, $scope, undef, 7.03174603174603 ),
+          ->call_u( {}, $scope, undef, 26.6428571428571 ),
         'expire',
         $self,
         $scope,

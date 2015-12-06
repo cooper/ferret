@@ -9,8 +9,7 @@ use Ferret::Lexer::Rules;
 use HOP::Lexer qw(string_lexer);
 use JSON::XS;
 my $json = JSON::XS->new->allow_nonref(1);
-
-my ($position, $increment);
+my $position;
 
 # keywords
 my $keyword_reg = '^('.join('|', qw{
@@ -360,7 +359,7 @@ sub tok_CLOSURE_S {
     my ($tokens, $value) = @_;
     my $last = $tokens->[-1] or return;
     if ($last->[0] eq 'KEYWORD_FUNC') {
-        $tokens->[-1] = [ FUNCTION => { anonymous => 1 } ];
+        $tokens->[-1] = [ FUNCTION => { anonymous => 1 }, undef, $position ];
         return;
     }
 }
@@ -380,14 +379,7 @@ sub increment_lines   {
 }
 
 sub tokenize {
-
-    # reset the position.
     $position = 1;
-
-    # determine the increment.
-    my $length = length $_[0];
-    $increment = 1 / $length;
-
     return _tokenize(@_);
 }
 
@@ -397,7 +389,7 @@ sub _tokenize {
     my @tokens;
 
     while (my $token = &$lexer) {
-        $position += $increment;
+        $position += 1;
 
         # something wasn't tokenized.
         return (Ferret::Lexer::fatal(sprintf
@@ -415,9 +407,18 @@ sub _tokenize {
 
         # we don't care about the value for this type of token.
         undef $token->[1] if $no_value{ $token->[0] };
-        $token->[2] = $position;
 
+        $token->[2] = $position;
         push @tokens, $token;
+    }
+
+    # add positioning bits.
+    my $count = scalar @tokens;
+    my $i = 0;
+    for my $token (@tokens) {
+        my $part = $i / $count;
+        $token->[2] = int($token->[2]) + $part;
+        $i++;
     }
 
     return (undef, @tokens);

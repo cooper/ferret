@@ -58,12 +58,12 @@ my $result = do {
                 user => str( $f, "bot" )
             },
             $scope, undef,
-            1.04878048780488
+            5.15789473684211
         ),
-        1.02439024390244
+        3.05263157894737
     );
     $scope->property_u('bot')->property_u('connect')
-      ->call_u( {}, $scope, undef, 2.03658536585366 );
+      ->call_u( {}, $scope, undef, 19.8421052631579 );
 };
 
 FF::after_content();

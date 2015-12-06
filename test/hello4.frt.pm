@@ -114,7 +114,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'x' ) or return;
             FF::need( $scope, $arguments, 'y' ) or return;
-            $scope->set_property( z => $arguments->{z}, 3.00373134328358 );
+            $scope->set_property( z => $arguments->{z}, 12.0909090909091 );
             $scope->set_property_ow(
                 $context,
                 point => FF::create_object(
@@ -124,11 +124,11 @@ my $result = do {
                         y => $scope->property_u('y')
                     }
                 ),
-                4.00746268656716
+                17.1428571428571
             );
             $return->set_property(
                 point => $scope->property_u('point'),
-                8.00746268656716
+                31.2727272727273
             );
             return $return;
         }
@@ -138,8 +138,8 @@ my $result = do {
         $context,
         pt => $scope->property_u('makePoint')
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ],
-            $scope, undef, 11.0149253731343 )->property_u('point'),
-        11.0074626865672
+            $scope, undef, 41.3636363636364 )->property_u('point'),
+        39.3376623376623
     );
     $scope->property_u('say')->call_u(
         [
@@ -153,7 +153,7 @@ my $result = do {
             )
         ],
         $scope, undef,
-        12.0074626865672
+        50.4675324675325
     );
     $scope->set_property_ow(
         $context,
@@ -167,17 +167,17 @@ my $result = do {
                 add( $scope, num( $f, 4 ), num( $f, 1 ) )
             ]
         ),
-        14.0074626865672
+        67.6623376623377
     );
     $scope->set_property_ow(
         $context,
         emptyArray => FF::create_list( $f, [] ),
-        16.0074626865672
+        85.8701298701299
     );
     $scope->set_property_ow(
         $context,
         emptyHash => FF::create_hash( $f, {} ),
-        17.0074626865672
+        91.9350649350649
     );
 };
 

@@ -41,9 +41,9 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         x => FF::create_object( $f, {} ),
-        1.06666666666667
+        3.09090909090909
     );
-    $scope->delete_property( 'x', 2.03333333333333 );
+    $scope->delete_property( 'x', 9.54545454545454 );
     $scope->property_u('Second');
 };
 
