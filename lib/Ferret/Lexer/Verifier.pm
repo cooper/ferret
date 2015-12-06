@@ -184,8 +184,10 @@ sub verify_lexical_variables {
 
         # maybe if the variable is within the assignment, that's helpful.
         if (my $a = $v->{assignments}{$earliest}) {
-            delete $hints[0];
-            $hints[1] = [ $var->{var_name} ];
+            if ($var->somewhere_inside($a)) {
+                delete $hints[0];
+                $hints[1] = [ $var->{var_name} ];
+            }
         }
 
         # throw an exception.

@@ -150,4 +150,12 @@ sub next_element {
     return ($el->parent->children)[$el->index + 1];
 }
 
+sub somewhere_inside {
+    my ($el, $ancestor) = @_;
+    while ($el = $el->parent) {
+        return 1 if $el == $ancestor;
+    }
+    return;
+}
+
 1
