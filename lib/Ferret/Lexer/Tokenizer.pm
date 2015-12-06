@@ -19,7 +19,7 @@ my $keyword_reg = '^('.join('|', qw{
     if          else        return      after
     for         in          init        on
     true        false       undefined   set
-    delete      weaken
+    delete      weaken      share       local
     __END__     __LINE__
 }).')$';
 $keyword_reg = qr/$keyword_reg/;

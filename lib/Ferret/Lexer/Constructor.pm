@@ -704,6 +704,7 @@ sub c_OP_SEMI {
     $c->close_nodes(qw(
         WantNeed PropertyModifier Negation Operation
         Equality Assignment Return ReturnPair
+        SharedDeclaration LocalDeclaration
     ));
 
     # at this point, the instruction must be the current node.
@@ -865,9 +866,9 @@ sub c_OP_ASSIGN {
 
     # remember the last element as the left side of the assignment.
     my $a = F::Assignment->new;
-    $c->adopt_and_set_node($a);
     $a->{left_side} = $last_el;
     $last_el->parent->abandon($last_el);
+    $c->adopt_and_set_node($a);
 
     return $a;
 }
@@ -1051,6 +1052,60 @@ sub c_KEYWORD_WEAKEN {
     my ($c, $value) = @_;
     # see start_modifier() for rules.
     return start_modifier($c, 'weaken');
+}
+
+sub c_KEYWORD_SHARE {
+    my ($c, $value) = @_;
+
+    # Rule SharedDeclaration[0]:
+    #   Must be a direct child of an Instruction.
+
+    # Rule SharedDeclaration[1]:
+    #   Direct children must be one of the following types:
+    #
+    #       Lexical variable
+    #       Assignment
+    #
+
+    # Rule SharedDeclaration[2]:
+    #   Direct children must satisfy the following condition:
+    #
+    #       if (child is an Assignment)
+    #           Left side must be a lexical variable
+    #
+
+    # Rule SharedDeclaration[3]:
+    #   Number of direct children must not exceed one (1).
+
+    my $share = F::SharedDeclaration->new;
+    return $c->adopt_and_set_node($share);
+}
+
+sub c_KEYWORD_LOCAL {
+    my ($c, $value) = @_;
+
+    # Rule LocalDeclaration[0]:
+    #   Must be a direct child of an Instruction.
+
+    # Rule LocalDeclaration[1]:
+    #   Direct children must be one of the following types:
+    #
+    #       Lexical variable
+    #       Assignment
+    #
+
+    # Rule LocalDeclaration[2]:
+    #   Direct children must satisfy the following condition:
+    #
+    #       if (child is an Assignment)
+    #           Left side must be a lexical variable
+    #
+
+    # Rule LocalDeclaration[3]:
+    #   Number of direct children must not exceed one (1).
+
+    my $local = F::LocalDeclaration->new;
+    return $c->adopt_and_set_node($local);
 }
 
 sub c_any {

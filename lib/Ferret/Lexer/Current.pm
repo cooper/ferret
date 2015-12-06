@@ -248,9 +248,10 @@ sub close_end_cap {
 my (@closes, %precedence);
 {
     @closes = (
-        qw( WantNeed PropertyModifier ),                                        # 1
-        qw( Negation Operation Equality Pair ListItem List Call ),              # 2
-        qw( Assignment Return ReturnPair ),                                     # 3
+        qw( WantNeed PropertyModifier ),                                # 1
+        qw( Negation Operation Equality Pair ListItem List Call ),      # 2
+        qw( Assignment Return ReturnPair ),                             # 3
+        qw( SharedDeclaration LocalDeclaration ),
         qw( Instruction )
     );
     my $i = 0;

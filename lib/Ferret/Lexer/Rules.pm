@@ -257,6 +257,62 @@ our %element_rules = (
 
     },
 
+    SharedDeclaration => {
+
+        # must be a direct child an instruction.
+        parent_must_be => 'Instruction',                                        # SharedDeclaration[0]
+
+        # it can be lexical variables or an assignment of a lexical variable.
+        children_must_be => [                                                   # SharedDeclaration[1]
+            'LexicalVariable Assignment',
+            'Shared variable declaration can only capture a lexical variable '.
+            'or a lexical variable assignment'
+        ],
+
+        # if it's an assignment, it must be of a lexical variable.
+        children_must_satisfy => [                                              # SharedDeclaration[2]
+            sub {
+                my $el = shift;
+                return 1 if $el->type ne 'Assignment';
+                return $el->assign_to->type eq 'LexicalVariable';
+            },
+            'Shared variable declaration can capture an assignment only '.
+            'of a lexical variable'
+        ],
+
+        # there can only be one child.
+        max_children => 1                                                       # SharedDeclaration[3]
+
+    },
+
+    LocalDeclaration => {
+
+        # must be a direct child an instruction.
+        parent_must_be => 'Instruction',                                        # LocalDeclaration[0]
+
+        # it can be lexical variables or an assignment of a lexical variable.
+        children_must_be => [                                                   # LocalDeclaration[1]
+            'LexicalVariable Assignment',
+            'Local variable declaration can only capture a lexical variable '.
+            'or a lexical variable assignment'
+        ],
+
+        # if it's an assignment, it must be of a lexical variable.
+        children_must_satisfy => [                                              # LocalDeclaration[2]
+            sub {
+                my $el = shift;
+                return 1 if $el->type ne 'Assignment';
+                return $el->assign_to->type eq 'LexicalVariable';
+            },
+            'Local variable declaration can capture an assignment only '.
+            'of a lexical variable'
+        ],
+
+        # there can only be one child.
+        max_children => 1                                                       # LocalDeclaration[3]
+
+    },
+
     Token => {
 
         # tokens cannot be astray.

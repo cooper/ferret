@@ -42,8 +42,8 @@ sub verify {
 sub identify_lexical_variable_declarations {
     my ($v, $main_node) = @_;
 
-    # WantNeeds
-    # ---------
+    # WantNeed variable declarations
+    # ------------------------------
 
     # find all the declarations.
     my @wantneeds = $main_node->filter_descendants(type => 'WantNeed');
@@ -58,8 +58,42 @@ sub identify_lexical_variable_declarations {
         # the scope of interest is the one containing the assignment
         my $soi = $wn->first_upper_scope;
 
-        # process the assignment.
+        # process the declaration.
         my $var = $wn->variable;
+        $var->{could_be_declaration} = 1;
+        $soi->process_lex_declaration($var->{var_name}, $var->{create_pos});
+
+    }
+
+    # Shared variable declarations
+    # ----------------------------
+
+    my @shares = $main_node->filter_descendants(type => 'SharedDeclaration');
+
+    foreach my $share (@shares) {
+
+        # the scope of interest is the one containing the declaration
+        my $soi = $share->first_upper_scope;
+
+        # process the declaration.
+        my $var = $share->variable;
+        $var->{could_be_declaration} = 1;
+        $soi->process_lex_declaration($var->{var_name}, $var->{create_pos});
+
+    }
+
+    # Local variable declarations
+    # ----------------------------
+
+    my @locals = $main_node->filter_descendants(type => 'LocalDeclaration');
+
+    foreach my $local (@locals) {
+
+        # the scope of interest is the one containing the declaration
+        my $soi = $local->first_upper_scope;
+
+        # process the declaration.
+        my $var = $local->variable;
         $var->{could_be_declaration} = 1;
         $soi->process_lex_declaration($var->{var_name}, $var->{create_pos});
 
