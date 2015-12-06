@@ -12,8 +12,10 @@
 #                              String 'Hello World!'
 use warnings;
 use strict;
-use utf8;
 use 5.010;
+
+use utf8;
+use open ':std', ':encoding(UTF-8)';
 
 BEGIN {
     unless ( length $Ferret::ferret_root ) {
