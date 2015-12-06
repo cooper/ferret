@@ -283,14 +283,21 @@ sub fatal {
     if ($el && $el->parent) {
         $line    = $el->{create_line};
         $parent  = $el->parent;
-        $last_el = $el->previous_element || $parent;
+        $last_el = $el->previous_element         || $el->next_element         ||
+                   $el->parent->previous_element || $el->parent->next_element ||
+                   $el->parent;
     }
 
+    # find a useful description for something it's near.
     # if $last_el is not defined at this point, we are at the beginning.
+    $last_el = $last_el->first_child
+        if $last_el && $last_el->type eq 'Instruction';
     my $near = $last_el ? $last_el->desc : 'beginning of file';
-    $parent  = $parent->parent while $parent->type eq 'Instruction';
-    $parent  = $parent->desc if $parent;
-    
+
+    # find a useful description for the parent.
+    $parent  = $parent->parent if $parent->type eq 'Instruction';
+    $parent  = $parent->desc   if $parent;
+
     my @caller = @{ delete $c->{err_caller} || [caller] };
     $err .= "\n     Error   -> $opts{err_type}" if length $opts{err_type};
     $err .= "\n     File    -> $$c{file}";

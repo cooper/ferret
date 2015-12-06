@@ -144,4 +144,10 @@ sub previous_element {
     return ($el->parent->children)[$el->index - 1];
 }
 
+sub next_element {
+    my $el  = shift;
+    my $idx = $el->index;
+    return ($el->parent->children)[$el->index + 1];
+}
+
 1
