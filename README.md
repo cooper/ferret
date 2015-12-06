@@ -168,7 +168,7 @@ method description {
     return "Point" + @pretty;
 }
 
-main method midpoint {
+func midpoint {
     need $pt1: Point, $pt2: Point;
     return *class(
         x: ($pt1.x + $pt2.x) / 2,
@@ -176,7 +176,7 @@ main method midpoint {
     );
 }
 
-main method distanceBetween {
+func distanceBetween {
     need $pt1: Point, $pt2: Point;
     return $pt1.distanceTo($pt2);
 }
@@ -330,7 +330,7 @@ encounters nonsense.
  Document './test/hello20/IRC/Bot.frt'
      Package 'IRC'
      Class 'Bot'
-         Main method '_init_'
+         Class method '_init_'
              Instruction
                  Need
                      Instance variable '@addr'

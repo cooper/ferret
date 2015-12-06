@@ -269,7 +269,7 @@ sub _escape {
 sub tok_BAREWORD {
     my ($tokens, $value) = @_;
 
-    # init keyword = main method _init_.
+    # init keyword = func _init_.
     if ($value eq 'init') {
         return [ METHOD => { name => '_init_', main => 1 } ];
     }

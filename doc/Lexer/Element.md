@@ -24,7 +24,7 @@ Examples: `If`, `After`, `Method`, `Expression`.
 
 Returns a string describing the element. This is human-readable and more
 detailed than the value of the `->type` method.  
-Examples: `Class 'Person' version 2.5`, `Main method 'new'`.
+Examples: `Class 'Person' version 2.5`, `Class method 'new'`.
 
 ### $el->is_node
 

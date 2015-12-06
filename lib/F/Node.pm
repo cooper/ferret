@@ -135,6 +135,11 @@ sub descendants {
     return @children;
 }
 
+sub has_descendant {
+    my ($node, $descendant) = @_;
+    return $descendant->somewhere_inside($node);
+}
+
 sub type        { 'Node'                  } # element type
 sub is_node     { 1                       } # is a node
 sub is_closure  {                         } # isn't a closure
