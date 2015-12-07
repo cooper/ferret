@@ -54,8 +54,7 @@ my $result = do {
         }
     );
     $func_0->inside_scope( sqrt => $scope, $scope, undef, undef, undef );
-    FF::load_namespaces( $context,
-        qw(Math::NATIVE Math::NATIVE::Math Math::Num NATIVE NATIVE::Math Num) );
+    FF::load_namespaces( $context, qw(NATIVE NATIVE::Math Num) );
 };
 
 FF::after_content();

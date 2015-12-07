@@ -288,7 +288,7 @@ my $result = do {
         $method_4->inside_scope( midpoint => $scope, $proto, $class, 1, undef );
         $method_5->inside_scope( length   => $scope, $proto, $class, 1, undef );
     }
-    FF::load_namespaces( $context, qw(Math::Point Point) );
+    FF::load_namespaces( $context, qw(Point) );
 };
 
 FF::after_content();

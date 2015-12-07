@@ -13,15 +13,11 @@ use Scalar::Util 'blessed';
 use Getopt::Long::Descriptive;
 use JSON::XS;
 
-
 BEGIN {
     use FindBin;
     use lib 'lib';
     our $bin = $FindBin::Bin;
     use lib "$FindBin::Bin/lib";
-}
-
-BEGIN {
     do '/etc/ferret.conf' or die "config error: ".($@ || $!)
 }
 

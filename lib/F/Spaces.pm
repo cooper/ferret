@@ -28,16 +28,6 @@ sub after_adopt {
 sub perl_fmt {
     my $spaces = shift;
     my @spaces = $spaces->spaces;
-
-    # e.g. Point -> Math::Point
-    foreach my $pkg ($spaces->document->filter_children(type => 'Package')) {
-        my $pkg = $pkg->{pkg_name};
-        my @map =
-            map  { $pkg.'::'.$_ }
-            grep { $pkg ne $_ && !/^\Q$pkg\E::/ } @spaces;
-        @spaces = (@map, @spaces);
-    }
-
     return if !@spaces;
     return spaces => { spaces => join ' ', @spaces };
 }

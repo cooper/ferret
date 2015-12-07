@@ -28,9 +28,13 @@ sub new {
 
     # create the core and main context objects.
     $f->{context}{CORE} ||=
-        $core_context   ||= Ferret::Core::Context->new($f, %opts);
+        $core_context   ||= Ferret::Core::Context->new($f,
+        %opts,
+        name => 'CORE'
+    );
     $f->{context}{main} ||= Ferret::Context->new($f,
         %opts,
+        name   => 'main',
         parent => $f->{context}{CORE}
     );
 
@@ -130,7 +134,10 @@ sub get_context  {
     }
 
     # create a context.
-    my $context = Ferret::Context->new($f, parent => $f->core_context);
+    my $context = Ferret::Context->new($f,
+        name   => $name,
+        parent => $f->core_context
+    );
     $f->core_context->set_property($name => $context);
 
     return $f->{context}{$name} = $context;
@@ -173,7 +180,8 @@ sub space {
     # already tried this file, or the namespace/class exists.
     # ignore the value unless the owner is this context.
     my ($val, $owner) = $context->_property($space);
-    return $val if $val && $owner == $context || $tried_files{$file};
+    return $val if $val && $owner == $context;
+    return $val if $tried_files{$file};
 
     $tried_files{$file} = 1;
     do $file or do { print "error in $file: $@" and return if $@ };

@@ -1200,8 +1200,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context,
-        qw(IRC::Num IRC::Socket IRC::Socket::TCP IRC::Str IRC IRC::Message Num Socket Socket::TCP Str)
-    );
+        qw(IRC IRC::Message Num Socket Socket::TCP Str) );
 };
 
 FF::after_content();

@@ -345,7 +345,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(IRC::Num IRC::Str Num Str) );
+    FF::load_namespaces( $context, qw(Num Str) );
 };
 
 FF::after_content();

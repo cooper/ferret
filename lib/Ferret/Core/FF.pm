@@ -56,6 +56,17 @@ sub after_content {
 sub load_namespaces {
     my ($context, @namespaces) = @_;
     my @caller = caller;
+
+    # consider package first.
+    # e.g. Point -> Math::Point, Point
+    my $pkg = $context->{name};
+    if ($pkg ne 'CORE' && $pkg ne 'main') {
+        my @map =
+            map  { $pkg.'::'.$_ }
+            grep { $pkg ne $_ && !/^\Q$pkg\E::/ } @namespaces;
+        @namespaces = (@map, @namespaces);
+    }
+
     Ferret::space($context, \@caller, $_) for @namespaces;
     return;
 }

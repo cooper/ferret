@@ -424,7 +424,7 @@ my $result = do {
             $class, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Math::Num Math::Point Num Point) );
+    FF::load_namespaces( $context, qw(Num Point) );
 };
 
 FF::after_content();

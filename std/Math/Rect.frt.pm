@@ -507,8 +507,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context,
-        qw(Math::Line Math::Num Math::Point Line Num Point) );
+    FF::load_namespaces( $context, qw(Line Num Point) );
 };
 
 FF::after_content();
