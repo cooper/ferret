@@ -7,14 +7,13 @@ use utf8;
 use 5.010;
 
 use Scalar::Util 'blessed';
-use Ferret::Shared::Utils qw(ns_to_slash find_in_inc);
-use File::Basename 'dirname';
+use Ferret::Shared::Utils qw(ns_to_slash);
 
 our (
     $ferret,            $core_context,
     %tried_files,       %file_map,
     %class_bindings,    %delay_class_bindings,
-    %specials
+    %specials,          @ferret_libs
 );
 
 # create a new ferret.
@@ -170,18 +169,14 @@ sub get_class {
 sub space {
     my ($context, $caller, $space) = @_;
     my $file = ns_to_slash("$space.frt.pm");
-    my $dir  = dirname($caller->[1]);
 
     # already tried this file, or the namespace/class exists.
     # ignore the value unless the owner is this context.
     my ($val, $owner) = $context->_property($space);
     return $val if $val && $owner == $context || $tried_files{$file};
 
-    # use find_in_inc() to find it.
-    if (defined(my $file = find_in_inc($file, $dir))) {
-        $tried_files{$file} = 1;
-        do $file or do { print "error in $file: $@" and return if $@ };
-    }
+    $tried_files{$file} = 1;
+    do $file or do { print "error in $file: $@" and return if $@ };
 
     return $context->property($space);
 }

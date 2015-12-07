@@ -28,16 +28,4 @@ sub slash_to_ns {
     return $s;
 }
 
-# find something in @INC. the earliest result is returned.
-# e.g. $file = "Math.frt.pm"
-sub find_in_inc {
-    my ($file, @dirs) = @_;
-    my @inc = (@dirs, @$Ferret::ferret_libs);
-    foreach my $dir (@inc) {
-        my $path = "$dir/$file";
-        return $path if -e $path;
-    }
-    return;
-}
-
 1
