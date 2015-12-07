@@ -6,11 +6,7 @@ use utf8;
 use open ':std', ':encoding(UTF-8)';
 
 BEGIN {
-    unless(length $Ferret::ferret_root) {
-        my $libs = do '/etc/ferret.conf';
-        ref $libs eq 'ARRAY' or die "config error";
-        unshift @INC, @$libs;
-    }
+    do '/etc/ferret.conf' or die "config error: ".($@ || $!);
 }
 
 use Ferret;
