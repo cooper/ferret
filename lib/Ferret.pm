@@ -7,6 +7,8 @@ use utf8;
 use 5.010;
 
 use Scalar::Util 'blessed';
+use Ferret::Shared::Utils qw(ns_to_slash find_in_inc);
+use File::Basename 'dirname';
 
 our (
     $ferret,            $core_context,
@@ -166,23 +168,23 @@ sub get_class {
 # fetch a class or namespace.
 # if necessary, load it.
 sub space {
-    my ($context, $space) = @_;
-    my $file = c2s("$space.frt.pm");
+    my ($context, $caller, $space) = @_;
+    my $file = ns_to_slash("$space.frt.pm");
+    my $dir  = dirname($caller->[1]);
 
     # already tried this file, or the namespace/class exists.
     # ignore the value unless the owner is this context.
     my ($val, $owner) = $context->_property($space);
     return $val if $val && $owner == $context || $tried_files{$file};
 
-    # load it.
-    $tried_files{$file} = 1;
-    do $file or do { print "error in $file: $@" and return if $@ };
+    # use find_in_inc() to find it.
+    if (defined(my $file = find_in_inc($file, $dir))) {
+        $tried_files{$file} = 1;
+        do $file or do { print "error in $file: $@" and return if $@ };
+    }
 
     return $context->property($space);
 }
-
-sub c2s { my $c = shift; $c =~ s/::/\//g; $c }
-sub s2c { my $s = shift; $s =~ s/\//::/g; $s }
 
 ####################
 ### PERL BINDING ###

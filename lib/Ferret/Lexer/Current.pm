@@ -275,6 +275,7 @@ sub sort_precedence {
 
 sub fatal {
     my ($c, $err, $el, %opts) = @_;
+    $err = "Error: $err";
 
     # use the "current" info if no element is provided.
     my ($parent, $last_el, $line) = ($c->node, $c->elements->[-1], $c->{line});

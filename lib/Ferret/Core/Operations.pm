@@ -6,6 +6,8 @@ use strict;
 use utf8;
 use 5.010;
 
+use Ferret::Shared::Utils qw(import);
+
 BEGIN {
     no strict 'refs';
     foreach my $star (qw/range pow mod mul div add _sub/) {
@@ -44,13 +46,6 @@ sub _not {
 sub U {
     my $val = shift;
     return $val || Ferret::undefined;
-}
-
-sub import {
-    my $this_package = shift;
-    my $package = caller;
-    no strict 'refs';
-    *{ "${package}::$_" } = *{ "${this_package}::$_" } foreach @_;
 }
 
 sub num { Ferret::Number->new(shift, num_value => shift) }

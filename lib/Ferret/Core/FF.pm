@@ -55,7 +55,8 @@ sub after_content {
 # load namespaces.
 sub load_namespaces {
     my ($context, @namespaces) = @_;
-    Ferret::space($context, $_) for @namespaces;
+    my @caller = caller;
+    Ferret::space($context, \@caller, $_) for @namespaces;
     return;
 }
 

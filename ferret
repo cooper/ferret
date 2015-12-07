@@ -22,7 +22,7 @@ BEGIN {
 }
 
 BEGIN {
-    my $libs = do '/etc/ferret.conf';
+    my $libs = $Ferret::ferret_libs = do '/etc/ferret.conf';
     ref $libs eq 'ARRAY' or die "config error";
     $Ferret::ferret_root = shift @$libs;
     unshift @INC, @$libs;
@@ -141,5 +141,5 @@ sub minify {
 sub error {
     my ($file, $msg) = @_;
     unlink "$file.pm";
-    die "\nError: $msg\n";
+    die "\n$msg\n";
 }
