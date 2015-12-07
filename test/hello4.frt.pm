@@ -109,7 +109,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'x' ) or return;
             FF::need( $scope, $arguments, 'y' ) or return;
-            $scope->set_property( z => $arguments->{z}, 3.09090909090909 );
+            $scope->set_property( z => $arguments->{z}, 3.33333 );
             $scope->set_property_ow(
                 $context,
                 point => FF::create_object(
@@ -119,12 +119,9 @@ my $result = do {
                         y => $scope->property_u('y')
                     }
                 ),
-                4.14285714285714
+                4.66667
             );
-            $return->set_property(
-                point => $scope->property_u('point'),
-                8.27272727272727
-            );
+            $return->set_property( point => $scope->property_u('point'), 8.5 );
             return $return;
         }
     );
@@ -132,9 +129,9 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         pt => $scope->property_u('makePoint')
-          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ],
-            $scope, undef, 11.3636363636364 )->property_u('point'),
-        11.3376623376623
+          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11.4 )
+          ->property_u('point'),
+        11.2
     );
     $scope->property_u('say')->call_u(
         [
@@ -147,8 +144,7 @@ my $result = do {
                 str( $f, ")" )
             )
         ],
-        $scope, undef,
-        12.4675324675325
+        $scope, undef, 12.13333
     );
     $scope->set_property_ow(
         $context,
@@ -162,17 +158,17 @@ my $result = do {
                 add( $scope, num( $f, 4 ), num( $f, 1 ) )
             ]
         ),
-        14.6623376623377
+        14.125
     );
     $scope->set_property_ow(
         $context,
         emptyArray => FF::create_list( $f, [] ),
-        16.8701298701299
+        16.4
     );
     $scope->set_property_ow(
         $context,
         emptyHash => FF::create_hash( $f, {} ),
-        17.9350649350649
+        17.33333
     );
 };
 

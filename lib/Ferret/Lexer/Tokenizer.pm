@@ -412,11 +412,13 @@ sub _tokenize {
     }
 
     # add positioning bits.
-    my $count = scalar @tokens;
-    my $i = 0;
+    my (%all_on_line, %done_on_line);
+    $all_on_line{ $_->[2] }++ for @tokens;
+
     for my $token (@tokens) {
-        $token->[2] = int($token->[2]) + $i / $count;
-        $i++;
+        my $i = ++$done_on_line{ $token->[2] };
+        my $inc = sprintf '%.5f', $i / $all_on_line{ $token->[2] };
+        $token->[2] = int($token->[2]) + $inc;
     }
 
     return (undef, @tokens);

@@ -59,7 +59,7 @@ my $result = do {
                 return mul(
                     $scope,
                     $self->property_u('length')
-                      ->call_u( {}, $scope, undef, 4.25 ),
+                      ->call_u( {}, $scope, undef, 4.5 ),
                     num( $f, 2 )
                 );
                 return $return;
@@ -76,10 +76,10 @@ my $result = do {
                 $scope,
                 str( $f, "Length times two: " ),
                 str( $f, "hi there" )->property_u('doubledLength')
-                  ->call_u( {}, $scope, undef, 9.85 )
+                  ->call_u( {}, $scope, undef, 9.77778 )
             )
         ],
-        $scope, undef, 9.6
+        $scope, undef, 9.22222
     );
 };
 

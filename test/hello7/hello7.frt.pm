@@ -118,15 +118,14 @@ my $result = do {
                 width  => num( $f, 12 ),
                 height => num( $f, 10 )
             },
-            $scope, undef,
-            1.06493506493506
+            $scope, undef, 1.31579
         ),
-        1.01298701298701
+        1.10526
     );
     $scope->set_property_ow(
         $context,
         center => $scope->property_u('rect')->property_u('center'),
-        3.25974025974026
+        3.4
     );
     $scope->property_u('say')->call_u(
         [
@@ -135,8 +134,7 @@ my $result = do {
                 $scope->property_u('center')
             )
         ],
-        $scope, undef,
-        4.32467532467532
+        $scope, undef, 4.4
     );
     $scope->property_u('say')->call_u(
         [
@@ -146,26 +144,22 @@ my $result = do {
                 $scope->property_u('center')->property_u('distanceFromOrigin')
             )
         ],
-        $scope, undef,
-        5.38961038961039
+        $scope, undef, 5.25
     );
     $scope->set_property_ow(
         $context,
-        otherPt => $scope->property_u('Math::Point')->call_u(
-            [ num( $f, 9 ), num( $f, 2 ) ],
-            $scope, undef, 7.54545454545454
-        ),
-        7.49350649350649
+        otherPt => $scope->property_u('Math::Point')
+          ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7.54545 ),
+        7.18182
     );
     $scope->set_property_ow(
         $context,
         midpoint => FF::create_set(
             $scope, $scope->property_u('center'),
             $scope->property_u('otherPt')
-          )->property_u('midpoint')
-          ->call_u( {}, $scope, undef, 8.72727272727273 )->property_u('pretty')
-          ->call_u( {}, $scope, undef, 8.76623376623377 ),
-        8.63636363636364
+          )->property_u('midpoint')->call_u( {}, $scope, undef, 8.69231 )
+          ->property_u('pretty')->call_u( {}, $scope, undef, 8.92308 ),
+        8.15385
     );
     $scope->property_u('say')->call_u(
         [
@@ -174,8 +168,7 @@ my $result = do {
                 $scope->property_u('midpoint')
             )
         ],
-        $scope, undef,
-        9.80519480519481
+        $scope, undef, 9.4
     );
     $scope->property_u('say')->call_u(
         [
@@ -183,11 +176,10 @@ my $result = do {
                 $scope,
                 str( $f, "Square root of four: " ),
                 $scope->property_u('Math')->property_u('sqrt')
-                  ->call_u( [ num( $f, 4 ) ], $scope, undef, 11.9350649350649 )
+                  ->call_u( [ num( $f, 4 ) ], $scope, undef, 11.63636 )
             )
         ],
-        $scope, undef,
-        11.8701298701299
+        $scope, undef, 11.18182
     );
 };
 

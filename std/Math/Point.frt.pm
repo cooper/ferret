@@ -223,7 +223,7 @@ my $result = do {
                         $self->property_u('x'),
                         $scope->property_u('pt2')->property_u('x')
                     ),
-                    10.158273381295
+                    10.28571
                 );
                 $scope->set_property_ow(
                     $context,
@@ -232,7 +232,7 @@ my $result = do {
                         $self->property_u('y'),
                         $scope->property_u('pt2')->property_u('y')
                     ),
-                    11.2086330935252
+                    11.28571
                 );
                 return $scope->property_u('sqrt')->call_u(
                     [
@@ -248,8 +248,7 @@ my $result = do {
                             )
                         )
                     ],
-                    $scope, undef,
-                    12.2661870503597
+                    $scope, undef, 12.25
                 );
                 return $return;
             }
@@ -266,11 +265,10 @@ my $result = do {
                     [
                         $scope->{special}->property_u('class')->call_u(
                             [ num( $f, 0 ), num( $f, 0 ) ], $scope,
-                            undef, 16.3884892086331
+                            undef, 16.45455
                         )
                     ],
-                    $scope, undef,
-                    16.3741007194245
+                    $scope, undef, 16.27273
                 );
                 return $return;
             }
@@ -359,8 +357,7 @@ my $result = do {
                             num( $f, 2 )
                         )
                     },
-                    $scope, undef,
-                    33.6834532374101
+                    $scope, undef, 34
                 );
                 return $return;
             }
@@ -390,7 +387,7 @@ my $result = do {
                 FF::need( $scope, $arguments, 'pt2' ) or return;
                 return $scope->property_u('pt1')->property_u('distanceTo')
                   ->call_u( [ $scope->property_u('pt2') ],
-                    $scope, undef, 41.9640287769784 );
+                    $scope, undef, 41.57143 );
                 return $return;
             }
         );

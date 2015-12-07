@@ -159,8 +159,7 @@ my $result = do {
                         $self->property_u('real')
                     )
                 ],
-                $scope, undef,
-                14.5977011494253
+                $scope, undef, 14.4
             );
             $self->property_u('send')->call_u(
                 [
@@ -168,8 +167,7 @@ my $result = do {
                         $scope, str( $f, "NICK " ), $self->property_u('nick')
                     )
                 ],
-                $scope, undef,
-                15.6551724137931
+                $scope, undef, 15.66667
             );
             return $return;
         }
@@ -190,8 +188,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope, undef,
-                21.7931034482759
+                $scope, undef, 21.4
             );
             return $return;
         }
@@ -212,8 +209,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope, undef,
-                26.9310344827586
+                $scope, undef, 26.4
             );
             return $return;
         }
@@ -257,26 +253,25 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{port};
                     $want_val ||= num( $f, 6667 );
-                    $self->set_property( port => $want_val, 5.18390804597701 );
+                    $self->set_property( port => $want_val, 5.08333 );
                 };
                 do {
                     my $want_val = $arguments->{real};
                     $want_val ||= str( $f, "Ferret IRC" );
-                    $self->set_property( real => $want_val, 5.25287356321839 );
+                    $self->set_property( real => $want_val, 5.58333 );
                 };
                 $scope->property_u('Socket::TCP')->property_u('init')
                   ->call_u( [ $scope->{special}->property_u('self') ],
-                    $scope, undef, 9.37931034482759 )->call_u(
+                    $scope, undef, 9.33333 )->call_u(
                     {
                         addr => $self->property_u('address'),
                         port => $self->property_u('port')
                     },
-                    $scope, undef,
-                    9.41379310344828
+                    $scope, undef, 9.53333
                     );
                 $self->set_property(
                     send => $self->property_u('println'),
-                    11.5172413793103
+                    11.5
                 );
                 FF::on(
                     $self,

@@ -104,8 +104,7 @@ my $result = do {
                         $scope->{special}->property_u('return')
                     )
                 ],
-                $scope, undef,
-                11.3111111111111
+                $scope, undef, 11.4
             );
             return $return;
         }
@@ -128,27 +127,21 @@ my $result = do {
                         $scope->{special}->property_u('return')
                     )
                 ],
-                $scope, undef,
-                22.7777777777778
+                $scope, undef, 22.4
             );
             return $return;
         }
     );
     FF::load_namespaces( $context, qw(String) );
     $scope->property_u('say')
-      ->call_u( [ str( $f, "test" ) ], $scope, undef, 1.02222222222222 );
-    $scope->set_property_ow(
-        $context,
-        str => str( $f, "hi" ),
-        3.13333333333333
-    );
+      ->call_u( [ str( $f, "test" ) ], $scope, undef, 1.4 );
+    $scope->set_property_ow( $context, str => str( $f, "hi" ), 3.66667 );
     FF::on( $scope->property_u('str'), 'length', $self, $scope,
         $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
     $scope->property_u('str')->property_u('length')
-      ->call_u( {}, $scope, undef, 14.4666666666667 );
-    str( $f, "hello" )->property_u('length')
-      ->call_u( {}, $scope, undef, 19.5777777777778 );
+      ->call_u( {}, $scope, undef, 14.6 );
+    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 19.5 );
     FF::on(
         $scope->property_u('String')->property_u('proto'),
         'length',
@@ -156,8 +149,7 @@ my $result = do {
         $scope,
         $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
-    str( $f, "hello" )->property_u('length')
-      ->call_u( {}, $scope, undef, 25.9333333333333 );
+    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 25.6 );
 };
 
 FF::after_content();

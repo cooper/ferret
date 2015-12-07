@@ -200,14 +200,14 @@ my $result = do {
                         { separator => str( $f, " " ), limit => num( $f, 4 ) },
                         $scope,
                         undef,
-                        6.08965517241379
+                        6.71429
                       ),
-                    6.06896551724138
+                    6.28571
                 );
                 $self->set_property(
                     channel => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 2 ) ], $scope ),
-                    8.15172413793104
+                    8.28571
                 );
                 $self->set_property(
                     nickname => $scope->property_u('lineSplit')
@@ -216,28 +216,23 @@ my $result = do {
                         { separator => str( $f, "!" ), limit => num( $f, 2 ) },
                         $scope,
                         undef,
-                        10.2413793103448
+                        10.44444
                       )->get_index_value( [ num( $f, 0 ) ], $scope ),
-                    10.2
+                    10.11111
                 );
                 $self->property_u('nickname')->property_u('trimPrefix')
-                  ->call_u( [ str( $f, ":" ) ],
-                    $scope, undef, 11.3310344827586 );
+                  ->call_u( [ str( $f, ":" ) ], $scope, undef, 11.75 );
                 $self->set_property(
                     message => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 3 ) ], $scope ),
-                    14.3655172413793
+                    14.28571
                 );
                 $self->property_u('message')->property_u('trimPrefix')
-                  ->call_u( [ str( $f, ":" ) ],
-                    $scope, undef, 15.4206896551724 );
+                  ->call_u( [ str( $f, ":" ) ], $scope, undef, 15.75 );
                 $self->set_property(
                     parts => $self->property_u('message')->property_u('split')
-                      ->call_u(
-                        [ str( $f, " " ) ],
-                        $scope, undef, 18.4758620689655
-                      ),
-                    18.4551724137931
+                      ->call_u( [ str( $f, " " ) ], $scope, undef, 18.83333 ),
+                    18.33333
                 );
                 return $return;
             }
@@ -254,10 +249,8 @@ my $result = do {
                     bool(
                         $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
-                          ->property_u('hasPrefix')->call_u(
-                            [ str( $f, "." ) ], $scope,
-                            undef, 26.5655172413793
-                          )
+                          ->property_u('hasPrefix')
+                          ->call_u( [ str( $f, "." ) ], $scope, undef, 26.7 )
                     )
                   )
                 {
@@ -268,12 +261,12 @@ my $result = do {
                         cmd => $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
                           ->property_u('copy')
-                          ->call_u( {}, $scope, undef, 27.6413793103448 )
+                          ->call_u( {}, $scope, undef, 27.66667 )
                           ->property_u('trimPrefix')->call_u(
-                            [ str( $f, "." ) ], $scope,
-                            undef, 27.6620689655172
+                            [ str( $f, "." ) ],
+                            $scope, undef, 27.91667
                           ),
-                        27.6
+                        27.16667
                     );
                     if ( bool( $scope->property_u('cmd')->property_u('length') )
                       )
@@ -325,8 +318,7 @@ my $result = do {
                             num( $f, 1 )
                         )
                     },
-                    $scope, undef,
-                    42.9034482758621
+                    $scope, undef, 42.25
                   )->get_index_value( [ $scope->property_u('wordN') ], $scope );
                 return $return;
             }

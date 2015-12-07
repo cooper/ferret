@@ -52,13 +52,12 @@ my $result = do {
                 nick => str( $f, "ferret" ),
                 user => str( $f, "bot" )
             },
-            $scope, undef,
-            1.15789473684211
+            $scope, undef, 1.28571
         ),
-        1.05263157894737
+        1.14286
     );
     $scope->property_u('bot')->property_u('connect')
-      ->call_u( {}, $scope, undef, 2.84210526315789 );
+      ->call_u( {}, $scope, undef, 2.6 );
 };
 
 FF::after_content();

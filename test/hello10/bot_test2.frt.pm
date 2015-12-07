@@ -59,15 +59,15 @@ my $result = do {
                 nick    => str( $f, "ferret" ),
                 user    => str( $f, "bot" )
             },
-            $scope, undef, 1.12
+            $scope, undef, 1.28571
         ),
-        1.04
+        1.14286
     );
     $scope->property_u('say')
       ->call_u( [ $scope->property_u('bot')->property_u('address') ],
-        $scope, undef, 2.6 );
+        $scope, undef, 2.33333 );
     $scope->property_u('bot')->property_u('connect')
-      ->call_u( {}, $scope, undef, 3.88 );
+      ->call_u( {}, $scope, undef, 3.6 );
 };
 
 FF::after_content();

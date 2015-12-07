@@ -49,8 +49,8 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         words => str( $f, "how are you?" )->property_u('split')
-          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.21052631578947 ),
-        1.05263157894737
+          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.625 ),
+        1.25
     );
     FF::iterate(
         $f, $scope,
@@ -65,8 +65,7 @@ my $result = do {
                         $scope->property_u('word')
                     )
                 ],
-                $scope, undef,
-                4.73684210526316
+                $scope, undef, 4.4
             );
         }
     );

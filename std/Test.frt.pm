@@ -265,15 +265,15 @@ my $result = do {
                 do {
                     my $want_val = $arguments->{name};
                     $want_val ||= str( $f, "Test" );
-                    $self->set_property( name => $want_val, 4.01470588235294 );
+                    $self->set_property( name => $want_val, 4.25 );
                 };
                 do {
                     my $want_val = $arguments->{fatal};
                     $want_val ||= Ferret::true;
-                    $self->set_property( fatal => $want_val, 6.03921568627451 );
+                    $self->set_property( fatal => $want_val, 6.2 );
                 };
-                $self->set_property( tested => num( $f, 0 ), 7.06862745098039 );
-                $self->set_property( passed => num( $f, 0 ), 8.08823529411765 );
+                $self->set_property( tested => num( $f, 0 ), 7.5 );
+                $self->set_property( passed => num( $f, 0 ), 8.5 );
                 return $return;
             }
         );
@@ -285,17 +285,16 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 12.1176470588235 );
+                $scope->set_property( a => $arguments->{a}, 12.33333 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('Bool')->call_u(
                             [ $scope->property_u('a') ], $scope,
-                            undef,                       13.1519607843137
+                            undef,                       13.55556
                         ),
                         str( $f, "Value must be true" )
                     ],
-                    $scope, undef,
-                    13.1421568627451
+                    $scope, undef, 13.33333
                 );
                 return $return;
             }
@@ -308,15 +307,14 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 18.2009803921569 );
+                $scope->set_property( a => $arguments->{a}, 18.33333 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
                           ->equal_to_exactly( Ferret::true, $scope ),
                         str( $f, "Value must be exactly true" )
                     ],
-                    $scope, undef,
-                    19.2254901960784
+                    $scope, undef, 19.375
                 );
                 return $return;
             }
@@ -331,16 +329,15 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 24.2794117647059 );
-                $scope->set_property( b => $arguments->{b}, 24.2892156862745 );
+                $scope->set_property( a => $arguments->{a}, 24.2 );
+                $scope->set_property( b => $arguments->{b}, 24.6 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
                           ->equal_to( $scope->property_u('b'), $scope ),
                         str( $f, "Values must be equal" )
                     ],
-                    $scope, undef,
-                    25.3137254901961
+                    $scope, undef, 25.375
                 );
                 return $return;
             }
@@ -356,16 +353,15 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 30.3676470588235 );
-                $scope->set_property( b => $arguments->{b}, 30.3774509803922 );
+                $scope->set_property( a => $arguments->{a}, 30.2 );
+                $scope->set_property( b => $arguments->{b}, 30.6 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
                           ->equal_to_exactly( $scope->property_u('b'), $scope ),
                         str( $f, "Objects must be exactly equal" )
                     ],
-                    $scope, undef,
-                    31.4019607843137
+                    $scope, undef, 31.375
                 );
                 return $return;
             }
@@ -381,8 +377,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 36.4558823529412 );
-                $scope->set_property( b => $arguments->{b}, 36.4656862745098 );
+                $scope->set_property( a => $arguments->{a}, 36.2 );
+                $scope->set_property( b => $arguments->{b}, 36.6 );
                 return $self->property_u('_test')->call_u(
                     [
                         _not(
@@ -391,8 +387,7 @@ my $result = do {
                         ),
                         str( $f, "Values must not be equal" )
                     ],
-                    $scope, undef,
-                    37.4901960784314
+                    $scope, undef, 37.375
                 );
                 return $return;
             }
@@ -408,8 +403,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 42.5441176470588 );
-                $scope->set_property( b => $arguments->{b}, 42.5539215686275 );
+                $scope->set_property( a => $arguments->{a}, 42.2 );
+                $scope->set_property( b => $arguments->{b}, 42.6 );
                 return $self->property_u('_test')->call_u(
                     [
                         _not(
@@ -419,8 +414,7 @@ my $result = do {
                         ),
                         str( $f, "Objects must not be equal" )
                     ],
-                    $scope, undef,
-                    43.578431372549
+                    $scope, undef, 43.3
                 );
                 return $return;
             }
@@ -439,7 +433,7 @@ my $result = do {
                         $self->property_u('tested'),
                         $self->property_u('passed')
                     ),
-                    47.6372549019608
+                    47.33333
                 );
                 $scope->property_u('say')->call_u(
                     [
@@ -456,25 +450,24 @@ my $result = do {
                             str( $f, " failed" )
                         )
                     ],
-                    $scope, undef,
-                    48.6666666666667
+                    $scope, undef, 48.4
                 );
                 $return->set_property(
                     tests => $self->property_u('tested'),
-                    50.6911764705882
+                    50.5
                 );
                 $return->set_property(
                     fails => $scope->property_u('failed'),
-                    51.7107843137255
+                    51.5
                 );
                 $return->set_property(
                     passes => $self->property_u('passed'),
-                    52.7303921568627
+                    52.5
                 );
                 $return->set_property(
                     allOK => $self->property_u('passed')
                       ->equal_to( $self->property_u('tested'), $scope ),
-                    53.75
+                    53.33333
                 );
                 return $return;
             }
@@ -494,22 +487,16 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property(
-                    yes => $arguments->{yes},
-                    57.7892156862745
-                );
-                $scope->set_property(
-                    message => $arguments->{message},
-                    57.7990196078431
-                );
+                $scope->set_property( yes     => $arguments->{yes},     57.2 );
+                $scope->set_property( message => $arguments->{message}, 57.6 );
                 $self->set_property(
                     tested =>
                       add( $scope, $self->property_u('tested'), num( $f, 1 ) ),
-                    59.8186274509804
+                    59.33333
                 );
                 $return->set_property(
                     pass => $scope->property_u('yes'),
-                    60.8480392156863
+                    60.5
                 );
                 if ( bool( $scope->property_u('yes') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -519,7 +506,7 @@ my $result = do {
                             $scope, $self->property_u('passed'),
                             num( $f, 1 )
                         ),
-                        63.8823529411765
+                        63.33333
                     );
                     return $return;
                 }
@@ -528,12 +515,12 @@ my $result = do {
 
                     $scope->property_u('Error')
                       ->call_u( [ $scope->property_u('message') ],
-                        $scope, undef, 68.9411764705882 )->property_u('panic')
-                      ->call_u( {}, $scope, undef, 68.9607843137255 );
+                        $scope, undef, 68.25 )->property_u('panic')
+                      ->call_u( {}, $scope, undef, 68.75 );
                 }
                 $return->set_property(
                     message => $scope->property_u('message'),
-                    70.9803921568627
+                    70.5
                 );
                 return $return;
             }

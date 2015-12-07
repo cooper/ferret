@@ -212,14 +212,8 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $scope, $arguments, 'x' ) or return;
                 FF::need( $scope, $arguments, 'y' ) or return;
-                $self->set_property(
-                    x => $scope->property_u('x'),
-                    5.06521739130435
-                );
-                $self->set_property(
-                    y => $scope->property_u('y'),
-                    6.09420289855072
-                );
+                $self->set_property( x => $scope->property_u('x'), 5.5 );
+                $self->set_property( y => $scope->property_u('y'), 6.5 );
                 return $return;
             }
         );
@@ -238,10 +232,9 @@ my $result = do {
                             add( $scope, $self->property_u('x'), num( $f, 1 ) ),
                             $self->property_u('y')
                         ],
-                        $scope, undef,
-                        10.1594202898551
+                        $scope, undef, 10.36364
                     ),
-                    10.1449275362319
+                    10.18182
                 );
                 return $scope->property_u('pt');
                 return $return;
@@ -271,7 +264,7 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property_u('pretty')
-                  ->call_u( {}, $scope, undef, 19.3333333333333 );
+                  ->call_u( {}, $scope, undef, 19.6 );
                 return $return;
             }
         );
@@ -319,8 +312,7 @@ my $result = do {
                             num( $f, 2 )
                         )
                     },
-                    $scope, undef,
-                    24.4275362318841
+                    $scope, undef, 25
                 );
                 return $return;
             }
@@ -349,37 +341,35 @@ my $result = do {
     FF::load_namespaces( $context, qw(Point) );
     $scope->set_property_ow(
         $context,
-        pt => $scope->property_u('Point')->call_u(
-            [ num( $f, 5 ), num( $f, 3 ) ],
-            $scope, undef, 32.6376811594203
-        ),
-        32.6231884057971
+        pt => $scope->property_u('Point')
+          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32.44444 ),
+        32.22222
     );
     $scope->property_u('say')
       ->call_u( [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
-        $scope, undef, 33.6884057971015 );
+        $scope, undef, 33.4 );
     $scope->set_property_ow(
         $context,
         rpt => $scope->property_u('pt')->property_u('oneToRight')
-          ->call_u( {}, $scope, undef, 35.7463768115942 ),
-        35.7246376811594
+          ->call_u( {}, $scope, undef, 35.83333 ),
+        35.33333
     );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
-        $scope, undef, 36.768115942029 );
+        $scope, undef, 36.4 );
     $scope->set_property_ow(
         $context,
         mdpt => $scope->property_u('Point')->property_u('midpoint')->call_u(
-            [ $scope->property_u('pt'), $scope->property_u('rpt') ],
-            $scope, undef, 38.8260869565217
+            [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope,
+            undef, 38.5
         ),
-        38.804347826087
+        38.2
     );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt') ) ],
-        $scope, undef, 39.8768115942029 );
+        $scope, undef, 39.4 );
     $scope->set_property_ow(
         $context,
         nineteen => add(
@@ -387,7 +377,7 @@ my $result = do {
             num( $f, 4 ),
             div( $scope, num( $f, 45 ), num( $f, 3 ) )
         ),
-        41.9130434782609
+        41.25
     );
     $scope->property_u('say')->call_u(
         [
@@ -396,8 +386,7 @@ my $result = do {
                 $scope->property_u('nineteen')
             )
         ],
-        $scope, undef,
-        42.9710144927536
+        $scope, undef, 42.4
     );
 };
 

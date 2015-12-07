@@ -80,8 +80,8 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property_u('say')->call_u( [ str( $f, "five seconds up" ) ],
-                $scope, undef, 4.34883720930233 );
+            $scope->property_u('say')
+              ->call_u( [ str( $f, "five seconds up" ) ], $scope, undef, 4.4 );
             return $return;
         }
     );
@@ -95,17 +95,17 @@ my $result = do {
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "this shouldn't be said" ) ],
-                $scope, undef, 9.7906976744186 );
+                $scope, undef, 9.4 );
             return $return;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
     $scope->property_u('say')
-      ->call_u( [ str( $f, "hello" ) ], $scope, undef, 1.02325581395349 );
+      ->call_u( [ str( $f, "hello" ) ], $scope, undef, 1.4 );
     FF::on(
         $scope->property_u('Timer')
-          ->call_u( [ num( $f, 5 ) ], $scope, undef, 3.16279069767442 )
-          ->property_u('once')->call_u( {}, $scope, undef, 3.25581395348837 ),
+          ->call_u( [ num( $f, 5 ) ], $scope, undef, 3.33333 )
+          ->property_u('once')->call_u( {}, $scope, undef, 3.77778 ),
         'expire',
         $self,
         $scope,
@@ -114,19 +114,19 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         t2 => $scope->property_u('Timer')
-          ->call_u( [ num( $f, 2 ) ], $scope, undef, 7.53488372093023 ),
-        7.48837209302326
+          ->call_u( [ num( $f, 2 ) ], $scope, undef, 7.57143 ),
+        7.28571
     );
     FF::on(
         $scope->property_u('t2')->property_u('once')
-          ->call_u( {}, $scope, undef, 8.69767441860465 ),
+          ->call_u( {}, $scope, undef, 8.66667 ),
         'expire',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
     );
     $scope->property_u('t2')->property_u('cancel')
-      ->call_u( {}, $scope, undef, 12.953488372093 );
+      ->call_u( {}, $scope, undef, 12.75 );
 };
 
 FF::after_content();
