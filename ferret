@@ -22,9 +22,8 @@ BEGIN {
 }
 
 BEGIN {
-    my $libs = $Ferret::ferret_libs = do '/etc/ferret.conf';
+    my $libs = do '/etc/ferret.conf';
     ref $libs eq 'ARRAY' or die "config error";
-    $Ferret::ferret_root = shift @$libs;
     unshift @INC, @$libs;
 }
 

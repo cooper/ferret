@@ -19,9 +19,8 @@ use open ':std', ':encoding(UTF-8)';
 
 BEGIN {
     unless ( length $Ferret::ferret_root ) {
-        my $libs = $Ferret::ferret_libs = do '/etc/ferret.conf';
-        ref $libs eq 'ARRAY' or die 'config error';
-        $Ferret::ferret_root = shift @$libs;
+        my $libs = do '/etc/ferret.conf';
+        ref $libs eq 'ARRAY' or die "config error";
         unshift @INC, @$libs;
     }
 }
