@@ -412,7 +412,7 @@ $x in (1, 2, 3) {
 ```
 
 ```
-Unexpected keyword 'in' (where is 'for'?).
+Error: Unexpected keyword 'in' (where is 'for'?).
      File    -> (stdin)
      Line    -> 1
      Near    -> lexical variable '$x'
@@ -475,7 +475,7 @@ need $x;
 ```
 
 ```
-Unexpected need outside of a containing function.
+Error: Unexpected need outside of a containing function.
 Argument declaration must be within a function or method.
      File    -> (stdin)
      Line    -> 7
@@ -501,7 +501,7 @@ for ($a, $b) in [color: "blue", mood: "sad"] {
 ```
 
 ```
-Reference to lexical variable '$x' without previous declaration.
+Error: Reference to lexical variable '$x' without previous declaration.
 Note that '$x' is later declared in this scope on line 3.
      Error   -> UndeclaredVariableReference
      File    -> (stdin)

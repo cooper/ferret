@@ -772,7 +772,7 @@ my $result = do {
                 $scope, undef, undef, undef
             )
         ],
-        $scope, undef, 4.42857
+        $scope, undef, 4.5
     );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
@@ -782,7 +782,7 @@ my $result = do {
                 $scope, undef, undef, undef
             )
         ],
-        $scope, undef, 9.42857
+        $scope, undef, 9.5
     );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
@@ -792,7 +792,7 @@ my $result = do {
                 $scope, undef, undef, undef
             )
         ],
-        $scope, undef, 22.42857
+        $scope, undef, 22.5
     );
     $scope->property_u('bot')->property_u('addCommand')->call_u(
         [
@@ -802,7 +802,7 @@ my $result = do {
                 $scope, undef, undef, undef
             )
         ],
-        $scope, undef, 35.42857
+        $scope, undef, 35.5
     );
     $scope->property_u('bot')->property_u('addCommand')
       ->call_u( [ str( $f, "p" ), $scope->property_u('handlePerl') ],

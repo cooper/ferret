@@ -38,6 +38,33 @@ sub perl_fmt {
     };
 }
 
+# true if the call started an instruction.
+sub started_instr {
+    my $call = shift;
+    my $calling = $call->function;
+
+    # this might be easy...
+    return 1 if $calling->{started_instr};
+
+    # or it might be more difficult.
+    # search children, but stop when reaching functions or methods.
+    return unless $calling->is_node;
+
+    my $yes;
+    my $do; $do = sub {
+        my $el = shift;
+        if ($el->{started_instr}) {
+            $yes = 1;
+            return;
+        }
+        return if $el->hold_instr;
+        $do->($_) foreach $el->children;
+    };
+    $do->($calling);
+
+    return $yes;
+}
+
 sub function   { shift->first_child   }
 sub arg_list   { (shift->children)[1] }
 sub func_args  { my $l = shift->arg_list; $l ? $l->ordered_children : () }

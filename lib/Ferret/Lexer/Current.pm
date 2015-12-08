@@ -84,6 +84,11 @@ sub capture_closure_with {
     $c->{clos_cap} = $capturer;
 }
 
+sub do_not_capture_closure {
+    my $c = shift;
+    $c->{clos_cap} = $c->{clos_cap}{parent_clos_cap}; # consider: or delete?
+}
+
 sub get_closure {
     my $c = shift;
     my $closure = delete $c->{clos_cap};

@@ -1,12 +1,12 @@
 $bot = IRC::Bot(addr: "k.notroll.net", nick: "bottie", user: "ferret");
 $bot.autojoin = ["#k"];
 
-$bot.addCommand("info", func {
+$bot.addCommand("info") {
     need $msg;
     $bot.privmsg($msg.channel, "Ferret IRC bot");
-});
+}
 
-$bot.addCommand("t", func {
+$bot.addCommand("t") {
     need $msg;
     if !$msg.commandHasParameters:
         return;
@@ -17,9 +17,9 @@ $bot.addCommand("t", func {
         return;
     }
     $bot.privmsg($msg.channel, $res.pretty);
-});
+}
 
-$bot.addCommand("c", func {
+$bot.addCommand("c") {
     need $msg;
     if !$msg.commandHasParameters:
         return;
@@ -30,9 +30,9 @@ $bot.addCommand("c", func {
         return;
     }
     $bot.privmsg($msg.channel, $res.pretty);
-});
+}
 
-$bot.addCommand("e", func {
+$bot.addCommand("e") {
     need $msg;
     if !$msg.commandHasParameters:
         return;
@@ -43,7 +43,7 @@ $bot.addCommand("e", func {
     }
     $string = inspect(value: $res.result, quiet: true).string;
     $bot.privmsg($msg.channel, $string);
-});
+}
 
 $bot.addCommand("p", handlePerl);
 $bot.addCommand("pp", handlePerl);

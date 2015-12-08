@@ -299,7 +299,7 @@ sub c_CLOSURE_E {
         # $blah = something() { };  # do not simulate semicolon
         # something () { }          # simulate semicolon
         #
-        c_OP_SEMI($c) if $upper_call->{started_instr};
+        c_OP_SEMI($c) if $upper_call->started_instr;
 
     }
 
@@ -447,7 +447,6 @@ sub handle_call {
     # create a function call, adopting the last element.
     my $call = $c->node->adopt($package->new);
     $call->adopt($last_el);
-    $call->{started_instr} = $last_el->{started_instr};
 
     # handle the list, then adopt it.
     if ($has_list) {
@@ -460,6 +459,7 @@ sub handle_call {
         # something that's not a call like an if or on.
         my $more_likely = $c->clos_cap
             if $c->clos_cap && $c->clos_cap->type ne 'Call';
+            print "FOUND MORE LIKELY: ", $more_likely->desc, " son of ", $more_likely->parent->desc, "line ", $more_likely->{create_line}, "\n" if $more_likely;
 
         # clos_cap is just a call or nothing; use this call as the new clos_cap.
         $c->capture_closure_with($call) if !$is_index && !$more_likely;
@@ -719,8 +719,10 @@ sub c_OP_SEMI {
 
     # maybe now we can terminate an inline If.
     my ($n, $p) = ($c->node, $c->node->parent);
-    $c->close_node(2)
-        if $p && $n->type eq 'Body' && $p->type eq 'If' && $p->{inline};
+    if ($p && $n->type eq 'Body' && $p->type eq 'If' && $p->{inline}) {
+        $c->close_node(2); # if body and if
+        $c->do_not_capture_closure; # do not capture closure with it
+    }
 
     return;
 }
