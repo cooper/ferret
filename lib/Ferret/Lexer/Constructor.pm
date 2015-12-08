@@ -459,7 +459,6 @@ sub handle_call {
         # something that's not a call like an if or on.
         my $more_likely = $c->clos_cap
             if $c->clos_cap && $c->clos_cap->type ne 'Call';
-            print "FOUND MORE LIKELY: ", $more_likely->desc, " son of ", $more_likely->parent->desc, "line ", $more_likely->{create_line}, "\n" if $more_likely;
 
         # clos_cap is just a call or nothing; use this call as the new clos_cap.
         $c->capture_closure_with($call) if !$is_index && !$more_likely;

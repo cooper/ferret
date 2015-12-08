@@ -6,7 +6,8 @@ use strict;
 use 5.010;
 
 use Ferret::Lexer::Rules;
-use HOP::Lexer qw(string_lexer);
+use Ferret::Lexer::Lexer qw(string_lexer);
+
 use JSON::XS;
 my $json = JSON::XS->new->allow_nonref(1);
 my $position;
