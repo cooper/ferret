@@ -41,7 +41,10 @@ sub perl_fmt {
         my $info = $_;
         my $fmt  = $_->{event_cb} ? 'function_def_event' : 'function_def';
 
-        $info->{name} = $info->{anonymous} ? 'undef' : "'$$info{name}'";
+        $info->{name} =
+            length $info->{name} && $info->{name} ne '(undef)' ?
+            "'$$info{name}'"                                   :
+            'undef';
 
         $doc->get_format($fmt => $_);
     } @{ $doc->{function_defs} };

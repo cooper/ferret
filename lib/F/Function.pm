@@ -20,7 +20,6 @@ sub desc {
 sub new {
     my ($class, %opts) = @_;
     my $func = $class->SUPER::new(
-        name => '_anonymous_',
         body => F::Body->new,
         %opts
     );
@@ -47,7 +46,7 @@ sub perl_fmt {
         anonymous  => $func->{anonymous},
         event_cb   => $func->{event_cb},
         id         => $func->document->{function_cid}++,
-        name       => $func->{anonymous} ? '(undef)' : $func->{name},
+        name       => length $func->{name} ? $func->{name} : '(undef)',
         semi       => $func->{anonymous} ? ''        : ';', # probably temporary hack
         is_prop    => $func->{is_prop}   ? '1'       : 'undef',
         p_set      => $func->{p_set}     ? '1'       : 'undef',
@@ -58,7 +57,10 @@ sub perl_fmt {
     # add the function definition.
     push @{ $func->document->{function_defs} }, $info;
 
-    return function => $info;
+    return function => {
+        %$info,
+        name => $info->{anonymous} ? '(undef)' : $info->{name}
+    };
 }
 
 1

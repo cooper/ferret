@@ -631,8 +631,17 @@ sub c_VAR_SYM {
 
     # if the current node is an OnExpression, it's a callback name.
     if ($c->node->type eq 'OnExpression' && $c->node->{expecting_cb}) {
+
+        # cannot use ':default'
+        if ($value eq 'default') {
+            return $c->unexpected([
+                ":default for callback name",
+                'Cannot dynamically add default callback. Use \'func\' keyword instead'
+            ]);
+        }
+
         delete $c->node->{expecting_cb};
-        $c->node->parent->{cb_name} = $value;
+        $c->node->parent->set_cb_name($value);
         return;
     }
 

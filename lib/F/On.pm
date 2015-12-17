@@ -31,7 +31,6 @@ sub new {
 
     # create a function.
     my $func = F::Function->new(
-        name      => 'callback',
         anonymous => 1
     );
     $on->adopt($func);
@@ -64,13 +63,18 @@ sub event_name {
     die;
 }
 
+sub set_cb_name {
+    my ($on, $name) = @_;
+    $on->{cb_name} = $name;
+    $on->function->{name} = $name;
+}
+
 sub perl_fmt {
     my $on = shift;
-
     return on => {
         event_name => $on->event_name,
         object     => $on->event_object,
-        function   => $on->{function}->perl_fmt_do
+        function   => $on->function->perl_fmt_do
     };
 }
 
