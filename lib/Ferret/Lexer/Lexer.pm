@@ -11,26 +11,28 @@ use warnings;
 use strict;
 
 use parent 'Exporter';
-our @EXPORT_OK = qw(make_lexer string_lexer);
+our @EXPORT_OK = qw(string_lexer);
 
 sub string_lexer {
-    my $text = shift;
-    my @text = $text;
-    return make_lexer( sub { shift @text }, @_ );
-}
-
-sub make_lexer {
-    my $lexer = shift;
+    my $string = shift;
+    my @text   = $string;
+    my $lexer  = sub { shift @text };
     while (@_) {
         my $args = shift;
-        $lexer = _tokens( $lexer, @$args );
+        $lexer = _tokens( $string, $lexer, @$args );
     }
     return $lexer;
 }
 
 sub _tokens {
-    my ( $input, $label, $pattern, $maketoken ) = @_;
-    $maketoken ||= sub { [ $_[0] => $_[1] ] };
+    my ( $string, $input, $label, $pattern, $maketoken_user ) = @_;
+
+    my $maketoken = sub {
+        my ($buf, $l, $v) = @_;
+        return $maketoken_user->($l, $v) if $maketoken_user;
+        return [ $l, $v ];
+    };
+
     my @tokens;
     my $buf = "";    # set to undef when input is exhausted
     my $split = sub { split /($pattern)/ => $_[0] };
@@ -40,7 +42,7 @@ sub _tokens {
             my $i = $input->();
             if ( ref $i ) {    # input is a token
                 my ( $sep, $tok ) = $split->($buf);
-                $tok = $maketoken->( $label, $tok ) if defined $tok;
+                $tok = $maketoken->( $buf, $label, $tok ) if defined $tok;
                 push @tokens => grep defined && $_ ne "" => $sep, $tok, $i;
                 $buf = "";
                 last;
@@ -52,7 +54,7 @@ sub _tokens {
                 # buffer contains complete separator plus combined token
                 # OR we've reached the end of input
                 push @tokens => shift @newtoks;
-                push @tokens => $maketoken->( $label, shift @newtoks )
+                push @tokens => $maketoken->( $buf, $label, shift @newtoks )
                   if @newtoks;
             }
 

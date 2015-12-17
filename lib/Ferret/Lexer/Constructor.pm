@@ -629,6 +629,13 @@ sub c_KEYWORD_FALSE {
 sub c_VAR_SYM {
     my ($c, $value) = @_;
 
+    # if the current node is an OnExpression, it's a callback name.
+    if ($c->node->type eq 'OnExpression' && $c->node->{expecting_cb}) {
+        delete $c->node->{expecting_cb};
+        $c->node->parent->{cb_name} = $value;
+        return;
+    }
+
     # create the symbol...
     my $b = F::Symbol->new(sym_value => $value);
 
@@ -669,7 +676,20 @@ sub c_OP_COMMA {
         return $c->adopt_and_set_node($wn);
     }
 
-    return $c->unexpected('outside of list') if !$c->list;
+    # we're inside an OnExpression, so this comma could separate from a
+    # symbol callback name.
+    if (my $exp = $c->node->first_self_or_parent('OnExpression')) {
+        my $e = $c->next_token_must_be(
+            'VAR_SYM',
+            "Following a comma within 'on' parameter must be a symbol callback name"
+        );
+        return $e if $e;
+        $exp->{expecting_cb} = 1;
+        $c->set_node($exp);
+        return;
+    }
+
+    return $c->unexpected('outside of list');
 }
 
 sub c_BAREWORD {

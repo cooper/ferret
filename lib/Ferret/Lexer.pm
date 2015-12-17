@@ -65,6 +65,7 @@ our %pretty_tokens = (
     VAR_THIS    => 'instance variable (@)',
     VAR_SPEC    => 'special variable (*)',
     VAR_SET     => 'set type variable (<>)',
+    VAR_SYM     => 'symbol (:)',
     CLOSURE_S   => 'opening curly bracket "{"',
     CLOSURE_E   => 'closing curly bracket "}"',
     PAREN_S     => 'opening parenthesis "("',

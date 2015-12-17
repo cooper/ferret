@@ -26,6 +26,7 @@ sub body_fmt_do {
         my $wn = ($child->ordered_children)[0];
 
         # add wants/needs.
+        next unless wantarray;
         next unless $wn && $wn->type eq 'WantNeed';
         foreach my $var ($wn->variables) {
             push @arguments, $body->get_format(func_arg => {

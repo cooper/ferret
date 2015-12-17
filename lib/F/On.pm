@@ -11,6 +11,11 @@ sub type        { 'On' }
 sub function    { shift->{function}  }
 sub param_exp   { shift->{param_exp} }
 sub is_closure  { 1 }
+sub desc        {
+    my $on = shift;
+    my $name = $on->{cb_name};
+    return length $name ? "on ('$name' callback)" : 'on';
+}
 
 sub new {
     my ($class, %opts) = @_;

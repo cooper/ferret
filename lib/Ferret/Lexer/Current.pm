@@ -275,6 +275,24 @@ sub sort_precedence {
 }
 
 ##############
+### TOKENS ###
+##############
+
+# next token in line must be certain type.
+sub next_token_must_be {
+    my ($c, $tok, $err_desc) = @_;
+    my $next_t = $c->{upcoming}[0];
+    if (!$next_t || $next_t->[0] ne $tok) {
+        my $pretty = Ferret::Lexer::pretty_token($tok);
+        my $desc   = $c->node->desc;
+        my $e = "following $desc";
+           $e = [ $e, $err_desc ] if length $err_desc;
+        return $c->expected($pretty, $e);
+    }
+    return;
+}
+
+##############
 ### ERRORS ###
 ##############
 
@@ -317,10 +335,16 @@ sub fatal {
 }
 
 sub expected {
-    my ($c, $what, $where) = @_;
+    my ($c, $what, $reason, $el) = @_;
     $c->{err_caller} ||= [caller];
-    $where //= '';
-    fatal($c, "Expected $what $where.");
+
+    # if it's an arrayref, it's from a rule with a description.
+    my $err_desc;
+    ($reason, $err_desc) = @$reason if ref $reason eq 'ARRAY';
+    $err_desc = length $err_desc ? "\n$err_desc." : '';
+    $reason   = length $reason   ? " $reason"     : '';
+
+    fatal($c, "Expected $what$reason.$err_desc", $el);
 }
 
 sub unexpected {
