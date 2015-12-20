@@ -9,8 +9,9 @@ use 5.010;
 use List::Util qw(any all);
 
 use Ferret::Core::Conversion qw(
-    perl_string     ferret_string
-    perl_boolean    ferret_boolean
+    perl_string         ferret_string
+    perl_boolean        ferret_boolean
+    perl_number         ferret_number
     perl_description
 );
 
@@ -42,6 +43,13 @@ our %functions = (
     delay => {
         need => '$timeout:Num $callback',
         code => \&_delay
+    },
+    fetchObject => {
+        need => '$address:Num',
+        code => \&_fetchObject
+    },
+    activeObjectCount => {
+        code => \&_activeObjectCount
     }
 );
 
@@ -110,6 +118,19 @@ sub _delay {
 
     $return->set_property(timer => $timer);
     return $return;
+}
+
+sub _fetchObject {
+    my (undef, $arguments, $call_scope) = @_;
+    my $f = $call_scope->f;
+    my $addr = perl_number($arguments->{address});
+    return $f->{objects}{$addr} || Ferret::undefined;
+}
+
+sub _activeObjectCount {
+    my (undef, undef, $call_scope) = @_;
+    my $f = $call_scope->f;
+    return ferret_number(scalar keys %{ $f->{objects} });
 }
 
 1

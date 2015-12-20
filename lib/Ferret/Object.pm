@@ -37,6 +37,9 @@ sub new {
         $obj->set_property($_ => $pairs->{$_}) foreach keys %$pairs;
     }
 
+    # save object location.
+    weaken($f->{objects}{$obj + 0} = $obj);
+
     return $obj;
 }
 
@@ -488,6 +491,13 @@ sub call {
 
 sub call_u {
     return (shift->call(@_)) || Ferret::undefined;
+}
+
+# garbage disposal - remove object from Ferret instance.
+sub DESTROY {
+    my $obj = shift;
+    my $f = $obj->f or return;
+    delete $f->{objects}{$obj + 0};
 }
 
 ###############

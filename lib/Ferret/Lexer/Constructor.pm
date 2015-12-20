@@ -636,7 +636,8 @@ sub c_VAR_SYM {
         if ($value eq 'default') {
             return $c->unexpected([
                 ":default for callback name",
-                'Cannot dynamically add default callback. Use \'func\' keyword instead'
+                "Cannot dynamically add default callback. ".
+                "Use 'func' keyword instead"
             ]);
         }
 
@@ -690,7 +691,8 @@ sub c_OP_COMMA {
     if (my $exp = $c->node->first_self_or_parent('OnExpression')) {
         my $e = $c->next_token_must_be(
             'VAR_SYM',
-            "Following a comma within 'on' parameter must be a symbol callback name"
+            "Following a comma within 'on' parameter ".
+            "must be a symbol callback name"
         );
         return $e if $e;
         $exp->{expecting_cb} = 1;
