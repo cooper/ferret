@@ -10,7 +10,6 @@ sub new {
     return bless \%opts, $class;
 }
 
-sub unknown_el      { shift->{unknown_el}           }
 sub last_el         { shift->{last_el}              }
 sub rule_el         { shift->{rule_el}              }
 sub label           { shift->{label}                }
@@ -19,6 +18,14 @@ sub redo            { shift->{redo} = 1             }
 sub elements        { shift->{elements}             }
 sub should_redo     { delete shift->{redo}          }
 sub next_tok        { shift->{next_tok}[shift || 0] }
+
+sub unknown_el {
+    my $c = shift;
+    return $c->{unknown_el} ||= F::Unknown->new(
+        token_label => $c->{label},
+        token_value => $c->{value}
+    );
+}
 
 #############
 ### NODES ###

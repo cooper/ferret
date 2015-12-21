@@ -95,7 +95,7 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
-    # Function event 'makePoint' callback definition
+    # Function event 'makePoint' definition
     my $func_0 = FF::function_event_def(
         $f, $scope,
         'makePoint',

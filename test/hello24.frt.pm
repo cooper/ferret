@@ -69,7 +69,7 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
-    # Function event 'something' callback definition
+    # Function event 'something' definition
     my $func_0 = FF::function_event_def(
         $f, $scope,
         'something',

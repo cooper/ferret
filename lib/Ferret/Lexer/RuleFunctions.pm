@@ -83,7 +83,7 @@ sub token_check {
         last if $e;
     }
 
-    return $c->{unknown_el}->unexpected($e) if $e;
+    return $c->unknown_el->unexpected($e) if $e;
 }
 
 sub t_upper_nodes_must_have {

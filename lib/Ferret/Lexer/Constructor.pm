@@ -25,6 +25,7 @@ sub construct {
         file      => $main_node->{name} || 'unknown',
         node      => $main_node,
         elements  => [],
+        done_toks => [],
         upcoming  => \@_
     );
 
@@ -66,16 +67,12 @@ sub handle_label {
     return $err if $err = check_error();
 
     # current info.
-    @$current{ qw(label value line position next_tok last_el) } = (
+    @$current{ qw(label value line position next_tok last_el unknown_el) } = (
         $label, $value,
         int $position, $position,
         $current->{upcoming}[0],
-        $last_el
-    );
-
-    $current->{unknown_el} = F::Unknown->new(
-        token_label => $label,
-        token_value => $value
+        $last_el,
+        undef
     );
 
     # check token rules.
@@ -106,12 +103,14 @@ sub handle_label {
         return $redo->() if $current->should_redo;
 
         # all is good.
-        return;
-
     }
 
     # nothing to handle it. throw in an unknown element.
-    $current->node->adopt($current->unknown_el);
+    else {
+        $current->node->adopt($current->unknown_el);
+    }
+
+    push @{ $current->{done_toks} }, [ $label, $value ];
 
     # final error check.
     return $err if $err = check_error();
@@ -709,8 +708,10 @@ sub c_BAREWORD {
     # if the last element is a bareword, combine them.
     # ex: Math :: Point == Math::Point
     # ex: A B = AB
-    my $l_word = $c->last_el;
-    if ($l_word->type eq 'Bareword') {
+    my $l_word  = $c->last_el;
+    my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
+    my %useful  = map { $_ => 1 } qw(OP_PACK BAREWORD);
+    if ($useful{$l_label} && $l_word->type eq 'Bareword') {
         $l_word->{bareword_value} .= $value;
         $l_word->{parent}->adopt($l_word); # to redo after_adopt()
         return $l_word;

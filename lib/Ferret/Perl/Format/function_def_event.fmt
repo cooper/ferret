@@ -1,4 +1,4 @@
-# Function event <<name>> callback definition
+# Function event <<name>> definition
 my $func_<<id>> = FF::function_event_def($f, $scope, <<name>>, [ <<arguments>> ], sub {
     my ($_self, $arguments, $call_scope, $scope, $return) = @_;
     my $self = $_self || $self;

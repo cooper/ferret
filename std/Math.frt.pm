@@ -39,7 +39,7 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'Math' );
     FF::load_core('Math');
 
-    # Function event 'sqrt' callback definition
+    # Function event 'sqrt' definition
     my $func_0 = FF::function_event_def(
         $f, $scope, 'sqrt',
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],

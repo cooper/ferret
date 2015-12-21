@@ -115,7 +115,7 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
-    # Function event 'hello1' callback definition
+    # Function event 'hello1' definition
     my $func_0 = FF::function_event_def(
         $f, $scope, 'hello1',
         [],
@@ -144,7 +144,7 @@ my $result = do {
         }
     );
 
-    # Function event 'hello2' callback definition
+    # Function event 'hello2' definition
     my $func_1 = FF::function_event_def(
         $f, $scope, 'hello2',
         [],
@@ -164,7 +164,7 @@ my $result = do {
         }
     );
 
-    # Function event 'helloWorld' callback definition
+    # Function event 'helloWorld' definition
     my $func_2 = FF::function_event_def(
         $f, $scope,
         'helloWorld',
