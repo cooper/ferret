@@ -462,10 +462,11 @@ sub handle_call {
     my $last_el = $c->last_el;
     return $c->unexpected unless $last_el->is_type('Expression');
 
-    # if this is a list, it can only have one item.
+    # if this is a structural list, it can only have one item.
     if ($last_el->isa('F::List')
-     && $last_el->children > 1) {
-        return $c->expected('a single-element list', 'before');
+      && !$last_el->is_collection
+      && $last_el->children > 1) {
+        return $c->expected('a single-element list', 'before call arguments');
     }
 
     # create a function call, adopting the last element.

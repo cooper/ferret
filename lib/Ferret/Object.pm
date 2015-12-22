@@ -141,7 +141,14 @@ sub delete_property {
 # if the property does not exist, returns Perl undef.
 #
 sub property   { (shift->_property(@_))[0] }
-sub property_u { (shift->property(@_)) || Ferret::undefined }
+sub property_u {
+    my ($obj, $prop_name) = (shift, shift);
+    return $obj->property($prop_name, @_) || do {
+        my $undef = Ferret::undefined;
+        $undef->{last_name} = $prop_name;
+        $undef;
+    };
+}
 
 # this should not be used directly.
 # it returns a property value and its owner.
@@ -197,7 +204,11 @@ sub _property {
             $obj->set_property($prop_name => $p) if $setting;
         }
 
-        weaken($p->{last_parent} = $borrow_obj) if blessed $p;
+        if (blessed $p) {
+            weaken($p->{last_parent} = $borrow_obj);
+            $p->{last_name} = $prop_name;
+        }
+
         return ($p, $obj);
     }
 
@@ -467,6 +478,17 @@ sub description {
     return sprintf '[ %s ](%s)', join(', ', @parents), $prop_str;
 }
 
+# one-line truncated description.
+sub description_ol {
+    my $d = shift->description;
+    $d =~ s/\n/ /g;
+    $d =~ s/\s{2,}/ /g;
+    my $length = length $d;
+    $d = substr $d, 0, 30;
+    $d .= '...' if length $d < $length;
+    return $d;
+}
+
 # calling a non-function.
 sub call {
     my ($obj, undef, undef, undef, $pos) = @_;
@@ -482,7 +504,8 @@ sub call {
     $caller = [caller 1] if $caller->[0] eq __PACKAGE__;
 
     throw(CallOnNonFunction => $caller, [
-        Value => $obj->description,
+        Name  => $obj->{last_name} ? $obj->{last_name}.'()' : undef,
+        Value => $obj->description_ol,
         File  => $Ferret::file_map{ $caller->[1] } || 'unknown file',
         Line  => int $pos
     ]);

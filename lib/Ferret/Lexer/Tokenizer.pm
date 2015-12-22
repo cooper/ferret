@@ -150,8 +150,13 @@ sub possibly_call {
 
     # there can't be an operator or a keyword before a function call.
     return if grep {
-        $last ne 'OP_MAYBE' && $last =~ $_
+        $last ne 'KEYWORD_UNDEFINED'    &&
+        $last ne 'KEYWORD_TRUE'         &&
+        $last ne 'KEYWORD_FALSE'        &&
+        $last ne 'OP_MAYBE'             && $last =~ $_
     } qr/^OP_(.*)$/, qr/^KEYWORD.*$/;
+
+    # it also cannot be any of these.
     return if grep { $last eq $_ } qw(
         PAREN_S     PAREN_CALL
         BRACKET_S   BRACKET_IDX

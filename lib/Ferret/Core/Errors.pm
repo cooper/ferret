@@ -37,6 +37,8 @@ sub throw {
     my $max = 2 + max(map length($_), keys %hints);
     while (@hints) {
         my ($key, $value) = (shift @hints, shift @hints);
+        next if !defined $key || !defined $value;
+
         $value     = join "\n    ", split /\n/, $value;
         my $spaces = ' ' x ($max - length $key);
         $err      .= "    $key$spaces-> $value\n";
