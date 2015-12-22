@@ -120,9 +120,10 @@ sub _hasPrefix {
 
 sub trimPrefix {
     my ($str, $prefix) = @_;
-    my $pfx = \substr($str->{str_value}, 0, length $prefix);
-    $$pfx = '' if $$pfx eq $prefix;
-    return $str;
+    my $s   = $str->{str_value}; # make a copy
+    my $pfx = \substr($s, 0, length $prefix);
+    $$pfx   = '' if $$pfx eq $prefix;
+    return ferret_string($s);
 }
 
 sub _trimPrefix {
@@ -149,9 +150,9 @@ sub fill {
     }
 
     # join.
-    $str->{str_value} = join "\n", @lines;
+    my $s = join "\n", @lines; # make a copy
 
-    return $str;
+    return ferret_string($s);
 }
 
 sub _fill {

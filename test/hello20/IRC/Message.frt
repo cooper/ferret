@@ -8,11 +8,11 @@ init {
 
     # find nickname
     @nickname = $lineSplit[0].split(separator: "!", limit: 2)[0];
-    @nickname.trimPrefix(":");
+    @nickname = @nickname.trimPrefix(":");
 
     # find message
     @message = $lineSplit[3];
-    @message.trimPrefix(":");
+    @message = @message.trimPrefix(":");
 
     # split into parts
     @parts = @message.split(" ");
@@ -24,7 +24,7 @@ set prop command {
 
     # find it
     if @parts[0].hasPrefix(".") {
-        $cmd = @parts[0].copy().trimPrefix(".");
+        $cmd = @parts[0].trimPrefix(".");
         if $cmd.length:
             return $cmd;
     }

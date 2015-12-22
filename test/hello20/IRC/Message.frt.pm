@@ -48,12 +48,13 @@
 #                                  Item 0
 #                                      Number '0'
 #                  Instruction
-#                      Call
-#                          Property 'trimPrefix'
-#                              Instance variable '@nickname'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  String ':'
+#                      Assignment (instance variable '@nickname')
+#                          Call
+#                              Property 'trimPrefix'
+#                                  Instance variable '@nickname'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      String ':'
 #                  Instruction
 #                      Assignment (instance variable '@message')
 #                          Index
@@ -62,12 +63,13 @@
 #                                  Item 0
 #                                      Number '3'
 #                  Instruction
-#                      Call
-#                          Property 'trimPrefix'
-#                              Instance variable '@message'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  String ':'
+#                      Assignment (instance variable '@message')
+#                          Call
+#                              Property 'trimPrefix'
+#                                  Instance variable '@message'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      String ':'
 #                  Instruction
 #                      Assignment (instance variable '@parts')
 #                          Call
@@ -95,14 +97,11 @@
 #                              Assignment (lexical variable '$cmd')
 #                                  Call
 #                                      Property 'trimPrefix'
-#                                          Call
-#                                              Property 'copy'
-#                                                  Index
-#                                                      Instance variable '@parts'
-#                                                      Single value [1 items]
-#                                                          Item 0
-#                                                              Number '0'
-#                                              Argument list [0 items]
+#                                          Index
+#                                              Instance variable '@parts'
+#                                              Single value [1 items]
+#                                                  Item 0
+#                                                      Number '0'
 #                                      Argument list [1 items]
 #                                          Item 0
 #                                              String '.'
@@ -220,15 +219,23 @@ my $result = do {
                       )->get_index_value( [ num( $f, 0 ) ], $scope ),
                     10.11111
                 );
-                $self->property_u('nickname')->property_u('trimPrefix')
-                  ->call_u( [ str( $f, ":" ) ], $scope, undef, 11.75 );
+                $self->set_property(
+                    nickname =>
+                      $self->property_u('nickname')->property_u('trimPrefix')
+                      ->call_u( [ str( $f, ":" ) ], $scope, undef, 11.83333 ),
+                    11.33333
+                );
                 $self->set_property(
                     message => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 3 ) ], $scope ),
                     14.28571
                 );
-                $self->property_u('message')->property_u('trimPrefix')
-                  ->call_u( [ str( $f, ":" ) ], $scope, undef, 15.75 );
+                $self->set_property(
+                    message =>
+                      $self->property_u('message')->property_u('trimPrefix')
+                      ->call_u( [ str( $f, ":" ) ], $scope, undef, 15.83333 ),
+                    15.33333
+                );
                 $self->set_property(
                     parts => $self->property_u('message')->property_u('split')
                       ->call_u( [ str( $f, " " ) ], $scope, undef, 18.83333 ),
@@ -260,13 +267,11 @@ my $result = do {
                         $context,
                         cmd => $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
-                          ->property_u('copy')
-                          ->call_u( {}, $scope, undef, 27.66667 )
                           ->property_u('trimPrefix')->call_u(
                             [ str( $f, "." ) ],
-                            $scope, undef, 27.91667
+                            $scope, undef, 27.88889
                           ),
-                        27.16667
+                        27.22222
                     );
                     if ( bool( $scope->property_u('cmd')->property_u('length') )
                       )
