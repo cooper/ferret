@@ -14,14 +14,14 @@ my $position;
 
 # keywords
 my $keyword_reg = '^('.join('|', qw{
-    package     class       end
-    main        method      func        prop
-    need        want        inside      then
-    if          else        return      after
-    for         in          init        on
-    true        false       undefined   set
-    delete      weaken      share       local
-    __END__     __LINE__
+    package     class       end         init
+    method      func        prop        set
+    want        need        share       local
+    on          before      after       inside
+    if          else        return
+    true        false       undefined
+    for         in
+    delete      weaken      __END__     __LINE__
 }).')$';
 $keyword_reg = qr/$keyword_reg/;
 

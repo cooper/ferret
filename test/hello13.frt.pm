@@ -109,7 +109,8 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        {}
     );
     $scope->set_property_ow(
         $context,
@@ -123,7 +124,8 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        {}
     );
     $scope->property_u('t2')->property_u('cancel')
       ->call_u( {}, $scope, undef, 12.75 );

@@ -68,15 +68,10 @@ sub new {
     return $event;
 }
 
-sub add_function_with_self_and_scope {
-    my ($event, $self, $outer_scope) = (shift, shift, shift);
-    $event->{force_add_self} = $self;
-    $event->{force_add_outer_scope} = $outer_scope;
-    return $event->add_function(@_);
-}
-
-sub add_function {
-    my ($event, $obj, $func) = @_;
+sub add_function           { shift->add_function_with_opts(undef, @_) }
+sub add_function_with_opts {
+    my ($event, $_opts, $obj, $func) = @_;
+    my %opts = $_opts && ref $_opts eq 'HASH' ? %$_opts : ();
     #
     # if $func is undefined, that means the $obj was omitted.
     # when $obj is omitted, the object is inferred by last_parent.
@@ -91,11 +86,10 @@ sub add_function {
         $obj  = undef if $obj->{is_proto}; # adding to proto is for all objs
     }
 
-    my $self_maybe = delete $event->{force_add_self};
-    my $outer_scope_maybe = delete $event->{force_add_outer_scope};
+    my $self_maybe = delete $opts{self};
+    my $outer_scope_maybe = delete $opts{outer_scope};
 
     # function name is basically callback name.
-    my %opts;
     $opts{name} = $func->{name} ||= $func->{id};
     $event->{function}{ $opts{name} } = $func; # consider: weaken?
     $opts{priority} = 100 if $opts{name} eq 'default';

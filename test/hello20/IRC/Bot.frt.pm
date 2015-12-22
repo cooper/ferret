@@ -634,7 +634,8 @@ my $result = do {
                     $func_0->inside_scope(
                         (undef) => $scope,
                         $scope, undef, undef, undef
-                    )
+                    ),
+                    {}
                 );
                 FF::on(
                     $self->property_u('sock'),
@@ -643,7 +644,8 @@ my $result = do {
                     $func_1->inside_scope(
                         (undef) => $scope,
                         $scope, undef, undef, undef
-                    )
+                    ),
+                    {}
                 );
                 return $return;
             }

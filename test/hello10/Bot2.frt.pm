@@ -280,7 +280,8 @@ my $result = do {
                     $func_0->inside_scope(
                         (undef) => $scope,
                         $scope, undef, undef, undef
-                    )
+                    ),
+                    {}
                 );
                 FF::on(
                     $self,
@@ -289,7 +290,8 @@ my $result = do {
                     $func_1->inside_scope(
                         (undef) => $scope,
                         $scope, undef, undef, undef
-                    )
+                    ),
+                    {}
                 );
                 FF::on(
                     $self,
@@ -298,7 +300,8 @@ my $result = do {
                     $func_2->inside_scope(
                         (undef) => $scope,
                         $scope, undef, undef, undef
-                    )
+                    ),
+                    {}
                 );
                 return $return;
             }

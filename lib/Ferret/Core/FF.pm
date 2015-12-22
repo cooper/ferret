@@ -117,8 +117,9 @@ sub get_symbol {
 
 # attach an event callback.
 sub on {
-    my ($obj, $event_name, $self, $scope, $on_func) = @_;
+    my ($obj, $event_name, $self, $scope, $on_func, $_opts) = @_;
     my $event = $obj->property($event_name);
+    my %opts  = $_opts && ref $_opts eq 'HASH' ? %$_opts : ();
 
     # if $event exists and is not an event, runtime error.
     if ($event && !$event->isa('Ferret::Event')) { # TODO: proper type checking
@@ -135,7 +136,8 @@ sub on {
     }
 
     # add the function.
-    $event->add_function_with_self_and_scope($self, $scope, $on_func);
+    @opts{'self', 'outer_scope'} = ($self, $scope);
+    $event->add_function_with_opts(\%opts, $on_func);
 
     return;
 }

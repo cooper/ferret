@@ -136,8 +136,13 @@ my $result = do {
     $scope->property_u('say')
       ->call_u( [ str( $f, "test" ) ], $scope, undef, 1.4 );
     $scope->set_property_ow( $context, str => str( $f, "hi" ), 3.66667 );
-    FF::on( $scope->property_u('str'), 'length', $self, $scope,
-        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+    FF::on(
+        $scope->property_u('str'),
+        'length',
+        $self,
+        $scope,
+        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        {}
     );
     $scope->property_u('str')->property_u('length')
       ->call_u( {}, $scope, undef, 14.6 );
@@ -147,7 +152,8 @@ my $result = do {
         'length',
         $self,
         $scope,
-        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        {}
     );
     str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 25.6 );
 };

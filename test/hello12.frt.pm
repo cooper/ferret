@@ -223,14 +223,29 @@ my $result = do {
     );
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('sock') ], $scope, undef, 2.4 );
-    FF::on( $scope->property_u('sock'), 'gotLine', $self, $scope,
-        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+    FF::on(
+        $scope->property_u('sock'),
+        'gotLine',
+        $self,
+        $scope,
+        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        {}
     );
-    FF::on( $scope->property_u('sock'), 'println', $self, $scope,
-        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+    FF::on(
+        $scope->property_u('sock'),
+        'println',
+        $self,
+        $scope,
+        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        {}
     );
-    FF::on( $scope->property_u('sock'), 'connected', $self, $scope,
-        $func_2->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+    FF::on(
+        $scope->property_u('sock'),
+        'connected',
+        $self,
+        $scope,
+        $func_2->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        {}
     );
     $scope->property_u('sock')->property_u('connect')
       ->call_u( {}, $scope, undef, 19.6 );
@@ -241,7 +256,8 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $func_3->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+        $func_3->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        {}
     );
 };
 

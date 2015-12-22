@@ -23,9 +23,9 @@ sub new {
 
     # add parents.
     $obj->add_parent($_) foreach @{
-            delete $obj->{parents}    ||
-            [ delete $obj->{parent} ] ||
-            [ ]
+        delete $obj->{parents}    ||
+        [ delete $obj->{parent} ] ||
+        [ ]
     };
 
     # set special, if available.

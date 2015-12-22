@@ -80,7 +80,8 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef )
+        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        {}
     );
 };
 

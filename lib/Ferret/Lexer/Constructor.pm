@@ -337,6 +337,31 @@ sub c_KEYWORD_ON {
     return $on;
 }
 
+sub c_KEYWORD_BEFORE { handle_callback_clause(shift, 'before') }
+sub c_KEYWORD_AFTER  { handle_callback_clause(shift, 'after')  }
+
+sub handle_callback_clause {
+    my ($c, $type) = @_;
+
+    # must be inside an on expression.
+    my $exp = $c->node->first_self_or_parent('OnExpression');
+    return $c->unexpected("without preceding 'on' expression") if !$exp;
+
+    # next token must be a symbol.
+    my $e = $c->next_token_must_be(
+        'VAR_SYM',
+        "Following '$type' keyword must be a symbol callback name"
+    );
+    return $e if $e;
+
+    # make the on expression the current node.
+    $exp->{cb_method} = "add_${type}_clause";
+    $c->set_node($exp);
+
+    return;
+}
+
+
 sub c_KEYWORD_IF {
     my ($c, $value) = @_;
 
@@ -629,10 +654,11 @@ sub c_VAR_SYM {
     my ($c, $value) = @_;
 
     # if the current node is an OnExpression, it's a callback name.
-    if ($c->node->type eq 'OnExpression' && $c->node->{expecting_cb}) {
+    if ($c->node->type eq 'OnExpression' && $c->node->{cb_method}) {
+        my $method = delete $c->node->{cb_method};
 
-        # cannot use ':default'
-        if ($value eq 'default') {
+        # cannot use ':default' when it's the primary callback name
+        if ($value eq 'default' && $method eq 'set_cb_name') {
             return $c->unexpected([
                 ":default for callback name",
                 "Cannot dynamically add default callback. ".
@@ -640,8 +666,7 @@ sub c_VAR_SYM {
             ]);
         }
 
-        delete $c->node->{expecting_cb};
-        $c->node->parent->set_cb_name($value);
+        $c->node->parent->$method($value);
         return;
     }
 
@@ -694,7 +719,7 @@ sub c_OP_COMMA {
             "must be a symbol callback name"
         );
         return $e if $e;
-        $exp->{expecting_cb} = 1;
+        $exp->{cb_method} = 'set_cb_name';
         $c->set_node($exp);
         return;
     }
@@ -710,8 +735,8 @@ sub c_BAREWORD {
     # ex: A B = AB
     my $l_word  = $c->last_el;
     my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
-    my %useful  = map { $_ => 1 } qw(OP_PACK BAREWORD);
-    if ($useful{$l_label} && $l_word->type eq 'Bareword') {
+    if ($l_label eq 'OP_PACK' || $l_label eq 'BAREWORD'
+      and $l_word->type eq 'Bareword') {
         $l_word->{bareword_value} .= $value;
         $l_word->{parent}->adopt($l_word); # to redo after_adopt()
         return $l_word;

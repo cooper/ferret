@@ -127,7 +127,8 @@ my $result = do {
                 $func_0->inside_scope(
                     (undef) => $scope,
                     $scope, undef, undef, undef
-                )
+                ),
+                {}
             );
         }
     );
