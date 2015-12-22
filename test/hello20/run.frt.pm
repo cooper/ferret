@@ -400,6 +400,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
+my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('run.frt');
 
@@ -568,10 +569,8 @@ my $result = do {
             );
             $scope->set_property_ow(
                 $context,
-                res => $scope->property_u('c')->property_u('tokenize')->call_u(
-                    { pretty => Ferret::true },
-                    $scope, undef, 14.55556
-                ),
+                res => $scope->property_u('c')->property_u('tokenize')
+                  ->call_u( { pretty => $true }, $scope, undef, 14.55556 ),
                 14.22222
             );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
@@ -639,10 +638,8 @@ my $result = do {
             );
             $scope->set_property_ow(
                 $context,
-                res => $scope->property_u('c')->property_u('construct')->call_u(
-                    { pretty => Ferret::true },
-                    $scope, undef, 27.55556
-                ),
+                res => $scope->property_u('c')->property_u('construct')
+                  ->call_u( { pretty => $true }, $scope, undef, 27.55556 ),
                 27.22222
             );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
@@ -726,7 +723,7 @@ my $result = do {
                     {
                         value =>
                           $scope->property_u('res')->property_u('result'),
-                        quiet => Ferret::true
+                        quiet => $true
                     },
                     $scope, undef, 44.30769
                   )->property_u('string'),

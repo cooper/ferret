@@ -490,6 +490,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
+my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('Bot.frt');
 
@@ -683,12 +684,12 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $return->set_property( overwrote => Ferret::true, 45.5 );
+                    $return->set_property( overwrote => $true, 45.5 );
                 }
                 $self->property_u('commands')
                   ->set_index_value( [ $scope->property_u('command') ],
                     $scope->property_u('callback'), $scope );
-                $return->set_property( added => Ferret::true, 47.5 );
+                $return->set_property( added => $true, 47.5 );
                 return $return;
             }
         );
@@ -884,7 +885,7 @@ my $result = do {
 
                     return $return;
                 }
-                $self->set_property( _joinedChannels => Ferret::true, 96.5 );
+                $self->set_property( _joinedChannels => $true, 96.5 );
                 if ( bool( $self->property_u('autojoin') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 

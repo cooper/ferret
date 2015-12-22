@@ -26,6 +26,7 @@ our %functions = (
     },
     inspect => {
         need => '$value',
+        want => '$ownOnly:Bool',
         code => \&_inspect
     },
     require => {

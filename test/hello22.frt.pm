@@ -169,6 +169,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
+my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('hello22.frt');
 
@@ -190,7 +191,7 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     my $want_val = $arguments->{moos};
-                    $want_val ||= Ferret::true;
+                    $want_val ||= $true;
                     $self->set_property( moos => $want_val, 6.2 );
                 };
                 return $return;
@@ -239,7 +240,7 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     my $want_val = $arguments->{barks};
-                    $want_val ||= Ferret::false;
+                    $want_val ||= $false;
                     $self->set_property( barks => $want_val, 18.2 );
                 };
                 return $return;
@@ -281,7 +282,7 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 do {
                     my $want_val = $arguments->{mean};
-                    $want_val ||= Ferret::false;
+                    $want_val ||= $false;
                     $self->set_property( mean => $want_val, 30.2 );
                 };
                 return $return;
@@ -370,7 +371,7 @@ my $result = do {
     );
     $scope->property_u('Cat')->property_u('init')
       ->call_u( [ $scope->property_u('animal') ], $scope, undef, 65.3 )
-      ->call_u( { mean => Ferret::true }, $scope, undef, 65.6 );
+      ->call_u( { mean => $true }, $scope, undef, 65.6 );
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('animal') ], $scope, undef, 67.4 );
     $scope->set_property_ow(

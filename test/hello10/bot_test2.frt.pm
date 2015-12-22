@@ -42,6 +42,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
+my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('bot_test2.frt');
 

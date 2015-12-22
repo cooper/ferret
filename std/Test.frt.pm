@@ -235,6 +235,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
+my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('Test.frt');
 
@@ -269,7 +270,7 @@ my $result = do {
                 };
                 do {
                     my $want_val = $arguments->{fatal};
-                    $want_val ||= Ferret::true;
+                    $want_val ||= $true;
                     $self->set_property( fatal => $want_val, 6.2 );
                 };
                 $self->set_property( tested => num( $f, 0 ), 7.5 );
@@ -311,7 +312,7 @@ my $result = do {
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
-                          ->equal_to_exactly( Ferret::true, $scope ),
+                          ->equal_to_exactly( $true, $scope ),
                         str( $f, "Value must be exactly true" )
                     ],
                     $scope, undef, 19.375

@@ -13,6 +13,11 @@ sub get_ferret {
     return $Ferret::ferret ||= Ferret->new;
 }
 
+# fetch true, false, undefined objects
+sub get_constant_objects {
+    return (Ferret::true, Ferret::false, Ferret::undefined);
+}
+
 # fetch the current context.
 sub get_context {
     my ($f, $name) = @_;

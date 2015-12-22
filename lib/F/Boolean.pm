@@ -14,8 +14,8 @@ sub desc {
 
 sub perl_fmt_do {
     my $val = shift->{value};
-    return 'Ferret::undefined' if not defined $val;
-    return $val ? 'Ferret::true' : 'Ferret::false';
+    return '$undefined' if not defined $val;
+    return $val ? '$true' : '$false';
 }
 
 1

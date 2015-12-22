@@ -165,6 +165,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
+my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('Message.frt');
 
@@ -281,7 +282,7 @@ my $result = do {
                         return $scope->property_u('cmd');
                     }
                 }
-                return Ferret::false;
+                return $false;
                 return $return;
             }
         );

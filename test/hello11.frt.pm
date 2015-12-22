@@ -117,6 +117,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
+my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('hello11.frt');
 
@@ -209,8 +210,8 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         r => $scope->property_u('say')->call_u(
-            { message => str( $f, "It was said" ), twice => Ferret::true },
-            $scope, undef, 22.36364
+            { message => str( $f, "It was said" ), twice => $true }, $scope,
+            undef, 22.36364
         ),
         22.18182
     );
@@ -221,10 +222,9 @@ my $result = do {
           ->call_u( [ str( $f, "Did the first one twice!" ) ],
             $scope, undef, 25.4 );
     }
-    $scope->property_u('say')->call_u(
-        [ str( $f, "this should ignore the second parameter" ), Ferret::true ],
-        $scope, undef, 27.28571
-    );
+    $scope->property_u('say')
+      ->call_u( [ str( $f, "this should ignore the second parameter" ), $true ],
+        $scope, undef, 27.28571 );
 };
 
 FF::after_content();
