@@ -1,94 +1,94 @@
 # === Tokenization ===
-#         VAR_LEX |                        "point" | 1.08333
-#       OP_ASSIGN |                                | 1.16667
-#        BAREWORD |                         "Math" | 1.25
-#         OP_PACK |                                | 1.33333
-#        BAREWORD |                        "Point" | 1.41667
-#      PAREN_CALL |                                | 1.5
-#          NUMBER |                            "0" | 1.58333
-#        OP_COMMA |                                | 1.66667
-#          NUMBER |                            "0" | 1.75
-#         PAREN_E |                                | 1.83333
-#         OP_SEMI |                              1 | 1.91667
-#      KEYWORD_IF |                                | 3.25
-#         VAR_LEX |                        "point" | 3.5
-#       CLOSURE_S |                                | 3.75
-#        BAREWORD |                          "say" | 4.16667
-#      PAREN_CALL |                                | 4.33333
-#          STRING |          ["The point exists!"] | 4.5
-#         PAREN_E |                                | 4.66667
-#         OP_SEMI |                              1 | 4.83333
-#        BAREWORD |                      "inspect" | 5.16667
-#      PAREN_CALL |                                | 5.33333
-#         VAR_LEX |                        "point" | 5.5
-#         PAREN_E |                                | 5.66667
-#         OP_SEMI |                              1 | 5.83333
-#       CLOSURE_E |                                | 6.5
-#  KEYWORD_INSIDE |                                | 8.25
-#         VAR_LEX |                        "point" | 8.5
-#       CLOSURE_S |                                | 8.75
-#         VAR_LEX |                            "x" | 9.2
-#       OP_ASSIGN |                                | 9.4
-#          NUMBER |                            "5" | 9.6
-#         OP_SEMI |                              1 | 9.8
-#         VAR_LEX |                            "y" | 10.2
-#       OP_ASSIGN |                                | 10.4
-#          NUMBER |                           "10" | 10.6
-#         OP_SEMI |                              1 | 10.8
-#       CLOSURE_E |                                | 11.5
-#        BAREWORD |                          "say" | 13.16667
-#      PAREN_CALL |                                | 13.33333
-#          STRING | ["Point: ",["VAR_LEX","point",13]] | 13.5
-#         PAREN_E |                                | 13.66667
-#         OP_SEMI |                              1 | 13.83333
-#      KEYWORD_ON |                                | 15.25
-#        BAREWORD |                          "say" | 15.5
-#       CLOSURE_S |                                | 15.75
-#    KEYWORD_NEED |                                | 16.16667
-#         VAR_LEX |                        "twice" | 16.33333
-#        OP_COMMA |                                | 16.5
-#         VAR_LEX |                      "message" | 16.66667
-#         OP_SEMI |                              1 | 16.83333
-#      KEYWORD_IF |                                | 17.25
-#         VAR_LEX |                        "twice" | 17.5
-#        OP_VALUE |                                | 17.75
-#        BAREWORD |                          "say" | 18.16667
-#      PAREN_CALL |                                | 18.33333
-#          STRING | [["VAR_LEX","message",18]," again"] | 18.5
-#         PAREN_E |                                | 18.66667
-#         OP_SEMI |                              1 | 18.83333
-#        BAREWORD |                     "didTwice" | 19.2
-#       OP_RETURN |                                | 19.4
-#         VAR_LEX |                        "twice" | 19.6
-#         OP_SEMI |                              1 | 19.8
-#       CLOSURE_E |                                | 20.5
-#         VAR_LEX |                            "r" | 22.08333
-#       OP_ASSIGN |                                | 22.16667
-#        BAREWORD |                          "say" | 22.25
-#      PAREN_CALL |                                | 22.33333
-#      PROP_VALUE |                      "message" | 22.41667
-#          STRING |                ["It was said"] | 22.5
-#        OP_COMMA |                                | 22.58333
-#      PROP_VALUE |                        "twice" | 22.66667
-#    KEYWORD_TRUE |                                | 22.75
-#         PAREN_E |                                | 22.83333
-#         OP_SEMI |                              1 | 22.91667
-#      KEYWORD_IF |                                | 24.2
-#         VAR_LEX |                            "r" | 24.4
-#        PROPERTY |                     "didTwice" | 24.6
-#        OP_VALUE |                                | 24.8
-#        BAREWORD |                          "say" | 25.16667
-#      PAREN_CALL |                                | 25.33333
-#          STRING |   ["Did the first one twice!"] | 25.5
-#         PAREN_E |                                | 25.66667
-#         OP_SEMI |                              1 | 25.83333
-#        BAREWORD |                          "say" | 27.125
-#      PAREN_CALL |                                | 27.25
-#          STRING | ["this should ignore the second parameter"] | 27.375
-#        OP_COMMA |                                | 27.5
-#    KEYWORD_TRUE |                                | 27.625
-#         PAREN_E |                                | 27.75
-#         OP_SEMI |                              1 | 27.875
+#         VAR_LEX |                        "point" | 1.05
+#       OP_ASSIGN |                                | 1.1
+#        BAREWORD |                         "Math" | 1.15
+#         OP_PACK |                                | 1.2
+#        BAREWORD |                        "Point" | 1.25
+#      PAREN_CALL |                                | 1.3
+#          NUMBER |                            "0" | 1.35
+#        OP_COMMA |                                | 1.4
+#          NUMBER |                            "0" | 1.45
+#         PAREN_E |                                | 1.5
+#         OP_SEMI |                              1 | 1.55
+#      KEYWORD_IF |                                | 3.1
+#         VAR_LEX |                        "point" | 3.2
+#       CLOSURE_S |                                | 3.3
+#        BAREWORD |                          "say" | 4.1
+#      PAREN_CALL |                                | 4.2
+#          STRING |          ["The point exists!"] | 4.3
+#         PAREN_E |                                | 4.4
+#         OP_SEMI |                              1 | 4.5
+#        BAREWORD |                      "inspect" | 5.1
+#      PAREN_CALL |                                | 5.2
+#         VAR_LEX |                        "point" | 5.3
+#         PAREN_E |                                | 5.4
+#         OP_SEMI |                              1 | 5.5
+#       CLOSURE_E |                                | 6.1
+#  KEYWORD_INSIDE |                                | 8.1
+#         VAR_LEX |                        "point" | 8.2
+#       CLOSURE_S |                                | 8.3
+#         VAR_LEX |                            "x" | 9.1
+#       OP_ASSIGN |                                | 9.2
+#          NUMBER |                            "5" | 9.3
+#         OP_SEMI |                              1 | 9.4
+#         VAR_LEX |                            "y" | 10.1
+#       OP_ASSIGN |                                | 10.2
+#          NUMBER |                           "10" | 10.3
+#         OP_SEMI |                              1 | 10.4
+#       CLOSURE_E |                                | 11.1
+#        BAREWORD |                          "say" | 13.1
+#      PAREN_CALL |                                | 13.2
+#          STRING | ["Point: ",["VAR_LEX","point",13]] | 13.3
+#         PAREN_E |                                | 13.4
+#         OP_SEMI |                              1 | 13.5
+#      KEYWORD_ON |                                | 15.1
+#        BAREWORD |                          "say" | 15.2
+#       CLOSURE_S |                                | 15.3
+#    KEYWORD_NEED |                                | 16.1
+#         VAR_LEX |                        "twice" | 16.2
+#        OP_COMMA |                                | 16.3
+#         VAR_LEX |                      "message" | 16.4
+#         OP_SEMI |                              1 | 16.5
+#      KEYWORD_IF |                                | 17.1
+#         VAR_LEX |                        "twice" | 17.2
+#        OP_VALUE |                                | 17.3
+#        BAREWORD |                          "say" | 18.1
+#      PAREN_CALL |                                | 18.2
+#          STRING | [["VAR_LEX","message",18]," again"] | 18.3
+#         PAREN_E |                                | 18.4
+#         OP_SEMI |                              1 | 18.5
+#        BAREWORD |                     "didTwice" | 19.1
+#       OP_RETURN |                                | 19.2
+#         VAR_LEX |                        "twice" | 19.3
+#         OP_SEMI |                              1 | 19.4
+#       CLOSURE_E |                                | 20.1
+#         VAR_LEX |                            "r" | 22.05
+#       OP_ASSIGN |                                | 22.1
+#        BAREWORD |                          "say" | 22.15
+#      PAREN_CALL |                                | 22.2
+#      PROP_VALUE |                      "message" | 22.25
+#          STRING |                ["It was said"] | 22.3
+#        OP_COMMA |                                | 22.35
+#      PROP_VALUE |                        "twice" | 22.4
+#    KEYWORD_TRUE |                                | 22.45
+#         PAREN_E |                                | 22.5
+#         OP_SEMI |                              1 | 22.55
+#      KEYWORD_IF |                                | 24.1
+#         VAR_LEX |                            "r" | 24.2
+#        PROPERTY |                     "didTwice" | 24.3
+#        OP_VALUE |                                | 24.4
+#        BAREWORD |                          "say" | 25.1
+#      PAREN_CALL |                                | 25.2
+#          STRING |   ["Did the first one twice!"] | 25.3
+#         PAREN_E |                                | 25.4
+#         OP_SEMI |                              1 | 25.5
+#        BAREWORD |                          "say" | 27.1
+#      PAREN_CALL |                                | 27.2
+#          STRING | ["this should ignore the second parameter"] | 27.3
+#        OP_COMMA |                                | 27.4
+#    KEYWORD_TRUE |                                | 27.5
+#         PAREN_E |                                | 27.6
+#         OP_SEMI |                              1 | 27.7
 # === Document Model ===
 #  Document './test/hello11.frt'
 #      Instruction
@@ -237,8 +237,8 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'twice',   16.33333 ) or return;
-            FF::need( $scope, $arguments, 'message', 16.66667 ) or return;
+            FF::need( $scope, $arguments, 'twice',   16.2 ) or return;
+            FF::need( $scope, $arguments, 'message', 16.4 ) or return;
             if ( bool( $scope->property_u('twice') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -250,12 +250,12 @@ my $result = do {
                             str( $f, " again" )
                         )
                     ],
-                    $scope, undef, 18.33333
+                    $scope, undef, 18.2
                 );
             }
             $return->set_property(
                 didTwice => $scope->property_u('twice'),
-                19.4
+                19.2
             );
             return $return;
         }
@@ -264,17 +264,16 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         point => $scope->property_u('Math::Point')
-          ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1.5 ),
-        1.16667
+          ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1.3 ),
+        1.1
     );
     if ( bool( $scope->property_u('point') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
         $scope->property_u('say')
-          ->call_u( [ str( $f, "The point exists!" ) ], $scope, undef,
-            4.33333 );
+          ->call_u( [ str( $f, "The point exists!" ) ], $scope, undef, 4.2 );
         $scope->property_u('inspect')
-          ->call_u( [ $scope->property_u('point') ], $scope, undef, 5.33333 );
+          ->call_u( [ $scope->property_u('point') ], $scope, undef, 5.2 );
     }
 
     # Inside
@@ -283,14 +282,14 @@ my $result = do {
         $scope->property_u('point'),
         sub {
             my $scope = shift;
-            $scope->set_property_ow( $context, x => num( $f, 5 ),  9.4 );
-            $scope->set_property_ow( $context, y => num( $f, 10 ), 10.4 );
+            $scope->set_property_ow( $context, x => num( $f, 5 ),  9.2 );
+            $scope->set_property_ow( $context, y => num( $f, 10 ), 10.2 );
         }
     );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Point: " ), $scope->property_u('point') ) ],
-        $scope, undef, 13.33333 );
+        $scope, undef, 13.2 );
     FF::on(
         $scope,
         'say',
@@ -303,20 +302,20 @@ my $result = do {
         $context,
         r => $scope->property_u('say')->call_u(
             { message => str( $f, "It was said" ), twice => $true }, $scope,
-            undef, 22.33333
+            undef, 22.2
         ),
-        22.16667
+        22.1
     );
     if ( bool( $scope->property_u('r')->property_u('didTwice') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
         $scope->property_u('say')
           ->call_u( [ str( $f, "Did the first one twice!" ) ],
-            $scope, undef, 25.33333 );
+            $scope, undef, 25.2 );
     }
     $scope->property_u('say')
       ->call_u( [ str( $f, "this should ignore the second parameter" ), $true ],
-        $scope, undef, 27.25 );
+        $scope, undef, 27.2 );
 };
 
 FF::after_content();

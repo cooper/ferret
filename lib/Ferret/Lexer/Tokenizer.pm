@@ -452,11 +452,19 @@ sub _tokenize {
     # add positioning bits.
     for my $token (@tokens) {
         my $i = ++$done_on_line[ $token->[2] ];
-        my $inc = sprintf '%.5f', $i / ($all_on_line[ $token->[2] ] + 1);
+        my $inc = sprintf '%.5f', $i / multen($all_on_line[ $token->[2] ]);
         $token->[2] = int($token->[2]) + $inc;
     }
 
     return (undef, @tokens);
+}
+
+# find an appropriate multiple of ten.
+sub multen {
+    my $toks = shift() + 1;
+    my $tens = int $toks / 10;
+    $tens++;
+    return $tens * 10;
 }
 
 1

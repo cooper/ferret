@@ -1,150 +1,150 @@
 # === Tokenization ===
-#         PKG_DEC |                 {"name":"IRC"} | 1.5
-#       CLASS_DEC |             {"name":"Message"} | 2.5
-#          METHOD |     {"main":1,"name":"_init_"} | 4.33333
-#       CLOSURE_S |                                | 4.66667
-#    KEYWORD_NEED |                                | 5.16667
-#        VAR_THIS |                         "line" | 5.33333
-#        OP_VALUE |                                | 5.5
-#        BAREWORD |                          "Str" | 5.66667
-#         OP_SEMI |                              1 | 5.83333
-#         VAR_LEX |                    "lineSplit" | 6.07692
-#       OP_ASSIGN |                                | 6.15385
-#        VAR_THIS |                         "line" | 6.23077
-#        PROPERTY |                        "split" | 6.30769
-#      PAREN_CALL |                                | 6.38462
-#      PROP_VALUE |                    "separator" | 6.46154
-#          STRING |                          [" "] | 6.53846
-#        OP_COMMA |                                | 6.61538
-#      PROP_VALUE |                        "limit" | 6.69231
-#          NUMBER |                            "4" | 6.76923
-#         PAREN_E |                                | 6.84615
-#         OP_SEMI |                              1 | 6.92308
-#        VAR_THIS |                      "channel" | 7.125
-#       OP_ASSIGN |                                | 7.25
-#         VAR_LEX |                    "lineSplit" | 7.375
-#     BRACKET_IDX |                                | 7.5
-#          NUMBER |                            "2" | 7.625
-#       BRACKET_E |                                | 7.75
-#         OP_SEMI |                              1 | 7.875
-#        VAR_THIS |                     "nickname" | 10.05263
-#       OP_ASSIGN |                                | 10.10526
-#         VAR_LEX |                    "lineSplit" | 10.15789
-#     BRACKET_IDX |                                | 10.21053
-#          NUMBER |                            "0" | 10.26316
-#       BRACKET_E |                                | 10.31579
-#        PROPERTY |                        "split" | 10.36842
-#      PAREN_CALL |                                | 10.42105
-#      PROP_VALUE |                    "separator" | 10.47368
-#          STRING |                          ["!"] | 10.52632
-#        OP_COMMA |                                | 10.57895
-#      PROP_VALUE |                        "limit" | 10.63158
-#          NUMBER |                            "2" | 10.68421
-#         PAREN_E |                                | 10.73684
-#     BRACKET_IDX |                                | 10.78947
-#          NUMBER |                            "0" | 10.84211
-#       BRACKET_E |                                | 10.89474
-#         OP_SEMI |                              1 | 10.94737
-#        VAR_THIS |                     "nickname" | 11.11111
-#       OP_ASSIGN |                                | 11.22222
-#        VAR_THIS |                     "nickname" | 11.33333
-#        PROPERTY |                   "trimPrefix" | 11.44444
-#      PAREN_CALL |                                | 11.55556
-#          STRING |                          [":"] | 11.66667
-#         PAREN_E |                                | 11.77778
-#         OP_SEMI |                              1 | 11.88889
-#        VAR_THIS |                      "message" | 14.125
-#       OP_ASSIGN |                                | 14.25
-#         VAR_LEX |                    "lineSplit" | 14.375
-#     BRACKET_IDX |                                | 14.5
-#          NUMBER |                            "3" | 14.625
-#       BRACKET_E |                                | 14.75
-#         OP_SEMI |                              1 | 14.875
-#        VAR_THIS |                      "message" | 15.11111
-#       OP_ASSIGN |                                | 15.22222
-#        VAR_THIS |                      "message" | 15.33333
-#        PROPERTY |                   "trimPrefix" | 15.44444
-#      PAREN_CALL |                                | 15.55556
-#          STRING |                          [":"] | 15.66667
-#         PAREN_E |                                | 15.77778
-#         OP_SEMI |                              1 | 15.88889
-#        VAR_THIS |                        "parts" | 18.11111
-#       OP_ASSIGN |                                | 18.22222
-#        VAR_THIS |                      "message" | 18.33333
-#        PROPERTY |                        "split" | 18.44444
-#      PAREN_CALL |                                | 18.55556
-#          STRING |                          [" "] | 18.66667
-#         PAREN_E |                                | 18.77778
-#         OP_SEMI |                              1 | 18.88889
-#       CLOSURE_E |                                | 20.5
-#          METHOD | {"is_prop":1,"name":"command","p_set":1} | 23.33333
-#       CLOSURE_S |                                | 23.66667
-#      KEYWORD_IF |                                | 26.09091
-#        VAR_THIS |                        "parts" | 26.18182
-#     BRACKET_IDX |                                | 26.27273
-#          NUMBER |                            "0" | 26.36364
-#       BRACKET_E |                                | 26.45455
-#        PROPERTY |                    "hasPrefix" | 26.54545
-#      PAREN_CALL |                                | 26.63636
-#          STRING |                          ["."] | 26.72727
-#         PAREN_E |                                | 26.81818
-#       CLOSURE_S |                                | 26.90909
-#         VAR_LEX |                          "cmd" | 27.08333
-#       OP_ASSIGN |                                | 27.16667
-#        VAR_THIS |                        "parts" | 27.25
-#     BRACKET_IDX |                                | 27.33333
-#          NUMBER |                            "0" | 27.41667
-#       BRACKET_E |                                | 27.5
-#        PROPERTY |                   "trimPrefix" | 27.58333
-#      PAREN_CALL |                                | 27.66667
-#          STRING |                          ["."] | 27.75
-#         PAREN_E |                                | 27.83333
-#         OP_SEMI |                              1 | 27.91667
-#      KEYWORD_IF |                                | 28.2
-#         VAR_LEX |                          "cmd" | 28.4
-#        PROPERTY |                       "length" | 28.6
-#        OP_VALUE |                                | 28.8
-#  KEYWORD_RETURN |                                | 29.25
-#         VAR_LEX |                          "cmd" | 29.5
-#         OP_SEMI |                              1 | 29.75
-#       CLOSURE_E |                                | 30.5
-#  KEYWORD_RETURN |                                | 32.25
-#   KEYWORD_FALSE |                                | 32.5
-#         OP_SEMI |                              1 | 32.75
-#       CLOSURE_E |                                | 33.5
-#          METHOD | {"p_set":1,"name":"commandHasParameters","is_prop":1} | 35.33333
-#       CLOSURE_S |                                | 35.66667
-#  KEYWORD_RETURN |                                | 36.14286
-#        VAR_THIS |                        "parts" | 36.28571
-#        PROPERTY |                       "length" | 36.42857
-#       OP_NEQUAL |                                | 36.57143
-#          NUMBER |                            "1" | 36.71429
-#         OP_SEMI |                              1 | 36.85714
-#       CLOSURE_E |                                | 37.5
-#          METHOD |            {"name":"fromWord"} | 40.33333
-#       CLOSURE_S |                                | 40.66667
-#    KEYWORD_NEED |                                | 41.16667
-#         VAR_LEX |                        "wordN" | 41.33333
-#        OP_VALUE |                                | 41.5
-#        BAREWORD |                          "Num" | 41.66667
-#         OP_SEMI |                              1 | 41.83333
-#  KEYWORD_RETURN |                                | 42.05882
-#        VAR_THIS |                      "message" | 42.11765
-#        PROPERTY |                        "split" | 42.17647
-#      PAREN_CALL |                                | 42.23529
-#      PROP_VALUE |                    "separator" | 42.29412
-#          STRING |                          [" "] | 42.35294
-#        OP_COMMA |                                | 42.41176
-#      PROP_VALUE |                        "limit" | 42.47059
-#         VAR_LEX |                        "wordN" | 42.52941
-#          OP_ADD |                                | 42.58824
-#          NUMBER |                            "1" | 42.64706
-#         PAREN_E |                                | 42.70588
-#     BRACKET_IDX |                                | 42.76471
-#         VAR_LEX |                        "wordN" | 42.82353
-#       BRACKET_E |                                | 42.88235
-#         OP_SEMI |                              1 | 42.94118
-#       CLOSURE_E |                                | 43.5
+#         PKG_DEC |                 {"name":"IRC"} | 1.1
+#       CLASS_DEC |             {"name":"Message"} | 2.1
+#          METHOD |     {"name":"_init_","main":1} | 4.1
+#       CLOSURE_S |                                | 4.2
+#    KEYWORD_NEED |                                | 5.1
+#        VAR_THIS |                         "line" | 5.2
+#        OP_VALUE |                                | 5.3
+#        BAREWORD |                          "Str" | 5.4
+#         OP_SEMI |                              1 | 5.5
+#         VAR_LEX |                    "lineSplit" | 6.05
+#       OP_ASSIGN |                                | 6.1
+#        VAR_THIS |                         "line" | 6.15
+#        PROPERTY |                        "split" | 6.2
+#      PAREN_CALL |                                | 6.25
+#      PROP_VALUE |                    "separator" | 6.3
+#          STRING |                          [" "] | 6.35
+#        OP_COMMA |                                | 6.4
+#      PROP_VALUE |                        "limit" | 6.45
+#          NUMBER |                            "4" | 6.5
+#         PAREN_E |                                | 6.55
+#         OP_SEMI |                              1 | 6.6
+#        VAR_THIS |                      "channel" | 7.1
+#       OP_ASSIGN |                                | 7.2
+#         VAR_LEX |                    "lineSplit" | 7.3
+#     BRACKET_IDX |                                | 7.4
+#          NUMBER |                            "2" | 7.5
+#       BRACKET_E |                                | 7.6
+#         OP_SEMI |                              1 | 7.7
+#        VAR_THIS |                     "nickname" | 10.05
+#       OP_ASSIGN |                                | 10.1
+#         VAR_LEX |                    "lineSplit" | 10.15
+#     BRACKET_IDX |                                | 10.2
+#          NUMBER |                            "0" | 10.25
+#       BRACKET_E |                                | 10.3
+#        PROPERTY |                        "split" | 10.35
+#      PAREN_CALL |                                | 10.4
+#      PROP_VALUE |                    "separator" | 10.45
+#          STRING |                          ["!"] | 10.5
+#        OP_COMMA |                                | 10.55
+#      PROP_VALUE |                        "limit" | 10.6
+#          NUMBER |                            "2" | 10.65
+#         PAREN_E |                                | 10.7
+#     BRACKET_IDX |                                | 10.75
+#          NUMBER |                            "0" | 10.8
+#       BRACKET_E |                                | 10.85
+#         OP_SEMI |                              1 | 10.9
+#        VAR_THIS |                     "nickname" | 11.1
+#       OP_ASSIGN |                                | 11.2
+#        VAR_THIS |                     "nickname" | 11.3
+#        PROPERTY |                   "trimPrefix" | 11.4
+#      PAREN_CALL |                                | 11.5
+#          STRING |                          [":"] | 11.6
+#         PAREN_E |                                | 11.7
+#         OP_SEMI |                              1 | 11.8
+#        VAR_THIS |                      "message" | 14.1
+#       OP_ASSIGN |                                | 14.2
+#         VAR_LEX |                    "lineSplit" | 14.3
+#     BRACKET_IDX |                                | 14.4
+#          NUMBER |                            "3" | 14.5
+#       BRACKET_E |                                | 14.6
+#         OP_SEMI |                              1 | 14.7
+#        VAR_THIS |                      "message" | 15.1
+#       OP_ASSIGN |                                | 15.2
+#        VAR_THIS |                      "message" | 15.3
+#        PROPERTY |                   "trimPrefix" | 15.4
+#      PAREN_CALL |                                | 15.5
+#          STRING |                          [":"] | 15.6
+#         PAREN_E |                                | 15.7
+#         OP_SEMI |                              1 | 15.8
+#        VAR_THIS |                        "parts" | 18.1
+#       OP_ASSIGN |                                | 18.2
+#        VAR_THIS |                      "message" | 18.3
+#        PROPERTY |                        "split" | 18.4
+#      PAREN_CALL |                                | 18.5
+#          STRING |                          [" "] | 18.6
+#         PAREN_E |                                | 18.7
+#         OP_SEMI |                              1 | 18.8
+#       CLOSURE_E |                                | 20.1
+#          METHOD | {"p_set":1,"name":"command","is_prop":1} | 23.1
+#       CLOSURE_S |                                | 23.2
+#      KEYWORD_IF |                                | 26.05
+#        VAR_THIS |                        "parts" | 26.1
+#     BRACKET_IDX |                                | 26.15
+#          NUMBER |                            "0" | 26.2
+#       BRACKET_E |                                | 26.25
+#        PROPERTY |                    "hasPrefix" | 26.3
+#      PAREN_CALL |                                | 26.35
+#          STRING |                          ["."] | 26.4
+#         PAREN_E |                                | 26.45
+#       CLOSURE_S |                                | 26.5
+#         VAR_LEX |                          "cmd" | 27.05
+#       OP_ASSIGN |                                | 27.1
+#        VAR_THIS |                        "parts" | 27.15
+#     BRACKET_IDX |                                | 27.2
+#          NUMBER |                            "0" | 27.25
+#       BRACKET_E |                                | 27.3
+#        PROPERTY |                   "trimPrefix" | 27.35
+#      PAREN_CALL |                                | 27.4
+#          STRING |                          ["."] | 27.45
+#         PAREN_E |                                | 27.5
+#         OP_SEMI |                              1 | 27.55
+#      KEYWORD_IF |                                | 28.1
+#         VAR_LEX |                          "cmd" | 28.2
+#        PROPERTY |                       "length" | 28.3
+#        OP_VALUE |                                | 28.4
+#  KEYWORD_RETURN |                                | 29.1
+#         VAR_LEX |                          "cmd" | 29.2
+#         OP_SEMI |                              1 | 29.3
+#       CLOSURE_E |                                | 30.1
+#  KEYWORD_RETURN |                                | 32.1
+#   KEYWORD_FALSE |                                | 32.2
+#         OP_SEMI |                              1 | 32.3
+#       CLOSURE_E |                                | 33.1
+#          METHOD | {"is_prop":1,"name":"commandHasParameters","p_set":1} | 35.1
+#       CLOSURE_S |                                | 35.2
+#  KEYWORD_RETURN |                                | 36.1
+#        VAR_THIS |                        "parts" | 36.2
+#        PROPERTY |                       "length" | 36.3
+#       OP_NEQUAL |                                | 36.4
+#          NUMBER |                            "1" | 36.5
+#         OP_SEMI |                              1 | 36.6
+#       CLOSURE_E |                                | 37.1
+#          METHOD |            {"name":"fromWord"} | 40.1
+#       CLOSURE_S |                                | 40.2
+#    KEYWORD_NEED |                                | 41.1
+#         VAR_LEX |                        "wordN" | 41.2
+#        OP_VALUE |                                | 41.3
+#        BAREWORD |                          "Num" | 41.4
+#         OP_SEMI |                              1 | 41.5
+#  KEYWORD_RETURN |                                | 42.05
+#        VAR_THIS |                      "message" | 42.1
+#        PROPERTY |                        "split" | 42.15
+#      PAREN_CALL |                                | 42.2
+#      PROP_VALUE |                    "separator" | 42.25
+#          STRING |                          [" "] | 42.3
+#        OP_COMMA |                                | 42.35
+#      PROP_VALUE |                        "limit" | 42.4
+#         VAR_LEX |                        "wordN" | 42.45
+#          OP_ADD |                                | 42.5
+#          NUMBER |                            "1" | 42.55
+#         PAREN_E |                                | 42.6
+#     BRACKET_IDX |                                | 42.65
+#         VAR_LEX |                        "wordN" | 42.7
+#       BRACKET_E |                                | 42.75
+#         OP_SEMI |                              1 | 42.8
+#       CLOSURE_E |                                | 43.1
 # === Document Model ===
 #  Document './test/hello20/IRC/Message.frt'
 #      Package 'IRC'
@@ -347,14 +347,14 @@ my $result = do {
                         { separator => str( $f, " " ), limit => num( $f, 4 ) },
                         $scope,
                         undef,
-                        6.38462
+                        6.25
                       ),
-                    6.15385
+                    6.1
                 );
                 $self->set_property(
                     channel => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 2 ) ], $scope ),
-                    7.25
+                    7.2
                 );
                 $self->set_property(
                     nickname => $scope->property_u('lineSplit')
@@ -363,31 +363,31 @@ my $result = do {
                         { separator => str( $f, "!" ), limit => num( $f, 2 ) },
                         $scope,
                         undef,
-                        10.42105
+                        10.4
                       )->get_index_value( [ num( $f, 0 ) ], $scope ),
-                    10.10526
+                    10.1
                 );
                 $self->set_property(
                     nickname =>
                       $self->property_u('nickname')->property_u('trimPrefix')
-                      ->call_u( [ str( $f, ":" ) ], $scope, undef, 11.55556 ),
-                    11.22222
+                      ->call_u( [ str( $f, ":" ) ], $scope, undef, 11.5 ),
+                    11.2
                 );
                 $self->set_property(
                     message => $scope->property_u('lineSplit')
                       ->get_index_value( [ num( $f, 3 ) ], $scope ),
-                    14.25
+                    14.2
                 );
                 $self->set_property(
                     message =>
                       $self->property_u('message')->property_u('trimPrefix')
-                      ->call_u( [ str( $f, ":" ) ], $scope, undef, 15.55556 ),
-                    15.22222
+                      ->call_u( [ str( $f, ":" ) ], $scope, undef, 15.5 ),
+                    15.2
                 );
                 $self->set_property(
                     parts => $self->property_u('message')->property_u('split')
-                      ->call_u( [ str( $f, " " ) ], $scope, undef, 18.55556 ),
-                    18.22222
+                      ->call_u( [ str( $f, " " ) ], $scope, undef, 18.5 ),
+                    18.2
                 );
                 return $return;
             }
@@ -404,10 +404,8 @@ my $result = do {
                     bool(
                         $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
-                          ->property_u('hasPrefix')->call_u(
-                            [ str( $f, "." ) ],
-                            $scope, undef, 26.63636
-                          )
+                          ->property_u('hasPrefix')
+                          ->call_u( [ str( $f, "." ) ], $scope, undef, 26.35 )
                     )
                   )
                 {
@@ -417,11 +415,9 @@ my $result = do {
                         $context,
                         cmd => $self->property_u('parts')
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
-                          ->property_u('trimPrefix')->call_u(
-                            [ str( $f, "." ) ],
-                            $scope, undef, 27.66667
-                          ),
-                        27.16667
+                          ->property_u('trimPrefix')
+                          ->call_u( [ str( $f, "." ) ], $scope, undef, 27.4 ),
+                        27.1
                     );
                     if ( bool( $scope->property_u('cmd')->property_u('length') )
                       )
@@ -463,7 +459,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'wordN', 41.33333 ) or return;
+                FF::need( $scope, $arguments, 'wordN', 41.2 ) or return;
                 return $self->property_u('message')->property_u('split')
                   ->call_u(
                     {
@@ -473,7 +469,7 @@ my $result = do {
                             num( $f, 1 )
                         )
                     },
-                    $scope, undef, 42.23529
+                    $scope, undef, 42.2
                   )->get_index_value( [ $scope->property_u('wordN') ], $scope );
                 return $return;
             }

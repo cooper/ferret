@@ -1,208 +1,208 @@
 # === Tokenization ===
-#       CLASS_DEC |                {"name":"Test"} | 1.5
-#          METHOD |     {"name":"_init_","main":1} | 3.33333
-#       CLOSURE_S |                                | 3.66667
-#    KEYWORD_WANT |                                | 4.16667
-#        VAR_THIS |                         "name" | 4.33333
-#       OP_ASSIGN |                                | 4.5
-#          STRING |                       ["Test"] | 4.66667
-#         OP_SEMI |                              1 | 4.83333
-#    KEYWORD_WANT |                                | 5.16667
-#        VAR_THIS |                        "fatal" | 5.33333
-#       OP_ASSIGN |                                | 5.5
-#    KEYWORD_TRUE |                                | 5.66667
-#         OP_SEMI |                              1 | 5.83333
-#        VAR_THIS |                       "tested" | 6.2
-#       OP_ASSIGN |                                | 6.4
-#          NUMBER |                            "0" | 6.6
-#         OP_SEMI |                              1 | 6.8
-#        VAR_THIS |                       "passed" | 7.2
-#       OP_ASSIGN |                                | 7.4
-#          NUMBER |                            "0" | 7.6
-#         OP_SEMI |                              1 | 7.8
-#       CLOSURE_E |                                | 8.5
-#          METHOD |           {"name":"trueValue"} | 11.33333
-#       CLOSURE_S |                                | 11.66667
-#    KEYWORD_WANT |                                | 12.25
-#         VAR_LEX |                            "a" | 12.5
-#         OP_SEMI |                              1 | 12.75
-#  KEYWORD_RETURN |                                | 13.08333
-#        VAR_THIS |                        "_test" | 13.16667
+#       CLASS_DEC |                {"name":"Test"} | 1.1
+#          METHOD |     {"main":1,"name":"_init_"} | 3.1
+#       CLOSURE_S |                                | 3.2
+#    KEYWORD_WANT |                                | 4.1
+#        VAR_THIS |                         "name" | 4.2
+#       OP_ASSIGN |                                | 4.3
+#          STRING |                       ["Test"] | 4.4
+#         OP_SEMI |                              1 | 4.5
+#    KEYWORD_WANT |                                | 5.1
+#        VAR_THIS |                        "fatal" | 5.2
+#       OP_ASSIGN |                                | 5.3
+#    KEYWORD_TRUE |                                | 5.4
+#         OP_SEMI |                              1 | 5.5
+#        VAR_THIS |                       "tested" | 6.1
+#       OP_ASSIGN |                                | 6.2
+#          NUMBER |                            "0" | 6.3
+#         OP_SEMI |                              1 | 6.4
+#        VAR_THIS |                       "passed" | 7.1
+#       OP_ASSIGN |                                | 7.2
+#          NUMBER |                            "0" | 7.3
+#         OP_SEMI |                              1 | 7.4
+#       CLOSURE_E |                                | 8.1
+#          METHOD |           {"name":"trueValue"} | 11.1
+#       CLOSURE_S |                                | 11.2
+#    KEYWORD_WANT |                                | 12.1
+#         VAR_LEX |                            "a" | 12.2
+#         OP_SEMI |                              1 | 12.3
+#  KEYWORD_RETURN |                                | 13.05
+#        VAR_THIS |                        "_test" | 13.1
+#      PAREN_CALL |                                | 13.15
+#        BAREWORD |                         "Bool" | 13.2
 #      PAREN_CALL |                                | 13.25
-#        BAREWORD |                         "Bool" | 13.33333
-#      PAREN_CALL |                                | 13.41667
-#         VAR_LEX |                            "a" | 13.5
-#         PAREN_E |                                | 13.58333
-#        OP_COMMA |                                | 13.66667
-#          STRING |         ["Value must be true"] | 13.75
-#         PAREN_E |                                | 13.83333
-#         OP_SEMI |                              1 | 13.91667
-#       CLOSURE_E |                                | 14.5
-#          METHOD |            {"name":"veryTrue"} | 17.33333
-#       CLOSURE_S |                                | 17.66667
-#    KEYWORD_WANT |                                | 18.25
-#         VAR_LEX |                            "a" | 18.5
-#         OP_SEMI |                              1 | 18.75
-#  KEYWORD_RETURN |                                | 19.09091
-#        VAR_THIS |                        "_test" | 19.18182
-#      PAREN_CALL |                                | 19.27273
-#         VAR_LEX |                            "a" | 19.36364
-#      OP_EQUAL_I |                                | 19.45455
-#    KEYWORD_TRUE |                                | 19.54545
-#        OP_COMMA |                                | 19.63636
-#          STRING | ["Value must be exactly true"] | 19.72727
-#         PAREN_E |                                | 19.81818
-#         OP_SEMI |                              1 | 19.90909
-#       CLOSURE_E |                                | 20.5
-#          METHOD |               {"name":"equal"} | 23.33333
-#       CLOSURE_S |                                | 23.66667
-#    KEYWORD_WANT |                                | 24.16667
-#         VAR_LEX |                            "a" | 24.33333
-#        OP_COMMA |                                | 24.5
-#         VAR_LEX |                            "b" | 24.66667
-#         OP_SEMI |                              1 | 24.83333
-#  KEYWORD_RETURN |                                | 25.09091
-#        VAR_THIS |                        "_test" | 25.18182
-#      PAREN_CALL |                                | 25.27273
-#         VAR_LEX |                            "a" | 25.36364
-#        OP_EQUAL |                                | 25.45455
-#         VAR_LEX |                            "b" | 25.54545
-#        OP_COMMA |                                | 25.63636
-#          STRING |       ["Values must be equal"] | 25.72727
-#         PAREN_E |                                | 25.81818
-#         OP_SEMI |                              1 | 25.90909
-#       CLOSURE_E |                                | 26.5
-#          METHOD |        {"name":"objectsEqual"} | 29.33333
-#       CLOSURE_S |                                | 29.66667
-#    KEYWORD_WANT |                                | 30.16667
-#         VAR_LEX |                            "a" | 30.33333
-#        OP_COMMA |                                | 30.5
-#         VAR_LEX |                            "b" | 30.66667
-#         OP_SEMI |                              1 | 30.83333
-#  KEYWORD_RETURN |                                | 31.09091
-#        VAR_THIS |                        "_test" | 31.18182
-#      PAREN_CALL |                                | 31.27273
-#         VAR_LEX |                            "a" | 31.36364
-#      OP_EQUAL_I |                                | 31.45455
-#         VAR_LEX |                            "b" | 31.54545
-#        OP_COMMA |                                | 31.63636
-#          STRING | ["Objects must be exactly equal"] | 31.72727
-#         PAREN_E |                                | 31.81818
-#         OP_SEMI |                              1 | 31.90909
-#       CLOSURE_E |                                | 32.5
-#          METHOD |            {"name":"notEqual"} | 35.33333
-#       CLOSURE_S |                                | 35.66667
-#    KEYWORD_WANT |                                | 36.16667
-#         VAR_LEX |                            "a" | 36.33333
-#        OP_COMMA |                                | 36.5
-#         VAR_LEX |                            "b" | 36.66667
-#         OP_SEMI |                              1 | 36.83333
-#  KEYWORD_RETURN |                                | 37.09091
-#        VAR_THIS |                        "_test" | 37.18182
-#      PAREN_CALL |                                | 37.27273
-#         VAR_LEX |                            "a" | 37.36364
-#       OP_NEQUAL |                                | 37.45455
-#         VAR_LEX |                            "b" | 37.54545
-#        OP_COMMA |                                | 37.63636
-#          STRING |   ["Values must not be equal"] | 37.72727
-#         PAREN_E |                                | 37.81818
-#         OP_SEMI |                              1 | 37.90909
-#       CLOSURE_E |                                | 38.5
-#          METHOD |     {"name":"objectsNotEqual"} | 41.33333
-#       CLOSURE_S |                                | 41.66667
-#    KEYWORD_WANT |                                | 42.16667
-#         VAR_LEX |                            "a" | 42.33333
-#        OP_COMMA |                                | 42.5
-#         VAR_LEX |                            "b" | 42.66667
-#         OP_SEMI |                              1 | 42.83333
-#  KEYWORD_RETURN |                                | 43.09091
-#        VAR_THIS |                        "_test" | 43.18182
-#      PAREN_CALL |                                | 43.27273
-#         VAR_LEX |                            "a" | 43.36364
-#     OP_NEQUAL_I |                                | 43.45455
-#         VAR_LEX |                            "b" | 43.54545
-#        OP_COMMA |                                | 43.63636
-#          STRING |  ["Objects must not be equal"] | 43.72727
-#         PAREN_E |                                | 43.81818
-#         OP_SEMI |                              1 | 43.90909
-#       CLOSURE_E |                                | 44.5
-#          METHOD |              {"name":"review"} | 46.33333
-#       CLOSURE_S |                                | 46.66667
-#         VAR_LEX |                       "failed" | 47.14286
-#       OP_ASSIGN |                                | 47.28571
-#        VAR_THIS |                       "tested" | 47.42857
-#          OP_SUB |                                | 47.57143
-#        VAR_THIS |                       "passed" | 47.71429
-#         OP_SEMI |                              1 | 47.85714
-#        BAREWORD |                          "say" | 48.16667
-#      PAREN_CALL |                                | 48.33333
-#          STRING | ["[",["VAR_THIS","name",48],"] ",["VAR_THIS","tested",48]," tests ",["VAR_THIS","passed",48]," passed ",["VAR_LEX","failed",48]," failed"] | 48.5
-#         PAREN_E |                                | 48.66667
-#         OP_SEMI |                              1 | 48.83333
-#        BAREWORD |                        "tests" | 50.2
-#       OP_RETURN |                                | 50.4
-#        VAR_THIS |                       "tested" | 50.6
-#         OP_SEMI |                              1 | 50.8
-#        BAREWORD |                        "fails" | 51.2
-#       OP_RETURN |                                | 51.4
-#         VAR_LEX |                       "failed" | 51.6
-#         OP_SEMI |                              1 | 51.8
-#        BAREWORD |                       "passes" | 52.2
-#       OP_RETURN |                                | 52.4
-#        VAR_THIS |                       "passed" | 52.6
-#         OP_SEMI |                              1 | 52.8
-#        BAREWORD |                        "allOK" | 53.14286
-#       OP_RETURN |                                | 53.28571
-#        VAR_THIS |                       "passed" | 53.42857
-#        OP_EQUAL |                                | 53.57143
-#        VAR_THIS |                       "tested" | 53.71429
-#         OP_SEMI |                              1 | 53.85714
-#       CLOSURE_E |                                | 54.5
-#          METHOD |               {"name":"_test"} | 56.33333
-#       CLOSURE_S |                                | 56.66667
-#    KEYWORD_WANT |                                | 57.16667
-#         VAR_LEX |                          "yes" | 57.33333
-#        OP_COMMA |                                | 57.5
-#         VAR_LEX |                      "message" | 57.66667
-#         OP_SEMI |                              1 | 57.83333
-#        VAR_THIS |                       "tested" | 59.14286
-#       OP_ASSIGN |                                | 59.28571
-#        VAR_THIS |                       "tested" | 59.42857
-#          OP_ADD |                                | 59.57143
-#          NUMBER |                            "1" | 59.71429
-#         OP_SEMI |                              1 | 59.85714
-#        BAREWORD |                         "pass" | 60.2
-#       OP_RETURN |                                | 60.4
-#         VAR_LEX |                          "yes" | 60.6
-#         OP_SEMI |                              1 | 60.8
-#      KEYWORD_IF |                                | 62.25
-#         VAR_LEX |                          "yes" | 62.5
-#       CLOSURE_S |                                | 62.75
-#        VAR_THIS |                       "passed" | 63.14286
-#       OP_ASSIGN |                                | 63.28571
-#        VAR_THIS |                       "passed" | 63.42857
-#          OP_ADD |                                | 63.57143
-#          NUMBER |                            "1" | 63.71429
-#         OP_SEMI |                              1 | 63.85714
-#  KEYWORD_RETURN |                                | 64.33333
-#         OP_SEMI |                              1 | 64.66667
-#       CLOSURE_E |                                | 65.5
-#      KEYWORD_IF |                                | 67.25
-#        VAR_THIS |                        "fatal" | 67.5
-#        OP_VALUE |                                | 67.75
-#        BAREWORD |                        "Error" | 68.11111
-#      PAREN_CALL |                                | 68.22222
-#         VAR_LEX |                      "message" | 68.33333
-#         PAREN_E |                                | 68.44444
-#        PROPERTY |                        "panic" | 68.55556
-#      PAREN_CALL |                                | 68.66667
-#         PAREN_E |                                | 68.77778
-#         OP_SEMI |                              1 | 68.88889
-#        BAREWORD |                      "message" | 70.2
-#       OP_RETURN |                                | 70.4
-#         VAR_LEX |                      "message" | 70.6
-#         OP_SEMI |                              1 | 70.8
-#       CLOSURE_E |                                | 71.5
+#         VAR_LEX |                            "a" | 13.3
+#         PAREN_E |                                | 13.35
+#        OP_COMMA |                                | 13.4
+#          STRING |         ["Value must be true"] | 13.45
+#         PAREN_E |                                | 13.5
+#         OP_SEMI |                              1 | 13.55
+#       CLOSURE_E |                                | 14.1
+#          METHOD |            {"name":"veryTrue"} | 17.1
+#       CLOSURE_S |                                | 17.2
+#    KEYWORD_WANT |                                | 18.1
+#         VAR_LEX |                            "a" | 18.2
+#         OP_SEMI |                              1 | 18.3
+#  KEYWORD_RETURN |                                | 19.05
+#        VAR_THIS |                        "_test" | 19.1
+#      PAREN_CALL |                                | 19.15
+#         VAR_LEX |                            "a" | 19.2
+#      OP_EQUAL_I |                                | 19.25
+#    KEYWORD_TRUE |                                | 19.3
+#        OP_COMMA |                                | 19.35
+#          STRING | ["Value must be exactly true"] | 19.4
+#         PAREN_E |                                | 19.45
+#         OP_SEMI |                              1 | 19.5
+#       CLOSURE_E |                                | 20.1
+#          METHOD |               {"name":"equal"} | 23.1
+#       CLOSURE_S |                                | 23.2
+#    KEYWORD_WANT |                                | 24.1
+#         VAR_LEX |                            "a" | 24.2
+#        OP_COMMA |                                | 24.3
+#         VAR_LEX |                            "b" | 24.4
+#         OP_SEMI |                              1 | 24.5
+#  KEYWORD_RETURN |                                | 25.05
+#        VAR_THIS |                        "_test" | 25.1
+#      PAREN_CALL |                                | 25.15
+#         VAR_LEX |                            "a" | 25.2
+#        OP_EQUAL |                                | 25.25
+#         VAR_LEX |                            "b" | 25.3
+#        OP_COMMA |                                | 25.35
+#          STRING |       ["Values must be equal"] | 25.4
+#         PAREN_E |                                | 25.45
+#         OP_SEMI |                              1 | 25.5
+#       CLOSURE_E |                                | 26.1
+#          METHOD |        {"name":"objectsEqual"} | 29.1
+#       CLOSURE_S |                                | 29.2
+#    KEYWORD_WANT |                                | 30.1
+#         VAR_LEX |                            "a" | 30.2
+#        OP_COMMA |                                | 30.3
+#         VAR_LEX |                            "b" | 30.4
+#         OP_SEMI |                              1 | 30.5
+#  KEYWORD_RETURN |                                | 31.05
+#        VAR_THIS |                        "_test" | 31.1
+#      PAREN_CALL |                                | 31.15
+#         VAR_LEX |                            "a" | 31.2
+#      OP_EQUAL_I |                                | 31.25
+#         VAR_LEX |                            "b" | 31.3
+#        OP_COMMA |                                | 31.35
+#          STRING | ["Objects must be exactly equal"] | 31.4
+#         PAREN_E |                                | 31.45
+#         OP_SEMI |                              1 | 31.5
+#       CLOSURE_E |                                | 32.1
+#          METHOD |            {"name":"notEqual"} | 35.1
+#       CLOSURE_S |                                | 35.2
+#    KEYWORD_WANT |                                | 36.1
+#         VAR_LEX |                            "a" | 36.2
+#        OP_COMMA |                                | 36.3
+#         VAR_LEX |                            "b" | 36.4
+#         OP_SEMI |                              1 | 36.5
+#  KEYWORD_RETURN |                                | 37.05
+#        VAR_THIS |                        "_test" | 37.1
+#      PAREN_CALL |                                | 37.15
+#         VAR_LEX |                            "a" | 37.2
+#       OP_NEQUAL |                                | 37.25
+#         VAR_LEX |                            "b" | 37.3
+#        OP_COMMA |                                | 37.35
+#          STRING |   ["Values must not be equal"] | 37.4
+#         PAREN_E |                                | 37.45
+#         OP_SEMI |                              1 | 37.5
+#       CLOSURE_E |                                | 38.1
+#          METHOD |     {"name":"objectsNotEqual"} | 41.1
+#       CLOSURE_S |                                | 41.2
+#    KEYWORD_WANT |                                | 42.1
+#         VAR_LEX |                            "a" | 42.2
+#        OP_COMMA |                                | 42.3
+#         VAR_LEX |                            "b" | 42.4
+#         OP_SEMI |                              1 | 42.5
+#  KEYWORD_RETURN |                                | 43.05
+#        VAR_THIS |                        "_test" | 43.1
+#      PAREN_CALL |                                | 43.15
+#         VAR_LEX |                            "a" | 43.2
+#     OP_NEQUAL_I |                                | 43.25
+#         VAR_LEX |                            "b" | 43.3
+#        OP_COMMA |                                | 43.35
+#          STRING |  ["Objects must not be equal"] | 43.4
+#         PAREN_E |                                | 43.45
+#         OP_SEMI |                              1 | 43.5
+#       CLOSURE_E |                                | 44.1
+#          METHOD |              {"name":"review"} | 46.1
+#       CLOSURE_S |                                | 46.2
+#         VAR_LEX |                       "failed" | 47.1
+#       OP_ASSIGN |                                | 47.2
+#        VAR_THIS |                       "tested" | 47.3
+#          OP_SUB |                                | 47.4
+#        VAR_THIS |                       "passed" | 47.5
+#         OP_SEMI |                              1 | 47.6
+#        BAREWORD |                          "say" | 48.1
+#      PAREN_CALL |                                | 48.2
+#          STRING | ["[",["VAR_THIS","name",48],"] ",["VAR_THIS","tested",48]," tests ",["VAR_THIS","passed",48]," passed ",["VAR_LEX","failed",48]," failed"] | 48.3
+#         PAREN_E |                                | 48.4
+#         OP_SEMI |                              1 | 48.5
+#        BAREWORD |                        "tests" | 50.1
+#       OP_RETURN |                                | 50.2
+#        VAR_THIS |                       "tested" | 50.3
+#         OP_SEMI |                              1 | 50.4
+#        BAREWORD |                        "fails" | 51.1
+#       OP_RETURN |                                | 51.2
+#         VAR_LEX |                       "failed" | 51.3
+#         OP_SEMI |                              1 | 51.4
+#        BAREWORD |                       "passes" | 52.1
+#       OP_RETURN |                                | 52.2
+#        VAR_THIS |                       "passed" | 52.3
+#         OP_SEMI |                              1 | 52.4
+#        BAREWORD |                        "allOK" | 53.1
+#       OP_RETURN |                                | 53.2
+#        VAR_THIS |                       "passed" | 53.3
+#        OP_EQUAL |                                | 53.4
+#        VAR_THIS |                       "tested" | 53.5
+#         OP_SEMI |                              1 | 53.6
+#       CLOSURE_E |                                | 54.1
+#          METHOD |               {"name":"_test"} | 56.1
+#       CLOSURE_S |                                | 56.2
+#    KEYWORD_WANT |                                | 57.1
+#         VAR_LEX |                          "yes" | 57.2
+#        OP_COMMA |                                | 57.3
+#         VAR_LEX |                      "message" | 57.4
+#         OP_SEMI |                              1 | 57.5
+#        VAR_THIS |                       "tested" | 59.1
+#       OP_ASSIGN |                                | 59.2
+#        VAR_THIS |                       "tested" | 59.3
+#          OP_ADD |                                | 59.4
+#          NUMBER |                            "1" | 59.5
+#         OP_SEMI |                              1 | 59.6
+#        BAREWORD |                         "pass" | 60.1
+#       OP_RETURN |                                | 60.2
+#         VAR_LEX |                          "yes" | 60.3
+#         OP_SEMI |                              1 | 60.4
+#      KEYWORD_IF |                                | 62.1
+#         VAR_LEX |                          "yes" | 62.2
+#       CLOSURE_S |                                | 62.3
+#        VAR_THIS |                       "passed" | 63.1
+#       OP_ASSIGN |                                | 63.2
+#        VAR_THIS |                       "passed" | 63.3
+#          OP_ADD |                                | 63.4
+#          NUMBER |                            "1" | 63.5
+#         OP_SEMI |                              1 | 63.6
+#  KEYWORD_RETURN |                                | 64.1
+#         OP_SEMI |                              1 | 64.2
+#       CLOSURE_E |                                | 65.1
+#      KEYWORD_IF |                                | 67.1
+#        VAR_THIS |                        "fatal" | 67.2
+#        OP_VALUE |                                | 67.3
+#        BAREWORD |                        "Error" | 68.1
+#      PAREN_CALL |                                | 68.2
+#         VAR_LEX |                      "message" | 68.3
+#         PAREN_E |                                | 68.4
+#        PROPERTY |                        "panic" | 68.5
+#      PAREN_CALL |                                | 68.6
+#         PAREN_E |                                | 68.7
+#         OP_SEMI |                              1 | 68.8
+#        BAREWORD |                      "message" | 70.1
+#       OP_RETURN |                                | 70.2
+#         VAR_LEX |                      "message" | 70.3
+#         OP_SEMI |                              1 | 70.4
+#       CLOSURE_E |                                | 71.1
 # === Document Model ===
 #  Document './std/Test.frt'
 #      Class 'Test'
@@ -468,11 +468,10 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $self, $arguments, 'name', 4.33333,
-                    str( $f, "Test" ) );
-                FF::want( $self, $arguments, 'fatal', 5.33333, $true );
-                $self->set_property( tested => num( $f, 0 ), 6.4 );
-                $self->set_property( passed => num( $f, 0 ), 7.4 );
+                FF::want( $self, $arguments, 'name', 4.2, str( $f, "Test" ) );
+                FF::want( $self, $arguments, 'fatal', 5.2, $true );
+                $self->set_property( tested => num( $f, 0 ), 6.2 );
+                $self->set_property( passed => num( $f, 0 ), 7.2 );
                 return $return;
             }
         );
@@ -484,16 +483,16 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 12.5 );
+                FF::want( $scope, $arguments, 'a', 12.2 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('Bool')->call_u(
                             [ $scope->property_u('a') ], $scope,
-                            undef,                       13.41667
+                            undef,                       13.25
                         ),
                         str( $f, "Value must be true" )
                     ],
-                    $scope, undef, 13.25
+                    $scope, undef, 13.15
                 );
                 return $return;
             }
@@ -506,14 +505,14 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 18.5 );
+                FF::want( $scope, $arguments, 'a', 18.2 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
                           ->equal_to_exactly( $true, $scope ),
                         str( $f, "Value must be exactly true" )
                     ],
-                    $scope, undef, 19.27273
+                    $scope, undef, 19.15
                 );
                 return $return;
             }
@@ -528,15 +527,15 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 24.33333 );
-                FF::want( $scope, $arguments, 'b', 24.66667 );
+                FF::want( $scope, $arguments, 'a', 24.2 );
+                FF::want( $scope, $arguments, 'b', 24.4 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
                           ->equal_to( $scope->property_u('b'), $scope ),
                         str( $f, "Values must be equal" )
                     ],
-                    $scope, undef, 25.27273
+                    $scope, undef, 25.15
                 );
                 return $return;
             }
@@ -552,15 +551,15 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 30.33333 );
-                FF::want( $scope, $arguments, 'b', 30.66667 );
+                FF::want( $scope, $arguments, 'a', 30.2 );
+                FF::want( $scope, $arguments, 'b', 30.4 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
                           ->equal_to_exactly( $scope->property_u('b'), $scope ),
                         str( $f, "Objects must be exactly equal" )
                     ],
-                    $scope, undef, 31.27273
+                    $scope, undef, 31.15
                 );
                 return $return;
             }
@@ -576,8 +575,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 36.33333 );
-                FF::want( $scope, $arguments, 'b', 36.66667 );
+                FF::want( $scope, $arguments, 'a', 36.2 );
+                FF::want( $scope, $arguments, 'b', 36.4 );
                 return $self->property_u('_test')->call_u(
                     [
                         _not(
@@ -586,7 +585,7 @@ my $result = do {
                         ),
                         str( $f, "Values must not be equal" )
                     ],
-                    $scope, undef, 37.27273
+                    $scope, undef, 37.15
                 );
                 return $return;
             }
@@ -602,8 +601,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 42.33333 );
-                FF::want( $scope, $arguments, 'b', 42.66667 );
+                FF::want( $scope, $arguments, 'a', 42.2 );
+                FF::want( $scope, $arguments, 'b', 42.4 );
                 return $self->property_u('_test')->call_u(
                     [
                         _not(
@@ -613,7 +612,7 @@ my $result = do {
                         ),
                         str( $f, "Objects must not be equal" )
                     ],
-                    $scope, undef, 43.27273
+                    $scope, undef, 43.15
                 );
                 return $return;
             }
@@ -632,7 +631,7 @@ my $result = do {
                         $self->property_u('tested'),
                         $self->property_u('passed')
                     ),
-                    47.28571
+                    47.2
                 );
                 $scope->property_u('say')->call_u(
                     [
@@ -649,24 +648,24 @@ my $result = do {
                             str( $f, " failed" )
                         )
                     ],
-                    $scope, undef, 48.33333
+                    $scope, undef, 48.2
                 );
                 $return->set_property(
                     tests => $self->property_u('tested'),
-                    50.4
+                    50.2
                 );
                 $return->set_property(
                     fails => $scope->property_u('failed'),
-                    51.4
+                    51.2
                 );
                 $return->set_property(
                     passes => $self->property_u('passed'),
-                    52.4
+                    52.2
                 );
                 $return->set_property(
                     allOK => $self->property_u('passed')
                       ->equal_to( $self->property_u('tested'), $scope ),
-                    53.28571
+                    53.2
                 );
                 return $return;
             }
@@ -686,16 +685,16 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'yes',     57.33333 );
-                FF::want( $scope, $arguments, 'message', 57.66667 );
+                FF::want( $scope, $arguments, 'yes',     57.2 );
+                FF::want( $scope, $arguments, 'message', 57.4 );
                 $self->set_property(
                     tested =>
                       add( $scope, $self->property_u('tested'), num( $f, 1 ) ),
-                    59.28571
+                    59.2
                 );
                 $return->set_property(
                     pass => $scope->property_u('yes'),
-                    60.4
+                    60.2
                 );
                 if ( bool( $scope->property_u('yes') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -705,7 +704,7 @@ my $result = do {
                             $scope, $self->property_u('passed'),
                             num( $f, 1 )
                         ),
-                        63.28571
+                        63.2
                     );
                     return $return;
                 }
@@ -714,12 +713,12 @@ my $result = do {
 
                     $scope->property_u('Error')
                       ->call_u( [ $scope->property_u('message') ],
-                        $scope, undef, 68.22222 )->property_u('panic')
-                      ->call_u( {}, $scope, undef, 68.66667 );
+                        $scope, undef, 68.2 )->property_u('panic')
+                      ->call_u( {}, $scope, undef, 68.6 );
                 }
                 $return->set_property(
                     message => $scope->property_u('message'),
-                    70.4
+                    70.2
                 );
                 return $return;
             }

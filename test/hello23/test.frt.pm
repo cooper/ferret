@@ -1,15 +1,15 @@
 # === Tokenization ===
-#         VAR_LEX |                            "x" | 1.14286
-#       OP_ASSIGN |                                | 1.28571
-#         PAREN_S |                                | 1.42857
-#        OP_VALUE |                                | 1.57143
-#         PAREN_E |                                | 1.71429
-#         OP_SEMI |                              1 | 1.85714
-#  KEYWORD_DELETE |                                | 2.25
-#         VAR_LEX |                            "x" | 2.5
-#         OP_SEMI |                              1 | 2.75
-#        BAREWORD |                       "Second" | 3.33333
-#         OP_SEMI |                              1 | 3.66667
+#         VAR_LEX |                            "x" | 1.1
+#       OP_ASSIGN |                                | 1.2
+#         PAREN_S |                                | 1.3
+#        OP_VALUE |                                | 1.4
+#         PAREN_E |                                | 1.5
+#         OP_SEMI |                              1 | 1.6
+#  KEYWORD_DELETE |                                | 2.1
+#         VAR_LEX |                            "x" | 2.2
+#         OP_SEMI |                              1 | 2.3
+#        BAREWORD |                       "Second" | 3.1
+#         OP_SEMI |                              1 | 3.2
 # === Document Model ===
 #  Document './test/hello23/test.frt'
 #      Instruction
@@ -46,12 +46,8 @@ my $result = do {
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Second) );
-    $scope->set_property_ow(
-        $context,
-        x => FF::create_object( $f, {} ),
-        1.28571
-    );
-    $scope->delete_property( 'x', 2.25 );
+    $scope->set_property_ow( $context, x => FF::create_object( $f, {} ), 1.2 );
+    $scope->delete_property( 'x', 2.1 );
     $scope->property_u('Second');
 };
 

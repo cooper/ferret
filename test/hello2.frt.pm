@@ -1,13 +1,13 @@
 # === Tokenization ===
+#         PAREN_S |                                | 1.05
 #         PAREN_S |                                | 1.1
-#         PAREN_S |                                | 1.2
-#        BAREWORD |                          "say" | 1.3
+#        BAREWORD |                          "say" | 1.15
+#         PAREN_E |                                | 1.2
+#      PAREN_CALL |                                | 1.25
+#          STRING |               ["Hello World!"] | 1.3
+#         PAREN_E |                                | 1.35
 #         PAREN_E |                                | 1.4
-#      PAREN_CALL |                                | 1.5
-#          STRING |               ["Hello World!"] | 1.6
-#         PAREN_E |                                | 1.7
-#         PAREN_E |                                | 1.8
-#         OP_SEMI |                              1 | 1.9
+#         OP_SEMI |                              1 | 1.45
 # === Document Model ===
 #  Document './test/hello2.frt'
 #      Instruction
@@ -45,7 +45,7 @@ my $result = do {
     FF::load_core('main');
 
     $scope->property_u('say')
-      ->call_u( [ str( $f, "Hello World!" ) ], $scope, undef, 1.5 );
+      ->call_u( [ str( $f, "Hello World!" ) ], $scope, undef, 1.25 );
 };
 
 FF::after_content();

@@ -1,49 +1,49 @@
 # === Tokenization ===
-#        BAREWORD |                          "say" | 1.16667
-#      PAREN_CALL |                                | 1.33333
-#          STRING |                       ["test"] | 1.5
-#         PAREN_E |                                | 1.66667
-#         OP_SEMI |                              1 | 1.83333
-#         VAR_LEX |                          "str" | 3.2
-#       OP_ASSIGN |                                | 3.4
-#          STRING |                         ["hi"] | 3.6
-#         OP_SEMI |                              1 | 3.8
-#      KEYWORD_ON |                                | 8.2
-#         VAR_LEX |                          "str" | 8.4
-#        PROPERTY |                       "length" | 8.6
-#       CLOSURE_S |                                | 8.8
-#        BAREWORD |                          "say" | 11.16667
-#      PAREN_CALL |                                | 11.33333
-#          STRING | ["found '",["VAR_SPEC","this",11],"' length to be ",["VAR_SPEC","return",11]] | 11.5
-#         PAREN_E |                                | 11.66667
-#         OP_SEMI |                              1 | 11.83333
-#       CLOSURE_E |                                | 12.5
-#         VAR_LEX |                          "str" | 14.16667
-#        PROPERTY |                       "length" | 14.33333
-#      PAREN_CALL |                                | 14.5
-#         PAREN_E |                                | 14.66667
-#         OP_SEMI |                              1 | 14.83333
-#          STRING |                      ["hello"] | 16.16667
-#        PROPERTY |                       "length" | 16.33333
-#      PAREN_CALL |                                | 16.5
-#         PAREN_E |                                | 16.66667
-#         OP_SEMI |                              1 | 16.83333
-#      KEYWORD_ON |                                | 21.16667
-#        BAREWORD |                       "String" | 21.33333
-#        PROPERTY |                        "proto" | 21.5
-#        PROPERTY |                       "length" | 21.66667
-#       CLOSURE_S |                                | 21.83333
-#        BAREWORD |                          "say" | 22.16667
-#      PAREN_CALL |                                | 22.33333
-#          STRING | ["found '",["VAR_SPEC","this",22],"' length to be ",["VAR_SPEC","return",22]] | 22.5
-#         PAREN_E |                                | 22.66667
-#         OP_SEMI |                              1 | 22.83333
-#       CLOSURE_E |                                | 23.5
-#          STRING |                      ["hello"] | 25.16667
-#        PROPERTY |                       "length" | 25.33333
-#      PAREN_CALL |                                | 25.5
-#         PAREN_E |                                | 25.66667
-#         OP_SEMI |                              1 | 25.83333
+#        BAREWORD |                          "say" | 1.1
+#      PAREN_CALL |                                | 1.2
+#          STRING |                       ["test"] | 1.3
+#         PAREN_E |                                | 1.4
+#         OP_SEMI |                              1 | 1.5
+#         VAR_LEX |                          "str" | 3.1
+#       OP_ASSIGN |                                | 3.2
+#          STRING |                         ["hi"] | 3.3
+#         OP_SEMI |                              1 | 3.4
+#      KEYWORD_ON |                                | 8.1
+#         VAR_LEX |                          "str" | 8.2
+#        PROPERTY |                       "length" | 8.3
+#       CLOSURE_S |                                | 8.4
+#        BAREWORD |                          "say" | 11.1
+#      PAREN_CALL |                                | 11.2
+#          STRING | ["found '",["VAR_SPEC","this",11],"' length to be ",["VAR_SPEC","return",11]] | 11.3
+#         PAREN_E |                                | 11.4
+#         OP_SEMI |                              1 | 11.5
+#       CLOSURE_E |                                | 12.1
+#         VAR_LEX |                          "str" | 14.1
+#        PROPERTY |                       "length" | 14.2
+#      PAREN_CALL |                                | 14.3
+#         PAREN_E |                                | 14.4
+#         OP_SEMI |                              1 | 14.5
+#          STRING |                      ["hello"] | 16.1
+#        PROPERTY |                       "length" | 16.2
+#      PAREN_CALL |                                | 16.3
+#         PAREN_E |                                | 16.4
+#         OP_SEMI |                              1 | 16.5
+#      KEYWORD_ON |                                | 21.1
+#        BAREWORD |                       "String" | 21.2
+#        PROPERTY |                        "proto" | 21.3
+#        PROPERTY |                       "length" | 21.4
+#       CLOSURE_S |                                | 21.5
+#        BAREWORD |                          "say" | 22.1
+#      PAREN_CALL |                                | 22.2
+#          STRING | ["found '",["VAR_SPEC","this",22],"' length to be ",["VAR_SPEC","return",22]] | 22.3
+#         PAREN_E |                                | 22.4
+#         OP_SEMI |                              1 | 22.5
+#       CLOSURE_E |                                | 23.1
+#          STRING |                      ["hello"] | 25.1
+#        PROPERTY |                       "length" | 25.2
+#      PAREN_CALL |                                | 25.3
+#         PAREN_E |                                | 25.4
+#         OP_SEMI |                              1 | 25.5
 # === Document Model ===
 #  Document './test/hello14.frt'
 #      Instruction
@@ -151,7 +151,7 @@ my $result = do {
                         $scope->{special}->property_u('return')
                     )
                 ],
-                $scope, undef, 11.33333
+                $scope, undef, 11.2
             );
             return $return;
         }
@@ -174,15 +174,15 @@ my $result = do {
                         $scope->{special}->property_u('return')
                     )
                 ],
-                $scope, undef, 22.33333
+                $scope, undef, 22.2
             );
             return $return;
         }
     );
     FF::load_namespaces( $context, qw(String) );
     $scope->property_u('say')
-      ->call_u( [ str( $f, "test" ) ], $scope, undef, 1.33333 );
-    $scope->set_property_ow( $context, str => str( $f, "hi" ), 3.4 );
+      ->call_u( [ str( $f, "test" ) ], $scope, undef, 1.2 );
+    $scope->set_property_ow( $context, str => str( $f, "hi" ), 3.2 );
     FF::on(
         $scope->property_u('str'),
         'length',
@@ -192,8 +192,8 @@ my $result = do {
         {}
     );
     $scope->property_u('str')->property_u('length')
-      ->call_u( {}, $scope, undef, 14.5 );
-    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 16.5 );
+      ->call_u( {}, $scope, undef, 14.3 );
+    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 16.3 );
     FF::on(
         $scope->property_u('String')->property_u('proto'),
         'length',
@@ -202,7 +202,7 @@ my $result = do {
         $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
         {}
     );
-    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 25.5 );
+    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 25.3 );
 };
 
 FF::after_content();

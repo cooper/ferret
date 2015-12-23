@@ -1,91 +1,91 @@
 # === Tokenization ===
-#       CLASS_DEC |                {"name":"Bot2"} | 1.5
-#          METHOD |     {"main":1,"name":"_init_"} | 3.33333
-#       CLOSURE_S |                                | 3.66667
-#    KEYWORD_NEED |                                | 4.07143
-#        VAR_THIS |                      "address" | 4.14286
-#        OP_VALUE |                                | 4.21429
-#        BAREWORD |                          "Str" | 4.28571
-#        OP_COMMA |                                | 4.35714
-#        VAR_THIS |                         "nick" | 4.42857
-#        OP_VALUE |                                | 4.5
-#        BAREWORD |                          "Str" | 4.57143
-#        OP_COMMA |                                | 4.64286
-#        VAR_THIS |                         "user" | 4.71429
-#        OP_VALUE |                                | 4.78571
-#        BAREWORD |                          "Str" | 4.85714
-#         OP_SEMI |                              1 | 4.92857
-#    KEYWORD_WANT |                                | 5.07143
-#        VAR_THIS |                         "port" | 5.14286
-#        OP_VALUE |                                | 5.21429
-#        BAREWORD |                          "Num" | 5.28571
-#       OP_ASSIGN |                                | 5.35714
-#          NUMBER |                         "6667" | 5.42857
-#        OP_COMMA |                                | 5.5
-#        VAR_THIS |                         "real" | 5.57143
-#        OP_VALUE |                                | 5.64286
-#        BAREWORD |                          "Str" | 5.71429
-#       OP_ASSIGN |                                | 5.78571
-#          STRING |                 ["Ferret IRC"] | 5.85714
-#         OP_SEMI |                              1 | 5.92857
-#        BAREWORD |                       "Socket" | 8.0625
-#         OP_PACK |                                | 8.125
-#        BAREWORD |                          "TCP" | 8.1875
-#        PROPERTY |                         "init" | 8.25
-#      PAREN_CALL |                                | 8.3125
-#        VAR_SPEC |                         "self" | 8.375
-#         PAREN_E |                                | 8.4375
-#      PAREN_CALL |                                | 8.5
-#      PROP_VALUE |                         "addr" | 8.5625
-#        VAR_THIS |                      "address" | 8.625
-#        OP_COMMA |                                | 8.6875
-#      PROP_VALUE |                         "port" | 8.75
-#        VAR_THIS |                         "port" | 8.8125
-#         PAREN_E |                                | 8.875
-#         OP_SEMI |                              1 | 8.9375
-#        VAR_THIS |                         "send" | 10.2
-#       OP_ASSIGN |                                | 10.4
-#        VAR_THIS |                      "println" | 10.6
-#         OP_SEMI |                              1 | 10.8
-#      KEYWORD_ON |                                | 13.25
-#        VAR_THIS |                    "connected" | 13.5
-#       CLOSURE_S |                                | 13.75
-#        VAR_THIS |                         "send" | 14.16667
-#      PAREN_CALL |                                | 14.33333
-#          STRING | ["USER ",["VAR_THIS","user",14]," ","*"," ","*"," :",["VAR_THIS","real",14]] | 14.5
-#         PAREN_E |                                | 14.66667
-#         OP_SEMI |                              1 | 14.83333
-#        VAR_THIS |                         "send" | 15.16667
-#      PAREN_CALL |                                | 15.33333
-#          STRING | ["NICK ",["VAR_THIS","nick",15]] | 15.5
-#         PAREN_E |                                | 15.66667
-#         OP_SEMI |                              1 | 15.83333
-#       CLOSURE_E |                                | 16.5
-#      KEYWORD_ON |                                | 19.25
-#        VAR_THIS |                      "gotLine" | 19.5
-#       CLOSURE_S |                                | 19.75
-#    KEYWORD_NEED |                                | 20.25
-#         VAR_LEX |                         "data" | 20.5
-#         OP_SEMI |                              1 | 20.75
-#        BAREWORD |                          "say" | 21.16667
-#      PAREN_CALL |                                | 21.33333
-#          STRING | ["recv: ",["VAR_LEX","data",21]] | 21.5
-#         PAREN_E |                                | 21.66667
-#         OP_SEMI |                              1 | 21.83333
-#       CLOSURE_E |                                | 22.5
-#      KEYWORD_ON |                                | 24.25
-#        VAR_THIS |                      "println" | 24.5
-#       CLOSURE_S |                                | 24.75
-#    KEYWORD_NEED |                                | 25.25
-#         VAR_LEX |                         "data" | 25.5
-#         OP_SEMI |                              1 | 25.75
-#        BAREWORD |                          "say" | 26.16667
-#      PAREN_CALL |                                | 26.33333
-#          STRING | ["send: ",["VAR_LEX","data",26]] | 26.5
-#         PAREN_E |                                | 26.66667
-#         OP_SEMI |                              1 | 26.83333
-#       CLOSURE_E |                                | 27.5
-#       CLOSURE_E |                                | 29.5
+#       CLASS_DEC |                {"name":"Bot2"} | 1.1
+#          METHOD |     {"main":1,"name":"_init_"} | 3.1
+#       CLOSURE_S |                                | 3.2
+#    KEYWORD_NEED |                                | 4.05
+#        VAR_THIS |                      "address" | 4.1
+#        OP_VALUE |                                | 4.15
+#        BAREWORD |                          "Str" | 4.2
+#        OP_COMMA |                                | 4.25
+#        VAR_THIS |                         "nick" | 4.3
+#        OP_VALUE |                                | 4.35
+#        BAREWORD |                          "Str" | 4.4
+#        OP_COMMA |                                | 4.45
+#        VAR_THIS |                         "user" | 4.5
+#        OP_VALUE |                                | 4.55
+#        BAREWORD |                          "Str" | 4.6
+#         OP_SEMI |                              1 | 4.65
+#    KEYWORD_WANT |                                | 5.05
+#        VAR_THIS |                         "port" | 5.1
+#        OP_VALUE |                                | 5.15
+#        BAREWORD |                          "Num" | 5.2
+#       OP_ASSIGN |                                | 5.25
+#          NUMBER |                         "6667" | 5.3
+#        OP_COMMA |                                | 5.35
+#        VAR_THIS |                         "real" | 5.4
+#        OP_VALUE |                                | 5.45
+#        BAREWORD |                          "Str" | 5.5
+#       OP_ASSIGN |                                | 5.55
+#          STRING |                 ["Ferret IRC"] | 5.6
+#         OP_SEMI |                              1 | 5.65
+#        BAREWORD |                       "Socket" | 8.05
+#         OP_PACK |                                | 8.1
+#        BAREWORD |                          "TCP" | 8.15
+#        PROPERTY |                         "init" | 8.2
+#      PAREN_CALL |                                | 8.25
+#        VAR_SPEC |                         "self" | 8.3
+#         PAREN_E |                                | 8.35
+#      PAREN_CALL |                                | 8.4
+#      PROP_VALUE |                         "addr" | 8.45
+#        VAR_THIS |                      "address" | 8.5
+#        OP_COMMA |                                | 8.55
+#      PROP_VALUE |                         "port" | 8.6
+#        VAR_THIS |                         "port" | 8.65
+#         PAREN_E |                                | 8.7
+#         OP_SEMI |                              1 | 8.75
+#        VAR_THIS |                         "send" | 10.1
+#       OP_ASSIGN |                                | 10.2
+#        VAR_THIS |                      "println" | 10.3
+#         OP_SEMI |                              1 | 10.4
+#      KEYWORD_ON |                                | 13.1
+#        VAR_THIS |                    "connected" | 13.2
+#       CLOSURE_S |                                | 13.3
+#        VAR_THIS |                         "send" | 14.1
+#      PAREN_CALL |                                | 14.2
+#          STRING | ["USER ",["VAR_THIS","user",14]," ","*"," ","*"," :",["VAR_THIS","real",14]] | 14.3
+#         PAREN_E |                                | 14.4
+#         OP_SEMI |                              1 | 14.5
+#        VAR_THIS |                         "send" | 15.1
+#      PAREN_CALL |                                | 15.2
+#          STRING | ["NICK ",["VAR_THIS","nick",15]] | 15.3
+#         PAREN_E |                                | 15.4
+#         OP_SEMI |                              1 | 15.5
+#       CLOSURE_E |                                | 16.1
+#      KEYWORD_ON |                                | 19.1
+#        VAR_THIS |                      "gotLine" | 19.2
+#       CLOSURE_S |                                | 19.3
+#    KEYWORD_NEED |                                | 20.1
+#         VAR_LEX |                         "data" | 20.2
+#         OP_SEMI |                              1 | 20.3
+#        BAREWORD |                          "say" | 21.1
+#      PAREN_CALL |                                | 21.2
+#          STRING | ["recv: ",["VAR_LEX","data",21]] | 21.3
+#         PAREN_E |                                | 21.4
+#         OP_SEMI |                              1 | 21.5
+#       CLOSURE_E |                                | 22.1
+#      KEYWORD_ON |                                | 24.1
+#        VAR_THIS |                      "println" | 24.2
+#       CLOSURE_S |                                | 24.3
+#    KEYWORD_NEED |                                | 25.1
+#         VAR_LEX |                         "data" | 25.2
+#         OP_SEMI |                              1 | 25.3
+#        BAREWORD |                          "say" | 26.1
+#      PAREN_CALL |                                | 26.2
+#          STRING | ["send: ",["VAR_LEX","data",26]] | 26.3
+#         PAREN_E |                                | 26.4
+#         OP_SEMI |                              1 | 26.5
+#       CLOSURE_E |                                | 27.1
+#       CLOSURE_E |                                | 29.1
 # === Document Model ===
 #  Document './test/hello10/Bot2.frt'
 #      Class 'Bot2'
@@ -248,7 +248,7 @@ my $result = do {
                         $self->property_u('real')
                     )
                 ],
-                $scope, undef, 14.33333
+                $scope, undef, 14.2
             );
             $self->property_u('send')->call_u(
                 [
@@ -256,7 +256,7 @@ my $result = do {
                         $scope, str( $f, "NICK " ), $self->property_u('nick')
                     )
                 ],
-                $scope, undef, 15.33333
+                $scope, undef, 15.2
             );
             return $return;
         }
@@ -269,7 +269,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data', 20.5 ) or return;
+            FF::need( $scope, $arguments, 'data', 20.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -277,7 +277,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope, undef, 21.33333
+                $scope, undef, 21.2
             );
             return $return;
         }
@@ -290,7 +290,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data', 25.5 ) or return;
+            FF::need( $scope, $arguments, 'data', 25.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -298,7 +298,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope, undef, 26.33333
+                $scope, undef, 26.2
             );
             return $return;
         }
@@ -339,21 +339,21 @@ my $result = do {
                 FF::need( $self, $arguments, 'address' ) or return;
                 FF::need( $self, $arguments, 'nick' )    or return;
                 FF::need( $self, $arguments, 'user' )    or return;
-                FF::want( $self, $arguments, 'port', 5.14286, num( $f, 6667 ) );
-                FF::want( $self, $arguments, 'real', 5.57143,
+                FF::want( $self, $arguments, 'port', 5.1, num( $f, 6667 ) );
+                FF::want( $self, $arguments, 'real', 5.4,
                     str( $f, "Ferret IRC" ) );
                 $scope->property_u('Socket::TCP')->property_u('init')
                   ->call_u( [ $scope->{special}->property_u('self') ],
-                    $scope, undef, 8.3125 )->call_u(
+                    $scope, undef, 8.25 )->call_u(
                     {
                         addr => $self->property_u('address'),
                         port => $self->property_u('port')
                     },
-                    $scope, undef, 8.5
+                    $scope, undef, 8.4
                     );
                 $self->set_property(
                     send => $self->property_u('println'),
-                    10.4
+                    10.2
                 );
                 FF::on(
                     $self,

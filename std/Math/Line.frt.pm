@@ -1,97 +1,97 @@
 # === Tokenization ===
-#         PKG_DEC |                {"name":"Math"} | 1.5
-#       CLASS_DEC |                {"name":"Line"} | 2.5
-#          METHOD |     {"main":1,"name":"_init_"} | 4.33333
-#       CLOSURE_S |                                | 4.66667
-#    KEYWORD_NEED |                                | 5.1
-#        VAR_THIS |                          "pt1" | 5.2
-#        OP_VALUE |                                | 5.3
+#         PKG_DEC |                {"name":"Math"} | 1.1
+#       CLASS_DEC |                {"name":"Line"} | 2.1
+#          METHOD |     {"main":1,"name":"_init_"} | 4.1
+#       CLOSURE_S |                                | 4.2
+#    KEYWORD_NEED |                                | 5.05
+#        VAR_THIS |                          "pt1" | 5.1
+#        OP_VALUE |                                | 5.15
+#        BAREWORD |                        "Point" | 5.2
+#        OP_COMMA |                                | 5.25
+#        VAR_THIS |                          "pt2" | 5.3
+#        OP_VALUE |                                | 5.35
 #        BAREWORD |                        "Point" | 5.4
-#        OP_COMMA |                                | 5.5
-#        VAR_THIS |                          "pt2" | 5.6
-#        OP_VALUE |                                | 5.7
-#        BAREWORD |                        "Point" | 5.8
-#         OP_SEMI |                              1 | 5.9
-#       CLOSURE_E |                                | 6.5
-#          METHOD | {"name":"endpoints","is_prop":1,"p_set":null} | 8.33333
-#       CLOSURE_S |                                | 8.66667
-#  KEYWORD_RETURN |                                | 9.125
-#       BRACKET_S |                                | 9.25
-#        VAR_THIS |                          "pt1" | 9.375
-#        OP_COMMA |                                | 9.5
-#        VAR_THIS |                          "pt2" | 9.625
-#       BRACKET_E |                                | 9.75
-#         OP_SEMI |                              1 | 9.875
-#       CLOSURE_E |                                | 10.5
-#          METHOD | {"is_prop":1,"name":"pretty","p_set":null} | 12.33333
-#       CLOSURE_S |                                | 12.66667
-#         VAR_LEX |                           "mp" | 13.2
-#       OP_ASSIGN |                                | 13.4
-#        VAR_THIS |                     "midpoint" | 13.6
-#         OP_SEMI |                              1 | 13.8
-#         VAR_LEX |                          "pox" | 14.09091
-#       OP_ASSIGN |                                | 14.18182
-#        VAR_THIS |                          "pt1" | 14.27273
-#        PROPERTY |                            "x" | 14.36364
-#         OP_SEMI |                                | 14.45455
-#         VAR_LEX |                          "poy" | 14.54545
-#       OP_ASSIGN |                                | 14.63636
-#        VAR_THIS |                          "pt1" | 14.72727
-#        PROPERTY |                            "y" | 14.81818
-#         OP_SEMI |                              1 | 14.90909
-#         VAR_LEX |                          "ptx" | 15.09091
-#       OP_ASSIGN |                                | 15.18182
-#        VAR_THIS |                          "pt2" | 15.27273
-#        PROPERTY |                            "x" | 15.36364
-#         OP_SEMI |                                | 15.45455
-#         VAR_LEX |                          "pty" | 15.54545
-#       OP_ASSIGN |                                | 15.63636
-#        VAR_THIS |                          "pt2" | 15.72727
-#        PROPERTY |                            "y" | 15.81818
-#         OP_SEMI |                              1 | 15.90909
-#         VAR_LEX |                           "mx" | 16.09091
-#       OP_ASSIGN |                                | 16.18182
-#         VAR_LEX |                           "mp" | 16.27273
-#        PROPERTY |                            "x" | 16.36364
-#         OP_SEMI |                                | 16.45455
-#         VAR_LEX |                           "my" | 16.54545
-#       OP_ASSIGN |                                | 16.63636
-#         VAR_LEX |                           "mp" | 16.72727
-#        PROPERTY |                            "y" | 16.81818
-#         OP_SEMI |                              1 | 16.90909
-#  KEYWORD_RETURN |                                | 17.25
-#          STRING | ["Segment( |(",["VAR_LEX","pox",17],", ",["VAR_LEX","poy",17],")---(",["VAR_LEX","mx",17],", ",["VAR_LEX","my",17],")---(",["VAR_LEX","ptx",17],", ",["VAR_LEX","pty",17],")| Length = ",["VAR_THIS","length",17]," )"] | 17.5
-#         OP_SEMI |                              1 | 17.75
-#       CLOSURE_E |                                | 18.5
-#          METHOD |         {"name":"description"} | 20.33333
-#       CLOSURE_S |                                | 20.66667
-#  KEYWORD_RETURN |                                | 21.25
-#        VAR_THIS |                       "pretty" | 21.5
-#         OP_SEMI |                              1 | 21.75
-#       CLOSURE_E |                                | 22.5
-#          METHOD | {"p_set":null,"name":"midpoint","is_prop":1} | 24.33333
-#       CLOSURE_S |                                | 24.66667
-#  KEYWORD_RETURN |                                | 25.09091
-#         PAREN_S |                                | 25.18182
-#        VAR_THIS |                          "pt1" | 25.27273
-#        OP_COMMA |                                | 25.36364
-#        VAR_THIS |                          "pt2" | 25.45455
-#         PAREN_E |                                | 25.54545
-#        PROPERTY |                     "midpoint" | 25.63636
-#      PAREN_CALL |                                | 25.72727
-#         PAREN_E |                                | 25.81818
-#         OP_SEMI |                              1 | 25.90909
-#       CLOSURE_E |                                | 26.5
-#          METHOD | {"name":"length","is_prop":1,"p_set":null} | 28.33333
-#       CLOSURE_S |                                | 28.66667
-#  KEYWORD_RETURN |                                | 29.125
-#        VAR_THIS |                          "pt1" | 29.25
-#        PROPERTY |                   "distanceTo" | 29.375
-#      PAREN_CALL |                                | 29.5
-#        VAR_THIS |                          "pt2" | 29.625
-#         PAREN_E |                                | 29.75
-#         OP_SEMI |                              1 | 29.875
-#       CLOSURE_E |                                | 30.5
+#         OP_SEMI |                              1 | 5.45
+#       CLOSURE_E |                                | 6.1
+#          METHOD | {"name":"endpoints","is_prop":1,"p_set":null} | 8.1
+#       CLOSURE_S |                                | 8.2
+#  KEYWORD_RETURN |                                | 9.1
+#       BRACKET_S |                                | 9.2
+#        VAR_THIS |                          "pt1" | 9.3
+#        OP_COMMA |                                | 9.4
+#        VAR_THIS |                          "pt2" | 9.5
+#       BRACKET_E |                                | 9.6
+#         OP_SEMI |                              1 | 9.7
+#       CLOSURE_E |                                | 10.1
+#          METHOD | {"p_set":null,"name":"pretty","is_prop":1} | 12.1
+#       CLOSURE_S |                                | 12.2
+#         VAR_LEX |                           "mp" | 13.1
+#       OP_ASSIGN |                                | 13.2
+#        VAR_THIS |                     "midpoint" | 13.3
+#         OP_SEMI |                              1 | 13.4
+#         VAR_LEX |                          "pox" | 14.05
+#       OP_ASSIGN |                                | 14.1
+#        VAR_THIS |                          "pt1" | 14.15
+#        PROPERTY |                            "x" | 14.2
+#         OP_SEMI |                                | 14.25
+#         VAR_LEX |                          "poy" | 14.3
+#       OP_ASSIGN |                                | 14.35
+#        VAR_THIS |                          "pt1" | 14.4
+#        PROPERTY |                            "y" | 14.45
+#         OP_SEMI |                              1 | 14.5
+#         VAR_LEX |                          "ptx" | 15.05
+#       OP_ASSIGN |                                | 15.1
+#        VAR_THIS |                          "pt2" | 15.15
+#        PROPERTY |                            "x" | 15.2
+#         OP_SEMI |                                | 15.25
+#         VAR_LEX |                          "pty" | 15.3
+#       OP_ASSIGN |                                | 15.35
+#        VAR_THIS |                          "pt2" | 15.4
+#        PROPERTY |                            "y" | 15.45
+#         OP_SEMI |                              1 | 15.5
+#         VAR_LEX |                           "mx" | 16.05
+#       OP_ASSIGN |                                | 16.1
+#         VAR_LEX |                           "mp" | 16.15
+#        PROPERTY |                            "x" | 16.2
+#         OP_SEMI |                                | 16.25
+#         VAR_LEX |                           "my" | 16.3
+#       OP_ASSIGN |                                | 16.35
+#         VAR_LEX |                           "mp" | 16.4
+#        PROPERTY |                            "y" | 16.45
+#         OP_SEMI |                              1 | 16.5
+#  KEYWORD_RETURN |                                | 17.1
+#          STRING | ["Segment( |(",["VAR_LEX","pox",17],", ",["VAR_LEX","poy",17],")---(",["VAR_LEX","mx",17],", ",["VAR_LEX","my",17],")---(",["VAR_LEX","ptx",17],", ",["VAR_LEX","pty",17],")| Length = ",["VAR_THIS","length",17]," )"] | 17.2
+#         OP_SEMI |                              1 | 17.3
+#       CLOSURE_E |                                | 18.1
+#          METHOD |         {"name":"description"} | 20.1
+#       CLOSURE_S |                                | 20.2
+#  KEYWORD_RETURN |                                | 21.1
+#        VAR_THIS |                       "pretty" | 21.2
+#         OP_SEMI |                              1 | 21.3
+#       CLOSURE_E |                                | 22.1
+#          METHOD | {"p_set":null,"is_prop":1,"name":"midpoint"} | 24.1
+#       CLOSURE_S |                                | 24.2
+#  KEYWORD_RETURN |                                | 25.05
+#         PAREN_S |                                | 25.1
+#        VAR_THIS |                          "pt1" | 25.15
+#        OP_COMMA |                                | 25.2
+#        VAR_THIS |                          "pt2" | 25.25
+#         PAREN_E |                                | 25.3
+#        PROPERTY |                     "midpoint" | 25.35
+#      PAREN_CALL |                                | 25.4
+#         PAREN_E |                                | 25.45
+#         OP_SEMI |                              1 | 25.5
+#       CLOSURE_E |                                | 26.1
+#          METHOD | {"name":"length","is_prop":1,"p_set":null} | 28.1
+#       CLOSURE_S |                                | 28.2
+#  KEYWORD_RETURN |                                | 29.1
+#        VAR_THIS |                          "pt1" | 29.2
+#        PROPERTY |                   "distanceTo" | 29.3
+#      PAREN_CALL |                                | 29.4
+#        VAR_THIS |                          "pt2" | 29.5
+#         PAREN_E |                                | 29.6
+#         OP_SEMI |                              1 | 29.7
+#       CLOSURE_E |                                | 30.1
 # === Document Model ===
 #  Document './std/Math/Line.frt'
 #      Package 'Math'
@@ -280,37 +280,37 @@ my $result = do {
                 $scope->set_property_ow(
                     $context,
                     mp => $self->property_u('midpoint'),
-                    13.4
+                    13.2
                 );
                 $scope->set_property_ow(
                     $context,
                     pox => $self->property_u('pt1')->property_u('x'),
-                    14.18182
+                    14.1
                 );
                 $scope->set_property_ow(
                     $context,
                     poy => $self->property_u('pt1')->property_u('y'),
-                    14.63636
+                    14.35
                 );
                 $scope->set_property_ow(
                     $context,
                     ptx => $self->property_u('pt2')->property_u('x'),
-                    15.18182
+                    15.1
                 );
                 $scope->set_property_ow(
                     $context,
                     pty => $self->property_u('pt2')->property_u('y'),
-                    15.63636
+                    15.35
                 );
                 $scope->set_property_ow(
                     $context,
                     mx => $scope->property_u('mp')->property_u('x'),
-                    16.18182
+                    16.1
                 );
                 $scope->set_property_ow(
                     $context,
                     my => $scope->property_u('mp')->property_u('y'),
-                    16.63636
+                    16.35
                 );
                 return add(
                     $scope,                      str( $f, "Segment( |(" ),
@@ -349,8 +349,7 @@ my $result = do {
                     $scope,
                     $self->property_u('pt1'),
                     $self->property_u('pt2')
-                  )->property_u('midpoint')
-                  ->call_u( {}, $scope, undef, 25.72727 );
+                )->property_u('midpoint')->call_u( {}, $scope, undef, 25.4 );
                 return $return;
             }
         );
@@ -362,7 +361,7 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property_u('pt1')->property_u('distanceTo')
-                  ->call_u( [ $self->property_u('pt2') ], $scope, undef, 29.5 );
+                  ->call_u( [ $self->property_u('pt2') ], $scope, undef, 29.4 );
                 return $return;
             }
         );

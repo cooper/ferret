@@ -1,32 +1,32 @@
 # === Tokenization ===
-#         VAR_LEX |                          "obj" | 2.14286
-#       OP_ASSIGN |                                | 2.28571
-#         PAREN_S |                                | 2.42857
-#        OP_VALUE |                                | 2.57143
-#         PAREN_E |                                | 2.71429
-#         OP_SEMI |                              1 | 2.85714
-#        BAREWORD |                        "Timer" | 5.1
-#        PROPERTY |                         "init" | 5.2
+#         VAR_LEX |                          "obj" | 2.1
+#       OP_ASSIGN |                                | 2.2
+#         PAREN_S |                                | 2.3
+#        OP_VALUE |                                | 2.4
+#         PAREN_E |                                | 2.5
+#         OP_SEMI |                              1 | 2.6
+#        BAREWORD |                        "Timer" | 5.05
+#        PROPERTY |                         "init" | 5.1
+#      PAREN_CALL |                                | 5.15
+#         VAR_LEX |                          "obj" | 5.2
+#         PAREN_E |                                | 5.25
 #      PAREN_CALL |                                | 5.3
-#         VAR_LEX |                          "obj" | 5.4
-#         PAREN_E |                                | 5.5
-#      PAREN_CALL |                                | 5.6
-#          NUMBER |                            "5" | 5.7
-#         PAREN_E |                                | 5.8
-#         OP_SEMI |                              1 | 5.9
-#      KEYWORD_ON |                                | 7.125
-#         VAR_LEX |                          "obj" | 7.25
-#        PROPERTY |                         "once" | 7.375
-#      PAREN_CALL |                                | 7.5
-#         PAREN_E |                                | 7.625
-#        PROPERTY |                       "expire" | 7.75
-#       CLOSURE_S |                                | 7.875
-#        BAREWORD |                          "say" | 8.16667
-#      PAREN_CALL |                                | 8.33333
-#          STRING |                  ["it works!"] | 8.5
-#         PAREN_E |                                | 8.66667
-#         OP_SEMI |                              1 | 8.83333
-#       CLOSURE_E |                                | 9.5
+#          NUMBER |                            "5" | 5.35
+#         PAREN_E |                                | 5.4
+#         OP_SEMI |                              1 | 5.45
+#      KEYWORD_ON |                                | 7.1
+#         VAR_LEX |                          "obj" | 7.2
+#        PROPERTY |                         "once" | 7.3
+#      PAREN_CALL |                                | 7.4
+#         PAREN_E |                                | 7.5
+#        PROPERTY |                       "expire" | 7.6
+#       CLOSURE_S |                                | 7.7
+#        BAREWORD |                          "say" | 8.1
+#      PAREN_CALL |                                | 8.2
+#          STRING |                  ["it works!"] | 8.3
+#         PAREN_E |                                | 8.4
+#         OP_SEMI |                              1 | 8.5
+#       CLOSURE_E |                                | 9.1
 # === Document Model ===
 #  Document './test/hello17.frt'
 #      Instruction
@@ -91,7 +91,7 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
-              ->call_u( [ str( $f, "it works!" ) ], $scope, undef, 8.33333 );
+              ->call_u( [ str( $f, "it works!" ) ], $scope, undef, 8.2 );
             return $return;
         }
     );
@@ -99,14 +99,14 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         obj => FF::create_object( $f, {} ),
-        2.28571
+        2.2
     );
     $scope->property_u('Timer')->property_u('init')
-      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 5.3 )
-      ->call_u( [ num( $f, 5 ) ], $scope, undef, 5.6 );
+      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 5.15 )
+      ->call_u( [ num( $f, 5 ) ], $scope, undef, 5.3 );
     FF::on(
         $scope->property_u('obj')->property_u('once')
-          ->call_u( {}, $scope, undef, 7.5 ),
+          ->call_u( {}, $scope, undef, 7.4 ),
         'expire',
         $self,
         $scope,

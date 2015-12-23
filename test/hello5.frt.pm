@@ -1,143 +1,143 @@
 # === Tokenization ===
-#       CLASS_DEC | {"name":"Point","version":"1.0"} | 1.5
-#          METHOD |     {"name":"_init_","main":1} | 3.33333
-#       CLOSURE_S |                                | 3.66667
-#    KEYWORD_NEED |                                | 4.16667
-#         VAR_LEX |                            "x" | 4.33333
-#        OP_COMMA |                                | 4.5
-#         VAR_LEX |                            "y" | 4.66667
-#         OP_SEMI |                              1 | 4.83333
-#        VAR_THIS |                            "x" | 5.2
-#       OP_ASSIGN |                                | 5.4
-#         VAR_LEX |                            "x" | 5.6
-#         OP_SEMI |                              1 | 5.8
-#        VAR_THIS |                            "y" | 6.2
-#       OP_ASSIGN |                                | 6.4
-#         VAR_LEX |                            "y" | 6.6
-#         OP_SEMI |                              1 | 6.8
-#       CLOSURE_E |                                | 7.5
-#          METHOD |          {"name":"oneToRight"} | 9.33333
-#       CLOSURE_S |                                | 9.66667
-#         VAR_LEX |                           "pt" | 10.08333
-#       OP_ASSIGN |                                | 10.16667
-#        VAR_SPEC |                        "class" | 10.25
-#      PAREN_CALL |                                | 10.33333
-#        VAR_THIS |                            "x" | 10.41667
-#          OP_ADD |                                | 10.5
-#          NUMBER |                            "1" | 10.58333
-#        OP_COMMA |                                | 10.66667
-#        VAR_THIS |                            "y" | 10.75
-#         PAREN_E |                                | 10.83333
-#         OP_SEMI |                              1 | 10.91667
-#  KEYWORD_RETURN |                                | 11.25
-#         VAR_LEX |                           "pt" | 11.5
-#         OP_SEMI |                              1 | 11.75
-#       CLOSURE_E |                                | 12.5
-#          METHOD |              {"name":"pretty"} | 14.33333
-#       CLOSURE_S |                                | 14.66667
-#  KEYWORD_RETURN |                                | 15.16667
-#         PAREN_S |                                | 15.33333
-#          STRING | ["(",["VAR_THIS","x",15],", ",["VAR_THIS","y",15],")"] | 15.5
-#         PAREN_E |                                | 15.66667
-#         OP_SEMI |                              1 | 15.83333
-#       CLOSURE_E |                                | 16.5
-#          METHOD |            {"name":"toString"} | 18.33333
-#       CLOSURE_S |                                | 18.66667
-#  KEYWORD_RETURN |                                | 19.16667
-#        VAR_THIS |                       "pretty" | 19.33333
-#      PAREN_CALL |                                | 19.5
-#         PAREN_E |                                | 19.66667
-#         OP_SEMI |                              1 | 19.83333
-#       CLOSURE_E |                                | 20.5
-#        FUNCTION |            {"name":"midpoint"} | 22.33333
-#       CLOSURE_S |                                | 22.66667
-#    KEYWORD_NEED |                                | 23.16667
-#         VAR_LEX |                          "pt1" | 23.33333
-#        OP_COMMA |                                | 23.5
-#         VAR_LEX |                          "pt2" | 23.66667
-#         OP_SEMI |                              1 | 23.83333
-#  KEYWORD_RETURN |                                | 24.25
-#        BAREWORD |                        "Point" | 24.5
-#      PAREN_CALL |                                | 24.75
-#      PROP_VALUE |                            "x" | 25.08333
-#         PAREN_S |                                | 25.16667
-#         VAR_LEX |                          "pt1" | 25.25
-#        PROPERTY |                            "x" | 25.33333
-#          OP_ADD |                                | 25.41667
-#         VAR_LEX |                          "pt2" | 25.5
-#        PROPERTY |                            "x" | 25.58333
-#         PAREN_E |                                | 25.66667
-#          OP_DIV |                                | 25.75
-#          NUMBER |                            "2" | 25.83333
-#        OP_COMMA |                                | 25.91667
-#      PROP_VALUE |                            "y" | 26.08333
-#         PAREN_S |                                | 26.16667
-#         VAR_LEX |                          "pt1" | 26.25
-#        PROPERTY |                            "y" | 26.33333
-#          OP_ADD |                                | 26.41667
-#         VAR_LEX |                          "pt2" | 26.5
-#        PROPERTY |                            "y" | 26.58333
-#         PAREN_E |                                | 26.66667
-#          OP_DIV |                                | 26.75
-#          NUMBER |                            "2" | 26.83333
-#         OP_SEMI |                              1 | 26.91667
-#         PAREN_E |                                | 27.33333
-#         OP_SEMI |                              1 | 27.66667
-#       CLOSURE_E |                                | 28.5
-#     KEYWORD_END |                                | 30.5
-#         VAR_LEX |                           "pt" | 32.1
-#       OP_ASSIGN |                                | 32.2
-#        BAREWORD |                        "Point" | 32.3
-#      PAREN_CALL |                                | 32.4
-#          NUMBER |                            "5" | 32.5
-#        OP_COMMA |                                | 32.6
-#          NUMBER |                            "3" | 32.7
-#         PAREN_E |                                | 32.8
-#         OP_SEMI |                              1 | 32.9
-#        BAREWORD |                          "say" | 33.16667
-#      PAREN_CALL |                                | 33.33333
-#          STRING |  ["Point",["VAR_LEX","pt",33]] | 33.5
-#         PAREN_E |                                | 33.66667
-#         OP_SEMI |                              1 | 33.83333
-#         VAR_LEX |                          "rpt" | 35.14286
-#       OP_ASSIGN |                                | 35.28571
-#         VAR_LEX |                           "pt" | 35.42857
-#        PROPERTY |                   "oneToRight" | 35.57143
-#         OP_CALL |                                | 35.71429
-#         OP_SEMI |                              1 | 35.85714
-#        BAREWORD |                          "say" | 36.16667
-#      PAREN_CALL |                                | 36.33333
-#          STRING | ["Right",["VAR_LEX","rpt",36]] | 36.5
-#         PAREN_E |                                | 36.66667
-#         OP_SEMI |                              1 | 36.83333
-#         VAR_LEX |                         "mdpt" | 38.09091
-#       OP_ASSIGN |                                | 38.18182
-#        BAREWORD |                        "Point" | 38.27273
-#        PROPERTY |                     "midpoint" | 38.36364
-#      PAREN_CALL |                                | 38.45455
-#         VAR_LEX |                           "pt" | 38.54545
-#        OP_COMMA |                                | 38.63636
-#         VAR_LEX |                          "rpt" | 38.72727
-#         PAREN_E |                                | 38.81818
-#         OP_SEMI |                              1 | 38.90909
-#        BAREWORD |                          "say" | 39.16667
-#      PAREN_CALL |                                | 39.33333
-#          STRING | ["Midpoint",["VAR_LEX","mdpt",39]] | 39.5
-#         PAREN_E |                                | 39.66667
-#         OP_SEMI |                              1 | 39.83333
-#         VAR_LEX |                     "nineteen" | 41.11111
-#       OP_ASSIGN |                                | 41.22222
-#          NUMBER |                            "4" | 41.33333
-#          OP_ADD |                                | 41.44444
-#          NUMBER |                           "45" | 41.55556
-#          OP_DIV |                                | 41.66667
-#          NUMBER |                            "3" | 41.77778
-#         OP_SEMI |                              1 | 41.88889
-#        BAREWORD |                          "say" | 42.16667
-#      PAREN_CALL |                                | 42.33333
-#          STRING | ["Nineteen: ",["VAR_LEX","nineteen",42]] | 42.5
-#         PAREN_E |                                | 42.66667
-#         OP_SEMI |                              1 | 42.83333
+#       CLASS_DEC | {"version":"1.0","name":"Point"} | 1.1
+#          METHOD |     {"name":"_init_","main":1} | 3.1
+#       CLOSURE_S |                                | 3.2
+#    KEYWORD_NEED |                                | 4.1
+#         VAR_LEX |                            "x" | 4.2
+#        OP_COMMA |                                | 4.3
+#         VAR_LEX |                            "y" | 4.4
+#         OP_SEMI |                              1 | 4.5
+#        VAR_THIS |                            "x" | 5.1
+#       OP_ASSIGN |                                | 5.2
+#         VAR_LEX |                            "x" | 5.3
+#         OP_SEMI |                              1 | 5.4
+#        VAR_THIS |                            "y" | 6.1
+#       OP_ASSIGN |                                | 6.2
+#         VAR_LEX |                            "y" | 6.3
+#         OP_SEMI |                              1 | 6.4
+#       CLOSURE_E |                                | 7.1
+#          METHOD |          {"name":"oneToRight"} | 9.1
+#       CLOSURE_S |                                | 9.2
+#         VAR_LEX |                           "pt" | 10.05
+#       OP_ASSIGN |                                | 10.1
+#        VAR_SPEC |                        "class" | 10.15
+#      PAREN_CALL |                                | 10.2
+#        VAR_THIS |                            "x" | 10.25
+#          OP_ADD |                                | 10.3
+#          NUMBER |                            "1" | 10.35
+#        OP_COMMA |                                | 10.4
+#        VAR_THIS |                            "y" | 10.45
+#         PAREN_E |                                | 10.5
+#         OP_SEMI |                              1 | 10.55
+#  KEYWORD_RETURN |                                | 11.1
+#         VAR_LEX |                           "pt" | 11.2
+#         OP_SEMI |                              1 | 11.3
+#       CLOSURE_E |                                | 12.1
+#          METHOD |              {"name":"pretty"} | 14.1
+#       CLOSURE_S |                                | 14.2
+#  KEYWORD_RETURN |                                | 15.1
+#         PAREN_S |                                | 15.2
+#          STRING | ["(",["VAR_THIS","x",15],", ",["VAR_THIS","y",15],")"] | 15.3
+#         PAREN_E |                                | 15.4
+#         OP_SEMI |                              1 | 15.5
+#       CLOSURE_E |                                | 16.1
+#          METHOD |            {"name":"toString"} | 18.1
+#       CLOSURE_S |                                | 18.2
+#  KEYWORD_RETURN |                                | 19.1
+#        VAR_THIS |                       "pretty" | 19.2
+#      PAREN_CALL |                                | 19.3
+#         PAREN_E |                                | 19.4
+#         OP_SEMI |                              1 | 19.5
+#       CLOSURE_E |                                | 20.1
+#        FUNCTION |            {"name":"midpoint"} | 22.1
+#       CLOSURE_S |                                | 22.2
+#    KEYWORD_NEED |                                | 23.1
+#         VAR_LEX |                          "pt1" | 23.2
+#        OP_COMMA |                                | 23.3
+#         VAR_LEX |                          "pt2" | 23.4
+#         OP_SEMI |                              1 | 23.5
+#  KEYWORD_RETURN |                                | 24.1
+#        BAREWORD |                        "Point" | 24.2
+#      PAREN_CALL |                                | 24.3
+#      PROP_VALUE |                            "x" | 25.05
+#         PAREN_S |                                | 25.1
+#         VAR_LEX |                          "pt1" | 25.15
+#        PROPERTY |                            "x" | 25.2
+#          OP_ADD |                                | 25.25
+#         VAR_LEX |                          "pt2" | 25.3
+#        PROPERTY |                            "x" | 25.35
+#         PAREN_E |                                | 25.4
+#          OP_DIV |                                | 25.45
+#          NUMBER |                            "2" | 25.5
+#        OP_COMMA |                                | 25.55
+#      PROP_VALUE |                            "y" | 26.05
+#         PAREN_S |                                | 26.1
+#         VAR_LEX |                          "pt1" | 26.15
+#        PROPERTY |                            "y" | 26.2
+#          OP_ADD |                                | 26.25
+#         VAR_LEX |                          "pt2" | 26.3
+#        PROPERTY |                            "y" | 26.35
+#         PAREN_E |                                | 26.4
+#          OP_DIV |                                | 26.45
+#          NUMBER |                            "2" | 26.5
+#         OP_SEMI |                              1 | 26.55
+#         PAREN_E |                                | 27.1
+#         OP_SEMI |                              1 | 27.2
+#       CLOSURE_E |                                | 28.1
+#     KEYWORD_END |                                | 30.1
+#         VAR_LEX |                           "pt" | 32.05
+#       OP_ASSIGN |                                | 32.1
+#        BAREWORD |                        "Point" | 32.15
+#      PAREN_CALL |                                | 32.2
+#          NUMBER |                            "5" | 32.25
+#        OP_COMMA |                                | 32.3
+#          NUMBER |                            "3" | 32.35
+#         PAREN_E |                                | 32.4
+#         OP_SEMI |                              1 | 32.45
+#        BAREWORD |                          "say" | 33.1
+#      PAREN_CALL |                                | 33.2
+#          STRING |  ["Point",["VAR_LEX","pt",33]] | 33.3
+#         PAREN_E |                                | 33.4
+#         OP_SEMI |                              1 | 33.5
+#         VAR_LEX |                          "rpt" | 35.1
+#       OP_ASSIGN |                                | 35.2
+#         VAR_LEX |                           "pt" | 35.3
+#        PROPERTY |                   "oneToRight" | 35.4
+#         OP_CALL |                                | 35.5
+#         OP_SEMI |                              1 | 35.6
+#        BAREWORD |                          "say" | 36.1
+#      PAREN_CALL |                                | 36.2
+#          STRING | ["Right",["VAR_LEX","rpt",36]] | 36.3
+#         PAREN_E |                                | 36.4
+#         OP_SEMI |                              1 | 36.5
+#         VAR_LEX |                         "mdpt" | 38.05
+#       OP_ASSIGN |                                | 38.1
+#        BAREWORD |                        "Point" | 38.15
+#        PROPERTY |                     "midpoint" | 38.2
+#      PAREN_CALL |                                | 38.25
+#         VAR_LEX |                           "pt" | 38.3
+#        OP_COMMA |                                | 38.35
+#         VAR_LEX |                          "rpt" | 38.4
+#         PAREN_E |                                | 38.45
+#         OP_SEMI |                              1 | 38.5
+#        BAREWORD |                          "say" | 39.1
+#      PAREN_CALL |                                | 39.2
+#          STRING | ["Midpoint",["VAR_LEX","mdpt",39]] | 39.3
+#         PAREN_E |                                | 39.4
+#         OP_SEMI |                              1 | 39.5
+#         VAR_LEX |                     "nineteen" | 41.1
+#       OP_ASSIGN |                                | 41.2
+#          NUMBER |                            "4" | 41.3
+#          OP_ADD |                                | 41.4
+#          NUMBER |                           "45" | 41.5
+#          OP_DIV |                                | 41.6
+#          NUMBER |                            "3" | 41.7
+#         OP_SEMI |                              1 | 41.8
+#        BAREWORD |                          "say" | 42.1
+#      PAREN_CALL |                                | 42.2
+#          STRING | ["Nineteen: ",["VAR_LEX","nineteen",42]] | 42.3
+#         PAREN_E |                                | 42.4
+#         OP_SEMI |                              1 | 42.5
 # === Document Model ===
 #  Document './test/hello5.frt'
 #      Class 'Point' version 1.0
@@ -351,10 +351,10 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'x', 4.33333 ) or return;
-                FF::need( $scope, $arguments, 'y', 4.66667 ) or return;
-                $self->set_property( x => $scope->property_u('x'), 5.4 );
-                $self->set_property( y => $scope->property_u('y'), 6.4 );
+                FF::need( $scope, $arguments, 'x', 4.2 ) or return;
+                FF::need( $scope, $arguments, 'y', 4.4 ) or return;
+                $self->set_property( x => $scope->property_u('x'), 5.2 );
+                $self->set_property( y => $scope->property_u('y'), 6.2 );
                 return $return;
             }
         );
@@ -373,9 +373,9 @@ my $result = do {
                             add( $scope, $self->property_u('x'), num( $f, 1 ) ),
                             $self->property_u('y')
                         ],
-                        $scope, undef, 10.33333
+                        $scope, undef, 10.2
                     ),
-                    10.16667
+                    10.1
                 );
                 return $scope->property_u('pt');
                 return $return;
@@ -405,7 +405,7 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 return $self->property_u('pretty')
-                  ->call_u( {}, $scope, undef, 19.5 );
+                  ->call_u( {}, $scope, undef, 19.3 );
                 return $return;
             }
         );
@@ -430,8 +430,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'pt1', 23.33333 ) or return;
-                FF::need( $scope, $arguments, 'pt2', 23.66667 ) or return;
+                FF::need( $scope, $arguments, 'pt1', 23.2 ) or return;
+                FF::need( $scope, $arguments, 'pt2', 23.4 ) or return;
                 return $scope->property_u('Point')->call_u(
                     {
                         x => div(
@@ -453,7 +453,7 @@ my $result = do {
                             num( $f, 2 )
                         )
                     },
-                    $scope, undef, 24.75
+                    $scope, undef, 24.3
                 );
                 return $return;
             }
@@ -483,34 +483,34 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         pt => $scope->property_u('Point')
-          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32.4 ),
-        32.2
+          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32.2 ),
+        32.1
     );
     $scope->property_u('say')
       ->call_u( [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
-        $scope, undef, 33.33333 );
+        $scope, undef, 33.2 );
     $scope->set_property_ow(
         $context,
         rpt => $scope->property_u('pt')->property_u('oneToRight')
-          ->call_u( {}, $scope, undef, 35.71429 ),
-        35.28571
+          ->call_u( {}, $scope, undef, 35.5 ),
+        35.2
     );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
-        $scope, undef, 36.33333 );
+        $scope, undef, 36.2 );
     $scope->set_property_ow(
         $context,
         mdpt => $scope->property_u('Point')->property_u('midpoint')->call_u(
             [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope,
-            undef, 38.45455
+            undef, 38.25
         ),
-        38.18182
+        38.1
     );
     $scope->property_u('say')
       ->call_u(
         [ add( $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt') ) ],
-        $scope, undef, 39.33333 );
+        $scope, undef, 39.2 );
     $scope->set_property_ow(
         $context,
         nineteen => add(
@@ -518,7 +518,7 @@ my $result = do {
             num( $f, 4 ),
             div( $scope, num( $f, 45 ), num( $f, 3 ) )
         ),
-        41.22222
+        41.2
     );
     $scope->property_u('say')->call_u(
         [
@@ -527,7 +527,7 @@ my $result = do {
                 $scope->property_u('nineteen')
             )
         ],
-        $scope, undef, 42.33333
+        $scope, undef, 42.2
     );
 };
 

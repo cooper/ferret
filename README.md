@@ -270,40 +270,21 @@ involves very minimal error checking. In fact, the only error that can occur
 during this process is a failure to tokenize a certain byte or string.
 
 ```
-=== Tokens ===
-        PKG_DEC | {"name":"Math"}
-      CLASS_DEC | {"name":"Line"}
-         METHOD | {"name":"_init_","main":1}
-      CLOSURE_S |
-   KEYWORD_NEED |
-       VAR_THIS | "pt1"
-       OP_COMMA |
-       VAR_THIS | "pt2"
-        OP_SEMI |
-      CLOSURE_E |
-         METHOD | {"name":"midpoint","main":null}
-      CLOSURE_S |
- KEYWORD_RETURN |
-        PAREN_S |
-       VAR_THIS | "pt1"
-       OP_COMMA |
-       VAR_THIS | "pt2"
-        PAREN_E |
-       PROPERTY | "midpoint"
-     PAREN_CALL |
-        PAREN_E |
-        OP_SEMI |
-      CLOSURE_E |
-         METHOD | {"name":"length","main":null}
-      CLOSURE_S |
- KEYWORD_RETURN |
-       VAR_THIS | "pt1"
-       PROPERTY | "distanceTo"
-     PAREN_CALL |
-       VAR_THIS | "pt2"
-        PAREN_E |
-        OP_SEMI |
-      CLOSURE_E |
+=== Tokenization ===
+     PKG_DEC |                {"name":"Math"} | 1.5
+   CLASS_DEC |                {"name":"Line"} | 2.5
+      METHOD |     {"main":1,"name":"_init_"} | 4.33333
+   CLOSURE_S |                                | 4.66667
+KEYWORD_NEED |                                | 5.1
+    VAR_THIS |                          "pt1" | 5.2
+    OP_VALUE |                                | 5.3
+    BAREWORD |                        "Point" | 5.4
+    OP_COMMA |                                | 5.5
+    VAR_THIS |                          "pt2" | 5.6
+    OP_VALUE |                                | 5.7
+    BAREWORD |                        "Point" | 5.8
+     OP_SEMI |                              1 | 5.9
+   CLOSURE_E |                                | 6.5
 ```
 
 Example of an error raised during the tokenization stage

@@ -1,81 +1,81 @@
 # === Tokenization ===
-#         VAR_LEX |                         "rect" | 1.05
-#       OP_ASSIGN |                                | 1.1
-#        BAREWORD |                         "Math" | 1.15
-#         OP_PACK |                                | 1.2
-#        BAREWORD |                         "Rect" | 1.25
-#      PAREN_CALL |                                | 1.3
-#      PROP_VALUE |                            "x" | 1.35
-#          NUMBER |                            "5" | 1.4
-#        OP_COMMA |                                | 1.45
-#      PROP_VALUE |                            "y" | 1.5
-#          NUMBER |                            "4" | 1.55
-#        OP_COMMA |                                | 1.6
-#      PROP_VALUE |                        "width" | 1.65
-#          NUMBER |                           "12" | 1.7
-#        OP_COMMA |                                | 1.75
-#      PROP_VALUE |                       "height" | 1.8
-#          NUMBER |                           "10" | 1.85
-#         PAREN_E |                                | 1.9
-#         OP_SEMI |                              1 | 1.95
-#         VAR_LEX |                       "center" | 3.16667
-#       OP_ASSIGN |                                | 3.33333
-#         VAR_LEX |                         "rect" | 3.5
-#        PROPERTY |                       "center" | 3.66667
-#         OP_SEMI |                              1 | 3.83333
-#        BAREWORD |                          "say" | 4.16667
-#      PAREN_CALL |                                | 4.33333
-#          STRING | ["Center of rect: ",["VAR_LEX","center",4]] | 4.5
-#         PAREN_E |                                | 4.66667
-#         OP_SEMI |                              1 | 4.83333
-#        BAREWORD |                          "say" | 5.11111
-#      PAREN_CALL |                                | 5.22222
-#          STRING | ["Center distance from origin: "] | 5.33333
-#          OP_ADD |                                | 5.44444
-#         VAR_LEX |                       "center" | 5.55556
-#        PROPERTY |           "distanceFromOrigin" | 5.66667
-#         PAREN_E |                                | 5.77778
-#         OP_SEMI |                              1 | 5.88889
-#         VAR_LEX |                      "otherPt" | 7.08333
-#       OP_ASSIGN |                                | 7.16667
-#        BAREWORD |                         "Math" | 7.25
-#         OP_PACK |                                | 7.33333
-#        BAREWORD |                        "Point" | 7.41667
-#      PAREN_CALL |                                | 7.5
-#          NUMBER |                            "9" | 7.58333
-#        OP_COMMA |                                | 7.66667
-#          NUMBER |                            "2" | 7.75
-#         PAREN_E |                                | 7.83333
-#         OP_SEMI |                              1 | 7.91667
-#         VAR_LEX |                     "midpoint" | 8.07143
-#       OP_ASSIGN |                                | 8.14286
-#         PAREN_S |                                | 8.21429
-#         VAR_LEX |                       "center" | 8.28571
-#        OP_COMMA |                                | 8.35714
-#         VAR_LEX |                      "otherPt" | 8.42857
+#         VAR_LEX |                         "rect" | 1.03333
+#       OP_ASSIGN |                                | 1.06667
+#        BAREWORD |                         "Math" | 1.1
+#         OP_PACK |                                | 1.13333
+#        BAREWORD |                         "Rect" | 1.16667
+#      PAREN_CALL |                                | 1.2
+#      PROP_VALUE |                            "x" | 1.23333
+#          NUMBER |                            "5" | 1.26667
+#        OP_COMMA |                                | 1.3
+#      PROP_VALUE |                            "y" | 1.33333
+#          NUMBER |                            "4" | 1.36667
+#        OP_COMMA |                                | 1.4
+#      PROP_VALUE |                        "width" | 1.43333
+#          NUMBER |                           "12" | 1.46667
+#        OP_COMMA |                                | 1.5
+#      PROP_VALUE |                       "height" | 1.53333
+#          NUMBER |                           "10" | 1.56667
+#         PAREN_E |                                | 1.6
+#         OP_SEMI |                              1 | 1.63333
+#         VAR_LEX |                       "center" | 3.1
+#       OP_ASSIGN |                                | 3.2
+#         VAR_LEX |                         "rect" | 3.3
+#        PROPERTY |                       "center" | 3.4
+#         OP_SEMI |                              1 | 3.5
+#        BAREWORD |                          "say" | 4.1
+#      PAREN_CALL |                                | 4.2
+#          STRING | ["Center of rect: ",["VAR_LEX","center",4]] | 4.3
+#         PAREN_E |                                | 4.4
+#         OP_SEMI |                              1 | 4.5
+#        BAREWORD |                          "say" | 5.1
+#      PAREN_CALL |                                | 5.2
+#          STRING | ["Center distance from origin: "] | 5.3
+#          OP_ADD |                                | 5.4
+#         VAR_LEX |                       "center" | 5.5
+#        PROPERTY |           "distanceFromOrigin" | 5.6
+#         PAREN_E |                                | 5.7
+#         OP_SEMI |                              1 | 5.8
+#         VAR_LEX |                      "otherPt" | 7.05
+#       OP_ASSIGN |                                | 7.1
+#        BAREWORD |                         "Math" | 7.15
+#         OP_PACK |                                | 7.2
+#        BAREWORD |                        "Point" | 7.25
+#      PAREN_CALL |                                | 7.3
+#          NUMBER |                            "9" | 7.35
+#        OP_COMMA |                                | 7.4
+#          NUMBER |                            "2" | 7.45
+#         PAREN_E |                                | 7.5
+#         OP_SEMI |                              1 | 7.55
+#         VAR_LEX |                     "midpoint" | 8.05
+#       OP_ASSIGN |                                | 8.1
+#         PAREN_S |                                | 8.15
+#         VAR_LEX |                       "center" | 8.2
+#        OP_COMMA |                                | 8.25
+#         VAR_LEX |                      "otherPt" | 8.3
+#         PAREN_E |                                | 8.35
+#        PROPERTY |                     "midpoint" | 8.4
+#      PAREN_CALL |                                | 8.45
 #         PAREN_E |                                | 8.5
-#        PROPERTY |                     "midpoint" | 8.57143
-#      PAREN_CALL |                                | 8.64286
-#         PAREN_E |                                | 8.71429
-#        PROPERTY |                       "pretty" | 8.78571
-#         OP_CALL |                                | 8.85714
-#         OP_SEMI |                              1 | 8.92857
-#        BAREWORD |                          "say" | 9.16667
-#      PAREN_CALL |                                | 9.33333
-#          STRING | ["Midpoint: ",["VAR_LEX","midpoint",9]] | 9.5
-#         PAREN_E |                                | 9.66667
-#         OP_SEMI |                              1 | 9.83333
-#        BAREWORD |                          "say" | 11.08333
-#      PAREN_CALL |                                | 11.16667
-#          STRING |      ["Square root of four: "] | 11.25
-#          OP_ADD |                                | 11.33333
-#        BAREWORD |                         "Math" | 11.41667
-#        PROPERTY |                         "sqrt" | 11.5
-#      PAREN_CALL |                                | 11.58333
-#          NUMBER |                            "4" | 11.66667
-#         PAREN_E |                                | 11.75
-#         PAREN_E |                                | 11.83333
-#         OP_SEMI |                              1 | 11.91667
+#        PROPERTY |                       "pretty" | 8.55
+#         OP_CALL |                                | 8.6
+#         OP_SEMI |                              1 | 8.65
+#        BAREWORD |                          "say" | 9.1
+#      PAREN_CALL |                                | 9.2
+#          STRING | ["Midpoint: ",["VAR_LEX","midpoint",9]] | 9.3
+#         PAREN_E |                                | 9.4
+#         OP_SEMI |                              1 | 9.5
+#        BAREWORD |                          "say" | 11.05
+#      PAREN_CALL |                                | 11.1
+#          STRING |      ["Square root of four: "] | 11.15
+#          OP_ADD |                                | 11.2
+#        BAREWORD |                         "Math" | 11.25
+#        PROPERTY |                         "sqrt" | 11.3
+#      PAREN_CALL |                                | 11.35
+#          NUMBER |                            "4" | 11.4
+#         PAREN_E |                                | 11.45
+#         PAREN_E |                                | 11.5
+#         OP_SEMI |                              1 | 11.55
 # === Document Model ===
 #  Document './test/hello7/hello7.frt'
 #      Instruction
@@ -197,14 +197,14 @@ my $result = do {
                 width  => num( $f, 12 ),
                 height => num( $f, 10 )
             },
-            $scope, undef, 1.3
+            $scope, undef, 1.2
         ),
-        1.1
+        1.06667
     );
     $scope->set_property_ow(
         $context,
         center => $scope->property_u('rect')->property_u('center'),
-        3.33333
+        3.2
     );
     $scope->property_u('say')->call_u(
         [
@@ -213,7 +213,7 @@ my $result = do {
                 $scope->property_u('center')
             )
         ],
-        $scope, undef, 4.33333
+        $scope, undef, 4.2
     );
     $scope->property_u('say')->call_u(
         [
@@ -223,22 +223,22 @@ my $result = do {
                 $scope->property_u('center')->property_u('distanceFromOrigin')
             )
         ],
-        $scope, undef, 5.22222
+        $scope, undef, 5.2
     );
     $scope->set_property_ow(
         $context,
         otherPt => $scope->property_u('Math::Point')
-          ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7.5 ),
-        7.16667
+          ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7.3 ),
+        7.1
     );
     $scope->set_property_ow(
         $context,
         midpoint => FF::create_set(
             $scope, $scope->property_u('center'),
             $scope->property_u('otherPt')
-          )->property_u('midpoint')->call_u( {}, $scope, undef, 8.64286 )
-          ->property_u('pretty')->call_u( {}, $scope, undef, 8.85714 ),
-        8.14286
+          )->property_u('midpoint')->call_u( {}, $scope, undef, 8.45 )
+          ->property_u('pretty')->call_u( {}, $scope, undef, 8.6 ),
+        8.1
     );
     $scope->property_u('say')->call_u(
         [
@@ -247,7 +247,7 @@ my $result = do {
                 $scope->property_u('midpoint')
             )
         ],
-        $scope, undef, 9.33333
+        $scope, undef, 9.2
     );
     $scope->property_u('say')->call_u(
         [
@@ -255,10 +255,10 @@ my $result = do {
                 $scope,
                 str( $f, "Square root of four: " ),
                 $scope->property_u('Math')->property_u('sqrt')
-                  ->call_u( [ num( $f, 4 ) ], $scope, undef, 11.58333 )
+                  ->call_u( [ num( $f, 4 ) ], $scope, undef, 11.35 )
             )
         ],
-        $scope, undef, 11.16667
+        $scope, undef, 11.1
     );
 };
 

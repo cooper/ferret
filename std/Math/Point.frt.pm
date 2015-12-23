@@ -1,144 +1,144 @@
 # === Tokenization ===
-#         PKG_DEC |                {"name":"Math"} | 1.5
-#       CLASS_DEC |               {"name":"Point"} | 2.5
-#          METHOD |     {"name":"_init_","main":1} | 4.33333
-#       CLOSURE_S |                                | 4.66667
-#    KEYWORD_NEED |                                | 5.1
-#        VAR_THIS |                            "x" | 5.2
-#        OP_VALUE |                                | 5.3
+#         PKG_DEC |                {"name":"Math"} | 1.1
+#       CLASS_DEC |               {"name":"Point"} | 2.1
+#          METHOD |     {"name":"_init_","main":1} | 4.1
+#       CLOSURE_S |                                | 4.2
+#    KEYWORD_NEED |                                | 5.05
+#        VAR_THIS |                            "x" | 5.1
+#        OP_VALUE |                                | 5.15
+#        BAREWORD |                          "Num" | 5.2
+#        OP_COMMA |                                | 5.25
+#        VAR_THIS |                            "y" | 5.3
+#        OP_VALUE |                                | 5.35
 #        BAREWORD |                          "Num" | 5.4
-#        OP_COMMA |                                | 5.5
-#        VAR_THIS |                            "y" | 5.6
-#        OP_VALUE |                                | 5.7
-#        BAREWORD |                          "Num" | 5.8
-#         OP_SEMI |                              1 | 5.9
-#       CLOSURE_E |                                | 6.5
-#          METHOD |          {"name":"distanceTo"} | 8.33333
-#       CLOSURE_S |                                | 8.66667
-#    KEYWORD_NEED |                                | 9.16667
-#         VAR_LEX |                          "pt2" | 9.33333
-#        OP_VALUE |                                | 9.5
-#        BAREWORD |                        "Point" | 9.66667
-#         OP_SEMI |                              1 | 9.83333
-#         VAR_LEX |                           "dx" | 10.125
-#       OP_ASSIGN |                                | 10.25
-#        VAR_THIS |                            "x" | 10.375
-#          OP_SUB |                                | 10.5
-#         VAR_LEX |                          "pt2" | 10.625
-#        PROPERTY |                            "x" | 10.75
-#         OP_SEMI |                              1 | 10.875
-#         VAR_LEX |                           "dy" | 11.125
-#       OP_ASSIGN |                                | 11.25
-#        VAR_THIS |                            "y" | 11.375
-#          OP_SUB |                                | 11.5
-#         VAR_LEX |                          "pt2" | 11.625
-#        PROPERTY |                            "y" | 11.75
-#         OP_SEMI |                              1 | 11.875
-#  KEYWORD_RETURN |                                | 12.07692
-#        BAREWORD |                         "sqrt" | 12.15385
-#      PAREN_CALL |                                | 12.23077
-#         VAR_LEX |                           "dx" | 12.30769
-#          OP_POW |                                | 12.38462
-#          NUMBER |                            "2" | 12.46154
-#          OP_ADD |                                | 12.53846
-#         VAR_LEX |                           "dy" | 12.61538
-#          OP_POW |                                | 12.69231
-#          NUMBER |                            "2" | 12.76923
-#         PAREN_E |                                | 12.84615
-#         OP_SEMI |                              1 | 12.92308
-#       CLOSURE_E |                                | 13.5
-#          METHOD | {"name":"distanceFromOrigin","is_prop":1,"p_set":null} | 15.33333
-#       CLOSURE_S |                                | 15.66667
-#  KEYWORD_RETURN |                                | 16.08333
-#        VAR_THIS |                   "distanceTo" | 16.16667
+#         OP_SEMI |                              1 | 5.45
+#       CLOSURE_E |                                | 6.1
+#          METHOD |          {"name":"distanceTo"} | 8.1
+#       CLOSURE_S |                                | 8.2
+#    KEYWORD_NEED |                                | 9.1
+#         VAR_LEX |                          "pt2" | 9.2
+#        OP_VALUE |                                | 9.3
+#        BAREWORD |                        "Point" | 9.4
+#         OP_SEMI |                              1 | 9.5
+#         VAR_LEX |                           "dx" | 10.1
+#       OP_ASSIGN |                                | 10.2
+#        VAR_THIS |                            "x" | 10.3
+#          OP_SUB |                                | 10.4
+#         VAR_LEX |                          "pt2" | 10.5
+#        PROPERTY |                            "x" | 10.6
+#         OP_SEMI |                              1 | 10.7
+#         VAR_LEX |                           "dy" | 11.1
+#       OP_ASSIGN |                                | 11.2
+#        VAR_THIS |                            "y" | 11.3
+#          OP_SUB |                                | 11.4
+#         VAR_LEX |                          "pt2" | 11.5
+#        PROPERTY |                            "y" | 11.6
+#         OP_SEMI |                              1 | 11.7
+#  KEYWORD_RETURN |                                | 12.05
+#        BAREWORD |                         "sqrt" | 12.1
+#      PAREN_CALL |                                | 12.15
+#         VAR_LEX |                           "dx" | 12.2
+#          OP_POW |                                | 12.25
+#          NUMBER |                            "2" | 12.3
+#          OP_ADD |                                | 12.35
+#         VAR_LEX |                           "dy" | 12.4
+#          OP_POW |                                | 12.45
+#          NUMBER |                            "2" | 12.5
+#         PAREN_E |                                | 12.55
+#         OP_SEMI |                              1 | 12.6
+#       CLOSURE_E |                                | 13.1
+#          METHOD | {"p_set":null,"is_prop":1,"name":"distanceFromOrigin"} | 15.1
+#       CLOSURE_S |                                | 15.2
+#  KEYWORD_RETURN |                                | 16.05
+#        VAR_THIS |                   "distanceTo" | 16.1
+#      PAREN_CALL |                                | 16.15
+#        VAR_SPEC |                        "class" | 16.2
 #      PAREN_CALL |                                | 16.25
-#        VAR_SPEC |                        "class" | 16.33333
-#      PAREN_CALL |                                | 16.41667
-#          NUMBER |                            "0" | 16.5
-#        OP_COMMA |                                | 16.58333
-#          NUMBER |                            "0" | 16.66667
-#         PAREN_E |                                | 16.75
-#         PAREN_E |                                | 16.83333
-#         OP_SEMI |                              1 | 16.91667
-#       CLOSURE_E |                                | 17.5
-#          METHOD | {"is_prop":1,"name":"pretty","p_set":null} | 19.33333
-#       CLOSURE_S |                                | 19.66667
-#  KEYWORD_RETURN |                                | 20.25
-#          STRING | ["(",["VAR_THIS","x",20],", ",["VAR_THIS","y",20],")"] | 20.5
-#         OP_SEMI |                              1 | 20.75
-#       CLOSURE_E |                                | 21.5
-#          METHOD |            {"name":"toString"} | 23.33333
-#       CLOSURE_S |                                | 23.66667
-#  KEYWORD_RETURN |                                | 24.25
-#        VAR_THIS |                       "pretty" | 24.5
-#         OP_SEMI |                              1 | 24.75
-#       CLOSURE_E |                                | 25.5
-#          METHOD |         {"name":"description"} | 27.33333
-#       CLOSURE_S |                                | 27.66667
-#  KEYWORD_RETURN |                                | 28.16667
-#          STRING |                      ["Point"] | 28.33333
-#          OP_ADD |                                | 28.5
-#        VAR_THIS |                       "pretty" | 28.66667
-#         OP_SEMI |                              1 | 28.83333
-#       CLOSURE_E |                                | 29.5
-#        FUNCTION |            {"name":"midpoint"} | 31.33333
-#       CLOSURE_S |                                | 31.66667
-#    KEYWORD_NEED |                                | 32.1
-#         VAR_LEX |                          "pt1" | 32.2
-#        OP_VALUE |                                | 32.3
+#          NUMBER |                            "0" | 16.3
+#        OP_COMMA |                                | 16.35
+#          NUMBER |                            "0" | 16.4
+#         PAREN_E |                                | 16.45
+#         PAREN_E |                                | 16.5
+#         OP_SEMI |                              1 | 16.55
+#       CLOSURE_E |                                | 17.1
+#          METHOD | {"name":"pretty","is_prop":1,"p_set":null} | 19.1
+#       CLOSURE_S |                                | 19.2
+#  KEYWORD_RETURN |                                | 20.1
+#          STRING | ["(",["VAR_THIS","x",20],", ",["VAR_THIS","y",20],")"] | 20.2
+#         OP_SEMI |                              1 | 20.3
+#       CLOSURE_E |                                | 21.1
+#          METHOD |            {"name":"toString"} | 23.1
+#       CLOSURE_S |                                | 23.2
+#  KEYWORD_RETURN |                                | 24.1
+#        VAR_THIS |                       "pretty" | 24.2
+#         OP_SEMI |                              1 | 24.3
+#       CLOSURE_E |                                | 25.1
+#          METHOD |         {"name":"description"} | 27.1
+#       CLOSURE_S |                                | 27.2
+#  KEYWORD_RETURN |                                | 28.1
+#          STRING |                      ["Point"] | 28.2
+#          OP_ADD |                                | 28.3
+#        VAR_THIS |                       "pretty" | 28.4
+#         OP_SEMI |                              1 | 28.5
+#       CLOSURE_E |                                | 29.1
+#        FUNCTION |            {"name":"midpoint"} | 31.1
+#       CLOSURE_S |                                | 31.2
+#    KEYWORD_NEED |                                | 32.05
+#         VAR_LEX |                          "pt1" | 32.1
+#        OP_VALUE |                                | 32.15
+#        BAREWORD |                        "Point" | 32.2
+#        OP_COMMA |                                | 32.25
+#         VAR_LEX |                          "pt2" | 32.3
+#        OP_VALUE |                                | 32.35
 #        BAREWORD |                        "Point" | 32.4
-#        OP_COMMA |                                | 32.5
-#         VAR_LEX |                          "pt2" | 32.6
-#        OP_VALUE |                                | 32.7
-#        BAREWORD |                        "Point" | 32.8
-#         OP_SEMI |                              1 | 32.9
-#  KEYWORD_RETURN |                                | 33.25
-#        VAR_SPEC |                        "class" | 33.5
-#      PAREN_CALL |                                | 33.75
-#      PROP_VALUE |                            "x" | 34.08333
-#         PAREN_S |                                | 34.16667
-#         VAR_LEX |                          "pt1" | 34.25
-#        PROPERTY |                            "x" | 34.33333
-#          OP_ADD |                                | 34.41667
-#         VAR_LEX |                          "pt2" | 34.5
-#        PROPERTY |                            "x" | 34.58333
-#         PAREN_E |                                | 34.66667
-#          OP_DIV |                                | 34.75
-#          NUMBER |                            "2" | 34.83333
-#        OP_COMMA |                                | 34.91667
-#      PROP_VALUE |                            "y" | 35.08333
-#         PAREN_S |                                | 35.16667
-#         VAR_LEX |                          "pt1" | 35.25
-#        PROPERTY |                            "y" | 35.33333
-#          OP_ADD |                                | 35.41667
-#         VAR_LEX |                          "pt2" | 35.5
-#        PROPERTY |                            "y" | 35.58333
-#         PAREN_E |                                | 35.66667
-#          OP_DIV |                                | 35.75
-#          NUMBER |                            "2" | 35.83333
-#         OP_SEMI |                              1 | 35.91667
-#         PAREN_E |                                | 36.33333
-#         OP_SEMI |                              1 | 36.66667
-#       CLOSURE_E |                                | 37.5
-#        FUNCTION |     {"name":"distanceBetween"} | 39.33333
-#       CLOSURE_S |                                | 39.66667
-#    KEYWORD_NEED |                                | 40.1
-#         VAR_LEX |                          "pt1" | 40.2
-#        OP_VALUE |                                | 40.3
+#         OP_SEMI |                              1 | 32.45
+#  KEYWORD_RETURN |                                | 33.1
+#        VAR_SPEC |                        "class" | 33.2
+#      PAREN_CALL |                                | 33.3
+#      PROP_VALUE |                            "x" | 34.05
+#         PAREN_S |                                | 34.1
+#         VAR_LEX |                          "pt1" | 34.15
+#        PROPERTY |                            "x" | 34.2
+#          OP_ADD |                                | 34.25
+#         VAR_LEX |                          "pt2" | 34.3
+#        PROPERTY |                            "x" | 34.35
+#         PAREN_E |                                | 34.4
+#          OP_DIV |                                | 34.45
+#          NUMBER |                            "2" | 34.5
+#        OP_COMMA |                                | 34.55
+#      PROP_VALUE |                            "y" | 35.05
+#         PAREN_S |                                | 35.1
+#         VAR_LEX |                          "pt1" | 35.15
+#        PROPERTY |                            "y" | 35.2
+#          OP_ADD |                                | 35.25
+#         VAR_LEX |                          "pt2" | 35.3
+#        PROPERTY |                            "y" | 35.35
+#         PAREN_E |                                | 35.4
+#          OP_DIV |                                | 35.45
+#          NUMBER |                            "2" | 35.5
+#         OP_SEMI |                              1 | 35.55
+#         PAREN_E |                                | 36.1
+#         OP_SEMI |                              1 | 36.2
+#       CLOSURE_E |                                | 37.1
+#        FUNCTION |     {"name":"distanceBetween"} | 39.1
+#       CLOSURE_S |                                | 39.2
+#    KEYWORD_NEED |                                | 40.05
+#         VAR_LEX |                          "pt1" | 40.1
+#        OP_VALUE |                                | 40.15
+#        BAREWORD |                        "Point" | 40.2
+#        OP_COMMA |                                | 40.25
+#         VAR_LEX |                          "pt2" | 40.3
+#        OP_VALUE |                                | 40.35
 #        BAREWORD |                        "Point" | 40.4
-#        OP_COMMA |                                | 40.5
-#         VAR_LEX |                          "pt2" | 40.6
-#        OP_VALUE |                                | 40.7
-#        BAREWORD |                        "Point" | 40.8
-#         OP_SEMI |                              1 | 40.9
-#  KEYWORD_RETURN |                                | 41.125
-#         VAR_LEX |                          "pt1" | 41.25
-#        PROPERTY |                   "distanceTo" | 41.375
-#      PAREN_CALL |                                | 41.5
-#         VAR_LEX |                          "pt2" | 41.625
-#         PAREN_E |                                | 41.75
-#         OP_SEMI |                              1 | 41.875
-#       CLOSURE_E |                                | 42.5
+#         OP_SEMI |                              1 | 40.45
+#  KEYWORD_RETURN |                                | 41.1
+#         VAR_LEX |                          "pt1" | 41.2
+#        PROPERTY |                   "distanceTo" | 41.3
+#      PAREN_CALL |                                | 41.4
+#         VAR_LEX |                          "pt2" | 41.5
+#         PAREN_E |                                | 41.6
+#         OP_SEMI |                              1 | 41.7
+#       CLOSURE_E |                                | 42.1
 # === Document Model ===
 #  Document './std/Math/Point.frt'
 #      Package 'Math'
@@ -357,7 +357,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'pt2', 9.33333 ) or return;
+                FF::need( $scope, $arguments, 'pt2', 9.2 ) or return;
                 $scope->set_property_ow(
                     $context,
                     dx => _sub(
@@ -365,7 +365,7 @@ my $result = do {
                         $self->property_u('x'),
                         $scope->property_u('pt2')->property_u('x')
                     ),
-                    10.25
+                    10.2
                 );
                 $scope->set_property_ow(
                     $context,
@@ -374,7 +374,7 @@ my $result = do {
                         $self->property_u('y'),
                         $scope->property_u('pt2')->property_u('y')
                     ),
-                    11.25
+                    11.2
                 );
                 return $scope->property_u('sqrt')->call_u(
                     [
@@ -390,7 +390,7 @@ my $result = do {
                             )
                         )
                     ],
-                    $scope, undef, 12.23077
+                    $scope, undef, 12.15
                 );
                 return $return;
             }
@@ -407,10 +407,10 @@ my $result = do {
                     [
                         $scope->{special}->property_u('class')->call_u(
                             [ num( $f, 0 ), num( $f, 0 ) ], $scope,
-                            undef, 16.41667
+                            undef, 16.25
                         )
                     ],
-                    $scope, undef, 16.25
+                    $scope, undef, 16.15
                 );
                 return $return;
             }
@@ -476,8 +476,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'pt1', 32.2 ) or return;
-                FF::need( $scope, $arguments, 'pt2', 32.6 ) or return;
+                FF::need( $scope, $arguments, 'pt1', 32.1 ) or return;
+                FF::need( $scope, $arguments, 'pt2', 32.3 ) or return;
                 return $scope->{special}->property_u('class')->call_u(
                     {
                         x => div(
@@ -499,7 +499,7 @@ my $result = do {
                             num( $f, 2 )
                         )
                     },
-                    $scope, undef, 33.75
+                    $scope, undef, 33.3
                 );
                 return $return;
             }
@@ -525,11 +525,11 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'pt1', 40.2 ) or return;
-                FF::need( $scope, $arguments, 'pt2', 40.6 ) or return;
+                FF::need( $scope, $arguments, 'pt1', 40.1 ) or return;
+                FF::need( $scope, $arguments, 'pt2', 40.3 ) or return;
                 return $scope->property_u('pt1')->property_u('distanceTo')
                   ->call_u( [ $scope->property_u('pt2') ], $scope, undef,
-                    41.5 );
+                    41.4 );
                 return $return;
             }
         );

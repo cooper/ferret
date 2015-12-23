@@ -1,89 +1,89 @@
 # === Tokenization ===
-#         VAR_LEX |                         "sock" | 1.05882
-#       OP_ASSIGN |                                | 1.11765
-#        BAREWORD |                       "Socket" | 1.17647
-#         OP_PACK |                                | 1.23529
-#        BAREWORD |                          "TCP" | 1.29412
-#      PAREN_CALL |                                | 1.35294
-#      PROP_VALUE |                      "address" | 1.41176
-#          STRING |              ["k.notroll.net"] | 1.47059
-#        OP_COMMA |                                | 1.52941
-#      PROP_VALUE |                         "port" | 1.58824
-#          NUMBER |                         "6667" | 1.64706
-#        OP_COMMA |                                | 1.70588
-#      PROP_VALUE |                     "readMode" | 1.76471
-#         VAR_SYM |                         "line" | 1.82353
-#         PAREN_E |                                | 1.88235
-#         OP_SEMI |                              1 | 1.94118
-#        BAREWORD |                      "inspect" | 2.16667
-#      PAREN_CALL |                                | 2.33333
-#         VAR_LEX |                         "sock" | 2.5
-#         PAREN_E |                                | 2.66667
-#         OP_SEMI |                              1 | 2.83333
-#      KEYWORD_ON |                                | 4.2
-#         VAR_LEX |                         "sock" | 4.4
-#        PROPERTY |                      "gotLine" | 4.6
-#       CLOSURE_S |                                | 4.8
-#    KEYWORD_NEED |                                | 5.25
-#         VAR_LEX |                         "data" | 5.5
-#         OP_SEMI |                              1 | 5.75
-#        BAREWORD |                          "say" | 6.16667
-#      PAREN_CALL |                                | 6.33333
-#          STRING | ["recv: ",["VAR_LEX","data",6]] | 6.5
-#         PAREN_E |                                | 6.66667
-#         OP_SEMI |                              1 | 6.83333
-#       CLOSURE_E |                                | 7.5
-#      KEYWORD_ON |                                | 9.2
-#         VAR_LEX |                         "sock" | 9.4
-#        PROPERTY |                      "println" | 9.6
-#       CLOSURE_S |                                | 9.8
-#    KEYWORD_NEED |                                | 10.25
-#         VAR_LEX |                         "data" | 10.5
-#         OP_SEMI |                              1 | 10.75
-#        BAREWORD |                          "say" | 11.16667
-#      PAREN_CALL |                                | 11.33333
-#          STRING | ["send: ",["VAR_LEX","data",11]] | 11.5
-#         PAREN_E |                                | 11.66667
-#         OP_SEMI |                              1 | 11.83333
-#       CLOSURE_E |                                | 12.5
-#      KEYWORD_ON |                                | 14.2
-#         VAR_LEX |                         "sock" | 14.4
-#        PROPERTY |                    "connected" | 14.6
-#       CLOSURE_S |                                | 14.8
-#         VAR_LEX |                         "sock" | 15.14286
-#        PROPERTY |                      "println" | 15.28571
-#      PAREN_CALL |                                | 15.42857
-#          STRING |                     ["NICK k"] | 15.57143
-#         PAREN_E |                                | 15.71429
-#         OP_SEMI |                              1 | 15.85714
-#         VAR_LEX |                         "sock" | 16.14286
-#        PROPERTY |                      "println" | 16.28571
-#      PAREN_CALL |                                | 16.42857
-#          STRING |  ["USER k ","*"," ","*"," :k"] | 16.57143
-#         PAREN_E |                                | 16.71429
-#         OP_SEMI |                              1 | 16.85714
-#       CLOSURE_E |                                | 17.5
-#         VAR_LEX |                         "sock" | 19.16667
-#        PROPERTY |                      "connect" | 19.33333
-#      PAREN_CALL |                                | 19.5
-#         PAREN_E |                                | 19.66667
-#         OP_SEMI |                              1 | 19.83333
-#      KEYWORD_ON |                                | 21.1
-#        BAREWORD |                        "Timer" | 21.2
-#      PAREN_CALL |                                | 21.3
-#          NUMBER |                            "5" | 21.4
-#         PAREN_E |                                | 21.5
-#        PROPERTY |                         "once" | 21.6
-#         OP_CALL |                                | 21.7
-#        PROPERTY |                       "expire" | 21.8
-#       CLOSURE_S |                                | 21.9
-#         VAR_LEX |                         "sock" | 22.14286
-#        PROPERTY |                      "println" | 22.28571
-#      PAREN_CALL |                                | 22.42857
-#          STRING |                    ["JOIN #k"] | 22.57143
-#         PAREN_E |                                | 22.71429
-#         OP_SEMI |                              1 | 22.85714
-#       CLOSURE_E |                                | 23.5
+#         VAR_LEX |                         "sock" | 1.05
+#       OP_ASSIGN |                                | 1.1
+#        BAREWORD |                       "Socket" | 1.15
+#         OP_PACK |                                | 1.2
+#        BAREWORD |                          "TCP" | 1.25
+#      PAREN_CALL |                                | 1.3
+#      PROP_VALUE |                      "address" | 1.35
+#          STRING |              ["k.notroll.net"] | 1.4
+#        OP_COMMA |                                | 1.45
+#      PROP_VALUE |                         "port" | 1.5
+#          NUMBER |                         "6667" | 1.55
+#        OP_COMMA |                                | 1.6
+#      PROP_VALUE |                     "readMode" | 1.65
+#         VAR_SYM |                         "line" | 1.7
+#         PAREN_E |                                | 1.75
+#         OP_SEMI |                              1 | 1.8
+#        BAREWORD |                      "inspect" | 2.1
+#      PAREN_CALL |                                | 2.2
+#         VAR_LEX |                         "sock" | 2.3
+#         PAREN_E |                                | 2.4
+#         OP_SEMI |                              1 | 2.5
+#      KEYWORD_ON |                                | 4.1
+#         VAR_LEX |                         "sock" | 4.2
+#        PROPERTY |                      "gotLine" | 4.3
+#       CLOSURE_S |                                | 4.4
+#    KEYWORD_NEED |                                | 5.1
+#         VAR_LEX |                         "data" | 5.2
+#         OP_SEMI |                              1 | 5.3
+#        BAREWORD |                          "say" | 6.1
+#      PAREN_CALL |                                | 6.2
+#          STRING | ["recv: ",["VAR_LEX","data",6]] | 6.3
+#         PAREN_E |                                | 6.4
+#         OP_SEMI |                              1 | 6.5
+#       CLOSURE_E |                                | 7.1
+#      KEYWORD_ON |                                | 9.1
+#         VAR_LEX |                         "sock" | 9.2
+#        PROPERTY |                      "println" | 9.3
+#       CLOSURE_S |                                | 9.4
+#    KEYWORD_NEED |                                | 10.1
+#         VAR_LEX |                         "data" | 10.2
+#         OP_SEMI |                              1 | 10.3
+#        BAREWORD |                          "say" | 11.1
+#      PAREN_CALL |                                | 11.2
+#          STRING | ["send: ",["VAR_LEX","data",11]] | 11.3
+#         PAREN_E |                                | 11.4
+#         OP_SEMI |                              1 | 11.5
+#       CLOSURE_E |                                | 12.1
+#      KEYWORD_ON |                                | 14.1
+#         VAR_LEX |                         "sock" | 14.2
+#        PROPERTY |                    "connected" | 14.3
+#       CLOSURE_S |                                | 14.4
+#         VAR_LEX |                         "sock" | 15.1
+#        PROPERTY |                      "println" | 15.2
+#      PAREN_CALL |                                | 15.3
+#          STRING |                     ["NICK k"] | 15.4
+#         PAREN_E |                                | 15.5
+#         OP_SEMI |                              1 | 15.6
+#         VAR_LEX |                         "sock" | 16.1
+#        PROPERTY |                      "println" | 16.2
+#      PAREN_CALL |                                | 16.3
+#          STRING |  ["USER k ","*"," ","*"," :k"] | 16.4
+#         PAREN_E |                                | 16.5
+#         OP_SEMI |                              1 | 16.6
+#       CLOSURE_E |                                | 17.1
+#         VAR_LEX |                         "sock" | 19.1
+#        PROPERTY |                      "connect" | 19.2
+#      PAREN_CALL |                                | 19.3
+#         PAREN_E |                                | 19.4
+#         OP_SEMI |                              1 | 19.5
+#      KEYWORD_ON |                                | 21.05
+#        BAREWORD |                        "Timer" | 21.1
+#      PAREN_CALL |                                | 21.15
+#          NUMBER |                            "5" | 21.2
+#         PAREN_E |                                | 21.25
+#        PROPERTY |                         "once" | 21.3
+#         OP_CALL |                                | 21.35
+#        PROPERTY |                       "expire" | 21.4
+#       CLOSURE_S |                                | 21.45
+#         VAR_LEX |                         "sock" | 22.1
+#        PROPERTY |                      "println" | 22.2
+#      PAREN_CALL |                                | 22.3
+#          STRING |                    ["JOIN #k"] | 22.4
+#         PAREN_E |                                | 22.5
+#         OP_SEMI |                              1 | 22.6
+#       CLOSURE_E |                                | 23.1
 # === Document Model ===
 #  Document './test/hello12.frt'
 #      Instruction
@@ -227,7 +227,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data', 5.5 ) or return;
+            FF::need( $scope, $arguments, 'data', 5.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -235,7 +235,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope, undef, 6.33333
+                $scope, undef, 6.2
             );
             return $return;
         }
@@ -248,7 +248,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data', 10.5 ) or return;
+            FF::need( $scope, $arguments, 'data', 10.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -256,7 +256,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope, undef, 11.33333
+                $scope, undef, 11.2
             );
             return $return;
         }
@@ -270,7 +270,7 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
-              ->call_u( [ str( $f, "NICK k" ) ], $scope, undef, 15.42857 );
+              ->call_u( [ str( $f, "NICK k" ) ], $scope, undef, 15.3 );
             $scope->property_u('sock')->property_u('println')->call_u(
                 [
                     add(
@@ -282,7 +282,7 @@ my $result = do {
                         str( $f, " :k" )
                     )
                 ],
-                $scope, undef, 16.42857
+                $scope, undef, 16.3
             );
             return $return;
         }
@@ -296,7 +296,7 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
-              ->call_u( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.42857 );
+              ->call_u( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.3 );
             return $return;
         }
     );
@@ -309,12 +309,12 @@ my $result = do {
                 port     => num( $f,            6667 ),
                 readMode => FF::get_symbol( $f, 'line' )
             },
-            $scope, undef, 1.35294
+            $scope, undef, 1.3
         ),
-        1.11765
+        1.1
     );
     $scope->property_u('inspect')
-      ->call_u( [ $scope->property_u('sock') ], $scope, undef, 2.33333 );
+      ->call_u( [ $scope->property_u('sock') ], $scope, undef, 2.2 );
     FF::on(
         $scope->property_u('sock'),
         'gotLine',
@@ -340,11 +340,11 @@ my $result = do {
         {}
     );
     $scope->property_u('sock')->property_u('connect')
-      ->call_u( {}, $scope, undef, 19.5 );
+      ->call_u( {}, $scope, undef, 19.3 );
     FF::on(
         $scope->property_u('Timer')
-          ->call_u( [ num( $f, 5 ) ], $scope, undef, 21.3 )->property_u('once')
-          ->call_u( {}, $scope, undef, 21.7 ),
+          ->call_u( [ num( $f, 5 ) ], $scope, undef, 21.15 )
+          ->property_u('once')->call_u( {}, $scope, undef, 21.35 ),
         'expire',
         $self,
         $scope,

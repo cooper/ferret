@@ -1,24 +1,24 @@
 # === Tokenization ===
-#       CLASS_DEC |              {"name":"String"} | 1.5
-#          METHOD |       {"name":"doubledLength"} | 3.33333
-#       CLOSURE_S |                                | 3.66667
-#  KEYWORD_RETURN |                                | 4.14286
-#        VAR_THIS |                       "length" | 4.28571
-#         OP_CALL |                                | 4.42857
-#          OP_MUL |                                | 4.57143
-#          NUMBER |                            "2" | 4.71429
-#         OP_SEMI |                              1 | 4.85714
-#       CLOSURE_E |                                | 5.5
-#     KEYWORD_END |                                | 7.5
-#        BAREWORD |                          "say" | 9.1
-#      PAREN_CALL |                                | 9.2
-#          STRING |         ["Length times two: "] | 9.3
-#          OP_ADD |                                | 9.4
-#          STRING |                   ["hi there"] | 9.5
-#        PROPERTY |                "doubledLength" | 9.6
-#         OP_CALL |                                | 9.7
-#         PAREN_E |                                | 9.8
-#         OP_SEMI |                              1 | 9.9
+#       CLASS_DEC |              {"name":"String"} | 1.1
+#          METHOD |       {"name":"doubledLength"} | 3.1
+#       CLOSURE_S |                                | 3.2
+#  KEYWORD_RETURN |                                | 4.1
+#        VAR_THIS |                       "length" | 4.2
+#         OP_CALL |                                | 4.3
+#          OP_MUL |                                | 4.4
+#          NUMBER |                            "2" | 4.5
+#         OP_SEMI |                              1 | 4.6
+#       CLOSURE_E |                                | 5.1
+#     KEYWORD_END |                                | 7.1
+#        BAREWORD |                          "say" | 9.05
+#      PAREN_CALL |                                | 9.1
+#          STRING |         ["Length times two: "] | 9.15
+#          OP_ADD |                                | 9.2
+#          STRING |                   ["hi there"] | 9.25
+#        PROPERTY |                "doubledLength" | 9.3
+#         OP_CALL |                                | 9.35
+#         PAREN_E |                                | 9.4
+#         OP_SEMI |                              1 | 9.45
 # === Document Model ===
 #  Document './test/hello8.frt'
 #      Class 'String'
@@ -81,7 +81,7 @@ my $result = do {
                 return mul(
                     $scope,
                     $self->property_u('length')
-                      ->call_u( {}, $scope, undef, 4.42857 ),
+                      ->call_u( {}, $scope, undef, 4.3 ),
                     num( $f, 2 )
                 );
                 return $return;
@@ -98,10 +98,10 @@ my $result = do {
                 $scope,
                 str( $f, "Length times two: " ),
                 str( $f, "hi there" )->property_u('doubledLength')
-                  ->call_u( {}, $scope, undef, 9.7 )
+                  ->call_u( {}, $scope, undef, 9.35 )
             )
         ],
-        $scope, undef, 9.2
+        $scope, undef, 9.1
     );
 };
 

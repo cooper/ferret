@@ -1,22 +1,22 @@
 # === Tokenization ===
-#         PKG_DEC |                {"name":"Math"} | 1.5
-#        FUNCTION |                {"name":"sqrt"} | 3.33333
-#       CLOSURE_S |                                | 3.66667
-#    KEYWORD_NEED |                                | 4.16667
-#         VAR_LEX |                          "num" | 4.33333
-#        OP_VALUE |                                | 4.5
-#        BAREWORD |                          "Num" | 4.66667
-#         OP_SEMI |                              1 | 4.83333
-#  KEYWORD_RETURN |                                | 5.1
-#        BAREWORD |                       "NATIVE" | 5.2
-#         OP_PACK |                                | 5.3
-#        BAREWORD |                         "Math" | 5.4
-#        PROPERTY |                         "sqrt" | 5.5
-#      PAREN_CALL |                                | 5.6
-#         VAR_LEX |                          "num" | 5.7
-#         PAREN_E |                                | 5.8
-#         OP_SEMI |                              1 | 5.9
-#       CLOSURE_E |                                | 6.5
+#         PKG_DEC |                {"name":"Math"} | 1.1
+#        FUNCTION |                {"name":"sqrt"} | 3.1
+#       CLOSURE_S |                                | 3.2
+#    KEYWORD_NEED |                                | 4.1
+#         VAR_LEX |                          "num" | 4.2
+#        OP_VALUE |                                | 4.3
+#        BAREWORD |                          "Num" | 4.4
+#         OP_SEMI |                              1 | 4.5
+#  KEYWORD_RETURN |                                | 5.05
+#        BAREWORD |                       "NATIVE" | 5.1
+#         OP_PACK |                                | 5.15
+#        BAREWORD |                         "Math" | 5.2
+#        PROPERTY |                         "sqrt" | 5.25
+#      PAREN_CALL |                                | 5.3
+#         VAR_LEX |                          "num" | 5.35
+#         PAREN_E |                                | 5.4
+#         OP_SEMI |                              1 | 5.45
+#       CLOSURE_E |                                | 6.1
 # === Document Model ===
 #  Document './std/Math.frt'
 #      Package 'Math'
@@ -66,9 +66,9 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'num', 4.33333 ) or return;
+            FF::need( $scope, $arguments, 'num', 4.2 ) or return;
             return $scope->property_u('NATIVE::Math')->property_u('sqrt')
-              ->call_u( [ $scope->property_u('num') ], $scope, undef, 5.6 );
+              ->call_u( [ $scope->property_u('num') ], $scope, undef, 5.3 );
             return $return;
         }
     );

@@ -1,23 +1,23 @@
 # === Tokenization ===
-#         VAR_LEX |                        "words" | 1.11111
-#       OP_ASSIGN |                                | 1.22222
-#          STRING |               ["how are you?"] | 1.33333
-#        PROPERTY |                        "split" | 1.44444
-#      PAREN_CALL |                                | 1.55556
-#          STRING |                          [" "] | 1.66667
-#         PAREN_E |                                | 1.77778
-#         OP_SEMI |                              1 | 1.88889
-#     KEYWORD_FOR |                                | 3.16667
-#         VAR_LEX |                         "word" | 3.33333
-#      KEYWORD_IN |                                | 3.5
-#         VAR_LEX |                        "words" | 3.66667
-#       CLOSURE_S |                                | 3.83333
-#        BAREWORD |                          "say" | 4.16667
-#      PAREN_CALL |                                | 4.33333
-#          STRING | ["part: ",["VAR_LEX","word",4]] | 4.5
-#         PAREN_E |                                | 4.66667
-#         OP_SEMI |                              1 | 4.83333
-#       CLOSURE_E |                                | 5.5
+#         VAR_LEX |                        "words" | 1.1
+#       OP_ASSIGN |                                | 1.2
+#          STRING |               ["how are you?"] | 1.3
+#        PROPERTY |                        "split" | 1.4
+#      PAREN_CALL |                                | 1.5
+#          STRING |                          [" "] | 1.6
+#         PAREN_E |                                | 1.7
+#         OP_SEMI |                              1 | 1.8
+#     KEYWORD_FOR |                                | 3.1
+#         VAR_LEX |                         "word" | 3.2
+#      KEYWORD_IN |                                | 3.3
+#         VAR_LEX |                        "words" | 3.4
+#       CLOSURE_S |                                | 3.5
+#        BAREWORD |                          "say" | 4.1
+#      PAREN_CALL |                                | 4.2
+#          STRING | ["part: ",["VAR_LEX","word",4]] | 4.3
+#         PAREN_E |                                | 4.4
+#         OP_SEMI |                              1 | 4.5
+#       CLOSURE_E |                                | 5.1
 # === Document Model ===
 #  Document './test/hello19.frt'
 #      Instruction
@@ -70,8 +70,8 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         words => str( $f, "how are you?" )->property_u('split')
-          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.55556 ),
-        1.22222
+          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.5 ),
+        1.2
     );
     FF::iterate(
         $f, $scope,
@@ -86,7 +86,7 @@ my $result = do {
                         $scope->property_u('word')
                     )
                 ],
-                $scope, undef, 4.33333
+                $scope, undef, 4.2
             );
         }
     );
