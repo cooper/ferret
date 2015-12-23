@@ -41,7 +41,7 @@ end
 ```
 
 Terminates a `class`. It is required for that purpose, except when multiple
-classes in a row are declared, in which case the `  class` keyword alone
+classes in a row are declared, in which case the `class` keyword alone
 terminates the previous class. When multiple package declarations per document
 become possible, this keyword will also terminate a `package`.
 
@@ -487,6 +487,22 @@ if "hi".length == 2:
 
 ### else
 
+```
+else { [<statements>...] }
+```
+
+Compliment to `if`. Specifies an alternate set of operations in the case of
+a false condition.
+
+```
+if false {
+    say("Nothing here will happen")
+}
+
+else {
+    say("This will be said")
+}
+```
 
 ### return
 
