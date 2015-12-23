@@ -79,7 +79,7 @@
 #       CLOSURE_S |                                | 17.9
 #        BAREWORD |                          "say" | 18.16667
 #      PAREN_CALL |                                | 18.33333
-#          STRING | ["pair: key=",["VAR_LEX","key",18],"; value=",["VAR_LEX","val",18]] | 18.5
+#          STRING | ["pair: key=",["VAR_LEX","key",18]," value=",["VAR_LEX","val",18]] | 18.5
 #         PAREN_E |                                | 18.66667
 #         OP_SEMI |                                | 18.83333
 #       CLOSURE_E |                                | 19.5
@@ -170,7 +170,7 @@
 #                                  Addition operator (+)
 #                                  Lexical variable '$key'
 #                                  Addition operator (+)
-#                                  String '; value='
+#                                  String ' value='
 #                                  Addition operator (+)
 #                                  Lexical variable '$val'
 use warnings;
@@ -263,7 +263,7 @@ my $result = do {
                 [
                     add(
                         $scope,                    str( $f, "pair: key=" ),
-                        $scope->property_u('key'), str( $f, "; value=" ),
+                        $scope->property_u('key'), str( $f, " value=" ),
                         $scope->property_u('val')
                     )
                 ],

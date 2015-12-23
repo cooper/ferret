@@ -48,5 +48,5 @@ prop center {
 method description {
     $o = @origin
     $c = @center
-    return "Rect( Origin($o.x, $o.y); Center($c.x, $c.y); Width = @width; Height = @height )"
+    return "Rect( Origin($o.x, $o.y) Center($c.x, $c.y) Width = @width Height = @height )"
 }

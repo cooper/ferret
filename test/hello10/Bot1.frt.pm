@@ -1,6 +1,6 @@
 # === Tokenization ===
 #       CLASS_DEC |                {"name":"Bot1"} | 1.5
-#          METHOD |     {"main":1,"name":"_init_"} | 3.33333
+#          METHOD |     {"name":"_init_","main":1} | 3.33333
 #       CLOSURE_S |                                | 3.66667
 #    KEYWORD_NEED |                                | 4.07143
 #        VAR_THIS |                         "addr" | 4.14286

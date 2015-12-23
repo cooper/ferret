@@ -1,7 +1,7 @@
 # === Tokenization ===
 #         PKG_DEC |                {"name":"Math"} | 1.5
 #       CLASS_DEC |               {"name":"Point"} | 2.5
-#          METHOD |     {"name":"_init_","main":1} | 4.33333
+#          METHOD |     {"main":1,"name":"_init_"} | 4.33333
 #       CLOSURE_S |                                | 4.66667
 #    KEYWORD_NEED |                                | 5.1
 #        VAR_THIS |                            "x" | 5.2
@@ -47,7 +47,7 @@
 #         PAREN_E |                                | 12.84615
 #         OP_SEMI |                                | 12.92308
 #       CLOSURE_E |                                | 13.5
-#          METHOD | {"name":"distanceFromOrigin","is_prop":1,"p_set":null} | 15.33333
+#          METHOD | {"is_prop":1,"name":"distanceFromOrigin","p_set":null} | 15.33333
 #       CLOSURE_S |                                | 15.66667
 #  KEYWORD_RETURN |                                | 16.08333
 #        VAR_THIS |                   "distanceTo" | 16.16667
@@ -61,7 +61,7 @@
 #         PAREN_E |                                | 16.83333
 #         OP_SEMI |                                | 16.91667
 #       CLOSURE_E |                                | 17.5
-#          METHOD | {"p_set":null,"is_prop":1,"name":"pretty"} | 19.33333
+#          METHOD | {"p_set":null,"name":"pretty","is_prop":1} | 19.33333
 #       CLOSURE_S |                                | 19.66667
 #  KEYWORD_RETURN |                                | 20.25
 #          STRING | ["(",["VAR_THIS","x",20],", ",["VAR_THIS","y",20],")"] | 20.5

@@ -1,7 +1,7 @@
 func sayHello {
-    need $who: Str;
-    say("Hello $who!");
+    need $who: Str
+    say("Hello $who!")
 }
 
-sayHello?("World");
-sayGoodbye?("World");
+sayHello?("World")
+sayGoodbye?("World")

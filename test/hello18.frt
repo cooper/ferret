@@ -1,19 +1,19 @@
-$list = [ "hi" ];
-$list.push("there");
-$list[4] = "yeah";
+$list = [ "hi" ]
+$list.push("there")
+$list[4] = "yeah"
 
-say("Length: " + $list.length);
+say("Length: " + $list.length)
 
 for $item in $list {
-    say("item: $item");
+    say("item: $item")
 }
 
-$hash = [ hi: "there" ];
-$hash["whats"] = "up";
-$hash["thank"] = "you";
+$hash = [ hi: "there" ]
+$hash["whats"] = "up"
+$hash["thank"] = "you"
 
-say("whats " + $hash["whats"]);
+say("whats " + $hash["whats"])
 
 for ($key, $val) in $hash {
-    say("pair: key=$key; value=$val");
+    say("pair: key=$key value=$val")
 }

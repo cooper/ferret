@@ -1,5 +1,5 @@
-$words = "how are you?".split(" ");
+$words = "how are you?".split(" ")
 
 for $word in $words {
-    say("part: $word");
+    say("part: $word")
 }

@@ -1,7 +1,7 @@
 # === Tokenization ===
 #         PKG_DEC |                {"name":"Math"} | 1.5
 #       CLASS_DEC |                {"name":"Line"} | 2.5
-#          METHOD |     {"name":"_init_","main":1} | 4.33333
+#          METHOD |     {"main":1,"name":"_init_"} | 4.33333
 #       CLOSURE_S |                                | 4.66667
 #    KEYWORD_NEED |                                | 5.1
 #        VAR_THIS |                          "pt1" | 5.2
@@ -13,7 +13,7 @@
 #        BAREWORD |                        "Point" | 5.8
 #         OP_SEMI |                                | 5.9
 #       CLOSURE_E |                                | 6.5
-#          METHOD | {"name":"endpoints","is_prop":1,"p_set":null} | 8.33333
+#          METHOD | {"p_set":null,"name":"endpoints","is_prop":1} | 8.33333
 #       CLOSURE_S |                                | 8.66667
 #  KEYWORD_RETURN |                                | 9.125
 #       BRACKET_S |                                | 9.25
@@ -60,7 +60,7 @@
 #        PROPERTY |                            "y" | 16.81818
 #         OP_SEMI |                                | 16.90909
 #  KEYWORD_RETURN |                                | 17.25
-#          STRING | ["Segment( |(",["VAR_LEX","pox",17],", ",["VAR_LEX","poy",17],")---(",["VAR_LEX","mx",17],", ",["VAR_LEX","my",17],")---(",["VAR_LEX","ptx",17],", ",["VAR_LEX","pty",17],")|; Length = ",["VAR_THIS","length",17]," )"] | 17.5
+#          STRING | ["Segment( |(",["VAR_LEX","pox",17],", ",["VAR_LEX","poy",17],")---(",["VAR_LEX","mx",17],", ",["VAR_LEX","my",17],")---(",["VAR_LEX","ptx",17],", ",["VAR_LEX","pty",17],")| Length = ",["VAR_THIS","length",17]," )"] | 17.5
 #         OP_SEMI |                                | 17.75
 #       CLOSURE_E |                                | 18.5
 #          METHOD |         {"name":"description"} | 20.33333
@@ -82,7 +82,7 @@
 #         PAREN_E |                                | 25.81818
 #         OP_SEMI |                                | 25.90909
 #       CLOSURE_E |                                | 26.5
-#          METHOD | {"name":"length","p_set":null,"is_prop":1} | 28.33333
+#          METHOD | {"is_prop":1,"name":"length","p_set":null} | 28.33333
 #       CLOSURE_S |                                | 28.66667
 #  KEYWORD_RETURN |                                | 29.125
 #        VAR_THIS |                          "pt1" | 29.25
@@ -171,7 +171,7 @@
 #                              Addition operator (+)
 #                              Lexical variable '$pty'
 #                              Addition operator (+)
-#                              String ')|; Length = '
+#                              String ')| Length = '
 #                              Addition operator (+)
 #                              Instance variable '@length'
 #                              Addition operator (+)
@@ -319,7 +319,7 @@ my $result = do {
                     $scope->property_u('mx'),    str( $f, ", " ),
                     $scope->property_u('my'),    str( $f, ")---(" ),
                     $scope->property_u('ptx'),   str( $f, ", " ),
-                    $scope->property_u('pty'),   str( $f, ")|; Length = " ),
+                    $scope->property_u('pty'),   str( $f, ")| Length = " ),
                     $self->property_u('length'), str( $f, " )" )
                 );
                 return $return;

@@ -277,8 +277,10 @@ sub c_CLOSURE_E {
     # Rule CLOSURE_E[0]:
     #   The current 'closure' must exist.
 
+    # DISABLED
     # Rule CLOSURE_E[1]:
     #   The current 'node' must be equal to the current 'closure'.
+    c_OP_SEMI($c) if $c->instruction && $c->node != $c->closure;
 
     # close the closure and the node.
     my $closure = $c->closure;

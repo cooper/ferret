@@ -1,2 +1,2 @@
-$x = (:);
-weaken $x;
+$x = (:)
+weaken $x

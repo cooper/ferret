@@ -1,3 +1,3 @@
-$x = (:);
-delete $x;
-Second;
+$x = (:)
+delete $x
+Second

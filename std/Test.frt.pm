@@ -1,6 +1,6 @@
 # === Tokenization ===
 #       CLASS_DEC |                {"name":"Test"} | 1.5
-#          METHOD |     {"main":1,"name":"_init_"} | 3.33333
+#          METHOD |     {"name":"_init_","main":1} | 3.33333
 #       CLOSURE_S |                                | 3.66667
 #    KEYWORD_WANT |                                | 4.16667
 #        VAR_THIS |                         "name" | 4.33333
@@ -136,7 +136,7 @@
 #         OP_SEMI |                                | 47.85714
 #        BAREWORD |                          "say" | 48.16667
 #      PAREN_CALL |                                | 48.33333
-#          STRING | ["[",["VAR_THIS","name",48],"] ",["VAR_THIS","tested",48]," tests; ",["VAR_THIS","passed",48]," passed; ",["VAR_LEX","failed",48]," failed"] | 48.5
+#          STRING | ["[",["VAR_THIS","name",48],"] ",["VAR_THIS","tested",48]," tests ",["VAR_THIS","passed",48]," passed ",["VAR_LEX","failed",48]," failed"] | 48.5
 #         PAREN_E |                                | 48.66667
 #         OP_SEMI |                                | 48.83333
 #        BAREWORD |                        "tests" | 50.2
@@ -356,11 +356,11 @@
 #                                      Addition operator (+)
 #                                      Instance variable '@tested'
 #                                      Addition operator (+)
-#                                      String ' tests; '
+#                                      String ' tests '
 #                                      Addition operator (+)
 #                                      Instance variable '@passed'
 #                                      Addition operator (+)
-#                                      String ' passed; '
+#                                      String ' passed '
 #                                      Addition operator (+)
 #                                      Lexical variable '$failed'
 #                                      Addition operator (+)
@@ -642,9 +642,9 @@ my $result = do {
                             $self->property_u('name'),
                             str( $f, "] " ),
                             $self->property_u('tested'),
-                            str( $f, " tests; " ),
+                            str( $f, " tests " ),
                             $self->property_u('passed'),
-                            str( $f, " passed; " ),
+                            str( $f, " passed " ),
                             $scope->property_u('failed'),
                             str( $f, " failed" )
                         )

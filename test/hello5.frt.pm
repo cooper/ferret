@@ -1,6 +1,6 @@
 # === Tokenization ===
 #       CLASS_DEC | {"name":"Point","version":"1.0"} | 1.5
-#          METHOD |     {"name":"_init_","main":1} | 3.33333
+#          METHOD |     {"main":1,"name":"_init_"} | 3.33333
 #       CLOSURE_S |                                | 3.66667
 #    KEYWORD_NEED |                                | 4.16667
 #         VAR_LEX |                            "x" | 4.33333

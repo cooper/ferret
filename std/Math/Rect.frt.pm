@@ -30,7 +30,7 @@
 #         PAREN_E |                                | 6.8
 #         OP_SEMI |                                | 6.9
 #       CLOSURE_E |                                | 7.5
-#          METHOD | {"name":"vertices","p_set":null,"is_prop":1} | 9.33333
+#          METHOD | {"p_set":null,"name":"vertices","is_prop":1} | 9.33333
 #       CLOSURE_S |                                | 9.66667
 #  KEYWORD_RETURN |                                | 10.33333
 #       BRACKET_S |                                | 10.66667
@@ -45,13 +45,13 @@
 #       BRACKET_E |                                | 15.33333
 #         OP_SEMI |                                | 15.66667
 #       CLOSURE_E |                                | 16.5
-#          METHOD | {"name":"bottomLeft","p_set":null,"is_prop":1} | 18.33333
+#          METHOD | {"p_set":null,"is_prop":1,"name":"bottomLeft"} | 18.33333
 #       CLOSURE_S |                                | 18.66667
 #  KEYWORD_RETURN |                                | 19.25
 #        VAR_THIS |                       "origin" | 19.5
 #         OP_SEMI |                                | 19.75
 #       CLOSURE_E |                                | 20.5
-#          METHOD | {"name":"bottomRight","is_prop":1,"p_set":null} | 22.33333
+#          METHOD | {"p_set":null,"is_prop":1,"name":"bottomRight"} | 22.33333
 #       CLOSURE_S |                                | 22.66667
 #  KEYWORD_RETURN |                                | 23.07692
 #        BAREWORD |                        "Point" | 23.15385
@@ -81,7 +81,7 @@
 #         PAREN_E |                                | 27.84615
 #         OP_SEMI |                                | 27.92308
 #       CLOSURE_E |                                | 28.5
-#          METHOD | {"p_set":null,"is_prop":1,"name":"topRight"} | 30.33333
+#          METHOD | {"is_prop":1,"name":"topRight","p_set":null} | 30.33333
 #       CLOSURE_S |                                | 30.66667
 #  KEYWORD_RETURN |                                | 31.06667
 #        BAREWORD |                        "Point" | 31.13333
@@ -98,7 +98,7 @@
 #         PAREN_E |                                | 31.86667
 #         OP_SEMI |                                | 31.93333
 #       CLOSURE_E |                                | 32.5
-#          METHOD | {"name":"bottomLine","p_set":null,"is_prop":1} | 34.33333
+#          METHOD | {"p_set":null,"name":"bottomLine","is_prop":1} | 34.33333
 #       CLOSURE_S |                                | 34.66667
 #  KEYWORD_RETURN |                                | 35.11111
 #        BAREWORD |                         "Line" | 35.22222
@@ -109,7 +109,7 @@
 #         PAREN_E |                                | 35.77778
 #         OP_SEMI |                                | 35.88889
 #       CLOSURE_E |                                | 36.5
-#          METHOD | {"p_set":null,"is_prop":1,"name":"topLine"} | 38.33333
+#          METHOD | {"p_set":null,"name":"topLine","is_prop":1} | 38.33333
 #       CLOSURE_S |                                | 38.66667
 #  KEYWORD_RETURN |                                | 39.11111
 #        BAREWORD |                         "Line" | 39.22222
@@ -120,7 +120,7 @@
 #         PAREN_E |                                | 39.77778
 #         OP_SEMI |                                | 39.88889
 #       CLOSURE_E |                                | 40.5
-#          METHOD | {"is_prop":1,"p_set":null,"name":"center"} | 42.33333
+#          METHOD | {"name":"center","is_prop":1,"p_set":null} | 42.33333
 #       CLOSURE_S |                                | 42.66667
 #         VAR_LEX |                            "x" | 43.1
 #       OP_ASSIGN |                                | 43.2
@@ -160,7 +160,7 @@
 #        VAR_THIS |                       "center" | 50.6
 #         OP_SEMI |                                | 50.8
 #  KEYWORD_RETURN |                                | 51.25
-#          STRING | ["Rect( Origin(",["VAR_LEX","o",51],["PROPERTY","x",51],", ",["VAR_LEX","o",51],["PROPERTY","y",51],"); Center(",["VAR_LEX","c",51],["PROPERTY","x",51],", ",["VAR_LEX","c",51],["PROPERTY","y",51],"); Width = ",["VAR_THIS","width",51],"; Height = ",["VAR_THIS","height",51]," )"] | 51.5
+#          STRING | ["Rect( Origin(",["VAR_LEX","o",51],["PROPERTY","x",51],", ",["VAR_LEX","o",51],["PROPERTY","y",51],") Center(",["VAR_LEX","c",51],["PROPERTY","x",51],", ",["VAR_LEX","c",51],["PROPERTY","y",51],") Width = ",["VAR_THIS","width",51]," Height = ",["VAR_THIS","height",51]," )"] | 51.5
 #         OP_SEMI |                                | 51.75
 #       CLOSURE_E |                                | 52.5
 # === Document Model ===
@@ -335,7 +335,7 @@
 #                              Property 'y'
 #                                  Lexical variable '$o'
 #                              Addition operator (+)
-#                              String '); Center('
+#                              String ') Center('
 #                              Addition operator (+)
 #                              Property 'x'
 #                                  Lexical variable '$c'
@@ -345,11 +345,11 @@
 #                              Property 'y'
 #                                  Lexical variable '$c'
 #                              Addition operator (+)
-#                              String '); Width = '
+#                              String ') Width = '
 #                              Addition operator (+)
 #                              Instance variable '@width'
 #                              Addition operator (+)
-#                              String '; Height = '
+#                              String ' Height = '
 #                              Addition operator (+)
 #                              Instance variable '@height'
 #                              Addition operator (+)
@@ -629,13 +629,13 @@ my $result = do {
                     $scope->property_u('o')->property_u('x'),
                     str( $f, ", " ),
                     $scope->property_u('o')->property_u('y'),
-                    str( $f, "); Center(" ),
+                    str( $f, ") Center(" ),
                     $scope->property_u('c')->property_u('x'),
                     str( $f, ", " ),
                     $scope->property_u('c')->property_u('y'),
-                    str( $f, "); Width = " ),
+                    str( $f, ") Width = " ),
                     $self->property_u('width'),
-                    str( $f, "; Height = " ),
+                    str( $f, " Height = " ),
                     $self->property_u('height'),
                     str( $f, " )" )
                 );

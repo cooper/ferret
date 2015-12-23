@@ -77,7 +77,7 @@
 #         PAREN_E |                                | 18.77778
 #         OP_SEMI |                                | 18.88889
 #       CLOSURE_E |                                | 20.5
-#          METHOD | {"is_prop":1,"p_set":1,"name":"command"} | 23.33333
+#          METHOD | {"name":"command","is_prop":1,"p_set":1} | 23.33333
 #       CLOSURE_S |                                | 23.66667
 #      KEYWORD_IF |                                | 26.09091
 #        VAR_THIS |                        "parts" | 26.18182
@@ -112,7 +112,7 @@
 #   KEYWORD_FALSE |                                | 32.5
 #         OP_SEMI |                                | 32.75
 #       CLOSURE_E |                                | 33.5
-#          METHOD | {"name":"commandHasParameters","p_set":1,"is_prop":1} | 35.33333
+#          METHOD | {"p_set":1,"is_prop":1,"name":"commandHasParameters"} | 35.33333
 #       CLOSURE_S |                                | 35.66667
 #  KEYWORD_RETURN |                                | 36.14286
 #        VAR_THIS |                        "parts" | 36.28571

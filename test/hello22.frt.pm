@@ -1,6 +1,6 @@
 # === Tokenization ===
 #       CLASS_DEC |                 {"name":"Cow"} | 3.5
-#          METHOD |     {"main":1,"name":"_init_"} | 5.33333
+#          METHOD |     {"name":"_init_","main":1} | 5.33333
 #       CLOSURE_S |                                | 5.66667
 #    KEYWORD_WANT |                                | 6.16667
 #        VAR_THIS |                         "moos" | 6.33333
@@ -42,7 +42,7 @@
 #         OP_SEMI |                                | 24.75
 #       CLOSURE_E |                                | 25.5
 #       CLASS_DEC |                 {"name":"Cat"} | 27.5
-#          METHOD |     {"main":1,"name":"_init_"} | 29.33333
+#          METHOD |     {"name":"_init_","main":1} | 29.33333
 #       CLOSURE_S |                                | 29.66667
 #    KEYWORD_WANT |                                | 30.16667
 #        VAR_THIS |                         "mean" | 30.33333

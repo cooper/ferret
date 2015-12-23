@@ -45,7 +45,7 @@ method objectsNotEqual {
 
 method review {
     $failed = @tested - @passed
-    say("[@name] @tested tests; @passed passed; $failed failed")
+    say("[@name] @tested tests @passed passed $failed failed")
 
     tests   -> @tested
     fails   -> $failed
