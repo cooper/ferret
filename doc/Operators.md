@@ -10,7 +10,8 @@ This documentation explains the uses of all operators.
 
     ;
 
-Terminates an instruction.
+Terminates an instruction. The semicolon is optional and can be inferred
+in most cases, depending on which type of token terminates a line.
 
 Tokenized as `OP_SEMI`.
 
@@ -38,7 +39,7 @@ Negates a value to its boolean opposite.
 
 Tokenized as `OP_NOT`.
 
-#### Property operator
+### Property operator
 
     .
 
@@ -134,7 +135,7 @@ Tokenized as `OP_SSUB`.
 
 ### Multiplication operator
 
-    \*
+    *
 
 Multiplies two values.
 

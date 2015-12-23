@@ -312,7 +312,8 @@ callback to apply to any object, attach it to a class prototype object.
 
 The use of a symbol `callback_name` is optional but strongly recommended. The
 order of callback execution depends on the use of priority hints. See the below
-example and `before` and `after` keywords for information on `priority_hints`.
+example and [`before`](#before) [`after`](#after) keywords for information on
+`priority_hints`.
 
 ```
 # assuming class Person exists and has a method haveBirthday
@@ -534,6 +535,8 @@ complex(5)  # returns (gotX: true, value: 5)
 complex()   # returns "reached bottom"
 ```
 
+See also the [return operator](Operators.md#return-operator).
+
 ### for
 
 ```
@@ -564,7 +567,7 @@ for ($firstWord, $others) in $hash {
 
 ### in
 
-Compliment to the `for` keyword. See above.
+Compliment to the [`for`](#for) keyword.
 
 ### \_\_END\_\_
 
