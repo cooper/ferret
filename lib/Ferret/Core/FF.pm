@@ -187,9 +187,21 @@ sub need {
     }
 
     # set the variable.
-    $scope_or_self->set_property($var_name => $value);
+    $scope_or_self->set_property($var_name => $value); # TODO: add pos
 
     return $value;
+}
+
+sub want {
+    my ($scope_or_self, $arguments, $var_name, $value_maybe) = @_;
+    my $value = $arguments->{$var_name};
+
+    # if a value exists, it is the fallback value.
+    if ($value_maybe && !$value) {
+        $value = $value_maybe;
+    }
+
+    $scope_or_self->set_property($var_name => $value); # TODO: add pos
 }
 
 # set any object as scope.

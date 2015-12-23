@@ -1,5 +1,1 @@
-do {
-    my $want_val = $arguments->{<<var_name>>};
-    $want_val ||= <<value>>;
-    $self->set_property(<<var_name>> => $want_val, <<pos>>);
-}
+FF::want($self, $arguments, '<<var_name>>', <<value>>)

@@ -110,7 +110,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $arguments, 'x' ) or return;
             FF::need( $scope, $arguments, 'y' ) or return;
-            $scope->set_property( z => $arguments->{z}, 3.33333 );
+            FF::want( $scope, $arguments, 'z' );
             $scope->set_property_ow(
                 $context,
                 point => FF::create_object(

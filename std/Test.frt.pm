@@ -263,16 +263,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    my $want_val = $arguments->{name};
-                    $want_val ||= str( $f, "Test" );
-                    $self->set_property( name => $want_val, 4.25 );
-                };
-                do {
-                    my $want_val = $arguments->{fatal};
-                    $want_val ||= $true;
-                    $self->set_property( fatal => $want_val, 6.2 );
-                };
+                FF::want( $self, $arguments, 'name', str( $f, "Test" ) );
+                FF::want( $self, $arguments, 'fatal', $true );
                 $self->set_property( tested => num( $f, 0 ), 7.5 );
                 $self->set_property( passed => num( $f, 0 ), 8.5 );
                 return $return;
@@ -286,7 +278,7 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 12.33333 );
+                FF::want( $scope, $arguments, 'a' );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('Bool')->call_u(
@@ -308,7 +300,7 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 18.33333 );
+                FF::want( $scope, $arguments, 'a' );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
@@ -330,8 +322,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 24.2 );
-                $scope->set_property( b => $arguments->{b}, 24.6 );
+                FF::want( $scope, $arguments, 'a' );
+                FF::want( $scope, $arguments, 'b' );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
@@ -354,8 +346,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 30.2 );
-                $scope->set_property( b => $arguments->{b}, 30.6 );
+                FF::want( $scope, $arguments, 'a' );
+                FF::want( $scope, $arguments, 'b' );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
@@ -378,8 +370,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 36.2 );
-                $scope->set_property( b => $arguments->{b}, 36.6 );
+                FF::want( $scope, $arguments, 'a' );
+                FF::want( $scope, $arguments, 'b' );
                 return $self->property_u('_test')->call_u(
                     [
                         _not(
@@ -404,8 +396,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( a => $arguments->{a}, 42.2 );
-                $scope->set_property( b => $arguments->{b}, 42.6 );
+                FF::want( $scope, $arguments, 'a' );
+                FF::want( $scope, $arguments, 'b' );
                 return $self->property_u('_test')->call_u(
                     [
                         _not(
@@ -488,8 +480,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                $scope->set_property( yes     => $arguments->{yes},     57.2 );
-                $scope->set_property( message => $arguments->{message}, 57.6 );
+                FF::want( $scope, $arguments, 'yes' );
+                FF::want( $scope, $arguments, 'message' );
                 $self->set_property(
                     tested =>
                       add( $scope, $self->property_u('tested'), num( $f, 1 ) ),

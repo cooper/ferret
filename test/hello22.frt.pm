@@ -189,11 +189,7 @@ my $result = do {
             [ { name => 'moos', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    my $want_val = $arguments->{moos};
-                    $want_val ||= $true;
-                    $self->set_property( moos => $want_val, 6.2 );
-                };
+                FF::want( $self, $arguments, 'moos', $true );
                 return $return;
             }
         );
@@ -238,11 +234,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    my $want_val = $arguments->{barks};
-                    $want_val ||= $false;
-                    $self->set_property( barks => $want_val, 18.2 );
-                };
+                FF::want( $self, $arguments, 'barks', $false );
                 return $return;
             }
         );
@@ -280,11 +272,7 @@ my $result = do {
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                do {
-                    my $want_val = $arguments->{mean};
-                    $want_val ||= $false;
-                    $self->set_property( mean => $want_val, 30.2 );
-                };
+                FF::want( $self, $arguments, 'mean', $false );
                 return $return;
             }
         );

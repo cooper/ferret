@@ -251,16 +251,8 @@ my $result = do {
                 FF::need( $self, $arguments, 'address' ) or return;
                 FF::need( $self, $arguments, 'nick' )    or return;
                 FF::need( $self, $arguments, 'user' )    or return;
-                do {
-                    my $want_val = $arguments->{port};
-                    $want_val ||= num( $f, 6667 );
-                    $self->set_property( port => $want_val, 5.08333 );
-                };
-                do {
-                    my $want_val = $arguments->{real};
-                    $want_val ||= str( $f, "Ferret IRC" );
-                    $self->set_property( real => $want_val, 5.58333 );
-                };
+                FF::want( $self, $arguments, 'port', num( $f, 6667 ) );
+                FF::want( $self, $arguments, 'real', str( $f, "Ferret IRC" ) );
                 $scope->property_u('Socket::TCP')->property_u('init')
                   ->call_u( [ $scope->{special}->property_u('self') ],
                     $scope, undef, 9.33333 )->call_u(

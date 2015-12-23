@@ -577,21 +577,9 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $self, $arguments, 'addr' ) or return;
                 FF::need( $self, $arguments, 'nick' ) or return;
-                do {
-                    my $want_val = $arguments->{port};
-                    $want_val ||= num( $f, 6667 );
-                    $self->set_property( port => $want_val, 7 );
-                };
-                do {
-                    my $want_val = $arguments->{user};
-                    $want_val ||= str( $f, "ferret" );
-                    $self->set_property( user => $want_val, 8 );
-                };
-                do {
-                    my $want_val = $arguments->{real};
-                    $want_val ||= str( $f, "Ferret IRC" );
-                    $self->set_property( real => $want_val, 9 );
-                };
+                FF::want( $self, $arguments, 'port', num( $f, 6667 ) );
+                FF::want( $self, $arguments, 'user', str( $f, "ferret" ) );
+                FF::want( $self, $arguments, 'real', str( $f, "Ferret IRC" ) );
                 $self->set_property(
                     handlers => FF::create_hash(
                         $f,
