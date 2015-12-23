@@ -145,15 +145,15 @@ Tokenized as `OP_CALL`.
 
 The absolute order of math operations is as follows:
 
-* `+` - Positivity
-* `-` - Negativity
-* `..` - Range
-* `^` - Power
-* `%` - Modulus
-* `*` - Multiplication
-* `/` - Division
-* `-` - Subtraction
-* `+` - Addition
+* Positivity `+`
+* Negativity `-`
+* Range `..`
+* Power `^`
+* Modulus `%`
+* Multiplication `*`
+* Division `/`
+* Subtraction `-`
+* Addition `+`
 
 ### Addition operator
 
