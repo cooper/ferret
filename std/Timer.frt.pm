@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(perl_number);
+use Ferret::Core::Conversion qw(perl_number ferret_number);
 
 my @methods = (
     once => {
@@ -16,11 +16,20 @@ my @methods = (
     expire => {
         code => \&expire_cb
     },
+    tick => {
+        code => \&tick_cb,
+        want => '$n:Num'
+    },
     cancel => {
         code => \&cancel
+    },
+    start => {
+        code => \&start,
+        want => '$times:Num'
+    },
+    stop => {
+        code => \&cancel
     }
-    # start
-    # stop
 );
 
 Ferret::bind_class(
@@ -46,27 +55,45 @@ sub run_once {
         delay => $timer->{delay},
         on_expire => sub {
             return if $timer->{canceled};
-            delete $timer->{t};
-            $timer->property('expire')->call([ ]);
-            Ferret::remove_notifier($t);
+            $timer->_tick;
+            $timer->_expire;
         }
     );
 
     # add to loop.
     Ferret::add_notifier($t->start);
 
-    # conveniently return the expire event.
-    #$return->set_property(expire => $timer->property('expire'));
-    # nvm: can't do this anymore. it causes last_parent to be the
-    # return object, meaning the event would belong to that object
+    return $timer;
+}
+
+sub start {
+    my ($timer, $arguments, $call_scope, $scope, $return) = @_;
+    $timer->{times} = perl_number($arguments->{times}) if $arguments->{times};
+
+    # create a periodic timer.
+    require IO::Async::Timer::Periodic;
+    my $t; $t = $timer->{t} = IO::Async::Timer::Periodic->new(
+        interval  => $timer->{delay},
+        on_tick   => sub {
+            return if $timer->{canceled};
+            $timer->_tick;
+        }
+    );
+
+    # add to loop.
+    Ferret::add_notifier($t->start);
 
     return $timer;
 }
 
 sub expire_cb {
-    my ($timer, $arguments, $call_scope, $scope, $return) = @_;
+    my ($timer, undef, undef, undef, $return) = @_;
     $timer->{expired} = 1;
     return $return;
+}
+
+sub tick_cb {
+    return $_[4];
 }
 
 sub cancel {
@@ -77,6 +104,24 @@ sub cancel {
     Ferret::remove_notifier($t);
     $return->set_property(canceled => Ferret::true);
     return $return;
+}
+
+sub _tick {
+    my ($timer, undef, undef, undef, $return) = @_;
+    $timer->property('tick')->call([ ferret_number(++$timer->{ticks}) ]);
+
+    # if it's done enough times, stop.
+    if (defined $timer->{times} && $timer->{ticks} >= $timer->{times}) {
+        return $return if $timer->{canceled};
+        $timer->_expire;
+    }
+}
+
+sub _expire {
+    my $timer = shift;
+    my $t = delete $timer->{t};
+    $timer->property('expire')->call;
+    Ferret::remove_notifier($t);
 }
 
 1
