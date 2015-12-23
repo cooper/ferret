@@ -312,8 +312,8 @@ callback to apply to any object, attach it to a class prototype object.
 
 The use of a symbol `callback_name` is optional but strongly recommended. The
 order of callback execution depends on the use of priority hints. See the below
-example and [`before`](#before) [`after`](#after) keywords for information on
-`priority_hints`.
+example and [`before`](#before) and [`after`](#after) keywords for information
+on `priority_hints`.
 
 ```
 # assuming class Person exists and has a method haveBirthday
