@@ -1,3 +1,9 @@
+# === Tokenization ===
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Hello World!"]
+#         PAREN_E | 
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello.frt'
 #      Instruction

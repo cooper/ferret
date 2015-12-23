@@ -1,3 +1,158 @@
+# === Tokenization ===
+#       CLASS_DEC | {"name":"Cow"}
+#          METHOD | {"main":1,"name":"_init_"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#        VAR_THIS | "moos"
+#       OP_ASSIGN | 
+#    KEYWORD_TRUE | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"moo"}
+#       CLOSURE_S | 
+#      KEYWORD_IF | 
+#        VAR_THIS | "moos"
+#        OP_VALUE | 
+#  KEYWORD_RETURN | 
+#          STRING | ["moo"]
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#          STRING | ["I am a nonverbal cow"]
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#       CLASS_DEC | {"name":"Dog"}
+#          METHOD | {"main":1,"name":"_init_"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#        VAR_THIS | "barks"
+#       OP_ASSIGN | 
+#   KEYWORD_FALSE | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"bark"}
+#       CLOSURE_S | 
+#      KEYWORD_IF | 
+#        VAR_THIS | "barks"
+#        OP_VALUE | 
+#  KEYWORD_RETURN | 
+#          STRING | ["bark"]
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#          STRING | ["I had my bark box bred out of me"]
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#       CLASS_DEC | {"name":"Cat"}
+#          METHOD | {"main":1,"name":"_init_"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#        VAR_THIS | "mean"
+#       OP_ASSIGN | 
+#   KEYWORD_FALSE | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"meow"}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#          STRING | ["meow"]
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"fight"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "cat1"
+#        OP_VALUE | 
+#        BAREWORD | "Cat"
+#        OP_COMMA | 
+#         VAR_LEX | "cat2"
+#        OP_VALUE | 
+#        BAREWORD | "Cat"
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "cat1"
+#        PROPERTY | "mean"
+#        OP_VALUE | 
+#  KEYWORD_RETURN | 
+#          STRING | ["Cat 1 started a catfight!"]
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "cat2"
+#        PROPERTY | "mean"
+#        OP_VALUE | 
+#  KEYWORD_RETURN | 
+#          STRING | ["Cat 2 started a catfight!"]
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#          STRING | ["nice cats don't fight"]
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#     KEYWORD_END | 
+#         VAR_LEX | "animal"
+#       OP_ASSIGN | 
+#        BAREWORD | "Cow"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "Dog"
+#        PROPERTY | "init"
+#      PAREN_CALL | 
+#         VAR_LEX | "animal"
+#         PAREN_E | 
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#         VAR_LEX | "animal"
+#        PROPERTY | "moo"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#         VAR_LEX | "animal"
+#        PROPERTY | "bark"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "Cat"
+#        PROPERTY | "init"
+#      PAREN_CALL | 
+#         VAR_LEX | "animal"
+#         PAREN_E | 
+#      PAREN_CALL | 
+#      PROP_VALUE | "mean"
+#    KEYWORD_TRUE | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "inspect"
+#      PAREN_CALL | 
+#         VAR_LEX | "animal"
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "cat"
+#       OP_ASSIGN | 
+#        BAREWORD | "Cat"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "aftermath"
+#       OP_ASSIGN | 
+#         PAREN_S | 
+#         VAR_LEX | "animal"
+#        OP_COMMA | 
+#         VAR_LEX | "cat"
+#         PAREN_E | 
+#        PROPERTY | "fight"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#         VAR_LEX | "aftermath"
+#         PAREN_E | 
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello22.frt'
 #      Class 'Cow'

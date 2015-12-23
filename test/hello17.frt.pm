@@ -1,3 +1,32 @@
+# === Tokenization ===
+#         VAR_LEX | "obj"
+#       OP_ASSIGN | 
+#         PAREN_S | 
+#        OP_VALUE | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "Timer"
+#        PROPERTY | "init"
+#      PAREN_CALL | 
+#         VAR_LEX | "obj"
+#         PAREN_E | 
+#      PAREN_CALL | 
+#          NUMBER | "5"
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#         VAR_LEX | "obj"
+#        PROPERTY | "once"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#        PROPERTY | "expire"
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["it works!"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './test/hello17.frt'
 #      Instruction

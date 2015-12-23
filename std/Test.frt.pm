@@ -1,3 +1,208 @@
+# === Tokenization ===
+#       CLASS_DEC | {"name":"Test"}
+#          METHOD | {"main":1,"name":"_init_"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#        VAR_THIS | "name"
+#       OP_ASSIGN | 
+#          STRING | ["Test"]
+#         OP_SEMI | 
+#    KEYWORD_WANT | 
+#        VAR_THIS | "fatal"
+#       OP_ASSIGN | 
+#    KEYWORD_TRUE | 
+#         OP_SEMI | 
+#        VAR_THIS | "tested"
+#       OP_ASSIGN | 
+#          NUMBER | "0"
+#         OP_SEMI | 
+#        VAR_THIS | "passed"
+#       OP_ASSIGN | 
+#          NUMBER | "0"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"trueValue"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#         VAR_LEX | "a"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "_test"
+#      PAREN_CALL | 
+#        BAREWORD | "Bool"
+#      PAREN_CALL | 
+#         VAR_LEX | "a"
+#         PAREN_E | 
+#        OP_COMMA | 
+#          STRING | ["Value must be true"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"veryTrue"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#         VAR_LEX | "a"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "_test"
+#      PAREN_CALL | 
+#         VAR_LEX | "a"
+#      OP_EQUAL_I | 
+#    KEYWORD_TRUE | 
+#        OP_COMMA | 
+#          STRING | ["Value must be exactly true"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"equal"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#         VAR_LEX | "a"
+#        OP_COMMA | 
+#         VAR_LEX | "b"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "_test"
+#      PAREN_CALL | 
+#         VAR_LEX | "a"
+#        OP_EQUAL | 
+#         VAR_LEX | "b"
+#        OP_COMMA | 
+#          STRING | ["Values must be equal"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"objectsEqual"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#         VAR_LEX | "a"
+#        OP_COMMA | 
+#         VAR_LEX | "b"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "_test"
+#      PAREN_CALL | 
+#         VAR_LEX | "a"
+#      OP_EQUAL_I | 
+#         VAR_LEX | "b"
+#        OP_COMMA | 
+#          STRING | ["Objects must be exactly equal"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"notEqual"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#         VAR_LEX | "a"
+#        OP_COMMA | 
+#         VAR_LEX | "b"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "_test"
+#      PAREN_CALL | 
+#         VAR_LEX | "a"
+#       OP_NEQUAL | 
+#         VAR_LEX | "b"
+#        OP_COMMA | 
+#          STRING | ["Values must not be equal"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"objectsNotEqual"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#         VAR_LEX | "a"
+#        OP_COMMA | 
+#         VAR_LEX | "b"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "_test"
+#      PAREN_CALL | 
+#         VAR_LEX | "a"
+#     OP_NEQUAL_I | 
+#         VAR_LEX | "b"
+#        OP_COMMA | 
+#          STRING | ["Objects must not be equal"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"review"}
+#       CLOSURE_S | 
+#         VAR_LEX | "failed"
+#       OP_ASSIGN | 
+#        VAR_THIS | "tested"
+#          OP_SUB | 
+#        VAR_THIS | "passed"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["[",["VAR_THIS","name",49],"] ",["VAR_THIS","tested",49]," tests; ",["VAR_THIS","passed",49]," passed; ",["VAR_LEX","failed",49]," failed"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "tests"
+#       OP_RETURN | 
+#        VAR_THIS | "tested"
+#         OP_SEMI | 
+#        BAREWORD | "fails"
+#       OP_RETURN | 
+#         VAR_LEX | "failed"
+#         OP_SEMI | 
+#        BAREWORD | "passes"
+#       OP_RETURN | 
+#        VAR_THIS | "passed"
+#         OP_SEMI | 
+#        BAREWORD | "allOK"
+#       OP_RETURN | 
+#        VAR_THIS | "passed"
+#        OP_EQUAL | 
+#        VAR_THIS | "tested"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"_test"}
+#       CLOSURE_S | 
+#    KEYWORD_WANT | 
+#         VAR_LEX | "yes"
+#        OP_COMMA | 
+#         VAR_LEX | "message"
+#         OP_SEMI | 
+#        VAR_THIS | "tested"
+#       OP_ASSIGN | 
+#        VAR_THIS | "tested"
+#          OP_ADD | 
+#          NUMBER | "1"
+#         OP_SEMI | 
+#        BAREWORD | "pass"
+#       OP_RETURN | 
+#         VAR_LEX | "yes"
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "yes"
+#       CLOSURE_S | 
+#        VAR_THIS | "passed"
+#       OP_ASSIGN | 
+#        VAR_THIS | "passed"
+#          OP_ADD | 
+#          NUMBER | "1"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#      KEYWORD_IF | 
+#        VAR_THIS | "fatal"
+#        OP_VALUE | 
+#        BAREWORD | "Error"
+#      PAREN_CALL | 
+#         VAR_LEX | "message"
+#         PAREN_E | 
+#        PROPERTY | "panic"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "message"
+#       OP_RETURN | 
+#         VAR_LEX | "message"
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './std/Test.frt'
 #      Class 'Test'

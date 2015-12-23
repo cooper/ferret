@@ -1,3 +1,89 @@
+# === Tokenization ===
+#         VAR_LEX | "sock"
+#       OP_ASSIGN | 
+#        BAREWORD | "Socket"
+#         OP_PACK | 
+#        BAREWORD | "TCP"
+#      PAREN_CALL | 
+#      PROP_VALUE | "address"
+#          STRING | ["k.notroll.net"]
+#        OP_COMMA | 
+#      PROP_VALUE | "port"
+#          NUMBER | "6667"
+#        OP_COMMA | 
+#      PROP_VALUE | "readMode"
+#         VAR_SYM | "line"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "inspect"
+#      PAREN_CALL | 
+#         VAR_LEX | "sock"
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#         VAR_LEX | "sock"
+#        PROPERTY | "gotLine"
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "data"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["recv: ",["VAR_LEX","data",7]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#      KEYWORD_ON | 
+#         VAR_LEX | "sock"
+#        PROPERTY | "println"
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "data"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["send: ",["VAR_LEX","data",12]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#      KEYWORD_ON | 
+#         VAR_LEX | "sock"
+#        PROPERTY | "connected"
+#       CLOSURE_S | 
+#         VAR_LEX | "sock"
+#        PROPERTY | "println"
+#      PAREN_CALL | 
+#          STRING | ["NICK k"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "sock"
+#        PROPERTY | "println"
+#      PAREN_CALL | 
+#          STRING | ["USER k ","*"," ","*"," :k"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "sock"
+#        PROPERTY | "connect"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#        BAREWORD | "Timer"
+#      PAREN_CALL | 
+#          NUMBER | "5"
+#         PAREN_E | 
+#        PROPERTY | "once"
+#         OP_CALL | 
+#        PROPERTY | "expire"
+#       CLOSURE_S | 
+#         VAR_LEX | "sock"
+#        PROPERTY | "println"
+#      PAREN_CALL | 
+#          STRING | ["JOIN #k"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './test/hello12.frt'
 #      Instruction

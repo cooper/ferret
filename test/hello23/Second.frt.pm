@@ -1,3 +1,13 @@
+# === Tokenization ===
+#         VAR_LEX | "x"
+#       OP_ASSIGN | 
+#         PAREN_S | 
+#        OP_VALUE | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#  KEYWORD_WEAKEN | 
+#         VAR_LEX | "x"
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello23/Second.frt'
 #      Instruction

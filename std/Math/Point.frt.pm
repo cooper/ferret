@@ -1,3 +1,143 @@
+# === Tokenization ===
+#         PKG_DEC | {"name":"Math"}
+#       CLASS_DEC | {"name":"Point"}
+#          METHOD | {"main":1,"name":"_init_"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#        VAR_THIS | "x"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#        OP_COMMA | 
+#        VAR_THIS | "y"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"distanceTo"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "pt2"
+#        OP_VALUE | 
+#        BAREWORD | "Point"
+#         OP_SEMI | 
+#         VAR_LEX | "dx"
+#       OP_ASSIGN | 
+#        VAR_THIS | "x"
+#          OP_SUB | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "x"
+#         OP_SEMI | 
+#         VAR_LEX | "dy"
+#       OP_ASSIGN | 
+#        VAR_THIS | "y"
+#          OP_SUB | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "y"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "sqrt"
+#      PAREN_CALL | 
+#         VAR_LEX | "dx"
+#          OP_POW | 
+#          NUMBER | "2"
+#          OP_ADD | 
+#         VAR_LEX | "dy"
+#          OP_POW | 
+#          NUMBER | "2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"distanceFromOrigin","p_set":null,"is_prop":1}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "distanceTo"
+#      PAREN_CALL | 
+#        VAR_SPEC | "class"
+#      PAREN_CALL | 
+#          NUMBER | "0"
+#        OP_COMMA | 
+#          NUMBER | "0"
+#         PAREN_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"is_prop":1,"name":"pretty","p_set":null}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#          STRING | ["(",["VAR_THIS","x",21],", ",["VAR_THIS","y",21],")"]
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"toString"}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "pretty"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"description"}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#          STRING | ["Point"]
+#          OP_ADD | 
+#        VAR_THIS | "pretty"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"midpoint"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "pt1"
+#        OP_VALUE | 
+#        BAREWORD | "Point"
+#        OP_COMMA | 
+#         VAR_LEX | "pt2"
+#        OP_VALUE | 
+#        BAREWORD | "Point"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        VAR_SPEC | "class"
+#      PAREN_CALL | 
+#      PROP_VALUE | "x"
+#         PAREN_S | 
+#         VAR_LEX | "pt1"
+#        PROPERTY | "x"
+#          OP_ADD | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "x"
+#         PAREN_E | 
+#          OP_DIV | 
+#          NUMBER | "2"
+#        OP_COMMA | 
+#      PROP_VALUE | "y"
+#         PAREN_S | 
+#         VAR_LEX | "pt1"
+#        PROPERTY | "y"
+#          OP_ADD | 
+#         VAR_LEX | "pt2"
+#        PROPERTY | "y"
+#         PAREN_E | 
+#          OP_DIV | 
+#          NUMBER | "2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"distanceBetween"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "pt1"
+#        OP_VALUE | 
+#        BAREWORD | "Point"
+#        OP_COMMA | 
+#         VAR_LEX | "pt2"
+#        OP_VALUE | 
+#        BAREWORD | "Point"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#         VAR_LEX | "pt1"
+#        PROPERTY | "distanceTo"
+#      PAREN_CALL | 
+#         VAR_LEX | "pt2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './std/Math/Point.frt'
 #      Package 'Math'

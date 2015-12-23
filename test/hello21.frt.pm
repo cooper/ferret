@@ -1,3 +1,55 @@
+# === Tokenization ===
+#         VAR_LEX | "parts"
+#       OP_ASSIGN | 
+#          STRING | ["s p a m"]
+#        PROPERTY | "split"
+#      PAREN_CALL | 
+#          STRING | [" "]
+#         PAREN_E | 
+#         OP_SEMI | 
+#     KEYWORD_FOR | 
+#         PAREN_S | 
+#         VAR_LEX | "i"
+#        OP_COMMA | 
+#         VAR_LEX | "part"
+#         PAREN_E | 
+#      KEYWORD_IN | 
+#         VAR_LEX | "parts"
+#       CLOSURE_S | 
+#      KEYWORD_ON | 
+#        BAREWORD | "Timer"
+#      PAREN_CALL | 
+#         VAR_LEX | "i"
+#         PAREN_E | 
+#        PROPERTY | "once"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#        PROPERTY | "expire"
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["(",["VAR_LEX","i",6],") ",["VAR_LEX","part",6]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#       CLOSURE_E | 
+#     KEYWORD_FOR | 
+#         VAR_LEX | "part"
+#      KEYWORD_IN | 
+#       BRACKET_S | 
+#          NUMBER | "1"
+#        OP_COMMA | 
+#          NUMBER | "2"
+#        OP_COMMA | 
+#          NUMBER | "3"
+#       BRACKET_E | 
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#         VAR_LEX | "part"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './test/hello21.frt'
 #      Instruction

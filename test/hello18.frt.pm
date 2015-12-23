@@ -1,3 +1,88 @@
+# === Tokenization ===
+#         VAR_LEX | "list"
+#       OP_ASSIGN | 
+#       BRACKET_S | 
+#          STRING | ["hi"]
+#       BRACKET_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "list"
+#        PROPERTY | "push"
+#      PAREN_CALL | 
+#          STRING | ["there"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "list"
+#     BRACKET_IDX | 
+#          NUMBER | "4"
+#       BRACKET_E | 
+#       OP_ASSIGN | 
+#          STRING | ["yeah"]
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Length: "]
+#          OP_ADD | 
+#         VAR_LEX | "list"
+#        PROPERTY | "length"
+#         PAREN_E | 
+#         OP_SEMI | 
+#     KEYWORD_FOR | 
+#         VAR_LEX | "item"
+#      KEYWORD_IN | 
+#         VAR_LEX | "list"
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["item: ",["VAR_LEX","item",9]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "hash"
+#       OP_ASSIGN | 
+#       BRACKET_S | 
+#      PROP_VALUE | "hi"
+#          STRING | ["there"]
+#       BRACKET_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "hash"
+#     BRACKET_IDX | 
+#          STRING | ["whats"]
+#       BRACKET_E | 
+#       OP_ASSIGN | 
+#          STRING | ["up"]
+#         OP_SEMI | 
+#         VAR_LEX | "hash"
+#     BRACKET_IDX | 
+#          STRING | ["thank"]
+#       BRACKET_E | 
+#       OP_ASSIGN | 
+#          STRING | ["you"]
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["whats "]
+#          OP_ADD | 
+#         VAR_LEX | "hash"
+#     BRACKET_IDX | 
+#          STRING | ["whats"]
+#       BRACKET_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#     KEYWORD_FOR | 
+#         PAREN_S | 
+#         VAR_LEX | "key"
+#        OP_COMMA | 
+#         VAR_LEX | "val"
+#         PAREN_E | 
+#      KEYWORD_IN | 
+#         VAR_LEX | "hash"
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["pair: key=",["VAR_LEX","key",19],"; value=",["VAR_LEX","val",19]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './test/hello18.frt'
 #      Instruction

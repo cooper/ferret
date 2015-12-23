@@ -1,3 +1,49 @@
+# === Tokenization ===
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["test"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "str"
+#       OP_ASSIGN | 
+#          STRING | ["hi"]
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#         VAR_LEX | "str"
+#        PROPERTY | "length"
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["found '",["VAR_SPEC","this",12],"' length to be ",["VAR_SPEC","return",12]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "str"
+#        PROPERTY | "length"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#          STRING | ["hello"]
+#        PROPERTY | "length"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#        BAREWORD | "String"
+#        PROPERTY | "proto"
+#        PROPERTY | "length"
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["found '",["VAR_SPEC","this",23],"' length to be ",["VAR_SPEC","return",23]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          STRING | ["hello"]
+#        PROPERTY | "length"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello14.frt'
 #      Instruction

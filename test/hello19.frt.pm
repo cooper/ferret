@@ -1,3 +1,23 @@
+# === Tokenization ===
+#         VAR_LEX | "words"
+#       OP_ASSIGN | 
+#          STRING | ["how are you?"]
+#        PROPERTY | "split"
+#      PAREN_CALL | 
+#          STRING | [" "]
+#         PAREN_E | 
+#         OP_SEMI | 
+#     KEYWORD_FOR | 
+#         VAR_LEX | "word"
+#      KEYWORD_IN | 
+#         VAR_LEX | "words"
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["part: ",["VAR_LEX","word",5]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './test/hello19.frt'
 #      Instruction

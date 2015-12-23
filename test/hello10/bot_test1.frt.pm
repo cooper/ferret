@@ -1,3 +1,23 @@
+# === Tokenization ===
+#         VAR_LEX | "bot"
+#       OP_ASSIGN | 
+#        BAREWORD | "Bot1"
+#      PAREN_CALL | 
+#      PROP_VALUE | "addr"
+#          STRING | ["k.notroll.net"]
+#        OP_COMMA | 
+#      PROP_VALUE | "nick"
+#          STRING | ["ferret"]
+#        OP_COMMA | 
+#      PROP_VALUE | "user"
+#          STRING | ["bot"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "connect"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello10/bot_test1.frt'
 #      Instruction

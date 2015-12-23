@@ -1,3 +1,22 @@
+# === Tokenization ===
+#         PKG_DEC | {"name":"Math"}
+#        FUNCTION | {"name":"sqrt"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "num"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "NATIVE"
+#         OP_PACK | 
+#        BAREWORD | "Math"
+#        PROPERTY | "sqrt"
+#      PAREN_CALL | 
+#         VAR_LEX | "num"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './std/Math.frt'
 #      Package 'Math'

@@ -1,3 +1,81 @@
+# === Tokenization ===
+#         VAR_LEX | "rect"
+#       OP_ASSIGN | 
+#        BAREWORD | "Math"
+#         OP_PACK | 
+#        BAREWORD | "Rect"
+#      PAREN_CALL | 
+#      PROP_VALUE | "x"
+#          NUMBER | "5"
+#        OP_COMMA | 
+#      PROP_VALUE | "y"
+#          NUMBER | "4"
+#        OP_COMMA | 
+#      PROP_VALUE | "width"
+#          NUMBER | "12"
+#        OP_COMMA | 
+#      PROP_VALUE | "height"
+#          NUMBER | "10"
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "center"
+#       OP_ASSIGN | 
+#         VAR_LEX | "rect"
+#        PROPERTY | "center"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Center of rect: ",["VAR_LEX","center",5]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Center distance from origin: "]
+#          OP_ADD | 
+#         VAR_LEX | "center"
+#        PROPERTY | "distanceFromOrigin"
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "otherPt"
+#       OP_ASSIGN | 
+#        BAREWORD | "Math"
+#         OP_PACK | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#          NUMBER | "9"
+#        OP_COMMA | 
+#          NUMBER | "2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "midpoint"
+#       OP_ASSIGN | 
+#         PAREN_S | 
+#         VAR_LEX | "center"
+#        OP_COMMA | 
+#         VAR_LEX | "otherPt"
+#         PAREN_E | 
+#        PROPERTY | "midpoint"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#        PROPERTY | "pretty"
+#         OP_CALL | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Midpoint: ",["VAR_LEX","midpoint",10]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Square root of four: "]
+#          OP_ADD | 
+#        BAREWORD | "Math"
+#        PROPERTY | "sqrt"
+#      PAREN_CALL | 
+#          NUMBER | "4"
+#         PAREN_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello7/hello7.frt'
 #      Instruction

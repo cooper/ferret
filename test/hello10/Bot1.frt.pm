@@ -1,3 +1,103 @@
+# === Tokenization ===
+#       CLASS_DEC | {"name":"Bot1"}
+#          METHOD | {"main":1,"name":"_init_"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#        VAR_THIS | "addr"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#        OP_COMMA | 
+#        VAR_THIS | "nick"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#        OP_COMMA | 
+#        VAR_THIS | "user"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#         OP_SEMI | 
+#    KEYWORD_WANT | 
+#        VAR_THIS | "port"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#       OP_ASSIGN | 
+#          NUMBER | "6667"
+#        OP_COMMA | 
+#        VAR_THIS | "real"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#       OP_ASSIGN | 
+#          STRING | ["Ferret IRC"]
+#         OP_SEMI | 
+#        VAR_THIS | "sock"
+#       OP_ASSIGN | 
+#        BAREWORD | "Socket"
+#         OP_PACK | 
+#        BAREWORD | "TCP"
+#      PAREN_CALL | 
+#      PROP_VALUE | "address"
+#        VAR_THIS | "addr"
+#        OP_COMMA | 
+#      PROP_VALUE | "port"
+#        VAR_THIS | "port"
+#        OP_COMMA | 
+#      PROP_VALUE | "readMode"
+#         VAR_SYM | "line"
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#        VAR_THIS | "sock"
+#        PROPERTY | "connected"
+#       CLOSURE_S | 
+#        VAR_THIS | "send"
+#      PAREN_CALL | 
+#          STRING | ["USER ",["VAR_THIS","user",13]," ","*"," ","*"," :",["VAR_THIS","real",13]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "send"
+#      PAREN_CALL | 
+#          STRING | ["NICK ",["VAR_THIS","nick",14]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#      KEYWORD_ON | 
+#        VAR_THIS | "sock"
+#        PROPERTY | "gotLine"
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "data"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["recv: ",["VAR_LEX","data",20]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"connect"}
+#       CLOSURE_S | 
+#        VAR_THIS | "sock"
+#        PROPERTY | "connect"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"send"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "line"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["send: ",["VAR_LEX","line",31]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "sock"
+#        PROPERTY | "println"
+#      PAREN_CALL | 
+#         VAR_LEX | "line"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './test/hello10/Bot1.frt'
 #      Class 'Bot1'

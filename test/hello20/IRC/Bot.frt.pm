@@ -1,3 +1,450 @@
+# === Tokenization ===
+#         PKG_DEC | {"name":"IRC"}
+#       CLASS_DEC | {"name":"Bot"}
+#         VAR_LEX | "handlers"
+#       OP_ASSIGN | 
+#       BRACKET_S | 
+#      PROP_VALUE | "MODE"
+#        BAREWORD | "_joinChannels"
+#        OP_COMMA | 
+#      PROP_VALUE | "PING"
+#        BAREWORD | "_pong"
+#        OP_COMMA | 
+#      PROP_VALUE | "PRIVMSG"
+#        BAREWORD | "_handleMessage"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "initialCommands"
+#       OP_ASSIGN | 
+#       BRACKET_S | 
+#      PROP_VALUE | "hello"
+#        BAREWORD | "_commandHello"
+#        OP_COMMA | 
+#      PROP_VALUE | "hi"
+#        BAREWORD | "_commandHello"
+#        OP_COMMA | 
+#      PROP_VALUE | "add"
+#        BAREWORD | "_commandAdd"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#          METHOD | {"name":"_init_","main":1}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#        VAR_THIS | "addr"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#        OP_COMMA | 
+#        VAR_THIS | "nick"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#         OP_SEMI | 
+#    KEYWORD_WANT | 
+#        VAR_THIS | "port"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#       OP_ASSIGN | 
+#          NUMBER | "6667"
+#         OP_SEMI | 
+#    KEYWORD_WANT | 
+#        VAR_THIS | "user"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#       OP_ASSIGN | 
+#          STRING | ["ferret"]
+#         OP_SEMI | 
+#    KEYWORD_WANT | 
+#        VAR_THIS | "real"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#       OP_ASSIGN | 
+#          STRING | ["Ferret IRC"]
+#         OP_SEMI | 
+#        VAR_THIS | "commands"
+#       OP_ASSIGN | 
+#         VAR_LEX | "initialCommands"
+#         OP_SEMI | 
+#        VAR_THIS | "factoids"
+#       OP_ASSIGN | 
+#       BRACKET_S | 
+#        OP_VALUE | 
+#       BRACKET_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "sock"
+#       OP_ASSIGN | 
+#        BAREWORD | "Socket"
+#         OP_PACK | 
+#        BAREWORD | "TCP"
+#      PAREN_CALL | 
+#      PROP_VALUE | "address"
+#        VAR_THIS | "addr"
+#        OP_COMMA | 
+#      PROP_VALUE | "port"
+#        VAR_THIS | "port"
+#        OP_COMMA | 
+#      PROP_VALUE | "readMode"
+#         VAR_SYM | "line"
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#        VAR_THIS | "sock"
+#        PROPERTY | "connected"
+#        OP_COMMA | 
+#         VAR_SYM | "sendRegistration"
+#       CLOSURE_S | 
+#        VAR_THIS | "send"
+#      PAREN_CALL | 
+#          STRING | ["USER ",["VAR_THIS","user",31]," ","*"," ","*"," :",["VAR_THIS","real",31]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "send"
+#      PAREN_CALL | 
+#          STRING | ["NICK ",["VAR_THIS","nick",32]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#      KEYWORD_ON | 
+#        VAR_THIS | "sock"
+#        PROPERTY | "gotLine"
+#        OP_COMMA | 
+#         VAR_SYM | "handleLine"
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "data"
+#         OP_SEMI | 
+#        VAR_THIS | "handleLine"
+#      PAREN_CALL | 
+#         VAR_LEX | "data"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"addCommand"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "command"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#        OP_COMMA | 
+#         VAR_LEX | "callback"
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#        VAR_THIS | "commands"
+#     BRACKET_IDX | 
+#         VAR_LEX | "command"
+#       BRACKET_E | 
+#        OP_VALUE | 
+#        BAREWORD | "overwrote"
+#       OP_RETURN | 
+#    KEYWORD_TRUE | 
+#         OP_SEMI | 
+#        VAR_THIS | "commands"
+#     BRACKET_IDX | 
+#         VAR_LEX | "command"
+#       BRACKET_E | 
+#       OP_ASSIGN | 
+#         VAR_LEX | "callback"
+#         OP_SEMI | 
+#        BAREWORD | "added"
+#       OP_RETURN | 
+#    KEYWORD_TRUE | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"connect"}
+#       CLOSURE_S | 
+#        VAR_THIS | "sock"
+#        PROPERTY | "connect"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"send"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "line"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["send: ",["VAR_LEX","line",57]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "sock"
+#        PROPERTY | "println"
+#      PAREN_CALL | 
+#         VAR_LEX | "line"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"handleLine"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "line"
+#         OP_SEMI | 
+#         VAR_LEX | "s"
+#       OP_ASSIGN | 
+#         VAR_LEX | "line"
+#        PROPERTY | "split"
+#      PAREN_CALL | 
+#          STRING | [" "]
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "command"
+#       OP_ASSIGN | 
+#         VAR_LEX | "s"
+#     BRACKET_IDX | 
+#          NUMBER | "1"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "s"
+#     BRACKET_IDX | 
+#          NUMBER | "0"
+#       BRACKET_E | 
+#        OP_EQUAL | 
+#          STRING | ["PING"]
+#        OP_VALUE | 
+#         VAR_LEX | "command"
+#       OP_ASSIGN | 
+#         VAR_LEX | "s"
+#     BRACKET_IDX | 
+#          NUMBER | "0"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["recv[",["VAR_LEX","command",72],"]: ",["VAR_LEX","line",72]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "handlers"
+#     BRACKET_IDX | 
+#         VAR_LEX | "command"
+#       BRACKET_E | 
+#        OP_MAYBE | 
+#      PAREN_CALL | 
+#      PROP_VALUE | "_self"
+#        VAR_SPEC | "self"
+#        OP_COMMA | 
+#      PROP_VALUE | "line"
+#         VAR_LEX | "line"
+#        OP_COMMA | 
+#      PROP_VALUE | "command"
+#         VAR_LEX | "command"
+#        OP_COMMA | 
+#      PROP_VALUE | "s"
+#         VAR_LEX | "s"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"privmsg"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "channel"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#        OP_COMMA | 
+#         VAR_LEX | "message"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#         OP_SEMI | 
+#     KEYWORD_FOR | 
+#         VAR_LEX | "line"
+#      KEYWORD_IN | 
+#         VAR_LEX | "message"
+#        PROPERTY | "split"
+#      PAREN_CALL | 
+#          STRING | ["\n"]
+#         PAREN_E | 
+#       CLOSURE_S | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "line"
+#        PROPERTY | "length"
+#       OP_NEQUAL | 
+#          NUMBER | "0"
+#        OP_VALUE | 
+#        VAR_THIS | "send"
+#      PAREN_CALL | 
+#          STRING | ["PRIVMSG ",["VAR_LEX","channel",88]," :",["VAR_LEX","line",88]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"_joinChannels"}
+#       CLOSURE_S | 
+#      KEYWORD_IF | 
+#        VAR_THIS | "_joinedChannels"
+#        OP_VALUE | 
+#  KEYWORD_RETURN | 
+#         OP_SEMI | 
+#        VAR_THIS | "_joinedChannels"
+#       OP_ASSIGN | 
+#    KEYWORD_TRUE | 
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#        VAR_THIS | "autojoin"
+#       CLOSURE_S | 
+#     KEYWORD_FOR | 
+#         VAR_LEX | "chan"
+#      KEYWORD_IN | 
+#        VAR_THIS | "autojoin"
+#       CLOSURE_S | 
+#        VAR_THIS | "send"
+#      PAREN_CALL | 
+#          STRING | ["JOIN ",["VAR_LEX","chan",101]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#       CLOSURE_E | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"_pong"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "s"
+#         OP_SEMI | 
+#        VAR_THIS | "send"
+#      PAREN_CALL | 
+#          STRING | ["PONG "]
+#          OP_ADD | 
+#         VAR_LEX | "s"
+#     BRACKET_IDX | 
+#          NUMBER | "1"
+#       BRACKET_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"_handleMessage"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "line"
+#        OP_COMMA | 
+#         VAR_LEX | "s"
+#         OP_SEMI | 
+#         VAR_LEX | "msg"
+#       OP_ASSIGN | 
+#        BAREWORD | "IRC"
+#         OP_PACK | 
+#        BAREWORD | "Message"
+#      PAREN_CALL | 
+#         VAR_LEX | "line"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "msg"
+#       OP_RETURN | 
+#         VAR_LEX | "msg"
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "command"
+#        OP_VALUE | 
+#        VAR_THIS | "commands"
+#     BRACKET_IDX | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "command"
+#       BRACKET_E | 
+#        OP_MAYBE | 
+#      PAREN_CALL | 
+#      PROP_VALUE | "_self"
+#        VAR_SPEC | "self"
+#        OP_COMMA | 
+#      PROP_VALUE | "line"
+#         VAR_LEX | "line"
+#        OP_COMMA | 
+#      PROP_VALUE | "s"
+#         VAR_LEX | "s"
+#        OP_COMMA | 
+#      PROP_VALUE | "msg"
+#         VAR_LEX | "msg"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"_commandHello"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "msg"
+#         OP_SEMI | 
+#         VAR_LEX | "nickname"
+#       OP_ASSIGN | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "nickname"
+#         OP_SEMI | 
+#        VAR_THIS | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#          STRING | ["Hi ",["VAR_LEX","nickname",133],"!"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"_commandAdd"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "msg"
+#         OP_SEMI | 
+#        BAREWORD | "inspect"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "trigger"
+#       OP_ASSIGN | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "parts"
+#     BRACKET_IDX | 
+#          NUMBER | "1"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "response"
+#       OP_ASSIGN | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "fromWord"
+#      PAREN_CALL | 
+#          NUMBER | "2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "factoids"
+#     BRACKET_IDX | 
+#         VAR_LEX | "trigger"
+#       BRACKET_E | 
+#       OP_ASSIGN | 
+#         VAR_LEX | "response"
+#         OP_SEMI | 
+#        VAR_THIS | "commands"
+#     BRACKET_IDX | 
+#         VAR_LEX | "trigger"
+#       BRACKET_E | 
+#       OP_ASSIGN | 
+#        BAREWORD | "_commandFactoid"
+#         OP_SEMI | 
+#        VAR_THIS | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#          STRING | ["alright, associating .",["VAR_LEX","trigger",148]," with '",["VAR_LEX","response",148],"'"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"_commandFactoid"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "msg"
+#         OP_SEMI | 
+#         VAR_LEX | "response"
+#       OP_ASSIGN | 
+#        VAR_THIS | "factoids"
+#     BRACKET_IDX | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "command"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#         VAR_LEX | "response"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './test/hello20/IRC/Bot.frt'
 #      Package 'IRC'
@@ -74,7 +521,7 @@
 #                                  Item 2
 #                                      Pair 'readMode'
 #                                          Symbol :line
-#                  On
+#                  On ('sendRegistration' callback)
 #                      Expression ('on' parameter)
 #                          Property 'connected'
 #                              Instance variable '@sock'
@@ -110,7 +557,7 @@
 #                                                  String 'NICK '
 #                                                  Addition operator (+)
 #                                                  Instance variable '@nick'
-#                  On
+#                  On ('handleLine' callback)
 #                      Expression ('on' parameter)
 #                          Property 'gotLine'
 #                              Instance variable '@sock'
@@ -439,7 +886,7 @@
 #                          Lexical variable '$response'
 #                  Instruction
 #                      Assignment (index)
-#                          Instance variable '@commandFactoid'
+#                          Bareword '_commandFactoid'
 #                  Instruction
 #                      Call
 #                          Instance variable '@privmsg'
@@ -507,7 +954,8 @@ my $result = do {
 
     # Anonymous function definition
     my $func_0 = FF::function_def(
-        $f, $scope, undef,
+        $f, $scope,
+        'sendRegistration',
         [],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -542,7 +990,8 @@ my $result = do {
 
     # Anonymous function definition
     my $func_1 = FF::function_def(
-        $f, $scope, undef,
+        $f, $scope,
+        'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
@@ -724,7 +1173,7 @@ my $result = do {
                 $scope->property_u('response'), $scope );
             $self->property_u('commands')
               ->set_index_value( [ $scope->property_u('trigger') ],
-                $self->property_u('commandFactoid'), $scope );
+                $scope->property_u('_commandFactoid'), $scope );
             $self->property_u('privmsg')->call_u(
                 [
                     $scope->property_u('msg')->property_u('channel'),

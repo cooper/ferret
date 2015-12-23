@@ -1,3 +1,47 @@
+# === Tokenization ===
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["hello"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#        BAREWORD | "Timer"
+#      PAREN_CALL | 
+#          NUMBER | "5"
+#         PAREN_E | 
+#        PROPERTY | "once"
+#         OP_CALL | 
+#        PROPERTY | "expire"
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["five seconds up"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "t2"
+#       OP_ASSIGN | 
+#        BAREWORD | "Timer"
+#      PAREN_CALL | 
+#          NUMBER | "2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#         VAR_LEX | "t2"
+#        PROPERTY | "once"
+#         OP_CALL | 
+#        PROPERTY | "expire"
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["this shouldn't be said"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "t2"
+#        PROPERTY | "cancel"
+#         OP_CALL | 
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello13.frt'
 #      Instruction

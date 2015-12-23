@@ -1,3 +1,150 @@
+# === Tokenization ===
+#         PKG_DEC | {"name":"IRC"}
+#       CLASS_DEC | {"name":"Message"}
+#          METHOD | {"name":"_init_","main":1}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#        VAR_THIS | "line"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#         OP_SEMI | 
+#         VAR_LEX | "lineSplit"
+#       OP_ASSIGN | 
+#        VAR_THIS | "line"
+#        PROPERTY | "split"
+#      PAREN_CALL | 
+#      PROP_VALUE | "separator"
+#          STRING | [" "]
+#        OP_COMMA | 
+#      PROP_VALUE | "limit"
+#          NUMBER | "4"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "channel"
+#       OP_ASSIGN | 
+#         VAR_LEX | "lineSplit"
+#     BRACKET_IDX | 
+#          NUMBER | "2"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "nickname"
+#       OP_ASSIGN | 
+#         VAR_LEX | "lineSplit"
+#     BRACKET_IDX | 
+#          NUMBER | "0"
+#       BRACKET_E | 
+#        PROPERTY | "split"
+#      PAREN_CALL | 
+#      PROP_VALUE | "separator"
+#          STRING | ["!"]
+#        OP_COMMA | 
+#      PROP_VALUE | "limit"
+#          NUMBER | "2"
+#         PAREN_E | 
+#     BRACKET_IDX | 
+#          NUMBER | "0"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "nickname"
+#       OP_ASSIGN | 
+#        VAR_THIS | "nickname"
+#        PROPERTY | "trimPrefix"
+#      PAREN_CALL | 
+#          STRING | [":"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "message"
+#       OP_ASSIGN | 
+#         VAR_LEX | "lineSplit"
+#     BRACKET_IDX | 
+#          NUMBER | "3"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "message"
+#       OP_ASSIGN | 
+#        VAR_THIS | "message"
+#        PROPERTY | "trimPrefix"
+#      PAREN_CALL | 
+#          STRING | [":"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "parts"
+#       OP_ASSIGN | 
+#        VAR_THIS | "message"
+#        PROPERTY | "split"
+#      PAREN_CALL | 
+#          STRING | [" "]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"is_prop":1,"p_set":1,"name":"command"}
+#       CLOSURE_S | 
+#      KEYWORD_IF | 
+#        VAR_THIS | "parts"
+#     BRACKET_IDX | 
+#          NUMBER | "0"
+#       BRACKET_E | 
+#        PROPERTY | "hasPrefix"
+#      PAREN_CALL | 
+#          STRING | ["."]
+#         PAREN_E | 
+#       CLOSURE_S | 
+#         VAR_LEX | "cmd"
+#       OP_ASSIGN | 
+#        VAR_THIS | "parts"
+#     BRACKET_IDX | 
+#          NUMBER | "0"
+#       BRACKET_E | 
+#        PROPERTY | "trimPrefix"
+#      PAREN_CALL | 
+#          STRING | ["."]
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "cmd"
+#        PROPERTY | "length"
+#        OP_VALUE | 
+#  KEYWORD_RETURN | 
+#         VAR_LEX | "cmd"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#  KEYWORD_RETURN | 
+#   KEYWORD_FALSE | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"commandHasParameters","p_set":1,"is_prop":1}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "parts"
+#        PROPERTY | "length"
+#       OP_NEQUAL | 
+#          NUMBER | "1"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"fromWord"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "wordN"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "message"
+#        PROPERTY | "split"
+#      PAREN_CALL | 
+#      PROP_VALUE | "separator"
+#          STRING | [" "]
+#        OP_COMMA | 
+#      PROP_VALUE | "limit"
+#         VAR_LEX | "wordN"
+#          OP_ADD | 
+#          NUMBER | "1"
+#         PAREN_E | 
+#     BRACKET_IDX | 
+#         VAR_LEX | "wordN"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './test/hello20/IRC/Message.frt'
 #      Package 'IRC'

@@ -1,3 +1,167 @@
+# === Tokenization ===
+#         PKG_DEC | {"name":"Math"}
+#       CLASS_DEC | {"name":"Rect"}
+#          METHOD | {"main":1,"name":"_init_"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "x"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#        OP_COMMA | 
+#         VAR_LEX | "y"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#        OP_COMMA | 
+#        VAR_THIS | "width"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#        OP_COMMA | 
+#        VAR_THIS | "height"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#         OP_SEMI | 
+#        VAR_THIS | "origin"
+#       OP_ASSIGN | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#         VAR_LEX | "x"
+#        OP_COMMA | 
+#         VAR_LEX | "y"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"p_set":null,"name":"vertices","is_prop":1}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#       BRACKET_S | 
+#        VAR_THIS | "topLeft"
+#        OP_COMMA | 
+#        VAR_THIS | "topRight"
+#        OP_COMMA | 
+#        VAR_THIS | "bottomLeft"
+#        OP_COMMA | 
+#        VAR_THIS | "bottomRight"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"is_prop":1,"name":"bottomLeft","p_set":null}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "origin"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"is_prop":1,"p_set":null,"name":"bottomRight"}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#        VAR_THIS | "origin"
+#        PROPERTY | "x"
+#          OP_ADD | 
+#        VAR_THIS | "width"
+#        OP_COMMA | 
+#        VAR_THIS | "origin"
+#        PROPERTY | "y"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"is_prop":1,"p_set":null,"name":"topLeft"}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#        VAR_THIS | "origin"
+#        PROPERTY | "x"
+#        OP_COMMA | 
+#        VAR_THIS | "origin"
+#        PROPERTY | "y"
+#          OP_ADD | 
+#        VAR_THIS | "height"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"topRight","p_set":null,"is_prop":1}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#        VAR_THIS | "origin"
+#        PROPERTY | "x"
+#          OP_ADD | 
+#        VAR_THIS | "width"
+#        OP_COMMA | 
+#        VAR_THIS | "origin"
+#        PROPERTY | "y"
+#          OP_ADD | 
+#        VAR_THIS | "height"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"is_prop":1,"name":"bottomLine","p_set":null}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "Line"
+#      PAREN_CALL | 
+#        VAR_THIS | "bottomLeft"
+#        OP_COMMA | 
+#        VAR_THIS | "bottomRight"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"topLine","p_set":null,"is_prop":1}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "Line"
+#      PAREN_CALL | 
+#        VAR_THIS | "topLeft"
+#        OP_COMMA | 
+#        VAR_THIS | "topRight"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"is_prop":1,"p_set":null,"name":"center"}
+#       CLOSURE_S | 
+#         VAR_LEX | "x"
+#       OP_ASSIGN | 
+#        VAR_THIS | "origin"
+#        PROPERTY | "x"
+#          OP_ADD | 
+#        VAR_THIS | "width"
+#          OP_MUL | 
+#          NUMBER | "0.5"
+#         OP_SEMI | 
+#         VAR_LEX | "y"
+#       OP_ASSIGN | 
+#        VAR_THIS | "origin"
+#        PROPERTY | "y"
+#          OP_ADD | 
+#        VAR_THIS | "height"
+#          OP_MUL | 
+#          NUMBER | "0.5"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#         VAR_LEX | "x"
+#        OP_COMMA | 
+#         VAR_LEX | "y"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"description"}
+#       CLOSURE_S | 
+#         VAR_LEX | "o"
+#       OP_ASSIGN | 
+#        VAR_THIS | "origin"
+#         OP_SEMI | 
+#         VAR_LEX | "c"
+#       OP_ASSIGN | 
+#        VAR_THIS | "center"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#          STRING | ["Rect( Origin(",["VAR_LEX","o",52],["PROPERTY","x",52],", ",["VAR_LEX","o",52],["PROPERTY","y",52],"); Center(",["VAR_LEX","c",52],["PROPERTY","x",52],", ",["VAR_LEX","c",52],["PROPERTY","y",52],"); Width = ",["VAR_THIS","width",52],"; Height = ",["VAR_THIS","height",52]," )"]
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './std/Math/Rect.frt'
 #      Package 'Math'

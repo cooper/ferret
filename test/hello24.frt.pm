@@ -1,3 +1,45 @@
+# === Tokenization ===
+#        BAREWORD | "delay"
+#      PAREN_CALL | 
+#          NUMBER | "5"
+#         PAREN_E | 
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["been five seconds"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["waiting..."]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#        BAREWORD | "something"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#          STRING | ["any second now"]
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        PROPERTY | "message"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        FUNCTION | {"name":"something"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "code"
+#         OP_SEMI | 
+#        BAREWORD | "message"
+#       OP_RETURN | 
+#         VAR_LEX | "code"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './test/hello24.frt'
 #      Instruction

@@ -1,3 +1,94 @@
+# === Tokenization ===
+#         VAR_LEX | "point"
+#       OP_ASSIGN | 
+#        BAREWORD | "Math"
+#         OP_PACK | 
+#        BAREWORD | "Point"
+#      PAREN_CALL | 
+#          NUMBER | "0"
+#        OP_COMMA | 
+#          NUMBER | "0"
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "point"
+#       CLOSURE_S | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["The point exists!"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "inspect"
+#      PAREN_CALL | 
+#         VAR_LEX | "point"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#  KEYWORD_INSIDE | 
+#         VAR_LEX | "point"
+#       CLOSURE_S | 
+#         VAR_LEX | "x"
+#       OP_ASSIGN | 
+#          NUMBER | "5"
+#         OP_SEMI | 
+#         VAR_LEX | "y"
+#       OP_ASSIGN | 
+#          NUMBER | "10"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Point: ",["VAR_LEX","point",14]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#        BAREWORD | "say"
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "twice"
+#        OP_COMMA | 
+#         VAR_LEX | "message"
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "twice"
+#        OP_VALUE | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | [["VAR_LEX","message",19]," again"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "didTwice"
+#       OP_RETURN | 
+#         VAR_LEX | "twice"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "r"
+#       OP_ASSIGN | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#      PROP_VALUE | "message"
+#          STRING | ["It was said"]
+#        OP_COMMA | 
+#      PROP_VALUE | "twice"
+#    KEYWORD_TRUE | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "r"
+#        PROPERTY | "didTwice"
+#        OP_VALUE | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Did the first one twice!"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["this should ignore the second parameter"]
+#        OP_COMMA | 
+#    KEYWORD_TRUE | 
+#         PAREN_E | 
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello11.frt'
 #      Instruction

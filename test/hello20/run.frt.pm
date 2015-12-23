@@ -1,3 +1,358 @@
+# === Tokenization ===
+#         VAR_LEX | "bot"
+#       OP_ASSIGN | 
+#        BAREWORD | "IRC"
+#         OP_PACK | 
+#        BAREWORD | "Bot"
+#      PAREN_CALL | 
+#      PROP_VALUE | "addr"
+#          STRING | ["k.notroll.net"]
+#        OP_COMMA | 
+#      PROP_VALUE | "nick"
+#          STRING | ["bottie"]
+#        OP_COMMA | 
+#      PROP_VALUE | "user"
+#          STRING | ["ferret"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "autojoin"
+#       OP_ASSIGN | 
+#       BRACKET_S | 
+#          STRING | ["#k"]
+#       BRACKET_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "addCommand"
+#      PAREN_CALL | 
+#          STRING | ["info"]
+#         PAREN_E | 
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "msg"
+#         OP_SEMI | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#          STRING | ["Ferret IRC bot"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "addCommand"
+#      PAREN_CALL | 
+#          STRING | ["t"]
+#         PAREN_E | 
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "msg"
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#          OP_NOT | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "commandHasParameters"
+#        OP_VALUE | 
+#  KEYWORD_RETURN | 
+#         OP_SEMI | 
+#         VAR_LEX | "c"
+#       OP_ASSIGN | 
+#        BAREWORD | "COMPILER"
+#      PAREN_CALL | 
+#        BAREWORD | "convertNewlines"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "fromWord"
+#      PAREN_CALL | 
+#          NUMBER | "1"
+#         PAREN_E | 
+#         PAREN_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "res"
+#       OP_ASSIGN | 
+#         VAR_LEX | "c"
+#        PROPERTY | "tokenize"
+#      PAREN_CALL | 
+#      PROP_VALUE | "pretty"
+#    KEYWORD_TRUE | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "res"
+#        PROPERTY | "error"
+#       CLOSURE_S | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#         VAR_LEX | "res"
+#        PROPERTY | "error"
+#         PAREN_E | 
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#         VAR_LEX | "res"
+#        PROPERTY | "pretty"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "addCommand"
+#      PAREN_CALL | 
+#          STRING | ["c"]
+#         PAREN_E | 
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "msg"
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#          OP_NOT | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "commandHasParameters"
+#        OP_VALUE | 
+#  KEYWORD_RETURN | 
+#         OP_SEMI | 
+#         VAR_LEX | "c"
+#       OP_ASSIGN | 
+#        BAREWORD | "COMPILER"
+#      PAREN_CALL | 
+#        BAREWORD | "convertNewlines"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "fromWord"
+#      PAREN_CALL | 
+#          NUMBER | "1"
+#         PAREN_E | 
+#         PAREN_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "res"
+#       OP_ASSIGN | 
+#         VAR_LEX | "c"
+#        PROPERTY | "construct"
+#      PAREN_CALL | 
+#      PROP_VALUE | "pretty"
+#    KEYWORD_TRUE | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "res"
+#        PROPERTY | "error"
+#       CLOSURE_S | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#         VAR_LEX | "res"
+#        PROPERTY | "error"
+#         PAREN_E | 
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#         VAR_LEX | "res"
+#        PROPERTY | "pretty"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "addCommand"
+#      PAREN_CALL | 
+#          STRING | ["e"]
+#         PAREN_E | 
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "msg"
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#          OP_NOT | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "commandHasParameters"
+#        OP_VALUE | 
+#  KEYWORD_RETURN | 
+#         OP_SEMI | 
+#         VAR_LEX | "res"
+#       OP_ASSIGN | 
+#        BAREWORD | "COMPILER"
+#      PAREN_CALL | 
+#        BAREWORD | "convertNewlines"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "fromWord"
+#      PAREN_CALL | 
+#          NUMBER | "1"
+#         PAREN_E | 
+#         PAREN_E | 
+#         PAREN_E | 
+#        PROPERTY | "eval"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "res"
+#        PROPERTY | "error"
+#       CLOSURE_S | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#         VAR_LEX | "res"
+#        PROPERTY | "error"
+#         PAREN_E | 
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "string"
+#       OP_ASSIGN | 
+#        BAREWORD | "inspect"
+#      PAREN_CALL | 
+#      PROP_VALUE | "value"
+#         VAR_LEX | "res"
+#        PROPERTY | "result"
+#        OP_COMMA | 
+#      PROP_VALUE | "quiet"
+#    KEYWORD_TRUE | 
+#         PAREN_E | 
+#        PROPERTY | "string"
+#         OP_SEMI | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#         VAR_LEX | "string"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "addCommand"
+#      PAREN_CALL | 
+#          STRING | ["p"]
+#        OP_COMMA | 
+#        BAREWORD | "handlePerl"
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "addCommand"
+#      PAREN_CALL | 
+#          STRING | ["pp"]
+#        OP_COMMA | 
+#        BAREWORD | "handlePerl"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        FUNCTION | {"name":"handlePerl"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "msg"
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#          OP_NOT | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "commandHasParameters"
+#        OP_VALUE | 
+#  KEYWORD_RETURN | 
+#         OP_SEMI | 
+#         VAR_LEX | "c"
+#       OP_ASSIGN | 
+#        BAREWORD | "COMPILER"
+#      PAREN_CALL | 
+#        BAREWORD | "convertNewlines"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "fromWord"
+#      PAREN_CALL | 
+#          NUMBER | "1"
+#         PAREN_E | 
+#         PAREN_E | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#         VAR_LEX | "res"
+#       OP_ASSIGN | 
+#         VAR_LEX | "c"
+#        PROPERTY | "compile"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "command"
+#        OP_EQUAL | 
+#          STRING | ["p"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#      KEYWORD_IF | 
+#         VAR_LEX | "res"
+#        PROPERTY | "error"
+#       CLOSURE_S | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#         VAR_LEX | "res"
+#        PROPERTY | "error"
+#         PAREN_E | 
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "privmsg"
+#      PAREN_CALL | 
+#         VAR_LEX | "msg"
+#        PROPERTY | "channel"
+#        OP_COMMA | 
+#         VAR_LEX | "res"
+#        PROPERTY | "perl"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#        FUNCTION | {"name":"convertNewlines"}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "string"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#         VAR_LEX | "string"
+#        PROPERTY | "split"
+#      PAREN_CALL | 
+#          STRING | ["_NL_"]
+#         PAREN_E | 
+#        PROPERTY | "join"
+#      PAREN_CALL | 
+#          STRING | ["\n"]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#         VAR_LEX | "bot"
+#        PROPERTY | "connect"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello20/run.frt'
 #      Instruction

@@ -1,3 +1,91 @@
+# === Tokenization ===
+#       CLASS_DEC | {"name":"Bot2"}
+#          METHOD | {"name":"_init_","main":1}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#        VAR_THIS | "address"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#        OP_COMMA | 
+#        VAR_THIS | "nick"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#        OP_COMMA | 
+#        VAR_THIS | "user"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#         OP_SEMI | 
+#    KEYWORD_WANT | 
+#        VAR_THIS | "port"
+#        OP_VALUE | 
+#        BAREWORD | "Num"
+#       OP_ASSIGN | 
+#          NUMBER | "6667"
+#        OP_COMMA | 
+#        VAR_THIS | "real"
+#        OP_VALUE | 
+#        BAREWORD | "Str"
+#       OP_ASSIGN | 
+#          STRING | ["Ferret IRC"]
+#         OP_SEMI | 
+#        BAREWORD | "Socket"
+#         OP_PACK | 
+#        BAREWORD | "TCP"
+#        PROPERTY | "init"
+#      PAREN_CALL | 
+#        VAR_SPEC | "self"
+#         PAREN_E | 
+#      PAREN_CALL | 
+#      PROP_VALUE | "addr"
+#        VAR_THIS | "address"
+#        OP_COMMA | 
+#      PROP_VALUE | "port"
+#        VAR_THIS | "port"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "send"
+#       OP_ASSIGN | 
+#        VAR_THIS | "println"
+#         OP_SEMI | 
+#      KEYWORD_ON | 
+#        VAR_THIS | "connected"
+#       CLOSURE_S | 
+#        VAR_THIS | "send"
+#      PAREN_CALL | 
+#          STRING | ["USER ",["VAR_THIS","user",15]," ","*"," ","*"," :",["VAR_THIS","real",15]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#        VAR_THIS | "send"
+#      PAREN_CALL | 
+#          STRING | ["NICK ",["VAR_THIS","nick",16]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#      KEYWORD_ON | 
+#        VAR_THIS | "gotLine"
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "data"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["recv: ",["VAR_LEX","data",22]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#      KEYWORD_ON | 
+#        VAR_THIS | "println"
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#         VAR_LEX | "data"
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["send: ",["VAR_LEX","data",27]]
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './test/hello10/Bot2.frt'
 #      Class 'Bot2'

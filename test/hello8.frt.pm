@@ -1,3 +1,24 @@
+# === Tokenization ===
+#       CLASS_DEC | {"name":"String"}
+#          METHOD | {"name":"doubledLength"}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "length"
+#         OP_CALL | 
+#          OP_MUL | 
+#          NUMBER | "2"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#     KEYWORD_END | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#          STRING | ["Length times two: "]
+#          OP_ADD | 
+#          STRING | ["hi there"]
+#        PROPERTY | "doubledLength"
+#         OP_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello8.frt'
 #      Class 'String'

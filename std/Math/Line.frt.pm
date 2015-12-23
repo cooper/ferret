@@ -1,3 +1,97 @@
+# === Tokenization ===
+#         PKG_DEC | {"name":"Math"}
+#       CLASS_DEC | {"name":"Line"}
+#          METHOD | {"name":"_init_","main":1}
+#       CLOSURE_S | 
+#    KEYWORD_NEED | 
+#        VAR_THIS | "pt1"
+#        OP_VALUE | 
+#        BAREWORD | "Point"
+#        OP_COMMA | 
+#        VAR_THIS | "pt2"
+#        OP_VALUE | 
+#        BAREWORD | "Point"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"endpoints","p_set":null,"is_prop":1}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#       BRACKET_S | 
+#        VAR_THIS | "pt1"
+#        OP_COMMA | 
+#        VAR_THIS | "pt2"
+#       BRACKET_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"is_prop":1,"p_set":null,"name":"pretty"}
+#       CLOSURE_S | 
+#         VAR_LEX | "mp"
+#       OP_ASSIGN | 
+#        VAR_THIS | "midpoint"
+#         OP_SEMI | 
+#         VAR_LEX | "pox"
+#       OP_ASSIGN | 
+#        VAR_THIS | "pt1"
+#        PROPERTY | "x"
+#         OP_SEMI | 
+#         VAR_LEX | "poy"
+#       OP_ASSIGN | 
+#        VAR_THIS | "pt1"
+#        PROPERTY | "y"
+#         OP_SEMI | 
+#         VAR_LEX | "ptx"
+#       OP_ASSIGN | 
+#        VAR_THIS | "pt2"
+#        PROPERTY | "x"
+#         OP_SEMI | 
+#         VAR_LEX | "pty"
+#       OP_ASSIGN | 
+#        VAR_THIS | "pt2"
+#        PROPERTY | "y"
+#         OP_SEMI | 
+#         VAR_LEX | "mx"
+#       OP_ASSIGN | 
+#         VAR_LEX | "mp"
+#        PROPERTY | "x"
+#         OP_SEMI | 
+#         VAR_LEX | "my"
+#       OP_ASSIGN | 
+#         VAR_LEX | "mp"
+#        PROPERTY | "y"
+#         OP_SEMI | 
+#  KEYWORD_RETURN | 
+#          STRING | ["Segment( |(",["VAR_LEX","pox",18],", ",["VAR_LEX","poy",18],")---(",["VAR_LEX","mx",18],", ",["VAR_LEX","my",18],")---(",["VAR_LEX","ptx",18],", ",["VAR_LEX","pty",18],")|; Length = ",["VAR_THIS","length",18]," )"]
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"description"}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "pretty"
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"midpoint","p_set":null,"is_prop":1}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#         PAREN_S | 
+#        VAR_THIS | "pt1"
+#        OP_COMMA | 
+#        VAR_THIS | "pt2"
+#         PAREN_E | 
+#        PROPERTY | "midpoint"
+#      PAREN_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
+#          METHOD | {"name":"length","p_set":null,"is_prop":1}
+#       CLOSURE_S | 
+#  KEYWORD_RETURN | 
+#        VAR_THIS | "pt1"
+#        PROPERTY | "distanceTo"
+#      PAREN_CALL | 
+#        VAR_THIS | "pt2"
+#         PAREN_E | 
+#         OP_SEMI | 
+#       CLOSURE_E | 
 # === Document Model ===
 #  Document './std/Math/Line.frt'
 #      Package 'Math'

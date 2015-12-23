@@ -26,13 +26,13 @@ init {
     @sock = Socket::TCP(address: @addr, port: @port, readMode: :line);
 
     # connect event
-    on @sock.connected {
+    on @sock.connected, :sendRegistration {
         @send("USER @user * * :@real");
         @send("NICK @nick");
     }
 
     # print data
-    on @sock.gotLine {
+    on @sock.gotLine, :handleLine {
         need $data;
         @handleLine($data);
     }
@@ -142,7 +142,7 @@ func _commandAdd {
 
     # remember this factoid
     @factoids[$trigger] = $response;
-    @commands[$trigger] = @commandFactoid;
+    @commands[$trigger] = _commandFactoid;
 
     @privmsg($msg.channel, "alright, associating .$trigger with '$response'");
 }

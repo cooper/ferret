@@ -1,3 +1,15 @@
+# === Tokenization ===
+#         VAR_LEX | "x"
+#       OP_ASSIGN | 
+#         PAREN_S | 
+#        OP_VALUE | 
+#         PAREN_E | 
+#         OP_SEMI | 
+#  KEYWORD_DELETE | 
+#         VAR_LEX | "x"
+#         OP_SEMI | 
+#        BAREWORD | "Second"
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello23/test.frt'
 #      Instruction

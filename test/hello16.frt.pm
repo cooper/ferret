@@ -1,3 +1,28 @@
+# === Tokenization ===
+#         VAR_LEX | "obj"
+#       OP_ASSIGN | 
+#          STRING | ["hi"]
+#         OP_SEMI | 
+#        BAREWORD | "Math"
+#         OP_PACK | 
+#        BAREWORD | "Point"
+#        PROPERTY | "init"
+#      PAREN_CALL | 
+#         VAR_LEX | "obj"
+#         PAREN_E | 
+#      PAREN_CALL | 
+#          NUMBER | "1"
+#        OP_COMMA | 
+#          NUMBER | "1"
+#         PAREN_E | 
+#         OP_SEMI | 
+#        BAREWORD | "say"
+#      PAREN_CALL | 
+#         VAR_LEX | "obj"
+#        PROPERTY | "pretty"
+#         OP_CALL | 
+#         PAREN_E | 
+#         OP_SEMI | 
 # === Document Model ===
 #  Document './test/hello16.frt'
 #      Instruction

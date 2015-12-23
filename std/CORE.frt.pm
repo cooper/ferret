@@ -1,3 +1,5 @@
+# === Tokenization ===
+#         PKG_DEC | {"name":"CORE"}
 # === Document Model ===
 #  Document './std/CORE.frt'
 #      Package 'CORE'
