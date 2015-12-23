@@ -9,7 +9,7 @@ therefore be classified as a very-high-level language (VHLL). In other words,
 Ferret has many features at the cost of considerable overhead.
 
 ```
-say("Hello World!");
+say("Hello World!")
 ```
 
 ```perl
@@ -24,8 +24,8 @@ features of interpreted languages such as compilation and evaluation during
 runtime
 
 ```
-$code = "sqrt(4)";
-$two = COMPILER($code).eval().result;
+$code = "sqrt(4)"
+$two = COMPILER($code).eval().result
 ```
 
 ### Concepts
@@ -44,15 +44,15 @@ All functions and methods in Ferret are implemented as events.
 class Person
 
 init {
-    need @name: Str, @age: Num;
+    need @name: Str, @age: Num
 }
 
 # all methods are implemented as events
 method haveBirthday {
-    $old = @age;
-    @age = $old + 1;
-    oldAge -> $old;
-    newAge -> @age;
+    $old = @age
+    @age = $old + 1
+    oldAge -> $old
+    newAge -> @age
 }
 
 ```
@@ -61,11 +61,11 @@ Example use of event
 
 ```
 # create a person
-$person = Person(name: "Jake", age: 22);
+$person = Person(name: "Jake", age: 22)
 
 # add an event callback for haveBirthday
 on $person.haveBirthday {
-    say("Happy Birthday Jake!");
+    say("Happy Birthday Jake!")
 }
 ```
 
@@ -73,7 +73,7 @@ It is also possible to respond to events regardless of object.
 
 ```
 on Person.proto.haveBirthday {
-    say("Happy Birthday *this.name!");
+    say("Happy Birthday *this.name!")
 }
 ```
 
@@ -142,43 +142,43 @@ package Math
 class Point
 
 init {
-    need @x: Num, @y: Num;
+    need @x: Num, @y: Num
 }
 
 method distanceTo {
-    need $pt2: Point;
-    $dx = @x - $pt2.x;
-    $dy = @y - $pt2.y;
-    return sqrt($dx ^ 2 + $dy ^ 2);
+    need $pt2: Point
+    $dx = @x - $pt2.x
+    $dy = @y - $pt2.y
+    return sqrt($dx ^ 2 + $dy ^ 2)
 }
 
 prop distanceFromOrigin {
-    return @distanceTo(*class(0, 0));
+    return @distanceTo(*class(0, 0))
 }
 
 prop pretty {
-    return "(@x, @y)";
+    return "(@x, @y)"
 }
 
 method toString {
-    return @pretty;
+    return @pretty
 }
 
 method description {
-    return "Point" + @pretty;
+    return "Point" + @pretty
 }
 
 func midpoint {
-    need $pt1: Point, $pt2: Point;
+    need $pt1: Point, $pt2: Point
     return *class(
         x: ($pt1.x + $pt2.x) / 2,
         y: ($pt1.y + $pt2.y) / 2
-    );
+    )
 }
 
 func distanceBetween {
-    need $pt1: Point, $pt2: Point;
-    return $pt1.distanceTo($pt2);
+    need $pt1: Point, $pt2: Point
+    return $pt1.distanceTo($pt2)
 }
 ```
 
@@ -188,14 +188,14 @@ example.
 
 ```
 # Create an empty object. This is like {} in JavaScript.
-$obj = (:);
+$obj = (:)
 
 # Make the object an instance of Point.
-Math::Point.init($obj)(0, 0);
+Math::Point.init($obj)(0, 0)
 
 # The object is now a Point representing the origin.
 # Therefore, $obj.*isa includes Math::Point.proto.
-inspect($obj);
+inspect($obj)
 ```
 
 Output
@@ -211,7 +211,7 @@ This is equivalent to below, as calling a class creates an empty object and
 initializes it in one step.
 
 ```
-$obj = Math::Point(0, 0);
+$obj = Math::Point(0, 0)
 ```
 
 #### Example of basic inheritance
@@ -221,15 +221,15 @@ for inheritance. Below is an example of basic inheritance without a class.
 
 ```
 # create a basic object representing a male being.
-$male = (gender: "male");
+$male = (gender: "male")
 
 # create a basic object representing a specific person.
-$person = (name: "Jake", age: 22);
+$person = (name: "Jake", age: 22)
 
 # add $male to $person's *isa list
-$person.*isa.push($male);
+$person.*isa.push($male)
 
-inspect($person);
+inspect($person)
 ```
 
 Output
@@ -252,10 +252,10 @@ system-specific polling methods.
 
 ```
 delay(5) {
-    say("it's been five seconds!");    
+    say("it's been five seconds!")    
 }
 
-say("starting timer...");
+say("starting timer...")
 ```
 
 ### Compilation
@@ -407,7 +407,7 @@ Example of an error raised during the construction stage
 
 ```
 $x in (1, 2, 3) {
-    say("Number: $x");
+    say("Number: $x")
 }
 ```
 
@@ -466,12 +466,12 @@ Example of an error raised during the enforcement stage
 
 ```
 func add {
-    need $x, $y;
-    $z = $x + $y;
-    say("$x + $y = $z");
+    need $x, $y
+    $z = $x + $y
+    say("$x + $y = $z")
 }
 
-need $x;
+need $x
 ```
 
 ```
@@ -495,8 +495,8 @@ Example of an error raised by during the verification stage
 
 ```
 for ($a, $b) in [color: "blue", mood: "sad"] {
-    $x;
-    $x = true;
+    $x
+    $x = true
 }
 ```
 
