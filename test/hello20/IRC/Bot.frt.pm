@@ -1111,7 +1111,7 @@ my $result = do {
             _commandFactoid => $scope,
             $scope, undef, undef, undef
         );
-        $scope->set_property_ow(
+        $class->set_property_ow(
             $context,
             handlers => FF::create_hash(
                 $f,
@@ -1123,7 +1123,7 @@ my $result = do {
             ),
             4.66667
         );
-        $scope->set_property_ow(
+        $class->set_property_ow(
             $context,
             initialCommands => FF::create_hash(
                 $f,
