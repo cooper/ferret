@@ -28,4 +28,11 @@ sub slash_to_ns {
     return $s;
 }
 
+sub build_name {
+    my $s = shift;
+    my @parts = split /\//, $s;
+    my $base  = pop @parts;
+    return join '/', @parts, 'build', $base;
+}
+
 1

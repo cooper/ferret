@@ -8,8 +8,9 @@ use 5.010;
 use utf8;
 use open ':std', ':encoding(UTF-8)';
 
-use File::Slurp  'slurp';
-use Scalar::Util 'blessed';
+use File::Slurp     'slurp';
+use Scalar::Util    'blessed';
+use File::Basename  'fileparse';
 use Getopt::Long::Descriptive;
 use JSON::XS;
 
@@ -52,8 +53,12 @@ sub do_file {
     print "[ $file ]";
 
     # check if it's been changed
+    my ($name, $path) = fileparse($file);
+    my $build = "$path/build";
+    my $pm    = "$build/$name.pm";
+
     if (!$o->no_skip) {
-        my @stat1 = stat "$file.pm";
+        my @stat1 = stat $pm;
         my @stat2 = stat $file;
         if (@stat1 && $stat1[9] > $stat2[9]) {
             say " skipped";
@@ -64,10 +69,13 @@ sub do_file {
 
     # open the output file.
     if ($o->stdout) { $fh = \*STDOUT }
-    else            { open $fh, '>', "$file.pm" }
+    else {
+        mkdir $build or die "Couldn't create $build" if !-d $build;
+        open $fh, '>', $pm or die "Couldn't open $pm to write";
+    }
 
     # parse the input file.
-    my $str = eval { slurp($file) } or error($file, $!);
+    my $str = eval { slurp($file) } or error($pm, $!);
 
     # tokenize.
     my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize("$str\n");
@@ -75,7 +83,7 @@ sub do_file {
         inter "=== Tokenization ===\n";
         inter Ferret::Lexer::show_tok(@tok);
     }
-    error($file, $$err) if $err;
+    error($pm, $$err) if $err;
 
     # construct elements.
     my $doc = F::Document->new(name => $file);
@@ -84,7 +92,7 @@ sub do_file {
         inter "=== Document Model ===\n";
         inter Ferret::Lexer::show_dom($doc, $o->show_all);
     }
-    error($file, $$err) if $err;
+    error($pm, $$err) if $err;
 
     # compile to Perl.
     my $compiled = Ferret::Perl::main($doc);
@@ -132,7 +140,7 @@ sub minify {
 }
 
 sub error {
-    my ($file, $msg) = @_;
-    unlink "$file.pm";
+    my ($pm, $msg) = @_;
+    unlink $pm;
     die "\n$msg\n";
 }

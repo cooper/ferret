@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 use Scalar::Util 'blessed';
-use Ferret::Shared::Utils qw(ns_to_slash);
+use Ferret::Shared::Utils qw(ns_to_slash build_name);
 
 our (
     $ferret,            $core_context,
@@ -176,7 +176,7 @@ sub get_class {
 # if necessary, load it.
 sub space {
     my ($context, $caller, $space) = @_;
-    my $file = ns_to_slash("$space.frt.pm");
+    my $file = build_name(ns_to_slash("$space.frt.pm"));
 
     # already tried this file, or the namespace/class exists.
     # ignore the value unless the owner is this context.
