@@ -6,7 +6,7 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Core::Conversion qw(ferret_string);
+use Ferret::Core::Conversion qw(ferret_string perl_boolean);
 
 # fetch the global Ferret.
 sub get_ferret {
@@ -176,12 +176,19 @@ sub iterate_pair {
 # set a required function argument.
 # return false if failed.
 sub need {
-    my ($scope_or_self, $arguments, $var_name) = @_;
+    my ($scope_or_self, $arguments, $var_name, $value_maybe) = @_;
 
     # must be present.
     my $value = $arguments->{$var_name} or return;
 
+    # if a value exists, the value must be equal to it.
+    if ($value_maybe) {
+        return unless perl_boolean($value->equal_to($value_maybe));
+    }
+
+    # set the variable.
     $scope_or_self->set_property($var_name => $value);
+
     return $value;
 }
 

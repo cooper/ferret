@@ -94,8 +94,14 @@ sub adopt {
         # just remember that we're in the value now.
         if ($child->type_or_tok eq 'OP_ASSIGN') {
             return $child->unexpected('inside type') if $wn->{inside_type};
-            return $child->unexpected('inside need, use want instead')
-                if $wn->{arg_type} eq 'need';
+
+            # need can now have a value.
+            # if present, the callback will only be executed if the
+            # passed variable is equal to the value here.
+            #
+            #return $child->unexpected('inside need, use want instead')
+            #    if $wn->{arg_type} eq 'need';
+
             $wn->{value_exp} =
                 F::Expression->new(parameter_for => $wn->{arg_type});
             $wn->SUPER::adopt($wn->{value_exp});

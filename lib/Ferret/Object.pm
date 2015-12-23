@@ -481,8 +481,7 @@ sub description {
 # one-line truncated description.
 sub description_ol {
     my $d = shift->description;
-    $d =~ s/\n/ /g;
-    $d =~ s/\s{2,}/ /g;
+    $d =~ s/\s{2,}|\n/ /g;
     my $length = length $d;
     $d = substr $d, 0, 30;
     $d .= '...' if length $d < $length;
@@ -504,7 +503,7 @@ sub call {
     $caller = [caller 1] if $caller->[0] eq __PACKAGE__;
 
     throw(CallOnNonFunction => $caller, [
-        Name  => $obj->{last_name} ? $obj->{last_name}.'()' : undef,
+        Name  => $obj->{last_name},
         Value => $obj->description_ol,
         File  => $Ferret::file_map{ $caller->[1] } || 'unknown file',
         Line  => int $pos

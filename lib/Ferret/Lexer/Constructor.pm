@@ -377,17 +377,6 @@ sub c_KEYWORD_IF {
     return $if;
 }
 
-# sub c_KEYWORD_THEN {
-#     my ($c, $value) = @_;
-#
-#     my $then = F::Node->new(type => 'Then');
-#
-#     $c->adopt_and_set_node($then);
-#     $c->capture_closure_with($then);
-#
-#     return $then;
-# }
-
 sub c_KEYWORD_FOR {
     my ($c, $value) = @_;
 
@@ -461,13 +450,6 @@ sub handle_call {
     # a call can only come after an expression.
     my $last_el = $c->last_el;
     return $c->unexpected unless $last_el->is_type('Expression');
-
-    # if this is a structural list, it can only have one item.
-    if ($last_el->isa('F::List')
-      && !$last_el->is_collection
-      && $last_el->children > 1) {
-        return $c->expected('a single-element list', 'before call arguments');
-    }
 
     # create a function call, adopting the last element.
     my $call = $c->node->adopt($package->new);
