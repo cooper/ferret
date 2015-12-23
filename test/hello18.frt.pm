@@ -1,88 +1,88 @@
 # === Tokenization ===
-#         VAR_LEX | "list"
-#       OP_ASSIGN | 
-#       BRACKET_S | 
-#          STRING | ["hi"]
-#       BRACKET_E | 
-#         OP_SEMI | 
-#         VAR_LEX | "list"
-#        PROPERTY | "push"
-#      PAREN_CALL | 
-#          STRING | ["there"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#         VAR_LEX | "list"
-#     BRACKET_IDX | 
-#          NUMBER | "4"
-#       BRACKET_E | 
-#       OP_ASSIGN | 
-#          STRING | ["yeah"]
-#         OP_SEMI | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["Length: "]
-#          OP_ADD | 
-#         VAR_LEX | "list"
-#        PROPERTY | "length"
-#         PAREN_E | 
-#         OP_SEMI | 
-#     KEYWORD_FOR | 
-#         VAR_LEX | "item"
-#      KEYWORD_IN | 
-#         VAR_LEX | "list"
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["item: ",["VAR_LEX","item",9]]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#         VAR_LEX | "hash"
-#       OP_ASSIGN | 
-#       BRACKET_S | 
-#      PROP_VALUE | "hi"
-#          STRING | ["there"]
-#       BRACKET_E | 
-#         OP_SEMI | 
-#         VAR_LEX | "hash"
-#     BRACKET_IDX | 
-#          STRING | ["whats"]
-#       BRACKET_E | 
-#       OP_ASSIGN | 
-#          STRING | ["up"]
-#         OP_SEMI | 
-#         VAR_LEX | "hash"
-#     BRACKET_IDX | 
-#          STRING | ["thank"]
-#       BRACKET_E | 
-#       OP_ASSIGN | 
-#          STRING | ["you"]
-#         OP_SEMI | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["whats "]
-#          OP_ADD | 
-#         VAR_LEX | "hash"
-#     BRACKET_IDX | 
-#          STRING | ["whats"]
-#       BRACKET_E | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#     KEYWORD_FOR | 
-#         PAREN_S | 
-#         VAR_LEX | "key"
-#        OP_COMMA | 
-#         VAR_LEX | "val"
-#         PAREN_E | 
-#      KEYWORD_IN | 
-#         VAR_LEX | "hash"
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["pair: key=",["VAR_LEX","key",19],"; value=",["VAR_LEX","val",19]]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
+#         VAR_LEX |                         "list" | 1.14286
+#       OP_ASSIGN |                                | 1.28571
+#       BRACKET_S |                                | 1.42857
+#          STRING |                         ["hi"] | 1.57143
+#       BRACKET_E |                                | 1.71429
+#         OP_SEMI |                                | 1.85714
+#         VAR_LEX |                         "list" | 2.14286
+#        PROPERTY |                         "push" | 2.28571
+#      PAREN_CALL |                                | 2.42857
+#          STRING |                      ["there"] | 2.57143
+#         PAREN_E |                                | 2.71429
+#         OP_SEMI |                                | 2.85714
+#         VAR_LEX |                         "list" | 3.125
+#     BRACKET_IDX |                                | 3.25
+#          NUMBER |                            "4" | 3.375
+#       BRACKET_E |                                | 3.5
+#       OP_ASSIGN |                                | 3.625
+#          STRING |                       ["yeah"] | 3.75
+#         OP_SEMI |                                | 3.875
+#        BAREWORD |                          "say" | 5.11111
+#      PAREN_CALL |                                | 5.22222
+#          STRING |                   ["Length: "] | 5.33333
+#          OP_ADD |                                | 5.44444
+#         VAR_LEX |                         "list" | 5.55556
+#        PROPERTY |                       "length" | 5.66667
+#         PAREN_E |                                | 5.77778
+#         OP_SEMI |                                | 5.88889
+#     KEYWORD_FOR |                                | 7.16667
+#         VAR_LEX |                         "item" | 7.33333
+#      KEYWORD_IN |                                | 7.5
+#         VAR_LEX |                         "list" | 7.66667
+#       CLOSURE_S |                                | 7.83333
+#        BAREWORD |                          "say" | 8.16667
+#      PAREN_CALL |                                | 8.33333
+#          STRING | ["item: ",["VAR_LEX","item",8]] | 8.5
+#         PAREN_E |                                | 8.66667
+#         OP_SEMI |                                | 8.83333
+#       CLOSURE_E |                                | 9.5
+#         VAR_LEX |                         "hash" | 11.125
+#       OP_ASSIGN |                                | 11.25
+#       BRACKET_S |                                | 11.375
+#      PROP_VALUE |                           "hi" | 11.5
+#          STRING |                      ["there"] | 11.625
+#       BRACKET_E |                                | 11.75
+#         OP_SEMI |                                | 11.875
+#         VAR_LEX |                         "hash" | 12.125
+#     BRACKET_IDX |                                | 12.25
+#          STRING |                      ["whats"] | 12.375
+#       BRACKET_E |                                | 12.5
+#       OP_ASSIGN |                                | 12.625
+#          STRING |                         ["up"] | 12.75
+#         OP_SEMI |                                | 12.875
+#         VAR_LEX |                         "hash" | 13.125
+#     BRACKET_IDX |                                | 13.25
+#          STRING |                      ["thank"] | 13.375
+#       BRACKET_E |                                | 13.5
+#       OP_ASSIGN |                                | 13.625
+#          STRING |                        ["you"] | 13.75
+#         OP_SEMI |                                | 13.875
+#        BAREWORD |                          "say" | 15.09091
+#      PAREN_CALL |                                | 15.18182
+#          STRING |                     ["whats "] | 15.27273
+#          OP_ADD |                                | 15.36364
+#         VAR_LEX |                         "hash" | 15.45455
+#     BRACKET_IDX |                                | 15.54545
+#          STRING |                      ["whats"] | 15.63636
+#       BRACKET_E |                                | 15.72727
+#         PAREN_E |                                | 15.81818
+#         OP_SEMI |                                | 15.90909
+#     KEYWORD_FOR |                                | 17.1
+#         PAREN_S |                                | 17.2
+#         VAR_LEX |                          "key" | 17.3
+#        OP_COMMA |                                | 17.4
+#         VAR_LEX |                          "val" | 17.5
+#         PAREN_E |                                | 17.6
+#      KEYWORD_IN |                                | 17.7
+#         VAR_LEX |                         "hash" | 17.8
+#       CLOSURE_S |                                | 17.9
+#        BAREWORD |                          "say" | 18.16667
+#      PAREN_CALL |                                | 18.33333
+#          STRING | ["pair: key=",["VAR_LEX","key",18],"; value=",["VAR_LEX","val",18]] | 18.5
+#         PAREN_E |                                | 18.66667
+#         OP_SEMI |                                | 18.83333
+#       CLOSURE_E |                                | 19.5
 # === Document Model ===
 #  Document './test/hello18.frt'
 #      Instruction
@@ -200,10 +200,10 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         list => FF::create_list( $f, [ str( $f, "hi" ) ] ),
-        1.33333
+        1.28571
     );
     $scope->property_u('list')->property_u('push')
-      ->call_u( [ str( $f, "there" ) ], $scope, undef, 2.5 );
+      ->call_u( [ str( $f, "there" ) ], $scope, undef, 2.42857 );
     $scope->property_u('list')
       ->set_index_value( [ num( $f, 4 ) ], str( $f, "yeah" ), $scope );
     $scope->property_u('say')->call_u(
@@ -214,7 +214,7 @@ my $result = do {
                 $scope->property_u('list')->property_u('length')
             )
         ],
-        $scope, undef, 5.25
+        $scope, undef, 5.22222
     );
     FF::iterate(
         $f, $scope,
@@ -229,14 +229,14 @@ my $result = do {
                         $scope->property_u('item')
                     )
                 ],
-                $scope, undef, 8.4
+                $scope, undef, 8.33333
             );
         }
     );
     $scope->set_property_ow(
         $context,
         hash => FF::create_hash( $f, { hi => str( $f, "there" ) } ),
-        11.28571
+        11.25
     );
     $scope->property_u('hash')
       ->set_index_value( [ str( $f, "whats" ) ], str( $f, "up" ), $scope );
@@ -251,7 +251,7 @@ my $result = do {
                   ->get_index_value( [ str( $f, "whats" ) ], $scope )
             )
         ],
-        $scope, undef, 15.2
+        $scope, undef, 15.18182
     );
     FF::iterate_pair(
         $f, $scope,
@@ -267,7 +267,7 @@ my $result = do {
                         $scope->property_u('val')
                     )
                 ],
-                $scope, undef, 18.4
+                $scope, undef, 18.33333
             );
         }
     );

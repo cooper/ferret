@@ -39,6 +39,30 @@ my %no_value = map { $_ => 1 } qw(
     OP_MOD
 );
 
+# inject semicolons after these at the end of a line.
+my %semi_follows = map { $_ => 1 } qw(
+    PAREN_E
+    VAR_LEX
+    BAREWORD
+    STRING
+    KEYWORD_TRUE
+    KEYWORD_RETURN
+    KEYWORD_FALSE
+    KEYWORD_UNDEFINED
+    BRACKET_E
+    PAREN_E
+    PROPERTY
+    NUMBER
+    VAR_THIS
+    VAR_SPEC
+    VAR_SET
+    VAR_SYM
+    OP_CALL
+    OP_ELLIP
+
+);
+
+
 # reused formats
 my $prop_reg    = qr/[A-Za-z_]+[A-Za-z0-9_]*/;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
@@ -50,7 +74,7 @@ my @token_formats = (
     [ STR_REG       => qr/$string_reg|$regex_reg/, \&increment_lines        ],  # string or regex
 
     # comments
-    [ COMMENT_L     => qr/[#]+[^\n]*\n+/,       \&ignore_increment          ],  # line comment
+    [ COMMENT_L     => qr/[#]+[^\n]*/,       \&ignore_increment          ],  # line comment
     [ COMMENT_S     => qr/===.*===(?:\n)?/,     \&ignore_increment          ],  # section comment
     [ COMMENT_B     => qr/\/#.*#\//,            \&ignore_increment          ],  # block comment
     # comments don't really work
@@ -72,7 +96,7 @@ my @token_formats = (
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start
     [ CLOSURE_E     => qr/}/                                                ],  # closure end
-    [ PAREN_S       => qr/\s*\(/                                            ],  # parentheses start
+    [ PAREN_S       => qr/\s*\(/,         \&increment_lines                 ],  # parentheses start
     [ PAREN_E       => qr/\)/                                               ],  # parentheses end
     [ BRACKET_S     => qr/\[/                                               ],  # bracket start
     [ BRACKET_E     => qr/\]/                                               ],  # bracket end
@@ -257,7 +281,7 @@ sub tok_STR_REG {
         }
 
         my $code = "$$part{sigil}$$part{name}";
-        $parts[$i] = (_tokenize($code))[1];
+        $parts[$i] = (_tokenize($code, 1))[1];
     }
 
     @parts = "" if !@parts;
@@ -390,7 +414,7 @@ sub tokenize {
 }
 
 sub _tokenize {
-    my $string = shift;
+    my ($string, $inside) = @_;
     my $lexer  = string_lexer($string, @token_formats);
     my @tokens;
 
@@ -417,13 +441,31 @@ sub _tokenize {
         push @tokens, $token;
     }
 
-    # add positioning bits.
-    my (%all_on_line, %done_on_line);
-    $all_on_line{ $_->[2] }++ for @tokens;
+    # if this is a string or something, don't do any of the below just yet.
+    return (undef, @tokens) if $inside;
 
+    # separate into lines.
+    my (@lines, @all_on_line, @done_on_line);
+    foreach my $tok (@tokens) {
+        my $line = $tok->[2];
+        push @{ $lines[$line] ||= [] }, $tok;
+        $all_on_line[$line]++;
+    }
+
+    # inject semicolons.
+    foreach my $line (@lines) {
+        my $last = $line->[-1] or next;
+        next unless $semi_follows{ $last->[0] };
+        push @$line, [ 'OP_SEMI', undef, $last->[2] ];
+        $all_on_line[ $last->[2] ]++;
+    }
+
+    @tokens = map @$_, @lines;
+
+    # add positioning bits.
     for my $token (@tokens) {
-        my $i = ++$done_on_line{ $token->[2] };
-        my $inc = sprintf '%.5f', $i / $all_on_line{ $token->[2] };
+        my $i = ++$done_on_line[ $token->[2] ];
+        my $inc = sprintf '%.5f', $i / ($all_on_line[ $token->[2] ] + 1);
         $token->[2] = int($token->[2]) + $inc;
     }
 

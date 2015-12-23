@@ -1,23 +1,23 @@
 # === Tokenization ===
-#         VAR_LEX | "words"
-#       OP_ASSIGN | 
-#          STRING | ["how are you?"]
-#        PROPERTY | "split"
-#      PAREN_CALL | 
-#          STRING | [" "]
-#         PAREN_E | 
-#         OP_SEMI | 
-#     KEYWORD_FOR | 
-#         VAR_LEX | "word"
-#      KEYWORD_IN | 
-#         VAR_LEX | "words"
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["part: ",["VAR_LEX","word",5]]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
+#         VAR_LEX |                        "words" | 1.11111
+#       OP_ASSIGN |                                | 1.22222
+#          STRING |               ["how are you?"] | 1.33333
+#        PROPERTY |                        "split" | 1.44444
+#      PAREN_CALL |                                | 1.55556
+#          STRING |                          [" "] | 1.66667
+#         PAREN_E |                                | 1.77778
+#         OP_SEMI |                                | 1.88889
+#     KEYWORD_FOR |                                | 3.16667
+#         VAR_LEX |                         "word" | 3.33333
+#      KEYWORD_IN |                                | 3.5
+#         VAR_LEX |                        "words" | 3.66667
+#       CLOSURE_S |                                | 3.83333
+#        BAREWORD |                          "say" | 4.16667
+#      PAREN_CALL |                                | 4.33333
+#          STRING | ["part: ",["VAR_LEX","word",4]] | 4.5
+#         PAREN_E |                                | 4.66667
+#         OP_SEMI |                                | 4.83333
+#       CLOSURE_E |                                | 5.5
 # === Document Model ===
 #  Document './test/hello19.frt'
 #      Instruction
@@ -70,8 +70,8 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         words => str( $f, "how are you?" )->property_u('split')
-          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.625 ),
-        1.25
+          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.55556 ),
+        1.22222
     );
     FF::iterate(
         $f, $scope,
@@ -86,7 +86,7 @@ my $result = do {
                         $scope->property_u('word')
                     )
                 ],
-                $scope, undef, 4.4
+                $scope, undef, 4.33333
             );
         }
     );

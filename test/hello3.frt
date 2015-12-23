@@ -1,29 +1,29 @@
-helloWorld(name2: "USA", name1: "World");
+helloWorld(name2: "USA", name1: "World")
 
 helloWorld(
     name1: "Earth",
-    name2: "Humans"
-);
+    name2: "Humans",
+)
 
-helloWorld("Benjamin", "George");
+helloWorld("Benjamin", "George")
 
 func helloWorld {
-    need $name1, $name2;
+    need $name1, $name2
 
-    hello1();
-    hello2();
+    hello1()
+    hello2()
 
     func hello1 {
-        $hello = "Hello";
-        $hello.name = $name1;
-        say($hello + " " + $hello.name);
+        $hello = "Hello"
+        $hello.name = $name1
+        say($hello + " " + $hello.name)
     }
 
     func hello2 {
-        say("Hello " + $name2);
+        say("Hello " + $name2)
     }
 
 }
 
-$pi = 3 + 0.1 + 0.04;
-say("Pi = $pi");
+$pi = 3 + 0.1 + 0.04
+say("Pi = $pi")

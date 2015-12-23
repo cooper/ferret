@@ -1,9 +1,9 @@
 # === Tokenization ===
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["Hello World!"]
-#         PAREN_E | 
-#         OP_SEMI | 
+#        BAREWORD |                          "say" | 1.16667
+#      PAREN_CALL |                                | 1.33333
+#          STRING |               ["Hello World!"] | 1.5
+#         PAREN_E |                                | 1.66667
+#         OP_SEMI |                                | 1.83333
 # === Document Model ===
 #  Document './test/hello.frt'
 #      Instruction
@@ -37,7 +37,7 @@ my $result = do {
     FF::load_core('main');
 
     $scope->property_u('say')
-      ->call_u( [ str( $f, "Hello World!" ) ], $scope, undef, 1.4 );
+      ->call_u( [ str( $f, "Hello World!" ) ], $scope, undef, 1.33333 );
 };
 
 FF::after_content();

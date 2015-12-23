@@ -4,87 +4,87 @@ class Bot
 $handlers = [
     MODE:       _joinChannels,
     PING:       _pong,
-    PRIVMSG:    _handleMessage
-];
+    PRIVMSG:    _handleMessage,
+]
 
 $initialCommands = [
     hello:  _commandHello,
     hi:     _commandHello,
-    add:    _commandAdd
-];
+    add:    _commandAdd,
+]
 
 init {
-    need @addr: Str, @nick: Str;
-    want @port: Num = 6667;
-    want @user: Str = "ferret";
-    want @real: Str = "Ferret IRC";
+    need @addr: Str, @nick: Str
+    want @port: Num = 6667
+    want @user: Str = "ferret"
+    want @real: Str = "Ferret IRC"
 
-    @commands = $initialCommands; # TODO: .copy();
-    @factoids = [:];
+    @commands = $initialCommands # TODO: .copy()
+    @factoids = [:]
 
     # create a socket
-    @sock = Socket::TCP(address: @addr, port: @port, readMode: :line);
+    @sock = Socket::TCP(address: @addr, port: @port, readMode: :line)
 
     # connect event
     on @sock.connected, :sendRegistration {
-        @send("USER @user * * :@real");
-        @send("NICK @nick");
+        @send("USER @user * * :@real")
+        @send("NICK @nick")
     }
 
     # print data
     on @sock.gotLine, :handleLine {
-        need $data;
-        @handleLine($data);
+        need $data
+        @handleLine($data)
     }
 
 }
 
 method addCommand {
-    need $command: Str, $callback;
+    need $command: Str, $callback
     if @commands[$command]:
-        overwrote -> true;
-    @commands[$command] = $callback;
-    added -> true;
+        overwrote -> true
+    @commands[$command] = $callback
+    added -> true
 }
 
 method connect {
-    @sock.connect();
+    @sock.connect()
 }
 
 method send {
-    need $line;
-    say("send: $line");
-    @sock.println($line);
+    need $line
+    say("send: $line")
+    @sock.println($line)
 }
 
 method handleLine {
-    need $line;
+    need $line
 
     # find command
-    $s = $line.split(" ");
-    $command = $s[1];
+    $s = $line.split(" ")
+    $command = $s[1]
 
     # ping is special
     if $s[0] == "PING":
-        $command = $s[0];
+        $command = $s[0]
 
-    say("recv[$command]: $line");
+    say("recv[$command]: $line")
 
     # handle command maybe
     $handlers[$command]?(
         _self:      *self,
         line:       $line,
         command:    $command,
-        s:          $s
-    );
+        s:          $s,
+    )
 
 }
 
 method privmsg {
-    need $channel: Str, $message: Str;
+    need $channel: Str, $message: Str
     for $line in $message.split("\n") {
         if $line.length != 0:
-            @send("PRIVMSG $channel :$line");
+            @send("PRIVMSG $channel :$line")
     }
 }
 
@@ -92,12 +92,12 @@ func _joinChannels {
 
     # check if already joined.
     if @_joinedChannels:
-        return;
-    @_joinedChannels = true;
+        return
+    @_joinedChannels = true
 
     if @autojoin {
         for $chan in @autojoin {
-            @send("JOIN $chan");
+            @send("JOIN $chan")
         }
     }
 }
@@ -105,50 +105,50 @@ func _joinChannels {
 # Default handlers and commands
 
 func _pong {
-    need $s;
-    @send("PONG " + $s[1]);
+    need $s
+    @send("PONG " + $s[1])
 }
 
 func _handleMessage {
-    need $line, $s;
+    need $line, $s
 
     # parse the message
-    $msg = IRC::Message($line);
-    msg -> $msg;
+    $msg = IRC::Message($line)
+    msg -> $msg
 
     # found a command
     if $msg.command: @commands[ $msg.command ]?(
         _self:  *self,
         line:   $line,
         s:      $s,
-        msg:    $msg
-    );
+        msg:    $msg,
+    )
 
 }
 
 func _commandHello {
-    need $msg;
-    $nickname = $msg.nickname;
-    @privmsg($msg.channel, "Hi $nickname!");
+    need $msg
+    $nickname = $msg.nickname
+    @privmsg($msg.channel, "Hi $nickname!")
 }
 
 func _commandAdd {
-    need $msg;
-    inspect($msg);
+    need $msg
+    inspect($msg)
 
     # .add (0) trigger (1) response (2-)
-    $trigger  = $msg.parts[1];
-    $response = $msg.fromWord(2);
+    $trigger  = $msg.parts[1]
+    $response = $msg.fromWord(2)
 
     # remember this factoid
-    @factoids[$trigger] = $response;
-    @commands[$trigger] = _commandFactoid;
+    @factoids[$trigger] = $response
+    @commands[$trigger] = _commandFactoid
 
-    @privmsg($msg.channel, "alright, associating .$trigger with '$response'");
+    @privmsg($msg.channel, "alright, associating .$trigger with '$response'")
 }
 
 func _commandFactoid {
-    need $msg;
-    $response = @factoids[ $msg.command ];
-    @privmsg($msg.channel, $response);
+    need $msg
+    $response = @factoids[ $msg.command ]
+    @privmsg($msg.channel, $response)
 }

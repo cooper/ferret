@@ -1,49 +1,49 @@
 # === Tokenization ===
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["test"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#         VAR_LEX | "str"
-#       OP_ASSIGN | 
-#          STRING | ["hi"]
-#         OP_SEMI | 
-#      KEYWORD_ON | 
-#         VAR_LEX | "str"
-#        PROPERTY | "length"
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["found '",["VAR_SPEC","this",12],"' length to be ",["VAR_SPEC","return",12]]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#         VAR_LEX | "str"
-#        PROPERTY | "length"
-#      PAREN_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#          STRING | ["hello"]
-#        PROPERTY | "length"
-#      PAREN_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#      KEYWORD_ON | 
-#        BAREWORD | "String"
-#        PROPERTY | "proto"
-#        PROPERTY | "length"
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["found '",["VAR_SPEC","this",23],"' length to be ",["VAR_SPEC","return",23]]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          STRING | ["hello"]
-#        PROPERTY | "length"
-#      PAREN_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
+#        BAREWORD |                          "say" | 1.16667
+#      PAREN_CALL |                                | 1.33333
+#          STRING |                       ["test"] | 1.5
+#         PAREN_E |                                | 1.66667
+#         OP_SEMI |                                | 1.83333
+#         VAR_LEX |                          "str" | 3.2
+#       OP_ASSIGN |                                | 3.4
+#          STRING |                         ["hi"] | 3.6
+#         OP_SEMI |                                | 3.8
+#      KEYWORD_ON |                                | 8.2
+#         VAR_LEX |                          "str" | 8.4
+#        PROPERTY |                       "length" | 8.6
+#       CLOSURE_S |                                | 8.8
+#        BAREWORD |                          "say" | 11.16667
+#      PAREN_CALL |                                | 11.33333
+#          STRING | ["found '",["VAR_SPEC","this",11],"' length to be ",["VAR_SPEC","return",11]] | 11.5
+#         PAREN_E |                                | 11.66667
+#         OP_SEMI |                                | 11.83333
+#       CLOSURE_E |                                | 12.5
+#         VAR_LEX |                          "str" | 14.16667
+#        PROPERTY |                       "length" | 14.33333
+#      PAREN_CALL |                                | 14.5
+#         PAREN_E |                                | 14.66667
+#         OP_SEMI |                                | 14.83333
+#          STRING |                      ["hello"] | 16.16667
+#        PROPERTY |                       "length" | 16.33333
+#      PAREN_CALL |                                | 16.5
+#         PAREN_E |                                | 16.66667
+#         OP_SEMI |                                | 16.83333
+#      KEYWORD_ON |                                | 21.16667
+#        BAREWORD |                       "String" | 21.33333
+#        PROPERTY |                        "proto" | 21.5
+#        PROPERTY |                       "length" | 21.66667
+#       CLOSURE_S |                                | 21.83333
+#        BAREWORD |                          "say" | 22.16667
+#      PAREN_CALL |                                | 22.33333
+#          STRING | ["found '",["VAR_SPEC","this",22],"' length to be ",["VAR_SPEC","return",22]] | 22.5
+#         PAREN_E |                                | 22.66667
+#         OP_SEMI |                                | 22.83333
+#       CLOSURE_E |                                | 23.5
+#          STRING |                      ["hello"] | 25.16667
+#        PROPERTY |                       "length" | 25.33333
+#      PAREN_CALL |                                | 25.5
+#         PAREN_E |                                | 25.66667
+#         OP_SEMI |                                | 25.83333
 # === Document Model ===
 #  Document './test/hello14.frt'
 #      Instruction
@@ -151,7 +151,7 @@ my $result = do {
                         $scope->{special}->property_u('return')
                     )
                 ],
-                $scope, undef, 11.4
+                $scope, undef, 11.33333
             );
             return $return;
         }
@@ -174,15 +174,15 @@ my $result = do {
                         $scope->{special}->property_u('return')
                     )
                 ],
-                $scope, undef, 22.4
+                $scope, undef, 22.33333
             );
             return $return;
         }
     );
     FF::load_namespaces( $context, qw(String) );
     $scope->property_u('say')
-      ->call_u( [ str( $f, "test" ) ], $scope, undef, 1.4 );
-    $scope->set_property_ow( $context, str => str( $f, "hi" ), 3.66667 );
+      ->call_u( [ str( $f, "test" ) ], $scope, undef, 1.33333 );
+    $scope->set_property_ow( $context, str => str( $f, "hi" ), 3.4 );
     FF::on(
         $scope->property_u('str'),
         'length',
@@ -192,8 +192,8 @@ my $result = do {
         {}
     );
     $scope->property_u('str')->property_u('length')
-      ->call_u( {}, $scope, undef, 14.6 );
-    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 19.5 );
+      ->call_u( {}, $scope, undef, 14.5 );
+    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 16.5 );
     FF::on(
         $scope->property_u('String')->property_u('proto'),
         'length',
@@ -202,7 +202,7 @@ my $result = do {
         $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
         {}
     );
-    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 25.6 );
+    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 25.5 );
 };
 
 FF::after_content();

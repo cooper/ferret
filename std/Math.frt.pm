@@ -1,22 +1,22 @@
 # === Tokenization ===
-#         PKG_DEC | {"name":"Math"}
-#        FUNCTION | {"name":"sqrt"}
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#         VAR_LEX | "num"
-#        OP_VALUE | 
-#        BAREWORD | "Num"
-#         OP_SEMI | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "NATIVE"
-#         OP_PACK | 
-#        BAREWORD | "Math"
-#        PROPERTY | "sqrt"
-#      PAREN_CALL | 
-#         VAR_LEX | "num"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
+#         PKG_DEC |                {"name":"Math"} | 1.5
+#        FUNCTION |                {"name":"sqrt"} | 3.33333
+#       CLOSURE_S |                                | 3.66667
+#    KEYWORD_NEED |                                | 4.16667
+#         VAR_LEX |                          "num" | 4.33333
+#        OP_VALUE |                                | 4.5
+#        BAREWORD |                          "Num" | 4.66667
+#         OP_SEMI |                                | 4.83333
+#  KEYWORD_RETURN |                                | 5.1
+#        BAREWORD |                       "NATIVE" | 5.2
+#         OP_PACK |                                | 5.3
+#        BAREWORD |                         "Math" | 5.4
+#        PROPERTY |                         "sqrt" | 5.5
+#      PAREN_CALL |                                | 5.6
+#         VAR_LEX |                          "num" | 5.7
+#         PAREN_E |                                | 5.8
+#         OP_SEMI |                                | 5.9
+#       CLOSURE_E |                                | 6.5
 # === Document Model ===
 #  Document './std/Math.frt'
 #      Package 'Math'
@@ -66,9 +66,9 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'num', 4.4 ) or return;
+            FF::need( $scope, $arguments, 'num', 4.33333 ) or return;
             return $scope->property_u('NATIVE::Math')->property_u('sqrt')
-              ->call_u( [ $scope->property_u('num') ], $scope, undef, 5.66667 );
+              ->call_u( [ $scope->property_u('num') ], $scope, undef, 5.6 );
             return $return;
         }
     );

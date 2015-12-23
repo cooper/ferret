@@ -159,10 +159,11 @@ sub show_tok {
     state $json = JSON::XS->new->allow_nonref(1);
     my $str = '';
     foreach (@_) {
-        my ($label, $value) = @$_;
-        $str .= sprintf "%15s | %s\n",
+        my ($label, $value, $pos) = @$_;
+        $str .= sprintf "%15s | %30s | %s\n",
             $label,
-            defined $value ? $json->encode($value) : '';
+            defined $value ? $json->encode($value) : '',
+            $pos;
     }
     return $str;
 }

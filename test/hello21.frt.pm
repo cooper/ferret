@@ -1,55 +1,55 @@
 # === Tokenization ===
-#         VAR_LEX | "parts"
-#       OP_ASSIGN | 
-#          STRING | ["s p a m"]
-#        PROPERTY | "split"
-#      PAREN_CALL | 
-#          STRING | [" "]
-#         PAREN_E | 
-#         OP_SEMI | 
-#     KEYWORD_FOR | 
-#         PAREN_S | 
-#         VAR_LEX | "i"
-#        OP_COMMA | 
-#         VAR_LEX | "part"
-#         PAREN_E | 
-#      KEYWORD_IN | 
-#         VAR_LEX | "parts"
-#       CLOSURE_S | 
-#      KEYWORD_ON | 
-#        BAREWORD | "Timer"
-#      PAREN_CALL | 
-#         VAR_LEX | "i"
-#         PAREN_E | 
-#        PROPERTY | "once"
-#      PAREN_CALL | 
-#         PAREN_E | 
-#        PROPERTY | "expire"
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["(",["VAR_LEX","i",6],") ",["VAR_LEX","part",6]]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#       CLOSURE_E | 
-#     KEYWORD_FOR | 
-#         VAR_LEX | "part"
-#      KEYWORD_IN | 
-#       BRACKET_S | 
-#          NUMBER | "1"
-#        OP_COMMA | 
-#          NUMBER | "2"
-#        OP_COMMA | 
-#          NUMBER | "3"
-#       BRACKET_E | 
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#         VAR_LEX | "part"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
+#         VAR_LEX |                        "parts" | 1.11111
+#       OP_ASSIGN |                                | 1.22222
+#          STRING |                    ["s p a m"] | 1.33333
+#        PROPERTY |                        "split" | 1.44444
+#      PAREN_CALL |                                | 1.55556
+#          STRING |                          [" "] | 1.66667
+#         PAREN_E |                                | 1.77778
+#         OP_SEMI |                                | 1.88889
+#     KEYWORD_FOR |                                | 3.1
+#         PAREN_S |                                | 3.2
+#         VAR_LEX |                            "i" | 3.3
+#        OP_COMMA |                                | 3.4
+#         VAR_LEX |                         "part" | 3.5
+#         PAREN_E |                                | 3.6
+#      KEYWORD_IN |                                | 3.7
+#         VAR_LEX |                        "parts" | 3.8
+#       CLOSURE_S |                                | 3.9
+#      KEYWORD_ON |                                | 4.09091
+#        BAREWORD |                        "Timer" | 4.18182
+#      PAREN_CALL |                                | 4.27273
+#         VAR_LEX |                            "i" | 4.36364
+#         PAREN_E |                                | 4.45455
+#        PROPERTY |                         "once" | 4.54545
+#      PAREN_CALL |                                | 4.63636
+#         PAREN_E |                                | 4.72727
+#        PROPERTY |                       "expire" | 4.81818
+#       CLOSURE_S |                                | 4.90909
+#        BAREWORD |                          "say" | 5.16667
+#      PAREN_CALL |                                | 5.33333
+#          STRING | ["(",["VAR_LEX","i",5],") ",["VAR_LEX","part",5]] | 5.5
+#         PAREN_E |                                | 5.66667
+#         OP_SEMI |                                | 5.83333
+#       CLOSURE_E |                                | 6.5
+#       CLOSURE_E |                                | 7.5
+#     KEYWORD_FOR |                                | 9.08333
+#         VAR_LEX |                         "part" | 9.16667
+#      KEYWORD_IN |                                | 9.25
+#       BRACKET_S |                                | 9.33333
+#          NUMBER |                            "1" | 9.41667
+#        OP_COMMA |                                | 9.5
+#          NUMBER |                            "2" | 9.58333
+#        OP_COMMA |                                | 9.66667
+#          NUMBER |                            "3" | 9.75
+#       BRACKET_E |                                | 9.83333
+#       CLOSURE_S |                                | 9.91667
+#        BAREWORD |                          "say" | 10.16667
+#      PAREN_CALL |                                | 10.33333
+#         VAR_LEX |                         "part" | 10.5
+#         PAREN_E |                                | 10.66667
+#         OP_SEMI |                                | 10.83333
+#       CLOSURE_E |                                | 11.5
 # === Document Model ===
 #  Document './test/hello21.frt'
 #      Instruction
@@ -154,7 +154,7 @@ my $result = do {
                         $scope->property_u('part')
                     )
                 ],
-                $scope, undef, 5.4
+                $scope, undef, 5.33333
             );
             return $return;
         }
@@ -163,8 +163,8 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         parts => str( $f, "s p a m" )->property_u('split')
-          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.625 ),
-        1.25
+          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.55556 ),
+        1.22222
     );
     FF::iterate_pair(
         $f, $scope,
@@ -174,8 +174,9 @@ my $result = do {
             my $scope = shift;
             FF::on(
                 $scope->property_u('Timer')
-                  ->call_u( [ $scope->property_u('i') ], $scope, undef, 4.3 )
-                  ->property_u('once')->call_u( {}, $scope, undef, 4.7 ),
+                  ->call_u( [ $scope->property_u('i') ],
+                    $scope, undef, 4.27273 )->property_u('once')
+                  ->call_u( {}, $scope, undef, 4.63636 ),
                 'expire', $self, $scope,
                 $func_0->inside_scope(
                     (undef) => $scope,
@@ -191,8 +192,8 @@ my $result = do {
         'part',
         sub {
             my $scope = shift;
-            $scope->property_u('say')
-              ->call_u( [ $scope->property_u('part') ], $scope, undef, 10.4 );
+            $scope->property_u('say')->call_u( [ $scope->property_u('part') ],
+                $scope, undef, 10.33333 );
         }
     );
 };

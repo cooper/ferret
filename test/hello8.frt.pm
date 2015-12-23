@@ -1,24 +1,24 @@
 # === Tokenization ===
-#       CLASS_DEC | {"name":"String"}
-#          METHOD | {"name":"doubledLength"}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        VAR_THIS | "length"
-#         OP_CALL | 
-#          OP_MUL | 
-#          NUMBER | "2"
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#     KEYWORD_END | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["Length times two: "]
-#          OP_ADD | 
-#          STRING | ["hi there"]
-#        PROPERTY | "doubledLength"
-#         OP_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
+#       CLASS_DEC |              {"name":"String"} | 1.5
+#          METHOD |       {"name":"doubledLength"} | 3.33333
+#       CLOSURE_S |                                | 3.66667
+#  KEYWORD_RETURN |                                | 4.14286
+#        VAR_THIS |                       "length" | 4.28571
+#         OP_CALL |                                | 4.42857
+#          OP_MUL |                                | 4.57143
+#          NUMBER |                            "2" | 4.71429
+#         OP_SEMI |                                | 4.85714
+#       CLOSURE_E |                                | 5.5
+#     KEYWORD_END |                                | 7.5
+#        BAREWORD |                          "say" | 9.1
+#      PAREN_CALL |                                | 9.2
+#          STRING |         ["Length times two: "] | 9.3
+#          OP_ADD |                                | 9.4
+#          STRING |                   ["hi there"] | 9.5
+#        PROPERTY |                "doubledLength" | 9.6
+#         OP_CALL |                                | 9.7
+#         PAREN_E |                                | 9.8
+#         OP_SEMI |                                | 9.9
 # === Document Model ===
 #  Document './test/hello8.frt'
 #      Class 'String'
@@ -81,7 +81,7 @@ my $result = do {
                 return mul(
                     $scope,
                     $self->property_u('length')
-                      ->call_u( {}, $scope, undef, 4.5 ),
+                      ->call_u( {}, $scope, undef, 4.42857 ),
                     num( $f, 2 )
                 );
                 return $return;
@@ -98,10 +98,10 @@ my $result = do {
                 $scope,
                 str( $f, "Length times two: " ),
                 str( $f, "hi there" )->property_u('doubledLength')
-                  ->call_u( {}, $scope, undef, 9.77778 )
+                  ->call_u( {}, $scope, undef, 9.7 )
             )
         ],
-        $scope, undef, 9.22222
+        $scope, undef, 9.2
     );
 };
 

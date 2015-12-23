@@ -1,90 +1,91 @@
 # === Tokenization ===
-#        BAREWORD | "helloWorld"
-#      PAREN_CALL | 
-#      PROP_VALUE | "name2"
-#          STRING | ["USA"]
-#        OP_COMMA | 
-#      PROP_VALUE | "name1"
-#          STRING | ["World"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#        BAREWORD | "helloWorld"
-#      PAREN_CALL | 
-#      PROP_VALUE | "name1"
-#          STRING | ["Earth"]
-#        OP_COMMA | 
-#      PROP_VALUE | "name2"
-#          STRING | ["Humans"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#        BAREWORD | "helloWorld"
-#      PAREN_CALL | 
-#          STRING | ["Benjamin"]
-#        OP_COMMA | 
-#          STRING | ["George"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#        FUNCTION | {"name":"helloWorld"}
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#         VAR_LEX | "name1"
-#        OP_COMMA | 
-#         VAR_LEX | "name2"
-#         OP_SEMI | 
-#        BAREWORD | "hello1"
-#      PAREN_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#        BAREWORD | "hello2"
-#      PAREN_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#        FUNCTION | {"name":"hello1"}
-#       CLOSURE_S | 
-#         VAR_LEX | "hello"
-#       OP_ASSIGN | 
-#          STRING | ["Hello"]
-#         OP_SEMI | 
-#         VAR_LEX | "hello"
-#        PROPERTY | "name"
-#       OP_ASSIGN | 
-#         VAR_LEX | "name1"
-#         OP_SEMI | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#         VAR_LEX | "hello"
-#          OP_ADD | 
-#          STRING | [" "]
-#          OP_ADD | 
-#         VAR_LEX | "hello"
-#        PROPERTY | "name"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#        FUNCTION | {"name":"hello2"}
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["Hello "]
-#          OP_ADD | 
-#         VAR_LEX | "name2"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#       CLOSURE_E | 
-#         VAR_LEX | "pi"
-#       OP_ASSIGN | 
-#          NUMBER | "3"
-#          OP_ADD | 
-#          NUMBER | "0.1"
-#          OP_ADD | 
-#          NUMBER | "0.04"
-#         OP_SEMI | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["Pi = ",["VAR_LEX","pi",30]]
-#         PAREN_E | 
-#         OP_SEMI | 
+#        BAREWORD |                   "helloWorld" | 1.1
+#      PAREN_CALL |                                | 1.2
+#      PROP_VALUE |                        "name2" | 1.3
+#          STRING |                        ["USA"] | 1.4
+#        OP_COMMA |                                | 1.5
+#      PROP_VALUE |                        "name1" | 1.6
+#          STRING |                      ["World"] | 1.7
+#         PAREN_E |                                | 1.8
+#         OP_SEMI |                                | 1.9
+#        BAREWORD |                   "helloWorld" | 3.33333
+#      PAREN_CALL |                                | 3.66667
+#      PROP_VALUE |                        "name1" | 4.25
+#          STRING |                      ["Earth"] | 4.5
+#        OP_COMMA |                                | 4.75
+#      PROP_VALUE |                        "name2" | 5.25
+#          STRING |                     ["Humans"] | 5.5
+#        OP_COMMA |                                | 5.75
+#         PAREN_E |                                | 6.33333
+#         OP_SEMI |                                | 6.66667
+#        BAREWORD |                   "helloWorld" | 8.125
+#      PAREN_CALL |                                | 8.25
+#          STRING |                   ["Benjamin"] | 8.375
+#        OP_COMMA |                                | 8.5
+#          STRING |                     ["George"] | 8.625
+#         PAREN_E |                                | 8.75
+#         OP_SEMI |                                | 8.875
+#        FUNCTION |          {"name":"helloWorld"} | 10.33333
+#       CLOSURE_S |                                | 10.66667
+#    KEYWORD_NEED |                                | 11.16667
+#         VAR_LEX |                        "name1" | 11.33333
+#        OP_COMMA |                                | 11.5
+#         VAR_LEX |                        "name2" | 11.66667
+#         OP_SEMI |                                | 11.83333
+#        BAREWORD |                       "hello1" | 13.2
+#      PAREN_CALL |                                | 13.4
+#         PAREN_E |                                | 13.6
+#         OP_SEMI |                                | 13.8
+#        BAREWORD |                       "hello2" | 14.2
+#      PAREN_CALL |                                | 14.4
+#         PAREN_E |                                | 14.6
+#         OP_SEMI |                                | 14.8
+#        FUNCTION |              {"name":"hello1"} | 16.33333
+#       CLOSURE_S |                                | 16.66667
+#         VAR_LEX |                        "hello" | 17.2
+#       OP_ASSIGN |                                | 17.4
+#          STRING |                      ["Hello"] | 17.6
+#         OP_SEMI |                                | 17.8
+#         VAR_LEX |                        "hello" | 18.16667
+#        PROPERTY |                         "name" | 18.33333
+#       OP_ASSIGN |                                | 18.5
+#         VAR_LEX |                        "name1" | 18.66667
+#         OP_SEMI |                                | 18.83333
+#        BAREWORD |                          "say" | 19.09091
+#      PAREN_CALL |                                | 19.18182
+#         VAR_LEX |                        "hello" | 19.27273
+#          OP_ADD |                                | 19.36364
+#          STRING |                          [" "] | 19.45455
+#          OP_ADD |                                | 19.54545
+#         VAR_LEX |                        "hello" | 19.63636
+#        PROPERTY |                         "name" | 19.72727
+#         PAREN_E |                                | 19.81818
+#         OP_SEMI |                                | 19.90909
+#       CLOSURE_E |                                | 20.5
+#        FUNCTION |              {"name":"hello2"} | 22.33333
+#       CLOSURE_S |                                | 22.66667
+#        BAREWORD |                          "say" | 23.125
+#      PAREN_CALL |                                | 23.25
+#          STRING |                     ["Hello "] | 23.375
+#          OP_ADD |                                | 23.5
+#         VAR_LEX |                        "name2" | 23.625
+#         PAREN_E |                                | 23.75
+#         OP_SEMI |                                | 23.875
+#       CLOSURE_E |                                | 24.5
+#       CLOSURE_E |                                | 26.5
+#         VAR_LEX |                           "pi" | 28.11111
+#       OP_ASSIGN |                                | 28.22222
+#          NUMBER |                            "3" | 28.33333
+#          OP_ADD |                                | 28.44444
+#          NUMBER |                          "0.1" | 28.55556
+#          OP_ADD |                                | 28.66667
+#          NUMBER |                         "0.04" | 28.77778
+#         OP_SEMI |                                | 28.88889
+#        BAREWORD |                          "say" | 29.16667
+#      PAREN_CALL |                                | 29.33333
+#          STRING |  ["Pi = ",["VAR_LEX","pi",29]] | 29.5
+#         PAREN_E |                                | 29.66667
+#         OP_SEMI |                                | 29.83333
 # === Document Model ===
 #  Document './test/hello3.frt'
 #      Instruction
@@ -213,10 +214,10 @@ my $result = do {
             $scope->set_property_ow(
                 $context,
                 hello => str( $f, "Hello" ),
-                17.5
+                17.4
             );
             $scope->property_u('hello')
-              ->set_property( name => $scope->property_u('name1'), 18.6 );
+              ->set_property( name => $scope->property_u('name1'), 18.5 );
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -226,7 +227,7 @@ my $result = do {
                         $scope->property_u('hello')->property_u('name')
                     )
                 ],
-                $scope, undef, 19.2
+                $scope, undef, 19.18182
             );
             return $return;
         }
@@ -246,7 +247,7 @@ my $result = do {
                         $scope->property_u('name2')
                     )
                 ],
-                $scope, undef, 23.28571
+                $scope, undef, 23.25
             );
             return $return;
         }
@@ -281,31 +282,31 @@ my $result = do {
                 hello2 => $scope,
                 $scope, undef, undef, undef
             );
-            FF::need( $scope, $arguments, 'name1', 11.4 ) or return;
-            FF::need( $scope, $arguments, 'name2', 11.8 ) or return;
-            $scope->property_u('hello1')->call_u( {}, $scope, undef, 13.5 );
-            $scope->property_u('hello2')->call_u( {}, $scope, undef, 14.5 );
+            FF::need( $scope, $arguments, 'name1', 11.33333 ) or return;
+            FF::need( $scope, $arguments, 'name2', 11.66667 ) or return;
+            $scope->property_u('hello1')->call_u( {}, $scope, undef, 13.4 );
+            $scope->property_u('hello2')->call_u( {}, $scope, undef, 14.4 );
             return $return;
         }
     );
     $func_2->inside_scope( helloWorld => $scope, $scope, undef, undef, undef );
     $scope->property_u('helloWorld')
       ->call_u( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
-        $scope, undef, 1.22222 );
+        $scope, undef, 1.2 );
     $scope->property_u('helloWorld')
       ->call_u( { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
-        $scope, undef, 4 );
+        $scope, undef, 3.66667 );
     $scope->property_u('helloWorld')
       ->call_u( [ str( $f, "Benjamin" ), str( $f, "George" ) ],
-        $scope, undef, 8.28571 );
+        $scope, undef, 8.25 );
     $scope->set_property_ow(
         $context,
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ),
-        28.25
+        28.22222
     );
     $scope->property_u('say')
       ->call_u( [ add( $scope, str( $f, "Pi = " ), $scope->property_u('pi') ) ],
-        $scope, undef, 29.4 );
+        $scope, undef, 29.33333 );
 };
 
 FF::after_content();

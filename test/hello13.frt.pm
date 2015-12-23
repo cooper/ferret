@@ -1,47 +1,47 @@
 # === Tokenization ===
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["hello"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#      KEYWORD_ON | 
-#        BAREWORD | "Timer"
-#      PAREN_CALL | 
-#          NUMBER | "5"
-#         PAREN_E | 
-#        PROPERTY | "once"
-#         OP_CALL | 
-#        PROPERTY | "expire"
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["five seconds up"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#         VAR_LEX | "t2"
-#       OP_ASSIGN | 
-#        BAREWORD | "Timer"
-#      PAREN_CALL | 
-#          NUMBER | "2"
-#         PAREN_E | 
-#         OP_SEMI | 
-#      KEYWORD_ON | 
-#         VAR_LEX | "t2"
-#        PROPERTY | "once"
-#         OP_CALL | 
-#        PROPERTY | "expire"
-#       CLOSURE_S | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["this shouldn't be said"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#         VAR_LEX | "t2"
-#        PROPERTY | "cancel"
-#         OP_CALL | 
-#         OP_SEMI | 
+#        BAREWORD |                          "say" | 1.16667
+#      PAREN_CALL |                                | 1.33333
+#          STRING |                      ["hello"] | 1.5
+#         PAREN_E |                                | 1.66667
+#         OP_SEMI |                                | 1.83333
+#      KEYWORD_ON |                                | 3.1
+#        BAREWORD |                        "Timer" | 3.2
+#      PAREN_CALL |                                | 3.3
+#          NUMBER |                            "5" | 3.4
+#         PAREN_E |                                | 3.5
+#        PROPERTY |                         "once" | 3.6
+#         OP_CALL |                                | 3.7
+#        PROPERTY |                       "expire" | 3.8
+#       CLOSURE_S |                                | 3.9
+#        BAREWORD |                          "say" | 4.16667
+#      PAREN_CALL |                                | 4.33333
+#          STRING |            ["five seconds up"] | 4.5
+#         PAREN_E |                                | 4.66667
+#         OP_SEMI |                                | 4.83333
+#       CLOSURE_E |                                | 5.5
+#         VAR_LEX |                           "t2" | 7.125
+#       OP_ASSIGN |                                | 7.25
+#        BAREWORD |                        "Timer" | 7.375
+#      PAREN_CALL |                                | 7.5
+#          NUMBER |                            "2" | 7.625
+#         PAREN_E |                                | 7.75
+#         OP_SEMI |                                | 7.875
+#      KEYWORD_ON |                                | 8.14286
+#         VAR_LEX |                           "t2" | 8.28571
+#        PROPERTY |                         "once" | 8.42857
+#         OP_CALL |                                | 8.57143
+#        PROPERTY |                       "expire" | 8.71429
+#       CLOSURE_S |                                | 8.85714
+#        BAREWORD |                          "say" | 9.16667
+#      PAREN_CALL |                                | 9.33333
+#          STRING |     ["this shouldn't be said"] | 9.5
+#         PAREN_E |                                | 9.66667
+#         OP_SEMI |                                | 9.83333
+#       CLOSURE_E |                                | 10.5
+#         VAR_LEX |                           "t2" | 12.2
+#        PROPERTY |                       "cancel" | 12.4
+#         OP_CALL |                                | 12.6
+#         OP_SEMI |                                | 12.8
 # === Document Model ===
 #  Document './test/hello13.frt'
 #      Instruction
@@ -125,8 +125,8 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            $scope->property_u('say')
-              ->call_u( [ str( $f, "five seconds up" ) ], $scope, undef, 4.4 );
+            $scope->property_u('say')->call_u( [ str( $f, "five seconds up" ) ],
+                $scope, undef, 4.33333 );
             return $return;
         }
     );
@@ -140,17 +140,17 @@ my $result = do {
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "this shouldn't be said" ) ],
-                $scope, undef, 9.4 );
+                $scope, undef, 9.33333 );
             return $return;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
     $scope->property_u('say')
-      ->call_u( [ str( $f, "hello" ) ], $scope, undef, 1.4 );
+      ->call_u( [ str( $f, "hello" ) ], $scope, undef, 1.33333 );
     FF::on(
         $scope->property_u('Timer')
-          ->call_u( [ num( $f, 5 ) ], $scope, undef, 3.33333 )
-          ->property_u('once')->call_u( {}, $scope, undef, 3.77778 ),
+          ->call_u( [ num( $f, 5 ) ], $scope, undef, 3.3 )->property_u('once')
+          ->call_u( {}, $scope, undef, 3.7 ),
         'expire',
         $self,
         $scope,
@@ -160,12 +160,12 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         t2 => $scope->property_u('Timer')
-          ->call_u( [ num( $f, 2 ) ], $scope, undef, 7.57143 ),
-        7.28571
+          ->call_u( [ num( $f, 2 ) ], $scope, undef, 7.5 ),
+        7.25
     );
     FF::on(
         $scope->property_u('t2')->property_u('once')
-          ->call_u( {}, $scope, undef, 8.66667 ),
+          ->call_u( {}, $scope, undef, 8.57143 ),
         'expire',
         $self,
         $scope,
@@ -173,7 +173,7 @@ my $result = do {
         {}
     );
     $scope->property_u('t2')->property_u('cancel')
-      ->call_u( {}, $scope, undef, 12.75 );
+      ->call_u( {}, $scope, undef, 12.6 );
 };
 
 FF::after_content();

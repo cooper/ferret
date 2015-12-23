@@ -1,29 +1,29 @@
 # === Tokenization ===
-#         VAR_LEX | "bot"
-#       OP_ASSIGN | 
-#        BAREWORD | "Bot2"
-#      PAREN_CALL | 
-#      PROP_VALUE | "address"
-#          STRING | ["k.notroll.net"]
-#        OP_COMMA | 
-#      PROP_VALUE | "nick"
-#          STRING | ["ferret"]
-#        OP_COMMA | 
-#      PROP_VALUE | "user"
-#          STRING | ["bot"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#         VAR_LEX | "bot"
-#        PROPERTY | "address"
-#         PAREN_E | 
-#         OP_SEMI | 
-#         VAR_LEX | "bot"
-#        PROPERTY | "connect"
-#      PAREN_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
+#         VAR_LEX |                          "bot" | 1.06667
+#       OP_ASSIGN |                                | 1.13333
+#        BAREWORD |                         "Bot2" | 1.2
+#      PAREN_CALL |                                | 1.26667
+#      PROP_VALUE |                      "address" | 1.33333
+#          STRING |              ["k.notroll.net"] | 1.4
+#        OP_COMMA |                                | 1.46667
+#      PROP_VALUE |                         "nick" | 1.53333
+#          STRING |                     ["ferret"] | 1.6
+#        OP_COMMA |                                | 1.66667
+#      PROP_VALUE |                         "user" | 1.73333
+#          STRING |                        ["bot"] | 1.8
+#         PAREN_E |                                | 1.86667
+#         OP_SEMI |                                | 1.93333
+#        BAREWORD |                          "say" | 2.14286
+#      PAREN_CALL |                                | 2.28571
+#         VAR_LEX |                          "bot" | 2.42857
+#        PROPERTY |                      "address" | 2.57143
+#         PAREN_E |                                | 2.71429
+#         OP_SEMI |                                | 2.85714
+#         VAR_LEX |                          "bot" | 3.16667
+#        PROPERTY |                      "connect" | 3.33333
+#      PAREN_CALL |                                | 3.5
+#         PAREN_E |                                | 3.66667
+#         OP_SEMI |                                | 3.83333
 # === Document Model ===
 #  Document './test/hello10/bot_test2.frt'
 #      Instruction
@@ -86,15 +86,15 @@ my $result = do {
                 nick    => str( $f, "ferret" ),
                 user    => str( $f, "bot" )
             },
-            $scope, undef, 1.28571
+            $scope, undef, 1.26667
         ),
-        1.14286
+        1.13333
     );
     $scope->property_u('say')
       ->call_u( [ $scope->property_u('bot')->property_u('address') ],
-        $scope, undef, 2.33333 );
+        $scope, undef, 2.28571 );
     $scope->property_u('bot')->property_u('connect')
-      ->call_u( {}, $scope, undef, 3.6 );
+      ->call_u( {}, $scope, undef, 3.5 );
 };
 
 FF::after_content();

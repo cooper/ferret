@@ -1,13 +1,13 @@
 # === Tokenization ===
-#         VAR_LEX | "x"
-#       OP_ASSIGN | 
-#         PAREN_S | 
-#        OP_VALUE | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#  KEYWORD_WEAKEN | 
-#         VAR_LEX | "x"
-#         OP_SEMI | 
+#         VAR_LEX |                            "x" | 1.14286
+#       OP_ASSIGN |                                | 1.28571
+#         PAREN_S |                                | 1.42857
+#        OP_VALUE |                                | 1.57143
+#         PAREN_E |                                | 1.71429
+#         OP_SEMI |                                | 1.85714
+#  KEYWORD_WEAKEN |                                | 2.25
+#         VAR_LEX |                            "x" | 2.5
+#         OP_SEMI |                                | 2.75
 # === Document Model ===
 #  Document './test/hello23/Second.frt'
 #      Instruction
@@ -43,9 +43,9 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         x => FF::create_object( $f, {} ),
-        1.33333
+        1.28571
     );
-    $scope->weaken_property( 'x', 2.33333 );
+    $scope->weaken_property( 'x', 2.25 );
 };
 
 FF::after_content();

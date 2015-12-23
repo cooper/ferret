@@ -1,17 +1,17 @@
 func makePoint {
-    need $x, $y;
-    want $z;
+    need $x, $y
+    want $z
     $point = (
         x: $x,
-        y: $y
-    );
-    point -> $point;
+        y: $y,
+    )
+    point -> $point
 }
 
-$pt = makePoint(5, 3).point;
-say("Point(" + $pt.x + ", " + $pt.y + ")");
+$pt = makePoint(5, 3).point
+say("Point(" + $pt.x + ", " + $pt.y + ")")
 
-$numbers = [ 1, 2, 3, 4, 4 + 1 ];
+$numbers = [ 1, 2, 3, 4, 4 + 1 ]
 
-$emptyArray = [];
-$emptyHash = [:];
+$emptyArray = []
+$emptyHash = [:]

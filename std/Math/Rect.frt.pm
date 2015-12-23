@@ -1,167 +1,168 @@
 # === Tokenization ===
-#         PKG_DEC | {"name":"Math"}
-#       CLASS_DEC | {"name":"Rect"}
-#          METHOD | {"main":1,"name":"_init_"}
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#         VAR_LEX | "x"
-#        OP_VALUE | 
-#        BAREWORD | "Num"
-#        OP_COMMA | 
-#         VAR_LEX | "y"
-#        OP_VALUE | 
-#        BAREWORD | "Num"
-#        OP_COMMA | 
-#        VAR_THIS | "width"
-#        OP_VALUE | 
-#        BAREWORD | "Num"
-#        OP_COMMA | 
-#        VAR_THIS | "height"
-#        OP_VALUE | 
-#        BAREWORD | "Num"
-#         OP_SEMI | 
-#        VAR_THIS | "origin"
-#       OP_ASSIGN | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#         VAR_LEX | "x"
-#        OP_COMMA | 
-#         VAR_LEX | "y"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"p_set":null,"name":"vertices","is_prop":1}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#       BRACKET_S | 
-#        VAR_THIS | "topLeft"
-#        OP_COMMA | 
-#        VAR_THIS | "topRight"
-#        OP_COMMA | 
-#        VAR_THIS | "bottomLeft"
-#        OP_COMMA | 
-#        VAR_THIS | "bottomRight"
-#       BRACKET_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"is_prop":1,"name":"bottomLeft","p_set":null}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        VAR_THIS | "origin"
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"is_prop":1,"p_set":null,"name":"bottomRight"}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "x"
-#          OP_ADD | 
-#        VAR_THIS | "width"
-#        OP_COMMA | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "y"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"is_prop":1,"p_set":null,"name":"topLeft"}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "x"
-#        OP_COMMA | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "y"
-#          OP_ADD | 
-#        VAR_THIS | "height"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"name":"topRight","p_set":null,"is_prop":1}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "x"
-#          OP_ADD | 
-#        VAR_THIS | "width"
-#        OP_COMMA | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "y"
-#          OP_ADD | 
-#        VAR_THIS | "height"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"is_prop":1,"name":"bottomLine","p_set":null}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Line"
-#      PAREN_CALL | 
-#        VAR_THIS | "bottomLeft"
-#        OP_COMMA | 
-#        VAR_THIS | "bottomRight"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"name":"topLine","p_set":null,"is_prop":1}
-#       CLOSURE_S | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Line"
-#      PAREN_CALL | 
-#        VAR_THIS | "topLeft"
-#        OP_COMMA | 
-#        VAR_THIS | "topRight"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"is_prop":1,"p_set":null,"name":"center"}
-#       CLOSURE_S | 
-#         VAR_LEX | "x"
-#       OP_ASSIGN | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "x"
-#          OP_ADD | 
-#        VAR_THIS | "width"
-#          OP_MUL | 
-#          NUMBER | "0.5"
-#         OP_SEMI | 
-#         VAR_LEX | "y"
-#       OP_ASSIGN | 
-#        VAR_THIS | "origin"
-#        PROPERTY | "y"
-#          OP_ADD | 
-#        VAR_THIS | "height"
-#          OP_MUL | 
-#          NUMBER | "0.5"
-#         OP_SEMI | 
-#  KEYWORD_RETURN | 
-#        BAREWORD | "Point"
-#      PAREN_CALL | 
-#         VAR_LEX | "x"
-#        OP_COMMA | 
-#         VAR_LEX | "y"
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#          METHOD | {"name":"description"}
-#       CLOSURE_S | 
-#         VAR_LEX | "o"
-#       OP_ASSIGN | 
-#        VAR_THIS | "origin"
-#         OP_SEMI | 
-#         VAR_LEX | "c"
-#       OP_ASSIGN | 
-#        VAR_THIS | "center"
-#         OP_SEMI | 
-#  KEYWORD_RETURN | 
-#          STRING | ["Rect( Origin(",["VAR_LEX","o",52],["PROPERTY","x",52],", ",["VAR_LEX","o",52],["PROPERTY","y",52],"); Center(",["VAR_LEX","c",52],["PROPERTY","x",52],", ",["VAR_LEX","c",52],["PROPERTY","y",52],"); Width = ",["VAR_THIS","width",52],"; Height = ",["VAR_THIS","height",52]," )"]
-#         OP_SEMI | 
-#       CLOSURE_E | 
+#         PKG_DEC |                {"name":"Math"} | 1.5
+#       CLASS_DEC |                {"name":"Rect"} | 2.5
+#          METHOD |     {"main":1,"name":"_init_"} | 4.33333
+#       CLOSURE_S |                                | 4.66667
+#    KEYWORD_NEED |                                | 5.05556
+#         VAR_LEX |                            "x" | 5.11111
+#        OP_VALUE |                                | 5.16667
+#        BAREWORD |                          "Num" | 5.22222
+#        OP_COMMA |                                | 5.27778
+#         VAR_LEX |                            "y" | 5.33333
+#        OP_VALUE |                                | 5.38889
+#        BAREWORD |                          "Num" | 5.44444
+#        OP_COMMA |                                | 5.5
+#        VAR_THIS |                        "width" | 5.55556
+#        OP_VALUE |                                | 5.61111
+#        BAREWORD |                          "Num" | 5.66667
+#        OP_COMMA |                                | 5.72222
+#        VAR_THIS |                       "height" | 5.77778
+#        OP_VALUE |                                | 5.83333
+#        BAREWORD |                          "Num" | 5.88889
+#         OP_SEMI |                                | 5.94444
+#        VAR_THIS |                       "origin" | 6.1
+#       OP_ASSIGN |                                | 6.2
+#        BAREWORD |                        "Point" | 6.3
+#      PAREN_CALL |                                | 6.4
+#         VAR_LEX |                            "x" | 6.5
+#        OP_COMMA |                                | 6.6
+#         VAR_LEX |                            "y" | 6.7
+#         PAREN_E |                                | 6.8
+#         OP_SEMI |                                | 6.9
+#       CLOSURE_E |                                | 7.5
+#          METHOD | {"name":"vertices","p_set":null,"is_prop":1} | 9.33333
+#       CLOSURE_S |                                | 9.66667
+#  KEYWORD_RETURN |                                | 10.33333
+#       BRACKET_S |                                | 10.66667
+#        VAR_THIS |                      "topLeft" | 11.33333
+#        OP_COMMA |                                | 11.66667
+#        VAR_THIS |                     "topRight" | 12.33333
+#        OP_COMMA |                                | 12.66667
+#        VAR_THIS |                   "bottomLeft" | 13.33333
+#        OP_COMMA |                                | 13.66667
+#        VAR_THIS |                  "bottomRight" | 14.33333
+#        OP_COMMA |                                | 14.66667
+#       BRACKET_E |                                | 15.33333
+#         OP_SEMI |                                | 15.66667
+#       CLOSURE_E |                                | 16.5
+#          METHOD | {"name":"bottomLeft","p_set":null,"is_prop":1} | 18.33333
+#       CLOSURE_S |                                | 18.66667
+#  KEYWORD_RETURN |                                | 19.25
+#        VAR_THIS |                       "origin" | 19.5
+#         OP_SEMI |                                | 19.75
+#       CLOSURE_E |                                | 20.5
+#          METHOD | {"name":"bottomRight","is_prop":1,"p_set":null} | 22.33333
+#       CLOSURE_S |                                | 22.66667
+#  KEYWORD_RETURN |                                | 23.07692
+#        BAREWORD |                        "Point" | 23.15385
+#      PAREN_CALL |                                | 23.23077
+#        VAR_THIS |                       "origin" | 23.30769
+#        PROPERTY |                            "x" | 23.38462
+#          OP_ADD |                                | 23.46154
+#        VAR_THIS |                        "width" | 23.53846
+#        OP_COMMA |                                | 23.61538
+#        VAR_THIS |                       "origin" | 23.69231
+#        PROPERTY |                            "y" | 23.76923
+#         PAREN_E |                                | 23.84615
+#         OP_SEMI |                                | 23.92308
+#       CLOSURE_E |                                | 24.5
+#          METHOD | {"p_set":null,"is_prop":1,"name":"topLeft"} | 26.33333
+#       CLOSURE_S |                                | 26.66667
+#  KEYWORD_RETURN |                                | 27.07692
+#        BAREWORD |                        "Point" | 27.15385
+#      PAREN_CALL |                                | 27.23077
+#        VAR_THIS |                       "origin" | 27.30769
+#        PROPERTY |                            "x" | 27.38462
+#        OP_COMMA |                                | 27.46154
+#        VAR_THIS |                       "origin" | 27.53846
+#        PROPERTY |                            "y" | 27.61538
+#          OP_ADD |                                | 27.69231
+#        VAR_THIS |                       "height" | 27.76923
+#         PAREN_E |                                | 27.84615
+#         OP_SEMI |                                | 27.92308
+#       CLOSURE_E |                                | 28.5
+#          METHOD | {"p_set":null,"is_prop":1,"name":"topRight"} | 30.33333
+#       CLOSURE_S |                                | 30.66667
+#  KEYWORD_RETURN |                                | 31.06667
+#        BAREWORD |                        "Point" | 31.13333
+#      PAREN_CALL |                                | 31.2
+#        VAR_THIS |                       "origin" | 31.26667
+#        PROPERTY |                            "x" | 31.33333
+#          OP_ADD |                                | 31.4
+#        VAR_THIS |                        "width" | 31.46667
+#        OP_COMMA |                                | 31.53333
+#        VAR_THIS |                       "origin" | 31.6
+#        PROPERTY |                            "y" | 31.66667
+#          OP_ADD |                                | 31.73333
+#        VAR_THIS |                       "height" | 31.8
+#         PAREN_E |                                | 31.86667
+#         OP_SEMI |                                | 31.93333
+#       CLOSURE_E |                                | 32.5
+#          METHOD | {"name":"bottomLine","p_set":null,"is_prop":1} | 34.33333
+#       CLOSURE_S |                                | 34.66667
+#  KEYWORD_RETURN |                                | 35.11111
+#        BAREWORD |                         "Line" | 35.22222
+#      PAREN_CALL |                                | 35.33333
+#        VAR_THIS |                   "bottomLeft" | 35.44444
+#        OP_COMMA |                                | 35.55556
+#        VAR_THIS |                  "bottomRight" | 35.66667
+#         PAREN_E |                                | 35.77778
+#         OP_SEMI |                                | 35.88889
+#       CLOSURE_E |                                | 36.5
+#          METHOD | {"p_set":null,"is_prop":1,"name":"topLine"} | 38.33333
+#       CLOSURE_S |                                | 38.66667
+#  KEYWORD_RETURN |                                | 39.11111
+#        BAREWORD |                         "Line" | 39.22222
+#      PAREN_CALL |                                | 39.33333
+#        VAR_THIS |                      "topLeft" | 39.44444
+#        OP_COMMA |                                | 39.55556
+#        VAR_THIS |                     "topRight" | 39.66667
+#         PAREN_E |                                | 39.77778
+#         OP_SEMI |                                | 39.88889
+#       CLOSURE_E |                                | 40.5
+#          METHOD | {"is_prop":1,"p_set":null,"name":"center"} | 42.33333
+#       CLOSURE_S |                                | 42.66667
+#         VAR_LEX |                            "x" | 43.1
+#       OP_ASSIGN |                                | 43.2
+#        VAR_THIS |                       "origin" | 43.3
+#        PROPERTY |                            "x" | 43.4
+#          OP_ADD |                                | 43.5
+#        VAR_THIS |                        "width" | 43.6
+#          OP_MUL |                                | 43.7
+#          NUMBER |                          "0.5" | 43.8
+#         OP_SEMI |                                | 43.9
+#         VAR_LEX |                            "y" | 44.1
+#       OP_ASSIGN |                                | 44.2
+#        VAR_THIS |                       "origin" | 44.3
+#        PROPERTY |                            "y" | 44.4
+#          OP_ADD |                                | 44.5
+#        VAR_THIS |                       "height" | 44.6
+#          OP_MUL |                                | 44.7
+#          NUMBER |                          "0.5" | 44.8
+#         OP_SEMI |                                | 44.9
+#  KEYWORD_RETURN |                                | 45.11111
+#        BAREWORD |                        "Point" | 45.22222
+#      PAREN_CALL |                                | 45.33333
+#         VAR_LEX |                            "x" | 45.44444
+#        OP_COMMA |                                | 45.55556
+#         VAR_LEX |                            "y" | 45.66667
+#         PAREN_E |                                | 45.77778
+#         OP_SEMI |                                | 45.88889
+#       CLOSURE_E |                                | 46.5
+#          METHOD |         {"name":"description"} | 48.33333
+#       CLOSURE_S |                                | 48.66667
+#         VAR_LEX |                            "o" | 49.2
+#       OP_ASSIGN |                                | 49.4
+#        VAR_THIS |                       "origin" | 49.6
+#         OP_SEMI |                                | 49.8
+#         VAR_LEX |                            "c" | 50.2
+#       OP_ASSIGN |                                | 50.4
+#        VAR_THIS |                       "center" | 50.6
+#         OP_SEMI |                                | 50.8
+#  KEYWORD_RETURN |                                | 51.25
+#          STRING | ["Rect( Origin(",["VAR_LEX","o",51],["PROPERTY","x",51],", ",["VAR_LEX","o",51],["PROPERTY","y",51],"); Center(",["VAR_LEX","c",51],["PROPERTY","x",51],", ",["VAR_LEX","c",51],["PROPERTY","y",51],"); Width = ",["VAR_THIS","width",51],"; Height = ",["VAR_THIS","height",51]," )"] | 51.5
+#         OP_SEMI |                                | 51.75
+#       CLOSURE_E |                                | 52.5
 # === Document Model ===
 #  Document './std/Math/Rect.frt'
 #      Package 'Math'
@@ -414,16 +415,16 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'x', 5.11765 ) or return;
-                FF::need( $scope, $arguments, 'y', 5.35294 ) or return;
+                FF::need( $scope, $arguments, 'x', 5.11111 ) or return;
+                FF::need( $scope, $arguments, 'y', 5.33333 ) or return;
                 FF::need( $self, $arguments, 'width' )  or return;
                 FF::need( $self, $arguments, 'height' ) or return;
                 $self->set_property(
                     origin => $scope->property_u('Point')->call_u(
                         [ $scope->property_u('x'), $scope->property_u('y') ],
-                        $scope, undef, 6.44444
+                        $scope, undef, 6.4
                     ),
-                    6.22222
+                    6.2
                 );
                 return $return;
             }
@@ -477,7 +478,7 @@ my $result = do {
                         ),
                         $self->property_u('origin')->property_u('y')
                     ],
-                    $scope, undef, 23.25
+                    $scope, undef, 23.23077
                 );
                 return $return;
             }
@@ -499,7 +500,7 @@ my $result = do {
                             $self->property_u('height')
                         )
                     ],
-                    $scope, undef, 27.25
+                    $scope, undef, 27.23077
                 );
                 return $return;
             }
@@ -525,7 +526,7 @@ my $result = do {
                             $self->property_u('height')
                         )
                     ],
-                    $scope, undef, 31.21429
+                    $scope, undef, 31.2
                 );
                 return $return;
             }
@@ -543,7 +544,7 @@ my $result = do {
                         $self->property_u('bottomLeft'),
                         $self->property_u('bottomRight')
                     ],
-                    $scope, undef, 35.375
+                    $scope, undef, 35.33333
                 );
                 return $return;
             }
@@ -561,7 +562,7 @@ my $result = do {
                         $self->property_u('topLeft'),
                         $self->property_u('topRight')
                     ],
-                    $scope, undef, 39.375
+                    $scope, undef, 39.33333
                 );
                 return $return;
             }
@@ -583,7 +584,7 @@ my $result = do {
                             num( $f, 0.5 )
                         )
                     ),
-                    43.22222
+                    43.2
                 );
                 $scope->set_property_ow(
                     $context,
@@ -595,12 +596,12 @@ my $result = do {
                             num( $f, 0.5 )
                         )
                     ),
-                    44.22222
+                    44.2
                 );
                 return $scope->property_u('Point')
                   ->call_u(
                     [ $scope->property_u('x'), $scope->property_u('y') ],
-                    $scope, undef, 45.375 );
+                    $scope, undef, 45.33333 );
                 return $return;
             }
         );
@@ -615,12 +616,12 @@ my $result = do {
                 $scope->set_property_ow(
                     $context,
                     o => $self->property_u('origin'),
-                    49.5
+                    49.4
                 );
                 $scope->set_property_ow(
                     $context,
                     c => $self->property_u('center'),
-                    50.5
+                    50.4
                 );
                 return add(
                     $scope,

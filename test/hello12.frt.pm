@@ -1,89 +1,89 @@
 # === Tokenization ===
-#         VAR_LEX | "sock"
-#       OP_ASSIGN | 
-#        BAREWORD | "Socket"
-#         OP_PACK | 
-#        BAREWORD | "TCP"
-#      PAREN_CALL | 
-#      PROP_VALUE | "address"
-#          STRING | ["k.notroll.net"]
-#        OP_COMMA | 
-#      PROP_VALUE | "port"
-#          NUMBER | "6667"
-#        OP_COMMA | 
-#      PROP_VALUE | "readMode"
-#         VAR_SYM | "line"
-#         PAREN_E | 
-#         OP_SEMI | 
-#        BAREWORD | "inspect"
-#      PAREN_CALL | 
-#         VAR_LEX | "sock"
-#         PAREN_E | 
-#         OP_SEMI | 
-#      KEYWORD_ON | 
-#         VAR_LEX | "sock"
-#        PROPERTY | "gotLine"
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#         VAR_LEX | "data"
-#         OP_SEMI | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["recv: ",["VAR_LEX","data",7]]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#      KEYWORD_ON | 
-#         VAR_LEX | "sock"
-#        PROPERTY | "println"
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#         VAR_LEX | "data"
-#         OP_SEMI | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["send: ",["VAR_LEX","data",12]]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#      KEYWORD_ON | 
-#         VAR_LEX | "sock"
-#        PROPERTY | "connected"
-#       CLOSURE_S | 
-#         VAR_LEX | "sock"
-#        PROPERTY | "println"
-#      PAREN_CALL | 
-#          STRING | ["NICK k"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#         VAR_LEX | "sock"
-#        PROPERTY | "println"
-#      PAREN_CALL | 
-#          STRING | ["USER k ","*"," ","*"," :k"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#         VAR_LEX | "sock"
-#        PROPERTY | "connect"
-#      PAREN_CALL | 
-#         PAREN_E | 
-#         OP_SEMI | 
-#      KEYWORD_ON | 
-#        BAREWORD | "Timer"
-#      PAREN_CALL | 
-#          NUMBER | "5"
-#         PAREN_E | 
-#        PROPERTY | "once"
-#         OP_CALL | 
-#        PROPERTY | "expire"
-#       CLOSURE_S | 
-#         VAR_LEX | "sock"
-#        PROPERTY | "println"
-#      PAREN_CALL | 
-#          STRING | ["JOIN #k"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#       CLOSURE_E | 
+#         VAR_LEX |                         "sock" | 1.05882
+#       OP_ASSIGN |                                | 1.11765
+#        BAREWORD |                       "Socket" | 1.17647
+#         OP_PACK |                                | 1.23529
+#        BAREWORD |                          "TCP" | 1.29412
+#      PAREN_CALL |                                | 1.35294
+#      PROP_VALUE |                      "address" | 1.41176
+#          STRING |              ["k.notroll.net"] | 1.47059
+#        OP_COMMA |                                | 1.52941
+#      PROP_VALUE |                         "port" | 1.58824
+#          NUMBER |                         "6667" | 1.64706
+#        OP_COMMA |                                | 1.70588
+#      PROP_VALUE |                     "readMode" | 1.76471
+#         VAR_SYM |                         "line" | 1.82353
+#         PAREN_E |                                | 1.88235
+#         OP_SEMI |                                | 1.94118
+#        BAREWORD |                      "inspect" | 2.16667
+#      PAREN_CALL |                                | 2.33333
+#         VAR_LEX |                         "sock" | 2.5
+#         PAREN_E |                                | 2.66667
+#         OP_SEMI |                                | 2.83333
+#      KEYWORD_ON |                                | 4.2
+#         VAR_LEX |                         "sock" | 4.4
+#        PROPERTY |                      "gotLine" | 4.6
+#       CLOSURE_S |                                | 4.8
+#    KEYWORD_NEED |                                | 5.25
+#         VAR_LEX |                         "data" | 5.5
+#         OP_SEMI |                                | 5.75
+#        BAREWORD |                          "say" | 6.16667
+#      PAREN_CALL |                                | 6.33333
+#          STRING | ["recv: ",["VAR_LEX","data",6]] | 6.5
+#         PAREN_E |                                | 6.66667
+#         OP_SEMI |                                | 6.83333
+#       CLOSURE_E |                                | 7.5
+#      KEYWORD_ON |                                | 9.2
+#         VAR_LEX |                         "sock" | 9.4
+#        PROPERTY |                      "println" | 9.6
+#       CLOSURE_S |                                | 9.8
+#    KEYWORD_NEED |                                | 10.25
+#         VAR_LEX |                         "data" | 10.5
+#         OP_SEMI |                                | 10.75
+#        BAREWORD |                          "say" | 11.16667
+#      PAREN_CALL |                                | 11.33333
+#          STRING | ["send: ",["VAR_LEX","data",11]] | 11.5
+#         PAREN_E |                                | 11.66667
+#         OP_SEMI |                                | 11.83333
+#       CLOSURE_E |                                | 12.5
+#      KEYWORD_ON |                                | 14.2
+#         VAR_LEX |                         "sock" | 14.4
+#        PROPERTY |                    "connected" | 14.6
+#       CLOSURE_S |                                | 14.8
+#         VAR_LEX |                         "sock" | 15.14286
+#        PROPERTY |                      "println" | 15.28571
+#      PAREN_CALL |                                | 15.42857
+#          STRING |                     ["NICK k"] | 15.57143
+#         PAREN_E |                                | 15.71429
+#         OP_SEMI |                                | 15.85714
+#         VAR_LEX |                         "sock" | 16.14286
+#        PROPERTY |                      "println" | 16.28571
+#      PAREN_CALL |                                | 16.42857
+#          STRING |  ["USER k ","*"," ","*"," :k"] | 16.57143
+#         PAREN_E |                                | 16.71429
+#         OP_SEMI |                                | 16.85714
+#       CLOSURE_E |                                | 17.5
+#         VAR_LEX |                         "sock" | 19.16667
+#        PROPERTY |                      "connect" | 19.33333
+#      PAREN_CALL |                                | 19.5
+#         PAREN_E |                                | 19.66667
+#         OP_SEMI |                                | 19.83333
+#      KEYWORD_ON |                                | 21.1
+#        BAREWORD |                        "Timer" | 21.2
+#      PAREN_CALL |                                | 21.3
+#          NUMBER |                            "5" | 21.4
+#         PAREN_E |                                | 21.5
+#        PROPERTY |                         "once" | 21.6
+#         OP_CALL |                                | 21.7
+#        PROPERTY |                       "expire" | 21.8
+#       CLOSURE_S |                                | 21.9
+#         VAR_LEX |                         "sock" | 22.14286
+#        PROPERTY |                      "println" | 22.28571
+#      PAREN_CALL |                                | 22.42857
+#          STRING |                    ["JOIN #k"] | 22.57143
+#         PAREN_E |                                | 22.71429
+#         OP_SEMI |                                | 22.85714
+#       CLOSURE_E |                                | 23.5
 # === Document Model ===
 #  Document './test/hello12.frt'
 #      Instruction
@@ -227,7 +227,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data', 5.66667 ) or return;
+            FF::need( $scope, $arguments, 'data', 5.5 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -235,7 +235,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope, undef, 6.4
+                $scope, undef, 6.33333
             );
             return $return;
         }
@@ -248,7 +248,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data', 10.66667 ) or return;
+            FF::need( $scope, $arguments, 'data', 10.5 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -256,7 +256,7 @@ my $result = do {
                         $scope->property_u('data')
                     )
                 ],
-                $scope, undef, 11.4
+                $scope, undef, 11.33333
             );
             return $return;
         }
@@ -270,7 +270,7 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
-              ->call_u( [ str( $f, "NICK k" ) ], $scope, undef, 15.5 );
+              ->call_u( [ str( $f, "NICK k" ) ], $scope, undef, 15.42857 );
             $scope->property_u('sock')->property_u('println')->call_u(
                 [
                     add(
@@ -282,7 +282,7 @@ my $result = do {
                         str( $f, " :k" )
                     )
                 ],
-                $scope, undef, 16.5
+                $scope, undef, 16.42857
             );
             return $return;
         }
@@ -296,7 +296,7 @@ my $result = do {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
-              ->call_u( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.5 );
+              ->call_u( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.42857 );
             return $return;
         }
     );
@@ -309,12 +309,12 @@ my $result = do {
                 port     => num( $f,            6667 ),
                 readMode => FF::get_symbol( $f, 'line' )
             },
-            $scope, undef, 1.375
+            $scope, undef, 1.35294
         ),
-        1.125
+        1.11765
     );
     $scope->property_u('inspect')
-      ->call_u( [ $scope->property_u('sock') ], $scope, undef, 2.4 );
+      ->call_u( [ $scope->property_u('sock') ], $scope, undef, 2.33333 );
     FF::on(
         $scope->property_u('sock'),
         'gotLine',
@@ -340,11 +340,11 @@ my $result = do {
         {}
     );
     $scope->property_u('sock')->property_u('connect')
-      ->call_u( {}, $scope, undef, 19.6 );
+      ->call_u( {}, $scope, undef, 19.5 );
     FF::on(
         $scope->property_u('Timer')
-          ->call_u( [ num( $f, 5 ) ], $scope, undef, 21.33333 )
-          ->property_u('once')->call_u( {}, $scope, undef, 21.77778 ),
+          ->call_u( [ num( $f, 5 ) ], $scope, undef, 21.3 )->property_u('once')
+          ->call_u( {}, $scope, undef, 21.7 ),
         'expire',
         $self,
         $scope,

@@ -1,81 +1,82 @@
 # === Tokenization ===
-#        FUNCTION | {"name":"makePoint"}
-#       CLOSURE_S | 
-#    KEYWORD_NEED | 
-#         VAR_LEX | "x"
-#        OP_COMMA | 
-#         VAR_LEX | "y"
-#         OP_SEMI | 
-#    KEYWORD_WANT | 
-#         VAR_LEX | "z"
-#         OP_SEMI | 
-#         VAR_LEX | "point"
-#       OP_ASSIGN | 
-#         PAREN_S | 
-#      PROP_VALUE | "x"
-#         VAR_LEX | "x"
-#        OP_COMMA | 
-#      PROP_VALUE | "y"
-#         VAR_LEX | "y"
-#         PAREN_E | 
-#         OP_SEMI | 
-#        BAREWORD | "point"
-#       OP_RETURN | 
-#         VAR_LEX | "point"
-#         OP_SEMI | 
-#       CLOSURE_E | 
-#         VAR_LEX | "pt"
-#       OP_ASSIGN | 
-#        BAREWORD | "makePoint"
-#      PAREN_CALL | 
-#          NUMBER | "5"
-#        OP_COMMA | 
-#          NUMBER | "3"
-#         PAREN_E | 
-#        PROPERTY | "point"
-#         OP_SEMI | 
-#        BAREWORD | "say"
-#      PAREN_CALL | 
-#          STRING | ["Point("]
-#          OP_ADD | 
-#         VAR_LEX | "pt"
-#        PROPERTY | "x"
-#          OP_ADD | 
-#          STRING | [", "]
-#          OP_ADD | 
-#         VAR_LEX | "pt"
-#        PROPERTY | "y"
-#          OP_ADD | 
-#          STRING | [")"]
-#         PAREN_E | 
-#         OP_SEMI | 
-#         VAR_LEX | "numbers"
-#       OP_ASSIGN | 
-#       BRACKET_S | 
-#          NUMBER | "1"
-#        OP_COMMA | 
-#          NUMBER | "2"
-#        OP_COMMA | 
-#          NUMBER | "3"
-#        OP_COMMA | 
-#          NUMBER | "4"
-#        OP_COMMA | 
-#          NUMBER | "4"
-#          OP_ADD | 
-#          NUMBER | "1"
-#       BRACKET_E | 
-#         OP_SEMI | 
-#         VAR_LEX | "emptyArray"
-#       OP_ASSIGN | 
-#       BRACKET_S | 
-#       BRACKET_E | 
-#         OP_SEMI | 
-#         VAR_LEX | "emptyHash"
-#       OP_ASSIGN | 
-#       BRACKET_S | 
-#        OP_VALUE | 
-#       BRACKET_E | 
-#         OP_SEMI | 
+#        FUNCTION |           {"name":"makePoint"} | 1.33333
+#       CLOSURE_S |                                | 1.66667
+#    KEYWORD_NEED |                                | 2.16667
+#         VAR_LEX |                            "x" | 2.33333
+#        OP_COMMA |                                | 2.5
+#         VAR_LEX |                            "y" | 2.66667
+#         OP_SEMI |                                | 2.83333
+#    KEYWORD_WANT |                                | 3.25
+#         VAR_LEX |                            "z" | 3.5
+#         OP_SEMI |                                | 3.75
+#         VAR_LEX |                        "point" | 4.25
+#       OP_ASSIGN |                                | 4.5
+#         PAREN_S |                                | 4.75
+#      PROP_VALUE |                            "x" | 5.25
+#         VAR_LEX |                            "x" | 5.5
+#        OP_COMMA |                                | 5.75
+#      PROP_VALUE |                            "y" | 6.25
+#         VAR_LEX |                            "y" | 6.5
+#        OP_COMMA |                                | 6.75
+#         PAREN_E |                                | 7.33333
+#         OP_SEMI |                                | 7.66667
+#        BAREWORD |                        "point" | 8.2
+#       OP_RETURN |                                | 8.4
+#         VAR_LEX |                        "point" | 8.6
+#         OP_SEMI |                                | 8.8
+#       CLOSURE_E |                                | 9.5
+#         VAR_LEX |                           "pt" | 11.09091
+#       OP_ASSIGN |                                | 11.18182
+#        BAREWORD |                    "makePoint" | 11.27273
+#      PAREN_CALL |                                | 11.36364
+#          NUMBER |                            "5" | 11.45455
+#        OP_COMMA |                                | 11.54545
+#          NUMBER |                            "3" | 11.63636
+#         PAREN_E |                                | 11.72727
+#        PROPERTY |                        "point" | 11.81818
+#         OP_SEMI |                                | 11.90909
+#        BAREWORD |                          "say" | 12.0625
+#      PAREN_CALL |                                | 12.125
+#          STRING |                     ["Point("] | 12.1875
+#          OP_ADD |                                | 12.25
+#         VAR_LEX |                           "pt" | 12.3125
+#        PROPERTY |                            "x" | 12.375
+#          OP_ADD |                                | 12.4375
+#          STRING |                         [", "] | 12.5
+#          OP_ADD |                                | 12.5625
+#         VAR_LEX |                           "pt" | 12.625
+#        PROPERTY |                            "y" | 12.6875
+#          OP_ADD |                                | 12.75
+#          STRING |                          [")"] | 12.8125
+#         PAREN_E |                                | 12.875
+#         OP_SEMI |                                | 12.9375
+#         VAR_LEX |                      "numbers" | 14.05882
+#       OP_ASSIGN |                                | 14.11765
+#       BRACKET_S |                                | 14.17647
+#          NUMBER |                            "1" | 14.23529
+#        OP_COMMA |                                | 14.29412
+#          NUMBER |                            "2" | 14.35294
+#        OP_COMMA |                                | 14.41176
+#          NUMBER |                            "3" | 14.47059
+#        OP_COMMA |                                | 14.52941
+#          NUMBER |                            "4" | 14.58824
+#        OP_COMMA |                                | 14.64706
+#          NUMBER |                            "4" | 14.70588
+#          OP_ADD |                                | 14.76471
+#          NUMBER |                            "1" | 14.82353
+#       BRACKET_E |                                | 14.88235
+#         OP_SEMI |                                | 14.94118
+#         VAR_LEX |                   "emptyArray" | 16.16667
+#       OP_ASSIGN |                                | 16.33333
+#       BRACKET_S |                                | 16.5
+#       BRACKET_E |                                | 16.66667
+#         OP_SEMI |                                | 16.83333
+#         VAR_LEX |                    "emptyHash" | 17.14286
+#       OP_ASSIGN |                                | 17.28571
+#       BRACKET_S |                                | 17.42857
+#        OP_VALUE |                                | 17.57143
+#       BRACKET_E |                                | 17.71429
+#         OP_SEMI |                                | 17.85714
 # === Document Model ===
 #  Document './test/hello4.frt'
 #      Function 'makePoint'
@@ -186,9 +187,9 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'x', 2.4 ) or return;
-            FF::need( $scope, $arguments, 'y', 2.8 ) or return;
-            FF::want( $scope, $arguments, 'z', 3.66667 );
+            FF::need( $scope, $arguments, 'x', 2.33333 ) or return;
+            FF::need( $scope, $arguments, 'y', 2.66667 ) or return;
+            FF::want( $scope, $arguments, 'z', 3.5 );
             $scope->set_property_ow(
                 $context,
                 point => FF::create_object(
@@ -198,9 +199,9 @@ my $result = do {
                         y => $scope->property_u('y')
                     }
                 ),
-                4.66667
+                4.5
             );
-            $return->set_property( point => $scope->property_u('point'), 8.5 );
+            $return->set_property( point => $scope->property_u('point'), 8.4 );
             return $return;
         }
     );
@@ -208,9 +209,9 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         pt => $scope->property_u('makePoint')
-          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11.4 )
+          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11.36364 )
           ->property_u('point'),
-        11.2
+        11.18182
     );
     $scope->property_u('say')->call_u(
         [
@@ -223,7 +224,7 @@ my $result = do {
                 str( $f, ")" )
             )
         ],
-        $scope, undef, 12.13333
+        $scope, undef, 12.125
     );
     $scope->set_property_ow(
         $context,
@@ -237,17 +238,17 @@ my $result = do {
                 add( $scope, num( $f, 4 ), num( $f, 1 ) )
             ]
         ),
-        14.125
+        14.11765
     );
     $scope->set_property_ow(
         $context,
         emptyArray => FF::create_list( $f, [] ),
-        16.4
+        16.33333
     );
     $scope->set_property_ow(
         $context,
         emptyHash => FF::create_hash( $f, {} ),
-        17.33333
+        17.28571
     );
 };
 
