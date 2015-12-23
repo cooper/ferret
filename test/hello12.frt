@@ -1,4 +1,4 @@
-$sock = Socket::TCP(address: "k.notroll.net", port: 6667);
+$sock = Socket::TCP(address: "k.notroll.net", port: 6667, readMode: :line);
 inspect($sock);
 
 on $sock.gotLine {

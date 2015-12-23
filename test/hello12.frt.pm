@@ -4,13 +4,16 @@
 #          Assignment (lexical variable '$sock')
 #              Call
 #                  Bareword 'Socket::TCP'
-#                  Named argument list [2 items]
+#                  Named argument list [3 items]
 #                      Item 0
 #                          Pair 'address'
 #                              String 'k.notroll.net'
 #                      Item 1
 #                          Pair 'port'
 #                              Number '6667'
+#                      Item 2
+#                          Pair 'readMode'
+#                              Symbol :line
 #      Instruction
 #          Call
 #              Bareword 'inspect'
@@ -215,12 +218,14 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         sock => $scope->property_u('Socket::TCP')->call_u(
-            { address => str( $f, "k.notroll.net" ), port => num( $f, 6667 ) },
-            $scope,
-            undef,
-            1.46154
+            {
+                address  => str( $f,            "k.notroll.net" ),
+                port     => num( $f,            6667 ),
+                readMode => FF::get_symbol( $f, 'line' )
+            },
+            $scope, undef, 1.375
         ),
-        1.15385
+        1.125
     );
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('sock') ], $scope, undef, 2.4 );

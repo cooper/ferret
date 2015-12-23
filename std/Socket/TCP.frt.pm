@@ -17,9 +17,35 @@ my @methods = (
     connect => {
         code => \&_connect
     },
+
+    # connected callback
+    connected => { },
+
+    # disconnected callback
+    disconnected => { },
+
+    # read data callback
+    gotData => {
+        need => '$data:Str'
+    },
+
+    # read line callback
     gotLine => {
         need => '$data:Str'
     },
+
+    # reached EOF callback
+    eof => {
+        need => '$remainder:Str'
+    },
+
+    # print method
+    print => {
+        code => \&_print,
+        need => '$data:Str'
+    },
+
+    # print line method
     println => {
         code => \&println,
         need => '$data:Str'
@@ -31,16 +57,41 @@ Ferret::bind_class(
     name      => 'TCP',
     init      => \&init,
     init_need => '$address:Str $port:Num',
+    init_want => '$readMode:Sym',
     methods   => \@methods
 );
 
 *new = *Ferret::bind_constructor;
 
+# mode name to integer constant map
+my %modes = (
+    default => 0,
+    line    => 1
+);
+
+# mode integer constant to subroutine handler map
+my @modes = (
+    \&_stream_on_read_default,  # 0 = read data as it fills the buffer
+    \&_stream_on_read_line      # 1 = read data line-by-line
+);
+
 # this is passed $sock which is preinitialized. return value is ignored.
 sub init {
     my ($sock, $arguments, $call_scope, $scope) = @_;
     $sock->set_property($_ => $arguments->{$_}) for qw(address port);
+
+    # read mode.
+    my $mode = 0;
+    if (my $sym = $arguments->{readMode}) {
+        $mode = $modes{ $sym->{sym_value} } or die; # FIXME
+    }
+    $sock->{read_mode} = $mode;
+
 }
+
+###############
+### METHODS ###
+###############
 
 sub _connect {
     my ($sock, $arguments, $call_scope, $scope, $return) = @_;
@@ -56,16 +107,11 @@ sub _connect {
 
     # create a stream.
     my $stream = $sock->{stream} = IO::Async::Stream->new(
-        handle   => $conn,
-        encoding => 'utf8',
-        on_read  => sub {
-            my ($self, $buffer, $eof) = @_;
-            while ($$buffer =~ s/^(.*)\n//) {
-                (my $val = $1) =~ s/\0|\r//g;
-                my $str = Ferret::String->new($sock->f, str_value => $val);
-                $sock->property('gotLine')->call([ $str ]);
-            }
-        }
+        handle         => $conn,
+        encoding       => 'utf8',
+        on_read        => sub { _stream_on_read($sock, @_) },
+        on_read_error  => sub { _disconnected(  $sock, @_) }, # TODO: errors
+        on_write_error => sub { _disconnected(  $sock, @_) }
     );
     Ferret::add_notifier($stream);
 
@@ -75,10 +121,67 @@ sub _connect {
     return $return;
 }
 
+sub print {
+    my ($sock, $arguments, $call_scope, $scope, $return) = @_;
+    my $data = perl_string($arguments->{data});
+    $sock->{stream}->write($data);
+    return $return;
+}
+
 sub println {
     my ($sock, $arguments, $call_scope, $scope, $return) = @_;
     my $line = perl_string($arguments->{data});
     $sock->{stream}->write("$line\n");
+    return $return;
+}
+
+###########################
+### IO::ASYNC CALLBACKS ###
+###########################
+
+sub _stream_on_read {
+    my ($sock, $stream, $buffer, $eof) = @_;
+    my $code = $modes[ $sock->{read_mode} ] or return;
+    $code->(@_);
+}
+
+sub _stream_on_read_default {
+    my ($sock, $stream, $buffer, $eof) = @_;
+
+    # handle lines.
+    while ($$buffer =~ s/.+//) {
+        my $str = Ferret::String->new($sock->f, str_value => $1);
+        $sock->property('gotData')->call({ data => $str });
+    }
+
+    return unless $eof;
+    $sock->property('eof')->call;
+    $sock->_disconnected;
+}
+
+sub _stream_on_read_line {
+    my ($sock, $stream, $buffer, $eof) = @_;
+
+    # handle lines.
+    while ($$buffer =~ s/^(.*)\n//) {
+        (my $val = $1) =~ s/\0|\r//g;
+        my $str = Ferret::String->new($sock->f, str_value => $val);
+        $sock->property('gotLine')->call({ data => $str });
+    }
+
+    # reached EOF. at this point, $$buffer is a partial line
+    return unless $eof;
+    $sock->property('eof')->call({ remainder => $$buffer });
+    $sock->_disconnected;
+
+}
+
+# generic disconnect. may be EOF, any type of error, etc.
+sub _disconnected {
+    my $sock = shift;
+    return if $sock->{disconnected}++;
+    delete $sock->{stream};
+    $sock->property('disconnected')->call;
 }
 
 1

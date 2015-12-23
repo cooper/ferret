@@ -61,13 +61,16 @@
 #                      Assignment (instance variable '@sock')
 #                          Call
 #                              Bareword 'Socket::TCP'
-#                              Named argument list [2 items]
+#                              Named argument list [3 items]
 #                                  Item 0
 #                                      Pair 'address'
 #                                          Instance variable '@addr'
 #                                  Item 1
 #                                      Pair 'port'
 #                                          Instance variable '@port'
+#                                  Item 2
+#                                      Pair 'readMode'
+#                                          Symbol :line
 #                  On
 #                      Expression ('on' parameter)
 #                          Property 'connected'
@@ -611,12 +614,13 @@ my $result = do {
                 $self->set_property(
                     sock => $scope->property_u('Socket::TCP')->call_u(
                         {
-                            address => $self->property_u('addr'),
-                            port    => $self->property_u('port')
+                            address  => $self->property_u('addr'),
+                            port     => $self->property_u('port'),
+                            readMode => FF::get_symbol( $f, 'line' )
                         },
-                        $scope, undef, 27.46154
+                        $scope, undef, 27.375
                     ),
-                    27.15385
+                    27.125
                 );
                 FF::on(
                     $self->property_u('sock'),

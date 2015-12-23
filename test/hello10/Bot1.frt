@@ -5,7 +5,7 @@ init {
     want @port: Num = 6667, @real: Str = "Ferret IRC";
 
     # create a socket
-    @sock = Socket::TCP(address: @addr, port: @port);
+    @sock = Socket::TCP(address: @addr, port: @port, readMode: :line);
 
     # connect event
     on @sock.connected {
