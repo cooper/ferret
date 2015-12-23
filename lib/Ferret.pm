@@ -144,15 +144,8 @@ sub get_context  {
     return $f->{context}{$name} = $context;
 }
 
-sub get_class {
-    my ($f, $context) = @_;
-    my $class = &_get_class;
-    $class->add_parent($context) if $class;
-    return $class;
-}
-
 # determine whether to reuse or create a class.
-sub _get_class {
+sub get_class {
     my ($f, $context, $class_name) = @_;
     my ($class, $owner) = $context->_property($class_name);
     return unless $class && $class->isa('Ferret::Class');

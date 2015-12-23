@@ -41,7 +41,7 @@ sub perl_fmt {
     # add everything else.
     # this must come before the definitions below because
     # they are added to method_defs in perl_fmt.
-    $after_c .= $_->perl_fmt_do."\n" foreach $class->children;
+    $after_c .= $_->perl_fmt_do."\n" foreach $class->ordered_children;
 
     # add each method definition.
     foreach my $def (@{ $class->{method_defs} }) {

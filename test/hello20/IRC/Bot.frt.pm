@@ -1069,30 +1069,6 @@ my $result = do {
                 return $return;
             }
         );
-        $scope->set_property_ow(
-            $context,
-            handlers => FF::create_hash(
-                $f,
-                {
-                    MODE    => $scope->property_u('_joinChannels'),
-                    PING    => $scope->property_u('_pong'),
-                    PRIVMSG => $scope->property_u('_handleMessage')
-                }
-            ),
-            4.66667
-        );
-        $scope->set_property_ow(
-            $context,
-            initialCommands => FF::create_hash(
-                $f,
-                {
-                    hello => $scope->property_u('_commandHello'),
-                    hi    => $scope->property_u('_commandHello'),
-                    add   => $scope->property_u('_commandAdd')
-                }
-            ),
-            10.66667
-        );
         $method_0->inside_scope(
             _init_ => $scope,
             $class, $class, undef, undef
@@ -1134,6 +1110,30 @@ my $result = do {
         $func_7->inside_scope(
             _commandFactoid => $scope,
             $scope, undef, undef, undef
+        );
+        $scope->set_property_ow(
+            $context,
+            handlers => FF::create_hash(
+                $f,
+                {
+                    MODE    => $scope->property_u('_joinChannels'),
+                    PING    => $scope->property_u('_pong'),
+                    PRIVMSG => $scope->property_u('_handleMessage')
+                }
+            ),
+            4.66667
+        );
+        $scope->set_property_ow(
+            $context,
+            initialCommands => FF::create_hash(
+                $f,
+                {
+                    hello => $scope->property_u('_commandHello'),
+                    hi    => $scope->property_u('_commandHello'),
+                    add   => $scope->property_u('_commandAdd')
+                }
+            ),
+            10.66667
         );
     }
     FF::load_namespaces( $context,
