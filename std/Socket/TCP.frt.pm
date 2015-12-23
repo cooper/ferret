@@ -17,11 +17,7 @@ my @methods = (
     connect => {
         code => \&_connect
     },
-    connected => {
-        code => sub { }
-    },
     gotLine => {
-        code => sub { },
         need => '$data:Str'
     },
     println => {

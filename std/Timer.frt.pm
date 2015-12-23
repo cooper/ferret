@@ -14,10 +14,8 @@ my @methods = (
         code => \&run_once
     },
     expire => {
-        code => \&expire_cb
     },
     tick => {
-        code => \&tick_cb,
         want => '$n:Num'
     },
     cancel => {
@@ -86,16 +84,6 @@ sub start {
     return $timer;
 }
 
-sub expire_cb {
-    my ($timer, undef, undef, undef, $return) = @_;
-    $timer->{expired} = 1;
-    return $return;
-}
-
-sub tick_cb {
-    return $_[4];
-}
-
 sub cancel {
     my ($timer, $arguments, $call_scope, $scope, $return) = @_;
     $timer->{canceled} = 1;
@@ -119,6 +107,7 @@ sub _tick {
 
 sub _expire {
     my $timer = shift;
+    $timer->{expired} = 1;
     my $t = delete $timer->{t};
     $timer->property('expire')->call;
     Ferret::remove_notifier($t);

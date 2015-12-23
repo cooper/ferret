@@ -126,6 +126,8 @@ sub init {
     return $ret;
 }
 
+my $dummy_cb_func = sub { $_[4] };
+
 # bind a method or class function, creating an event
 sub bind_function { _bind_function(0, @_) }
 sub bind_method   { _bind_function(1, @_) }
@@ -156,7 +158,7 @@ sub _bind_function {
     # create function.
     my $func = Ferret::Function->new($f,
         name        => $opts{callback} || 'default',
-        code        => $opts{code},
+        code        => $opts{code} || $dummy_cb_func,
         need        => $opts{need},
         want        => $opts{want},
         mimic       => $opts{mimic},
