@@ -324,9 +324,15 @@ use parent 'Ferret::Object';
 sub new {
     my ($class, $f, %opts) = @_;
     return $class->SUPER::new($f,
-        faketype => 'Return',
+        faketype  => 'Return',
+        is_return => 1,
         %opts
     );
+}
+
+sub empty_return {
+    my $ret = shift;
+    return !scalar $ret->properties(1);
 }
 
 1
