@@ -12,7 +12,8 @@ use JSON::XS;
 my $json = JSON::XS->new->allow_nonref(1);
 my $position;
 
-# keywords
+# keywords.
+# when changing this, update Keywords.md
 my $keyword_reg = '^('.join('|', qw{
     package     class       end         init
     method      func        prop        set
