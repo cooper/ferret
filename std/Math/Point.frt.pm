@@ -216,7 +216,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'pt2' ) or return;
+                FF::need( $scope, $arguments, 'pt2', 9.4 ) or return;
                 $scope->set_property_ow(
                     $context,
                     dx => _sub(
@@ -335,8 +335,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'pt1' ) or return;
-                FF::need( $scope, $arguments, 'pt2' ) or return;
+                FF::need( $scope, $arguments, 'pt1', 32.22222 ) or return;
+                FF::need( $scope, $arguments, 'pt2', 32.66667 ) or return;
                 return $scope->{special}->property_u('class')->call_u(
                     {
                         x => div(
@@ -384,8 +384,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'pt1' ) or return;
-                FF::need( $scope, $arguments, 'pt2' ) or return;
+                FF::need( $scope, $arguments, 'pt1', 40.22222 ) or return;
+                FF::need( $scope, $arguments, 'pt2', 40.66667 ) or return;
                 return $scope->property_u('pt1')->property_u('distanceTo')
                   ->call_u( [ $scope->property_u('pt2') ],
                     $scope, undef, 41.57143 );

@@ -108,9 +108,9 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'x' ) or return;
-            FF::need( $scope, $arguments, 'y' ) or return;
-            FF::want( $scope, $arguments, 'z' );
+            FF::need( $scope, $arguments, 'x', 2.4 ) or return;
+            FF::need( $scope, $arguments, 'y', 2.8 ) or return;
+            FF::want( $scope, $arguments, 'z', 3.66667 );
             $scope->set_property_ow(
                 $context,
                 point => FF::create_object(

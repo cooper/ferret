@@ -176,7 +176,7 @@ sub iterate_pair {
 # set a required function argument.
 # return false if failed.
 sub need {
-    my ($scope_or_self, $arguments, $var_name, $value_maybe) = @_;
+    my ($scope_or_self, $arguments, $var_name, $var_pos, $value_maybe) = @_;
 
     # must be present.
     my $value = $arguments->{$var_name} or return;
@@ -187,13 +187,13 @@ sub need {
     }
 
     # set the variable.
-    $scope_or_self->set_property($var_name => $value); # TODO: add pos
+    $scope_or_self->set_property($var_name => $value, $var_pos);
 
     return $value;
 }
 
 sub want {
-    my ($scope_or_self, $arguments, $var_name, $value_maybe) = @_;
+    my ($scope_or_self, $arguments, $var_name, $var_pos, $value_maybe) = @_;
     my $value = $arguments->{$var_name};
 
     # if a value exists, it is the fallback value.
@@ -201,7 +201,7 @@ sub want {
         $value = $value_maybe;
     }
 
-    $scope_or_self->set_property($var_name => $value); # TODO: add pos
+    $scope_or_self->set_property($var_name => $value, $var_pos);
 }
 
 # set any object as scope.

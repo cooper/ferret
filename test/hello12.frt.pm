@@ -138,7 +138,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data' ) or return;
+            FF::need( $scope, $arguments, 'data', 5.66667 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -159,7 +159,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data' ) or return;
+            FF::need( $scope, $arguments, 'data', 10.66667 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(

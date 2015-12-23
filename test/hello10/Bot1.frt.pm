@@ -187,7 +187,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data' ) or return;
+            FF::need( $scope, $arguments, 'data', 18.66667 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -236,8 +236,9 @@ my $result = do {
                 FF::need( $self, $arguments, 'addr' ) or return;
                 FF::need( $self, $arguments, 'nick' ) or return;
                 FF::need( $self, $arguments, 'user' ) or return;
-                FF::want( $self, $arguments, 'port', num( $f, 6667 ) );
-                FF::want( $self, $arguments, 'real', str( $f, "Ferret IRC" ) );
+                FF::want( $self, $arguments, 'port', 5.16667, num( $f, 6667 ) );
+                FF::want( $self, $arguments, 'real', 5.66667,
+                    str( $f, "Ferret IRC" ) );
                 $self->set_property(
                     sock => $scope->property_u('Socket::TCP')->call_u(
                         {
@@ -298,7 +299,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'line' ) or return;
+                FF::need( $scope, $arguments, 'line', 29.66667 ) or return;
                 $scope->property_u('say')->call_u(
                     [
                         add(

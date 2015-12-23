@@ -194,8 +194,8 @@ my $result = do {
                 hello2 => $scope,
                 $scope, undef, undef, undef
             );
-            FF::need( $scope, $arguments, 'name1' ) or return;
-            FF::need( $scope, $arguments, 'name2' ) or return;
+            FF::need( $scope, $arguments, 'name1', 11.4 ) or return;
+            FF::need( $scope, $arguments, 'name2', 11.8 ) or return;
             $scope->property_u('hello1')->call_u( {}, $scope, undef, 13.5 );
             $scope->property_u('hello2')->call_u( {}, $scope, undef, 14.5 );
             return $return;

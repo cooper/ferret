@@ -417,7 +417,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'msg' ) or return;
+            FF::need( $scope, $arguments, 'msg', 52.66667 ) or return;
             if (
                 bool(
                     _not(
@@ -499,7 +499,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'string' ) or return;
+            FF::need( $scope, $arguments, 'string', 65.4 ) or return;
             return $scope->property_u('string')->property_u('split')
               ->call_u( [ str( $f, "_NL_" ) ], $scope, undef, 66.36364 )
               ->property_u('join')
@@ -515,7 +515,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'msg' ) or return;
+            FF::need( $scope, $arguments, 'msg', 5.66667 ) or return;
             $scope->property_u('bot')->property_u('privmsg')->call_u(
                 [
                     $scope->property_u('msg')->property_u('channel'),
@@ -534,7 +534,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'msg' ) or return;
+            FF::need( $scope, $arguments, 'msg', 10.66667 ) or return;
             if (
                 bool(
                     _not(
@@ -603,7 +603,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'msg' ) or return;
+            FF::need( $scope, $arguments, 'msg', 23.66667 ) or return;
             if (
                 bool(
                     _not(
@@ -672,7 +672,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'msg' ) or return;
+            FF::need( $scope, $arguments, 'msg', 36.66667 ) or return;
             if (
                 bool(
                     _not(

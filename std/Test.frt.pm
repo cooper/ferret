@@ -263,8 +263,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $self, $arguments, 'name', str( $f, "Test" ) );
-                FF::want( $self, $arguments, 'fatal', $true );
+                FF::want( $self, $arguments, 'name', 4.5, str( $f, "Test" ) );
+                FF::want( $self, $arguments, 'fatal', 6.4, $true );
                 $self->set_property( tested => num( $f, 0 ), 7.5 );
                 $self->set_property( passed => num( $f, 0 ), 8.5 );
                 return $return;
@@ -278,7 +278,7 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a' );
+                FF::want( $scope, $arguments, 'a', 12.66667 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('Bool')->call_u(
@@ -300,7 +300,7 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a' );
+                FF::want( $scope, $arguments, 'a', 18.66667 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
@@ -322,8 +322,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a' );
-                FF::want( $scope, $arguments, 'b' );
+                FF::want( $scope, $arguments, 'a', 24.4 );
+                FF::want( $scope, $arguments, 'b', 24.8 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
@@ -346,8 +346,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a' );
-                FF::want( $scope, $arguments, 'b' );
+                FF::want( $scope, $arguments, 'a', 30.4 );
+                FF::want( $scope, $arguments, 'b', 30.8 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('a')
@@ -370,8 +370,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a' );
-                FF::want( $scope, $arguments, 'b' );
+                FF::want( $scope, $arguments, 'a', 36.4 );
+                FF::want( $scope, $arguments, 'b', 36.8 );
                 return $self->property_u('_test')->call_u(
                     [
                         _not(
@@ -396,8 +396,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a' );
-                FF::want( $scope, $arguments, 'b' );
+                FF::want( $scope, $arguments, 'a', 42.4 );
+                FF::want( $scope, $arguments, 'b', 42.8 );
                 return $self->property_u('_test')->call_u(
                     [
                         _not(
@@ -480,8 +480,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'yes' );
-                FF::want( $scope, $arguments, 'message' );
+                FF::want( $scope, $arguments, 'yes',     57.4 );
+                FF::want( $scope, $arguments, 'message', 57.8 );
                 $self->set_property(
                     tested =>
                       add( $scope, $self->property_u('tested'), num( $f, 1 ) ),

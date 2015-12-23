@@ -314,7 +314,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'wordN' ) or return;
+                FF::need( $scope, $arguments, 'wordN', 41.4 ) or return;
                 return $self->property_u('message')->property_u('split')
                   ->call_u(
                     {

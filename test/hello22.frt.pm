@@ -189,7 +189,7 @@ my $result = do {
             [ { name => 'moos', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $self, $arguments, 'moos', $true );
+                FF::want( $self, $arguments, 'moos', 6.4, $true );
                 return $return;
             }
         );
@@ -234,7 +234,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $self, $arguments, 'barks', $false );
+                FF::want( $self, $arguments, 'barks', 18.4, $false );
                 return $return;
             }
         );
@@ -272,7 +272,7 @@ my $result = do {
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $self, $arguments, 'mean', $false );
+                FF::want( $self, $arguments, 'mean', 30.4, $false );
                 return $return;
             }
         );
@@ -307,8 +307,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'cat1' ) or return;
-                FF::need( $scope, $arguments, 'cat2' ) or return;
+                FF::need( $scope, $arguments, 'cat1', 39.22222 ) or return;
+                FF::need( $scope, $arguments, 'cat2', 39.66667 ) or return;
                 if ( bool( $scope->property_u('cat1')->property_u('mean') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 

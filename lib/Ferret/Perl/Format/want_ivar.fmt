@@ -1,1 +1,1 @@
-FF::want($self, $arguments, '<<var_name>>')
+FF::want($self, $arguments, '<<var_name>>', <<var_pos>>)

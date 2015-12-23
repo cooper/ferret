@@ -250,10 +250,10 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'x' )      or return;
-                FF::need( $scope, $arguments, 'y' )      or return;
-                FF::need( $self,  $arguments, 'width' )  or return;
-                FF::need( $self,  $arguments, 'height' ) or return;
+                FF::need( $scope, $arguments, 'x', 5.11765 ) or return;
+                FF::need( $scope, $arguments, 'y', 5.35294 ) or return;
+                FF::need( $self, $arguments, 'width' )  or return;
+                FF::need( $self, $arguments, 'height' ) or return;
                 $self->set_property(
                     origin => $scope->property_u('Point')->call_u(
                         [ $scope->property_u('x'), $scope->property_u('y') ],

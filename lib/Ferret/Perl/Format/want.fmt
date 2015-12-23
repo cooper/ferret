@@ -1,1 +1,1 @@
-FF::want($scope, $arguments, '<<var_name>>')
+FF::want($scope, $arguments, '<<var_name>>', <<var_pos>>)

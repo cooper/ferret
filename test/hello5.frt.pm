@@ -211,8 +211,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'x' ) or return;
-                FF::need( $scope, $arguments, 'y' ) or return;
+                FF::need( $scope, $arguments, 'x', 4.4 ) or return;
+                FF::need( $scope, $arguments, 'y', 4.8 ) or return;
                 $self->set_property( x => $scope->property_u('x'), 5.5 );
                 $self->set_property( y => $scope->property_u('y'), 6.5 );
                 return $return;
@@ -290,8 +290,8 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'pt1' ) or return;
-                FF::need( $scope, $arguments, 'pt2' ) or return;
+                FF::need( $scope, $arguments, 'pt1', 23.4 ) or return;
+                FF::need( $scope, $arguments, 'pt2', 23.8 ) or return;
                 return $scope->property_u('Point')->call_u(
                     {
                         x => div(

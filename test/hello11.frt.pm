@@ -146,8 +146,8 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'twice' )   or return;
-            FF::need( $scope, $arguments, 'message' ) or return;
+            FF::need( $scope, $arguments, 'twice',   16.4 ) or return;
+            FF::need( $scope, $arguments, 'message', 16.8 ) or return;
             if ( bool( $scope->property_u('twice') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 

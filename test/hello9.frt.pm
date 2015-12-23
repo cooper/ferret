@@ -64,7 +64,7 @@ my $result = do {
         sub {
             my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'who' ) or return;
+            FF::need( $scope, $arguments, 'who', 2.4 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
