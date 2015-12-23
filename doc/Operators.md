@@ -132,12 +132,12 @@ Tokenized as `OP_ELLIP`.
 
 Calls a function with no arguments.
 
+Tokenized as `OP_CALL`.
+
     someFunction!
 
     # equivalent to
     someFunction()
-
-Tokenized as `OP_CALL`.
 
 
 
@@ -185,13 +185,17 @@ Tokenized as `OP_SSUB`.
 
 ### Multiplication operator
 
-    *
+```
+*
+```
 
 Multiplies two values.
 
 Tokenized as `OP_MUL`.
 
-    $ten = 5 * 2
+```
+$ten = 5 * 2
+```
 
 ### Division operator
 
@@ -239,15 +243,19 @@ Tokenized as `OP_SUB_A`.
 
 ### Altering multiplication operator
 
-    \*=
+```
+*=
+```
 
 Alters a value by multiplying it by a value.
 
 Tokenized as `OP_MUL_A`.
 
-    $x = 4
-    $x \*= 5
-    # $x is now 20
+```
+$x = 4
+$x *= 5
+# $x is now 20
+```
 
 ### Altering division operator
 
