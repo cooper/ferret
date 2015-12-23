@@ -32,7 +32,7 @@ func midpoint {
     need $pt1: Point, $pt2: Point
     return *class(
         x: ($pt1.x + $pt2.x) / 2,
-        y: ($pt1.y + $pt2.y) / 2,
+        y: ($pt1.y + $pt2.y) / 2
     )
 }
 

@@ -4,12 +4,12 @@
 #         PAREN_S |                                | 1.42857
 #        OP_VALUE |                                | 1.57143
 #         PAREN_E |                                | 1.71429
-#         OP_SEMI |                                | 1.85714
+#         OP_SEMI |                              1 | 1.85714
 #  KEYWORD_DELETE |                                | 2.25
 #         VAR_LEX |                            "x" | 2.5
-#         OP_SEMI |                                | 2.75
+#         OP_SEMI |                              1 | 2.75
 #        BAREWORD |                       "Second" | 3.33333
-#         OP_SEMI |                                | 3.66667
+#         OP_SEMI |                              1 | 3.66667
 # === Document Model ===
 #  Document './test/hello23/test.frt'
 #      Instruction

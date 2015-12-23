@@ -9,7 +9,7 @@
 #        OP_COMMA |                                | 1.66667
 #          NUMBER |                            "0" | 1.75
 #         PAREN_E |                                | 1.83333
-#         OP_SEMI |                                | 1.91667
+#         OP_SEMI |                              1 | 1.91667
 #      KEYWORD_IF |                                | 3.25
 #         VAR_LEX |                        "point" | 3.5
 #       CLOSURE_S |                                | 3.75
@@ -17,12 +17,12 @@
 #      PAREN_CALL |                                | 4.33333
 #          STRING |          ["The point exists!"] | 4.5
 #         PAREN_E |                                | 4.66667
-#         OP_SEMI |                                | 4.83333
+#         OP_SEMI |                              1 | 4.83333
 #        BAREWORD |                      "inspect" | 5.16667
 #      PAREN_CALL |                                | 5.33333
 #         VAR_LEX |                        "point" | 5.5
 #         PAREN_E |                                | 5.66667
-#         OP_SEMI |                                | 5.83333
+#         OP_SEMI |                              1 | 5.83333
 #       CLOSURE_E |                                | 6.5
 #  KEYWORD_INSIDE |                                | 8.25
 #         VAR_LEX |                        "point" | 8.5
@@ -30,17 +30,17 @@
 #         VAR_LEX |                            "x" | 9.2
 #       OP_ASSIGN |                                | 9.4
 #          NUMBER |                            "5" | 9.6
-#         OP_SEMI |                                | 9.8
+#         OP_SEMI |                              1 | 9.8
 #         VAR_LEX |                            "y" | 10.2
 #       OP_ASSIGN |                                | 10.4
 #          NUMBER |                           "10" | 10.6
-#         OP_SEMI |                                | 10.8
+#         OP_SEMI |                              1 | 10.8
 #       CLOSURE_E |                                | 11.5
 #        BAREWORD |                          "say" | 13.16667
 #      PAREN_CALL |                                | 13.33333
 #          STRING | ["Point: ",["VAR_LEX","point",13]] | 13.5
 #         PAREN_E |                                | 13.66667
-#         OP_SEMI |                                | 13.83333
+#         OP_SEMI |                              1 | 13.83333
 #      KEYWORD_ON |                                | 15.25
 #        BAREWORD |                          "say" | 15.5
 #       CLOSURE_S |                                | 15.75
@@ -48,7 +48,7 @@
 #         VAR_LEX |                        "twice" | 16.33333
 #        OP_COMMA |                                | 16.5
 #         VAR_LEX |                      "message" | 16.66667
-#         OP_SEMI |                                | 16.83333
+#         OP_SEMI |                              1 | 16.83333
 #      KEYWORD_IF |                                | 17.25
 #         VAR_LEX |                        "twice" | 17.5
 #        OP_VALUE |                                | 17.75
@@ -56,11 +56,11 @@
 #      PAREN_CALL |                                | 18.33333
 #          STRING | [["VAR_LEX","message",18]," again"] | 18.5
 #         PAREN_E |                                | 18.66667
-#         OP_SEMI |                                | 18.83333
+#         OP_SEMI |                              1 | 18.83333
 #        BAREWORD |                     "didTwice" | 19.2
 #       OP_RETURN |                                | 19.4
 #         VAR_LEX |                        "twice" | 19.6
-#         OP_SEMI |                                | 19.8
+#         OP_SEMI |                              1 | 19.8
 #       CLOSURE_E |                                | 20.5
 #         VAR_LEX |                            "r" | 22.08333
 #       OP_ASSIGN |                                | 22.16667
@@ -72,7 +72,7 @@
 #      PROP_VALUE |                        "twice" | 22.66667
 #    KEYWORD_TRUE |                                | 22.75
 #         PAREN_E |                                | 22.83333
-#         OP_SEMI |                                | 22.91667
+#         OP_SEMI |                              1 | 22.91667
 #      KEYWORD_IF |                                | 24.2
 #         VAR_LEX |                            "r" | 24.4
 #        PROPERTY |                     "didTwice" | 24.6
@@ -81,14 +81,14 @@
 #      PAREN_CALL |                                | 25.33333
 #          STRING |   ["Did the first one twice!"] | 25.5
 #         PAREN_E |                                | 25.66667
-#         OP_SEMI |                                | 25.83333
+#         OP_SEMI |                              1 | 25.83333
 #        BAREWORD |                          "say" | 27.125
 #      PAREN_CALL |                                | 27.25
 #          STRING | ["this should ignore the second parameter"] | 27.375
 #        OP_COMMA |                                | 27.5
 #    KEYWORD_TRUE |                                | 27.625
 #         PAREN_E |                                | 27.75
-#         OP_SEMI |                                | 27.875
+#         OP_SEMI |                              1 | 27.875
 # === Document Model ===
 #  Document './test/hello11.frt'
 #      Instruction

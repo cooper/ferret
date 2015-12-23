@@ -3,7 +3,7 @@
 #      PAREN_CALL |                                | 1.33333
 #          STRING |                      ["hello"] | 1.5
 #         PAREN_E |                                | 1.66667
-#         OP_SEMI |                                | 1.83333
+#         OP_SEMI |                              1 | 1.83333
 #      KEYWORD_ON |                                | 3.1
 #        BAREWORD |                        "Timer" | 3.2
 #      PAREN_CALL |                                | 3.3
@@ -17,7 +17,7 @@
 #      PAREN_CALL |                                | 4.33333
 #          STRING |            ["five seconds up"] | 4.5
 #         PAREN_E |                                | 4.66667
-#         OP_SEMI |                                | 4.83333
+#         OP_SEMI |                              1 | 4.83333
 #       CLOSURE_E |                                | 5.5
 #         VAR_LEX |                           "t2" | 7.125
 #       OP_ASSIGN |                                | 7.25
@@ -25,7 +25,7 @@
 #      PAREN_CALL |                                | 7.5
 #          NUMBER |                            "2" | 7.625
 #         PAREN_E |                                | 7.75
-#         OP_SEMI |                                | 7.875
+#         OP_SEMI |                              1 | 7.875
 #      KEYWORD_ON |                                | 8.14286
 #         VAR_LEX |                           "t2" | 8.28571
 #        PROPERTY |                         "once" | 8.42857
@@ -36,12 +36,12 @@
 #      PAREN_CALL |                                | 9.33333
 #          STRING |     ["this shouldn't be said"] | 9.5
 #         PAREN_E |                                | 9.66667
-#         OP_SEMI |                                | 9.83333
+#         OP_SEMI |                              1 | 9.83333
 #       CLOSURE_E |                                | 10.5
 #         VAR_LEX |                           "t2" | 12.2
 #        PROPERTY |                       "cancel" | 12.4
 #         OP_CALL |                                | 12.6
-#         OP_SEMI |                                | 12.8
+#         OP_SEMI |                              1 | 12.8
 # === Document Model ===
 #  Document './test/hello13.frt'
 #      Instruction

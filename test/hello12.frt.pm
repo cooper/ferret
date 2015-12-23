@@ -14,24 +14,24 @@
 #      PROP_VALUE |                     "readMode" | 1.76471
 #         VAR_SYM |                         "line" | 1.82353
 #         PAREN_E |                                | 1.88235
-#         OP_SEMI |                                | 1.94118
+#         OP_SEMI |                              1 | 1.94118
 #        BAREWORD |                      "inspect" | 2.16667
 #      PAREN_CALL |                                | 2.33333
 #         VAR_LEX |                         "sock" | 2.5
 #         PAREN_E |                                | 2.66667
-#         OP_SEMI |                                | 2.83333
+#         OP_SEMI |                              1 | 2.83333
 #      KEYWORD_ON |                                | 4.2
 #         VAR_LEX |                         "sock" | 4.4
 #        PROPERTY |                      "gotLine" | 4.6
 #       CLOSURE_S |                                | 4.8
 #    KEYWORD_NEED |                                | 5.25
 #         VAR_LEX |                         "data" | 5.5
-#         OP_SEMI |                                | 5.75
+#         OP_SEMI |                              1 | 5.75
 #        BAREWORD |                          "say" | 6.16667
 #      PAREN_CALL |                                | 6.33333
 #          STRING | ["recv: ",["VAR_LEX","data",6]] | 6.5
 #         PAREN_E |                                | 6.66667
-#         OP_SEMI |                                | 6.83333
+#         OP_SEMI |                              1 | 6.83333
 #       CLOSURE_E |                                | 7.5
 #      KEYWORD_ON |                                | 9.2
 #         VAR_LEX |                         "sock" | 9.4
@@ -39,12 +39,12 @@
 #       CLOSURE_S |                                | 9.8
 #    KEYWORD_NEED |                                | 10.25
 #         VAR_LEX |                         "data" | 10.5
-#         OP_SEMI |                                | 10.75
+#         OP_SEMI |                              1 | 10.75
 #        BAREWORD |                          "say" | 11.16667
 #      PAREN_CALL |                                | 11.33333
 #          STRING | ["send: ",["VAR_LEX","data",11]] | 11.5
 #         PAREN_E |                                | 11.66667
-#         OP_SEMI |                                | 11.83333
+#         OP_SEMI |                              1 | 11.83333
 #       CLOSURE_E |                                | 12.5
 #      KEYWORD_ON |                                | 14.2
 #         VAR_LEX |                         "sock" | 14.4
@@ -55,19 +55,19 @@
 #      PAREN_CALL |                                | 15.42857
 #          STRING |                     ["NICK k"] | 15.57143
 #         PAREN_E |                                | 15.71429
-#         OP_SEMI |                                | 15.85714
+#         OP_SEMI |                              1 | 15.85714
 #         VAR_LEX |                         "sock" | 16.14286
 #        PROPERTY |                      "println" | 16.28571
 #      PAREN_CALL |                                | 16.42857
 #          STRING |  ["USER k ","*"," ","*"," :k"] | 16.57143
 #         PAREN_E |                                | 16.71429
-#         OP_SEMI |                                | 16.85714
+#         OP_SEMI |                              1 | 16.85714
 #       CLOSURE_E |                                | 17.5
 #         VAR_LEX |                         "sock" | 19.16667
 #        PROPERTY |                      "connect" | 19.33333
 #      PAREN_CALL |                                | 19.5
 #         PAREN_E |                                | 19.66667
-#         OP_SEMI |                                | 19.83333
+#         OP_SEMI |                              1 | 19.83333
 #      KEYWORD_ON |                                | 21.1
 #        BAREWORD |                        "Timer" | 21.2
 #      PAREN_CALL |                                | 21.3
@@ -82,7 +82,7 @@
 #      PAREN_CALL |                                | 22.42857
 #          STRING |                    ["JOIN #k"] | 22.57143
 #         PAREN_E |                                | 22.71429
-#         OP_SEMI |                                | 22.85714
+#         OP_SEMI |                              1 | 22.85714
 #       CLOSURE_E |                                | 23.5
 # === Document Model ===
 #  Document './test/hello12.frt'

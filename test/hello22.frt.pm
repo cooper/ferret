@@ -1,12 +1,12 @@
 # === Tokenization ===
 #       CLASS_DEC |                 {"name":"Cow"} | 3.5
-#          METHOD |     {"name":"_init_","main":1} | 5.33333
+#          METHOD |     {"main":1,"name":"_init_"} | 5.33333
 #       CLOSURE_S |                                | 5.66667
 #    KEYWORD_WANT |                                | 6.16667
 #        VAR_THIS |                         "moos" | 6.33333
 #       OP_ASSIGN |                                | 6.5
 #    KEYWORD_TRUE |                                | 6.66667
-#         OP_SEMI |                                | 6.83333
+#         OP_SEMI |                              1 | 6.83333
 #       CLOSURE_E |                                | 7.5
 #          METHOD |                 {"name":"moo"} | 9.33333
 #       CLOSURE_S |                                | 9.66667
@@ -15,10 +15,10 @@
 #        OP_VALUE |                                | 10.75
 #  KEYWORD_RETURN |                                | 11.25
 #          STRING |                        ["moo"] | 11.5
-#         OP_SEMI |                                | 11.75
+#         OP_SEMI |                              1 | 11.75
 #  KEYWORD_RETURN |                                | 12.25
 #          STRING |       ["I am a nonverbal cow"] | 12.5
-#         OP_SEMI |                                | 12.75
+#         OP_SEMI |                              1 | 12.75
 #       CLOSURE_E |                                | 13.5
 #       CLASS_DEC |                 {"name":"Dog"} | 15.5
 #          METHOD |     {"main":1,"name":"_init_"} | 17.33333
@@ -27,7 +27,7 @@
 #        VAR_THIS |                        "barks" | 18.33333
 #       OP_ASSIGN |                                | 18.5
 #   KEYWORD_FALSE |                                | 18.66667
-#         OP_SEMI |                                | 18.83333
+#         OP_SEMI |                              1 | 18.83333
 #       CLOSURE_E |                                | 19.5
 #          METHOD |                {"name":"bark"} | 21.33333
 #       CLOSURE_S |                                | 21.66667
@@ -36,10 +36,10 @@
 #        OP_VALUE |                                | 22.75
 #  KEYWORD_RETURN |                                | 23.25
 #          STRING |                       ["bark"] | 23.5
-#         OP_SEMI |                                | 23.75
+#         OP_SEMI |                              1 | 23.75
 #  KEYWORD_RETURN |                                | 24.25
 #          STRING | ["I had my bark box bred out of me"] | 24.5
-#         OP_SEMI |                                | 24.75
+#         OP_SEMI |                              1 | 24.75
 #       CLOSURE_E |                                | 25.5
 #       CLASS_DEC |                 {"name":"Cat"} | 27.5
 #          METHOD |     {"name":"_init_","main":1} | 29.33333
@@ -48,13 +48,13 @@
 #        VAR_THIS |                         "mean" | 30.33333
 #       OP_ASSIGN |                                | 30.5
 #   KEYWORD_FALSE |                                | 30.66667
-#         OP_SEMI |                                | 30.83333
+#         OP_SEMI |                              1 | 30.83333
 #       CLOSURE_E |                                | 31.5
 #          METHOD |                {"name":"meow"} | 33.33333
 #       CLOSURE_S |                                | 33.66667
 #  KEYWORD_RETURN |                                | 34.25
 #          STRING |                       ["meow"] | 34.5
-#         OP_SEMI |                                | 34.75
+#         OP_SEMI |                              1 | 34.75
 #       CLOSURE_E |                                | 35.5
 #        FUNCTION |               {"name":"fight"} | 38.33333
 #       CLOSURE_S |                                | 38.66667
@@ -66,24 +66,24 @@
 #         VAR_LEX |                         "cat2" | 39.6
 #        OP_VALUE |                                | 39.7
 #        BAREWORD |                          "Cat" | 39.8
-#         OP_SEMI |                                | 39.9
+#         OP_SEMI |                              1 | 39.9
 #      KEYWORD_IF |                                | 40.2
 #         VAR_LEX |                         "cat1" | 40.4
 #        PROPERTY |                         "mean" | 40.6
 #        OP_VALUE |                                | 40.8
 #  KEYWORD_RETURN |                                | 41.25
 #          STRING |  ["Cat 1 started a catfight!"] | 41.5
-#         OP_SEMI |                                | 41.75
+#         OP_SEMI |                              1 | 41.75
 #      KEYWORD_IF |                                | 42.2
 #         VAR_LEX |                         "cat2" | 42.4
 #        PROPERTY |                         "mean" | 42.6
 #        OP_VALUE |                                | 42.8
 #  KEYWORD_RETURN |                                | 43.25
 #          STRING |  ["Cat 2 started a catfight!"] | 43.5
-#         OP_SEMI |                                | 43.75
+#         OP_SEMI |                              1 | 43.75
 #  KEYWORD_RETURN |                                | 44.25
 #          STRING |      ["nice cats don't fight"] | 44.5
-#         OP_SEMI |                                | 44.75
+#         OP_SEMI |                              1 | 44.75
 #       CLOSURE_E |                                | 45.5
 #     KEYWORD_END |                                | 47.5
 #         VAR_LEX |                       "animal" | 50.14286
@@ -91,7 +91,7 @@
 #        BAREWORD |                          "Cow" | 50.42857
 #      PAREN_CALL |                                | 50.57143
 #         PAREN_E |                                | 50.71429
-#         OP_SEMI |                                | 50.85714
+#         OP_SEMI |                              1 | 50.85714
 #        BAREWORD |                          "Dog" | 53.11111
 #        PROPERTY |                         "init" | 53.22222
 #      PAREN_CALL |                                | 53.33333
@@ -99,7 +99,7 @@
 #         PAREN_E |                                | 53.55556
 #      PAREN_CALL |                                | 53.66667
 #         PAREN_E |                                | 53.77778
-#         OP_SEMI |                                | 53.88889
+#         OP_SEMI |                              1 | 53.88889
 #        BAREWORD |                          "say" | 56.11111
 #      PAREN_CALL |                                | 56.22222
 #         VAR_LEX |                       "animal" | 56.33333
@@ -107,7 +107,7 @@
 #      PAREN_CALL |                                | 56.55556
 #         PAREN_E |                                | 56.66667
 #         PAREN_E |                                | 56.77778
-#         OP_SEMI |                                | 56.88889
+#         OP_SEMI |                              1 | 56.88889
 #        BAREWORD |                          "say" | 57.11111
 #      PAREN_CALL |                                | 57.22222
 #         VAR_LEX |                       "animal" | 57.33333
@@ -115,7 +115,7 @@
 #      PAREN_CALL |                                | 57.55556
 #         PAREN_E |                                | 57.66667
 #         PAREN_E |                                | 57.77778
-#         OP_SEMI |                                | 57.88889
+#         OP_SEMI |                              1 | 57.88889
 #        BAREWORD |                          "Cat" | 60.09091
 #        PROPERTY |                         "init" | 60.18182
 #      PAREN_CALL |                                | 60.27273
@@ -125,18 +125,18 @@
 #      PROP_VALUE |                         "mean" | 60.63636
 #    KEYWORD_TRUE |                                | 60.72727
 #         PAREN_E |                                | 60.81818
-#         OP_SEMI |                                | 60.90909
+#         OP_SEMI |                              1 | 60.90909
 #        BAREWORD |                      "inspect" | 62.16667
 #      PAREN_CALL |                                | 62.33333
 #         VAR_LEX |                       "animal" | 62.5
 #         PAREN_E |                                | 62.66667
-#         OP_SEMI |                                | 62.83333
+#         OP_SEMI |                              1 | 62.83333
 #         VAR_LEX |                          "cat" | 65.14286
 #       OP_ASSIGN |                                | 65.28571
 #        BAREWORD |                          "Cat" | 65.42857
 #      PAREN_CALL |                                | 65.57143
 #         PAREN_E |                                | 65.71429
-#         OP_SEMI |                                | 65.85714
+#         OP_SEMI |                              1 | 65.85714
 #         VAR_LEX |                    "aftermath" | 71.08333
 #       OP_ASSIGN |                                | 71.16667
 #         PAREN_S |                                | 71.25
@@ -147,12 +147,12 @@
 #        PROPERTY |                        "fight" | 71.66667
 #      PAREN_CALL |                                | 71.75
 #         PAREN_E |                                | 71.83333
-#         OP_SEMI |                                | 71.91667
+#         OP_SEMI |                              1 | 71.91667
 #        BAREWORD |                          "say" | 72.16667
 #      PAREN_CALL |                                | 72.33333
 #         VAR_LEX |                    "aftermath" | 72.5
 #         PAREN_E |                                | 72.66667
-#         OP_SEMI |                                | 72.83333
+#         OP_SEMI |                              1 | 72.83333
 # === Document Model ===
 #  Document './test/hello22.frt'
 #      Class 'Cow'

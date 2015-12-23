@@ -6,7 +6,7 @@
 #      PAREN_CALL |                                | 1.55556
 #          STRING |                          [" "] | 1.66667
 #         PAREN_E |                                | 1.77778
-#         OP_SEMI |                                | 1.88889
+#         OP_SEMI |                              1 | 1.88889
 #     KEYWORD_FOR |                                | 3.16667
 #         VAR_LEX |                         "word" | 3.33333
 #      KEYWORD_IN |                                | 3.5
@@ -16,7 +16,7 @@
 #      PAREN_CALL |                                | 4.33333
 #          STRING | ["part: ",["VAR_LEX","word",4]] | 4.5
 #         PAREN_E |                                | 4.66667
-#         OP_SEMI |                                | 4.83333
+#         OP_SEMI |                              1 | 4.83333
 #       CLOSURE_E |                                | 5.5
 # === Document Model ===
 #  Document './test/hello19.frt'

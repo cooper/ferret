@@ -738,7 +738,7 @@ sub c_BAREWORD {
 }
 
 sub c_OP_SEMI {
-    my $c = shift;
+    my ($c, $automatic) = @_;
 
     # Rule OP_SEMI[0]:
     #   The current 'instruction' must exist.
@@ -750,10 +750,20 @@ sub c_OP_SEMI {
         SharedDeclaration LocalDeclaration
     ));
 
+    # special case:
+    # if it's an automatic semicolon and the node is a list item, ignore it.
+    return if $automatic and
+        $c->node->type eq 'ListItem' || $c->node->type eq 'Pair';
+
     # at this point, the instruction must be the current node.
     if ($c->node != $c->instruction) {
         my $type = $c->node->desc;
-        return $c->unexpected("inside $type");
+        return $c->unexpected([
+            "inside $type",
+            'This is an inferred semicolon. Perhaps you forgot a separator '.
+            '(comma) or terminator (closing parenthesis, bracket, etc.) '.
+            'at the end of the line'
+        ]);
     }
 
     # close the instruction.

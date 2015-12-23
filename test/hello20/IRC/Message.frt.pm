@@ -7,7 +7,7 @@
 #        VAR_THIS |                         "line" | 5.33333
 #        OP_VALUE |                                | 5.5
 #        BAREWORD |                          "Str" | 5.66667
-#         OP_SEMI |                                | 5.83333
+#         OP_SEMI |                              1 | 5.83333
 #         VAR_LEX |                    "lineSplit" | 6.07692
 #       OP_ASSIGN |                                | 6.15385
 #        VAR_THIS |                         "line" | 6.23077
@@ -19,14 +19,14 @@
 #      PROP_VALUE |                        "limit" | 6.69231
 #          NUMBER |                            "4" | 6.76923
 #         PAREN_E |                                | 6.84615
-#         OP_SEMI |                                | 6.92308
+#         OP_SEMI |                              1 | 6.92308
 #        VAR_THIS |                      "channel" | 7.125
 #       OP_ASSIGN |                                | 7.25
 #         VAR_LEX |                    "lineSplit" | 7.375
 #     BRACKET_IDX |                                | 7.5
 #          NUMBER |                            "2" | 7.625
 #       BRACKET_E |                                | 7.75
-#         OP_SEMI |                                | 7.875
+#         OP_SEMI |                              1 | 7.875
 #        VAR_THIS |                     "nickname" | 10.05263
 #       OP_ASSIGN |                                | 10.10526
 #         VAR_LEX |                    "lineSplit" | 10.15789
@@ -44,7 +44,7 @@
 #     BRACKET_IDX |                                | 10.78947
 #          NUMBER |                            "0" | 10.84211
 #       BRACKET_E |                                | 10.89474
-#         OP_SEMI |                                | 10.94737
+#         OP_SEMI |                              1 | 10.94737
 #        VAR_THIS |                     "nickname" | 11.11111
 #       OP_ASSIGN |                                | 11.22222
 #        VAR_THIS |                     "nickname" | 11.33333
@@ -52,14 +52,14 @@
 #      PAREN_CALL |                                | 11.55556
 #          STRING |                          [":"] | 11.66667
 #         PAREN_E |                                | 11.77778
-#         OP_SEMI |                                | 11.88889
+#         OP_SEMI |                              1 | 11.88889
 #        VAR_THIS |                      "message" | 14.125
 #       OP_ASSIGN |                                | 14.25
 #         VAR_LEX |                    "lineSplit" | 14.375
 #     BRACKET_IDX |                                | 14.5
 #          NUMBER |                            "3" | 14.625
 #       BRACKET_E |                                | 14.75
-#         OP_SEMI |                                | 14.875
+#         OP_SEMI |                              1 | 14.875
 #        VAR_THIS |                      "message" | 15.11111
 #       OP_ASSIGN |                                | 15.22222
 #        VAR_THIS |                      "message" | 15.33333
@@ -67,7 +67,7 @@
 #      PAREN_CALL |                                | 15.55556
 #          STRING |                          [":"] | 15.66667
 #         PAREN_E |                                | 15.77778
-#         OP_SEMI |                                | 15.88889
+#         OP_SEMI |                              1 | 15.88889
 #        VAR_THIS |                        "parts" | 18.11111
 #       OP_ASSIGN |                                | 18.22222
 #        VAR_THIS |                      "message" | 18.33333
@@ -75,9 +75,9 @@
 #      PAREN_CALL |                                | 18.55556
 #          STRING |                          [" "] | 18.66667
 #         PAREN_E |                                | 18.77778
-#         OP_SEMI |                                | 18.88889
+#         OP_SEMI |                              1 | 18.88889
 #       CLOSURE_E |                                | 20.5
-#          METHOD | {"name":"command","is_prop":1,"p_set":1} | 23.33333
+#          METHOD | {"is_prop":1,"name":"command","p_set":1} | 23.33333
 #       CLOSURE_S |                                | 23.66667
 #      KEYWORD_IF |                                | 26.09091
 #        VAR_THIS |                        "parts" | 26.18182
@@ -99,27 +99,27 @@
 #      PAREN_CALL |                                | 27.66667
 #          STRING |                          ["."] | 27.75
 #         PAREN_E |                                | 27.83333
-#         OP_SEMI |                                | 27.91667
+#         OP_SEMI |                              1 | 27.91667
 #      KEYWORD_IF |                                | 28.2
 #         VAR_LEX |                          "cmd" | 28.4
 #        PROPERTY |                       "length" | 28.6
 #        OP_VALUE |                                | 28.8
 #  KEYWORD_RETURN |                                | 29.25
 #         VAR_LEX |                          "cmd" | 29.5
-#         OP_SEMI |                                | 29.75
+#         OP_SEMI |                              1 | 29.75
 #       CLOSURE_E |                                | 30.5
 #  KEYWORD_RETURN |                                | 32.25
 #   KEYWORD_FALSE |                                | 32.5
-#         OP_SEMI |                                | 32.75
+#         OP_SEMI |                              1 | 32.75
 #       CLOSURE_E |                                | 33.5
-#          METHOD | {"p_set":1,"is_prop":1,"name":"commandHasParameters"} | 35.33333
+#          METHOD | {"p_set":1,"name":"commandHasParameters","is_prop":1} | 35.33333
 #       CLOSURE_S |                                | 35.66667
 #  KEYWORD_RETURN |                                | 36.14286
 #        VAR_THIS |                        "parts" | 36.28571
 #        PROPERTY |                       "length" | 36.42857
 #       OP_NEQUAL |                                | 36.57143
 #          NUMBER |                            "1" | 36.71429
-#         OP_SEMI |                                | 36.85714
+#         OP_SEMI |                              1 | 36.85714
 #       CLOSURE_E |                                | 37.5
 #          METHOD |            {"name":"fromWord"} | 40.33333
 #       CLOSURE_S |                                | 40.66667
@@ -127,7 +127,7 @@
 #         VAR_LEX |                        "wordN" | 41.33333
 #        OP_VALUE |                                | 41.5
 #        BAREWORD |                          "Num" | 41.66667
-#         OP_SEMI |                                | 41.83333
+#         OP_SEMI |                              1 | 41.83333
 #  KEYWORD_RETURN |                                | 42.05882
 #        VAR_THIS |                      "message" | 42.11765
 #        PROPERTY |                        "split" | 42.17647
@@ -143,7 +143,7 @@
 #     BRACKET_IDX |                                | 42.76471
 #         VAR_LEX |                        "wordN" | 42.82353
 #       BRACKET_E |                                | 42.88235
-#         OP_SEMI |                                | 42.94118
+#         OP_SEMI |                              1 | 42.94118
 #       CLOSURE_E |                                | 43.5
 # === Document Model ===
 #  Document './test/hello20/IRC/Message.frt'

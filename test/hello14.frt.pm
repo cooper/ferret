@@ -3,11 +3,11 @@
 #      PAREN_CALL |                                | 1.33333
 #          STRING |                       ["test"] | 1.5
 #         PAREN_E |                                | 1.66667
-#         OP_SEMI |                                | 1.83333
+#         OP_SEMI |                              1 | 1.83333
 #         VAR_LEX |                          "str" | 3.2
 #       OP_ASSIGN |                                | 3.4
 #          STRING |                         ["hi"] | 3.6
-#         OP_SEMI |                                | 3.8
+#         OP_SEMI |                              1 | 3.8
 #      KEYWORD_ON |                                | 8.2
 #         VAR_LEX |                          "str" | 8.4
 #        PROPERTY |                       "length" | 8.6
@@ -16,18 +16,18 @@
 #      PAREN_CALL |                                | 11.33333
 #          STRING | ["found '",["VAR_SPEC","this",11],"' length to be ",["VAR_SPEC","return",11]] | 11.5
 #         PAREN_E |                                | 11.66667
-#         OP_SEMI |                                | 11.83333
+#         OP_SEMI |                              1 | 11.83333
 #       CLOSURE_E |                                | 12.5
 #         VAR_LEX |                          "str" | 14.16667
 #        PROPERTY |                       "length" | 14.33333
 #      PAREN_CALL |                                | 14.5
 #         PAREN_E |                                | 14.66667
-#         OP_SEMI |                                | 14.83333
+#         OP_SEMI |                              1 | 14.83333
 #          STRING |                      ["hello"] | 16.16667
 #        PROPERTY |                       "length" | 16.33333
 #      PAREN_CALL |                                | 16.5
 #         PAREN_E |                                | 16.66667
-#         OP_SEMI |                                | 16.83333
+#         OP_SEMI |                              1 | 16.83333
 #      KEYWORD_ON |                                | 21.16667
 #        BAREWORD |                       "String" | 21.33333
 #        PROPERTY |                        "proto" | 21.5
@@ -37,13 +37,13 @@
 #      PAREN_CALL |                                | 22.33333
 #          STRING | ["found '",["VAR_SPEC","this",22],"' length to be ",["VAR_SPEC","return",22]] | 22.5
 #         PAREN_E |                                | 22.66667
-#         OP_SEMI |                                | 22.83333
+#         OP_SEMI |                              1 | 22.83333
 #       CLOSURE_E |                                | 23.5
 #          STRING |                      ["hello"] | 25.16667
 #        PROPERTY |                       "length" | 25.33333
 #      PAREN_CALL |                                | 25.5
 #         PAREN_E |                                | 25.66667
-#         OP_SEMI |                                | 25.83333
+#         OP_SEMI |                              1 | 25.83333
 # === Document Model ===
 #  Document './test/hello14.frt'
 #      Instruction

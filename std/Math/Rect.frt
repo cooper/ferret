@@ -11,7 +11,7 @@ prop vertices {
         @topLeft,
         @topRight,
         @bottomLeft,
-        @bottomRight,
+        @bottomRight
     ]
 }
 

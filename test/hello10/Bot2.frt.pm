@@ -1,6 +1,6 @@
 # === Tokenization ===
 #       CLASS_DEC |                {"name":"Bot2"} | 1.5
-#          METHOD |     {"name":"_init_","main":1} | 3.33333
+#          METHOD |     {"main":1,"name":"_init_"} | 3.33333
 #       CLOSURE_S |                                | 3.66667
 #    KEYWORD_NEED |                                | 4.07143
 #        VAR_THIS |                      "address" | 4.14286
@@ -14,7 +14,7 @@
 #        VAR_THIS |                         "user" | 4.71429
 #        OP_VALUE |                                | 4.78571
 #        BAREWORD |                          "Str" | 4.85714
-#         OP_SEMI |                                | 4.92857
+#         OP_SEMI |                              1 | 4.92857
 #    KEYWORD_WANT |                                | 5.07143
 #        VAR_THIS |                         "port" | 5.14286
 #        OP_VALUE |                                | 5.21429
@@ -27,7 +27,7 @@
 #        BAREWORD |                          "Str" | 5.71429
 #       OP_ASSIGN |                                | 5.78571
 #          STRING |                 ["Ferret IRC"] | 5.85714
-#         OP_SEMI |                                | 5.92857
+#         OP_SEMI |                              1 | 5.92857
 #        BAREWORD |                       "Socket" | 8.0625
 #         OP_PACK |                                | 8.125
 #        BAREWORD |                          "TCP" | 8.1875
@@ -42,11 +42,11 @@
 #      PROP_VALUE |                         "port" | 8.75
 #        VAR_THIS |                         "port" | 8.8125
 #         PAREN_E |                                | 8.875
-#         OP_SEMI |                                | 8.9375
+#         OP_SEMI |                              1 | 8.9375
 #        VAR_THIS |                         "send" | 10.2
 #       OP_ASSIGN |                                | 10.4
 #        VAR_THIS |                      "println" | 10.6
-#         OP_SEMI |                                | 10.8
+#         OP_SEMI |                              1 | 10.8
 #      KEYWORD_ON |                                | 13.25
 #        VAR_THIS |                    "connected" | 13.5
 #       CLOSURE_S |                                | 13.75
@@ -54,36 +54,36 @@
 #      PAREN_CALL |                                | 14.33333
 #          STRING | ["USER ",["VAR_THIS","user",14]," ","*"," ","*"," :",["VAR_THIS","real",14]] | 14.5
 #         PAREN_E |                                | 14.66667
-#         OP_SEMI |                                | 14.83333
+#         OP_SEMI |                              1 | 14.83333
 #        VAR_THIS |                         "send" | 15.16667
 #      PAREN_CALL |                                | 15.33333
 #          STRING | ["NICK ",["VAR_THIS","nick",15]] | 15.5
 #         PAREN_E |                                | 15.66667
-#         OP_SEMI |                                | 15.83333
+#         OP_SEMI |                              1 | 15.83333
 #       CLOSURE_E |                                | 16.5
 #      KEYWORD_ON |                                | 19.25
 #        VAR_THIS |                      "gotLine" | 19.5
 #       CLOSURE_S |                                | 19.75
 #    KEYWORD_NEED |                                | 20.25
 #         VAR_LEX |                         "data" | 20.5
-#         OP_SEMI |                                | 20.75
+#         OP_SEMI |                              1 | 20.75
 #        BAREWORD |                          "say" | 21.16667
 #      PAREN_CALL |                                | 21.33333
 #          STRING | ["recv: ",["VAR_LEX","data",21]] | 21.5
 #         PAREN_E |                                | 21.66667
-#         OP_SEMI |                                | 21.83333
+#         OP_SEMI |                              1 | 21.83333
 #       CLOSURE_E |                                | 22.5
 #      KEYWORD_ON |                                | 24.25
 #        VAR_THIS |                      "println" | 24.5
 #       CLOSURE_S |                                | 24.75
 #    KEYWORD_NEED |                                | 25.25
 #         VAR_LEX |                         "data" | 25.5
-#         OP_SEMI |                                | 25.75
+#         OP_SEMI |                              1 | 25.75
 #        BAREWORD |                          "say" | 26.16667
 #      PAREN_CALL |                                | 26.33333
 #          STRING | ["send: ",["VAR_LEX","data",26]] | 26.5
 #         PAREN_E |                                | 26.66667
-#         OP_SEMI |                                | 26.83333
+#         OP_SEMI |                              1 | 26.83333
 #       CLOSURE_E |                                | 27.5
 #       CLOSURE_E |                                | 29.5
 # === Document Model ===

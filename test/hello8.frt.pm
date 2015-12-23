@@ -7,7 +7,7 @@
 #         OP_CALL |                                | 4.42857
 #          OP_MUL |                                | 4.57143
 #          NUMBER |                            "2" | 4.71429
-#         OP_SEMI |                                | 4.85714
+#         OP_SEMI |                              1 | 4.85714
 #       CLOSURE_E |                                | 5.5
 #     KEYWORD_END |                                | 7.5
 #        BAREWORD |                          "say" | 9.1
@@ -18,7 +18,7 @@
 #        PROPERTY |                "doubledLength" | 9.6
 #         OP_CALL |                                | 9.7
 #         PAREN_E |                                | 9.8
-#         OP_SEMI |                                | 9.9
+#         OP_SEMI |                              1 | 9.9
 # === Document Model ===
 #  Document './test/hello8.frt'
 #      Class 'String'

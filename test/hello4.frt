@@ -3,7 +3,7 @@ func makePoint {
     want $z
     $point = (
         x: $x,
-        y: $y,
+        y: $y
     )
     point -> $point
 }

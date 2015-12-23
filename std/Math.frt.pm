@@ -6,7 +6,7 @@
 #         VAR_LEX |                          "num" | 4.33333
 #        OP_VALUE |                                | 4.5
 #        BAREWORD |                          "Num" | 4.66667
-#         OP_SEMI |                                | 4.83333
+#         OP_SEMI |                              1 | 4.83333
 #  KEYWORD_RETURN |                                | 5.1
 #        BAREWORD |                       "NATIVE" | 5.2
 #         OP_PACK |                                | 5.3
@@ -15,7 +15,7 @@
 #      PAREN_CALL |                                | 5.6
 #         VAR_LEX |                          "num" | 5.7
 #         PAREN_E |                                | 5.8
-#         OP_SEMI |                                | 5.9
+#         OP_SEMI |                              1 | 5.9
 #       CLOSURE_E |                                | 6.5
 # === Document Model ===
 #  Document './std/Math.frt'

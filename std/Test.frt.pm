@@ -6,26 +6,26 @@
 #        VAR_THIS |                         "name" | 4.33333
 #       OP_ASSIGN |                                | 4.5
 #          STRING |                       ["Test"] | 4.66667
-#         OP_SEMI |                                | 4.83333
+#         OP_SEMI |                              1 | 4.83333
 #    KEYWORD_WANT |                                | 5.16667
 #        VAR_THIS |                        "fatal" | 5.33333
 #       OP_ASSIGN |                                | 5.5
 #    KEYWORD_TRUE |                                | 5.66667
-#         OP_SEMI |                                | 5.83333
+#         OP_SEMI |                              1 | 5.83333
 #        VAR_THIS |                       "tested" | 6.2
 #       OP_ASSIGN |                                | 6.4
 #          NUMBER |                            "0" | 6.6
-#         OP_SEMI |                                | 6.8
+#         OP_SEMI |                              1 | 6.8
 #        VAR_THIS |                       "passed" | 7.2
 #       OP_ASSIGN |                                | 7.4
 #          NUMBER |                            "0" | 7.6
-#         OP_SEMI |                                | 7.8
+#         OP_SEMI |                              1 | 7.8
 #       CLOSURE_E |                                | 8.5
 #          METHOD |           {"name":"trueValue"} | 11.33333
 #       CLOSURE_S |                                | 11.66667
 #    KEYWORD_WANT |                                | 12.25
 #         VAR_LEX |                            "a" | 12.5
-#         OP_SEMI |                                | 12.75
+#         OP_SEMI |                              1 | 12.75
 #  KEYWORD_RETURN |                                | 13.08333
 #        VAR_THIS |                        "_test" | 13.16667
 #      PAREN_CALL |                                | 13.25
@@ -36,13 +36,13 @@
 #        OP_COMMA |                                | 13.66667
 #          STRING |         ["Value must be true"] | 13.75
 #         PAREN_E |                                | 13.83333
-#         OP_SEMI |                                | 13.91667
+#         OP_SEMI |                              1 | 13.91667
 #       CLOSURE_E |                                | 14.5
 #          METHOD |            {"name":"veryTrue"} | 17.33333
 #       CLOSURE_S |                                | 17.66667
 #    KEYWORD_WANT |                                | 18.25
 #         VAR_LEX |                            "a" | 18.5
-#         OP_SEMI |                                | 18.75
+#         OP_SEMI |                              1 | 18.75
 #  KEYWORD_RETURN |                                | 19.09091
 #        VAR_THIS |                        "_test" | 19.18182
 #      PAREN_CALL |                                | 19.27273
@@ -52,7 +52,7 @@
 #        OP_COMMA |                                | 19.63636
 #          STRING | ["Value must be exactly true"] | 19.72727
 #         PAREN_E |                                | 19.81818
-#         OP_SEMI |                                | 19.90909
+#         OP_SEMI |                              1 | 19.90909
 #       CLOSURE_E |                                | 20.5
 #          METHOD |               {"name":"equal"} | 23.33333
 #       CLOSURE_S |                                | 23.66667
@@ -60,7 +60,7 @@
 #         VAR_LEX |                            "a" | 24.33333
 #        OP_COMMA |                                | 24.5
 #         VAR_LEX |                            "b" | 24.66667
-#         OP_SEMI |                                | 24.83333
+#         OP_SEMI |                              1 | 24.83333
 #  KEYWORD_RETURN |                                | 25.09091
 #        VAR_THIS |                        "_test" | 25.18182
 #      PAREN_CALL |                                | 25.27273
@@ -70,7 +70,7 @@
 #        OP_COMMA |                                | 25.63636
 #          STRING |       ["Values must be equal"] | 25.72727
 #         PAREN_E |                                | 25.81818
-#         OP_SEMI |                                | 25.90909
+#         OP_SEMI |                              1 | 25.90909
 #       CLOSURE_E |                                | 26.5
 #          METHOD |        {"name":"objectsEqual"} | 29.33333
 #       CLOSURE_S |                                | 29.66667
@@ -78,7 +78,7 @@
 #         VAR_LEX |                            "a" | 30.33333
 #        OP_COMMA |                                | 30.5
 #         VAR_LEX |                            "b" | 30.66667
-#         OP_SEMI |                                | 30.83333
+#         OP_SEMI |                              1 | 30.83333
 #  KEYWORD_RETURN |                                | 31.09091
 #        VAR_THIS |                        "_test" | 31.18182
 #      PAREN_CALL |                                | 31.27273
@@ -88,7 +88,7 @@
 #        OP_COMMA |                                | 31.63636
 #          STRING | ["Objects must be exactly equal"] | 31.72727
 #         PAREN_E |                                | 31.81818
-#         OP_SEMI |                                | 31.90909
+#         OP_SEMI |                              1 | 31.90909
 #       CLOSURE_E |                                | 32.5
 #          METHOD |            {"name":"notEqual"} | 35.33333
 #       CLOSURE_S |                                | 35.66667
@@ -96,7 +96,7 @@
 #         VAR_LEX |                            "a" | 36.33333
 #        OP_COMMA |                                | 36.5
 #         VAR_LEX |                            "b" | 36.66667
-#         OP_SEMI |                                | 36.83333
+#         OP_SEMI |                              1 | 36.83333
 #  KEYWORD_RETURN |                                | 37.09091
 #        VAR_THIS |                        "_test" | 37.18182
 #      PAREN_CALL |                                | 37.27273
@@ -106,7 +106,7 @@
 #        OP_COMMA |                                | 37.63636
 #          STRING |   ["Values must not be equal"] | 37.72727
 #         PAREN_E |                                | 37.81818
-#         OP_SEMI |                                | 37.90909
+#         OP_SEMI |                              1 | 37.90909
 #       CLOSURE_E |                                | 38.5
 #          METHOD |     {"name":"objectsNotEqual"} | 41.33333
 #       CLOSURE_S |                                | 41.66667
@@ -114,7 +114,7 @@
 #         VAR_LEX |                            "a" | 42.33333
 #        OP_COMMA |                                | 42.5
 #         VAR_LEX |                            "b" | 42.66667
-#         OP_SEMI |                                | 42.83333
+#         OP_SEMI |                              1 | 42.83333
 #  KEYWORD_RETURN |                                | 43.09091
 #        VAR_THIS |                        "_test" | 43.18182
 #      PAREN_CALL |                                | 43.27273
@@ -124,7 +124,7 @@
 #        OP_COMMA |                                | 43.63636
 #          STRING |  ["Objects must not be equal"] | 43.72727
 #         PAREN_E |                                | 43.81818
-#         OP_SEMI |                                | 43.90909
+#         OP_SEMI |                              1 | 43.90909
 #       CLOSURE_E |                                | 44.5
 #          METHOD |              {"name":"review"} | 46.33333
 #       CLOSURE_S |                                | 46.66667
@@ -133,30 +133,30 @@
 #        VAR_THIS |                       "tested" | 47.42857
 #          OP_SUB |                                | 47.57143
 #        VAR_THIS |                       "passed" | 47.71429
-#         OP_SEMI |                                | 47.85714
+#         OP_SEMI |                              1 | 47.85714
 #        BAREWORD |                          "say" | 48.16667
 #      PAREN_CALL |                                | 48.33333
 #          STRING | ["[",["VAR_THIS","name",48],"] ",["VAR_THIS","tested",48]," tests ",["VAR_THIS","passed",48]," passed ",["VAR_LEX","failed",48]," failed"] | 48.5
 #         PAREN_E |                                | 48.66667
-#         OP_SEMI |                                | 48.83333
+#         OP_SEMI |                              1 | 48.83333
 #        BAREWORD |                        "tests" | 50.2
 #       OP_RETURN |                                | 50.4
 #        VAR_THIS |                       "tested" | 50.6
-#         OP_SEMI |                                | 50.8
+#         OP_SEMI |                              1 | 50.8
 #        BAREWORD |                        "fails" | 51.2
 #       OP_RETURN |                                | 51.4
 #         VAR_LEX |                       "failed" | 51.6
-#         OP_SEMI |                                | 51.8
+#         OP_SEMI |                              1 | 51.8
 #        BAREWORD |                       "passes" | 52.2
 #       OP_RETURN |                                | 52.4
 #        VAR_THIS |                       "passed" | 52.6
-#         OP_SEMI |                                | 52.8
+#         OP_SEMI |                              1 | 52.8
 #        BAREWORD |                        "allOK" | 53.14286
 #       OP_RETURN |                                | 53.28571
 #        VAR_THIS |                       "passed" | 53.42857
 #        OP_EQUAL |                                | 53.57143
 #        VAR_THIS |                       "tested" | 53.71429
-#         OP_SEMI |                                | 53.85714
+#         OP_SEMI |                              1 | 53.85714
 #       CLOSURE_E |                                | 54.5
 #          METHOD |               {"name":"_test"} | 56.33333
 #       CLOSURE_S |                                | 56.66667
@@ -164,17 +164,17 @@
 #         VAR_LEX |                          "yes" | 57.33333
 #        OP_COMMA |                                | 57.5
 #         VAR_LEX |                      "message" | 57.66667
-#         OP_SEMI |                                | 57.83333
+#         OP_SEMI |                              1 | 57.83333
 #        VAR_THIS |                       "tested" | 59.14286
 #       OP_ASSIGN |                                | 59.28571
 #        VAR_THIS |                       "tested" | 59.42857
 #          OP_ADD |                                | 59.57143
 #          NUMBER |                            "1" | 59.71429
-#         OP_SEMI |                                | 59.85714
+#         OP_SEMI |                              1 | 59.85714
 #        BAREWORD |                         "pass" | 60.2
 #       OP_RETURN |                                | 60.4
 #         VAR_LEX |                          "yes" | 60.6
-#         OP_SEMI |                                | 60.8
+#         OP_SEMI |                              1 | 60.8
 #      KEYWORD_IF |                                | 62.25
 #         VAR_LEX |                          "yes" | 62.5
 #       CLOSURE_S |                                | 62.75
@@ -183,9 +183,9 @@
 #        VAR_THIS |                       "passed" | 63.42857
 #          OP_ADD |                                | 63.57143
 #          NUMBER |                            "1" | 63.71429
-#         OP_SEMI |                                | 63.85714
+#         OP_SEMI |                              1 | 63.85714
 #  KEYWORD_RETURN |                                | 64.33333
-#         OP_SEMI |                                | 64.66667
+#         OP_SEMI |                              1 | 64.66667
 #       CLOSURE_E |                                | 65.5
 #      KEYWORD_IF |                                | 67.25
 #        VAR_THIS |                        "fatal" | 67.5
@@ -197,11 +197,11 @@
 #        PROPERTY |                        "panic" | 68.55556
 #      PAREN_CALL |                                | 68.66667
 #         PAREN_E |                                | 68.77778
-#         OP_SEMI |                                | 68.88889
+#         OP_SEMI |                              1 | 68.88889
 #        BAREWORD |                      "message" | 70.2
 #       OP_RETURN |                                | 70.4
 #         VAR_LEX |                      "message" | 70.6
-#         OP_SEMI |                                | 70.8
+#         OP_SEMI |                              1 | 70.8
 #       CLOSURE_E |                                | 71.5
 # === Document Model ===
 #  Document './std/Test.frt'

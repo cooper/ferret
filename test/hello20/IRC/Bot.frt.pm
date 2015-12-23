@@ -12,9 +12,9 @@
 #        OP_COMMA |                                | 6.75
 #      PROP_VALUE |                      "PRIVMSG" | 7.25
 #        BAREWORD |               "_handleMessage" | 7.5
-#        OP_COMMA |                                | 7.75
+#         OP_SEMI |                              1 | 7.75
 #       BRACKET_E |                                | 8.33333
-#         OP_SEMI |                                | 8.66667
+#         OP_SEMI |                              1 | 8.66667
 #         VAR_LEX |              "initialCommands" | 10.25
 #       OP_ASSIGN |                                | 10.5
 #       BRACKET_S |                                | 10.75
@@ -26,9 +26,9 @@
 #        OP_COMMA |                                | 12.75
 #      PROP_VALUE |                          "add" | 13.25
 #        BAREWORD |                  "_commandAdd" | 13.5
-#        OP_COMMA |                                | 13.75
+#         OP_SEMI |                              1 | 13.75
 #       BRACKET_E |                                | 14.33333
-#         OP_SEMI |                                | 14.66667
+#         OP_SEMI |                              1 | 14.66667
 #          METHOD |     {"name":"_init_","main":1} | 16.33333
 #       CLOSURE_S |                                | 16.66667
 #    KEYWORD_NEED |                                | 17.1
@@ -39,38 +39,38 @@
 #        VAR_THIS |                         "nick" | 17.6
 #        OP_VALUE |                                | 17.7
 #        BAREWORD |                          "Str" | 17.8
-#         OP_SEMI |                                | 17.9
+#         OP_SEMI |                              1 | 17.9
 #    KEYWORD_WANT |                                | 18.125
 #        VAR_THIS |                         "port" | 18.25
 #        OP_VALUE |                                | 18.375
 #        BAREWORD |                          "Num" | 18.5
 #       OP_ASSIGN |                                | 18.625
 #          NUMBER |                         "6667" | 18.75
-#         OP_SEMI |                                | 18.875
+#         OP_SEMI |                              1 | 18.875
 #    KEYWORD_WANT |                                | 19.125
 #        VAR_THIS |                         "user" | 19.25
 #        OP_VALUE |                                | 19.375
 #        BAREWORD |                          "Str" | 19.5
 #       OP_ASSIGN |                                | 19.625
 #          STRING |                     ["ferret"] | 19.75
-#         OP_SEMI |                                | 19.875
+#         OP_SEMI |                              1 | 19.875
 #    KEYWORD_WANT |                                | 20.125
 #        VAR_THIS |                         "real" | 20.25
 #        OP_VALUE |                                | 20.375
 #        BAREWORD |                          "Str" | 20.5
 #       OP_ASSIGN |                                | 20.625
 #          STRING |                 ["Ferret IRC"] | 20.75
-#         OP_SEMI |                                | 20.875
+#         OP_SEMI |                              1 | 20.875
 #        VAR_THIS |                     "commands" | 22.2
 #       OP_ASSIGN |                                | 22.4
 #         VAR_LEX |              "initialCommands" | 22.6
-#         OP_SEMI |                                | 22.8
+#         OP_SEMI |                              1 | 22.8
 #        VAR_THIS |                     "factoids" | 23.14286
 #       OP_ASSIGN |                                | 23.28571
 #       BRACKET_S |                                | 23.42857
 #        OP_VALUE |                                | 23.57143
 #       BRACKET_E |                                | 23.71429
-#         OP_SEMI |                                | 23.85714
+#         OP_SEMI |                              1 | 23.85714
 #        VAR_THIS |                         "sock" | 26.05882
 #       OP_ASSIGN |                                | 26.11765
 #        BAREWORD |                       "Socket" | 26.17647
@@ -86,7 +86,7 @@
 #      PROP_VALUE |                     "readMode" | 26.76471
 #         VAR_SYM |                         "line" | 26.82353
 #         PAREN_E |                                | 26.88235
-#         OP_SEMI |                                | 26.94118
+#         OP_SEMI |                              1 | 26.94118
 #      KEYWORD_ON |                                | 29.14286
 #        VAR_THIS |                         "sock" | 29.28571
 #        PROPERTY |                    "connected" | 29.42857
@@ -97,12 +97,12 @@
 #      PAREN_CALL |                                | 30.33333
 #          STRING | ["USER ",["VAR_THIS","user",30]," ","*"," ","*"," :",["VAR_THIS","real",30]] | 30.5
 #         PAREN_E |                                | 30.66667
-#         OP_SEMI |                                | 30.83333
+#         OP_SEMI |                              1 | 30.83333
 #        VAR_THIS |                         "send" | 31.16667
 #      PAREN_CALL |                                | 31.33333
 #          STRING | ["NICK ",["VAR_THIS","nick",31]] | 31.5
 #         PAREN_E |                                | 31.66667
-#         OP_SEMI |                                | 31.83333
+#         OP_SEMI |                              1 | 31.83333
 #       CLOSURE_E |                                | 32.5
 #      KEYWORD_ON |                                | 35.14286
 #        VAR_THIS |                         "sock" | 35.28571
@@ -112,12 +112,12 @@
 #       CLOSURE_S |                                | 35.85714
 #    KEYWORD_NEED |                                | 36.25
 #         VAR_LEX |                         "data" | 36.5
-#         OP_SEMI |                                | 36.75
+#         OP_SEMI |                              1 | 36.75
 #        VAR_THIS |                   "handleLine" | 37.16667
 #      PAREN_CALL |                                | 37.33333
 #         VAR_LEX |                         "data" | 37.5
 #         PAREN_E |                                | 37.66667
-#         OP_SEMI |                                | 37.83333
+#         OP_SEMI |                              1 | 37.83333
 #       CLOSURE_E |                                | 38.5
 #       CLOSURE_E |                                | 40.5
 #          METHOD |          {"name":"addCommand"} | 42.33333
@@ -128,7 +128,7 @@
 #        BAREWORD |                          "Str" | 43.5
 #        OP_COMMA |                                | 43.625
 #         VAR_LEX |                     "callback" | 43.75
-#         OP_SEMI |                                | 43.875
+#         OP_SEMI |                              1 | 43.875
 #      KEYWORD_IF |                                | 44.14286
 #        VAR_THIS |                     "commands" | 44.28571
 #     BRACKET_IDX |                                | 44.42857
@@ -138,18 +138,18 @@
 #        BAREWORD |                    "overwrote" | 45.2
 #       OP_RETURN |                                | 45.4
 #    KEYWORD_TRUE |                                | 45.6
-#         OP_SEMI |                                | 45.8
+#         OP_SEMI |                              1 | 45.8
 #        VAR_THIS |                     "commands" | 46.125
 #     BRACKET_IDX |                                | 46.25
 #         VAR_LEX |                      "command" | 46.375
 #       BRACKET_E |                                | 46.5
 #       OP_ASSIGN |                                | 46.625
 #         VAR_LEX |                     "callback" | 46.75
-#         OP_SEMI |                                | 46.875
+#         OP_SEMI |                              1 | 46.875
 #        BAREWORD |                        "added" | 47.2
 #       OP_RETURN |                                | 47.4
 #    KEYWORD_TRUE |                                | 47.6
-#         OP_SEMI |                                | 47.8
+#         OP_SEMI |                              1 | 47.8
 #       CLOSURE_E |                                | 48.5
 #          METHOD |             {"name":"connect"} | 50.33333
 #       CLOSURE_S |                                | 50.66667
@@ -157,30 +157,30 @@
 #        PROPERTY |                      "connect" | 51.33333
 #      PAREN_CALL |                                | 51.5
 #         PAREN_E |                                | 51.66667
-#         OP_SEMI |                                | 51.83333
+#         OP_SEMI |                              1 | 51.83333
 #       CLOSURE_E |                                | 52.5
 #          METHOD |                {"name":"send"} | 54.33333
 #       CLOSURE_S |                                | 54.66667
 #    KEYWORD_NEED |                                | 55.25
 #         VAR_LEX |                         "line" | 55.5
-#         OP_SEMI |                                | 55.75
+#         OP_SEMI |                              1 | 55.75
 #        BAREWORD |                          "say" | 56.16667
 #      PAREN_CALL |                                | 56.33333
 #          STRING | ["send: ",["VAR_LEX","line",56]] | 56.5
 #         PAREN_E |                                | 56.66667
-#         OP_SEMI |                                | 56.83333
+#         OP_SEMI |                              1 | 56.83333
 #        VAR_THIS |                         "sock" | 57.14286
 #        PROPERTY |                      "println" | 57.28571
 #      PAREN_CALL |                                | 57.42857
 #         VAR_LEX |                         "line" | 57.57143
 #         PAREN_E |                                | 57.71429
-#         OP_SEMI |                                | 57.85714
+#         OP_SEMI |                              1 | 57.85714
 #       CLOSURE_E |                                | 58.5
 #          METHOD |          {"name":"handleLine"} | 60.33333
 #       CLOSURE_S |                                | 60.66667
 #    KEYWORD_NEED |                                | 61.25
 #         VAR_LEX |                         "line" | 61.5
-#         OP_SEMI |                                | 61.75
+#         OP_SEMI |                              1 | 61.75
 #         VAR_LEX |                            "s" | 64.11111
 #       OP_ASSIGN |                                | 64.22222
 #         VAR_LEX |                         "line" | 64.33333
@@ -188,14 +188,14 @@
 #      PAREN_CALL |                                | 64.55556
 #          STRING |                          [" "] | 64.66667
 #         PAREN_E |                                | 64.77778
-#         OP_SEMI |                                | 64.88889
+#         OP_SEMI |                              1 | 64.88889
 #         VAR_LEX |                      "command" | 65.125
 #       OP_ASSIGN |                                | 65.25
 #         VAR_LEX |                            "s" | 65.375
 #     BRACKET_IDX |                                | 65.5
 #          NUMBER |                            "1" | 65.625
 #       BRACKET_E |                                | 65.75
-#         OP_SEMI |                                | 65.875
+#         OP_SEMI |                              1 | 65.875
 #      KEYWORD_IF |                                | 68.11111
 #         VAR_LEX |                            "s" | 68.22222
 #     BRACKET_IDX |                                | 68.33333
@@ -210,12 +210,12 @@
 #     BRACKET_IDX |                                | 69.5
 #          NUMBER |                            "0" | 69.625
 #       BRACKET_E |                                | 69.75
-#         OP_SEMI |                                | 69.875
+#         OP_SEMI |                              1 | 69.875
 #        BAREWORD |                          "say" | 71.16667
 #      PAREN_CALL |                                | 71.33333
 #          STRING | ["recv[",["VAR_LEX","command",71],"]: ",["VAR_LEX","line",71]] | 71.5
 #         PAREN_E |                                | 71.66667
-#         OP_SEMI |                                | 71.83333
+#         OP_SEMI |                              1 | 71.83333
 #         VAR_LEX |                     "handlers" | 74.14286
 #     BRACKET_IDX |                                | 74.28571
 #         VAR_LEX |                      "command" | 74.42857
@@ -233,9 +233,9 @@
 #        OP_COMMA |                                | 77.75
 #      PROP_VALUE |                            "s" | 78.25
 #         VAR_LEX |                            "s" | 78.5
-#        OP_COMMA |                                | 78.75
+#         OP_SEMI |                              1 | 78.75
 #         PAREN_E |                                | 79.33333
-#         OP_SEMI |                                | 79.66667
+#         OP_SEMI |                              1 | 79.66667
 #       CLOSURE_E |                                | 81.5
 #          METHOD |             {"name":"privmsg"} | 83.33333
 #       CLOSURE_S |                                | 83.66667
@@ -247,7 +247,7 @@
 #         VAR_LEX |                      "message" | 84.6
 #        OP_VALUE |                                | 84.7
 #        BAREWORD |                          "Str" | 84.8
-#         OP_SEMI |                                | 84.9
+#         OP_SEMI |                              1 | 84.9
 #     KEYWORD_FOR |                                | 85.1
 #         VAR_LEX |                         "line" | 85.2
 #      KEYWORD_IN |                                | 85.3
@@ -267,7 +267,7 @@
 #      PAREN_CALL |                                | 87.33333
 #          STRING | ["PRIVMSG ",["VAR_LEX","channel",87]," :",["VAR_LEX","line",87]] | 87.5
 #         PAREN_E |                                | 87.66667
-#         OP_SEMI |                                | 87.83333
+#         OP_SEMI |                              1 | 87.83333
 #       CLOSURE_E |                                | 88.5
 #       CLOSURE_E |                                | 89.5
 #        FUNCTION |       {"name":"_joinChannels"} | 91.33333
@@ -276,11 +276,11 @@
 #        VAR_THIS |              "_joinedChannels" | 94.5
 #        OP_VALUE |                                | 94.75
 #  KEYWORD_RETURN |                                | 95.33333
-#         OP_SEMI |                                | 95.66667
+#         OP_SEMI |                              1 | 95.66667
 #        VAR_THIS |              "_joinedChannels" | 96.2
 #       OP_ASSIGN |                                | 96.4
 #    KEYWORD_TRUE |                                | 96.6
-#         OP_SEMI |                                | 96.8
+#         OP_SEMI |                              1 | 96.8
 #      KEYWORD_IF |                                | 98.25
 #        VAR_THIS |                     "autojoin" | 98.5
 #       CLOSURE_S |                                | 98.75
@@ -293,7 +293,7 @@
 #      PAREN_CALL |                                | 100.33333
 #          STRING | ["JOIN ",["VAR_LEX","chan",100]] | 100.5
 #         PAREN_E |                                | 100.66667
-#         OP_SEMI |                                | 100.83333
+#         OP_SEMI |                              1 | 100.83333
 #       CLOSURE_E |                                | 101.5
 #       CLOSURE_E |                                | 102.5
 #       CLOSURE_E |                                | 103.5
@@ -301,7 +301,7 @@
 #       CLOSURE_S |                                | 107.66667
 #    KEYWORD_NEED |                                | 108.25
 #         VAR_LEX |                            "s" | 108.5
-#         OP_SEMI |                                | 108.75
+#         OP_SEMI |                              1 | 108.75
 #        VAR_THIS |                         "send" | 109.09091
 #      PAREN_CALL |                                | 109.18182
 #          STRING |                      ["PONG "] | 109.27273
@@ -311,7 +311,7 @@
 #          NUMBER |                            "1" | 109.63636
 #       BRACKET_E |                                | 109.72727
 #         PAREN_E |                                | 109.81818
-#         OP_SEMI |                                | 109.90909
+#         OP_SEMI |                              1 | 109.90909
 #       CLOSURE_E |                                | 110.5
 #        FUNCTION |      {"name":"_handleMessage"} | 112.33333
 #       CLOSURE_S |                                | 112.66667
@@ -319,7 +319,7 @@
 #         VAR_LEX |                         "line" | 113.33333
 #        OP_COMMA |                                | 113.5
 #         VAR_LEX |                            "s" | 113.66667
-#         OP_SEMI |                                | 113.83333
+#         OP_SEMI |                              1 | 113.83333
 #         VAR_LEX |                          "msg" | 116.1
 #       OP_ASSIGN |                                | 116.2
 #        BAREWORD |                          "IRC" | 116.3
@@ -328,11 +328,11 @@
 #      PAREN_CALL |                                | 116.6
 #         VAR_LEX |                         "line" | 116.7
 #         PAREN_E |                                | 116.8
-#         OP_SEMI |                                | 116.9
+#         OP_SEMI |                              1 | 116.9
 #        BAREWORD |                          "msg" | 117.2
 #       OP_RETURN |                                | 117.4
 #         VAR_LEX |                          "msg" | 117.6
-#         OP_SEMI |                                | 117.8
+#         OP_SEMI |                              1 | 117.8
 #      KEYWORD_IF |                                | 120.08333
 #         VAR_LEX |                          "msg" | 120.16667
 #        PROPERTY |                      "command" | 120.25
@@ -355,20 +355,20 @@
 #        OP_COMMA |                                | 123.75
 #      PROP_VALUE |                          "msg" | 124.25
 #         VAR_LEX |                          "msg" | 124.5
-#        OP_COMMA |                                | 124.75
+#         OP_SEMI |                              1 | 124.75
 #         PAREN_E |                                | 125.33333
-#         OP_SEMI |                                | 125.66667
+#         OP_SEMI |                              1 | 125.66667
 #       CLOSURE_E |                                | 127.5
 #        FUNCTION |       {"name":"_commandHello"} | 129.33333
 #       CLOSURE_S |                                | 129.66667
 #    KEYWORD_NEED |                                | 130.25
 #         VAR_LEX |                          "msg" | 130.5
-#         OP_SEMI |                                | 130.75
+#         OP_SEMI |                              1 | 130.75
 #         VAR_LEX |                     "nickname" | 131.16667
 #       OP_ASSIGN |                                | 131.33333
 #         VAR_LEX |                          "msg" | 131.5
 #        PROPERTY |                     "nickname" | 131.66667
-#         OP_SEMI |                                | 131.83333
+#         OP_SEMI |                              1 | 131.83333
 #        VAR_THIS |                      "privmsg" | 132.11111
 #      PAREN_CALL |                                | 132.22222
 #         VAR_LEX |                          "msg" | 132.33333
@@ -376,18 +376,18 @@
 #        OP_COMMA |                                | 132.55556
 #          STRING | ["Hi ",["VAR_LEX","nickname",132],"!"] | 132.66667
 #         PAREN_E |                                | 132.77778
-#         OP_SEMI |                                | 132.88889
+#         OP_SEMI |                              1 | 132.88889
 #       CLOSURE_E |                                | 133.5
 #        FUNCTION |         {"name":"_commandAdd"} | 135.33333
 #       CLOSURE_S |                                | 135.66667
 #    KEYWORD_NEED |                                | 136.25
 #         VAR_LEX |                          "msg" | 136.5
-#         OP_SEMI |                                | 136.75
+#         OP_SEMI |                              1 | 136.75
 #        BAREWORD |                      "inspect" | 137.16667
 #      PAREN_CALL |                                | 137.33333
 #         VAR_LEX |                          "msg" | 137.5
 #         PAREN_E |                                | 137.66667
-#         OP_SEMI |                                | 137.83333
+#         OP_SEMI |                              1 | 137.83333
 #         VAR_LEX |                      "trigger" | 140.11111
 #       OP_ASSIGN |                                | 140.22222
 #         VAR_LEX |                          "msg" | 140.33333
@@ -395,7 +395,7 @@
 #     BRACKET_IDX |                                | 140.55556
 #          NUMBER |                            "1" | 140.66667
 #       BRACKET_E |                                | 140.77778
-#         OP_SEMI |                                | 140.88889
+#         OP_SEMI |                              1 | 140.88889
 #         VAR_LEX |                     "response" | 141.11111
 #       OP_ASSIGN |                                | 141.22222
 #         VAR_LEX |                          "msg" | 141.33333
@@ -403,21 +403,21 @@
 #      PAREN_CALL |                                | 141.55556
 #          NUMBER |                            "2" | 141.66667
 #         PAREN_E |                                | 141.77778
-#         OP_SEMI |                                | 141.88889
+#         OP_SEMI |                              1 | 141.88889
 #        VAR_THIS |                     "factoids" | 144.125
 #     BRACKET_IDX |                                | 144.25
 #         VAR_LEX |                      "trigger" | 144.375
 #       BRACKET_E |                                | 144.5
 #       OP_ASSIGN |                                | 144.625
 #         VAR_LEX |                     "response" | 144.75
-#         OP_SEMI |                                | 144.875
+#         OP_SEMI |                              1 | 144.875
 #        VAR_THIS |                     "commands" | 145.125
 #     BRACKET_IDX |                                | 145.25
 #         VAR_LEX |                      "trigger" | 145.375
 #       BRACKET_E |                                | 145.5
 #       OP_ASSIGN |                                | 145.625
 #        BAREWORD |              "_commandFactoid" | 145.75
-#         OP_SEMI |                                | 145.875
+#         OP_SEMI |                              1 | 145.875
 #        VAR_THIS |                      "privmsg" | 147.11111
 #      PAREN_CALL |                                | 147.22222
 #         VAR_LEX |                          "msg" | 147.33333
@@ -425,13 +425,13 @@
 #        OP_COMMA |                                | 147.55556
 #          STRING | ["alright, associating .",["VAR_LEX","trigger",147]," with '",["VAR_LEX","response",147],"'"] | 147.66667
 #         PAREN_E |                                | 147.77778
-#         OP_SEMI |                                | 147.88889
+#         OP_SEMI |                              1 | 147.88889
 #       CLOSURE_E |                                | 148.5
 #        FUNCTION |     {"name":"_commandFactoid"} | 150.33333
 #       CLOSURE_S |                                | 150.66667
 #    KEYWORD_NEED |                                | 151.25
 #         VAR_LEX |                          "msg" | 151.5
-#         OP_SEMI |                                | 151.75
+#         OP_SEMI |                              1 | 151.75
 #         VAR_LEX |                     "response" | 152.11111
 #       OP_ASSIGN |                                | 152.22222
 #        VAR_THIS |                     "factoids" | 152.33333
@@ -439,7 +439,7 @@
 #         VAR_LEX |                          "msg" | 152.55556
 #        PROPERTY |                      "command" | 152.66667
 #       BRACKET_E |                                | 152.77778
-#         OP_SEMI |                                | 152.88889
+#         OP_SEMI |                              1 | 152.88889
 #        VAR_THIS |                      "privmsg" | 153.11111
 #      PAREN_CALL |                                | 153.22222
 #         VAR_LEX |                          "msg" | 153.33333
@@ -447,7 +447,7 @@
 #        OP_COMMA |                                | 153.55556
 #         VAR_LEX |                     "response" | 153.66667
 #         PAREN_E |                                | 153.77778
-#         OP_SEMI |                                | 153.88889
+#         OP_SEMI |                              1 | 153.88889
 #       CLOSURE_E |                                | 154.5
 # === Document Model ===
 #  Document './test/hello20/IRC/Bot.frt'

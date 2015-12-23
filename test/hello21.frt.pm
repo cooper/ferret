@@ -6,7 +6,7 @@
 #      PAREN_CALL |                                | 1.55556
 #          STRING |                          [" "] | 1.66667
 #         PAREN_E |                                | 1.77778
-#         OP_SEMI |                                | 1.88889
+#         OP_SEMI |                              1 | 1.88889
 #     KEYWORD_FOR |                                | 3.1
 #         PAREN_S |                                | 3.2
 #         VAR_LEX |                            "i" | 3.3
@@ -30,7 +30,7 @@
 #      PAREN_CALL |                                | 5.33333
 #          STRING | ["(",["VAR_LEX","i",5],") ",["VAR_LEX","part",5]] | 5.5
 #         PAREN_E |                                | 5.66667
-#         OP_SEMI |                                | 5.83333
+#         OP_SEMI |                              1 | 5.83333
 #       CLOSURE_E |                                | 6.5
 #       CLOSURE_E |                                | 7.5
 #     KEYWORD_FOR |                                | 9.08333
@@ -48,7 +48,7 @@
 #      PAREN_CALL |                                | 10.33333
 #         VAR_LEX |                         "part" | 10.5
 #         PAREN_E |                                | 10.66667
-#         OP_SEMI |                                | 10.83333
+#         OP_SEMI |                              1 | 10.83333
 #       CLOSURE_E |                                | 11.5
 # === Document Model ===
 #  Document './test/hello21.frt'

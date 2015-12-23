@@ -4,7 +4,7 @@
 #         PAREN_S |                                | 2.42857
 #        OP_VALUE |                                | 2.57143
 #         PAREN_E |                                | 2.71429
-#         OP_SEMI |                                | 2.85714
+#         OP_SEMI |                              1 | 2.85714
 #        BAREWORD |                        "Timer" | 5.1
 #        PROPERTY |                         "init" | 5.2
 #      PAREN_CALL |                                | 5.3
@@ -13,7 +13,7 @@
 #      PAREN_CALL |                                | 5.6
 #          NUMBER |                            "5" | 5.7
 #         PAREN_E |                                | 5.8
-#         OP_SEMI |                                | 5.9
+#         OP_SEMI |                              1 | 5.9
 #      KEYWORD_ON |                                | 7.125
 #         VAR_LEX |                          "obj" | 7.25
 #        PROPERTY |                         "once" | 7.375
@@ -25,7 +25,7 @@
 #      PAREN_CALL |                                | 8.33333
 #          STRING |                  ["it works!"] | 8.5
 #         PAREN_E |                                | 8.66667
-#         OP_SEMI |                                | 8.83333
+#         OP_SEMI |                              1 | 8.83333
 #       CLOSURE_E |                                | 9.5
 # === Document Model ===
 #  Document './test/hello17.frt'

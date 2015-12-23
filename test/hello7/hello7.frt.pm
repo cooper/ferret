@@ -17,17 +17,17 @@
 #      PROP_VALUE |                       "height" | 1.8
 #          NUMBER |                           "10" | 1.85
 #         PAREN_E |                                | 1.9
-#         OP_SEMI |                                | 1.95
+#         OP_SEMI |                              1 | 1.95
 #         VAR_LEX |                       "center" | 3.16667
 #       OP_ASSIGN |                                | 3.33333
 #         VAR_LEX |                         "rect" | 3.5
 #        PROPERTY |                       "center" | 3.66667
-#         OP_SEMI |                                | 3.83333
+#         OP_SEMI |                              1 | 3.83333
 #        BAREWORD |                          "say" | 4.16667
 #      PAREN_CALL |                                | 4.33333
 #          STRING | ["Center of rect: ",["VAR_LEX","center",4]] | 4.5
 #         PAREN_E |                                | 4.66667
-#         OP_SEMI |                                | 4.83333
+#         OP_SEMI |                              1 | 4.83333
 #        BAREWORD |                          "say" | 5.11111
 #      PAREN_CALL |                                | 5.22222
 #          STRING | ["Center distance from origin: "] | 5.33333
@@ -35,7 +35,7 @@
 #         VAR_LEX |                       "center" | 5.55556
 #        PROPERTY |           "distanceFromOrigin" | 5.66667
 #         PAREN_E |                                | 5.77778
-#         OP_SEMI |                                | 5.88889
+#         OP_SEMI |                              1 | 5.88889
 #         VAR_LEX |                      "otherPt" | 7.08333
 #       OP_ASSIGN |                                | 7.16667
 #        BAREWORD |                         "Math" | 7.25
@@ -46,7 +46,7 @@
 #        OP_COMMA |                                | 7.66667
 #          NUMBER |                            "2" | 7.75
 #         PAREN_E |                                | 7.83333
-#         OP_SEMI |                                | 7.91667
+#         OP_SEMI |                              1 | 7.91667
 #         VAR_LEX |                     "midpoint" | 8.07143
 #       OP_ASSIGN |                                | 8.14286
 #         PAREN_S |                                | 8.21429
@@ -59,12 +59,12 @@
 #         PAREN_E |                                | 8.71429
 #        PROPERTY |                       "pretty" | 8.78571
 #         OP_CALL |                                | 8.85714
-#         OP_SEMI |                                | 8.92857
+#         OP_SEMI |                              1 | 8.92857
 #        BAREWORD |                          "say" | 9.16667
 #      PAREN_CALL |                                | 9.33333
 #          STRING | ["Midpoint: ",["VAR_LEX","midpoint",9]] | 9.5
 #         PAREN_E |                                | 9.66667
-#         OP_SEMI |                                | 9.83333
+#         OP_SEMI |                              1 | 9.83333
 #        BAREWORD |                          "say" | 11.08333
 #      PAREN_CALL |                                | 11.16667
 #          STRING |      ["Square root of four: "] | 11.25
@@ -75,7 +75,7 @@
 #          NUMBER |                            "4" | 11.66667
 #         PAREN_E |                                | 11.75
 #         PAREN_E |                                | 11.83333
-#         OP_SEMI |                                | 11.91667
+#         OP_SEMI |                              1 | 11.91667
 # === Document Model ===
 #  Document './test/hello7/hello7.frt'
 #      Instruction

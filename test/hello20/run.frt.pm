@@ -14,14 +14,14 @@
 #      PROP_VALUE |                         "user" | 1.76471
 #          STRING |                     ["ferret"] | 1.82353
 #         PAREN_E |                                | 1.88235
-#         OP_SEMI |                                | 1.94118
+#         OP_SEMI |                              1 | 1.94118
 #         VAR_LEX |                          "bot" | 2.125
 #        PROPERTY |                     "autojoin" | 2.25
 #       OP_ASSIGN |                                | 2.375
 #       BRACKET_S |                                | 2.5
 #          STRING |                         ["#k"] | 2.625
 #       BRACKET_E |                                | 2.75
-#         OP_SEMI |                                | 2.875
+#         OP_SEMI |                              1 | 2.875
 #         VAR_LEX |                          "bot" | 4.14286
 #        PROPERTY |                   "addCommand" | 4.28571
 #      PAREN_CALL |                                | 4.42857
@@ -30,7 +30,7 @@
 #       CLOSURE_S |                                | 4.85714
 #    KEYWORD_NEED |                                | 5.25
 #         VAR_LEX |                          "msg" | 5.5
-#         OP_SEMI |                                | 5.75
+#         OP_SEMI |                              1 | 5.75
 #         VAR_LEX |                          "bot" | 6.1
 #        PROPERTY |                      "privmsg" | 6.2
 #      PAREN_CALL |                                | 6.3
@@ -39,7 +39,7 @@
 #        OP_COMMA |                                | 6.6
 #          STRING |             ["Ferret IRC bot"] | 6.7
 #         PAREN_E |                                | 6.8
-#         OP_SEMI |                                | 6.9
+#         OP_SEMI |                              1 | 6.9
 #       CLOSURE_E |                                | 7.5
 #         VAR_LEX |                          "bot" | 9.14286
 #        PROPERTY |                   "addCommand" | 9.28571
@@ -49,14 +49,14 @@
 #       CLOSURE_S |                                | 9.85714
 #    KEYWORD_NEED |                                | 10.25
 #         VAR_LEX |                          "msg" | 10.5
-#         OP_SEMI |                                | 10.75
+#         OP_SEMI |                              1 | 10.75
 #      KEYWORD_IF |                                | 11.16667
 #          OP_NOT |                                | 11.33333
 #         VAR_LEX |                          "msg" | 11.5
 #        PROPERTY |         "commandHasParameters" | 11.66667
 #        OP_VALUE |                                | 11.83333
 #  KEYWORD_RETURN |                                | 12.33333
-#         OP_SEMI |                                | 12.66667
+#         OP_SEMI |                              1 | 12.66667
 #         VAR_LEX |                            "c" | 13.06667
 #       OP_ASSIGN |                                | 13.13333
 #        BAREWORD |                     "COMPILER" | 13.2
@@ -70,7 +70,7 @@
 #         PAREN_E |                                | 13.73333
 #         PAREN_E |                                | 13.8
 #         PAREN_E |                                | 13.86667
-#         OP_SEMI |                                | 13.93333
+#         OP_SEMI |                              1 | 13.93333
 #         VAR_LEX |                          "res" | 14.1
 #       OP_ASSIGN |                                | 14.2
 #         VAR_LEX |                            "c" | 14.3
@@ -79,7 +79,7 @@
 #      PROP_VALUE |                       "pretty" | 14.6
 #    KEYWORD_TRUE |                                | 14.7
 #         PAREN_E |                                | 14.8
-#         OP_SEMI |                                | 14.9
+#         OP_SEMI |                              1 | 14.9
 #      KEYWORD_IF |                                | 15.2
 #         VAR_LEX |                          "res" | 15.4
 #        PROPERTY |                        "error" | 15.6
@@ -93,9 +93,9 @@
 #         VAR_LEX |                          "res" | 16.63636
 #        PROPERTY |                        "error" | 16.72727
 #         PAREN_E |                                | 16.81818
-#         OP_SEMI |                                | 16.90909
+#         OP_SEMI |                              1 | 16.90909
 #  KEYWORD_RETURN |                                | 17.33333
-#         OP_SEMI |                                | 17.66667
+#         OP_SEMI |                              1 | 17.66667
 #       CLOSURE_E |                                | 18.5
 #         VAR_LEX |                          "bot" | 19.09091
 #        PROPERTY |                      "privmsg" | 19.18182
@@ -106,7 +106,7 @@
 #         VAR_LEX |                          "res" | 19.63636
 #        PROPERTY |                       "pretty" | 19.72727
 #         PAREN_E |                                | 19.81818
-#         OP_SEMI |                                | 19.90909
+#         OP_SEMI |                              1 | 19.90909
 #       CLOSURE_E |                                | 20.5
 #         VAR_LEX |                          "bot" | 22.14286
 #        PROPERTY |                   "addCommand" | 22.28571
@@ -116,14 +116,14 @@
 #       CLOSURE_S |                                | 22.85714
 #    KEYWORD_NEED |                                | 23.25
 #         VAR_LEX |                          "msg" | 23.5
-#         OP_SEMI |                                | 23.75
+#         OP_SEMI |                              1 | 23.75
 #      KEYWORD_IF |                                | 24.16667
 #          OP_NOT |                                | 24.33333
 #         VAR_LEX |                          "msg" | 24.5
 #        PROPERTY |         "commandHasParameters" | 24.66667
 #        OP_VALUE |                                | 24.83333
 #  KEYWORD_RETURN |                                | 25.33333
-#         OP_SEMI |                                | 25.66667
+#         OP_SEMI |                              1 | 25.66667
 #         VAR_LEX |                            "c" | 26.06667
 #       OP_ASSIGN |                                | 26.13333
 #        BAREWORD |                     "COMPILER" | 26.2
@@ -137,7 +137,7 @@
 #         PAREN_E |                                | 26.73333
 #         PAREN_E |                                | 26.8
 #         PAREN_E |                                | 26.86667
-#         OP_SEMI |                                | 26.93333
+#         OP_SEMI |                              1 | 26.93333
 #         VAR_LEX |                          "res" | 27.1
 #       OP_ASSIGN |                                | 27.2
 #         VAR_LEX |                            "c" | 27.3
@@ -146,7 +146,7 @@
 #      PROP_VALUE |                       "pretty" | 27.6
 #    KEYWORD_TRUE |                                | 27.7
 #         PAREN_E |                                | 27.8
-#         OP_SEMI |                                | 27.9
+#         OP_SEMI |                              1 | 27.9
 #      KEYWORD_IF |                                | 28.2
 #         VAR_LEX |                          "res" | 28.4
 #        PROPERTY |                        "error" | 28.6
@@ -160,9 +160,9 @@
 #         VAR_LEX |                          "res" | 29.63636
 #        PROPERTY |                        "error" | 29.72727
 #         PAREN_E |                                | 29.81818
-#         OP_SEMI |                                | 29.90909
+#         OP_SEMI |                              1 | 29.90909
 #  KEYWORD_RETURN |                                | 30.33333
-#         OP_SEMI |                                | 30.66667
+#         OP_SEMI |                              1 | 30.66667
 #       CLOSURE_E |                                | 31.5
 #         VAR_LEX |                          "bot" | 32.09091
 #        PROPERTY |                      "privmsg" | 32.18182
@@ -173,7 +173,7 @@
 #         VAR_LEX |                          "res" | 32.63636
 #        PROPERTY |                       "pretty" | 32.72727
 #         PAREN_E |                                | 32.81818
-#         OP_SEMI |                                | 32.90909
+#         OP_SEMI |                              1 | 32.90909
 #       CLOSURE_E |                                | 33.5
 #         VAR_LEX |                          "bot" | 35.14286
 #        PROPERTY |                   "addCommand" | 35.28571
@@ -183,14 +183,14 @@
 #       CLOSURE_S |                                | 35.85714
 #    KEYWORD_NEED |                                | 36.25
 #         VAR_LEX |                          "msg" | 36.5
-#         OP_SEMI |                                | 36.75
+#         OP_SEMI |                              1 | 36.75
 #      KEYWORD_IF |                                | 37.16667
 #          OP_NOT |                                | 37.33333
 #         VAR_LEX |                          "msg" | 37.5
 #        PROPERTY |         "commandHasParameters" | 37.66667
 #        OP_VALUE |                                | 37.83333
 #  KEYWORD_RETURN |                                | 38.33333
-#         OP_SEMI |                                | 38.66667
+#         OP_SEMI |                              1 | 38.66667
 #         VAR_LEX |                          "res" | 39.05556
 #       OP_ASSIGN |                                | 39.11111
 #        BAREWORD |                     "COMPILER" | 39.16667
@@ -207,7 +207,7 @@
 #        PROPERTY |                         "eval" | 39.77778
 #      PAREN_CALL |                                | 39.83333
 #         PAREN_E |                                | 39.88889
-#         OP_SEMI |                                | 39.94444
+#         OP_SEMI |                              1 | 39.94444
 #      KEYWORD_IF |                                | 40.2
 #         VAR_LEX |                          "res" | 40.4
 #        PROPERTY |                        "error" | 40.6
@@ -221,9 +221,9 @@
 #         VAR_LEX |                          "res" | 41.63636
 #        PROPERTY |                        "error" | 41.72727
 #         PAREN_E |                                | 41.81818
-#         OP_SEMI |                                | 41.90909
+#         OP_SEMI |                              1 | 41.90909
 #  KEYWORD_RETURN |                                | 42.33333
-#         OP_SEMI |                                | 42.66667
+#         OP_SEMI |                              1 | 42.66667
 #       CLOSURE_E |                                | 43.5
 #         VAR_LEX |                       "string" | 44.07143
 #       OP_ASSIGN |                                | 44.14286
@@ -237,7 +237,7 @@
 #    KEYWORD_TRUE |                                | 44.71429
 #         PAREN_E |                                | 44.78571
 #        PROPERTY |                       "string" | 44.85714
-#         OP_SEMI |                                | 44.92857
+#         OP_SEMI |                              1 | 44.92857
 #         VAR_LEX |                          "bot" | 45.1
 #        PROPERTY |                      "privmsg" | 45.2
 #      PAREN_CALL |                                | 45.3
@@ -246,7 +246,7 @@
 #        OP_COMMA |                                | 45.6
 #         VAR_LEX |                       "string" | 45.7
 #         PAREN_E |                                | 45.8
-#         OP_SEMI |                                | 45.9
+#         OP_SEMI |                              1 | 45.9
 #       CLOSURE_E |                                | 46.5
 #         VAR_LEX |                          "bot" | 48.11111
 #        PROPERTY |                   "addCommand" | 48.22222
@@ -255,7 +255,7 @@
 #        OP_COMMA |                                | 48.55556
 #        BAREWORD |                   "handlePerl" | 48.66667
 #         PAREN_E |                                | 48.77778
-#         OP_SEMI |                                | 48.88889
+#         OP_SEMI |                              1 | 48.88889
 #         VAR_LEX |                          "bot" | 49.11111
 #        PROPERTY |                   "addCommand" | 49.22222
 #      PAREN_CALL |                                | 49.33333
@@ -263,19 +263,19 @@
 #        OP_COMMA |                                | 49.55556
 #        BAREWORD |                   "handlePerl" | 49.66667
 #         PAREN_E |                                | 49.77778
-#         OP_SEMI |                                | 49.88889
+#         OP_SEMI |                              1 | 49.88889
 #        FUNCTION |          {"name":"handlePerl"} | 51.33333
 #       CLOSURE_S |                                | 51.66667
 #    KEYWORD_NEED |                                | 52.25
 #         VAR_LEX |                          "msg" | 52.5
-#         OP_SEMI |                                | 52.75
+#         OP_SEMI |                              1 | 52.75
 #      KEYWORD_IF |                                | 53.16667
 #          OP_NOT |                                | 53.33333
 #         VAR_LEX |                          "msg" | 53.5
 #        PROPERTY |         "commandHasParameters" | 53.66667
 #        OP_VALUE |                                | 53.83333
 #  KEYWORD_RETURN |                                | 54.33333
-#         OP_SEMI |                                | 54.66667
+#         OP_SEMI |                              1 | 54.66667
 #         VAR_LEX |                            "c" | 55.06667
 #       OP_ASSIGN |                                | 55.13333
 #        BAREWORD |                     "COMPILER" | 55.2
@@ -289,7 +289,7 @@
 #         PAREN_E |                                | 55.73333
 #         PAREN_E |                                | 55.8
 #         PAREN_E |                                | 55.86667
-#         OP_SEMI |                                | 55.93333
+#         OP_SEMI |                              1 | 55.93333
 #         VAR_LEX |                          "res" | 56.08333
 #       OP_ASSIGN |                                | 56.16667
 #         VAR_LEX |                            "c" | 56.25
@@ -300,7 +300,7 @@
 #        OP_EQUAL |                                | 56.66667
 #          STRING |                          ["p"] | 56.75
 #         PAREN_E |                                | 56.83333
-#         OP_SEMI |                                | 56.91667
+#         OP_SEMI |                              1 | 56.91667
 #      KEYWORD_IF |                                | 57.2
 #         VAR_LEX |                          "res" | 57.4
 #        PROPERTY |                        "error" | 57.6
@@ -314,9 +314,9 @@
 #         VAR_LEX |                          "res" | 58.63636
 #        PROPERTY |                        "error" | 58.72727
 #         PAREN_E |                                | 58.81818
-#         OP_SEMI |                                | 58.90909
+#         OP_SEMI |                              1 | 58.90909
 #  KEYWORD_RETURN |                                | 59.33333
-#         OP_SEMI |                                | 59.66667
+#         OP_SEMI |                              1 | 59.66667
 #       CLOSURE_E |                                | 60.5
 #         VAR_LEX |                          "bot" | 61.09091
 #        PROPERTY |                      "privmsg" | 61.18182
@@ -327,7 +327,7 @@
 #         VAR_LEX |                          "res" | 61.63636
 #        PROPERTY |                         "perl" | 61.72727
 #         PAREN_E |                                | 61.81818
-#         OP_SEMI |                                | 61.90909
+#         OP_SEMI |                              1 | 61.90909
 #       CLOSURE_E |                                | 62.5
 #        FUNCTION |     {"name":"convertNewlines"} | 64.33333
 #       CLOSURE_S |                                | 64.66667
@@ -335,7 +335,7 @@
 #         VAR_LEX |                       "string" | 65.33333
 #        OP_VALUE |                                | 65.5
 #        BAREWORD |                          "Str" | 65.66667
-#         OP_SEMI |                                | 65.83333
+#         OP_SEMI |                              1 | 65.83333
 #  KEYWORD_RETURN |                                | 66.08333
 #         VAR_LEX |                       "string" | 66.16667
 #        PROPERTY |                        "split" | 66.25
@@ -346,13 +346,13 @@
 #      PAREN_CALL |                                | 66.66667
 #          STRING |                         ["\n"] | 66.75
 #         PAREN_E |                                | 66.83333
-#         OP_SEMI |                                | 66.91667
+#         OP_SEMI |                              1 | 66.91667
 #       CLOSURE_E |                                | 67.5
 #         VAR_LEX |                          "bot" | 69.16667
 #        PROPERTY |                      "connect" | 69.33333
 #      PAREN_CALL |                                | 69.5
 #         PAREN_E |                                | 69.66667
-#         OP_SEMI |                                | 69.83333
+#         OP_SEMI |                              1 | 69.83333
 # === Document Model ===
 #  Document './test/hello20/run.frt'
 #      Instruction

@@ -4,10 +4,10 @@
 #         PAREN_S |                                | 1.42857
 #        OP_VALUE |                                | 1.57143
 #         PAREN_E |                                | 1.71429
-#         OP_SEMI |                                | 1.85714
+#         OP_SEMI |                              1 | 1.85714
 #  KEYWORD_WEAKEN |                                | 2.25
 #         VAR_LEX |                            "x" | 2.5
-#         OP_SEMI |                                | 2.75
+#         OP_SEMI |                              1 | 2.75
 # === Document Model ===
 #  Document './test/hello23/Second.frt'
 #      Instruction

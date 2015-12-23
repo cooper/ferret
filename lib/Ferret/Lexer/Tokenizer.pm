@@ -41,27 +41,13 @@ my %no_value = map { $_ => 1 } qw(
 
 # inject semicolons after these at the end of a line.
 my %semi_follows = map { $_ => 1 } qw(
-    PAREN_E
-    VAR_LEX
-    BAREWORD
-    STRING
-    KEYWORD_TRUE
-    KEYWORD_RETURN
-    KEYWORD_FALSE
-    KEYWORD_UNDEFINED
-    BRACKET_E
-    PAREN_E
-    PROPERTY
-    NUMBER
-    VAR_THIS
-    VAR_SPEC
-    VAR_SET
-    VAR_SYM
-    OP_CALL
-    OP_ELLIP
-
+    PAREN_E         BRACKET_E       PAREN_E
+    PROPERTY        NUMBER          STRING
+    BAREWORD        VAR_THIS        VAR_SPEC
+    VAR_SET         VAR_SYM         VAR_LEX
+    OP_CALL         OP_ELLIP        KEYWORD_RETURN
+    KEYWORD_TRUE    KEYWORD_FALSE   KEYWORD_UNDEFINED
 );
-
 
 # reused formats
 my $prop_reg    = qr/[A-Za-z_]+[A-Za-z0-9_]*/;
@@ -456,7 +442,7 @@ sub _tokenize {
     foreach my $line (@lines) {
         my $last = $line->[-1] or next;
         next unless $semi_follows{ $last->[0] };
-        push @$line, [ 'OP_SEMI', undef, $last->[2] ];
+        push @$line, [ 'OP_SEMI', 1, $last->[2] ];
         $all_on_line[ $last->[2] ]++;
     }
 

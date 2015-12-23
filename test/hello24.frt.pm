@@ -8,13 +8,13 @@
 #      PAREN_CALL |                                | 4.33333
 #          STRING |          ["been five seconds"] | 4.5
 #         PAREN_E |                                | 4.66667
-#         OP_SEMI |                                | 4.83333
+#         OP_SEMI |                              1 | 4.83333
 #       CLOSURE_E |                                | 5.5
 #        BAREWORD |                          "say" | 7.16667
 #      PAREN_CALL |                                | 7.33333
 #          STRING |                 ["waiting..."] | 7.5
 #         PAREN_E |                                | 7.66667
-#         OP_SEMI |                                | 7.83333
+#         OP_SEMI |                              1 | 7.83333
 #        BAREWORD |                          "say" | 12.14286
 #      PAREN_CALL |                                | 12.28571
 #        BAREWORD |                    "something" | 12.42857
@@ -23,22 +23,22 @@
 #       CLOSURE_S |                                | 12.85714
 #  KEYWORD_RETURN |                                | 13.25
 #          STRING |             ["any second now"] | 13.5
-#         OP_SEMI |                                | 13.75
+#         OP_SEMI |                              1 | 13.75
 #       CLOSURE_E |                                | 14.2
 #        PROPERTY |                      "message" | 14.4
 #         PAREN_E |                                | 14.6
-#         OP_SEMI |                                | 14.8
+#         OP_SEMI |                              1 | 14.8
 #        FUNCTION |           {"name":"something"} | 16.33333
 #       CLOSURE_S |                                | 16.66667
 #    KEYWORD_NEED |                                | 17.25
 #         VAR_LEX |                         "code" | 17.5
-#         OP_SEMI |                                | 17.75
+#         OP_SEMI |                              1 | 17.75
 #        BAREWORD |                      "message" | 18.14286
 #       OP_RETURN |                                | 18.28571
 #         VAR_LEX |                         "code" | 18.42857
 #      PAREN_CALL |                                | 18.57143
 #         PAREN_E |                                | 18.71429
-#         OP_SEMI |                                | 18.85714
+#         OP_SEMI |                              1 | 18.85714
 #       CLOSURE_E |                                | 19.5
 # === Document Model ===
 #  Document './test/hello24.frt'

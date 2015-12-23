@@ -5,25 +5,25 @@
 #         VAR_LEX |                          "who" | 2.33333
 #        OP_VALUE |                                | 2.5
 #        BAREWORD |                          "Str" | 2.66667
-#         OP_SEMI |                                | 2.83333
+#         OP_SEMI |                              1 | 2.83333
 #        BAREWORD |                          "say" | 3.16667
 #      PAREN_CALL |                                | 3.33333
 #          STRING | ["Hello ",["VAR_LEX","who",3],"!"] | 3.5
 #         PAREN_E |                                | 3.66667
-#         OP_SEMI |                                | 3.83333
+#         OP_SEMI |                              1 | 3.83333
 #       CLOSURE_E |                                | 4.5
 #        BAREWORD |                     "sayHello" | 6.14286
 #        OP_MAYBE |                                | 6.28571
 #      PAREN_CALL |                                | 6.42857
 #          STRING |                      ["World"] | 6.57143
 #         PAREN_E |                                | 6.71429
-#         OP_SEMI |                                | 6.85714
+#         OP_SEMI |                              1 | 6.85714
 #        BAREWORD |                   "sayGoodbye" | 7.14286
 #        OP_MAYBE |                                | 7.28571
 #      PAREN_CALL |                                | 7.42857
 #          STRING |                      ["World"] | 7.57143
 #         PAREN_E |                                | 7.71429
-#         OP_SEMI |                                | 7.85714
+#         OP_SEMI |                              1 | 7.85714
 # === Document Model ===
 #  Document './test/hello9.frt'
 #      Function 'sayHello'

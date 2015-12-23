@@ -19,7 +19,7 @@
 #        VAR_THIS |                       "height" | 5.77778
 #        OP_VALUE |                                | 5.83333
 #        BAREWORD |                          "Num" | 5.88889
-#         OP_SEMI |                                | 5.94444
+#         OP_SEMI |                              1 | 5.94444
 #        VAR_THIS |                       "origin" | 6.1
 #       OP_ASSIGN |                                | 6.2
 #        BAREWORD |                        "Point" | 6.3
@@ -28,9 +28,9 @@
 #        OP_COMMA |                                | 6.6
 #         VAR_LEX |                            "y" | 6.7
 #         PAREN_E |                                | 6.8
-#         OP_SEMI |                                | 6.9
+#         OP_SEMI |                              1 | 6.9
 #       CLOSURE_E |                                | 7.5
-#          METHOD | {"p_set":null,"name":"vertices","is_prop":1} | 9.33333
+#          METHOD | {"p_set":null,"is_prop":1,"name":"vertices"} | 9.33333
 #       CLOSURE_S |                                | 9.66667
 #  KEYWORD_RETURN |                                | 10.33333
 #       BRACKET_S |                                | 10.66667
@@ -41,17 +41,17 @@
 #        VAR_THIS |                   "bottomLeft" | 13.33333
 #        OP_COMMA |                                | 13.66667
 #        VAR_THIS |                  "bottomRight" | 14.33333
-#        OP_COMMA |                                | 14.66667
+#         OP_SEMI |                              1 | 14.66667
 #       BRACKET_E |                                | 15.33333
-#         OP_SEMI |                                | 15.66667
+#         OP_SEMI |                              1 | 15.66667
 #       CLOSURE_E |                                | 16.5
 #          METHOD | {"p_set":null,"is_prop":1,"name":"bottomLeft"} | 18.33333
 #       CLOSURE_S |                                | 18.66667
 #  KEYWORD_RETURN |                                | 19.25
 #        VAR_THIS |                       "origin" | 19.5
-#         OP_SEMI |                                | 19.75
+#         OP_SEMI |                              1 | 19.75
 #       CLOSURE_E |                                | 20.5
-#          METHOD | {"p_set":null,"is_prop":1,"name":"bottomRight"} | 22.33333
+#          METHOD | {"is_prop":1,"name":"bottomRight","p_set":null} | 22.33333
 #       CLOSURE_S |                                | 22.66667
 #  KEYWORD_RETURN |                                | 23.07692
 #        BAREWORD |                        "Point" | 23.15385
@@ -64,7 +64,7 @@
 #        VAR_THIS |                       "origin" | 23.69231
 #        PROPERTY |                            "y" | 23.76923
 #         PAREN_E |                                | 23.84615
-#         OP_SEMI |                                | 23.92308
+#         OP_SEMI |                              1 | 23.92308
 #       CLOSURE_E |                                | 24.5
 #          METHOD | {"p_set":null,"is_prop":1,"name":"topLeft"} | 26.33333
 #       CLOSURE_S |                                | 26.66667
@@ -79,9 +79,9 @@
 #          OP_ADD |                                | 27.69231
 #        VAR_THIS |                       "height" | 27.76923
 #         PAREN_E |                                | 27.84615
-#         OP_SEMI |                                | 27.92308
+#         OP_SEMI |                              1 | 27.92308
 #       CLOSURE_E |                                | 28.5
-#          METHOD | {"is_prop":1,"name":"topRight","p_set":null} | 30.33333
+#          METHOD | {"name":"topRight","is_prop":1,"p_set":null} | 30.33333
 #       CLOSURE_S |                                | 30.66667
 #  KEYWORD_RETURN |                                | 31.06667
 #        BAREWORD |                        "Point" | 31.13333
@@ -96,9 +96,9 @@
 #          OP_ADD |                                | 31.73333
 #        VAR_THIS |                       "height" | 31.8
 #         PAREN_E |                                | 31.86667
-#         OP_SEMI |                                | 31.93333
+#         OP_SEMI |                              1 | 31.93333
 #       CLOSURE_E |                                | 32.5
-#          METHOD | {"p_set":null,"name":"bottomLine","is_prop":1} | 34.33333
+#          METHOD | {"is_prop":1,"name":"bottomLine","p_set":null} | 34.33333
 #       CLOSURE_S |                                | 34.66667
 #  KEYWORD_RETURN |                                | 35.11111
 #        BAREWORD |                         "Line" | 35.22222
@@ -107,9 +107,9 @@
 #        OP_COMMA |                                | 35.55556
 #        VAR_THIS |                  "bottomRight" | 35.66667
 #         PAREN_E |                                | 35.77778
-#         OP_SEMI |                                | 35.88889
+#         OP_SEMI |                              1 | 35.88889
 #       CLOSURE_E |                                | 36.5
-#          METHOD | {"p_set":null,"name":"topLine","is_prop":1} | 38.33333
+#          METHOD | {"name":"topLine","is_prop":1,"p_set":null} | 38.33333
 #       CLOSURE_S |                                | 38.66667
 #  KEYWORD_RETURN |                                | 39.11111
 #        BAREWORD |                         "Line" | 39.22222
@@ -118,7 +118,7 @@
 #        OP_COMMA |                                | 39.55556
 #        VAR_THIS |                     "topRight" | 39.66667
 #         PAREN_E |                                | 39.77778
-#         OP_SEMI |                                | 39.88889
+#         OP_SEMI |                              1 | 39.88889
 #       CLOSURE_E |                                | 40.5
 #          METHOD | {"name":"center","is_prop":1,"p_set":null} | 42.33333
 #       CLOSURE_S |                                | 42.66667
@@ -130,7 +130,7 @@
 #        VAR_THIS |                        "width" | 43.6
 #          OP_MUL |                                | 43.7
 #          NUMBER |                          "0.5" | 43.8
-#         OP_SEMI |                                | 43.9
+#         OP_SEMI |                              1 | 43.9
 #         VAR_LEX |                            "y" | 44.1
 #       OP_ASSIGN |                                | 44.2
 #        VAR_THIS |                       "origin" | 44.3
@@ -139,7 +139,7 @@
 #        VAR_THIS |                       "height" | 44.6
 #          OP_MUL |                                | 44.7
 #          NUMBER |                          "0.5" | 44.8
-#         OP_SEMI |                                | 44.9
+#         OP_SEMI |                              1 | 44.9
 #  KEYWORD_RETURN |                                | 45.11111
 #        BAREWORD |                        "Point" | 45.22222
 #      PAREN_CALL |                                | 45.33333
@@ -147,21 +147,21 @@
 #        OP_COMMA |                                | 45.55556
 #         VAR_LEX |                            "y" | 45.66667
 #         PAREN_E |                                | 45.77778
-#         OP_SEMI |                                | 45.88889
+#         OP_SEMI |                              1 | 45.88889
 #       CLOSURE_E |                                | 46.5
 #          METHOD |         {"name":"description"} | 48.33333
 #       CLOSURE_S |                                | 48.66667
 #         VAR_LEX |                            "o" | 49.2
 #       OP_ASSIGN |                                | 49.4
 #        VAR_THIS |                       "origin" | 49.6
-#         OP_SEMI |                                | 49.8
+#         OP_SEMI |                              1 | 49.8
 #         VAR_LEX |                            "c" | 50.2
 #       OP_ASSIGN |                                | 50.4
 #        VAR_THIS |                       "center" | 50.6
-#         OP_SEMI |                                | 50.8
+#         OP_SEMI |                              1 | 50.8
 #  KEYWORD_RETURN |                                | 51.25
 #          STRING | ["Rect( Origin(",["VAR_LEX","o",51],["PROPERTY","x",51],", ",["VAR_LEX","o",51],["PROPERTY","y",51],") Center(",["VAR_LEX","c",51],["PROPERTY","x",51],", ",["VAR_LEX","c",51],["PROPERTY","y",51],") Width = ",["VAR_THIS","width",51]," Height = ",["VAR_THIS","height",51]," )"] | 51.5
-#         OP_SEMI |                                | 51.75
+#         OP_SEMI |                              1 | 51.75
 #       CLOSURE_E |                                | 52.5
 # === Document Model ===
 #  Document './std/Math/Rect.frt'

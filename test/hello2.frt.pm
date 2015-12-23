@@ -7,7 +7,7 @@
 #          STRING |               ["Hello World!"] | 1.6
 #         PAREN_E |                                | 1.7
 #         PAREN_E |                                | 1.8
-#         OP_SEMI |                                | 1.9
+#         OP_SEMI |                              1 | 1.9
 # === Document Model ===
 #  Document './test/hello2.frt'
 #      Instruction

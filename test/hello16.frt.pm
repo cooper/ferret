@@ -2,7 +2,7 @@
 #         VAR_LEX |                          "obj" | 2.2
 #       OP_ASSIGN |                                | 2.4
 #          STRING |                         ["hi"] | 2.6
-#         OP_SEMI |                                | 2.8
+#         OP_SEMI |                              1 | 2.8
 #        BAREWORD |                         "Math" | 9.07143
 #         OP_PACK |                                | 9.14286
 #        BAREWORD |                        "Point" | 9.21429
@@ -15,14 +15,14 @@
 #        OP_COMMA |                                | 9.71429
 #          NUMBER |                            "1" | 9.78571
 #         PAREN_E |                                | 9.85714
-#         OP_SEMI |                                | 9.92857
+#         OP_SEMI |                              1 | 9.92857
 #        BAREWORD |                          "say" | 11.125
 #      PAREN_CALL |                                | 11.25
 #         VAR_LEX |                          "obj" | 11.375
 #        PROPERTY |                       "pretty" | 11.5
 #         OP_CALL |                                | 11.625
 #         PAREN_E |                                | 11.75
-#         OP_SEMI |                                | 11.875
+#         OP_SEMI |                              1 | 11.875
 # === Document Model ===
 #  Document './test/hello16.frt'
 #      Instruction

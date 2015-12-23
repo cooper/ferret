@@ -5,10 +5,10 @@
 #         VAR_LEX |                            "x" | 2.33333
 #        OP_COMMA |                                | 2.5
 #         VAR_LEX |                            "y" | 2.66667
-#         OP_SEMI |                                | 2.83333
+#         OP_SEMI |                              1 | 2.83333
 #    KEYWORD_WANT |                                | 3.25
 #         VAR_LEX |                            "z" | 3.5
-#         OP_SEMI |                                | 3.75
+#         OP_SEMI |                              1 | 3.75
 #         VAR_LEX |                        "point" | 4.25
 #       OP_ASSIGN |                                | 4.5
 #         PAREN_S |                                | 4.75
@@ -17,13 +17,13 @@
 #        OP_COMMA |                                | 5.75
 #      PROP_VALUE |                            "y" | 6.25
 #         VAR_LEX |                            "y" | 6.5
-#        OP_COMMA |                                | 6.75
+#         OP_SEMI |                              1 | 6.75
 #         PAREN_E |                                | 7.33333
-#         OP_SEMI |                                | 7.66667
+#         OP_SEMI |                              1 | 7.66667
 #        BAREWORD |                        "point" | 8.2
 #       OP_RETURN |                                | 8.4
 #         VAR_LEX |                        "point" | 8.6
-#         OP_SEMI |                                | 8.8
+#         OP_SEMI |                              1 | 8.8
 #       CLOSURE_E |                                | 9.5
 #         VAR_LEX |                           "pt" | 11.09091
 #       OP_ASSIGN |                                | 11.18182
@@ -34,7 +34,7 @@
 #          NUMBER |                            "3" | 11.63636
 #         PAREN_E |                                | 11.72727
 #        PROPERTY |                        "point" | 11.81818
-#         OP_SEMI |                                | 11.90909
+#         OP_SEMI |                              1 | 11.90909
 #        BAREWORD |                          "say" | 12.0625
 #      PAREN_CALL |                                | 12.125
 #          STRING |                     ["Point("] | 12.1875
@@ -49,7 +49,7 @@
 #          OP_ADD |                                | 12.75
 #          STRING |                          [")"] | 12.8125
 #         PAREN_E |                                | 12.875
-#         OP_SEMI |                                | 12.9375
+#         OP_SEMI |                              1 | 12.9375
 #         VAR_LEX |                      "numbers" | 14.05882
 #       OP_ASSIGN |                                | 14.11765
 #       BRACKET_S |                                | 14.17647
@@ -65,18 +65,18 @@
 #          OP_ADD |                                | 14.76471
 #          NUMBER |                            "1" | 14.82353
 #       BRACKET_E |                                | 14.88235
-#         OP_SEMI |                                | 14.94118
+#         OP_SEMI |                              1 | 14.94118
 #         VAR_LEX |                   "emptyArray" | 16.16667
 #       OP_ASSIGN |                                | 16.33333
 #       BRACKET_S |                                | 16.5
 #       BRACKET_E |                                | 16.66667
-#         OP_SEMI |                                | 16.83333
+#         OP_SEMI |                              1 | 16.83333
 #         VAR_LEX |                    "emptyHash" | 17.14286
 #       OP_ASSIGN |                                | 17.28571
 #       BRACKET_S |                                | 17.42857
 #        OP_VALUE |                                | 17.57143
 #       BRACKET_E |                                | 17.71429
-#         OP_SEMI |                                | 17.85714
+#         OP_SEMI |                              1 | 17.85714
 # === Document Model ===
 #  Document './test/hello4.frt'
 #      Function 'makePoint'

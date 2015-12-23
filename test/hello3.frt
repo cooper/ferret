@@ -2,7 +2,7 @@ helloWorld(name2: "USA", name1: "World")
 
 helloWorld(
     name1: "Earth",
-    name2: "Humans",
+    name2: "Humans"
 )
 
 helloWorld("Benjamin", "George")

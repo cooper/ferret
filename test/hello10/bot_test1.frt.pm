@@ -12,12 +12,12 @@
 #      PROP_VALUE |                         "user" | 1.73333
 #          STRING |                        ["bot"] | 1.8
 #         PAREN_E |                                | 1.86667
-#         OP_SEMI |                                | 1.93333
+#         OP_SEMI |                              1 | 1.93333
 #         VAR_LEX |                          "bot" | 2.16667
 #        PROPERTY |                      "connect" | 2.33333
 #      PAREN_CALL |                                | 2.5
 #         PAREN_E |                                | 2.66667
-#         OP_SEMI |                                | 2.83333
+#         OP_SEMI |                              1 | 2.83333
 # === Document Model ===
 #  Document './test/hello10/bot_test1.frt'
 #      Instruction

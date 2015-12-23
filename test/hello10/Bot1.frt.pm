@@ -14,7 +14,7 @@
 #        VAR_THIS |                         "user" | 4.71429
 #        OP_VALUE |                                | 4.78571
 #        BAREWORD |                          "Str" | 4.85714
-#         OP_SEMI |                                | 4.92857
+#         OP_SEMI |                              1 | 4.92857
 #    KEYWORD_WANT |                                | 5.07143
 #        VAR_THIS |                         "port" | 5.14286
 #        OP_VALUE |                                | 5.21429
@@ -27,7 +27,7 @@
 #        BAREWORD |                          "Str" | 5.71429
 #       OP_ASSIGN |                                | 5.78571
 #          STRING |                 ["Ferret IRC"] | 5.85714
-#         OP_SEMI |                                | 5.92857
+#         OP_SEMI |                              1 | 5.92857
 #        VAR_THIS |                         "sock" | 8.05882
 #       OP_ASSIGN |                                | 8.11765
 #        BAREWORD |                       "Socket" | 8.17647
@@ -43,7 +43,7 @@
 #      PROP_VALUE |                     "readMode" | 8.76471
 #         VAR_SYM |                         "line" | 8.82353
 #         PAREN_E |                                | 8.88235
-#         OP_SEMI |                                | 8.94118
+#         OP_SEMI |                              1 | 8.94118
 #      KEYWORD_ON |                                | 11.2
 #        VAR_THIS |                         "sock" | 11.4
 #        PROPERTY |                    "connected" | 11.6
@@ -52,12 +52,12 @@
 #      PAREN_CALL |                                | 12.33333
 #          STRING | ["USER ",["VAR_THIS","user",12]," ","*"," ","*"," :",["VAR_THIS","real",12]] | 12.5
 #         PAREN_E |                                | 12.66667
-#         OP_SEMI |                                | 12.83333
+#         OP_SEMI |                              1 | 12.83333
 #        VAR_THIS |                         "send" | 13.16667
 #      PAREN_CALL |                                | 13.33333
 #          STRING | ["NICK ",["VAR_THIS","nick",13]] | 13.5
 #         PAREN_E |                                | 13.66667
-#         OP_SEMI |                                | 13.83333
+#         OP_SEMI |                              1 | 13.83333
 #       CLOSURE_E |                                | 14.5
 #      KEYWORD_ON |                                | 17.2
 #        VAR_THIS |                         "sock" | 17.4
@@ -65,12 +65,12 @@
 #       CLOSURE_S |                                | 17.8
 #    KEYWORD_NEED |                                | 18.25
 #         VAR_LEX |                         "data" | 18.5
-#         OP_SEMI |                                | 18.75
+#         OP_SEMI |                              1 | 18.75
 #        BAREWORD |                          "say" | 19.16667
 #      PAREN_CALL |                                | 19.33333
 #          STRING | ["recv: ",["VAR_LEX","data",19]] | 19.5
 #         PAREN_E |                                | 19.66667
-#         OP_SEMI |                                | 19.83333
+#         OP_SEMI |                              1 | 19.83333
 #       CLOSURE_E |                                | 20.5
 #       CLOSURE_E |                                | 22.5
 #          METHOD |             {"name":"connect"} | 24.33333
@@ -79,24 +79,24 @@
 #        PROPERTY |                      "connect" | 25.33333
 #      PAREN_CALL |                                | 25.5
 #         PAREN_E |                                | 25.66667
-#         OP_SEMI |                                | 25.83333
+#         OP_SEMI |                              1 | 25.83333
 #       CLOSURE_E |                                | 26.5
 #          METHOD |                {"name":"send"} | 28.33333
 #       CLOSURE_S |                                | 28.66667
 #    KEYWORD_NEED |                                | 29.25
 #         VAR_LEX |                         "line" | 29.5
-#         OP_SEMI |                                | 29.75
+#         OP_SEMI |                              1 | 29.75
 #        BAREWORD |                          "say" | 30.16667
 #      PAREN_CALL |                                | 30.33333
 #          STRING | ["send: ",["VAR_LEX","line",30]] | 30.5
 #         PAREN_E |                                | 30.66667
-#         OP_SEMI |                                | 30.83333
+#         OP_SEMI |                              1 | 30.83333
 #        VAR_THIS |                         "sock" | 31.14286
 #        PROPERTY |                      "println" | 31.28571
 #      PAREN_CALL |                                | 31.42857
 #         VAR_LEX |                         "line" | 31.57143
 #         PAREN_E |                                | 31.71429
-#         OP_SEMI |                                | 31.85714
+#         OP_SEMI |                              1 | 31.85714
 #       CLOSURE_E |                                | 32.5
 # === Document Model ===
 #  Document './test/hello10/Bot1.frt'

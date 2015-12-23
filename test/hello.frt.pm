@@ -3,7 +3,7 @@
 #      PAREN_CALL |                                | 1.33333
 #          STRING |               ["Hello World!"] | 1.5
 #         PAREN_E |                                | 1.66667
-#         OP_SEMI |                                | 1.83333
+#         OP_SEMI |                              1 | 1.83333
 # === Document Model ===
 #  Document './test/hello.frt'
 #      Instruction

@@ -11,9 +11,9 @@
 #        VAR_THIS |                          "pt2" | 5.6
 #        OP_VALUE |                                | 5.7
 #        BAREWORD |                        "Point" | 5.8
-#         OP_SEMI |                                | 5.9
+#         OP_SEMI |                              1 | 5.9
 #       CLOSURE_E |                                | 6.5
-#          METHOD | {"p_set":null,"name":"endpoints","is_prop":1} | 8.33333
+#          METHOD | {"name":"endpoints","is_prop":1,"p_set":null} | 8.33333
 #       CLOSURE_S |                                | 8.66667
 #  KEYWORD_RETURN |                                | 9.125
 #       BRACKET_S |                                | 9.25
@@ -21,14 +21,14 @@
 #        OP_COMMA |                                | 9.5
 #        VAR_THIS |                          "pt2" | 9.625
 #       BRACKET_E |                                | 9.75
-#         OP_SEMI |                                | 9.875
+#         OP_SEMI |                              1 | 9.875
 #       CLOSURE_E |                                | 10.5
-#          METHOD | {"name":"pretty","is_prop":1,"p_set":null} | 12.33333
+#          METHOD | {"is_prop":1,"name":"pretty","p_set":null} | 12.33333
 #       CLOSURE_S |                                | 12.66667
 #         VAR_LEX |                           "mp" | 13.2
 #       OP_ASSIGN |                                | 13.4
 #        VAR_THIS |                     "midpoint" | 13.6
-#         OP_SEMI |                                | 13.8
+#         OP_SEMI |                              1 | 13.8
 #         VAR_LEX |                          "pox" | 14.09091
 #       OP_ASSIGN |                                | 14.18182
 #        VAR_THIS |                          "pt1" | 14.27273
@@ -38,7 +38,7 @@
 #       OP_ASSIGN |                                | 14.63636
 #        VAR_THIS |                          "pt1" | 14.72727
 #        PROPERTY |                            "y" | 14.81818
-#         OP_SEMI |                                | 14.90909
+#         OP_SEMI |                              1 | 14.90909
 #         VAR_LEX |                          "ptx" | 15.09091
 #       OP_ASSIGN |                                | 15.18182
 #        VAR_THIS |                          "pt2" | 15.27273
@@ -48,7 +48,7 @@
 #       OP_ASSIGN |                                | 15.63636
 #        VAR_THIS |                          "pt2" | 15.72727
 #        PROPERTY |                            "y" | 15.81818
-#         OP_SEMI |                                | 15.90909
+#         OP_SEMI |                              1 | 15.90909
 #         VAR_LEX |                           "mx" | 16.09091
 #       OP_ASSIGN |                                | 16.18182
 #         VAR_LEX |                           "mp" | 16.27273
@@ -58,18 +58,18 @@
 #       OP_ASSIGN |                                | 16.63636
 #         VAR_LEX |                           "mp" | 16.72727
 #        PROPERTY |                            "y" | 16.81818
-#         OP_SEMI |                                | 16.90909
+#         OP_SEMI |                              1 | 16.90909
 #  KEYWORD_RETURN |                                | 17.25
 #          STRING | ["Segment( |(",["VAR_LEX","pox",17],", ",["VAR_LEX","poy",17],")---(",["VAR_LEX","mx",17],", ",["VAR_LEX","my",17],")---(",["VAR_LEX","ptx",17],", ",["VAR_LEX","pty",17],")| Length = ",["VAR_THIS","length",17]," )"] | 17.5
-#         OP_SEMI |                                | 17.75
+#         OP_SEMI |                              1 | 17.75
 #       CLOSURE_E |                                | 18.5
 #          METHOD |         {"name":"description"} | 20.33333
 #       CLOSURE_S |                                | 20.66667
 #  KEYWORD_RETURN |                                | 21.25
 #        VAR_THIS |                       "pretty" | 21.5
-#         OP_SEMI |                                | 21.75
+#         OP_SEMI |                              1 | 21.75
 #       CLOSURE_E |                                | 22.5
-#          METHOD | {"p_set":null,"is_prop":1,"name":"midpoint"} | 24.33333
+#          METHOD | {"p_set":null,"name":"midpoint","is_prop":1} | 24.33333
 #       CLOSURE_S |                                | 24.66667
 #  KEYWORD_RETURN |                                | 25.09091
 #         PAREN_S |                                | 25.18182
@@ -80,9 +80,9 @@
 #        PROPERTY |                     "midpoint" | 25.63636
 #      PAREN_CALL |                                | 25.72727
 #         PAREN_E |                                | 25.81818
-#         OP_SEMI |                                | 25.90909
+#         OP_SEMI |                              1 | 25.90909
 #       CLOSURE_E |                                | 26.5
-#          METHOD | {"is_prop":1,"name":"length","p_set":null} | 28.33333
+#          METHOD | {"name":"length","is_prop":1,"p_set":null} | 28.33333
 #       CLOSURE_S |                                | 28.66667
 #  KEYWORD_RETURN |                                | 29.125
 #        VAR_THIS |                          "pt1" | 29.25
@@ -90,7 +90,7 @@
 #      PAREN_CALL |                                | 29.5
 #        VAR_THIS |                          "pt2" | 29.625
 #         PAREN_E |                                | 29.75
-#         OP_SEMI |                                | 29.875
+#         OP_SEMI |                              1 | 29.875
 #       CLOSURE_E |                                | 30.5
 # === Document Model ===
 #  Document './std/Math/Line.frt'

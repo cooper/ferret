@@ -4,13 +4,13 @@ class Bot
 $handlers = [
     MODE:       _joinChannels,
     PING:       _pong,
-    PRIVMSG:    _handleMessage,
+    PRIVMSG:    _handleMessage
 ]
 
 $initialCommands = [
     hello:  _commandHello,
     hi:     _commandHello,
-    add:    _commandAdd,
+    add:    _commandAdd
 ]
 
 init {
@@ -75,7 +75,7 @@ method handleLine {
         _self:      *self,
         line:       $line,
         command:    $command,
-        s:          $s,
+        s:          $s
     )
 
 }
@@ -121,7 +121,7 @@ func _handleMessage {
         _self:  *self,
         line:   $line,
         s:      $s,
-        msg:    $msg,
+        msg:    $msg
     )
 
 }
