@@ -47,7 +47,7 @@ my $result = do {
 
     # Class 'String'
     {
-        my ( $class, $self, $proto ) =
+        my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'String', undef );
 
         # Method event 'doubledLength' definition

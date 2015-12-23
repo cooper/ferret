@@ -144,8 +144,15 @@ sub get_context  {
     return $f->{context}{$name} = $context;
 }
 
-# determine whether to reuse or create a class.
 sub get_class {
+    my ($f, $context) = @_;
+    my $class = &_get_class;
+    $class->add_parent($context) if $class;
+    return $class;
+}
+
+# determine whether to reuse or create a class.
+sub _get_class {
     my ($f, $context, $class_name) = @_;
     my ($class, $owner) = $context->_property($class_name);
     return unless $class && $class->isa('Ferret::Class');
@@ -223,7 +230,7 @@ sub add_binding {
     # find parent class.
     my $parent_class;
     if (length $opts{parent}) {
-        $parent_class = $f->_get_class($opts{parent});
+        $parent_class = $f->_bind_get_class($opts{parent});
 
         # not yet available.
         if (!$parent_class) {
@@ -294,7 +301,7 @@ sub bind_constructor {
 
 }
 
-sub _get_class {
+sub _bind_get_class {
     my ($f, $name) = @_;
     return undef if !length $name;
 

@@ -246,7 +246,7 @@ my $result = do {
 
     # Class 'Test'
     {
-        my ( $class, $self, $proto ) =
+        my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Test', undef );
 
         # Method event '_init_' definition

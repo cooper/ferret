@@ -1,25 +1,25 @@
 package IRC
 class Bot
 
+$handlers = [
+    MODE:       _joinChannels,
+    PING:       _pong,
+    PRIVMSG:    _handleMessage
+];
+
+$initialCommands = [
+    hello:  _commandHello,
+    hi:     _commandHello,
+    add:    _commandAdd
+];
+
 init {
     need @addr: Str, @nick: Str;
-    want
-        @port: Num = 6667,
-        @user: Str = "ferret",
-        @real: Str = "Ferret IRC";
+    want @port: Num = 6667;
+    want @user: Str = "ferret";
+    want @real: Str = "Ferret IRC";
 
-    @handlers = [
-        MODE:       @joinChannels,
-        PING:       @pong,
-        PRIVMSG:    @handleMessage
-    ];
-
-    @commands = [
-        hello:  @commandHello,
-        hi:     @commandHello,
-        add:    @commandAdd
-    ];
-
+    @commands = $initialCommands; # TODO: .copy();
     @factoids = [:];
 
     # create a socket
@@ -71,7 +71,7 @@ method handleLine {
     say("recv[$command]: $line");
 
     # handle command maybe
-    @handlers[$command]?(
+    $handlers[$command]?(
         _self:      *self,
         line:       $line,
         command:    $command,
@@ -88,7 +88,7 @@ method privmsg {
     }
 }
 
-method joinChannels {
+func _joinChannels {
 
     # check if already joined.
     if @_joinedChannels:
@@ -102,12 +102,14 @@ method joinChannels {
     }
 }
 
-method pong {
+# Default handlers and commands
+
+func _pong {
     need $s;
     @send("PONG " + $s[1]);
 }
 
-method handleMessage {
+func _handleMessage {
     need $line, $s;
 
     # parse the message
@@ -124,13 +126,13 @@ method handleMessage {
 
 }
 
-method commandHello {
+func _commandHello {
     need $msg;
     $nickname = $msg.nickname;
     @privmsg($msg.channel, "Hi $nickname!");
 }
 
-method commandAdd {
+func _commandAdd {
     need $msg;
     inspect($msg);
 
@@ -145,7 +147,7 @@ method commandAdd {
     @privmsg($msg.channel, "alright, associating .$trigger with '$response'");
 }
 
-method commandFactoid {
+func _commandFactoid {
     need $msg;
     $response = @factoids[ $msg.command ];
     @privmsg($msg.channel, $response);

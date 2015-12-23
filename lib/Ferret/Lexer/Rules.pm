@@ -122,11 +122,39 @@ our %element_rules = (
             'Class declaration must be in the global scope'
         ],
 
-        # classes can currently contain only methods.
+        # classes can currently contain only methods and variable declarations.
         children_must_be => [                                                   # Class[1]
-            'Method',
+            'Function Method Instruction',
             'Class must only contain class functions, instance methods, '.
             'and variable declarations'
+        ],
+
+        # if it's an instruction, it must be a parent to a WantNeed.
+        after_rules => [
+
+            children_must_satisfy => [                                          # Class[2]
+                sub {
+                    my $el = shift;
+                    return 1 if $el->type ne 'Instruction';
+                    my $child = $el->first_child;
+                    return unless $child->type eq 'Assignment';
+
+                    # if it's an assignment, it must be a lexical variable.
+                    if ($child->type eq 'Assignment') {
+                        return $child->assign_to->type eq 'LexicalVariable';
+                    }
+
+                    # if it's a WantNeed, it must be an instance variable.
+                    elsif ($child->type eq 'WantNeed') {
+                        return $child->variable->type eq 'InstanceVariable';
+                    }
+
+                    return;
+                },
+                'Class-level variables can only include instance variable '.
+                'declarations and lexical variable assignments'
+            ]
+
         ]
 
     },
@@ -198,8 +226,8 @@ our %element_rules = (
 
         # instance variables only make sense inside of classes.
         must_be_somewhere_inside => [                                           # InstanceVariable[0]
-            'Class',
-            'Instance variables must be inside a class'
+            'Function Method',
+            'Instance variables must be inside a class function or method'
         ]
 
     },

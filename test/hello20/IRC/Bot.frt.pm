@@ -2,6 +2,30 @@
 #  Document './test/hello20/IRC/Bot.frt'
 #      Package 'IRC'
 #      Class 'Bot'
+#          Instruction
+#              Assignment (lexical variable '$handlers')
+#                  Hash [3 items]
+#                      Item 0
+#                          Pair 'MODE'
+#                              Bareword '_joinChannels'
+#                      Item 1
+#                          Pair 'PING'
+#                              Bareword '_pong'
+#                      Item 2
+#                          Pair 'PRIVMSG'
+#                              Bareword '_handleMessage'
+#          Instruction
+#              Assignment (lexical variable '$initialCommands')
+#                  Hash [3 items]
+#                      Item 0
+#                          Pair 'hello'
+#                              Bareword '_commandHello'
+#                      Item 1
+#                          Pair 'hi'
+#                              Bareword '_commandHello'
+#                      Item 2
+#                          Pair 'add'
+#                              Bareword '_commandAdd'
 #          Class method '_init_'
 #              Body ('method' scope)
 #                  Instruction
@@ -31,29 +55,8 @@
 #                              String 'Ferret IRC'
 #                          Bareword 'Str'
 #                  Instruction
-#                      Assignment (instance variable '@handlers')
-#                          Hash [3 items]
-#                              Item 0
-#                                  Pair 'MODE'
-#                                      Instance variable '@joinChannels'
-#                              Item 1
-#                                  Pair 'PING'
-#                                      Instance variable '@pong'
-#                              Item 2
-#                                  Pair 'PRIVMSG'
-#                                      Instance variable '@handleMessage'
-#                  Instruction
 #                      Assignment (instance variable '@commands')
-#                          Hash [3 items]
-#                              Item 0
-#                                  Pair 'hello'
-#                                      Instance variable '@commandHello'
-#                              Item 1
-#                                  Pair 'hi'
-#                                      Instance variable '@commandHello'
-#                              Item 2
-#                                  Pair 'add'
-#                                      Instance variable '@commandAdd'
+#                          Lexical variable '$initialCommands'
 #                  Instruction
 #                      Assignment (instance variable '@factoids')
 #                          Hash [0 items]
@@ -230,7 +233,7 @@
 #                      Call
 #                          Maybe
 #                              Index
-#                                  Instance variable '@handlers'
+#                                  Lexical variable '$handlers'
 #                                  Single value [1 items]
 #                                      Item 0
 #                                          Lexical variable '$command'
@@ -288,8 +291,8 @@
 #                                                      String ' :'
 #                                                      Addition operator (+)
 #                                                      Lexical variable '$line'
-#          Method 'joinChannels'
-#              Body ('method' scope)
+#          Function '_joinChannels'
+#              Body ('function' scope)
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@_joinedChannels'
@@ -318,8 +321,8 @@
 #                                                      String 'JOIN '
 #                                                      Addition operator (+)
 #                                                      Lexical variable '$chan'
-#          Method 'pong'
-#              Body ('method' scope)
+#          Function '_pong'
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$s'
@@ -336,8 +339,8 @@
 #                                          Single value [1 items]
 #                                              Item 0
 #                                                  Number '1'
-#          Method 'handleMessage'
-#              Body ('method' scope)
+#          Function '_handleMessage'
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -381,8 +384,8 @@
 #                                      Item 3
 #                                          Pair 'msg'
 #                                              Lexical variable '$msg'
-#          Method 'commandHello'
-#              Body ('method' scope)
+#          Function '_commandHello'
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -404,8 +407,8 @@
 #                                      Lexical variable '$nickname'
 #                                      Addition operator (+)
 #                                      String '!'
-#          Method 'commandAdd'
-#              Body ('method' scope)
+#          Function '_commandAdd'
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -455,8 +458,8 @@
 #                                      Lexical variable '$response'
 #                                      Addition operator (+)
 #                                      String '''
-#          Method 'commandFactoid'
-#              Body ('method' scope)
+#          Function '_commandFactoid'
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -551,9 +554,226 @@ my $result = do {
         }
     );
 
+    # Function event '_joinChannels' definition
+    my $func_2 = FF::function_event_def(
+        $f, $scope,
+        '_joinChannels',
+        [],
+        sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            if ( bool( $self->property_u('_joinedChannels') ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                return $return;
+            }
+            $self->set_property( _joinedChannels => $true, 96.5 );
+            if ( bool( $self->property_u('autojoin') ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                FF::iterate(
+                    $f, $scope,
+                    $self->property_u('autojoin'),
+                    'chan',
+                    sub {
+                        my $scope = shift;
+                        $self->property_u('send')->call_u(
+                            [
+                                add(
+                                    $scope,
+                                    str( $f, "JOIN " ),
+                                    $scope->property_u('chan')
+                                )
+                            ],
+                            $scope, undef,
+                            100.66667
+                        );
+                    }
+                );
+            }
+            return $return;
+        }
+    );
+
+    # Function event '_pong' definition
+    my $func_3 = FF::function_event_def(
+        $f, $scope, '_pong',
+        [ { name => 's', type => undef, optional => undef, more => undef } ],
+        sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            FF::need( $scope, $arguments, 's', 108.66667 ) or return;
+            $self->property_u('send')->call_u(
+                [
+                    add(
+                        $scope,
+                        str( $f, "PONG " ),
+                        $scope->property_u('s')
+                          ->get_index_value( [ num( $f, 1 ) ], $scope )
+                    )
+                ],
+                $scope, undef,
+                109.66667
+            );
+            return $return;
+        }
+    );
+
+    # Function event '_handleMessage' definition
+    my $func_4 = FF::function_event_def(
+        $f, $scope,
+        '_handleMessage',
+        [
+            { name => 'line', type => undef, optional => undef, more => undef },
+            { name => 's',    type => undef, optional => undef, more => undef }
+        ],
+        sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            FF::need( $scope, $arguments, 'line', 115.4 ) or return;
+            FF::need( $scope, $arguments, 's',    115.8 ) or return;
+            $scope->set_property_ow(
+                $context,
+                msg => $scope->property_u('IRC::Message')->call_u(
+                    [ $scope->property_u('line') ], $scope,
+                    undef,                          117.66667
+                ),
+                117.22222
+            );
+            $return->set_property( msg => $scope->property_u('msg'), 118.5 );
+            if ( bool( $scope->property_u('msg')->property_u('command') ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                {
+                    my $maybe_0 =
+                      $self->property_u('commands')
+                      ->get_index_value(
+                        [ $scope->property_u('msg')->property_u('command') ],
+                        $scope );
+                    if ( bool($maybe_0) ) {
+                        $maybe_0->call_u(
+                            {
+                                _self => $scope->{special}->property_u('self'),
+                                line  => $scope->property_u('line'),
+                                s     => $scope->property_u('s'),
+                                msg   => $scope->property_u('msg')
+                            },
+                            $scope, undef, 121
+                        );
+                    }
+                }
+            }
+            return $return;
+        }
+    );
+
+    # Function event '_commandHello' definition
+    my $func_5 = FF::function_event_def(
+        $f, $scope,
+        '_commandHello',
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
+        sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            FF::need( $scope, $arguments, 'msg', 130.66667 ) or return;
+            $scope->set_property_ow(
+                $context,
+                nickname => $scope->property_u('msg')->property_u('nickname'),
+                131.4
+            );
+            $self->property_u('privmsg')->call_u(
+                [
+                    $scope->property_u('msg')->property_u('channel'),
+                    add(
+                        $scope,                         str( $f, "Hi " ),
+                        $scope->property_u('nickname'), str( $f, "!" )
+                    )
+                ],
+                $scope, undef,
+                132.33333
+            );
+            return $return;
+        }
+    );
+
+    # Function event '_commandAdd' definition
+    my $func_6 = FF::function_event_def(
+        $f, $scope,
+        '_commandAdd',
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
+        sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            FF::need( $scope, $arguments, 'msg', 138.66667 ) or return;
+            $scope->property_u('inspect')
+              ->call_u( [ $scope->property_u('msg') ], $scope, undef, 139.4 );
+            $scope->set_property_ow(
+                $context,
+                trigger => $scope->property_u('msg')->property_u('parts')
+                  ->get_index_value( [ num( $f, 1 ) ], $scope ),
+                141.25
+            );
+            $scope->set_property_ow(
+                $context,
+                response => $scope->property_u('msg')->property_u('fromWord')
+                  ->call_u( [ num( $f, 2 ) ], $scope, undef, 142.625 ),
+                142.25
+            );
+            $self->property_u('factoids')
+              ->set_index_value( [ $scope->property_u('trigger') ],
+                $scope->property_u('response'), $scope );
+            $self->property_u('commands')
+              ->set_index_value( [ $scope->property_u('trigger') ],
+                $self->property_u('commandFactoid'), $scope );
+            $self->property_u('privmsg')->call_u(
+                [
+                    $scope->property_u('msg')->property_u('channel'),
+                    add(
+                        $scope,
+                        str( $f, "alright, associating ." ),
+                        $scope->property_u('trigger'),
+                        str( $f, " with '" ),
+                        $scope->property_u('response'),
+                        str( $f, "'" )
+                    )
+                ],
+                $scope, undef, 147.25
+            );
+            return $return;
+        }
+    );
+
+    # Function event '_commandFactoid' definition
+    my $func_7 = FF::function_event_def(
+        $f, $scope,
+        '_commandFactoid',
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
+        sub {
+            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my $self = $_self || $self;
+            FF::need( $scope, $arguments, 'msg', 151.66667 ) or return;
+            $scope->set_property_ow(
+                $context,
+                response => $self->property_u('factoids')->get_index_value(
+                    [ $scope->property_u('msg')->property_u('command') ],
+                    $scope
+                ),
+                152.25
+            );
+            $self->property_u('privmsg')->call_u(
+                [
+                    $scope->property_u('msg')->property_u('channel'),
+                    $scope->property_u('response')
+                ],
+                $scope, undef, 153.25
+            );
+            return $return;
+        }
+    );
+
     # Class 'Bot'
     {
-        my ( $class, $self, $proto ) =
+        my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Bot', undef );
 
         # Method event '_init_' definition
@@ -580,36 +800,19 @@ my $result = do {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 FF::need( $self, $arguments, 'addr' ) or return;
                 FF::need( $self, $arguments, 'nick' ) or return;
-                FF::want( $self, $arguments, 'port', 7.16667, num( $f, 6667 ) );
-                FF::want( $self, $arguments, 'user', 8.16667,
+                FF::want( $self, $arguments, 'port', 18.28571,
+                    num( $f, 6667 ) );
+                FF::want( $self, $arguments, 'user', 19.28571,
                     str( $f, "ferret" ) );
-                FF::want( $self, $arguments, 'real', 9.2,
+                FF::want( $self, $arguments, 'real', 20.33333,
                     str( $f, "Ferret IRC" ) );
                 $self->set_property(
-                    handlers => FF::create_hash(
-                        $f,
-                        {
-                            MODE    => $self->property_u('joinChannels'),
-                            PING    => $self->property_u('pong'),
-                            PRIVMSG => $self->property_u('handleMessage')
-                        }
-                    ),
-                    13.66667
-                );
-                $self->set_property(
-                    commands => FF::create_hash(
-                        $f,
-                        {
-                            hello => $self->property_u('commandHello'),
-                            hi    => $self->property_u('commandHello'),
-                            add   => $self->property_u('commandAdd')
-                        }
-                    ),
-                    19.66667
+                    commands => $scope->property_u('initialCommands'),
+                    25.2
                 );
                 $self->set_property(
                     factoids => FF::create_hash( $f, {} ),
-                    25.33333
+                    25.6
                 );
                 $self->set_property(
                     sock => $scope->property_u('Socket::TCP')->call_u(
@@ -787,7 +990,7 @@ my $result = do {
                 );
                 {
                     my $maybe_0 =
-                      $self->property_u('handlers')
+                      $scope->property_u('handlers')
                       ->get_index_value( [ $scope->property_u('command') ],
                         $scope );
                     if ( bool($maybe_0) ) {
@@ -866,263 +1069,29 @@ my $result = do {
                 return $return;
             }
         );
-
-        # Method event 'joinChannels' definition
-        my $method_6 = FF::method_event_def(
-            $f, $scope,
-            'joinChannels',
-            [],
-            sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                if ( bool( $self->property_u('_joinedChannels') ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    return $return;
+        $scope->set_property_ow(
+            $context,
+            handlers => FF::create_hash(
+                $f,
+                {
+                    MODE    => $scope->property_u('_joinChannels'),
+                    PING    => $scope->property_u('_pong'),
+                    PRIVMSG => $scope->property_u('_handleMessage')
                 }
-                $self->set_property( _joinedChannels => $true, 96.5 );
-                if ( bool( $self->property_u('autojoin') ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    FF::iterate(
-                        $f, $scope,
-                        $self->property_u('autojoin'),
-                        'chan',
-                        sub {
-                            my $scope = shift;
-                            $self->property_u('send')->call_u(
-                                [
-                                    add(
-                                        $scope,
-                                        str( $f, "JOIN " ),
-                                        $scope->property_u('chan')
-                                    )
-                                ],
-                                $scope, undef, 100.4
-                            );
-                        }
-                    );
-                }
-                return $return;
-            }
+            ),
+            4.66667
         );
-
-        # Method event 'pong' definition
-        my $method_7 = FF::method_event_def(
-            $f, $scope, 'pong',
-            [
+        $scope->set_property_ow(
+            $context,
+            initialCommands => FF::create_hash(
+                $f,
                 {
-                    name     => 's',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
+                    hello => $scope->property_u('_commandHello'),
+                    hi    => $scope->property_u('_commandHello'),
+                    add   => $scope->property_u('_commandAdd')
                 }
-            ],
-            sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 's', 106.66667 ) or return;
-                $self->property_u('send')->call_u(
-                    [
-                        add(
-                            $scope,
-                            str( $f, "PONG " ),
-                            $scope->property_u('s')
-                              ->get_index_value( [ num( $f, 1 ) ], $scope )
-                        )
-                    ],
-                    $scope, undef,
-                    107.66667
-                );
-                return $return;
-            }
-        );
-
-        # Method event 'handleMessage' definition
-        my $method_8 = FF::method_event_def(
-            $f, $scope,
-            'handleMessage',
-            [
-                {
-                    name     => 'line',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 's',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'line', 113.4 ) or return;
-                FF::need( $scope, $arguments, 's',    113.8 ) or return;
-                $scope->set_property_ow(
-                    $context,
-                    msg => $scope->property_u('IRC::Message')->call_u(
-                        [ $scope->property_u('line') ], $scope,
-                        undef,                          115.66667
-                    ),
-                    115.22222
-                );
-                $return->set_property(
-                    msg => $scope->property_u('msg'),
-                    116.5
-                );
-                if ( bool( $scope->property_u('msg')->property_u('command') ) )
-                {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    {
-                        my $maybe_0 =
-                          $self->property_u('commands')->get_index_value(
-                            [
-                                $scope->property_u('msg')->property_u('command')
-                            ],
-                            $scope
-                          );
-                        if ( bool($maybe_0) ) {
-                            $maybe_0->call_u(
-                                {
-                                    _self =>
-                                      $scope->{special}->property_u('self'),
-                                    line => $scope->property_u('line'),
-                                    s    => $scope->property_u('s'),
-                                    msg  => $scope->property_u('msg')
-                                },
-                                $scope, undef, 119
-                            );
-                        }
-                    }
-                }
-                return $return;
-            }
-        );
-
-        # Method event 'commandHello' definition
-        my $method_9 = FF::method_event_def(
-            $f, $scope,
-            'commandHello',
-            [
-                {
-                    name     => 'msg',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'msg', 128.66667 ) or return;
-                $scope->set_property_ow(
-                    $context,
-                    nickname =>
-                      $scope->property_u('msg')->property_u('nickname'),
-                    129.4
-                );
-                $self->property_u('privmsg')->call_u(
-                    [
-                        $scope->property_u('msg')->property_u('channel'),
-                        add(
-                            $scope,                         str( $f, "Hi " ),
-                            $scope->property_u('nickname'), str( $f, "!" )
-                        )
-                    ],
-                    $scope, undef,
-                    130.33333
-                );
-                return $return;
-            }
-        );
-
-        # Method event 'commandAdd' definition
-        my $method_10 = FF::method_event_def(
-            $f, $scope,
-            'commandAdd',
-            [
-                {
-                    name     => 'msg',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'msg', 136.66667 ) or return;
-                $scope->property_u('inspect')
-                  ->call_u( [ $scope->property_u('msg') ],
-                    $scope, undef, 137.4 );
-                $scope->set_property_ow(
-                    $context,
-                    trigger => $scope->property_u('msg')->property_u('parts')
-                      ->get_index_value( [ num( $f, 1 ) ], $scope ),
-                    139.25
-                );
-                $scope->set_property_ow(
-                    $context,
-                    response =>
-                      $scope->property_u('msg')->property_u('fromWord')
-                      ->call_u( [ num( $f, 2 ) ], $scope, undef, 140.625 ),
-                    140.25
-                );
-                $self->property_u('factoids')
-                  ->set_index_value( [ $scope->property_u('trigger') ],
-                    $scope->property_u('response'), $scope );
-                $self->property_u('commands')
-                  ->set_index_value( [ $scope->property_u('trigger') ],
-                    $self->property_u('commandFactoid'), $scope );
-                $self->property_u('privmsg')->call_u(
-                    [
-                        $scope->property_u('msg')->property_u('channel'),
-                        add(
-                            $scope,
-                            str( $f, "alright, associating ." ),
-                            $scope->property_u('trigger'),
-                            str( $f, " with '" ),
-                            $scope->property_u('response'),
-                            str( $f, "'" )
-                        )
-                    ],
-                    $scope, undef, 145.25
-                );
-                return $return;
-            }
-        );
-
-        # Method event 'commandFactoid' definition
-        my $method_11 = FF::method_event_def(
-            $f, $scope,
-            'commandFactoid',
-            [
-                {
-                    name     => 'msg',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'msg', 149.66667 ) or return;
-                $scope->set_property_ow(
-                    $context,
-                    response => $self->property_u('factoids')->get_index_value(
-                        [ $scope->property_u('msg')->property_u('command') ],
-                        $scope
-                    ),
-                    150.25
-                );
-                $self->property_u('privmsg')->call_u(
-                    [
-                        $scope->property_u('msg')->property_u('channel'),
-                        $scope->property_u('response')
-                    ],
-                    $scope, undef, 151.25
-                );
-                return $return;
-            }
+            ),
+            10.66667
         );
         $method_0->inside_scope(
             _init_ => $scope,
@@ -1145,26 +1114,26 @@ my $result = do {
             privmsg => $scope,
             $proto, $class, undef, undef
         );
-        $method_6->inside_scope(
-            joinChannels => $scope,
-            $proto, $class, undef, undef
+        $func_2->inside_scope(
+            _joinChannels => $scope,
+            $scope, undef, undef, undef
         );
-        $method_7->inside_scope( pong => $scope, $proto, $class, undef, undef );
-        $method_8->inside_scope(
-            handleMessage => $scope,
-            $proto, $class, undef, undef
+        $func_3->inside_scope( _pong => $scope, $scope, undef, undef, undef );
+        $func_4->inside_scope(
+            _handleMessage => $scope,
+            $scope, undef, undef, undef
         );
-        $method_9->inside_scope(
-            commandHello => $scope,
-            $proto, $class, undef, undef
+        $func_5->inside_scope(
+            _commandHello => $scope,
+            $scope, undef, undef, undef
         );
-        $method_10->inside_scope(
-            commandAdd => $scope,
-            $proto, $class, undef, undef
+        $func_6->inside_scope(
+            _commandAdd => $scope,
+            $scope, undef, undef, undef
         );
-        $method_11->inside_scope(
-            commandFactoid => $scope,
-            $proto, $class, undef, undef
+        $func_7->inside_scope(
+            _commandFactoid => $scope,
+            $scope, undef, undef, undef
         );
     }
     FF::load_namespaces( $context,

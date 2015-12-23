@@ -174,7 +174,7 @@ my $result = do {
 
     # Class 'Point'
     {
-        my ( $class, $self, $proto ) =
+        my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Point', undef );
 
         # Method event '_init_' definition

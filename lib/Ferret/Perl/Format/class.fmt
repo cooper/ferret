@@ -1,7 +1,6 @@
 # Class '<<name>>'
 {
-    my ($class, $self, $proto) = FF::get_class($f, $context, '<<name>>', <<version>>);
-
+    my ($class, $self, $proto, $scope) = FF::get_class($f, $context, '<<name>>', <<version>>);
     <<upper_content>>
     <<lower_content>>
 }

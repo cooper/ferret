@@ -3,7 +3,7 @@ package F::Class;
 
 use warnings;
 use strict;
-use parent 'F::Statement';
+use parent 'F::ScopeOwner';
 
 sub type { 'Class' }
 sub hold_instr { 1 }

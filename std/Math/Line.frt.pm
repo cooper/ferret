@@ -136,7 +136,7 @@ my $result = do {
 
     # Class 'Line'
     {
-        my ( $class, $self, $proto ) =
+        my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Line', undef );
 
         # Method event '_init_' definition

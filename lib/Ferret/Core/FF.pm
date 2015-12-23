@@ -234,7 +234,11 @@ sub get_class {
         $context->set_property($name => $class);
     }
 
-    return ($class, $class, $class->prototype);
+    # create a scope inheriting from the class and the context.
+    my $scope = Ferret::Scope->new($f, parent_scope => $context);
+    $scope->add_parent($class);
+
+    return ($class, $class, $class->prototype, $scope);
 }
 
 # anonymous function definition.

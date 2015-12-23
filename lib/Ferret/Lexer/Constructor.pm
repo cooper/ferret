@@ -206,8 +206,10 @@ sub c_METHOD {
 sub c_FUNCTION {
     my ($c, $value) = @_;
 
-    # if the current node is a class, it's a class method.
-    if ($c->node->type eq 'Class') {
+    # if the current node is a class and this is not a private function,
+    # it's a class method.
+    my $first_char = substr $value->{name}, 0, 1;
+    if ($c->node->type eq 'Class' && $first_char ne '_') {
         $value->{main} = 1;
         return c_METHOD($c, $value);
     }

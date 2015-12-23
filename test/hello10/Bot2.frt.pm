@@ -218,7 +218,7 @@ my $result = do {
 
     # Class 'Bot2'
     {
-        my ( $class, $self, $proto ) =
+        my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Bot2', undef );
 
         # Method event '_init_' definition
