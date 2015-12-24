@@ -19,14 +19,16 @@ sub perl_fmt {
     my $child = $local->first_child;
     my $var   = $local->variable;
 
-    # if it's not an assignment, do nothing.
-    # the purpose of non-assignment shared declaration is
-    # for variable tracking only.
-    $child->type eq 'Assignment' or return;
+    # if it's not an assignment, assign to undef if no value is already there.
+    $child->type eq 'Assignment' or return share_lexical_var => {
+        name => $var->{var_name},
+        pos  => $var->{create_pos}
+    };
 
     return assign_lexical_var => {
         name         => $var->{var_name},
-        assign_value => $child->assign_value->perl_fmt_do
+        assign_value => $child->assign_value->perl_fmt_do,
+        pos          => $child->{create_pos}
     };
 }
 

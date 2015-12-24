@@ -305,4 +305,11 @@ sub method_event_def {
     return $event;
 }
 
+# shared variable declaration without a value.
+sub share {
+    my ($scope, $prop_name, $pos) = @_;
+    return if $scope->property($prop_name);
+    $scope->set_property($prop_name => Ferret::undefined);
+}
+
 1

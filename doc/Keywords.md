@@ -348,7 +348,7 @@ on Person.proto.haveBirthday {
 ### before
 
 ```
-before :<<callback_name>>
+before :<callback_name>
 ```
 
 Indicates a priority hint for an event callback function (`on` block). When
@@ -363,7 +363,7 @@ on $obj.someEvent before :lateCallback after :earlyCallback { }
 ### after
 
 ```
-after :<<callback_name>>
+after :<callback_name>
 ```
 
 Indicates a priority hint for an event callback function (`on` block). When
@@ -382,7 +382,7 @@ These keywords are to be used within classes only.
 ### method
 
 ```
-method <<name>> { [<statements>...] }
+method <name> { [<statements>...] }
 ```
 
 Declares a class instance method. All methods are implemented as events. The
@@ -415,7 +415,7 @@ init {
 ### prop
 
 ```
-prop <<name>> { [<statements>...] }
+prop <name> { [<statements>...] }
 ```
 
 Declares a computed property (instance variable).
@@ -435,7 +435,7 @@ $line.midpoint  # returns a Point, created on the spot
 ### set
 
 ```
-set <<prop_declaration>>
+set <prop_declaration>
 ```
 
 Indicates that a computed property is to be evaluated only once. After the first
@@ -508,7 +508,7 @@ else {
 ### return
 
 ```
-return [<<value>>]
+return [<value>]
 ```
 
 Terminates the current function or method, returning `value`. If the return
