@@ -11,6 +11,8 @@ use open ':std', ':encoding(UTF-8)';
 use File::Slurp     'slurp';
 use Scalar::Util    'blessed';
 use File::Basename  'fileparse';
+use IO::Async::Function;
+use IO::Async::Loop;
 use Getopt::Long::Descriptive;
 use JSON::XS;
 
@@ -25,17 +27,15 @@ BEGIN {
 use Ferret::Lexer;
 use Ferret::Perl;
 
-sub inter  (@);
-sub interf (@);
-
 my ($o, $usage) = describe_options(
     "$0 %o [file ...]",
     [ 'no-skip|n'       => 'do not skip unchanged files'                ],
-    [ 'tokens|t'        => 'show tokenization'                          ],
-    [ 'dom|d'           => 'show lexer object tree (DOM)'               ],
+    [ 'tokens|t'        => 'write tokenization'                         ],
+    [ 'dom|d'           => 'write lexer object tree (DOM)'              ],
+    [ 'verbose|v'       => 'print tokens/DOM to STDOUT (with -d/v)'     ],
     [ 'show-all'        => 'include unknown objects in DOM'             ],
-    [ 'stdout|s'        => 'write to STDOUT instead of file'            ],
-    [ 'comments|c'      => 'write tokens/DOM as comments (with -t/-d)'  ],
+    #[ 'stdout|s'        => 'write to STDOUT instead of file'            ],
+    [ 'synchronous|y'   => 'work one file at a time in a single thread '],
     [ 'beautify|p'      => 'beautify code with perltidy'                ],
     [ 'minify|m'        => 'minify code'                                ],
     [ 'help|h'          => 'show help'                                  ]
@@ -44,55 +44,155 @@ my ($o, $usage) = describe_options(
 # show help.
 print($usage->text) and exit if $o->help;
 
-# handle each file.
-do_file($_) foreach grep { substr($_, -4) eq '.frt' } @ARGV;
+my (
+    $loop,      # IO::Async::Loop
+    $function,  # IO::Async compile function
+    $pending,   # number of files in progress
+    @errors     # postponed errors
+);
 
-my $fh;
+# find the files.
+my @files = grep { substr($_, -4) eq '.frt' } @ARGV;
+   @files = split /\n/, `find . | grep '\\.frt\$'` if !@files;
+   # TODO: do this right, support Windows, etc.
+
+# do it synchronously.
+if ($o->synchronous) {
+    $pending = scalar @files;
+    handle_result($_, 'return', do_file($_)) foreach @files;
+}
+
+# or asynchronously.
+else {
+    $loop = IO::Async::Loop->new;
+    $function = IO::Async::Function->new(code => \&do_file);
+    $loop->add($function);
+    async_do_file($_) foreach @files;
+    $loop->run;
+}
+
+sub async_do_file {
+    my $file = shift;
+    $pending++;
+    $function->call(
+        args => [ $file ],
+        on_result => sub { handle_result($file, @_) }
+    );
+}
+
+sub handle_result {
+    my ($file, $status, $ret) = @_;
+
+    print "[ $file ] ";
+
+    # bad status
+    if ($status eq 'error') {
+        print "ERROR\n";
+        push @errors, [ $file, 'Process exited prematurely' ];
+    }
+
+    # skipped.
+    elsif ($ret->{skipped}) {
+        print "skipped\n";
+    }
+
+    # error.
+    elsif ($ret->{error}) {
+        print "ERROR\n";
+        push @errors, [ $file, $ret->{error} ];
+    }
+
+    # good status
+    else {
+        print "OK\n";
+    }
+
+    # show stuff
+    print "=== Tokenization ===\n$$ret{tokenization}\n"
+        if length $ret->{tokenization};
+    print "=== Document Model ===\n$$ret{construction}\n"
+        if length $ret->{construction};
+
+    finish() if !--$pending;
+}
+
+sub finish {
+    $loop->stop if $loop;
+
+    # show errors
+    foreach my $error (@errors) {
+        my ($file, $msg) = @$error;
+        print "\n\n[ $file ]\n\n$msg\n";
+    }
+
+    my $e = scalar(@errors) || 'no';
+    my $s = $e ne '1' ? 's' : '';
+    print "\nCompilation completed with $e error$s.\n";
+}
+
+# returns {
+#   file            => the input file path,
+#   build           => the build directory,
+#   pm              => the path to the .frt.pm file,
+#   tokenization    => string of tokenization if -tv enabled,
+#   construction    => model of dom if -dv enabled,
+#   skipped         => true if the file was skipped
+# }
 sub do_file {
     my $file = shift;
-    print "[ $file ]";
 
     # check if it's been changed
     my ($name, $path) = fileparse($file);
     my $build = "$path/build";
     my $pm    = "$build/$name.pm";
 
+    my $ret = {
+        file  => $file,
+        build => $build,
+        pm    => $pm
+    };
+
+    # we might be able to skip this
     if (!$o->no_skip) {
         my @stat1 = stat $pm;
         my @stat2 = stat $file;
         if (@stat1 && $stat1[9] > $stat2[9]) {
-            say " skipped";
-            return;
+            $ret->{skipped} = 1;
+            return $ret;
         }
     }
-    print "\n";
 
     # open the output file.
-    if ($o->stdout) { $fh = \*STDOUT }
-    else {
+    my $fh;
+    # if ($o->stdout) { $fh = \*STDOUT }
+    #else {
         mkdir $build or die "Couldn't create $build" if !-d $build;
         open $fh, '>', $pm or die "Couldn't open $pm to write";
-    }
+    #}
 
     # parse the input file.
-    my $str = eval { slurp($file) } or error($pm, $!);
+    my $str = eval { slurp($file) } or return error($ret, $fh, $pm, $!);
 
     # tokenize.
     my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize("$str\n");
-    if ($o->tokens) {
-        inter "=== Tokenization ===\n";
-        inter Ferret::Lexer::show_tok(@tok);
+    if ($o->tokens && !$err) {
+        my $tok = Ferret::Lexer::show_tok(@tok);
+        print $fh "# === Tokenization ===\n";
+        print $fh commentize($tok), "\n";
+        $ret->{tokenization} = $tok if $o->verbose;
     }
-    error($pm, $$err) if $err;
+    return error($ret, $fh, $pm, $$err) if $err;
 
     # construct elements.
     my $doc = F::Document->new(name => $file);
        $err = Ferret::Lexer::Constructor::construct($doc, @tok);
-    if ($o->dom) {
-        inter "=== Document Model ===\n";
-        inter Ferret::Lexer::show_dom($doc, $o->show_all);
+    if ($o->dom || $err) {
+        my $dom = Ferret::Lexer::show_dom($doc, $o->show_all);
+        print $fh "# === Document Model ===\n"  unless $err;
+        print $fh commentize($dom), "\n"        unless $err;
+        $ret->{construction} = $dom if $o->verbose || $err;
     }
-    error($pm, $$err) if $err;
+    return error($ret, $fh, $pm, $$err) if $err;
 
     # compile to Perl.
     my $compiled = Ferret::Perl::main($doc);
@@ -103,18 +203,7 @@ sub do_file {
     print $fh $compiled;
     close $fh;
 
-}
-
-sub inter (@) {
-    my @lines = split /\n/, join '', @_;
-    say $fh join("\n", map("# $_", @lines));
-    say     join("\n", @lines);
-}
-
-sub interf (@) {
-    my $str = shift;
-    $str = sprintf $str, @_;
-    inter($str);
+    return $ret;
 }
 
 sub perltidy {
@@ -139,8 +228,15 @@ sub minify {
     $$ref =~ s/\n//g;
 }
 
+sub commentize {
+    my @lines = split /\n/, join '', @_;
+    return join("\n", map("# $_", @lines));
+}
+
 sub error {
-    my ($pm, $msg) = @_;
+    my ($ret, $fh, $pm, $msg) = @_;
+    close $fh;
     unlink $pm;
-    die "\n$msg\n";
+    $ret->{error} = $msg;
+    return $ret;
 }

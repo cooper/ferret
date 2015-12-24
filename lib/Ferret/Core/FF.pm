@@ -31,7 +31,7 @@ sub load_core {
     # this is the CORE module, or it's already been done.
     return if $name eq 'CORE' || $INC{'CORE.frt.pm'};
 
-    do 'CORE.frt.pm' or die "Core error: ".($@ || $!);
+    do 'build/CORE.frt.pm' or die "Core error: ".($@ || $!);
     return;
 }
 

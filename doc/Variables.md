@@ -33,10 +33,12 @@ objects cannot be accessed directly; their properties can only be retrieved
 using this type of variable.
 
 * __*scope__ - refers to the current scope object
-* __*self__ - refers to the current class instance
-* __*return__ - with functions, refers to the return object
+* __*return__ - within a function, refers to the return object
+* __*class__ - within a class, refers to the class itself
+* __*self__ - within a class, refers to the current instance
 * __*this__ - within event callback functions, refers to the object on which the
 event was called
+* __*argv__ - refers to the list of arguments passed to the program
 
 ## Set type variables
 
