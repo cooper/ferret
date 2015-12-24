@@ -2,6 +2,8 @@
 
 Ferret is a hobby programming language.
 
+![Editor](http://i.imgur.com/ULCvNDM.png)
+
 ### Compiled
 
 Ferret currently compiles exclusively to Perl, a high-level language. It might
