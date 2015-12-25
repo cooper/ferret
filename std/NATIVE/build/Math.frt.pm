@@ -20,12 +20,13 @@ bind_math_func($_, 2) foreach qw(
     atan2
 );
 
-*new = *Ferret::bind_constructor;
 Ferret::bind_class(
     package   => 'NATIVE',
     name      => 'Math',
     functions => \@functions
 );
+
+*new = *Ferret::bind_constructor;
 
 sub bind_math_func {
     my ($name, $n_args) = @_;

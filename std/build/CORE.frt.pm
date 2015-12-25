@@ -1,6 +1,9 @@
 # === Document Model ===
 #  Document './std/CORE.frt'
 #      Package 'CORE'
+#      Instruction
+#          Bareword 'Signal'
+#      Include (Signal)
 use warnings;
 use strict;
 use 5.010;
@@ -25,6 +28,9 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'CORE' );
     FF::load_core('CORE');
 
+    FF::load_namespaces( $context, qw(Signal) );
+
+    $scope->property_u('Signal');
 };
 
 FF::after_content();

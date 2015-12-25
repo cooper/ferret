@@ -238,6 +238,9 @@ sub get_class {
     my $scope = Ferret::Scope->new($f, parent_scope => $context);
     $scope->add_parent($class);
 
+    # special properties, accessible in class variables.
+    $scope->{special}->set_property_weak(class => $class);
+
     return ($class, $class, $class->prototype, $scope);
 }
 

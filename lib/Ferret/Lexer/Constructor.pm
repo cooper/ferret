@@ -208,7 +208,7 @@ sub c_FUNCTION {
 
     # if the current node is a class and this is not a private function,
     # it's a class method.
-    my $first_char = substr $value->{name}, 0, 1;
+    my $first_char = length $value->{name} ? substr $value->{name}, 0, 1 : '';
     if ($c->node->type eq 'Class' && $first_char ne '_') {
         $value->{main} = 1;
         return c_METHOD($c, $value);
@@ -252,8 +252,9 @@ sub c_CLOSURE_S {
         $closure = $func->body;
     }
 
-    # a closure can terminate an equality.
-    $c->close_node_maybe('Equality');
+    # a closure can terminate these.
+    $c->close_nodes(qw(Negation Operation Equality));
+
 
     # a closure can terminate a generated expression.
     # for instance, inside $something {}. the expression $something ends there.

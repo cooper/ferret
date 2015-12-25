@@ -51,6 +51,10 @@ our %functions = (
     },
     activeObjectCount => {
         code => \&_activeObjectCount
+    },
+    _exit => {
+        want => '$status:Num',
+        code => \&_exit
     }
 );
 
@@ -132,6 +136,13 @@ sub _activeObjectCount {
     my (undef, undef, $call_scope) = @_;
     my $f = $call_scope->f;
     return ferret_number(scalar keys %{ $f->{objects} });
+}
+
+# this is temporary, until *process.exit() exists
+sub _exit {
+    my (undef, $arguments) = @_;
+    my $status = $arguments->{status} ? perl_number($arguments->{status}) : 0;
+    exit $status;
 }
 
 1
