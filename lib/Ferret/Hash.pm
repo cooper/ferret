@@ -108,13 +108,19 @@ sub _values {
 sub description {
     my ($hash, $own_only) = @_;
     my @keys   = $hash->keys;
-    my @values = map perl_description($_, $own_only), $hash->values;
-    my $i = 0;
+
+    my @values = map {
+        join "\n    ", split /\n/, perl_description($_, $own_only)
+    } $hash->values;
+
     return "[:]" if !@keys;
+
+    my $i = 0;
     foreach my $key (@keys) {
         $values[$i] = "$key: ".$values[$i];
         $i++;
     }
+
     return "[\n    ".join("\n    ", @values)."\n]";
 }
 

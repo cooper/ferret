@@ -10,14 +10,20 @@ sub type { 'Assignment' }
 sub desc {
     my $a = shift;
     my $left = $a->assign_to->desc;
-    return "assignment ($left)";
+    my $lazy = $a->{lazy} ? 'lazy ' : '';
+    return "${lazy}assignment ($left)";
 }
 
 sub perl_fmt_do {
     my $a = shift;
     my ($fmt_name, $fmt_args) = $a->assign_to->perl_fmt;
-    $fmt_args->{assign_value} = $a->assign_value->perl_fmt_do;
     $fmt_args->{pos} = $a->{create_pos};
+
+    # the assignment value should be wrapped in sub{} if it's a lazy property.
+    my $val = $a->assign_value->perl_fmt_do;
+    $val = "sub { $val }" if $a->{lazy};
+    $fmt_args->{assign_value} = $val;
+
 
     # fix *special properties
     # consider: will it ever even be allowed to assign to special property?

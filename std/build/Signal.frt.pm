@@ -5,35 +5,35 @@
 #              Load
 #                  Bareword 'NATIVE::Signal'
 #          Instruction
-#              Assignment (lexical variable '$INT')
+#              Lazy assignment (lexical variable '$INT')
 #                  Call
 #                      Special variable '*class'
 #                      Argument list [1 items]
 #                          Item 0
 #                              Symbol :INT
 #          Instruction
-#              Assignment (lexical variable '$HUP')
+#              Lazy assignment (lexical variable '$HUP')
 #                  Call
 #                      Special variable '*class'
 #                      Argument list [1 items]
 #                          Item 0
 #                              Symbol :HUP
 #          Instruction
-#              Assignment (lexical variable '$TERM')
+#              Lazy assignment (lexical variable '$TERM')
 #                  Call
 #                      Special variable '*class'
 #                      Argument list [1 items]
 #                          Item 0
 #                              Symbol :TERM
 #          Instruction
-#              Assignment (lexical variable '$ALRM')
+#              Lazy assignment (lexical variable '$ALRM')
 #                  Call
 #                      Special variable '*class'
 #                      Argument list [1 items]
 #                          Item 0
 #                              Symbol :ALRM
 #          Instruction
-#              Assignment (lexical variable '$signals')
+#              Lazy assignment (lexical variable '$signals')
 #                  Hash [4 items]
 #                      Item 0
 #                          Pair 'INT'
@@ -132,7 +132,7 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->property_u('_exit')
-                  ->call_u( [ num( $f, 0 ) ], $scope, undef, 26.2 );
+                  ->call_u( [ num( $f, 0 ) ], $scope, undef, 25.2 );
                 return $return;
             }
         );
@@ -151,7 +151,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'type', 32.2 ) or return;
+                FF::need( $scope, $arguments, 'type', 31.2 ) or return;
                 {
                     my $maybe_0 =
                       $scope->property_u('signals')
@@ -159,7 +159,7 @@ my $result = do {
                         $scope );
                     if ( bool($maybe_0) ) {
                         $maybe_0->property_u('catch')
-                          ->call_u( {}, $scope, undef, 33.35 );
+                          ->call_u( {}, $scope, undef, 32.35 );
                     }
                 }
                 return $return;
@@ -180,40 +180,54 @@ my $result = do {
 
         $class->set_property_ow(
             $context,
-            INT => $scope->{special}->property_u('class')
-              ->call_u( [ FF::get_symbol( $f, 'INT' ) ], $scope, undef, 8.4 ),
+            INT => sub {
+                $scope->{special}->property_u('class')
+                  ->call_u( [ FF::get_symbol( $f, 'INT' ) ],
+                    $scope, undef, 7.4 );
+            },
+            7.2
+        );
+        $class->set_property_ow(
+            $context,
+            HUP => sub {
+                $scope->{special}->property_u('class')
+                  ->call_u( [ FF::get_symbol( $f, 'HUP' ) ],
+                    $scope, undef, 8.4 );
+            },
             8.2
         );
         $class->set_property_ow(
             $context,
-            HUP => $scope->{special}->property_u('class')
-              ->call_u( [ FF::get_symbol( $f, 'HUP' ) ], $scope, undef, 9.4 ),
+            TERM => sub {
+                $scope->{special}->property_u('class')
+                  ->call_u( [ FF::get_symbol( $f, 'TERM' ) ],
+                    $scope, undef, 9.4 );
+            },
             9.2
         );
         $class->set_property_ow(
             $context,
-            TERM => $scope->{special}->property_u('class')
-              ->call_u( [ FF::get_symbol( $f, 'TERM' ) ], $scope, undef, 10.4 ),
+            ALRM => sub {
+                $scope->{special}->property_u('class')
+                  ->call_u( [ FF::get_symbol( $f, 'ALRM' ) ],
+                    $scope, undef, 10.4 );
+            },
             10.2
         );
         $class->set_property_ow(
             $context,
-            ALRM => $scope->{special}->property_u('class')
-              ->call_u( [ FF::get_symbol( $f, 'ALRM' ) ], $scope, undef, 11.4 ),
-            11.2
-        );
-        $class->set_property_ow(
-            $context,
-            signals => FF::create_hash(
-                $f,
-                {
-                    INT  => $scope->property_u('INT'),
-                    HUP  => $scope->property_u('HUP'),
-                    TERM => $scope->property_u('TERM'),
-                    ALRM => $scope->property_u('ALRM')
-                }
-            ),
-            13.2
+            signals => sub {
+                FF::create_hash(
+                    $f,
+                    {
+                        INT  => $scope->property_u('INT'),
+                        HUP  => $scope->property_u('HUP'),
+                        TERM => $scope->property_u('TERM'),
+                        ALRM => $scope->property_u('ALRM')
+                    }
+                );
+            },
+            12.2
         );
     }
     FF::load_namespaces( $context, qw(NATIVE NATIVE::Signal Sym) );

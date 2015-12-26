@@ -952,6 +952,24 @@ sub c_OP_ASSIGN {
     return $a;
 }
 
+sub c_OP_LASSIGN {
+    my ($c, $value) = @_;
+
+    my $last_el = $c->last_el;
+    return $c->expected(
+        'an assignable expression',
+        'at left of lazy assignment operator (?=)'
+    ) unless $last_el->is_type('Assignable');
+
+    # remember the last element as the left side of the assignment.
+    my $a = F::Assignment->new(lazy => 1);
+    $a->{left_side} = $last_el;
+    $last_el->parent->abandon($last_el);
+    $c->adopt_and_set_node($a);
+
+    return $a;
+}
+
 sub c_OP_EQUAL      { handle_equality(shift, 0, 0) }
 sub c_OP_EQUAL_I    { handle_equality(shift, 0, 1) }
 sub c_OP_NEQUAL     { handle_equality(shift, 1, 0) }

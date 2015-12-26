@@ -88,6 +88,7 @@ our %pretty_tokens = (
     OP_EQUAL    => 'equality operator (==)',
     OP_NEQUAL_I => 'negated reference equality operator (!==)',
     OP_NEQUAL   => 'negated equality operator (!=)',
+    OP_LASSIGN  => 'lazy assignment operator (?=)',
     OP_ASSIGN   => 'assignment operator (=)',
     OP_ADD      => 'addition operator (+)',
     OP_SADD     => 'positivity operator (+)',

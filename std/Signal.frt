@@ -1,16 +1,15 @@
 class Signal
 
-# TODO: lazy signal instances
 # TODO: non-standard signals
 
 load NATIVE::Signal
 
-$INT  = *class(:INT)
-$HUP  = *class(:HUP)
-$TERM = *class(:TERM)
-$ALRM = *class(:ALRM)
+$INT  ?= *class(:INT)
+$HUP  ?= *class(:HUP)
+$TERM ?= *class(:TERM)
+$ALRM ?= *class(:ALRM)
 
-$signals = [
+$signals ?= [
     INT:    $INT,
     HUP:    $HUP,
     TERM:   $TERM,

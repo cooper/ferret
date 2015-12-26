@@ -37,7 +37,7 @@ my %no_value = map { $_ => 1 } qw(
     OP_EQUAL    OP_EQUAL_I  OP_NEQUAL   OP_NEQUAL_I
     OP_ASSIGN   OP_COMMA    OP_RETURN   OP_SEMI
     OP_NOT      OP_MAYBE    OP_ELLIP    OP_RANGE
-    OP_MOD
+    OP_MOD      OP_LASSIGN  OP_AND      OP_OR
 );
 
 # inject semicolons after these at the end of a line.
@@ -84,9 +84,9 @@ my @token_formats = (
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start
     [ CLOSURE_E     => qr/}/                                                ],  # closure end
-    [ PAREN_S       => qr/\s*\(/,         \&increment_lines                 ],  # parentheses start
+    [ PAREN_S       => qr/[^\S\n]*\(/,      \&increment_lines               ],  # parentheses start
     [ PAREN_E       => qr/\)/                                               ],  # parentheses end
-    [ BRACKET_S     => qr/\[/                                               ],  # bracket start
+    [ BRACKET_S     => qr/[^\S\n]*\[/,      \&increment_lines               ],  # bracket start
     [ BRACKET_E     => qr/\]/                                               ],  # bracket end
 
     # operators
@@ -102,6 +102,7 @@ my @token_formats = (
     [ OP_NEQUAL_I   => qr/!==/                                              ],  # negated object equality
     [ OP_EQUAL      => qr/==/                                               ],  # equality
     [ OP_NEQUAL     => qr/!=/                                               ],  # negated equality
+    [ OP_LASSIGN    => qr/\?=/                                              ],
     [ OP_ASSIGN     => qr/=/                                                ],  # assignment
     [ OP_ADD        => qr/\+/                                               ],  # addition
     [ OP_SUB        => qr/\-/                                               ],  # subtraction

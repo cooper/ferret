@@ -37,16 +37,6 @@ Tokenized as `OP_VALUE`.
 
     $object = (key: "value", other: "another")
 
-### Not operator
-
-    !
-
-Negates a value to its boolean opposite.
-
-Tokenized as `OP_NOT`.
-
-    $false = !true
-
 ### Property operator
 
     .
@@ -138,6 +128,40 @@ Tokenized as `OP_CALL`.
 
     # equivalent to
     someFunction()
+
+
+
+## Logic
+
+### Logical AND operator
+
+    &&
+
+True if two values evaluate to boolean true.
+
+Tokenized as `OP_AND`.
+
+    $true = true && 0
+
+### Logical OR operator
+
+    ||
+
+True if one or both of two values evaluate to boolean true.
+
+Tokenized as `OP_OR`.
+
+    $true = false || 1
+
+### Logical NOT operator
+
+    !
+
+Negates a value to its boolean opposite.
+
+Tokenized as `OP_NOT`.
+
+    $false = !true
 
 
 
