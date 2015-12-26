@@ -1,4 +1,4 @@
-if (bool(<<condition>>)) {
+<<type>> (bool(<<condition>>)) {
     my $scope = Ferret::Scope->new($f, parent => $scope);
 
     <<content>>

@@ -350,6 +350,16 @@ sub tok_BAREWORD {
     # other keyword.
     if ($value =~ $keyword_reg) {
         my $key = uc $value;
+
+        # change else if to elsif
+        if ($key eq 'IF') {
+            my $last = $tokens->[-1];
+            if ($last && $last->[0] eq 'KEYWORD_ELSE') {
+                delete $tokens->[-1];
+                $key = 'ELSIF';
+            }
+        }
+
         return [ "KEYWORD_$key" => ];
     }
 

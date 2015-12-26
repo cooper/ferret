@@ -366,12 +366,35 @@ sub handle_callback_clause {
     return;
 }
 
-
 sub c_KEYWORD_IF {
     my ($c, $value) = @_;
 
     # create an if statement which expects a closure to be opened soon.
-    my $if = F::If->new;
+    my $if = F::If->new(if_type => 'if');
+    $c->node->adopt($if);
+    $c->capture_closure_with($if->body);
+
+    # set the current node to the conditional expression.
+    $if->param_exp->{set_body} = $if->body;
+    $c->set_node($if->param_exp);
+
+    return $if;
+}
+
+sub c_KEYWORD_ELSIF {
+    my ($c, $value) = @_;
+
+    # ensure that the last element is an if.
+    my $last_el = $c->last_el;
+    if ($last_el->type ne 'If') {
+        return $c->unexpected([
+            'without preceding if',
+            'Else if must immediately follow the termination of an if body'
+        ]);
+    }
+
+    # create an if statement which expects a closure to be opened soon.
+    my $if = F::If->new(if_type => 'elsif');
     $c->node->adopt($if);
     $c->capture_closure_with($if->body);
 
@@ -1219,7 +1242,7 @@ sub c_any {
         ^PKG_DEC$           ^CLASS_DEC$
         ^KEYWORD_INSIDE$    ^KEYWORD_FOR$
         ^KEYWORD_ON$        ^KEYWORD_END$
-        ^KEYWORD_IF$        ^KEYWORD_ELSE$
+        ^KEYWORD_IF$        ^KEYWORD_ELSE$      ^KEYWORD_ELSIF$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

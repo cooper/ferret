@@ -37,8 +37,9 @@ sub perl_fmt {
 
     # get content.
     my $content = $if->body->body_fmt_do;
-    
+
     return if => {
+        type      => $if->{if_type},
         condition => $if->{param_exp}->perl_fmt_do,
         content   => $content
     };
