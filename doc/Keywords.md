@@ -45,6 +45,29 @@ classes in a row are declared, in which case the `class` keyword alone
 terminates the previous class. When multiple package declarations per document
 become possible, this keyword will also terminate a `package`.
 
+### load
+
+```
+load <package_name>
+```
+
+Explicitly indicates that a package should be loaded. Packages are loaded
+automatically simply by referencing their names, so `load` is **almost never
+required**. Its occasional use case is when a package should be loaded but is
+not actually referenced within the current file.
+
+`load` provides no true function beyond a human-readable statement with a clear
+intent. It is functionally equivalent to simply stating a package name alone in
+void context. In fact, it does not affect the compiled code in any way.
+
+Additionally, `load` cannot enforce that a package actually be loaded. If such
+a file is not found or has errors, the statement will be quietly ignored, and
+the runtime will attempt to continue normal execution.
+
+```
+load My::Package
+```
+
 ## Constants
 
 ### true
@@ -373,6 +396,35 @@ may be utilized for a single callback.
 
 ```
 on $obj.someEvent before :lateCallback after :earlyCallback { }
+```
+
+### stop
+
+```
+stop
+```
+
+Cancels all remaining callbacks for this event call. This does not affect any
+future calls, only the current one. Also note that it does not emulate a
+function return; any statements below it will still execute unless it is
+followed by an explicit `return` statement. `stop` cannot fail, as if there are
+no pending callbacks, it has no effect and raises no error or warning.
+
+```
+# on INT, ask "are you sure?"
+# then kill on the second INT
+
+$asked = false
+
+on Signal.INT.catch before :default {
+    if !$asked {
+        say("Are you sure?")
+        $asked = true
+        stop    # cancel further callbacks
+        return  # note that stop does not affect the remainder of the callback
+    }
+    say("Got second INT. Terminating!")
+}
 ```
 
 ## Classes
