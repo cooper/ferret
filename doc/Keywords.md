@@ -296,9 +296,9 @@ package context.
 
 ```
 func spam {
-    want $start: Num = 1, $stop: Num = 100
-    for $i in $start..$stop {
-        say("$i of $stop")
+    want $start: Num = 1, $end: Num = 100
+    for $i in $start..$end {
+        say("$i of $end")
     }
 }
 
@@ -566,6 +566,10 @@ return [<value>]
 Terminates the current function or method, returning `value`. If the return
 value is omitted or no `return` statement is ever reached, the function yields
 the return object (`*return`).
+
+When used within an event callback, it is possible that the provided value will
+not ultimately be returned by the event call. If multiple callbacks have an
+explicit `return` statement, the value of the lattermost statement will be used.
 
 ```
 func simple {
