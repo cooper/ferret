@@ -47,6 +47,7 @@ sub adopt_and_set_node {
 # close the current node or n nodes.
 sub close_node {
     my ($c, $n) = (shift, shift || 1);
+    die 'Attempted to close document!' if $c->node->type eq 'Document';
     $c->set_node($c->node->close) for 1..$n;
     return $c->node;
 }

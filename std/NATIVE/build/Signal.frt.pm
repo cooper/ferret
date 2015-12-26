@@ -16,4 +16,14 @@ sub _handle_signal {
     $signal_class->property('fireSignal')->call({ type => $type });
 }
 
+# TODO: make it possible to handle these
+
+$SIG{__DIE__} = sub {
+    print "@_";
+};
+
+$SIG{__WARN__} = sub {
+    print "@_";
+};
+
 1

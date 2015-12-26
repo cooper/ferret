@@ -371,7 +371,7 @@ sub c_KEYWORD_IF {
     my ($c, $value) = @_;
 
     # create an if statement which expects a closure to be opened soon.
-    my $if = F::If->new(type => 'If');
+    my $if = F::If->new;
     $c->node->adopt($if);
     $c->capture_closure_with($if->body);
 
@@ -380,6 +380,27 @@ sub c_KEYWORD_IF {
     $c->set_node($if->param_exp);
 
     return $if;
+}
+
+sub c_KEYWORD_ELSE {
+    my ($c, $value) = @_;
+
+    # ensure that the last element is an if.
+    my $last_el = $c->last_el;
+    if ($last_el->type ne 'If') {
+        return $c->unexpected([
+            'without preceding if',
+            'Else must immediately follow the termination of an if body'
+        ]);
+    }
+
+    # create else.
+    my $else = F::Else->new;
+    $c->capture_closure_with($else->body);
+    $c->node->adopt($else);
+    $c->set_node($else->body);
+
+    return $else;
 }
 
 sub c_KEYWORD_FOR {
@@ -761,8 +782,9 @@ sub c_OP_SEMI {
     $c->close_instruction;
 
     # maybe now we can terminate an inline If.
+    my %acceptable = map { $_ => 1 } qw(If Else);
     my ($n, $p) = ($c->node, $c->node->parent);
-    if ($p && $n->type eq 'Body' && $p->type eq 'If' && $p->{inline}) {
+    if ($p && $n->type eq 'Body' && $acceptable{ $p->type } && $p->{inline}) {
         $c->close_node(2); # if body and if
         $c->do_not_capture_closure; # do not capture closure with it
     }
@@ -1196,7 +1218,8 @@ sub c_any {
         ^METHOD$            ^COMPUTED$
         ^PKG_DEC$           ^CLASS_DEC$
         ^KEYWORD_INSIDE$    ^KEYWORD_FOR$
-        ^KEYWORD_ON$        ^KEYWORD_END$   ^KEYWORD_IF$
+        ^KEYWORD_ON$        ^KEYWORD_END$
+        ^KEYWORD_IF$        ^KEYWORD_ELSE$
     );
     foreach (@ignore) { return if $label =~ $_ }
 
