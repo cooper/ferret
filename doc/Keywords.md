@@ -554,7 +554,8 @@ return [<value>]
 
 Terminates the current function or method, returning `value`. If the return
 value is omitted or no `return` statement is ever reached, the function yields
-the return object (`*return`).
+the return object ([special variable](Variables.md#special-variables)
+`*return`).
 
 When used within an event callback, it is possible that the provided value will
 not ultimately be returned by the event call. If multiple callbacks have an

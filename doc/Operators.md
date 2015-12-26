@@ -37,10 +37,10 @@ or hash pair.
 
 Tokenized as `OP_VALUE`.
 
+    $object = (key: "value", other: "another")
+
 The symbol data type (e.g. `:sym`) is tokenized separately as `VAR_SYM`; see
 [Symbols](https://github.com/cooper/ferret/blob/master/doc/Variables.md#symbols).
-
-    $object = (key: "value", other: "another")
 
 ### Property operator
 
@@ -66,6 +66,13 @@ Tokenized as `OP_ASSIGN`.
 
     $x = 1
 
+See also
+* `?=` [`OP_LASSIGN`](#lazy-assignment-operator) - lazy assignment
+* `+=` [`OP_ADD_A`](#altering-addition-operator) - addition assignment
+* `-=` [`OP_SUB_A`](#altering-subtraction-operator) - subtraction assignment
+* `*=` [`OP_MUL_A`](#altering-multiplication-operator) - multiplication assignment
+* `/=` [`OP_DIV_A`](#altering-division-operator) - division assignment
+
 ### Lazy assignment operator
 
     ?=
@@ -85,6 +92,8 @@ Tokenized as `OP_LASSIGN`.
 
     $y = $x
     # now $x and $y have the semi-permanent value returned by doSomething()
+
+See also [`OP_ASSIGN`](#assignment-operator).
 
 ### Return operator
 
@@ -110,6 +119,8 @@ Tokenized as `OP_RETURN`.
     }
 
     addOneToEach(5, 10)  # returns (newX: 6, newY: 11)
+
+See also the [`return`](Keywords.md#return) keyword.
 
 ### Namespace operator
 
