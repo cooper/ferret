@@ -153,12 +153,23 @@ sub instruction { shift->{instruction} }
 sub set_instruction {
     my ($c, $instr) = @_;
     $instr->{parent_instruction} = $c->{instruction};
+    $instr->{will_close_closure} = $c->instruction_will_close_closure;
     return $c->{instruction} = $instr;
 }
 
 sub close_instruction {
     my $c = shift;
     return $c->{instruction} = $c->{instruction}{parent_instruction};
+}
+
+sub instruction_opens_closure {
+    my $c = shift;
+    $c->{instruction_is_closure} = 1;
+}
+
+sub instruction_will_close_closure {
+    my $c = shift;
+    return delete $c->{instruction_is_closure};
 }
 
 ############################

@@ -14,7 +14,7 @@ my $position;
 
 # keywords.
 # when changing this, update Keywords.md
-my $keyword_reg = '^('.join('|', qw{
+my $keyword_reg = '\\b(?:'.join('|', qw{
     package     class       end         init
     method      func        prop        set
     want        need        share       local
@@ -23,8 +23,7 @@ my $keyword_reg = '^('.join('|', qw{
     true        false       undefined
     for         in          load
     delete      weaken      __END__     __LINE__
-}).')$';
-$keyword_reg = qr/$keyword_reg/;
+}).')\\b';
 
 # these tokens do not have values.
 # some which are handled manually are not in this list.
@@ -88,6 +87,9 @@ my @token_formats = (
     [ PAREN_E       => qr/\)/                                               ],  # parentheses end
     [ BRACKET_S     => qr/[^\S\n]*\[/,      \&increment_lines               ],  # bracket start
     [ BRACKET_E     => qr/\]/                                               ],  # bracket end
+
+    # keywords
+    [ KEYWORD       => qr/$keyword_reg/                                     ],  # keywords
 
     # operators
     [ OP_AND        => qr/&&/                                               ],  # logical and
@@ -334,8 +336,17 @@ sub _escape {
     return $char;
 }
 
-sub tok_BAREWORD {
+sub tok_KEYWORD {
     my ($tokens, $value) = @_;
+
+    # change else if to elsif
+    if ($value eq 'if') {
+        my $last = $tokens->[-1];
+        if ($last && $last->[0] eq 'KEYWORD_ELSE') {
+            delete $tokens->[-1];
+            return [ 'KEYWORD_ELSIF' => ];
+        }
+    }
 
     # init keyword = func _init_.
     if ($value eq 'init') {
@@ -348,21 +359,13 @@ sub tok_BAREWORD {
     }
 
     # other keyword.
-    if ($value =~ $keyword_reg) {
-        my $key = uc $value;
+    my $name = uc $value;
+    return [ "KEYWORD_$name" => $value ];
 
-        # change else if to elsif
-        if ($key eq 'IF') {
-            my $last = $tokens->[-1];
-            if ($last && $last->[0] eq 'KEYWORD_ELSE') {
-                delete $tokens->[-1];
-                $key = 'ELSIF';
-            }
-        }
+}
 
-        return [ "KEYWORD_$key" => ];
-    }
-
+sub tok_BAREWORD {
+    my ($tokens, $value) = @_;
     my $last = $tokens->[-1] or return;
 
     # class declaration.

@@ -229,7 +229,7 @@ sub c_FUNCTION {
 
 # start of a closure
 sub c_CLOSURE_S {
-    my ($c, $value) = @_;
+    my ($c, $value, $is_colon) = @_;
 
     # Rule CLOSURE_S[0]:
     #   The current 'clos_cap' must exist.
@@ -273,7 +273,7 @@ sub c_CLOSURE_S {
 
 # end of a closure
 sub c_CLOSURE_E {
-    my ($c, $value) = @_;
+    my ($c, $value, $is_semi) = @_;
 
     # Rule CLOSURE_E[0]:
     #   The current 'closure' must exist.
@@ -801,15 +801,13 @@ sub c_OP_SEMI {
     }
 
     # close the instruction.
+    my $instr = $c->instruction;
     $c->close_node;
     $c->close_instruction;
 
-    # maybe now we can terminate an inline If.
-    my %acceptable = map { $_ => 1 } qw(If Else);
-    my ($n, $p) = ($c->node, $c->node->parent);
-    if ($p && $n->type eq 'Body' && $acceptable{ $p->type } && $p->{inline}) {
-        $c->close_node(2); # if body and if
-        $c->do_not_capture_closure; # do not capture closure with it
+    # possibly terminate a closure.
+    if (delete $instr->{will_close_closure}) {
+        c_CLOSURE_E($c, undef, 1);
     }
 
     return;
@@ -892,20 +890,45 @@ sub c_KEYWORD_NEED {
 sub c_OP_VALUE {
     my $c = shift;
 
-    # inline if can terminate this.
-    $c->close_nodes(qw(Negation Operation));
+    # if something is waiting to capture a closure,
+    # maybe that's what this is, a single-statement closure.
+    if (could_be_one_liner($c)) {
 
-    # perhaps this is an inline if?
-    if (($c->node->{parameter_for} || '') eq 'if') {
-        my $if = $c->close_node;
-        $if->{inline} = 1;
-        $c->set_node($if->body);
-        return $if;
+        # simulate a {
+        c_CLOSURE_S($c, undef, 1);
+
+        # remember that the coming intruction will terminate closure.
+        $c->instruction_opens_closure;
+
+        return;
     }
 
     # otherwise just throw the token back in.
     $c->node->adopt($c->unknown_el);
 
+}
+
+sub could_be_one_liner {
+    my $c = shift;
+
+    # clos_cap gotta be there.
+    return unless $c->clos_cap;
+
+    # if we're inside a generated expression, all good.
+    # this could be problematic if a generated expression had an anonymous
+    # function or other sort of closure in it, but that would be ridiculous.
+    my $el = $c->node;
+    do {
+        return 1 if $el->{generated_expression};
+    } while $el = $el->parent;
+
+    # if the last token is any of these, good.
+    my %is_reasonable = map { $_ => 1 } qw(
+        KEYWORD_ELSE
+    );
+
+    my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
+    return $is_reasonable{$l_label};
 }
 
 sub c_PROP_VALUE {
@@ -1200,12 +1223,11 @@ sub c_any {
     # these things cannot start an instruction.
     # (tokens only) (this is horrendous)
     my @ignore = qw(
-        ^FUNCTION$          ^CLOSURE_.+$
-        ^METHOD$            ^COMPUTED$
-        ^PKG_DEC$           ^CLASS_DEC$
-        ^KEYWORD_INSIDE$    ^KEYWORD_FOR$
-        ^KEYWORD_ON$        ^KEYWORD_END$
+        ^FUNCTION$          ^METHOD$            ^COMPUTED$
+        ^KEYWORD_INSIDE$    ^KEYWORD_FOR$       ^KEYWORD_ON$
         ^KEYWORD_IF$        ^KEYWORD_ELSE$      ^KEYWORD_ELSIF$
+        ^PKG_DEC$           ^CLASS_DEC$         ^KEYWORD_END$
+        ^CLOSURE_.+$        ^OP_.+$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

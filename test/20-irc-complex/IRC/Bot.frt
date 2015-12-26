@@ -93,13 +93,14 @@ func _joinChannels {
     # check if already joined.
     if @_joinedChannels:
         return
-    @_joinedChannels = true
 
     if @autojoin {
         for $chan in @autojoin {
             @send("JOIN $chan")
         }
     }
+
+    @_joinedChannels = true
 }
 
 # Default handlers and commands
