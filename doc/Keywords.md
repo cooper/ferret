@@ -467,10 +467,17 @@ init {
 ### prop
 
 ```
-prop <name> { [<statements>...] }
+prop(?) <name> { [<statements>...] }
 ```
 
 Declares a computed property (instance variable).
+
+If the keyword is spelled `prop?` with a question mark
+([`OP_MAYBE`](Operators.md#inline-if-operator)) suffixing it, its value will
+only be computed once. After the first evaluation, the returned value will be
+stored as the semi-permanent property value. This works similarly to lazy
+assignment with the `?=` operator
+([OP_LASSIGN](Operators.md#lazy-assignment-operator)).
 
 ```
 class Line
@@ -482,24 +489,6 @@ prop midpoint {
 
 ```
 $line.midpoint  # returns a Point, created on the spot
-```
-
-### set
-
-```
-set <prop_declaration>
-```
-
-Indicates that a computed property is to be evaluated only once. After the first
-evaluation, the return value is set as the semi-permanent value.
-
-```
-class Person
-
-set prop firstName {
-    $words = @fullName.split(" ")
-    return $words[0]
-}
 ```
 
 ## Control flow

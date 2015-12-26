@@ -20,7 +20,7 @@ init {
 }
 
 # find the command
-set prop command {
+prop? command {
 
     # find it
     if @parts[0].hasPrefix(".") {
@@ -32,7 +32,7 @@ set prop command {
     return false
 }
 
-set prop commandHasParameters {
+prop? commandHasParameters {
     return @parts.length != 1 # ge once implemented
 }
 

@@ -57,6 +57,20 @@ Tokenized as `OP_ASSIGN`.
 
     $x = 1
 
+### Lazy assignment operator
+
+    ?=
+
+Separates an assignable expression from its lazy-computed value.
+
+Tokenized as `OP_LASSIGN`.
+
+    $x ?= doSomething()
+    # doSomething will not be called until $x is accessed below
+
+    $y = $x
+    # now $x and $y have the semi-permanent value returned by doSomething()
+
 ### Return operator
 
     ->

@@ -16,7 +16,7 @@ my $position;
 # when changing this, update Keywords.md
 my $keyword_reg = '\\b(?:'.join('|', qw{
     package     class       end         init
-    method      func        prop        set
+    method      func        prop
     want        need        share       local
     on          before      after       inside
     if          else        return      stop
@@ -390,17 +390,9 @@ sub tok_BAREWORD {
     if ($last->[0] eq 'KEYWORD_PROP') {
         delete $tokens->[-1];
 
-        # 'set prop'
-        my $set;
-        my $last_last = $tokens->[-1];
-        if ($last_last->[0] eq 'KEYWORD_SET') {
-            delete $tokens->[-1];
-            $set = 1;
-        }
-
         return [ METHOD => {
             name    => $value,
-            p_set   => $set,
+            p_set   => $last->[1] && $last->[1] eq 'set',
             is_prop => 1
         } ];
     }
@@ -432,6 +424,19 @@ sub tok_OP_NOT {
     return unless possibly_call($tokens);
 
     return [ OP_CALL => ];
+}
+
+sub tok_OP_MAYBE {
+    my ($tokens, $value) = @_;
+
+    # if it follows 'prop' keyword, it's a lazy computed property.
+    my $last = $tokens->[-1] or return;
+    if ($last->[0] eq 'KEYWORD_PROP') {
+        $last->[1] = 'set';
+        return [];
+    }
+
+    return;
 }
 
 # opening curly bracket can start an anonymous function
