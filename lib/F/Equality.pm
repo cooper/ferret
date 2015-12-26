@@ -22,14 +22,6 @@ sub perl_fmt {
    };
 }
 
-sub new {
-    my ($class, %opts) = @_;
-    return $class->SUPER::new(
-        no_instructions => 1,
-        %opts
-    );
-}
-
 sub left_side  { shift->first_child }
 sub right_side {
     my $eq = shift;

@@ -41,8 +41,7 @@ sub is_collection { shift->{collection} }
 sub new_item {
     my $list = shift;
     my $item = F::ListItem->new(
-        item_num => $list->{item_c}++,
-        no_instructions => 1
+        item_num => $list->{item_c}++
     );
     return $list->adopt($item);
 }

@@ -1226,14 +1226,6 @@ sub c_any {
     # can the current node hold instructions?
     return unless $c->node->hold_instr;
 
-    # TODO: remove this? doesn't the above nullify it?
-    #
-    # if the current node does not directly allow instructions,
-    # do not start an instruction here. for example, the
-    # expression representing the condition of an if block
-    # does not allow instructions.
-    return if $c->node->{no_instructions};
-
     # these things cannot start an instruction.
     # (tokens only) (this is horrendous)
     my @ignore = qw(

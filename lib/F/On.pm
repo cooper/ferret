@@ -128,7 +128,6 @@ sub new {
     return $class->SUPER::new(
         parameter_for        => 'on',
         generated_expression => 1,
-        no_instructions      => 1,
         %opts
     );
 }

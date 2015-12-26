@@ -17,16 +17,14 @@ sub new {
     # create 'for' parameter.
     my $exp = $for->{param_exp} = F::Expression->new(
         parameter_for        => 'for',
-        generated_expression => 1,
-        no_instructions      => 1
+        generated_expression => 1
     );
     $for->adopt($exp);
 
     # create 'in' parameter.
     $exp = $for->{in_param_exp} = F::Expression->new(
         parameter_for        => 'in',
-        generated_expression => 1,
-        no_instructions      => 1
+        generated_expression => 1
     );
     $for->adopt($exp);
 

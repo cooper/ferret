@@ -7,14 +7,6 @@ use parent qw(F::Statement);
 
 sub type { 'Stop' }
 
-sub new {
-    my ($class, %opts) = @_;
-    return $class->SUPER::new(
-        no_instructions => 1,
-        %opts
-    );
-}
-
 sub perl_fmt_do {
     return '$return->stop';
 }

@@ -17,8 +17,7 @@ sub new {
     # automatically by certain tokens.
     my $exp = F::Expression->new(
         parameter_for        => 'if',
-        generated_expression => 1,
-        no_instructions      => 1
+        generated_expression => 1
     );
     $if->adopt($exp);
     weaken($if->{param_exp} = $exp);

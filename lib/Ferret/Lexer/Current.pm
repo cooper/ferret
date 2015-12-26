@@ -130,7 +130,6 @@ sub start_list {
     my $list = F::List->new;
     $list->{parent_list} = $c->{list};
     $list->{list_terminator} = $terminator;
-    $list->{no_instructions} = 1;
 
     # set the current list and the current node to the list's first item.
     $c->{list} = $list;
