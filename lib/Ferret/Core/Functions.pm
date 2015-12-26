@@ -6,7 +6,6 @@ use strict;
 use utf8;
 use 5.010;
 
-use List::Util qw(any all);
 
 use Ferret::Core::Conversion qw(
     perl_string         ferret_string
@@ -32,14 +31,6 @@ our %functions = (
     require => {
         need => '$test',
         code => \&_require
-    },
-    all => {
-        need => '$value1 $value2',
-        code => \&_all
-    },
-    any => {
-        need => '$value1 $value2',
-        code => \&_any
     },
     delay => {
         need => '$timeout:Num $callback',
@@ -88,16 +79,6 @@ sub _inspect {
 
     $return->set_property(string => ferret_string($str));
     return $return;
-}
-
-sub _any {
-    my (undef, $arguments) = @_;
-    return ferret_boolean(any { perl_boolean($_) } values %$arguments);
-}
-
-sub _all {
-    my (undef, $arguments) = @_;
-    return ferret_boolean(all { perl_boolean($_) } values %$arguments);
 }
 
 sub _require {

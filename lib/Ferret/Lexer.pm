@@ -77,6 +77,8 @@ our %pretty_tokens = (
     BRACKET_IDX => 'index bracket "["',
     BRACKET_E   => 'closing bracket "]"',
     PROPERTY    => 'property accessor (.property)',
+    OP_AND      => 'logical and operator (&&)',
+    OP_OR       => 'logical or operator (||)',
     OP_RETURN   => 'return operator (->)',
     OP_ADD_A    => 'altering addition operator (+=)',
     OP_SUB_A    => 'altering subtraction operator (-=)',

@@ -70,7 +70,7 @@ sub compile {
     my @children = $op->children;
 
     # for each operator, while there are instances of that operator
-    foreach my $op_type (qw/ssub sadd range pow mod mul div sub add/) {
+    foreach my $op_type (qw/ssub sadd range pow mod mul div sub add and or/) {
     while (grep { is_op($_, $op_type) } @children) {
         my ($i, $left, $right) = -1;
 
@@ -107,6 +107,8 @@ sub op_fmt {
     $op_name = '_sub' if $op_name eq 'sub';
     $op_name = '_sub' if $op_name eq 'ssub';
     $op_name = 'add'  if $op_name eq 'sadd';
+    $op_name = '_and' if $op_name eq 'and';
+    $op_name = '_or'  if $op_name eq 'or';
 
     my $doc = $op->document;
     $doc->{required_operations}{$op_name}++;

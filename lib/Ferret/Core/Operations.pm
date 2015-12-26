@@ -7,6 +7,7 @@ use utf8;
 use 5.010;
 
 use Ferret::Shared::Utils qw(import);
+use List::Util qw(any all);
 
 BEGIN {
     no strict 'refs';
@@ -34,6 +35,18 @@ sub op_star {
     return $left;
 }
 
+sub _and {
+    shift;
+    return Ferret::true if all { bool($_) } @_;
+    return Ferret::false;
+}
+
+sub _or {
+    shift;
+    return Ferret::true if any { bool($_) } @_;
+    return Ferret::false;
+}
+
 sub bool {
     return Ferret::truth(@_);
 }
@@ -41,11 +54,6 @@ sub bool {
 sub _not {
     my $val = shift;
     return $val == Ferret::false ? Ferret::true : Ferret::false;
-}
-
-sub U {
-    my $val = shift;
-    return $val || Ferret::undefined;
 }
 
 sub num { Ferret::Number->new(shift, num_value => shift) }

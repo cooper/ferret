@@ -90,6 +90,8 @@ my @token_formats = (
     [ BRACKET_E     => qr/\]/                                               ],  # bracket end
 
     # operators
+    [ OP_AND        => qr/&&/                                               ],  # logical and
+    [ OP_OR         => qr/\|\|/                                             ],  # logical or
     [ OP_RETURN     => qr/->/                                               ],  # return property
     [ OP_ADD_A      => qr/\+=/                                              ],  # addition assignment
     [ OP_SUB_A      => qr/-=/                                               ],  # subtraction assignment

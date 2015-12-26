@@ -985,9 +985,11 @@ sub handle_equality {
 
 *c_OP_ADD = *c_OP_SUB =
 *c_OP_MUL = *c_OP_DIV =
-*c_OP_POW = *c_OP_MOD = *c_OP_RANGE = *c_math_operator;
+*c_OP_POW = *c_OP_MOD =
+*c_OP_AND = *c_OP_OR  =
+*c_OP_RANGE = *c_operator;
 
-sub c_math_operator {
+sub c_operator {
     my ($c, $value) = @_;
     my $last_el = $c->last_el;
 
