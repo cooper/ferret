@@ -201,12 +201,13 @@
 #                                      Number '1'
 #                  If
 #                      Expression ('if' parameter)
-#                          Equality
+#                          Operation
 #                              Index
 #                                  Lexical variable '$s'
 #                                  Single value [1 items]
 #                                      Item 0
 #                                          Number '0'
+#                              Equality operator (==)
 #                              String 'PING'
 #                      Body ('if' scope)
 #                          Instruction
@@ -273,9 +274,10 @@
 #                      Body ('for' scope)
 #                          If
 #                              Expression ('if' parameter)
-#                                  Equality
+#                                  Operation
 #                                      Property 'length'
 #                                          Lexical variable '$line'
+#                                      Negated equality operator (!=)
 #                                      Number '0'
 #                              Body ('if' scope)
 #                                  Instruction
@@ -500,7 +502,7 @@ my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('Bot.frt');
 
-use Ferret::Core::Operations qw(_not add bool num str);
+use Ferret::Core::Operations qw(add bool equal nequal num str);
 my $result = do {
     my $scope = my $context = FF::get_context( $f, 'IRC' );
     FF::load_core('IRC');
@@ -961,9 +963,12 @@ my $result = do {
                 );
                 if (
                     bool(
-                        $scope->property_u('s')
-                          ->get_index_value( [ num( $f, 0 ) ], $scope )
-                          ->equal_to( str( $f, "PING" ), $scope )
+                        equal(
+                            $scope,
+                            $scope->property_u('s')
+                              ->get_index_value( [ num( $f, 0 ) ], $scope ),
+                            str( $f, "PING" )
+                        )
                     )
                   )
                 {
@@ -1038,10 +1043,11 @@ my $result = do {
                         my $scope = shift;
                         if (
                             bool(
-                                _not(
+                                nequal(
+                                    $scope,
                                     $scope->property_u('line')
-                                      ->property_u('length')
-                                      ->equal_to( num( $f, 0 ), $scope )
+                                      ->property_u('length'),
+                                    num( $f, 0 )
                                 )
                             )
                           )

@@ -253,7 +253,7 @@ sub c_CLOSURE_S {
     }
 
     # a closure can terminate these.
-    $c->close_nodes(qw(Negation Operation Equality));
+    $c->close_nodes(qw(Negation Operation));
 
 
     # a closure can terminate a generated expression.
@@ -560,7 +560,7 @@ sub c_PAREN_E {
         if $t ne 'PAREN_E';
 
     # closes these things.
-    $c->close_nodes(qw(Negation Operation Equality Pair));
+    $c->close_nodes(qw(Negation Operation Pair));
 
     # close the list itself.
     #
@@ -595,7 +595,7 @@ sub c_BRACKET_E {
         if $t ne 'BRACKET_E';
 
     # closes these things.
-    $c->close_nodes(qw(Equality Operation Pair));
+    $c->close_nodes(qw(Operation Pair));
 
     # close the list itself.
     #
@@ -780,7 +780,7 @@ sub c_OP_SEMI {
     # close these things.
     $c->close_nodes(qw(
         WantNeed PropertyModifier Negation Operation
-        Equality Assignment Return ReturnPair
+        Assignment Return ReturnPair
         SharedDeclaration LocalDeclaration Load Stop
     ));
 
@@ -893,7 +893,7 @@ sub c_OP_VALUE {
     my $c = shift;
 
     # inline if can terminate this.
-    $c->close_nodes(qw(Negation Equality));
+    $c->close_nodes(qw(Negation Operation));
 
     # perhaps this is an inline if?
     if (($c->node->{parameter_for} || '') eq 'if') {
@@ -981,42 +981,13 @@ sub c_OP_LASSIGN {
     return $a;
 }
 
-sub c_OP_EQUAL      { handle_equality(shift, 0, 0) }
-sub c_OP_EQUAL_I    { handle_equality(shift, 0, 1) }
-sub c_OP_NEQUAL     { handle_equality(shift, 1, 0) }
-sub c_OP_NEQUAL_I   { handle_equality(shift, 1, 1) }
-
-sub handle_equality {
-    my ($c, $negated, $obj_equality) = @_;
-
-    # equality closes these.
-    my $redo = $c->close_nodes(qw(Negation Equality));
-
-    # if we closed something, redo to update last_el.
-    return $c->redo if $redo;
-
-    my $last_el = $c->last_el;
-    return $c->expected(
-        'an expression',
-        'at left of '.Ferret::Lexer::pretty_token($c->label)
-    ) unless $last_el->is_type('Expression');
-
-    # adopt the last element as the left side of the equality.
-    my $equality = F::Equality->new(
-        negated      => $negated,
-        obj_equality => $obj_equality
-    );
-    $c->adopt_and_set_node($equality);
-    $equality->adopt($last_el);
-
-    return $equality;
-}
-
-*c_OP_ADD = *c_OP_SUB =
-*c_OP_MUL = *c_OP_DIV =
-*c_OP_POW = *c_OP_MOD =
-*c_OP_AND = *c_OP_OR  =
-*c_OP_RANGE = *c_operator;
+*c_OP_ADD    = *c_OP_SUB      =
+*c_OP_MUL    = *c_OP_DIV      =
+*c_OP_POW    = *c_OP_MOD      =
+*c_OP_AND    = *c_OP_OR       =
+*c_OP_EQUAL  = *c_OP_EQUAL_I  =
+*c_OP_NEQUAL = *c_OP_NEQUAL_I =
+*c_OP_RANGE  = *c_operator;
 
 sub c_operator {
     my ($c, $value) = @_;

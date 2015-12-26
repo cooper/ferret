@@ -27,7 +27,6 @@
         * Operation
         * Maybe
         * Index
-        * Equality
     * __Expression__ - possesses a value.
         * String
         * Number
@@ -44,7 +43,6 @@
         * Maybe
         * Boolean
         * Index
-        * Equality
     * __Assignable__ - allowed at left of assignment operator.
         * Bareword
         * LexicalVariable

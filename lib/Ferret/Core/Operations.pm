@@ -35,13 +35,39 @@ sub op_star {
     return $left;
 }
 
-sub _and {
+sub equal {
+    shift;
+    my $obj = shift;
+    while (@_) {
+        my $right = shift;
+        return Ferret::false if !bool($obj->equal_to($right));
+        $obj = $right;
+    }
+    return Ferret::true;
+}
+
+sub nequal { _not(&equal) }
+
+sub refs_equal {
+    shift;
+    my $obj = shift;
+    while (@_) {
+        my $right = shift;
+        return Ferret::false if !bool($obj->equal_to_exactly($right));
+        $obj = $right;
+    }
+    return Ferret::true;
+}
+
+sub refs_nequal { _not(&refs_equal) }
+
+sub all_true {
     shift;
     return Ferret::true if all { bool($_) } @_;
     return Ferret::false;
 }
 
-sub _or {
+sub any_true {
     shift;
     return Ferret::true if any { bool($_) } @_;
     return Ferret::false;

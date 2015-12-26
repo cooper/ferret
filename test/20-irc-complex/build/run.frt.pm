@@ -327,9 +327,10 @@
 #                              Lexical variable '$c'
 #                          Argument list [1 items]
 #                              Item 0
-#                                  Equality
+#                                  Operation
 #                                      Property 'command'
 #                                          Lexical variable '$msg'
+#                                      Equality operator (==)
 #                                      String 'p'
 #              If
 #                  Expression ('if' parameter)
@@ -404,7 +405,7 @@ my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('run.frt');
 
-use Ferret::Core::Operations qw(_not bool num str);
+use Ferret::Core::Operations qw(_not bool equal num str);
 my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
@@ -454,8 +455,11 @@ my $result = do {
                 $context,
                 res => $scope->property_u('c')->property_u('compile')->call_u(
                     [
-                        $scope->property_u('msg')->property_u('command')
-                          ->equal_to( str( $f, "p" ), $scope )
+                        equal(
+                            $scope,
+                            $scope->property_u('msg')->property_u('command'),
+                            str( $f, "p" )
+                        )
                     ],
                     $scope, undef, 56.25
                 ),

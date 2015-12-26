@@ -46,7 +46,6 @@ use F::On;
 use F::Boolean;
 use F::For;
 use F::Index;
-use F::Equality;
 use F::PropertyModifier;
 use F::Assignable;
 use F::Negation;

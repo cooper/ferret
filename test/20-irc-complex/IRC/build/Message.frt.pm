@@ -120,9 +120,10 @@
 #              Body ('method' scope)
 #                  Instruction
 #                      Return
-#                          Equality
+#                          Operation
 #                              Property 'length'
 #                                  Instance variable '@parts'
+#                              Negated equality operator (!=)
 #                              Number '1'
 #          Method 'fromWord'
 #              Body ('method' scope)
@@ -169,7 +170,7 @@ my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('Message.frt');
 
-use Ferret::Core::Operations qw(_not add bool num str);
+use Ferret::Core::Operations qw(add bool nequal num str);
 my $result = do {
     my $scope = my $context = FF::get_context( $f, 'IRC' );
     FF::load_core('IRC');
@@ -292,8 +293,11 @@ my $result = do {
             [],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                return _not( $self->property_u('parts')->property_u('length')
-                      ->equal_to( num( $f, 1 ), $scope ) );
+                return nequal(
+                    $scope,
+                    $self->property_u('parts')->property_u('length'),
+                    num( $f, 1 )
+                );
                 return $return;
             }
         );

@@ -48,8 +48,9 @@
 #                              Instance variable '@_test'
 #                              Argument list [2 items]
 #                                  Item 0
-#                                      Equality
+#                                      Operation
 #                                          Lexical variable '$a'
+#                                          Reference equality operator (===)
 #                                          Boolean true
 #                                  Item 1
 #                                      String 'Value must...'
@@ -67,8 +68,9 @@
 #                              Instance variable '@_test'
 #                              Argument list [2 items]
 #                                  Item 0
-#                                      Equality
+#                                      Operation
 #                                          Lexical variable '$a'
+#                                          Equality operator (==)
 #                                          Lexical variable '$b'
 #                                  Item 1
 #                                      String 'Values mus...'
@@ -86,8 +88,9 @@
 #                              Instance variable '@_test'
 #                              Argument list [2 items]
 #                                  Item 0
-#                                      Equality
+#                                      Operation
 #                                          Lexical variable '$a'
+#                                          Reference equality operator (===)
 #                                          Lexical variable '$b'
 #                                  Item 1
 #                                      String 'Objects mu...'
@@ -105,8 +108,9 @@
 #                              Instance variable '@_test'
 #                              Argument list [2 items]
 #                                  Item 0
-#                                      Equality
+#                                      Operation
 #                                          Lexical variable '$a'
+#                                          Negated equality operator (!=)
 #                                          Lexical variable '$b'
 #                                  Item 1
 #                                      String 'Values mus...'
@@ -124,8 +128,9 @@
 #                              Instance variable '@_test'
 #                              Argument list [2 items]
 #                                  Item 0
-#                                      Equality
+#                                      Operation
 #                                          Lexical variable '$a'
+#                                          Negated reference equality operator (!==)
 #                                          Lexical variable '$b'
 #                                  Item 1
 #                                      String 'Objects mu...'
@@ -171,8 +176,9 @@
 #                          Instance variable '@passed'
 #                  Instruction
 #                      Return pair 'allOK'
-#                          Equality
+#                          Operation
 #                              Instance variable '@passed'
+#                              Equality operator (==)
 #                              Instance variable '@tested'
 #          Method '_test'
 #              Body ('method' scope)
@@ -239,7 +245,8 @@ my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('Test.frt');
 
-use Ferret::Core::Operations qw(_not _sub add bool num str);
+use Ferret::Core::Operations
+  qw(_sub add bool equal nequal num refs_equal refs_nequal str);
 my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
@@ -303,8 +310,7 @@ my $result = do {
                 FF::want( $scope, $arguments, 'a', 18.2 );
                 return $self->property_u('_test')->call_u(
                     [
-                        $scope->property_u('a')
-                          ->equal_to_exactly( $true, $scope ),
+                        refs_equal( $scope, $scope->property_u('a'), $true ),
                         str( $f, "Value must be exactly true" )
                     ],
                     $scope, undef, 19.15
@@ -326,8 +332,10 @@ my $result = do {
                 FF::want( $scope, $arguments, 'b', 24.4 );
                 return $self->property_u('_test')->call_u(
                     [
-                        $scope->property_u('a')
-                          ->equal_to( $scope->property_u('b'), $scope ),
+                        equal(
+                            $scope, $scope->property_u('a'),
+                            $scope->property_u('b')
+                        ),
                         str( $f, "Values must be equal" )
                     ],
                     $scope, undef, 25.15
@@ -350,8 +358,10 @@ my $result = do {
                 FF::want( $scope, $arguments, 'b', 30.4 );
                 return $self->property_u('_test')->call_u(
                     [
-                        $scope->property_u('a')
-                          ->equal_to_exactly( $scope->property_u('b'), $scope ),
+                        refs_equal(
+                            $scope, $scope->property_u('a'),
+                            $scope->property_u('b')
+                        ),
                         str( $f, "Objects must be exactly equal" )
                     ],
                     $scope, undef, 31.15
@@ -374,9 +384,9 @@ my $result = do {
                 FF::want( $scope, $arguments, 'b', 36.4 );
                 return $self->property_u('_test')->call_u(
                     [
-                        _not(
-                            $scope->property_u('a')
-                              ->equal_to( $scope->property_u('b'), $scope )
+                        nequal(
+                            $scope, $scope->property_u('a'),
+                            $scope->property_u('b')
                         ),
                         str( $f, "Values must not be equal" )
                     ],
@@ -400,10 +410,9 @@ my $result = do {
                 FF::want( $scope, $arguments, 'b', 42.4 );
                 return $self->property_u('_test')->call_u(
                     [
-                        _not(
-                            $scope->property_u('a')->equal_to_exactly(
-                                $scope->property_u('b'), $scope
-                            )
+                        refs_nequal(
+                            $scope, $scope->property_u('a'),
+                            $scope->property_u('b')
                         ),
                         str( $f, "Objects must not be equal" )
                     ],
@@ -458,8 +467,11 @@ my $result = do {
                     52.2
                 );
                 $return->set_property(
-                    allOK => $self->property_u('passed')
-                      ->equal_to( $self->property_u('tested'), $scope ),
+                    allOK => equal(
+                        $scope,
+                        $self->property_u('passed'),
+                        $self->property_u('tested')
+                    ),
                     53.2
                 );
                 return $return;
