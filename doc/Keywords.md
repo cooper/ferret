@@ -467,7 +467,7 @@ init {
 ### prop
 
 ```
-prop(?) <name> { [<statements>...] }
+prop[?] <name> { [<statements>...] }
 ```
 
 Declares a computed property (instance variable).
@@ -477,7 +477,7 @@ If the keyword is spelled `prop?` with a question mark
 only be computed once. After the first evaluation, the returned value will be
 stored as the semi-permanent property value. This works similarly to lazy
 assignment with the `?=` operator
-([OP_LASSIGN](Operators.md#lazy-assignment-operator)).
+([`OP_LASSIGN`](Operators.md#lazy-assignment-operator)).
 
 ```
 class Line
