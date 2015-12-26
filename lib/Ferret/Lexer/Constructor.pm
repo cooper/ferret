@@ -416,6 +416,22 @@ sub c_KEYWORD_IN {
 
 }
 
+sub c_KEYWORD_LOAD {
+    my ($c, $value) = @_;
+
+    # Rule Load[0]:
+    #   Must be a direct child of an Instruction.
+
+    # Rule Load[1]:
+    #   Parent must be a direct child of a Class or Document.
+
+    # Rule Load[2]:
+    #   Number of direct children must not exceed one (1).
+
+    my $load = F::Load->new;
+    $c->adopt_and_set_node($load);
+}
+
 sub c_PAREN_S {
     my ($c, $value) = @_;
     my $list = $c->start_list('PAREN_E');
@@ -748,7 +764,7 @@ sub c_OP_SEMI {
     $c->close_nodes(qw(
         WantNeed PropertyModifier Negation Operation
         Equality Assignment Return ReturnPair
-        SharedDeclaration LocalDeclaration
+        SharedDeclaration LocalDeclaration Load
     ));
 
     # special case:
@@ -759,12 +775,12 @@ sub c_OP_SEMI {
     # at this point, the instruction must be the current node.
     if ($c->node != $c->instruction) {
         my $type = $c->node->desc;
-        return $c->unexpected([
+        return $c->unexpected($automatic ? [
             "inside $type",
             'This is an inferred semicolon. Perhaps you forgot a separator '.
             '(comma) or terminator (closing parenthesis, bracket, etc.) '.
             'at the end of the line'
-        ]);
+        ] : "inside $type");
     }
 
     # close the instruction.
@@ -1172,6 +1188,8 @@ sub c_any {
     # can the current node hold instructions?
     return unless $c->node->hold_instr;
 
+    # TODO: remove this? doesn't the above nullify it?
+    #
     # if the current node does not directly allow instructions,
     # do not start an instruction here. for example, the
     # expression representing the condition of an if block

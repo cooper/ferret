@@ -1,3 +1,3 @@
 package CORE
 
-Signal
+load Signal

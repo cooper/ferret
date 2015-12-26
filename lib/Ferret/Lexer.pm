@@ -54,6 +54,7 @@ use F::Symbol;
 use F::ScopeOwner;
 use F::LocalDeclaration;
 use F::SharedDeclaration;
+use F::Load;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (

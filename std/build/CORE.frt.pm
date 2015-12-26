@@ -2,7 +2,8 @@
 #  Document './std/CORE.frt'
 #      Package 'CORE'
 #      Instruction
-#          Bareword 'Signal'
+#          Load
+#              Bareword 'Signal'
 #      Include (Signal)
 use warnings;
 use strict;
@@ -30,7 +31,6 @@ my $result = do {
 
     FF::load_namespaces( $context, qw(Signal) );
 
-    $scope->property_u('Signal');
 };
 
 FF::after_content();

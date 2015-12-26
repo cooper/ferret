@@ -108,10 +108,12 @@ sub handle_result {
     }
 
     # show stuff
-    print "=== Tokenization ===\n$$ret{tokenization}\n"
-        if length $ret->{tokenization};
-    print "=== Document Model ===\n$$ret{construction}\n"
-        if length $ret->{construction};
+    if ($status ne 'error') {
+        print "=== Tokenization ===\n$$ret{tokenization}\n"
+            if length $ret->{tokenization};
+        print "=== Document Model ===\n$$ret{construction}\n"
+            if length $ret->{construction};
+    }
 
     finish() if !--$pending;
 }

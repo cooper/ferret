@@ -3,6 +3,8 @@ class Signal
 # TODO: lazy signal instances
 # TODO: non-standard signals
 
+load NATIVE::Signal
+
 $INT  = *class(:INT)
 $HUP  = *class(:HUP)
 $TERM = *class(:TERM)
@@ -30,7 +32,3 @@ func fireSignal {
     need $type: Sym
     $signals[$type]?.catch()
 }
-
-end
-
-NATIVE::Signal

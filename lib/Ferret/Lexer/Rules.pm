@@ -114,6 +114,10 @@ our %element_rules = (
 
     },
 
+    Instruction => {
+        max_children => 1                                                       # Instruction[0]
+    },
+
     Class => {
 
         # parent of package declaration must be a document.
@@ -137,22 +141,24 @@ our %element_rules = (
                     my $el = shift;
                     return 1 if $el->type ne 'Instruction';
                     my $child = $el->first_child;
-                    return unless $child->type eq 'Assignment';
+
+                    # Loads are a-ok.
+                    return 1 if $child->type eq 'Load';
 
                     # if it's an assignment, it must be a lexical variable.
                     if ($child->type eq 'Assignment') {
                         return $child->assign_to->type eq 'LexicalVariable';
                     }
 
-                    # if it's a WantNeed, it must be an instance variable.
-                    elsif ($child->type eq 'WantNeed') {
-                        return $child->variable->type eq 'InstanceVariable';
-                    }
+                    # # if it's a WantNeed, it must be an instance variable.
+                    # elsif ($child->type eq 'WantNeed') {
+                    #     return $child->variable->type eq 'InstanceVariable';
+                    # }
 
                     return;
                 },
-                'Class-level variables can only include instance variable '.
-                'declarations and lexical variable assignments'
+                'Class-level instructions can only include lexical variable '.
+                'assignments and load statements'
             ]
 
         ]
@@ -338,6 +344,38 @@ our %element_rules = (
 
         # there can only be one child.
         max_children => 1                                                       # LocalDeclaration[3]
+
+    },
+
+    Load => {
+
+        # the parent must be an instruction.
+        parent_must_be => [                                                     # Load[0]
+            'Instruction',
+            "Load statement must be a direct child of an instruction"
+        ],
+
+        # rules for the parent instruction
+        parent_rules => {
+
+            # the instruction's parent must be a class or document.
+            parent_must_be => [                                                 # Load[1]
+                'Class Document',
+                'Load statement can only exist at class or document level'
+            ]
+
+        },
+
+        children_must_be => [
+            'Bareword',
+            'Load statement can only contain a bareword package name'
+        ],
+
+        # there can only be one child.
+        max_children => 1,                                                      # Load[2]
+
+        # there must be one child.
+        min_children => 1
 
     },
 

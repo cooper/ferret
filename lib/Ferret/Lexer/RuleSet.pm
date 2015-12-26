@@ -6,8 +6,8 @@ use strict;
 use 5.010;
 
 sub new {
-    my ($class, %opts) = @_;
-    return bless \%opts, $class;
+    my (undef, %opts) = @_;
+    return bless \%opts;
 }
 
 # merge the rules from another set.

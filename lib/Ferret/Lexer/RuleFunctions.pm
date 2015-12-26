@@ -13,6 +13,7 @@ my $ok;
 our %error_reasons = (
     child_not_allowed       => 'inside %s',
     parent_maxed_out        => 'inside %s, which can only contain %d element(s)',
+    not_enough_children     => 'without %d or more child element(s)',
     previous_not_allowed    => 'after %s',
     expected_before         => 'without previous element at same level',
     expected_after          => 'without following element at same level',
@@ -191,6 +192,8 @@ sub final_check {
         # do tests.
         my $err = $el->parent->can_adopt($el, 1) if $el->parent;
         $err  ||= $el->can_close                 if $el->is_node;
+        $err  ||= $el->has_minimal(1)            if $el->is_node;
+
         $el->unexpected($err) if $err;
 
         # now do the same for each child.
@@ -218,18 +221,21 @@ sub F::Element::rule_set {
         push @after, rule_hash($el->tok,  'after_rules');
     }
 
-    # local rules.
+    # Set 1: local rules.
     my $set1 = Ferret::Lexer::RuleSet->new(
         @after,
         rule_hash($el->type),
         rule_hash($el->tok)
     );
 
-    my ($set2, $set3);
+    my ($set2, $set3, $set4);
+
+    # rules from ancestors
     if ($parent) {
 
+        # Set 2: Rules from ancestors above
+
         # rules from parent or any node above parent.
-        #
         my @rules = map {
             my   @a = rule_hash($_, 'lower_rules', $el->type);
             push @a,  rule_hash($_, 'lower_rules', $el->tok) if $el->tok;
@@ -237,20 +243,21 @@ sub F::Element::rule_set {
         } reverse $parent->types_upward;
 
         # rules directly from parent.
-        #
         push @rules, rule_hash($parent->t, 'child_rules', $el->type);
         push @rules, rule_hash($parent->t, 'child_rules', $el->tok) if $el->tok;
 
         $set2 = Ferret::Lexer::RuleSet->new(@rules);
 
+        # Set 3: Rules from self, when certain ancestors are above
+
         # rules from self while inside a certain type of node at any level.
-        #
-        #
         @rules = map {
             rule_hash($el->type, 'anywhere_inside_rules', $_)
         } reverse $parent->types_upward;
 
-        # if the parent is an instruction, check instruction_inside_rules.
+        # rules from self while the parent instruction is a direct descendant of
+        # a type. This is like directly_inside_rules, except it overlooks the
+        # above instruction.
         if ($parent->type eq 'Instruction') {
             my $p = $parent->parent;
             push @rules, rule_hash($el->type, 'instruction_inside_rules', $p->type) if $p;
@@ -258,14 +265,22 @@ sub F::Element::rule_set {
         }
 
         # rules from self while directly inside a certain type of node.
-        #
         push @rules, rule_hash($el->type, 'directly_inside_rules', $parent->type);
         push @rules, rule_hash($el->type, 'directly_inside_rules', $parent->tok) if $parent->tok;
 
         $set3 = Ferret::Lexer::RuleSet->new(@rules);
     }
 
-    return $set1->merge_in($set2)->merge_in($set3);
+    # Set 4: Rules from children
+    my @rules;
+    if ($after && $el->is_node) {
+        foreach my $child ($el->children) {
+            push @rules, rule_hash($child->type, 'parent_rules');
+        }
+    }
+    $set4 = Ferret::Lexer::RuleSet->new(@rules);
+
+    return $set1->merge_in($set2)->merge_in($set3)->merge_in($set4);
 }
 
 # checks if an element should be adopted.
@@ -457,6 +472,24 @@ sub F::Node::has_room {
     return $set->err(
         parent_maxed_out => $parent_maybe->desc, $max
     ) if $bad;
+
+    return $ok;
+}
+
+sub F::Node::has_minimal {
+    my ($node, $after_check) = @_;
+    my $set = $node->rule_set(undef, $after_check);
+
+    # no limit.
+    my $min = $set->{min_children};
+    return $ok if !defined $min;
+
+    # less than the minimum.
+    my $current = scalar $node->children;
+    return $set->err(
+        not_enough_children => $node->desc, $min
+    ) if $current < $min;
+
 
     return $ok;
 }

@@ -19,9 +19,9 @@ my $keyword_reg = '^('.join('|', qw{
     method      func        prop        set
     want        need        share       local
     on          before      after       inside
-    if          else        return
+    if          else        return      stop
     true        false       undefined
-    for         in
+    for         in          load
     delete      weaken      __END__     __LINE__
 }).')$';
 $keyword_reg = qr/$keyword_reg/;

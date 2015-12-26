@@ -2,6 +2,9 @@
 #  Document './std/Signal.frt'
 #      Class 'Signal'
 #          Instruction
+#              Load
+#                  Bareword 'NATIVE::Signal'
+#          Instruction
 #              Assignment (lexical variable '$INT')
 #                  Call
 #                      Special variable '*class'
@@ -74,8 +77,6 @@
 #                                          Item 0
 #                                              Lexical variable '$type'
 #                          Argument list [0 items]
-#      Instruction
-#          Bareword 'NATIVE::Signal'
 #      Include (NATIVE, NATIVE::Signal, Sym)
 use warnings;
 use strict;
@@ -131,7 +132,7 @@ my $result = do {
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
                 $scope->property_u('_exit')
-                  ->call_u( [ num( $f, 0 ) ], $scope, undef, 24.2 );
+                  ->call_u( [ num( $f, 0 ) ], $scope, undef, 26.2 );
                 return $return;
             }
         );
@@ -150,7 +151,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'type', 30.2 ) or return;
+                FF::need( $scope, $arguments, 'type', 32.2 ) or return;
                 {
                     my $maybe_0 =
                       $scope->property_u('signals')
@@ -158,7 +159,7 @@ my $result = do {
                         $scope );
                     if ( bool($maybe_0) ) {
                         $maybe_0->property_u('catch')
-                          ->call_u( {}, $scope, undef, 31.35 );
+                          ->call_u( {}, $scope, undef, 33.35 );
                     }
                 }
                 return $return;
@@ -179,26 +180,26 @@ my $result = do {
         $class->set_property_ow(
             $context,
             INT => $scope->{special}->property_u('class')
-              ->call_u( [ FF::get_symbol( $f, 'INT' ) ], $scope, undef, 6.4 ),
-            6.2
-        );
-        $class->set_property_ow(
-            $context,
-            HUP => $scope->{special}->property_u('class')
-              ->call_u( [ FF::get_symbol( $f, 'HUP' ) ], $scope, undef, 7.4 ),
-            7.2
-        );
-        $class->set_property_ow(
-            $context,
-            TERM => $scope->{special}->property_u('class')
-              ->call_u( [ FF::get_symbol( $f, 'TERM' ) ], $scope, undef, 8.4 ),
+              ->call_u( [ FF::get_symbol( $f, 'INT' ) ], $scope, undef, 8.4 ),
             8.2
         );
         $class->set_property_ow(
             $context,
-            ALRM => $scope->{special}->property_u('class')
-              ->call_u( [ FF::get_symbol( $f, 'ALRM' ) ], $scope, undef, 9.4 ),
+            HUP => $scope->{special}->property_u('class')
+              ->call_u( [ FF::get_symbol( $f, 'HUP' ) ], $scope, undef, 9.4 ),
             9.2
+        );
+        $class->set_property_ow(
+            $context,
+            TERM => $scope->{special}->property_u('class')
+              ->call_u( [ FF::get_symbol( $f, 'TERM' ) ], $scope, undef, 10.4 ),
+            10.2
+        );
+        $class->set_property_ow(
+            $context,
+            ALRM => $scope->{special}->property_u('class')
+              ->call_u( [ FF::get_symbol( $f, 'ALRM' ) ], $scope, undef, 11.4 ),
+            11.2
         );
         $class->set_property_ow(
             $context,
@@ -211,11 +212,10 @@ my $result = do {
                     ALRM => $scope->property_u('ALRM')
                 }
             ),
-            11.2
+            13.2
         );
     }
     FF::load_namespaces( $context, qw(NATIVE NATIVE::Signal Sym) );
-    $scope->property_u('NATIVE::Signal');
 };
 
 FF::after_content();
