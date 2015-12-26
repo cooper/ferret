@@ -335,4 +335,11 @@ sub empty_return {
     return !scalar $ret->properties(1);
 }
 
+# stop further propagation.
+sub stop {
+    # FIXME: if this isn't an event, raise a runtime error.
+    my $fire = shift->{fire} or return;
+    $fire->stop;
+}
+
 1

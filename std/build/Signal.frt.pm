@@ -177,6 +177,7 @@ my $result = do {
             fireSignal => $scope,
             $class, $class, undef, undef
         );
+
         $class->set_property_ow(
             $context,
             INT => $scope->{special}->property_u('class')

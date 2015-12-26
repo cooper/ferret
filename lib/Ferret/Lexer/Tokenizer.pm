@@ -46,8 +46,9 @@ my %semi_follows = map { $_ => 1 } qw(
     PROPERTY        NUMBER          STRING
     BAREWORD        VAR_THIS        VAR_SPEC
     VAR_SET         VAR_SYM         VAR_LEX
-    OP_CALL         OP_ELLIP        KEYWORD_RETURN
+    OP_CALL         OP_ELLIP
     KEYWORD_TRUE    KEYWORD_FALSE   KEYWORD_UNDEFINED
+    KEYWORD_RETURN  KEYWORD_STOP
 );
 
 # reused formats

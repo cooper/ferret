@@ -7,11 +7,15 @@ on Signal.TERM.catch before :default {
 # then kill on the second INT
 $asked = false
 on Signal.INT.catch before :default {
+
+    # have we asked if sure?
     if !$asked {
         say("Are you sure?")
-        # stop
-        return
+        $asked = true
+        stop    # cancel further callbacks
+        return  # note that stop does not affect the remainder of the callback
     }
+
     say("Got second INT. Terminating!")
 }
 

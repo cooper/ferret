@@ -379,6 +379,20 @@ our %element_rules = (
 
     },
 
+    Stop => {
+
+        parent_must_be => [                                                     # Stop[0]
+            'Instruction',
+            'Stop statement must be a direct child of an instruction'
+        ],
+
+        must_be_somewhere_inside => [                                           # Stop[1]
+            'Function',
+            'Stop statement must be inside a function, method, or callback'
+        ]
+
+    },
+
     Token => {
 
         # tokens cannot be astray.

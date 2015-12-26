@@ -15,6 +15,7 @@ sub add_maybe {
 sub simple_fmt {
     my $instr = shift;
     my $code  = join('', map $_->perl_fmt_do, $instr->children);
+    return unless length $code;
     return instruction => { instruction => $code };
 }
 

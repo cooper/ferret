@@ -117,6 +117,9 @@ sub add_function_with_opts {
         # from which the event is being fired
         $func->{this} = $obj;
 
+        # store the fire object in the return object.
+        weaken($return->{fire} = $fire);
+
         # call the function.
         my $ret = $func->call_with_self(
             $arguments->{_self} || $self_maybe || $obj,

@@ -432,6 +432,13 @@ sub c_KEYWORD_LOAD {
     $c->adopt_and_set_node($load);
 }
 
+sub c_KEYWORD_STOP {
+    my ($c, $value) = @_;
+
+    my $stop = F::Stop->new;
+    $c->adopt_and_set_node($stop);
+}
+
 sub c_PAREN_S {
     my ($c, $value) = @_;
     my $list = $c->start_list('PAREN_E');
@@ -764,7 +771,7 @@ sub c_OP_SEMI {
     $c->close_nodes(qw(
         WantNeed PropertyModifier Negation Operation
         Equality Assignment Return ReturnPair
-        SharedDeclaration LocalDeclaration Load
+        SharedDeclaration LocalDeclaration Load Stop
     ));
 
     # special case:

@@ -37,6 +37,11 @@
 #                                      Item 0
 #                                          String 'Are you sure?'
 #                          Instruction
+#                              Assignment (lexical variable '$asked')
+#                                  Boolean true
+#                          Instruction
+#                              Stop
+#                          Instruction
 #                              Return
 #                  Instruction
 #                      Call
@@ -105,11 +110,13 @@ my $result = do {
                 $scope->property_u('say')
                   ->call_u( [ str( $f, "Are you sure?" ) ],
                     $scope, undef, 11.2 );
+                $scope->set_property_ow( $context, asked => $true, 12.2 );
+                $return->stop;
                 return $return;
             }
             $scope->property_u('say')
               ->call_u( [ str( $f, "Got second INT. Terminating!" ) ],
-                $scope, undef, 15.2 );
+                $scope, undef, 16.2 );
             return $return;
         }
     );
@@ -133,8 +140,8 @@ my $result = do {
         { before => ['default'] }
     );
     $scope->property_u('Timer')
-      ->call_u( [ num( $f, 5 ) ], $scope, undef, 19.2 )->property_u('start')
-      ->call_u( {}, $scope, undef, 19.6 );
+      ->call_u( [ num( $f, 5 ) ], $scope, undef, 20.2 )->property_u('start')
+      ->call_u( {}, $scope, undef, 20.6 );
 };
 
 FF::after_content();

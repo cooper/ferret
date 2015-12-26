@@ -30,7 +30,6 @@ my $result = do {
     FF::load_core('CORE');
 
     FF::load_namespaces( $context, qw(Signal) );
-
 };
 
 FF::after_content();

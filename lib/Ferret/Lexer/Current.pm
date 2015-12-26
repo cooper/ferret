@@ -262,7 +262,7 @@ my (@closes, %precedence);
     @closes = (
         qw( WantNeed PropertyModifier ),                                # 1
         qw( Negation Operation Equality Pair ListItem List Call ),      # 2
-        qw( Assignment Return ReturnPair Load ),                        # 3
+        qw( Assignment Return ReturnPair Load Stop ),                   # 3
         qw( SharedDeclaration LocalDeclaration ),
         qw( Instruction )
     );
