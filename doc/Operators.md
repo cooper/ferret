@@ -31,9 +31,14 @@ Tokenized as `OP_COMMA`.
 
     :
 
-Separates key:value pairs.
+Separates key:value pairs. If it follows a bareword immediately (without
+whitespace in between), it is assumed that the bareword is the key for an object
+or hash pair.
 
 Tokenized as `OP_VALUE`.
+
+The symbol data type (e.g. `:sym`) is tokenized separately as `VAR_SYM`; see
+[Symbols](https://github.com/cooper/ferret/blob/master/doc/Variables.md#symbols).
 
     $object = (key: "value", other: "another")
 
@@ -45,13 +50,17 @@ Accesses a property on an object.
 
 Tokenized as `OP_PROP`.
 
+Currently, the `OP_PROP` token always raises a tokenizer error. This is because
+properties, including the period (`.`) are tokenized as a single `PROPERTY`.
+
     $value = $object.someValue
 
 ### Assignment operator
 
     =
 
-Separates an assignable expression from its new value.
+Separates an assignable expression from its new value. At its left must be an
+assignable variable, property, or other type of lvalue.
 
 Tokenized as `OP_ASSIGN`.
 
@@ -61,7 +70,13 @@ Tokenized as `OP_ASSIGN`.
 
     ?=
 
-Separates an assignable expression from its lazy-computed value.
+Separates an assignable expression from its lazy-computed value. At its left
+must be an assignable variable, property, or other type of lvalue.
+
+Lazy assignment allows the evaluation of a property or variable's value to be
+deferred until it is referenced somewhere. This is useful for decreasing load
+time when it is unknown whether a value will ever be used in the particular
+program.
 
 Tokenized as `OP_LASSIGN`.
 
@@ -76,6 +91,15 @@ Tokenized as `OP_LASSIGN`.
     ->
 
 Adds a named value to the return object of a function.
+
+All functions, methods, and callbacks start with an empty return object. This is
+useful for returning multiple values, especially if the routine is extensible
+through user-defined event callbacks which may find use in returning values. The
+return object is represented by the
+[special variable](Variables.md#special-variables) `*return`.
+
+This operator, in the form of `propName -> $value`, provides a more appealing
+syntax for the functionally equivalent `*return.propName = $value`.
 
 Tokenized as `OP_RETURN`.
 
@@ -101,10 +125,21 @@ Tokenized as `OP_PACK`.
 
     ?
 
-Indicates that a value may not be present, ignoring the entire current
+Indicates that a value may not be present and ignores the entire current
 instruction in such a case.
 
+This operator is especially useful when the presence of a value is unknown, but
+the use of `if` would be repetitive.
+
 Tokenized as `OP_MAYBE`.
+
+    if $x:
+        doSomethingWith($x)
+
+    # is better written
+    doSomethingWith($x?)
+
+Frequent use case involving named handlers
 
     # if there is nothing at $handlers[$command], nothing happens.
     # if there is, it is called.
@@ -119,7 +154,7 @@ Tokenized as `OP_MAYBE`.
     ...
 
 Indicates that a function argument should consume the remainder of the passed
-values.
+values. When specified, a function has a variable number of unnamed arguments.
 
 Tokenized as `OP_ELLIP`.
 
@@ -151,21 +186,23 @@ Tokenized as `OP_CALL`.
 
     &&
 
-True if two values evaluate to boolean true.
+True if two or more values evaluate to boolean true.
 
 Tokenized as `OP_AND`.
 
-    $true = true && 0
+    $true  = true && 1
+    $false = true && true && false
 
 ### Logical OR operator
 
     ||
 
-True if one or both of two values evaluate to boolean true.
+True if at least one of two or more values evaluates to boolean true.
 
 Tokenized as `OP_OR`.
 
-    $true = false || 1
+    $true  = false || 1
+    $false = false || undefined || 2.odd
 
 ### Logical NOT operator
 
@@ -199,7 +236,7 @@ The absolute order of math operations is as follows:
 
 Tokenized as `OP_ADD`.
 
-Adds two values.
+Adds values.
 
     $three = 2 + 1
 
@@ -217,7 +254,7 @@ Tokenized as `OP_SADD`.
 
     -
 
-Subtracts two values.
+Subtracts values.
 
 Tokenized as `OP_SUB`.
 
@@ -239,7 +276,7 @@ Tokenized as `OP_SSUB`.
 *
 ```
 
-Multiplies two values.
+Multiplies values.
 
 Tokenized as `OP_MUL`.
 
@@ -251,7 +288,7 @@ $ten = 5 * 2
 
     /
 
-Divides two values.
+Divides values.
 
 Tokenized as `OP_DIV`.
 
@@ -271,7 +308,8 @@ Tokenized as `OP_POW`.
 
     +=
 
-Alters a value by adding a value to it.
+Alters a value by adding a value to it. At its left must be an assignable
+variable, property, or other type of lvalue.
 
 Tokenized as `OP_ADD_A`.
 
@@ -283,7 +321,8 @@ Tokenized as `OP_ADD_A`.
 
     -=
 
-Alters a value by subtracting a value from it.
+Alters a value by subtracting a value from it. At its left must be an assignable
+variable, property, or other type of lvalue.
 
 Tokenized as `OP_SUB_A`.
 
@@ -297,7 +336,8 @@ Tokenized as `OP_SUB_A`.
 *=
 ```
 
-Alters a value by multiplying it by a value.
+Alters a value by multiplying it by a value. At its left must be an assignable
+variable, property, or other type of lvalue.
 
 Tokenized as `OP_MUL_A`.
 
@@ -311,7 +351,8 @@ $x *= 5
 
     /=
 
-Alters a value by dividing it by a value.
+Alters a value by dividing it by a value. At its left must be an assignable
+variable, property, or other type of lvalue.
 
 Tokenized as `OP_DIV_A`.
 
@@ -347,29 +388,33 @@ Tokenized as `OP_RANGE`.
 
     ==
 
-Tests the logical equivalence of two values.
+Tests the logical equivalence of two or more values. The result is dependent
+on the combination of data types and their equality method implementations.
 
 Tokenized as `OP_EQUAL`.
 
-      10 == 10      # true
-    "hi" == "hi"    # true
+      10 == 10          # true
+    "hi" == "hi"        # true
+       1 == 1.0 == 1.1  # false
 
 ### Reference equality operator
 
     ===
 
-Tests the memory address equivalence of two values.
+Tests the memory address equivalence of two or more values.
 
 Tokenized as `OP_EQUAL_I`.
 
-     "hi" === "hi"      # false
-    false === false     # true
+     "hi" === "hi"              # false
+    false === false             # true
+     true === true === false    # false
 
 ### Negated equality operator
 
     !=
 
-Tests the logical inequivalence of two values.
+Tests the logical inequivalence of two or more values. The result is dependent
+on the combination of data types and their equality method implementations.
 
 Tokenized as `OP_NEQUAL`.
 
@@ -380,7 +425,7 @@ Tokenized as `OP_NEQUAL`.
 
     !==
 
-Tests the memory address inequivalence of two values.
+Tests the memory address inequivalence of two or more values.
 
 Tokenized as `OP_NEQUAL_I`.
 
