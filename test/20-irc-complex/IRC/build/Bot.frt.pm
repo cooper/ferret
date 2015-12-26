@@ -527,7 +527,7 @@ my $result = do {
                         $self->property_u('real')
                     )
                 ],
-                $scope, undef, 30.2
+                $scope, undef, 30.06667
             );
             $self->property_u('send')->call_u(
                 [
@@ -689,7 +689,7 @@ my $result = do {
                         $scope->property_u('nickname'), str( $f, "!" )
                     )
                 ],
-                $scope, undef, 132.2
+                $scope, undef, 132.1
             );
             return $return;
         }
@@ -736,7 +736,7 @@ my $result = do {
                         str( $f, "'" )
                     )
                 ],
-                $scope, undef, 147.2
+                $scope, undef, 147.1
             );
             return $return;
         }
@@ -984,7 +984,7 @@ my $result = do {
                             $scope->property_u('line')
                         )
                     ],
-                    $scope, undef, 71.2
+                    $scope, undef, 71.1
                 );
                 {
                     my $maybe_0 =
@@ -1059,7 +1059,7 @@ my $result = do {
                                         $scope->property_u('line')
                                     )
                                 ],
-                                $scope, undef, 87.2
+                                $scope, undef, 87.1
                             );
                         }
                     }

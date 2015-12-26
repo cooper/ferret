@@ -182,7 +182,7 @@ my $result = do {
                         $scope->property_u('val')
                     )
                 ],
-                $scope, undef, 18.2
+                $scope, undef, 18.1
             );
         }
     );

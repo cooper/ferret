@@ -443,7 +443,7 @@ my $result = do {
                             str( $f, " failed" )
                         )
                     ],
-                    $scope, undef, 48.2
+                    $scope, undef, 48.06667
                 );
                 $return->set_property(
                     tests => $self->property_u('tested'),

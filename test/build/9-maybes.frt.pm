@@ -72,7 +72,7 @@ my $result = do {
                         $scope->property_u('who'), str( $f, "!" )
                     )
                 ],
-                $scope, undef, 3.2
+                $scope, undef, 3.1
             );
             return $return;
         }

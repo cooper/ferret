@@ -279,6 +279,53 @@ sub tok_STR_REG {
     return $is_str ? [ STRING => \@parts ] : [ REGEX => \@parts ];
 }
 
+# split strings into parts.
+sub handle_strings {
+    my @tokens = @_;
+    my @new_tokens;
+    foreach my $tok (@tokens) {
+        my $is_str = $tok->[0] eq 'STRING';
+        my $is_rgx = $tok->[0] eq 'REGEX';
+        my $type   = $is_str ? 'STRING' : 'REGEX';
+
+        # not a string or regex.
+        if (!$is_str && !$is_rgx) {
+            push @new_tokens, $tok;
+            next;
+        }
+
+        # simple string or regex with no variables, etc.
+        if (!ref $tok->[1]) {
+            push @new_tokens, $tok;
+            next;
+        }
+
+        my $line = $tok->[2];
+
+        my @parts;
+        foreach my $part (@{ $tok->[1] }) {
+            $line = $part->[2] if ref $part;
+            my $add = [ 'OP_ADD', undef, $line ];
+
+            # simple string.
+            if (!ref $part) {
+                push @parts, $add if @parts;
+                push @parts, [ STRING => $part, $line ];
+                next;
+            }
+
+            # variable or property.
+            push @parts, $add if @parts && $part->[0] ne 'PROPERTY';
+            push @parts, $part;
+
+        }
+
+        push @new_tokens, @parts;
+    }
+
+    return @new_tokens;
+}
+
 sub _escape {
     my $char = shift;
     # TODO: do this correctly
@@ -434,6 +481,9 @@ sub _tokenize {
 
     # if this is a string or something, don't do any of the below just yet.
     return (undef, @tokens) if $inside;
+
+    # split strings into multiple tokens.
+    @tokens = handle_strings(@tokens);
 
     # separate into lines.
     my (@lines, @all_on_line, @done_on_line);

@@ -105,7 +105,7 @@ my $result = do {
                         $scope->{special}->property_u('return')
                     )
                 ],
-                $scope, undef, 11.2
+                $scope, undef, 11.1
             );
             return $return;
         }
@@ -128,7 +128,7 @@ my $result = do {
                         $scope->{special}->property_u('return')
                     )
                 ],
-                $scope, undef, 22.2
+                $scope, undef, 22.1
             );
             return $return;
         }

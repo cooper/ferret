@@ -575,42 +575,8 @@ sub c_BRACKET_E {
 
 sub c_STRING {
     my ($c, $value) = @_;
-    my @parts = @$value;
-
-    # just one part.
-    if (@parts == 1) {
-        # FIXME: probably force string context of variables here
-        return handle_label(@{ $parts[0] }) if ref $parts[0];
-        my $string = F::String->new(value => $parts[0]);
-        return $c->node->adopt($string);
-    }
-
-    # more than one part. contains variables.
-    my $op = F::Operation->new;
-    $c->adopt_and_set_node($op);
-
-    while (my $part = shift @parts) {
-        my $is_prop = ref $part && $part->[0] eq 'PROPERTY';
-
-        # add an addition operator unless it's a property.
-        $op->adopt(F::Operator->new(token => 'OP_ADD'))
-            if $op->last_child && !$is_prop &&
-               $op->last_child->type ne 'Operator';
-
-        # variable or property part.
-        if (ref $part) {
-            handle_label(@$part);
-        }
-
-        # just a string part.
-        else {
-            $op->adopt(F::String->new(value => $part));
-        }
-
-    }
-    $c->close_node;
-
-    return $op;
+    my $string = F::String->new(value => $value);
+    return $c->node->adopt($string);
 }
 
 sub c_NUMBER {

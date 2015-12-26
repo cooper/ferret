@@ -169,7 +169,7 @@ my $result = do {
                         $self->property_u('real')
                     )
                 ],
-                $scope, undef, 12.2
+                $scope, undef, 12.06667
             );
             $self->property_u('send')->call_u(
                 [

@@ -102,7 +102,7 @@ my $result = do {
                         $scope->property_u('part')
                     )
                 ],
-                $scope, undef, 5.2
+                $scope, undef, 5.1
             );
             return $return;
         }
