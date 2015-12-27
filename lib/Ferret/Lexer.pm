@@ -56,6 +56,7 @@ use F::SharedDeclaration;
 use F::Load;
 use F::Stop;
 use F::Else;
+use F::PropertyVariable;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (

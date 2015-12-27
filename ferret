@@ -83,29 +83,29 @@ sub async_do_file {
 sub handle_result {
     my ($file, $status, $ret) = @_;
 
-    print "[ $file ] ";
-
     # bad status
     if ($status eq 'error') {
-        print "ERROR\n";
+        print "ERROR   ";
         push @errors, [ $file, 'Process exited prematurely' ];
     }
 
     # skipped.
     elsif ($ret->{skipped}) {
-        print "skipped\n";
+        print "SKIP    ";
     }
 
     # error.
     elsif ($ret->{error}) {
-        print "ERROR\n";
+        print "ERROR   ";
         push @errors, [ $file, $ret->{error} ];
     }
 
     # good status
     else {
-        print "OK\n";
+        print "OK      ";
     }
+
+    print "$file\n";
 
     # show stuff
     if ($status ne 'error') {

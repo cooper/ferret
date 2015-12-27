@@ -207,16 +207,8 @@ sub want {
 # set any object as scope.
 sub inside {
     my ($f, $outer_scope, $obj, $code) = @_;
-
-    # add the outer scope to the object's parents.
-    $obj->add_parent($outer_scope);
-
-    # call with $obj as scope.
-    $code->($obj);
-
-    # remove from parents.
-    $obj->remove_parent($outer_scope);
-
+    my $scope = Ferret::Scope->new($f, parent => $outer_scope);
+    $code->($scope, $obj);
     return;
 }
 

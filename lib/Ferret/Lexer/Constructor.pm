@@ -841,6 +841,19 @@ sub c_VAR_SET {
     return $c->node->adopt($var);
 }
 
+sub c_VAR_PROP {
+    my ($c, $value) = @_;
+
+    # Rule PropertyVariable[0]:
+    #   Must be somewhere inside an Inside.
+
+    # Rule PropertyVariable[1]:
+    #   Must be somewhere inside the parent's first ancestor Inside's body.
+
+    my $var = F::PropertyVariable->new(var_name => $value);
+    return $c->node->adopt($var);
+}
+
 sub c_KEYWORD_WANT {
     my ($c, $value) = @_;
 
@@ -949,7 +962,6 @@ sub c_PROP_VALUE {
 
 sub c_PROPERTY {
     my ($c, $value) = @_;
-    my $prop = F::Property->new(prop_name => $value);
 
     my $last_el = $c->last_el;
     return $c->expected(
@@ -957,6 +969,7 @@ sub c_PROPERTY {
         'at left of '.Ferret::Lexer::pretty_token($c->label)
     ) unless $last_el->is_type('Expression');
 
+    my $prop = F::Property->new(prop_name => $value);
     $c->node->adopt($prop);
     $prop->adopt($last_el);
 

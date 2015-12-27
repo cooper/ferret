@@ -1,0 +1,1 @@
+$ins->set_property(<<name>> => <<assign_value>>, <<pos>>)

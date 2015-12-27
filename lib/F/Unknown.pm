@@ -10,7 +10,7 @@ sub type { 'Token' }
 sub desc {
     my $el = shift;
     my $desc  = Ferret::Lexer::pretty_token($el->{token_label});
-       $desc .= " = $$el{token_value}"
+       $desc .= " (value '$$el{token_value}')"
            if defined $el->{token_value} && !ref $el->{token_value};
     return $desc;
 }

@@ -293,14 +293,14 @@ sub F::Node::can_adopt {
     # only check after all is done.
     $e ||= $parent_maybe->has_room($after_check) if $after_check;
 
+    # check that the upper hierarchy is satisfactory.
+    $e ||= $child_maybe->allows_upper_nodes($parent_maybe, $after_check);
+
     # check that the parent allows this type of child.
     $e ||= $parent_maybe->allows_child($child_maybe, $after_check);
 
     # check that the child allows this type of parent.
     $e ||= $child_maybe->allows_parent($parent_maybe, $after_check);
-
-    # check that the upper hierarchy is satisfactory.
-    $e ||= $child_maybe->allows_upper_nodes($parent_maybe, $after_check);
 
     # determine the previous element.
     my $previous_maybe = $child_maybe->parent   ?
@@ -365,15 +365,19 @@ sub F::Element::allows_parent {
     my ($child_maybe, $parent_maybe, $after_check) = @_;
     my $set = $child_maybe->rule_set($parent_maybe, $after_check);
 
-    # there's no rule, so it allows everything.
-    return $ok if !$set->{parent_must_be};
+    # parent must be of a certain type.
+    if ($set->{parent_must_be}) {
+        return $set->err(child_not_allowed => $parent_maybe->desc)
+            if !$set->list_contains(parent_must_be => $parent_maybe->t);
+    }
 
-    # it's in the list.
-    return $ok if $set->list_contains(parent_must_be => $parent_maybe->t);
+    # parent must match a subroutine.
+    if (my $code = $set->rule_code('parent_must_satisfy')) {
+        return $set->err(child_not_allowed => $parent_maybe->desc)
+            if !$code->($parent_maybe, $child_maybe);
+    }
 
-    # not allowed.
-    return $set->err(child_not_allowed => $parent_maybe->desc);
-
+    return $ok;
 }
 
 # check if somewhere in an upper level is a certain node type.

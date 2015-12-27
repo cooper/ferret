@@ -28,7 +28,7 @@ sub perl_fmt {
         $child->assign_value->perl_fmt_do :
         'Ferret::undefined';
 
-    return assign_local_var => {
+    return assign_local => {
         name         => $var->{var_name},
         assign_value => $assign_value
     };

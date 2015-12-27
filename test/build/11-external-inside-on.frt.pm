@@ -190,7 +190,7 @@ my $result = do {
         $f, $scope,
         $scope->property_u('point'),
         sub {
-            my $scope = shift;
+            my ( $scope, $ins ) = @_;
             $scope->set_property_ow( $context, x => num( $f, 5 ),  9.2 );
             $scope->set_property_ow( $context, y => num( $f, 10 ), 10.2 );
         }

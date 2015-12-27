@@ -1,5 +1,5 @@
 # Inside
 FF::inside($f, $scope, <<expression>>, sub {
-    my $scope = shift;
+    my ($scope, $ins) = @_;
     <<content>>
 });

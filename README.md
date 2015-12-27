@@ -99,8 +99,8 @@ Currently, it must be stored at `/etc/ferret.conf`. Make sure the whole system
 has read access. Later, alternative methods will be available which do not
 require root access.
 
-Copy `ferret.conf.example` to `/etc/ferret.conf` and change the top line to
-the full path of wherever you cloned this repository.
+Copy [`ferret.conf.example`](ferret.conf.example) to `/etc/ferret.conf` and
+change the top line to the full path of wherever you cloned this repository.
 
 After that, try running `./ferret -pdn` from the repository root directory
 (recompile the standard library) to verify that all is working.

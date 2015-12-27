@@ -67,9 +67,6 @@ my @token_formats = (
     # comments don't really work
     # I need to fix it by making comment start and end
 
-    # simple properties
-    [ PROPERTY      => qr/\.[\*]?$prop_reg/, \&remove_first_char            ],  # simple .property
-
     # this is way up here because it must be above VAR_SYM and OP_VALUE.
     [ OP_PACK       => qr/::/                                               ],  # package
 
@@ -79,6 +76,9 @@ my @token_formats = (
     [ VAR_SPEC      => qr/\*$prop_reg/,   \&remove_first_char               ],  # special variable
     [ VAR_SYM       => qr/\:$prop_reg/,   \&remove_first_char               ],  # symbol variable
     [ VAR_SET       => qr/\<[A-Za-z_]+[A-Za-z0-9:_]*\>/, \&remove_firstlast ],  # set type variable
+
+    # simple properties
+    [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/, \&increment_lines           ],  # simple .property
 
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start
@@ -448,6 +448,19 @@ sub tok_CLOSURE_S {
         $tokens->[-1] = [ FUNCTION => { anonymous => 1 }, $position ];
         return;
     }
+}
+
+sub tok_PROPERTY {
+    my ($tokens, $value) = @_;
+
+    # if it has whitespace, it's VAR_PROP.
+    if ($value =~ s/^\s+//) {
+        $value = substr $value, 1;
+        return [ VAR_PROP => $value ];
+    }
+
+    $value = substr $value, 1;
+    return [ PROPERTY => $value ];
 }
 
 # common token modifiers.

@@ -1,7 +1,9 @@
-### Compilation
+# Compilation
 
 The Ferret compiler is also written entirely in Perl. Compilation is a
 multi-stage process.
+
+## Stages
 
 #### 1. Tokenizer
 
@@ -321,6 +323,6 @@ child process exits unexpectedly, but the parent process survives it.
 Try running `ferret` with the `-y` flag. This tells the compiler to use only
 one process and one thread. Usually it will then provide a Perl error message.
 
-### None of those
+#### None of those
 
 Head to **#k** on **irc.notroll.net** and start complaining.

@@ -393,6 +393,27 @@ our %element_rules = (
 
     },
 
+    PropertyVariable => {
+
+        must_be_somewhere_inside => [                                           # PropertyVariable[0]
+            'Inside',
+            "Property variable (standalone .property) can only exist within ".
+            "an 'inside' block"
+        ],
+
+        # make sure we're in the BODY of the Inside, not the param_exp.
+        parent_must_satisfy => [                                                # PropertyVariable[1]
+            sub {
+                my $el = shift;
+                my $inside = $el->first_self_or_parent('Inside') or return;
+                return $el->somewhere_inside($inside->body);
+            },
+            "Property variable (standalone .property) can only exist within ".
+            "an 'inside' block"
+        ]
+
+    },
+
     Token => {
 
         # tokens cannot be astray.
