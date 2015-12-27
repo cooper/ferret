@@ -11,9 +11,9 @@ use Scalar::Util qw(blessed);
 use List::Util qw(sum product);
 
 use Ferret::Core::Conversion qw(
-    ferret_number perl_number
-    perl_list ferret_list
-    ferret_boolean
+    fnumber pnumber
+    plist flist
+    fbool
 );
 
 my @methods = (
@@ -92,7 +92,7 @@ sub init {
 
     # from other value.
     if (my $from = $arguments->{from}) {
-        $num->{num_value} = perl_number($from);
+        $num->{num_value} = pnumber($from);
     }
     $num->{num_value} = 0 if !defined $num->{num_value};
 
@@ -102,58 +102,58 @@ sub init {
 sub op_add {
     my ($num, $arguments) = @_;
     my $other = $arguments->{other};
-    my $new_value = perl_number($num) + perl_number($other);
-    return ferret_number($new_value);
+    my $new_value = pnumber($num) + pnumber($other);
+    return fnumber($new_value);
 }
 
 # number minus number
 sub op_sub {
     my ($num, $arguments) = @_;
     my $other = $arguments->{other};
-    my $new_value = perl_number($num) - perl_number($other);
-    return ferret_number($new_value);
+    my $new_value = pnumber($num) - pnumber($other);
+    return fnumber($new_value);
 }
 
 # number divided by number
 sub op_div {
     my ($num, $arguments) = @_;
     my $other = $arguments->{other};
-    my $new_value = perl_number($num) / perl_number($other);
-    return ferret_number($new_value);
+    my $new_value = pnumber($num) / pnumber($other);
+    return fnumber($new_value);
 }
 
 # number times number
 sub op_mul {
     my ($num, $arguments) = @_;
     my $other = $arguments->{other};
-    my $new_value = perl_number($num) * perl_number($other);
-    return ferret_number($new_value);
+    my $new_value = pnumber($num) * pnumber($other);
+    return fnumber($new_value);
 }
 
 # number to a number power
 sub op_pow {
     my ($num, $arguments) = @_;
     my $other = $arguments->{other};
-    my $new_value = perl_number($num) ** perl_number($other);
-    return ferret_number($new_value);
+    my $new_value = pnumber($num) ** pnumber($other);
+    return fnumber($new_value);
 }
 
 sub op_mod {
     my ($num, $arguments) = @_;
     my $other = $arguments->{other};
-    my $new_value = perl_number($num) % perl_number($other);
-    return ferret_number($new_value);
+    my $new_value = pnumber($num) % pnumber($other);
+    return fnumber($new_value);
 }
 
 sub op_range {
     my ($num, $arguments, $call_scope) = @_;
     my $other = $arguments->{other};
 
-    my @range = perl_number($num)..perl_number($other);
-       @range = map ferret_number($_), @range;
+    my @range = pnumber($num)..pnumber($other);
+       @range = map fnumber($_), @range;
 
     # if there's only one number, return a list containing only that number.
-    return ferret_list(@range) if @range == 1;
+    return flist(@range) if @range == 1;
 
     # otherwise, there must be two numbers.
     return Ferret::undefined if @range < 2;
@@ -162,11 +162,11 @@ sub op_range {
 }
 
 sub _odd {
-    return ferret_boolean(shift->{num_value} % 2);
+    return fbool(shift->{num_value} % 2);
 }
 
 sub _even {
-    return ferret_boolean(not shift->{num_value} % 2);
+    return fbool(not shift->{num_value} % 2);
 }
 
 sub _to_string {
@@ -180,14 +180,14 @@ sub description {
 
 sub _sum {
     my ($class, $arguments) = @_;
-    my $sum = sum map { perl_number($_) } perl_list($arguments->{nums});
-    return ferret_number($sum);
+    my $sum = sum map { pnumber($_) } plist($arguments->{nums});
+    return fnumber($sum);
 }
 
 sub _product {
     my ($class, $arguments) = @_;
-    my $sum = product map { perl_number($_) } perl_list($arguments->{nums});
-    return ferret_number($sum);
+    my $sum = product map { pnumber($_) } plist($arguments->{nums});
+    return fnumber($sum);
 }
 
 sub equal {
@@ -198,7 +198,7 @@ sub equal {
 
 sub _equal {
     my ($num_class, $arguments) = @_;
-    my ($first_num, @rest_nums) = perl_list($arguments->{nums});
+    my ($first_num, @rest_nums) = plist($arguments->{nums});
     foreach (@rest_nums) {
         return Ferret::false if !$first_num->equal($_);
     }

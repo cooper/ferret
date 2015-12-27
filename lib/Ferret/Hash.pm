@@ -8,9 +8,9 @@ use 5.010;
 
 use parent 'Ferret::Object';
 use Ferret::Core::Conversion qw(
-    perl_string ferret_number
-    ferret_string ferret_list
-    perl_description
+    pstring fnumber
+    fstring flist
+    pdescription
 );
 
 my @methods = (
@@ -54,7 +54,7 @@ sub init {
 sub set_value {
     my ($hash, $key, $value) = @_;
     # TODO: check for a hashValue function
-    $key = perl_string($key);
+    $key = pstring($key);
     $hash->{hash_values}{$key} = $value;
 }
 
@@ -74,7 +74,7 @@ sub _get_value {
     my ($hash, $arguments) = @_;
     my $key = $arguments->{key} // $arguments->{index};
     $key = $key->{sym_value} if length $key->{sym_value};
-    $key = perl_string($key);
+    $key = pstring($key);
     return $hash->get_value($key);
 }
 
@@ -84,7 +84,7 @@ sub length : method {
 }
 
 sub _length {
-    return ferret_number(shift->length);
+    return fnumber(shift->length);
 }
 
 sub keys : method {
@@ -93,8 +93,8 @@ sub keys : method {
 
 sub _keys {
     my $hash = shift;
-    my @keys = map ferret_string($_), $hash->keys;
-    return ferret_list(@keys);
+    my @keys = map fstring($_), $hash->keys;
+    return flist(@keys);
 }
 
 sub values : method {
@@ -102,7 +102,7 @@ sub values : method {
 }
 
 sub _values {
-    return ferret_list(shift->values);
+    return flist(shift->values);
 }
 
 sub description {
@@ -110,7 +110,7 @@ sub description {
     my @keys   = $hash->keys;
 
     my @values = map {
-        join "\n    ", split /\n/, perl_description($_, $own_only)
+        join "\n    ", split /\n/, pdescription($_, $own_only)
     } $hash->values;
 
     return "[:]" if !@keys;
@@ -127,7 +127,7 @@ sub description {
 sub iterate_pair {
     my $hash = shift;
     my %hash = %{ $hash->{hash_values} };
-    return map [ ferret_string($_), $hash{$_} ], keys %hash;
+    return map [ fstring($_), $hash{$_} ], keys %hash;
 }
 
 1

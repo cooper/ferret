@@ -6,7 +6,7 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Core::Conversion qw(ferret_string perl_boolean);
+use Ferret::Core::Conversion qw(fstring pbool);
 
 # fetch the global Ferret.
 sub get_ferret {
@@ -116,7 +116,7 @@ sub get_set_type {
 sub get_symbol {
     my ($f, $name) = @_;
     return $f->{symbols}{$name} || Ferret::Symbol->new($f, init_args => {
-        from => ferret_string($name)
+        from => fstring($name)
     });
 }
 
@@ -183,7 +183,7 @@ sub need {
 
     # if a value exists, the value must be equal to it.
     if ($value_maybe) {
-        return unless perl_boolean($value->equal_to($value_maybe));
+        return unless pbool($value->equal_to($value_maybe));
     }
 
     # set the variable.

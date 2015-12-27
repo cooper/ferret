@@ -8,10 +8,10 @@ use 5.010;
 
 
 use Ferret::Core::Conversion qw(
-    perl_string         ferret_string
-    perl_boolean        ferret_boolean
-    perl_number         ferret_number
-    perl_description
+    pstring         fstring
+    pbool        fbool
+    pnumber         fnumber
+    pdescription
 );
 
 our %functions = (
@@ -51,7 +51,7 @@ our %functions = (
 
 sub _say {
     my ($self, $arguments, $call_scope, $scope, $return) = @_;
-    say perl_string($arguments->{message});
+    say $arguments->pstring('message');
     return $return;
 }
 
@@ -74,16 +74,16 @@ sub _inspect {
     my ($self, $arguments, $call_scope, $scope, $return) = @_;
     my $obj = $arguments->{value};
 
-    my $str = perl_description($obj, perl_boolean($arguments->{ownOnly}));
-    say $str unless $arguments->{quiet};
+    my $str = pdescription($obj, $arguments->pbool('ownOnly'));
+    say $str unless $arguments->pbool('quiet');
 
-    $return->set_property(string => ferret_string($str));
+    $return->set_property(string => fstring($str));
     return $return;
 }
 
 sub _require {
     my (undef, $arguments) = @_;
-    return Ferret::true if perl_boolean($arguments->{test});
+    return Ferret::true if $arguments->pbool('test');
     die; # FIXME: throw
 }
 
@@ -100,7 +100,7 @@ sub _delay {
     FF::on($timer, 'expire', undef, $call_scope, $func);
 
     # start the timer.
-    $timer->property('once')->call(undef, $call_scope);
+    $timer->call_prop(once => undef, $call_scope);
 
     $return->set_property(timer => $timer);
     return $return;
@@ -109,20 +109,20 @@ sub _delay {
 sub _fetchObject {
     my (undef, $arguments, $call_scope) = @_;
     my $f = $call_scope->f;
-    my $addr = perl_number($arguments->{address});
+    my $addr = $arguments->pnumber('address');
     return $f->{objects}{$addr} || Ferret::undefined;
 }
 
 sub _activeObjectCount {
     my (undef, undef, $call_scope) = @_;
     my $f = $call_scope->f;
-    return ferret_number(scalar keys %{ $f->{objects} });
+    return fnumber(scalar keys %{ $f->{objects} });
 }
 
 # this is temporary, until *process.exit() exists
 sub _exit {
     my (undef, $arguments) = @_;
-    my $status = $arguments->{status} ? perl_number($arguments->{status}) : 0;
+    my $status = $arguments->pnumber('status', 0);
     exit $status;
 }
 

@@ -13,7 +13,7 @@ sub _handle_signal {
     my $f = $Ferret::ferret;
     my $type = FF::get_symbol($f, shift);
     my $signal_class = Ferret::space($f->main_context, [caller], 'Signal');
-    $signal_class->property('fireSignal')->call({ type => $type });
+    $signal_class->call_prop(fireSignal => { type => $type });
 }
 
 # TODO: make it possible to handle these

@@ -6,11 +6,23 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Core::Operations 'import';
 use Scalar::Util qw(blessed looks_like_number);
 
+# special import to handle underscore prefix
+sub import {
+    my $this_package = shift;
+    my $package = caller;
+    foreach (@_) {
+        my ($left, $right) = ($_) x 2;
+        my $f = \substr($right, 0, 1);
+        $$f = '' if $$f eq '_';
+        no strict 'refs';
+        *{ "${package}::$left" } = *{ "${this_package}::$right" }
+    }
+}
+
 # return a ferret string object.
-sub ferret_string {
+sub fstring {
     my $val = shift;
     my $f = $Ferret::ferret;
 
@@ -38,7 +50,7 @@ sub ferret_string {
 
         # it's an object with a description converter.
         if ($val->can('description')) {
-            return ferret_string($val->description);
+            return fstring($val->description);
         }
         if (my $to_desc = $val->property('description')) {
             return $to_desc->call;
@@ -50,22 +62,22 @@ sub ferret_string {
 }
 
 # return a perl string value.
-sub perl_string {
+sub pstring {
     my $val = shift;
     return ''   if !defined $val;
     return $val if !blessed $val;
-    return ferret_string($val)->{str_value} // '';
+    return fstring($val)->{str_value} // '';
 }
 
 # return a perl object description.
-sub perl_description {
+sub pdescription {
     my ($val, $own_only) = @_;
     return $val->description($own_only) if $val->can('description');
-    return perl_string($val);
+    return pstring($val);
 }
 
 # return a ferret number object.
-sub ferret_number {
+sub fnumber {
     my $val = shift;
     my $f = $Ferret::ferret;
 
@@ -100,15 +112,15 @@ sub ferret_number {
 }
 
 # return a perl string value.
-sub perl_number {
+sub pnumber {
     my $val = shift;
     return $val if !blessed $val && looks_like_number($val);
-    return ferret_number($val)->{num_value} // 0;
+    return fnumber($val)->{num_value} // 0;
 }
 
 # return a ferret list object.
 # if @vals are not ferret objects, they will be ferretized.
-sub ferret_list {
+sub flist {
     my @vals = @_;
 
     # already an object, probably a list.
@@ -126,23 +138,23 @@ sub ferret_list {
 }
 
 # returns a Ferret list which updates a Perl array reference.
-sub ferret_list_wrap {
+sub flist_wrap {
     my $ref = shift;
     return if ref $ref ne 'ARRAY';
     return Ferret::List->new($Ferret::ferret, ref_values => $ref);
 }
 
-sub perl_list {
-    return @{ &perl_listref };
+sub plist {
+    return @{ &plistref };
 }
 
-sub perl_listref {
+sub plistref {
     my $list = shift;
     return [ ] if !blessed $list || !$list->isa('Ferret::List');
     return [ @{ $list->{list_items} || [] } ]; # make a copy
 }
 
-sub ferret_hash {
+sub fhash {
     my $hashref = shift;
     return unless ref $hashref eq 'HASH';
     $hashref = { %$hashref }; # make a copy
@@ -150,7 +162,7 @@ sub ferret_hash {
 }
 
 # $recursive indicates whether to perlize values.
-sub perl_hashref {
+sub phashref {
     my ($hash, $recursive) = @_;
 
     # can't do anything with this.
@@ -165,25 +177,25 @@ sub perl_hashref {
     return \%hash;
 }
 
-sub ferret_boolean {
+sub fbool {
     my $val = shift;
     return $val if blessed $val && defined $val->{bool_value};
     my $truth = !!$val;
     return $truth ? Ferret::true : Ferret::false;
 }
 
-sub perl_boolean {
+sub pbool {
     return Ferret::truth(@_);
 }
 
-sub ferret_function {
+sub ffunction {
     my $code = shift;
     return unless ref $code eq 'CODE';
     return Ferret::Function->new($Ferret::ferret, code => $code);
 }
 
-sub ferret_method {
-    my $func = &ferret_function;
+sub fmethod {
+    my $func = &ffunction;
     $func->{is_method} = 1;
     return $func;
 }
@@ -192,25 +204,25 @@ sub ferretize {
     my $val = shift;
     return $val if blessed $val && $val->isa('Ferret::Object');
     if (ref $val eq 'ARRAY') {
-        return ferret_list(@$val);
+        return flist(@$val);
     }
     if (ref $val eq 'HASH') {
-        return ferret_hash(%$val);
+        return fhash(%$val);
     }
     if (looks_like_number($val)) {
-        return ferret_number($val);
+        return fnumber($val);
     }
-    return ferret_string($val);
+    return fstring($val);
 }
 
 # for lists and hashes, references are returned.
 sub perlize {
     my $val = shift;
     return $val if !blessed $val || !$val->isa('Ferret::Object');
-    return perl_listef($val)    if $val->{list_items};
-    return perl_hashref($val)   if $val->{hash_values};
+    return plistef($val)    if $val->{list_items};
+    return phashref($val)   if $val->{hash_values};
     return $val->{num_value}    if defined $val->{num_value};
-    return perl_string($val);
+    return pstring($val);
 }
 
 1

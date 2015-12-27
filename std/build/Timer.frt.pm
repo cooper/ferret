@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(perl_number ferret_number);
+use Ferret::Core::Conversion qw(pnumber fnumber);
 
 my @methods = (
     once => {
@@ -41,7 +41,7 @@ Ferret::bind_class(
 
 sub init {
     my ($timer, $arguments) = @_;
-    $timer->{delay} = perl_number($arguments->{delay});
+    $timer->{delay} = $arguments->pnumber('delay');
 }
 
 sub run_once {
@@ -66,7 +66,7 @@ sub run_once {
 
 sub start {
     my ($timer, $arguments, $call_scope, $scope, $return) = @_;
-    $timer->{times} = perl_number($arguments->{times}) if $arguments->{times};
+    $timer->{times} = $arguments->pnumber('times') if $arguments->{times};
 
     # create a periodic timer.
     require IO::Async::Timer::Periodic;
@@ -96,7 +96,7 @@ sub cancel {
 
 sub _tick {
     my ($timer, undef, undef, undef, $return) = @_;
-    $timer->property('tick')->call([ ferret_number(++$timer->{ticks}) ]);
+    $timer->call_prop(tick => [ fnumber(++$timer->{ticks}) ]);
 
     # if it's done enough times, stop.
     if (defined $timer->{times} && $timer->{ticks} >= $timer->{times}) {

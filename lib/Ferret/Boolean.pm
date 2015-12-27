@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(perl_boolean);
+use Ferret::Core::Conversion qw(pbool);
 
 Ferret::bind_class(
     name      => 'Boolean',
@@ -24,8 +24,8 @@ sub init {
     $bool->{ro_properties} = 1;
 
     # from another value
-    if (my $from = $arguments->{from}) {
-        $bool->{bool_value} = perl_boolean($from);
+    if ($arguments->has('from')) {
+        $bool->{bool_value} = $arguments->pbool('from');
     }
 
     return $bool if $bool->{real};

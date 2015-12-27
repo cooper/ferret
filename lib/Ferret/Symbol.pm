@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(perl_string);
+use Ferret::Core::Conversion qw(pstring);
 
 Ferret::bind_class(
     name      => 'Symbol',
@@ -25,7 +25,7 @@ sub init {
 
     # from another value
     if (my $from = $arguments->{from}) {
-        $sym->{sym_value} = perl_string($from);
+        $sym->{sym_value} = pstring($from);
     }
 
     # this isn't one of the "real" true or false objects,

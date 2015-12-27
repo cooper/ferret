@@ -9,8 +9,8 @@ use parent 'Ferret::Object';
 
 use Scalar::Util qw(blessed looks_like_number);
 use Ferret::Core::Conversion qw(
-    perl_string perl_number perl_hashref perl_list
-    ferret_string ferret_list ferret_boolean ferret_number
+    pstring pnumber phashref plist
+    fstring flist fbool fnumber
 );
 
 my @methods = (
@@ -73,8 +73,8 @@ Ferret::bind_class(
 
 sub init {
     my ($str, $arguments) = @_;
-    if ($arguments->{from}) {
-        $str->{str_value} = perl_string($arguments->{from});
+    if ($arguments->has('from')) {
+        $str->{str_value} = $arguments->pstring('from');
     }
     $str->{str_value} = '' if !defined $str->{str_value};
 }
@@ -83,8 +83,8 @@ sub init {
 sub op_add {
     my ($str, $arguments) = @_;
     my $other = $arguments->{other};
-    my $new_value = perl_string($str).perl_string($other);
-    return ferret_string($new_value);
+    my $new_value = pstring($str).pstring($other);
+    return fstring($new_value);
 }
 
 sub length : method {
@@ -100,10 +100,10 @@ sub _length {
 # for now, this only accepts strings.
 sub _split {
     my ($str, $arguments) = @_;
-    my $sep     = perl_string($arguments->{separator}); # undef returns ''
-    my $limit   = $arguments->{limit} ? perl_number($arguments->{limit}) : 0;
+    my $sep     = $arguments->pstring('separator'); # undef returns ''
+    my $limit   = $arguments->pnumber('limit', 0);
     my @strings = split /\Q$sep\E/, $str->{str_value}, $limit;
-    return ferret_list(map ferret_string($_), @strings);
+    return flist(map fstring($_), @strings);
 }
 
 sub hasPrefix {
@@ -114,8 +114,8 @@ sub hasPrefix {
 
 sub _hasPrefix {
     my ($str, $arguments) = @_;
-    my $pfx = perl_string($arguments->{prefix});
-    return ferret_boolean($str->hasPrefix($pfx));
+    my $pfx = $arguments->pstring('prefix');
+    return fbool($str->hasPrefix($pfx));
 }
 
 sub trimPrefix {
@@ -123,12 +123,12 @@ sub trimPrefix {
     my $s   = $str->{str_value}; # make a copy
     my $pfx = \substr($s, 0, length $prefix);
     $$pfx   = '' if $$pfx eq $prefix;
-    return ferret_string($s);
+    return fstring($s);
 }
 
 sub _trimPrefix {
     my ($str, $arguments) = @_;
-    my $pfx = perl_string($arguments->{prefix});
+    my $pfx = $arguments->pstring('prefix');
     return $str->trimPrefix($pfx);
 }
 
@@ -152,26 +152,26 @@ sub fill {
     # join.
     my $s = join "\n", @lines; # make a copy
 
-    return ferret_string($s);
+    return fstring($s);
 }
 
 sub _fill {
     my ($str, $arguments) = @_;
     my %info;
     if (my $hash = $arguments->{valueHash}) {
-        %info = %{ perl_hashref($hash, 1) };
+        %info = %{ phashref($hash, 1) };
     }
     else {
-        %info = map { $_ => perl_string($arguments->{$_}) } keys %$arguments;
+        %info = map { $_ => $arguments->pstring($_) } keys %$arguments;
     }
     return $str->fill(\%info);
 }
 
 sub _to_number {
     my $str = shift;
-    return ferret_number($str->{str_value} + 0)
+    return fnumber($str->{str_value} + 0)
         if looks_like_number($str->{str_value});
-    return ferret_number(0);
+    return fnumber(0);
 }
 
 sub description {
@@ -184,7 +184,7 @@ sub description {
 # TODO: copy will eventually be an Object method.
 sub _copy {
     my $str = shift;
-    return ferret_string($str->{str_value});
+    return fstring($str->{str_value});
 }
 
 # any of these work
@@ -206,7 +206,7 @@ sub equal {
 
 sub _equal {
     my (undef, $arguments) = @_;
-    my ($first_str, @rest_strs) = perl_list($arguments->{strs});
+    my ($first_str, @rest_strs) = $arguments->plist('strs');
     foreach (@rest_strs) {
         return Ferret::false if !$first_str->equal($_);
     }
@@ -215,8 +215,8 @@ sub _equal {
 
 sub _join {
     my (undef, $arguments) = @_;
-    my $list = ferret_list(delete $arguments->{strs});
-    return ferret_string($list->join(''));
+    my $list = flist(delete $arguments->{strs});
+    return fstring($list->join(''));
 }
 
 1

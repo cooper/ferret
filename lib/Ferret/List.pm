@@ -8,9 +8,9 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Ferret::Core::Conversion qw(
-    ferret_number perl_number
-    ferret_string perl_string
-    perl_description
+    fnumber pnumber
+    fstring pstring
+    pdescription
 );
 
 my @methods = (
@@ -92,7 +92,7 @@ sub length : method {
 }
 
 sub _length {
-    return ferret_number(shift->length);
+    return fnumber(shift->length);
 }
 
 sub shift : method {
@@ -122,21 +122,21 @@ sub insert {
 
 sub _insert {
     my ($list, $arguments) = @_;
-    my $index = perl_number($arguments->{index});
+    my $index = $arguments->pnumber('index');
     $list->insert($index, $arguments->{item});
     return $list;
 }
 
 sub join : method {
     my ($list, $separator) = @_;
-    my @items = map perl_string($_), @{ $list->{list_items} };
+    my @items = map pstring($_), @{ $list->{list_items} };
     return join $separator, @items;
 }
 
 sub _join {
     my ($list, $arguments) = @_;
-    my $sep = perl_string($arguments->{separator});
-    return ferret_string($list->join($sep));
+    my $sep = $arguments->pstring('separator');
+    return fstring($list->join($sep));
 }
 
 sub set_value {
@@ -146,7 +146,7 @@ sub set_value {
 
 sub _set_value {
     my ($list, $arguments) = @_;
-    my $index = perl_number($arguments->{index});
+    my $index = $arguments->pnumber('index');
     $list->set_value($index, $arguments->{value});
     return $list;
 }
@@ -158,7 +158,7 @@ sub get_value {
 
 sub _get_value {
     my ($list, $arguments) = @_;
-    my $index = perl_number($arguments->{index});
+    my $index = $arguments->pnumber('index');
     return $list->get_value($index);
 }
 
@@ -179,7 +179,7 @@ sub description {
 
     # handle indents
     my @values = map {
-        join "\n    ", split /\n/, perl_description($_, $own_only)
+        join "\n    ", split /\n/, pdescription($_, $own_only)
     } @{ $list->{list_items} };
 
     return "[]" if !@values;
@@ -194,7 +194,7 @@ sub iterate {
 sub iterate_pair {
     my $list = shift;
     my $i = 0;
-    return map [ ferret_number($i++), $_ ], @{ $list->{list_items} };
+    return map [ fnumber($i++), $_ ], @{ $list->{list_items} };
 }
 
 1

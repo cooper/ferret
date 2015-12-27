@@ -8,6 +8,7 @@ use 5.010;
 
 use parent 'Ferret::Object';
 
+use Ferret::Arguments;
 use Scalar::Util 'blessed';
 
 # creates a new function.
@@ -190,57 +191,52 @@ sub call {
     }
 
     # hash ref of arguments.
-    if (ref $arguments eq 'HASH') {
-        return unless $func->arguments_satisfy_signature($arguments);
+    return unless $func->arguments_satisfy_signature($arguments);
+    bless $arguments, 'Ferret::Arguments';
 
-        # at this point, invalid wants have been deleted.
-        # if this function has an ellipsis variable, that deleted
-        # argument's value must be replaced with an empty list.
-        if (my $elp = $func->{hungry}) {
-            $arguments->{$elp} ||= Ferret::List->new($func->f);
-        }
-
-        # create a scope which inherits from the outer scope.
-        #
-        # $call_scope   = the scope where the function was called
-        # $scope        = the scope within the function
-        # outer_scope   = the scope outside of the function definition
-        #
-        my $scope = Ferret::Scope->new($func->f,
-            parent => $func->{outer_scope}
-        );
-
-        $return ||= Ferret::Return->new($func->f);
-
-        # find self.
-        my $self =
-            ( delete $func->{force_self}                          ) ||
-            ( $arguments->{_self}                                 ) ||
-            ( $func->is_method     ? $func->{last_parent} : undef ) ||
-            ( $func->is_class_func ? $func->{class}       : undef ) ;
-
-        # class/instance argument.
-        $scope->{special}->set_property(self   => $self) if $self;
-        $scope->{special}->set_property(class  => $func->{class})       if $func->{class};
-        $scope->{special}->set_property(this   => delete $func->{this}) if $func->{this};
-        $scope->{special}->set_property(return => $return);
-
-        # call the function.
-        my $ret = $func->{code}(
-            $self,
-            $arguments,
-            $call_scope,
-            $scope,
-            $return,
-            $func
-        );
-        return $ret // Ferret::undefined;
-
+    # at this point, invalid wants have been deleted.
+    # if this function has an ellipsis variable, that deleted
+    # argument's value must be replaced with an empty list.
+    if (my $elp = $func->{hungry}) {
+        $arguments->{$elp} ||= Ferret::List->new($func->f);
     }
 
-    # otherwise, not sure what to do...
-    return;
+    # create a scope which inherits from the outer scope.
+    #
+    # $call_scope   = the scope where the function was called
+    # $scope        = the scope within the function
+    # outer_scope   = the scope outside of the function definition
+    #
+    my $scope = Ferret::Scope->new($func->f,
+        parent => $func->{outer_scope}
+    );
 
+    $return ||= Ferret::Return->new($func->f);
+
+    # find self.
+    my $self =
+        ( delete $func->{force_self}                          ) ||
+        ( $arguments->{_self}                                 ) ||
+        ( $func->is_method     ? $func->{last_parent} : undef ) ||
+        ( $func->is_class_func ? $func->{class}       : undef ) ;
+
+    # class/instance argument.
+    $scope->{special}->set_property(self   => $self) if $self;
+    $scope->{special}->set_property(class  => $func->{class})       if $func->{class};
+    $scope->{special}->set_property(this   => delete $func->{this}) if $func->{this};
+    $scope->{special}->set_property(return => $return);
+
+    # call the function.
+    my $ret = $func->{code}(
+        $self,
+        $arguments,
+        $call_scope,
+        $scope,
+        $return,
+        $func
+    );
+
+    return $ret // Ferret::undefined;
 }
 
 sub inside_scope {

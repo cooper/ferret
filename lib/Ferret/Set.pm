@@ -6,7 +6,7 @@ use strict;
 use utf8;
 
 use parent 'Ferret::Object';
-use Ferret::Core::Conversion qw(perl_description ferret_list perl_list);
+use Ferret::Core::Conversion qw(pdescription flist plist);
 
 *new = *Ferret::bind_constructor;
 
@@ -41,7 +41,7 @@ sub init {
     $set->{set_scope} = $call_scope;
 
     # add objects.
-    my @others          = perl_list($arguments->{items});
+    my @others          = $arguments->plist('items');
     $set->{primary_obj} = delete $arguments->{item1};
     $set->{other_objs}  = \@others;
     $set->{all_objs}    = [ $set->{primary_obj}, @others ];
@@ -109,17 +109,17 @@ sub _methods {
         push @good, $prop_name;
     }
 
-    return ferret_list(@good);
+    return flist(@good);
 }
 
 sub _to_list {
     my $set = shift;
-    ferret_list(@{ $set->{all_objs} });
+    flist(@{ $set->{all_objs} });
 }
 
 sub _from_list {
     my ($set_class, $arguments, $call_scope) = @_;
-    my @items = perl_list($arguments->{list});
+    my @items = $arguments->plist('list');
     return $set_class->call([ @items ], $call_scope);
 }
 
@@ -129,7 +129,7 @@ sub description {
 
     # handle indents
     my @values = map {
-        join "\n    ", split /\n/, perl_description($_, $own_only)
+        join "\n    ", split /\n/, pdescription($_, $own_only)
     } @{ $set->{all_objs} };
 
     return "<$class_name>(\n    ".join("\n    ", @values)."\n)";

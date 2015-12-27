@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(perl_list);
+use Ferret::Core::Conversion qw(plist);
 use Scalar::Util qw(weaken);
 
 Ferret::bind_class(
@@ -228,8 +228,8 @@ sub _get_set_type {
     }, mimic => $global_set_class->property('_init_'));
 
     $set_type->bind_function('fromList', code => sub {
-        my ($set_class, $arguments, $call_scope) = @_;
-        my @items = perl_list($arguments->{list});
+        my ($set_class, $arguments, $call_scope) = @_;        
+        my @items = $arguments->plist('list');
         return $set_class->call([ @items ], $call_scope);
     }, need => '$list:List');
 

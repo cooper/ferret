@@ -9,7 +9,8 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken);
-use Ferret::Core::Conversion qw(ferret_method ferret_hash);
+use Ferret::Core::Conversion qw(fmethod fhash);
+use Ferret::Arguments;
 
 Ferret::bind_class(
     name => 'Event',
@@ -168,6 +169,8 @@ sub call {
         $arguments = $default->handle_arguments($arguments);
     }
 
+    bless $arguments, 'Ferret::Arguments';
+
     # find the object
     my $obj =
         $arguments->{_self}         ||
@@ -229,9 +232,9 @@ sub _global_event_prototype {
     return $f->{event_proto} ||= do {
         my $proto = Ferret::Prototype->new($f);
         $proto->set_property(callbacks => [ sub {
-            ferret_method(sub {
+            fmethod(sub {
                 my $event = shift;
-                return ferret_hash($event->{function});
+                return fhash($event->{function});
             })
         } ]);
         $proto;

@@ -7,8 +7,8 @@ use utf8;
 use 5.010;
 
 use Ferret::Core::Conversion qw(
-    ferret_list_wrap ferret_list ferret_boolean
-    perl_string ferret_number
+    flist_wrap flist fbool
+    pstring fnumber
 );
 
 my %specials = (
@@ -55,7 +55,7 @@ sub _self {
 sub _isa {
     my $obj = shift;
     return $obj->{_isa_ferret} if $obj->{_isa_ferret};
-    my $list = ferret_list_wrap($obj->{isa});
+    my $list = flist_wrap($obj->{isa});
 
     # as a function, it tests whether it's an instance of a class
     $list->set_property(toFunction => Ferret::Function->new($obj->f,
@@ -69,28 +69,28 @@ sub _isa {
 # returns immutable class list.
 sub _classes {
     my $obj = shift;
-    return ferret_list($obj->parent_classes);
+    return flist($obj->parent_classes);
 }
 
 sub _allProperties {
     my $obj = shift;
-    return ferret_list($obj->properties(1));
+    return flist($obj->properties(1));
 }
 
 sub _ownProperties {
     my $obj = shift;
-    return ferret_list($obj->properties);
+    return flist($obj->properties);
 }
 
 sub _instanceOf {
     my ($obj, $arguments) = @_;
     my $class = $arguments->{class};
-    return ferret_boolean($obj->instance_of($class));
+    return fbool($obj->instance_of($class));
 }
 
 sub _get {
     my ($obj, $arguments) = @_;
-    my $prop_name = perl_string($arguments->{property});
+    my $prop_name = $arguments->pstring('property');
     delete $obj->{actual_inherited}{$prop_name};
     my $val = $obj->simple_property_u($prop_name);
     return $obj->{actual_inherited}{$prop_name} || $val;
@@ -98,7 +98,7 @@ sub _get {
 
 sub _getOwn {
     my ($obj, $arguments) = @_;
-    my $prop_name = perl_string($arguments->{property});
+    my $prop_name = $arguments->pstring('property');
     delete $obj->{actual_props}{$prop_name};
     my $val = $obj->own_property_u($prop_name);
     return $obj->{actual_props}{$prop_name} || $val;
@@ -106,7 +106,7 @@ sub _getOwn {
 
 sub _set {
     my ($obj, $arguments) = @_;
-    my $key   = perl_string($arguments->{property});
+    my $key   = $arguments->pstring('property');
     my $value = $arguments->{value};
     # FIXME: check that it's not special,
     #        that it is valid,
@@ -125,7 +125,7 @@ sub _commonClass {
 
 sub _addr {
     my $obj = shift;
-    return ferret_number($obj + 0);
+    return fnumber($obj + 0);
 }
 
 1

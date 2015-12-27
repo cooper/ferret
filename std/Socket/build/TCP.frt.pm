@@ -11,7 +11,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(perl_string perl_number);
+use Ferret::Core::Conversion qw(pstring pnumber);
 
 my @methods = (
     connect => {
@@ -100,8 +100,8 @@ sub _connect {
 
     # create a connection.
     my $conn = IO::Socket::IP->new(
-        PeerHost => perl_string($sock->property('address')),
-        PeerPort => perl_number($sock->property('port')),
+        PeerHost => pstring($sock->property('address')),
+        PeerPort => pnumber($sock->property('port')),
         Type     => Socket::SOCK_STREAM()
     ) or return;
 
@@ -123,14 +123,14 @@ sub _connect {
 
 sub print {
     my ($sock, $arguments, $call_scope, $scope, $return) = @_;
-    my $data = perl_string($arguments->{data});
+    my $data = $arguments->pstring('data');
     $sock->{stream}->write($data);
     return $return;
 }
 
 sub println {
     my ($sock, $arguments, $call_scope, $scope, $return) = @_;
-    my $line = perl_string($arguments->{data});
+    my $line = $arguments->pstring('data');
     $sock->{stream}->write("$line\n");
     return $return;
 }
@@ -151,7 +151,7 @@ sub _stream_on_read_default {
     # handle lines.
     while ($$buffer =~ s/.+//) {
         my $str = Ferret::String->new($sock->f, str_value => $1);
-        $sock->property('gotData')->call({ data => $str });
+        $sock->call_prop(gotData => { data => $str });
     }
 
     return unless $eof;
@@ -166,12 +166,12 @@ sub _stream_on_read_line {
     while ($$buffer =~ s/^(.*)\n//) {
         (my $val = $1) =~ s/\0|\r//g;
         my $str = Ferret::String->new($sock->f, str_value => $val);
-        $sock->property('gotLine')->call({ data => $str });
+        $sock->call_prop(gotLine => { data => $str });
     }
 
     # reached EOF. at this point, $$buffer is a partial line
     return unless $eof;
-    $sock->property('eof')->call({ remainder => $$buffer });
+    $sock->call_prop(eof => { remainder => $$buffer });
     $sock->_disconnected;
 
 }

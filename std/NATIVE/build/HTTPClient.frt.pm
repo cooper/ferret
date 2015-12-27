@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(perl_string perl_number ferret_string);
+use Ferret::Core::Conversion qw(pstring pnumber fstring);
 
 my @functions = (
     initialize => {
@@ -34,10 +34,10 @@ sub _initialize {
     require Net::Async::HTTP;
 
     my $http = Net::Async::HTTP->new(
-        user_agent   => perl_string($client->property('userAgent')),
-        timeout      => perl_string($client->property('timeout')),
-        read_len     => perl_number($client->property('readLength')),
-        write_len    => perl_number($client->property('writeLength')),
+        user_agent   => pstring($client->property('userAgent')),
+        timeout      => pstring($client->property('timeout')),
+        read_len     => pnumber($client->property('readLength')),
+        write_len    => pnumber($client->property('writeLength')),
         max_connections_per_host => 5
     );
 
@@ -54,8 +54,8 @@ sub _connect {
 
     increase_count($http);
     $http->do_request(
-        uri         => perl_string($request->property('url')),
-        method      => perl_string($request->property('method')) eq ':POST' ?
+        uri         => pstring($request->property('url')),
+        method      => pstring($request->property('method')) eq ':POST' ?
                        'POST' : 'GET', # TODO: other methods
         on_ready    => sub {    _ready($client, $request, @_) },
         on_redirect => sub { _redirect($client, $request, @_) },
@@ -77,7 +77,7 @@ sub _ready {
 sub _redirect {
     my ($client, $request, $response, $url_string) = @_;
     $request->property('redirect')->call({
-        location => ferret_string($url_string)
+        location => fstring($url_string)
     });
 }
 
@@ -85,7 +85,7 @@ sub _response {
     my ($client, $request, $response) = @_;
     $request->property('response')->call({
         # TODO: response object in Ferret
-        content => ferret_string($response->as_string)
+        content => fstring($response->as_string)
     });
 
     decrease_count($client->{http});

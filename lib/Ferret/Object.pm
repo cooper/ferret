@@ -9,7 +9,10 @@ use parent 'Evented::Object';
 use Scalar::Util qw(blessed weaken);
 use List::Util qw(first);
 
-use Ferret::Core::Conversion qw(perl_description perl_string ferret_list);
+use Ferret::Core::Conversion qw(
+    _pdescription _pstring
+    _pnumber _pbool
+);
 use Ferret::Core::Errors qw(throw);
 
 # create a new object.
@@ -443,7 +446,7 @@ sub description {
 
     # description method
     if (!$obj->{is_proto} and my $d_func = $obj->property('description')) {
-        return perl_string($d_func->call);
+        return _pstring($d_func->call);
     }
 
     my ($skipped, $prop_str) = (0, '');
@@ -469,7 +472,7 @@ sub description {
         $prop_name = "($prop_name)" if $owner != $obj;
 
         # indent lines
-        $value     = join "\n    ", split /\n/, perl_description($value, $own_only);
+        $value     = join "\n    ", split /\n/, _pdescription($value, $own_only);
         $prop_str .= '    '.$prop_name." = $value\n";
 
     }
@@ -529,7 +532,7 @@ sub DESTROY {
 # call getValue.
 sub get_index_value {
     my ($obj, $arguments, $call_scope) = @_;
-    return $obj->property('getValue')->call($arguments, $call_scope);
+    return $obj->call_prop(getValue => $arguments, $call_scope);
 }
 
 # call setValue.
@@ -537,7 +540,7 @@ sub get_index_value {
 sub set_index_value {
     my ($obj, $arguments, $value, $call_scope) = @_;
     unshift @$arguments, $value;
-    return $obj->property('setValue')->call($arguments, $call_scope);
+    return $obj->call_prop(setValue => $arguments, $call_scope);
 }
 
 ###############################
@@ -563,6 +566,33 @@ sub equal_to {
 sub equal_to_exactly {
     my ($left_obj, $right_obj, $scope) = @_;
     return $left_obj == $right_obj ? Ferret::true : Ferret::false;
+}
+
+############################
+### PROPERTY CONVENIENCE ###
+############################
+
+sub pstring {
+    my ($obj, $prop_name, $fallback) = @_;
+    my $value = $obj->property($prop_name);
+    return $value ? _pstring($value) // $fallback : $fallback;
+}
+
+sub pnumber {
+    my ($obj, $prop_name, $fallback) = @_;
+    my $value = $obj->property($prop_name);
+    return $value ? _pnumber($value) // $fallback : $fallback;
+}
+
+sub pbool {
+    my ($obj, $prop_name, $fallback) = @_;
+    my $value = $obj->property($prop_name);
+    return $value ? _pbool($value) : $fallback;
+}
+
+sub call_prop {
+    my ($obj, $prop_name) = (shift, shift);
+    $obj->property($prop_name)->call(@_);
 }
 
 ################
