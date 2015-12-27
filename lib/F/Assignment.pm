@@ -21,7 +21,7 @@ sub perl_fmt_do {
 
     # the assignment value should be wrapped in sub{} if it's a lazy property.
     my $val = $a->assign_value->perl_fmt_do;
-    $val = "sub { $val }" if $a->{lazy};
+    $val = "[ sub { $val } ]" if $a->{lazy};
     $fmt_args->{assign_value} = $val;
 
 

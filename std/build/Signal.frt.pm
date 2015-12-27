@@ -180,53 +180,63 @@ my $result = do {
 
         $class->set_property_ow(
             $context,
-            INT => sub {
-                $scope->{special}->property_u('class')
-                  ->call_u( [ FF::get_symbol( $f, 'INT' ) ],
-                    $scope, undef, 7.4 );
-            },
+            INT => [
+                sub {
+                    $scope->{special}->property_u('class')
+                      ->call_u( [ FF::get_symbol( $f, 'INT' ) ],
+                        $scope, undef, 7.4 );
+                }
+            ],
             7.2
         );
         $class->set_property_ow(
             $context,
-            HUP => sub {
-                $scope->{special}->property_u('class')
-                  ->call_u( [ FF::get_symbol( $f, 'HUP' ) ],
-                    $scope, undef, 8.4 );
-            },
+            HUP => [
+                sub {
+                    $scope->{special}->property_u('class')
+                      ->call_u( [ FF::get_symbol( $f, 'HUP' ) ],
+                        $scope, undef, 8.4 );
+                }
+            ],
             8.2
         );
         $class->set_property_ow(
             $context,
-            TERM => sub {
-                $scope->{special}->property_u('class')
-                  ->call_u( [ FF::get_symbol( $f, 'TERM' ) ],
-                    $scope, undef, 9.4 );
-            },
+            TERM => [
+                sub {
+                    $scope->{special}->property_u('class')
+                      ->call_u( [ FF::get_symbol( $f, 'TERM' ) ],
+                        $scope, undef, 9.4 );
+                }
+            ],
             9.2
         );
         $class->set_property_ow(
             $context,
-            ALRM => sub {
-                $scope->{special}->property_u('class')
-                  ->call_u( [ FF::get_symbol( $f, 'ALRM' ) ],
-                    $scope, undef, 10.4 );
-            },
+            ALRM => [
+                sub {
+                    $scope->{special}->property_u('class')
+                      ->call_u( [ FF::get_symbol( $f, 'ALRM' ) ],
+                        $scope, undef, 10.4 );
+                }
+            ],
             10.2
         );
         $class->set_property_ow(
             $context,
-            signals => sub {
-                FF::create_hash(
-                    $f,
-                    {
-                        INT  => $scope->property_u('INT'),
-                        HUP  => $scope->property_u('HUP'),
-                        TERM => $scope->property_u('TERM'),
-                        ALRM => $scope->property_u('ALRM')
-                    }
-                );
-            },
+            signals => [
+                sub {
+                    FF::create_hash(
+                        $f,
+                        {
+                            INT  => $scope->property_u('INT'),
+                            HUP  => $scope->property_u('HUP'),
+                            TERM => $scope->property_u('TERM'),
+                            ALRM => $scope->property_u('ALRM')
+                        }
+                    );
+                }
+            ],
             12.2
         );
     }

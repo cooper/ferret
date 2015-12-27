@@ -19,7 +19,7 @@ sub _handle_signal {
 # TODO: make it possible to handle these
 
 $SIG{__DIE__} = sub {
-    print "@_";
+    #print "@_";
 };
 
 $SIG{__WARN__} = sub {

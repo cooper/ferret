@@ -313,7 +313,7 @@ sub _bind_get_class {
 ### RUNTIME ###
 ###############
 
-my $loop;
+my ($loop, @notifiers);
 our $keep_alive = 0;
 
 sub init_runtime {
@@ -326,12 +326,14 @@ sub add_notifier {
     my $notifier = shift;
     init_runtime();
     $loop->add($notifier);
+    push @notifiers, $notifier;
 }
 
 sub remove_notifier {
     my $notifier = shift;
     return unless $loop;
     $loop->remove($notifier);
+    @notifiers = grep { $_ != $notifier } @notifiers;
 }
 
 sub loop_connect {
@@ -344,7 +346,7 @@ sub runtime {
     return 1 unless $loop;
     return 1 if $looping;
     $looping = 1;
-    while ($loop->notifiers || $keep_alive) {
+    while (@notifiers || $keep_alive) {
         $loop->loop_once;
     }
     undef $looping;
