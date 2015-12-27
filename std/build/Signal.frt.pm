@@ -119,9 +119,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $self, $arguments, 'type' ) or return;
-                return $return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $self, $args, 'type' ) or return;
+                return $ret;
             }
         );
 
@@ -130,10 +130,10 @@ my $result = do {
             $f, $scope, 'catch',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $scope->property_u('_exit')
                   ->call_u( [ num( $f, 0 ) ], $scope, undef, 25.2 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -150,8 +150,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'type', 31.2 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'type', 31.2 ) or return;
                 {
                     my $maybe_0 =
                       $scope->property_u('signals')
@@ -162,7 +162,7 @@ my $result = do {
                           ->call_u( {}, $scope, undef, 32.35 );
                     }
                 }
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

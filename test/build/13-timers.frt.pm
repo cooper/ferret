@@ -79,11 +79,11 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "five seconds up" ) ], $scope, undef, 4.2 );
-            return $return;
+            return $ret;
         }
     );
 
@@ -92,12 +92,12 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "this shouldn't be said" ) ],
                 $scope, undef, 9.2 );
-            return $return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );

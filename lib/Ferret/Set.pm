@@ -37,12 +37,12 @@ Ferret::bind_class(
 );
 
 sub init {
-    my ($set, $arguments, $call_scope) = @_;
+    my ($set, $args, $call_scope) = @_;
     $set->{set_scope} = $call_scope;
 
     # add objects.
-    my @others          = $arguments->plist('items');
-    $set->{primary_obj} = delete $arguments->{item1};
+    my @others          = $args->plist('items');
+    $set->{primary_obj} = delete $args->{item1};
     $set->{other_objs}  = \@others;
     $set->{all_objs}    = [ $set->{primary_obj}, @others ];
 
@@ -118,8 +118,8 @@ sub _to_list {
 }
 
 sub _from_list {
-    my ($set_class, $arguments, $call_scope) = @_;
-    my @items = $arguments->plist('list');
+    my ($set_class, $args, $call_scope) = @_;
+    my @items = $args->plist('list');
     return $set_class->call([ @items ], $call_scope);
 }
 

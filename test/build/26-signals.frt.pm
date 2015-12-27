@@ -88,12 +88,12 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "Got TERM. Terminating!" ) ],
                 $scope, undef, 3.2 );
-            return $return;
+            return $ret;
         }
     );
 
@@ -102,7 +102,7 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             if ( bool( _not( $scope->property_u('asked') ) ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -111,13 +111,13 @@ my $result = do {
                   ->call_u( [ str( $f, "Are you sure?" ) ],
                     $scope, undef, 13.2 );
                 $scope->set_property_ow( $context, asked => $true, 14.2 );
-                $return->stop;
-                return $return;
+                $ret->stop;
+                return $ret;
             }
             $scope->property_u('say')
               ->call_u( [ str( $f, "Got second INT. Terminating!" ) ],
                 $scope, undef, 19.2 );
-            return $return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Signal Timer) );

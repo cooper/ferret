@@ -50,14 +50,14 @@ our %functions = (
 );
 
 sub _say {
-    my ($self, $arguments, $call_scope, $scope, $return) = @_;
-    say $arguments->pstring('message');
-    return $return;
+    my ($self, $args, $call_scope, $scope, $ret) = @_;
+    say $args->pstring('message');
+    return $ret;
 }
 
 sub _dump {
-    my ($self, $arguments, $call_scope, $scope, $return) = @_;
-    my $obj     = $arguments->{value};
+    my ($self, $args, $call_scope, $scope, $ret) = @_;
+    my $obj     = $args->{value};
     my @parents = map $_->{proto_class}{name}, $obj->parents;
     my $type    = join(',', @parents);
 
@@ -67,29 +67,29 @@ sub _dump {
     $Data::Dumper::Terse = 1;
 
     print Dumper($obj), " = [ $type ] $obj\n";
-    return $return;
+    return $ret;
 }
 
 sub _inspect {
-    my ($self, $arguments, $call_scope, $scope, $return) = @_;
-    my $obj = $arguments->{value};
+    my ($self, $args, $call_scope, $scope, $ret) = @_;
+    my $obj = $args->{value};
 
-    my $str = pdescription($obj, $arguments->pbool('ownOnly'));
-    say $str unless $arguments->pbool('quiet');
+    my $str = pdescription($obj, $args->pbool('ownOnly'));
+    say $str unless $args->pbool('quiet');
 
-    $return->set_property(string => fstring($str));
-    return $return;
+    $ret->set_property(string => fstring($str));
+    return $ret;
 }
 
 sub _require {
-    my (undef, $arguments) = @_;
-    return Ferret::true if $arguments->pbool('test');
+    my (undef, $args) = @_;
+    return Ferret::true if $args->pbool('test');
     die; # FIXME: throw
 }
 
 sub _delay {
-    my (undef, $arguments, $call_scope, $scope, $return) = @_;
-    my ($num, $func) = @$arguments{'timeout', 'callback'};
+    my (undef, $args, $call_scope, $scope, $ret) = @_;
+    my ($num, $func) = @$args{'timeout', 'callback'};
 
     # load Timer and create a timer.
     my $timer_class = Ferret::space($num->f->core_context, [caller], 'Timer');
@@ -102,14 +102,14 @@ sub _delay {
     # start the timer.
     $timer->call_prop(once => undef, $call_scope);
 
-    $return->set_property(timer => $timer);
-    return $return;
+    $ret->set_property(timer => $timer);
+    return $ret;
 }
 
 sub _fetchObject {
-    my (undef, $arguments, $call_scope) = @_;
+    my (undef, $args, $call_scope) = @_;
     my $f = $call_scope->f;
-    my $addr = $arguments->pnumber('address');
+    my $addr = $args->pnumber('address');
     return $f->{objects}{$addr} || Ferret::undefined;
 }
 
@@ -121,8 +121,8 @@ sub _activeObjectCount {
 
 # this is temporary, until *process.exit() exists
 sub _exit {
-    my (undef, $arguments) = @_;
-    my $status = $arguments->pnumber('status', 0);
+    my (undef, $args) = @_;
+    my $status = $args->pnumber('status', 0);
     exit $status;
 }
 

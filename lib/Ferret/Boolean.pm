@@ -20,12 +20,12 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my ($bool, $arguments) = @_;
+    my ($bool, $args) = @_;
     $bool->{ro_properties} = 1;
 
     # from another value
-    if ($arguments->has('from')) {
-        $bool->{bool_value} = $arguments->pbool('from');
+    if ($args->has('from')) {
+        $bool->{bool_value} = $args->pbool('from');
     }
 
     return $bool if $bool->{real};

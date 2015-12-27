@@ -102,11 +102,11 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "Connected!" ) ], $scope, undef, 4.2 );
-            return $return;
+            return $ret;
         }
     );
 
@@ -122,9 +122,9 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'location', 8.2 ) or return;
+            FF::need( $scope, $args, 'location', 8.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -135,7 +135,7 @@ my $result = do {
                 ],
                 $scope, undef, 9.2
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -151,9 +151,9 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'content', 14.2 ) or return;
+            FF::need( $scope, $args, 'content', 14.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -164,7 +164,7 @@ my $result = do {
                 ],
                 $scope, undef, 15.2
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -173,11 +173,11 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "Got error!" ) ], $scope, undef, 20.2 );
-            return $return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(HTTP Str) );

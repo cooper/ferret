@@ -20,11 +20,11 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my ($sym, $arguments) = @_;
+    my ($sym, $args) = @_;
     $sym->{ro_properties} = 1;
 
     # from another value
-    if (my $from = $arguments->{from}) {
+    if (my $from = $args->{from}) {
         $sym->{sym_value} = pstring($from);
     }
 

@@ -59,11 +59,11 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "it works!" ) ], $scope, undef, 8.2 );
-            return $return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );

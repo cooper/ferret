@@ -243,11 +243,11 @@ error checking is complete. The object model is converted to Perl source code.
 ```perl
 # Method event 'center' definition
 my $method_8 = FF::method_event_def($f, $scope, 'center', [  ], sub {
-    my ($self, $arguments, $call_scope, $scope, $return) = @_;
+    my ($self, $args, $call_scope, $scope, $ret) = @_;
     $scope->set_property_ow($context, x => add($scope, $self->property_u('origin')->property_u('x'), mul($scope, $self->property_u('width'), num($f, 0.5))));
     $scope->set_property_ow($context, y => add($scope, $self->property_u('origin')->property_u('y'), mul($scope, $self->property_u('height'), num($f, 0.5))));
     return $scope->property_u('Point')->call_u([ $scope->property_u('x'), $scope->property_u('y') ], $scope);
-    return $return;
+    return $ret;
 });
 ```
 
@@ -262,7 +262,7 @@ my $method_8 = FF::method_event_def(
     $f, $scope, 'center',
     [],
     sub {
-        my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+        my ( $self, $args, $call_scope, $scope, $ret ) = @_;
         $scope->set_property_ow(
             $context,
             x => add(
@@ -289,7 +289,7 @@ my $method_8 = FF::method_event_def(
           ->call_u(
             [ $scope->property_u('x'), $scope->property_u('y') ],
             $scope );
-        return $return;
+        return $ret;
     }
 );
 ```

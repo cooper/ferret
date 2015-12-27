@@ -95,16 +95,16 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'client', 7.2 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'client', 7.2 ) or return;
                 $self->set_property(
                     client => $scope->property_u('client'),
                     8.2
                 );
                 $self->weaken_property( 'client', 9.1 );
-                FF::need( $self, $arguments, 'url' )        or return;
-                FF::need( $self, $arguments, 'httpMethod' ) or return;
-                return $return;
+                FF::need( $self, $args, 'url' )        or return;
+                FF::need( $self, $args, 'httpMethod' ) or return;
+                return $ret;
             }
         );
 
@@ -114,7 +114,7 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $scope->property_u('NATIVE::HTTPClient')->property_u('connect')
                   ->call_u(
                     [
@@ -123,7 +123,7 @@ my $result = do {
                     ],
                     $scope, undef, 17.25
                   );
-                return $return;
+                return $ret;
             }
         );
 
@@ -133,9 +133,9 @@ my $result = do {
             'connected',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
 
-                return $return;
+                return $ret;
             }
         );
 
@@ -145,9 +145,9 @@ my $result = do {
             'redirect',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
 
-                return $return;
+                return $ret;
             }
         );
 
@@ -156,9 +156,9 @@ my $result = do {
             $f, $scope, 'error',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
 
-                return $return;
+                return $ret;
             }
         );
 
@@ -168,9 +168,9 @@ my $result = do {
             'response',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
 
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

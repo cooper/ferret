@@ -106,11 +106,11 @@ my $result = do {
             { name => 'z', type => undef, optional => 1,     more => undef }
         ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'x', 2.2 ) or return;
-            FF::need( $scope, $arguments, 'y', 2.4 ) or return;
-            FF::want( $scope, $arguments, 'z', 3.2 );
+            FF::need( $scope, $args, 'x', 2.2 ) or return;
+            FF::need( $scope, $args, 'y', 2.4 ) or return;
+            FF::want( $scope, $args, 'z', 3.2 );
             $scope->set_property_ow(
                 $context,
                 point => FF::create_object(
@@ -122,8 +122,8 @@ my $result = do {
                 ),
                 4.2
             );
-            $return->set_property( point => $scope->property_u('point'), 8.2 );
-            return $return;
+            $ret->set_property( point => $scope->property_u('point'), 8.2 );
+            return $ret;
         }
     );
     $func_0->inside_scope( makePoint => $scope, $scope, undef, undef, undef );

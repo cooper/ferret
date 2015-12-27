@@ -188,9 +188,9 @@ my $result = do {
             $f, $scope, '_init_',
             [ { name => 'moos', type => undef, optional => 1, more => undef } ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $self, $arguments, 'moos', 6.2, $true );
-                return $return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $self, $args, 'moos', 6.2, $true );
+                return $ret;
             }
         );
 
@@ -199,14 +199,14 @@ my $result = do {
             $f, $scope, 'moo',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 if ( bool( $self->property_u('moos') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return str( $f, "moo" );
                 }
                 return str( $f, "I am a nonverbal cow" );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(
@@ -233,9 +233,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $self, $arguments, 'barks', 18.2, $false );
-                return $return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $self, $args, 'barks', 18.2, $false );
+                return $ret;
             }
         );
 
@@ -244,14 +244,14 @@ my $result = do {
             $f, $scope, 'bark',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 if ( bool( $self->property_u('barks') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return str( $f, "bark" );
                 }
                 return str( $f, "I had my bark box bred out of me" );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(
@@ -271,9 +271,9 @@ my $result = do {
             $f, $scope, '_init_',
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $self, $arguments, 'mean', 30.2, $false );
-                return $return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $self, $args, 'mean', 30.2, $false );
+                return $ret;
             }
         );
 
@@ -282,9 +282,9 @@ my $result = do {
             $f, $scope, 'meow',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return str( $f, "meow" );
-                return $return;
+                return $ret;
             }
         );
 
@@ -306,9 +306,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'cat1', 39.1 ) or return;
-                FF::need( $scope, $arguments, 'cat2', 39.3 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'cat1', 39.1 ) or return;
+                FF::need( $scope, $args, 'cat2', 39.3 ) or return;
                 if ( bool( $scope->property_u('cat1')->property_u('mean') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -320,7 +320,7 @@ my $result = do {
                     return str( $f, "Cat 2 started a catfight!" );
                 }
                 return str( $f, "nice cats don't fight" );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

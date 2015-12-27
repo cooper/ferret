@@ -1,1 +1,1 @@
-FF::need($self, $arguments, '<<var_name>>') or return
+FF::need($self, $args, '<<var_name>>') or return

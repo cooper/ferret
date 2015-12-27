@@ -176,20 +176,20 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $self, $arguments, 'userAgent', 10.2,
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $self, $args, 'userAgent', 10.2,
                     $scope->property_u('defaultUA') );
-                FF::want( $self, $arguments, 'timeout', 13.2, num( $f, 10 ) );
-                FF::want( $self, $arguments, 'maxContentLength', 19.2 );
-                FF::want( $self, $arguments, 'readLength', 22.2,
+                FF::want( $self, $args, 'timeout', 13.2, num( $f, 10 ) );
+                FF::want( $self, $args, 'maxContentLength', 19.2 );
+                FF::want( $self, $args, 'readLength', 22.2,
                     $scope->property_u('defaultLength') );
-                FF::want( $self, $arguments, 'writeLength', 23.2,
+                FF::want( $self, $args, 'writeLength', 23.2,
                     $scope->property_u('defaultLength') );
                 $scope->property_u('NATIVE::HTTPClient')
                   ->property_u('initialize')
                   ->call_u( [ $scope->{special}->property_u('self') ],
                     $scope, undef, 25.5 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -205,8 +205,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'url', 29.2 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'url', 29.2 ) or return;
                 return $self->property_u('request')->call_u(
                     {
                         httpMethod => FF::get_symbol( $f, 'GET' ),
@@ -214,7 +214,7 @@ my $result = do {
                     },
                     $scope, undef, 30.3
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -230,8 +230,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'url', 37.2 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'url', 37.2 ) or return;
                 return $self->property_u('request')->call_u(
                     {
                         httpMethod => FF::get_symbol( $f, 'POST' ),
@@ -239,7 +239,7 @@ my $result = do {
                     },
                     $scope, undef, 38.3
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -262,9 +262,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'httpMethod', 45.1 ) or return;
-                FF::need( $scope, $arguments, 'url',        45.3 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'httpMethod', 45.1 ) or return;
+                FF::need( $scope, $args, 'url',        45.3 ) or return;
                 return $scope->property_u('HTTP::Request')->call_u(
                     {
                         client     => $scope->{special}->property_u('self'),
@@ -273,7 +273,7 @@ my $result = do {
                     },
                     $scope, undef, 46.5
                 );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

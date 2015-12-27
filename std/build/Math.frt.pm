@@ -45,12 +45,12 @@ my $result = do {
         $f, $scope, 'sqrt',
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'num', 4.2 ) or return;
+            FF::need( $scope, $args, 'num', 4.2 ) or return;
             return $scope->property_u('NATIVE::Math')->property_u('sqrt')
               ->call_u( [ $scope->property_u('num') ], $scope, undef, 5.3 );
-            return $return;
+            return $ret;
         }
     );
     $func_0->inside_scope( sqrt => $scope, $scope, undef, undef, undef );

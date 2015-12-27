@@ -76,20 +76,20 @@ sub prototype { shift->{prototype} }
 
 # "calling" a class is creating an instance.
 sub call {
-    my ($class, $arguments) = @_;
+    my ($class, $args) = @_;
 
     # create a new object.
     my $obj = Ferret::Object->new($class->f);
 
     # initialize it; return the instance.
-    my $ret = $class->init($obj, $arguments);
+    my $ret = $class->init($obj, $args);
     return $ret->property(lc $class->{name});
 
 }
 
 # initialize an object.
 sub init {
-    my ($class, $obj, $arguments) = @_;
+    my ($class, $obj, $args) = @_;
 
     # add the class prototype to the object.
     $obj->add_parent($class->prototype)
@@ -102,7 +102,7 @@ sub init {
         my $init = $class->property('_init_');
         $init->call_with_self(
             $obj,
-            $arguments,
+            $args,
             $class->{outer_scope},
             $ret
         );
@@ -188,13 +188,13 @@ sub _global_init {
             name        => 'init',
             is_method   => 1,
             code        => sub {
-                my ($class, $arguments) = @_;
-                my $obj = delete $arguments->{obj};
+                my ($class, $args) = @_;
+                my $obj = delete $args->{obj};
                 return Ferret::Function->new($f,
                     mimic => $class->property('_init_') || undef,
                     code  => sub {
-                        my (undef, $arguments) = @_;
-                        return $class->init($obj, $arguments);
+                        my (undef, $args) = @_;
+                        return $class->init($obj, $args);
                     }
                 );
             }
@@ -216,10 +216,10 @@ sub _get_set_type {
 
     # create an initializer.
     $set_type->bind_function('_init_', code => sub {
-        my ($set, $arguments) = @_;
+        my ($set, $args) = @_;
 
         # call the normal Set initializer.
-        $global_set_class->init($set, $arguments);
+        $global_set_class->init($set, $args);
 
         # force the set class.
         $set->{set_class} = $class;
@@ -228,8 +228,8 @@ sub _get_set_type {
     }, mimic => $global_set_class->property('_init_'));
 
     $set_type->bind_function('fromList', code => sub {
-        my ($set_class, $arguments, $call_scope) = @_;        
-        my @items = $arguments->plist('list');
+        my ($set_class, $args, $call_scope) = @_;        
+        my @items = $args->plist('list');
         return $set_class->call([ @items ], $call_scope);
     }, need => '$list:List');
 

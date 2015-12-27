@@ -210,12 +210,12 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'x', 4.2 ) or return;
-                FF::need( $scope, $arguments, 'y', 4.4 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'x', 4.2 ) or return;
+                FF::need( $scope, $args, 'y', 4.4 ) or return;
                 $self->set_property( x => $scope->property_u('x'), 5.2 );
                 $self->set_property( y => $scope->property_u('y'), 6.2 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -225,7 +225,7 @@ my $result = do {
             'oneToRight',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $scope->set_property_ow(
                     $context,
                     pt => $scope->{special}->property_u('class')->call_u(
@@ -238,7 +238,7 @@ my $result = do {
                     10.1
                 );
                 return $scope->property_u('pt');
-                return $return;
+                return $ret;
             }
         );
 
@@ -247,13 +247,13 @@ my $result = do {
             $f, $scope, 'pretty',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return add(
                     $scope,                 str( $f, "(" ),
                     $self->property_u('x'), str( $f, ", " ),
                     $self->property_u('y'), str( $f, ")" )
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -263,10 +263,10 @@ my $result = do {
             'toString',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $self->property_u('pretty')
                   ->call_u( {}, $scope, undef, 19.3 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -289,9 +289,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'pt1', 23.2 ) or return;
-                FF::need( $scope, $arguments, 'pt2', 23.4 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'pt1', 23.2 ) or return;
+                FF::need( $scope, $args, 'pt2', 23.4 ) or return;
                 return $scope->property_u('Point')->call_u(
                     {
                         x => div(
@@ -315,7 +315,7 @@ my $result = do {
                     },
                     $scope, undef, 24.3
                 );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

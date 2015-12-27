@@ -513,7 +513,7 @@ my $result = do {
         'sendRegistration',
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $self->property_u('send')->call_u(
                 [
@@ -539,7 +539,7 @@ my $result = do {
                 ],
                 $scope, undef, 31.2
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -549,12 +549,12 @@ my $result = do {
         'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data', 36.2 ) or return;
+            FF::need( $scope, $args, 'data', 36.2 ) or return;
             $self->property_u('handleLine')
               ->call_u( [ $scope->property_u('data') ], $scope, undef, 37.2 );
-            return $return;
+            return $ret;
         }
     );
 
@@ -564,12 +564,12 @@ my $result = do {
         '_joinChannels',
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             if ( bool( $self->property_u('_joinedChannels') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $return;
+                return $ret;
             }
             if ( bool( $self->property_u('autojoin') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -594,7 +594,7 @@ my $result = do {
                 );
             }
             $self->set_property( _joinedChannels => $true, 103.2 );
-            return $return;
+            return $ret;
         }
     );
 
@@ -603,9 +603,9 @@ my $result = do {
         $f, $scope, '_pong',
         [ { name => 's', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 's', 109.2 ) or return;
+            FF::need( $scope, $args, 's', 109.2 ) or return;
             $self->property_u('send')->call_u(
                 [
                     add(
@@ -617,7 +617,7 @@ my $result = do {
                 ],
                 $scope, undef, 110.1
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -630,10 +630,10 @@ my $result = do {
             { name => 's',    type => undef, optional => undef, more => undef }
         ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'line', 114.2 ) or return;
-            FF::need( $scope, $arguments, 's',    114.4 ) or return;
+            FF::need( $scope, $args, 'line', 114.2 ) or return;
+            FF::need( $scope, $args, 's',    114.4 ) or return;
             $scope->set_property_ow(
                 $context,
                 msg => $scope->property_u('IRC::Message')->call_u(
@@ -642,7 +642,7 @@ my $result = do {
                 ),
                 117.1
             );
-            $return->set_property( msg => $scope->property_u('msg'), 118.2 );
+            $ret->set_property( msg => $scope->property_u('msg'), 118.2 );
             if ( bool( $scope->property_u('msg')->property_u('command') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -665,7 +665,7 @@ my $result = do {
                     }
                 }
             }
-            return $return;
+            return $ret;
         }
     );
 
@@ -675,9 +675,9 @@ my $result = do {
         '_commandHello',
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'msg', 131.2 ) or return;
+            FF::need( $scope, $args, 'msg', 131.2 ) or return;
             $scope->set_property_ow(
                 $context,
                 nickname => $scope->property_u('msg')->property_u('nickname'),
@@ -693,7 +693,7 @@ my $result = do {
                 ],
                 $scope, undef, 133.1
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -703,9 +703,9 @@ my $result = do {
         '_commandAdd',
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'msg', 137.2 ) or return;
+            FF::need( $scope, $args, 'msg', 137.2 ) or return;
             $scope->property_u('inspect')
               ->call_u( [ $scope->property_u('msg') ], $scope, undef, 138.2 );
             $scope->set_property_ow(
@@ -740,7 +740,7 @@ my $result = do {
                 ],
                 $scope, undef, 148.1
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -750,9 +750,9 @@ my $result = do {
         '_commandFactoid',
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'msg', 152.2 ) or return;
+            FF::need( $scope, $args, 'msg', 152.2 ) or return;
             $scope->set_property_ow(
                 $context,
                 response => $self->property_u('factoids')->get_index_value(
@@ -768,7 +768,7 @@ my $result = do {
                 ],
                 $scope, undef, 154.2
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -798,14 +798,12 @@ my $result = do {
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $self, $arguments, 'addr' ) or return;
-                FF::need( $self, $arguments, 'nick' ) or return;
-                FF::want( $self, $arguments, 'port', 18.2, num( $f, 6667 ) );
-                FF::want( $self, $arguments, 'user', 19.2,
-                    str( $f, "ferret" ) );
-                FF::want( $self, $arguments, 'real', 20.2,
-                    str( $f, "Ferret IRC" ) );
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $self, $args, 'addr' ) or return;
+                FF::need( $self, $args, 'nick' ) or return;
+                FF::want( $self, $args, 'port', 18.2, num( $f, 6667 ) );
+                FF::want( $self, $args, 'user', 19.2, str( $f, "ferret" ) );
+                FF::want( $self, $args, 'real', 20.2, str( $f, "Ferret IRC" ) );
                 $self->set_property(
                     commands => $scope->property_u('initialCommands'),
                     22.2
@@ -845,7 +843,7 @@ my $result = do {
                     ),
                     {}
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -868,9 +866,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'command',  43.2 ) or return;
-                FF::need( $scope, $arguments, 'callback', 43.6 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'command',  43.2 ) or return;
+                FF::need( $scope, $args, 'callback', 43.6 ) or return;
                 if (
                     bool(
                         $self->property_u('commands')->get_index_value(
@@ -881,13 +879,13 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $return->set_property( overwrote => $true, 45.2 );
+                    $ret->set_property( overwrote => $true, 45.2 );
                 }
                 $self->property_u('commands')
                   ->set_index_value( [ $scope->property_u('command') ],
                     $scope->property_u('callback'), $scope );
-                $return->set_property( added => $true, 47.2 );
-                return $return;
+                $ret->set_property( added => $true, 47.2 );
+                return $ret;
             }
         );
 
@@ -897,10 +895,10 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $self->property_u('sock')->property_u('connect')
                   ->call_u( {}, $scope, undef, 51.3 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -916,8 +914,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'line', 55.2 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'line', 55.2 ) or return;
                 $scope->property_u('say')->call_u(
                     [
                         add(
@@ -930,7 +928,7 @@ my $result = do {
                 $self->property_u('sock')->property_u('println')
                   ->call_u( [ $scope->property_u('line') ],
                     $scope, undef, 57.3 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -947,8 +945,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'line', 61.2 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'line', 61.2 ) or return;
                 $scope->set_property_ow(
                     $context,
                     s => $scope->property_u('line')->property_u('split')
@@ -1008,7 +1006,7 @@ my $result = do {
                         );
                     }
                 }
-                return $return;
+                return $ret;
             }
         );
 
@@ -1031,9 +1029,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'channel', 84.1 ) or return;
-                FF::need( $scope, $arguments, 'message', 84.3 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'channel', 84.1 ) or return;
+                FF::need( $scope, $args, 'message', 84.3 ) or return;
                 FF::iterate(
                     $f, $scope,
                     $scope->property_u('message')->property_u('split')
@@ -1070,7 +1068,7 @@ my $result = do {
                         }
                     }
                 );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

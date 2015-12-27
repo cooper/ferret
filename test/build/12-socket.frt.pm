@@ -139,9 +139,9 @@ my $result = do {
         $f, $scope, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data', 5.2 ) or return;
+            FF::need( $scope, $args, 'data', 5.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -151,7 +151,7 @@ my $result = do {
                 ],
                 $scope, undef, 6.2
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -160,9 +160,9 @@ my $result = do {
         $f, $scope, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data', 10.2 ) or return;
+            FF::need( $scope, $args, 'data', 10.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -172,7 +172,7 @@ my $result = do {
                 ],
                 $scope, undef, 11.2
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -181,7 +181,7 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
               ->call_u( [ str( $f, "NICK k" ) ], $scope, undef, 15.3 );
@@ -198,7 +198,7 @@ my $result = do {
                 ],
                 $scope, undef, 16.15
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -207,11 +207,11 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
               ->call_u( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.3 );
-            return $return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Socket Socket::TCP Timer) );

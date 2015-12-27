@@ -192,8 +192,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $self, $arguments, 'line' ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $self, $args, 'line' ) or return;
                 $scope->set_property_ow(
                     $context,
                     lineSplit =>
@@ -243,7 +243,7 @@ my $result = do {
                       ->call_u( [ str( $f, " " ) ], $scope, undef, 18.5 ),
                     18.2
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -253,7 +253,7 @@ my $result = do {
             'command',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 if (
                     bool(
                         $self->property_u('parts')
@@ -282,7 +282,7 @@ my $result = do {
                     }
                 }
                 return $false;
-                return $return;
+                return $ret;
             }
         );
 
@@ -292,13 +292,13 @@ my $result = do {
             'commandHasParameters',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return nequal(
                     $scope,
                     $self->property_u('parts')->property_u('length'),
                     num( $f, 1 )
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -315,8 +315,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'wordN', 41.2 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $self->property_u('message')->property_u('split')
                   ->call_u(
                     {
@@ -328,7 +328,7 @@ my $result = do {
                     },
                     $scope, undef, 42.2
                   )->get_index_value( [ $scope->property_u('wordN') ], $scope );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

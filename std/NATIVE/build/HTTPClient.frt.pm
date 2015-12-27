@@ -29,8 +29,8 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub _initialize {
-    my (undef, $arguments) = @_;
-    my $client = $arguments->{client} or return;
+    my (undef, $args) = @_;
+    my $client = $args->{client} or return;
     require Net::Async::HTTP;
 
     my $http = Net::Async::HTTP->new(
@@ -47,9 +47,9 @@ sub _initialize {
 }
 
 sub _connect {
-    my (undef, $arguments) = @_;
-    my $client  = $arguments->{client}  or return;
-    my $request = $arguments->{request} or return;
+    my (undef, $args) = @_;
+    my $client  = $args->{client}  or return;
+    my $request = $args->{request} or return;
     my $http    = $client->{http}       or return;
 
     increase_count($http);

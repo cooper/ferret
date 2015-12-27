@@ -157,10 +157,10 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $self, $arguments, 'pt1' ) or return;
-                FF::need( $self, $arguments, 'pt2' ) or return;
-                return $return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $self, $args, 'pt1' ) or return;
+                FF::need( $self, $args, 'pt2' ) or return;
+                return $ret;
             }
         );
 
@@ -170,10 +170,10 @@ my $result = do {
             'endpoints',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return FF::create_list( $f,
                     [ $self->property_u('pt1'), $self->property_u('pt2') ] );
-                return $return;
+                return $ret;
             }
         );
 
@@ -182,7 +182,7 @@ my $result = do {
             $f, $scope, 'pretty',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $scope->set_property_ow(
                     $context,
                     mp => $self->property_u('midpoint'),
@@ -228,7 +228,7 @@ my $result = do {
                     $scope->property_u('pty'),   str( $f, ")| Length = " ),
                     $self->property_u('length'), str( $f, " )" )
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -238,9 +238,9 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $self->property_u('pretty');
-                return $return;
+                return $ret;
             }
         );
 
@@ -250,13 +250,13 @@ my $result = do {
             'midpoint',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return FF::create_set(
                     $scope,
                     $self->property_u('pt1'),
                     $self->property_u('pt2')
                 )->property_u('midpoint')->call_u( {}, $scope, undef, 25.4 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -265,10 +265,10 @@ my $result = do {
             $f, $scope, 'length',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $self->property_u('pt1')->property_u('distanceTo')
                   ->call_u( [ $self->property_u('pt2') ], $scope, undef, 29.4 );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

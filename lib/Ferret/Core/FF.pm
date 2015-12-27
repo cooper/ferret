@@ -176,10 +176,10 @@ sub iterate_pair {
 # set a required function argument.
 # return false if failed.
 sub need {
-    my ($scope_or_self, $arguments, $var_name, $var_pos, $value_maybe) = @_;
+    my ($scope_or_self, $args, $var_name, $var_pos, $value_maybe) = @_;
 
     # must be present.
-    my $value = $arguments->{$var_name} or return;
+    my $value = $args->{$var_name} or return;
 
     # if a value exists, the value must be equal to it.
     if ($value_maybe) {
@@ -193,8 +193,8 @@ sub need {
 }
 
 sub want {
-    my ($scope_or_self, $arguments, $var_name, $var_pos, $value_maybe) = @_;
-    my $value = $arguments->{$var_name};
+    my ($scope_or_self, $args, $var_name, $var_pos, $value_maybe) = @_;
+    my $value = $args->{$var_name};
 
     # if a value exists, it is the fallback value.
     if ($value_maybe && !$value) {

@@ -269,12 +269,12 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $self, $arguments, 'name', 4.2, str( $f, "Test" ) );
-                FF::want( $self, $arguments, 'fatal', 5.2, $true );
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $self, $args, 'name', 4.2, str( $f, "Test" ) );
+                FF::want( $self, $args, 'fatal', 5.2, $true );
                 $self->set_property( tested => num( $f, 0 ), 6.2 );
                 $self->set_property( passed => num( $f, 0 ), 7.2 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -284,8 +284,8 @@ my $result = do {
             'trueValue',
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 12.2 );
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $scope, $args, 'a', 12.2 );
                 return $self->property_u('_test')->call_u(
                     [
                         $scope->property_u('Bool')->call_u(
@@ -296,7 +296,7 @@ my $result = do {
                     ],
                     $scope, undef, 13.15
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -306,8 +306,8 @@ my $result = do {
             'veryTrue',
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 18.2 );
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $scope, $args, 'a', 18.2 );
                 return $self->property_u('_test')->call_u(
                     [
                         refs_equal( $scope, $scope->property_u('a'), $true ),
@@ -315,7 +315,7 @@ my $result = do {
                     ],
                     $scope, undef, 19.15
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -327,9 +327,9 @@ my $result = do {
                 { name => 'b', type => undef, optional => 1, more => undef }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 24.2 );
-                FF::want( $scope, $arguments, 'b', 24.4 );
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $scope, $args, 'a', 24.2 );
+                FF::want( $scope, $args, 'b', 24.4 );
                 return $self->property_u('_test')->call_u(
                     [
                         equal(
@@ -340,7 +340,7 @@ my $result = do {
                     ],
                     $scope, undef, 25.15
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -353,9 +353,9 @@ my $result = do {
                 { name => 'b', type => undef, optional => 1, more => undef }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 30.2 );
-                FF::want( $scope, $arguments, 'b', 30.4 );
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $scope, $args, 'a', 30.2 );
+                FF::want( $scope, $args, 'b', 30.4 );
                 return $self->property_u('_test')->call_u(
                     [
                         refs_equal(
@@ -366,7 +366,7 @@ my $result = do {
                     ],
                     $scope, undef, 31.15
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -379,9 +379,9 @@ my $result = do {
                 { name => 'b', type => undef, optional => 1, more => undef }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 36.2 );
-                FF::want( $scope, $arguments, 'b', 36.4 );
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $scope, $args, 'a', 36.2 );
+                FF::want( $scope, $args, 'b', 36.4 );
                 return $self->property_u('_test')->call_u(
                     [
                         nequal(
@@ -392,7 +392,7 @@ my $result = do {
                     ],
                     $scope, undef, 37.15
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -405,9 +405,9 @@ my $result = do {
                 { name => 'b', type => undef, optional => 1, more => undef }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'a', 42.2 );
-                FF::want( $scope, $arguments, 'b', 42.4 );
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $scope, $args, 'a', 42.2 );
+                FF::want( $scope, $args, 'b', 42.4 );
                 return $self->property_u('_test')->call_u(
                     [
                         refs_nequal(
@@ -418,7 +418,7 @@ my $result = do {
                     ],
                     $scope, undef, 43.15
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -427,7 +427,7 @@ my $result = do {
             $f, $scope, 'review',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $scope->set_property_ow(
                     $context,
                     failed => _sub(
@@ -454,19 +454,19 @@ my $result = do {
                     ],
                     $scope, undef, 48.06667
                 );
-                $return->set_property(
+                $ret->set_property(
                     tests => $self->property_u('tested'),
                     50.2
                 );
-                $return->set_property(
+                $ret->set_property(
                     fails => $scope->property_u('failed'),
                     51.2
                 );
-                $return->set_property(
+                $ret->set_property(
                     passes => $self->property_u('passed'),
                     52.2
                 );
-                $return->set_property(
+                $ret->set_property(
                     allOK => equal(
                         $scope,
                         $self->property_u('passed'),
@@ -474,7 +474,7 @@ my $result = do {
                     ),
                     53.2
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -491,18 +491,15 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::want( $scope, $arguments, 'yes',     57.2 );
-                FF::want( $scope, $arguments, 'message', 57.4 );
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::want( $scope, $args, 'yes',     57.2 );
+                FF::want( $scope, $args, 'message', 57.4 );
                 $self->set_property(
                     tested =>
                       add( $scope, $self->property_u('tested'), num( $f, 1 ) ),
                     59.2
                 );
-                $return->set_property(
-                    pass => $scope->property_u('yes'),
-                    60.2
-                );
+                $ret->set_property( pass => $scope->property_u('yes'), 60.2 );
                 if ( bool( $scope->property_u('yes') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -513,7 +510,7 @@ my $result = do {
                         ),
                         63.2
                     );
-                    return $return;
+                    return $ret;
                 }
                 if ( bool( $self->property_u('fatal') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -523,11 +520,11 @@ my $result = do {
                         $scope, undef, 68.2 )->property_u('panic')
                       ->call_u( {}, $scope, undef, 68.6 );
                 }
-                $return->set_property(
+                $ret->set_property(
                     message => $scope->property_u('message'),
                     70.2
                 );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

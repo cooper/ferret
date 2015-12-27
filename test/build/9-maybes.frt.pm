@@ -62,9 +62,9 @@ my $result = do {
         'sayHello',
         [ { name => 'who', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'who', 2.2 ) or return;
+            FF::need( $scope, $args, 'who', 2.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -74,7 +74,7 @@ my $result = do {
                 ],
                 $scope, undef, 3.1
             );
-            return $return;
+            return $ret;
         }
     );
     $func_0->inside_scope( sayHello => $scope, $scope, undef, undef, undef );

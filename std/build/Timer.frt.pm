@@ -40,12 +40,12 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my ($timer, $arguments) = @_;
-    $timer->{delay} = $arguments->pnumber('delay');
+    my ($timer, $args) = @_;
+    $timer->{delay} = $args->pnumber('delay');
 }
 
 sub run_once {
-    my ($timer, $arguments, $call_scope, $scope, $return) = @_;
+    my ($timer, $args, $call_scope, $scope, $ret) = @_;
 
     # create a countdown timer.
     require IO::Async::Timer::Countdown;
@@ -65,8 +65,8 @@ sub run_once {
 }
 
 sub start {
-    my ($timer, $arguments, $call_scope, $scope, $return) = @_;
-    $timer->{times} = $arguments->pnumber('times') if $arguments->{times};
+    my ($timer, $args, $call_scope, $scope, $ret) = @_;
+    $timer->{times} = $args->pnumber('times') if $args->{times};
 
     # create a periodic timer.
     require IO::Async::Timer::Periodic;
@@ -85,22 +85,22 @@ sub start {
 }
 
 sub cancel {
-    my ($timer, $arguments, $call_scope, $scope, $return) = @_;
+    my ($timer, $args, $call_scope, $scope, $ret) = @_;
     $timer->{canceled} = 1;
-    my $t = delete $timer->{t} or return $return;
+    my $t = delete $timer->{t} or return $ret;
     $t->stop;
     Ferret::remove_notifier($t);
-    $return->set_property(canceled => Ferret::true);
-    return $return;
+    $ret->set_property(canceled => Ferret::true);
+    return $ret;
 }
 
 sub _tick {
-    my ($timer, undef, undef, undef, $return) = @_;
+    my ($timer, undef, undef, undef, $ret) = @_;
     $timer->call_prop(tick => [ fnumber(++$timer->{ticks}) ]);
 
     # if it's done enough times, stop.
     if (defined $timer->{times} && $timer->{ticks} >= $timer->{times}) {
-        return $return if $timer->{canceled};
+        return $ret if $timer->{canceled};
         $timer->_expire;
     }
 }

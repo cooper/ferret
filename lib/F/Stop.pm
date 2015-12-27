@@ -8,7 +8,7 @@ use parent qw(F::Statement);
 sub type { 'Stop' }
 
 sub perl_fmt_do {
-    return '$return->stop';
+    return '$ret->stop';
 }
 
 1

@@ -121,7 +121,7 @@ my $result = do {
         $f, $scope, 'hello1',
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->set_property_ow(
                 $context,
@@ -141,7 +141,7 @@ my $result = do {
                 ],
                 $scope, undef, 19.1
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -150,7 +150,7 @@ my $result = do {
         $f, $scope, 'hello2',
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')->call_u(
                 [
@@ -161,7 +161,7 @@ my $result = do {
                 ],
                 $scope, undef, 23.2
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -184,7 +184,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $func_0->inside_scope(
                 hello1 => $scope,
@@ -194,11 +194,11 @@ my $result = do {
                 hello2 => $scope,
                 $scope, undef, undef, undef
             );
-            FF::need( $scope, $arguments, 'name1', 11.2 ) or return;
-            FF::need( $scope, $arguments, 'name2', 11.4 ) or return;
+            FF::need( $scope, $args, 'name1', 11.2 ) or return;
+            FF::need( $scope, $args, 'name2', 11.4 ) or return;
             $scope->property_u('hello1')->call_u( {}, $scope, undef, 13.2 );
             $scope->property_u('hello2')->call_u( {}, $scope, undef, 14.2 );
-            return $return;
+            return $ret;
         }
     );
     $func_2->inside_scope( helloWorld => $scope, $scope, undef, undef, undef );

@@ -249,11 +249,11 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'x', 5.1 ) or return;
-                FF::need( $scope, $arguments, 'y', 5.3 ) or return;
-                FF::need( $self, $arguments, 'width' )  or return;
-                FF::need( $self, $arguments, 'height' ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'x', 5.1 ) or return;
+                FF::need( $scope, $args, 'y', 5.3 ) or return;
+                FF::need( $self, $args, 'width' )  or return;
+                FF::need( $self, $args, 'height' ) or return;
                 $self->set_property(
                     origin => $scope->property_u('Point')->call_u(
                         [ $scope->property_u('x'), $scope->property_u('y') ],
@@ -261,7 +261,7 @@ my $result = do {
                     ),
                     6.1
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -271,7 +271,7 @@ my $result = do {
             'vertices',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return FF::create_list(
                     $f,
                     [
@@ -281,7 +281,7 @@ my $result = do {
                         $self->property_u('bottomRight')
                     ]
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -291,9 +291,9 @@ my $result = do {
             'bottomLeft',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $self->property_u('origin');
-                return $return;
+                return $ret;
             }
         );
 
@@ -303,7 +303,7 @@ my $result = do {
             'bottomRight',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $scope->property_u('Point')->call_u(
                     [
                         add(
@@ -315,7 +315,7 @@ my $result = do {
                     ],
                     $scope, undef, 23.15
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -325,7 +325,7 @@ my $result = do {
             'topLeft',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $scope->property_u('Point')->call_u(
                     [
                         $self->property_u('origin')->property_u('x'),
@@ -337,7 +337,7 @@ my $result = do {
                     ],
                     $scope, undef, 27.15
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -347,7 +347,7 @@ my $result = do {
             'topRight',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $scope->property_u('Point')->call_u(
                     [
                         add(
@@ -363,7 +363,7 @@ my $result = do {
                     ],
                     $scope, undef, 31.15
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -373,7 +373,7 @@ my $result = do {
             'bottomLine',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $scope->property_u('Line')->call_u(
                     [
                         $self->property_u('bottomLeft'),
@@ -381,7 +381,7 @@ my $result = do {
                     ],
                     $scope, undef, 35.3
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -391,7 +391,7 @@ my $result = do {
             'topLine',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $scope->property_u('Line')->call_u(
                     [
                         $self->property_u('topLeft'),
@@ -399,7 +399,7 @@ my $result = do {
                     ],
                     $scope, undef, 39.3
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -408,7 +408,7 @@ my $result = do {
             $f, $scope, 'center',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $scope->set_property_ow(
                     $context,
                     x => add(
@@ -437,7 +437,7 @@ my $result = do {
                   ->call_u(
                     [ $scope->property_u('x'), $scope->property_u('y') ],
                     $scope, undef, 45.3 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -447,7 +447,7 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $scope->set_property_ow(
                     $context,
                     o => $self->property_u('origin'),
@@ -474,7 +474,7 @@ my $result = do {
                     $self->property_u('height'),
                     str( $f, " )" )
                 );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

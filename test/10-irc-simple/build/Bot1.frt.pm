@@ -153,7 +153,7 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $self->property_u('send')->call_u(
                 [
@@ -179,7 +179,7 @@ my $result = do {
                 ],
                 $scope, undef, 13.2
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -188,9 +188,9 @@ my $result = do {
         $f, $scope, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'data', 18.2 ) or return;
+            FF::need( $scope, $args, 'data', 18.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -200,7 +200,7 @@ my $result = do {
                 ],
                 $scope, undef, 19.2
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -235,13 +235,12 @@ my $result = do {
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $self, $arguments, 'addr' ) or return;
-                FF::need( $self, $arguments, 'nick' ) or return;
-                FF::need( $self, $arguments, 'user' ) or return;
-                FF::want( $self, $arguments, 'port', 5.1, num( $f, 6667 ) );
-                FF::want( $self, $arguments, 'real', 5.4,
-                    str( $f, "Ferret IRC" ) );
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $self, $args, 'addr' ) or return;
+                FF::need( $self, $args, 'nick' ) or return;
+                FF::need( $self, $args, 'user' ) or return;
+                FF::want( $self, $args, 'port', 5.1, num( $f, 6667 ) );
+                FF::want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
                 $self->set_property(
                     sock => $scope->property_u('Socket::TCP')->call_u(
                         {
@@ -273,7 +272,7 @@ my $result = do {
                     ),
                     {}
                 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -283,10 +282,10 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $self->property_u('sock')->property_u('connect')
                   ->call_u( {}, $scope, undef, 25.3 );
-                return $return;
+                return $ret;
             }
         );
 
@@ -302,8 +301,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-                FF::need( $scope, $arguments, 'line', 29.2 ) or return;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'line', 29.2 ) or return;
                 $scope->property_u('say')->call_u(
                     [
                         add(
@@ -316,7 +315,7 @@ my $result = do {
                 $self->property_u('sock')->property_u('println')
                   ->call_u( [ $scope->property_u('line') ],
                     $scope, undef, 31.3 );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

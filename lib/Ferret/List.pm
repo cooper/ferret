@@ -63,7 +63,7 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my ($list, $arguments) = @_;
+    my ($list, $args) = @_;
     $list->{list_items} ||= [];
 
     # reference items.
@@ -80,9 +80,9 @@ sub init {
 # wrapper for generic method bindings.
 # all of them return the list.
 sub _item_method {
-    my ($list, $arguments, undef, undef, undef, $func) = @_;
+    my ($list, $args, undef, undef, undef, $func) = @_;
     my $code = $list->can($func->{event_name}) or return;
-    $code->($list, $arguments->{item});
+    $code->($list, $args->{item});
     return $list;
 }
 
@@ -121,9 +121,9 @@ sub insert {
 }
 
 sub _insert {
-    my ($list, $arguments) = @_;
-    my $index = $arguments->pnumber('index');
-    $list->insert($index, $arguments->{item});
+    my ($list, $args) = @_;
+    my $index = $args->pnumber('index');
+    $list->insert($index, $args->{item});
     return $list;
 }
 
@@ -134,8 +134,8 @@ sub join : method {
 }
 
 sub _join {
-    my ($list, $arguments) = @_;
-    my $sep = $arguments->pstring('separator');
+    my ($list, $args) = @_;
+    my $sep = $args->pstring('separator');
     return fstring($list->join($sep));
 }
 
@@ -145,9 +145,9 @@ sub set_value {
 }
 
 sub _set_value {
-    my ($list, $arguments) = @_;
-    my $index = $arguments->pnumber('index');
-    $list->set_value($index, $arguments->{value});
+    my ($list, $args) = @_;
+    my $index = $args->pnumber('index');
+    $list->set_value($index, $args->{value});
     return $list;
 }
 
@@ -157,13 +157,13 @@ sub get_value {
 }
 
 sub _get_value {
-    my ($list, $arguments) = @_;
-    my $index = $arguments->pnumber('index');
+    my ($list, $args) = @_;
+    my $index = $args->pnumber('index');
     return $list->get_value($index);
 }
 
 sub _to_set {
-    my ($list, $arguments, $call_scope) = @_;
+    my ($list, $args, $call_scope) = @_;
     my ($first_obj, @other_objs) = @{ $list->{list_items} };
 
     # set must have at least two items.

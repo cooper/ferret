@@ -88,10 +88,10 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my ($num, $arguments) = @_;
+    my ($num, $args) = @_;
 
     # from other value.
-    if (my $from = $arguments->{from}) {
+    if (my $from = $args->{from}) {
         $num->{num_value} = pnumber($from);
     }
     $num->{num_value} = 0 if !defined $num->{num_value};
@@ -100,54 +100,54 @@ sub init {
 
 # number plus number
 sub op_add {
-    my ($num, $arguments) = @_;
-    my $other = $arguments->{other};
+    my ($num, $args) = @_;
+    my $other = $args->{other};
     my $new_value = pnumber($num) + pnumber($other);
     return fnumber($new_value);
 }
 
 # number minus number
 sub op_sub {
-    my ($num, $arguments) = @_;
-    my $other = $arguments->{other};
+    my ($num, $args) = @_;
+    my $other = $args->{other};
     my $new_value = pnumber($num) - pnumber($other);
     return fnumber($new_value);
 }
 
 # number divided by number
 sub op_div {
-    my ($num, $arguments) = @_;
-    my $other = $arguments->{other};
+    my ($num, $args) = @_;
+    my $other = $args->{other};
     my $new_value = pnumber($num) / pnumber($other);
     return fnumber($new_value);
 }
 
 # number times number
 sub op_mul {
-    my ($num, $arguments) = @_;
-    my $other = $arguments->{other};
+    my ($num, $args) = @_;
+    my $other = $args->{other};
     my $new_value = pnumber($num) * pnumber($other);
     return fnumber($new_value);
 }
 
 # number to a number power
 sub op_pow {
-    my ($num, $arguments) = @_;
-    my $other = $arguments->{other};
+    my ($num, $args) = @_;
+    my $other = $args->{other};
     my $new_value = pnumber($num) ** pnumber($other);
     return fnumber($new_value);
 }
 
 sub op_mod {
-    my ($num, $arguments) = @_;
-    my $other = $arguments->{other};
+    my ($num, $args) = @_;
+    my $other = $args->{other};
     my $new_value = pnumber($num) % pnumber($other);
     return fnumber($new_value);
 }
 
 sub op_range {
-    my ($num, $arguments, $call_scope) = @_;
-    my $other = $arguments->{other};
+    my ($num, $args, $call_scope) = @_;
+    my $other = $args->{other};
 
     my @range = pnumber($num)..pnumber($other);
        @range = map fnumber($_), @range;
@@ -179,14 +179,14 @@ sub description {
 }
 
 sub _sum {
-    my ($class, $arguments) = @_;
-    my $sum = sum map { pnumber($_) } plist($arguments->{nums});
+    my ($class, $args) = @_;
+    my $sum = sum map { pnumber($_) } plist($args->{nums});
     return fnumber($sum);
 }
 
 sub _product {
-    my ($class, $arguments) = @_;
-    my $sum = product map { pnumber($_) } plist($arguments->{nums});
+    my ($class, $args) = @_;
+    my $sum = product map { pnumber($_) } plist($args->{nums});
     return fnumber($sum);
 }
 
@@ -197,8 +197,8 @@ sub equal {
 }
 
 sub _equal {
-    my ($num_class, $arguments) = @_;
-    my ($first_num, @rest_nums) = plist($arguments->{nums});
+    my ($num_class, $args) = @_;
+    my ($first_num, @rest_nums) = plist($args->{nums});
     foreach (@rest_nums) {
         return Ferret::false if !$first_num->equal($_);
     }

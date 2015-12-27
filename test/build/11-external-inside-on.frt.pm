@@ -144,10 +144,10 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'twice',   16.2 ) or return;
-            FF::need( $scope, $arguments, 'message', 16.4 ) or return;
+            FF::need( $scope, $args, 'twice',   16.2 ) or return;
+            FF::need( $scope, $args, 'message', 16.4 ) or return;
             if ( bool( $scope->property_u('twice') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -162,11 +162,8 @@ my $result = do {
                     $scope, undef, 18.2
                 );
             }
-            $return->set_property(
-                didTwice => $scope->property_u('twice'),
-                19.2
-            );
-            return $return;
+            $ret->set_property( didTwice => $scope->property_u('twice'), 19.2 );
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Math Math::Point) );

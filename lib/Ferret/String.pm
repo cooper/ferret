@@ -72,17 +72,17 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my ($str, $arguments) = @_;
-    if ($arguments->has('from')) {
-        $str->{str_value} = $arguments->pstring('from');
+    my ($str, $args) = @_;
+    if ($args->has('from')) {
+        $str->{str_value} = $args->pstring('from');
     }
     $str->{str_value} = '' if !defined $str->{str_value};
 }
 
 # string plus string
 sub op_add {
-    my ($str, $arguments) = @_;
-    my $other = $arguments->{other};
+    my ($str, $args) = @_;
+    my $other = $args->{other};
     my $new_value = pstring($str).pstring($other);
     return fstring($new_value);
 }
@@ -99,9 +99,9 @@ sub _length {
 
 # for now, this only accepts strings.
 sub _split {
-    my ($str, $arguments) = @_;
-    my $sep     = $arguments->pstring('separator'); # undef returns ''
-    my $limit   = $arguments->pnumber('limit', 0);
+    my ($str, $args) = @_;
+    my $sep     = $args->pstring('separator'); # undef returns ''
+    my $limit   = $args->pnumber('limit', 0);
     my @strings = split /\Q$sep\E/, $str->{str_value}, $limit;
     return flist(map fstring($_), @strings);
 }
@@ -113,8 +113,8 @@ sub hasPrefix {
 }
 
 sub _hasPrefix {
-    my ($str, $arguments) = @_;
-    my $pfx = $arguments->pstring('prefix');
+    my ($str, $args) = @_;
+    my $pfx = $args->pstring('prefix');
     return fbool($str->hasPrefix($pfx));
 }
 
@@ -127,8 +127,8 @@ sub trimPrefix {
 }
 
 sub _trimPrefix {
-    my ($str, $arguments) = @_;
-    my $pfx = $arguments->pstring('prefix');
+    my ($str, $args) = @_;
+    my $pfx = $args->pstring('prefix');
     return $str->trimPrefix($pfx);
 }
 
@@ -156,13 +156,13 @@ sub fill {
 }
 
 sub _fill {
-    my ($str, $arguments) = @_;
+    my ($str, $args) = @_;
     my %info;
-    if (my $hash = $arguments->{valueHash}) {
+    if (my $hash = $args->{valueHash}) {
         %info = %{ phashref($hash, 1) };
     }
     else {
-        %info = map { $_ => $arguments->pstring($_) } keys %$arguments;
+        %info = map { $_ => $args->pstring($_) } keys %$args;
     }
     return $str->fill(\%info);
 }
@@ -205,8 +205,8 @@ sub equal {
 }
 
 sub _equal {
-    my (undef, $arguments) = @_;
-    my ($first_str, @rest_strs) = $arguments->plist('strs');
+    my (undef, $args) = @_;
+    my ($first_str, @rest_strs) = $args->plist('strs');
     foreach (@rest_strs) {
         return Ferret::false if !$first_str->equal($_);
     }
@@ -214,8 +214,8 @@ sub _equal {
 }
 
 sub _join {
-    my (undef, $arguments) = @_;
-    my $list = flist(delete $arguments->{strs});
+    my (undef, $args) = @_;
+    my $list = flist(delete $args->{strs});
     return fstring($list->join(''));
 }
 

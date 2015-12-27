@@ -66,13 +66,13 @@ my $result = do {
         $f, $scope, 'get',
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'url', 7.2 ) or return;
+            FF::need( $scope, $args, 'url', 7.2 ) or return;
             return $scope->property_u('client')->property_u('get')
               ->call_u( { url => $scope->property_u('url') },
                 $scope, undef, 8.4 );
-            return $return;
+            return $ret;
         }
     );
 
@@ -81,13 +81,13 @@ my $result = do {
         $f, $scope, 'post',
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'url', 12.2 ) or return;
+            FF::need( $scope, $args, 'url', 12.2 ) or return;
             return $scope->property_u('client')->property_u('post')
               ->call_u( { url => $scope->property_u('url') },
                 $scope, undef, 13.4 );
-            return $return;
+            return $ret;
         }
     );
     $func_0->inside_scope( get  => $scope, $scope, undef, undef, undef );

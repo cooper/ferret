@@ -76,15 +76,15 @@ my $result = do {
         'something',
         [ { name => 'code', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $arguments, 'code', 17.2 ) or return;
-            $return->set_property(
+            FF::need( $scope, $args, 'code', 17.2 ) or return;
+            $ret->set_property(
                 message =>
                   $scope->property_u('code')->call_u( {}, $scope, undef, 18.4 ),
                 18.2
             );
-            return $return;
+            return $ret;
         }
     );
 
@@ -93,12 +93,12 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "been five seconds" ) ], $scope, undef,
                 4.2 );
-            return $return;
+            return $ret;
         }
     );
 
@@ -107,10 +107,10 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             return str( $f, "any second now" );
-            return $return;
+            return $ret;
         }
     );
     $func_0->inside_scope( something => $scope, $scope, undef, undef, undef );

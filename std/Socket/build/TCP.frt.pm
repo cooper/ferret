@@ -77,12 +77,12 @@ my @modes = (
 
 # this is passed $sock which is preinitialized. return value is ignored.
 sub init {
-    my ($sock, $arguments, $call_scope, $scope) = @_;
-    $sock->set_property($_ => $arguments->{$_}) for qw(address port);
+    my ($sock, $args, $call_scope, $scope) = @_;
+    $sock->set_property($_ => $args->{$_}) for qw(address port);
 
     # read mode.
     my $mode = 0;
-    if (my $sym = $arguments->{readMode}) {
+    if (my $sym = $args->{readMode}) {
         $mode = $modes{ $sym->{sym_value} } or die; # FIXME
     }
     $sock->{read_mode} = $mode;
@@ -94,7 +94,7 @@ sub init {
 ###############
 
 sub _connect {
-    my ($sock, $arguments, $call_scope, $scope, $return) = @_;
+    my ($sock, $args, $call_scope, $scope, $ret) = @_;
     require IO::Socket::IP;
     require IO::Async::Stream;
 
@@ -118,21 +118,21 @@ sub _connect {
     # call connected event.
     $sock->property('connected')->call;
 
-    return $return;
+    return $ret;
 }
 
 sub print {
-    my ($sock, $arguments, $call_scope, $scope, $return) = @_;
-    my $data = $arguments->pstring('data');
+    my ($sock, $args, $call_scope, $scope, $ret) = @_;
+    my $data = $args->pstring('data');
     $sock->{stream}->write($data);
-    return $return;
+    return $ret;
 }
 
 sub println {
-    my ($sock, $arguments, $call_scope, $scope, $return) = @_;
-    my $line = $arguments->pstring('data');
+    my ($sock, $args, $call_scope, $scope, $ret) = @_;
+    my $line = $args->pstring('data');
     $sock->{stream}->write("$line\n");
-    return $return;
+    return $ret;
 }
 
 ###########################

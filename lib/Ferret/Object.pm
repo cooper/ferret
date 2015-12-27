@@ -531,16 +531,16 @@ sub DESTROY {
 
 # call getValue.
 sub get_index_value {
-    my ($obj, $arguments, $call_scope) = @_;
-    return $obj->call_prop(getValue => $arguments, $call_scope);
+    my ($obj, $args, $call_scope) = @_;
+    return $obj->call_prop(getValue => $args, $call_scope);
 }
 
 # call setValue.
 # because the number of indices can be variable, the value is always first.
 sub set_index_value {
-    my ($obj, $arguments, $value, $call_scope) = @_;
-    unshift @$arguments, $value;
-    return $obj->call_prop(setValue => $arguments, $call_scope);
+    my ($obj, $args, $value, $call_scope) = @_;
+    unshift @$args, $value;
+    return $obj->call_prop(setValue => $args, $call_scope);
 }
 
 ###############################

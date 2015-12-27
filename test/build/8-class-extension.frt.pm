@@ -56,14 +56,14 @@ my $result = do {
             'doubledLength',
             [],
             sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return mul(
                     $scope,
                     $self->property_u('length')
                       ->call_u( {}, $scope, undef, 4.3 ),
                     num( $f, 2 )
                 );
-                return $return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

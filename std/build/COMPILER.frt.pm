@@ -46,8 +46,8 @@ Ferret::bind_class(
 );
 
 sub init {
-    my ($compiler, $arguments) = @_;
-    $compiler->{string} = $arguments->pstring('string') or return;
+    my ($compiler, $args) = @_;
+    $compiler->{string} = $args->pstring('string') or return;
     return;
 }
 
@@ -66,23 +66,23 @@ sub tokenize {
 }
 
 sub _tokenize {
-    my ($compiler, $arguments, undef, undef, $return) = @_;
+    my ($compiler, $args, undef, undef, $ret) = @_;
 
     # tokenize
     my $tokens = $compiler->tokenize;
     if (ref $tokens eq 'F::Error') {
-        $return->set_property(error => fstring($$tokens));
-        return $return;
+        $ret->set_property(error => fstring($$tokens));
+        return $ret;
     }
 
     # pretty
-    if ($arguments->pbool('pretty')) {
+    if ($args->pbool('pretty')) {
         my $pretty = Ferret::Lexer::show_tok(@$tokens);
-        $return->set_property(pretty => fstring($pretty));
+        $ret->set_property(pretty => fstring($pretty));
     }
 
-    $return->set_property(tokens => ferretize($tokens));
-    return $return;
+    $ret->set_property(tokens => ferretize($tokens));
+    return $ret;
 }
 
 sub construct {
@@ -104,22 +104,22 @@ sub construct {
 }
 
 sub _construct {
-    my ($compiler, $arguments, undef, undef, $return) = @_;
+    my ($compiler, $args, undef, undef, $ret) = @_;
 
     # construct
     my $doc = $compiler->construct();
     if (ref $doc eq 'F::Error') {
-        $return->set_property(error => fstring($$doc));
-        return $return;
+        $ret->set_property(error => fstring($$doc));
+        return $ret;
     }
 
     # pretty
-    if ($arguments->pbool('pretty')) {
+    if ($args->pbool('pretty')) {
         my $pretty = Ferret::Lexer::show_dom($doc);
-        $return->set_property(pretty => fstring($pretty));
+        $ret->set_property(pretty => fstring($pretty));
     }
 
-    return $return;
+    return $ret;
 }
 
 sub compile {
@@ -135,18 +135,18 @@ sub compile {
 }
 
 sub _compile {
-    my ($compiler, $arguments, undef, undef, $return) = @_;
-    my $mini = $arguments->pbool('mini');
+    my ($compiler, $args, undef, undef, $ret) = @_;
+    my $mini = $args->pbool('mini');
 
     # compile
     my $code = $compiler->compile($mini);
     if (ref $code eq 'SCALAR') {
-        $return->set_property(error => fstring($$code));
-        return $return;
+        $ret->set_property(error => fstring($$code));
+        return $ret;
     }
 
-    $return->set_property(perl => fstring($code));
-    return $return;
+    $ret->set_property(perl => fstring($code));
+    return $ret;
 }
 
 sub eval : method {
@@ -169,21 +169,21 @@ sub __eval {
 }
 
 sub _eval {
-    my ($compiler, undef, undef, undef, $return) = @_;
+    my ($compiler, undef, undef, undef, $ret) = @_;
     my $res = $compiler->eval;
     if (ref $res eq 'SCALAR') {
-        $return->set_property(error => fstring($$res));
+        $ret->set_property(error => fstring($$res));
     }
-    $return->set_property(result =>
+    $ret->set_property(result =>
         Ferret::valid_value($res) ? $res : Ferret::undefined
     );
-    $return->set_property(stringResult => fstring($res));
-    return $return;
+    $ret->set_property(stringResult => fstring($res));
+    return $ret;
 }
 
 sub _prettyToken {
-    my ($class, $arguments) = @_;
-    my $tok = $arguments->pstring('token');
+    my ($class, $args) = @_;
+    my $tok = $args->pstring('token');
        $tok = Ferret::Lexer::pretty_token($tok);
     return $tok ? fstring($tok) : Ferret::undefined;
 }

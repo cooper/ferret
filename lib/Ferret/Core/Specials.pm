@@ -83,31 +83,31 @@ sub _ownProperties {
 }
 
 sub _instanceOf {
-    my ($obj, $arguments) = @_;
-    my $class = $arguments->{class};
+    my ($obj, $args) = @_;
+    my $class = $args->{class};
     return fbool($obj->instance_of($class));
 }
 
 sub _get {
-    my ($obj, $arguments) = @_;
-    my $prop_name = $arguments->pstring('property');
+    my ($obj, $args) = @_;
+    my $prop_name = $args->pstring('property');
     delete $obj->{actual_inherited}{$prop_name};
     my $val = $obj->simple_property_u($prop_name);
     return $obj->{actual_inherited}{$prop_name} || $val;
 }
 
 sub _getOwn {
-    my ($obj, $arguments) = @_;
-    my $prop_name = $arguments->pstring('property');
+    my ($obj, $args) = @_;
+    my $prop_name = $args->pstring('property');
     delete $obj->{actual_props}{$prop_name};
     my $val = $obj->own_property_u($prop_name);
     return $obj->{actual_props}{$prop_name} || $val;
 }
 
 sub _set {
-    my ($obj, $arguments) = @_;
-    my $key   = $arguments->pstring('property');
-    my $value = $arguments->{value};
+    my ($obj, $args) = @_;
+    my $key   = $args->pstring('property');
+    my $value = $args->{value};
     # FIXME: check that it's not special,
     #        that it is valid,
     #        that it's not a namespace,
@@ -117,8 +117,8 @@ sub _set {
 }
 
 sub _commonClass {
-    my ($obj, $arguments) = @_;
-    my $other = $arguments->{other};
+    my ($obj, $args) = @_;
+    my $other = $args->{other};
     return $obj->best_common_class($other) || $obj->f->{object_initializer};
     # note: best_common_class() will eventually return Object
 }

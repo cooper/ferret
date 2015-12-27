@@ -32,9 +32,9 @@ sub bind_math_func {
     my ($name, $n_args) = @_;
 
     my $code = sub {
-        my ($class, $arguments) = @_;
+        my ($class, $args) = @_;
 
-        my @args = map { $arguments->{"num$_"}{num_value} } 1..$n_args;
+        my @args = map { $args->{"num$_"}{num_value} } 1..$n_args;
         my $value;
         {
             no strict;

@@ -92,7 +92,7 @@ my $result = do {
         $f, $scope, undef,
         [],
         sub {
-            my ( $_self, $arguments, $call_scope, $scope, $return ) = @_;
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $scope->property_u('say')->call_u(
                 [
@@ -104,7 +104,7 @@ my $result = do {
                 ],
                 $scope, undef, 5.1
             );
-            return $return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );

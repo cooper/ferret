@@ -43,12 +43,12 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my ($hash, $arguments) = @_;
+    my ($hash, $args) = @_;
     $hash->{hash_values} ||= {};
     if (my $pairs = delete $hash->{pairs}) {
         $hash->set_value($_ => $pairs->{$_}) foreach keys %$pairs;
     }
-    $hash->set_value($_ => $arguments->{$_}) foreach keys %$arguments;
+    $hash->set_value($_ => $args->{$_}) foreach keys %$args;
 }
 
 sub set_value {
@@ -59,9 +59,9 @@ sub set_value {
 }
 
 sub _set_value {
-    my ($hash, $arguments) = @_;
-    $arguments->{key} ||= $arguments->{index};
-    $hash->set_value(@$arguments{'key', 'value'});
+    my ($hash, $args) = @_;
+    $args->{key} ||= $args->{index};
+    $hash->set_value(@$args{'key', 'value'});
     return $hash;
 }
 
@@ -71,8 +71,8 @@ sub get_value {
 }
 
 sub _get_value {
-    my ($hash, $arguments) = @_;
-    my $key = $arguments->{key} // $arguments->{index};
+    my ($hash, $args) = @_;
+    my $key = $args->{key} // $args->{index};
     $key = $key->{sym_value} if length $key->{sym_value};
     $key = pstring($key);
     return $hash->get_value($key);
