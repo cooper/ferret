@@ -291,3 +291,36 @@ my $method_8 = FF::method_event_def(
     }
 );
 ```
+
+## Troubleshooting
+
+Here are some problematic situations you might encounter and their solutions.
+
+#### Unable to tokenize
+
+These errors are raised by the [Tokenizer](Tokenizer/Tokenizer.md).
+
+Try running `ferret` with the `-tv` flags. This will print the tokenization to
+give you a better idea of where the error occurred.
+
+#### (Un)expected elements
+
+These errors are raised by the [Constructor](Constructor/Constructor.md).
+
+Hopefully, the error message is descriptive enough for you to find the issue.
+If not, it helps to know a little Perl. Ferret will tell you where the
+exception occurred in the compiler's Perl source code. That may help you nail
+it down.
+
+#### Compiler process "exited prematurely"
+
+The Ferret compiler is multi-process and asynchronous. Put another way, the
+`ferret` executable is more like `make` than `cc`. These errors occur when a
+child process exits unexpectedly, but the parent process survives it.
+
+Try running `ferret` with the `-y` flag. This tells the compiler to use only
+one process and one thread. Usually it will then provide a Perl error message.
+
+### None of those
+
+Head to **#k** on **irc.notroll.net** and start complaining.
