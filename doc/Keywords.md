@@ -276,7 +276,7 @@ weaken $person.parent
 ### func
 
 ```
-func [<name>] { [<statements>...] }
+func [<name>] [ { [<statements>...] } ]
 ```
 
 Declares an event. It is spelled `func` because all functions are implemented as
@@ -285,6 +285,9 @@ events.
 If `name` is provided, the event will be assigned to that property of the scope
 of interest (SOI; see below). Without a name, `func` acts as an inline
 expression representing an anonymous event.
+
+The curly bracket delimiters (`{` and `}`) may be omitted if the function has no
+body. This is useful for declaring an event with no default callback.
 
 The scope of interest (SOI) is determined by the hierarchical level of the event
 within the document. At document level, the SOI is the current package context,
@@ -434,11 +437,14 @@ These keywords are to be used within classes only.
 ### method
 
 ```
-method <name> { [<statements>...] }
+method <name> [ { [<statements>...] } ]
 ```
 
 Declares a class instance method. All methods are implemented as events. The
 event will be assigned to the property `name` of the class's prototype object.
+
+The curly bracket delimiters (`{` and `}`) may be omitted if the method has no
+body. This is useful for declaring an event with no default callback.
 
 ```
 class Person
@@ -581,7 +587,7 @@ complex(5)  # returns (gotX: true, value: 5)
 complex()   # returns "reached bottom"
 ```
 
-See also the [return operator](Operators.md#return-operator).
+See also the [return operator `OP_RETURN`](Operators.md#return-operator) (`->`).
 
 ### for
 

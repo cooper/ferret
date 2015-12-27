@@ -72,7 +72,7 @@ so `:sym === :sym`. Always.
 
 Tokenized as `VAR_SYM`.
 
-## Property variables.
+## Property variables
 
 Property variables are defined by the `.` sigil.
 
