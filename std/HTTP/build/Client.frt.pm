@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './std/HTTP/Client.frt'
 #      Package 'HTTP'
-#      Class 'Client'
+#      Class 'Client' version 1.0
 #          Instruction
 #              Assignment (lexical variable '$defaultUA')
 #                  Operation
@@ -138,7 +138,7 @@ my $result = do {
     # Class 'Client'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, 'Client', undef );
+          FF::get_class( $f, $context, 'Client', 1.0 );
 
         # Method event '_init_' definition
         my $method_0 = FF::method_event_def(

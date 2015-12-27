@@ -24,9 +24,6 @@ method connected { }
 # called when redirected
 method redirect { }
 
-# called when data comes in
-method data { }
-
 # called when a connection error occurs
 method error { }
 

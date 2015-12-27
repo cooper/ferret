@@ -1,5 +1,5 @@
 package HTTP
-class Client
+class Client 1.0
 
 $defaultUA = "ferret-http/*class.version"
 $defaultLength = 64 * 1024

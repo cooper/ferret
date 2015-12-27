@@ -37,8 +37,6 @@
 #              Body ('method' scope)
 #          Method 'redirect'
 #              Body ('method' scope)
-#          Method 'data'
-#              Body ('method' scope)
 #          Method 'error'
 #              Body ('method' scope)
 #          Method 'response'
@@ -153,19 +151,8 @@ my $result = do {
             }
         );
 
-        # Method event 'data' definition
-        my $method_4 = FF::method_event_def(
-            $f, $scope, 'data',
-            [],
-            sub {
-                my ( $self, $arguments, $call_scope, $scope, $return ) = @_;
-
-                return $return;
-            }
-        );
-
         # Method event 'error' definition
-        my $method_5 = FF::method_event_def(
+        my $method_4 = FF::method_event_def(
             $f, $scope, 'error',
             [],
             sub {
@@ -176,7 +163,7 @@ my $result = do {
         );
 
         # Method event 'response' definition
-        my $method_6 = FF::method_event_def(
+        my $method_5 = FF::method_event_def(
             $f, $scope,
             'response',
             [],
@@ -202,12 +189,11 @@ my $result = do {
             redirect => $scope,
             $proto, $class, undef, undef
         );
-        $method_4->inside_scope( data => $scope, $proto, $class, undef, undef );
-        $method_5->inside_scope(
+        $method_4->inside_scope(
             error => $scope,
             $proto, $class, undef, undef
         );
-        $method_6->inside_scope(
+        $method_5->inside_scope(
             response => $scope,
             $proto, $class, undef, undef
         );

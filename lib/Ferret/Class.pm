@@ -51,10 +51,11 @@ sub new {
     $class->set_property_weak(proto => $class->prototype);
 
     # class name
-    my $name = $class->{name};
-    $class->set_property(name => [ sub {
-        Ferret::String->new($f, str_value => $name)
-    } ]);
+    my ($name, $version) = @$class{'name', 'version'};
+    $class->set_property(name => Ferret::String->new($f, str_value => $name));
+    $class->set_property(version =>
+        Ferret::Number->new($f, num_value => $version)
+    ) if $version;
 
     # set type.
     $class->set_property(Set => [ \&_get_set_type ])
