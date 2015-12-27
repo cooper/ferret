@@ -15,6 +15,8 @@ object. Inheritance of variables from external scopes is possible through the
 same ISA inheritance system used for all objects. For this reason, `$var` is
 functionally equivalent to `*scope.var`.
 
+Tokenized as `VAR_LEX`.
+
 ## Instance variables
 
 Instance variables are identified by the `@` sigil.
@@ -22,6 +24,8 @@ Instance variables are identified by the `@` sigil.
 Instance variables are only valid within class functions and methods. They refer
 to properties of the current class instance. For this reason, `@var` is
 functionally equivalent to `*self.var`.
+
+Tokenized as `VAR_THIS`.
 
 ## Special variables
 
@@ -40,6 +44,8 @@ using this type of variable.
 event was called
 * __*argv__ - refers to the list of arguments passed to the program
 
+Tokenized as `VAR_SPEC`.
+
 ## Set type variables
 
 Set type variables are identified by the `<` and `>` delimiters.
@@ -53,6 +59,8 @@ best-guess effort).
 `<Type>` is functionally equivalent to `Type.Set`. If the type specified does
 not exist, the set type variable will possess the `undefined` value.
 
+Tokenized as `VAR_SET`.
+
 ## Symbols
 
 Symbols are identified by the `:` sigil.
@@ -61,3 +69,5 @@ Symbols are global objects associated with their identifiers. Therefore,
 `:sym` is always referentially equivalent to to `:sym` anywhere else. In other
 words, two symbols of the same identifier are memory-address-equivalent,
 so `:sym === :sym`. Always.
+
+Tokenized as `VAR_SYM`.

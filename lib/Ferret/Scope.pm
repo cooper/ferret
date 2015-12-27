@@ -1,4 +1,4 @@
-# Copyright (c) 2013, Mitchell Cooper
+# Copyright (c) 2015, Mitchell Cooper
 package Ferret::Scope;
 
 use warnings;

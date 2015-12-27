@@ -51,7 +51,8 @@ Accesses a property on an object.
 Tokenized as `OP_PROP`.
 
 Currently, the `OP_PROP` token always raises a tokenizer error. This is because
-properties, including the period (`.`) are tokenized as a single `PROPERTY`.
+properties, including the period (`.`) are tokenized as a single `PROPERTY`
+token.
 
     $value = $object.someValue
 
@@ -159,6 +160,9 @@ Frequent use case involving named handlers
     # this is functionally equivalent to
     if $handlers[$command]:
         $handlers[$command]()
+
+See also the [`prop?`](Keywords.md#prop) keyword and the
+[lazy assignment operator](#lazy-assignment-operator) (`?=`).
 
 ### Ellipsis
 

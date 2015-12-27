@@ -1,4 +1,4 @@
-# Copyright 2015 Mitchell Cooper
+# Copyright 2015, Mitchell Cooper
 package F::Boolean;
 
 use warnings;

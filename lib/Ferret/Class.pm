@@ -1,4 +1,4 @@
-# Copyright (c) 2014, Mitchell Cooper
+# Copyright (c) 2015, Mitchell Cooper
 package Ferret::Class;
 
 use warnings;
