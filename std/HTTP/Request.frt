@@ -19,13 +19,13 @@ method connect {
 
 # called when the connection opens
 # may be called multiple times if redirected or retried
-method connected { }
+method connected
 
 # called when redirected
-method redirect { }
+method redirect
 
 # called when a connection error occurs
-method error { }
+method error
 
 # called when a response comes in
-method response { }
+method response

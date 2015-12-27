@@ -197,7 +197,6 @@ sub c_METHOD {
     my $method = F::Method->new(%$value, event_cb => 1);
 
     $c->node->adopt($method);
-    $c->set_node($method->body);
     $c->capture_closure_with($method->body);
 
     return $method;
@@ -221,7 +220,6 @@ sub c_FUNCTION {
     );
 
     $c->node->adopt($function);
-    $c->set_node($function->body);
     $c->capture_closure_with($function->body);
 
     return $function;
@@ -244,7 +242,6 @@ sub c_CLOSURE_S {
         # create a function.
         my $func = F::Function->new(anonymous => 1, call_closure => 1);
         $func->body->{call_closure} = 1;
-        $c->set_node($func->body);
 
         # make it an argument to the call.
         $call->arg_list->new_item->adopt($func);
@@ -261,12 +258,12 @@ sub c_CLOSURE_S {
     my $node = $c->node;
     if ($node->{generated_expression}) {
         $c->close_node;
-        $c->set_node(delete $node->{set_body}) if $node->{set_body};
     }
 
     # remember which closure this is inside; if any.
     # then, set this node as the current closure.
     $c->set_closure($closure);
+    $c->set_node($closure);
 
     return;
 }
@@ -319,7 +316,6 @@ sub c_KEYWORD_INSIDE {
     $c->node->adopt($inside);
 
     # set the current node to the inside expression.
-    $inside->param_exp->{set_body} = $inside->body;
     $c->set_node($inside->param_exp);
 
     return $inside;
@@ -336,7 +332,6 @@ sub c_KEYWORD_ON {
     $c->node->adopt($on);
 
     # set the current node to the on expression.
-    $on->param_exp->{set_body} = $on->function->body;
     $c->set_node($on->param_exp);
 
     return $on;
@@ -375,7 +370,6 @@ sub c_KEYWORD_IF {
     $c->capture_closure_with($if->body);
 
     # set the current node to the conditional expression.
-    $if->param_exp->{set_body} = $if->body;
     $c->set_node($if->param_exp);
 
     return $if;
@@ -399,7 +393,6 @@ sub c_KEYWORD_ELSIF {
     $c->capture_closure_with($if->body);
 
     # set the current node to the conditional expression.
-    $if->param_exp->{set_body} = $if->body;
     $c->set_node($if->param_exp);
 
     return $if;
@@ -421,7 +414,6 @@ sub c_KEYWORD_ELSE {
     my $else = F::Else->new;
     $c->capture_closure_with($else->body);
     $c->node->adopt($else);
-    $c->set_node($else->body);
 
     return $else;
 }
@@ -436,7 +428,6 @@ sub c_KEYWORD_FOR {
     $c->capture_closure_with($for->body);
 
     # set the node to the for parameter.
-    $for->param_exp->{set_body} = $for->body;
     $c->set_node($for->param_exp);
 
     return $for;
@@ -450,12 +441,8 @@ sub c_KEYWORD_IN {
         $c->node->{parameter_for} && $c->node->{parameter_for} eq 'for';
         # FIXME: if wrapped in parentheses, this will fail.
 
-    my $for_exp = $c->node;
-    delete $for_exp->{set_body};
-
     # set the node to the 'in' parameter.
     my $for = $c->close_node;
-    $for->in_param_exp->{set_body} = $for->body;
     return $c->set_node($for->in_param_exp);
 
 }
