@@ -639,24 +639,18 @@ non-code down here
 inside <object> { [<statements>...] }
 ```
 
-Temporarily allows an object to behave as the current scope. This is useful when
+Temporarily sets a focal object for a shorthand syntax. Rather than writing
+`$obj.x`, simply `.x` works within the block. This is useful when accessing or
 altering several properties at once.
-
-The outer scope becomes a parent to `object` by adding the scope to its `*isa`
-list. Then, the code inside is executed with the object as the current scope.
-Finally, the outer scope is removed from the object's `*isa` list.
 
 ```
 $x = 5
 
 inside $person {
-
-    # in here, $x refers to the outer 5, UNLESS $person has a property x
-    $x = 3
-
-    # these refer to properties
-    $age = 24
-    $name = "Pam"
-
+    .age  = $x * 4 + 6
+    .name = "Pam"
+    say("Hello " + .firstName)
 }
+
+inspect($person) # (age: 26, name: "Pam")
 ```

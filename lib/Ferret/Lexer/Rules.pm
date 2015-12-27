@@ -270,7 +270,7 @@ our %element_rules = (
 
             # children can only be non-special variables or properties.
             children_must_be => [                                               # OnExpression[0]
-                'Property LexicalVariable InstanceVariable Bareword',
+                'Property LexicalVariable InstanceVariable PropertyVariable Bareword',
                 "'On' parameter can only be a non-special variable or property"
             ],
 

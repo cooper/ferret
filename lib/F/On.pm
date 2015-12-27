@@ -54,6 +54,7 @@ sub event_object {
     return '$scope' if $c->type eq 'LexicalVariable';
     return '$scope' if $c->type eq 'Bareword';
     return '$self'  if $c->type eq 'InstanceVariable';
+    return '$ins'   if $c->type eq 'PropertyVariable';
     return $c->left if $c->type eq 'Property';
     die;
 }
