@@ -84,13 +84,13 @@ for a breakdown of the process.
 
 ## Getting started
 
-1. Install [Atom](https://atom.io).
-2. Install the [`language-ferret`](https://github.com/cooper/language-ferret) package.
-3. Clone this repository.
-4. [Install Ferret](#installation).
-5. Browse the [`test`](test) directory for code snippet examples.
-6. Explore the [documentation](#documentation).
-7. [Start writing in Ferret](#writing). But only as a hobby.
+1. [Install](https://atom.io) Atom.
+2. [Install](https://github.com/cooper/language-ferret) the `language-ferret` package.
+3. [Clone](#) this repository.
+4. [Install](#installation) Ferret.
+5. [Browse](test) the `test` directory for code snippet examples.
+6. [Explore](#documentation) the documentation.
+7. [Write](#writing) in Ferret. But only as a hobby.
 
 ### Installation
 
