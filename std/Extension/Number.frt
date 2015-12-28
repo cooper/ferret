@@ -15,3 +15,8 @@ prop? even {
 prop? odd {
     return *self % 2 != 0
 }
+
+method root {
+    need $root: Num
+    return Math.root($root, *self)
+}

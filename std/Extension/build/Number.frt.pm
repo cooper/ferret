@@ -39,7 +39,23 @@
 #                              Number '2'
 #                              Negated equality operator (!=)
 #                              Number '0'
-#      Include (Math)
+#          Method 'root'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$root'
+#                          Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Property 'root'
+#                                  Bareword 'Math'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Lexical variable '$root'
+#                                  Item 1
+#                                      Special variable '*self'
+#      Include (Math, Num)
 use warnings;
 use strict;
 use 5.010;
@@ -146,12 +162,41 @@ my $result = do {
                 return $ret->return;
             }
         );
+
+        # Method event 'root' definition
+        my $method_4 = FF::method_event_def(
+            $f, $scope, 'root',
+            [
+                {
+                    name     => 'root',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
+                FF::need( $scope, $args, 'root', 20.2 ) or return;
+                return $ret->return(
+                    $scope->property_u('Math')->property_u('root')->call_u(
+                        [
+                            $scope->property_u('root'),
+                            $scope->{special}->property_u('self')
+                        ],
+                        $scope, undef, 21.2
+                    )
+                );
+                return $ret->return;
+            }
+        );
         $method_0->inside_scope( sqrt   => $scope, $proto, $class, 1, undef );
         $method_1->inside_scope( square => $scope, $proto, $class, 1, undef );
         $method_2->inside_scope( even   => $scope, $proto, $class, 1, 1 );
         $method_3->inside_scope( odd    => $scope, $proto, $class, 1, 1 );
+        $method_4->inside_scope( root => $scope, $proto, $class, undef, undef );
     }
-    FF::load_namespaces( $context, qw(Math) );
+    FF::load_namespaces( $context, qw(Math Num) );
 };
 
 FF::after_content();
