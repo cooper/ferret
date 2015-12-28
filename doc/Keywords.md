@@ -660,3 +660,42 @@ inside $person {
 
 inspect($person) # (age: 26, name: "Pam")
 ```
+
+### type
+
+```
+type <name> { [<expressions>....] }
+```
+
+Defines a type for dynamic type checking. This is especially useful for
+functions or methods utilizing [`want`](#want) or [`need`](#need).
+
+Types are generally declared at document or class level, but they are valid
+within almost any scope. Although it is most often used with
+[symbols](Variables.md#symbols), any expressions are valid.
+
+In order for an object to pass as a certain type, it must be equal
+(according to the `==` [`OP_EQUAL`](Operators.md#equality-operator) operator) to
+at least one of the provided expressions.
+
+Behind the scenes, `type` creates a function which tests a value for dynamic
+type checking. If an object matches, `TypeName($obj)` will output `$obj`. If
+it fails, `undefined` is returned.
+
+```
+type Gender {
+    :male
+    :female
+}
+
+func announce {
+    need $name: Str, $gender: Gender
+    $what = Str($gender).trimPrefix(":")
+    say("$name is $what")
+}
+
+announce("Robert", :male)
+announce("Kris", :female)
+announce("Kylie", :female)
+announce("Caitlyn", :other) # ignored
+```
