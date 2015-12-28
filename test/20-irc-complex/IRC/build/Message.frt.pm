@@ -243,7 +243,7 @@ my $result = do {
                       ->call_u( [ str( $f, " " ) ], $scope, undef, 18.5 ),
                     18.2
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -278,11 +278,11 @@ my $result = do {
                     {
                         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                        return $scope->property_u('cmd');
+                        return $ret->return( $scope->property_u('cmd') );
                     }
                 }
-                return $false;
-                return $ret;
+                return $ret->return($false);
+                return $ret->return;
             }
         );
 
@@ -293,12 +293,14 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return nequal(
-                    $scope,
-                    $self->property_u('parts')->property_u('length'),
-                    num( $f, 1 )
+                return $ret->return(
+                    nequal(
+                        $scope,
+                        $self->property_u('parts')->property_u('length'),
+                        num( $f, 1 )
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -317,18 +319,21 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'wordN', 41.2 ) or return;
-                return $self->property_u('message')->property_u('split')
-                  ->call_u(
-                    {
-                        separator => str( $f, " " ),
-                        limit     => add(
-                            $scope, $scope->property_u('wordN'),
-                            num( $f, 1 )
-                        )
-                    },
-                    $scope, undef, 42.2
-                  )->get_index_value( [ $scope->property_u('wordN') ], $scope );
-                return $ret;
+                return $ret->return(
+                    $self->property_u('message')->property_u('split')->call_u(
+                        {
+                            separator => str( $f, " " ),
+                            limit     => add(
+                                $scope, $scope->property_u('wordN'),
+                                num( $f, 1 )
+                            )
+                        },
+                        $scope, undef, 42.2
+                      )->get_index_value(
+                        [ $scope->property_u('wordN') ], $scope
+                      )
+                );
+                return $ret->return;
             }
         );
         $method_0->inside_scope(

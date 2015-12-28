@@ -141,7 +141,7 @@ my $result = do {
                 ],
                 $scope, undef, 19.1
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -161,7 +161,7 @@ my $result = do {
                 ],
                 $scope, undef, 23.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -198,7 +198,7 @@ my $result = do {
             FF::need( $scope, $args, 'name2', 11.4 ) or return;
             $scope->property_u('hello1')->call_u( {}, $scope, undef, 13.2 );
             $scope->property_u('hello2')->call_u( {}, $scope, undef, 14.2 );
-            return $ret;
+            return $ret->return;
         }
     );
     $func_2->inside_scope( helloWorld => $scope, $scope, undef, undef, undef );

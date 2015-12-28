@@ -131,7 +131,7 @@ my $result = do {
                 ],
                 $scope, undef, 9.1
             );
-            return $ret;
+            return $ret->return;
         }
     );
     $func_0->inside_scope( announce => $scope, $scope, undef, undef, undef );

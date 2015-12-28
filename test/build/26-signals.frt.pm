@@ -93,7 +93,7 @@ my $result = do {
             $scope->property_u('say')
               ->call_u( [ str( $f, "Got TERM. Terminating!" ) ],
                 $scope, undef, 3.2 );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -112,12 +112,12 @@ my $result = do {
                     $scope, undef, 13.2 );
                 $scope->set_property_ow( $context, asked => $true, 14.2 );
                 $ret->stop;
-                return $ret;
+                return $ret->return();
             }
             $scope->property_u('say')
               ->call_u( [ str( $f, "Got second INT. Terminating!" ) ],
                 $scope, undef, 19.2 );
-            return $ret;
+            return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(Signal Timer) );

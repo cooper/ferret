@@ -10,7 +10,7 @@ sub value { shift->first_child }
 
 sub perl_fmt {
     my $ret = shift;
-    my $value = $ret->value ? $ret->value->perl_fmt_do : '$ret';
+    my $value = $ret->value ? $ret->value->perl_fmt_do : '';
     return return => { value => $value };
 }
 

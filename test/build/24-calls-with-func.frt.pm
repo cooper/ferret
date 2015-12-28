@@ -84,7 +84,7 @@ my $result = do {
                   $scope->property_u('code')->call_u( {}, $scope, undef, 18.4 ),
                 18.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -98,7 +98,7 @@ my $result = do {
             $scope->property_u('say')
               ->call_u( [ str( $f, "been five seconds" ) ], $scope, undef,
                 4.2 );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -109,8 +109,8 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            return str( $f, "any second now" );
-            return $ret;
+            return $ret->return( str( $f, "any second now" ) );
+            return $ret->return;
         }
     );
     $func_0->inside_scope( something => $scope, $scope, undef, undef, undef );

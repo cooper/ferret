@@ -57,13 +57,15 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return mul(
-                    $scope,
-                    $self->property_u('length')
-                      ->call_u( {}, $scope, undef, 4.3 ),
-                    num( $f, 2 )
+                return $ret->return(
+                    mul(
+                        $scope,
+                        $self->property_u('length')
+                          ->call_u( {}, $scope, undef, 4.3 ),
+                        num( $f, 2 )
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
         $method_0->inside_scope(

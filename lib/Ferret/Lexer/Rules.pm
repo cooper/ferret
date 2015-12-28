@@ -388,7 +388,7 @@ our %element_rules = (
         ],
 
         must_be_somewhere_inside => [                                           # Stop[1]
-            'Function',
+            'Function Method',
             'Stop statement must be inside a function, method, or callback'
         ]
 
@@ -441,6 +441,15 @@ our %element_rules = (
                 'requirements'
             ]
         }
+    },
+
+    Defer => {
+
+        must_be_somewhere_inside => [
+            'Function Method',
+            "'Defer' can only exist within a function or method"
+        ]
+
     },
 
     Token => {

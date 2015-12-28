@@ -83,7 +83,7 @@ my $result = do {
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "five seconds up" ) ], $scope, undef, 4.2 );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -97,7 +97,7 @@ my $result = do {
             $scope->property_u('say')
               ->call_u( [ str( $f, "this shouldn't be said" ) ],
                 $scope, undef, 9.2 );
-            return $ret;
+            return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );

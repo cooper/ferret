@@ -20,7 +20,7 @@ my $keyword_reg = '\\b(?:'.join('|', qw{
     want        need        share       local
     on          before      after       inside
     if          else        return      stop
-    true        false       undefined
+    true        false       undefined   defer
     for         in          load        type
     delete      weaken      __END__     __LINE__
 }).')\\b';

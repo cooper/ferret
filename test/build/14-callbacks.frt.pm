@@ -107,7 +107,7 @@ my $result = do {
                 ],
                 $scope, undef, 11.1
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -130,7 +130,7 @@ my $result = do {
                 ],
                 $scope, undef, 22.1
             );
-            return $ret;
+            return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(String) );

@@ -74,7 +74,7 @@ my $result = do {
                 ],
                 $scope, undef, 3.1
             );
-            return $ret;
+            return $ret->return;
         }
     );
     $func_0->inside_scope( sayHello => $scope, $scope, undef, undef, undef );

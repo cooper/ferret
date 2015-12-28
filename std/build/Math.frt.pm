@@ -48,9 +48,11 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'num', 4.2 ) or return;
-            return $scope->property_u('NATIVE::Math')->property_u('sqrt')
-              ->call_u( [ $scope->property_u('num') ], $scope, undef, 5.3 );
-            return $ret;
+            return $ret->return(
+                $scope->property_u('NATIVE::Math')->property_u('sqrt')
+                  ->call_u( [ $scope->property_u('num') ], $scope, undef, 5.3 )
+            );
+            return $ret->return;
         }
     );
     $func_0->inside_scope( sqrt => $scope, $scope, undef, undef, undef );

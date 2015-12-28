@@ -2,5 +2,5 @@
 my $method_<<id>> = FF::method_event_def($f, $scope, '<<name>>', [ <<arguments>> ], sub {
     my ($self, $args, $call_scope, $scope, $ret) = @_;
     <<statements>>
-    return $ret;
+    return $ret->return;
 });

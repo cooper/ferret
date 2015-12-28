@@ -179,7 +179,7 @@ my $result = do {
                 ],
                 $scope, undef, 13.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -200,7 +200,7 @@ my $result = do {
                 ],
                 $scope, undef, 19.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -272,7 +272,7 @@ my $result = do {
                     ),
                     {}
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -285,7 +285,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $self->property_u('sock')->property_u('connect')
                   ->call_u( {}, $scope, undef, 25.3 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -315,7 +315,7 @@ my $result = do {
                 $self->property_u('sock')->property_u('println')
                   ->call_u( [ $scope->property_u('line') ],
                     $scope, undef, 31.3 );
-                return $ret;
+                return $ret->return;
             }
         );
         $method_0->inside_scope(

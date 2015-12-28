@@ -189,7 +189,7 @@ my $result = do {
                   ->property_u('initialize')
                   ->call_u( [ $scope->{special}->property_u('self') ],
                     $scope, undef, 25.5 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -207,14 +207,16 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'url', 29.2 ) or return;
-                return $self->property_u('request')->call_u(
-                    {
-                        httpMethod => FF::get_symbol( $f, 'GET' ),
-                        url        => $scope->property_u('url')
-                    },
-                    $scope, undef, 30.3
+                return $ret->return(
+                    $self->property_u('request')->call_u(
+                        {
+                            httpMethod => FF::get_symbol( $f, 'GET' ),
+                            url        => $scope->property_u('url')
+                        },
+                        $scope, undef, 30.3
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -232,14 +234,16 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'url', 37.2 ) or return;
-                return $self->property_u('request')->call_u(
-                    {
-                        httpMethod => FF::get_symbol( $f, 'POST' ),
-                        url        => $scope->property_u('url')
-                    },
-                    $scope, undef, 38.3
+                return $ret->return(
+                    $self->property_u('request')->call_u(
+                        {
+                            httpMethod => FF::get_symbol( $f, 'POST' ),
+                            url        => $scope->property_u('url')
+                        },
+                        $scope, undef, 38.3
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -265,15 +269,17 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'httpMethod', 45.1 ) or return;
                 FF::need( $scope, $args, 'url',        45.3 ) or return;
-                return $scope->property_u('HTTP::Request')->call_u(
-                    {
-                        client     => $scope->{special}->property_u('self'),
-                        httpMethod => $scope->property_u('httpMethod'),
-                        url        => $scope->property_u('url')
-                    },
-                    $scope, undef, 46.5
+                return $ret->return(
+                    $scope->property_u('HTTP::Request')->call_u(
+                        {
+                            client     => $scope->{special}->property_u('self'),
+                            httpMethod => $scope->property_u('httpMethod'),
+                            url        => $scope->property_u('url')
+                        },
+                        $scope, undef, 46.5
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
         $method_0->inside_scope(

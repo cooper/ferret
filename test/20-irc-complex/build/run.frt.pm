@@ -430,7 +430,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret;
+                return $ret->return();
             }
             $scope->set_property_ow(
                 $context,
@@ -475,7 +475,7 @@ my $result = do {
                     ],
                     $scope, undef, 58.15
                 );
-                return $ret;
+                return $ret->return();
             }
             $scope->property_u('bot')->property_u('privmsg')->call_u(
                 [
@@ -484,7 +484,7 @@ my $result = do {
                 ],
                 $scope, undef, 61.15
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -504,11 +504,12 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'string', 65.2 ) or return;
-            return $scope->property_u('string')->property_u('split')
-              ->call_u( [ str( $f, "_NL_" ) ], $scope, undef, 66.2 )
-              ->property_u('join')
-              ->call_u( [ str( $f, "\n" ) ], $scope, undef, 66.4 );
-            return $ret;
+            return $ret->return(
+                $scope->property_u('string')->property_u('split')
+                  ->call_u( [ str( $f, "_NL_" ) ], $scope, undef, 66.2 )
+                  ->property_u('join')
+                  ->call_u( [ str( $f, "\n" ) ], $scope, undef, 66.4 ) );
+            return $ret->return;
         }
     );
 
@@ -527,7 +528,7 @@ my $result = do {
                 ],
                 $scope, undef, 6.15
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -550,7 +551,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret;
+                return $ret->return();
             }
             $scope->set_property_ow(
                 $context,
@@ -587,7 +588,7 @@ my $result = do {
                     ],
                     $scope, undef, 16.15
                 );
-                return $ret;
+                return $ret->return();
             }
             $scope->property_u('bot')->property_u('privmsg')->call_u(
                 [
@@ -596,7 +597,7 @@ my $result = do {
                 ],
                 $scope, undef, 19.15
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -619,7 +620,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret;
+                return $ret->return();
             }
             $scope->set_property_ow(
                 $context,
@@ -656,7 +657,7 @@ my $result = do {
                     ],
                     $scope, undef, 29.15
                 );
-                return $ret;
+                return $ret->return();
             }
             $scope->property_u('bot')->property_u('privmsg')->call_u(
                 [
@@ -665,7 +666,7 @@ my $result = do {
                 ],
                 $scope, undef, 32.15
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -688,7 +689,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret;
+                return $ret->return();
             }
             $scope->set_property_ow(
                 $context,
@@ -719,7 +720,7 @@ my $result = do {
                     ],
                     $scope, undef, 41.15
                 );
-                return $ret;
+                return $ret->return();
             }
             $scope->set_property_ow(
                 $context,
@@ -740,7 +741,7 @@ my $result = do {
                 ],
                 $scope, undef, 45.15
             );
-            return $ret;
+            return $ret->return;
         }
     );
     $func_0->inside_scope( handlePerl => $scope, $scope, undef, undef, undef );

@@ -170,7 +170,7 @@ my $result = do {
                 ],
                 $scope, undef, 15.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -191,7 +191,7 @@ my $result = do {
                 ],
                 $scope, undef, 21.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -212,7 +212,7 @@ my $result = do {
                 ],
                 $scope, undef, 26.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -296,7 +296,7 @@ my $result = do {
                     ),
                     {}
                 );
-                return $ret;
+                return $ret->return;
             }
         );
         $method_0->inside_scope(

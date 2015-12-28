@@ -58,6 +58,7 @@ use F::Stop;
 use F::Else;
 use F::PropertyVariable;
 use F::Type;
+use F::Defer;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (

@@ -215,7 +215,7 @@ my $result = do {
                 FF::need( $scope, $args, 'y', 4.4 ) or return;
                 $self->set_property( x => $scope->property_u('x'), 5.2 );
                 $self->set_property( y => $scope->property_u('y'), 6.2 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -237,8 +237,8 @@ my $result = do {
                     ),
                     10.1
                 );
-                return $scope->property_u('pt');
-                return $ret;
+                return $ret->return( $scope->property_u('pt') );
+                return $ret->return;
             }
         );
 
@@ -248,12 +248,14 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return add(
-                    $scope,                 str( $f, "(" ),
-                    $self->property_u('x'), str( $f, ", " ),
-                    $self->property_u('y'), str( $f, ")" )
+                return $ret->return(
+                    add(
+                        $scope,                 str( $f, "(" ),
+                        $self->property_u('x'), str( $f, ", " ),
+                        $self->property_u('y'), str( $f, ")" )
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -264,9 +266,9 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $self->property_u('pretty')
-                  ->call_u( {}, $scope, undef, 19.3 );
-                return $ret;
+                return $ret->return( $self->property_u('pretty')
+                      ->call_u( {}, $scope, undef, 19.3 ) );
+                return $ret->return;
             }
         );
 
@@ -292,30 +294,32 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'pt1', 23.2 ) or return;
                 FF::need( $scope, $args, 'pt2', 23.4 ) or return;
-                return $scope->property_u('Point')->call_u(
-                    {
-                        x => div(
-                            $scope,
-                            add(
+                return $ret->return(
+                    $scope->property_u('Point')->call_u(
+                        {
+                            x => div(
                                 $scope,
-                                $scope->property_u('pt1')->property_u('x'),
-                                $scope->property_u('pt2')->property_u('x')
+                                add(
+                                    $scope,
+                                    $scope->property_u('pt1')->property_u('x'),
+                                    $scope->property_u('pt2')->property_u('x')
+                                ),
+                                num( $f, 2 )
                             ),
-                            num( $f, 2 )
-                        ),
-                        y => div(
-                            $scope,
-                            add(
+                            y => div(
                                 $scope,
-                                $scope->property_u('pt1')->property_u('y'),
-                                $scope->property_u('pt2')->property_u('y')
-                            ),
-                            num( $f, 2 )
-                        )
-                    },
-                    $scope, undef, 24.3
+                                add(
+                                    $scope,
+                                    $scope->property_u('pt1')->property_u('y'),
+                                    $scope->property_u('pt2')->property_u('y')
+                                ),
+                                num( $f, 2 )
+                            )
+                        },
+                        $scope, undef, 24.3
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
         $method_0->inside_scope(

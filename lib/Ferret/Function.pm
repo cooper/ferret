@@ -47,10 +47,10 @@ sub new {
         ) foreach _parse_method_args($want);
     }
 
-    $func->set_property(signature => [ sub {
+    $func->set_property(signature => sub {
         my $func = $_[1];
         Ferret::String->new($f, str_value => $func->signature_string)
-    } ]);
+    });
 
     $func->set_property(name => [ sub {
         my $func = $_[1];
@@ -162,6 +162,8 @@ sub _instance_of {
 
     # if this is a function, see if it returns true.
     if ($class_maybe->isa('Ferret::Function')) {
+        # TODO: in case it performed a transform,
+        # use $ret as the argument value.
         my $ret = $class_maybe->call_u([ $obj ]);
         return Ferret::truth($ret);
     }
@@ -341,6 +343,25 @@ sub new {
 sub empty_return {
     my $ret = shift;
     return !scalar $ret->properties(1);
+}
+
+sub defer {
+    my ($ret, $code) = @_;
+    push @{ $ret->{defers} ||= [] }, $code;
+}
+
+sub return {
+    my ($ret, $force) = @_;
+    $ret->run_defers;
+    return $force if $force;
+    return $ret;
+}
+
+sub run_defers {
+    my $ret = shift;
+    my $defers = $ret->{defers} or return;
+    $_->() foreach @$defers;
+    @$defers = ();
 }
 
 # stop further propagation.

@@ -261,7 +261,7 @@ my $result = do {
                     ),
                     6.1
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -272,16 +272,18 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return FF::create_list(
-                    $f,
-                    [
-                        $self->property_u('topLeft'),
-                        $self->property_u('topRight'),
-                        $self->property_u('bottomLeft'),
-                        $self->property_u('bottomRight')
-                    ]
+                return $ret->return(
+                    FF::create_list(
+                        $f,
+                        [
+                            $self->property_u('topLeft'),
+                            $self->property_u('topRight'),
+                            $self->property_u('bottomLeft'),
+                            $self->property_u('bottomRight')
+                        ]
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -292,8 +294,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $self->property_u('origin');
-                return $ret;
+                return $ret->return( $self->property_u('origin') );
+                return $ret->return;
             }
         );
 
@@ -304,18 +306,20 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $scope->property_u('Point')->call_u(
-                    [
-                        add(
-                            $scope,
-                            $self->property_u('origin')->property_u('x'),
-                            $self->property_u('width')
-                        ),
-                        $self->property_u('origin')->property_u('y')
-                    ],
-                    $scope, undef, 23.15
+                return $ret->return(
+                    $scope->property_u('Point')->call_u(
+                        [
+                            add(
+                                $scope,
+                                $self->property_u('origin')->property_u('x'),
+                                $self->property_u('width')
+                            ),
+                            $self->property_u('origin')->property_u('y')
+                        ],
+                        $scope, undef, 23.15
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -326,18 +330,20 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $scope->property_u('Point')->call_u(
-                    [
-                        $self->property_u('origin')->property_u('x'),
-                        add(
-                            $scope,
-                            $self->property_u('origin')->property_u('y'),
-                            $self->property_u('height')
-                        )
-                    ],
-                    $scope, undef, 27.15
+                return $ret->return(
+                    $scope->property_u('Point')->call_u(
+                        [
+                            $self->property_u('origin')->property_u('x'),
+                            add(
+                                $scope,
+                                $self->property_u('origin')->property_u('y'),
+                                $self->property_u('height')
+                            )
+                        ],
+                        $scope, undef, 27.15
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -348,22 +354,24 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $scope->property_u('Point')->call_u(
-                    [
-                        add(
-                            $scope,
-                            $self->property_u('origin')->property_u('x'),
-                            $self->property_u('width')
-                        ),
-                        add(
-                            $scope,
-                            $self->property_u('origin')->property_u('y'),
-                            $self->property_u('height')
-                        )
-                    ],
-                    $scope, undef, 31.15
+                return $ret->return(
+                    $scope->property_u('Point')->call_u(
+                        [
+                            add(
+                                $scope,
+                                $self->property_u('origin')->property_u('x'),
+                                $self->property_u('width')
+                            ),
+                            add(
+                                $scope,
+                                $self->property_u('origin')->property_u('y'),
+                                $self->property_u('height')
+                            )
+                        ],
+                        $scope, undef, 31.15
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -374,14 +382,16 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $scope->property_u('Line')->call_u(
-                    [
-                        $self->property_u('bottomLeft'),
-                        $self->property_u('bottomRight')
-                    ],
-                    $scope, undef, 35.3
+                return $ret->return(
+                    $scope->property_u('Line')->call_u(
+                        [
+                            $self->property_u('bottomLeft'),
+                            $self->property_u('bottomRight')
+                        ],
+                        $scope, undef, 35.3
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -392,14 +402,16 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $scope->property_u('Line')->call_u(
-                    [
-                        $self->property_u('topLeft'),
-                        $self->property_u('topRight')
-                    ],
-                    $scope, undef, 39.3
+                return $ret->return(
+                    $scope->property_u('Line')->call_u(
+                        [
+                            $self->property_u('topLeft'),
+                            $self->property_u('topRight')
+                        ],
+                        $scope, undef, 39.3
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -433,11 +445,13 @@ my $result = do {
                     ),
                     44.1
                 );
-                return $scope->property_u('Point')
-                  ->call_u(
-                    [ $scope->property_u('x'), $scope->property_u('y') ],
-                    $scope, undef, 45.3 );
-                return $ret;
+                return $ret->return(
+                    $scope->property_u('Point')->call_u(
+                        [ $scope->property_u('x'), $scope->property_u('y') ],
+                        $scope, undef, 45.3
+                    )
+                );
+                return $ret->return;
             }
         );
 
@@ -458,23 +472,25 @@ my $result = do {
                     c => $self->property_u('center'),
                     50.2
                 );
-                return add(
-                    $scope,
-                    str( $f, "Rect( Origin(" ),
-                    $scope->property_u('o')->property_u('x'),
-                    str( $f, ", " ),
-                    $scope->property_u('o')->property_u('y'),
-                    str( $f, ") Center(" ),
-                    $scope->property_u('c')->property_u('x'),
-                    str( $f, ", " ),
-                    $scope->property_u('c')->property_u('y'),
-                    str( $f, ") Width = " ),
-                    $self->property_u('width'),
-                    str( $f, " Height = " ),
-                    $self->property_u('height'),
-                    str( $f, " )" )
+                return $ret->return(
+                    add(
+                        $scope,
+                        str( $f, "Rect( Origin(" ),
+                        $scope->property_u('o')->property_u('x'),
+                        str( $f, ", " ),
+                        $scope->property_u('o')->property_u('y'),
+                        str( $f, ") Center(" ),
+                        $scope->property_u('c')->property_u('x'),
+                        str( $f, ", " ),
+                        $scope->property_u('c')->property_u('y'),
+                        str( $f, ") Width = " ),
+                        $self->property_u('width'),
+                        str( $f, " Height = " ),
+                        $self->property_u('height'),
+                        str( $f, " )" )
+                    )
                 );
-                return $ret;
+                return $ret->return;
             }
         );
         $method_0->inside_scope(

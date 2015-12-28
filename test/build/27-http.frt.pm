@@ -106,7 +106,7 @@ my $result = do {
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "Connected!" ) ], $scope, undef, 4.2 );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -135,7 +135,7 @@ my $result = do {
                 ],
                 $scope, undef, 9.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -164,7 +164,7 @@ my $result = do {
                 ],
                 $scope, undef, 15.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -177,7 +177,7 @@ my $result = do {
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "Got error!" ) ], $scope, undef, 20.2 );
-            return $ret;
+            return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(HTTP Str) );

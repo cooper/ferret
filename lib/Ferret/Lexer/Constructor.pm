@@ -481,6 +481,17 @@ sub c_KEYWORD_STOP {
     $c->adopt_and_set_node($stop);
 }
 
+sub c_KEYWORD_DEFER {
+    my ($c, $value) = @_;
+
+    # create closure.
+    my $defer = F::Defer->new;
+    $c->capture_closure_with($defer->body);
+    $c->node->adopt($defer);
+
+    return $defer;
+}
+
 sub c_PAREN_S {
     my ($c, $value) = @_;
     my $list = $c->start_list('PAREN_E');
@@ -936,6 +947,7 @@ sub could_be_one_liner {
     # if the last token is any of these, good.
     my %is_reasonable = map { $_ => 1 } qw(
         KEYWORD_ELSE
+        KEYWORD_DEFER
     );
 
     my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
@@ -1239,6 +1251,7 @@ sub c_any {
         ^KEYWORD_IF$        ^KEYWORD_ELSE$      ^KEYWORD_ELSIF$
         ^PKG_DEC$           ^CLASS_DEC$         ^KEYWORD_END$
         ^CLOSURE_.+$        ^OP_.+$             ^TYPE$
+        ^KEYWORD_DEFER$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

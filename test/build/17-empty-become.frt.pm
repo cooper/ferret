@@ -63,7 +63,7 @@ my $result = do {
             my $self = $_self || $self;
             $scope->property_u('say')
               ->call_u( [ str( $f, "it works!" ) ], $scope, undef, 8.2 );
-            return $ret;
+            return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );

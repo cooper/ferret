@@ -163,7 +163,7 @@ my $result = do {
                 );
             }
             $ret->set_property( didTwice => $scope->property_u('twice'), 19.2 );
-            return $ret;
+            return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(Math Math::Point) );

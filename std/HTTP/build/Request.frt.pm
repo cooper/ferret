@@ -104,7 +104,7 @@ my $result = do {
                 $self->weaken_property( 'client', 9.1 );
                 FF::need( $self, $args, 'url' )        or return;
                 FF::need( $self, $args, 'httpMethod' ) or return;
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -123,7 +123,7 @@ my $result = do {
                     ],
                     $scope, undef, 17.25
                   );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -135,7 +135,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
 
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -147,7 +147,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
 
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -158,7 +158,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
 
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -170,7 +170,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
 
-                return $ret;
+                return $ret->return;
             }
         );
         $method_0->inside_scope(

@@ -151,7 +151,7 @@ my $result = do {
                 ],
                 $scope, undef, 6.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -172,7 +172,7 @@ my $result = do {
                 ],
                 $scope, undef, 11.2
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -198,7 +198,7 @@ my $result = do {
                 ],
                 $scope, undef, 16.15
             );
-            return $ret;
+            return $ret->return;
         }
     );
 
@@ -211,7 +211,7 @@ my $result = do {
             my $self = $_self || $self;
             $scope->property_u('sock')->property_u('println')
               ->call_u( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.3 );
-            return $ret;
+            return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(Socket Socket::TCP Timer) );

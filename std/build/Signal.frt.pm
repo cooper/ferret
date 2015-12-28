@@ -121,7 +121,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'type' ) or return;
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -133,7 +133,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $scope->property_u('_exit')
                   ->call_u( [ num( $f, 0 ) ], $scope, undef, 25.2 );
-                return $ret;
+                return $ret->return;
             }
         );
 
@@ -162,7 +162,7 @@ my $result = do {
                           ->call_u( {}, $scope, undef, 32.35 );
                     }
                 }
-                return $ret;
+                return $ret->return;
             }
         );
         $method_0->inside_scope(
