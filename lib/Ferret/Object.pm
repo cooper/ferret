@@ -90,7 +90,8 @@ sub set_property {
     delete $obj->{properties}{$prop_name} if !defined $value;
 
     # good.
-    return $value;
+    return $value if blessed $value && $value->isa('Ferret::Object');
+    return 1;
 
 }
 

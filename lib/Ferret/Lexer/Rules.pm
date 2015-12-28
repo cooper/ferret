@@ -462,7 +462,15 @@ our %element_rules = (
     IfParameter => {
 
         children_must_satisfy => [
-            sub { shift->isa('F::Expression') },
+            sub {
+                my $el = shift;
+
+                # lazy assignments cannot act as expressions because
+                # they return a non-Ferret value (CODE reference)
+                return !$el->{lazy} if $el->isa('F::Assignment');
+
+                return $el->isa('F::Expression');
+            },
             'If parameter must be an expression'
         ],
 
