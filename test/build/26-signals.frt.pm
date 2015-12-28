@@ -90,6 +90,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             $scope->property_u('say')
               ->call_u( [ str( $f, "Got TERM. Terminating!" ) ],
                 $scope, undef, 3.2 );
@@ -104,6 +105,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             if ( bool( _not( $scope->property_u('asked') ) ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 

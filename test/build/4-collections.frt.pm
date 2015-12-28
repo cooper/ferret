@@ -108,6 +108,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'x', 2.2 ) or return;
             FF::need( $scope, $args, 'y', 2.4 ) or return;
             FF::want( $scope, $args, 'z', 3.2 );

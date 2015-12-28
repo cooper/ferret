@@ -47,6 +47,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'num', 4.2 ) or return;
             return $ret->return(
                 $scope->property_u('NATIVE::Math')->property_u('sqrt')

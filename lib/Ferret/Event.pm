@@ -10,7 +10,6 @@ use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken);
 use Ferret::Core::Conversion qw(fmethod fhash);
-use Ferret::Arguments;
 
 Ferret::bind_class(
     name => 'Event',

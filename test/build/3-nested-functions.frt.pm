@@ -123,6 +123,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             $scope->set_property_ow(
                 $context,
                 hello => str( $f, "Hello" ),
@@ -152,6 +153,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             $scope->property_u('say')->call_u(
                 [
                     add(
@@ -186,6 +188,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             $func_0->inside_scope(
                 hello1 => $scope,
                 $scope, undef, undef, undef

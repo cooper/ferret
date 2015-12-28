@@ -141,6 +141,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'data', 5.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
@@ -162,6 +163,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'data', 10.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
@@ -183,6 +185,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             $scope->property_u('sock')->property_u('println')
               ->call_u( [ str( $f, "NICK k" ) ], $scope, undef, 15.3 );
             $scope->property_u('sock')->property_u('println')->call_u(
@@ -209,6 +212,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             $scope->property_u('sock')->property_u('println')
               ->call_u( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.3 );
             return $ret->return;

@@ -61,6 +61,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             $scope->property_u('say')
               ->call_u( [ str( $f, "it works!" ) ], $scope, undef, 8.2 );
             return $ret->return;

@@ -8,7 +8,7 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(blessed);
-use List::Util qw(sum product);
+use List::Util qw(sum product min max);
 
 use Ferret::Core::Conversion qw(
     fnumber pnumber
@@ -148,9 +148,10 @@ sub op_mod {
 sub op_range {
     my ($num, $args, $call_scope) = @_;
     my $other = $args->{other};
-
-    my @range = pnumber($num)..pnumber($other);
+    my @input = map pnumber($_), $num, $other;
+    my @range = (min @input)..(max @input);
        @range = map fnumber($_), @range;
+       @range = reverse @range if $input[0] > $input[1];
 
     # if there's only one number, return a list containing only that number.
     return flist(@range) if @range == 1;

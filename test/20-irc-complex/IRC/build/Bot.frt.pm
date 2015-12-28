@@ -515,6 +515,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             $self->property_u('send')->call_u(
                 [
                     add(
@@ -551,6 +552,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'data', 36.2 ) or return;
             $self->property_u('handleLine')
               ->call_u( [ $scope->property_u('data') ], $scope, undef, 37.2 );
@@ -566,6 +568,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             if ( bool( $self->property_u('_joinedChannels') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -605,6 +608,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 's', 109.2 ) or return;
             $self->property_u('send')->call_u(
                 [
@@ -632,6 +636,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'line', 114.2 ) or return;
             FF::need( $scope, $args, 's',    114.4 ) or return;
             $scope->set_property_ow(
@@ -677,6 +682,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'msg', 131.2 ) or return;
             $scope->set_property_ow(
                 $context,
@@ -705,6 +711,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'msg', 137.2 ) or return;
             $scope->property_u('inspect')
               ->call_u( [ $scope->property_u('msg') ], $scope, undef, 138.2 );
@@ -752,6 +759,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'msg', 152.2 ) or return;
             $scope->set_property_ow(
                 $context,
@@ -799,6 +807,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $self, $args, 'addr' ) or return;
                 FF::need( $self, $args, 'nick' ) or return;
                 FF::want( $self, $args, 'port', 18.2, num( $f, 6667 ) );
@@ -867,6 +876,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'command',  43.2 ) or return;
                 FF::need( $scope, $args, 'callback', 43.6 ) or return;
                 if (
@@ -896,6 +906,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 $self->property_u('sock')->property_u('connect')
                   ->call_u( {}, $scope, undef, 51.3 );
                 return $ret->return;
@@ -915,6 +926,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'line', 55.2 ) or return;
                 $scope->property_u('say')->call_u(
                     [
@@ -946,6 +958,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'line', 61.2 ) or return;
                 $scope->set_property_ow(
                     $context,
@@ -1030,6 +1043,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'channel', 84.1 ) or return;
                 FF::need( $scope, $args, 'message', 84.3 ) or return;
                 FF::iterate(

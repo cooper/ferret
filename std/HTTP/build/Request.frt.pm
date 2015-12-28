@@ -96,6 +96,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'client', 7.2 ) or return;
                 $self->set_property(
                     client => $scope->property_u('client'),
@@ -115,6 +116,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 $scope->property_u('NATIVE::HTTPClient')->property_u('connect')
                   ->call_u(
                     [
@@ -134,6 +136,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
 
                 return $ret->return;
             }
@@ -146,6 +149,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
 
                 return $ret->return;
             }
@@ -157,6 +161,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
 
                 return $ret->return;
             }
@@ -169,6 +174,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
 
                 return $ret->return;
             }

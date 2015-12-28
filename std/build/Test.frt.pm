@@ -270,6 +270,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $self, $args, 'name', 4.2, str( $f, "Test" ) );
                 FF::want( $self, $args, 'fatal', 5.2, $true );
                 $self->set_property( tested => num( $f, 0 ), 6.2 );
@@ -285,6 +286,7 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $scope, $args, 'a', 12.2 );
                 return $ret->return(
                     $self->property_u('_test')->call_u(
@@ -309,6 +311,7 @@ my $result = do {
             [ { name => 'a', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $scope, $args, 'a', 18.2 );
                 return $ret->return(
                     $self->property_u('_test')->call_u(
@@ -334,6 +337,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $scope, $args, 'a', 24.2 );
                 FF::want( $scope, $args, 'b', 24.4 );
                 return $ret->return(
@@ -363,6 +367,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $scope, $args, 'a', 30.2 );
                 FF::want( $scope, $args, 'b', 30.4 );
                 return $ret->return(
@@ -392,6 +397,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $scope, $args, 'a', 36.2 );
                 FF::want( $scope, $args, 'b', 36.4 );
                 return $ret->return(
@@ -421,6 +427,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $scope, $args, 'a', 42.2 );
                 FF::want( $scope, $args, 'b', 42.4 );
                 return $ret->return(
@@ -446,6 +453,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 $scope->set_property_ow(
                     $context,
                     failed => _sub(
@@ -510,6 +518,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $scope, $args, 'yes',     57.2 );
                 FF::want( $scope, $args, 'message', 57.4 );
                 $self->set_property(

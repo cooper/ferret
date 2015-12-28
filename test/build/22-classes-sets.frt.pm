@@ -189,6 +189,7 @@ my $result = do {
             [ { name => 'moos', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $self, $args, 'moos', 6.2, $true );
                 return $ret->return;
             }
@@ -200,6 +201,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 if ( bool( $self->property_u('moos') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -234,6 +236,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $self, $args, 'barks', 18.2, $false );
                 return $ret->return;
             }
@@ -245,6 +248,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 if ( bool( $self->property_u('barks') ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -273,6 +277,7 @@ my $result = do {
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $self, $args, 'mean', 30.2, $false );
                 return $ret->return;
             }
@@ -284,6 +289,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return( str( $f, "meow" ) );
                 return $ret->return;
             }
@@ -308,6 +314,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'cat1', 39.1 ) or return;
                 FF::need( $scope, $args, 'cat2', 39.3 ) or return;
                 if ( bool( $scope->property_u('cat1')->property_u('mean') ) ) {

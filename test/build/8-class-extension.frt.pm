@@ -57,6 +57,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     mul(
                         $scope,

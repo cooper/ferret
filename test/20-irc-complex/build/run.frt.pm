@@ -418,6 +418,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'msg', 52.2 ) or return;
             if (
                 bool(
@@ -503,6 +504,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'string', 65.2 ) or return;
             return $ret->return(
                 $scope->property_u('string')->property_u('split')
@@ -520,6 +522,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'msg', 5.2 ) or return;
             $scope->property_u('bot')->property_u('privmsg')->call_u(
                 [
@@ -539,6 +542,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'msg', 10.2 ) or return;
             if (
                 bool(
@@ -608,6 +612,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'msg', 23.2 ) or return;
             if (
                 bool(
@@ -677,6 +682,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'msg', 36.2 ) or return;
             if (
                 bool(

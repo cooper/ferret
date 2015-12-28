@@ -155,6 +155,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             $self->property_u('send')->call_u(
                 [
                     add(
@@ -190,6 +191,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
+            $ret->inc;
             FF::need( $scope, $args, 'data', 18.2 ) or return;
             $scope->property_u('say')->call_u(
                 [
@@ -236,6 +238,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $self, $args, 'addr' ) or return;
                 FF::need( $self, $args, 'nick' ) or return;
                 FF::need( $self, $args, 'user' ) or return;
@@ -283,6 +286,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 $self->property_u('sock')->property_u('connect')
                   ->call_u( {}, $scope, undef, 25.3 );
                 return $ret->return;
@@ -302,6 +306,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'line', 29.2 ) or return;
                 $scope->property_u('say')->call_u(
                     [

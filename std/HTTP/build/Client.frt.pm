@@ -177,6 +177,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::want( $self, $args, 'userAgent', 10.2,
                     $scope->property_u('defaultUA') );
                 FF::want( $self, $args, 'timeout', 13.2, num( $f, 10 ) );
@@ -206,6 +207,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'url', 29.2 ) or return;
                 return $ret->return(
                     $self->property_u('request')->call_u(
@@ -233,6 +235,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'url', 37.2 ) or return;
                 return $ret->return(
                     $self->property_u('request')->call_u(
@@ -267,6 +270,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'httpMethod', 45.1 ) or return;
                 FF::need( $scope, $args, 'url',        45.3 ) or return;
                 return $ret->return(

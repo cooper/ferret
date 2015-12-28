@@ -158,6 +158,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $self, $args, 'pt1' ) or return;
                 FF::need( $self, $args, 'pt2' ) or return;
                 return $ret->return;
@@ -171,6 +172,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     FF::create_list(
                         $f,
@@ -187,6 +189,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 $scope->set_property_ow(
                     $context,
                     mp => $self->property_u('midpoint'),
@@ -253,6 +256,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return( $self->property_u('pretty') );
                 return $ret->return;
             }
@@ -265,6 +269,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     FF::create_set(
                         $scope, $self->property_u('pt1'),
@@ -282,6 +287,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     $self->property_u('pt1')->property_u('distanceTo')->call_u(
                         [ $self->property_u('pt2') ],

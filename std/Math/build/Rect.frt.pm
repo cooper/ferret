@@ -250,6 +250,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'x', 5.1 ) or return;
                 FF::need( $scope, $args, 'y', 5.3 ) or return;
                 FF::need( $self, $args, 'width' )  or return;
@@ -272,6 +273,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     FF::create_list(
                         $f,
@@ -294,6 +296,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return( $self->property_u('origin') );
                 return $ret->return;
             }
@@ -306,6 +309,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     $scope->property_u('Point')->call_u(
                         [
@@ -330,6 +334,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     $scope->property_u('Point')->call_u(
                         [
@@ -354,6 +359,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     $scope->property_u('Point')->call_u(
                         [
@@ -382,6 +388,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     $scope->property_u('Line')->call_u(
                         [
@@ -402,6 +409,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     $scope->property_u('Line')->call_u(
                         [
@@ -421,6 +429,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 $scope->set_property_ow(
                     $context,
                     x => add(
@@ -462,6 +471,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 $scope->set_property_ow(
                     $context,
                     o => $self->property_u('origin'),

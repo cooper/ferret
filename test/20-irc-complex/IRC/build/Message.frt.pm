@@ -193,6 +193,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $self, $args, 'line' ) or return;
                 $scope->set_property_ow(
                     $context,
@@ -254,6 +255,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 if (
                     bool(
                         $self->property_u('parts')
@@ -293,6 +295,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 return $ret->return(
                     nequal(
                         $scope,
@@ -318,6 +321,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $ret->return(
                     $self->property_u('message')->property_u('split')->call_u(

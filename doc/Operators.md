@@ -390,12 +390,13 @@ Tokenized as `OP_MOD`.
 
     ..
 
-Returns a set representing a range from a value to a value.
+Returns a set representing a range from a value to a value. If the first value
+is larger than the second, the items in the set will be in descending order.
 
 Tokenized as `OP_RANGE`.
 
-    $set = 1..5
-    # $set is <Number>(1, 2, 3, 4, 5)
+    $set = 1..5 # $set is <Number>(1, 2, 3, 4, 5)
+    $set = 5..1 # $set is <Number>(5, 4, 3, 2, 1)
 
 ## Equality and inequality
 

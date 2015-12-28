@@ -82,7 +82,7 @@ sub truth {
     return if !defined $val;
     return if $val == false;
     return if undefined $val;
-    return if $val->{is_return} && $val->empty_return;
+    return if $val->{is_return} && !$val->true_return;
     return !!$val;
 }
 

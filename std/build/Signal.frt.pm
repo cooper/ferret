@@ -120,6 +120,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $self, $args, 'type' ) or return;
                 return $ret->return;
             }
@@ -131,6 +132,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 $scope->property_u('_exit')
                   ->call_u( [ num( $f, 0 ) ], $scope, undef, 25.2 );
                 return $ret->return;
@@ -151,6 +153,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
                 FF::need( $scope, $args, 'type', 31.2 ) or return;
                 {
                     my $maybe_0 =
