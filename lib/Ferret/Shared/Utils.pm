@@ -76,7 +76,7 @@ sub string_to_signature {
     # FIXME: currently will not match types with :: in them
     # this is ok for the time being because they are not yet supported
 
-    while ($string =~ s/^(\?)?\$($prop_reg)+(?:\:($prop_reg))?(\.\.\.)?\s*//) {
+    while ($string =~ s/^(\?)?\$($prop_reg|\d+)+(?:\:($prop_reg))?(\.\.\.)?\s*//) {
         my $arg = { name => $2 };
         $arg->{optional} = 1  if $1;
         $arg->{type}     = $3 if $3;
@@ -85,6 +85,55 @@ sub string_to_signature {
     }
 
     return \@parts;
+}
+
+# check if an argument signature fits into a function signature.
+#
+# FIXME: how to handle 'need' value requirements
+# FIXME: same type name can mean different types depending on scope
+# FIXME: aliases don't work. String and Str will not match
+#
+# TODO: possible solution
+# for type{}, I think I can solve the above issues by always using the full
+# symbol name for the type. just pass that to this function. for example,
+# Str and String would both evaluate to 'CORE::String'
+#
+#   arg_sig                         func_sig                            match
+#   ------------------------------  --------------------------------  --------
+#   '$1:Str $2:Str'                 '$firstName:Str $lastName:Str'      YES
+#   '$1:Str $2:Str'                 '$lastName:Str $firstName:Str'      YES
+#   '$firstName:Str $age:Num'       '$age:Num $firstName:Str'           YES
+#   '$firstName:Str $age:Num'       '$age:Num'                          YES
+#   '$firstName:Str $age:Num'       '$1:Str $2:Num'                     YES
+#   '$age:Num $firstName:Str'       '$1:Str $2:Num'                     NO
+#   '$age:Num $firstName:Str'       '$age:Str $firstName:Str'           NO
+#   '$age:Num $firstName:Str'       '?$age:Str $firstName:Str'          YES
+#
+sub signatures_compatible {
+    my ($arg_sig, $func_sig) = @_;
+    $arg_sig  = string_to_signature($arg_sig) if !ref $arg_sig;
+    $func_sig = string_to_signature($func_sig) if !ref $func_sig;
+
+    # map variables to their argument elements.
+    my ($i, $j);
+    my %arg_vars  = map { ++$i => $_, $_->{name} => $_ } @$arg_sig;
+    my %func_vars = map { ++$j => $_, $_->{name} => $_ } @$func_sig;
+
+    $i = 0;
+    foreach my $arg (@$func_sig) { $i++;
+        next if $arg->{optional};
+
+        # find counterpart argument.
+        my $carg = $arg_vars{ $arg->{name} } || $arg_vars{$i}; # || $args{'*more'}
+        return if !$carg; # no counterpart for required variable.
+
+        # now, check the type.
+        return if $arg->{type} ne $carg->{type};
+
+        # TODO: handle ellipsis *more
+    }
+
+    return 1;
 }
 
 1
