@@ -286,7 +286,7 @@ If `name` is provided, the event will be assigned to that property of the scope
 of interest (SOI; see below). Without a name, `func` acts as an inline
 expression representing an anonymous event.
 
-The curly bracket delimiters (`{` and `}`) may be omitted if the function has no
+The curly bracket delimiters `{` and `}` may be omitted if the function has no
 body. This is useful for declaring an event with no default callback.
 
 The scope of interest (SOI) is determined by the hierarchical level of the event
@@ -466,7 +466,7 @@ Declares a class instance initializer.
 class Person
 
 init {
-    need @fullName: Str, @age: Num, @gender: Sym;
+    need @fullName: Str, @age: Num, @gender: Sym
 }
 ```
 
@@ -587,7 +587,7 @@ complex(5)  # returns (gotX: true, value: 5)
 complex()   # returns "reached bottom"
 ```
 
-See also the [return operator `OP_RETURN`](Operators.md#return-operator) (`->`).
+See also the return operator [`OP_RETURN`](Operators.md#return-operator) (`->`).
 
 ### for
 

@@ -283,7 +283,7 @@ sub c_CLOSURE_E {
     # close the closure and the node.
     my $closure = $c->closure;
     $c->close_closure;
-    $c->close_node($closure->type eq 'Body' ? 2 : 1);
+    $c->close_node($closure->type =~ m/Body$/ ? 2 : 1);
 
     # this is a closure-capturing function call.
     if ($closure->{call_closure}) {
@@ -311,7 +311,7 @@ sub c_KEYWORD_INSIDE {
     my ($c, $value) = @_;
 
     # create a closure to be opened soon.
-    my $inside = F::Inside->new(type => 'Inside');
+    my $inside = F::Inside->new;
     $c->capture_closure_with($inside->body);
     $c->node->adopt($inside);
 
@@ -321,11 +321,22 @@ sub c_KEYWORD_INSIDE {
     return $inside;
 }
 
+sub c_TYPE {
+    my ($c, $value) = @_;
+
+    # create a closure to be opened soon.
+    my $type = F::Type->new(type_name => $value);
+    $c->capture_closure_with($type->body);
+    $c->node->adopt($type);
+
+    return $type;
+}
+
 sub c_KEYWORD_ON {
     my ($c, $value) = @_;
 
     # create on.
-    my $on = F::On->new(type => 'On');
+    my $on = F::On->new;
 
     # set the closure to the function of on.
     $c->capture_closure_with($on->function->body);
@@ -422,7 +433,7 @@ sub c_KEYWORD_FOR {
     my ($c, $value) = @_;
 
     # create a closure to be opened soon.
-    my $for = F::For->new(type => 'For');
+    my $for = F::For->new;
 
     $c->node->adopt($for);
     $c->capture_closure_with($for->body);
@@ -1227,7 +1238,7 @@ sub c_any {
         ^KEYWORD_INSIDE$    ^KEYWORD_FOR$       ^KEYWORD_ON$
         ^KEYWORD_IF$        ^KEYWORD_ELSE$      ^KEYWORD_ELSIF$
         ^PKG_DEC$           ^CLASS_DEC$         ^KEYWORD_END$
-        ^CLOSURE_.+$        ^OP_.+$
+        ^CLOSURE_.+$        ^OP_.+$             ^TYPE$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

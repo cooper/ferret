@@ -6,7 +6,7 @@ use strict;
 use 5.010;
 use parent 'F::ScopeOwner';
 
-sub type { 'Body'  }
+sub type { 'Body' }
 sub desc {
     my $t = lcfirst shift->parent->type;
     return "body ('$t' scope)";

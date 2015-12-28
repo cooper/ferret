@@ -21,7 +21,7 @@ my $keyword_reg = '\\b(?:'.join('|', qw{
     on          before      after       inside
     if          else        return      stop
     true        false       undefined
-    for         in          load
+    for         in          load        type
     delete      weaken      __END__     __LINE__
 }).')\\b';
 
@@ -360,7 +360,7 @@ sub tok_KEYWORD {
 
     # other keyword.
     my $name = uc $value;
-    return [ "KEYWORD_$name" => $value ];
+    return [ "KEYWORD_$name" ];
 
 }
 
@@ -401,6 +401,12 @@ sub tok_BAREWORD {
     if ($last->[0] eq 'KEYWORD_METHOD') {
         delete $tokens->[-1];
         return [ METHOD => { name => $value } ]
+    }
+
+    # type definition.
+    if ($last->[0] eq 'KEYWORD_TYPE') {
+        delete $tokens->[-1];
+        return [ TYPE => $value ];
     }
 
 }

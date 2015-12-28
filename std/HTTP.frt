@@ -1,5 +1,10 @@
 package HTTP 1.0
 
+type HTTPMethod {
+    :GET
+    :POST
+}
+
 # default HTTP client
 $client ?= HTTP::Client()
 

@@ -1,6 +1,12 @@
 # === Document Model ===
 #  Document './std/HTTP.frt'
 #      Package 'HTTP'
+#      Type definition ('HTTPMethod')
+#          Body ('type' scope)
+#              Instruction
+#                  Symbol :GET
+#              Instruction
+#                  Symbol :POST
 #      Instruction
 #          Lazy assignment (lexical variable '$client')
 #              Call
@@ -68,10 +74,10 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'url', 7.2 ) or return;
+            FF::need( $scope, $args, 'url', 12.2 ) or return;
             return $scope->property_u('client')->property_u('get')
               ->call_u( { url => $scope->property_u('url') },
-                $scope, undef, 8.4 );
+                $scope, undef, 13.4 );
             return $ret;
         }
     );
@@ -83,10 +89,10 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'url', 12.2 ) or return;
+            FF::need( $scope, $args, 'url', 17.2 ) or return;
             return $scope->property_u('client')->property_u('post')
               ->call_u( { url => $scope->property_u('url') },
-                $scope, undef, 13.4 );
+                $scope, undef, 18.4 );
             return $ret;
         }
     );
@@ -94,15 +100,17 @@ my $result = do {
     $func_1->inside_scope( post => $scope, $scope, undef, undef, undef );
     FF::load_namespaces( $context, qw(HTTP HTTP::Client Str) );
 
+    FF::typedef( $scope, 'HTTPMethod',
+        [ FF::get_symbol( $f, 'GET' ), FF::get_symbol( $f, 'POST' ) ] );
     $scope->set_property_ow(
         $context,
         client => [
             sub {
                 $scope->property_u('HTTP::Client')
-                  ->call_u( {}, $scope, undef, 4.6 );
+                  ->call_u( {}, $scope, undef, 9.6 );
             }
         ],
-        4.2
+        9.2
     );
 };
 

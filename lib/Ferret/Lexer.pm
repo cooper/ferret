@@ -57,6 +57,7 @@ use F::Load;
 use F::Stop;
 use F::Else;
 use F::PropertyVariable;
+use F::Type;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (
@@ -132,7 +133,7 @@ our %pretty_currents = (
     clos_cap        => 'closure capturer',      # upcoming structure to capture closure
     closure         => 'closure',               # closure
     instruction     => 'instruction',           # instruction
-    last_el    => 'previous element',      # previous element at same level
+    last_el         => 'previous element',      # previous element at same level
     list            => 'list',                  # innermost list
     want            => 'want declaration',      # innermost want
     need            => 'need declaration',      # innermost need

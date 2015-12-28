@@ -181,7 +181,8 @@ our %element_rules = (
             # directly inside a method, WantNeed can ONLY contain these things.
             Method => {
                 children_must_be => [                                           # WantNeed[2]
-                    'InstanceVariable LexicalVariable Expression Bareword SetTypeVariable',
+                    'InstanceVariable LexicalVariable Expression Bareword '.
+                    'SetTypeVariable',
                     'Argument declaration inside method can only contain '.
                     'lexical or instance variables and their types'
                 ]
@@ -412,6 +413,34 @@ our %element_rules = (
             "an 'inside' block"
         ]
 
+    },
+
+    TypeBody => {
+
+        children_must_be => [
+            'Instruction',
+            'Type definitions can only contain instructions'
+        ],
+
+        after_rules => {
+            children_must_satisfy => [
+                sub {
+                    my $el = shift;
+
+                    # not instruction, pass on top children_must_be.
+                    return 1 if $el->type ne 'Instruction';
+
+                    # first of all, it has to be an expression.
+                    my $child = $el->first_child;
+                    return if !$child || !$child->isa('F::Expression');
+
+                    # TODO: further checking
+                    return 1;
+                },
+                'Type definitions can only contain test values or method '.
+                'requirements'
+            ]
+        }
     },
 
     Token => {

@@ -91,7 +91,7 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$httpMethod'
-#                          Bareword 'Sym'
+#                          Bareword 'HTTPMethod'
 #                  Instruction
 #                      Need
 #                          Lexical variable '$url'
@@ -110,7 +110,7 @@
 #                                  Item 2
 #                                      Pair 'url'
 #                                          Lexical variable '$url'
-#      Include (HTTP, HTTP::Request, NATIVE, NATIVE::HTTPClient, Num, Str, Sym)
+#      Include (HTTP, HTTP::Request, HTTPMethod, NATIVE, NATIVE::HTTPClient, Num, Str)
 use warnings;
 use strict;
 use 5.010;
@@ -250,7 +250,7 @@ my $result = do {
             [
                 {
                     name     => 'httpMethod',
-                    type     => 'Sym',
+                    type     => 'HTTPMethod',
                     optional => undef,
                     more     => undef
                 },
@@ -302,7 +302,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context,
-        qw(HTTP HTTP::Request NATIVE NATIVE::HTTPClient Num Str Sym) );
+        qw(HTTP HTTP::Request HTTPMethod NATIVE NATIVE::HTTPClient Num Str) );
 };
 
 FF::after_content();

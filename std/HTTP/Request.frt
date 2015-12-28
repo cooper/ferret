@@ -9,7 +9,7 @@ init {
     weaken @client
 
     need @url: Str
-    need @httpMethod: Sym
+    need @httpMethod: HTTPMethod
 }
 
 #

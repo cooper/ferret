@@ -6,7 +6,8 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Core::Conversion qw(fstring pbool);
+use Ferret::Core::Conversion qw(fstring ffunction pbool);
+use List::Util qw(any);
 
 # fetch the global Ferret.
 sub get_ferret {
@@ -305,6 +306,24 @@ sub share {
     my ($scope, $prop_name, $pos) = @_;
     return if $scope->property($prop_name);
     $scope->set_property($prop_name => Ferret::undefined);
+}
+
+# type definitions.
+sub typedef {
+    my ($scope, $type_name, $equal_to) = @_;
+
+    # create a function.
+    my $func = ffunction(sub {
+        my (undef, $args) = @_;
+        my $test = $args->{test};
+
+        # it's equal to something in $equal_to.
+        return $test if any { pbool($test->equal_to($_)) } @$equal_to;
+
+        return Ferret::undefined;
+    }, $type_name, '$test');
+
+    $scope->set_property($type_name => $func); # TODO: pos
 }
 
 1

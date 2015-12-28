@@ -21,7 +21,7 @@
 #                  Instruction
 #                      Need
 #                          Instance variable '@httpMethod'
-#                          Bareword 'Sym'
+#                          Bareword 'HTTPMethod'
 #          Method 'connect'
 #              Body ('method' scope)
 #                  Instruction
@@ -41,7 +41,7 @@
 #              Body ('method' scope)
 #          Method 'response'
 #              Body ('method' scope)
-#      Include (Client, NATIVE, NATIVE::HTTPClient, Str, Sym)
+#      Include (Client, HTTPMethod, NATIVE, NATIVE::HTTPClient, Str)
 use warnings;
 use strict;
 use 5.010;
@@ -89,7 +89,7 @@ my $result = do {
                 },
                 {
                     name     => 'httpMethod',
-                    type     => 'Sym',
+                    type     => 'HTTPMethod',
                     optional => undef,
                     more     => undef
                 }
@@ -199,7 +199,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context,
-        qw(Client NATIVE NATIVE::HTTPClient Str Sym) );
+        qw(Client HTTPMethod NATIVE NATIVE::HTTPClient Str) );
 };
 
 FF::after_content();

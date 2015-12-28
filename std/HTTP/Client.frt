@@ -42,7 +42,7 @@ method post {
 }
 
 method request {
-    need $httpMethod: Sym, $url: Str
+    need $httpMethod: HTTPMethod, $url: Str
     return HTTP::Request(
         client:     *self,
         httpMethod: $httpMethod,

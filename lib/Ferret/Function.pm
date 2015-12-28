@@ -144,7 +144,7 @@ sub obj_type_works {
 
     # if the type is an object, we only have to check instance of.
     if (blessed $type && $type->isa('Ferret::Object')) {
-        return $obj->instance_of($type);
+        return _instance_of($obj, $type);
     }
 
     # find scope of interest.
@@ -153,8 +153,20 @@ sub obj_type_works {
 
     # check that it works.
     my $class_maybe = $soi->property($type);
-    return $obj->instance_of($class_maybe);
+    return _instance_of($obj, $class_maybe);
 
+}
+
+sub _instance_of {
+    my ($obj, $class_maybe) = @_;
+
+    # if this is a function, see if it returns true.
+    if ($class_maybe->isa('Ferret::Function')) {
+        my $ret = $class_maybe->call_u([ $obj ]);
+        return Ferret::truth($ret);
+    }
+
+    return $obj->instance_of($class_maybe);
 }
 
 sub signature_string {

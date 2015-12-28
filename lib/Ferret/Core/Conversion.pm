@@ -189,9 +189,14 @@ sub pbool {
 }
 
 sub ffunction {
-    my $code = shift;
+    my ($code, $name, $need, $want) = @_;
     return unless ref $code eq 'CODE';
-    return Ferret::Function->new($Ferret::ferret, code => $code);
+    return Ferret::Function->new($Ferret::ferret,
+        code => $code,
+        name => $name,
+        need => $need,
+        want => $want
+    );
 }
 
 sub fmethod {
