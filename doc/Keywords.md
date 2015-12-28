@@ -110,18 +110,6 @@ delete $x
 # $x is now undefined
 ```
 
-### \_\_LINE\_\_
-
-```
-__LINE__
-```
-
-Replaced at compile-time with the line on which it occurs in the document.
-
-```
-say(__LINE__)   # prints "1"
-```
-
 ## Variable declarations
 
 Simple variable declarations require no keyword. Simply assign to a previously
@@ -644,7 +632,7 @@ non-code down here
 ### defer
 
 ```
-defer { [<<statements>>...] }
+defer { [<statements>...] }
 ```
 
 Postpones the execution of code until the current routine reaches its end.

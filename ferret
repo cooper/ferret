@@ -176,7 +176,7 @@ sub do_file {
     my $str = eval { slurp($file) } or return error($ret, $fh, $pm, $!);
 
     # tokenize.
-    my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize("$str\n");
+    my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize("$str\n", $file);
     if ($o->tokens && !$err) {
         my $tok = Ferret::Lexer::show_tok(@tok);
         print $fh "# === Tokenization ===\n";

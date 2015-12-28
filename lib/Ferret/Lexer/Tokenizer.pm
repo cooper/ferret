@@ -10,7 +10,7 @@ use Ferret::Lexer::Lexer qw(string_lexer);
 
 use JSON::XS;
 my $json = JSON::XS->new->allow_nonref(1);
-my $position;
+my ($position, $file);
 
 # keywords.
 # when changing this, update Keywords.md
@@ -22,7 +22,7 @@ my $keyword_reg = '\\b(?:'.join('|', qw{
     if          else        return      stop
     true        false       undefined   defer
     for         in          load        type
-    delete      weaken      __END__     __LINE__
+    delete      weaken      __END__
 }).')\\b';
 
 # these tokens do not have values.
@@ -274,7 +274,7 @@ sub tok_STR_REG {
         }
 
         my $code = "$$part{sigil}$$part{name}";
-        $parts[$i] = (_tokenize($code, 1))[1];
+        $parts[$i] = (_tokenize($code, undef, 1))[1];
     }
 
     @parts = "" if !@parts;
@@ -351,11 +351,6 @@ sub tok_KEYWORD {
     # init keyword = func _init_.
     if ($value eq 'init') {
         return [ METHOD => { name => '_init_', main => 1 } ];
-    }
-
-    # line number.
-    if ($value eq '__LINE__') {
-        return [ NUMBER => $position ];
     }
 
     # other keyword.
@@ -469,6 +464,13 @@ sub tok_PROPERTY {
     return [ PROPERTY => $value ];
 }
 
+sub tok_VAR_SPEC {
+    my ($tokens, $value) = @_;
+    return [ NUMBER => int $position ] if $value eq 'line';
+    return [ STRING => $file ]         if $value eq 'file';
+    return;
+}
+
 # common token modifiers.
 sub remove_first_char { [ $_[0], substr $_[1], 1     ] }
 sub remove_last_char  { [ $_[0], substr $_[1], 0, -1 ] }
@@ -489,8 +491,9 @@ sub tokenize {
 }
 
 sub _tokenize {
-    my ($string, $inside) = @_;
-    my $lexer  = string_lexer($string, @token_formats);
+    my ($string, $_file, $inside) = @_;
+    my $lexer = string_lexer($string, @token_formats);
+    $file = $_file if length $_file;
     my @tokens;
 
     while (my $token = &$lexer) {

@@ -43,6 +43,8 @@ using this type of variable.
 * __*this__ - within event callback functions, refers to the object on which the
 event was called
 * __*argv__ - refers to the list of arguments passed to the program
+* __*file__ - replaced at compile time with the name of the source file
+* __*line__ - replaced at compile time with the current line in the source file
 
 Tokenized as `VAR_SPEC`.
 
