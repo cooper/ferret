@@ -47,16 +47,6 @@ my @methods = (
     },
     toString => {
         code => \&_to_string
-    },
-    even => {
-        code => \&_even,
-        prop => 1,
-        pset => 1
-    },
-    odd => {
-        code => \&_odd,
-        prop => 1,
-        pset => 1
     }
 );
 
@@ -160,14 +150,6 @@ sub op_range {
     return Ferret::undefined if @range < 2;
 
     return $range[0]->create_set($call_scope, @range[1..$#range]);
-}
-
-sub _odd {
-    return fbool(shift->{num_value} % 2);
-}
-
-sub _even {
-    return fbool(not shift->{num_value} % 2);
 }
 
 sub _to_string {

@@ -178,11 +178,8 @@ sub space {
     my ($context, $caller, $space) = @_;
     my $file = build_name(ns_to_slash("$space.frt.pm"));
 
-    # already tried this file, or the namespace/class exists.
-    # ignore the value unless the owner is this context.
-    my ($val, $owner) = $context->_property($space);
-    return $val if $val && $owner == $context;
-    return $val if $tried_files{$file};
+    # already tried this file.
+    return $context->property($space) if $tried_files{$file};
 
     $tried_files{$file} = 1;
     do $file or do { print "error in $file: $@" and return if $@ };
