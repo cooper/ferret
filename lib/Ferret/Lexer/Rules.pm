@@ -133,7 +133,7 @@ our %element_rules = (
             'and variable declarations'
         ],
 
-        # if it's an instruction, it must be a parent to a WantNeed.
+        # if it's an instruction, it must satisfy these rules.
         after_rules => [
 
             children_must_satisfy => [                                          # Class[2]
@@ -225,7 +225,8 @@ our %element_rules = (
         ],
 
         # there can only be one child.
-        max_children => 1                                                       # PropertyModifier[3]
+        max_children => 1,                                                      # PropertyModifier[3]
+        min_children => 1                                                       # PropertyModifier[4]
 
     },
 
@@ -286,7 +287,8 @@ our %element_rules = (
             ],
 
             # it can only contain one property or variable.
-            max_children => 1                                                   # OnExpression[2]
+            max_children => 1,                                                  # OnExpression[2]
+            min_children => 1                                                   # OnExpression[3]
 
         }
 
@@ -376,7 +378,7 @@ our %element_rules = (
         max_children => 1,                                                      # Load[2]
 
         # there must be one child.
-        min_children => 1
+        min_children => 1                                                       # Load[3]
 
     },
 
@@ -417,13 +419,14 @@ our %element_rules = (
 
     TypeBody => {
 
-        children_must_be => [
+        children_must_be => [                                                   # TypeBody[0]
             'Instruction',
             'Type definitions can only contain instructions'
         ],
 
         after_rules => {
-            children_must_satisfy => [
+
+            children_must_satisfy => [                                          # TypeBody[1]
                 sub {
                     my $el = shift;
 
@@ -440,12 +443,14 @@ our %element_rules = (
                 'Type definitions can only contain test values or method '.
                 'requirements'
             ]
+
         }
+
     },
 
     Defer => {
 
-        must_be_somewhere_inside => [
+        must_be_somewhere_inside => [                                           # Defer[0]
             'Function Method',
             "'Defer' can only exist within a function or method"
         ]
@@ -453,15 +458,17 @@ our %element_rules = (
     },
 
     Assignment => {
-        parent_must_be => [
+
+        parent_must_be => [                                                     # Assignment[0]
             'Instruction IfParameter',
             "Assignment must be direct child of an instruction or 'if' parameter"
         ]
+
     },
 
     IfParameter => {
 
-        children_must_satisfy => [
+        children_must_satisfy => [                                              # IfParameter[0]
             sub {
                 my $el = shift;
 
@@ -474,8 +481,8 @@ our %element_rules = (
             'If parameter must be an expression'
         ],
 
-        max_children => 1,
-        min_children => 1
+        max_children => 1,                                                      # IfParameter[1]
+        min_children => 1                                                       # IfParameter[2]
 
     },
 

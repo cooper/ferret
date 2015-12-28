@@ -107,6 +107,10 @@ sub handle_label {
 
     # nothing to handle it. throw in an unknown element.
     else {
+
+        # Rule Token[0]:
+        #   Parent must be of type NONE (pseudotype representing no type).
+
         $current->node->adopt($current->unknown_el);
     }
 
@@ -150,7 +154,15 @@ sub c_CLASS_DEC {
     $c->adopt_and_set_node($class);
 
     # Rule Class[1]:
-    #   Direct children must be of type Method.
+    #   Direct children must be of type Function, Method, or Instruction.
+
+    # Rule Class[2]:
+    #   If a direct child is an Instruction, its statement must satisfy one
+    #   of the following conditions:
+    #
+    #       Child is a 'load' statement.
+    #       Child is a lexical variable assignment.
+    #
 
     return $class;
 }
@@ -328,6 +340,13 @@ sub c_TYPE {
     $c->capture_closure_with($type->body);
     $c->node->adopt($type);
 
+    # Rule TypeBody[0]:
+    #   Direct children must of type Instruction.
+
+    # Rule TypeBody[1]:
+    #   If direct child is an Instruction, its statement has an be an
+    #   Expression of some sort.
+
     return $type;
 }
 
@@ -343,6 +362,24 @@ sub c_KEYWORD_ON {
 
     # set the current node to the on expression.
     $c->set_node($on->param_exp);
+
+    # Rule OnExpression[0]:
+    #   Direct children must be one of the following:
+    #
+    #       Property            (e.g. $obj.prop)
+    #       Lexical variable    (e.g. $var)
+    #       Instance variable   (e.g. $var)
+    #       Property variable   (e.g. .var)
+    #       Bareword            (i.e. function name)
+
+    # Rule OnExpression[1]:
+    #   If a direct child is a Property, it must not be a special property.
+
+    # Rule OnExpression[2]:
+    #   Number of direct children must not exceed one (1).
+
+    # Rule OnExpression[3]:
+    #   Number of direct children must be no less than one (1).
 
     return $on;
 }
@@ -378,6 +415,16 @@ sub c_KEYWORD_IF {
     my $if = F::If->new(if_type => 'if');
     $c->node->adopt($if);
     $c->capture_closure_with($if->body);
+
+    # Rule IfParameter[0]:
+    #   Direct children must be an Expression of some sort.
+    #   If direct child is an Assignment, it cannot be a lazy assignment.
+
+    # Rule IfParameter[1]:
+    #   Number of direct children must not exceed one (1).
+
+    # Rule IfParameter[2]:
+    #   Number of direct children must be no less than one (1).
 
     # set the current node to the conditional expression.
     $c->set_node($if->param_exp);
@@ -469,6 +516,9 @@ sub c_KEYWORD_LOAD {
     # Rule Load[2]:
     #   Number of direct children must not exceed one (1).
 
+    # Rule Load[3]:
+    #   Number of direct children must be no less than one (1).
+
     my $load = F::Load->new;
     $c->adopt_and_set_node($load);
 }
@@ -476,12 +526,21 @@ sub c_KEYWORD_LOAD {
 sub c_KEYWORD_STOP {
     my ($c, $value) = @_;
 
+    # Rule Stop[0]:
+    #   Direct parent must be of type Instruction.
+
+    # Rule Stop[1]:
+    #   Direct children must be of type Function or Method.
+
     my $stop = F::Stop->new;
     $c->adopt_and_set_node($stop);
 }
 
 sub c_KEYWORD_DEFER {
     my ($c, $value) = @_;
+
+    # Rule Defer[0]:
+    #   Must be somewhere inside a Function or Method.
 
     # create closure.
     my $defer = F::Defer->new;
@@ -831,7 +890,7 @@ sub c_VAR_THIS {
     my ($c, $value) = @_;
 
     # Rule InstanceVariable[0]:
-    #   Must be somewhere inside a Class.
+    #   Must be somewhere inside a Function or Method.
 
     my $var = F::InstanceVariable->new(var_name => $value);
     return $c->node->adopt($var);
@@ -999,6 +1058,9 @@ sub c_OP_ASSIGN {
         'at left of assignment operator (=)'
     ) unless $last_el->is_type('Assignable');
 
+    # Rule Assignment[0]:
+    #   Direct parent must be of type Instruction or IfParameter.
+
     # remember the last element as the left side of the assignment.
     my $a = F::Assignment->new;
     $a->{left_side} = $last_el;
@@ -1163,6 +1225,9 @@ sub start_modifier {
 
     # Rule PropertyModifier[3]:
     #   Number of direct children must not exceed one (1).
+
+    # Rule PropertyModifier[4]:
+    #   Number of direct children must be no less than one (1).
 
     my $mod = F::PropertyModifier->new(mod_type => $type);
     return $c->adopt_and_set_node($mod);
