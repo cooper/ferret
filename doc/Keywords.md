@@ -623,6 +623,10 @@ Compliment to the [`for`](#for) keyword.
 
 ### \_\_END\_\_
 
+```
+__END__
+```
+
 Terminates the document. This keyword is never required, as reaching the actual
 EOF has the same effect. However, it is useful if there is data such as
 documentation below the code intended to be compiled. If present, `__END__`
@@ -635,6 +639,29 @@ doStuff()
 __END__
 
 non-code down here
+```
+
+### defer
+
+```
+defer { [<<statements>>...] }
+```
+
+Postpones the execution of code until the current routine reaches its end.
+This is useful to guarantee that something be done after a routine executes,
+regardless of whether it terminated early by `return` or other means.
+
+`defer` can only exist within functions, methods, and callbacks.
+If multiple instances of `defer` occur in a routine, they are executed in the
+order that the keyword was reached, with normal control flow in consideration.
+
+```
+func ok {
+    defer: say("goodbye")
+    say("hello")
+}
+
+ok()    # says "hello" then "goodbye"
 ```
 
 ## Miscellaneous
