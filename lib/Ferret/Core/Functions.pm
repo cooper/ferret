@@ -25,7 +25,7 @@ our %functions = (
     },
     inspect => {
         need => '$value',
-        want => '$ownOnly:Bool',
+        want => '$detailed:Bool $ownOnly:Bool $compute:Bool $quiet:Bool',
         code => \&_inspect
     },
     require => {
@@ -74,7 +74,17 @@ sub _inspect {
     my ($self, $args, $call_scope, $scope, $ret) = @_;
     my $obj = $args->{value};
 
-    my $str = pdescription($obj, $args->pbool('ownOnly'));
+    # use Object's ->description if detailed
+    my $code = $args->pbool('detailed') ?
+        Ferret::Object->can('description') :
+        Ferret::Core::Conversion->can('pdescription');
+
+    my $str = $code->(
+        $obj,
+        $args->pbool('ownOnly'),
+        $args->pbool('compute'),
+        1   # tells Object to use its own ->description
+    );
     say $str unless $args->pbool('quiet');
 
     $ret->set_property(string => fstring($str));

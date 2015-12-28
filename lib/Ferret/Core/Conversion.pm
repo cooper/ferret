@@ -71,9 +71,8 @@ sub pstring {
 
 # return a perl object description.
 sub pdescription {
-    my ($val, $own_only) = @_;
-    return $val->description($own_only) if $val->can('description');
-    return pstring($val);
+    my ($val, $own_only, $compute) = @_;
+    return $val->description($own_only, $compute) if $val->can('description');
 }
 
 # return a ferret number object.

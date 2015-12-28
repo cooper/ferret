@@ -162,7 +162,7 @@ sub property_u {
 # only rely on whichever custom implemention of ->_property exists.
 #
 sub _property {
-    my ($obj, $prop_name, $borrow_obj, $simple_only) = @_;
+    my ($obj, $prop_name, $borrow_obj, $simple_only, $no_compute) = @_;
 
     # if the prop name starts with asterisk, it's a special property.
     my $first = \substr($prop_name, 0, 1);
@@ -183,14 +183,14 @@ sub _property {
         # array ref containing code means that after computing the value,
         # we should actually set the property to that value.
         my $setting;
-        if (ref $p eq 'ARRAY') {
+        if (ref $p eq 'ARRAY' && !$no_compute) {
             $setting = 1;
             $p = shift @$p;
             die unless ref $p eq 'CODE'; # FIXME: lazy
         }
 
         # code reference is a computed property.
-        if (ref $p eq 'CODE') {
+        if (ref $p eq 'CODE' && !$no_compute) {
             $p = $p->($borrow_obj, $obj); # (obj inheriting, obj owner)
 
             # if the code returns an array ref, the second arg is the "real"
@@ -225,7 +225,9 @@ sub _property {
 
     # try inheritance.
     foreach my $o ($obj->parents) {
-        my @v = $o->_property($prop_name, $borrow_obj, $simple_only);
+        my @v = $o->_property(
+            $prop_name, $borrow_obj, $simple_only, $no_compute
+        );
         return (@v) if @v;
     }
 
@@ -439,21 +441,26 @@ sub create_set {
 }
 
 sub description {
-    my ($obj, $own_only) = @_;
+    my ($obj, $own_only, $compute, $no_method) = @_;
 
     return 'undefined' if Ferret::undefined($obj);
     return 'true'      if $obj == Ferret::true;
     return 'false'     if $obj == Ferret::false;
 
     # description method
-    if (!$obj->{is_proto} and my $d_func = $obj->property('description')) {
+    if (!$no_method && !$obj->{is_proto} and
+      my $d_func = $obj->property('description')) {
         return _pstring($d_func->call);
     }
 
     my ($skipped, $prop_str) = (0, '');
     my @parents = $obj->parent_names;
     foreach my $prop_name ($obj->properties(1)) {
-        my ($value, $owner) = $obj->_property($prop_name);
+
+        # fetch value
+        # if it's computed, it will return the arrayref or coderef.
+        my ($value, $owner) =
+            $obj->_property($prop_name, undef, undef, !$compute);
 
         # skip other contexts
         if ($owner != $obj && $owner->isa('Ferret::Context')) {
@@ -473,7 +480,8 @@ sub description {
         $prop_name = "($prop_name)" if $owner != $obj;
 
         # indent lines
-        $value     = join "\n    ", split /\n/, _pdescription($value, $own_only);
+        $value = blessed $value ? join "\n    ", split /\n/,
+            _pdescription($value, $own_only, $compute) : '(computed)';
         $prop_str .= '    '.$prop_name." = $value\n";
 
     }
