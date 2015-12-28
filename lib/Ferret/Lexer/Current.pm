@@ -35,6 +35,7 @@ sub node { shift->{node} }
 
 sub set_node {
     my ($c, $new) = @_;
+    $c->node->close if $c->node->type ne 'Document';
     return $c->{node} = $new;
 }
 

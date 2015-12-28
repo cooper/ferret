@@ -15,10 +15,7 @@ sub new {
     # the expression is marked as the parameter to the if keyword.
     # it is also marked as generated, so we know it can be terminated
     # automatically by certain tokens.
-    my $exp = F::Expression->new(
-        parameter_for        => 'if',
-        generated_expression => 1
-    );
+    my $exp = F::IfParameter->new;
     $if->adopt($exp);
     weaken($if->{param_exp} = $exp);
 
@@ -50,5 +47,18 @@ sub is_closure { 1 }
 sub hold_instr { 1 }
 sub type       { 'If' }
 
+package F::IfParameter;
+
+use parent 'F::Expression';
+
+sub new {
+    my ($class, %opts) = @_;
+    return $class->SUPER::new(
+        parameter_for        => 'if',
+        generated_expression => 1
+    );
+}
+
+sub type { 'IfParameter' }
 
 1

@@ -250,8 +250,7 @@ sub c_CLOSURE_S {
     }
 
     # a closure can terminate these.
-    $c->close_nodes(qw(Negation Operation));
-
+    $c->close_nodes(qw(Negation Operation Assignment));
 
     # a closure can terminate a generated expression.
     # for instance, inside $something {}. the expression $something ends there.

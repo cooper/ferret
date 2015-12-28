@@ -452,6 +452,25 @@ our %element_rules = (
 
     },
 
+    Assignment => {
+        parent_must_be => [
+            'Instruction IfParameter',
+            "Assignment must be direct child of an instruction or 'if' parameter"
+        ]
+    },
+
+    IfParameter => {
+
+        children_must_satisfy => [
+            sub { shift->isa('F::Expression') },
+            'If parameter must be an expression'
+        ],
+
+        max_children => 1,
+        min_children => 1
+
+    },
+
     Token => {
 
         # tokens cannot be astray.

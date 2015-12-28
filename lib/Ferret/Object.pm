@@ -90,7 +90,7 @@ sub set_property {
     delete $obj->{properties}{$prop_name} if !defined $value;
 
     # good.
-    return 1;
+    return $value;
 
 }
 
