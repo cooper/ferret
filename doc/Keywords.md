@@ -660,7 +660,8 @@ ok()    # says "hello" then "goodbye"
 inside <object> { [<statements>...] }
 ```
 
-Temporarily sets a focal object for a shorthand syntax. Rather than writing
+Temporarily sets a focal object for a shorthand syntax using
+[property variables](Variables.md#property-variables). Rather than writing
 `$obj.x`, simply `.x` works within the block. This is useful when accessing or
 altering several properties at once.
 

@@ -28,7 +28,7 @@ sub fstring {
 
     # not blessed.
     if (!blessed $val) {
-        return Ferret::String->new($f, str_value => $val);
+        return Ferret::String->new($f, str_value => "$val");
     }
 
     # already a blessed string.
@@ -154,10 +154,20 @@ sub plistref {
 }
 
 sub fhash {
-    my $hashref = shift;
-    return unless ref $hashref eq 'HASH';
-    $hashref = { %$hashref }; # make a copy
-    return Ferret::Hash->new($Ferret::ferret, pairs => $hashref);
+    my @keys_vals = @_;
+    my %input;
+
+    if (@keys_vals % 2) {
+        my $hashref = shift @keys_vals;
+        return unless ref $hashref eq 'HASH';
+        %input = %$hashref;
+    }
+    else {
+         %input = @keys_vals;
+    }
+
+    my %output = map { $_ => ferretize($input{$_}) } keys %input;
+    return Ferret::Hash->new($Ferret::ferret, pairs => \%output);
 }
 
 # $recursive indicates whether to perlize values.
@@ -206,6 +216,7 @@ sub fmethod {
 
 sub ferretize {
     my $val = shift;
+    return Ferret::undefined if !defined $val;
     return $val if blessed $val && $val->isa('Ferret::Object');
     if (ref $val eq 'ARRAY') {
         return flist(@$val);
@@ -223,8 +234,8 @@ sub ferretize {
 sub perlize {
     my $val = shift;
     return $val if !blessed $val || !$val->isa('Ferret::Object');
-    return plistef($val)    if $val->{list_items};
-    return phashref($val)   if $val->{hash_values};
+    return plistref($val)       if $val->{list_items};
+    return phashref($val)       if $val->{hash_values};
     return $val->{num_value}    if defined $val->{num_value};
     return pstring($val);
 }

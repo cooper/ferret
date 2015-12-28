@@ -27,6 +27,9 @@ my @methods = (
     },
     eval => {
         code => \&_eval
+    },
+    perlEval => {
+        code => \&_perl_eval
     }
 );
 
@@ -58,7 +61,7 @@ sub tokenize {
     return $compiler->{tokens} if $compiler->{tokens};
 
     # tokenize
-    my $code = $compiler->_ferret_code;
+    my $code = $compiler->_code;
     my ($err, @tokens) = Ferret::Lexer::Tokenizer::tokenize("$code\n", '(stdin)');
     return $err if $err;
 
@@ -181,6 +184,20 @@ sub _eval {
     return $ret;
 }
 
+sub _perl_eval {
+    my ($compiler, $args, undef, undef, $ret) = @_;
+    my $code = $compiler->_code;
+       $code = "my \$result = do { $code };";
+    my $res = __eval($code);
+
+    if (ref $res eq 'SCALAR') {
+        $ret->set_property(error => fstring($$res));
+    }
+    $ret->set_property(result => ferretize($res));
+
+    return $ret;
+}
+
 sub _prettyToken {
     my ($class, $args) = @_;
     my $tok = $args->pstring('token');
@@ -188,7 +205,7 @@ sub _prettyToken {
     return $tok ? fstring($tok) : Ferret::undefined;
 }
 
-sub _ferret_code {
+sub _code {
     # this may read a file if a file a specified.
     return shift->{string};
 }

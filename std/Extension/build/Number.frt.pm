@@ -11,6 +11,15 @@
 #                              Argument list [1 items]
 #                                  Item 0
 #                                      Special variable '*self'
+#          Computed property 'cbrt'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@root'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Number '3'
 #          Computed property 'square'
 #              Body ('method' scope)
 #                  Instruction
@@ -102,8 +111,21 @@ my $result = do {
             }
         );
 
-        # Method event 'square' definition
+        # Method event 'cbrt' definition
         my $method_1 = FF::method_event_def(
+            $f, $scope, 'cbrt',
+            [],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $ret->inc;
+                return $ret->return( $self->property_u('root')
+                      ->call_u( [ num( $f, 3 ) ], $scope, undef, 8.3 ) );
+                return $ret->return;
+            }
+        );
+
+        # Method event 'square' definition
+        my $method_2 = FF::method_event_def(
             $f, $scope, 'square',
             [],
             sub {
@@ -120,7 +142,7 @@ my $result = do {
         );
 
         # Method event 'even' definition
-        my $method_2 = FF::method_event_def(
+        my $method_3 = FF::method_event_def(
             $f, $scope, 'even',
             [],
             sub {
@@ -142,7 +164,7 @@ my $result = do {
         );
 
         # Method event 'odd' definition
-        my $method_3 = FF::method_event_def(
+        my $method_4 = FF::method_event_def(
             $f, $scope, 'odd',
             [],
             sub {
@@ -164,7 +186,7 @@ my $result = do {
         );
 
         # Method event 'root' definition
-        my $method_4 = FF::method_event_def(
+        my $method_5 = FF::method_event_def(
             $f, $scope, 'root',
             [
                 {
@@ -177,24 +199,25 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                FF::need( $scope, $args, 'root', 20.2 ) or return;
+                FF::need( $scope, $args, 'root', 24.2 ) or return;
                 return $ret->return(
                     $scope->property_u('Math')->property_u('root')->call_u(
                         [
                             $scope->property_u('root'),
                             $scope->{special}->property_u('self')
                         ],
-                        $scope, undef, 21.2
+                        $scope, undef, 25.2
                     )
                 );
                 return $ret->return;
             }
         );
         $method_0->inside_scope( sqrt   => $scope, $proto, $class, 1, undef );
-        $method_1->inside_scope( square => $scope, $proto, $class, 1, undef );
-        $method_2->inside_scope( even   => $scope, $proto, $class, 1, 1 );
-        $method_3->inside_scope( odd    => $scope, $proto, $class, 1, 1 );
-        $method_4->inside_scope( root => $scope, $proto, $class, undef, undef );
+        $method_1->inside_scope( cbrt   => $scope, $proto, $class, 1, undef );
+        $method_2->inside_scope( square => $scope, $proto, $class, 1, undef );
+        $method_3->inside_scope( even   => $scope, $proto, $class, 1, 1 );
+        $method_4->inside_scope( odd    => $scope, $proto, $class, 1, 1 );
+        $method_5->inside_scope( root => $scope, $proto, $class, undef, undef );
     }
     FF::load_namespaces( $context, qw(Math Num) );
 };

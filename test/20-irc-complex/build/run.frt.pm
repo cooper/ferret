@@ -279,6 +279,87 @@
 #                  Lexical variable '$bot'
 #              Argument list [2 items]
 #                  Item 0
+#                      String 'pe'
+#                  Item 1
+#                      Anonymous function
+#                          Body ('function' scope)
+#                              Instruction
+#                                  Need
+#                                      Lexical variable '$msg'
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Negation
+#                                          Property 'commandHasParameters'
+#                                              Lexical variable '$msg'
+#                                  Body ('if' scope)
+#                                      Instruction
+#                                          Return
+#                              Instruction
+#                                  Assignment (lexical variable '$res')
+#                                      Call
+#                                          Property 'perlEval'
+#                                              Call
+#                                                  Bareword 'COMPILER'
+#                                                  Argument list [1 items]
+#                                                      Item 0
+#                                                          Call
+#                                                              Bareword 'convertNewlines'
+#                                                              Argument list [1 items]
+#                                                                  Item 0
+#                                                                      Call
+#                                                                          Property 'fromWord'
+#                                                                              Lexical variable '$msg'
+#                                                                          Argument list [1 items]
+#                                                                              Item 0
+#                                                                                  Number '1'
+#                                          Argument list [0 items]
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Property 'error'
+#                                          Lexical variable '$res'
+#                                  Body ('if' scope)
+#                                      Instruction
+#                                          Call
+#                                              Property 'privmsg'
+#                                                  Lexical variable '$bot'
+#                                              Argument list [2 items]
+#                                                  Item 0
+#                                                      Property 'channel'
+#                                                          Lexical variable '$msg'
+#                                                  Item 1
+#                                                      Property 'error'
+#                                                          Lexical variable '$res'
+#                                      Instruction
+#                                          Return
+#                              Instruction
+#                                  Assignment (lexical variable '$string')
+#                                      Property 'string'
+#                                          Call
+#                                              Bareword 'inspect'
+#                                              Named argument list [2 items]
+#                                                  Item 0
+#                                                      Pair 'value'
+#                                                          Property 'result'
+#                                                              Lexical variable '$res'
+#                                                  Item 1
+#                                                      Pair 'quiet'
+#                                                          Boolean true
+#                              Instruction
+#                                  Call
+#                                      Property 'privmsg'
+#                                          Lexical variable '$bot'
+#                                      Argument list [2 items]
+#                                          Item 0
+#                                              Property 'channel'
+#                                                  Lexical variable '$msg'
+#                                          Item 1
+#                                              Lexical variable '$string'
+#      Instruction
+#          Call
+#              Property 'addCommand'
+#                  Lexical variable '$bot'
+#              Argument list [2 items]
+#                  Item 0
 #                      String 'p'
 #                  Item 1
 #                      Bareword 'handlePerl'
@@ -419,7 +500,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            FF::need( $scope, $args, 'msg', 52.2 ) or return;
+            FF::need( $scope, $args, 'msg', 65.2 ) or return;
             if (
                 bool(
                     _not(
@@ -442,15 +523,15 @@ my $result = do {
                                 $scope->property_u('msg')
                                   ->property_u('fromWord')->call_u(
                                     [ num( $f, 1 ) ],
-                                    $scope, undef, 55.45
+                                    $scope, undef, 68.45
                                   )
                             ],
-                            $scope, undef, 55.3
+                            $scope, undef, 68.3
                         )
                     ],
-                    $scope, undef, 55.2
+                    $scope, undef, 68.2
                 ),
-                55.1
+                68.1
             );
             $scope->set_property_ow(
                 $context,
@@ -462,9 +543,9 @@ my $result = do {
                             str( $f, "p" )
                         )
                     ],
-                    $scope, undef, 56.25
+                    $scope, undef, 69.25
                 ),
-                56.1
+                69.1
             );
             if ( bool( $scope->property_u('res')->property_u('error') ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -474,7 +555,7 @@ my $result = do {
                         $scope->property_u('msg')->property_u('channel'),
                         $scope->property_u('res')->property_u('error')
                     ],
-                    $scope, undef, 58.15
+                    $scope, undef, 71.15
                 );
                 return $ret->return();
             }
@@ -483,7 +564,7 @@ my $result = do {
                     $scope->property_u('msg')->property_u('channel'),
                     $scope->property_u('res')->property_u('perl')
                 ],
-                $scope, undef, 61.15
+                $scope, undef, 74.15
             );
             return $ret->return;
         }
@@ -505,12 +586,12 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            FF::need( $scope, $args, 'string', 65.2 ) or return;
+            FF::need( $scope, $args, 'string', 78.2 ) or return;
             return $ret->return(
                 $scope->property_u('string')->property_u('split')
-                  ->call_u( [ str( $f, "_NL_" ) ], $scope, undef, 66.2 )
+                  ->call_u( [ str( $f, "_NL_" ) ], $scope, undef, 79.2 )
                   ->property_u('join')
-                  ->call_u( [ str( $f, "\n" ) ], $scope, undef, 66.4 ) );
+                  ->call_u( [ str( $f, "\n" ) ], $scope, undef, 79.4 ) );
             return $ret->return;
         }
     );
@@ -750,6 +831,82 @@ my $result = do {
             return $ret->return;
         }
     );
+
+    # Anonymous function definition
+    my $func_6 = FF::function_def(
+        $f, $scope, undef,
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
+        sub {
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my $self = $_self || $self;
+            $ret->inc;
+            FF::need( $scope, $args, 'msg', 49.2 ) or return;
+            if (
+                bool(
+                    _not(
+                        $scope->property_u('msg')
+                          ->property_u('commandHasParameters')
+                    )
+                )
+              )
+            {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                return $ret->return();
+            }
+            $scope->set_property_ow(
+                $context,
+                res => $scope->property_u('COMPILER')->call_u(
+                    [
+                        $scope->property_u('convertNewlines')->call_u(
+                            [
+                                $scope->property_u('msg')
+                                  ->property_u('fromWord')->call_u(
+                                    [ num( $f, 1 ) ],
+                                    $scope, undef, 52.45
+                                  )
+                            ],
+                            $scope, undef, 52.3
+                        )
+                    ],
+                    $scope, undef, 52.2
+                  )->property_u('perlEval')->call_u( {}, $scope, undef, 52.75 ),
+                52.1
+            );
+            if ( bool( $scope->property_u('res')->property_u('error') ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                $scope->property_u('bot')->property_u('privmsg')->call_u(
+                    [
+                        $scope->property_u('msg')->property_u('channel'),
+                        $scope->property_u('res')->property_u('error')
+                    ],
+                    $scope, undef, 54.15
+                );
+                return $ret->return();
+            }
+            $scope->set_property_ow(
+                $context,
+                string => $scope->property_u('inspect')->call_u(
+                    {
+                        value =>
+                          $scope->property_u('res')->property_u('result'),
+                        quiet => $true
+                    },
+                    $scope, undef, 57.2
+                  )->property_u('string'),
+                57.1
+            );
+            $scope->property_u('bot')->property_u('privmsg')->call_u(
+                [
+                    $scope->property_u('msg')->property_u('channel'),
+                    $scope->property_u('string')
+                ],
+                $scope, undef, 58.15
+            );
+            return $ret->return;
+        }
+    );
     $func_0->inside_scope( handlePerl => $scope, $scope, undef, undef, undef );
     $func_1->inside_scope(
         convertNewlines => $scope,
@@ -812,14 +969,24 @@ my $result = do {
         ],
         $scope, undef, 35.3
     );
+    $scope->property_u('bot')->property_u('addCommand')->call_u(
+        [
+            str( $f, "pe" ),
+            $func_6->inside_scope(
+                (undef) => $scope,
+                $scope, undef, undef, undef
+            )
+        ],
+        $scope, undef, 48.3
+    );
     $scope->property_u('bot')->property_u('addCommand')
       ->call_u( [ str( $f, "p" ), $scope->property_u('handlePerl') ],
-        $scope, undef, 48.3 );
+        $scope, undef, 61.3 );
     $scope->property_u('bot')->property_u('addCommand')
       ->call_u( [ str( $f, "pp" ), $scope->property_u('handlePerl') ],
-        $scope, undef, 49.3 );
+        $scope, undef, 62.3 );
     $scope->property_u('bot')->property_u('connect')
-      ->call_u( {}, $scope, undef, 69.3 );
+      ->call_u( {}, $scope, undef, 82.3 );
 };
 
 FF::after_content();

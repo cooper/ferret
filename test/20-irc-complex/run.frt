@@ -45,6 +45,19 @@ $bot.addCommand("e") {
     $bot.privmsg($msg.channel, $string)
 }
 
+$bot.addCommand("pe") {
+    need $msg
+    if !$msg.commandHasParameters:
+        return
+    $res = COMPILER(convertNewlines($msg.fromWord(1))).perlEval()
+    if $res.error {
+        $bot.privmsg($msg.channel, $res.error)
+        return
+    }
+    $string = inspect(value: $res.result, quiet: true).string
+    $bot.privmsg($msg.channel, $string)
+}
+
 $bot.addCommand("p", handlePerl)
 $bot.addCommand("pp", handlePerl)
 

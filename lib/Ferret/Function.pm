@@ -173,15 +173,8 @@ sub _instance_of {
 }
 
 sub signature_string {
-    my ($func, @parts) = shift;
-    foreach my $sig (@{ $func->{signatures} }) {
-        my $s =
-            ($sig->{optional} ? '?'              : '') . '$' . $sig->{name} .
-            ($sig->{type}     ? ':'.$sig->{type} : '') .
-            ($sig->{more}     ? '...'            : '');
-        push @parts, $s;
-    }
-    return join ' ', @parts;
+    my $func = shift;
+    return Ferret::Shared::Utils::signature_to_string($func->{signatures});
 }
 
 sub call_with_self {

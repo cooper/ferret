@@ -4,6 +4,10 @@ prop sqrt {
     return Math.sqrt(*self)
 }
 
+prop cbrt {
+    return @root(3)
+}
+
 prop square {
     return *self ^ 2
 }

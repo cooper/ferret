@@ -5,6 +5,7 @@ use warnings;
 use strict;
 use 5.010;
 
+use Ferret::Shared::Utils;
 use Ferret::Lexer::Rules;
 use Ferret::Lexer::Lexer qw(string_lexer);
 
@@ -51,7 +52,7 @@ my %semi_follows = map { $_ => 1 } qw(
 );
 
 # reused formats
-my $prop_reg    = qr/[A-Za-z_]+[A-Za-z0-9_]*/;
+my $prop_reg    = $Ferret::Shared::Utils::prop_reg;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
 my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
 
