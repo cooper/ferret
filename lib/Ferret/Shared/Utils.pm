@@ -10,6 +10,7 @@ use strict;
 use 5.010;
 
 our $prop_reg = qr/[A-Za-z_]+[A-Za-z0-9_]*/;
+our $type_reg = qr/[A-Za-z_]+[A-Za-z0-9_\:]*/;
 
 sub import {
     my $this_package = shift;
@@ -76,7 +77,7 @@ sub string_to_signature {
     # FIXME: currently will not match types with :: in them
     # this is ok for the time being because they are not yet supported
 
-    while ($string =~ s/^(\?)?\$($prop_reg|\d+)+(?:\:($prop_reg))?(\.\.\.)?\s*//) {
+    while ($string =~ s/^(\?)?\$($prop_reg|\d+)+(?:\:($type_reg))?(\.\.\.)?\s*//) {
         my $arg = { name => $2 };
         $arg->{optional} = 1  if $1;
         $arg->{type}     = $3 if $3;
@@ -90,13 +91,6 @@ sub string_to_signature {
 # check if an argument signature fits into a function signature.
 #
 # FIXME: how to handle 'need' value requirements
-# FIXME: same type name can mean different types depending on scope
-# FIXME: aliases don't work. String and Str will not match
-#
-# TODO: possible solution
-# for type{}, I think I can solve the above issues by always using the full
-# symbol name for the type. just pass that to this function. for example,
-# Str and String would both evaluate to 'CORE::String'
 #
 #   arg_sig                         func_sig                            match
 #   ------------------------------  --------------------------------  --------
@@ -111,7 +105,7 @@ sub string_to_signature {
 #
 sub signatures_compatible {
     my ($arg_sig, $func_sig) = @_;
-    $arg_sig  = string_to_signature($arg_sig) if !ref $arg_sig;
+    $arg_sig  = string_to_signature($arg_sig)  if !ref $arg_sig;
     $func_sig = string_to_signature($func_sig) if !ref $func_sig;
 
     # map variables to their argument elements.

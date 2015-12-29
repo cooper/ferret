@@ -43,4 +43,27 @@ sub closest_context {
     return first { $_->isa('Ferret::Context') } $scope, $scope->parents;
 }
 
+sub get_full_name {
+    my ($scope, $prop_name) = @_;
+    my ($val, $owner, $name) = $scope->_property($prop_name) or return;
+    $prop_name = $name;
+
+    # it's a context.
+    if ($owner->isa('Ferret::Context')) {
+        return $owner->{name}."::$prop_name";
+    }
+
+    # it's a scope.
+    if ($owner->isa('Ferret::Scope')) {
+        my $ctx = $owner->closest_context;
+        my $addr = $owner + 0;
+        return $ctx->{name}."::$addr.$prop_name"
+    }
+
+    # it's some other object.
+    my $addr = $owner + 0;
+    return "$addr\::$prop_name";
+
+}
+
 1

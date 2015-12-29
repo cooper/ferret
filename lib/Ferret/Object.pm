@@ -213,7 +213,7 @@ sub _property {
             $p->{last_name} = $prop_name;
         }
 
-        return ($p, $obj);
+        return ($p, $obj, $prop_name);
     }
 
     # try a different context.
