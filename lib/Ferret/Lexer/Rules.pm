@@ -256,6 +256,20 @@ our %element_rules = (
 
     },
 
+    List => {
+        children_must_be => 'ListItem'
+    },
+
+    ListItem => {
+
+        children_must_satisfy => {
+            sub { shift->isa('F::Expression') },
+            'Lists can only contain expressions of sorts'
+        },
+
+        max_children => 1
+    },
+
     Method => {
 
         # direct parent must be a class.
@@ -399,20 +413,20 @@ our %element_rules = (
     PropertyVariable => {
 
         must_be_somewhere_inside => [                                           # PropertyVariable[0]
-            'Inside',
+            'Inside Type',
             "Property variable (standalone .property) can only exist within ".
-            "an 'inside' block"
+            "'inside' or 'type' block"
         ],
 
         # make sure we're in the BODY of the Inside, not the param_exp.
         parent_must_satisfy => [                                                # PropertyVariable[1]
             sub {
                 my $el = shift;
-                my $inside = $el->first_self_or_parent('Inside') or return;
+                my $inside = $el->first_self_or_parent('Inside') or return 1;
                 return $el->somewhere_inside($inside->body);
             },
-            "Property variable (standalone .property) can only exist within ".
-            "an 'inside' block"
+            "Property variable (standalone .property) cannot exist within ".
+            "'inside' parameter expression; it must be in the body instead"
         ]
 
     },
@@ -432,12 +446,15 @@ our %element_rules = (
 
                     # not instruction, pass on top children_must_be.
                     return 1 if $el->type ne 'Instruction';
-
-                    # first of all, it has to be an expression.
                     my $child = $el->first_child;
-                    return if !$child || !$child->isa('F::Expression');
 
-                    # TODO: further checking
+                    # first of all, it has to be an expression,
+                    # unless it's a type requirement.
+                    return if
+                        !$child or
+                        !$child->isa('F::Expression')
+                        && $child->type ne 'TypeRequirement';
+
                     return 1;
                 },
                 'Type definitions can only contain test values or method '.
@@ -483,6 +500,33 @@ our %element_rules = (
 
         max_children => 1,                                                      # IfParameter[1]
         min_children => 1                                                       # IfParameter[2]
+
+    },
+
+    TypeRequirement => {
+
+        parent_must_be => [
+            'Instruction',
+            'Type requirement (can/satisfies/transform) must be a direct '.
+            'child of an instruction'
+        ],
+
+        children_must_satisfy => [
+            sub { shift->isa('F::Expression') },
+            'Type requirement (can/satisfies/transform) must contain '.
+            'an expression of some sort'
+        ],
+
+        max_children => 1,
+        min_children => 1
+
+        # Rule implemented in F/Type.pm:
+        #   If the type requirement is a 'can' statement,
+        #   its interface method, represented by a subtype of Call,
+        #   must have a 'function' of type PropertyVariable.
+        #   e.g.   .someMethod()
+        #   NOT    someMethod()
+        #   Checked on ->close of the TypeRequirement.
 
     },
 

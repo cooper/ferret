@@ -275,7 +275,7 @@ my (@closes, %precedence);
         qw( WantNeed PropertyModifier ),                                # 1
         qw( Negation Operation Pair ListItem List Call ),               # 2
         qw( Assignment Return ReturnPair Load Stop ),                   # 3
-        qw( SharedDeclaration LocalDeclaration ),
+        qw( SharedDeclaration LocalDeclaration TypeRequirement ),
         qw( Instruction )
     );
     my $i = 0;
@@ -303,7 +303,7 @@ sub next_token_must_be {
     my $next_t = $c->{upcoming}[0];
     if (!$next_t || $next_t->[0] ne $tok) {
         my $pretty = Ferret::Lexer::pretty_token($tok);
-        my $desc   = $c->node->desc;
+        my $desc   = $c->node->detail;
         my $e = "following $desc";
            $e = [ $e, $err_desc ] if length $err_desc;
         return $c->expected($pretty, $e);
@@ -335,11 +335,12 @@ sub fatal {
     # if $last_el is not defined at this point, we are at the beginning.
     $last_el = $last_el->first_child
         if $last_el && $last_el->type eq 'Instruction';
-    my $near = $last_el ? $last_el->desc : 'beginning of file';
+    my $near = $last_el ? $last_el->detail : 'beginning of file';
 
     # find a useful description for the parent.
-    $parent  = $parent->parent if $parent->type eq 'Instruction';
-    $parent  = $parent->desc   if $parent;
+    # $parent = $parent->parent if $parent->type eq 'Instruction';
+    # the above is disabled because instruction ->detail says child now.
+    $parent  = $parent->detail if $parent;
 
     my @caller = @{ delete $c->{err_caller} || [caller] };
     $err .= "\n     Error   -> $opts{err_type}" if length $opts{err_type};
@@ -399,7 +400,7 @@ sub throw {
     # if we're processing element rules, use the actual element if possible.
     # otherwise, use the pretty representation of the token.
     my $what = $c->rule_el ?
-        $c->rule_el->desc  :
+        $c->rule_el->detail :
         Ferret::Lexer::pretty_token($c->label);
 
     # stringify.
@@ -409,7 +410,7 @@ sub throw {
 
     fatal($c, "$err_string.", $el,
         err_type => $type,
-        el_desc  => $el->desc
+        el_desc  => $el->detail
     );
 }
 

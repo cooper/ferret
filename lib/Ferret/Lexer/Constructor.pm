@@ -350,6 +350,16 @@ sub c_TYPE {
     return $type;
 }
 
+sub c_KEYWORD_CAN {
+    my ($c, $value) = @_;
+
+    # create a type requirement.
+    my $req = F::TypeRequirement->new(req_type => 'can');
+    $c->adopt_and_set_node($req);
+
+    return $req;
+}
+
 sub c_KEYWORD_ON {
     my ($c, $value) = @_;
 
@@ -583,8 +593,13 @@ sub c_OP_CALL {
 sub handle_call {
     my ($c, $value, $has_list, $is_index) = @_;
 
-    my $terminator = $is_index ? 'BRACKET_E' : 'PAREN_E';
-    my $package    = $is_index ? 'F::Index'  : 'F::Call';
+    # if it's a 'can', this is an interface method requirement.
+    my $is_req = ($c->node->{req_type} || '') eq 'can';
+
+    # determine list terminator and call package.
+    my $terminator = $is_index ? 'BRACKET_E'          : 'PAREN_E';
+    my $package    = $is_index ? 'F::Index'           :
+                     $is_req   ? 'F::InterfaceMethod' : 'F::Call';
 
     # a call can only come after an expression.
     my $last_el = $c->last_el;
@@ -601,14 +616,20 @@ sub handle_call {
         $list->{collection} = 1; # pretend to be array/hash for checks.
         $call->adopt($list);
 
-        # found a more likely thing to capture a closure -
-        # something that's not a call like an if or on.
-        my $more_likely = $c->clos_cap
-            if $c->clos_cap && $c->clos_cap->type ne 'Call';
+        # if it's not an index or method requirement,
+        # it might be a closure-capturing call.
+        if (!$is_index && !$is_req) {
 
-        # clos_cap is just a call or nothing; use this call as the new clos_cap.
-        $c->capture_closure_with($call) if !$is_index && !$more_likely;
+            # found a more likely thing to capture a closure -
+            # something that's not a call like an 'if' or 'on'
+            my $more_likely = $c->clos_cap
+                if $c->clos_cap && $c->clos_cap->type ne 'Call';
 
+            # clos_cap is just a call or nothing;
+            # use this call as the new clos_cap.
+            $c->capture_closure_with($call) if !$more_likely;
+
+        }
     }
 
     return $call;
@@ -642,7 +663,7 @@ sub c_PAREN_E {
     #       as a special case, close function calls here as well, since they are
     #       terminated by the end of their argument list.
     #
-    $c->close_node_maybe('Call');
+    $c->close_node_maybe('Call') || $c->close_node_maybe('InterfaceMethod');
 
     # finally, the current list becomes the next list up in the tree.
 
@@ -847,7 +868,7 @@ sub c_OP_SEMI {
     # close these things.
     $c->close_nodes(qw(
         WantNeed PropertyModifier Negation Operation
-        Assignment Return ReturnPair
+        Assignment Return ReturnPair TypeRequirement
         SharedDeclaration LocalDeclaration Load Stop
     ));
 
@@ -912,10 +933,11 @@ sub c_VAR_PROP {
     my ($c, $value) = @_;
 
     # Rule PropertyVariable[0]:
-    #   Must be somewhere inside an Inside.
+    #   Must be somewhere inside an Inside or Type.
 
     # Rule PropertyVariable[1]:
-    #   Must be somewhere inside the parent's first ancestor Inside's body.
+    #   Must be somewhere inside the parent's first ancestor Inside's body,
+    #   if such an ancestor exists.
 
     my $var = F::PropertyVariable->new(var_name => $value);
     return $c->node->adopt($var);

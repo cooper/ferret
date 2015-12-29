@@ -1,1 +1,7 @@
-FF::typedef($scope, '<<name>>', [ <<equal_to>> ]);
+FF::typedef($scope, '<<name>>', sub {
+    my ($ins) = @_;
+    FF::typedef_check(
+        conditions => <<conditions>>,
+        equals => <<equal_to>>
+    );
+});

@@ -59,6 +59,8 @@ use F::Else;
 use F::PropertyVariable;
 use F::Type;
 use F::Defer;
+use F::TypeRequirement;
+use F::InterfaceMethod;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (

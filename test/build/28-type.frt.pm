@@ -137,8 +137,19 @@ my $result = do {
     );
     $func_0->inside_scope( announce => $scope, $scope, undef, undef, undef );
     FF::load_namespaces( $context, qw(Gender Str) );
-    FF::typedef( $scope, 'Gender',
-        [ FF::get_symbol( $f, 'male' ), FF::get_symbol( $f, 'female' ) ] );
+    FF::typedef(
+        $scope, 'Gender',
+        sub {
+            my ($ins) = @_;
+            FF::typedef_check(
+                conditions =>,
+                equals     => [
+                    FF::get_symbol( $f, 'male' ),
+                    FF::get_symbol( $f, 'female' )
+                ]
+            );
+        }
+    );
     $scope->property_u('announce')
       ->call_u( [ str( $f, "Robert" ), FF::get_symbol( $f, 'male' ) ],
         $scope, undef, 12.2 );

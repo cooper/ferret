@@ -108,8 +108,18 @@ my $result = do {
     $func_1->inside_scope( post => $scope, $scope, undef, undef, undef );
     FF::load_namespaces( $context, qw(HTTP HTTP::Client Str) );
 
-    FF::typedef( $scope, 'HTTPMethod',
-        [ FF::get_symbol( $f, 'GET' ), FF::get_symbol( $f, 'POST' ) ] );
+    FF::typedef(
+        $scope,
+        'HTTPMethod',
+        sub {
+            my ($ins) = @_;
+            FF::typedef_check(
+                conditions =>,
+                equals =>
+                  [ FF::get_symbol( $f, 'GET' ), FF::get_symbol( $f, 'POST' ) ]
+            );
+        }
+    );
     $scope->set_property_ow(
         $context,
         client => [

@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent 'F::Closure';
 
-use Scalar::Util 'weaken';
+use Scalar::Util qw(weaken);
 
 sub new {
     my ($class, %opts) = @_;
@@ -19,19 +19,65 @@ sub new {
     return $type;
 }
 
+sub close : method {
+    my $type = shift;
+
+    # check method requirements.
+    # the function being 'called' must be a VAR_PROP.
+    foreach my $item (map $_->first_child, $type->body->children) {
+        if ($item && ($item->{req_type} || '') eq 'can') {
+            my $var = $item->first_child->function;
+            return $var->unexpected([
+                "in interface method requirement ('can')",
+                "Only method requirements are permitted, using the syntax: ".
+                "can .methodName(arguments)"
+            ]) if $var->type ne 'PropertyVariable';
+        }
+    }
+
+    return $type->SUPER::close(@_);
+}
+
 sub perl_fmt {
     my $type = shift;
 
-    my @possibilities;
+    my (@equal_possibly, @requirements);
     foreach my $item (map $_->first_child, $type->body->children) {
-        next if $item->type eq 'Call'; # TODO
-        push @possibilities, $item->perl_fmt_do;
+
+        # it's some sort of requirement or transform.
+        if (defined $item->{req_type}) {
+            my $format = $item->{req_type} eq 'can' ?
+                         _handle_can($item)         :
+                         $item->perl_fmt_do;
+            push @requirements, [ $item->{req_type} => $format ];
+        }
+
+        # it's just an expression.
+        push @equal_possibly, $item->perl_fmt_do;
+
     }
+
+    # they must be subs with $ins.
+
+    my $equal_to = join(', ', @equal_possibly);
+       $equal_to = $equal_to ? "[ $equal_to ]" : 'undef';
 
     return type => {
         name     => $type->type_name,
-        equal_to => join(', ', @possibilities)
+        equal_to => $equal_to
     };
+}
+
+sub _handle_can {
+    my $req  = shift;
+    my $mreq = $req->first_child;
+    print "CAN($mreq)\n";
+
+    # the function being 'called' must be a property variable.
+    my $var = $mreq->function;
+
+
+    return '';
 }
 
 sub type_name  { shift->{type_name} }

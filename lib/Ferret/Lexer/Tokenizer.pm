@@ -17,12 +17,13 @@ my ($position, $file);
 # when changing this, update Keywords.md
 my $keyword_reg = '\\b(?:'.join('|', qw{
     package     class       end         init
-    method      func        prop
+    method      func        prop        load
     want        need        share       local
     on          before      after       inside
     if          else        return      stop
     true        false       undefined   defer
-    for         in          load        type
+    for         in          gather      take
+    type        can         satisfies   transform
     delete      weaken      __END__
 }).')\\b';
 
