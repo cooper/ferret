@@ -177,13 +177,13 @@ sub verify_lexical_variables {
 
         # maybe we can provide useful info on when it was first declared.
         my $earliest = $soi->earliest_lex_declaration($var->{var_name});
-        my ($this_line, $other_line) = ($var->{create_line}, int $earliest);
+        my ($this_line, $other_line) = ($var->{create_line}, $earliest);
         if (defined $earliest) {
-            $hints[0] = [ $var->{var_name}, $other_line ];
+            $hints[0] = [ $var->{var_name}, int $other_line ];
         }
 
         # maybe if the variable is within the assignment, that's helpful.
-        if (my $a = $v->{assignments}{$earliest}) {
+        if (defined $earliest and my $a = $v->{assignments}{$earliest}) {
             if ($var->somewhere_inside($a)) {
                 delete $hints[0];
                 $hints[1] = [ $var->{var_name} ];

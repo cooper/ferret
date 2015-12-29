@@ -4,7 +4,7 @@ package F::Assignment;
 use warnings;
 use strict;
 use 5.010;
-use parent 'F::Expression';
+use parent 'F::Statement';
 
 sub type { 'Assignment' }
 sub desc {

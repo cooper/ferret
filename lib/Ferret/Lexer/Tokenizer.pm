@@ -71,15 +71,14 @@ my @token_formats = (
     # this is way up here because it must be above VAR_SYM and OP_VALUE.
     [ OP_PACK       => qr/::/                                               ],  # package
 
+    [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/, \&increment_lines           ],  # simple .property
+
     # variables
     [ VAR_LEX       => qr/\$$prop_reg/,   \&remove_first_char               ],  # lexical variable
     [ VAR_THIS      => qr/\@$prop_reg/,   \&remove_first_char               ],  # object variable
     [ VAR_SPEC      => qr/\*$prop_reg/,   \&remove_first_char               ],  # special variable
     [ VAR_SYM       => qr/\:$prop_reg/,   \&remove_first_char               ],  # symbol variable
     [ VAR_SET       => qr/\<[A-Za-z_]+[A-Za-z0-9:_]*\>/, \&remove_firstlast ],  # set type variable
-
-    # simple properties
-    [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/, \&increment_lines           ],  # simple .property
 
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start

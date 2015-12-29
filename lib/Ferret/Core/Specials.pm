@@ -8,7 +8,7 @@ use 5.010;
 
 use Ferret::Core::Conversion qw(
     flist_wrap flist fbool
-    pstring fnumber
+    pstring fnumber fstring
 );
 
 my %specials = (
@@ -22,6 +22,7 @@ my %specials = (
     getOwn          => _function('getOwn', '$property:Str'),
     set             => _function('set', '$property:Str $value'),
     commonClass     => _function('commonClass', '$other:Object'),
+    fullName        => _function('fullName', '$property:Str'),
     addr            => \&_addr
 );
 
@@ -126,6 +127,12 @@ sub _commonClass {
 sub _addr {
     my $obj = shift;
     return fnumber($obj + 0);
+}
+
+sub _fullName {
+    my ($obj, $args) = @_;
+    my $prop_name = pstring($args->{property});
+    return fstring($obj->full_name($prop_name));
 }
 
 1

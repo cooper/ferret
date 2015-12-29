@@ -33,6 +33,7 @@ sub is_type {
 sub parent      { shift->{parent}           }       # parent element
 sub type        { 'Element'                 }       # element type
 sub desc        { lcfirst shift->type       }       # description string
+sub detail      { shift->desc               }       # detailed description
 sub fake        { shift->{fake}             }       # is it fake
 sub type_or_tok { shift->type               }       # type
 sub t           { shift->type_or_tok        }       # shorthand type

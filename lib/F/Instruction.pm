@@ -5,7 +5,12 @@ use warnings;
 use strict;
 use parent qw(F::Statement);
 
-sub type { 'Instruction' }
+sub type   { 'Instruction' }
+sub detail {
+    my $instr = shift;
+    my $child = $instr->first_child;
+    return $child ? $child->desc.' instruction' : 'instruction';
+}
 
 sub add_maybe {
     my ($instr, $maybe) = @_;

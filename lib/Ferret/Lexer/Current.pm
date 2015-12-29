@@ -378,8 +378,8 @@ sub unexpected {
 
     # if we're processing element rules, use the actual element if possible.
     # otherwise, use the pretty representation of the token.
-    my $what = $c->rule_el ?
-        $c->rule_el->desc  :
+    my $what = $c->rule_el  ?
+        $c->rule_el->detail :
         Ferret::Lexer::pretty_token($c->label);
 
     fatal($c, "Unexpected $what$reason.$err_desc", $el);

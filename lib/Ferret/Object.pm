@@ -527,6 +527,29 @@ sub call_u {
     return (shift->call(@_)) || Ferret::undefined;
 }
 
+sub full_name {
+    my ($obj, $prop_name) = @_;
+    my ($val, $owner, $name) = $obj->_property($prop_name) or return;
+    $prop_name = $name;
+
+    # it's a context.
+    if ($owner->isa('Ferret::Context')) {
+        return $owner->{name}."::$prop_name";
+    }
+
+    # it's a scope.
+    if ($owner->isa('Ferret::Scope')) {
+        my $ctx = $owner->closest_context;
+        my $addr = $owner->{scope_id};
+        return $ctx->{name}."::$addr\::$prop_name"
+    }
+
+    # it's some other object.
+    my $addr = $owner + 0;
+    return "$addr\::$prop_name";
+
+}
+
 # garbage disposal - remove object from Ferret instance.
 sub DESTROY {
     my $obj = shift;
