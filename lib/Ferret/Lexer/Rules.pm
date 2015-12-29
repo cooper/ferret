@@ -318,7 +318,8 @@ our %element_rules = (
         ],
 
         # there can only be one child.
-        max_children => 1                                                       # SharedDeclaration[3]
+        max_children => 1,                                                      # SharedDeclaration[3]
+        min_children => 1                                                       # SharedDeclaration[4]
 
     },
 
@@ -346,7 +347,8 @@ our %element_rules = (
         ],
 
         # there can only be one child.
-        max_children => 1                                                       # LocalDeclaration[3]
+        max_children => 1,                                                      # LocalDeclaration[3]
+        max_children => 1                                                       # LocalDeclaration[4]
 
     },
 
@@ -376,8 +378,6 @@ our %element_rules = (
 
         # there can only be one child.
         max_children => 1,                                                      # Load[2]
-
-        # there must be one child.
         min_children => 1                                                       # Load[3]
 
     },

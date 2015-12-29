@@ -17,6 +17,7 @@ sub new {
     # create a new object.
     my $scope = $class->SUPER::new($f,
         faketype => 'Scope',
+        scope_id => $f->{_scope_cid}++,
         %opts
     );
 
@@ -56,8 +57,8 @@ sub get_full_name {
     # it's a scope.
     if ($owner->isa('Ferret::Scope')) {
         my $ctx = $owner->closest_context;
-        my $addr = $owner + 0;
-        return $ctx->{name}."::$addr.$prop_name"
+        my $addr = $owner->{scope_id};
+        return $ctx->{name}."::$addr\::$prop_name"
     }
 
     # it's some other object.

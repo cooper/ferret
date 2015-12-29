@@ -1268,6 +1268,9 @@ sub c_KEYWORD_SHARE {
     # Rule SharedDeclaration[3]:
     #   Number of direct children must not exceed one (1).
 
+    # Rule SharedDeclaration[4]:
+    #   Number of direct children must be no less than one (1).
+
     my $share = F::SharedDeclaration->new;
     return $c->adopt_and_set_node($share);
 }
@@ -1294,6 +1297,9 @@ sub c_KEYWORD_LOCAL {
 
     # Rule LocalDeclaration[3]:
     #   Number of direct children must not exceed one (1).
+
+    # Rule LocalDeclaration[4]:
+    #   Number of direct children must be no less than one (1).
 
     my $local = F::LocalDeclaration->new;
     return $c->adopt_and_set_node($local);
