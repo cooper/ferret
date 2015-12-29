@@ -15,7 +15,7 @@ sub adopt {
 
     # first item --
     # if this is a collection, determine whether value list or hash.
-    if ($list->children == 1) {
+    if ($list->children == 1 && !$list->first_child->children) {
 
         # if the element is a pair, it's a hash.
         # otherwise, it's an array.
@@ -38,17 +38,28 @@ sub adopt {
 
     # hashes must contain ONLY pairs.
     if ($list->{hash} && $el->type ne 'Pair') {
-        die "hashes can only contain key-value pairs\n";
+        return $el->unexpected([
+            'inside hash',
+            'Hashes can only contain key-value pairs'
+        ]);
     }
 
     # arrays CANNOT contain pairs.
     # more specifically, it can only contain expressions...
     # we'll get to that.
     if ($list->{array} && $el->type eq 'Pair') {
-        die "arrays cannot contain key-value pairs\n";
+        return $el->unexpected([
+            'inside list',
+            'Value lists cannot contain key-value pairs'
+        ]);
     }
 
-    die "list not expected to have any elements\n" if $list->{must_be_empty};
+    # hash was supposed to be empty.
+    return $el->unexpected([
+        'inside empty hash',
+        'This hash list contains a colon (:), indicating it must be empty'
+    ]) if $list->{must_be_empty};
+
     return $item->SUPER::adopt($el);
 }
 

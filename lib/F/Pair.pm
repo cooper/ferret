@@ -3,7 +3,7 @@ package F::Pair;
 
 use warnings;
 use strict;
-use parent qw(F::Node F::Expression);
+use parent qw(F::Node);
 
 sub type { 'Pair' }
 sub desc {

@@ -262,10 +262,10 @@ our %element_rules = (
 
     ListItem => {
 
-        children_must_satisfy => {
-            sub { shift->isa('F::Expression') },
+        children_must_satisfy => [
+            sub { $_[0]->isa('F::Expression') || $_[0]->isa('F::Pair') },
             'Lists can only contain expressions of sorts'
-        },
+        ],
 
         max_children => 1
     },
@@ -527,6 +527,20 @@ our %element_rules = (
         #   e.g.   .someMethod()
         #   NOT    someMethod()
         #   Checked on ->close of the TypeRequirement.
+
+    },
+
+    Function => {
+
+        # if it's an anonymous function, it can act as an expression and be
+        # just about anywhere. if not, it must be direct child of scope owner.
+        parent_must_satisfy => [
+            sub {
+                my ($parent, $func) = @_;
+                return $func->anonymous || $parent->isa('F::ScopeOwner');
+            },
+            'Function must be inside a scope owner'
+        ]
 
     },
 
