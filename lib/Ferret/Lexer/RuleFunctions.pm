@@ -347,13 +347,13 @@ sub F::Element::allows_child {
 
     # children must be of a certain type.
     if ($set->{children_must_be}) {
-        return $set->err(child_not_allowed => $parent_maybe->desc)
+        return $set->err(child_not_allowed => $parent_maybe->detail)
             if !$set->list_contains(children_must_be => $child_maybe->t);
     }
 
     # children must match a subroutine.
     if (my $code = $set->rule_code('children_must_satisfy')) {
-        return $set->err(child_not_allowed => $parent_maybe->desc)
+        return $set->err(child_not_allowed => $parent_maybe->detail)
             if !$code->($child_maybe, $parent_maybe);
     }
 
@@ -367,13 +367,13 @@ sub F::Element::allows_parent {
 
     # parent must be of a certain type.
     if ($set->{parent_must_be}) {
-        return $set->err(child_not_allowed => $parent_maybe->desc)
+        return $set->err(child_not_allowed => $parent_maybe->detail)
             if !$set->list_contains(parent_must_be => $parent_maybe->t);
     }
 
     # parent must match a subroutine.
     if (my $code = $set->rule_code('parent_must_satisfy')) {
-        return $set->err(child_not_allowed => $parent_maybe->desc)
+        return $set->err(child_not_allowed => $parent_maybe->detail)
             if !$code->($parent_maybe, $child_maybe);
     }
 
@@ -421,13 +421,13 @@ sub F::Element::allows_previous {
         $set->list_contains(must_come_after => 'NONE');
 
     # require something, but there's nothing.
-    return $set->err(expected_before => $child_maybe->desc) if !$previous_maybe;
+    return $set->err(expected_before => $child_maybe->detail) if !$previous_maybe;
 
     # this type is in the list.
     return $ok if $set->list_contains(must_come_after => $previous_maybe->t);
 
     # this type doesn't work.
-    return $set->err(previous_not_allowed => $previous_maybe->desc);
+    return $set->err(previous_not_allowed => $previous_maybe->detail);
 
 }
 
@@ -457,7 +457,7 @@ sub F::Element::previous_allows {
     return $ok if $set->list_contains(must_come_before => $child_maybe->t);
 
     # this type doesn't work.
-    return $set->err(previous_not_allowed => $previous_maybe->desc);
+    return $set->err(previous_not_allowed => $previous_maybe->detail);
 
 }
 
@@ -474,7 +474,7 @@ sub F::Node::has_room {
     my $current = scalar $parent_maybe->children;
     my $bad = $after_check ? $current > $max : $current >= $max;
     return $set->err(
-        parent_maxed_out => $parent_maybe->desc, $max
+        parent_maxed_out => $parent_maybe->detail, $max
     ) if $bad;
 
     return $ok;
@@ -491,7 +491,7 @@ sub F::Node::has_minimal {
     # less than the minimum.
     my $current = scalar $node->children;
     return $set->err(
-        not_enough_children => $node->desc, $min
+        not_enough_children => $node->detail, $min
     ) if $current < $min;
 
 
