@@ -43,6 +43,14 @@ my @methods = (
     toNumber => {
         code => \&_to_number
     },
+    uppercase => {
+        prop => 1,
+        code => \&_uppercase
+    },
+    lowercase => {
+        prop => 1,
+        code => \&_lowercase
+    },
     copy => {
         code => \&_copy
     }
@@ -165,6 +173,16 @@ sub _fill {
         %info = map { $_ => $args->pstring($_) } keys %$args;
     }
     return $str->fill(\%info);
+}
+
+sub _uppercase {
+    my $str = shift;
+    return fstring(uc $str->{str_value});
+}
+
+sub _lowercase {
+    my $str = shift;
+    return fstring(lc $str->{str_value});
 }
 
 sub _to_number {

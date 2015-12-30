@@ -334,10 +334,9 @@ sub typedef {
     my $transform = sub {
         my ($func, $obj) = @_;
 
-        # we can't do anything with a non-function.
-        # FIXME: maybe we should raise a runtime error here.
-        # at LEAST a warning.
-        return Ferret::undefined
+        # if it's not a function, just use the value. it is likely the
+        # value of a method or property or other expression
+        return $func
             if !$func->isa('Ferret::Function') && !$func->isa('Ferret::Event');
 
         # return whatever the transform returns.

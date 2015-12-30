@@ -513,13 +513,19 @@ our %element_rules = (
 
         parent_must_be => [
             'Instruction',
-            'Type requirement (can/satisfies/transform) must be a direct '.
+            'Type requirement (can/isa/satisfies/transform) must be a direct '.
             'child of an instruction'
+        ],
+
+        must_be_somewhere_inside => [
+            'Type',
+            'Type requirement (can/isa/satisfies/transform) can only exist '.
+            "somewhere inside of a 'type' construct"
         ],
 
         children_must_satisfy => [
             sub { shift->isa('F::Expression') },
-            'Type requirement (can/satisfies/transform) must contain '.
+            'Type requirement (can/isa/satisfies/transform) must contain '.
             'an expression of some sort'
         ],
 

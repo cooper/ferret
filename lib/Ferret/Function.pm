@@ -133,7 +133,8 @@ sub arguments_satisfy_signature {
         next   if !length $type;                # want/need with no type check
 
         # check that it works.
-        next if $func->obj_type_works($arg, $type);
+        next if $arguments->{ $sig->{name} } =
+            $func->obj_type_works($arg, $type);
 
         # TODO: check if ellipsis satisfies type
         #       if not, want will make it an empty list,
@@ -150,33 +151,25 @@ sub arguments_satisfy_signature {
 sub obj_type_works {
     my ($func, $obj, $type) = @_;
 
-    # if the type is an object, we only have to check instance of.
-    if (blessed $type && $type->isa('Ferret::Object')) {
-        return _instance_of($obj, $type);
+    # not blessed - find SOI and type obj.
+    if (!blessed $type) {
+
+        # find scope of interest.
+        my $soi = $func->{outer_scope} || $func->f->main_context;
+        $soi = $soi->closest_context;
+
+        # get object.
+        $type = $soi->property($type) or return;
+
     }
 
-    # find scope of interest.
-    my $soi = $func->{outer_scope} || $func->f->main_context;
-    $soi = $soi->closest_context;
-
-    # check that it works.
-    my $class_maybe = $soi->property($type);
-    return _instance_of($obj, $class_maybe);
-
-}
-
-sub _instance_of {
-    my ($obj, $class_maybe) = @_;
-
-    # if this is a function, see if it returns true.
-    if ($class_maybe->isa('Ferret::Function')) {
-        # TODO: in case it performed a transform,
-        # use $ret as the argument value.
-        my $ret = $class_maybe->call_u([ $obj ]);
-        return Ferret::truth($ret);
+    # if this is a function, use its return value.
+    if ($type->isa('Ferret::Function') || $type->isa('Ferret::Event')) {
+        return $type->call_u([ $obj ]);
     }
 
-    return $obj->instance_of($class_maybe);
+    return $obj if $obj->instance_of($type);
+    return;
 }
 
 sub signature_string {
