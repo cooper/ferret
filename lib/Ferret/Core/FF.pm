@@ -318,9 +318,13 @@ sub typedef {
         my ($method_name, $obj) = @_;
         my $can_func = ffunction(sub {
             my (undef, $args) = @_;
+
+            # TODO: how am I going to tell if arguments are unnamed?
+            # there is no way to tell from $args what was passed.
+
             return Ferret::false if !$obj->has_property($method_name);
             return Ferret::true;
-        }, 'canFunc');
+        });
 
         return $can_func;
     };

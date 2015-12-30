@@ -112,13 +112,13 @@ my $result = do {
         $scope,
         'HTTPMethod',
         sub {
-            my ( $ins, $create_can ) = @_;
+            my ( $ins, $create_can, $transform ) = @_;
             FF::typedef_check(
                 $scope, $ins,
                 conditions => undef,
                 equal_to =>
                   [ FF::get_symbol( $f, 'GET' ), FF::get_symbol( $f, 'POST' ) ]
-            );
+            ) ? $ins : undef;
         }
     );
     $scope->set_property_ow(

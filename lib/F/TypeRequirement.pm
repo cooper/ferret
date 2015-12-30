@@ -41,9 +41,8 @@ sub perl_fmt_do {
     return $fmt_do if $type eq 'satisfies';
 
     # for transform, it's more complicated.
-    if ($type eq 'transform') {
-        return "do { \$ins = \$transform->($fmt_do, \$ins) }";
-    }
+    return $req->get_format(transform => { expression => $fmt_do })
+        if $type eq 'transform';
 
     return '';
 }

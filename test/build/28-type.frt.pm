@@ -140,7 +140,7 @@ my $result = do {
     FF::typedef(
         $scope, 'Gender',
         sub {
-            my ( $ins, $create_can ) = @_;
+            my ( $ins, $create_can, $transform ) = @_;
             FF::typedef_check(
                 $scope, $ins,
                 conditions => undef,
@@ -148,7 +148,7 @@ my $result = do {
                     FF::get_symbol( $f, 'male' ),
                     FF::get_symbol( $f, 'female' )
                 ]
-            );
+            ) ? $ins : undef;
         }
     );
     $scope->property_u('announce')
