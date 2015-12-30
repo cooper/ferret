@@ -4,7 +4,7 @@
 #          Single value [1 items]
 #              Item 0
 #                  Call
-#                      Argument list [1 items]
+#                      Single value [1 items]
 #                          Item 0
 #                              Bareword 'say'
 #                      Argument list [1 items]

@@ -62,7 +62,7 @@
 #                          Addition operator (+)
 #                          Index
 #                              Lexical variable '$hash'
-#                              Single value [1 items]
+#                              Index list [1 items]
 #                                  Item 0
 #                                      String 'whats'
 #      For

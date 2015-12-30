@@ -138,7 +138,7 @@
 #                      Expression ('if' parameter)
 #                          Index
 #                              Instance variable '@commands'
-#                              Single value [1 items]
+#                              Index list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$command'
 #                      Body ('if' scope)
@@ -196,7 +196,7 @@
 #                      Assignment (lexical variable '$command')
 #                          Index
 #                              Lexical variable '$s'
-#                              Single value [1 items]
+#                              Index list [1 items]
 #                                  Item 0
 #                                      Number '1'
 #                  If
@@ -204,7 +204,7 @@
 #                          Operation
 #                              Index
 #                                  Lexical variable '$s'
-#                                  Single value [1 items]
+#                                  Index list [1 items]
 #                                      Item 0
 #                                          Number '0'
 #                              Equality operator (==)
@@ -214,7 +214,7 @@
 #                              Assignment (lexical variable '$command')
 #                                  Index
 #                                      Lexical variable '$s'
-#                                      Single value [1 items]
+#                                      Index list [1 items]
 #                                          Item 0
 #                                              Number '0'
 #                  Instruction
@@ -235,7 +235,7 @@
 #                          Maybe
 #                              Index
 #                                  Lexical variable '$handlers'
-#                                  Single value [1 items]
+#                                  Index list [1 items]
 #                                      Item 0
 #                                          Lexical variable '$command'
 #                          Named argument list [4 items]
@@ -338,7 +338,7 @@
 #                                      Addition operator (+)
 #                                      Index
 #                                          Lexical variable '$s'
-#                                          Single value [1 items]
+#                                          Index list [1 items]
 #                                              Item 0
 #                                                  Number '1'
 #          Function '_handleMessage'
@@ -369,7 +369,7 @@
 #                                  Maybe
 #                                      Index
 #                                          Instance variable '@commands'
-#                                          Single value [1 items]
+#                                          Index list [1 items]
 #                                              Item 0
 #                                                  Property 'command'
 #                                                      Lexical variable '$msg'
@@ -425,7 +425,7 @@
 #                          Index
 #                              Property 'parts'
 #                                  Lexical variable '$msg'
-#                              Single value [1 items]
+#                              Index list [1 items]
 #                                  Item 0
 #                                      Number '1'
 #                  Instruction
@@ -469,7 +469,7 @@
 #                      Assignment (lexical variable '$response')
 #                          Index
 #                              Instance variable '@factoids'
-#                              Single value [1 items]
+#                              Index list [1 items]
 #                                  Item 0
 #                                      Property 'command'
 #                                          Lexical variable '$msg'

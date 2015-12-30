@@ -612,7 +612,8 @@ sub handle_call {
     # handle the list, then adopt it.
     if ($has_list) {
         my $list = $c->start_list($terminator);
-        $list->{is_call} = 1;
+        $list->{is_callidx} = 1;
+        $list->{is_index} = $is_index;
         $list->{collection} = 1; # pretend to be array/hash for checks.
         $call->adopt($list);
 

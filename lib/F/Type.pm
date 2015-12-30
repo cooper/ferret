@@ -71,10 +71,10 @@ sub perl_fmt {
 sub _handle_can {
     my $req  = shift;
     my $mreq = $req->first_child;
-    print "CAN($mreq)\n";
 
-    # the function being 'called' must be a property variable.
-    my $var = $mreq->function;
+    # the function being 'called' is guaranteed to be a property variable.
+    my $method_name = $mreq->function->{var_name};
+    my $list = $mreq->arg_list;
 
 
     return '';

@@ -262,12 +262,18 @@ our %element_rules = (
 
     ListItem => {
 
+        # list items can only contain expressions and pairs.
         children_must_satisfy => [
             sub { $_[0]->isa('F::Expression') || $_[0]->isa('F::Pair') },
             'Lists can only contain expressions of sorts'
         ],
 
         max_children => 1
+
+        # Rule implemented in F/List.pm:
+        #   Pairs and non-pairs cannot be mixed in a list unless it is the
+        #   argument list of a call.
+
     },
 
     Method => {

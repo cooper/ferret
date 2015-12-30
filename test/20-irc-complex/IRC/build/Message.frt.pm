@@ -24,7 +24,7 @@
 #                      Assignment (instance variable '@channel')
 #                          Index
 #                              Lexical variable '$lineSplit'
-#                              Single value [1 items]
+#                              Index list [1 items]
 #                                  Item 0
 #                                      Number '2'
 #                  Instruction
@@ -34,7 +34,7 @@
 #                                  Property 'split'
 #                                      Index
 #                                          Lexical variable '$lineSplit'
-#                                          Single value [1 items]
+#                                          Index list [1 items]
 #                                              Item 0
 #                                                  Number '0'
 #                                  Named argument list [2 items]
@@ -44,7 +44,7 @@
 #                                      Item 1
 #                                          Pair 'limit'
 #                                              Number '2'
-#                              Single value [1 items]
+#                              Index list [1 items]
 #                                  Item 0
 #                                      Number '0'
 #                  Instruction
@@ -59,7 +59,7 @@
 #                      Assignment (instance variable '@message')
 #                          Index
 #                              Lexical variable '$lineSplit'
-#                              Single value [1 items]
+#                              Index list [1 items]
 #                                  Item 0
 #                                      Number '3'
 #                  Instruction
@@ -86,7 +86,7 @@
 #                              Property 'hasPrefix'
 #                                  Index
 #                                      Instance variable '@parts'
-#                                      Single value [1 items]
+#                                      Index list [1 items]
 #                                          Item 0
 #                                              Number '0'
 #                              Argument list [1 items]
@@ -99,7 +99,7 @@
 #                                      Property 'trimPrefix'
 #                                          Index
 #                                              Instance variable '@parts'
-#                                              Single value [1 items]
+#                                              Index list [1 items]
 #                                                  Item 0
 #                                                      Number '0'
 #                                      Argument list [1 items]
@@ -147,7 +147,7 @@
 #                                                  Lexical variable '$wordN'
 #                                                  Addition operator (+)
 #                                                  Number '1'
-#                              Single value [1 items]
+#                              Index list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$wordN'
 #      Include (Num, Str)

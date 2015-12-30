@@ -14,13 +14,13 @@ sub desc {
 
 sub list_type {
     my $list = shift;
-    my $is_call = $list->parent->type eq 'Call';
-    if ($list->is_collection && !$is_call) {
+    if ($list->is_collection && !$list->is_callidx) {
         return 'hash'               if $list->is_hash;
         return 'value list'         if $list->is_array;
     }
-    return 'named argument list'    if $is_call && $list->is_hash;
-    return 'argument list'          if $is_call;
+    return 'named argument list'    if $list->is_call && $list->is_hash;
+    return 'argument list'          if $list->is_call;
+    return 'index list'             if $list->is_index;
     return 'object'                 if $list->is_hash;
     return 'set'                    if $list->children > 1;
     return 'single value'           if $list->children;
@@ -37,6 +37,10 @@ sub list_type {
 sub is_array      { shift->{array}      }
 sub is_hash       { shift->{hash}       }
 sub is_collection { shift->{collection} }
+
+sub is_callidx { shift->{is_callidx} }
+sub is_call    { $_[0]->is_callidx && !$_[0]->{is_index} }
+sub is_index   { $_[0]->is_callidx &&  $_[0]->{is_index} }
 
 sub new_item {
     my $list = shift;
@@ -94,11 +98,30 @@ sub perl_fmt {
 # filter out empty items.
 sub close : method {
     my $list = shift;
+    my $type = '';
     foreach my $item ($list->children) {
-        next if $item->children;
-        $list->abandon($item);
+        my $child = $item->first_child;
+        if (!$child) {
+            $list->abandon($item);
+            next;
+        }
+        $type ||= $child->type eq 'Pair' ? 'pairs' : 'items';
+
+        # if it's a call, the below rule does not apply.
+        next if $list->is_call;
+        my $this_type = $child->type eq 'Pair' ? 'pairs' : 'items';
+        next if $this_type eq $type;
+
+        # mismatching types -- pairs and items.
+        my $detail = $list->detail;
+        return $child->unexpected([
+            "inside $detail",
+            'Cannot mix pairs and non-pairs in a list unless it is the '.
+            'argument list for a call'
+        ]);
+
     }
-    $list->SUPER::close;
+    $list->SUPER::close(@_);
 }
 
 1

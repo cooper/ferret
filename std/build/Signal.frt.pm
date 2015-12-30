@@ -73,7 +73,7 @@
 #                              Maybe
 #                                  Index
 #                                      Lexical variable '$signals'
-#                                      Single value [1 items]
+#                                      Index list [1 items]
 #                                          Item 0
 #                                              Lexical variable '$type'
 #                          Argument list [0 items]
