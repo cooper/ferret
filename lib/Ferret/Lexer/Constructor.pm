@@ -808,6 +808,7 @@ sub c_OP_COMMA {
     }
 
     # we're in a want/need. this starts another.
+    $c->close_nodes(qw(WantNeedType WantNeedValue));
     if ($c->node->type eq 'WantNeed') {
         my $old_wn = $c->node;
 
@@ -874,7 +875,8 @@ sub c_OP_SEMI {
 
     # close these things.
     $c->close_nodes(qw(
-        WantNeed PropertyModifier Negation Operation
+        WantNeed WantNeedType WantNeedValue
+        PropertyModifier Negation Operation
         Assignment Return ReturnPair TypeRequirement
         SharedDeclaration LocalDeclaration Load Stop
     ));
@@ -999,6 +1001,24 @@ sub c_KEYWORD_NEED {
 sub c_OP_VALUE {
     my $c = shift;
 
+    # if the current node is a WantNeed, this is likely the type
+    # for the argument variable.
+    if ($c->node->type eq 'WantNeed') {
+        my $wn = $c->node;
+
+        # if the argument already has a type, that's an issue.
+        if ($wn->arg_type_exp) {
+            return $c->unexpected([
+                "inside $$wn{arg_type}",
+                'This argument declaration already has a type expression'
+            ]);
+        }
+
+        my $exp = $wn->create_arg_type_exp;
+        $c->adopt_and_set_node($exp);
+        return $exp;
+    }
+
     # if something is waiting to capture a closure,
     # maybe that's what this is, a single-statement closure.
     if (could_be_one_liner($c)) {
@@ -1041,6 +1061,22 @@ sub could_be_one_liner {
     return $is_reasonable{$l_label};
 }
 
+sub c_OP_ELLIP {
+    my ($c, $value) = @_;
+
+    # ellipsis can only exist on the end of a WantNeed.
+    # consider: no way to handle need $var...: Type = exp.
+    # not really a big deal because it has the same effect as
+    # need $var: Type = exp...
+    $c->close_nodes(qw(WantNeedType WantNeedValue));
+    if ($c->node->type eq 'WantNeed') {
+        $c->node->{ellipsis} = 1;
+        return;
+    }
+
+    $c->node->adopt($c->unknown_el);
+}
+
 sub c_PROP_VALUE {
     my ($c, $value) = @_;
 
@@ -1076,9 +1112,23 @@ sub c_PROPERTY {
 sub c_OP_ASSIGN {
     my ($c, $value) = @_;
 
-    # if we're in a WantNeed, it's not a real assignment.
+    # if we're in a WantNeed, this is the value expression.
+    $c->close_node_maybe('WantNeedType');
     if ($c->node->type eq 'WantNeed') {
-        return $c->node->adopt($c->unknown_el);
+        my $wn = $c->node;
+
+        # if the argument already has a value expression, that's an issue.
+        if ($wn->value_exp) {
+            return $c->unexpected([
+                "inside $$wn{arg_type}",
+                'This argument declaration already has a fallback value '.
+                'expression'
+            ]);
+        }
+
+        my $exp = $wn->create_value_exp;
+        $c->adopt_and_set_node($exp);
+        return $exp;
     }
 
     my $last_el = $c->last_el;

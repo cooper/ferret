@@ -52,7 +52,8 @@
 #                  Instruction
 #                      Need
 #                          Instance variable '@type'
-#                          Bareword 'Sym'
+#                          Argument type
+#                              Bareword 'Sym'
 #          Method 'catch'
 #              Body ('method' scope)
 #                  Instruction
@@ -66,7 +67,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$type'
-#                          Bareword 'Sym'
+#                          Argument type
+#                              Bareword 'Sym'
 #                  Instruction
 #                      Call
 #                          Property 'catch'

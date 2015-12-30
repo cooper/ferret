@@ -28,7 +28,8 @@
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$location'
-#                                  Bareword 'Str'
+#                                  Argument type
+#                                      Bareword 'Str'
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'
@@ -46,7 +47,8 @@
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$content'
-#                                  Bareword 'Str'
+#                                  Argument type
+#                                      Bareword 'Str'
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'

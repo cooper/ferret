@@ -20,31 +20,36 @@
 #                  Instruction
 #                      Want
 #                          Instance variable '@userAgent'
-#                          Expression ('want' parameter)
+#                          Argument type
+#                              Bareword 'Str'
+#                          Argument value
 #                              Lexical variable '$defaultUA'
-#                          Bareword 'Str'
 #                  Instruction
 #                      Want
 #                          Instance variable '@timeout'
-#                          Expression ('want' parameter)
+#                          Argument type
+#                              Bareword 'Num'
+#                          Argument value
 #                              Number '10'
-#                          Bareword 'Num'
 #                  Instruction
 #                      Want
 #                          Instance variable '@maxContentLength'
-#                          Bareword 'Num'
+#                          Argument type
+#                              Bareword 'Num'
 #                  Instruction
 #                      Want
 #                          Instance variable '@readLength'
-#                          Expression ('want' parameter)
+#                          Argument type
+#                              Bareword 'Num'
+#                          Argument value
 #                              Lexical variable '$defaultLength'
-#                          Bareword 'Num'
 #                  Instruction
 #                      Want
 #                          Instance variable '@writeLength'
-#                          Expression ('want' parameter)
+#                          Argument type
+#                              Bareword 'Num'
+#                          Argument value
 #                              Lexical variable '$defaultLength'
-#                          Bareword 'Num'
 #                  Instruction
 #                      Call
 #                          Property 'initialize'
@@ -57,7 +62,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$url'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Return
 #                          Call
@@ -74,7 +80,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$url'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Return
 #                          Call
@@ -91,11 +98,13 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$httpMethod'
-#                          Bareword 'HTTPMethod'
+#                          Argument type
+#                              Bareword 'HTTPMethod'
 #                  Instruction
 #                      Need
 #                          Lexical variable '$url'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Return
 #                          Call

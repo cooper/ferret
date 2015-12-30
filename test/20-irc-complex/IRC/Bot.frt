@@ -40,7 +40,7 @@ init {
 }
 
 method addCommand {
-    need $command: Str, $callback
+    need $command: Str::LC, $callback
     if @commands[$command]:
         overwrote -> true
     @commands[$command] = $callback
@@ -118,7 +118,7 @@ func _handleMessage {
     msg -> $msg
 
     # found a command
-    if $msg.command: @commands[ $msg.command ]?(
+    if $msg.command: @commands[ $msg.command.lowercase ]?(
         _self:  *self,
         line:   $line,
         s:      $s,

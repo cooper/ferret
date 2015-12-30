@@ -176,28 +176,43 @@ our %element_rules = (
             'Argument declaration must be within a function or method'
         ],
 
-        instruction_inside_rules => {
+        children_must_be => [
+            'InstanceVariable LexicalVariable WantNeedType WantNeedValue',
+            'Argument declaration can only contain lexical variables, '.
+            'instance variables, their bareword types, and their fallback '.
+            'value expressions'
+        ],
 
-            # directly inside a method, WantNeed can ONLY contain these things.
-            Method => {
-                children_must_be => [                                           # WantNeed[2]
-                    'InstanceVariable LexicalVariable Expression Bareword '.
-                    'SetTypeVariable',
-                    'Argument declaration inside method can only contain '.
-                    'lexical or instance variables and their types'
-                ]
-            },
+        min_children => 1,
+        max_children => 3
 
-            # directly inside a function, WantNeed can ONLY contain these things.
-            Function => {
-                children_must_be => [                                           # WantNeed[3]
-                    'LexicalVariable Expression Bareword SetTypeVariable',
-                    'Argument declaration inside function can only contain '.
-                    'lexical variables and their types'
-                ]
-            },
+    },
 
-        } # end directly_inside_rules
+    WantNeedType => {
+
+        parent_must_be => 'WantNeed',
+
+        children_must_be => [
+            'Bareword',
+            'Argument declaration type following colon (:) must be a bareword'
+        ],
+
+        min_children => 1,
+        max_children => 1
+
+    },
+
+    WantNeedValue => {
+
+        parent_must_be => 'WantNeed',
+
+        children_must_satisfy => [
+            sub { shift->isa('F::Expression') },
+            'Argument declaration fallback value must be an expression of sorts'
+        ],
+
+        min_children => 1,
+        max_children => 1
 
     },
 
@@ -559,7 +574,10 @@ our %element_rules = (
     Token => {
 
         # tokens cannot be astray.
-        parent_must_be => 'NONE'                                                # Token[0]
+        parent_must_be => [                                                     # Token[0]
+            'NONE',
+            'This token is not valid in the current context'
+        ]
 
     }
 

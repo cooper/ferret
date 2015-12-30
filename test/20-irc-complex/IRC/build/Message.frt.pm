@@ -7,7 +7,8 @@
 #                  Instruction
 #                      Need
 #                          Instance variable '@line'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Assignment (lexical variable '$lineSplit')
 #                          Call
@@ -130,7 +131,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$wordN'
-#                          Bareword 'Num'
+#                          Argument type
+#                              Bareword 'Num'
 #                  Instruction
 #                      Return
 #                          Index

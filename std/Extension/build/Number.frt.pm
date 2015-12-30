@@ -53,7 +53,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$root'
-#                          Bareword 'Num'
+#                          Argument type
+#                              Bareword 'Num'
 #                  Instruction
 #                      Return
 #                          Call

@@ -265,17 +265,18 @@ sub close_end_cap {
 # Node groups
 # ================================
 #
-#   1. Special nodes that have their own specific rules.
 #   2. Normal nodes, usually expressions.
 #   3. Statement nodes which are direct descendants of instructions.
 #
 my (@closes, %precedence);
 {
     @closes = (
-        qw( WantNeed PropertyModifier ),                                # 1
+        qw( PropertyModifier ),                                # 1
         qw( Negation Operation Pair ListItem List Call ),               # 2
         qw( Assignment Return ReturnPair Load Stop ),                   # 3
+        qw( WantNeedValue WantNeedType WantNeed ),
         qw( SharedDeclaration LocalDeclaration TypeRequirement ),
+        qw( PropertyModifier ),
         qw( Instruction )
     );
     my $i = 0;

@@ -6,27 +6,32 @@
 #                  Instruction
 #                      Need
 #                          Instance variable '@addr'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Need
 #                          Instance variable '@nick'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Need
 #                          Instance variable '@user'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Want
 #                          Instance variable '@port'
-#                          Expression ('want' parameter)
+#                          Argument type
+#                              Bareword 'Num'
+#                          Argument value
 #                              Number '6667'
-#                          Bareword 'Num'
 #                  Instruction
 #                      Want
 #                          Instance variable '@real'
-#                          Expression ('want' parameter)
+#                          Argument type
+#                              Bareword 'Str'
+#                          Argument value
 #                              String 'Ferret IRC'
-#                          Bareword 'Str'
 #                  Instruction
 #                      Assignment (instance variable '@sock')
 #                          Call

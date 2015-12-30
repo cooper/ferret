@@ -447,7 +447,8 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$string'
-#                      Bareword 'Str'
+#                      Argument type
+#                          Bareword 'Str'
 #              Instruction
 #                  Return
 #                      Call

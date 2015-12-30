@@ -7,7 +7,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$client'
-#                          Bareword 'Client'
+#                          Argument type
+#                              Bareword 'Client'
 #                  Instruction
 #                      Assignment (instance variable '@client')
 #                          Lexical variable '$client'
@@ -17,11 +18,13 @@
 #                  Instruction
 #                      Need
 #                          Instance variable '@url'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Need
 #                          Instance variable '@httpMethod'
-#                          Bareword 'HTTPMethod'
+#                          Argument type
+#                              Bareword 'HTTPMethod'
 #          Method 'connect'
 #              Body ('method' scope)
 #                  Instruction

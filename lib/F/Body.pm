@@ -28,16 +28,15 @@ sub body_fmt_do {
         # add wants/needs.
         next unless wantarray;
         next unless $wn && $wn->type eq 'WantNeed';
-        foreach my $var ($wn->variables) {
-            push @arguments, $body->get_format(func_arg => {
-                name => $var->{var_name},
-                want => $wn->{arg_type} eq 'want' ? '1' : 'undef',
-                type => $wn->type_string,
-                more => $wn->{ellipsis} ? '1' : 'undef'
-            });
-        }
 
+        push @arguments, $body->get_format(func_arg => {
+            name => $wn->variable->{var_name},
+            want => $wn->{arg_type} eq 'want' ? '1' : 'undef',
+            type => $wn->type_string,
+            more => $wn->{ellipsis} ? '1' : 'undef'
+        });
     }
+
     return wantarray ? ($content, @arguments) : $content;
 }
 

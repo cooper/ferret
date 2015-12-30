@@ -31,29 +31,34 @@
 #                  Instruction
 #                      Need
 #                          Instance variable '@addr'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Need
 #                          Instance variable '@nick'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Want
 #                          Instance variable '@port'
-#                          Expression ('want' parameter)
+#                          Argument type
+#                              Bareword 'Num'
+#                          Argument value
 #                              Number '6667'
-#                          Bareword 'Num'
 #                  Instruction
 #                      Want
 #                          Instance variable '@user'
-#                          Expression ('want' parameter)
+#                          Argument type
+#                              Bareword 'Str'
+#                          Argument value
 #                              String 'ferret'
-#                          Bareword 'Str'
 #                  Instruction
 #                      Want
 #                          Instance variable '@real'
-#                          Expression ('want' parameter)
+#                          Argument type
+#                              Bareword 'Str'
+#                          Argument value
 #                              String 'Ferret IRC'
-#                          Bareword 'Str'
 #                  Instruction
 #                      Assignment (instance variable '@commands')
 #                          Lexical variable '$initialCommands'
@@ -130,7 +135,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$command'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str::LC'
 #                  Instruction
 #                      Need
 #                          Lexical variable '$callback'
@@ -256,11 +262,13 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$channel'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Need
 #                          Lexical variable '$message'
-#                          Bareword 'Str'
+#                          Argument type
+#                              Bareword 'Str'
 #                  For
 #                      Expression ('for' parameter)
 #                          Lexical variable '$line'
@@ -371,8 +379,9 @@
 #                                          Instance variable '@commands'
 #                                          Index list [1 items]
 #                                              Item 0
-#                                                  Property 'command'
-#                                                      Lexical variable '$msg'
+#                                                  Property 'lowercase'
+#                                                      Property 'command'
+#                                                          Lexical variable '$msg'
 #                                  Named argument list [4 items]
 #                                      Item 0
 #                                          Pair '_self'
@@ -482,7 +491,7 @@
 #                                      Lexical variable '$msg'
 #                              Item 1
 #                                  Lexical variable '$response'
-#      Include (IRC, IRC::Message, Num, Socket, Socket::TCP, Str)
+#      Include (IRC, IRC::Message, Num, Socket, Socket::TCP, Str, Str::LC)
 use warnings;
 use strict;
 use 5.010;
@@ -653,10 +662,13 @@ my $result = do {
 
                 {
                     my $maybe_0 =
-                      $self->property_u('commands')
-                      ->get_index_value(
-                        [ $scope->property_u('msg')->property_u('command') ],
-                        $scope );
+                      $self->property_u('commands')->get_index_value(
+                        [
+                            $scope->property_u('msg')->property_u('command')
+                              ->property_u('lowercase')
+                        ],
+                        $scope
+                      );
                     if ( bool($maybe_0) ) {
                         $maybe_0->call_u(
                             {
@@ -665,7 +677,7 @@ my $result = do {
                                 s     => $scope->property_u('s'),
                                 msg   => $scope->property_u('msg')
                             },
-                            $scope, undef, 121.55
+                            $scope, undef, 121.6
                         );
                     }
                 }
@@ -863,7 +875,7 @@ my $result = do {
             [
                 {
                     name     => 'command',
-                    type     => 'Str',
+                    type     => 'Str::LC',
                     optional => undef,
                     more     => undef
                 },
@@ -877,8 +889,8 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                FF::need( $scope, $args, 'command',  43.2 ) or return;
-                FF::need( $scope, $args, 'callback', 43.6 ) or return;
+                FF::need( $scope, $args, 'command',  43.1 ) or return;
+                FF::need( $scope, $args, 'callback', 43.4 ) or return;
                 if (
                     bool(
                         $self->property_u('commands')->get_index_value(
@@ -1153,7 +1165,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context,
-        qw(IRC IRC::Message Num Socket Socket::TCP Str) );
+        qw(IRC IRC::Message Num Socket Socket::TCP Str Str::LC) );
 };
 
 FF::after_content();

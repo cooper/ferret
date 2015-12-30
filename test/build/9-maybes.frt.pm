@@ -5,7 +5,8 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$who'
-#                      Bareword 'Str'
+#                      Argument type
+#                          Bareword 'Str'
 #              Instruction
 #                  Call
 #                      Bareword 'say'

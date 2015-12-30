@@ -17,7 +17,8 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$url'
-#                      Bareword 'Str'
+#                      Argument type
+#                          Bareword 'Str'
 #              Instruction
 #                  Return
 #                      Call
@@ -32,7 +33,8 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$url'
-#                      Bareword 'Str'
+#                      Argument type
+#                          Bareword 'Str'
 #              Instruction
 #                  Return
 #                      Call

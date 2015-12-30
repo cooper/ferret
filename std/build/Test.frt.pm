@@ -6,12 +6,12 @@
 #                  Instruction
 #                      Want
 #                          Instance variable '@name'
-#                          Expression ('want' parameter)
+#                          Argument value
 #                              String 'Test'
 #                  Instruction
 #                      Want
 #                          Instance variable '@fatal'
-#                          Expression ('want' parameter)
+#                          Argument value
 #                              Boolean true
 #                  Instruction
 #                      Assignment (instance variable '@tested')

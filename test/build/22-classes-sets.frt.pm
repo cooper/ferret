@@ -6,7 +6,7 @@
 #                  Instruction
 #                      Want
 #                          Instance variable '@moos'
-#                          Expression ('want' parameter)
+#                          Argument value
 #                              Boolean true
 #          Method 'moo'
 #              Body ('method' scope)
@@ -26,7 +26,7 @@
 #                  Instruction
 #                      Want
 #                          Instance variable '@barks'
-#                          Expression ('want' parameter)
+#                          Argument value
 #                              Boolean false
 #          Method 'bark'
 #              Body ('method' scope)
@@ -46,7 +46,7 @@
 #                  Instruction
 #                      Want
 #                          Instance variable '@mean'
-#                          Expression ('want' parameter)
+#                          Argument value
 #                              Boolean false
 #          Method 'meow'
 #              Body ('method' scope)
@@ -58,11 +58,13 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$cat1'
-#                          Bareword 'Cat'
+#                          Argument type
+#                              Bareword 'Cat'
 #                  Instruction
 #                      Need
 #                          Lexical variable '$cat2'
-#                          Bareword 'Cat'
+#                          Argument type
+#                              Bareword 'Cat'
 #                  If
 #                      Expression ('if' parameter)
 #                          Property 'mean'

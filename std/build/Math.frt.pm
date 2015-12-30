@@ -6,7 +6,8 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$num'
-#                      Bareword 'Num'
+#                      Argument type
+#                          Bareword 'Num'
 #              Instruction
 #                  Return
 #                      Call
@@ -20,11 +21,13 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$root'
-#                      Bareword 'Num'
+#                      Argument type
+#                          Bareword 'Num'
 #              Instruction
 #                  Need
 #                      Lexical variable '$num'
-#                      Bareword 'Num'
+#                      Argument type
+#                          Bareword 'Num'
 #              Instruction
 #                  Return
 #                      Operation

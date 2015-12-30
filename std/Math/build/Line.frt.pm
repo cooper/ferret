@@ -7,11 +7,13 @@
 #                  Instruction
 #                      Need
 #                          Instance variable '@pt1'
-#                          Bareword 'Point'
+#                          Argument type
+#                              Bareword 'Point'
 #                  Instruction
 #                      Need
 #                          Instance variable '@pt2'
-#                          Bareword 'Point'
+#                          Argument type
+#                              Bareword 'Point'
 #          Computed property 'endpoints'
 #              Body ('method' scope)
 #                  Instruction

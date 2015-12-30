@@ -7,19 +7,23 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$x'
-#                          Bareword 'Num'
+#                          Argument type
+#                              Bareword 'Num'
 #                  Instruction
 #                      Need
 #                          Lexical variable '$y'
-#                          Bareword 'Num'
+#                          Argument type
+#                              Bareword 'Num'
 #                  Instruction
 #                      Need
 #                          Instance variable '@width'
-#                          Bareword 'Num'
+#                          Argument type
+#                              Bareword 'Num'
 #                  Instruction
 #                      Need
 #                          Instance variable '@height'
-#                          Bareword 'Num'
+#                          Argument type
+#                              Bareword 'Num'
 #                  Instruction
 #                      Assignment (instance variable '@origin')
 #                          Call

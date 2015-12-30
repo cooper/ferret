@@ -7,17 +7,20 @@
 #                  Instruction
 #                      Need
 #                          Instance variable '@x'
-#                          Bareword 'Num'
+#                          Argument type
+#                              Bareword 'Num'
 #                  Instruction
 #                      Need
 #                          Instance variable '@y'
-#                          Bareword 'Num'
+#                          Argument type
+#                              Bareword 'Num'
 #          Method 'distanceTo'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt2'
-#                          Bareword 'Point'
+#                          Argument type
+#                              Bareword 'Point'
 #                  Instruction
 #                      Assignment (lexical variable '$dx')
 #                          Operation
@@ -93,11 +96,13 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt1'
-#                          Bareword 'Point'
+#                          Argument type
+#                              Bareword 'Point'
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt2'
-#                          Bareword 'Point'
+#                          Argument type
+#                              Bareword 'Point'
 #                  Instruction
 #                      Return
 #                          Call
@@ -134,11 +139,13 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt1'
-#                          Bareword 'Point'
+#                          Argument type
+#                              Bareword 'Point'
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt2'
-#                          Bareword 'Point'
+#                          Argument type
+#                              Bareword 'Point'
 #                  Instruction
 #                      Return
 #                          Call

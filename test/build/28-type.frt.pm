@@ -11,11 +11,13 @@
 #              Instruction
 #                  Need
 #                      Lexical variable '$name'
-#                      Bareword 'Str'
+#                      Argument type
+#                          Bareword 'Str'
 #              Instruction
 #                  Need
 #                      Lexical variable '$gender'
-#                      Bareword 'Gender'
+#                      Argument type
+#                          Bareword 'Gender'
 #              Instruction
 #                  Assignment (lexical variable '$what')
 #                      Call
