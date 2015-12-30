@@ -197,8 +197,7 @@ our %element_rules = (
             'Argument declaration type following colon (:) must be a bareword'
         ],
 
-        min_children => 1,
-        max_children => 1
+        num_children => 1
 
     },
 
@@ -211,8 +210,7 @@ our %element_rules = (
             'Argument declaration fallback value must be an expression of sorts'
         ],
 
-        min_children => 1,
-        max_children => 1
+        num_children => 1
 
     },
 
@@ -240,8 +238,7 @@ our %element_rules = (
         ],
 
         # there can only be one child.
-        max_children => 1,                                                      # PropertyModifier[3]
-        min_children => 1                                                       # PropertyModifier[4]
+        num_children => 1
 
     },
 
@@ -322,8 +319,7 @@ our %element_rules = (
             ],
 
             # it can only contain one property or variable.
-            max_children => 1,                                                  # OnExpression[2]
-            min_children => 1                                                   # OnExpression[3]
+            num_children => 1
 
         }
 
@@ -353,8 +349,7 @@ our %element_rules = (
         ],
 
         # there can only be one child.
-        max_children => 1,                                                      # SharedDeclaration[3]
-        min_children => 1                                                       # SharedDeclaration[4]
+        num_children => 1
 
     },
 
@@ -412,8 +407,7 @@ our %element_rules = (
         ],
 
         # there can only be one child.
-        max_children => 1,                                                      # Load[2]
-        min_children => 1                                                       # Load[3]
+        num_children => 1
 
     },
 
@@ -519,8 +513,7 @@ our %element_rules = (
             'If parameter must be an expression'
         ],
 
-        max_children => 1,                                                      # IfParameter[1]
-        min_children => 1                                                       # IfParameter[2]
+        num_children => 1
 
     },
 
@@ -544,8 +537,7 @@ our %element_rules = (
             'an expression of some sort'
         ],
 
-        max_children => 1,
-        min_children => 1
+        num_children => 1
 
         # Rule implemented in F/TypeRequirement.pm:
         #   If the type requirement is a 'can' statement,

@@ -12,8 +12,9 @@ my $ok;
 # Unexpected something <...>
 our %error_reasons = (
     child_not_allowed       => 'inside %s',
-    parent_maxed_out        => 'inside %s, which can only contain %d element(s)',
-    not_enough_children     => 'without %d or more child element(s)',
+    parent_maxed_out        => 'inside %s, which can only contain %d element%s',
+    not_enough_children     => 'lacking %d or more child element%s',
+    wrong_number_children   => 'lacking %d child element%s',
     previous_not_allowed    => 'after %s',
     expected_before         => 'without previous element at same level',
     expected_after          => 'without following element at same level',
@@ -467,14 +468,16 @@ sub F::Node::has_room {
     my $set = $parent_maybe->rule_set(undef, $after_check);
 
     # no limit.
-    my $max = $set->{max_children};
+    my $max = $set->{max_children} // $set->{num_children};
     return $ok if !defined $max;
 
     # surpassing the limit.
     my $current = scalar $parent_maybe->children;
     my $bad = $after_check ? $current > $max : $current >= $max;
-    return $set->err(
-        parent_maxed_out => $parent_maybe->detail, $max
+    return $set->err(parent_maxed_out =>
+        $parent_maybe->detail,
+        $max,
+        $max == 1 ? '' : 's'
     ) if $bad;
 
     return $ok;
@@ -483,17 +486,26 @@ sub F::Node::has_room {
 sub F::Node::has_minimal {
     my ($node, $after_check) = @_;
     my $set = $node->rule_set(undef, $after_check);
+    my $current = scalar $node->children;
 
-    # no limit.
+    # first, check if it has an exact amount.
+    my $exact = $set->{num_children};
+    if (defined $exact) {
+        return $set->err(wrong_number_children =>
+            $exact,
+            $exact == 1 ? '' : 's'
+        ) if $current != $exact;
+    }
+
+    # now check minimum.
     my $min = $set->{min_children};
     return $ok if !defined $min;
 
     # less than the minimum.
-    my $current = scalar $node->children;
-    return $set->err(
-        not_enough_children => $node->detail, $min
+    return $set->err(not_enough_children =>
+        $min,
+        $min == 1 ? '' : 's'
     ) if $current < $min;
-
 
     return $ok;
 }
