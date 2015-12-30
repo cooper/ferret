@@ -24,7 +24,7 @@ my $keyword_reg = '\\b(?:'.join('|', qw{
     true        false       undefined   defer
     for         in          gather      take
     type        can         satisfies   transform
-    delete      weaken      __END__
+    delete      weaken      __END__     isa
 }).')\\b';
 
 # these tokens do not have values.

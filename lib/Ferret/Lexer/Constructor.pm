@@ -351,6 +351,7 @@ sub c_TYPE {
 }
 
 sub c_KEYWORD_CAN       { start_type_requirement(shift, 'can')       }
+sub c_KEYWORD_ISA       { start_type_requirement(shift, 'isa')       }
 sub c_KEYWORD_SATISFIES { start_type_requirement(shift, 'satisfies') }
 sub c_KEYWORD_TRANSFORM { start_type_requirement(shift, 'transform') }
 

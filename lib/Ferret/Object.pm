@@ -426,6 +426,8 @@ sub instance_of {
     return defined first { $_ == $class_maybe } $obj->parent_classes;
 }
 
+sub instance_of_u { &instance_of ? Ferret::true : Ferret::undefined }
+
 #####################
 ### MISCELLANEOUS ###
 #####################

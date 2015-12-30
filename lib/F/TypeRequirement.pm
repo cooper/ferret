@@ -40,9 +40,13 @@ sub perl_fmt_do {
     # for satisfies, the condition is simply the expression.
     return $fmt_do if $type eq 'satisfies';
 
-    # for transform, it's more complicated.
+    # transform.
     return $req->get_format(transform => { expression => $fmt_do })
         if $type eq 'transform';
+
+    # isa.
+    return $req->get_format(isa => { expression => $fmt_do })
+        if $type eq 'isa';
 
     return '';
 }
