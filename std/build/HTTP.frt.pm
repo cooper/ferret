@@ -109,12 +109,12 @@ my $result = do {
     FF::load_namespaces( $context, qw(HTTP HTTP::Client Str) );
 
     FF::typedef(
-        $scope,
+        $scope, $scope,
         'HTTPMethod',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
             FF::typedef_check(
-                $scope, $ins,
+                $scope, $scope, $ins,
                 conditions => undef,
                 equal_to =>
                   [ FF::get_symbol( $f, 'GET' ), FF::get_symbol( $f, 'POST' ) ]

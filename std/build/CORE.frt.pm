@@ -7,7 +7,10 @@
 #      Instruction
 #          Load
 #              Bareword 'Extension::Number'
-#      Include (Extension, Extension::Number, Signal)
+#      Instruction
+#          Load
+#              Bareword 'Extension::String'
+#      Include (Extension, Extension::Number, Extension::String, Signal)
 use warnings;
 use strict;
 use 5.010;
@@ -32,7 +35,8 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'CORE' );
     FF::load_core('CORE');
 
-    FF::load_namespaces( $context, qw(Extension Extension::Number Signal) );
+    FF::load_namespaces( $context,
+        qw(Extension Extension::Number Extension::String Signal) );
 };
 
 FF::after_content();

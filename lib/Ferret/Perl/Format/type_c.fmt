@@ -1,6 +1,6 @@
-FF::typedef($scope, $scope, '<<name>>', sub {
+FF::typedef($scope, $class, '<<name>>', sub {
     my ($ins, $create_can, $transform) = @_;
-    FF::typedef_check($scope, $scope, $ins,
+    FF::typedef_check($scope, $class, $ins,
         conditions => <<conditions>>,
         equal_to => <<equal_to>>
     ) ? $ins : undef;

@@ -128,9 +128,9 @@ our %element_rules = (
 
         # classes can currently contain only methods and variable declarations.
         children_must_be => [                                                   # Class[1]
-            'Function Method Instruction',
+            'Function Method Instruction Type',
             'Class must only contain class functions, instance methods, '.
-            'and variable declarations'
+            'and variable/type declarations'
         ],
 
         # if it's an instruction, it must satisfy these rules.

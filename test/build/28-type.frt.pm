@@ -138,11 +138,11 @@ my $result = do {
     $func_0->inside_scope( announce => $scope, $scope, undef, undef, undef );
     FF::load_namespaces( $context, qw(Gender Str) );
     FF::typedef(
-        $scope, 'Gender',
+        $scope, $scope, 'Gender',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
             FF::typedef_check(
-                $scope, $ins,
+                $scope, $scope, $ins,
                 conditions => undef,
                 equal_to   => [
                     FF::get_symbol( $f, 'male' ),

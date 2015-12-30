@@ -50,15 +50,20 @@ sub perl_fmt {
 
     }
 
-    # they must be subs with $ins.
-
     my $equal_to = join(', ', @equal_possibly);
        $equal_to = $equal_to ? "[ $equal_to ]" : 'undef';
 
     my $conditions = join(', ', @conditions);
        $conditions = $conditions ? "[ $conditions ]" : 'undef';
 
-    return type => {
+   # if the direct parent is a Class, use a special format
+   # UNLESS it starts with '_', in which case it is a "private" class type.
+   my $fmt_name = 'type';
+   $fmt_name .= '_c' if
+       $type->parent->type eq 'Class' &&
+       substr($type->type_name, 0, 1) ne '_';
+
+    return $fmt_name => {
         name       => $type->type_name,
         conditions => $conditions,
         equal_to   => $equal_to

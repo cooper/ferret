@@ -219,7 +219,7 @@ sub _property {
     # try a different context.
     if (!$simple_only && index($prop_name, '::') != -1) {
         my ($context, $real_prop_name) = ($prop_name =~ m/^(.+)::(.+?)$/);
-        $context = $obj->f->get_context($context) or return;
+        $context = $obj->f->get_context_or_class($context) or return;
         return $context->_property($real_prop_name, undef, $simple_only);
     }
 

@@ -310,7 +310,7 @@ sub share {
 
 # type definitions.
 sub typedef {
-    my ($scope, $type_name, $code) = @_;
+    my ($scope, $scope_or_class, $type_name, $code) = @_;
 
     # this sub returns a function which returns Ferret true if
     # a method requirement is satisfied.
@@ -352,11 +352,11 @@ sub typedef {
         return $res || Ferret::undefined;
     }, $type_name, '$obj');
 
-    $scope->set_property($type_name => $func); # TODO: pos
+    $scope_or_class->set_property($type_name => $func); # TODO: pos
 }
 
 sub typedef_check {
-    my ($scope, $obj, %opts) = @_;
+    my ($scope, $scope_or_class, $obj, %opts) = @_;
 
     # all conditions must return Ferret true.
     my $conditions = delete $opts{conditions} || [];

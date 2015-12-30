@@ -144,6 +144,8 @@ sub get_context  {
     return $f->{context}{$name} = $context;
 }
 
+sub get_context_or_class { &get_context || &_bind_get_class }
+
 # determine whether to reuse or create a class.
 sub get_class {
     my ($f, $context, $class_name) = @_;
