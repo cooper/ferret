@@ -36,6 +36,7 @@ sub list_type {
 #
 sub is_array      { shift->{array}      }
 sub is_hash       { shift->{hash}       }
+sub is_mixed      { shift->{mixed}      }
 sub is_collection { shift->{collection} }
 
 sub is_callidx { shift->{is_callidx} }
@@ -107,12 +108,18 @@ sub close : method {
         }
         $type ||= $child->type eq 'Pair' ? 'pairs' : 'items';
 
-        # if it's a call, the below rule does not apply.
-        next if $list->is_call;
         my $this_type = $child->type eq 'Pair' ? 'pairs' : 'items';
         next if $this_type eq $type;
 
         # mismatching types -- pairs and items.
+        if ($list->is_call) {
+            delete $list->{hash};
+            delete $list->{array};
+            $list->{mixed}++;
+            next;
+        }
+
+        # not OK for non-calls.
         my $detail = $list->detail;
         return $child->unexpected([
             "inside $detail",

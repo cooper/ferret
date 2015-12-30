@@ -11,27 +11,32 @@ sub fake { 1 }
 sub perl_fmt {
     my $call = shift;
     my $func = $call->function;
-    my $arg_string = '';
 
-    # named.
-    if ($call->named_args) {
-        foreach my $pair (map $_->first_child, $call->func_args) {
-            $arg_string .= ', ' if length $arg_string;
-            my ($key, $value) = ($pair->key, $pair->value->perl_fmt_do);
-            $arg_string .= "$key => $value";
+    my ($list_args, $hash_args) = ('') x 2;
+    foreach my $child (map $_->first_child, $call->args) {
+
+        # pair -- add to pair string.
+        if ($child->type eq 'Pair') {
+            my ($key, $value) = ($child->key, $child->value->perl_fmt_do);
+            $hash_args .= ', ' if length $hash_args;
+            $hash_args .= "$key => $value";
+            next;
         }
+
+        # non-pairs -- add to normal string.
+        $list_args .= ', ' if length $list_args;
+        $list_args .= $child->perl_fmt_do;
+
     }
 
-    # unnamed.
-    else {
-        $arg_string = join ', ',
-            grep length,
-            map $_->perl_fmt_do,
-            $call->func_args;
-    }
+    my $arg_string =
+        length $list_args && length $hash_args ?
+        "[ $list_args, { $hash_args } ]"       :
+        length $list_args                      ?
+        "[ $list_args ]"                       :
+        "{ $hash_args }"                       ;
 
-    my $fmt = !length $arg_string || $call->named_args ? 'call_named' : 'call';
-    return $fmt => {
+    return call => {
         coderef   => $func->perl_fmt_do,
         arguments => $arg_string,
         pos       => $call->{create_pos}
@@ -65,9 +70,8 @@ sub started_instr {
     return $yes;
 }
 
-sub function   { shift->first_child   }
-sub arg_list   { (shift->children)[1] }
-sub func_args  { my $l = shift->arg_list; $l ? $l->ordered_children : () }
-sub named_args { my $l = shift->arg_list; $l ? $l->is_hash : undef       }
+sub function { shift->first_child   }
+sub arg_list { (shift->children)[1] }
+sub args     { my $l = shift->arg_list; $l ? $l->ordered_children : () }
 
 1
