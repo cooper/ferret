@@ -10,7 +10,38 @@
 #      Instruction
 #          Load
 #              Bareword 'Extension::String'
-#      Include (Extension, Extension::Number, Extension::String, Signal)
+#      Type definition ('Hashable')
+#          Body ('type' scope)
+#              Instruction
+#                  Can
+#                      Method requirement
+#                          Property variable '.hashValue'
+#                          Argument list [0 items]
+#              Instruction
+#                  Transform
+#                      Property variable '.hashValue'
+#      Type definition ('Indexed')
+#          Body ('type' scope)
+#              Instruction
+#                  Can
+#                      Method requirement
+#                          Property variable '.getValue'
+#                          Named argument list [1 items]
+#                              Item 0
+#                                  Pair 'index'
+#                                      Bareword 'Hashable'
+#              Instruction
+#                  Can
+#                      Method requirement
+#                          Property variable '.setValue'
+#                          Named argument list [2 items]
+#                              Item 0
+#                                  Pair 'value'
+#                                      Bareword 'Obj'
+#                              Item 1
+#                                  Pair 'index'
+#                                      Bareword 'Hashable'
+#      Include (Extension, Extension::Number, Extension::String, Hashable, Obj, Signal)
 use warnings;
 use strict;
 use 5.010;
@@ -36,7 +67,51 @@ my $result = do {
     FF::load_core('CORE');
 
     FF::load_namespaces( $context,
-        qw(Extension Extension::Number Extension::String Signal) );
+        qw(Extension Extension::Number Extension::String Hashable Obj Signal) );
+
+    FF::typedef(
+        $scope, $scope,
+        'Hashable',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            FF::typedef_check(
+                $scope, $scope, $ins,
+                conditions => [
+                    $create_can->( 'hashValue', $ins )
+                      ->call_u( {}, $scope, undef, 9.3 ),
+                    do {
+                        $ins =
+                          $transform->( $ins->property_u('hashValue'), $ins );
+                      }
+                ],
+                equal_to => undef
+            ) ? $ins : undef;
+        }
+    );
+    FF::typedef(
+        $scope, $scope,
+        'Indexed',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            FF::typedef_check(
+                $scope, $scope, $ins,
+                conditions => [
+                    $create_can->( 'getValue', $ins )->call_u(
+                        { index => $scope->property_u('Hashable') }, $scope,
+                        undef, 14.3
+                    ),
+                    $create_can->( 'setValue', $ins )->call_u(
+                        {
+                            value => $scope->property_u('Obj'),
+                            index => $scope->property_u('Hashable')
+                        },
+                        $scope, undef, 15.15
+                    )
+                ],
+                equal_to => undef
+            ) ? $ins : undef;
+        }
+    );
 };
 
 FF::after_content();

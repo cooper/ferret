@@ -9,7 +9,7 @@ use 5.010;
 use parent 'Ferret::Object';
 use Ferret::Core::Conversion qw(
     pstring fnumber
-    fstring flist
+    fstring flist psym
     pdescription
 );
 
@@ -24,11 +24,11 @@ my @methods = (
         code => \&_length
     },
     setValue => {
-        need => '$value $index',
+        need => '$value $index:Hashable',
         code => \&_set_value
     },
     getValue => {
-        need => '$index',
+        need => '$index:Hashable',
         code => \&_get_value
     }
 );
@@ -60,8 +60,8 @@ sub set_value {
 
 sub _set_value {
     my ($hash, $args) = @_;
-    $args->{key} ||= $args->{index};
-    $hash->set_value(@$args{'key', 'value'});
+    my $key = $args->psym('index');
+    $hash->set_value($key, $args->{value});
     return $hash;
 }
 
@@ -72,9 +72,8 @@ sub get_value {
 
 sub _get_value {
     my ($hash, $args) = @_;
-    my $key = $args->{key} // $args->{index};
-    $key = $key->{sym_value} if length $key->{sym_value};
-    $key = pstring($key);
+    my $key = $args->psym('index');
+    print "get_value($key)\n";
     return $hash->get_value($key);
 }
 

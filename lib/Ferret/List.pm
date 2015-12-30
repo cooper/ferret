@@ -50,7 +50,7 @@ my @methods = (
     push => {
         need => '$item',
         code => \&_item_method
-    },
+    }
 );
 
 Ferret::bind_class(

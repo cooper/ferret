@@ -10,7 +10,7 @@ use parent 'Ferret::Object';
 use Scalar::Util qw(blessed looks_like_number);
 use Ferret::Core::Conversion qw(
     pstring pnumber phashref plist
-    fstring flist fbool fnumber
+    fstring flist fbool fnumber fsym
 );
 
 my @methods = (
@@ -50,6 +50,9 @@ my @methods = (
     lowercase => {
         prop => 1,
         code => \&_lowercase
+    },
+    hashValue => {
+        code => \&_hashValue
     },
     copy => {
         code => \&_copy
@@ -183,6 +186,11 @@ sub _uppercase {
 sub _lowercase {
     my $str = shift;
     return fstring(lc $str->{str_value});
+}
+
+sub _hashValue {
+    my $str = shift;
+    return fsym($str->{str_value});
 }
 
 sub _to_number {

@@ -13,7 +13,7 @@ use List::Util qw(sum product min max);
 use Ferret::Core::Conversion qw(
     fnumber pnumber
     plist flist
-    fbool
+    fbool fsym
 );
 
 my @methods = (
@@ -47,6 +47,9 @@ my @methods = (
     },
     toString => {
         code => \&_to_string
+    },
+    hashValue => {
+        code => \&_hashValue
     }
 );
 
@@ -155,6 +158,11 @@ sub op_range {
 sub _to_string {
     my $num = shift;
     return Ferret::String->new($num->f, str_value => $num->{num_value});
+}
+
+sub _hashValue {
+    my $num = shift;
+    return fsym($num->{num_value});
 }
 
 sub description {

@@ -7,14 +7,21 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(pstring);
+use Ferret::Core::Conversion qw(pstring fstring);
+
+my @methods = (
+    hashValue => {
+        code => \&_hashValue
+    }
+);
 
 Ferret::bind_class(
     name      => 'Symbol',
     alias     => 'Sym',
     init      => \&init,
     init_want => '$from',
-    desc      => \&description
+    desc      => \&description,
+    methods   => \@methods
 );
 
 *new = *Ferret::bind_constructor;
@@ -32,6 +39,12 @@ sub init {
     # so force init to return one of them.
     $sym->{override_init_obj} = $sym->get_sym;
 
+}
+
+# symbols are hashable by nature.
+sub _hashValue {
+    my $sym = shift;
+    return $sym;
 }
 
 sub get_sym {

@@ -11,6 +11,7 @@ use Ferret::Core::Conversion qw(
     _pnumber
     _pbool
     _plist
+    _psym
 );
 
 sub pstring {
@@ -24,6 +25,13 @@ sub pnumber {
     my ($obj, $prop_name, $fallback) = @_;
     my $value = $obj->{$prop_name};
     return $value ? _pnumber($value) // $fallback : $fallback;
+}
+
+sub psym {
+    my ($obj, $prop_name, $fallback) = @_;
+    my $value = _psym($obj->{$prop_name});
+    $value = length $value ? $value : ($fallback // '');
+    return $value;
 }
 
 sub pbool {

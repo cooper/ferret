@@ -61,12 +61,23 @@ sub fstring {
     return "$val";
 }
 
+sub fsym {
+    my $name = shift;
+    return FF::get_symbol($Ferret::ferret, $name);
+}
+
 # return a perl string value.
 sub pstring {
     my $val = shift;
     return ''   if !defined $val;
     return $val if !blessed $val;
     return fstring($val)->{str_value} // '';
+}
+
+sub psym {
+    my $val = shift;
+    return $val->{sym_value} if blessed $val && defined $val->{sym_value};
+    return pstring(fstring($val));
 }
 
 # return a perl object description.
