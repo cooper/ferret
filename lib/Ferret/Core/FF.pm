@@ -325,11 +325,28 @@ sub typedef {
         return $can_func;
     };
 
+    # this sub takes a Ferret function and the $ins and calls that function.
+    # the return value overwrites $ins. if undefined, the condition fails.
+    my $transform = sub {
+        my ($func, $obj) = @_;
+
+        # we can't do anything with a non-function.
+        # FIXME: maybe we should raise a runtime error here.
+        # at LEAST a warning.
+        return Ferret::undefined
+            if !$func->isa('Ferret::Function') && !$func->isa('Ferret::Event');
+
+        # return whatever the transform returns.
+        return $func->call([ $obj ], $scope);
+
+    };
+
     # create a function.
     my $func = ffunction(sub {
         my (undef, $args) = @_;
         my $obj = $args->{obj};
-        return $code->($obj, $create_can) ? $obj : Ferret::undefined;
+        my $res = $code->($obj, $create_can, $transform);
+        return $res || Ferret::undefined;
     }, $type_name, '$obj');
 
     $scope->set_property($type_name => $func); # TODO: pos

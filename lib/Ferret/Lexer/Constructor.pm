@@ -350,15 +350,20 @@ sub c_TYPE {
     return $type;
 }
 
-sub c_KEYWORD_CAN {
-    my ($c, $value) = @_;
+sub c_KEYWORD_CAN       { start_type_requirement(shift, 'can')       }
+sub c_KEYWORD_SATISFIES { start_type_requirement(shift, 'satisfies') }
+sub c_KEYWORD_TRANSFORM { start_type_requirement(shift, 'transform') }
+
+sub start_type_requirement {
+    my ($c, $type) = @_;
 
     # create a type requirement.
-    my $req = F::TypeRequirement->new(req_type => 'can');
+    my $req = F::TypeRequirement->new(req_type => $type);
     $c->adopt_and_set_node($req);
 
     return $req;
 }
+
 
 sub c_KEYWORD_ON {
     my ($c, $value) = @_;

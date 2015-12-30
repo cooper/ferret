@@ -29,4 +29,23 @@ sub req_error {
     return;
 }
 
+sub perl_fmt_do {
+    my $req    = shift;
+    my $type   = $req->{req_type};
+    my $fmt_do = $req->first_child->perl_fmt_do;
+
+    # for can, pass it on to the InterfaceMethod.
+    return $fmt_do if $type eq 'can';
+
+    # for satisfies, the condition is simply the expression.
+    return $fmt_do if $type eq 'satisfies';
+
+    # for transform, it's more complicated.
+    if ($type eq 'transform') {
+        return "do { \$ins = \$transform->($fmt_do, \$ins) }";
+    }
+
+    return '';
+}
+
 1

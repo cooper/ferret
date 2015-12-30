@@ -40,8 +40,9 @@ sub perl_fmt {
 
         # it's some sort of requirement or transform.
         if (defined $item->{req_type}) {
-            my $format = $item->first_child->perl_fmt_do;
+            my $format = $item->perl_fmt_do;
             push @conditions, $format;
+            next;
         }
 
         # it's just an expression.
