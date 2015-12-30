@@ -6,6 +6,7 @@ use strict;
 use 5.010;
 
 use List::Util 'first';
+use Scalar::Util 'looks_like_number';
 
 my $ok;
 
@@ -14,14 +15,14 @@ our %error_reasons = (
     child_not_allowed       => 'inside %s',
     parent_maxed_out        => 'inside %s, which can only contain %d element%s',
     not_enough_children     => 'lacking %d or more child element%s',
-    wrong_number_children   => 'lacking %d child element%s',
+    wrong_number_children   => 'lacking exactly %d child element%s',
     previous_not_allowed    => 'after %s',
     expected_before         => 'without previous element at same level',
     expected_after          => 'without following element at same level',
     must_be_inside          => 'outside of a containing %s',
-    must_be_set             => "without a current %s",
+    must_be_set             => "without a current '%s'",
     must_not_be_set         => "with already a current '%s'",
-    must_be_equal           => "with mismatching current %s and current %s"
+    must_be_equal           => "with mismatching current '%s' and '%s'"
 );
 
 sub err { sprintf $error_reasons{+shift}, @_ }
@@ -169,19 +170,34 @@ sub t_current_must_satisfy {
 ### ELEMENT RULES ###
 #####################
 
+# this injects the rule name into the third element of arrays.
+sub add_rule_name {
+    my ($name, @rules) = @_;
+    my @done;
+    while (@rules >= 2) {
+        my ($k, $v) = (shift @rules, shift @rules);
+        if (ref $v eq 'ARRAY' && looks_like_number($v->[2])) {
+            $v->[2] = "$name\[$$v[2]\]";
+        }
+        push @done, $k, $v;
+    }
+    return @done;
+}
+
 # returns a hash of rules from a section of the rule tree.
 #
 #   e.g. rule_hash('WantNeed', 'child_rules', 'Bareword')
 #
 sub rule_hash {
     my @levels = @_;
+    my $first = $_[0];
     my $h = \%Ferret::Lexer::Rules::element_rules;
     for my $level (@levels) {
         return unless $h->{$level};
         $h = $h->{$level};
         $h = _hashify($h);
     }
-    return %$h;
+    return add_rule_name($first, %$h);
 }
 
 # final element check.
@@ -219,14 +235,12 @@ sub F::Element::rule_set {
     my @after;
     if ($after) {
         push @after, rule_hash($el->type, 'after_rules');
-        push @after, rule_hash($el->tok,  'after_rules');
     }
 
     # Set 1: local rules.
     my $set1 = Ferret::Lexer::RuleSet->new(
         @after,
-        rule_hash($el->type),
-        rule_hash($el->tok)
+        rule_hash($el->type)
     );
 
     my ($set2, $set3, $set4);
@@ -238,14 +252,11 @@ sub F::Element::rule_set {
 
         # rules from parent or any node above parent.
         my @rules = map {
-            my   @a = rule_hash($_, 'lower_rules', $el->type);
-            push @a,  rule_hash($_, 'lower_rules', $el->tok) if $el->tok;
-            @a;
+            rule_hash($_, 'lower_rules', $el->type);
         } reverse $parent->types_upward;
 
         # rules directly from parent.
         push @rules, rule_hash($parent->t, 'child_rules', $el->type);
-        push @rules, rule_hash($parent->t, 'child_rules', $el->tok) if $el->tok;
 
         $set2 = Ferret::Lexer::RuleSet->new(@rules);
 
@@ -262,12 +273,10 @@ sub F::Element::rule_set {
         if ($parent->type eq 'Instruction') {
             my $p = $parent->parent;
             push @rules, rule_hash($el->type, 'instruction_inside_rules', $p->type) if $p;
-            push @rules, rule_hash($el->type, 'instruction_inside_rules', $p->tok)  if $p && $p->tok;
         }
 
         # rules from self while directly inside a certain type of node.
         push @rules, rule_hash($el->type, 'directly_inside_rules', $parent->type);
-        push @rules, rule_hash($el->type, 'directly_inside_rules', $parent->tok) if $parent->tok;
 
         $set3 = Ferret::Lexer::RuleSet->new(@rules);
     }
@@ -468,7 +477,8 @@ sub F::Node::has_room {
     my $set = $parent_maybe->rule_set(undef, $after_check);
 
     # no limit.
-    my $max = $set->{max_children} // $set->{num_children};
+    my $max = $set->rule_value('max_children') //
+              $set->rule_value('num_children');
     return $ok if !defined $max;
 
     # surpassing the limit.
@@ -489,7 +499,7 @@ sub F::Node::has_minimal {
     my $current = scalar $node->children;
 
     # first, check if it has an exact amount.
-    my $exact = $set->{num_children};
+    my $exact = $set->rule_value('num_children');
     if (defined $exact) {
         return $set->err(wrong_number_children =>
             $exact,
@@ -498,7 +508,7 @@ sub F::Node::has_minimal {
     }
 
     # now check minimum.
-    my $min = $set->{min_children};
+    my $min = $set->rule_value('min_children');
     return $ok if !defined $min;
 
     # less than the minimum.

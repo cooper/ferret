@@ -343,14 +343,19 @@ sub fatal {
     # the above is disabled because instruction ->detail says child now.
     $parent  = $parent->detail if $parent;
 
-    my @caller = @{ delete $c->{err_caller} || [caller] };
+    # say where the exception came from.
+    my @caller   = @{ delete $c->{err_caller} || [caller] };
+    my $err_from = "$caller[0] line $caller[2]";
+    $err_from    = "rule $opts{rule_name}"
+        if $opts{rule_name};    # if we have a rule name, use this instead.
+
     $err .= "\n     Error   -> $opts{err_type}" if length $opts{err_type};
     $err .= "\n     File    -> $$c{file}";
     $err .= "\n     Line    -> $line";
     $err .= "\n     Element -> $opts{el_desc}"  if length $opts{el_desc};
     $err .= "\n     Near    -> $near"           if !$parent || $parent ne $near;
     $err .= "\n     Parent  -> ".$parent        if $parent;
-    $err .= "\n\nException raised by $caller[0] line $caller[2].";
+    $err .= "\n\nException raised by $err_from.";
 
     return Ferret::Lexer::fatal($err);
 }
@@ -373,8 +378,8 @@ sub unexpected {
     $c->{err_caller} ||= [caller];
 
     # if it's an arrayref, it's from a rule with a description.
-    my $err_desc;
-    ($reason, $err_desc) = @$reason if ref $reason eq 'ARRAY';
+    my ($err_desc, $rule_name);
+    ($reason, $err_desc, $rule_name) = @$reason if ref $reason eq 'ARRAY';
     $err_desc = length $err_desc ? "\n$err_desc." : '';
     $reason   = length $reason   ? " $reason"     : '';
 
@@ -384,7 +389,11 @@ sub unexpected {
         $c->rule_el->detail :
         Ferret::Lexer::pretty_token($c->label);
 
-    fatal($c, "Unexpected $what$reason.$err_desc", $el);
+    fatal($c,
+        "Unexpected $what$reason.$err_desc",
+        $el,
+        rule_name => $rule_name
+    );
 }
 
 sub throw {

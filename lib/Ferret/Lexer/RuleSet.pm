@@ -34,7 +34,7 @@ sub list_items {
     my ($set, $list) = @_;
     my $list_str = $set->{$list} or return;
     if (ref $list_str eq 'ARRAY') {
-         ($list_str, $set->{last_error}) = @$list_str;
+         ($list_str, $set->{last_error}, $set->{last_num}) = @$list_str;
     }
     return split /\s+/, $list_str;
 }
@@ -44,16 +44,25 @@ sub rule_code {
     my ($set, $name) = @_;
     my $code = $set->{$name} or return;
     if (ref $code eq 'ARRAY') {
-        ($code, $set->{last_error}) = @$code;
+        ($code, $set->{last_error}, $set->{last_num}) = @$code;
     }
     return if ref $code ne 'CODE';
     return $code;
 }
 
+sub rule_value {
+    my ($set, $name) = @_;
+    my $value = $set->{$name} or return;
+    if (ref $value eq 'ARRAY') {
+        ($value, $set->{last_error}, $set->{last_num}) = @$value;
+    }
+    return $value;
+}
+
 sub err {
     my ($set, @err) = @_;
     my $err_str = Ferret::Lexer::RuleFunctions::err(@err);
-    return [ $err_str, $set->{last_error} ];
+    return [ $err_str, $set->{last_error}, $set->{last_num} ];
 }
 
 1

@@ -1064,6 +1064,12 @@ sub could_be_one_liner {
 sub c_OP_ELLIP {
     my ($c, $value) = @_;
 
+    # Rule OP_ELLIP[0]:
+    #   The current node must be of one of the following types:
+    #       WantNeed
+    #       WantNeedType
+    #       WantNeedValue
+
     # ellipsis can only exist on the end of a WantNeed.
     # consider: no way to handle need $var...: Type = exp.
     # not really a big deal because it has the same effect as
