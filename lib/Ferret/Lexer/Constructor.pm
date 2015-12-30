@@ -217,6 +217,10 @@ sub c_METHOD {
 sub c_FUNCTION {
     my ($c, $value) = @_;
 
+    # Rule Function[0]:
+    #   If the function is named (not anonymous), it must be a direct child
+    #   of a subtype of ScopeOwner.
+
     # if the current node is a class and this is not a private function,
     # it's a class method.
     my $first_char = length $value->{name} ? substr $value->{name}, 0, 1 : '';
@@ -358,6 +362,19 @@ sub c_KEYWORD_TRANSFORM { start_type_requirement(shift, 'transform') }
 sub start_type_requirement {
     my ($c, $type) = @_;
 
+    # Rule TypeRequirement[0]:
+    #   Must be a direct child of an Instruction.
+
+    # Rule TypeRequirement[1]:
+    #   Must be somewhere inside a Type declaration.
+
+    # Rule TypeRequirement[2]:
+    #   Direct children must be a subtype of Expression.
+
+    # Rule TypeRequirement[3]:
+    #   Number of direct children must be exactly one (1).
+
+
     # create a type requirement.
     my $req = F::TypeRequirement->new(req_type => $type);
     $c->adopt_and_set_node($req);
@@ -392,10 +409,7 @@ sub c_KEYWORD_ON {
     #   If a direct child is a Property, it must not be a special property.
 
     # Rule OnExpression[2]:
-    #   Number of direct children must not exceed one (1).
-
-    # Rule OnExpression[3]:
-    #   Number of direct children must be no less than one (1).
+    #   Number of direct children must be exactly one (1).
 
     return $on;
 }
@@ -437,10 +451,7 @@ sub c_KEYWORD_IF {
     #   If direct child is an Assignment, it cannot be a lazy assignment.
 
     # Rule IfParameter[1]:
-    #   Number of direct children must not exceed one (1).
-
-    # Rule IfParameter[2]:
-    #   Number of direct children must be no less than one (1).
+    #   Number of direct children must be exactly one (1).
 
     # set the current node to the conditional expression.
     $c->set_node($if->param_exp);
@@ -530,10 +541,10 @@ sub c_KEYWORD_LOAD {
     #   Parent must be a direct child of a Class or Document.
 
     # Rule Load[2]:
-    #   Number of direct children must not exceed one (1).
+    #   Direct children must be of type Bareword.
 
     # Rule Load[3]:
-    #   Number of direct children must be no less than one (1).
+    #   Number of direct children must be exactly one (1).
 
     my $load = F::Load->new;
     $c->adopt_and_set_node($load);
@@ -568,12 +579,36 @@ sub c_KEYWORD_DEFER {
 
 sub c_PAREN_S {
     my ($c, $value) = @_;
+
+    # Rule List[0]:
+    #   Direct children must be of type ListItem.
+
+    # Rule ListItem[0]:
+    #   Direct children must be of type Pair or some sort of Expression.
+
+    # Rule ListItem[1]:
+    #   Must directly follow a ListItem, if following anything.
+
+    # Rule ListItem[2]:
+    #   Must come directly before a ListItem, if before anything.
+
+    # Rule ListItem[3]:
+    #   Number of direct children must be exactly one (1).
+
+    # Rule for ListItem implemented in F/List.pm:
+    #   Pairs and non-pairs cannot be mixed in a list unless it is the
+    #   argument list of a call.
+
     my $list = $c->start_list('PAREN_E');
     return $list;
 }
 
 sub c_BRACKET_S {
     my ($c, $value) = @_;
+
+    # Rules for List:
+    #   See c_PAREN_S().
+
     my $list = $c->start_list('BRACKET_E');
     $list->{collection} = 1; # define as a value list or hash.
     $list->{array} = 1;      # default
@@ -617,6 +652,10 @@ sub handle_call {
 
     # handle the list, then adopt it.
     if ($has_list) {
+
+        # Rules for List:
+        #   See c_PAREN_S().
+
         my $list = $c->start_list($terminator);
         $list->{is_callidx} = 1;
         $list->{is_index} = $is_index;
@@ -801,6 +840,9 @@ sub c_OP_COMMA {
     # we're in a list.
     if ($c->list) {
 
+        # Rules for ListItem:
+        #   See c_PAREN_S().
+
         # set the current node to a new list item.
         $c->set_node($c->list->new_item);
 
@@ -962,28 +1004,44 @@ sub c_KEYWORD_WANT {
     #   Must be somewhere inside a Function or a Method.
 
     # Rule WantNeed[2]:
-    #   When directly inside a method, WantNeed can only directly contain
-    #   children of the following types:
-    #
-    #       Instance variable   (e.g. need @x)
-    #       Lexical variable    (e.g. need $x)
-    #       Expression          (i.e. the want parameter for fallback value)
-    #       Bareword            (i.e. bareword variable type; need $x: Str)
-    #       Set type variable   (i.e. set type variable type; need $x: <Str>)
-    #
+    #   Direct children must be one of the following types:
+    #       InstanceVariable
+    #       LexicalVariable
+    #       WantNeedType
+    #       WantNeedValue
 
     # Rule WantNeed[3]:
-    #   When directly inside a function, WantNeed can only directly contain
-    #   children of the following types:
-    #
-    #       Lexical variable    (e.g. need $x)
-    #       Expression          (i.e. the want parameter for fallback value)
-    #       Bareword            (i.e. bareword variable type; need $x: Str)
-    #       Set type variable   (i.e. set type variable type; need $x: <Str>)
-    #
+    #   Number of direct children must be no less than one (1).
 
-    # Manually implemented rules:
-    #   See F/WantNeed.pm for more rules which are implemented in ->adopt().
+    # Rule WantNeed[4]:
+    #   Number of direct children must not exceed three (3).
+
+    # Rule WantNeedType[0]:
+    #   Direct parent must be of type WantNeed.
+
+    # Rule WantNeedType[1]:
+    #   Direct children must be of type Bareword.
+
+    # Rule WantNeedType[2]:
+    #   Must directly follow a lexical variable or instance variable.
+
+    # Rule WantNeedType[3]:
+    #   Number of direct children must be exactly one (1).
+
+    # Rule WantNeedValue[0]:
+    #   Direct parent must be of type WantNeed.
+
+    # Rule WantNeedValue[1]:
+    #   Direct children must be some sort of Expression.
+
+    # Rule WantNeedValue[2]:
+    #   Must directly follow one of the following types:
+    #       LexicalVariable
+    #       InstanceVariable
+    #       WantNeedType
+
+    # Rule WantNeedValue[3]:
+    #   Number of direct children must be exactly one (1).
 
     my $want = F::WantNeed->new(arg_type => 'want');
     return $c->adopt_and_set_node($want);
@@ -992,7 +1050,8 @@ sub c_KEYWORD_WANT {
 sub c_KEYWORD_NEED {
     my ($c, $value) = @_;
 
-    # same rules as in c_KEYWORD_WANT above.
+    # Rules:
+    #   See rules in c_KEYWORD_WANT() above.
 
     my $need = F::WantNeed->new(arg_type => 'need');
     return $c->adopt_and_set_node($need);
@@ -1005,6 +1064,9 @@ sub c_OP_VALUE {
     # for the argument variable.
     if ($c->node->type eq 'WantNeed') {
         my $wn = $c->node;
+
+        # Rules for WantNeedType:
+        #   See c_KEYWORD_WANT().
 
         # if the argument already has a type, that's an issue.
         if ($wn->arg_type_exp) {
@@ -1122,6 +1184,9 @@ sub c_OP_ASSIGN {
     $c->close_node_maybe('WantNeedType');
     if ($c->node->type eq 'WantNeed') {
         my $wn = $c->node;
+
+        # Rules for WantNeedValue:
+        #   See c_KEYWORD_WANT().
 
         # if the argument already has a value expression, that's an issue.
         if ($wn->value_exp) {
@@ -1309,10 +1374,7 @@ sub start_modifier {
     #
 
     # Rule PropertyModifier[3]:
-    #   Number of direct children must not exceed one (1).
-
-    # Rule PropertyModifier[4]:
-    #   Number of direct children must be no less than one (1).
+    #   Number of direct children must be exactly one (1).
 
     my $mod = F::PropertyModifier->new(mod_type => $type);
     return $c->adopt_and_set_node($mod);
@@ -1351,10 +1413,7 @@ sub c_KEYWORD_SHARE {
     #
 
     # Rule SharedDeclaration[3]:
-    #   Number of direct children must not exceed one (1).
-
-    # Rule SharedDeclaration[4]:
-    #   Number of direct children must be no less than one (1).
+    #   Number of direct children must be exactly one (1).
 
     my $share = F::SharedDeclaration->new;
     return $c->adopt_and_set_node($share);
@@ -1381,10 +1440,8 @@ sub c_KEYWORD_LOCAL {
     #
 
     # Rule LocalDeclaration[3]:
-    #   Number of direct children must not exceed one (1).
+    #   Number of direct children must be exactly one (1).
 
-    # Rule LocalDeclaration[4]:
-    #   Number of direct children must be no less than one (1).
 
     my $local = F::LocalDeclaration->new;
     return $c->adopt_and_set_node($local);

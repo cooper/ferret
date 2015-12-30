@@ -65,14 +65,7 @@ our %token_rules = (
             'closure',
             'Attempted to terminate a closure, but no closure is open',
             0
-        ],
-
-        # # $c->{node} must be equal to $c->{node} at this point.
-        # current_must_be_equal => [                                              # CLOSURE_E[1]
-        #     'closure node',
-        #     'Attempted to terminate a closure, but it is not the current node',
-        #     1
-        # ]
+        ]
 
     ],
 
@@ -203,7 +196,7 @@ our %element_rules = (
             1
         ],
 
-        children_must_be => [
+        children_must_be => [                                                   # WantNeed[2]
             'InstanceVariable LexicalVariable WantNeedType WantNeedValue',
             'Argument declaration can only contain lexical variables, '.
             'instance variables, their bareword types, and their fallback '.
@@ -211,48 +204,48 @@ our %element_rules = (
             2
         ],
 
-        min_children => [ 1, undef, 3 ],
-        max_children => [ 3, undef, 4 ]
+        min_children => [ 1, undef, 3 ],                                        # WantNeed[3]
+        max_children => [ 3, undef, 4 ]                                         # WantNeed[4]
 
     },
 
     WantNeedType => {
 
-        parent_must_be => [ 'WantNeed', undef, 0 ],
+        parent_must_be => [ 'WantNeed', undef, 0 ],                             # WantNeedType[0]
 
-        children_must_be => [
+        children_must_be => [                                                   # WantNeedType[1]
             'Bareword',
             'Argument declaration type following colon (:) must be a bareword',
             1
         ],
 
-        must_come_after => [
+        must_come_after => [                                                    # WantNeedType[2]
             'InstanceVariable LexicalVariable',
             'Argument declaration type must follow argument variable',
             2
         ],
 
-        num_children => [ 1, undef, 3 ]
+        num_children => [ 1, undef, 3 ]                                         # WantNeedType[3]
 
     },
 
     WantNeedValue => {
 
-        parent_must_be => [ 'WantNeed', undef, 0 ],
+        parent_must_be => [ 'WantNeed', undef, 0 ],                             # WantNeedValue[0]
 
-        children_must_satisfy => [
+        children_must_satisfy => [                                              # WantNeedValue[1]
             sub { shift->isa('F::Expression') },
             'Argument declaration fallback value must be an expression of sorts',
             1
         ],
 
-        must_come_after => [
+        must_come_after => [                                                    # WantNeedValue[2]
             'InstanceVariable LexicalVariable WantNeedType',
             'Argument declaration type must follow argument variable or type',
             2
         ],
 
-        num_children => [ 1, undef, 3 ]
+        num_children => [ 1, undef, 3 ]                                         # WantNeedValue[3]
 
     },
 
@@ -282,7 +275,7 @@ our %element_rules = (
         ],
 
         # there can only be one child.
-        num_children => [ 1, undef, 3 ]
+        num_children => [ 1, undef, 3 ]                                         # PropertyModifier[3]
 
     },
 
@@ -317,7 +310,7 @@ our %element_rules = (
 
     List => {
 
-        children_must_be => [
+        children_must_be => [                                                   # List[0]
             'ListItem',
             'Lists can only directly contain list items',
             0
@@ -328,25 +321,25 @@ our %element_rules = (
     ListItem => {
 
         # list items can only contain expressions and pairs.
-        children_must_satisfy => [
+        children_must_satisfy => [                                              # ListItem[0]
             sub { $_[0]->isa('F::Expression') || $_[0]->isa('F::Pair') },
             'Lists can only contain expressions of sorts',
             0
         ],
 
-        must_come_after => [
+        must_come_after => [                                                    # ListItem[1]
             'NONE ListItem',
             'List items can only follow other list items',
             1
         ],
 
-        must_come_before => [
+        must_come_before => [                                                   # ListItem[2]
             'NONE ListItem',
             'List items can only follow other list items',
             2
         ],
 
-        max_children => [ 1, undef, 3 ]
+        max_children => [ 1, undef, 3 ]                                         # ListItem[3]
 
         # Rule implemented in F/List.pm:
         #   Pairs and non-pairs cannot be mixed in a list unless it is the
@@ -388,7 +381,7 @@ our %element_rules = (
             ],
 
             # it can only contain one property or variable.
-            num_children => [ 1, undef, 2 ]
+            num_children => [ 1, undef, 2 ]                                     # OnExpression[2]
 
         }
 
@@ -420,7 +413,7 @@ our %element_rules = (
         ],
 
         # there can only be one child.
-        num_children => [ 1, undef, 3 ]
+        num_children => [ 1, undef, 3 ]                                         # SharedDeclaration[3]
 
     },
 
@@ -450,7 +443,7 @@ our %element_rules = (
         ],
 
         # there can only be one child.
-        num_children => [ 1, undef, 0 ]
+        num_children => [ 1, undef, 0 ]                                         # LocalDeclaration[3]
 
     },
 
@@ -475,13 +468,13 @@ our %element_rules = (
 
         },
 
-        children_must_be => [
+        children_must_be => [                                                   # Load[2]
             'Bareword',
             'Load statement can only contain a bareword package name',
             2
         ],
 
-        # there can only be one child.
+        # there can only be one child.                                          # Load[3]
         num_children => [ 1, undef, 3 ]
 
     },
@@ -597,34 +590,34 @@ our %element_rules = (
             0
         ],
 
-        num_children => [ 1, undef, 1 ]
+        num_children => [ 1, undef, 1 ]                                         # IfParameter[1]
 
     },
 
     TypeRequirement => {
 
-        parent_must_be => [
+        parent_must_be => [                                                     # TypeRequirement[0]
             'Instruction',
             'Type requirement (can/isa/satisfies/transform) must be a direct '.
             'child of an instruction',
             0
         ],
 
-        must_be_somewhere_inside => [
+        must_be_somewhere_inside => [                                           # TypeRequirement[1]
             'Type',
             'Type requirement (can/isa/satisfies/transform) can only exist '.
             "somewhere inside of a 'type' construct",
             1
         ],
 
-        children_must_satisfy => [
+        children_must_satisfy => [                                              # TypeRequirement[2]
             sub { shift->isa('F::Expression') },
             'Type requirement (can/isa/satisfies/transform) must contain '.
             'an expression of some sort',
             2
         ],
 
-        num_children => [ 1, undef, 3 ]
+        num_children => [ 1, undef, 3 ]                                         # TypeRequirement[3]
 
         # Rule implemented in F/TypeRequirement.pm:
         #   If the type requirement is a 'can' statement,
@@ -640,7 +633,7 @@ our %element_rules = (
 
         # if it's an anonymous function, it can act as an expression and be
         # just about anywhere. if not, it must be direct child of scope owner.
-        parent_must_satisfy => [
+        parent_must_satisfy => [                                                # Function[0]
             sub {
                 my ($parent, $func) = @_;
                 return $func->anonymous || $parent->isa('F::ScopeOwner');
