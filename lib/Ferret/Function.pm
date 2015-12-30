@@ -94,6 +94,12 @@ sub handle_arguments {
     my ($func, @args, %args) = (shift, @{ +shift });
     my @sigs = @{ $func->{signatures} };
 
+    # the last argument may be a hash ref with named arguments.
+    my %named_args;
+    if (ref $args[$#args] eq 'HASH') {
+        %named_args = %{ pop @args };
+    }
+
     while (@sigs) {
         my $sig = shift @sigs;
 
@@ -107,6 +113,7 @@ sub handle_arguments {
         $args{ $sig->{name} } = $val if $val;
     }
 
+    @args{ keys %named_args } = values %named_args;
     return \%args;
 }
 

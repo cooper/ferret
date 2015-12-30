@@ -38,7 +38,7 @@ sub plist {
     return $value ? _plist($value) : ();
 }
 
-sub call {
+sub call_prop {
     my ($obj, $prop_name) = (shift, shift);
     my $call = $obj->{$prop_name} || Ferret::undefined;
     $call->call(@_);

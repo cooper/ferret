@@ -19,7 +19,8 @@ on say {
     didTwice -> $twice
 }
 
-$r = say(message: "It was said", twice: true)
+# note how the signature still determines the first argument
+$r = say("It was said", twice: true)
 
 if $r.didTwice:
     say("Did the first one twice!")

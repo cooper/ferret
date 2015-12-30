@@ -19,6 +19,7 @@ sub list_type {
         return 'value list'         if $list->is_array;
     }
     return 'named argument list'    if $list->is_call && $list->is_hash;
+    return 'mixed argument list'    if $list->is_call && $list->is_mixed;
     return 'argument list'          if $list->is_call;
     return 'index list'             if $list->is_index;
     return 'object'                 if $list->is_hash;

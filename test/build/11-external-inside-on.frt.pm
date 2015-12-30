@@ -75,10 +75,9 @@
 #          Assignment (lexical variable '$r')
 #              Call
 #                  Bareword 'say'
-#                  Named argument list [2 items]
+#                  Mixed argument list [2 items]
 #                      Item 0
-#                          Pair 'message'
-#                              String 'It was said'
+#                          String 'It was said'
 #                      Item 1
 #                          Pair 'twice'
 #                              Boolean true
@@ -208,21 +207,21 @@ my $result = do {
     $scope->set_property_ow(
         $context,
         r => $scope->property_u('say')->call_u(
-            { message => str( $f, "It was said" ), twice => $true }, $scope,
-            undef, 22.2
+            [ str( $f, "It was said" ), { twice => $true } ], $scope,
+            undef, 23.2
         ),
-        22.1
+        23.1
     );
     if ( bool( $scope->property_u('r')->property_u('didTwice') ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
         $scope->property_u('say')
           ->call_u( [ str( $f, "Did the first one twice!" ) ],
-            $scope, undef, 25.2 );
+            $scope, undef, 26.2 );
     }
     $scope->property_u('say')
       ->call_u( [ str( $f, "this should ignore the second parameter" ), $true ],
-        $scope, undef, 27.2 );
+        $scope, undef, 28.2 );
 };
 
 FF::after_content();
