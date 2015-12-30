@@ -1,16 +1,16 @@
 class String
 
 type NonEmpty {
-    isa String
+    isa *class
     satisfies .length != 0
 }
 
 type UC {
-    isa String
+    isa *class
     transform .uppercase
 }
 
 type LC {
-    isa String
+    isa *class
     transform .lowercase
 }

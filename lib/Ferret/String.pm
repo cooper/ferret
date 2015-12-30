@@ -52,7 +52,7 @@ my @methods = (
         code => \&_lowercase
     },
     hashValue => {
-        code => \&_hashValue
+        code => \&_hash_value
     },
     copy => {
         code => \&_copy
@@ -188,7 +188,7 @@ sub _lowercase {
     return fstring(lc $str->{str_value});
 }
 
-sub _hashValue {
+sub _hash_value {
     my $str = shift;
     return fsym($str->{str_value});
 }

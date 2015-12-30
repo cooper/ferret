@@ -5,7 +5,7 @@
 #              Body ('type' scope)
 #                  Instruction
 #                      Isa
-#                          Bareword 'String'
+#                          Special variable '*class'
 #                  Instruction
 #                      Satisfies
 #                          Operation
@@ -16,7 +16,7 @@
 #              Body ('type' scope)
 #                  Instruction
 #                      Isa
-#                          Bareword 'String'
+#                          Special variable '*class'
 #                  Instruction
 #                      Transform
 #                          Property variable '.uppercase'
@@ -24,11 +24,10 @@
 #              Body ('type' scope)
 #                  Instruction
 #                      Isa
-#                          Bareword 'String'
+#                          Special variable '*class'
 #                  Instruction
 #                      Transform
 #                          Property variable '.lowercase'
-#      Include (String)
 use warnings;
 use strict;
 use 5.010;
@@ -66,7 +65,9 @@ my $result = do {
                 FF::typedef_check(
                     $scope, $class, $ins,
                     conditions => [
-                        $ins->instance_of_u( $scope->property_u('String') ),
+                        $ins->instance_of_u(
+                            $scope->{special}->property_u('class')
+                        ),
                         nequal(
                             $scope, $ins->property_u('length'),
                             num( $f, 0 )
@@ -83,7 +84,9 @@ my $result = do {
                 FF::typedef_check(
                     $scope, $class, $ins,
                     conditions => [
-                        $ins->instance_of_u( $scope->property_u('String') ),
+                        $ins->instance_of_u(
+                            $scope->{special}->property_u('class')
+                        ),
                         do {
                             $ins = $transform->(
                                 $ins->property_u('uppercase'), $ins
@@ -101,7 +104,9 @@ my $result = do {
                 FF::typedef_check(
                     $scope, $class, $ins,
                     conditions => [
-                        $ins->instance_of_u( $scope->property_u('String') ),
+                        $ins->instance_of_u(
+                            $scope->{special}->property_u('class')
+                        ),
                         do {
                             $ins = $transform->(
                                 $ins->property_u('lowercase'), $ins
@@ -113,7 +118,6 @@ my $result = do {
             }
         );
     }
-    FF::load_namespaces( $context, qw(String) );
 };
 
 FF::after_content();

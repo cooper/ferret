@@ -11,7 +11,7 @@ use Ferret::Core::Conversion qw(pstring fstring);
 
 my @methods = (
     hashValue => {
-        code => \&_hashValue
+        code => \&_hash_value
     }
 );
 
@@ -42,7 +42,7 @@ sub init {
 }
 
 # symbols are hashable by nature.
-sub _hashValue {
+sub _hash_value {
     my $sym = shift;
     return $sym;
 }

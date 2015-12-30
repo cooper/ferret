@@ -73,7 +73,6 @@ sub get_value {
 sub _get_value {
     my ($hash, $args) = @_;
     my $key = $args->psym('index');
-    print "get_value($key)\n";
     return $hash->get_value($key);
 }
 

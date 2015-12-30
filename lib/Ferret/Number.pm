@@ -49,7 +49,7 @@ my @methods = (
         code => \&_to_string
     },
     hashValue => {
-        code => \&_hashValue
+        code => \&_hash_value
     }
 );
 
@@ -160,7 +160,7 @@ sub _to_string {
     return Ferret::String->new($num->f, str_value => $num->{num_value});
 }
 
-sub _hashValue {
+sub _hash_value {
     my $num = shift;
     return fsym($num->{num_value});
 }
