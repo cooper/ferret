@@ -8,4 +8,15 @@ use parent 'F::Call';
 sub type { 'InterfaceMethod' }
 sub desc { 'method requirement' }
 
+sub func_fmt_do {
+    my $mreq = shift;
+    my $name = $mreq->method_name;
+    return "\$create_can->('$name', \$ins)";
+}
+
+sub method_name {
+    my $var = shift->function;
+    return $var->{var_name};
+}
+
 1

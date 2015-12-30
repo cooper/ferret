@@ -526,7 +526,7 @@ our %element_rules = (
         max_children => 1,
         min_children => 1
 
-        # Rule implemented in F/Type.pm:
+        # Rule implemented in F/TypeRequirement.pm:
         #   If the type requirement is a 'can' statement,
         #   its interface method, represented by a subtype of Call,
         #   must have a 'function' of type PropertyVariable.

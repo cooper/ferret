@@ -37,7 +37,7 @@ sub perl_fmt {
         "{ $hash_args }"                       ;
 
     return call => {
-        coderef   => $func->perl_fmt_do,
+        coderef   => $call->func_fmt_do,
         arguments => $arg_string,
         pos       => $call->{create_pos}
     };
@@ -69,6 +69,8 @@ sub started_instr {
 
     return $yes;
 }
+
+sub func_fmt_do { shift->function->perl_fmt_do }
 
 sub function { shift->first_child   }
 sub arg_list { (shift->children)[1] }

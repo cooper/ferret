@@ -140,10 +140,11 @@ my $result = do {
     FF::typedef(
         $scope, 'Gender',
         sub {
-            my ($ins) = @_;
+            my ( $ins, $create_can ) = @_;
             FF::typedef_check(
-                conditions =>,
-                equals     => [
+                $scope, $ins,
+                conditions => undef,
+                equal_to   => [
                     FF::get_symbol( $f, 'male' ),
                     FF::get_symbol( $f, 'female' )
                 ]

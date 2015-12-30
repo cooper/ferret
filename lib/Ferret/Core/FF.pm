@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 use Ferret::Core::Conversion qw(fstring ffunction pbool);
-use List::Util qw(any);
+use List::Util qw(any all);
 
 # fetch the global Ferret.
 sub get_ferret {
@@ -310,20 +310,46 @@ sub share {
 
 # type definitions.
 sub typedef {
-    my ($scope, $type_name, $equal_to) = @_;
+    my ($scope, $type_name, $code) = @_;
+
+    # this sub returns a function which returns Ferret true if
+    # a method requirement is satisfied.
+    my $create_can = sub {
+        my ($method_name, $obj) = @_;
+        my $can_func = ffunction(sub {
+            my (undef, $args) = @_;
+            return Ferret::false if !$obj->has_property($method_name);
+            return Ferret::true;
+        }, 'canFunc');
+
+        return $can_func;
+    };
 
     # create a function.
     my $func = ffunction(sub {
         my (undef, $args) = @_;
-        my $test = $args->{test};
-
-        # it's equal to something in $equal_to.
-        return $test if any { pbool($test->equal_to($_)) } @$equal_to;
-
-        return Ferret::undefined;
-    }, $type_name, '$test');
+        my $obj = $args->{obj};
+        return $code->($obj, $create_can) ? $obj : Ferret::undefined;
+    }, $type_name, '$obj');
 
     $scope->set_property($type_name => $func); # TODO: pos
+}
+
+sub typedef_check {
+    my ($scope, $obj, %opts) = @_;
+
+    # all conditions must return Ferret true.
+    my $conditions = delete $opts{conditions} || [];
+    return unless all { pbool($_) } @$conditions;
+
+    # there are no equality requirements.
+    my $equal_to = delete $opts{equal_to};
+    return 1 if !$equal_to;
+
+    # something is equal.
+    return 1 if any { pbool($obj->equal_to($_)) } @$equal_to;
+
+    return;
 }
 
 1
