@@ -78,6 +78,11 @@ sub prototype { shift->{prototype} }
 sub call {
     my ($class, $args) = @_;
 
+    # if passed an instance, return the instance.
+    if (ref $args eq 'ARRAY' && @$args == 1) {
+        return $args->[0] if $args->[0]->instance_of($class);
+    }
+
     # create a new object.
     my $obj = Ferret::Object->new($class->f);
 
@@ -228,7 +233,7 @@ sub _get_set_type {
     }, mimic => $global_set_class->property('_init_'));
 
     $set_type->bind_function('fromList', code => sub {
-        my ($set_class, $args, $call_scope) = @_;        
+        my ($set_class, $args, $call_scope) = @_;
         my @items = $args->plist('list');
         return $set_class->call([ @items ], $call_scope);
     }, need => '$list:List');
