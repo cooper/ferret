@@ -1264,19 +1264,13 @@ sub c_OP_ASSIGN {
 sub c_OP_LASSIGN {
     my ($c, $value) = @_;
 
-    my $last_el = $c->last_el;
-    return $c->expected(
-        'an assignable expression',
-        'at left of lazy assignment operator (?=)'
-    ) unless $last_el->is_type('Assignable');
-
     # Rules for Assignment:
     #   See c_OP_ASSIGN().
 
     # remember the last element as the left side of the assignment.
     my $a = F::Assignment->new(lazy => 1);
     $c->adopt_and_set_node($a);
-    $a->adopt($last_el);
+    $a->adopt($c->last_el);
 
     return $a;
 }
