@@ -669,11 +669,11 @@ within almost any scope.
 In order for an object to conform to a type, it must meet **all** of the
 provided conditions. A few keywords can be used in a type declaration:
 
-* [__isa__](#isa) - specifies another type to which the object must conform.
-* [__satisfies__](#satisfies) - specifies a condition which the object must
+* [`isa`](#isa) - specifies another type to which the object must conform.
+* [`satisfies`](#satisfies) - specifies a condition which the object must
   meet.
-* [__can__](#can) - specifies a method which the object must implement.
-* [__transform__](#transform) - specifies an object transformation.
+* [`can`](#can) - specifies a method which the object must implement.
+* [`transform`](#transform) - specifies an object transformation.
 
 Conditions are checked in the order that they are specified. Transforms are also
 executed in the provided order. See the documentation for each of the above
