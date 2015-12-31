@@ -12,7 +12,7 @@
 #                              Property variable '.length'
 #                              Negated equality operator (!=)
 #                              Number '0'
-#          Type definition ('UC')
+#          Type definition ('Uppercase')
 #              Body ('type' scope)
 #                  Instruction
 #                      Isa
@@ -20,7 +20,12 @@
 #                  Instruction
 #                      Transform
 #                          Property variable '.uppercase'
-#          Type definition ('LC')
+#          Instruction
+#              Alias
+#                  Assignment
+#                      Bareword 'UC'
+#                      Bareword 'Uppercase'
+#          Type definition ('Lowercase')
 #              Body ('type' scope)
 #                  Instruction
 #                      Isa
@@ -28,6 +33,12 @@
 #                  Instruction
 #                      Transform
 #                          Property variable '.lowercase'
+#          Instruction
+#              Alias
+#                  Assignment
+#                      Bareword 'LC'
+#                      Bareword 'Lowercase'
+#      Include (LC, Lowercase, UC, Uppercase)
 use warnings;
 use strict;
 use 5.010;
@@ -79,7 +90,8 @@ my $result = do {
             undef
         );
         FF::typedef(
-            $scope, $class, 'UC',
+            $scope, $class,
+            'Uppercase',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
                 FF::typedef_check(
@@ -99,8 +111,10 @@ my $result = do {
             },
             undef
         );
+        $class->set_property( UC => $scope->property_u('Uppercase'), 13.3 );
         FF::typedef(
-            $scope, $class, 'LC',
+            $scope, $class,
+            'Lowercase',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
                 FF::typedef_check(
@@ -120,7 +134,9 @@ my $result = do {
             },
             undef
         );
+        $class->set_property( LC => $scope->property_u('Lowercase'), 20.3 );
     }
+    FF::load_namespaces( $context, qw(LC Lowercase UC Uppercase) );
 };
 
 FF::after_content();

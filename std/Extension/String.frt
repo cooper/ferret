@@ -5,12 +5,16 @@ type NonEmpty {
     satisfies .length != 0
 }
 
-type UC {
+type Uppercase {
     isa *class
     transform .uppercase
 }
 
-type LC {
+alias UC = Uppercase
+
+type Lowercase {
     isa *class
     transform .lowercase
 }
+
+alias LC = Lowercase

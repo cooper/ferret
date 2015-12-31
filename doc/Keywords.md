@@ -686,10 +686,15 @@ object will conform to the type only if it is equal
 to at least **one** of them. Although this feature is most
 often used with [symbols](Variables.md#symbols), any expressions are valid.
 
+Anywhere within the `type` construct, the test object is the object of
+interest for [property variables](Variables.md#property-variables). Therefore,
+the test object's properties can be easily accessed using the `.property`
+syntax.
+
 Behind the scenes, `type` creates a function which tests an object's
 conformance. If an object matches, `TypeName($obj)` will output that object
-or another object returned by a `transform`. If it fails, `undefined` is
-returned.
+or another object returned by a [`transform`](#transform). If it fails,
+`undefined` is returned.
 
 The finished type function will be available only within the scope of interest
 (SOI). The SOI is determined by the hierarchical level of the `type` construct
@@ -733,6 +738,10 @@ type EvenNumber {
 }
 ```
 
+Note that the type in the example exists in the standard library as
+`Number::Even`.
+
+
 ### satisfies
 
 Used within a [`type`](#type) construct to specify a condition which must be
@@ -747,6 +756,9 @@ type NonEmptyString {
     satisfies .length != 0
 }
 ```
+
+Note that the type in the example exists in the standard library as
+`String::NonEmpty`.
 
 ### can
 
@@ -789,6 +801,9 @@ func sayUC {
 
 sayUC("Hello World!")   # HELLO WORLD!
 ```
+
+Note that the type in the example exists in the standard library as
+`String::UC`.
 
 ## Miscellaneous
 

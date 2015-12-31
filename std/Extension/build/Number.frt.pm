@@ -1,6 +1,35 @@
 # === Document Model ===
 #  Document './std/Extension/Number.frt'
 #      Class 'Number'
+#          Type definition ('Even')
+#              Body ('type' scope)
+#                  Instruction
+#                      Isa
+#                          Special variable '*class'
+#                  Instruction
+#                      Satisfies
+#                          Property variable '.even'
+#          Type definition ('Odd')
+#              Body ('type' scope)
+#                  Instruction
+#                      Isa
+#                          Special variable '*class'
+#                  Instruction
+#                      Satisfies
+#                          Property variable '.odd'
+#          Type definition ('Integer')
+#              Body ('type' scope)
+#                  Instruction
+#                      Isa
+#                          Special variable '*class'
+#                  Instruction
+#                      Transform
+#                          Property variable '.round'
+#          Instruction
+#              Alias
+#                  Assignment
+#                      Bareword 'Int'
+#                      Bareword 'Integer'
 #          Computed property 'sqrt'
 #              Body ('method' scope)
 #                  Instruction
@@ -65,7 +94,7 @@
 #                                      Lexical variable '$root'
 #                                  Item 1
 #                                      Special variable '*self'
-#      Include (Math, Num)
+#      Include (Int, Integer, Math, Num)
 use warnings;
 use strict;
 use 5.010;
@@ -105,7 +134,7 @@ my $result = do {
                 return $ret->return(
                     $scope->property_u('Math')->property_u('sqrt')->call_u(
                         [ $scope->{special}->property_u('self') ], $scope,
-                        undef,                                     4.4
+                        undef,                                     21.4
                     )
                 );
                 return $ret->return;
@@ -120,7 +149,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return( $self->property_u('root')
-                      ->call_u( [ num( $f, 3 ) ], $scope, undef, 8.3 ) );
+                      ->call_u( [ num( $f, 3 ) ], $scope, undef, 25.3 ) );
                 return $ret->return;
             }
         );
@@ -200,14 +229,14 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                FF::need( $scope, $args, 'root', 24.2 ) or return;
+                FF::need( $scope, $args, 'root', 41.2 ) or return;
                 return $ret->return(
                     $scope->property_u('Math')->property_u('root')->call_u(
                         [
                             $scope->property_u('root'),
                             $scope->{special}->property_u('self')
                         ],
-                        $scope, undef, 25.2
+                        $scope, undef, 42.2
                     )
                 );
                 return $ret->return;
@@ -219,8 +248,64 @@ my $result = do {
         $method_3->inside_scope( even   => $scope, $proto, $class, 1, 1 );
         $method_4->inside_scope( odd    => $scope, $proto, $class, 1, 1 );
         $method_5->inside_scope( root => $scope, $proto, $class, undef, undef );
+        FF::typedef(
+            $scope, $class, 'Even',
+            sub {
+                my ( $ins, $create_can, $transform ) = @_;
+                FF::typedef_check(
+                    $scope, $class, $ins,
+                    conditions => [
+                        $ins->instance_of_u(
+                            $scope->{special}->property_u('class')
+                        ),
+                        $ins->property_u('even')
+                    ],
+                    equal_to => undef
+                ) ? $ins : undef;
+            },
+            undef
+        );
+        FF::typedef(
+            $scope, $class, 'Odd',
+            sub {
+                my ( $ins, $create_can, $transform ) = @_;
+                FF::typedef_check(
+                    $scope, $class, $ins,
+                    conditions => [
+                        $ins->instance_of_u(
+                            $scope->{special}->property_u('class')
+                        ),
+                        $ins->property_u('odd')
+                    ],
+                    equal_to => undef
+                ) ? $ins : undef;
+            },
+            undef
+        );
+        FF::typedef(
+            $scope, $class,
+            'Integer',
+            sub {
+                my ( $ins, $create_can, $transform ) = @_;
+                FF::typedef_check(
+                    $scope, $class, $ins,
+                    conditions => [
+                        $ins->instance_of_u(
+                            $scope->{special}->property_u('class')
+                        ),
+                        do {
+                            $ins =
+                              $transform->( $ins->property_u('round'), $ins );
+                          }
+                    ],
+                    equal_to => undef
+                ) ? $ins : undef;
+            },
+            undef
+        );
+        $class->set_property( Int => $scope->property_u('Integer'), 18.3 );
     }
-    FF::load_namespaces( $context, qw(Math Num) );
+    FF::load_namespaces( $context, qw(Int Integer Math Num) );
 };
 
 FF::after_content();

@@ -1,5 +1,22 @@
 class Number
 
+type Even {
+    isa *class
+    satisfies .even
+}
+
+type Odd {
+    isa *class
+    satisfies .odd
+}
+
+type Integer {
+    isa *class
+    transform .round
+}
+
+alias Int = Integer
+
 prop sqrt {
     return Math.sqrt(*self)
 }

@@ -82,7 +82,8 @@ They are tokenized separately from the normal `PROPERTY`. The difference is
 that normal properties can never have whitespace between the object and period.
 
 Property variables are only valid within body of an
-[`inside`](Keywords.md#inside). They provide a shorthand syntax for
-`$obj.property`, allowing it to instead be written as just `.property`.
+[`inside`](Keywords.md#inside) or [`type`](Keywords.md#type). They provide a
+shorthand syntax for `$obj.property`, allowing it to instead be written as just
+`.property`.
 
 Tokenized as `VAR_PROP`.

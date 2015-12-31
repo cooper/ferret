@@ -9,6 +9,7 @@ use parent 'Ferret::Object';
 
 use Scalar::Util qw(blessed);
 use List::Util qw(sum product min max);
+use POSIX qw(ceil floor);
 
 use Ferret::Core::Conversion qw(
     fnumber pnumber
@@ -47,6 +48,21 @@ my @methods = (
     },
     toString => {
         code => \&_to_string
+    },
+    floor => {
+        code => \&_floor,
+        prop => 1,
+        pset => 1
+    },
+    ceil => {
+        code => \&_ceil,
+        prop => 1,
+        pset => 1
+    },
+    round => {
+        code => \&_round,
+        prop => 1,
+        pset => 1
     },
     hashValue => {
         code => \&_hash_value
@@ -160,9 +176,20 @@ sub _to_string {
     return Ferret::String->new($num->f, str_value => $num->{num_value});
 }
 
-sub _hash_value {
+sub _round {
     my $num = shift;
-    return fsym($num->{num_value});
+    my $v = $num->{num_value};
+    return fnumber(int( $v + $v / abs($v * 2) ));
+}
+
+sub _ceil {
+    my $num = shift;
+    return fnumber(ceil($num->{num_value}));
+}
+
+sub _floor {
+    my $num = shift;
+    return fnumber(floor($num->{num_value}));
 }
 
 sub description {
