@@ -12,10 +12,16 @@
 #              Bareword 'Extension::String'
 #      Type definition ('Any')
 #          Body ('type' scope)
-#      Type definition ('Obj')
-#          Body ('type' scope)
-#      Type definition ('Object')
-#          Body ('type' scope)
+#      Instruction
+#          Alias
+#              Assignment
+#                  Bareword 'Obj'
+#                  Bareword 'Any'
+#      Instruction
+#          Alias
+#              Assignment
+#                  Bareword 'Object'
+#                  Bareword 'Any'
 #      Type definition ('Hashable')
 #          Body ('type' scope)
 #              Instruction
@@ -47,7 +53,7 @@
 #                              Item 1
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
-#      Include (Extension, Extension::Number, Extension::String, Hashable, Obj, Signal)
+#      Include (Any, Extension, Extension::Number, Extension::String, Hashable, Obj, Object, Signal)
 use warnings;
 use strict;
 use 5.010;
@@ -73,7 +79,8 @@ my $result = do {
     FF::load_core('CORE');
 
     FF::load_namespaces( $context,
-        qw(Extension Extension::Number Extension::String Hashable Obj Signal) );
+        qw(Any Extension Extension::Number Extension::String Hashable Obj Object Signal)
+    );
 
     FF::typedef(
         $scope, $scope, 'Any',
@@ -86,28 +93,8 @@ my $result = do {
             ) ? $ins : undef;
         }
     );
-    FF::typedef(
-        $scope, $scope, 'Obj',
-        sub {
-            my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
-                $scope, $scope, $ins,
-                conditions => undef,
-                equal_to   => undef
-            ) ? $ins : undef;
-        }
-    );
-    FF::typedef(
-        $scope, $scope, 'Object',
-        sub {
-            my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
-                $scope, $scope, $ins,
-                conditions => undef,
-                equal_to   => undef
-            ) ? $ins : undef;
-        }
-    );
+    $scope->set_property( Obj    => $scope->property_u('Any'), 10.3 );
+    $scope->set_property( Object => $scope->property_u('Any'), 11.3 );
     FF::typedef(
         $scope, $scope,
         'Hashable',
@@ -117,7 +104,7 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
-                      ->call_u( {}, $scope, undef, 13.3 ),
+                      ->call_u( {}, $scope, undef, 14.3 ),
                     do {
                         $ins =
                           $transform->( $ins->property_u('hashValue'), $ins );
@@ -137,14 +124,14 @@ my $result = do {
                 conditions => [
                     $create_can->( 'getValue', $ins )->call_u(
                         { index => $scope->property_u('Hashable') }, $scope,
-                        undef, 18.3
+                        undef, 19.3
                     ),
                     $create_can->( 'setValue', $ins )->call_u(
                         {
                             value => $scope->property_u('Obj'),
                             index => $scope->property_u('Hashable')
                         },
-                        $scope, undef, 19.15
+                        $scope, undef, 20.15
                     )
                 ],
                 equal_to => undef

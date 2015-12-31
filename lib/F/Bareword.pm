@@ -34,7 +34,7 @@ sub after_adopt {
 }
 
 sub perl_fmt {
-    return lexical_var => { name => shift->{bareword_value} };
+    return bareword => { name => shift->{bareword_value} };
 }
 
 1

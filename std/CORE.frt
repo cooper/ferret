@@ -5,9 +5,10 @@ load Signal
 load Extension::Number
 load Extension::String
 
-type Any { } # TODO: these should be aliases
-type Obj { }
-type Object { }
+type Any { }
+
+alias Obj = Any
+alias Object = Any
 
 type Hashable {
     can .hashValue()

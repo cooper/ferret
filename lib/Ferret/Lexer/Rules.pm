@@ -160,8 +160,9 @@ our %element_rules = (
                     return 1 if $el->type ne 'Instruction';
                     my $child = $el->first_child;
 
-                    # Loads are a-ok.
+                    # these are a-ok.
                     return 1 if $child->type eq 'Load';
+                    return 1 if $child->type eq 'Alias';
 
                     # if it's an assignment, it must be a lexical variable.
                     if ($child->type eq 'Assignment') {

@@ -28,11 +28,18 @@ sub perl_fmt_do {
     $fmt_args->{name} = "'$$fmt_args{name}'"
         if ($fmt_args->{name} // '') =~ m/^\*/;
 
-    # if the direct parent of instruction is a Class, use a special format
-    # UNLESS it starts with '_', in which case it is a "private" class var.
+    my $private = substr($fmt_args->{name}, 0, 1) eq '_' if $fmt_args->{name};
+
+    # find the instruction. Only useful if the assignment isn't in an If.
+    # also find the Class we're in. Only useful if it's instruction's parent.
+    my $instr = $a->first_self_or_parent('Instruction');
+    my $class = $a->first_self_or_parent('Class');
+    undef $instr if $a->parent->type eq 'IfParameter';
+    undef $class if !$class || $instr->parent != $class;
+
+    # if our instruction belongs to a class, use special formats.
     $fmt_name .= '_c' if
-        $a->parent->parent->type eq 'Class' &&
-        substr($fmt_args->{name}, 0, 1) ne '_';
+        $class && !$private;
 
     return $a->get_format("assign_$fmt_name" => $fmt_args);
 }

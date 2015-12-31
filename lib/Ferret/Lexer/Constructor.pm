@@ -154,13 +154,18 @@ sub c_CLASS_DEC {
     $c->adopt_and_set_node($class);
 
     # Rule Class[1]:
-    #   Direct children must be of type Function, Method, or Instruction.
+    #   Direct children must be of one of the following types:
+    #       Function
+    #       Method
+    #       Instruction
+    #       Type
 
     # Rule Class[2]:
     #   If a direct child is an Instruction, its statement must satisfy one
     #   of the following conditions:
     #
     #       Child is a 'load' statement.
+    #       Child is an 'alias' statement.
     #       Child is a lexical variable assignment.
     #
 
