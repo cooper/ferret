@@ -10,6 +10,12 @@
 #      Instruction
 #          Load
 #              Bareword 'Extension::String'
+#      Type definition ('Any')
+#          Body ('type' scope)
+#      Type definition ('Obj')
+#          Body ('type' scope)
+#      Type definition ('Object')
+#          Body ('type' scope)
 #      Type definition ('Hashable')
 #          Body ('type' scope)
 #              Instruction
@@ -70,6 +76,39 @@ my $result = do {
         qw(Extension Extension::Number Extension::String Hashable Obj Signal) );
 
     FF::typedef(
+        $scope, $scope, 'Any',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            FF::typedef_check(
+                $scope, $scope, $ins,
+                conditions => undef,
+                equal_to   => undef
+            ) ? $ins : undef;
+        }
+    );
+    FF::typedef(
+        $scope, $scope, 'Obj',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            FF::typedef_check(
+                $scope, $scope, $ins,
+                conditions => undef,
+                equal_to   => undef
+            ) ? $ins : undef;
+        }
+    );
+    FF::typedef(
+        $scope, $scope, 'Object',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            FF::typedef_check(
+                $scope, $scope, $ins,
+                conditions => undef,
+                equal_to   => undef
+            ) ? $ins : undef;
+        }
+    );
+    FF::typedef(
         $scope, $scope,
         'Hashable',
         sub {
@@ -78,7 +117,7 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
-                      ->call_u( {}, $scope, undef, 9.3 ),
+                      ->call_u( {}, $scope, undef, 13.3 ),
                     do {
                         $ins =
                           $transform->( $ins->property_u('hashValue'), $ins );
@@ -98,14 +137,14 @@ my $result = do {
                 conditions => [
                     $create_can->( 'getValue', $ins )->call_u(
                         { index => $scope->property_u('Hashable') }, $scope,
-                        undef, 14.3
+                        undef, 18.3
                     ),
                     $create_can->( 'setValue', $ins )->call_u(
                         {
                             value => $scope->property_u('Obj'),
                             index => $scope->property_u('Hashable')
                         },
-                        $scope, undef, 15.15
+                        $scope, undef, 19.15
                     )
                 ],
                 equal_to => undef

@@ -18,6 +18,7 @@ my %specials = (
     ownProperties   => \&_ownProperties,
     allProperties   => \&_allProperties,
     instanceOf      => _function('instanceOf', '$class'),
+    fitsType        => _function('fitsType', '$type'),
     get             => _function('get', '$property:Str'),
     getOwn          => _function('getOwn', '$property:Str'),
     set             => _function('set', '$property:Str $value'),
@@ -89,6 +90,23 @@ sub _instanceOf {
     return fbool($obj->instance_of($class));
 }
 
+sub _fitsType {
+    my ($obj, $args) = @_;
+    my $class_or_func = $args->{type};
+
+    if ($class_or_func->isa('Ferret::Class')) {
+        return fbool($obj->instance_of($class_or_func));
+    }
+
+    if ($class_or_func->isa('Ferret::Function') ||
+        $class_or_func->isa('Ferret::Event')) {
+        return Ferret::false if !$class_or_func->{is_typedef};
+        return fbool($class_or_func->call([ $obj ]));
+    }
+
+    return Ferret::false;
+}
+
 sub _get {
     my ($obj, $args) = @_;
     my $prop_name = $args->pstring('property');
@@ -120,8 +138,7 @@ sub _set {
 sub _commonClass {
     my ($obj, $args) = @_;
     my $other = $args->{other};
-    return $obj->best_common_class($other) || $obj->f->{object_initializer};
-    # note: best_common_class() will eventually return Object
+    return $obj->best_common_class($other);
 }
 
 sub _addr {

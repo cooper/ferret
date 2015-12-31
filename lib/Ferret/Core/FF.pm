@@ -352,6 +352,7 @@ sub typedef {
         return $res || Ferret::undefined;
     }, $type_name, '$obj');
 
+    $func->{is_typedef} = 1;
     $scope_or_class->set_property($type_name => $func); # TODO: pos
 }
 

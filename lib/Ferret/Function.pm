@@ -165,6 +165,7 @@ sub obj_type_works {
 
     # if this is a function, use its return value.
     if ($type->isa('Ferret::Function') || $type->isa('Ferret::Event')) {
+        return if !$type->{is_typedef};
         return $type->call_u([ $obj ]);
     }
 

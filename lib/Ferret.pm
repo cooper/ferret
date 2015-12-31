@@ -26,18 +26,6 @@ sub new {
     $f->{special}->set_property($_ => $specials{$_})
         foreach keys %specials;
 
-    # create the global object initializer.
-    $f->{object_initializer} = Ferret::Function->new($f,
-        name => 'objectInitializer',
-        code => sub {
-            my (undef, $arguments) = @_;
-            my $new = Ferret::Object->new($f);
-            $new->set_property($_ => $arguments->{$_})
-                foreach keys %$arguments;
-            return $new;
-        }
-    );
-
     # create the core and main context objects.
     $f->{context}{CORE} ||=
         $core_context   ||= Ferret::Core::Context->new($f,

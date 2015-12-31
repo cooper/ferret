@@ -419,10 +419,12 @@ sub best_common_class {
     # TODO: if ever implemented an Object class, return it here.
 }
 
+# FIXME: should .*instanceOf() return true for all objs for Obj?
+# currently it does not. But this does not affect arguments, etc.
+# because they use .*fitsType() instead.
 sub instance_of {
     my ($obj, $class_maybe) = @_;
     return if !$class_maybe;
-    return 1 if $class_maybe == $obj->f->{object_initializer}; # i.e. $o.*isa(Obj)
     return defined first { $_ == $class_maybe } $obj->parent_classes;
 }
 
