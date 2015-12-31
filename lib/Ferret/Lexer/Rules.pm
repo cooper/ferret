@@ -168,11 +168,6 @@ our %element_rules = (
                         return $child->assign_to->type eq 'LexicalVariable';
                     }
 
-                    # # if it's a WantNeed, it must be an instance variable.
-                    # elsif ($child->type eq 'WantNeed') {
-                    #     return $child->variable->type eq 'InstanceVariable';
-                    # }
-
                     return;
                 },
                 'Class-level instructions can only include lexical variable '.
@@ -233,9 +228,10 @@ our %element_rules = (
 
         parent_must_be => [ 'WantNeed', undef, 0 ],                             # WantNeedValue[0]
 
-        children_must_satisfy => [                                              # WantNeedValue[1]
-            sub { shift->isa('F::Expression') },
-            'Argument declaration fallback value must be an expression of sorts',
+        children_must_be => [                                                   # WantNeedValue[1]
+            '@Expression',
+            'Argument declaration fallback value must be an expression '.
+            'of sorts',
             1
         ],
 
@@ -321,8 +317,8 @@ our %element_rules = (
     ListItem => {
 
         # list items can only contain expressions and pairs.
-        children_must_satisfy => [                                              # ListItem[0]
-            sub { $_[0]->isa('F::Expression') || $_[0]->isa('F::Pair') },
+        children_must_be => [                                                   # ListItem[0]
+            '@Expression Pair',
             'Lists can only contain expressions of sorts',
             0
         ],
@@ -540,7 +536,7 @@ our %element_rules = (
                     # unless it's a type requirement.
                     return if
                         !$child or
-                        !$child->isa('F::Expression')
+                        !$child->is_type('Expression')
                         && $child->type ne 'TypeRequirement';
 
                     return 1;
@@ -568,7 +564,8 @@ our %element_rules = (
 
         parent_must_be => [                                                     # Assignment[0]
             'Instruction IfParameter',
-            "Assignment must be direct child of an instruction or 'if' parameter",
+            "Assignment must be direct child of an instruction or 'if' ".
+            "parameter",
             0
         ],
 
@@ -585,9 +582,9 @@ our %element_rules = (
 
                 # lazy assignments cannot act as expressions because
                 # they return a non-Ferret value (CODE reference)
-                return !$el->{lazy} if $el->isa('F::Assignment');
+                return !$el->{lazy} if $el->is_type('Assignment');
 
-                return $el->isa('F::Expression');
+                return $el->is_type('Expression');
             },
             'If parameter must be an expression',
             0
@@ -613,8 +610,8 @@ our %element_rules = (
             1
         ],
 
-        children_must_satisfy => [                                              # TypeRequirement[2]
-            sub { shift->isa('F::Expression') },
+        children_must_be => [                                                   # TypeRequirement[2]
+            '@Expression',
             'Type requirement (can/isa/satisfies/transform) must contain '.
             'an expression of some sort',
             2
@@ -639,7 +636,7 @@ our %element_rules = (
         parent_must_satisfy => [                                                # Function[0]
             sub {
                 my ($parent, $func) = @_;
-                return $func->anonymous || $parent->isa('F::ScopeOwner');
+                return $func->anonymous || $parent->is_type('ScopeOwner');
             },
             'Function must be inside a scope owner',
             0

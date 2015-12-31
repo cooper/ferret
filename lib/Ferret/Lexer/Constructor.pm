@@ -1333,7 +1333,7 @@ sub c_OP_MAYBE {
     return $c->unexpected unless $last_el->is_type('Expression');
 
     # if this is a list, it can only have one item.
-    if ($last_el->isa('F::List') && $last_el->children > 1) {
+    if ($last_el->type eq 'List' && $last_el->children > 1) {
         return $c->expected('a single-element list', 'before');
     }
 

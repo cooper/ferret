@@ -357,8 +357,14 @@ sub F::Element::allows_child {
 
     # children must be of a certain type.
     if ($set->{children_must_be}) {
-        return $set->err(child_not_allowed => $parent_maybe->detail)
-            if !$set->list_contains(children_must_be => $child_maybe->t);
+        my $good;
+        my @allowed = $set->list_items('children_must_be');
+        foreach my $type (@allowed) {
+            my $supertypes = $type =~ s/^\@//;
+            $good++ and last if $child_maybe->t eq $type;
+            $good++ and last if $child_maybe->is_type($type) && $supertypes;
+        }
+        return $set->err(child_not_allowed => $parent_maybe->detail) if !$good;
     }
 
     # children must match a subroutine.
@@ -377,8 +383,14 @@ sub F::Element::allows_parent {
 
     # parent must be of a certain type.
     if ($set->{parent_must_be}) {
-        return $set->err(child_not_allowed => $parent_maybe->detail)
-            if !$set->list_contains(parent_must_be => $parent_maybe->t);
+        my $good;
+        my @allowed = $set->list_items('parent_must_be');
+        foreach my $type (@allowed) {
+            my $supertypes = $type =~ s/^\@//;
+            $good++ and last if $parent_maybe->t eq $type;
+            $good++ and last if $parent_maybe->is_type($type) && $supertypes;
+        }
+        return $set->err(child_not_allowed => $parent_maybe->detail) if !$good;
     }
 
     # parent must match a subroutine.
@@ -401,6 +413,7 @@ sub F::Element::allows_upper_nodes {
         !$set->{must_be_somewhere_inside_all};
 
     # any of these can work.
+    # first_self_or_parent() respects @.
     my $bad;
     foreach my $type ($set->list_items('must_be_somewhere_inside')) {
         return $ok if $parent_maybe->first_self_or_parent($type);
@@ -408,6 +421,7 @@ sub F::Element::allows_upper_nodes {
     }
 
     # all of these must work.
+    # first_self_or_parent() respects @.
     foreach my $type ($set->list_items('must_be_somewhere_inside_all')) {
         next if $parent_maybe->first_self_or_parent($type);
         $bad = $type;

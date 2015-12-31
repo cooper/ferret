@@ -128,7 +128,7 @@ sub descendants {
     my $add; $add = sub {
         my $el = shift;
         push @children, $el unless $el == $node;
-        return unless $el->isa('F::Node');
+        return unless $el->is_type('Node');
         $add->($_) foreach $el->children;
     };
     $add->($node);

@@ -22,6 +22,10 @@ A supertype for nodes which possess a value.
 
 The base type for all assignable element types.
 
+### ScopeOwner
+
+The base type for any node which will create its own runtime scope.
+
 ### Instruction
 
 A special node type which wraps all elements outside of other statements.
@@ -72,7 +76,6 @@ flow structures.
 ### PropertyVariable
 ### Return
 ### ReturnPair
-### ScopeOwner
 ### SetTypeVariable
 ### SharedDeclaration
 ### Spaces
