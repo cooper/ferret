@@ -8,6 +8,7 @@ use 5.010;
 
 use parent 'Ferret::Object';
 use Scalar::Util 'blessed';
+use Ferret::Core::Conversion qw(plist flist fset);
 
 use Ferret::Arguments;
 use Ferret::Return;
@@ -105,7 +106,7 @@ sub handle_arguments {
 
         # ellipsis
         if ($sig->{more}) {
-            $args{ $sig->{name} } = Ferret::List->new($func->f, values => \@args);
+            $args{ $sig->{name} } = flist(@args);
             last;
         }
 
@@ -121,47 +122,70 @@ sub handle_arguments {
 sub arguments_satisfy_signature {
     my ($func, $arguments) = @_;
     foreach my $sig (@{ $func->{signatures} }) {
+        my ($name, $type) = @$sig{ qw(name type) };
 
-        # if it's an ellipsis, the actual type of the arg must be List.
-        my $type = $sig->{more} ? 'List' : $sig->{type};
         next if $sig->{optional} && !length $type;
 
         # check things.
-        my $arg = $arguments->{ $sig->{name} };
+        my $arg = $arguments->{ $name };
         return if !$arg && !$sig->{optional};   # need must be present
         next   if !$arg;                        # want with no value
         next   if !length $type;                # want/need with no type check
 
-        # check that it works.
-        next if $arguments->{ $sig->{name} } =
-            $func->obj_type_works($arg, $type);
+        # if this is an ellipsis, check all of the items.
+        my $type_obj = $func->_get_type($type) if $type;
+        if ($sig->{more}) {
+            my $flist = $arguments->{$name};
+            my @plist = plist($flist);
 
-        # TODO: check if ellipsis satisfies type
-        #       if not, want will make it an empty list,
-        #       and need will unsatisfy the function.
+            # if we couldn't resolve a type, use a List.
+            # FIXME: what if a type was provided but does not exist?
+            if (!$type_obj) {
+                $arguments->{$name} = $flist;
+                next if @plist;
+            }
+
+            # otherwise, make a set.
+            my @items = grep defined,
+                map $func->obj_type_works($_, $type_obj), @plist;
+            $arguments->{$name} =
+                !@items                                              ?
+                $flist                                               :
+                $type_obj->isa('Ferret::Class')                      ?
+                fset($type_obj, grep !Ferret::undefined($_), @items) :
+                fset(grep !Ferret::undefined($_), @items);
+
+            next if @items;
+        }
+
+        # check that it works.
+        else {
+            next if $arguments->{$name} = $func->obj_type_works($arg, $type);
+        }
 
         # bad news.
-        return if !$sig->{optional};            # bad type for need
-        delete $arguments->{ $sig->{name} };    # bad type for want
+        return if !$sig->{optional};   # bad type for need
+        delete $arguments->{$name};    # bad type for want
 
     }
     return 1;
 }
 
+sub _get_type {
+    my ($func, $type) = @_;
+    return $type if blessed $type;
+
+    # find scope of interest.
+    my $soi = $func->{outer_scope} || $func->f->main_context;
+    $soi = $soi->closest_context;
+
+    # get object.
+    return $soi->property($type) or return;
+}
+
 sub obj_type_works {
     my ($func, $obj, $type) = @_;
-
-    # not blessed - find SOI and type obj.
-    if (!blessed $type) {
-
-        # find scope of interest.
-        my $soi = $func->{outer_scope} || $func->f->main_context;
-        $soi = $soi->closest_context;
-
-        # get object.
-        $type = $soi->property($type) or return;
-
-    }
+    $type = $func->_get_type($type) or return;
 
     # if this is a function, use its return value.
     if ($type->isa('Ferret::Function') || $type->isa('Ferret::Event')) {

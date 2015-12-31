@@ -160,8 +160,26 @@ sub plist {
 
 sub plistref {
     my $list = shift;
-    return [ ] if !blessed $list || !$list->isa('Ferret::List');
+    return [ @{ $list->{all_objs} } ]
+        if blessed $list && $list->isa('Ferret::Set');
+    return [ ]
+        if !blessed $list || !$list->isa('Ferret::List');
     return [ @{ $list->{list_items} || [] } ]; # make a copy
+}
+
+sub fset {
+    my (@objs) = @_;
+
+    # find global set class.
+    my $f = $Ferret::ferret;
+    my $set_class = $f->get_class($f->main_context, 'Set');
+
+    # create set.
+    my $class = shift @objs if $objs[0]->isa('Ferret::Class');
+    my $set = $set_class->call([ @objs ]);
+    $set->{set_class} = $class if $class;
+
+    return $set;
 }
 
 sub fhash {
