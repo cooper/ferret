@@ -342,10 +342,13 @@ sub c_KEYWORD_INSIDE {
 }
 
 sub c_TYPE {
-    my ($c, $value) = @_;
+    my ($c, $opts) = @_;
 
     # create a closure to be opened soon.
-    my $type = F::Type->new(type_name => $value);
+    my $type = F::Type->new(
+        type_name => $opts->{name},
+        lazy => $opts->{lazy}
+    );
     $c->capture_closure_with($type->body);
     $c->node->adopt($type);
 
@@ -387,8 +390,8 @@ sub start_type_requirement {
     return $req;
 }
 
-sub c_KEYWORD_ALIAS {
-    my ($c, $value) = @_;
+sub c_ALIAS {
+    my ($c, $opts) = @_;
 
     # Rule Alias[0]:
     #   Direct parent must be of type Instruction.
@@ -403,7 +406,7 @@ sub c_KEYWORD_ALIAS {
     #   See c_OP_ASSIGN().
 
     # create alias.
-    my $alias = F::Alias->new;
+    my $alias = F::Alias->new(lazy => $opts->{lazy});
     $c->adopt_and_set_node($alias);
 
     return $alias;

@@ -37,6 +37,7 @@ flow structures.
 
 ## Types
 
+### Alias
 ### Assignment
 ### Bareword
 ### Boolean

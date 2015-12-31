@@ -4,4 +4,4 @@ FF::typedef($scope, $class, '<<name>>', sub {
         conditions => <<conditions>>,
         equal_to => <<equal_to>>
     ) ? $ins : undef;
-});
+}, <<lazy>>);

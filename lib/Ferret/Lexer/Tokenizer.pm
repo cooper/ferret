@@ -341,12 +341,17 @@ sub _escape {
 sub tok_KEYWORD {
     my ($tokens, $value) = @_;
 
+    # alias to ALIAS token.
+    if ($value eq 'alias') {
+        return [ ALIAS => {} ];
+    }
+
     # change else if to elsif
     if ($value eq 'if') {
         my $last = $tokens->[-1];
         if ($last && $last->[0] eq 'KEYWORD_ELSE') {
             delete $tokens->[-1];
-            return [ 'KEYWORD_ELSIF' => ];
+            return [ KEYWORD_ELSIF => ];
         }
     }
 
@@ -403,7 +408,7 @@ sub tok_BAREWORD {
     # type definition.
     if ($last->[0] eq 'KEYWORD_TYPE') {
         delete $tokens->[-1];
-        return [ TYPE => $value ];
+        return [ TYPE => { name => $value, lazy => $last->[1] } ];
     }
 
 }
@@ -436,6 +441,13 @@ sub tok_OP_MAYBE {
     my $last = $tokens->[-1] or return;
     if ($last->[0] eq 'KEYWORD_PROP') {
         $last->[1] = 'set';
+        return [];
+    }
+
+    # if it follows 'type' or 'alias' keyword, it's a lazy type.
+    if ($last->[0] eq 'KEYWORD_TYPE' || $last->[0] eq 'ALIAS') {
+        $last->[1]{lazy} = 1 if $last->[1]; # store in ALIAS.
+        $last->[1] = 1 if !$last->[1];      # store in KEYWORD_TYPE.
         return [];
     }
 

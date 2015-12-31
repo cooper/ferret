@@ -310,50 +310,56 @@ sub share {
 
 # type definitions.
 sub typedef {
-    my ($scope, $scope_or_class, $type_name, $code) = @_;
+    my ($scope, $scope_or_class, $type_name, $code, $lazy) = @_;
+    my $typedef = sub {
 
-    # this sub returns a function which returns Ferret true if
-    # a method requirement is satisfied.
-    my $create_can = sub {
-        my ($method_name, $obj) = @_;
-        my $can_func = ffunction(sub {
+        # this sub returns a function which returns Ferret true if
+        # a method requirement is satisfied.
+        my $create_can = sub {
+            my ($method_name, $obj) = @_;
+            my $can_func = ffunction(sub {
+                my (undef, $args) = @_;
+
+                # TODO: how am I going to tell if arguments are unnamed?
+                # there is no way to tell from $args what was passed.
+
+                return Ferret::false if !$obj->has_property($method_name);
+                return Ferret::true;
+            });
+
+            return $can_func;
+        };
+
+        # this sub takes a Ferret function and the $ins and calls that function.
+        # the return value overwrites $ins. if undefined, the condition fails.
+        my $transform = sub {
+            my ($func, $obj) = @_;
+
+            # if it's not a function, just use the value. it is likely the
+            # value of a method or property or other expression
+            return $func
+                if !$func->isa('Ferret::Function') && !$func->isa('Ferret::Event');
+
+            # return whatever the transform returns.
+            return $func->call([ $obj ], $scope);
+
+        };
+
+        # create a function.
+        my $func = ffunction(sub {
             my (undef, $args) = @_;
+            my $obj = $args->{obj};
+            my $res = $code->($obj, $create_can, $transform);
+            return $res || Ferret::undefined;
+        }, $type_name, '$obj');
 
-            # TODO: how am I going to tell if arguments are unnamed?
-            # there is no way to tell from $args what was passed.
-
-            return Ferret::false if !$obj->has_property($method_name);
-            return Ferret::true;
-        });
-
-        return $can_func;
+        $func->{is_typedef} = 1;
+        return $func;
     };
 
-    # this sub takes a Ferret function and the $ins and calls that function.
-    # the return value overwrites $ins. if undefined, the condition fails.
-    my $transform = sub {
-        my ($func, $obj) = @_;
-
-        # if it's not a function, just use the value. it is likely the
-        # value of a method or property or other expression
-        return $func
-            if !$func->isa('Ferret::Function') && !$func->isa('Ferret::Event');
-
-        # return whatever the transform returns.
-        return $func->call([ $obj ], $scope);
-
-    };
-
-    # create a function.
-    my $func = ffunction(sub {
-        my (undef, $args) = @_;
-        my $obj = $args->{obj};
-        my $res = $code->($obj, $create_can, $transform);
-        return $res || Ferret::undefined;
-    }, $type_name, '$obj');
-
-    $func->{is_typedef} = 1;
-    $scope_or_class->set_property($type_name => $func); # TODO: pos
+    $scope_or_class->set_property($type_name =>
+        $lazy ? [ $typedef ] : $typedef->()
+    ); # TODO: pos
 }
 
 sub typedef_check {

@@ -66,7 +66,8 @@ sub perl_fmt {
     return $fmt_name => {
         name       => $type->type_name,
         conditions => $conditions,
-        equal_to   => $equal_to
+        equal_to   => $equal_to,
+        lazy       => $type->{lazy} ? 1 : 'undef'
     };
 }
 
