@@ -186,8 +186,9 @@ sub call_with_self {
 
 sub description {
     my $func = shift;
-    return "Function" if !length $func->{name};
-    return "Function '$$func{name}'";
+    my $type = $func->{is_typedef} ? 'Interface' : 'Function';
+    return $type if !length $func->{name};
+    return "$type '$$func{name}'";
 }
 
 sub call {

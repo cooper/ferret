@@ -91,7 +91,8 @@ my $result = do {
                 conditions => undef,
                 equal_to   => undef
             ) ? $ins : undef;
-        }
+        },
+        undef
     );
     $scope->set_property( Obj    => $scope->property_u('Any'), 10.3 );
     $scope->set_property( Object => $scope->property_u('Any'), 11.3 );
@@ -112,7 +113,8 @@ my $result = do {
                 ],
                 equal_to => undef
             ) ? $ins : undef;
-        }
+        },
+        undef
     );
     FF::typedef(
         $scope, $scope,
@@ -136,7 +138,8 @@ my $result = do {
                 ],
                 equal_to => undef
             ) ? $ins : undef;
-        }
+        },
+        undef
     );
 };
 

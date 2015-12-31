@@ -75,7 +75,8 @@ my $result = do {
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
-            }
+            },
+            undef
         );
         FF::typedef(
             $scope, $class, 'UC',
@@ -95,7 +96,8 @@ my $result = do {
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
-            }
+            },
+            undef
         );
         FF::typedef(
             $scope, $class, 'LC',
@@ -115,7 +117,8 @@ my $result = do {
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
-            }
+            },
+            undef
         );
     }
 };

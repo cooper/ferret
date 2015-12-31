@@ -652,6 +652,135 @@ func ok {
 ok()    # says "hello" then "goodbye"
 ```
 
+## Type interfaces
+
+### type
+
+```
+type <name> { [(<conditions>|<transforms>|<expresions>)...] }
+```
+
+Defines a type interface for dynamic type checking. This is especially useful
+for functions or methods utilizing [`want`](#want) or [`need`](#need).
+
+Types are generally declared at document or class level, but they are valid
+within almost any scope.
+
+In order for an object to conform to a type, it must meet **all** of the
+provided conditions. A few keywords can be used in a type declaration:
+
+* [__isa__](#isa) - specifies another type to which the object must conform.
+* [__satisfies__](#satisfies) - specifies a condition which the object must
+  meet.
+* [__can__](#can) - specifies a method which the object must implement.
+* [__transform__](#transform) - specifies an object transformation.
+
+Conditions are checked in the order that they are specified. Transforms are also
+executed in the provided order. See the documentation for each of the above
+keywords for additional information on their usage.
+
+A `type` construct can also contain standalone expressions. They must occur
+below any possible conditions or transforms. If expression(s) are provided, an
+object will conform to the type only if it is equal
+(according to the `==` [`OP_EQUAL`](Operators.md#equality-operator) operator)
+to at least **one** of them. Although this feature is most
+often used with [symbols](Variables.md#symbols), any expressions are valid.
+
+Behind the scenes, `type` creates a function which tests an object's
+conformance. If an object matches, `TypeName($obj)` will output that object
+or another object returned by a `transform`. If it fails, `undefined` is
+returned.
+
+Below is an example with only expressions provided. For examples with various
+conditions or transforms, see the respective keywords.
+
+```
+type Gender {
+    :male
+    :female
+}
+
+func announce {
+    need $name: Str, $gender: Gender
+    $what = Str($gender).trimPrefix(":")
+    say("$name is $what")
+}
+
+announce("Robert", :male)
+announce("Kris", :female)
+announce("Kylie", :female)
+announce("Caitlyn", :other) # ignored
+```
+
+### isa
+
+Used within a [`type`](#type) construct to specify another type to which the
+test object must conform.
+
+```
+type EvenNumber {
+    isa Num
+    satisfies .even
+}
+```
+
+### satisfies
+
+Used within a [`type`](#type) construct to specify a condition which must be
+true.
+
+If the provided expression does not evaluate to boolean true, the test object
+will not conform to the type.
+
+```
+type NonEmptyString {
+    isa String
+    satisfies .length != 0
+}
+```
+
+### can
+
+```
+can .<methodName>"("<arguments>...")"
+```
+
+Used within a [`type`](#type) construct to specify a method requirement.
+
+If the test object lacks a responder for the provided method, with any possibly
+provided arguments, the object will not conform to the type.
+
+### transform
+
+```
+transform (<function>|<expression>)
+```
+
+Used within a [`type`](#type) construct to perform a transformation on a test
+object.
+
+If the provided value is a function or event, it will be called, and the return
+value will overwrite the current test object. Otherwise, the provided value
+itself will overwrite the object.
+
+If the provided value or returned value is undefined, the test object will not
+conform to the type. Otherwise, it will conform, and the test will yield
+whatever object was returned by the transformation.
+
+```
+type UCString {
+    isa String
+    transform .uppercase
+}
+
+func sayUC {
+    need $str: UCString
+    say($str)
+}
+
+sayUC("Hello World!")   # HELLO WORLD!
+```
+
 ## Miscellaneous
 
 ### inside
@@ -675,43 +804,4 @@ inside $person {
 }
 
 inspect($person) # (age: 26, name: "Pam")
-```
-
-### type
-
-```
-type <name> { [<expressions>....] }
-```
-
-Defines a type for dynamic type checking. This is especially useful for
-functions or methods utilizing [`want`](#want) or [`need`](#need).
-
-Types are generally declared at document or class level, but they are valid
-within almost any scope. Although it is most often used with
-[symbols](Variables.md#symbols), any expressions are valid.
-
-In order for an object to pass as a certain type, it must be equal
-(according to the `==` [`OP_EQUAL`](Operators.md#equality-operator) operator) to
-at least one of the provided expressions.
-
-Behind the scenes, `type` creates a function which tests a value for dynamic
-type checking. If an object matches, `TypeName($obj)` will output `$obj`. If
-it fails, `undefined` is returned.
-
-```
-type Gender {
-    :male
-    :female
-}
-
-func announce {
-    need $name: Str, $gender: Gender
-    $what = Str($gender).trimPrefix(":")
-    say("$name is $what")
-}
-
-announce("Robert", :male)
-announce("Kris", :female)
-announce("Kylie", :female)
-announce("Caitlyn", :other) # ignored
 ```

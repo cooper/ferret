@@ -152,7 +152,8 @@ my $result = do {
                     FF::get_symbol( $f, 'female' )
                 ]
             ) ? $ins : undef;
-        }
+        },
+        undef
     );
     $scope->property_u('announce')
       ->call_u( [ str( $f, "Robert" ), FF::get_symbol( $f, 'male' ) ],
