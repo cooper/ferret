@@ -62,6 +62,7 @@ use F::Defer;
 use F::TypeRequirement;
 use F::InterfaceMethod;
 use F::NodeExpression;
+use F::Alias;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (

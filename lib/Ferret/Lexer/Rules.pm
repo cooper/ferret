@@ -563,14 +563,75 @@ our %element_rules = (
     Assignment => {
 
         parent_must_be => [                                                     # Assignment[0]
-            'Instruction IfParameter',
+            'Instruction IfParameter Alias',
             "Assignment must be direct child of an instruction or 'if' ".
             "parameter",
             0
         ],
 
         # left side and right side
-        num_children => 2                                                       # Assignment[1]
+        num_children => 2,                                                      # Assignment[1]
+
+        # the first child is the left side of the assignment.
+        # it has be assignable.
+        child_0_must_be => [                                                    # Assignment[2]
+            '@Assignable',
+            'Left side of assignment must be an assignable expression',
+            2
+        ],
+
+        # the right side of the assignment has to be an expression.
+        child_1_must_be => [                                                    # Assignment[3]
+            '@Expression',
+            'Right side of assignment must be an expression',
+            3
+        ],
+
+        directly_inside_rules => {
+
+            # with Alias as parent...
+            Alias => {
+
+                # both sides have to be a bareword.
+                children_must_be => [                                           # Assignment[4]
+                    'Bareword',
+                    'Both sides of assignment must be a bareword function or '.
+                    'type name inside "alias" declaration',
+                    4
+                ],
+
+                # void the above rules [2] and [3].
+                child_0_must_be => undef,                                       # Assignment[5]
+                child_1_must_be => undef                                        # Assignment[6]
+
+            }
+
+        }
+
+    },
+
+    Alias => {
+
+        parent_must_be => [                                                     # Alias[0]
+            'Instruction',
+            undef,
+            0
+        ],
+
+        after_rules => {
+
+            children_must_be => [                                               # Alias[1]
+                'Assignment',
+                'Alias can only contain an assignment for a bareword function '.
+                'or type name',
+                1
+            ]
+
+        },
+
+        num_children => [ 1, undef, 2 ]                                         # Alias[2]
+
+        # note the rules within assignment for while inside Alias.
 
     },
 

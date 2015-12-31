@@ -276,7 +276,7 @@ my (@closes, %precedence);
         qw( Assignment Return ReturnPair Load Stop ),                   # 3
         qw( WantNeedValue WantNeedType WantNeed ),
         qw( SharedDeclaration LocalDeclaration TypeRequirement ),
-        qw( PropertyModifier ),
+        qw( PropertyModifier Alias ),
         qw( Instruction )
     );
     my $i = 0;

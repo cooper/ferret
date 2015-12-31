@@ -247,6 +247,7 @@ sub F::Element::rule_set {
 
     # rules from ancestors
     if ($parent) {
+        my $my_place = scalar $parent->children;
 
         # Set 2: Rules from ancestors above
 
@@ -257,6 +258,7 @@ sub F::Element::rule_set {
 
         # rules directly from parent.
         push @rules, rule_hash($parent->t, 'child_rules', $el->type);
+        push @rules, rule_hash($parent->t, "child_${my_place}_rules");
 
         $set2 = Ferret::Lexer::RuleSet->new(@rules);
 
@@ -355,16 +357,32 @@ sub F::Element::allows_child {
     my ($parent_maybe, $child_maybe, $after_check) = @_;
     my $set = $parent_maybe->rule_set(undef, $after_check);
 
-    # children must be of a certain type.
-    if ($set->{children_must_be}) {
-        my $good;
-        my @allowed = $set->list_items('children_must_be');
+    # determine index of the child.
+    my $my_place = $after_check ?
+        $child_maybe->index : scalar $parent_maybe->children;
+
+    my $must_be = sub {
+        my $rule_name = shift;
+        my @allowed = $set->list_items($rule_name);
         foreach my $type (@allowed) {
             my $supertypes = $type =~ s/^\@//;
-            $good++ and last if $child_maybe->t eq $type;
-            $good++ and last if $child_maybe->is_type($type) && $supertypes;
+            return 1 if $child_maybe->t eq $type;
+            return 1 if $child_maybe->is_type($type) && $supertypes;
         }
-        return $set->err(child_not_allowed => $parent_maybe->detail) if !$good;
+        return;
+    };
+
+    # this specific child must be of a certain type.
+    my $idx_name = "child_${my_place}_must_be";
+    if ($set->{$idx_name}) {
+        return $set->err(child_not_allowed => $parent_maybe->detail)
+            if !$must_be->($idx_name);
+    }
+
+    # children must be of a certain type.
+    if ($set->{children_must_be}) {
+        return $set->err(child_not_allowed => $parent_maybe->detail)
+            if !$must_be->('children_must_be');
     }
 
     # children must match a subroutine.

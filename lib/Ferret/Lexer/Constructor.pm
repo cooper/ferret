@@ -382,6 +382,27 @@ sub start_type_requirement {
     return $req;
 }
 
+sub c_KEYWORD_ALIAS {
+    my ($c, $value) = @_;
+
+    # Rule Alias[0]:
+    #   Direct parent must be of type Instruction.
+
+    # Rule Alias[1]:
+    #   Direct children must be of type Assignment.
+
+    # Rule Alias[2]:
+    #   Number of direct children must be exactly one (1).
+
+    # Rules for Assignment while inside Alias:
+    #   See c_OP_ASSIGN().
+
+    # create alias.
+    my $alias = F::Alias->new;
+    $c->adopt_and_set_node($alias);
+
+    return $alias;
+}
 
 sub c_KEYWORD_ON {
     my ($c, $value) = @_;
@@ -918,7 +939,7 @@ sub c_OP_SEMI {
     # close these things.
     $c->close_nodes(qw(
         WantNeed WantNeedType WantNeedValue
-        PropertyModifier Negation Operation
+        PropertyModifier Negation Operation Alias
         Assignment Return ReturnPair TypeRequirement
         SharedDeclaration LocalDeclaration Load Stop
     ));
@@ -1202,22 +1223,35 @@ sub c_OP_ASSIGN {
         return $exp;
     }
 
-    my $last_el = $c->last_el;
-    return $c->expected(
-        'an assignable expression',
-        'at left of assignment operator (=)'
-    ) unless $last_el->is_type('Assignable');
-
     # Rule Assignment[0]:
-    #   Direct parent must be of type Instruction or IfParameter.
+    #   Direct parent must be of one of the following types:
+    #       Instruction
+    #       IfParameter
+    #       Alias
 
     # Rule Assignment[1]:
     #   Number of direct children must be exactly two (2).
 
+    # Rule Assignment[2]:
+    #   The first direct child must be some sort of Assignable expression.
+
+    # Rule Assignment[3]:
+    #   The second direct child must be an Expression of sorts.
+
+    # Rule Assignment[4]:
+    #   When the direct parent is of type Alias, only direct children of type
+    #   Bareword are permitted.
+
+    # Rule Assignment[5]:
+    #   When the direct parent is of type Alias, voids Assignment[2].
+
+    # Rule Assignment[6]:
+    #   When the direct parent is of type Alias, voids Assignment[3].
+
     # remember the last element as the left side of the assignment.
     my $a = F::Assignment->new;
     $c->adopt_and_set_node($a);
-    $a->adopt($last_el);
+    $a->adopt($c->last_el);
 
     return $a;
 }
@@ -1230,6 +1264,9 @@ sub c_OP_LASSIGN {
         'an assignable expression',
         'at left of lazy assignment operator (?=)'
     ) unless $last_el->is_type('Assignable');
+
+    # Rules for Assignment:
+    #   See c_OP_ASSIGN().
 
     # remember the last element as the left side of the assignment.
     my $a = F::Assignment->new(lazy => 1);
