@@ -163,7 +163,8 @@ my $result = do {
                 ],
                 $scope, undef, 8.2
             );
-        }
+        },
+        7.1
     );
     $scope->set_property_ow(
         $context,
@@ -201,7 +202,8 @@ my $result = do {
                 ],
                 $scope, undef, 18.1
             );
-        }
+        },
+        17.05
     );
 };
 

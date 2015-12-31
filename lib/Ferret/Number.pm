@@ -162,13 +162,9 @@ sub op_range {
        @range = map fnumber($_), @range;
        @range = reverse @range if $input[0] > $input[1];
 
-    # if there's only one number, return a list containing only that number.
-    return flist(@range) if @range == 1;
-
-    # otherwise, there must be two numbers.
-    return Ferret::undefined if @range < 2;
-
-    return $range[0]->create_set($call_scope, @range[1..$#range]);
+    return Ferret::undefined if !@range;
+    my $class = $num->f->get_class($num->f->core_context, 'Number');
+    return $range[0]->create_set($call_scope, $class, @range[1..$#range]);
 }
 
 sub _to_string {

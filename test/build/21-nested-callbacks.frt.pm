@@ -133,7 +133,8 @@ my $result = do {
                 ),
                 {}
             );
-        }
+        },
+        3.05
     );
     FF::iterate(
         $f, $scope,
@@ -143,7 +144,8 @@ my $result = do {
             my $scope = shift;
             $scope->property_u('say')
               ->call_u( [ $scope->property_u('part') ], $scope, undef, 10.2 );
-        }
+        },
+        9.05
     );
 };
 

@@ -631,7 +631,8 @@ my $result = do {
                             ],
                             $scope, undef, 99.2
                         );
-                    }
+                    },
+                    98.1
                 );
             }
             $self->set_property( _joinedChannels => $true, 103.2 );
@@ -1121,7 +1122,8 @@ my $result = do {
                                 $scope, undef, 87.1
                             );
                         }
-                    }
+                    },
+                    85.05
                 );
                 return $ret->return;
             }

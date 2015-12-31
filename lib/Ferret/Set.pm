@@ -47,7 +47,8 @@ sub init {
     $set->{all_objs}    = [ $set->{primary_obj}, @others ];
 
     # determine class.
-    $set->{set_class} = $set->{primary_obj}->best_common_class(@others);
+    $set->{set_class} = $set->{primary_obj}->best_common_class(@others)
+        if @others;
 
     $set->{set_done} = 1;
 }
@@ -121,6 +122,17 @@ sub _from_list {
     my ($set_class, $args, $call_scope) = @_;
     my @items = $args->plist('list');
     return $set_class->call([ @items ], $call_scope);
+}
+
+sub iterate {
+    my $set = shift;
+    return @{ $set->{all_objs} };
+}
+
+sub iterate_pair {
+    my $set = shift;
+    my $i = 0;
+    return map [ fnumber($i++), $_ ], @{ $set->{all_objs} };
 }
 
 sub description {

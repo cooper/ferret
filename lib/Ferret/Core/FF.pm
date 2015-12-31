@@ -150,8 +150,8 @@ sub on {
 
 # iterate over a list.
 sub iterate {
-    my ($f, $outer_scope, $collection, $var_name, $code) = @_;
-    foreach ($collection->iterate) {
+    my ($f, $outer_scope, $collection, $var_name, $code, $pos) = @_;
+    foreach ($collection->iterate($pos)) {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
         $scope->set_property($var_name => $_);
         $code->($scope);
@@ -161,8 +161,9 @@ sub iterate {
 
 # iterate over a hash.
 sub iterate_pair {
-    my ($f, $outer_scope, $collection, $var1_name, $var2_name, $code) = @_;
-    foreach ($collection->iterate_pair) {
+    my ($f, $outer_scope, $collection,
+        $var1_name, $var2_name, $code, $pos) = @_;
+    foreach ($collection->iterate_pair($pos)) {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
 
         # ->iterate_pair returns arrayref [key, value].

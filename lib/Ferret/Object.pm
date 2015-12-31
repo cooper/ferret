@@ -437,10 +437,18 @@ sub instance_of_u { &instance_of ? Ferret::true : Ferret::undefined }
 # create an object that represents a set of objects.
 sub create_set {
     my ($obj, $call_scope, @other_objs) = @_;
-    my $class = $obj->best_common_class(@other_objs);
+
+    # class might be provided. otherwise guess.
+    my $first = $other_objs[0];
+    my $class = $first && $first->isa('Ferret::Class') ?
+        shift @other_objs                              :
+        $obj->best_common_class(@other_objs);
+
+    # find the constructor.
     my $new = $class                ?
         $class->property_u('Set')   :
         $obj->f->get_class($obj->f->core_context, 'Set');
+
     return $new->call([ $obj, @other_objs ], $call_scope);
 }
 
@@ -530,6 +538,27 @@ sub call {
 sub call_u {
     return (shift->call(@_)) || Ferret::undefined;
 }
+
+# iterating over a non-function.
+sub iterate {
+    my ($obj, $pos) = @_;
+
+    # TODO: here is where we can check if it implements iterations
+    # with an interface
+
+    # throw an error.
+    my ($i, $caller) = 1;
+    $caller = [caller 1];
+
+    throw(InvalidIteration => $caller, [
+        Name  => $obj->{last_name},
+        Value => $obj->description_ol,
+        File  => $Ferret::file_map{ $caller->[1] } || 'unknown file',
+        Line  => int $pos
+    ]);
+}
+
+sub iterate_pair { &iterate }
 
 sub full_name {
     my ($obj, $prop_name) = @_;

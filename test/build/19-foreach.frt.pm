@@ -69,7 +69,8 @@ my $result = do {
                 ],
                 $scope, undef, 4.2
             );
-        }
+        },
+        3.1
     );
 };
 

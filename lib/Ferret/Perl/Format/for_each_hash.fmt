@@ -1,4 +1,4 @@
 FF::iterate_pair($f, $scope, <<collection>>, '<<var1_name>>', '<<var2_name>>', sub {
     my $scope = shift;
     <<body>>
-});
+}, <<pos>>);

@@ -41,7 +41,8 @@ sub perl_fmt {
         collection  => $collection->perl_fmt_do,
         var1_name   => $var1->{var_name},
         var2_name   => $var2->{var_name},
-        body        => $content
+        body        => $content,
+        pos         => $for->{create_pos}
     };
 }
 

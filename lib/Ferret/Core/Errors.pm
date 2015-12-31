@@ -20,6 +20,9 @@ our %errors = (
     },
     AlterationOfReadOnlyProperty => {
         message => "Cannot alter read-only property '%s'"
+    },
+    InvalidIteration => {
+        message => "Cannot iterate over this object"
     }
 );
 
@@ -44,7 +47,7 @@ sub throw {
         $err      .= "    $key$spaces-> $value\n";
     }
 
-    $err .= "Exception raised at $file line $line.\n";
+    $err .= "Exception $fmt raised at $file line $line.\n";
     die $err;
 }
 
