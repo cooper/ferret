@@ -283,7 +283,7 @@ unless the function starts with an underscore (`_`), in which case it is a
 private scope inheriting from the current package context. At class level, the
 SOI is the class itself, unless the function starts with an underscore (`_`), in
 which case it is a private scope inheriting from both the class and the current
-package context.
+package context. At any other level, the SOI is the current scope.
 
 ```
 func spam {
@@ -691,6 +691,15 @@ conformance. If an object matches, `TypeName($obj)` will output that object
 or another object returned by a `transform`. If it fails, `undefined` is
 returned.
 
+The finished type function will be available only within the scope of interest
+(SOI). The SOI is determined by the hierarchical level of the `type` construct
+within the document. At document level, the SOI is the current package context,
+unless the type name starts with an underscore (`_`), in which case it is a
+private scope inheriting from the current package context. At class level, the
+SOI is the class itself, unless the type name starts with an underscore (`_`),
+in which case it is a private scope inheriting from both the class and the
+current package context. At any other level, the SOI is the current scope.
+
 Below is an example with only expressions provided. For examples with various
 conditions or transforms, see the respective keywords.
 
@@ -782,6 +791,33 @@ sayUC("Hello World!")   # HELLO WORLD!
 ```
 
 ## Miscellaneous
+
+### alias
+
+```
+alias (<type_name>|<func_name>) = (<other_type_name>|<other_func_name>)
+```
+
+Declares that a function, method, or type is an alias for another.
+
+For functions, this is similar to `func <func_name> { <other_func_name>() }`,
+without considering arguments. For types, this is functionally equivalent to
+`type <type_name> { isa <other_type_name> }`.
+
+The finished type or function will be available only within the scope of
+interest (SOI). The SOI is determined by the hierarchical level of the `alias`
+construct within the document. At document level, the SOI is the current package
+context, unless the type or function name starts with an underscore (`_`), in
+which case it is a private scope inheriting from the current package context.
+At class level, the SOI is the class itself, unless the type or function name
+starts with an underscore (`_`), in which case it is a private scope inheriting
+from both the class and the current package context. At any other level, the SOI
+is the current scope.
+
+```
+alias println = say
+alias Str = String
+```
 
 ### inside
 
