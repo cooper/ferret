@@ -3,9 +3,9 @@ package F::Call;
 
 use warnings;
 use strict;
-use parent qw(F::Node F::Expression);
+use parent qw(F::NodeExpression);
 
-sub type { 'Call' }
+
 sub fake { 1 }
 
 sub perl_fmt {

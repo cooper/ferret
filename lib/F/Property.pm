@@ -3,9 +3,9 @@ package F::Property;
 
 use warnings;
 use strict;
-use parent qw(F::Node F::Expression F::Assignable);
+use parent qw(F::NodeExpression F::Assignable);
 
-sub type { 'Property' }
+
 sub desc {
     my $prop = shift;
     return ($prop->is_special ? 'special ' : '')."property '$$prop{prop_name}'";

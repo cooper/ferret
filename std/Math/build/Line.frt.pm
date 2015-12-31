@@ -26,30 +26,37 @@
 #          Computed property 'pretty'
 #              Body ('method' scope)
 #                  Instruction
-#                      Assignment (lexical variable '$mp')
+#                      Assignment
+#                          Lexical variable '$mp'
 #                          Instance variable '@midpoint'
 #                  Instruction
-#                      Assignment (lexical variable '$pox')
+#                      Assignment
+#                          Lexical variable '$pox'
 #                          Property 'x'
 #                              Instance variable '@pt1'
 #                  Instruction
-#                      Assignment (lexical variable '$poy')
+#                      Assignment
+#                          Lexical variable '$poy'
 #                          Property 'y'
 #                              Instance variable '@pt1'
 #                  Instruction
-#                      Assignment (lexical variable '$ptx')
+#                      Assignment
+#                          Lexical variable '$ptx'
 #                          Property 'x'
 #                              Instance variable '@pt2'
 #                  Instruction
-#                      Assignment (lexical variable '$pty')
+#                      Assignment
+#                          Lexical variable '$pty'
 #                          Property 'y'
 #                              Instance variable '@pt2'
 #                  Instruction
-#                      Assignment (lexical variable '$mx')
+#                      Assignment
+#                          Lexical variable '$mx'
 #                          Property 'x'
 #                              Lexical variable '$mp'
 #                  Instruction
-#                      Assignment (lexical variable '$my')
+#                      Assignment
+#                          Lexical variable '$my'
 #                          Property 'y'
 #                              Lexical variable '$mp'
 #                  Instruction

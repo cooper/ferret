@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent 'F::Node';
 
-sub type  { 'ScopeOwner' }
+
 sub scope { shift->{scope} }
 
 sub new {

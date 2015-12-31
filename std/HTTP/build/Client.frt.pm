@@ -3,14 +3,16 @@
 #      Package 'HTTP'
 #      Class 'Client' version 1.0
 #          Instruction
-#              Assignment (lexical variable '$defaultUA')
+#              Assignment
+#                  Lexical variable '$defaultUA'
 #                  Operation
 #                      String 'ferret-http/'
 #                      Addition operator (+)
 #                      Property 'version'
 #                          Special variable '*class'
 #          Instruction
-#              Assignment (lexical variable '$defaultLength')
+#              Assignment
+#                  Lexical variable '$defaultLength'
 #                  Operation
 #                      Number '64'
 #                      Multiplication operator (*)

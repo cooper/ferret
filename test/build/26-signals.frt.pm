@@ -16,7 +16,8 @@
 #      Instruction
 #          String 'are you sure?'
 #      Instruction
-#          Assignment (lexical variable '$asked')
+#          Assignment
+#              Lexical variable '$asked'
 #              Boolean false
 #      On
 #          Expression ('on' parameter)
@@ -37,7 +38,8 @@
 #                                      Item 0
 #                                          String 'Are you sure?'
 #                          Instruction
-#                              Assignment (lexical variable '$asked')
+#                              Assignment
+#                                  Lexical variable '$asked'
 #                                  Boolean true
 #                          Instruction
 #                              Stop

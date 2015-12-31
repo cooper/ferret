@@ -15,17 +15,11 @@ sub new {
     $for->{for_type} = 'iteration';
 
     # create 'for' parameter.
-    my $exp = $for->{param_exp} = F::Expression->new(
-        parameter_for        => 'for',
-        generated_expression => 1
-    );
+    my $exp = $for->{param_exp} = F::ForParameter->new;
     $for->adopt($exp);
 
     # create 'in' parameter.
-    $exp = $for->{in_param_exp} = F::Expression->new(
-        parameter_for        => 'in',
-        generated_expression => 1
-    );
+    $exp = $for->{in_param_exp} = F::InParameter->new;
     $for->adopt($exp);
 
     # create the body.
@@ -82,7 +76,34 @@ sub body         { shift->{body}         }
 sub param_exp    { shift->{param_exp}    }
 sub in_param_exp { shift->{in_param_exp} }
 sub is_closure   { 1 }
-sub type         { 'For' }
+
+
+package F::ForParameter;
+
+use parent qw(F::NodeExpression);
+
+sub new {
+    my ($class, %opts) = @_;
+    return $class->SUPER::new(
+        parameter_for        => 'for',
+        generated_expression => 1
+    );
+}
+
+
+
+package F::InParameter;
+
+use parent qw(F::NodeExpression);
+
+sub new {
+    my ($class, %opts) = @_;
+    return $class->SUPER::new(
+        parameter_for        => 'in',
+        generated_expression => 1
+    );
+}
+
 
 
 1

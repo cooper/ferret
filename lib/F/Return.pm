@@ -3,9 +3,9 @@ package F::Return;
 
 use warnings;
 use strict;
-use parent qw(F::Statement);
+use parent qw(F::Node);
 
-sub type  { 'Return' }
+
 sub value { shift->first_child }
 
 sub perl_fmt {

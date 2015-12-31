@@ -6,7 +6,7 @@ use strict;
 use 5.010;
 use parent qw(F::Element);
 
-sub type { 'Operator' }
+
 sub desc {
     my $op = shift;
     return Ferret::Lexer::pretty_token($op->{token});

@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent 'F::ScopeOwner';
 
-sub type { 'Class' }
+
 sub hold_instr { 1 }
 
 sub desc {

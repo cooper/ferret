@@ -1,7 +1,8 @@
 # === Document Model ===
 #  Document './test/7-math.frt'
 #      Instruction
-#          Assignment (lexical variable '$rect')
+#          Assignment
+#              Lexical variable '$rect'
 #              Call
 #                  Bareword 'Math::Rect'
 #                  Named argument list [4 items]
@@ -18,7 +19,8 @@
 #                          Pair 'height'
 #                              Number '10'
 #      Instruction
-#          Assignment (lexical variable '$center')
+#          Assignment
+#              Lexical variable '$center'
 #              Property 'center'
 #                  Lexical variable '$rect'
 #      Instruction
@@ -41,7 +43,8 @@
 #                          Property 'distanceFromOrigin'
 #                              Lexical variable '$center'
 #      Instruction
-#          Assignment (lexical variable '$otherPt')
+#          Assignment
+#              Lexical variable '$otherPt'
 #              Call
 #                  Bareword 'Math::Point'
 #                  Argument list [2 items]
@@ -50,7 +53,8 @@
 #                      Item 1
 #                          Number '2'
 #      Instruction
-#          Assignment (lexical variable '$midpoint')
+#          Assignment
+#              Lexical variable '$midpoint'
 #              Call
 #                  Property 'pretty'
 #                      Call

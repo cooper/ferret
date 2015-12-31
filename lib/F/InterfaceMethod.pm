@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent 'F::Call';
 
-sub type { 'InterfaceMethod' }
+
 sub desc { 'method requirement' }
 
 sub func_fmt_do {

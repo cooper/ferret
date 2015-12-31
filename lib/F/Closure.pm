@@ -3,9 +3,9 @@ package F::Closure;
 
 use warnings;
 use strict;
-use parent 'F::Statement';
+use parent 'F::Node';
 
-sub type { 'Closure' }
+
 sub is_closure { 1 }
 
 # returns a list of children excluding the parameter expression.

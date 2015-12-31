@@ -3,9 +3,9 @@ package F::ListItem;
 
 use warnings;
 use strict;
-use parent 'F::Expression';
+use parent qw(F::NodeExpression);
 
-sub type   { 'ListItem'  }
+
 sub desc   { 'item ' . shift->{item_num} }
 sub detail { 'list '.shift->desc }
 

@@ -3,9 +3,9 @@ package F::Package;
 
 use warnings;
 use strict;
-use parent 'F::Statement';
+use parent 'F::Node';
 
-sub type { 'Package' }
+
 sub hold_instr { 1 }
 
 sub desc {

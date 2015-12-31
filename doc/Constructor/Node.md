@@ -1,4 +1,4 @@
-# Node
+# Constructor/Node
 
 The node is a direct descendent of the [element](Element.md) and the most basic
 type of element capable of containing other elements.

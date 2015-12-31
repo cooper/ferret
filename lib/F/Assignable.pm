@@ -5,6 +5,6 @@ use warnings;
 use strict;
 use parent 'F::Element';
 
-sub type { 'Assignable' }
+
 
 1

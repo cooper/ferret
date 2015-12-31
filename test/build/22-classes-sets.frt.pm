@@ -85,7 +85,8 @@
 #                      Return
 #                          String 'nice cats ...'
 #      Instruction
-#          Assignment (lexical variable '$animal')
+#          Assignment
+#              Lexical variable '$animal'
 #              Call
 #                  Bareword 'Cow'
 #                  Argument list [0 items]
@@ -135,12 +136,14 @@
 #                  Item 0
 #                      Lexical variable '$animal'
 #      Instruction
-#          Assignment (lexical variable '$cat')
+#          Assignment
+#              Lexical variable '$cat'
 #              Call
 #                  Bareword 'Cat'
 #                  Argument list [0 items]
 #      Instruction
-#          Assignment (lexical variable '$aftermath')
+#          Assignment
+#              Lexical variable '$aftermath'
 #              Call
 #                  Property 'fight'
 #                      Set [2 items]

@@ -3,11 +3,11 @@ package F::WantNeed;
 
 use warnings;
 use strict;
-use parent 'F::Statement';
+use parent 'F::Node';
 
 use Scalar::Util qw(weaken);
 
-sub type { 'WantNeed' }
+
 sub desc {
     my $wn = shift;
     my $t  = $wn->{arg_type} || 'argument declaration';
@@ -81,14 +81,14 @@ package F::WantNeedType;
 
 use parent 'F::Node';
 
-sub type { 'WantNeedType'  }
+
 sub desc { 'argument type' }
 
 package F::WantNeedValue;
 
 use parent 'F::Node';
 
-sub type { 'WantNeedValue'  }
+
 sub desc { 'argument value' }
 
 sub perl_fmt_do { shift->first_child->perl_fmt_do }

@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent 'F::Expression';
 
-sub type { 'Symbol' }
+
 sub desc {
     my $sym = shift;
     return 'symbol :'.$sym->{sym_value};

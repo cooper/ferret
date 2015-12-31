@@ -3,9 +3,9 @@ package F::Stop;
 
 use warnings;
 use strict;
-use parent qw(F::Statement);
+use parent qw(F::Node);
 
-sub type { 'Stop' }
+
 
 sub perl_fmt_do {
     return '$ret->stop';

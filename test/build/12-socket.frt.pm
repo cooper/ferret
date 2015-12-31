@@ -1,7 +1,8 @@
 # === Document Model ===
 #  Document './test/12-socket.frt'
 #      Instruction
-#          Assignment (lexical variable '$sock')
+#          Assignment
+#              Lexical variable '$sock'
 #              Call
 #                  Bareword 'Socket::TCP'
 #                  Named argument list [3 items]

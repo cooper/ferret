@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent qw(F::Expression F::Assignable);
 
-sub type { 'PropertyVariable' }
+
 
 sub desc {
     my $var = shift;

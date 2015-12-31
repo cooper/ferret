@@ -15,10 +15,7 @@ sub new {
     # the expression is marked as the parameter to the inside keyword.
     # it is also marked as generated, so we know it can be terminated
     # automatically by certain tokens.
-    my $exp = F::Expression->new(
-        parameter_for        => 'inside',
-        generated_expression => 1
-    );
+    my $exp = F::InsideParameter->new;
     $ins->adopt($exp);
     weaken($ins->{param_exp} = $exp);
 
@@ -43,7 +40,20 @@ sub param_exp  { shift->{param_exp} }
 sub body       { shift->{body}      }
 sub is_closure { 1 }
 sub hold_instr { 1 }
-sub type       { 'Inside' }
+
+
+package F::InsideParameter;
+
+use parent qw(F::NodeExpression);
+
+sub new {
+    my ($class, %opts) = @_;
+    return $class->SUPER::new(
+        parameter_for        => 'inside',
+        generated_expression => 1
+    );
+}
+
 
 
 1

@@ -1,7 +1,8 @@
 # === Document Model ===
 #  Document './test/19-foreach.frt'
 #      Instruction
-#          Assignment (lexical variable '$words')
+#          Assignment
+#              Lexical variable '$words'
 #              Call
 #                  Property 'split'
 #                      String 'how are you?'

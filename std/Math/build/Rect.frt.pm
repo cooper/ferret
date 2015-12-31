@@ -25,7 +25,8 @@
 #                          Argument type
 #                              Bareword 'Num'
 #                  Instruction
-#                      Assignment (instance variable '@origin')
+#                      Assignment
+#                          Instance variable '@origin'
 #                          Call
 #                              Bareword 'Point'
 #                              Argument list [2 items]
@@ -127,7 +128,8 @@
 #          Computed property 'center'
 #              Body ('method' scope)
 #                  Instruction
-#                      Assignment (lexical variable '$x')
+#                      Assignment
+#                          Lexical variable '$x'
 #                          Operation
 #                              Property 'x'
 #                                  Instance variable '@origin'
@@ -136,7 +138,8 @@
 #                              Multiplication operator (*)
 #                              Number '0.5'
 #                  Instruction
-#                      Assignment (lexical variable '$y')
+#                      Assignment
+#                          Lexical variable '$y'
 #                          Operation
 #                              Property 'y'
 #                                  Instance variable '@origin'
@@ -156,10 +159,12 @@
 #          Method 'description'
 #              Body ('method' scope)
 #                  Instruction
-#                      Assignment (lexical variable '$o')
+#                      Assignment
+#                          Lexical variable '$o'
 #                          Instance variable '@origin'
 #                  Instruction
-#                      Assignment (lexical variable '$c')
+#                      Assignment
+#                          Lexical variable '$c'
 #                          Instance variable '@center'
 #                  Instruction
 #                      Return

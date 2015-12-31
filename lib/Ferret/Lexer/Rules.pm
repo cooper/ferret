@@ -358,19 +358,19 @@ our %element_rules = (
 
     },
 
-    OnExpression => {
+    OnParameter => {
 
         after_rules => {
 
             # children can only be non-special variables or properties.
-            children_must_be => [                                               # OnExpression[0]
+            children_must_be => [                                               # OnParameter[0]
                 'Property LexicalVariable InstanceVariable PropertyVariable Bareword',
                 "'On' parameter can only be a non-special variable or property",
                 0
             ],
 
             # if it's a property, it cannot be a special one.
-            children_must_satisfy => [                                          # OnExpression[1]
+            children_must_satisfy => [                                          # OnParameter[1]
                 sub {
                     my $el = shift;
                     return 1 if $el->type ne 'Property';
@@ -381,7 +381,7 @@ our %element_rules = (
             ],
 
             # it can only contain one property or variable.
-            num_children => [ 1, undef, 2 ]                                     # OnExpression[2]
+            num_children => [ 1, undef, 2 ]                                     # OnParameter[2]
 
         }
 
@@ -570,7 +570,10 @@ our %element_rules = (
             'Instruction IfParameter',
             "Assignment must be direct child of an instruction or 'if' parameter",
             0
-        ]
+        ],
+
+        # left side and right side
+        num_children => 2                                                       # Assignment[1]
 
     },
 

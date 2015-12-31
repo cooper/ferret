@@ -3,9 +3,9 @@ package F::TypeRequirement;
 
 use warnings;
 use strict;
-use parent 'F::Statement';
+use parent 'F::Node';
 
-sub type { 'TypeRequirement' }
+
 sub desc {
     my $req  = shift;
     my $type = $req->{req_type};

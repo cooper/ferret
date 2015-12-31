@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent 'F::Expression';
 
-sub type { 'SpecialVariable' }
+
 
 sub desc {
     my $var = shift;

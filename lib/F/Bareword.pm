@@ -6,7 +6,7 @@ use strict;
 use 5.010;
 use parent qw(F::Expression F::Assignable);
 
-sub type { 'Bareword' }
+
 sub desc {
     my $el = shift;
     my $desc = "bareword '$$el{bareword_value}'";

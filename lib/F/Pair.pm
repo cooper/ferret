@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent qw(F::Node);
 
-sub type { 'Pair' }
+
 sub desc {
     my $pair = shift;
     return "pair '$$pair{key}'";

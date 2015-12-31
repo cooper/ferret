@@ -4,9 +4,9 @@ package F::Function;
 use warnings;
 use strict;
 use 5.010;
-use parent qw(F::Statement F::Expression);
+use parent qw(F::NodeExpression);
 
-sub type { 'Function' }
+
 
 sub anonymous  { shift->{anonymous} }
 sub body       { shift->{body}      }

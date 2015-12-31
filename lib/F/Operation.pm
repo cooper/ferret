@@ -4,11 +4,11 @@ package F::Operation;
 use warnings;
 use strict;
 use 5.010;
-use parent qw(F::Node F::Expression);
+use parent qw(F::NodeExpression);
 
 use Scalar::Util 'blessed';
 
-sub type { 'Operation' }
+
 sub left_side { shift->first_child }
 
 # handle signs.

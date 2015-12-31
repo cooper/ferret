@@ -12,7 +12,7 @@ use F::Element;
 use F::Unknown;
 use F::Node;
 use F::Document;
-use F::Statement;
+use F::Node;
 use F::Class;
 use F::Package;
 use F::Function;
@@ -61,6 +61,7 @@ use F::Type;
 use F::Defer;
 use F::TypeRequirement;
 use F::InterfaceMethod;
+use F::NodeExpression;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (

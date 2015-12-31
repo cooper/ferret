@@ -10,15 +10,18 @@
 #                      Need
 #                          Lexical variable '$y'
 #                  Instruction
-#                      Assignment (instance variable '@x')
+#                      Assignment
+#                          Instance variable '@x'
 #                          Lexical variable '$x'
 #                  Instruction
-#                      Assignment (instance variable '@y')
+#                      Assignment
+#                          Instance variable '@y'
 #                          Lexical variable '$y'
 #          Method 'oneToRight'
 #              Body ('method' scope)
 #                  Instruction
-#                      Assignment (lexical variable '$pt')
+#                      Assignment
+#                          Lexical variable '$pt'
 #                          Call
 #                              Special variable '*class'
 #                              Argument list [2 items]
@@ -95,7 +98,8 @@
 #                                              Division operator (/)
 #                                              Number '2'
 #      Instruction
-#          Assignment (lexical variable '$pt')
+#          Assignment
+#              Lexical variable '$pt'
 #              Call
 #                  Bareword 'Point'
 #                  Argument list [2 items]
@@ -113,7 +117,8 @@
 #                          Addition operator (+)
 #                          Lexical variable '$pt'
 #      Instruction
-#          Assignment (lexical variable '$rpt')
+#          Assignment
+#              Lexical variable '$rpt'
 #              Call
 #                  Property 'oneToRight'
 #                      Lexical variable '$pt'
@@ -127,7 +132,8 @@
 #                          Addition operator (+)
 #                          Lexical variable '$rpt'
 #      Instruction
-#          Assignment (lexical variable '$mdpt')
+#          Assignment
+#              Lexical variable '$mdpt'
 #              Call
 #                  Property 'midpoint'
 #                      Bareword 'Point'
@@ -146,7 +152,8 @@
 #                          Addition operator (+)
 #                          Lexical variable '$mdpt'
 #      Instruction
-#          Assignment (lexical variable '$nineteen')
+#          Assignment
+#              Lexical variable '$nineteen'
 #              Operation
 #                  Number '4'
 #                  Addition operator (+)

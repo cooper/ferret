@@ -1,7 +1,8 @@
 # === Document Model ===
 #  Document './test/23-property-modifiers/test.frt'
 #      Instruction
-#          Assignment (lexical variable '$x')
+#          Assignment
+#              Lexical variable '$x'
 #              Object [0 items]
 #      Instruction
 #          Delete modifier

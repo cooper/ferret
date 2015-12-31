@@ -7,7 +7,7 @@ use parent 'F::Closure';
 
 use Scalar::Util 'weaken';
 
-sub type        { 'On' }
+
 sub function    { shift->{function}  }
 sub param_exp   { shift->{param_exp} }
 sub is_closure  { 1 }
@@ -29,7 +29,7 @@ sub new {
     # the expression is marked as the parameter to the on keyword.
     # it is also marked as generated, so we know it can be terminated
     # automatically by certain tokens.
-    my $exp = F::OnExpression->new;
+    my $exp = F::OnParameter->new;
     $on->adopt($exp);
     weaken($on->{param_exp} = $exp);
 
@@ -116,13 +116,13 @@ sub perl_fmt {
     };
 }
 
-package F::OnExpression;
+package F::OnParameter;
 
 use warnings;
 use strict;
-use parent 'F::Expression';
+use parent qw(F::NodeExpression);
 
-sub type { 'OnExpression' }
+
 
 sub new {
     my ($class, %opts) = @_;

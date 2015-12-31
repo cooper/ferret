@@ -22,14 +22,16 @@
 #                          Argument type
 #                              Bareword 'Point'
 #                  Instruction
-#                      Assignment (lexical variable '$dx')
+#                      Assignment
+#                          Lexical variable '$dx'
 #                          Operation
 #                              Instance variable '@x'
 #                              Subtraction operator (-)
 #                              Property 'x'
 #                                  Lexical variable '$pt2'
 #                  Instruction
-#                      Assignment (lexical variable '$dy')
+#                      Assignment
+#                          Lexical variable '$dy'
 #                          Operation
 #                              Instance variable '@y'
 #                              Subtraction operator (-)

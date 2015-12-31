@@ -19,7 +19,8 @@
 #                      Argument type
 #                          Bareword 'Gender'
 #              Instruction
-#                  Assignment (lexical variable '$what')
+#                  Assignment
+#                      Lexical variable '$what'
 #                      Call
 #                          Property 'trimPrefix'
 #                              Call

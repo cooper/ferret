@@ -14,10 +14,12 @@
 #                          Argument value
 #                              Boolean true
 #                  Instruction
-#                      Assignment (instance variable '@tested')
+#                      Assignment
+#                          Instance variable '@tested'
 #                          Number '0'
 #                  Instruction
-#                      Assignment (instance variable '@passed')
+#                      Assignment
+#                          Instance variable '@passed'
 #                          Number '0'
 #          Method 'trueValue'
 #              Body ('method' scope)
@@ -137,7 +139,8 @@
 #          Method 'review'
 #              Body ('method' scope)
 #                  Instruction
-#                      Assignment (lexical variable '$failed')
+#                      Assignment
+#                          Lexical variable '$failed'
 #                          Operation
 #                              Instance variable '@tested'
 #                              Subtraction operator (-)
@@ -189,7 +192,8 @@
 #                      Want
 #                          Lexical variable '$message'
 #                  Instruction
-#                      Assignment (instance variable '@tested')
+#                      Assignment
+#                          Instance variable '@tested'
 #                          Operation
 #                              Instance variable '@tested'
 #                              Addition operator (+)
@@ -202,7 +206,8 @@
 #                          Lexical variable '$yes'
 #                      Body ('if' scope)
 #                          Instruction
-#                              Assignment (instance variable '@passed')
+#                              Assignment
+#                                  Instance variable '@passed'
 #                                  Operation
 #                                      Instance variable '@passed'
 #                                      Addition operator (+)

@@ -1,7 +1,8 @@
 # === Document Model ===
 #  Document './test/21-nested-callbacks.frt'
 #      Instruction
-#          Assignment (lexical variable '$parts')
+#          Assignment
+#              Lexical variable '$parts'
 #              Call
 #                  Property 'split'
 #                      String 's p a m'

@@ -10,7 +10,8 @@
 #                          Argument type
 #                              Bareword 'Client'
 #                  Instruction
-#                      Assignment (instance variable '@client')
+#                      Assignment
+#                          Instance variable '@client'
 #                          Lexical variable '$client'
 #                  Instruction
 #                      Weaken modifier

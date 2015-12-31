@@ -339,9 +339,8 @@ sub fatal {
     my $near = $last_el ? $last_el->detail : 'beginning of file';
 
     # find a useful description for the parent.
-    # $parent = $parent->parent if $parent->type eq 'Instruction';
-    # the above is disabled because instruction ->detail says child now.
-    $parent  = $parent->detail if $parent;
+    $parent = $parent->parent if $parent->type eq 'Instruction';
+    $parent = $parent->detail if $parent;
 
     # say where the exception came from.
     my @caller   = @{ delete $c->{err_caller} || [caller] };

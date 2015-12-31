@@ -396,7 +396,7 @@ sub c_KEYWORD_ON {
     # set the current node to the on expression.
     $c->set_node($on->param_exp);
 
-    # Rule OnExpression[0]:
+    # Rule OnParameter[0]:
     #   Direct children must be one of the following:
     #
     #       Property            (e.g. $obj.prop)
@@ -405,10 +405,10 @@ sub c_KEYWORD_ON {
     #       Property variable   (e.g. .var)
     #       Bareword            (i.e. function name)
 
-    # Rule OnExpression[1]:
+    # Rule OnParameter[1]:
     #   If a direct child is a Property, it must not be a special property.
 
-    # Rule OnExpression[2]:
+    # Rule OnParameter[2]:
     #   Number of direct children must be exactly one (1).
 
     return $on;
@@ -421,7 +421,7 @@ sub handle_callback_clause {
     my ($c, $type) = @_;
 
     # must be inside an on expression.
-    my $exp = $c->node->first_self_or_parent('OnExpression');
+    my $exp = $c->node->first_self_or_parent('OnParameter');
     return $c->unexpected("without preceding 'on' expression") if !$exp;
 
     # next token must be a symbol.
@@ -808,8 +808,8 @@ sub c_KEYWORD_FALSE {
 sub c_VAR_SYM {
     my ($c, $value) = @_;
 
-    # if the current node is an OnExpression, it's a callback name.
-    if ($c->node->type eq 'OnExpression' && $c->node->{cb_method}) {
+    # if the current node is an OnParameter, it's a callback name.
+    if ($c->node->type eq 'OnParameter' && $c->node->{cb_method}) {
         my $method = delete $c->node->{cb_method};
 
         # cannot use ':default' when it's the primary callback name
@@ -869,9 +869,9 @@ sub c_OP_COMMA {
         return $c->adopt_and_set_node($wn);
     }
 
-    # we're inside an OnExpression, so this comma could separate from a
+    # we're inside an OnParameter, so this comma could separate from a
     # symbol callback name.
-    if (my $exp = $c->node->first_self_or_parent('OnExpression')) {
+    if (my $exp = $c->node->first_self_or_parent('OnParameter')) {
         my $e = $c->next_token_must_be(
             'VAR_SYM',
             "Following a comma within 'on' parameter ".
@@ -1211,11 +1211,13 @@ sub c_OP_ASSIGN {
     # Rule Assignment[0]:
     #   Direct parent must be of type Instruction or IfParameter.
 
+    # Rule Assignment[1]:
+    #   Number of direct children must be exactly two (2).
+
     # remember the last element as the left side of the assignment.
     my $a = F::Assignment->new;
-    $a->{left_side} = $last_el;
-    $last_el->parent->abandon($last_el);
     $c->adopt_and_set_node($a);
+    $a->adopt($last_el);
 
     return $a;
 }
@@ -1231,9 +1233,8 @@ sub c_OP_LASSIGN {
 
     # remember the last element as the left side of the assignment.
     my $a = F::Assignment->new(lazy => 1);
-    $a->{left_side} = $last_el;
-    $last_el->parent->abandon($last_el);
     $c->adopt_and_set_node($a);
+    $a->adopt($last_el);
 
     return $a;
 }

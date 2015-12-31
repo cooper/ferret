@@ -15,14 +15,25 @@ sub new {
     $opts{create_line} = $c->{line};
     $opts{create_pos}  = $c->{position};
     $opts{create_c}    = { %$c };
+    $opts{type}        = $class->type;
     return bless \%opts, $class;
 }
 
+sub type {
+    my $el = shift;
+    return $el->{type} if ref $el;
+    return ($el =~ m/^F::(.*)/)[0];
+}
+
 sub all_types {
-    my ($el, $method, @types) = (shift, 'type');
-    my $base = blessed $el;
+    my $el = shift;
+    return _all_types(blessed $el);
+}
+
+sub _all_types {
+    my $base = shift;
     my @isa  = Evented::Object::Hax::get_symbol($base, '@ISA');
-    return map $_->type, @isa;
+    return map($_->type, @isa), map(_all_types($_), @isa);
 }
 
 sub is_type {
@@ -31,7 +42,6 @@ sub is_type {
 }
 
 sub parent      { shift->{parent}           }       # parent element
-sub type        { 'Element'                 }       # element type
 sub desc        { lcfirst shift->type       }       # description string
 sub detail      { shift->desc               }       # detailed description
 sub fake        { shift->{fake}             }       # is it fake

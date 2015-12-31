@@ -74,7 +74,7 @@ sub type_name  { shift->{type_name} }
 sub body       { shift->{body}      }
 sub is_closure { 1 }
 sub hold_instr { 1 }
-sub type       { 'Type' }
+
 sub desc       {
     my $type = shift;
     my $name = $type->type_name;
@@ -88,6 +88,6 @@ use strict;
 use 5.010;
 use parent 'F::Body';
 
-sub type { 'TypeBody' }
+
 
 1

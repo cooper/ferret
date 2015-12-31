@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent 'F::Expression';
 
-sub type { 'Number' }
+
 sub desc {
     my $num = shift;
     return 'constant zero' if $num->{zero};

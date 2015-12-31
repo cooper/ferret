@@ -3,9 +3,9 @@ package F::List;
 
 use warnings;
 use strict;
-use parent qw(F::Node F::Expression);
+use parent qw(F::NodeExpression);
 
-sub type { 'List' }
+
 
 sub desc {
     my $list = shift;

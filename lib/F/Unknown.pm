@@ -6,7 +6,7 @@ use strict;
 use 5.010;
 use parent 'F::Element';
 
-sub type { 'Token' }
+
 sub desc {
     my $el = shift;
     my $desc  = Ferret::Lexer::pretty_token($el->{token_label});

@@ -4,14 +4,13 @@ package F::Assignment;
 use warnings;
 use strict;
 use 5.010;
-use parent 'F::Statement';
+use parent 'F::Node';
 
-sub type { 'Assignment' }
+
 sub desc {
     my $a = shift;
-    my $left = $a->assign_to->desc;
     my $lazy = $a->{lazy} ? 'lazy ' : '';
-    return "${lazy}assignment ($left)";
+    return "${lazy}assignment";
 }
 
 sub perl_fmt_do {
@@ -23,7 +22,6 @@ sub perl_fmt_do {
     my $val = $a->assign_value->perl_fmt_do;
     $val = "[ sub { $val } ]" if $a->{lazy};
     $fmt_args->{assign_value} = $val;
-
 
     # fix *special properties
     # consider: will it ever even be allowed to assign to special property?
@@ -39,14 +37,7 @@ sub perl_fmt_do {
     return $a->get_format("assign_$fmt_name" => $fmt_args);
 }
 
-sub assign_to    { shift->{left_side} }
-sub assign_value {
-    my $a = shift;
-    return $a->{assign_value} if $a->{assign_value};
-    my @c = $a->children;
-    my $exp = F::Expression->new(parent => $a->parent);
-    $exp->adopt($_) foreach @c;
-    return $a->{assign_value} = $exp;
-}
+sub assign_to    { shift->first_child   }
+sub assign_value { (shift->children)[1] }
 
 1

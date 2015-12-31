@@ -1,7 +1,8 @@
 # === Document Model ===
 #  Document './test/10-irc-simple/bot_test1.frt'
 #      Instruction
-#          Assignment (lexical variable '$bot')
+#          Assignment
+#              Lexical variable '$bot'
 #              Call
 #                  Bareword 'Bot1'
 #                  Named argument list [3 items]

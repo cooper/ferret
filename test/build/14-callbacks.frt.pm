@@ -7,7 +7,8 @@
 #                  Item 0
 #                      String 'test'
 #      Instruction
-#          Assignment (lexical variable '$str')
+#          Assignment
+#              Lexical variable '$str'
 #              String 'hi'
 #      On
 #          Expression ('on' parameter)

@@ -4,9 +4,9 @@ package F::Method;
 use warnings;
 use strict;
 use 5.010;
-use parent 'F::Statement';
+use parent 'F::Node';
 
-sub type { 'Method' }
+
 sub is_closure { 1 }
 sub hold_instr { 1 }
 sub body { shift->{body} }

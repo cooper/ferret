@@ -5,35 +5,40 @@
 #              Load
 #                  Bareword 'NATIVE::Signal'
 #          Instruction
-#              Lazy assignment (lexical variable '$INT')
+#              Lazy assignment
+#                  Lexical variable '$INT'
 #                  Call
 #                      Special variable '*class'
 #                      Argument list [1 items]
 #                          Item 0
 #                              Symbol :INT
 #          Instruction
-#              Lazy assignment (lexical variable '$HUP')
+#              Lazy assignment
+#                  Lexical variable '$HUP'
 #                  Call
 #                      Special variable '*class'
 #                      Argument list [1 items]
 #                          Item 0
 #                              Symbol :HUP
 #          Instruction
-#              Lazy assignment (lexical variable '$TERM')
+#              Lazy assignment
+#                  Lexical variable '$TERM'
 #                  Call
 #                      Special variable '*class'
 #                      Argument list [1 items]
 #                          Item 0
 #                              Symbol :TERM
 #          Instruction
-#              Lazy assignment (lexical variable '$ALRM')
+#              Lazy assignment
+#                  Lexical variable '$ALRM'
 #                  Call
 #                      Special variable '*class'
 #                      Argument list [1 items]
 #                          Item 0
 #                              Symbol :ALRM
 #          Instruction
-#              Lazy assignment (lexical variable '$signals')
+#              Lazy assignment
+#                  Lexical variable '$signals'
 #                  Hash [4 items]
 #                      Item 0
 #                          Pair 'INT'

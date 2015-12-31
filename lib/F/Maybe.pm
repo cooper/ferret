@@ -3,9 +3,9 @@ package F::Maybe;
 
 use warnings;
 use strict;
-use parent qw(F::Node F::Expression);
+use parent qw(F::NodeExpression);
 
-sub type { 'Maybe' }
+
 sub fake { 1 }
 
 sub perl_fmt {

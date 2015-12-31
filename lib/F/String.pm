@@ -7,7 +7,7 @@ use parent 'F::Expression';
 
 use Data::Dump qw(dump);
 
-sub type { 'String' }
+
 sub desc {
     my $str = shift;
     my $first = length $str->{value} > 13  ?

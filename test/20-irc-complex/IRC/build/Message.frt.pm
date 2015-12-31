@@ -10,7 +10,8 @@
 #                          Argument type
 #                              Bareword 'Str'
 #                  Instruction
-#                      Assignment (lexical variable '$lineSplit')
+#                      Assignment
+#                          Lexical variable '$lineSplit'
 #                          Call
 #                              Property 'split'
 #                                  Instance variable '@line'
@@ -22,14 +23,16 @@
 #                                      Pair 'limit'
 #                                          Number '4'
 #                  Instruction
-#                      Assignment (instance variable '@channel')
+#                      Assignment
+#                          Instance variable '@channel'
 #                          Index
 #                              Lexical variable '$lineSplit'
 #                              Index list [1 items]
 #                                  Item 0
 #                                      Number '2'
 #                  Instruction
-#                      Assignment (instance variable '@nickname')
+#                      Assignment
+#                          Instance variable '@nickname'
 #                          Index
 #                              Call
 #                                  Property 'split'
@@ -49,7 +52,8 @@
 #                                  Item 0
 #                                      Number '0'
 #                  Instruction
-#                      Assignment (instance variable '@nickname')
+#                      Assignment
+#                          Instance variable '@nickname'
 #                          Call
 #                              Property 'trimPrefix'
 #                                  Instance variable '@nickname'
@@ -57,14 +61,16 @@
 #                                  Item 0
 #                                      String ':'
 #                  Instruction
-#                      Assignment (instance variable '@message')
+#                      Assignment
+#                          Instance variable '@message'
 #                          Index
 #                              Lexical variable '$lineSplit'
 #                              Index list [1 items]
 #                                  Item 0
 #                                      Number '3'
 #                  Instruction
-#                      Assignment (instance variable '@message')
+#                      Assignment
+#                          Instance variable '@message'
 #                          Call
 #                              Property 'trimPrefix'
 #                                  Instance variable '@message'
@@ -72,7 +78,8 @@
 #                                  Item 0
 #                                      String ':'
 #                  Instruction
-#                      Assignment (instance variable '@parts')
+#                      Assignment
+#                          Instance variable '@parts'
 #                          Call
 #                              Property 'split'
 #                                  Instance variable '@message'
@@ -95,7 +102,8 @@
 #                                      String '.'
 #                      Body ('if' scope)
 #                          Instruction
-#                              Assignment (lexical variable '$cmd')
+#                              Assignment
+#                                  Lexical variable '$cmd'
 #                                  Call
 #                                      Property 'trimPrefix'
 #                                          Index

@@ -3,9 +3,9 @@ package F::Index;
 
 use warnings;
 use strict;
-use parent qw(F::Node F::Expression F::Assignable);
+use parent qw(F::NodeExpression F::Assignable);
 
-sub type { 'Index' }
+
 sub fake { 1 }
 
 sub perl_fmt {

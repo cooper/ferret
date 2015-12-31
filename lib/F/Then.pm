@@ -3,10 +3,10 @@ package F::Then;
 
 use warnings;
 use strict;
-use parent 'F::Statement';
+use parent 'F::Node';
 
 sub parameter_expression { shift->{parameter_expression} }
-sub type { 'If' }
+
 
 
 1

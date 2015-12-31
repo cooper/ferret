@@ -8,7 +8,8 @@
 #              Instruction
 #                  Symbol :POST
 #      Instruction
-#          Lazy assignment (lexical variable '$client')
+#          Lazy assignment
+#              Lexical variable '$client'
 #              Call
 #                  Bareword 'HTTP::Client'
 #                  Argument list [0 items]

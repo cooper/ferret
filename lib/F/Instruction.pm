@@ -3,9 +3,9 @@ package F::Instruction;
 
 use warnings;
 use strict;
-use parent qw(F::Statement);
+use parent qw(F::Node);
 
-sub type   { 'Instruction' }
+
 sub detail {
     my $instr = shift;
     my $child = $instr->first_child;

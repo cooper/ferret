@@ -47,10 +47,13 @@
 #              Function 'hello1'
 #                  Body ('function' scope)
 #                      Instruction
-#                          Assignment (lexical variable '$hello')
+#                          Assignment
+#                              Lexical variable '$hello'
 #                              String 'Hello'
 #                      Instruction
-#                          Assignment (property 'name')
+#                          Assignment
+#                              Property 'name'
+#                                  Lexical variable '$hello'
 #                              Lexical variable '$name1'
 #                      Instruction
 #                          Call
@@ -76,7 +79,8 @@
 #                                          Addition operator (+)
 #                                          Lexical variable '$name2'
 #      Instruction
-#          Assignment (lexical variable '$pi')
+#          Assignment
+#              Lexical variable '$pi'
 #              Operation
 #                  Number '3'
 #                  Addition operator (+)

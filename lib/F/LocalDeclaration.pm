@@ -3,9 +3,9 @@ package F::LocalDeclaration;
 
 use warnings;
 use strict;
-use parent qw(F::Statement);
+use parent qw(F::Node);
 
-sub type { 'LocalDeclaration' }
+
 sub desc { 'local variable declaration' }
 
 sub variable {

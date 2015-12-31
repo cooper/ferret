@@ -6,7 +6,7 @@ use strict;
 use parent qw(F::Element);
 
 sub fake { 1 }
-sub type { 'Spaces' }
+
 sub desc {
     my $spaces = join ', ', shift->spaces;
     my $desc   = 'Include';

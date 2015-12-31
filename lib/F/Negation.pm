@@ -3,9 +3,9 @@ package F::Negation;
 
 use warnings;
 use strict;
-use parent qw(F::Node F::Expression);
+use parent qw(F::NodeExpression);
 
-sub type { 'Negation' }
+
 
 sub perl_fmt {
     my $not = shift;

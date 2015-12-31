@@ -1,7 +1,8 @@
 # === Document Model ===
 #  Document './test/18-lists-hashes.frt'
 #      Instruction
-#          Assignment (lexical variable '$list')
+#          Assignment
+#              Lexical variable '$list'
 #              Value list [1 items]
 #                  Item 0
 #                      String 'hi'
@@ -13,7 +14,12 @@
 #                  Item 0
 #                      String 'there'
 #      Instruction
-#          Assignment (index)
+#          Assignment
+#              Index
+#                  Lexical variable '$list'
+#                  Index list [1 items]
+#                      Item 0
+#                          Number '4'
 #              String 'yeah'
 #      Instruction
 #          Call
@@ -41,16 +47,27 @@
 #                                  Addition operator (+)
 #                                  Lexical variable '$item'
 #      Instruction
-#          Assignment (lexical variable '$hash')
+#          Assignment
+#              Lexical variable '$hash'
 #              Hash [1 items]
 #                  Item 0
 #                      Pair 'hi'
 #                          String 'there'
 #      Instruction
-#          Assignment (index)
+#          Assignment
+#              Index
+#                  Lexical variable '$hash'
+#                  Index list [1 items]
+#                      Item 0
+#                          String 'whats'
 #              String 'up'
 #      Instruction
-#          Assignment (index)
+#          Assignment
+#              Index
+#                  Lexical variable '$hash'
+#                  Index list [1 items]
+#                      Item 0
+#                          String 'thank'
 #              String 'you'
 #      Instruction
 #          Call
@@ -107,7 +124,7 @@ my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('18-lists-hashes.frt');
 
-use Ferret::Core::Operations qw(add str);
+use Ferret::Core::Operations qw(add num str);
 my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');

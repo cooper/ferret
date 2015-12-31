@@ -3,9 +3,9 @@ package F::SharedDeclaration;
 
 use warnings;
 use strict;
-use parent qw(F::Statement);
+use parent qw(F::Node);
 
-sub type { 'SharedDeclaration' }
+
 sub desc { 'shared variable declaration' }
 
 sub variable {

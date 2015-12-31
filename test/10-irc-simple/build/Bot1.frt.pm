@@ -33,7 +33,8 @@
 #                          Argument value
 #                              String 'Ferret IRC'
 #                  Instruction
-#                      Assignment (instance variable '@sock')
+#                      Assignment
+#                          Instance variable '@sock'
 #                          Call
 #                              Bareword 'Socket::TCP'
 #                              Named argument list [3 items]

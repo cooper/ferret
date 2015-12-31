@@ -17,7 +17,7 @@ sub new {
 }
 
 sub hold_instr { 1 }
-sub type { 'Document' }
+
 sub desc {
     my $doc = shift;
     my $str = "document '$$doc{name}'";

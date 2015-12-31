@@ -3,7 +3,8 @@
 #      Package 'IRC'
 #      Class 'Bot'
 #          Instruction
-#              Assignment (lexical variable '$handlers')
+#              Assignment
+#                  Lexical variable '$handlers'
 #                  Hash [3 items]
 #                      Item 0
 #                          Pair 'MODE'
@@ -15,7 +16,8 @@
 #                          Pair 'PRIVMSG'
 #                              Bareword '_handleMessage'
 #          Instruction
-#              Assignment (lexical variable '$initialCommands')
+#              Assignment
+#                  Lexical variable '$initialCommands'
 #                  Hash [3 items]
 #                      Item 0
 #                          Pair 'hello'
@@ -60,13 +62,16 @@
 #                          Argument value
 #                              String 'Ferret IRC'
 #                  Instruction
-#                      Assignment (instance variable '@commands')
+#                      Assignment
+#                          Instance variable '@commands'
 #                          Lexical variable '$initialCommands'
 #                  Instruction
-#                      Assignment (instance variable '@factoids')
+#                      Assignment
+#                          Instance variable '@factoids'
 #                          Hash [0 items]
 #                  Instruction
-#                      Assignment (instance variable '@sock')
+#                      Assignment
+#                          Instance variable '@sock'
 #                          Call
 #                              Bareword 'Socket::TCP'
 #                              Named argument list [3 items]
@@ -152,7 +157,12 @@
 #                              Return pair 'overwrote'
 #                                  Boolean true
 #                  Instruction
-#                      Assignment (index)
+#                      Assignment
+#                          Index
+#                              Instance variable '@commands'
+#                              Index list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$command'
 #                          Lexical variable '$callback'
 #                  Instruction
 #                      Return pair 'added'
@@ -191,7 +201,8 @@
 #                      Need
 #                          Lexical variable '$line'
 #                  Instruction
-#                      Assignment (lexical variable '$s')
+#                      Assignment
+#                          Lexical variable '$s'
 #                          Call
 #                              Property 'split'
 #                                  Lexical variable '$line'
@@ -199,7 +210,8 @@
 #                                  Item 0
 #                                      String ' '
 #                  Instruction
-#                      Assignment (lexical variable '$command')
+#                      Assignment
+#                          Lexical variable '$command'
 #                          Index
 #                              Lexical variable '$s'
 #                              Index list [1 items]
@@ -217,7 +229,8 @@
 #                              String 'PING'
 #                      Body ('if' scope)
 #                          Instruction
-#                              Assignment (lexical variable '$command')
+#                              Assignment
+#                                  Lexical variable '$command'
 #                                  Index
 #                                      Lexical variable '$s'
 #                                      Index list [1 items]
@@ -329,7 +342,8 @@
 #                                                      Addition operator (+)
 #                                                      Lexical variable '$chan'
 #                  Instruction
-#                      Assignment (instance variable '@_joinedChannels')
+#                      Assignment
+#                          Instance variable '@_joinedChannels'
 #                          Boolean true
 #          Function '_pong'
 #              Body ('function' scope)
@@ -358,7 +372,8 @@
 #                      Need
 #                          Lexical variable '$s'
 #                  Instruction
-#                      Assignment (lexical variable '$msg')
+#                      Assignment
+#                          Lexical variable '$msg'
 #                          Call
 #                              Bareword 'IRC::Message'
 #                              Argument list [1 items]
@@ -401,7 +416,8 @@
 #                      Need
 #                          Lexical variable '$msg'
 #                  Instruction
-#                      Assignment (lexical variable '$nickname')
+#                      Assignment
+#                          Lexical variable '$nickname'
 #                          Property 'nickname'
 #                              Lexical variable '$msg'
 #                  Instruction
@@ -430,7 +446,8 @@
 #                              Item 0
 #                                  Lexical variable '$msg'
 #                  Instruction
-#                      Assignment (lexical variable '$trigger')
+#                      Assignment
+#                          Lexical variable '$trigger'
 #                          Index
 #                              Property 'parts'
 #                                  Lexical variable '$msg'
@@ -438,7 +455,8 @@
 #                                  Item 0
 #                                      Number '1'
 #                  Instruction
-#                      Assignment (lexical variable '$response')
+#                      Assignment
+#                          Lexical variable '$response'
 #                          Call
 #                              Property 'fromWord'
 #                                  Lexical variable '$msg'
@@ -446,10 +464,20 @@
 #                                  Item 0
 #                                      Number '2'
 #                  Instruction
-#                      Assignment (index)
+#                      Assignment
+#                          Index
+#                              Instance variable '@factoids'
+#                              Index list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$trigger'
 #                          Lexical variable '$response'
 #                  Instruction
-#                      Assignment (index)
+#                      Assignment
+#                          Index
+#                              Instance variable '@commands'
+#                              Index list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$trigger'
 #                          Bareword '_commandFactoid'
 #                  Instruction
 #                      Call
@@ -475,7 +503,8 @@
 #                      Need
 #                          Lexical variable '$msg'
 #                  Instruction
-#                      Assignment (lexical variable '$response')
+#                      Assignment
+#                          Lexical variable '$response'
 #                          Index
 #                              Instance variable '@factoids'
 #                              Index list [1 items]

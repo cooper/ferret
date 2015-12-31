@@ -3,9 +3,9 @@ package F::PropertyModifier;
 
 use warnings;
 use strict;
-use parent qw(F::Statement);
+use parent qw(F::Node);
 
-sub type { 'PropertyModifier' }
+
 sub desc {
     my $mod = shift;
     return "$$mod{mod_type} modifier";

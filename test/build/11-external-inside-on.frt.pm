@@ -1,7 +1,8 @@
 # === Document Model ===
 #  Document './test/11-external-inside-on.frt'
 #      Instruction
-#          Assignment (lexical variable '$point')
+#          Assignment
+#              Lexical variable '$point'
 #              Call
 #                  Bareword 'Math::Point'
 #                  Argument list [2 items]
@@ -30,10 +31,12 @@
 #              Lexical variable '$point'
 #          Body ('inside' scope)
 #              Instruction
-#                  Assignment (lexical variable '$x')
+#                  Assignment
+#                      Lexical variable '$x'
 #                      Number '5'
 #              Instruction
-#                  Assignment (lexical variable '$y')
+#                  Assignment
+#                      Lexical variable '$y'
 #                      Number '10'
 #      Instruction
 #          Call
@@ -72,7 +75,8 @@
 #                      Return pair 'didTwice'
 #                          Lexical variable '$twice'
 #      Instruction
-#          Assignment (lexical variable '$r')
+#          Assignment
+#              Lexical variable '$r'
 #              Call
 #                  Bareword 'say'
 #                  Mixed argument list [2 items]

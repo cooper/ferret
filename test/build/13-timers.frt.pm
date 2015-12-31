@@ -25,7 +25,8 @@
 #                              Item 0
 #                                  String 'five secon...'
 #      Instruction
-#          Assignment (lexical variable '$t2')
+#          Assignment
+#              Lexical variable '$t2'
 #              Call
 #                  Bareword 'Timer'
 #                  Argument list [1 items]

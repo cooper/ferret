@@ -3,9 +3,9 @@ package F::ReturnPair;
 
 use warnings;
 use strict;
-use parent qw(F::Statement);
+use parent qw(F::Node);
 
-sub type { 'ReturnPair' }
+
 sub desc {
     my $pair = shift;
     return "return pair '$$pair{key}'";

@@ -29,6 +29,6 @@ sub perl_fmt {
 sub body       { shift->{body}      }
 sub is_closure { 1 }
 sub hold_instr { 1 }
-sub type       { 'Else' }
+
 
 1

@@ -12,7 +12,8 @@
 #                  Want
 #                      Lexical variable '$z'
 #              Instruction
-#                  Assignment (lexical variable '$point')
+#                  Assignment
+#                      Lexical variable '$point'
 #                      Object [2 items]
 #                          Item 0
 #                              Pair 'x'
@@ -24,7 +25,8 @@
 #                  Return pair 'point'
 #                      Lexical variable '$point'
 #      Instruction
-#          Assignment (lexical variable '$pt')
+#          Assignment
+#              Lexical variable '$pt'
 #              Property 'point'
 #                  Call
 #                      Bareword 'makePoint'
@@ -51,7 +53,8 @@
 #                          Addition operator (+)
 #                          String ')'
 #      Instruction
-#          Assignment (lexical variable '$numbers')
+#          Assignment
+#              Lexical variable '$numbers'
 #              Value list [5 items]
 #                  Item 0
 #                      Number '1'
@@ -67,10 +70,12 @@
 #                          Addition operator (+)
 #                          Number '1'
 #      Instruction
-#          Assignment (lexical variable '$emptyArray')
+#          Assignment
+#              Lexical variable '$emptyArray'
 #              Value list [0 items]
 #      Instruction
-#          Assignment (lexical variable '$emptyHash')
+#          Assignment
+#              Lexical variable '$emptyHash'
 #              Hash [0 items]
 use warnings;
 use strict;

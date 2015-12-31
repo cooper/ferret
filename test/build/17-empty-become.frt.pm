@@ -1,7 +1,8 @@
 # === Document Model ===
 #  Document './test/17-empty-become.frt'
 #      Instruction
-#          Assignment (lexical variable '$obj')
+#          Assignment
+#              Lexical variable '$obj'
 #              Object [0 items]
 #      Instruction
 #          Call

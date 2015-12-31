@@ -45,11 +45,11 @@ sub param_exp  { shift->{param_exp} }
 sub body       { shift->{body}      }
 sub is_closure { 1 }
 sub hold_instr { 1 }
-sub type       { 'If' }
+
 
 package F::IfParameter;
 
-use parent 'F::Expression';
+use parent qw(F::NodeExpression);
 
 sub new {
     my ($class, %opts) = @_;
@@ -59,6 +59,6 @@ sub new {
     );
 }
 
-sub type { 'IfParameter' }
+
 
 1
