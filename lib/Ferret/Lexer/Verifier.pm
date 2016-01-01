@@ -22,7 +22,7 @@ our %errors = (
         hint_0  => "The 'isa' condition on line %d refers to the type itself"
     },
     BarewordDeclarationConflict => {
-        message => "Found multiple bareword declarations using the name '%s' in the same scope",
+        message => "Found multiple declarations using the name '%s' in the same scope",
         hint_0  => "The first is a %s, declared on line %d",
         hint_1  => "The second is a %s, declared on line %d"
     }

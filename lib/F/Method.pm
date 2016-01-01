@@ -38,7 +38,7 @@ sub owner {
     }
     else {
         $owner_str = '$proto';
-        $owner     = undef; # not trackable
+        $owner     = '_PROTO_'; # no element
     }
     return ($owner, $owner_str);
 }
