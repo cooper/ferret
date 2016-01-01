@@ -60,7 +60,7 @@ FF::before_content('String.frt');
 
 use Ferret::Core::Operations qw(nequal num);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Class 'String'
@@ -74,7 +74,7 @@ my $result = do {
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
                 FF::typedef_check(
-                    $scope, $class, $ins,
+                    $scope, $scope, $ins,
                     conditions => [
                         $ins->instance_of_u(
                             $scope->{special}->property_u('class')
@@ -95,7 +95,7 @@ my $result = do {
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
                 FF::typedef_check(
-                    $scope, $class, $ins,
+                    $scope, $scope, $ins,
                     conditions => [
                         $ins->instance_of_u(
                             $scope->{special}->property_u('class')
@@ -118,7 +118,7 @@ my $result = do {
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
                 FF::typedef_check(
-                    $scope, $class, $ins,
+                    $scope, $scope, $ins,
                     conditions => [
                         $ins->instance_of_u(
                             $scope->{special}->property_u('class')

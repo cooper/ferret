@@ -239,7 +239,7 @@ sub add_binding {
 
     # add init.
     if (my $init = $opts{init}) {
-        $class->bind_function('_init_', code => sub {
+        $class->bind_function('initializer__', code => sub {
             bless $_[0], $opts{perl_package};
             $init->(@_);
             # return value is ignored here

@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/5-class.frt'
 #      Class 'Point' version 1.0
-#          Class method '_init_'
+#          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
@@ -191,7 +191,7 @@ FF::before_content('5-class.frt');
 
 use Ferret::Core::Operations qw(add div num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Class 'Point'
@@ -199,9 +199,10 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Point', 1.0 );
 
-        # Method event '_init_' definition
+        # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
-            $f, $scope, '_init_',
+            $f, $scope,
+            'initializer__',
             [
                 {
                     name     => 'x',
@@ -335,7 +336,7 @@ my $result = do {
             }
         );
         $method_0->inside_scope(
-            _init_ => $scope,
+            initializer__ => $scope,
             $class, $class, undef, undef
         );
         $method_1->inside_scope(
@@ -356,7 +357,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context, qw(Point) );
-    $$context->set_property(
+    $scope->set_property(
         pt => $scope->property_u('Point')
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32.2 ),
         32.1
@@ -364,7 +365,7 @@ my $result = do {
     $scope->property_u('say')
       ->call_u( [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
         $scope, undef, 33.2 );
-    $$context->set_property(
+    $scope->set_property(
         rpt => $scope->property_u('pt')->property_u('oneToRight')
           ->call_u( {}, $scope, undef, 35.5 ),
         35.2
@@ -373,7 +374,7 @@ my $result = do {
       ->call_u(
         [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
         $scope, undef, 36.2 );
-    $$context->set_property(
+    $scope->set_property(
         mdpt => $scope->property_u('Point')->property_u('midpoint')->call_u(
             [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope,
             undef, 38.25
@@ -384,7 +385,7 @@ my $result = do {
       ->call_u(
         [ add( $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt') ) ],
         $scope, undef, 39.2 );
-    $$context->set_property(
+    $scope->set_property(
         nineteen => add(
             $scope,
             num( $f, 4 ),

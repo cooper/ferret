@@ -4,10 +4,10 @@ class Signal
 
 load NATIVE::Signal
 
-$INT  ?= *class(:INT)
-$HUP  ?= *class(:HUP)
-$TERM ?= *class(:TERM)
-$ALRM ?= *class(:ALRM)
+share $INT  ?= *class(:INT)
+share $HUP  ?= *class(:HUP)
+share $TERM ?= *class(:TERM)
+share $ALRM ?= *class(:ALRM)
 
 $signals ?= [
     INT:    $INT,

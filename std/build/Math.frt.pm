@@ -61,12 +61,12 @@ FF::before_content('Math.frt');
 
 use Ferret::Core::Operations qw(div num pow);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'Math' );
+    my ( $scope, $context ) = FF::get_context( $f, 'Math' );
     FF::load_core('Math');
 
     # Function event 'sqrt' definition
     my $func_0 = FF::function_event_def(
-        $f, $scope, 'sqrt',
+        $f, $context, 'sqrt',
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -83,7 +83,7 @@ my $result = do {
 
     # Function event 'root' definition
     my $func_1 = FF::function_event_def(
-        $f, $scope, 'root',
+        $f, $context, 'root',
         [
             { name => 'root', type => 'Num', optional => undef, more => undef },
             { name => 'num',  type => 'Num', optional => undef, more => undef }
@@ -104,8 +104,8 @@ my $result = do {
             return $ret->return;
         }
     );
-    $func_0->inside_scope( sqrt => $scope, $scope, undef, undef, undef );
-    $func_1->inside_scope( root => $scope, $scope, undef, undef, undef );
+    $func_0->inside_scope( sqrt => $scope, $context, undef, undef, undef );
+    $func_1->inside_scope( root => $scope, $context, undef, undef, undef );
     FF::load_namespaces( $context, qw(NATIVE NATIVE::Math Num) );
 };
 

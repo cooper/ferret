@@ -19,10 +19,12 @@ sub get_constant_objects {
     return (Ferret::true, Ferret::false, Ferret::undefined);
 }
 
-# fetch the current context.
+# fetch the current context and private file scope.
 sub get_context {
     my ($f, $name) = @_;
-    return $f->get_context($name);
+    my $context = $f->get_context($name);
+    my $scope = Ferret::Scope->new($f, parent => $context);
+    return ($scope, $context);
 }
 
 # load the CORE module.
@@ -240,7 +242,7 @@ sub get_class {
 
 # anonymous function definition.
 sub function_def {
-    my ($f, $scope, $name, $arg_ref, $code) = @_;
+    my ($f, $owner, $name, $arg_ref, $code) = @_;
     undef $name if !length $name;
 
     # create a default function.
@@ -258,7 +260,7 @@ sub function_def {
 
 # function definition as event.
 sub function_event_def {
-    my ($f, $scope, $name, $arg_ref, $code) = @_;
+    my ($f, $owner, $name, $arg_ref, $code) = @_;
     undef $name if !length $name;
 
     # create a default function.

@@ -117,7 +117,7 @@ FF::before_content('3-nested-functions.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Function event 'hello1' definition
@@ -173,7 +173,7 @@ my $result = do {
 
     # Function event 'helloWorld' definition
     my $func_2 = FF::function_event_def(
-        $f, $scope,
+        $f, $context,
         'helloWorld',
         [
             {
@@ -208,7 +208,10 @@ my $result = do {
             return $ret->return;
         }
     );
-    $func_2->inside_scope( helloWorld => $scope, $scope, undef, undef, undef );
+    $func_2->inside_scope(
+        helloWorld => $scope,
+        $context, undef, undef, undef
+    );
     $scope->property_u('helloWorld')
       ->call_u( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
         $scope, undef, 1.1 );
@@ -218,7 +221,7 @@ my $result = do {
     $scope->property_u('helloWorld')
       ->call_u( [ str( $f, "Benjamin" ), str( $f, "George" ) ],
         $scope, undef, 8.2 );
-    $$context->set_property(
+    $scope->set_property(
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ),
         28.2
     );

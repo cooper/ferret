@@ -33,6 +33,16 @@ sub perl_fmt {
     my $method = shift;
     my ($content, @arguments) = $method->body->body_fmt_do;
 
+    # determine owner
+    my $owner;
+    if ($method->{main}) {
+        my $public = $method->{name} && substr($method->{name}, 0, 1) ne '_';
+        $owner = $public ? '$class' : '$scope';
+    }
+    else {
+        $owner = '$proto';
+    }
+
     my $class = $method->class;
     my $info = {
         event_cb   => $method->{event_cb},
@@ -42,7 +52,7 @@ sub perl_fmt {
         arguments  => join(', ', @arguments),
         is_prop    => $method->{is_prop} ? '1' : 'undef',
         p_set      => $method->{p_set}   ? '1' : 'undef',
-        owner      => $method->{main} ? 'class' : 'proto'
+        owner      => $owner
     };
 
     # add the method definition.

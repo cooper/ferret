@@ -15,7 +15,7 @@ during this process is a failure to tokenize a certain byte or string.
 === Tokenization ===
      PKG_DEC |                {"name":"Math"} | 1.5
    CLASS_DEC |                {"name":"Line"} | 2.5
-      METHOD |     {"main":1,"name":"_init_"} | 4.33333
+      METHOD | {"main":1,"name":"initializer__"} | 4.33333
    CLOSURE_S |                                | 4.66667
 KEYWORD_NEED |                                | 5.1
     VAR_THIS |                          "pt1" | 5.2
@@ -53,7 +53,7 @@ encounters nonsense.
  Document './test/hello20/IRC/Bot.frt'
      Package 'IRC'
      Class 'Bot'
-         Class method '_init_'
+         Class method 'initializer__'
              Instruction
                  Need
                      Instance variable '@addr'

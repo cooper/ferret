@@ -1,13 +1,13 @@
 package IRC
 class Bot
 
-$handlers = [
+share $handlers = [
     MODE:       _joinChannels,
     PING:       _pong,
     PRIVMSG:    _handleMessage
 ]
 
-$initialCommands = [
+share $initialCommands = [
     hello:  _commandHello,
     hi:     _commandHello,
     add:    _commandAdd

@@ -42,11 +42,11 @@ FF::before_content('bot_test1.frt');
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Bot1) );
-    $$context->set_property(
+    $scope->set_property(
         bot => $scope->property_u('Bot1')->call_u(
             {
                 addr => str( $f, "k.notroll.net" ),

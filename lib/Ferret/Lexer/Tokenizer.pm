@@ -355,9 +355,9 @@ sub tok_KEYWORD {
         }
     }
 
-    # init keyword = func _init_.
+    # init keyword = func .
     if ($value eq 'init') {
-        return [ METHOD => { name => '_init_', main => 1 } ];
+        return [ METHOD => { name => 'initializer__', main => 1 } ];
     }
 
     # other keyword.

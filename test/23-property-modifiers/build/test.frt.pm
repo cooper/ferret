@@ -31,11 +31,11 @@ FF::before_content('test.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Second) );
-    $$context->set_property( x => FF::create_object( $f, {} ), 1.2 );
+    $scope->set_property( x => FF::create_object( $f, {} ), 1.2 );
     $scope->delete_property( 'x', 2.1 );
     $scope->property_u('Second');
 };

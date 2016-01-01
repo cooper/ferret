@@ -3,32 +3,34 @@
 #      Package 'IRC'
 #      Class 'Bot'
 #          Instruction
-#              Assignment
-#                  Lexical variable '$handlers'
-#                  Hash [3 items]
-#                      Item 0
-#                          Pair 'MODE'
-#                              Bareword '_joinChannels'
-#                      Item 1
-#                          Pair 'PING'
-#                              Bareword '_pong'
-#                      Item 2
-#                          Pair 'PRIVMSG'
-#                              Bareword '_handleMessage'
+#              Shared variable declaration
+#                  Assignment
+#                      Lexical variable '$handlers'
+#                      Hash [3 items]
+#                          Item 0
+#                              Pair 'MODE'
+#                                  Bareword '_joinChannels'
+#                          Item 1
+#                              Pair 'PING'
+#                                  Bareword '_pong'
+#                          Item 2
+#                              Pair 'PRIVMSG'
+#                                  Bareword '_handleMessage'
 #          Instruction
-#              Assignment
-#                  Lexical variable '$initialCommands'
-#                  Hash [3 items]
-#                      Item 0
-#                          Pair 'hello'
-#                              Bareword '_commandHello'
-#                      Item 1
-#                          Pair 'hi'
-#                              Bareword '_commandHello'
-#                      Item 2
-#                          Pair 'add'
-#                              Bareword '_commandAdd'
-#          Class method '_init_'
+#              Shared variable declaration
+#                  Assignment
+#                      Lexical variable '$initialCommands'
+#                      Hash [3 items]
+#                          Item 0
+#                              Pair 'hello'
+#                                  Bareword '_commandHello'
+#                          Item 1
+#                              Pair 'hi'
+#                                  Bareword '_commandHello'
+#                          Item 2
+#                              Pair 'add'
+#                                  Bareword '_commandAdd'
+#          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
@@ -542,7 +544,7 @@ FF::before_content('Bot.frt');
 
 use Ferret::Core::Operations qw(add bool equal nequal num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'IRC' );
+    my ( $scope, $context ) = FF::get_context( $f, 'IRC' );
     FF::load_core('IRC');
 
     # Anonymous function definition
@@ -827,9 +829,10 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Bot', undef );
 
-        # Method event '_init_' definition
+        # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
-            $f, $scope, '_init_',
+            $f, $scope,
+            'initializer__',
             [
                 {
                     name     => 'addr',
@@ -880,7 +883,7 @@ my $result = do {
                     $self, $scope,
                     $func_0->inside_scope(
                         (undef) => $scope,
-                        $scope, undef, undef, undef
+                        $scope, $class, undef, undef
                     ),
                     {}
                 );
@@ -890,7 +893,7 @@ my $result = do {
                     $self, $scope,
                     $func_1->inside_scope(
                         (undef) => $scope,
-                        $scope, undef, undef, undef
+                        $scope, $class, undef, undef
                     ),
                     {}
                 );
@@ -1129,7 +1132,7 @@ my $result = do {
             }
         );
         $method_0->inside_scope(
-            _init_ => $scope,
+            initializer__ => $scope,
             $class, $class, undef, undef
         );
         $method_1->inside_scope(
@@ -1151,27 +1154,26 @@ my $result = do {
         );
         $func_2->inside_scope(
             _joinChannels => $scope,
-            $scope, undef, undef, undef
+            $scope, $class, undef, undef
         );
-        $func_3->inside_scope( _pong => $scope, $scope, undef, undef, undef );
+        $func_3->inside_scope( _pong => $scope, $scope, $class, undef, undef );
         $func_4->inside_scope(
             _handleMessage => $scope,
-            $scope, undef, undef, undef
+            $scope, $class, undef, undef
         );
         $func_5->inside_scope(
             _commandHello => $scope,
-            $scope, undef, undef, undef
+            $scope, $class, undef, undef
         );
         $func_6->inside_scope(
             _commandAdd => $scope,
-            $scope, undef, undef, undef
+            $scope, $class, undef, undef
         );
         $func_7->inside_scope(
             _commandFactoid => $scope,
-            $scope, undef, undef, undef
+            $scope, $class, undef, undef
         );
-        $class->set_property_ow(
-            $context,
+        $class->set_property(
             handlers => FF::create_hash(
                 $f,
                 {
@@ -1180,10 +1182,9 @@ my $result = do {
                     PRIVMSG => $scope->property_u('_handleMessage')
                 }
             ),
-            4.2
+            4.3
         );
-        $class->set_property_ow(
-            $context,
+        $class->set_property(
             initialCommands => FF::create_hash(
                 $f,
                 {
@@ -1192,7 +1193,7 @@ my $result = do {
                     add   => $scope->property_u('_commandAdd')
                 }
             ),
-            10.2
+            10.3
         );
     }
     FF::load_namespaces( $context,

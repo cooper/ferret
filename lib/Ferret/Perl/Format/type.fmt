@@ -1,4 +1,4 @@
-FF::typedef($scope, $scope, '<<name>>', sub {
+FF::typedef($scope, <<owner>>, '<<name>>', sub {
     my ($ins, $create_can, $transform) = @_;
     FF::typedef_check($scope, $scope, $ins,
         conditions => <<conditions>>,

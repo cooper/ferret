@@ -110,11 +110,11 @@ FF::before_content('7-math.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Math Math::Point Math::Rect) );
-    $$context->set_property(
+    $scope->set_property(
         rect => $scope->property_u('Math::Rect')->call_u(
             {
                 x      => num( $f, 5 ),
@@ -126,7 +126,7 @@ my $result = do {
         ),
         1.06667
     );
-    $$context->set_property(
+    $scope->set_property(
         center => $scope->property_u('rect')->property_u('center'),
         3.2
     );
@@ -149,12 +149,12 @@ my $result = do {
         ],
         $scope, undef, 5.2
     );
-    $$context->set_property(
+    $scope->set_property(
         otherPt => $scope->property_u('Math::Point')
           ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7.3 ),
         7.1
     );
-    $$context->set_property(
+    $scope->set_property(
         midpoint => FF::create_set(
             $scope, $scope->property_u('center'),
             $scope->property_u('otherPt')

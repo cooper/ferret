@@ -1236,6 +1236,8 @@ sub c_OP_ASSIGN {
     #       Instruction
     #       IfParameter
     #       Alias
+    #       SharedDeclaration
+    #       LocalDeclaration
 
     # Rule Assignment[1]:
     #   Number of direct children must be exactly two (2).

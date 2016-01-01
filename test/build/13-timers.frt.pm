@@ -72,7 +72,7 @@ FF::before_content('13-timers.frt');
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
@@ -116,7 +116,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
         {}
     );
-    $$context->set_property(
+    $scope->set_property(
         t2 => $scope->property_u('Timer')
           ->call_u( [ num( $f, 2 ) ], $scope, undef, 7.4 ),
         7.2

@@ -96,12 +96,12 @@ FF::before_content('28-type.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Function event 'announce' definition
     my $func_0 = FF::function_event_def(
-        $f, $scope,
+        $f, $context,
         'announce',
         [
             { name => 'name', type => 'Str', optional => undef, more => undef },
@@ -138,10 +138,10 @@ my $result = do {
             return $ret->return;
         }
     );
-    $func_0->inside_scope( announce => $scope, $scope, undef, undef, undef );
+    $func_0->inside_scope( announce => $scope, $context, undef, undef, undef );
     FF::load_namespaces( $context, qw(Gender Str) );
     FF::typedef(
-        $scope, $scope, 'Gender',
+        $scope, $context, 'Gender',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
             FF::typedef_check(

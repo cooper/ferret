@@ -13,7 +13,7 @@ sub desc {
     return "${lazy}assignment";
 }
 
-sub perl_fmt_do {
+sub perl_fmt {
     my $a = shift;
     my ($fmt_name, $fmt_args) = $a->assign_to->perl_fmt;
     $fmt_args->{pos} = $a->{create_pos};
@@ -28,27 +28,35 @@ sub perl_fmt_do {
     $fmt_args->{name} = "'$$fmt_args{name}'"
         if ($fmt_args->{name} // '') =~ m/^\*/;
 
-    my $private = substr($fmt_args->{name}, 0, 1) eq '_' if $fmt_args->{name};
+    # if we find a share or alias, it's public.
+    # this $public is only respected if we're at document or class level.
+    my $public =
+        $a->parent->type eq 'SharedDeclaration' ||
+        $a->parent->type eq 'Alias';
 
-    # find the instruction. Only useful if the assignment isn't in an If.
-    # also find the Class we're in. Only useful if it's instruction's parent.
-    # finally, find the document. Only useful if it's instruction's parent.
+    # find instruction. assignment will always be below an instruction
+    # unless it is within an if parameter.
     my $instr = $a->first_self_or_parent('Instruction');
-    my $class = $a->first_self_or_parent('Class');
-    my $doc   = $a->first_self_or_parent('Document');
     undef $instr if $a->parent->type eq 'IfParameter';
-    undef $class if !$class || !$instr || $instr->parent != $class;
-    undef $doc   if !$doc   || !$instr || $instr->parent != $doc;
 
-    # if our instruction belongs to a class, use special formats.
-    $fmt_name .= '_c' if
-        $class && !$private;
+    # find the owner.
+    my ($owner, $owrite);
+    if ($instr && $instr->parent->type eq 'Document') {
+        $owner  = $public ? '$context' : '$scope';
+        $owrite = 0;
+    }
+    elsif ($instr && $instr->parent->type eq 'Class') {
+        $owner  = $public ? '$class' : '$scope';
+        $owrite = 0;
+    }
+    else {
+        $owner  = '$scope';
+        $owrite = 1;
+    }
 
-    # if our instruction belongs to a document, use special formats.
-    $fmt_name .= '_d' if
-        $doc && !$private;
-
-    return $a->get_format("assign_$fmt_name" => $fmt_args);
+    $fmt_args->{owner}  = $owner;
+    $fmt_args->{owrite} = $owrite ? '_ow($context, ' : '(';
+    return "assign_$fmt_name" => $fmt_args;
 }
 
 sub assign_to    { shift->first_child   }

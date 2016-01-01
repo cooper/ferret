@@ -67,12 +67,12 @@ FF::before_content('24-calls-with-func.frt');
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Function event 'something' definition
     my $func_0 = FF::function_event_def(
-        $f, $scope,
+        $f, $context,
         'something',
         [ { name => 'code', type => undef, optional => undef, more => undef } ],
         sub {
@@ -116,7 +116,7 @@ my $result = do {
             return $ret->return;
         }
     );
-    $func_0->inside_scope( something => $scope, $scope, undef, undef, undef );
+    $func_0->inside_scope( something => $scope, $context, undef, undef, undef );
     $scope->property_u('delay')->call_u(
         [
             num( $f, 5 ),

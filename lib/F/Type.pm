@@ -56,14 +56,23 @@ sub perl_fmt {
     my $conditions = join(', ', @conditions);
        $conditions = $conditions ? "[ $conditions ]" : 'undef';
 
-   # if the direct parent is a Class, use a special format
-   # UNLESS it starts with '_', in which case it is a "private" class type.
-   my $fmt_name = 'type';
-   $fmt_name .= '_c' if
-       $type->parent->type eq 'Class' &&
-       substr($type->type_name, 0, 1) ne '_';
+    # private if starts with _
+    my $private = substr($type->type_name, 0, 1) eq '_';
 
-    return $fmt_name => {
+    # determine owner.
+    my $owner;
+    if ($type->parent->type eq 'Class') {
+        $owner = $private ? '$scope' : '$class';
+    }
+    elsif ($type->parent->type eq 'Document') {
+        $owner = $private ? '$scope' : '$context';
+    }
+    else {
+        $owner = '$scope';
+    }
+
+    return type => {
+        owner      => $owner,
         name       => $type->type_name,
         conditions => $conditions,
         equal_to   => $equal_to,

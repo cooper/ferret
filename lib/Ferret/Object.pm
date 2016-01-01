@@ -530,7 +530,7 @@ sub call {
         Name  => $obj->{last_name},
         Value => $obj->description_ol,
         File  => $Ferret::file_map{ $caller->[1] } || 'unknown file',
-        Line  => int $pos
+        Line  => int($pos || 0)
     ]);
 
 }
@@ -597,6 +597,8 @@ sub DESTROY {
 # call getValue.
 sub get_index_value {
     my ($obj, $args, $call_scope) = @_;
+    # TODO: runtime error if $obj is undefined
+    print "$obj->{last_name}!\n" if $obj == Ferret::undefined;
     return $obj->call_prop(getValue => $args, $call_scope);
 }
 
@@ -657,7 +659,7 @@ sub pbool {
 
 sub call_prop {
     my ($obj, $prop_name) = (shift, shift);
-    $obj->property($prop_name)->call(@_);
+    $obj->property_u($prop_name)->call(@_);
 }
 
 ################

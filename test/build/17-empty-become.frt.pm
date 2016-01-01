@@ -52,7 +52,7 @@ FF::before_content('17-empty-become.frt');
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
@@ -69,7 +69,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $$context->set_property( obj => FF::create_object( $f, {} ), 2.2 );
+    $scope->set_property( obj => FF::create_object( $f, {} ), 2.2 );
     $scope->property_u('Timer')->property_u('init')
       ->call_u( [ $scope->property_u('obj') ], $scope, undef, 5.15 )
       ->call_u( [ num( $f, 5 ) ], $scope, undef, 5.3 );

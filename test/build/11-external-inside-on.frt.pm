@@ -126,7 +126,7 @@ FF::before_content('11-external-inside-on.frt');
 
 use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
@@ -171,7 +171,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Math Math::Point) );
-    $$context->set_property(
+    $scope->set_property(
         point => $scope->property_u('Math::Point')
           ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1.3 ),
         1.1
@@ -207,7 +207,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
         {}
     );
-    $$context->set_property(
+    $scope->set_property(
         r => $scope->property_u('say')->call_u(
             [ str( $f, "It was said" ), { twice => $true } ], $scope,
             undef, 23.2

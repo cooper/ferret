@@ -25,11 +25,7 @@ sub perl_fmt {
         pos  => $var->{create_pos}
     };
 
-    return assign_lexical_var => {
-        name         => $var->{var_name},
-        assign_value => $child->assign_value->perl_fmt_do,
-        pos          => $child->{create_pos}
-    };
+    return $child->perl_fmt;
 }
 
 1

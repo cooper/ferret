@@ -163,6 +163,7 @@ our %element_rules = (
                     # these are a-ok.
                     return 1 if $child->type eq 'Load';
                     return 1 if $child->type eq 'Alias';
+                    return 1 if $child->type eq 'SharedDeclaration';
 
                     # if it's an assignment, it must be a lexical variable.
                     if ($child->type eq 'Assignment') {
@@ -397,17 +398,21 @@ our %element_rules = (
             1
         ],
 
-        # if it's an assignment, it must be of a lexical variable.
-        children_must_satisfy => [                                              # SharedDeclaration[2]
-            sub {
-                my $el = shift;
-                return 1 if $el->type ne 'Assignment';
-                return $el->assign_to->type eq 'LexicalVariable';
-            },
-            'Shared variable declaration can capture an assignment only '.
-            'of a lexical variable',
-            2
-        ],
+        after_rules => {
+
+            # if it's an assignment, it must be of a lexical variable.
+            children_must_satisfy => [                                          # SharedDeclaration[2]
+                sub {
+                    my $el = shift;
+                    return 1 if $el->type ne 'Assignment';
+                    return $el->assign_to->type eq 'LexicalVariable';
+                },
+                'Shared variable declaration can capture an assignment only '.
+                'of a lexical variable',
+                2
+            ]
+
+        },
 
         # there can only be one child.
         num_children => [ 1, undef, 3 ]                                         # SharedDeclaration[3]
@@ -564,9 +569,9 @@ our %element_rules = (
     Assignment => {
 
         parent_must_be => [                                                     # Assignment[0]
-            'Instruction IfParameter Alias',
-            "Assignment must be direct child of an instruction or 'if' ".
-            "parameter",
+            'Instruction IfParameter Alias SharedDeclaration LocalDeclaration',
+            "Assignment must be direct child of an instruction, 'if' ".
+            "parameter, alias, or variable declaration",
             0
         ],
 

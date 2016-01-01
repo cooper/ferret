@@ -1,1 +1,1 @@
-$scope->set_property_ow($context, <<name>> => <<assign_value>>, <<pos>>)
+<<owner>>->set_property<<owrite>><<name>> => <<assign_value>>, <<pos>>)

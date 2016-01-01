@@ -82,7 +82,7 @@ FF::before_content('26-signals.frt');
 
 use Ferret::Core::Operations qw(_not bool num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
@@ -134,7 +134,7 @@ my $result = do {
         { before => ['default'] }
     );
     str( $f, "are you sure?" );
-    $$context->set_property( asked => $false, 8.2 );
+    $scope->set_property( asked => $false, 8.2 );
     FF::on(
         $scope->property_u('Signal')->property_u('INT'),
         'catch',

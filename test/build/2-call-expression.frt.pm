@@ -31,7 +31,7 @@ FF::before_content('2-call-expression.frt');
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     $scope->property_u('say')

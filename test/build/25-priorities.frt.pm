@@ -21,7 +21,7 @@ FF::before_content('25-priorities.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
 };

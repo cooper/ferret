@@ -2,7 +2,7 @@
 #  Document './std/Math/Rect.frt'
 #      Package 'Math'
 #      Class 'Rect'
-#          Class method '_init_'
+#          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
@@ -220,7 +220,7 @@ FF::before_content('Rect.frt');
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'Math' );
+    my ( $scope, $context ) = FF::get_context( $f, 'Math' );
     FF::load_core('Math');
 
     # Class 'Rect'
@@ -228,9 +228,10 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Rect', undef );
 
-        # Method event '_init_' definition
+        # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
-            $f, $scope, '_init_',
+            $f, $scope,
+            'initializer__',
             [
                 {
                     name     => 'x',
@@ -513,7 +514,7 @@ my $result = do {
             }
         );
         $method_0->inside_scope(
-            _init_ => $scope,
+            initializer__ => $scope,
             $class, $class, undef, undef
         );
         $method_1->inside_scope( vertices => $scope, $proto, $class, 1, undef );

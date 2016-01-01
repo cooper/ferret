@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './std/Test.frt'
 #      Class 'Test'
-#          Class method '_init_'
+#          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
 #                      Want
@@ -253,7 +253,7 @@ FF::before_content('Test.frt');
 use Ferret::Core::Operations
   qw(_sub add bool equal nequal num refs_equal refs_nequal str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Class 'Test'
@@ -261,9 +261,10 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Test', undef );
 
-        # Method event '_init_' definition
+        # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
-            $f, $scope, '_init_',
+            $f, $scope,
+            'initializer__',
             [
                 { name => 'name', type => undef, optional => 1, more => undef },
                 {
@@ -560,7 +561,7 @@ my $result = do {
             }
         );
         $method_0->inside_scope(
-            _init_ => $scope,
+            initializer__ => $scope,
             $class, $class, undef, undef
         );
         $method_1->inside_scope(

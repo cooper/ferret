@@ -42,11 +42,21 @@ sub perl_fmt {
     my $func = shift;
     my ($content, @arguments) = $func->body->body_fmt_do;
 
+    # document-level function.
+    my $public_ctx = $func->parent->type eq 'Document';
+    undef $public_ctx if $func->{name} && substr($func->{name}, 0, 1) eq '_';
+
+    # find a class maybe.
+    # this is for private class-level functions.
+    my $class = $func->first_self_or_parent('Class');
+
     my $info = {
         anonymous  => $func->{anonymous},
         event_cb   => $func->{event_cb},
+        owner      => $public_ctx ? '$context' : '$scope',
         id         => $func->document->{function_cid}++,
         name       => length $func->{name} ? $func->{name} : '(undef)',
+        class      => $class ? '$class' : 'undef',
         semi       => $func->{anonymous} ? ''        : ';', # probably temporary hack
         is_prop    => $func->{is_prop}   ? '1'       : 'undef',
         p_set      => $func->{p_set}     ? '1'       : 'undef',

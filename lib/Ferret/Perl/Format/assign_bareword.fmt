@@ -1,1 +1,1 @@
-$scope->set_property(<<name>> => <<assign_value>>, <<pos>>)
+<<owner>>->set_property(<<name>> => <<assign_value>>, <<pos>>)

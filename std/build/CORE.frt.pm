@@ -75,7 +75,7 @@ FF::before_content('CORE.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'CORE' );
+    my ( $scope, $context ) = FF::get_context( $f, 'CORE' );
     FF::load_core('CORE');
 
     FF::load_namespaces( $context,
@@ -83,7 +83,7 @@ my $result = do {
     );
 
     FF::typedef(
-        $scope, $scope, 'Any',
+        $scope, $context, 'Any',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
             FF::typedef_check(
@@ -97,7 +97,7 @@ my $result = do {
     $context->set_property( Obj    => $scope->property_u('Any'), 10.3 );
     $context->set_property( Object => $scope->property_u('Any'), 11.3 );
     FF::typedef(
-        $scope, $scope,
+        $scope, $context,
         'Hashable',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
@@ -117,7 +117,7 @@ my $result = do {
         undef
     );
     FF::typedef(
-        $scope, $scope,
+        $scope, $context,
         'Indexed',
         sub {
             my ( $ins, $create_can, $transform ) = @_;

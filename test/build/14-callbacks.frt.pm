@@ -86,7 +86,7 @@ FF::before_content('14-callbacks.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
@@ -139,7 +139,7 @@ my $result = do {
     FF::load_namespaces( $context, qw(String) );
     $scope->property_u('say')
       ->call_u( [ str( $f, "test" ) ], $scope, undef, 1.2 );
-    $$context->set_property( str => str( $f, "hi" ), 3.2 );
+    $scope->set_property( str => str( $f, "hi" ), 3.2 );
     FF::on(
         $scope->property_u('str'),
         'length',

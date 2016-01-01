@@ -85,7 +85,7 @@ FF::before_content('21-nested-callbacks.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Anonymous function definition
@@ -110,7 +110,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $$context->set_property(
+    $scope->set_property(
         parts => str( $f, "s p a m" )->property_u('split')
           ->call_u( [ str( $f, " " ) ], $scope, undef, 1.5 ),
         1.2

@@ -27,7 +27,7 @@ FF::before_content('1-hello-world.frt');
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     $scope->property_u('say')

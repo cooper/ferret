@@ -63,7 +63,7 @@ sub started_instr {
             return;
         }
         return if $el->hold_instr;
-        $do->($_) foreach $el->children;
+        if ($el->is_node) { $do->($_) foreach $el->children }
     };
     $do->($calling);
 

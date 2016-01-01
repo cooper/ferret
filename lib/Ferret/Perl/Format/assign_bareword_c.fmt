@@ -1,1 +1,0 @@
-$class->set_property(<<name>> => <<assign_value>>, <<pos>>)

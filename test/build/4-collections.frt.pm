@@ -98,12 +98,12 @@ FF::before_content('4-collections.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Function event 'makePoint' definition
     my $func_0 = FF::function_event_def(
-        $f, $scope,
+        $f, $context,
         'makePoint',
         [
             { name => 'x', type => undef, optional => undef, more => undef },
@@ -132,8 +132,8 @@ my $result = do {
             return $ret->return;
         }
     );
-    $func_0->inside_scope( makePoint => $scope, $scope, undef, undef, undef );
-    $$context->set_property(
+    $func_0->inside_scope( makePoint => $scope, $context, undef, undef, undef );
+    $scope->set_property(
         pt => $scope->property_u('makePoint')
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11.2 )
           ->property_u('point'),
@@ -152,7 +152,7 @@ my $result = do {
         ],
         $scope, undef, 12.1
     );
-    $$context->set_property(
+    $scope->set_property(
         numbers => FF::create_list(
             $f,
             [
@@ -165,8 +165,8 @@ my $result = do {
         ),
         14.1
     );
-    $$context->set_property( emptyArray => FF::create_list( $f, [] ), 16.2 );
-    $$context->set_property( emptyHash => FF::create_hash( $f, {} ), 17.2 );
+    $scope->set_property( emptyArray => FF::create_list( $f, [] ), 16.2 );
+    $scope->set_property( emptyHash => FF::create_hash( $f, {} ), 17.2 );
 };
 
 FF::after_content();

@@ -2,7 +2,7 @@
 #  Document './std/Math/Point.frt'
 #      Package 'Math'
 #      Class 'Point'
-#          Class method '_init_'
+#          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
@@ -178,7 +178,7 @@ FF::before_content('Point.frt');
 
 use Ferret::Core::Operations qw(_sub add div num pow str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'Math' );
+    my ( $scope, $context ) = FF::get_context( $f, 'Math' );
     FF::load_core('Math');
 
     # Class 'Point'
@@ -186,9 +186,10 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Point', undef );
 
-        # Method event '_init_' definition
+        # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
-            $f, $scope, '_init_',
+            $f, $scope,
+            'initializer__',
             [
                 {
                     name     => 'x',
@@ -426,7 +427,7 @@ my $result = do {
             }
         );
         $method_0->inside_scope(
-            _init_ => $scope,
+            initializer__ => $scope,
             $class, $class, undef, undef
         );
         $method_1->inside_scope(

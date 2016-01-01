@@ -103,8 +103,8 @@ sub init {
     # fetch or create return object.
     my $fire;
     my $ret = Ferret::Return->new($class->f);
-    if ($class->has_property('_init_')) {
-        my $init = $class->property('_init_');
+    if ($class->has_property('initializer__')) {
+        my $init = $class->property('initializer__');
         $init->call_with_self(
             $obj,
             $args,
@@ -196,7 +196,7 @@ sub _global_init {
                 my ($class, $args) = @_;
                 my $obj = delete $args->{obj};
                 return Ferret::Function->new($f,
-                    mimic => $class->property('_init_') || undef,
+                    mimic => $class->property('initializer__') || undef,
                     code  => sub {
                         my (undef, $args) = @_;
                         return $class->init($obj, $args);
@@ -220,7 +220,7 @@ sub _get_set_type {
     );
 
     # create an initializer.
-    $set_type->bind_function('_init_', code => sub {
+    $set_type->bind_function('initializer__', code => sub {
         my ($set, $args) = @_;
 
         # call the normal Set initializer.
@@ -230,7 +230,7 @@ sub _get_set_type {
         $set->{set_class} = $class;
 
         return $set;
-    }, mimic => $global_set_class->property('_init_'));
+    }, mimic => $global_set_class->property('initializer__'));
 
     $set_type->bind_function('fromList', code => sub {
         my ($set_class, $args, $call_scope) = @_;

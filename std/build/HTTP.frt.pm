@@ -67,12 +67,12 @@ FF::before_content('HTTP.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'HTTP' );
+    my ( $scope, $context ) = FF::get_context( $f, 'HTTP' );
     FF::load_core('HTTP');
 
     # Function event 'get' definition
     my $func_0 = FF::function_event_def(
-        $f, $scope, 'get',
+        $f, $context, 'get',
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -91,7 +91,7 @@ my $result = do {
 
     # Function event 'post' definition
     my $func_1 = FF::function_event_def(
-        $f, $scope, 'post',
+        $f, $context, 'post',
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -107,12 +107,12 @@ my $result = do {
             return $ret->return;
         }
     );
-    $func_0->inside_scope( get  => $scope, $scope, undef, undef, undef );
-    $func_1->inside_scope( post => $scope, $scope, undef, undef, undef );
+    $func_0->inside_scope( get  => $scope, $context, undef, undef, undef );
+    $func_1->inside_scope( post => $scope, $context, undef, undef, undef );
     FF::load_namespaces( $context, qw(HTTP HTTP::Client Str) );
 
     FF::typedef(
-        $scope, $scope,
+        $scope, $context,
         'HTTPMethod',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
@@ -125,7 +125,7 @@ my $result = do {
         },
         undef
     );
-    $$context->set_property(
+    $scope->set_property(
         client => [
             sub {
                 $scope->property_u('HTTP::Client')

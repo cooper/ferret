@@ -54,12 +54,12 @@ FF::before_content('9-maybes.frt');
 
 use Ferret::Core::Operations qw(add bool str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Function event 'sayHello' definition
     my $func_0 = FF::function_event_def(
-        $f, $scope,
+        $f, $context,
         'sayHello',
         [ { name => 'who', type => 'Str', optional => undef, more => undef } ],
         sub {
@@ -79,7 +79,7 @@ my $result = do {
             return $ret->return;
         }
     );
-    $func_0->inside_scope( sayHello => $scope, $scope, undef, undef, undef );
+    $func_0->inside_scope( sayHello => $scope, $context, undef, undef, undef );
     FF::load_namespaces( $context, qw(Str) );
     {
         my $maybe_0 = $scope->property_u('sayHello');

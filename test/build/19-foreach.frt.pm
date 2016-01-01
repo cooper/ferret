@@ -45,10 +45,10 @@ FF::before_content('19-foreach.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
-    $$context->set_property(
+    $scope->set_property(
         words => str( $f, "how are you?" )->property_u('split')
           ->call_u( [ str( $f, " " ) ], $scope, undef, 1.5 ),
         1.2

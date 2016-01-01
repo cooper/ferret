@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/22-classes-sets.frt'
 #      Class 'Cow'
-#          Class method '_init_'
+#          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
 #                      Want
@@ -21,7 +21,7 @@
 #                      Return
 #                          String 'I am a non...'
 #      Class 'Dog'
-#          Class method '_init_'
+#          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
 #                      Want
@@ -41,7 +41,7 @@
 #                      Return
 #                          String 'I had my b...'
 #      Class 'Cat'
-#          Class method '_init_'
+#          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
 #                      Want
@@ -180,7 +180,7 @@ FF::before_content('22-classes-sets.frt');
 
 use Ferret::Core::Operations qw(bool str);
 my $result = do {
-    my $scope = my $context = FF::get_context( $f, 'main' );
+    my ( $scope, $context ) = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
     # Class 'Cow'
@@ -188,9 +188,10 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Cow', undef );
 
-        # Method event '_init_' definition
+        # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
-            $f, $scope, '_init_',
+            $f, $scope,
+            'initializer__',
             [ { name => 'moos', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
@@ -217,7 +218,7 @@ my $result = do {
             }
         );
         $method_0->inside_scope(
-            _init_ => $scope,
+            initializer__ => $scope,
             $class, $class, undef, undef
         );
         $method_1->inside_scope( moo => $scope, $proto, $class, undef, undef );
@@ -228,9 +229,10 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Dog', undef );
 
-        # Method event '_init_' definition
+        # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
-            $f, $scope, '_init_',
+            $f, $scope,
+            'initializer__',
             [
                 {
                     name     => 'barks',
@@ -265,7 +267,7 @@ my $result = do {
             }
         );
         $method_0->inside_scope(
-            _init_ => $scope,
+            initializer__ => $scope,
             $class, $class, undef, undef
         );
         $method_1->inside_scope( bark => $scope, $proto, $class, undef, undef );
@@ -276,9 +278,10 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, 'Cat', undef );
 
-        # Method event '_init_' definition
+        # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
-            $f, $scope, '_init_',
+            $f, $scope,
+            'initializer__',
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
@@ -339,7 +342,7 @@ my $result = do {
             }
         );
         $method_0->inside_scope(
-            _init_ => $scope,
+            initializer__ => $scope,
             $class, $class, undef, undef
         );
         $method_1->inside_scope( meow => $scope, $proto, $class, undef, undef );
@@ -349,7 +352,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context, qw(Cat Cow Dog) );
-    $$context->set_property(
+    $scope->set_property(
         animal => $scope->property_u('Cow')->call_u( {}, $scope, undef, 50.4 ),
         50.2
     );
@@ -375,11 +378,11 @@ my $result = do {
       ->call_u( { mean => $true }, $scope, undef, 60.3 );
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('animal') ], $scope, undef, 62.2 );
-    $$context->set_property(
+    $scope->set_property(
         cat => $scope->property_u('Cat')->call_u( {}, $scope, undef, 65.4 ),
         65.2
     );
-    $$context->set_property(
+    $scope->set_property(
         aftermath => FF::create_set(
             $scope,
             $scope->property_u('animal'),
