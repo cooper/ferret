@@ -38,13 +38,22 @@ sub close : method {
     return $func->SUPER::close(@_);
 }
 
-sub perl_fmt {
+sub owner {
     my $func = shift;
-    my ($content, @arguments) = $func->body->body_fmt_do;
 
     # document-level function.
     my $public_ctx = $func->parent->type eq 'Document';
     undef $public_ctx if $func->{name} && substr($func->{name}, 0, 1) eq '_';
+
+    if ($public_ctx) {
+        return ($func->parent, '$context');
+    }
+    return ($func->first_upper_scope, '$scope');
+}
+
+sub perl_fmt {
+    my $func = shift;
+    my ($content, @arguments) = $func->body->body_fmt_do;
 
     # find a class maybe.
     # this is for private class-level functions.
@@ -53,7 +62,7 @@ sub perl_fmt {
     my $info = {
         anonymous  => $func->{anonymous},
         event_cb   => $func->{event_cb},
-        owner      => $public_ctx ? '$context' : '$scope',
+        owner      => $func->owner_str,
         id         => $func->document->{function_cid}++,
         name       => length $func->{name} ? $func->{name} : '(undef)',
         class      => $class ? '$class' : 'undef',

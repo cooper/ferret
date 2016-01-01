@@ -5,37 +5,41 @@
 #              Load
 #                  Bareword 'NATIVE::Signal'
 #          Instruction
-#              Lazy assignment
-#                  Lexical variable '$INT'
-#                  Call
-#                      Special variable '*class'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Symbol :INT
+#              Shared variable declaration
+#                  Lazy assignment
+#                      Lexical variable '$INT'
+#                      Call
+#                          Special variable '*class'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Symbol :INT
 #          Instruction
-#              Lazy assignment
-#                  Lexical variable '$HUP'
-#                  Call
-#                      Special variable '*class'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Symbol :HUP
+#              Shared variable declaration
+#                  Lazy assignment
+#                      Lexical variable '$HUP'
+#                      Call
+#                          Special variable '*class'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Symbol :HUP
 #          Instruction
-#              Lazy assignment
-#                  Lexical variable '$TERM'
-#                  Call
-#                      Special variable '*class'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Symbol :TERM
+#              Shared variable declaration
+#                  Lazy assignment
+#                      Lexical variable '$TERM'
+#                      Call
+#                          Special variable '*class'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Symbol :TERM
 #          Instruction
-#              Lazy assignment
-#                  Lexical variable '$ALRM'
-#                  Call
-#                      Special variable '*class'
-#                      Argument list [1 items]
-#                          Item 0
-#                              Symbol :ALRM
+#              Shared variable declaration
+#                  Lazy assignment
+#                      Lexical variable '$ALRM'
+#                      Call
+#                          Special variable '*class'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Symbol :ALRM
 #          Instruction
 #              Lazy assignment
 #                  Lexical variable '$signals'
@@ -189,45 +193,45 @@ my $result = do {
             $class, $class, undef, undef
         );
 
-        $scope->set_property(
+        $class->set_property(
             INT => [
                 sub {
                     $scope->{special}->property_u('class')
                       ->call_u( [ FF::get_symbol( $f, 'INT' ) ],
-                        $scope, undef, 7.4 );
+                        $scope, undef, 7.5 );
                 }
             ],
-            7.2
+            7.3
         );
-        $scope->set_property(
+        $class->set_property(
             HUP => [
                 sub {
                     $scope->{special}->property_u('class')
                       ->call_u( [ FF::get_symbol( $f, 'HUP' ) ],
-                        $scope, undef, 8.4 );
+                        $scope, undef, 8.5 );
                 }
             ],
-            8.2
+            8.3
         );
-        $scope->set_property(
+        $class->set_property(
             TERM => [
                 sub {
                     $scope->{special}->property_u('class')
                       ->call_u( [ FF::get_symbol( $f, 'TERM' ) ],
-                        $scope, undef, 9.4 );
+                        $scope, undef, 9.5 );
                 }
             ],
-            9.2
+            9.3
         );
-        $scope->set_property(
+        $class->set_property(
             ALRM => [
                 sub {
                     $scope->{special}->property_u('class')
                       ->call_u( [ FF::get_symbol( $f, 'ALRM' ) ],
-                        $scope, undef, 10.4 );
+                        $scope, undef, 10.5 );
                 }
             ],
-            10.2
+            10.3
         );
         $scope->set_property(
             signals => [

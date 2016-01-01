@@ -29,19 +29,23 @@ sub new {
     return $method;
 }
 
+sub owner {
+    my ($method, $owner_str, $owner) = shift;
+    if ($method->{main}) {
+        my $public = $method->{name} && substr($method->{name}, 0, 1) ne '_';
+        $owner_str = $public ? '$class'       : '$scope';
+        $owner     = $method->class;
+    }
+    else {
+        $owner_str = '$proto';
+        $owner     = undef; # not trackable
+    }
+    return ($owner, $owner_str);
+}
+
 sub perl_fmt {
     my $method = shift;
     my ($content, @arguments) = $method->body->body_fmt_do;
-
-    # determine owner
-    my $owner;
-    if ($method->{main}) {
-        my $public = $method->{name} && substr($method->{name}, 0, 1) ne '_';
-        $owner = $public ? '$class' : '$scope';
-    }
-    else {
-        $owner = '$proto';
-    }
 
     my $class = $method->class;
     my $info = {
@@ -52,7 +56,7 @@ sub perl_fmt {
         arguments  => join(', ', @arguments),
         is_prop    => $method->{is_prop} ? '1' : 'undef',
         p_set      => $method->{p_set}   ? '1' : 'undef',
-        owner      => $owner
+        owner      => $method->owner_str
     };
 
     # add the method definition.

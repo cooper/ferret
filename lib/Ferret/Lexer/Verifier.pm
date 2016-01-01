@@ -12,6 +12,14 @@ our %errors = (
         message => "Reference to lexical variable '\$%s' without previous declaration",
         hint_0  => "Note that '\$%s' is later declared in this scope on line %d",
         hint_1  => "Note that '\$%s' is the variable being assigned to; it cannot be referenced within its own assignment value"
+    },
+    RedundantPrivateIndicator => {
+        message => "Redundant private indicator (underscore) on lexical variable '\$%s'",
+        hint_0  => 'Lexical variables are assumed to be private unless explicitly shared'
+    },
+    RecursiveTypeDeclaration => {
+        message => "Type '%s' is recursive",
+        hint_0  => "The 'isa' condition on line %d refers to the type itself"
     }
 );
 
@@ -22,9 +30,18 @@ sub error_string {
     my @hints = @$hints;
     my @hint_msgs;
     for my $i (keys @hints) {
-        next unless $hints[$i];
-        my $hint_msg = sprintf $errors{$type}{"hint_$i"}, @{ $hints[$i] };
-        push @hint_msgs, $hint_msg;
+        my $found = $hints[$i];
+
+        # it's hint $i with arguments
+        if (ref $found eq 'ARRAY') {
+            my $hint_msg = sprintf $errors{$type}{"hint_$i"}, @$found;
+            push @hint_msgs, $hint_msg;
+            next;
+        }
+
+        # it's hint $found without arguments
+        push @hint_msgs, $errors{$type}{"hint_$found"};
+
     }
 
     my $msg = sprintf $errors{$type}{message}, @args;
@@ -39,6 +56,7 @@ sub verify {
     undef $error;
     identify_lexical_variable_declarations($v, $main_node)  and return;
     verify_lexical_variables($v, $main_node)                and return;
+    identify_recursive_type_declarations($v, $main_node)    and return;
 }
 
 sub identify_lexical_variable_declarations {
@@ -163,6 +181,15 @@ sub verify_lexical_variables {
 
     foreach my $var (@vars) {
 
+        ### Check that the variable is not starting with underscore ###
+
+        if ($var->{could_be_declaration} &&
+          substr($var->{var_name}, 0, 1) eq '_') {
+            $var->throw([ 0 ], RedundantPrivateIndicator => $var->{var_name});
+        }
+
+        ### Check that the variable is declared ###
+
         # this is in a WantNeed or Assignment which has been checked.
         next if $var->{could_be_declaration};
 
@@ -197,6 +224,31 @@ sub verify_lexical_variables {
 
     }
 
+    return;
+}
+
+sub identify_recursive_type_declarations {
+    my ($v, $main_node) = @_;
+    foreach my $type ($main_node->filter_descendants(type => 'Type')) {
+
+        # find requirements.
+        my @req = map $_->first_child,
+            $type->body->filter_children(type => 'Instruction.TypeRequirement');
+
+        # filter out isa.
+        foreach my $isa (grep { $_->{req_type} eq 'isa' } @req) {
+
+            # only interest if it's a bareword type.
+            next if scalar $isa->children != 1;
+            my $c = $isa->first_child;
+            next if $c->type ne 'Bareword';
+
+            my @hints = ([ int $isa->{create_pos} ]);
+            return $isa->throw(\@hints,
+                RecursiveTypeDeclaration => $type->{type_name})
+                if $c->{bareword_value} eq $type->{type_name};
+        }
+    }
     return;
 }
 

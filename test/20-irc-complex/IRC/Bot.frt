@@ -19,7 +19,7 @@ init {
     want @user: Str = "ferret"
     want @real: Str = "Ferret IRC"
 
-    @commands = $initialCommands # TODO: .copy()
+    @commands = $initialCommands.copy()
     @factoids = [:]
 
     # create a socket

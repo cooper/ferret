@@ -47,6 +47,8 @@ sub detail      { shift->desc               }       # detailed description
 sub fake        { shift->{fake}             }       # is it fake
 sub type_or_tok { shift->type               }       # type
 sub t           { shift->type_or_tok        }       # shorthand type
+sub owner_str   { (shift->owner)[1]         }       # owner string
+sub owner       { }     # no owner
 sub is_node     { }     # isn't a node
 sub hold_instr  { }     # can't hold an instruction
 sub tok         { }     # has no token label

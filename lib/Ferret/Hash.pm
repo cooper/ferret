@@ -8,9 +8,8 @@ use 5.010;
 
 use parent 'Ferret::Object';
 use Ferret::Core::Conversion qw(
-    pstring fnumber
-    fstring flist psym
-    pdescription
+    fnumber fstring flist fhash
+    pdescription psym pstring
 );
 
 my @methods = (
@@ -30,6 +29,10 @@ my @methods = (
     getValue => {
         need => '$index:Hashable',
         code => \&_get_value
+    },
+    copy => {
+        want => '$deep:Bool',
+        code => \&_copy
     }
 );
 
@@ -74,6 +77,13 @@ sub _get_value {
     my ($hash, $args) = @_;
     my $key = $args->psym('index');
     return $hash->get_value($key);
+}
+
+sub _copy {
+    my ($hash, $args) = @_;
+    # TODO: deep (recursive)
+    my $deep = $args->pbool('deep');
+    return fhash($hash->{hash_values});
 }
 
 sub length : method {

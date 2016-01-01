@@ -13,6 +13,40 @@ sub desc {
     return "${lazy}assignment";
 }
 
+sub owner {
+    my ($a, $owner_str, $owner, $owrite) = shift;
+
+    # if we find a share or alias, it's public.
+    # this $public is only respected if we're at document or class level.
+    my $public =
+        $a->parent->type eq 'SharedDeclaration' ||
+        $a->parent->type eq 'Alias';
+
+    # find instruction. assignment will always be below an instruction
+    # unless it is within an if parameter.
+    my $instr = $a->first_self_or_parent('Instruction');
+    undef $instr if $a->parent->type eq 'IfParameter';
+
+    # find the owner.
+    if ($instr && $instr->parent->type eq 'Document') {
+        $owner_str  = $public ? '$context' : '$scope';
+        $owner      = $instr->parent;
+        $owrite     = 0;
+    }
+    elsif ($instr && $instr->parent->type eq 'Class') {
+        $owner_str  = $public ? '$class' : '$scope';
+        $owner      = $instr->parent;
+        $owrite     = 0;
+    }
+    else {
+        $owner_str = '$scope';
+        $owner     = $a->first_upper_scope;
+        $owrite    = 1;
+    }
+
+    return ($owner, $owner_str, $owrite);
+}
+
 sub perl_fmt {
     my $a = shift;
     my ($fmt_name, $fmt_args) = $a->assign_to->perl_fmt;
@@ -28,31 +62,7 @@ sub perl_fmt {
     $fmt_args->{name} = "'$$fmt_args{name}'"
         if ($fmt_args->{name} // '') =~ m/^\*/;
 
-    # if we find a share or alias, it's public.
-    # this $public is only respected if we're at document or class level.
-    my $public =
-        $a->parent->type eq 'SharedDeclaration' ||
-        $a->parent->type eq 'Alias';
-
-    # find instruction. assignment will always be below an instruction
-    # unless it is within an if parameter.
-    my $instr = $a->first_self_or_parent('Instruction');
-    undef $instr if $a->parent->type eq 'IfParameter';
-
-    # find the owner.
-    my ($owner, $owrite);
-    if ($instr && $instr->parent->type eq 'Document') {
-        $owner  = $public ? '$context' : '$scope';
-        $owrite = 0;
-    }
-    elsif ($instr && $instr->parent->type eq 'Class') {
-        $owner  = $public ? '$class' : '$scope';
-        $owrite = 0;
-    }
-    else {
-        $owner  = '$scope';
-        $owrite = 1;
-    }
+    my (undef, $owner, $owrite) = $a->owner;
 
     $fmt_args->{owner}  = $owner;
     $fmt_args->{owrite} = $owrite ? '_ow($context, ' : '(';

@@ -66,7 +66,10 @@
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@commands'
-#                          Lexical variable '$initialCommands'
+#                          Call
+#                              Property 'copy'
+#                                  Lexical variable '$initialCommands'
+#                              Argument list [0 items]
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@factoids'
@@ -859,7 +862,9 @@ my $result = do {
                 FF::want( $self, $args, 'user', 19.2, str( $f, "ferret" ) );
                 FF::want( $self, $args, 'real', 20.2, str( $f, "Ferret IRC" ) );
                 $self->set_property(
-                    commands => $scope->property_u('initialCommands'),
+                    commands =>
+                      $scope->property_u('initialCommands')->property_u('copy')
+                      ->call_u( {}, $scope, undef, 22.5 ),
                     22.2
                 );
                 $self->set_property(

@@ -32,6 +32,28 @@ sub close : method {
     return $type->SUPER::close(@_);
 }
 
+sub owner {
+    my ($type, $owner, $owner_str) = shift;
+
+    # private if starts with _
+    my $private = substr($type->type_name, 0, 1) eq '_';
+
+    if ($type->parent->type eq 'Class') {
+        $owner_str = $private ? '$scope' : '$class';
+        $owner     = $type->parent;
+    }
+    elsif ($type->parent->type eq 'Document') {
+        $owner_str = $private ? '$scope' : '$context';
+        $owner     = $type->parent;
+    }
+    else {
+        $owner_str = '$scope';
+        $owner     = $type->first_upper_scope;
+    }
+
+    return ($owner, $owner_str);
+}
+
 sub perl_fmt {
     my $type = shift;
 
@@ -56,23 +78,8 @@ sub perl_fmt {
     my $conditions = join(', ', @conditions);
        $conditions = $conditions ? "[ $conditions ]" : 'undef';
 
-    # private if starts with _
-    my $private = substr($type->type_name, 0, 1) eq '_';
-
-    # determine owner.
-    my $owner;
-    if ($type->parent->type eq 'Class') {
-        $owner = $private ? '$scope' : '$class';
-    }
-    elsif ($type->parent->type eq 'Document') {
-        $owner = $private ? '$scope' : '$context';
-    }
-    else {
-        $owner = '$scope';
-    }
-
     return type => {
-        owner      => $owner,
+        owner      => $type->owner_str,
         name       => $type->type_name,
         conditions => $conditions,
         equal_to   => $equal_to,

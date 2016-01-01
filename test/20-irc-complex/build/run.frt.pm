@@ -1,20 +1,21 @@
 # === Document Model ===
 #  Document './test/20-irc-complex/run.frt'
 #      Instruction
-#          Assignment
-#              Lexical variable '$bot'
-#              Call
-#                  Bareword 'IRC::Bot'
-#                  Named argument list [3 items]
-#                      Item 0
-#                          Pair 'addr'
-#                              String 'k.notroll.net'
-#                      Item 1
-#                          Pair 'nick'
-#                              String 'bottie'
-#                      Item 2
-#                          Pair 'user'
-#                              String 'ferret'
+#          Shared variable declaration
+#              Assignment
+#                  Lexical variable '$bot'
+#                  Call
+#                      Bareword 'IRC::Bot'
+#                      Named argument list [3 items]
+#                          Item 0
+#                              Pair 'addr'
+#                                  String 'k.notroll.net'
+#                          Item 1
+#                              Pair 'nick'
+#                                  String 'bottie'
+#                          Item 2
+#                              Pair 'user'
+#                                  String 'ferret'
 #      Instruction
 #          Assignment
 #              Property 'autojoin'
@@ -930,16 +931,16 @@ my $result = do {
         $context, undef, undef, undef
     );
     FF::load_namespaces( $context, qw(COMPILER IRC IRC::Bot Str) );
-    $scope->set_property(
+    $context->set_property(
         bot => $scope->property_u('IRC::Bot')->call_u(
             {
                 addr => str( $f, "k.notroll.net" ),
                 nick => str( $f, "bottie" ),
                 user => str( $f, "ferret" )
             },
-            $scope, undef, 1.3
+            $scope, undef, 1.35
         ),
-        1.1
+        1.15
     );
     $scope->property_u('bot')->set_property(
         autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ),
