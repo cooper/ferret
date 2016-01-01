@@ -31,14 +31,15 @@ sub new {
 
 sub owner {
     my ($method, $owner_str, $owner) = shift;
+    my $class = $method->class;
     if ($method->{main}) {
         my $public = $method->{name} && substr($method->{name}, 0, 1) ne '_';
         $owner_str = $public ? '$class'       : '$scope';
-        $owner     = $method->class;
+        $owner     = $class;
     }
     else {
         $owner_str = '$proto';
-        $owner     = '_PROTO_'; # no element
+        $owner     = "$class._PROTO_"; # no element
     }
     return ($owner, $owner_str);
 }
