@@ -114,8 +114,7 @@ my $result = do {
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Math Math::Point Math::Rect) );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         rect => $scope->property_u('Math::Rect')->call_u(
             {
                 x      => num( $f, 5 ),
@@ -127,8 +126,7 @@ my $result = do {
         ),
         1.06667
     );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         center => $scope->property_u('rect')->property_u('center'),
         3.2
     );
@@ -151,14 +149,12 @@ my $result = do {
         ],
         $scope, undef, 5.2
     );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         otherPt => $scope->property_u('Math::Point')
           ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7.3 ),
         7.1
     );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         midpoint => FF::create_set(
             $scope, $scope->property_u('center'),
             $scope->property_u('otherPt')

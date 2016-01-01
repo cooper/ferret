@@ -82,30 +82,29 @@ sub async_do_file {
 
 sub handle_result {
     my ($file, $status, $ret) = @_;
+    print "[ $file ] " if !$o->synchronous;
 
     # bad status
     if ($status eq 'error') {
-        print "ERROR   ";
+        print "ERROR\n";
         push @errors, [ $file, 'Process exited prematurely' ];
     }
 
     # skipped.
     elsif ($ret->{skipped}) {
-        print "SKIP    ";
+        print "SKIP\n";
     }
 
     # error.
     elsif ($ret->{error}) {
-        print "ERROR   ";
+        print "ERROR\n";
         push @errors, [ $file, $ret->{error} ];
     }
 
     # good status
     else {
-        print "OK      ";
+        print "OK\n";
     }
-
-    print "$file\n";
 
     # show stuff
     if ($status ne 'error') {
@@ -142,6 +141,7 @@ sub finish {
 # }
 sub do_file {
     my $file = shift;
+    print "[ $file ] " if $o->synchronous;
 
     # check if it's been changed
     my ($name, $path) = fileparse($file);

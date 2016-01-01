@@ -171,8 +171,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Math Math::Point) );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         point => $scope->property_u('Math::Point')
           ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1.3 ),
         1.1
@@ -208,8 +207,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
         {}
     );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         r => $scope->property_u('say')->call_u(
             [ str( $f, "It was said" ), { twice => $true } ], $scope,
             undef, 23.2

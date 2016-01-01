@@ -349,8 +349,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context, qw(Cat Cow Dog) );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         animal => $scope->property_u('Cow')->call_u( {}, $scope, undef, 50.4 ),
         50.2
     );
@@ -376,13 +375,11 @@ my $result = do {
       ->call_u( { mean => $true }, $scope, undef, 60.3 );
     $scope->property_u('inspect')
       ->call_u( [ $scope->property_u('animal') ], $scope, undef, 62.2 );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         cat => $scope->property_u('Cat')->call_u( {}, $scope, undef, 65.4 ),
         65.2
     );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         aftermath => FF::create_set(
             $scope,
             $scope->property_u('animal'),

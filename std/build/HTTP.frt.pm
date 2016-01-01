@@ -125,8 +125,7 @@ my $result = do {
         },
         undef
     );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         client => [
             sub {
                 $scope->property_u('HTTP::Client')

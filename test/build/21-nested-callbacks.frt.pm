@@ -110,8 +110,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         parts => str( $f, "s p a m" )->property_u('split')
           ->call_u( [ str( $f, " " ) ], $scope, undef, 1.5 ),
         1.2

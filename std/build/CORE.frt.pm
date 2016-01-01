@@ -94,8 +94,8 @@ my $result = do {
         },
         undef
     );
-    $scope->set_property( Obj    => $scope->property_u('Any'), 10.3 );
-    $scope->set_property( Object => $scope->property_u('Any'), 11.3 );
+    $context->set_property( Obj    => $scope->property_u('Any'), 10.3 );
+    $context->set_property( Object => $scope->property_u('Any'), 11.3 );
     FF::typedef(
         $scope, $scope,
         'Hashable',

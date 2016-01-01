@@ -51,7 +51,7 @@ my $result = do {
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Math Math::Point) );
-    $scope->set_property_ow( $context, obj => str( $f, "hi" ), 2.2 );
+    $$context->set_property( obj => str( $f, "hi" ), 2.2 );
     $scope->property_u('Math::Point')->property_u('init')
       ->call_u( [ $scope->property_u('obj') ], $scope, undef, 9.25 )
       ->call_u( [ num( $f, 1 ), num( $f, 1 ) ], $scope, undef, 9.4 );

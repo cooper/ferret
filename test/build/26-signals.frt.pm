@@ -134,7 +134,7 @@ my $result = do {
         { before => ['default'] }
     );
     str( $f, "are you sure?" );
-    $scope->set_property_ow( $context, asked => $false, 8.2 );
+    $$context->set_property( asked => $false, 8.2 );
     FF::on(
         $scope->property_u('Signal')->property_u('INT'),
         'catch',

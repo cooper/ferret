@@ -48,8 +48,7 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         words => str( $f, "how are you?" )->property_u('split')
           ->call_u( [ str( $f, " " ) ], $scope, undef, 1.5 ),
         1.2

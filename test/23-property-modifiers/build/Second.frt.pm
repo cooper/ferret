@@ -31,7 +31,7 @@ my $result = do {
     my $scope = my $context = FF::get_context( $f, 'main' );
     FF::load_core('main');
 
-    $scope->set_property_ow( $context, x => FF::create_object( $f, {} ), 1.2 );
+    $$context->set_property( x => FF::create_object( $f, {} ), 1.2 );
     $scope->weaken_property( 'x', 2.1 );
 };
 

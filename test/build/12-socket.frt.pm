@@ -220,8 +220,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Socket Socket::TCP Timer) );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         sock => $scope->property_u('Socket::TCP')->call_u(
             {
                 address  => str( $f,            "k.notroll.net" ),

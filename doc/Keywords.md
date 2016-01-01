@@ -12,14 +12,19 @@ of variables, functions, classes, or any other types of symbols.
 package <name> [<version>]
 ```
 
-Declares the document's package name. All package names are global and
-independent of the previous package. At this time, only one package declaration
-per document is supported. Although it generally appears on the first line, its
-location within the file is insignificant. It does not require termination.
+Declares the document's package name. Package names determine the current
+context object, which is essentially a namespace. All contexts are global, and
+their names are always root-level.
+
+At this time, only one package declaration per document is supported. Although
+it generally appears on the first line, its location within the file is
+insignificant. It does not require termination.
 
 ```
 package Hello 1.0
 ```
+
+See [Contexts](Scopes.md#context) for general information on namespaces.
 
 ### class
 
@@ -33,6 +38,8 @@ Terminated with the `end` keyword or another `class` declaration.
 ```
 class Person 1.0
 ```
+
+See [Classes](Classes.md) for general information on classes.
 
 ### end
 
@@ -270,20 +277,13 @@ func [<name>] [ { [<statements>...] } ]
 Declares an event. It is spelled `func` because all functions are implemented as
 events.
 
-If `name` is provided, the event will be assigned to that property of the scope
-of interest (SOI; see below). Without a name, `func` acts as an inline
-expression representing an anonymous event.
+If `name` is provided, the event will be assigned to that property of the
+[scope of interest](Scopes.md#scope-of-interest) and will be available only
+within that scope. Without a name, `func` acts as an inline expression
+representing an anonymous event.
 
 The curly bracket delimiters `{` and `}` may be omitted if the function has no
 body. This is useful for declaring an event with no default callback.
-
-The scope of interest (SOI) is determined by the hierarchical level of the event
-within the document. At document level, the SOI is the current package context,
-unless the function starts with an underscore (`_`), in which case it is a
-private scope inheriting from the current package context. At class level, the
-SOI is the class itself, unless the function starts with an underscore (`_`), in
-which case it is a private scope inheriting from both the class and the current
-package context. At any other level, the SOI is the current scope.
 
 ```
 func spam {
@@ -696,14 +696,8 @@ conformance. If an object matches, `TypeName($obj)` will output that object
 or another object returned by a [`transform`](#transform). If it fails,
 `undefined` is returned.
 
-The finished type function will be available only within the scope of interest
-(SOI). The SOI is determined by the hierarchical level of the `type` construct
-within the document. At document level, the SOI is the current package context,
-unless the type name starts with an underscore (`_`), in which case it is a
-private scope inheriting from the current package context. At class level, the
-SOI is the class itself, unless the type name starts with an underscore (`_`),
-in which case it is a private scope inheriting from both the class and the
-current package context. At any other level, the SOI is the current scope.
+The finished type function will be available only within the
+[scope of interest](Scopes.md#scope-of-interest).
 
 Below is an example with only expressions provided. For examples with various
 conditions or transforms, see the respective keywords.
@@ -819,15 +813,8 @@ For functions, this is similar to `func <func_name> { <other_func_name>() }`,
 without considering arguments. For types, this is functionally equivalent to
 `type <type_name> { isa <other_type_name> }`.
 
-The finished type or function will be available only within the scope of
-interest (SOI). The SOI is determined by the hierarchical level of the `alias`
-construct within the document. At document level, the SOI is the current package
-context, unless the type or function name starts with an underscore (`_`), in
-which case it is a private scope inheriting from the current package context.
-At class level, the SOI is the class itself, unless the type or function name
-starts with an underscore (`_`), in which case it is a private scope inheriting
-from both the class and the current package context. At any other level, the SOI
-is the current scope.
+The finished type or function will be available only within the
+[scope of interest](Scopes.md#scope-of-interest).
 
 ```
 alias println = say

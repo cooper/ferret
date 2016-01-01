@@ -133,8 +133,7 @@ my $result = do {
         }
     );
     $func_0->inside_scope( makePoint => $scope, $scope, undef, undef, undef );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         pt => $scope->property_u('makePoint')
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11.2 )
           ->property_u('point'),
@@ -153,8 +152,7 @@ my $result = do {
         ],
         $scope, undef, 12.1
     );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         numbers => FF::create_list(
             $f,
             [
@@ -167,16 +165,8 @@ my $result = do {
         ),
         14.1
     );
-    $scope->set_property_ow(
-        $context,
-        emptyArray => FF::create_list( $f, [] ),
-        16.2
-    );
-    $scope->set_property_ow(
-        $context,
-        emptyHash => FF::create_hash( $f, {} ),
-        17.2
-    );
+    $$context->set_property( emptyArray => FF::create_list( $f, [] ), 16.2 );
+    $$context->set_property( emptyHash => FF::create_hash( $f, {} ), 17.2 );
 };
 
 FF::after_content();

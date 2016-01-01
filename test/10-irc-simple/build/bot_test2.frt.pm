@@ -53,8 +53,7 @@ my $result = do {
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Bot2) );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         bot => $scope->property_u('Bot2')->call_u(
             {
                 address => str( $f, "k.notroll.net" ),

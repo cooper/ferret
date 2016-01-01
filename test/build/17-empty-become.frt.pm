@@ -69,11 +69,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $scope->set_property_ow(
-        $context,
-        obj => FF::create_object( $f, {} ),
-        2.2
-    );
+    $$context->set_property( obj => FF::create_object( $f, {} ), 2.2 );
     $scope->property_u('Timer')->property_u('init')
       ->call_u( [ $scope->property_u('obj') ], $scope, undef, 5.15 )
       ->call_u( [ num( $f, 5 ) ], $scope, undef, 5.3 );

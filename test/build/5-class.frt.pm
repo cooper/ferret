@@ -356,8 +356,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context, qw(Point) );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         pt => $scope->property_u('Point')
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32.2 ),
         32.1
@@ -365,8 +364,7 @@ my $result = do {
     $scope->property_u('say')
       ->call_u( [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
         $scope, undef, 33.2 );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         rpt => $scope->property_u('pt')->property_u('oneToRight')
           ->call_u( {}, $scope, undef, 35.5 ),
         35.2
@@ -375,8 +373,7 @@ my $result = do {
       ->call_u(
         [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
         $scope, undef, 36.2 );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         mdpt => $scope->property_u('Point')->property_u('midpoint')->call_u(
             [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope,
             undef, 38.25
@@ -387,8 +384,7 @@ my $result = do {
       ->call_u(
         [ add( $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt') ) ],
         $scope, undef, 39.2 );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         nineteen => add(
             $scope,
             num( $f, 4 ),

@@ -32,14 +32,21 @@ sub perl_fmt_do {
 
     # find the instruction. Only useful if the assignment isn't in an If.
     # also find the Class we're in. Only useful if it's instruction's parent.
+    # finally, find the document. Only useful if it's instruction's parent.
     my $instr = $a->first_self_or_parent('Instruction');
     my $class = $a->first_self_or_parent('Class');
+    my $doc   = $a->first_self_or_parent('Document');
     undef $instr if $a->parent->type eq 'IfParameter';
-    undef $class if !$class || $instr->parent != $class;
+    undef $class if !$class || !$instr || $instr->parent != $class;
+    undef $doc   if !$doc   || !$instr || $instr->parent != $doc;
 
     # if our instruction belongs to a class, use special formats.
     $fmt_name .= '_c' if
         $class && !$private;
+
+    # if our instruction belongs to a document, use special formats.
+    $fmt_name .= '_d' if
+        $doc && !$private;
 
     return $a->get_format("assign_$fmt_name" => $fmt_args);
 }

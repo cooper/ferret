@@ -218,8 +218,7 @@ my $result = do {
     $scope->property_u('helloWorld')
       ->call_u( [ str( $f, "Benjamin" ), str( $f, "George" ) ],
         $scope, undef, 8.2 );
-    $scope->set_property_ow(
-        $context,
+    $$context->set_property(
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ),
         28.2
     );
