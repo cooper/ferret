@@ -20,6 +20,11 @@ our %errors = (
     RecursiveTypeDeclaration => {
         message => "Type '%s' is recursive",
         hint_0  => "The 'isa' condition on line %d refers to the type itself"
+    },
+    BarewordDeclarationConflict => {
+        message => "Found multiple bareword declarations using the name '%s' in the same scope",
+        hint_0  => "The first is a %s, declared on line %d",
+        hint_1  => "The second is a %s, declared on line %d"
     }
 );
 
@@ -54,9 +59,19 @@ sub verify {
     my $main_node = shift;
     my $v = { };
     undef $error;
-    identify_lexical_variable_declarations($v, $main_node)  and return;
-    verify_lexical_variables($v, $main_node)                and return;
-    identify_recursive_type_declarations($v, $main_node)    and return;
+
+    # determine where variables become available
+    identify_lexical_variable_declarations($v, $main_node) and return;
+
+    # raise error if referring to an undeclared variable
+    verify_lexical_variables($v, $main_node) and return;
+
+    # raise error for type T { isa T }
+    identify_recursive_type_declarations($v, $main_node) and return;
+
+    # raise error for multiple bareword declarations by same name in same scope
+    identify_duplicate_barewords($v, $main_node) and return;
+
 }
 
 sub identify_lexical_variable_declarations {
@@ -249,6 +264,56 @@ sub identify_recursive_type_declarations {
                 if $c->{bareword_value} eq $type->{type_name};
         }
     }
+    return;
+}
+
+sub identify_duplicate_barewords {
+    my ($v, $main_node) = @_;
+    my %taken;
+
+    my $err = sub {
+        my ($name, $second, $first) = (shift, shift, $taken{+shift});
+        state $what = {
+            Function   => 'function',
+            Method     => 'method',
+            Assignment => 'bareword alias',
+            Type       => 'type interface'
+        };
+        my @hints;
+        $hints[0] = [ $what->{ $first->type  }, int  $first->{create_pos} ];
+        $hints[1] = [ $what->{ $second->type }, int $second->{create_pos} ];
+        $second->throw(\@hints, BarewordDeclarationConflict => $name);
+    };
+
+    # functions and methods
+    foreach my $fm ($main_node->filter_descendants(type => 'Function Method')) {
+        my ($owner) = $fm->owner;
+        my $key = "$owner/$$fm{name}";
+
+        return $err->($fm->{name}, $fm, $key) if $taken{$key};
+        $taken{$key} = $fm;
+    }
+
+    # aliases
+    foreach my $as ($main_node->filter_descendants(type => 'Assignment')) {
+        my $bw = $as->assign_to;
+        next if $bw->type ne 'Bareword'; print "$bw\n";
+        my ($owner) = $as->owner;
+        my $key = "$owner/$$bw{bareword_value}";
+
+        return $err->($bw->{bareword_value}, $as, $key) if $taken{$key};
+        $taken{$key} = $as;
+    }
+
+    # types
+    foreach my $type ($main_node->filter_descendants(type => 'Type')) {
+        my ($owner) = $type->owner;
+        my $key = "$owner/$$type{type_name}";
+
+        return $err->($type->{type_name}, $type, $key) if $taken{$key};
+        $taken{$key} = $type;
+    }
+
     return;
 }
 
