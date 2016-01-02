@@ -137,7 +137,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_0 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -159,7 +159,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_1 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -181,7 +181,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_2 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -208,7 +208,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_3 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -238,7 +238,7 @@ my $result = do {
         'gotLine',
         $self,
         $scope,
-        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
     FF::on(
@@ -246,7 +246,7 @@ my $result = do {
         'println',
         $self,
         $scope,
-        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
     FF::on(
@@ -254,7 +254,7 @@ my $result = do {
         'connected',
         $self,
         $scope,
-        $func_2->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        $func_2->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
     $scope->property_u('sock')->property_u('connect')
@@ -266,7 +266,7 @@ my $result = do {
         'expire',
         $self,
         $scope,
-        $func_3->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        $func_3->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
 };

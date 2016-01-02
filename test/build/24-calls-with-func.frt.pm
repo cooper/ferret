@@ -91,7 +91,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_1 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -106,7 +106,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_2 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -122,7 +122,7 @@ my $result = do {
             num( $f, 5 ),
             $func_1->inside_scope(
                 (undef) => $scope,
-                $scope, undef, undef, undef
+                undef, undef, undef, undef
             )
         ],
         $scope, undef, 3.2
@@ -135,7 +135,7 @@ my $result = do {
                 [
                     $func_2->inside_scope(
                         (undef) => $scope,
-                        $scope, undef, undef, undef
+                        undef, undef, undef, undef
                     )
                 ],
                 $scope, undef, 12.4

@@ -86,7 +86,14 @@ sub token_check {
         last if $e;
     }
 
-    return $c->unknown_el->unexpected($e) if $e;
+    # create an unknown element because token_check() can occur
+    # later than $c through simulation.
+    return F::Unknown->new(
+        token_label => $label,
+        token_value => $value
+    )->unexpected($e) if $e;
+
+    return;
 }
 
 sub t_upper_nodes_must_have {

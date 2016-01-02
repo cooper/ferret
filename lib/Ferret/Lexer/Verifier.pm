@@ -287,7 +287,9 @@ sub identify_duplicate_barewords {
 
     # functions and methods
     foreach my $fm ($main_node->filter_descendants(type => 'Function Method')) {
+
         my ($owner) = $fm->owner;
+        next if !$owner;
         my $key = "$owner/$$fm{name}";
 
         return $err->($fm->{name}, $fm, $key) if $taken{$key};
@@ -297,8 +299,10 @@ sub identify_duplicate_barewords {
     # aliases
     foreach my $as ($main_node->filter_descendants(type => 'Assignment')) {
         my $bw = $as->assign_to;
-        next if $bw->type ne 'Bareword'; print "$bw\n";
+        next if $bw->type ne 'Bareword';
+
         my ($owner) = $as->owner;
+        next if !$owner;
         my $key = "$owner/$$bw{bareword_value}";
 
         return $err->($bw->{bareword_value}, $as, $key) if $taken{$key};
@@ -307,7 +311,9 @@ sub identify_duplicate_barewords {
 
     # types
     foreach my $type ($main_node->filter_descendants(type => 'Type')) {
+
         my ($owner) = $type->owner;
+        next if !$owner;
         my $key = "$owner/$$type{type_name}";
 
         return $err->($type->{type_name}, $type, $key) if $taken{$key};

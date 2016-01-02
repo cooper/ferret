@@ -147,7 +147,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_0 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -183,7 +183,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_1 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -205,7 +205,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_2 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -283,7 +283,7 @@ my $result = do {
                     $self, $scope,
                     $func_0->inside_scope(
                         (undef) => $scope,
-                        $scope, $class, undef, undef
+                        undef, $class, undef, undef
                     ),
                     {}
                 );
@@ -293,7 +293,7 @@ my $result = do {
                     $self, $scope,
                     $func_1->inside_scope(
                         (undef) => $scope,
-                        $scope, $class, undef, undef
+                        undef, $class, undef, undef
                     ),
                     {}
                 );
@@ -303,7 +303,7 @@ my $result = do {
                     $self, $scope,
                     $func_2->inside_scope(
                         (undef) => $scope,
-                        $scope, $class, undef, undef
+                        undef, $class, undef, undef
                     ),
                     {}
                 );

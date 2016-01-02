@@ -87,7 +87,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_0 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -102,7 +102,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_1 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -130,7 +130,7 @@ my $result = do {
         'catch',
         $self,
         $scope,
-        $func_0->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
     str( $f, "are you sure?" );
@@ -140,7 +140,7 @@ my $result = do {
         'catch',
         $self,
         $scope,
-        $func_1->inside_scope( (undef) => $scope, $scope, undef, undef, undef ),
+        $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
     $scope->property_u('Timer')

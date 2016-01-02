@@ -207,14 +207,27 @@ sub signature_string {
 
 sub inside_scope {
     #
-    # $name     =   the name of the event within the containing scope, or undef if anonymous
-    # $scope    =   the containing scope of the function definition
-    # $owner    =   the owner of the function: a scope, class, or prototype
+    # $name     =   the name of the function within the containing scope.
+    #               it can be undef for a nameless anonymous function.
+    #
+    # $scope    =   the containing scope of the function definition.
+    #               always available.
+    #
+    # $owner    =   the owner of the function: a scope, class, or prototype.
+    #               for anonymous functions, this is undef.
+    #
     # $class    =   the containing class of the function (if any)
-    # $is_prop  =   the event is a computed property
+    #               it is available for all functions and methods within a class
+    #               construct, even if they are private, etc.
+    #
+    # $is_prop  =   the function is a computed property.
+    #               only makes sense if this is a method.
+    #
     # $p_set    =   the computed property should be set after evaluating
+    #               only makes sense with $is_prop.
     #
     my ($event, $name, $scope, $owner, $class, $is_prop, $p_set) = @_;
+
     $event->{class} = $class;
     $event->{outer_scope} = $scope;
 

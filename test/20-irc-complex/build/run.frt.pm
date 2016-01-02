@@ -613,7 +613,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_2 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -633,7 +633,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_3 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -703,7 +703,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_4 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -773,7 +773,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_5 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -849,7 +849,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_6 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -951,7 +951,7 @@ my $result = do {
             str( $f, "info" ),
             $func_2->inside_scope(
                 (undef) => $scope,
-                $scope, undef, undef, undef
+                undef, undef, undef, undef
             )
         ],
         $scope, undef, 5.3
@@ -961,7 +961,7 @@ my $result = do {
             str( $f, "t" ),
             $func_3->inside_scope(
                 (undef) => $scope,
-                $scope, undef, undef, undef
+                undef, undef, undef, undef
             )
         ],
         $scope, undef, 10.3
@@ -971,7 +971,7 @@ my $result = do {
             str( $f, "c" ),
             $func_4->inside_scope(
                 (undef) => $scope,
-                $scope, undef, undef, undef
+                undef, undef, undef, undef
             )
         ],
         $scope, undef, 23.3
@@ -981,7 +981,7 @@ my $result = do {
             str( $f, "e" ),
             $func_5->inside_scope(
                 (undef) => $scope,
-                $scope, undef, undef, undef
+                undef, undef, undef, undef
             )
         ],
         $scope, undef, 36.3
@@ -991,7 +991,7 @@ my $result = do {
             str( $f, "pe" ),
             $func_6->inside_scope(
                 (undef) => $scope,
-                $scope, undef, undef, undef
+                undef, undef, undef, undef
             )
         ],
         $scope, undef, 49.3

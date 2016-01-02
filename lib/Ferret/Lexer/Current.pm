@@ -27,6 +27,14 @@ sub unknown_el {
     );
 }
 
+sub simulate {
+    my ($c, $tok, $value, @rest) = @_;
+    my $code = Ferret::Lexer::Constructor->can("c_$tok") or return;
+    my $e = Ferret::Lexer::RuleFunctions::token_check($tok, $c, $value);
+    return $e if $e;
+    return $code->($c, $value, @rest);
+}
+
 #############
 ### NODES ###
 #############
@@ -347,14 +355,14 @@ sub fatal {
     my $err_from = "$caller[0] line $caller[2]";
     $err_from    = "rule $opts{rule_name}"
         if $opts{rule_name};    # if we have a rule name, use this instead.
+    my $err_name = $opts{err_type} ? " $opts{err_type}" : '';
 
-    $err .= "\n     Error   -> $opts{err_type}" if length $opts{err_type};
     $err .= "\n     File    -> $$c{file}";
     $err .= "\n     Line    -> $line";
     $err .= "\n     Element -> $opts{el_desc}"  if length $opts{el_desc};
     $err .= "\n     Near    -> $near"           if !$parent || $parent ne $near;
     $err .= "\n     Parent  -> ".$parent        if $parent;
-    $err .= "\n\nException raised by $err_from.";
+    $err .= "\n\nException$err_name raised by $err_from.";
 
     return Ferret::Lexer::fatal($err);
 }

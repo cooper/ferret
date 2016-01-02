@@ -20,7 +20,7 @@ sub desc {
 sub new {
     my ($class, %opts) = @_;
     my $func = $class->SUPER::new(
-        body => F::Body->new,
+        body => F::FunctionMethodBody->new,
         %opts
     );
     $func->adopt($func->body);
@@ -40,6 +40,9 @@ sub close : method {
 
 sub owner {
     my $func = shift;
+
+    # anonymous functions are owned by no one.
+    return (undef, 'undef') if $func->anonymous;
 
     # document-level function.
     my $public_ctx = $func->parent->type eq 'Document';
@@ -81,5 +84,13 @@ sub perl_fmt {
         name => $info->{anonymous} ? '(undef)' : $info->{name}
     };
 }
+
+package F::FunctionMethodBody;
+
+use warnings;
+use strict;
+use 5.010;
+use parent 'F::Body';
+
 
 1

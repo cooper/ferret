@@ -20,16 +20,28 @@ sub construct {
 
     # CONSTRUCTOR
     # ===========
+
+    # separate into lines.
+    my @tokens = @_;
+    my (@lines, %positions);
+    foreach my $tok (@tokens) {
+        my $pos = $tok->[2];
+        $positions{$pos} = $tok;
+        push @{ $lines[ int $pos ] ||= [] }, $tok;
+    }
+
     $current = Ferret::Lexer::Current->new(
-        main_node => $main_node,
-        file      => $main_node->{name} || 'unknown',
-        node      => $main_node,
-        elements  => [],
-        done_toks => [],
-        upcoming  => \@_
+        main_node   => $main_node,
+        file        => $main_node->{name} || 'unknown',
+        node        => $main_node,
+        token_lines => \@lines,
+        token_pos   => \%positions,
+        upcoming    => \@tokens,
+        done_toks   => [],
+        elements    => []
     );
 
-    while (my ($label, $value, $position) = @{ shift || [] }) {
+    while (my ($label, $value, $position) = @{ shift @tokens || [] }) {
         return $err if $err = handle_label($label, $value, $position);
     }
 
@@ -231,7 +243,7 @@ sub c_FUNCTION {
     my $first_char = length $value->{name} ? substr $value->{name}, 0, 1 : '';
     if ($c->node->type eq 'Class' && $first_char ne '_') {
         $value->{main} = 1;
-        return c_METHOD($c, $value);
+        return $c->simulate('METHOD', $value);
     }
 
     my $function = F::Function->new(
@@ -298,7 +310,9 @@ sub c_CLOSURE_E {
     # DISABLED
     # Rule CLOSURE_E[1]:
     #   The current 'node' must be equal to the current 'closure'.
-    c_OP_SEMI($c) if $c->instruction && $c->node != $c->closure;
+
+    (my $added)++, $c->simulate('OP_SEMI')
+        if $c->instruction && $c->node != $c->closure;
 
     # close the closure and the node.
     my $closure = $c->closure;
@@ -314,13 +328,21 @@ sub c_CLOSURE_E {
             $c->close_node_until($upper_call->parent);
         }
 
-        # simulate a semicolon
-        # only if the call started the instruction.
-        #
-        # $blah = something() { };  # do not simulate semicolon
-        # something () { }          # simulate semicolon
-        #
-        c_OP_SEMI($c) if $upper_call->started_instr;
+    }
+
+    # if the closure we just terminated is a function body,
+    # check if it is anonymous. if so, possibly inject a semicolon.
+    my $fm = $closure->parent;
+    if (!$is_semi && !$added && $closure->type eq 'FunctionMethodBody' &&
+      $fm->type eq 'Function' && $fm->anonymous) {
+
+         # if the closing curly bracket is the last thing on the line,
+         # inject a semicolon.
+         my $close_pos = $fm->{close_pos};
+         my $is_close  = $c->{token_pos}{$close_pos}[0] eq 'CLOSURE_E';
+         my $last_on_line = $c->{token_lines}[ int $close_pos ][-1];
+         $c->simulate('OP_SEMI')
+            if $is_close && $close_pos == $last_on_line->[2];
 
     }
 
@@ -885,7 +907,7 @@ sub c_OP_COMMA {
 
         # fake a semicolon to terminate the instruction
         # wrapping the previous WantNeed.
-        c_OP_SEMI($c);
+        $c->simulate('OP_SEMI');
 
         # create new want/need.
         my $wn = F::WantNeed->new(arg_type => $old_wn->{arg_type});
@@ -975,7 +997,7 @@ sub c_OP_SEMI {
 
     # possibly terminate a closure.
     if (delete $instr->{will_close_closure}) {
-        c_CLOSURE_E($c, undef, 1);
+        $c->simulate('CLOSURE_E', undef, 1);
     }
 
     return;
@@ -1115,7 +1137,7 @@ sub c_OP_VALUE {
     if (could_be_one_liner($c)) {
 
         # simulate a {
-        c_CLOSURE_S($c, undef, 1);
+        $c->simulate('CLOSURE_S', 1);
 
         # remember that the coming intruction will terminate closure.
         $c->instruction_opens_closure;
@@ -1528,7 +1550,7 @@ sub c_eof {
 
     # if there's a current instruction, fake a semicolon.
     if ($c->instruction) {
-        c_OP_SEMI($c);
+        $c->simulate('OP_SEMI');
     }
 
     # end of file can terminate these.

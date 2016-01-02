@@ -90,7 +90,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_0 = FF::function_def(
-        $f, $scope, undef,
+        $f, undef, undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -128,7 +128,7 @@ my $result = do {
                 'expire', $self, $scope,
                 $func_0->inside_scope(
                     (undef) => $scope,
-                    $scope, undef, undef, undef
+                    undef, undef, undef, undef
                 ),
                 {}
             );
