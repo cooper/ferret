@@ -109,7 +109,7 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             $$scope->{'say'}
-              ->call_u( [ str( $f, "Connected!" ) ], $scope, undef, 4.2 );
+              ->( [ str( $f, "Connected!" ) ], $scope, undef, 4.2 );
             return $ret->return;
         }
     );
@@ -130,7 +130,7 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'location', 8.2 ) or return;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [
                     add(
                         $scope, str( $f, "Redirected to " ),
@@ -159,7 +159,7 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'content', 14.2 ) or return;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [
                     add(
                         $scope,
@@ -182,7 +182,7 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             $$scope->{'say'}
-              ->call_u( [ str( $f, "Got error!" ) ], $scope, undef, 20.2 );
+              ->( [ str( $f, "Got error!" ) ], $scope, undef, 20.2 );
             return $ret->return;
         }
     );
@@ -192,7 +192,7 @@ my $result = do {
     FF::inside(
         $f, $scope,
         ${ $$scope->{'HTTP'} }->{'get'}
-          ->call_u( [ str( $f, "http://google.com" ) ], $scope, undef, 1.4 ),
+          ->( [ str( $f, "http://google.com" ) ], $scope, undef, 1.4 ),
         sub {
             my ( $scope, $ins ) = @_;
             FF::on(
@@ -233,7 +233,7 @@ my $result = do {
                 ),
                 {}
             );
-            $$ins->{'connect'}->call_u( {}, $scope, undef, 23.3 );
+            $$ins->{'connect'}->( {}, $scope, undef, 23.3 );
         }
     );
 };

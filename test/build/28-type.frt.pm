@@ -123,13 +123,12 @@ my $result = do {
                 $scope,
                 what => ${
                     $$scope->{'Str'}
-                      ->call_u( [ $$scope->{'gender'} ], $scope, undef, 8.2 )
-                  }->{'trimPrefix'}
-                  ->call_u( [ str( $f, ":" ) ], $scope, undef, 8.4 ),
+                      ->( [ $$scope->{'gender'} ], $scope, undef, 8.2 )
+                  }->{'trimPrefix'}->( [ str( $f, ":" ) ], $scope, undef, 8.4 ),
                 $file_scope,
                 8.1
             );
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [
                     add(
                         $scope, $$scope->{'name'},
@@ -158,18 +157,22 @@ my $result = do {
         },
         undef
     );
-    $$scope->{'announce'}
-      ->call_u( [ str( $f, "Robert" ), FF::get_symbol( $f, 'male' ) ],
-        $scope, undef, 12.2 );
-    $$scope->{'announce'}
-      ->call_u( [ str( $f, "Kris" ), FF::get_symbol( $f, 'female' ) ],
-        $scope, undef, 13.2 );
-    $$scope->{'announce'}
-      ->call_u( [ str( $f, "Kylie" ), FF::get_symbol( $f, 'female' ) ],
-        $scope, undef, 14.2 );
-    $$scope->{'announce'}
-      ->call_u( [ str( $f, "Caitlyn" ), FF::get_symbol( $f, 'other' ) ],
-        $scope, undef, 15.2 );
+    $$scope->{'announce'}->(
+        [ str( $f, "Robert" ), FF::get_symbol( $f, 'male' ) ],
+        $scope, undef, 12.2
+    );
+    $$scope->{'announce'}->(
+        [ str( $f, "Kris" ), FF::get_symbol( $f, 'female' ) ],
+        $scope, undef, 13.2
+    );
+    $$scope->{'announce'}->(
+        [ str( $f, "Kylie" ), FF::get_symbol( $f, 'female' ) ],
+        $scope, undef, 14.2
+    );
+    $$scope->{'announce'}->(
+        [ str( $f, "Caitlyn" ), FF::get_symbol( $f, 'other' ) ],
+        $scope, undef, 15.2
+    );
 };
 
 FF::after_content();

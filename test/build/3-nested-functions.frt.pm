@@ -136,7 +136,7 @@ my $result = do {
             );
             $$scope->{'hello'}
               ->set_property( name => $$scope->{'name1'}, 18.3 );
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [
                     add(
                         $scope, $$scope->{'hello'},
@@ -157,9 +157,10 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [ add( $scope, str( $f, "Hello " ), $$scope->{'name2'} ) ],
-                $scope, undef, 23.2 );
+                $scope, undef, 23.2
+            );
             return $ret->return;
         }
     );
@@ -196,8 +197,8 @@ my $result = do {
             );
             FF::need( $scope, $args, 'name1', 11.2 ) or return;
             FF::need( $scope, $args, 'name2', 11.4 ) or return;
-            $$scope->{'hello1'}->call_u( {}, $scope, undef, 13.2 );
-            $$scope->{'hello2'}->call_u( {}, $scope, undef, 14.2 );
+            $$scope->{'hello1'}->( {}, $scope, undef, 13.2 );
+            $$scope->{'hello2'}->( {}, $scope, undef, 14.2 );
             return $ret->return;
         }
     );
@@ -205,23 +206,25 @@ my $result = do {
         helloWorld => $scope,
         $context, undef, undef, undef
     );
+    $$scope->{'helloWorld'}->(
+        { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
+        $scope, undef, 1.1
+    );
+    $$scope->{'helloWorld'}->(
+        { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
+        $scope, undef, 3.2
+    );
     $$scope->{'helloWorld'}
-      ->call_u( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
-        $scope, undef, 1.1 );
-    $$scope->{'helloWorld'}
-      ->call_u( { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
-        $scope, undef, 3.2 );
-    $$scope->{'helloWorld'}
-      ->call_u( [ str( $f, "Benjamin" ), str( $f, "George" ) ],
-        $scope, undef, 8.2 );
+      ->( [ str( $f, "Benjamin" ), str( $f, "George" ) ], $scope, undef, 8.2 );
     my $lv_pi = FF::lex_assign(
         $scope,
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ),
         undef, 28.2
     );
-    $$scope->{'say'}
-      ->call_u( [ add( $scope, str( $f, "Pi = " ), $$scope->{'pi'} ) ],
-        $scope, undef, 29.2 );
+    $$scope->{'say'}->(
+        [ add( $scope, str( $f, "Pi = " ), $$scope->{'pi'} ) ],
+        $scope, undef, 29.2
+    );
 };
 
 FF::after_content();

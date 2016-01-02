@@ -65,7 +65,7 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             $$scope->{'say'}
-              ->call_u( [ str( $f, "it works!" ) ], $scope, undef, 8.2 );
+              ->( [ str( $f, "it works!" ) ], $scope, undef, 8.2 );
             return $ret->return;
         }
     );
@@ -73,10 +73,10 @@ my $result = do {
     my $lv_obj =
       FF::lex_assign( $scope, obj => FF::create_object( $f, {} ), undef, 2.2 );
     ${ $$scope->{'Timer'} }->{'init'}
-      ->call_u( [ $$scope->{'obj'} ], $scope, undef, 5.15 )
-      ->call_u( [ num( $f, 5 ) ], $scope, undef, 5.3 );
+      ->( [ $$scope->{'obj'} ], $scope, undef, 5.15 )
+      ->( [ num( $f, 5 ) ], $scope, undef, 5.3 );
     FF::on(
-        ${ $$scope->{'obj'} }->{'once'}->call_u( {}, $scope, undef, 7.4 ),
+        ${ $$scope->{'obj'} }->{'once'}->( {}, $scope, undef, 7.4 ),
         'expire',
         $self,
         $scope,

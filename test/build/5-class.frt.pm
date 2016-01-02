@@ -239,7 +239,7 @@ my $result = do {
                 $ret->inc;
                 my $lv_pt = FF::lex_assign(
                     $scope,
-                    pt => ${ $scope->{special} }->{'class'}->call_u(
+                    pt => ${ $scope->{special} }->{'class'}->(
                         [
                             add( $scope, $$self->{'x'}, num( $f, 1 ) ),
                             $$self->{'y'}
@@ -281,7 +281,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    $$self->{'pretty'}->call_u( {}, $scope, undef, 19.3 ) );
+                    $$self->{'pretty'}->( {}, $scope, undef, 19.3 ) );
                 return $ret->return;
             }
         );
@@ -310,7 +310,7 @@ my $result = do {
                 FF::need( $scope, $args, 'pt1', 23.2 ) or return;
                 FF::need( $scope, $args, 'pt2', 23.4 ) or return;
                 return $ret->return(
-                    $$scope->{'Point'}->call_u(
+                    $$scope->{'Point'}->(
                         {
                             x => div(
                                 $scope,
@@ -362,33 +362,33 @@ my $result = do {
     my $lv_pt = FF::lex_assign(
         $scope,
         pt => $$scope->{'Point'}
-          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32.2 ),
+          ->( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32.2 ),
         undef, 32.1
     );
-    $$scope->{'say'}
-      ->call_u( [ add( $scope, str( $f, "Point" ), $$scope->{'pt'} ) ],
-        $scope, undef, 33.2 );
+    $$scope->{'say'}->(
+        [ add( $scope, str( $f, "Point" ), $$scope->{'pt'} ) ],
+        $scope, undef, 33.2
+    );
     my $lv_rpt = FF::lex_assign(
         $scope,
-        rpt => ${ $$scope->{'pt'} }->{'oneToRight'}
-          ->call_u( {}, $scope, undef, 35.5 ),
+        rpt =>
+          ${ $$scope->{'pt'} }->{'oneToRight'}->( {}, $scope, undef, 35.5 ),
         undef, 35.2
     );
-    $$scope->{'say'}
-      ->call_u( [ add( $scope, str( $f, "Right" ), $$scope->{'rpt'} ) ],
-        $scope, undef, 36.2 );
+    $$scope->{'say'}->(
+        [ add( $scope, str( $f, "Right" ), $$scope->{'rpt'} ) ],
+        $scope, undef, 36.2
+    );
     my $lv_mdpt = FF::lex_assign(
         $scope,
-        mdpt => ${ $$scope->{'Point'} }->{'midpoint'}->call_u(
-            [ $$scope->{'pt'}, $$scope->{'rpt'} ],
-            $scope, undef, 38.25
-        ),
-        undef,
-        38.1
+        mdpt => ${ $$scope->{'Point'} }->{'midpoint'}
+          ->( [ $$scope->{'pt'}, $$scope->{'rpt'} ], $scope, undef, 38.25 ),
+        undef, 38.1
     );
-    $$scope->{'say'}
-      ->call_u( [ add( $scope, str( $f, "Midpoint" ), $$scope->{'mdpt'} ) ],
-        $scope, undef, 39.2 );
+    $$scope->{'say'}->(
+        [ add( $scope, str( $f, "Midpoint" ), $$scope->{'mdpt'} ) ],
+        $scope, undef, 39.2
+    );
     my $lv_nineteen = FF::lex_assign(
         $scope,
         nineteen => add(
@@ -399,9 +399,10 @@ my $result = do {
         undef,
         41.2
     );
-    $$scope->{'say'}->call_u(
+    $$scope->{'say'}->(
         [ add( $scope, str( $f, "Nineteen: " ), $$scope->{'nineteen'} ) ],
-        $scope, undef, 42.2 );
+        $scope, undef, 42.2
+    );
 };
 
 FF::after_content();

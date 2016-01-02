@@ -62,7 +62,7 @@ my $result = do {
                 return $ret->return(
                     mul(
                         $scope,
-                        $$self->{'length'}->call_u( {}, $scope, undef, 4.3 ),
+                        $$self->{'length'}->( {}, $scope, undef, 4.3 ),
                         num( $f, 2 )
                     )
                 );
@@ -74,13 +74,13 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    $$scope->{'say'}->call_u(
+    $$scope->{'say'}->(
         [
             add(
                 $scope,
                 str( $f, "Length times two: " ),
                 ${ str( $f, "hi there" ) }->{'doubledLength'}
-                  ->call_u( {}, $scope, undef, 9.35 )
+                  ->( {}, $scope, undef, 9.35 )
             )
         ],
         $scope, undef, 9.1

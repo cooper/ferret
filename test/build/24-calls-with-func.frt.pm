@@ -82,7 +82,7 @@ my $result = do {
             $ret->inc;
             FF::need( $scope, $args, 'code', 17.2 ) or return;
             $ret->set_property(
-                message => $$scope->{'code'}->call_u( {}, $scope, undef, 18.4 ),
+                message => $$scope->{'code'}->( {}, $scope, undef, 18.4 ),
                 18.2
             );
             return $ret->return;
@@ -98,8 +98,7 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             $$scope->{'say'}
-              ->call_u( [ str( $f, "been five seconds" ) ], $scope, undef,
-                4.2 );
+              ->( [ str( $f, "been five seconds" ) ], $scope, undef, 4.2 );
             return $ret->return;
         }
     );
@@ -117,7 +116,7 @@ my $result = do {
         }
     );
     $func_0->inside_scope( something => $scope, $context, undef, undef, undef );
-    $$scope->{'delay'}->call_u(
+    $$scope->{'delay'}->(
         [
             num( $f, 5 ),
             $func_1->inside_scope(
@@ -127,11 +126,11 @@ my $result = do {
         ],
         $scope, undef, 3.2
     );
-    $$scope->{'say'}->call_u( [ str( $f, "waiting..." ) ], $scope, undef, 7.2 );
-    $$scope->{'say'}->call_u(
+    $$scope->{'say'}->( [ str( $f, "waiting..." ) ], $scope, undef, 7.2 );
+    $$scope->{'say'}->(
         [
             ${
-                $$scope->{'something'}->call_u(
+                $$scope->{'something'}->(
                     [
                         $func_2->inside_scope(
                             (undef) => $scope,

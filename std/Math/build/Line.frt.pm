@@ -274,7 +274,7 @@ my $result = do {
                     ${
                         FF::create_set( $scope, $$self->{'pt1'},
                             $$self->{'pt2'} )
-                    }->{'midpoint'}->call_u( {}, $scope, undef, 25.4 )
+                    }->{'midpoint'}->( {}, $scope, undef, 25.4 )
                 );
                 return $ret->return;
             }
@@ -288,7 +288,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return( ${ $$self->{'pt1'} }->{'distanceTo'}
-                      ->call_u( [ $$self->{'pt2'} ], $scope, undef, 29.4 ) );
+                      ->( [ $$self->{'pt2'} ], $scope, undef, 29.4 ) );
                 return $ret->return;
             }
         );

@@ -16,7 +16,10 @@ use Ferret::Core::Conversion qw(
 use Ferret::Core::Errors qw(throw);
 
 use Ferret::Tie;
-use overload fallback => 1, '${}' => \&_tie;
+use overload
+    fallback => 1,
+    '${}'    => \&__scalar,
+    '&{}'    => \&__code;
 
 # create a new object.
 sub new {
@@ -585,12 +588,17 @@ sub DESTROY {
     delete $f->{objects}{$obj + 0};
 }
 
-sub _tie {
+sub __scalar {
 	my $obj = shift;
     return \$obj->{tie} if $obj->{tie};
     $obj->{tie} = {};
     tie %{ $obj->{tie} }, 'Ferret::Tie', $obj;
     return \$obj->{tie};
+}
+
+sub __code {
+    my $obj = shift;
+    return sub { $obj->call_u(@_) };
 }
 
 ###############

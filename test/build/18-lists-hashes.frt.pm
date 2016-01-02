@@ -136,10 +136,10 @@ my $result = do {
         undef, 1.2
     );
     ${ $$scope->{'list'} }->{'push'}
-      ->call_u( [ str( $f, "there" ) ], $scope, undef, 2.3 );
+      ->( [ str( $f, "there" ) ], $scope, undef, 2.3 );
     $$scope->{'list'}
       ->set_index_value( [ num( $f, 4 ) ], str( $f, "yeah" ), $scope );
-    $$scope->{'say'}->call_u(
+    $$scope->{'say'}->(
         [
             add(
                 $scope,
@@ -156,9 +156,10 @@ my $result = do {
         sub {
             my $scope   = shift;
             my $lv_item = $scope->property_u('item');
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [ add( $scope, str( $f, "item: " ), $$scope->{'item'} ) ],
-                $scope, undef, 8.2 );
+                $scope, undef, 8.2
+            );
         },
         7.1
     );
@@ -171,7 +172,7 @@ my $result = do {
       ->set_index_value( [ str( $f, "whats" ) ], str( $f, "up" ), $scope );
     $$scope->{'hash'}
       ->set_index_value( [ str( $f, "thank" ) ], str( $f, "you" ), $scope );
-    $$scope->{'say'}->call_u(
+    $$scope->{'say'}->(
         [
             add(
                 $scope,
@@ -190,7 +191,7 @@ my $result = do {
             my $scope  = shift;
             my $lv_key = $scope->property_u('key');
             my $lv_val = $scope->property_u('val');
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [
                     add(
                         $scope,           str( $f, "pair: key=" ),

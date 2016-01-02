@@ -296,12 +296,10 @@ my $result = do {
                 $ret->inc;
                 FF::want( $scope, $args, 'a', 12.2 );
                 return $ret->return(
-                    $$self->{'_test'}->call_u(
+                    $$self->{'_test'}->(
                         [
-                            $$scope->{'Bool'}->call_u(
-                                [ $$scope->{'a'} ],
-                                $scope, undef, 13.25
-                            ),
+                            $$scope->{'Bool'}
+                              ->( [ $$scope->{'a'} ], $scope, undef, 13.25 ),
                             str( $f, "Value must be true" )
                         ],
                         $scope, undef, 13.15
@@ -321,7 +319,7 @@ my $result = do {
                 $ret->inc;
                 FF::want( $scope, $args, 'a', 18.2 );
                 return $ret->return(
-                    $$self->{'_test'}->call_u(
+                    $$self->{'_test'}->(
                         [
                             refs_equal( $scope, $$scope->{'a'}, $true ),
                             str( $f, "Value must be exactly true" )
@@ -346,7 +344,7 @@ my $result = do {
                 FF::want( $scope, $args, 'a', 24.2 );
                 FF::want( $scope, $args, 'b', 24.4 );
                 return $ret->return(
-                    $$self->{'_test'}->call_u(
+                    $$self->{'_test'}->(
                         [
                             equal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
                             str( $f, "Values must be equal" )
@@ -372,7 +370,7 @@ my $result = do {
                 FF::want( $scope, $args, 'a', 30.2 );
                 FF::want( $scope, $args, 'b', 30.4 );
                 return $ret->return(
-                    $$self->{'_test'}->call_u(
+                    $$self->{'_test'}->(
                         [
                             refs_equal(
                                 $scope, $$scope->{'a'}, $$scope->{'b'}
@@ -400,7 +398,7 @@ my $result = do {
                 FF::want( $scope, $args, 'a', 36.2 );
                 FF::want( $scope, $args, 'b', 36.4 );
                 return $ret->return(
-                    $$self->{'_test'}->call_u(
+                    $$self->{'_test'}->(
                         [
                             nequal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
                             str( $f, "Values must not be equal" )
@@ -426,7 +424,7 @@ my $result = do {
                 FF::want( $scope, $args, 'a', 42.2 );
                 FF::want( $scope, $args, 'b', 42.4 );
                 return $ret->return(
-                    $$self->{'_test'}->call_u(
+                    $$self->{'_test'}->(
                         [
                             refs_nequal(
                                 $scope, $$scope->{'a'}, $$scope->{'b'}
@@ -453,7 +451,7 @@ my $result = do {
                       _sub( $scope, $$self->{'tested'}, $$self->{'passed'} ),
                     $file_scope, 47.2
                 );
-                $$scope->{'say'}->call_u(
+                $$scope->{'say'}->(
                     [
                         add(
                             $scope,              str( $f, "[" ),
@@ -512,10 +510,9 @@ my $result = do {
                 if ( bool( $$self->{'fatal'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    ${
-                        $$scope->{'Error'}->call_u( [ $$scope->{'message'} ],
-                            $scope, undef, 68.2 )
-                    }->{'panic'}->call_u( {}, $scope, undef, 68.6 );
+                    ${ $$scope->{'Error'}
+                          ->( [ $$scope->{'message'} ], $scope, undef, 68.2 ) }
+                      ->{'panic'}->( {}, $scope, undef, 68.6 );
                 }
                 $ret->set_property( message => $$scope->{'message'}, 70.2 );
                 return $ret->return;

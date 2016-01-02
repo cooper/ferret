@@ -97,7 +97,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [
                     add(
                         $scope,         str( $f, "(" ),
@@ -114,7 +114,7 @@ my $result = do {
     my $lv_parts = FF::lex_assign(
         $scope,
         parts => ${ str( $f, "s p a m" ) }->{'split'}
-          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.5 ),
+          ->( [ str( $f, " " ) ], $scope, undef, 1.5 ),
         undef, 1.2
     );
     FF::iterate_pair(
@@ -128,8 +128,8 @@ my $result = do {
             FF::on(
                 ${
                     $$scope->{'Timer'}
-                      ->call_u( [ $$scope->{'i'} ], $scope, undef, 4.15 )
-                  }->{'once'}->call_u( {}, $scope, undef, 4.35 ),
+                      ->( [ $$scope->{'i'} ], $scope, undef, 4.15 )
+                  }->{'once'}->( {}, $scope, undef, 4.35 ),
                 'expire', $self, $scope,
                 $func_0->inside_scope(
                     (undef) => $scope,
@@ -147,8 +147,7 @@ my $result = do {
         sub {
             my $scope   = shift;
             my $lv_part = $scope->property_u('part');
-            $$scope->{'say'}
-              ->call_u( [ $$scope->{'part'} ], $scope, undef, 10.2 );
+            $$scope->{'say'}->( [ $$scope->{'part'} ], $scope, undef, 10.2 );
         },
         9.05
     );

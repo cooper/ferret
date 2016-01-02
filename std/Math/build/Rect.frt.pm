@@ -267,7 +267,7 @@ my $result = do {
                 FF::need( $self, $args, 'width' )  or return;
                 FF::need( $self, $args, 'height' ) or return;
                 $self->set_property(
-                    origin => $$scope->{'Point'}->call_u(
+                    origin => $$scope->{'Point'}->(
                         [ $$scope->{'x'}, $$scope->{'y'} ], $scope,
                         undef, 6.2
                     ),
@@ -320,7 +320,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    $$scope->{'Point'}->call_u(
+                    $$scope->{'Point'}->(
                         [
                             add(
                                 $scope,
@@ -345,7 +345,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    $$scope->{'Point'}->call_u(
+                    $$scope->{'Point'}->(
                         [
                             ${ $$self->{'origin'} }->{'x'},
                             add(
@@ -370,7 +370,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    $$scope->{'Point'}->call_u(
+                    $$scope->{'Point'}->(
                         [
                             add(
                                 $scope,
@@ -399,7 +399,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    $$scope->{'Line'}->call_u(
+                    $$scope->{'Line'}->(
                         [ $$self->{'bottomLeft'}, $$self->{'bottomRight'} ],
                         $scope, undef, 35.3
                     )
@@ -417,7 +417,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    $$scope->{'Line'}->call_u(
+                    $$scope->{'Line'}->(
                         [ $$self->{'topLeft'}, $$self->{'topRight'} ], $scope,
                         undef, 39.3
                     )
@@ -454,7 +454,7 @@ my $result = do {
                     44.1
                 );
                 return $ret->return(
-                    $$scope->{'Point'}->call_u(
+                    $$scope->{'Point'}->(
                         [ $$scope->{'x'}, $$scope->{'y'} ], $scope,
                         undef, 45.3
                     )

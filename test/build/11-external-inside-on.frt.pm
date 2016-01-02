@@ -156,7 +156,7 @@ my $result = do {
             if ( bool( $$scope->{'twice'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $$scope->{'say'}->call_u(
+                $$scope->{'say'}->(
                     [
                         add(
                             $scope, $$scope->{'message'}, str( $f, " again" )
@@ -173,16 +173,15 @@ my $result = do {
     my $lv_point = FF::lex_assign(
         $scope,
         point => $$scope->{'Math::Point'}
-          ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1.3 ),
+          ->( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1.3 ),
         undef, 1.1
     );
     if ( bool( $$scope->{'point'} ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
         $$scope->{'say'}
-          ->call_u( [ str( $f, "The point exists!" ) ], $scope, undef, 4.2 );
-        $$scope->{'inspect'}
-          ->call_u( [ $$scope->{'point'} ], $scope, undef, 5.2 );
+          ->( [ str( $f, "The point exists!" ) ], $scope, undef, 4.2 );
+        $$scope->{'inspect'}->( [ $$scope->{'point'} ], $scope, undef, 5.2 );
     }
 
     # Inside
@@ -197,9 +196,10 @@ my $result = do {
               FF::lex_assign( $scope, y => num( $f, 10 ), $file_scope, 10.2 );
         }
     );
-    $$scope->{'say'}
-      ->call_u( [ add( $scope, str( $f, "Point: " ), $$scope->{'point'} ) ],
-        $scope, undef, 13.2 );
+    $$scope->{'say'}->(
+        [ add( $scope, str( $f, "Point: " ), $$scope->{'point'} ) ],
+        $scope, undef, 13.2
+    );
     FF::on(
         $scope,
         'say',
@@ -210,7 +210,7 @@ my $result = do {
     );
     my $lv_r = FF::lex_assign(
         $scope,
-        r => $$scope->{'say'}->call_u(
+        r => $$scope->{'say'}->(
             [ str( $f, "It was said" ), { twice => $true } ], $scope,
             undef, 23.2
         ),
@@ -220,12 +220,13 @@ my $result = do {
     if ( bool( ${ $$scope->{'r'} }->{'didTwice'} ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-        $$scope->{'say'}->call_u( [ str( $f, "Did the first one twice!" ) ],
-            $scope, undef, 26.2 );
+        $$scope->{'say'}
+          ->( [ str( $f, "Did the first one twice!" ) ], $scope, undef, 26.2 );
     }
-    $$scope->{'say'}
-      ->call_u( [ str( $f, "this should ignore the second parameter" ), $true ],
-        $scope, undef, 28.2 );
+    $$scope->{'say'}->(
+        [ str( $f, "this should ignore the second parameter" ), $true ],
+        $scope, undef, 28.2
+    );
 };
 
 FF::after_content();

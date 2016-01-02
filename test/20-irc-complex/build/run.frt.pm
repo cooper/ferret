@@ -526,14 +526,12 @@ my $result = do {
             }
             my $lv_c = FF::lex_assign(
                 $scope,
-                c => $$scope->{'COMPILER'}->call_u(
+                c => $$scope->{'COMPILER'}->(
                     [
-                        $$scope->{'convertNewlines'}->call_u(
+                        $$scope->{'convertNewlines'}->(
                             [
-                                ${ $$scope->{'msg'} }->{'fromWord'}->call_u(
-                                    [ num( $f, 1 ) ],
-                                    $scope, undef, 69.45
-                                )
+                                ${ $$scope->{'msg'} }->{'fromWord'}
+                                  ->( [ num( $f, 1 ) ], $scope, undef, 69.45 )
                             ],
                             $scope, undef, 69.3
                         )
@@ -545,7 +543,7 @@ my $result = do {
             );
             my $lv_res = FF::lex_assign(
                 $scope,
-                res => ${ $$scope->{'c'} }->{'compile'}->call_u(
+                res => ${ $$scope->{'c'} }->{'compile'}->(
                     [
                         equal(
                             $scope,
@@ -561,7 +559,7 @@ my $result = do {
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+                ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
                         ${ $$scope->{'res'} }->{'error'}
@@ -570,7 +568,7 @@ my $result = do {
                 );
                 return $ret->return();
             }
-            ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+            ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
                     ${ $$scope->{'msg'} }->{'channel'},
                     ${ $$scope->{'res'} }->{'perl'}
@@ -601,9 +599,8 @@ my $result = do {
             return $ret->return(
                 ${
                     ${ $$scope->{'string'} }->{'split'}
-                      ->call_u( [ str( $f, "_NL_" ) ], $scope, undef, 80.2 )
-                  }->{'join'}
-                  ->call_u( [ str( $f, "\n" ) ], $scope, undef, 80.4 )
+                      ->( [ str( $f, "_NL_" ) ], $scope, undef, 80.2 )
+                }->{'join'}->( [ str( $f, "\n" ) ], $scope, undef, 80.4 )
             );
             return $ret->return;
         }
@@ -618,7 +615,7 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'msg', 6.2 ) or return;
-            ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+            ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
                     ${ $$scope->{'msg'} }->{'channel'},
                     str( $f, "Ferret IRC bot" )
@@ -647,14 +644,12 @@ my $result = do {
             }
             my $lv_c = FF::lex_assign(
                 $scope,
-                c => $$scope->{'COMPILER'}->call_u(
+                c => $$scope->{'COMPILER'}->(
                     [
-                        $$scope->{'convertNewlines'}->call_u(
+                        $$scope->{'convertNewlines'}->(
                             [
-                                ${ $$scope->{'msg'} }->{'fromWord'}->call_u(
-                                    [ num( $f, 1 ) ],
-                                    $scope, undef, 14.45
-                                )
+                                ${ $$scope->{'msg'} }->{'fromWord'}
+                                  ->( [ num( $f, 1 ) ], $scope, undef, 14.45 )
                             ],
                             $scope, undef, 14.3
                         )
@@ -667,13 +662,13 @@ my $result = do {
             my $lv_res = FF::lex_assign(
                 $scope,
                 res => ${ $$scope->{'c'} }->{'tokenize'}
-                  ->call_u( { pretty => $true }, $scope, undef, 15.25 ),
+                  ->( { pretty => $true }, $scope, undef, 15.25 ),
                 $file_scope, 15.1
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+                ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
                         ${ $$scope->{'res'} }->{'error'}
@@ -682,7 +677,7 @@ my $result = do {
                 );
                 return $ret->return();
             }
-            ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+            ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
                     ${ $$scope->{'msg'} }->{'channel'},
                     ${ $$scope->{'res'} }->{'pretty'}
@@ -711,14 +706,12 @@ my $result = do {
             }
             my $lv_c = FF::lex_assign(
                 $scope,
-                c => $$scope->{'COMPILER'}->call_u(
+                c => $$scope->{'COMPILER'}->(
                     [
-                        $$scope->{'convertNewlines'}->call_u(
+                        $$scope->{'convertNewlines'}->(
                             [
-                                ${ $$scope->{'msg'} }->{'fromWord'}->call_u(
-                                    [ num( $f, 1 ) ],
-                                    $scope, undef, 27.45
-                                )
+                                ${ $$scope->{'msg'} }->{'fromWord'}
+                                  ->( [ num( $f, 1 ) ], $scope, undef, 27.45 )
                             ],
                             $scope, undef, 27.3
                         )
@@ -731,13 +724,13 @@ my $result = do {
             my $lv_res = FF::lex_assign(
                 $scope,
                 res => ${ $$scope->{'c'} }->{'construct'}
-                  ->call_u( { pretty => $true }, $scope, undef, 28.25 ),
+                  ->( { pretty => $true }, $scope, undef, 28.25 ),
                 $file_scope, 28.1
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+                ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
                         ${ $$scope->{'res'} }->{'error'}
@@ -746,7 +739,7 @@ my $result = do {
                 );
                 return $ret->return();
             }
-            ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+            ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
                     ${ $$scope->{'msg'} }->{'channel'},
                     ${ $$scope->{'res'} }->{'pretty'}
@@ -776,11 +769,11 @@ my $result = do {
             my $lv_res = FF::lex_assign(
                 $scope,
                 res => ${
-                    $$scope->{'COMPILER'}->call_u(
+                    $$scope->{'COMPILER'}->(
                         [
-                            $$scope->{'convertNewlines'}->call_u(
+                            $$scope->{'convertNewlines'}->(
                                 [
-                                    ${ $$scope->{'msg'} }->{'fromWord'}->call_u(
+                                    ${ $$scope->{'msg'} }->{'fromWord'}->(
                                         [ num( $f, 1 ) ], $scope,
                                         undef, 40.45
                                     )
@@ -790,14 +783,14 @@ my $result = do {
                         ],
                         $scope, undef, 40.2
                     )
-                  }->{'eval'}->call_u( {}, $scope, undef, 40.75 ),
+                  }->{'eval'}->( {}, $scope, undef, 40.75 ),
                 $file_scope,
                 40.1
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+                ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
                         ${ $$scope->{'res'} }->{'error'}
@@ -809,7 +802,7 @@ my $result = do {
             my $lv_string = FF::lex_assign(
                 $scope,
                 string => ${
-                    $$scope->{'inspect'}->call_u(
+                    $$scope->{'inspect'}->(
                         {
                             value => ${ $$scope->{'res'} }->{'result'},
                             quiet => $true
@@ -820,9 +813,10 @@ my $result = do {
                 $file_scope,
                 45.1
             );
-            ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+            ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'string'} ],
-                $scope, undef, 46.15 );
+                $scope, undef, 46.15
+            );
             return $ret->return;
         }
     );
@@ -846,11 +840,11 @@ my $result = do {
             my $lv_res = FF::lex_assign(
                 $scope,
                 res => ${
-                    $$scope->{'COMPILER'}->call_u(
+                    $$scope->{'COMPILER'}->(
                         [
-                            $$scope->{'convertNewlines'}->call_u(
+                            $$scope->{'convertNewlines'}->(
                                 [
-                                    ${ $$scope->{'msg'} }->{'fromWord'}->call_u(
+                                    ${ $$scope->{'msg'} }->{'fromWord'}->(
                                         [ num( $f, 1 ) ], $scope,
                                         undef, 53.45
                                     )
@@ -860,14 +854,14 @@ my $result = do {
                         ],
                         $scope, undef, 53.2
                     )
-                  }->{'perlEval'}->call_u( {}, $scope, undef, 53.75 ),
+                  }->{'perlEval'}->( {}, $scope, undef, 53.75 ),
                 $file_scope,
                 53.1
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+                ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
                         ${ $$scope->{'res'} }->{'error'}
@@ -879,7 +873,7 @@ my $result = do {
             my $lv_string = FF::lex_assign(
                 $scope,
                 string => ${
-                    $$scope->{'inspect'}->call_u(
+                    $$scope->{'inspect'}->(
                         {
                             value => ${ $$scope->{'res'} }->{'result'},
                             quiet => $true
@@ -890,9 +884,10 @@ my $result = do {
                 $file_scope,
                 58.1
             );
-            ${ $$scope->{'bot'} }->{'privmsg'}->call_u(
+            ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'string'} ],
-                $scope, undef, 59.15 );
+                $scope, undef, 59.15
+            );
             return $ret->return;
         }
     );
@@ -907,7 +902,7 @@ my $result = do {
     FF::load_namespaces( $context, qw(COMPILER IRC IRC::Bot Str) );
     my $lv_bot = FF::lex_assign(
         $context,
-        bot => $$scope->{'IRC::Bot'}->call_u(
+        bot => $$scope->{'IRC::Bot'}->(
             {
                 addr => str( $f, "k.notroll.net" ),
                 nick => str( $f, "bottie" ),
@@ -922,7 +917,7 @@ my $result = do {
         autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ),
         3.3
     );
-    ${ $$scope->{'bot'} }->{'addCommand'}->call_u(
+    ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
             str( $f, "info" ),
             $func_2->inside_scope(
@@ -932,7 +927,7 @@ my $result = do {
         ],
         $scope, undef, 5.3
     );
-    ${ $$scope->{'bot'} }->{'addCommand'}->call_u(
+    ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
             str( $f, "t" ),
             $func_3->inside_scope(
@@ -942,7 +937,7 @@ my $result = do {
         ],
         $scope, undef, 10.3
     );
-    ${ $$scope->{'bot'} }->{'addCommand'}->call_u(
+    ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
             str( $f, "c" ),
             $func_4->inside_scope(
@@ -952,7 +947,7 @@ my $result = do {
         ],
         $scope, undef, 23.3
     );
-    ${ $$scope->{'bot'} }->{'addCommand'}->call_u(
+    ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
             str( $f, "e" ),
             $func_5->inside_scope(
@@ -962,7 +957,7 @@ my $result = do {
         ],
         $scope, undef, 36.3
     );
-    ${ $$scope->{'bot'} }->{'addCommand'}->call_u(
+    ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
             str( $f, "pe" ),
             $func_6->inside_scope(
@@ -973,12 +968,10 @@ my $result = do {
         $scope, undef, 49.3
     );
     ${ $$scope->{'bot'} }->{'addCommand'}
-      ->call_u( [ str( $f, "p" ), $$scope->{'handlePerl'} ],
-        $scope, undef, 62.3 );
+      ->( [ str( $f, "p" ), $$scope->{'handlePerl'} ], $scope, undef, 62.3 );
     ${ $$scope->{'bot'} }->{'addCommand'}
-      ->call_u( [ str( $f, "pp" ), $$scope->{'handlePerl'} ],
-        $scope, undef, 63.3 );
-    ${ $$scope->{'bot'} }->{'connect'}->call_u( {}, $scope, undef, 83.3 );
+      ->( [ str( $f, "pp" ), $$scope->{'handlePerl'} ], $scope, undef, 63.3 );
+    ${ $$scope->{'bot'} }->{'connect'}->( {}, $scope, undef, 83.3 );
 };
 
 FF::after_content();

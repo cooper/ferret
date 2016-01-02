@@ -98,7 +98,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [
                     add(
                         $scope,
@@ -122,7 +122,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [
                     add(
                         $scope,
@@ -138,7 +138,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(String) );
-    $$scope->{'say'}->call_u( [ str( $f, "test" ) ], $scope, undef, 1.2 );
+    $$scope->{'say'}->( [ str( $f, "test" ) ], $scope, undef, 1.2 );
     my $lv_str = FF::lex_assign( $scope, str => str( $f, "hi" ), undef, 3.2 );
     FF::on(
         $$scope->{'str'},
@@ -148,8 +148,8 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'str'} }->{'length'}->call_u( {}, $scope, undef, 14.3 );
-    ${ str( $f, "hello" ) }->{'length'}->call_u( {}, $scope, undef, 16.3 );
+    ${ $$scope->{'str'} }->{'length'}->( {}, $scope, undef, 14.3 );
+    ${ str( $f, "hello" ) }->{'length'}->( {}, $scope, undef, 16.3 );
     FF::on(
         ${ $$scope->{'String'} }->{'proto'},
         'length',
@@ -158,7 +158,7 @@ my $result = do {
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ str( $f, "hello" ) }->{'length'}->call_u( {}, $scope, undef, 25.3 );
+    ${ str( $f, "hello" ) }->{'length'}->( {}, $scope, undef, 25.3 );
 };
 
 FF::after_content();

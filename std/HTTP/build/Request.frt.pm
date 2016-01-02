@@ -120,9 +120,10 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                ${ $$scope->{'NATIVE::HTTPClient'} }->{'connect'}->call_u(
+                ${ $$scope->{'NATIVE::HTTPClient'} }->{'connect'}->(
                     [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, 17.25 );
+                    $scope, undef, 17.25
+                );
                 return $ret->return;
             }
         );

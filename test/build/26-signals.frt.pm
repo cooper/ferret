@@ -94,8 +94,8 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $$scope->{'say'}->call_u( [ str( $f, "Got TERM. Terminating!" ) ],
-                $scope, undef, 3.2 );
+            $$scope->{'say'}
+              ->( [ str( $f, "Got TERM. Terminating!" ) ], $scope, undef, 3.2 );
             return $ret->return;
         }
     );
@@ -111,16 +111,17 @@ my $result = do {
             if ( bool( _not( $$scope->{'asked'} ) ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $$scope->{'say'}->call_u( [ str( $f, "Are you sure?" ) ],
-                    $scope, undef, 13.2 );
+                $$scope->{'say'}
+                  ->( [ str( $f, "Are you sure?" ) ], $scope, undef, 13.2 );
                 my $lv_asked =
                   FF::lex_assign( $scope, asked => $true, $file_scope, 14.2 );
                 $ret->stop;
                 return $ret->return();
             }
-            $$scope->{'say'}
-              ->call_u( [ str( $f, "Got second INT. Terminating!" ) ],
-                $scope, undef, 19.2 );
+            $$scope->{'say'}->(
+                [ str( $f, "Got second INT. Terminating!" ) ],
+                $scope, undef, 19.2
+            );
             return $ret->return;
         }
     );
@@ -143,8 +144,8 @@ my $result = do {
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
-    ${ $$scope->{'Timer'}->call_u( [ num( $f, 5 ) ], $scope, undef, 23.2 ) }
-      ->{'start'}->call_u( {}, $scope, undef, 23.6 );
+    ${ $$scope->{'Timer'}->( [ num( $f, 5 ) ], $scope, undef, 23.2 ) }
+      ->{'start'}->( {}, $scope, undef, 23.6 );
 };
 
 FF::after_content();

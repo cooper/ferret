@@ -117,7 +117,7 @@ my $result = do {
     FF::load_namespaces( $context, qw(Math Math::Point Math::Rect) );
     my $lv_rect = FF::lex_assign(
         $scope,
-        rect => $$scope->{'Math::Rect'}->call_u(
+        rect => $$scope->{'Math::Rect'}->(
             {
                 x      => num( $f, 5 ),
                 y      => num( $f, 4 ),
@@ -134,10 +134,11 @@ my $result = do {
         center => ${ $$scope->{'rect'} }->{'center'},
         undef, 3.2
     );
-    $$scope->{'say'}->call_u(
+    $$scope->{'say'}->(
         [ add( $scope, str( $f, "Center of rect: " ), $$scope->{'center'} ) ],
-        $scope, undef, 4.2 );
-    $$scope->{'say'}->call_u(
+        $scope, undef, 4.2
+    );
+    $$scope->{'say'}->(
         [
             add(
                 $scope,
@@ -150,7 +151,7 @@ my $result = do {
     my $lv_otherPt = FF::lex_assign(
         $scope,
         otherPt => $$scope->{'Math::Point'}
-          ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7.3 ),
+          ->( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7.3 ),
         undef, 7.1
     );
     my $lv_midpoint = FF::lex_assign(
@@ -159,21 +160,22 @@ my $result = do {
             ${
                 FF::create_set( $scope, $$scope->{'center'},
                     $$scope->{'otherPt'} )
-            }->{'midpoint'}->call_u( {}, $scope, undef, 8.45 )
-          }->{'pretty'}->call_u( {}, $scope, undef, 8.6 ),
+            }->{'midpoint'}->( {}, $scope, undef, 8.45 )
+          }->{'pretty'}->( {}, $scope, undef, 8.6 ),
         undef,
         8.1
     );
-    $$scope->{'say'}->call_u(
+    $$scope->{'say'}->(
         [ add( $scope, str( $f, "Midpoint: " ), $$scope->{'midpoint'} ) ],
-        $scope, undef, 9.2 );
-    $$scope->{'say'}->call_u(
+        $scope, undef, 9.2
+    );
+    $$scope->{'say'}->(
         [
             add(
                 $scope,
                 str( $f, "Square root of four: " ),
                 ${ $$scope->{'Math'} }->{'sqrt'}
-                  ->call_u( [ num( $f, 4 ) ], $scope, undef, 11.35 )
+                  ->( [ num( $f, 4 ) ], $scope, undef, 11.35 )
             )
         ],
         $scope, undef, 11.1

@@ -145,9 +145,10 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'data', 5.2 ) or return;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
-                $scope, undef, 6.2 );
+                $scope, undef, 6.2
+            );
             return $ret->return;
         }
     );
@@ -161,9 +162,10 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'data', 10.2 ) or return;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
-                $scope, undef, 11.2 );
+                $scope, undef, 11.2
+            );
             return $ret->return;
         }
     );
@@ -177,8 +179,8 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             ${ $$scope->{'sock'} }->{'println'}
-              ->call_u( [ str( $f, "NICK k" ) ], $scope, undef, 15.3 );
-            ${ $$scope->{'sock'} }->{'println'}->call_u(
+              ->( [ str( $f, "NICK k" ) ], $scope, undef, 15.3 );
+            ${ $$scope->{'sock'} }->{'println'}->(
                 [
                     add(
                         $scope,
@@ -204,14 +206,14 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             ${ $$scope->{'sock'} }->{'println'}
-              ->call_u( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.3 );
+              ->( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.3 );
             return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(Socket Socket::TCP Timer) );
     my $lv_sock = FF::lex_assign(
         $scope,
-        sock => $$scope->{'Socket::TCP'}->call_u(
+        sock => $$scope->{'Socket::TCP'}->(
             {
                 address  => str( $f,            "k.notroll.net" ),
                 port     => num( $f,            6667 ),
@@ -222,7 +224,7 @@ my $result = do {
         undef,
         1.1
     );
-    $$scope->{'inspect'}->call_u( [ $$scope->{'sock'} ], $scope, undef, 2.2 );
+    $$scope->{'inspect'}->( [ $$scope->{'sock'} ], $scope, undef, 2.2 );
     FF::on(
         $$scope->{'sock'},
         'gotLine',
@@ -247,12 +249,13 @@ my $result = do {
         $func_2->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'sock'} }->{'connect'}->call_u( {}, $scope, undef, 19.3 );
+    ${ $$scope->{'sock'} }->{'connect'}->( {}, $scope, undef, 19.3 );
     FF::on(
-        ${
-            $$scope->{'Timer'}->call_u( [ num( $f, 5 ) ], $scope, undef, 21.15 )
-          }->{'once'}->call_u( {}, $scope, undef, 21.35 ),
-        'expire', $self, $scope,
+        ${ $$scope->{'Timer'}->( [ num( $f, 5 ) ], $scope, undef, 21.15 ) }
+          ->{'once'}->( {}, $scope, undef, 21.35 ),
+        'expire',
+        $self,
+        $scope,
         $func_3->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );

@@ -75,7 +75,7 @@ my $result = do {
             $ret->inc;
             FF::need( $scope, $args, 'num', 4.2 ) or return;
             return $ret->return( ${ $$scope->{'NATIVE::Math'} }->{'sqrt'}
-                  ->call_u( [ $$scope->{'num'} ], $scope, undef, 5.3 ) );
+                  ->( [ $$scope->{'num'} ], $scope, undef, 5.3 ) );
             return $ret->return;
         }
     );

@@ -146,8 +146,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                $$scope->{'_exit'}
-                  ->call_u( [ num( $f, 0 ) ], $scope, undef, 25.2 );
+                $$scope->{'_exit'}->( [ num( $f, 0 ) ], $scope, undef, 25.2 );
                 return $ret->return;
             }
         );
@@ -172,8 +171,7 @@ my $result = do {
                     my $maybe_0 = $$scope->{'signals'}
                       ->get_index_value( [ $$scope->{'type'} ], $scope );
                     if ( bool($maybe_0) ) {
-                        ${$maybe_0}->{'catch'}
-                          ->call_u( {}, $scope, undef, 32.35 );
+                        ${$maybe_0}->{'catch'}->( {}, $scope, undef, 32.35 );
                     }
                 }
                 return $ret->return;
@@ -197,8 +195,7 @@ my $result = do {
             INT => [
                 sub {
                     ${ $scope->{special} }->{'class'}
-                      ->call_u( [ FF::get_symbol( $f, 'INT' ) ],
-                        $scope, undef, 7.5 );
+                      ->( [ FF::get_symbol( $f, 'INT' ) ], $scope, undef, 7.5 );
                 }
             ],
             undef,
@@ -209,8 +206,7 @@ my $result = do {
             HUP => [
                 sub {
                     ${ $scope->{special} }->{'class'}
-                      ->call_u( [ FF::get_symbol( $f, 'HUP' ) ],
-                        $scope, undef, 8.5 );
+                      ->( [ FF::get_symbol( $f, 'HUP' ) ], $scope, undef, 8.5 );
                 }
             ],
             undef,
@@ -221,8 +217,8 @@ my $result = do {
             TERM => [
                 sub {
                     ${ $scope->{special} }->{'class'}
-                      ->call_u( [ FF::get_symbol( $f, 'TERM' ) ],
-                        $scope, undef, 9.5 );
+                      ->( [ FF::get_symbol( $f, 'TERM' ) ], $scope, undef,
+                        9.5 );
                 }
             ],
             undef,
@@ -232,9 +228,10 @@ my $result = do {
             $class,
             ALRM => [
                 sub {
-                    ${ $scope->{special} }->{'class'}
-                      ->call_u( [ FF::get_symbol( $f, 'ALRM' ) ],
-                        $scope, undef, 10.5 );
+                    ${ $scope->{special} }->{'class'}->(
+                        [ FF::get_symbol( $f, 'ALRM' ) ],
+                        $scope, undef, 10.5
+                    );
                 }
             ],
             undef,

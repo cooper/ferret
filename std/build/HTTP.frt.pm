@@ -81,8 +81,7 @@ my $result = do {
             $ret->inc;
             FF::need( $scope, $args, 'url', 12.2 ) or return;
             return $ret->return( ${ $$scope->{'client'} }->{'get'}
-                  ->call_u( { url => $$scope->{'url'} }, $scope, undef, 13.4 )
-            );
+                  ->( { url => $$scope->{'url'} }, $scope, undef, 13.4 ) );
             return $ret->return;
         }
     );
@@ -97,8 +96,7 @@ my $result = do {
             $ret->inc;
             FF::need( $scope, $args, 'url', 17.2 ) or return;
             return $ret->return( ${ $$scope->{'client'} }->{'post'}
-                  ->call_u( { url => $$scope->{'url'} }, $scope, undef, 18.4 )
-            );
+                  ->( { url => $$scope->{'url'} }, $scope, undef, 18.4 ) );
             return $ret->return;
         }
     );
@@ -122,11 +120,9 @@ my $result = do {
     );
     my $lv_client = FF::lex_assign(
         $scope,
-        client => [
-            sub { $$scope->{'HTTP::Client'}->call_u( {}, $scope, undef, 9.6 ) }
-        ],
-        undef,
-        9.2
+        client =>
+          [ sub { $$scope->{'HTTP::Client'}->( {}, $scope, undef, 9.6 ) } ],
+        undef, 9.2
     );
 };
 

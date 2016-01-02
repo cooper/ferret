@@ -68,7 +68,7 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'who', 2.2 ) or return;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [
                     add(
                         $scope,           str( $f, "Hello " ),
@@ -85,13 +85,13 @@ my $result = do {
     {
         my $maybe_0 = $$scope->{'sayHello'};
         if ( bool($maybe_0) ) {
-            $maybe_0->call_u( [ str( $f, "World" ) ], $scope, undef, 6.3 );
+            $maybe_0->( [ str( $f, "World" ) ], $scope, undef, 6.3 );
         }
     }
     {
         my $maybe_0 = $$scope->{'sayGoodbye'};
         if ( bool($maybe_0) ) {
-            $maybe_0->call_u( [ str( $f, "World" ) ], $scope, undef, 7.3 );
+            $maybe_0->( [ str( $f, "World" ) ], $scope, undef, 7.3 );
         }
     }
 };

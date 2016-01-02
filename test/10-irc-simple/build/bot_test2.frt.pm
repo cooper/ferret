@@ -56,7 +56,7 @@ my $result = do {
     FF::load_namespaces( $context, qw(Bot2) );
     my $lv_bot = FF::lex_assign(
         $scope,
-        bot => $$scope->{'Bot2'}->call_u(
+        bot => $$scope->{'Bot2'}->(
             {
                 address => str( $f, "k.notroll.net" ),
                 nick    => str( $f, "ferret" ),
@@ -68,8 +68,8 @@ my $result = do {
         1.1
     );
     $$scope->{'say'}
-      ->call_u( [ ${ $$scope->{'bot'} }->{'address'} ], $scope, undef, 2.2 );
-    ${ $$scope->{'bot'} }->{'connect'}->call_u( {}, $scope, undef, 3.3 );
+      ->( [ ${ $$scope->{'bot'} }->{'address'} ], $scope, undef, 2.2 );
+    ${ $$scope->{'bot'} }->{'connect'}->( {}, $scope, undef, 3.3 );
 };
 
 FF::after_content();

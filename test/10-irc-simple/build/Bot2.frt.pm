@@ -154,7 +154,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $$self->{'send'}->call_u(
+            $$self->{'send'}->(
                 [
                     add(
                         $scope,
@@ -170,9 +170,10 @@ my $result = do {
                 ],
                 $scope, undef, 14.06667
             );
-            $$self->{'send'}
-              ->call_u( [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, 15.2 );
+            $$self->{'send'}->(
+                [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
+                $scope, undef, 15.2
+            );
             return $ret->return;
         }
     );
@@ -186,9 +187,10 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'data', 20.2 ) or return;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
-                $scope, undef, 21.2 );
+                $scope, undef, 21.2
+            );
             return $ret->return;
         }
     );
@@ -202,9 +204,10 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'data', 25.2 ) or return;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
-                $scope, undef, 26.2 );
+                $scope, undef, 26.2
+            );
             return $ret->return;
         }
     );
@@ -248,12 +251,13 @@ my $result = do {
                 FF::need( $self, $args, 'user' )    or return;
                 FF::want( $self, $args, 'port', 5.1, num( $f, 6667 ) );
                 FF::want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
-                ${ $$scope->{'Socket::TCP'} }->{'init'}
-                  ->call_u( [ ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, 8.25 )
-                  ->call_u(
+                ${ $$scope->{'Socket::TCP'} }->{'init'}->(
+                    [ ${ $scope->{special} }->{'self'} ],
+                    $scope, undef, 8.25
+                  )->(
                     { addr => $$self->{'address'}, port => $$self->{'port'} },
-                    $scope, undef, 8.4 );
+                    $scope, undef, 8.4
+                  );
                 $self->set_property( send => $$self->{'println'}, 10.2 );
                 FF::on(
                     $self,

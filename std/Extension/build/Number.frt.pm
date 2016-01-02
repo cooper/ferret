@@ -133,7 +133,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    ${ $$scope->{'Math'} }->{'sqrt'}->call_u(
+                    ${ $$scope->{'Math'} }->{'sqrt'}->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
                         undef,                                21.4
                     )
@@ -149,8 +149,9 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                return $ret->return( $$self->{'root'}
-                      ->call_u( [ num( $f, 3 ) ], $scope, undef, 25.3 ) );
+                return $ret->return(
+                    $$self->{'root'}->( [ num( $f, 3 ) ], $scope, undef, 25.3 )
+                );
                 return $ret->return;
             }
         );
@@ -233,7 +234,7 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'root', 41.2 ) or return;
                 return $ret->return(
-                    ${ $$scope->{'Math'} }->{'root'}->call_u(
+                    ${ $$scope->{'Math'} }->{'root'}->(
                         [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
                         $scope,
                         undef,

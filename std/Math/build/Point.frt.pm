@@ -247,7 +247,7 @@ my $result = do {
                     11.2
                 );
                 return $ret->return(
-                    $$scope->{'sqrt'}->call_u(
+                    $$scope->{'sqrt'}->(
                         [
                             add(
                                 $scope,
@@ -271,9 +271,9 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    $$self->{'distanceTo'}->call_u(
+                    $$self->{'distanceTo'}->(
                         [
-                            ${ $scope->{special} }->{'class'}->call_u(
+                            ${ $scope->{special} }->{'class'}->(
                                 [ num( $f, 0 ), num( $f, 0 ) ], $scope,
                                 undef, 16.25
                             )
@@ -354,7 +354,7 @@ my $result = do {
                 FF::need( $scope, $args, 'pt1', 32.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 32.3 ) or return;
                 return $ret->return(
-                    ${ $scope->{special} }->{'class'}->call_u(
+                    ${ $scope->{special} }->{'class'}->(
                         {
                             x => div(
                                 $scope,
@@ -406,7 +406,7 @@ my $result = do {
                 FF::need( $scope, $args, 'pt1', 40.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 40.3 ) or return;
                 return $ret->return( ${ $$scope->{'pt1'} }->{'distanceTo'}
-                      ->call_u( [ $$scope->{'pt2'} ], $scope, undef, 41.4 ) );
+                      ->( [ $$scope->{'pt2'} ], $scope, undef, 41.4 ) );
                 return $ret->return;
             }
         );

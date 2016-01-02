@@ -35,8 +35,7 @@ my $result = do {
     my $scope = $file_scope;
     FF::load_core('main');
 
-    $$scope->{'say'}
-      ->call_u( [ str( $f, "Hello World!" ) ], $scope, undef, 1.25 );
+    $$scope->{'say'}->( [ str( $f, "Hello World!" ) ], $scope, undef, 1.25 );
 };
 
 FF::after_content();

@@ -163,7 +163,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $$self->{'send'}->call_u(
+            $$self->{'send'}->(
                 [
                     add(
                         $scope,
@@ -179,9 +179,10 @@ my $result = do {
                 ],
                 $scope, undef, 12.06667
             );
-            $$self->{'send'}
-              ->call_u( [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, 13.2 );
+            $$self->{'send'}->(
+                [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
+                $scope, undef, 13.2
+            );
             return $ret->return;
         }
     );
@@ -195,9 +196,10 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'data', 18.2 ) or return;
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
-                $scope, undef, 19.2 );
+                $scope, undef, 19.2
+            );
             return $ret->return;
         }
     );
@@ -242,7 +244,7 @@ my $result = do {
                 FF::want( $self, $args, 'port', 5.1, num( $f, 6667 ) );
                 FF::want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
                 $self->set_property(
-                    sock => $$scope->{'Socket::TCP'}->call_u(
+                    sock => $$scope->{'Socket::TCP'}->(
                         {
                             address  => $$self->{'addr'},
                             port     => $$self->{'port'},
@@ -284,8 +286,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                ${ $$self->{'sock'} }->{'connect'}
-                  ->call_u( {}, $scope, undef, 25.3 );
+                ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 25.3 );
                 return $ret->return;
             }
         );
@@ -305,11 +306,12 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 FF::need( $scope, $args, 'line', 29.2 ) or return;
-                $$scope->{'say'}->call_u(
+                $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, 30.2 );
+                    $scope, undef, 30.2
+                );
                 ${ $$self->{'sock'} }->{'println'}
-                  ->call_u( [ $$scope->{'line'} ], $scope, undef, 31.3 );
+                  ->( [ $$scope->{'line'} ], $scope, undef, 31.3 );
                 return $ret->return;
             }
         );

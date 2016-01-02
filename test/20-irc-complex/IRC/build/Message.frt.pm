@@ -209,7 +209,7 @@ my $result = do {
                 FF::need( $self, $args, 'line' ) or return;
                 my $lv_lineSplit = FF::lex_assign(
                     $scope,
-                    lineSplit => ${ $$self->{'line'} }->{'split'}->call_u(
+                    lineSplit => ${ $$self->{'line'} }->{'split'}->(
                         { separator => str( $f, " " ), limit => num( $f, 4 ) },
                         $scope,
                         undef,
@@ -227,7 +227,7 @@ my $result = do {
                     nickname => ${
                         $$scope->{'lineSplit'}
                           ->get_index_value( [ num( $f, 0 ) ], $scope )
-                      }->{'split'}->call_u(
+                      }->{'split'}->(
                         { separator => str( $f, "!" ), limit => num( $f, 2 ) },
                         $scope,
                         undef,
@@ -237,7 +237,7 @@ my $result = do {
                 );
                 $self->set_property(
                     nickname => ${ $$self->{'nickname'} }->{'trimPrefix'}
-                      ->call_u( [ str( $f, ":" ) ], $scope, undef, 11.5 ),
+                      ->( [ str( $f, ":" ) ], $scope, undef, 11.5 ),
                     11.2
                 );
                 $self->set_property(
@@ -247,12 +247,12 @@ my $result = do {
                 );
                 $self->set_property(
                     message => ${ $$self->{'message'} }->{'trimPrefix'}
-                      ->call_u( [ str( $f, ":" ) ], $scope, undef, 15.5 ),
+                      ->( [ str( $f, ":" ) ], $scope, undef, 15.5 ),
                     15.2
                 );
                 $self->set_property(
                     parts => ${ $$self->{'message'} }->{'split'}
-                      ->call_u( [ str( $f, " " ) ], $scope, undef, 18.5 ),
+                      ->( [ str( $f, " " ) ], $scope, undef, 18.5 ),
                     18.2
                 );
                 return $ret->return;
@@ -273,7 +273,7 @@ my $result = do {
                             $$self->{'parts'}
                               ->get_index_value( [ num( $f, 0 ) ], $scope )
                           }->{'hasPrefix'}
-                          ->call_u( [ str( $f, "." ) ], $scope, undef, 26.35 )
+                          ->( [ str( $f, "." ) ], $scope, undef, 26.35 )
                     )
                   )
                 {
@@ -285,7 +285,7 @@ my $result = do {
                             $$self->{'parts'}
                               ->get_index_value( [ num( $f, 0 ) ], $scope )
                           }->{'trimPrefix'}
-                          ->call_u( [ str( $f, "." ) ], $scope, undef, 27.4 ),
+                          ->( [ str( $f, "." ) ], $scope, undef, 27.4 ),
                         $file_scope,
                         27.1
                     );
@@ -336,7 +336,7 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $ret->return(
-                    ${ $$self->{'message'} }->{'split'}->call_u(
+                    ${ $$self->{'message'} }->{'split'}->(
                         {
                             separator => str( $f, " " ),
                             limit =>

@@ -199,9 +199,10 @@ my $result = do {
                     $$scope->{'defaultLength'} );
                 FF::want( $self, $args, 'writeLength', 23.2,
                     $$scope->{'defaultLength'} );
-                ${ $$scope->{'NATIVE::HTTPClient'} }->{'initialize'}
-                  ->call_u( [ ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, 25.5 );
+                ${ $$scope->{'NATIVE::HTTPClient'} }->{'initialize'}->(
+                    [ ${ $scope->{special} }->{'self'} ],
+                    $scope, undef, 25.5
+                );
                 return $ret->return;
             }
         );
@@ -222,7 +223,7 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'url', 29.2 ) or return;
                 return $ret->return(
-                    $$self->{'request'}->call_u(
+                    $$self->{'request'}->(
                         {
                             httpMethod => FF::get_symbol( $f, 'GET' ),
                             url        => $$scope->{'url'}
@@ -250,7 +251,7 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'url', 37.2 ) or return;
                 return $ret->return(
-                    $$self->{'request'}->call_u(
+                    $$self->{'request'}->(
                         {
                             httpMethod => FF::get_symbol( $f, 'POST' ),
                             url        => $$scope->{'url'}
@@ -286,7 +287,7 @@ my $result = do {
                 FF::need( $scope, $args, 'httpMethod', 45.1 ) or return;
                 FF::need( $scope, $args, 'url',        45.3 ) or return;
                 return $ret->return(
-                    $$scope->{'HTTP::Request'}->call_u(
+                    $$scope->{'HTTP::Request'}->(
                         {
                             client     => ${ $scope->{special} }->{'self'},
                             httpMethod => $$scope->{'httpMethod'},

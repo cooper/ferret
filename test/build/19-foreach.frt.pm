@@ -52,7 +52,7 @@ my $result = do {
     my $lv_words = FF::lex_assign(
         $scope,
         words => ${ str( $f, "how are you?" ) }->{'split'}
-          ->call_u( [ str( $f, " " ) ], $scope, undef, 1.5 ),
+          ->( [ str( $f, " " ) ], $scope, undef, 1.5 ),
         undef, 1.2
     );
     FF::iterate(
@@ -62,9 +62,10 @@ my $result = do {
         sub {
             my $scope   = shift;
             my $lv_word = $scope->property_u('word');
-            $$scope->{'say'}->call_u(
+            $$scope->{'say'}->(
                 [ add( $scope, str( $f, "part: " ), $$scope->{'word'} ) ],
-                $scope, undef, 4.2 );
+                $scope, undef, 4.2
+            );
         },
         3.1
     );

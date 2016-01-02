@@ -85,7 +85,7 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             $$scope->{'say'}
-              ->call_u( [ str( $f, "five seconds up" ) ], $scope, undef, 4.2 );
+              ->( [ str( $f, "five seconds up" ) ], $scope, undef, 4.2 );
             return $ret->return;
         }
     );
@@ -98,36 +98,36 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $$scope->{'say'}->call_u( [ str( $f, "this shouldn't be said" ) ],
-                $scope, undef, 9.2 );
+            $$scope->{'say'}
+              ->( [ str( $f, "this shouldn't be said" ) ], $scope, undef, 9.2 );
             return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $$scope->{'say'}->call_u( [ str( $f, "hello" ) ], $scope, undef, 1.2 );
+    $$scope->{'say'}->( [ str( $f, "hello" ) ], $scope, undef, 1.2 );
     FF::on(
-        ${
-            $$scope->{'Timer'}->call_u( [ num( $f, 5 ) ], $scope, undef, 3.15 )
-          }->{'once'}->call_u( {}, $scope, undef, 3.35 ),
-        'expire', $self, $scope,
+        ${ $$scope->{'Timer'}->( [ num( $f, 5 ) ], $scope, undef, 3.15 ) }
+          ->{'once'}->( {}, $scope, undef, 3.35 ),
+        'expire',
+        $self,
+        $scope,
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
     my $lv_t2 = FF::lex_assign(
         $scope,
-        t2 =>
-          $$scope->{'Timer'}->call_u( [ num( $f, 2 ) ], $scope, undef, 7.4 ),
+        t2 => $$scope->{'Timer'}->( [ num( $f, 2 ) ], $scope, undef, 7.4 ),
         undef, 7.2
     );
     FF::on(
-        ${ $$scope->{'t2'} }->{'once'}->call_u( {}, $scope, undef, 8.4 ),
+        ${ $$scope->{'t2'} }->{'once'}->( {}, $scope, undef, 8.4 ),
         'expire',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'t2'} }->{'cancel'}->call_u( {}, $scope, undef, 12.3 );
+    ${ $$scope->{'t2'} }->{'cancel'}->( {}, $scope, undef, 12.3 );
 };
 
 FF::after_content();

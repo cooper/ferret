@@ -106,7 +106,7 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
-                      ->call_u( {}, $scope, undef, 14.3 ),
+                      ->( {}, $scope, undef, 14.3 ),
                     do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                 ],
                 equal_to => undef
@@ -122,11 +122,11 @@ my $result = do {
             FF::typedef_check(
                 $scope, $scope, $ins,
                 conditions => [
-                    $create_can->( 'getValue', $ins )->call_u(
+                    $create_can->( 'getValue', $ins )->(
                         { index => $$scope->{'Hashable'} }, $scope,
                         undef, 19.3
                     ),
-                    $create_can->( 'setValue', $ins )->call_u(
+                    $create_can->( 'setValue', $ins )->(
                         {
                             value => $$scope->{'Obj'},
                             index => $$scope->{'Hashable'}

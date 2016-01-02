@@ -355,43 +355,37 @@ my $result = do {
     FF::load_namespaces( $context, qw(Cat Cow Dog) );
     my $lv_animal = FF::lex_assign(
         $scope,
-        animal => $$scope->{'Cow'}->call_u( {}, $scope, undef, 50.4 ),
+        animal => $$scope->{'Cow'}->( {}, $scope, undef, 50.4 ),
         undef, 50.2
     );
     ${ $$scope->{'Dog'} }->{'init'}
-      ->call_u( [ $$scope->{'animal'} ], $scope, undef, 53.3 )
-      ->call_u( {}, $scope, undef, 53.6 );
-    $$scope->{'say'}->call_u(
-        [
-            ${ $$scope->{'animal'} }->{'moo'}->call_u( {}, $scope, undef, 56.5 )
-        ],
+      ->( [ $$scope->{'animal'} ], $scope, undef, 53.3 )
+      ->( {}, $scope, undef, 53.6 );
+    $$scope->{'say'}->(
+        [ ${ $$scope->{'animal'} }->{'moo'}->( {}, $scope, undef, 56.5 ) ],
         $scope, undef, 56.2
     );
-    $$scope->{'say'}->call_u(
-        [
-            ${ $$scope->{'animal'} }->{'bark'}
-              ->call_u( {}, $scope, undef, 57.5 )
-        ],
+    $$scope->{'say'}->(
+        [ ${ $$scope->{'animal'} }->{'bark'}->( {}, $scope, undef, 57.5 ) ],
         $scope, undef, 57.2
     );
     ${ $$scope->{'Cat'} }->{'init'}
-      ->call_u( [ $$scope->{'animal'} ], $scope, undef, 60.15 )
-      ->call_u( { mean => $true }, $scope, undef, 60.3 );
-    $$scope->{'inspect'}
-      ->call_u( [ $$scope->{'animal'} ], $scope, undef, 62.2 );
+      ->( [ $$scope->{'animal'} ], $scope, undef, 60.15 )
+      ->( { mean => $true }, $scope, undef, 60.3 );
+    $$scope->{'inspect'}->( [ $$scope->{'animal'} ], $scope, undef, 62.2 );
     my $lv_cat = FF::lex_assign(
         $scope,
-        cat => $$scope->{'Cat'}->call_u( {}, $scope, undef, 65.4 ),
+        cat => $$scope->{'Cat'}->( {}, $scope, undef, 65.4 ),
         undef, 65.2
     );
     my $lv_aftermath = FF::lex_assign(
         $scope,
         aftermath =>
           ${ FF::create_set( $scope, $$scope->{'animal'}, $$scope->{'cat'} ) }
-          ->{'fight'}->call_u( {}, $scope, undef, 71.45 ),
+          ->{'fight'}->( {}, $scope, undef, 71.45 ),
         undef, 71.1
     );
-    $$scope->{'say'}->call_u( [ $$scope->{'aftermath'} ], $scope, undef, 72.2 );
+    $$scope->{'say'}->( [ $$scope->{'aftermath'} ], $scope, undef, 72.2 );
 };
 
 FF::after_content();

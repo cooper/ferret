@@ -135,12 +135,12 @@ my $result = do {
         $scope,
         pt => ${
             $$scope->{'makePoint'}
-              ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11.2 )
+              ->( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11.2 )
           }->{'point'},
         undef,
         11.1
     );
-    $$scope->{'say'}->call_u(
+    $$scope->{'say'}->(
         [
             add(
                 $scope,
