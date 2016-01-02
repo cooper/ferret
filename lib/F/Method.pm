@@ -34,7 +34,7 @@ sub owner {
     my $class = $method->class;
     if ($method->{main}) {
         my $public = $method->{name} && substr($method->{name}, 0, 1) ne '_';
-        $owner_str = $public ? '$class'       : '$scope';
+        $owner_str = $public ? '$class' : '$scope';
         $owner     = $class;
     }
     else {

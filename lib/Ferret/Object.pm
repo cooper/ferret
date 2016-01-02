@@ -7,13 +7,16 @@ use utf8;
 use parent 'Evented::Object';
 
 use Scalar::Util qw(blessed weaken);
-use List::Util qw(first);
+use List::Util qw(first any);
 
 use Ferret::Core::Conversion qw(
     _pdescription _pstring
     _pnumber _pbool
 );
 use Ferret::Core::Errors qw(throw);
+
+use Ferret::Tie;
+use overload fallback => 1, '${}' => \&_tie;
 
 # create a new object.
 sub new {
@@ -97,31 +100,23 @@ sub set_property {
 
 # set a property or overwrite an inherited property.
 sub set_property_ow {
-    my ($obj, $context, $prop_name, $value, $pos) = @_;
+    my ($obj, $scope_limit, $prop_name, $value, $pos) = @_;
     $obj->_check_prop_alteration($prop_name, [caller], $pos);
+    my $owner = $obj->has_property($prop_name);
 
-    my $owner = $obj->has_property($prop_name) || $obj;
-
-    # if the owner is a context, but not the call context,
-    # do not overwrite that value.
-    #
-    # for example, if you set a variable $x in the CORE context
-    #
-    # $x = "hi";
-    #
-    # then do
-    #
-    # package Hello
-    # $x = "hello";
-    #
-    # $x will not overwrite the original "hi", even though
-    # it would otherwise have been inherited from the main context.
-    #
-    if ($owner->isa('Ferret::Context') && $owner != $context) {
-        $owner = $obj;
+    # never overwrite inherited context properties.
+    # this saves time over reaching the bottom.
+    if (!$owner || $owner->isa('Ferret::Context')) {
+        return $obj->set_property($prop_name => $value, $pos);
     }
 
-    return $owner->set_property($prop_name => $value);
+    # if the owner is the scope limit or any scope inheriting from it,
+    # it's OK to overwrite
+    if (any { $_ == $scope_limit } $owner, $owner->parents) {
+        return $owner->set_property($prop_name => $value, $pos);
+    }
+
+    return $obj->set_property($prop_name => $value, $pos);
 }
 
 # deletes a property.
@@ -588,6 +583,14 @@ sub DESTROY {
     my $obj = shift;
     my $f = $obj->f or return;
     delete $f->{objects}{$obj + 0};
+}
+
+sub _tie {
+	my $obj = shift;
+    return \$obj->{tie} if $obj->{tie};
+    $obj->{tie} = {};
+    tie %{ $obj->{tie} }, 'Ferret::Tie', $obj;
+    return \$obj->{tie};
 }
 
 ###############

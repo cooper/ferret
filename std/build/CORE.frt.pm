@@ -75,7 +75,8 @@ FF::before_content('CORE.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'CORE' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'CORE' );
+    my $scope = $file_scope;
     FF::load_core('CORE');
 
     FF::load_namespaces( $context,
@@ -94,8 +95,8 @@ my $result = do {
         },
         undef
     );
-    $context->set_property( Obj    => $scope->property_u('Any'), 10.3 );
-    $context->set_property( Object => $scope->property_u('Any'), 11.3 );
+    $context->set_property( Obj    => $$scope->{'Any'}, 10.3 );
+    $context->set_property( Object => $$scope->{'Any'}, 11.3 );
     FF::typedef(
         $scope, $context,
         'Hashable',
@@ -106,10 +107,7 @@ my $result = do {
                 conditions => [
                     $create_can->( 'hashValue', $ins )
                       ->call_u( {}, $scope, undef, 14.3 ),
-                    do {
-                        $ins =
-                          $transform->( $ins->property_u('hashValue'), $ins );
-                      }
+                    do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                 ],
                 equal_to => undef
             ) ? $ins : undef;
@@ -125,13 +123,13 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'getValue', $ins )->call_u(
-                        { index => $scope->property_u('Hashable') }, $scope,
+                        { index => $$scope->{'Hashable'} }, $scope,
                         undef, 19.3
                     ),
                     $create_can->( 'setValue', $ins )->call_u(
                         {
-                            value => $scope->property_u('Obj'),
-                            index => $scope->property_u('Hashable')
+                            value => $$scope->{'Obj'},
+                            index => $$scope->{'Hashable'}
                         },
                         $scope, undef, 20.15
                     )

@@ -317,7 +317,7 @@ sub c_CLOSURE_E {
     # close the closure and the node.
     my $closure = $c->closure;
     $c->close_closure;
-    $c->close_node($closure->type =~ m/Body$/ ? 2 : 1);
+    $c->close_node($closure->is_type('Body') ? 2 : 1);
 
     # this is a closure-capturing function call.
     if ($closure->{call_closure}) {

@@ -47,18 +47,18 @@ FF::before_content('16-become.frt');
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Math Math::Point) );
-    $scope->set_property( obj => str( $f, "hi" ), 2.2 );
-    $scope->property_u('Math::Point')->property_u('init')
-      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 9.25 )
+    my $lv_obj = FF::lex_assign( $scope, obj => str( $f, "hi" ), undef, 2.2 );
+    ${ $$scope->{'Math::Point'} }->{'init'}
+      ->call_u( [ $$scope->{'obj'} ], $scope, undef, 9.25 )
       ->call_u( [ num( $f, 1 ), num( $f, 1 ) ], $scope, undef, 9.4 );
-    $scope->property_u('say')->call_u(
+    $$scope->{'say'}->call_u(
         [
-            $scope->property_u('obj')->property_u('pretty')
-              ->call_u( {}, $scope, undef, 11.5 )
+            ${ $$scope->{'obj'} }->{'pretty'}->call_u( {}, $scope, undef, 11.5 )
         ],
         $scope, undef, 11.2
     );

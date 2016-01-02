@@ -67,7 +67,8 @@ FF::before_content('Request.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'HTTP' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'HTTP' );
+    my $scope = $file_scope;
     FF::load_core('HTTP');
 
     # Class 'Request'
@@ -103,10 +104,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 FF::need( $scope, $args, 'client', 7.2 ) or return;
-                $self->set_property(
-                    client => $scope->property_u('client'),
-                    8.2
-                );
+                $self->set_property( client => $$scope->{'client'}, 8.2 );
                 $self->weaken_property( 'client', 9.1 );
                 FF::need( $self, $args, 'url' )        or return;
                 FF::need( $self, $args, 'httpMethod' ) or return;
@@ -122,14 +120,9 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                $scope->property_u('NATIVE::HTTPClient')->property_u('connect')
-                  ->call_u(
-                    [
-                        $self->property_u('client'),
-                        $scope->{special}->property_u('self')
-                    ],
-                    $scope, undef, 17.25
-                  );
+                ${ $$scope->{'NATIVE::HTTPClient'} }->{'connect'}->call_u(
+                    [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
+                    $scope, undef, 17.25 );
                 return $ret->return;
             }
         );

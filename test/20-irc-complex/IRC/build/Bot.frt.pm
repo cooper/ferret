@@ -547,7 +547,8 @@ FF::before_content('Bot.frt');
 
 use Ferret::Core::Operations qw(add bool equal nequal num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
+    my $scope = $file_scope;
     FF::load_core('IRC');
 
     # Anonymous function definition
@@ -559,30 +560,25 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $self->property_u('send')->call_u(
+            $$self->{'send'}->call_u(
                 [
                     add(
                         $scope,
                         str( $f, "USER " ),
-                        $self->property_u('user'),
+                        $$self->{'user'},
                         str( $f, " " ),
                         str( $f, "*" ),
                         str( $f, " " ),
                         str( $f, "*" ),
                         str( $f, " :" ),
-                        $self->property_u('real')
+                        $$self->{'real'}
                     )
                 ],
                 $scope, undef, 30.06667
             );
-            $self->property_u('send')->call_u(
-                [
-                    add(
-                        $scope, str( $f, "NICK " ), $self->property_u('nick')
-                    )
-                ],
-                $scope, undef, 31.2
-            );
+            $$self->{'send'}
+              ->call_u( [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
+                $scope, undef, 31.2 );
             return $ret->return;
         }
     );
@@ -597,8 +593,8 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'data', 36.2 ) or return;
-            $self->property_u('handleLine')
-              ->call_u( [ $scope->property_u('data') ], $scope, undef, 37.2 );
+            $$self->{'handleLine'}
+              ->call_u( [ $$scope->{'data'} ], $scope, undef, 37.2 );
             return $ret->return;
         }
     );
@@ -612,26 +608,26 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            if ( bool( $self->property_u('_joinedChannels') ) ) {
+            if ( bool( $$self->{'_joinedChannels'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 return $ret->return();
             }
-            if ( bool( $self->property_u('autojoin') ) ) {
+            if ( bool( $$self->{'autojoin'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 FF::iterate(
                     $f, $scope,
-                    $self->property_u('autojoin'),
+                    $$self->{'autojoin'},
                     'chan',
                     sub {
-                        my $scope = shift;
-                        $self->property_u('send')->call_u(
+                        my $scope   = shift;
+                        my $lv_chan = $scope->property_u('chan');
+                        $$self->{'send'}->call_u(
                             [
                                 add(
-                                    $scope,
-                                    str( $f, "JOIN " ),
-                                    $scope->property_u('chan')
+                                    $scope, str( $f, "JOIN " ),
+                                    $$scope->{'chan'}
                                 )
                             ],
                             $scope, undef, 99.2
@@ -654,12 +650,12 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 's', 109.2 ) or return;
-            $self->property_u('send')->call_u(
+            $$self->{'send'}->call_u(
                 [
                     add(
                         $scope,
                         str( $f, "PONG " ),
-                        $scope->property_u('s')
+                        $$scope->{'s'}
                           ->get_index_value( [ num( $f, 1 ) ], $scope )
                     )
                 ],
@@ -683,34 +679,31 @@ my $result = do {
             $ret->inc;
             FF::need( $scope, $args, 'line', 114.2 ) or return;
             FF::need( $scope, $args, 's',    114.4 ) or return;
-            $scope->set_property_ow(
-                $context,
-                msg => $scope->property_u('IRC::Message')->call_u(
-                    [ $scope->property_u('line') ],
-                    $scope, undef, 117.3
-                ),
-                117.1
+            my $lv_msg = FF::lex_assign(
+                $scope,
+                msg => $$scope->{'IRC::Message'}
+                  ->call_u( [ $$scope->{'line'} ], $scope, undef, 117.3 ),
+                $file_scope, 117.1
             );
-            $ret->set_property( msg => $scope->property_u('msg'), 118.2 );
-            if ( bool( $scope->property_u('msg')->property_u('command') ) ) {
+            $ret->set_property( msg => $$scope->{'msg'}, 118.2 );
+            if ( bool( ${ $$scope->{'msg'} }->{'command'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 {
-                    my $maybe_0 =
-                      $self->property_u('commands')->get_index_value(
+                    my $maybe_0 = $$self->{'commands'}->get_index_value(
                         [
-                            $scope->property_u('msg')->property_u('command')
-                              ->property_u('lowercase')
+                            ${ ${ $$scope->{'msg'} }->{'command'} }
+                              ->{'lowercase'}
                         ],
                         $scope
-                      );
+                    );
                     if ( bool($maybe_0) ) {
                         $maybe_0->call_u(
                             {
-                                _self => $scope->{special}->property_u('self'),
-                                line  => $scope->property_u('line'),
-                                s     => $scope->property_u('s'),
-                                msg   => $scope->property_u('msg')
+                                _self => ${ $scope->{special} }->{'self'},
+                                line  => $$scope->{'line'},
+                                s     => $$scope->{'s'},
+                                msg   => $$scope->{'msg'}
                             },
                             $scope, undef, 121.6
                         );
@@ -731,17 +724,17 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'msg', 131.2 ) or return;
-            $scope->set_property_ow(
-                $context,
-                nickname => $scope->property_u('msg')->property_u('nickname'),
-                132.2
+            my $lv_nickname = FF::lex_assign(
+                $scope,
+                nickname => ${ $$scope->{'msg'} }->{'nickname'},
+                $file_scope, 132.2
             );
-            $self->property_u('privmsg')->call_u(
+            $$self->{'privmsg'}->call_u(
                 [
-                    $scope->property_u('msg')->property_u('channel'),
+                    ${ $$scope->{'msg'} }->{'channel'},
                     add(
-                        $scope,                         str( $f, "Hi " ),
-                        $scope->property_u('nickname'), str( $f, "!" )
+                        $scope,                str( $f, "Hi " ),
+                        $$scope->{'nickname'}, str( $f, "!" )
                     )
                 ],
                 $scope, undef, 133.1
@@ -760,35 +753,33 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'msg', 137.2 ) or return;
-            $scope->property_u('inspect')
-              ->call_u( [ $scope->property_u('msg') ], $scope, undef, 138.2 );
-            $scope->set_property_ow(
-                $context,
-                trigger => $scope->property_u('msg')->property_u('parts')
+            $$scope->{'inspect'}
+              ->call_u( [ $$scope->{'msg'} ], $scope, undef, 138.2 );
+            my $lv_trigger = FF::lex_assign(
+                $scope,
+                trigger => ${ $$scope->{'msg'} }->{'parts'}
                   ->get_index_value( [ num( $f, 1 ) ], $scope ),
-                141.2
+                $file_scope, 141.2
             );
-            $scope->set_property_ow(
-                $context,
-                response => $scope->property_u('msg')->property_u('fromWord')
+            my $lv_response = FF::lex_assign(
+                $scope,
+                response => ${ $$scope->{'msg'} }->{'fromWord'}
                   ->call_u( [ num( $f, 2 ) ], $scope, undef, 142.5 ),
-                142.2
+                $file_scope, 142.2
             );
-            $self->property_u('factoids')
-              ->set_index_value( [ $scope->property_u('trigger') ],
-                $scope->property_u('response'), $scope );
-            $self->property_u('commands')
-              ->set_index_value( [ $scope->property_u('trigger') ],
-                $scope->property_u('_commandFactoid'), $scope );
-            $self->property_u('privmsg')->call_u(
+            $$self->{'factoids'}->set_index_value( [ $$scope->{'trigger'} ],
+                $$scope->{'response'}, $scope );
+            $$self->{'commands'}->set_index_value( [ $$scope->{'trigger'} ],
+                $$scope->{'_commandFactoid'}, $scope );
+            $$self->{'privmsg'}->call_u(
                 [
-                    $scope->property_u('msg')->property_u('channel'),
+                    ${ $$scope->{'msg'} }->{'channel'},
                     add(
                         $scope,
                         str( $f, "alright, associating ." ),
-                        $scope->property_u('trigger'),
+                        $$scope->{'trigger'},
                         str( $f, " with '" ),
-                        $scope->property_u('response'),
+                        $$scope->{'response'},
                         str( $f, "'" )
                     )
                 ],
@@ -808,21 +799,17 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'msg', 152.2 ) or return;
-            $scope->set_property_ow(
-                $context,
-                response => $self->property_u('factoids')->get_index_value(
-                    [ $scope->property_u('msg')->property_u('command') ],
-                    $scope
+            my $lv_response = FF::lex_assign(
+                $scope,
+                response => $$self->{'factoids'}->get_index_value(
+                    [ ${ $$scope->{'msg'} }->{'command'} ], $scope
                 ),
+                $file_scope,
                 153.2
             );
-            $self->property_u('privmsg')->call_u(
-                [
-                    $scope->property_u('msg')->property_u('channel'),
-                    $scope->property_u('response')
-                ],
-                $scope, undef, 154.2
-            );
+            $$self->{'privmsg'}->call_u(
+                [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'response'} ],
+                $scope, undef, 154.2 );
             return $ret->return;
         }
     );
@@ -862,8 +849,7 @@ my $result = do {
                 FF::want( $self, $args, 'user', 19.2, str( $f, "ferret" ) );
                 FF::want( $self, $args, 'real', 20.2, str( $f, "Ferret IRC" ) );
                 $self->set_property(
-                    commands =>
-                      $scope->property_u('initialCommands')->property_u('copy')
+                    commands => ${ $$scope->{'initialCommands'} }->{'copy'}
                       ->call_u( {}, $scope, undef, 22.5 ),
                     22.2
                 );
@@ -872,10 +858,10 @@ my $result = do {
                     23.2
                 );
                 $self->set_property(
-                    sock => $scope->property_u('Socket::TCP')->call_u(
+                    sock => $$scope->{'Socket::TCP'}->call_u(
                         {
-                            address  => $self->property_u('addr'),
-                            port     => $self->property_u('port'),
+                            address  => $$self->{'addr'},
+                            port     => $$self->{'port'},
                             readMode => FF::get_symbol( $f, 'line' )
                         },
                         $scope, undef, 26.3
@@ -883,7 +869,7 @@ my $result = do {
                     26.1
                 );
                 FF::on(
-                    $self->property_u('sock'),
+                    $$self->{'sock'},
                     'connected',
                     $self, $scope,
                     $func_0->inside_scope(
@@ -893,7 +879,7 @@ my $result = do {
                     {}
                 );
                 FF::on(
-                    $self->property_u('sock'),
+                    $$self->{'sock'},
                     'gotLine',
                     $self, $scope,
                     $func_1->inside_scope(
@@ -931,9 +917,8 @@ my $result = do {
                 FF::need( $scope, $args, 'callback', 43.4 ) or return;
                 if (
                     bool(
-                        $self->property_u('commands')->get_index_value(
-                            [ $scope->property_u('command') ], $scope
-                        )
+                        $$self->{'commands'}
+                          ->get_index_value( [ $$scope->{'command'} ], $scope )
                     )
                   )
                 {
@@ -941,9 +926,8 @@ my $result = do {
 
                     $ret->set_property( overwrote => $true, 45.2 );
                 }
-                $self->property_u('commands')
-                  ->set_index_value( [ $scope->property_u('command') ],
-                    $scope->property_u('callback'), $scope );
+                $$self->{'commands'}->set_index_value( [ $$scope->{'command'} ],
+                    $$scope->{'callback'}, $scope );
                 $ret->set_property( added => $true, 47.2 );
                 return $ret->return;
             }
@@ -957,7 +941,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                $self->property_u('sock')->property_u('connect')
+                ${ $$self->{'sock'} }->{'connect'}
                   ->call_u( {}, $scope, undef, 51.3 );
                 return $ret->return;
             }
@@ -978,18 +962,11 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 FF::need( $scope, $args, 'line', 55.2 ) or return;
-                $scope->property_u('say')->call_u(
-                    [
-                        add(
-                            $scope, str( $f, "send: " ),
-                            $scope->property_u('line')
-                        )
-                    ],
-                    $scope, undef, 56.2
-                );
-                $self->property_u('sock')->property_u('println')
-                  ->call_u( [ $scope->property_u('line') ],
-                    $scope, undef, 57.3 );
+                $$scope->{'say'}->call_u(
+                    [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
+                    $scope, undef, 56.2 );
+                ${ $$self->{'sock'} }->{'println'}
+                  ->call_u( [ $$scope->{'line'} ], $scope, undef, 57.3 );
                 return $ret->return;
             }
         );
@@ -1010,23 +987,23 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 FF::need( $scope, $args, 'line', 61.2 ) or return;
-                $scope->set_property_ow(
-                    $context,
-                    s => $scope->property_u('line')->property_u('split')
+                my $lv_s = FF::lex_assign(
+                    $scope,
+                    s => ${ $$scope->{'line'} }->{'split'}
                       ->call_u( [ str( $f, " " ) ], $scope, undef, 64.5 ),
-                    64.2
+                    $file_scope, 64.2
                 );
-                $scope->set_property_ow(
-                    $context,
-                    command => $scope->property_u('s')
+                my $lv_command = FF::lex_assign(
+                    $scope,
+                    command => $$scope->{'s'}
                       ->get_index_value( [ num( $f, 1 ) ], $scope ),
-                    65.2
+                    $file_scope, 65.2
                 );
                 if (
                     bool(
                         equal(
                             $scope,
-                            $scope->property_u('s')
+                            $$scope->{'s'}
                               ->get_index_value( [ num( $f, 0 ) ], $scope ),
                             str( $f, "PING" )
                         )
@@ -1035,35 +1012,33 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $scope->set_property_ow(
-                        $context,
-                        command => $scope->property_u('s')
+                    my $lv_command = FF::lex_assign(
+                        $scope,
+                        command => $$scope->{'s'}
                           ->get_index_value( [ num( $f, 0 ) ], $scope ),
-                        69.2
+                        $file_scope, 69.2
                     );
                 }
-                $scope->property_u('say')->call_u(
+                $$scope->{'say'}->call_u(
                     [
                         add(
-                            $scope,                        str( $f, "recv[" ),
-                            $scope->property_u('command'), str( $f, "]: " ),
-                            $scope->property_u('line')
+                            $scope,               str( $f, "recv[" ),
+                            $$scope->{'command'}, str( $f, "]: " ),
+                            $$scope->{'line'}
                         )
                     ],
                     $scope, undef, 71.1
                 );
                 {
-                    my $maybe_0 =
-                      $scope->property_u('handlers')
-                      ->get_index_value( [ $scope->property_u('command') ],
-                        $scope );
+                    my $maybe_0 = $$scope->{'handlers'}
+                      ->get_index_value( [ $$scope->{'command'} ], $scope );
                     if ( bool($maybe_0) ) {
                         $maybe_0->call_u(
                             {
-                                _self => $scope->{special}->property_u('self'),
-                                line  => $scope->property_u('line'),
-                                command => $scope->property_u('command'),
-                                s       => $scope->property_u('s')
+                                _self   => ${ $scope->{special} }->{'self'},
+                                line    => $$scope->{'line'},
+                                command => $$scope->{'command'},
+                                s       => $$scope->{'s'}
                             },
                             $scope, undef, 74.6
                         );
@@ -1098,17 +1073,17 @@ my $result = do {
                 FF::need( $scope, $args, 'message', 84.3 ) or return;
                 FF::iterate(
                     $f, $scope,
-                    $scope->property_u('message')->property_u('split')
+                    ${ $$scope->{'message'} }->{'split'}
                       ->call_u( [ str( $f, "\n" ) ], $scope, undef, 85.3 ),
                     'line',
                     sub {
-                        my $scope = shift;
+                        my $scope   = shift;
+                        my $lv_line = $scope->property_u('line');
                         if (
                             bool(
                                 nequal(
                                     $scope,
-                                    $scope->property_u('line')
-                                      ->property_u('length'),
+                                    ${ $$scope->{'line'} }->{'length'},
                                     num( $f, 0 )
                                 )
                             )
@@ -1117,14 +1092,14 @@ my $result = do {
                             my $scope =
                               Ferret::Scope->new( $f, parent => $scope );
 
-                            $self->property_u('send')->call_u(
+                            $$self->{'send'}->call_u(
                                 [
                                     add(
                                         $scope,
                                         str( $f, "PRIVMSG " ),
-                                        $scope->property_u('channel'),
+                                        $$scope->{'channel'},
                                         str( $f, " :" ),
-                                        $scope->property_u('line')
+                                        $$scope->{'line'}
                                     )
                                 ],
                                 $scope, undef, 87.1
@@ -1178,26 +1153,30 @@ my $result = do {
             _commandFactoid => $scope,
             $scope, $class, undef, undef
         );
-        $class->set_property(
+        my $lv_handlers = FF::lex_assign(
+            $class,
             handlers => FF::create_hash(
                 $f,
                 {
-                    MODE    => $scope->property_u('_joinChannels'),
-                    PING    => $scope->property_u('_pong'),
-                    PRIVMSG => $scope->property_u('_handleMessage')
+                    MODE    => $$scope->{'_joinChannels'},
+                    PING    => $$scope->{'_pong'},
+                    PRIVMSG => $$scope->{'_handleMessage'}
                 }
             ),
+            undef,
             4.3
         );
-        $class->set_property(
+        my $lv_initialCommands = FF::lex_assign(
+            $class,
             initialCommands => FF::create_hash(
                 $f,
                 {
-                    hello => $scope->property_u('_commandHello'),
-                    hi    => $scope->property_u('_commandHello'),
-                    add   => $scope->property_u('_commandAdd')
+                    hello => $$scope->{'_commandHello'},
+                    hi    => $$scope->{'_commandHello'},
+                    add   => $$scope->{'_commandAdd'}
                 }
             ),
+            undef,
             10.3
         );
     }

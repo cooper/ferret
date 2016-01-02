@@ -28,10 +28,12 @@ FF::before_content('Second.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
-    $scope->set_property( x => FF::create_object( $f, {} ), 1.2 );
+    my $lv_x =
+      FF::lex_assign( $scope, x => FF::create_object( $f, {} ), undef, 1.2 );
     $scope->weaken_property( 'x', 2.1 );
 };
 

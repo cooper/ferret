@@ -116,7 +116,8 @@ FF::before_content('Number.frt');
 
 use Ferret::Core::Operations qw(equal mod nequal num pow);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Class 'Number'
@@ -132,9 +133,9 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    $scope->property_u('Math')->property_u('sqrt')->call_u(
-                        [ $scope->{special}->property_u('self') ], $scope,
-                        undef,                                     21.4
+                    ${ $$scope->{'Math'} }->{'sqrt'}->call_u(
+                        [ ${ $scope->{special} }->{'self'} ], $scope,
+                        undef,                                21.4
                     )
                 );
                 return $ret->return;
@@ -148,7 +149,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                return $ret->return( $self->property_u('root')
+                return $ret->return( $$self->{'root'}
                       ->call_u( [ num( $f, 3 ) ], $scope, undef, 25.3 ) );
                 return $ret->return;
             }
@@ -163,7 +164,8 @@ my $result = do {
                 $ret->inc;
                 return $ret->return(
                     pow(
-                        $scope, $scope->{special}->property_u('self'),
+                        $scope,
+                        ${ $scope->{special} }->{'self'},
                         num( $f, 2 )
                     )
                 );
@@ -183,7 +185,7 @@ my $result = do {
                         $scope,
                         mod(
                             $scope,
-                            $scope->{special}->property_u('self'),
+                            ${ $scope->{special} }->{'self'},
                             num( $f, 2 )
                         ),
                         num( $f, 0 )
@@ -205,7 +207,7 @@ my $result = do {
                         $scope,
                         mod(
                             $scope,
-                            $scope->{special}->property_u('self'),
+                            ${ $scope->{special} }->{'self'},
                             num( $f, 2 )
                         ),
                         num( $f, 0 )
@@ -231,12 +233,11 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'root', 41.2 ) or return;
                 return $ret->return(
-                    $scope->property_u('Math')->property_u('root')->call_u(
-                        [
-                            $scope->property_u('root'),
-                            $scope->{special}->property_u('self')
-                        ],
-                        $scope, undef, 42.2
+                    ${ $$scope->{'Math'} }->{'root'}->call_u(
+                        [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
+                        $scope,
+                        undef,
+                        42.2
                     )
                 );
                 return $ret->return;
@@ -256,9 +257,9 @@ my $result = do {
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->instance_of_u(
-                            $scope->{special}->property_u('class')
+                            ${ $scope->{special} }->{'class'}
                         ),
-                        $ins->property_u('even')
+                        $$ins->{'even'}
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
@@ -273,9 +274,9 @@ my $result = do {
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->instance_of_u(
-                            $scope->{special}->property_u('class')
+                            ${ $scope->{special} }->{'class'}
                         ),
-                        $ins->property_u('odd')
+                        $$ins->{'odd'}
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
@@ -291,19 +292,16 @@ my $result = do {
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->instance_of_u(
-                            $scope->{special}->property_u('class')
+                            ${ $scope->{special} }->{'class'}
                         ),
-                        do {
-                            $ins =
-                              $transform->( $ins->property_u('round'), $ins );
-                          }
+                        do { $ins = $transform->( $$ins->{'round'}, $ins ) }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
             },
             undef
         );
-        $class->set_property( Int => $scope->property_u('Integer'), 18.3 );
+        $class->set_property( Int => $$scope->{'Integer'}, 18.3 );
     }
     FF::load_namespaces( $context, qw(Int Integer Math Num) );
 };

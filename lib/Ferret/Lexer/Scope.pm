@@ -42,6 +42,21 @@ sub earliest_lex_declaration {
     return;
 }
 
+# returns the position of where a lex declaration occurred.
+# it might be in this scope or another parent scope.
+sub where_lex_declared {
+    my ($scope, $var_name) = @_;
+
+    # if we own vars by this name, check that at least one was defined
+    # before it is referenced.
+    if (defined(my $earliest = $scope->earliest_lex_declaration($var_name))) {
+        return $earliest;
+    }
+
+    my $parent_scope = $scope->parent_scope or return;
+    return $parent_scope->where_lex_declared($var_name);
+}
+
 # returns true if it's ok to reference a lexical var at this position.
 sub is_lex_reference_ok {
     my ($scope, $var_name, $pos) = @_;

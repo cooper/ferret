@@ -93,6 +93,9 @@ sub identify_lexical_variable_declarations {
         # the scope of interest is the one containing the assignment
         my $soi = $wn->first_upper_scope;
 
+        # remember the location.
+        $v->{lex_declarations}{ $wn->{close_pos} } = [ $wn, $wn->variable ];
+
         # process the declaration.
         my $var = $wn->variable;
         $var->{could_be_declaration} = 1;
@@ -109,6 +112,10 @@ sub identify_lexical_variable_declarations {
 
         # the scope of interest is the one containing the declaration
         my $soi = $share->first_upper_scope;
+
+        # remember the location.
+        $v->{lex_declarations}{ $share->{close_pos} } =
+            [ $share, $share->variable ];
 
         # process the declaration.
         my $var = $share->variable;
@@ -127,6 +134,10 @@ sub identify_lexical_variable_declarations {
         # the scope of interest is the one containing the declaration
         my $soi = $local->first_upper_scope;
 
+        # remember the location.
+        $v->{lex_declarations}{ $local->{close_pos} } =
+            [ $local, $local->variable ];
+
         # process the declaration.
         my $var = $local->variable;
         $var->{could_be_declaration} = 1;
@@ -144,12 +155,14 @@ sub identify_lexical_variable_declarations {
     @assignments = grep {
         $_->assign_to->type eq 'LexicalVariable'
     } @assignments;
-    $v->{assignments}{ $_->{close_pos} } = $_ for @assignments;
 
     foreach my $a (@assignments) {
 
         # the scope of interest is the one containing the assignment
         my $soi = $a->first_upper_scope;
+
+        # remember the location.
+        $v->{lex_declarations}{ $a->{close_pos} } = [ $a, $a->assign_to ];
 
         # process the assignment.
         my $var = $a->assign_to;
@@ -174,15 +187,22 @@ sub identify_lexical_variable_declarations {
 
         # the scope of interest is the body of the loop.
         my $soi = $for->body->scope;
+        my $p = $for->body->{create_pos};
+
+        # remember the location.
+        $v->{lex_declarations}{$p} = [ $for, $var1 ];
 
         # process the assignment.
         $var1->{could_be_declaration} = 1;
-        $soi->process_lex_declaration($var1->{var_name}, $for->body->{create_pos});
+        $var1->{available_scope} = $soi;
+        $soi->process_lex_declaration($var1->{var_name}, $p);
 
         # there may or may not be a second variable.
         if ($var2) {
+            $v->{lex_declarations}{$p} = [ $for, $var1, $var2 ];
             $var2->{could_be_declaration} = 1;
-            $soi->process_lex_declaration($var2->{var_name}, $for->body->{create_pos});
+            $var2->{available_scope} = $soi;
+            $soi->process_lex_declaration($var2->{var_name}, $p);
         }
 
     }
@@ -205,16 +225,45 @@ sub verify_lexical_variables {
 
         ### Check that the variable is declared ###
 
-        # this is in a WantNeed or Assignment which has been checked.
-        next if $var->{could_be_declaration};
-
         # the scope of interest is the one containing the reference
         my $soi = $var->first_upper_scope;
 
-        # no problem here.
+        ### If declared, check if it is the declaration itself. ###
+
+        # this might be a declaration.
+        if ($var->{could_be_declaration}) {
+
+            # the scope where it was declared might not be the same
+            # as the scope where it becomes available.
+            my $sfi = $var->{available_scope} || $soi;
+
+            # find the position of where the variable is first declared.
+            my $pos = $sfi->where_lex_declared($var->{var_name}) or die;
+
+            # find the declaration at that position.
+            # this could be a SharedDeclaration, LocalDeclaration, Assignment...
+            my $decl_a = $v->{lex_declarations}{$pos} or die;
+            my ($decl, @decl_vars) = @$decl_a;
+
+            # if any of the variables in this declaration are this variable,
+            # tell the declaration node that it should respect that.
+            my $i = 1;
+            foreach my $decl_var (@decl_vars) {
+                if ($var == $decl_var) {
+                    $decl->{"var${i}_declaration"} = 1;
+                    last;
+                }
+                $i++;
+            }
+
+            next;
+        }
+
+        # not a declaration, but it's an OK reference.
         next if $soi->is_lex_reference_ok($var->{var_name}, $var->{create_pos});
 
-        # oh no. it's not ok.
+        ### Below this line: undeclared variable reference ###
+
         my @hints;
 
         # maybe we can provide useful info on when it was first declared.
@@ -225,7 +274,7 @@ sub verify_lexical_variables {
         }
 
         # maybe if the variable is within the assignment, that's helpful.
-        if (defined $earliest and my $a = $v->{assignments}{$earliest}) {
+        if (defined $earliest and my $a = $v->{lex_declarations}{$earliest}) {
             if ($var->somewhere_inside($a)) {
                 delete $hints[0];
                 $hints[1] = [ $var->{var_name} ];

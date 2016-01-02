@@ -96,7 +96,8 @@ FF::before_content('28-type.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Function event 'announce' definition
@@ -118,19 +119,21 @@ my $result = do {
             $ret->inc;
             FF::need( $scope, $args, 'name',   7.1 ) or return;
             FF::need( $scope, $args, 'gender', 7.3 ) or return;
-            $scope->set_property_ow(
-                $context,
-                what => $scope->property_u('Str')
-                  ->call_u( [ $scope->property_u('gender') ],
-                    $scope, undef, 8.2 )->property_u('trimPrefix')
+            my $lv_what = FF::lex_assign(
+                $scope,
+                what => ${
+                    $$scope->{'Str'}
+                      ->call_u( [ $$scope->{'gender'} ], $scope, undef, 8.2 )
+                  }->{'trimPrefix'}
                   ->call_u( [ str( $f, ":" ) ], $scope, undef, 8.4 ),
+                $file_scope,
                 8.1
             );
-            $scope->property_u('say')->call_u(
+            $$scope->{'say'}->call_u(
                 [
                     add(
-                        $scope, $scope->property_u('name'),
-                        str( $f, " is " ), $scope->property_u('what')
+                        $scope, $$scope->{'name'},
+                        str( $f, " is " ), $$scope->{'what'}
                     )
                 ],
                 $scope, undef, 9.1
@@ -155,16 +158,16 @@ my $result = do {
         },
         undef
     );
-    $scope->property_u('announce')
+    $$scope->{'announce'}
       ->call_u( [ str( $f, "Robert" ), FF::get_symbol( $f, 'male' ) ],
         $scope, undef, 12.2 );
-    $scope->property_u('announce')
+    $$scope->{'announce'}
       ->call_u( [ str( $f, "Kris" ), FF::get_symbol( $f, 'female' ) ],
         $scope, undef, 13.2 );
-    $scope->property_u('announce')
+    $$scope->{'announce'}
       ->call_u( [ str( $f, "Kylie" ), FF::get_symbol( $f, 'female' ) ],
         $scope, undef, 14.2 );
-    $scope->property_u('announce')
+    $$scope->{'announce'}
       ->call_u( [ str( $f, "Caitlyn" ), FF::get_symbol( $f, 'other' ) ],
         $scope, undef, 15.2 );
 };

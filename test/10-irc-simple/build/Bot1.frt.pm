@@ -151,7 +151,8 @@ FF::before_content('Bot1.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Anonymous function definition
@@ -162,30 +163,25 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $self->property_u('send')->call_u(
+            $$self->{'send'}->call_u(
                 [
                     add(
                         $scope,
                         str( $f, "USER " ),
-                        $self->property_u('user'),
+                        $$self->{'user'},
                         str( $f, " " ),
                         str( $f, "*" ),
                         str( $f, " " ),
                         str( $f, "*" ),
                         str( $f, " :" ),
-                        $self->property_u('real')
+                        $$self->{'real'}
                     )
                 ],
                 $scope, undef, 12.06667
             );
-            $self->property_u('send')->call_u(
-                [
-                    add(
-                        $scope, str( $f, "NICK " ), $self->property_u('nick')
-                    )
-                ],
-                $scope, undef, 13.2
-            );
+            $$self->{'send'}
+              ->call_u( [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
+                $scope, undef, 13.2 );
             return $ret->return;
         }
     );
@@ -199,15 +195,9 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'data', 18.2 ) or return;
-            $scope->property_u('say')->call_u(
-                [
-                    add(
-                        $scope, str( $f, "recv: " ),
-                        $scope->property_u('data')
-                    )
-                ],
-                $scope, undef, 19.2
-            );
+            $$scope->{'say'}->call_u(
+                [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
+                $scope, undef, 19.2 );
             return $ret->return;
         }
     );
@@ -252,10 +242,10 @@ my $result = do {
                 FF::want( $self, $args, 'port', 5.1, num( $f, 6667 ) );
                 FF::want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
                 $self->set_property(
-                    sock => $scope->property_u('Socket::TCP')->call_u(
+                    sock => $$scope->{'Socket::TCP'}->call_u(
                         {
-                            address  => $self->property_u('addr'),
-                            port     => $self->property_u('port'),
+                            address  => $$self->{'addr'},
+                            port     => $$self->{'port'},
                             readMode => FF::get_symbol( $f, 'line' )
                         },
                         $scope, undef, 8.3
@@ -263,7 +253,7 @@ my $result = do {
                     8.1
                 );
                 FF::on(
-                    $self->property_u('sock'),
+                    $$self->{'sock'},
                     'connected',
                     $self, $scope,
                     $func_0->inside_scope(
@@ -273,7 +263,7 @@ my $result = do {
                     {}
                 );
                 FF::on(
-                    $self->property_u('sock'),
+                    $$self->{'sock'},
                     'gotLine',
                     $self, $scope,
                     $func_1->inside_scope(
@@ -294,7 +284,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                $self->property_u('sock')->property_u('connect')
+                ${ $$self->{'sock'} }->{'connect'}
                   ->call_u( {}, $scope, undef, 25.3 );
                 return $ret->return;
             }
@@ -315,18 +305,11 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 FF::need( $scope, $args, 'line', 29.2 ) or return;
-                $scope->property_u('say')->call_u(
-                    [
-                        add(
-                            $scope, str( $f, "send: " ),
-                            $scope->property_u('line')
-                        )
-                    ],
-                    $scope, undef, 30.2
-                );
-                $self->property_u('sock')->property_u('println')
-                  ->call_u( [ $scope->property_u('line') ],
-                    $scope, undef, 31.3 );
+                $$scope->{'say'}->call_u(
+                    [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
+                    $scope, undef, 30.2 );
+                ${ $$self->{'sock'} }->{'println'}
+                  ->call_u( [ $$scope->{'line'} ], $scope, undef, 31.3 );
                 return $ret->return;
             }
         );

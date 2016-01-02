@@ -110,12 +110,14 @@ FF::before_content('7-math.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Math Math::Point Math::Rect) );
-    $scope->set_property(
-        rect => $scope->property_u('Math::Rect')->call_u(
+    my $lv_rect = FF::lex_assign(
+        $scope,
+        rect => $$scope->{'Math::Rect'}->call_u(
             {
                 x      => num( $f, 5 ),
                 y      => num( $f, 4 ),
@@ -124,59 +126,53 @@ my $result = do {
             },
             $scope, undef, 1.2
         ),
+        undef,
         1.06667
     );
-    $scope->set_property(
-        center => $scope->property_u('rect')->property_u('center'),
-        3.2
+    my $lv_center = FF::lex_assign(
+        $scope,
+        center => ${ $$scope->{'rect'} }->{'center'},
+        undef, 3.2
     );
-    $scope->property_u('say')->call_u(
-        [
-            add(
-                $scope, str( $f, "Center of rect: " ),
-                $scope->property_u('center')
-            )
-        ],
-        $scope, undef, 4.2
-    );
-    $scope->property_u('say')->call_u(
+    $$scope->{'say'}->call_u(
+        [ add( $scope, str( $f, "Center of rect: " ), $$scope->{'center'} ) ],
+        $scope, undef, 4.2 );
+    $$scope->{'say'}->call_u(
         [
             add(
                 $scope,
                 str( $f, "Center distance from origin: " ),
-                $scope->property_u('center')->property_u('distanceFromOrigin')
+                ${ $$scope->{'center'} }->{'distanceFromOrigin'}
             )
         ],
         $scope, undef, 5.2
     );
-    $scope->set_property(
-        otherPt => $scope->property_u('Math::Point')
+    my $lv_otherPt = FF::lex_assign(
+        $scope,
+        otherPt => $$scope->{'Math::Point'}
           ->call_u( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7.3 ),
-        7.1
+        undef, 7.1
     );
-    $scope->set_property(
-        midpoint => FF::create_set(
-            $scope, $scope->property_u('center'),
-            $scope->property_u('otherPt')
-          )->property_u('midpoint')->call_u( {}, $scope, undef, 8.45 )
-          ->property_u('pretty')->call_u( {}, $scope, undef, 8.6 ),
+    my $lv_midpoint = FF::lex_assign(
+        $scope,
+        midpoint => ${
+            ${
+                FF::create_set( $scope, $$scope->{'center'},
+                    $$scope->{'otherPt'} )
+            }->{'midpoint'}->call_u( {}, $scope, undef, 8.45 )
+          }->{'pretty'}->call_u( {}, $scope, undef, 8.6 ),
+        undef,
         8.1
     );
-    $scope->property_u('say')->call_u(
-        [
-            add(
-                $scope, str( $f, "Midpoint: " ),
-                $scope->property_u('midpoint')
-            )
-        ],
-        $scope, undef, 9.2
-    );
-    $scope->property_u('say')->call_u(
+    $$scope->{'say'}->call_u(
+        [ add( $scope, str( $f, "Midpoint: " ), $$scope->{'midpoint'} ) ],
+        $scope, undef, 9.2 );
+    $$scope->{'say'}->call_u(
         [
             add(
                 $scope,
                 str( $f, "Square root of four: " ),
-                $scope->property_u('Math')->property_u('sqrt')
+                ${ $$scope->{'Math'} }->{'sqrt'}
                   ->call_u( [ num( $f, 4 ) ], $scope, undef, 11.35 )
             )
         ],

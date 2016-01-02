@@ -52,7 +52,8 @@ FF::before_content('17-empty-become.frt');
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Anonymous function definition
@@ -63,19 +64,19 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')
+            $$scope->{'say'}
               ->call_u( [ str( $f, "it works!" ) ], $scope, undef, 8.2 );
             return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $scope->set_property( obj => FF::create_object( $f, {} ), 2.2 );
-    $scope->property_u('Timer')->property_u('init')
-      ->call_u( [ $scope->property_u('obj') ], $scope, undef, 5.15 )
+    my $lv_obj =
+      FF::lex_assign( $scope, obj => FF::create_object( $f, {} ), undef, 2.2 );
+    ${ $$scope->{'Timer'} }->{'init'}
+      ->call_u( [ $$scope->{'obj'} ], $scope, undef, 5.15 )
       ->call_u( [ num( $f, 5 ) ], $scope, undef, 5.3 );
     FF::on(
-        $scope->property_u('obj')->property_u('once')
-          ->call_u( {}, $scope, undef, 7.4 ),
+        ${ $$scope->{'obj'} }->{'once'}->call_u( {}, $scope, undef, 7.4 ),
         'expire',
         $self,
         $scope,

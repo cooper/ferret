@@ -1,1 +1,1 @@
-$scope->property_u('<<name>>')
+$$scope->{'<<name>>'}

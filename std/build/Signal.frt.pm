@@ -110,7 +110,8 @@ FF::before_content('Signal.frt');
 
 use Ferret::Core::Operations qw(bool num);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Class 'Signal'
@@ -145,7 +146,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                $scope->property_u('_exit')
+                $$scope->{'_exit'}
                   ->call_u( [ num( $f, 0 ) ], $scope, undef, 25.2 );
                 return $ret->return;
             }
@@ -168,12 +169,10 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'type', 31.2 ) or return;
                 {
-                    my $maybe_0 =
-                      $scope->property_u('signals')
-                      ->get_index_value( [ $scope->property_u('type') ],
-                        $scope );
+                    my $maybe_0 = $$scope->{'signals'}
+                      ->get_index_value( [ $$scope->{'type'} ], $scope );
                     if ( bool($maybe_0) ) {
-                        $maybe_0->property_u('catch')
+                        ${$maybe_0}->{'catch'}
                           ->call_u( {}, $scope, undef, 32.35 );
                     }
                 }
@@ -193,60 +192,70 @@ my $result = do {
             $class, $class, undef, undef
         );
 
-        $class->set_property(
+        my $lv_INT = FF::lex_assign(
+            $class,
             INT => [
                 sub {
-                    $scope->{special}->property_u('class')
+                    ${ $scope->{special} }->{'class'}
                       ->call_u( [ FF::get_symbol( $f, 'INT' ) ],
                         $scope, undef, 7.5 );
                 }
             ],
+            undef,
             7.3
         );
-        $class->set_property(
+        my $lv_HUP = FF::lex_assign(
+            $class,
             HUP => [
                 sub {
-                    $scope->{special}->property_u('class')
+                    ${ $scope->{special} }->{'class'}
                       ->call_u( [ FF::get_symbol( $f, 'HUP' ) ],
                         $scope, undef, 8.5 );
                 }
             ],
+            undef,
             8.3
         );
-        $class->set_property(
+        my $lv_TERM = FF::lex_assign(
+            $class,
             TERM => [
                 sub {
-                    $scope->{special}->property_u('class')
+                    ${ $scope->{special} }->{'class'}
                       ->call_u( [ FF::get_symbol( $f, 'TERM' ) ],
                         $scope, undef, 9.5 );
                 }
             ],
+            undef,
             9.3
         );
-        $class->set_property(
+        my $lv_ALRM = FF::lex_assign(
+            $class,
             ALRM => [
                 sub {
-                    $scope->{special}->property_u('class')
+                    ${ $scope->{special} }->{'class'}
                       ->call_u( [ FF::get_symbol( $f, 'ALRM' ) ],
                         $scope, undef, 10.5 );
                 }
             ],
+            undef,
             10.3
         );
-        $scope->set_property(
+        my $lv_signals = FF::lex_assign(
+            $scope,
             signals => [
                 sub {
                     FF::create_hash(
                         $f,
                         {
-                            INT  => $scope->property_u('INT'),
-                            HUP  => $scope->property_u('HUP'),
-                            TERM => $scope->property_u('TERM'),
-                            ALRM => $scope->property_u('ALRM')
+                            INT  => $$scope->{'INT'},
+                            HUP  => $$scope->{'HUP'},
+                            TERM => $$scope->{'TERM'},
+                            ALRM => $$scope->{'ALRM'}
                         }
                     );
                 }
             ],
+            undef,
             12.2
         );
     }

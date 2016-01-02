@@ -98,7 +98,8 @@ FF::before_content('4-collections.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Function event 'makePoint' definition
@@ -117,42 +118,43 @@ my $result = do {
             FF::need( $scope, $args, 'x', 2.2 ) or return;
             FF::need( $scope, $args, 'y', 2.4 ) or return;
             FF::want( $scope, $args, 'z', 3.2 );
-            $scope->set_property_ow(
-                $context,
+            my $lv_point = FF::lex_assign(
+                $scope,
                 point => FF::create_object(
-                    $f,
-                    {
-                        x => $scope->property_u('x'),
-                        y => $scope->property_u('y')
-                    }
+                    $f, { x => $$scope->{'x'}, y => $$scope->{'y'} }
                 ),
+                $file_scope,
                 4.2
             );
-            $ret->set_property( point => $scope->property_u('point'), 8.2 );
+            $ret->set_property( point => $$scope->{'point'}, 8.2 );
             return $ret->return;
         }
     );
     $func_0->inside_scope( makePoint => $scope, $context, undef, undef, undef );
-    $scope->set_property(
-        pt => $scope->property_u('makePoint')
-          ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11.2 )
-          ->property_u('point'),
+    my $lv_pt = FF::lex_assign(
+        $scope,
+        pt => ${
+            $$scope->{'makePoint'}
+              ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11.2 )
+          }->{'point'},
+        undef,
         11.1
     );
-    $scope->property_u('say')->call_u(
+    $$scope->{'say'}->call_u(
         [
             add(
                 $scope,
                 str( $f, "Point(" ),
-                $scope->property_u('pt')->property_u('x'),
+                ${ $$scope->{'pt'} }->{'x'},
                 str( $f, ", " ),
-                $scope->property_u('pt')->property_u('y'),
+                ${ $$scope->{'pt'} }->{'y'},
                 str( $f, ")" )
             )
         ],
         $scope, undef, 12.1
     );
-    $scope->set_property(
+    my $lv_numbers = FF::lex_assign(
+        $scope,
         numbers => FF::create_list(
             $f,
             [
@@ -163,10 +165,19 @@ my $result = do {
                 add( $scope, num( $f, 4 ), num( $f, 1 ) )
             ]
         ),
+        undef,
         14.1
     );
-    $scope->set_property( emptyArray => FF::create_list( $f, [] ), 16.2 );
-    $scope->set_property( emptyHash => FF::create_hash( $f, {} ), 17.2 );
+    my $lv_emptyArray = FF::lex_assign(
+        $scope,
+        emptyArray => FF::create_list( $f, [] ),
+        undef, 16.2
+    );
+    my $lv_emptyHash = FF::lex_assign(
+        $scope,
+        emptyHash => FF::create_hash( $f, {} ),
+        undef, 17.2
+    );
 };
 
 FF::after_content();

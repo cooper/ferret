@@ -126,7 +126,8 @@ FF::before_content('11-external-inside-on.frt');
 
 use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Anonymous function definition
@@ -152,52 +153,52 @@ my $result = do {
             $ret->inc;
             FF::need( $scope, $args, 'twice',   16.2 ) or return;
             FF::need( $scope, $args, 'message', 16.4 ) or return;
-            if ( bool( $scope->property_u('twice') ) ) {
+            if ( bool( $$scope->{'twice'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $scope->property_u('say')->call_u(
+                $$scope->{'say'}->call_u(
                     [
                         add(
-                            $scope,
-                            $scope->property_u('message'),
-                            str( $f, " again" )
+                            $scope, $$scope->{'message'}, str( $f, " again" )
                         )
                     ],
                     $scope, undef, 18.2
                 );
             }
-            $ret->set_property( didTwice => $scope->property_u('twice'), 19.2 );
+            $ret->set_property( didTwice => $$scope->{'twice'}, 19.2 );
             return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(Math Math::Point) );
-    $scope->set_property(
-        point => $scope->property_u('Math::Point')
+    my $lv_point = FF::lex_assign(
+        $scope,
+        point => $$scope->{'Math::Point'}
           ->call_u( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1.3 ),
-        1.1
+        undef, 1.1
     );
-    if ( bool( $scope->property_u('point') ) ) {
+    if ( bool( $$scope->{'point'} ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-        $scope->property_u('say')
+        $$scope->{'say'}
           ->call_u( [ str( $f, "The point exists!" ) ], $scope, undef, 4.2 );
-        $scope->property_u('inspect')
-          ->call_u( [ $scope->property_u('point') ], $scope, undef, 5.2 );
+        $$scope->{'inspect'}
+          ->call_u( [ $$scope->{'point'} ], $scope, undef, 5.2 );
     }
 
     # Inside
     FF::inside(
         $f, $scope,
-        $scope->property_u('point'),
+        $$scope->{'point'},
         sub {
             my ( $scope, $ins ) = @_;
-            $scope->set_property_ow( $context, x => num( $f, 5 ),  9.2 );
-            $scope->set_property_ow( $context, y => num( $f, 10 ), 10.2 );
+            my $lv_x =
+              FF::lex_assign( $scope, x => num( $f, 5 ), $file_scope, 9.2 );
+            my $lv_y =
+              FF::lex_assign( $scope, y => num( $f, 10 ), $file_scope, 10.2 );
         }
     );
-    $scope->property_u('say')
-      ->call_u(
-        [ add( $scope, str( $f, "Point: " ), $scope->property_u('point') ) ],
+    $$scope->{'say'}
+      ->call_u( [ add( $scope, str( $f, "Point: " ), $$scope->{'point'} ) ],
         $scope, undef, 13.2 );
     FF::on(
         $scope,
@@ -207,21 +208,22 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    $scope->set_property(
-        r => $scope->property_u('say')->call_u(
+    my $lv_r = FF::lex_assign(
+        $scope,
+        r => $$scope->{'say'}->call_u(
             [ str( $f, "It was said" ), { twice => $true } ], $scope,
             undef, 23.2
         ),
+        undef,
         23.1
     );
-    if ( bool( $scope->property_u('r')->property_u('didTwice') ) ) {
+    if ( bool( ${ $$scope->{'r'} }->{'didTwice'} ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-        $scope->property_u('say')
-          ->call_u( [ str( $f, "Did the first one twice!" ) ],
+        $$scope->{'say'}->call_u( [ str( $f, "Did the first one twice!" ) ],
             $scope, undef, 26.2 );
     }
-    $scope->property_u('say')
+    $$scope->{'say'}
       ->call_u( [ str( $f, "this should ignore the second parameter" ), $true ],
         $scope, undef, 28.2 );
 };

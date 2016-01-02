@@ -1,1 +1,1 @@
-$ins->property_u('<<name>>')
+$$ins->{'<<name>>'}

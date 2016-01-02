@@ -54,7 +54,8 @@ FF::before_content('9-maybes.frt');
 
 use Ferret::Core::Operations qw(add bool str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Function event 'sayHello' definition
@@ -67,11 +68,11 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'who', 2.2 ) or return;
-            $scope->property_u('say')->call_u(
+            $$scope->{'say'}->call_u(
                 [
                     add(
-                        $scope,                    str( $f, "Hello " ),
-                        $scope->property_u('who'), str( $f, "!" )
+                        $scope,           str( $f, "Hello " ),
+                        $$scope->{'who'}, str( $f, "!" )
                     )
                 ],
                 $scope, undef, 3.1
@@ -82,13 +83,13 @@ my $result = do {
     $func_0->inside_scope( sayHello => $scope, $context, undef, undef, undef );
     FF::load_namespaces( $context, qw(Str) );
     {
-        my $maybe_0 = $scope->property_u('sayHello');
+        my $maybe_0 = $$scope->{'sayHello'};
         if ( bool($maybe_0) ) {
             $maybe_0->call_u( [ str( $f, "World" ) ], $scope, undef, 6.3 );
         }
     }
     {
-        my $maybe_0 = $scope->property_u('sayGoodbye');
+        my $maybe_0 = $$scope->{'sayGoodbye'};
         if ( bool($maybe_0) ) {
             $maybe_0->call_u( [ str( $f, "World" ) ], $scope, undef, 7.3 );
         }

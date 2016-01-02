@@ -61,7 +61,8 @@ FF::before_content('Math.frt');
 
 use Ferret::Core::Operations qw(div num pow);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'Math' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'Math' );
+    my $scope = $file_scope;
     FF::load_core('Math');
 
     # Function event 'sqrt' definition
@@ -73,10 +74,8 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'num', 4.2 ) or return;
-            return $ret->return(
-                $scope->property_u('NATIVE::Math')->property_u('sqrt')
-                  ->call_u( [ $scope->property_u('num') ], $scope, undef, 5.3 )
-            );
+            return $ret->return( ${ $$scope->{'NATIVE::Math'} }->{'sqrt'}
+                  ->call_u( [ $$scope->{'num'} ], $scope, undef, 5.3 ) );
             return $ret->return;
         }
     );
@@ -96,9 +95,8 @@ my $result = do {
             FF::need( $scope, $args, 'num',  9.3 ) or return;
             return $ret->return(
                 pow(
-                    $scope,
-                    $scope->property_u('num'),
-                    div( $scope, num( $f, 1 ), $scope->property_u('root') )
+                    $scope, $$scope->{'num'},
+                    div( $scope, num( $f, 1 ), $$scope->{'root'} )
                 )
             );
             return $ret->return;

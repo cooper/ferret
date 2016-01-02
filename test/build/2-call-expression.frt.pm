@@ -31,10 +31,11 @@ FF::before_content('2-call-expression.frt');
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
-    $scope->property_u('say')
+    $$scope->{'say'}
       ->call_u( [ str( $f, "Hello World!" ) ], $scope, undef, 1.25 );
 };
 

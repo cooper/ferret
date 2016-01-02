@@ -178,7 +178,8 @@ FF::before_content('Point.frt');
 
 use Ferret::Core::Operations qw(_sub add div num pow str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'Math' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'Math' );
+    my $scope = $file_scope;
     FF::load_core('Math');
 
     # Class 'Point'
@@ -229,37 +230,29 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 FF::need( $scope, $args, 'pt2', 9.2 ) or return;
-                $scope->set_property_ow(
-                    $context,
+                my $lv_dx = FF::lex_assign(
+                    $scope,
                     dx => _sub(
-                        $scope,
-                        $self->property_u('x'),
-                        $scope->property_u('pt2')->property_u('x')
+                        $scope, $$self->{'x'}, ${ $$scope->{'pt2'} }->{'x'}
                     ),
+                    $file_scope,
                     10.2
                 );
-                $scope->set_property_ow(
-                    $context,
+                my $lv_dy = FF::lex_assign(
+                    $scope,
                     dy => _sub(
-                        $scope,
-                        $self->property_u('y'),
-                        $scope->property_u('pt2')->property_u('y')
+                        $scope, $$self->{'y'}, ${ $$scope->{'pt2'} }->{'y'}
                     ),
+                    $file_scope,
                     11.2
                 );
                 return $ret->return(
-                    $scope->property_u('sqrt')->call_u(
+                    $$scope->{'sqrt'}->call_u(
                         [
                             add(
                                 $scope,
-                                pow(
-                                    $scope, $scope->property_u('dx'),
-                                    num( $f, 2 )
-                                ),
-                                pow(
-                                    $scope, $scope->property_u('dy'),
-                                    num( $f, 2 )
-                                )
+                                pow( $scope, $$scope->{'dx'}, num( $f, 2 ) ),
+                                pow( $scope, $$scope->{'dy'}, num( $f, 2 ) )
                             )
                         ],
                         $scope, undef, 12.15
@@ -278,9 +271,9 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    $self->property_u('distanceTo')->call_u(
+                    $$self->{'distanceTo'}->call_u(
                         [
-                            $scope->{special}->property_u('class')->call_u(
+                            ${ $scope->{special} }->{'class'}->call_u(
                                 [ num( $f, 0 ), num( $f, 0 ) ], $scope,
                                 undef, 16.25
                             )
@@ -301,9 +294,9 @@ my $result = do {
                 $ret->inc;
                 return $ret->return(
                     add(
-                        $scope,                 str( $f, "(" ),
-                        $self->property_u('x'), str( $f, ", " ),
-                        $self->property_u('y'), str( $f, ")" )
+                        $scope,        str( $f, "(" ),
+                        $$self->{'x'}, str( $f, ", " ),
+                        $$self->{'y'}, str( $f, ")" )
                     )
                 );
                 return $ret->return;
@@ -318,7 +311,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                return $ret->return( $self->property_u('pretty') );
+                return $ret->return( $$self->{'pretty'} );
                 return $ret->return;
             }
         );
@@ -332,11 +325,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    add(
-                        $scope, str( $f, "Point" ),
-                        $self->property_u('pretty')
-                    )
-                );
+                    add( $scope, str( $f, "Point" ), $$self->{'pretty'} ) );
                 return $ret->return;
             }
         );
@@ -365,14 +354,14 @@ my $result = do {
                 FF::need( $scope, $args, 'pt1', 32.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 32.3 ) or return;
                 return $ret->return(
-                    $scope->{special}->property_u('class')->call_u(
+                    ${ $scope->{special} }->{'class'}->call_u(
                         {
                             x => div(
                                 $scope,
                                 add(
                                     $scope,
-                                    $scope->property_u('pt1')->property_u('x'),
-                                    $scope->property_u('pt2')->property_u('x')
+                                    ${ $$scope->{'pt1'} }->{'x'},
+                                    ${ $$scope->{'pt2'} }->{'x'}
                                 ),
                                 num( $f, 2 )
                             ),
@@ -380,8 +369,8 @@ my $result = do {
                                 $scope,
                                 add(
                                     $scope,
-                                    $scope->property_u('pt1')->property_u('y'),
-                                    $scope->property_u('pt2')->property_u('y')
+                                    ${ $$scope->{'pt1'} }->{'y'},
+                                    ${ $$scope->{'pt2'} }->{'y'}
                                 ),
                                 num( $f, 2 )
                             )
@@ -416,13 +405,8 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'pt1', 40.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 40.3 ) or return;
-                return $ret->return(
-                    $scope->property_u('pt1')->property_u('distanceTo')
-                      ->call_u(
-                        [ $scope->property_u('pt2') ],
-                        $scope, undef, 41.4
-                      )
-                );
+                return $ret->return( ${ $$scope->{'pt1'} }->{'distanceTo'}
+                      ->call_u( [ $$scope->{'pt2'} ], $scope, undef, 41.4 ) );
                 return $ret->return;
             }
         );

@@ -62,10 +62,11 @@ sub perl_fmt {
     $fmt_args->{name} = "'$$fmt_args{name}'"
         if ($fmt_args->{name} // '') =~ m/^\*/;
 
-    my (undef, $owner, $owrite) = $a->owner;
+    my (undef, $owner_str, $owrite) = $a->owner;
+    $fmt_args->{owner}  = $owner_str;
+    $fmt_args->{owrite} = $owrite  ? '$file_scope' : 'undef';
+    $fmt_args->{my}     = $a->{var1_declaration} ? 'my ' : '';
 
-    $fmt_args->{owner}  = $owner;
-    $fmt_args->{owrite} = $owrite ? '_ow($context, ' : '(';
     return "assign_$fmt_name" => $fmt_args;
 }
 

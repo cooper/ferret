@@ -72,7 +72,8 @@ FF::before_content('13-timers.frt');
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Anonymous function definition
@@ -83,7 +84,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')
+            $$scope->{'say'}
               ->call_u( [ str( $f, "five seconds up" ) ], $scope, undef, 4.2 );
             return $ret->return;
         }
@@ -97,41 +98,36 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')
-              ->call_u( [ str( $f, "this shouldn't be said" ) ],
+            $$scope->{'say'}->call_u( [ str( $f, "this shouldn't be said" ) ],
                 $scope, undef, 9.2 );
             return $ret->return;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $scope->property_u('say')
-      ->call_u( [ str( $f, "hello" ) ], $scope, undef, 1.2 );
+    $$scope->{'say'}->call_u( [ str( $f, "hello" ) ], $scope, undef, 1.2 );
     FF::on(
-        $scope->property_u('Timer')
-          ->call_u( [ num( $f, 5 ) ], $scope, undef, 3.15 )->property_u('once')
-          ->call_u( {}, $scope, undef, 3.35 ),
-        'expire',
-        $self,
-        $scope,
+        ${
+            $$scope->{'Timer'}->call_u( [ num( $f, 5 ) ], $scope, undef, 3.15 )
+          }->{'once'}->call_u( {}, $scope, undef, 3.35 ),
+        'expire', $self, $scope,
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    $scope->set_property(
-        t2 => $scope->property_u('Timer')
-          ->call_u( [ num( $f, 2 ) ], $scope, undef, 7.4 ),
-        7.2
+    my $lv_t2 = FF::lex_assign(
+        $scope,
+        t2 =>
+          $$scope->{'Timer'}->call_u( [ num( $f, 2 ) ], $scope, undef, 7.4 ),
+        undef, 7.2
     );
     FF::on(
-        $scope->property_u('t2')->property_u('once')
-          ->call_u( {}, $scope, undef, 8.4 ),
+        ${ $$scope->{'t2'} }->{'once'}->call_u( {}, $scope, undef, 8.4 ),
         'expire',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    $scope->property_u('t2')->property_u('cancel')
-      ->call_u( {}, $scope, undef, 12.3 );
+    ${ $$scope->{'t2'} }->{'cancel'}->call_u( {}, $scope, undef, 12.3 );
 };
 
 FF::after_content();

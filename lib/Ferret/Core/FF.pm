@@ -382,4 +382,19 @@ sub typedef_check {
     return;
 }
 
+sub lex_assign {
+    my ($owner, $name, $value, $scope_limit_if_ow, $pos) = @_;
+
+    # if a context is passed, use _ow.
+    if ($scope_limit_if_ow) {
+        $owner->set_property_ow($scope_limit_if_ow, $name => $value, $pos);
+    }
+
+    else {
+        $owner->set_property($name => $value, $pos);
+    }
+
+    return $value;
+}
+
 1

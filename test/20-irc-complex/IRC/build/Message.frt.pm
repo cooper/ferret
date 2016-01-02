@@ -182,7 +182,8 @@ FF::before_content('Message.frt');
 
 use Ferret::Core::Operations qw(add bool nequal num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
+    my $scope = $file_scope;
     FF::load_core('IRC');
 
     # Class 'Message'
@@ -206,26 +207,27 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 FF::need( $self, $args, 'line' ) or return;
-                $scope->set_property_ow(
-                    $context,
-                    lineSplit =>
-                      $self->property_u('line')->property_u('split')->call_u(
+                my $lv_lineSplit = FF::lex_assign(
+                    $scope,
+                    lineSplit => ${ $$self->{'line'} }->{'split'}->call_u(
                         { separator => str( $f, " " ), limit => num( $f, 4 ) },
                         $scope,
                         undef,
                         6.25
-                      ),
+                    ),
+                    $file_scope,
                     6.1
                 );
                 $self->set_property(
-                    channel => $scope->property_u('lineSplit')
+                    channel => $$scope->{'lineSplit'}
                       ->get_index_value( [ num( $f, 2 ) ], $scope ),
                     7.2
                 );
                 $self->set_property(
-                    nickname => $scope->property_u('lineSplit')
-                      ->get_index_value( [ num( $f, 0 ) ], $scope )
-                      ->property_u('split')->call_u(
+                    nickname => ${
+                        $$scope->{'lineSplit'}
+                          ->get_index_value( [ num( $f, 0 ) ], $scope )
+                      }->{'split'}->call_u(
                         { separator => str( $f, "!" ), limit => num( $f, 2 ) },
                         $scope,
                         undef,
@@ -234,24 +236,22 @@ my $result = do {
                     10.1
                 );
                 $self->set_property(
-                    nickname =>
-                      $self->property_u('nickname')->property_u('trimPrefix')
+                    nickname => ${ $$self->{'nickname'} }->{'trimPrefix'}
                       ->call_u( [ str( $f, ":" ) ], $scope, undef, 11.5 ),
                     11.2
                 );
                 $self->set_property(
-                    message => $scope->property_u('lineSplit')
+                    message => $$scope->{'lineSplit'}
                       ->get_index_value( [ num( $f, 3 ) ], $scope ),
                     14.2
                 );
                 $self->set_property(
-                    message =>
-                      $self->property_u('message')->property_u('trimPrefix')
+                    message => ${ $$self->{'message'} }->{'trimPrefix'}
                       ->call_u( [ str( $f, ":" ) ], $scope, undef, 15.5 ),
                     15.2
                 );
                 $self->set_property(
-                    parts => $self->property_u('message')->property_u('split')
+                    parts => ${ $$self->{'message'} }->{'split'}
                       ->call_u( [ str( $f, " " ) ], $scope, undef, 18.5 ),
                     18.2
                 );
@@ -269,29 +269,30 @@ my $result = do {
                 $ret->inc;
                 if (
                     bool(
-                        $self->property_u('parts')
-                          ->get_index_value( [ num( $f, 0 ) ], $scope )
-                          ->property_u('hasPrefix')
+                        ${
+                            $$self->{'parts'}
+                              ->get_index_value( [ num( $f, 0 ) ], $scope )
+                          }->{'hasPrefix'}
                           ->call_u( [ str( $f, "." ) ], $scope, undef, 26.35 )
                     )
                   )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $scope->set_property_ow(
-                        $context,
-                        cmd => $self->property_u('parts')
-                          ->get_index_value( [ num( $f, 0 ) ], $scope )
-                          ->property_u('trimPrefix')
+                    my $lv_cmd = FF::lex_assign(
+                        $scope,
+                        cmd => ${
+                            $$self->{'parts'}
+                              ->get_index_value( [ num( $f, 0 ) ], $scope )
+                          }->{'trimPrefix'}
                           ->call_u( [ str( $f, "." ) ], $scope, undef, 27.4 ),
+                        $file_scope,
                         27.1
                     );
-                    if ( bool( $scope->property_u('cmd')->property_u('length') )
-                      )
-                    {
+                    if ( bool( ${ $$scope->{'cmd'} }->{'length'} ) ) {
                         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                        return $ret->return( $scope->property_u('cmd') );
+                        return $ret->return( $$scope->{'cmd'} );
                     }
                 }
                 return $ret->return($false);
@@ -310,7 +311,7 @@ my $result = do {
                 return $ret->return(
                     nequal(
                         $scope,
-                        $self->property_u('parts')->property_u('length'),
+                        ${ $$self->{'parts'} }->{'length'},
                         num( $f, 1 )
                     )
                 );
@@ -335,18 +336,14 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $ret->return(
-                    $self->property_u('message')->property_u('split')->call_u(
+                    ${ $$self->{'message'} }->{'split'}->call_u(
                         {
                             separator => str( $f, " " ),
-                            limit     => add(
-                                $scope, $scope->property_u('wordN'),
-                                num( $f, 1 )
-                            )
+                            limit =>
+                              add( $scope, $$scope->{'wordN'}, num( $f, 1 ) )
                         },
                         $scope, undef, 42.2
-                      )->get_index_value(
-                        [ $scope->property_u('wordN') ], $scope
-                      )
+                    )->get_index_value( [ $$scope->{'wordN'} ], $scope )
                 );
                 return $ret->return;
             }

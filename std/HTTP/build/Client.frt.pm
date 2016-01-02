@@ -143,7 +143,8 @@ FF::before_content('Client.frt');
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'HTTP' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'HTTP' );
+    my $scope = $file_scope;
     FF::load_core('HTTP');
 
     # Class 'Client'
@@ -191,16 +192,15 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 FF::want( $self, $args, 'userAgent', 10.2,
-                    $scope->property_u('defaultUA') );
+                    $$scope->{'defaultUA'} );
                 FF::want( $self, $args, 'timeout', 13.2, num( $f, 10 ) );
                 FF::want( $self, $args, 'maxContentLength', 19.2 );
                 FF::want( $self, $args, 'readLength', 22.2,
-                    $scope->property_u('defaultLength') );
+                    $$scope->{'defaultLength'} );
                 FF::want( $self, $args, 'writeLength', 23.2,
-                    $scope->property_u('defaultLength') );
-                $scope->property_u('NATIVE::HTTPClient')
-                  ->property_u('initialize')
-                  ->call_u( [ $scope->{special}->property_u('self') ],
+                    $$scope->{'defaultLength'} );
+                ${ $$scope->{'NATIVE::HTTPClient'} }->{'initialize'}
+                  ->call_u( [ ${ $scope->{special} }->{'self'} ],
                     $scope, undef, 25.5 );
                 return $ret->return;
             }
@@ -222,10 +222,10 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'url', 29.2 ) or return;
                 return $ret->return(
-                    $self->property_u('request')->call_u(
+                    $$self->{'request'}->call_u(
                         {
                             httpMethod => FF::get_symbol( $f, 'GET' ),
-                            url        => $scope->property_u('url')
+                            url        => $$scope->{'url'}
                         },
                         $scope, undef, 30.3
                     )
@@ -250,10 +250,10 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'url', 37.2 ) or return;
                 return $ret->return(
-                    $self->property_u('request')->call_u(
+                    $$self->{'request'}->call_u(
                         {
                             httpMethod => FF::get_symbol( $f, 'POST' ),
-                            url        => $scope->property_u('url')
+                            url        => $$scope->{'url'}
                         },
                         $scope, undef, 38.3
                     )
@@ -286,11 +286,11 @@ my $result = do {
                 FF::need( $scope, $args, 'httpMethod', 45.1 ) or return;
                 FF::need( $scope, $args, 'url',        45.3 ) or return;
                 return $ret->return(
-                    $scope->property_u('HTTP::Request')->call_u(
+                    $$scope->{'HTTP::Request'}->call_u(
                         {
-                            client     => $scope->{special}->property_u('self'),
-                            httpMethod => $scope->property_u('httpMethod'),
-                            url        => $scope->property_u('url')
+                            client     => ${ $scope->{special} }->{'self'},
+                            httpMethod => $$scope->{'httpMethod'},
+                            url        => $$scope->{'url'}
                         },
                         $scope, undef, 46.5
                     )
@@ -308,17 +308,20 @@ my $result = do {
             request => $scope,
             $proto, $class, undef, undef
         );
-        $scope->set_property(
+        my $lv_defaultUA = FF::lex_assign(
+            $scope,
             defaultUA => add(
                 $scope,
                 str( $f, "ferret-http/" ),
-                $scope->{special}->property_u('class')->property_u('version')
+                ${ ${ $scope->{special} }->{'class'} }->{'version'}
             ),
+            undef,
             4.2
         );
-        $scope->set_property(
+        my $lv_defaultLength = FF::lex_assign(
+            $scope,
             defaultLength => mul( $scope, num( $f, 64 ), num( $f, 1024 ) ),
-            5.2
+            undef, 5.2
         );
     }
     FF::load_namespaces( $context,

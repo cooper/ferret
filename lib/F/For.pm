@@ -37,11 +37,18 @@ sub perl_fmt {
     # get content.
     my $content = $for->body->body_fmt_do;
 
+    # this is pretty ugly, but I don't know a better way.
+    my @mys;
+    push @mys, $var1->{var_name} if $var1;
+    push @mys, $var2->{var_name} if $var2;
+    my $mys = join "\n", map "my \$lv_$_ = \$scope->property_u('$_');", @mys;
+
     return $var2 ? 'for_each_hash' : 'for_each_list' => {
         collection  => $collection->perl_fmt_do,
         var1_name   => $var1->{var_name},
         var2_name   => $var2->{var_name},
         body        => $content,
+        mys         => $mys,
         pos         => $for->{create_pos}
     };
 }

@@ -140,7 +140,8 @@ FF::before_content('Line.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'Math' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'Math' );
+    my $scope = $file_scope;
     FF::load_core('Math');
 
     # Class 'Line'
@@ -184,10 +185,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    FF::create_list(
-                        $f,
-                        [ $self->property_u('pt1'), $self->property_u('pt2') ]
-                    )
+                    FF::create_list( $f, [ $$self->{'pt1'}, $$self->{'pt2'} ] )
                 );
                 return $ret->return;
             }
@@ -200,59 +198,51 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                $scope->set_property_ow(
-                    $context,
-                    mp => $self->property_u('midpoint'),
-                    13.2
+                my $lv_mp = FF::lex_assign(
+                    $scope,
+                    mp => $$self->{'midpoint'},
+                    $file_scope, 13.2
                 );
-                $scope->set_property_ow(
-                    $context,
-                    pox => $self->property_u('pt1')->property_u('x'),
-                    14.1
+                my $lv_pox = FF::lex_assign(
+                    $scope,
+                    pox => ${ $$self->{'pt1'} }->{'x'},
+                    $file_scope, 14.1
                 );
-                $scope->set_property_ow(
-                    $context,
-                    poy => $self->property_u('pt1')->property_u('y'),
-                    14.35
+                my $lv_poy = FF::lex_assign(
+                    $scope,
+                    poy => ${ $$self->{'pt1'} }->{'y'},
+                    $file_scope, 14.35
                 );
-                $scope->set_property_ow(
-                    $context,
-                    ptx => $self->property_u('pt2')->property_u('x'),
-                    15.1
+                my $lv_ptx = FF::lex_assign(
+                    $scope,
+                    ptx => ${ $$self->{'pt2'} }->{'x'},
+                    $file_scope, 15.1
                 );
-                $scope->set_property_ow(
-                    $context,
-                    pty => $self->property_u('pt2')->property_u('y'),
-                    15.35
+                my $lv_pty = FF::lex_assign(
+                    $scope,
+                    pty => ${ $$self->{'pt2'} }->{'y'},
+                    $file_scope, 15.35
                 );
-                $scope->set_property_ow(
-                    $context,
-                    mx => $scope->property_u('mp')->property_u('x'),
-                    16.1
+                my $lv_mx = FF::lex_assign(
+                    $scope,
+                    mx => ${ $$scope->{'mp'} }->{'x'},
+                    $file_scope, 16.1
                 );
-                $scope->set_property_ow(
-                    $context,
-                    my => $scope->property_u('mp')->property_u('y'),
-                    16.35
+                my $lv_my = FF::lex_assign(
+                    $scope,
+                    my => ${ $$scope->{'mp'} }->{'y'},
+                    $file_scope, 16.35
                 );
                 return $ret->return(
                     add(
-                        $scope,
-                        str( $f, "Segment( |(" ),
-                        $scope->property_u('pox'),
-                        str( $f, ", " ),
-                        $scope->property_u('poy'),
-                        str( $f, ")---(" ),
-                        $scope->property_u('mx'),
-                        str( $f, ", " ),
-                        $scope->property_u('my'),
-                        str( $f, ")---(" ),
-                        $scope->property_u('ptx'),
-                        str( $f, ", " ),
-                        $scope->property_u('pty'),
-                        str( $f, ")| Length = " ),
-                        $self->property_u('length'),
-                        str( $f, " )" )
+                        $scope,             str( $f, "Segment( |(" ),
+                        $$scope->{'pox'},   str( $f, ", " ),
+                        $$scope->{'poy'},   str( $f, ")---(" ),
+                        $$scope->{'mx'},    str( $f, ", " ),
+                        $$scope->{'my'},    str( $f, ")---(" ),
+                        $$scope->{'ptx'},   str( $f, ", " ),
+                        $$scope->{'pty'},   str( $f, ")| Length = " ),
+                        $$self->{'length'}, str( $f, " )" )
                     )
                 );
                 return $ret->return;
@@ -267,7 +257,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                return $ret->return( $self->property_u('pretty') );
+                return $ret->return( $$self->{'pretty'} );
                 return $ret->return;
             }
         );
@@ -281,11 +271,10 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
                 return $ret->return(
-                    FF::create_set(
-                        $scope, $self->property_u('pt1'),
-                        $self->property_u('pt2')
-                      )->property_u('midpoint')
-                      ->call_u( {}, $scope, undef, 25.4 )
+                    ${
+                        FF::create_set( $scope, $$self->{'pt1'},
+                            $$self->{'pt2'} )
+                    }->{'midpoint'}->call_u( {}, $scope, undef, 25.4 )
                 );
                 return $ret->return;
             }
@@ -298,12 +287,8 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                return $ret->return(
-                    $self->property_u('pt1')->property_u('distanceTo')->call_u(
-                        [ $self->property_u('pt2') ],
-                        $scope, undef, 29.4
-                    )
-                );
+                return $ret->return( ${ $$self->{'pt1'} }->{'distanceTo'}
+                      ->call_u( [ $$self->{'pt2'} ], $scope, undef, 29.4 ) );
                 return $ret->return;
             }
         );

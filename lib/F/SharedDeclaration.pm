@@ -15,9 +15,9 @@ sub variable {
 }
 
 sub perl_fmt {
-    my $local = shift;
-    my $child = $local->first_child;
-    my $var   = $local->variable;
+    my $share = shift;
+    my $child = $share->first_child;
+    my $var   = $share->variable;
 
     # if it's not an assignment, assign to undef if no value is already there.
     $child->type eq 'Assignment' or return share_lexical_var => {
@@ -25,6 +25,7 @@ sub perl_fmt {
         pos  => $var->{create_pos}
     };
 
+    $child->{var1_declaration} = $share->{var1_declaration};
     return $child->perl_fmt;
 }
 

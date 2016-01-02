@@ -82,7 +82,8 @@ FF::before_content('26-signals.frt');
 
 use Ferret::Core::Operations qw(_not bool num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Anonymous function definition
@@ -93,8 +94,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')
-              ->call_u( [ str( $f, "Got TERM. Terminating!" ) ],
+            $$scope->{'say'}->call_u( [ str( $f, "Got TERM. Terminating!" ) ],
                 $scope, undef, 3.2 );
             return $ret->return;
         }
@@ -108,17 +108,17 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            if ( bool( _not( $scope->property_u('asked') ) ) ) {
+            if ( bool( _not( $$scope->{'asked'} ) ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $scope->property_u('say')
-                  ->call_u( [ str( $f, "Are you sure?" ) ],
+                $$scope->{'say'}->call_u( [ str( $f, "Are you sure?" ) ],
                     $scope, undef, 13.2 );
-                $scope->set_property_ow( $context, asked => $true, 14.2 );
+                my $lv_asked =
+                  FF::lex_assign( $scope, asked => $true, $file_scope, 14.2 );
                 $ret->stop;
                 return $ret->return();
             }
-            $scope->property_u('say')
+            $$scope->{'say'}
               ->call_u( [ str( $f, "Got second INT. Terminating!" ) ],
                 $scope, undef, 19.2 );
             return $ret->return;
@@ -126,7 +126,7 @@ my $result = do {
     );
     FF::load_namespaces( $context, qw(Signal Timer) );
     FF::on(
-        $scope->property_u('Signal')->property_u('TERM'),
+        ${ $$scope->{'Signal'} }->{'TERM'},
         'catch',
         $self,
         $scope,
@@ -134,18 +134,17 @@ my $result = do {
         { before => ['default'] }
     );
     str( $f, "are you sure?" );
-    $scope->set_property( asked => $false, 8.2 );
+    my $lv_asked = FF::lex_assign( $scope, asked => $false, undef, 8.2 );
     FF::on(
-        $scope->property_u('Signal')->property_u('INT'),
+        ${ $$scope->{'Signal'} }->{'INT'},
         'catch',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
-    $scope->property_u('Timer')
-      ->call_u( [ num( $f, 5 ) ], $scope, undef, 23.2 )->property_u('start')
-      ->call_u( {}, $scope, undef, 23.6 );
+    ${ $$scope->{'Timer'}->call_u( [ num( $f, 5 ) ], $scope, undef, 23.2 ) }
+      ->{'start'}->call_u( {}, $scope, undef, 23.6 );
 };
 
 FF::after_content();

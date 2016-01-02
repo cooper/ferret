@@ -253,7 +253,8 @@ FF::before_content('Test.frt');
 use Ferret::Core::Operations
   qw(_sub add bool equal nequal num refs_equal refs_nequal str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Class 'Test'
@@ -295,11 +296,11 @@ my $result = do {
                 $ret->inc;
                 FF::want( $scope, $args, 'a', 12.2 );
                 return $ret->return(
-                    $self->property_u('_test')->call_u(
+                    $$self->{'_test'}->call_u(
                         [
-                            $scope->property_u('Bool')->call_u(
-                                [ $scope->property_u('a') ], $scope,
-                                undef,                       13.25
+                            $$scope->{'Bool'}->call_u(
+                                [ $$scope->{'a'} ],
+                                $scope, undef, 13.25
                             ),
                             str( $f, "Value must be true" )
                         ],
@@ -320,11 +321,9 @@ my $result = do {
                 $ret->inc;
                 FF::want( $scope, $args, 'a', 18.2 );
                 return $ret->return(
-                    $self->property_u('_test')->call_u(
+                    $$self->{'_test'}->call_u(
                         [
-                            refs_equal(
-                                $scope, $scope->property_u('a'), $true
-                            ),
+                            refs_equal( $scope, $$scope->{'a'}, $true ),
                             str( $f, "Value must be exactly true" )
                         ],
                         $scope, undef, 19.15
@@ -347,13 +346,9 @@ my $result = do {
                 FF::want( $scope, $args, 'a', 24.2 );
                 FF::want( $scope, $args, 'b', 24.4 );
                 return $ret->return(
-                    $self->property_u('_test')->call_u(
+                    $$self->{'_test'}->call_u(
                         [
-                            equal(
-                                $scope,
-                                $scope->property_u('a'),
-                                $scope->property_u('b')
-                            ),
+                            equal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
                             str( $f, "Values must be equal" )
                         ],
                         $scope, undef, 25.15
@@ -377,12 +372,10 @@ my $result = do {
                 FF::want( $scope, $args, 'a', 30.2 );
                 FF::want( $scope, $args, 'b', 30.4 );
                 return $ret->return(
-                    $self->property_u('_test')->call_u(
+                    $$self->{'_test'}->call_u(
                         [
                             refs_equal(
-                                $scope,
-                                $scope->property_u('a'),
-                                $scope->property_u('b')
+                                $scope, $$scope->{'a'}, $$scope->{'b'}
                             ),
                             str( $f, "Objects must be exactly equal" )
                         ],
@@ -407,13 +400,9 @@ my $result = do {
                 FF::want( $scope, $args, 'a', 36.2 );
                 FF::want( $scope, $args, 'b', 36.4 );
                 return $ret->return(
-                    $self->property_u('_test')->call_u(
+                    $$self->{'_test'}->call_u(
                         [
-                            nequal(
-                                $scope,
-                                $scope->property_u('a'),
-                                $scope->property_u('b')
-                            ),
+                            nequal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
                             str( $f, "Values must not be equal" )
                         ],
                         $scope, undef, 37.15
@@ -437,12 +426,10 @@ my $result = do {
                 FF::want( $scope, $args, 'a', 42.2 );
                 FF::want( $scope, $args, 'b', 42.4 );
                 return $ret->return(
-                    $self->property_u('_test')->call_u(
+                    $$self->{'_test'}->call_u(
                         [
                             refs_nequal(
-                                $scope,
-                                $scope->property_u('a'),
-                                $scope->property_u('b')
+                                $scope, $$scope->{'a'}, $$scope->{'b'}
                             ),
                             str( $f, "Objects must not be equal" )
                         ],
@@ -460,50 +447,30 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                $scope->set_property_ow(
-                    $context,
-                    failed => _sub(
-                        $scope,
-                        $self->property_u('tested'),
-                        $self->property_u('passed')
-                    ),
-                    47.2
+                my $lv_failed = FF::lex_assign(
+                    $scope,
+                    failed =>
+                      _sub( $scope, $$self->{'tested'}, $$self->{'passed'} ),
+                    $file_scope, 47.2
                 );
-                $scope->property_u('say')->call_u(
+                $$scope->{'say'}->call_u(
                     [
                         add(
-                            $scope,
-                            str( $f, "[" ),
-                            $self->property_u('name'),
-                            str( $f, "] " ),
-                            $self->property_u('tested'),
-                            str( $f, " tests " ),
-                            $self->property_u('passed'),
-                            str( $f, " passed " ),
-                            $scope->property_u('failed'),
-                            str( $f, " failed" )
+                            $scope,              str( $f, "[" ),
+                            $$self->{'name'},    str( $f, "] " ),
+                            $$self->{'tested'},  str( $f, " tests " ),
+                            $$self->{'passed'},  str( $f, " passed " ),
+                            $$scope->{'failed'}, str( $f, " failed" )
                         )
                     ],
                     $scope, undef, 48.06667
                 );
+                $ret->set_property( tests  => $$self->{'tested'},  50.2 );
+                $ret->set_property( fails  => $$scope->{'failed'}, 51.2 );
+                $ret->set_property( passes => $$self->{'passed'},  52.2 );
                 $ret->set_property(
-                    tests => $self->property_u('tested'),
-                    50.2
-                );
-                $ret->set_property(
-                    fails => $scope->property_u('failed'),
-                    51.2
-                );
-                $ret->set_property(
-                    passes => $self->property_u('passed'),
-                    52.2
-                );
-                $ret->set_property(
-                    allOK => equal(
-                        $scope,
-                        $self->property_u('passed'),
-                        $self->property_u('tested')
-                    ),
+                    allOK =>
+                      equal( $scope, $$self->{'passed'}, $$self->{'tested'} ),
                     53.2
                 );
                 return $ret->return;
@@ -528,35 +495,29 @@ my $result = do {
                 FF::want( $scope, $args, 'yes',     57.2 );
                 FF::want( $scope, $args, 'message', 57.4 );
                 $self->set_property(
-                    tested =>
-                      add( $scope, $self->property_u('tested'), num( $f, 1 ) ),
+                    tested => add( $scope, $$self->{'tested'}, num( $f, 1 ) ),
                     59.2
                 );
-                $ret->set_property( pass => $scope->property_u('yes'), 60.2 );
-                if ( bool( $scope->property_u('yes') ) ) {
+                $ret->set_property( pass => $$scope->{'yes'}, 60.2 );
+                if ( bool( $$scope->{'yes'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $self->set_property(
-                        passed => add(
-                            $scope, $self->property_u('passed'),
-                            num( $f, 1 )
-                        ),
+                        passed =>
+                          add( $scope, $$self->{'passed'}, num( $f, 1 ) ),
                         63.2
                     );
                     return $ret->return();
                 }
-                if ( bool( $self->property_u('fatal') ) ) {
+                if ( bool( $$self->{'fatal'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $scope->property_u('Error')
-                      ->call_u( [ $scope->property_u('message') ],
-                        $scope, undef, 68.2 )->property_u('panic')
-                      ->call_u( {}, $scope, undef, 68.6 );
+                    ${
+                        $$scope->{'Error'}->call_u( [ $$scope->{'message'} ],
+                            $scope, undef, 68.2 )
+                    }->{'panic'}->call_u( {}, $scope, undef, 68.6 );
                 }
-                $ret->set_property(
-                    message => $scope->property_u('message'),
-                    70.2
-                );
+                $ret->set_property( message => $$scope->{'message'}, 70.2 );
                 return $ret->return;
             }
         );

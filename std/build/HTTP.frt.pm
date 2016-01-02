@@ -67,7 +67,8 @@ FF::before_content('HTTP.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'HTTP' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'HTTP' );
+    my $scope = $file_scope;
     FF::load_core('HTTP');
 
     # Function event 'get' definition
@@ -79,11 +80,8 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'url', 12.2 ) or return;
-            return $ret->return(
-                $scope->property_u('client')->property_u('get')->call_u(
-                    { url => $scope->property_u('url') }, $scope,
-                    undef, 13.4
-                )
+            return $ret->return( ${ $$scope->{'client'} }->{'get'}
+                  ->call_u( { url => $$scope->{'url'} }, $scope, undef, 13.4 )
             );
             return $ret->return;
         }
@@ -98,11 +96,8 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'url', 17.2 ) or return;
-            return $ret->return(
-                $scope->property_u('client')->property_u('post')->call_u(
-                    { url => $scope->property_u('url') }, $scope,
-                    undef, 18.4
-                )
+            return $ret->return( ${ $$scope->{'client'} }->{'post'}
+                  ->call_u( { url => $$scope->{'url'} }, $scope, undef, 18.4 )
             );
             return $ret->return;
         }
@@ -125,13 +120,12 @@ my $result = do {
         },
         undef
     );
-    $scope->set_property(
+    my $lv_client = FF::lex_assign(
+        $scope,
         client => [
-            sub {
-                $scope->property_u('HTTP::Client')
-                  ->call_u( {}, $scope, undef, 9.6 );
-            }
+            sub { $$scope->{'HTTP::Client'}->call_u( {}, $scope, undef, 9.6 ) }
         ],
+        undef,
         9.2
     );
 };

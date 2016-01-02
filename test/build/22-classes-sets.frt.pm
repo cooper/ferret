@@ -180,7 +180,8 @@ FF::before_content('22-classes-sets.frt');
 
 use Ferret::Core::Operations qw(bool str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Class 'Cow'
@@ -208,7 +209,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                if ( bool( $self->property_u('moos') ) ) {
+                if ( bool( $$self->{'moos'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret->return( str( $f, "moo" ) );
@@ -256,7 +257,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                if ( bool( $self->property_u('barks') ) ) {
+                if ( bool( $$self->{'barks'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret->return( str( $f, "bark" ) );
@@ -325,13 +326,13 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'cat1', 39.1 ) or return;
                 FF::need( $scope, $args, 'cat2', 39.3 ) or return;
-                if ( bool( $scope->property_u('cat1')->property_u('mean') ) ) {
+                if ( bool( ${ $$scope->{'cat1'} }->{'mean'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret->return(
                         str( $f, "Cat 1 started a catfight!" ) );
                 }
-                if ( bool( $scope->property_u('cat2')->property_u('mean') ) ) {
+                if ( bool( ${ $$scope->{'cat2'} }->{'mean'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret->return(
@@ -352,46 +353,45 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context, qw(Cat Cow Dog) );
-    $scope->set_property(
-        animal => $scope->property_u('Cow')->call_u( {}, $scope, undef, 50.4 ),
-        50.2
+    my $lv_animal = FF::lex_assign(
+        $scope,
+        animal => $$scope->{'Cow'}->call_u( {}, $scope, undef, 50.4 ),
+        undef, 50.2
     );
-    $scope->property_u('Dog')->property_u('init')
-      ->call_u( [ $scope->property_u('animal') ], $scope, undef, 53.3 )
+    ${ $$scope->{'Dog'} }->{'init'}
+      ->call_u( [ $$scope->{'animal'} ], $scope, undef, 53.3 )
       ->call_u( {}, $scope, undef, 53.6 );
-    $scope->property_u('say')->call_u(
+    $$scope->{'say'}->call_u(
         [
-            $scope->property_u('animal')->property_u('moo')
-              ->call_u( {}, $scope, undef, 56.5 )
+            ${ $$scope->{'animal'} }->{'moo'}->call_u( {}, $scope, undef, 56.5 )
         ],
         $scope, undef, 56.2
     );
-    $scope->property_u('say')->call_u(
+    $$scope->{'say'}->call_u(
         [
-            $scope->property_u('animal')->property_u('bark')
+            ${ $$scope->{'animal'} }->{'bark'}
               ->call_u( {}, $scope, undef, 57.5 )
         ],
         $scope, undef, 57.2
     );
-    $scope->property_u('Cat')->property_u('init')
-      ->call_u( [ $scope->property_u('animal') ], $scope, undef, 60.15 )
+    ${ $$scope->{'Cat'} }->{'init'}
+      ->call_u( [ $$scope->{'animal'} ], $scope, undef, 60.15 )
       ->call_u( { mean => $true }, $scope, undef, 60.3 );
-    $scope->property_u('inspect')
-      ->call_u( [ $scope->property_u('animal') ], $scope, undef, 62.2 );
-    $scope->set_property(
-        cat => $scope->property_u('Cat')->call_u( {}, $scope, undef, 65.4 ),
-        65.2
+    $$scope->{'inspect'}
+      ->call_u( [ $$scope->{'animal'} ], $scope, undef, 62.2 );
+    my $lv_cat = FF::lex_assign(
+        $scope,
+        cat => $$scope->{'Cat'}->call_u( {}, $scope, undef, 65.4 ),
+        undef, 65.2
     );
-    $scope->set_property(
-        aftermath => FF::create_set(
-            $scope,
-            $scope->property_u('animal'),
-            $scope->property_u('cat')
-          )->property_u('fight')->call_u( {}, $scope, undef, 71.45 ),
-        71.1
+    my $lv_aftermath = FF::lex_assign(
+        $scope,
+        aftermath =>
+          ${ FF::create_set( $scope, $$scope->{'animal'}, $$scope->{'cat'} ) }
+          ->{'fight'}->call_u( {}, $scope, undef, 71.45 ),
+        undef, 71.1
     );
-    $scope->property_u('say')
-      ->call_u( [ $scope->property_u('aftermath') ], $scope, undef, 72.2 );
+    $$scope->{'say'}->call_u( [ $$scope->{'aftermath'} ], $scope, undef, 72.2 );
 };
 
 FF::after_content();

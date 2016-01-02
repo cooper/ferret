@@ -191,7 +191,8 @@ FF::before_content('5-class.frt');
 
 use Ferret::Core::Operations qw(add div num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Class 'Point'
@@ -222,8 +223,8 @@ my $result = do {
                 $ret->inc;
                 FF::need( $scope, $args, 'x', 4.2 ) or return;
                 FF::need( $scope, $args, 'y', 4.4 ) or return;
-                $self->set_property( x => $scope->property_u('x'), 5.2 );
-                $self->set_property( y => $scope->property_u('y'), 6.2 );
+                $self->set_property( x => $$scope->{'x'}, 5.2 );
+                $self->set_property( y => $$scope->{'y'}, 6.2 );
                 return $ret->return;
             }
         );
@@ -236,18 +237,19 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                $scope->set_property_ow(
-                    $context,
-                    pt => $scope->{special}->property_u('class')->call_u(
+                my $lv_pt = FF::lex_assign(
+                    $scope,
+                    pt => ${ $scope->{special} }->{'class'}->call_u(
                         [
-                            add( $scope, $self->property_u('x'), num( $f, 1 ) ),
-                            $self->property_u('y')
+                            add( $scope, $$self->{'x'}, num( $f, 1 ) ),
+                            $$self->{'y'}
                         ],
                         $scope, undef, 10.2
                     ),
+                    $file_scope,
                     10.1
                 );
-                return $ret->return( $scope->property_u('pt') );
+                return $ret->return( $$scope->{'pt'} );
                 return $ret->return;
             }
         );
@@ -261,9 +263,9 @@ my $result = do {
                 $ret->inc;
                 return $ret->return(
                     add(
-                        $scope,                 str( $f, "(" ),
-                        $self->property_u('x'), str( $f, ", " ),
-                        $self->property_u('y'), str( $f, ")" )
+                        $scope,        str( $f, "(" ),
+                        $$self->{'x'}, str( $f, ", " ),
+                        $$self->{'y'}, str( $f, ")" )
                     )
                 );
                 return $ret->return;
@@ -278,8 +280,8 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $ret->inc;
-                return $ret->return( $self->property_u('pretty')
-                      ->call_u( {}, $scope, undef, 19.3 ) );
+                return $ret->return(
+                    $$self->{'pretty'}->call_u( {}, $scope, undef, 19.3 ) );
                 return $ret->return;
             }
         );
@@ -308,14 +310,14 @@ my $result = do {
                 FF::need( $scope, $args, 'pt1', 23.2 ) or return;
                 FF::need( $scope, $args, 'pt2', 23.4 ) or return;
                 return $ret->return(
-                    $scope->property_u('Point')->call_u(
+                    $$scope->{'Point'}->call_u(
                         {
                             x => div(
                                 $scope,
                                 add(
                                     $scope,
-                                    $scope->property_u('pt1')->property_u('x'),
-                                    $scope->property_u('pt2')->property_u('x')
+                                    ${ $$scope->{'pt1'} }->{'x'},
+                                    ${ $$scope->{'pt2'} }->{'x'}
                                 ),
                                 num( $f, 2 )
                             ),
@@ -323,8 +325,8 @@ my $result = do {
                                 $scope,
                                 add(
                                     $scope,
-                                    $scope->property_u('pt1')->property_u('y'),
-                                    $scope->property_u('pt2')->property_u('y')
+                                    ${ $$scope->{'pt1'} }->{'y'},
+                                    ${ $$scope->{'pt2'} }->{'y'}
                                 ),
                                 num( $f, 2 )
                             )
@@ -357,51 +359,49 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context, qw(Point) );
-    $scope->set_property(
-        pt => $scope->property_u('Point')
+    my $lv_pt = FF::lex_assign(
+        $scope,
+        pt => $$scope->{'Point'}
           ->call_u( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32.2 ),
-        32.1
+        undef, 32.1
     );
-    $scope->property_u('say')
-      ->call_u( [ add( $scope, str( $f, "Point" ), $scope->property_u('pt') ) ],
+    $$scope->{'say'}
+      ->call_u( [ add( $scope, str( $f, "Point" ), $$scope->{'pt'} ) ],
         $scope, undef, 33.2 );
-    $scope->set_property(
-        rpt => $scope->property_u('pt')->property_u('oneToRight')
+    my $lv_rpt = FF::lex_assign(
+        $scope,
+        rpt => ${ $$scope->{'pt'} }->{'oneToRight'}
           ->call_u( {}, $scope, undef, 35.5 ),
-        35.2
+        undef, 35.2
     );
-    $scope->property_u('say')
-      ->call_u(
-        [ add( $scope, str( $f, "Right" ), $scope->property_u('rpt') ) ],
+    $$scope->{'say'}
+      ->call_u( [ add( $scope, str( $f, "Right" ), $$scope->{'rpt'} ) ],
         $scope, undef, 36.2 );
-    $scope->set_property(
-        mdpt => $scope->property_u('Point')->property_u('midpoint')->call_u(
-            [ $scope->property_u('pt'), $scope->property_u('rpt') ], $scope,
-            undef, 38.25
+    my $lv_mdpt = FF::lex_assign(
+        $scope,
+        mdpt => ${ $$scope->{'Point'} }->{'midpoint'}->call_u(
+            [ $$scope->{'pt'}, $$scope->{'rpt'} ],
+            $scope, undef, 38.25
         ),
+        undef,
         38.1
     );
-    $scope->property_u('say')
-      ->call_u(
-        [ add( $scope, str( $f, "Midpoint" ), $scope->property_u('mdpt') ) ],
+    $$scope->{'say'}
+      ->call_u( [ add( $scope, str( $f, "Midpoint" ), $$scope->{'mdpt'} ) ],
         $scope, undef, 39.2 );
-    $scope->set_property(
+    my $lv_nineteen = FF::lex_assign(
+        $scope,
         nineteen => add(
             $scope,
             num( $f, 4 ),
             div( $scope, num( $f, 45 ), num( $f, 3 ) )
         ),
+        undef,
         41.2
     );
-    $scope->property_u('say')->call_u(
-        [
-            add(
-                $scope, str( $f, "Nineteen: " ),
-                $scope->property_u('nineteen')
-            )
-        ],
-        $scope, undef, 42.2
-    );
+    $$scope->{'say'}->call_u(
+        [ add( $scope, str( $f, "Nineteen: " ), $$scope->{'nineteen'} ) ],
+        $scope, undef, 42.2 );
 };
 
 FF::after_content();

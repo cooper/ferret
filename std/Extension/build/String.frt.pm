@@ -60,7 +60,8 @@ FF::before_content('String.frt');
 
 use Ferret::Core::Operations qw(nequal num);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Class 'String'
@@ -77,12 +78,9 @@ my $result = do {
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->instance_of_u(
-                            $scope->{special}->property_u('class')
+                            ${ $scope->{special} }->{'class'}
                         ),
-                        nequal(
-                            $scope, $ins->property_u('length'),
-                            num( $f, 0 )
-                        )
+                        nequal( $scope, $$ins->{'length'}, num( $f, 0 ) )
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
@@ -98,20 +96,16 @@ my $result = do {
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->instance_of_u(
-                            $scope->{special}->property_u('class')
+                            ${ $scope->{special} }->{'class'}
                         ),
-                        do {
-                            $ins = $transform->(
-                                $ins->property_u('uppercase'), $ins
-                            );
-                          }
+                        do { $ins = $transform->( $$ins->{'uppercase'}, $ins ) }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
             },
             undef
         );
-        $class->set_property( UC => $scope->property_u('Uppercase'), 13.3 );
+        $class->set_property( UC => $$scope->{'Uppercase'}, 13.3 );
         FF::typedef(
             $scope, $class,
             'Lowercase',
@@ -121,20 +115,16 @@ my $result = do {
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->instance_of_u(
-                            $scope->{special}->property_u('class')
+                            ${ $scope->{special} }->{'class'}
                         ),
-                        do {
-                            $ins = $transform->(
-                                $ins->property_u('lowercase'), $ins
-                            );
-                          }
+                        do { $ins = $transform->( $$ins->{'lowercase'}, $ins ) }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
             },
             undef
         );
-        $class->set_property( LC => $scope->property_u('Lowercase'), 20.3 );
+        $class->set_property( LC => $$scope->{'Lowercase'}, 20.3 );
     }
     FF::load_namespaces( $context, qw(LC Lowercase UC Uppercase) );
 };

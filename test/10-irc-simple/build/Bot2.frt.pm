@@ -142,7 +142,8 @@ FF::before_content('Bot2.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Anonymous function definition
@@ -153,30 +154,25 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $self->property_u('send')->call_u(
+            $$self->{'send'}->call_u(
                 [
                     add(
                         $scope,
                         str( $f, "USER " ),
-                        $self->property_u('user'),
+                        $$self->{'user'},
                         str( $f, " " ),
                         str( $f, "*" ),
                         str( $f, " " ),
                         str( $f, "*" ),
                         str( $f, " :" ),
-                        $self->property_u('real')
+                        $$self->{'real'}
                     )
                 ],
                 $scope, undef, 14.06667
             );
-            $self->property_u('send')->call_u(
-                [
-                    add(
-                        $scope, str( $f, "NICK " ), $self->property_u('nick')
-                    )
-                ],
-                $scope, undef, 15.2
-            );
+            $$self->{'send'}
+              ->call_u( [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
+                $scope, undef, 15.2 );
             return $ret->return;
         }
     );
@@ -190,15 +186,9 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'data', 20.2 ) or return;
-            $scope->property_u('say')->call_u(
-                [
-                    add(
-                        $scope, str( $f, "recv: " ),
-                        $scope->property_u('data')
-                    )
-                ],
-                $scope, undef, 21.2
-            );
+            $$scope->{'say'}->call_u(
+                [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
+                $scope, undef, 21.2 );
             return $ret->return;
         }
     );
@@ -212,15 +202,9 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'data', 25.2 ) or return;
-            $scope->property_u('say')->call_u(
-                [
-                    add(
-                        $scope, str( $f, "send: " ),
-                        $scope->property_u('data')
-                    )
-                ],
-                $scope, undef, 26.2
-            );
+            $$scope->{'say'}->call_u(
+                [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
+                $scope, undef, 26.2 );
             return $ret->return;
         }
     );
@@ -264,19 +248,13 @@ my $result = do {
                 FF::need( $self, $args, 'user' )    or return;
                 FF::want( $self, $args, 'port', 5.1, num( $f, 6667 ) );
                 FF::want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
-                $scope->property_u('Socket::TCP')->property_u('init')
-                  ->call_u( [ $scope->{special}->property_u('self') ],
-                    $scope, undef, 8.25 )->call_u(
-                    {
-                        addr => $self->property_u('address'),
-                        port => $self->property_u('port')
-                    },
-                    $scope, undef, 8.4
-                    );
-                $self->set_property(
-                    send => $self->property_u('println'),
-                    10.2
-                );
+                ${ $$scope->{'Socket::TCP'} }->{'init'}
+                  ->call_u( [ ${ $scope->{special} }->{'self'} ],
+                    $scope, undef, 8.25 )
+                  ->call_u(
+                    { addr => $$self->{'address'}, port => $$self->{'port'} },
+                    $scope, undef, 8.4 );
+                $self->set_property( send => $$self->{'println'}, 10.2 );
                 FF::on(
                     $self,
                     'connected',

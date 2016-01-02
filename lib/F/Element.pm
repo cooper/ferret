@@ -7,7 +7,7 @@ use 5.010;
 
 use Evented::Object::Hax;
 use Scalar::Util 'blessed';
-use List::Util 'first';
+use List::Util 'any';
 
 sub new {
     my ($class, %opts) = @_;
@@ -33,12 +33,12 @@ sub all_types {
 sub _all_types {
     my $base = shift;
     my @isa  = Evented::Object::Hax::get_symbol($base, '@ISA');
-    return map($_->type, @isa), map(_all_types($_), @isa);
+    return map($_->type, $base, @isa), map(_all_types($_), @isa);
 }
 
 sub is_type {
     my ($el, $type) = @_;
-    return scalar first { $_ eq $type } $el->all_types;
+    return any { $_ eq $type } $el->all_types;
 }
 
 sub parent      { shift->{parent}           }       # parent element

@@ -85,7 +85,8 @@ FF::before_content('21-nested-callbacks.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Anonymous function definition
@@ -96,12 +97,12 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')->call_u(
+            $$scope->{'say'}->call_u(
                 [
                     add(
-                        $scope,                  str( $f, "(" ),
-                        $scope->property_u('i'), str( $f, ") " ),
-                        $scope->property_u('part')
+                        $scope,         str( $f, "(" ),
+                        $$scope->{'i'}, str( $f, ") " ),
+                        $$scope->{'part'}
                     )
                 ],
                 $scope, undef, 5.1
@@ -110,21 +111,25 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $scope->set_property(
-        parts => str( $f, "s p a m" )->property_u('split')
+    my $lv_parts = FF::lex_assign(
+        $scope,
+        parts => ${ str( $f, "s p a m" ) }->{'split'}
           ->call_u( [ str( $f, " " ) ], $scope, undef, 1.5 ),
-        1.2
+        undef, 1.2
     );
     FF::iterate_pair(
         $f, $scope,
-        $scope->property_u('parts'),
+        $$scope->{'parts'},
         'i', 'part',
         sub {
-            my $scope = shift;
+            my $scope   = shift;
+            my $lv_i    = $scope->property_u('i');
+            my $lv_part = $scope->property_u('part');
             FF::on(
-                $scope->property_u('Timer')
-                  ->call_u( [ $scope->property_u('i') ], $scope, undef, 4.15 )
-                  ->property_u('once')->call_u( {}, $scope, undef, 4.35 ),
+                ${
+                    $$scope->{'Timer'}
+                      ->call_u( [ $$scope->{'i'} ], $scope, undef, 4.15 )
+                  }->{'once'}->call_u( {}, $scope, undef, 4.35 ),
                 'expire', $self, $scope,
                 $func_0->inside_scope(
                     (undef) => $scope,
@@ -140,9 +145,10 @@ my $result = do {
         FF::create_list( $f, [ num( $f, 1 ), num( $f, 2 ), num( $f, 3 ) ] ),
         'part',
         sub {
-            my $scope = shift;
-            $scope->property_u('say')
-              ->call_u( [ $scope->property_u('part') ], $scope, undef, 10.2 );
+            my $scope   = shift;
+            my $lv_part = $scope->property_u('part');
+            $$scope->{'say'}
+              ->call_u( [ $$scope->{'part'} ], $scope, undef, 10.2 );
         },
         9.05
     );

@@ -86,7 +86,8 @@ FF::before_content('14-callbacks.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Anonymous function definition
@@ -97,14 +98,14 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')->call_u(
+            $$scope->{'say'}->call_u(
                 [
                     add(
                         $scope,
                         str( $f, "found '" ),
-                        $scope->{special}->property_u('this'),
+                        ${ $scope->{special} }->{'this'},
                         str( $f, "' length to be " ),
-                        $scope->{special}->property_u('return')
+                        ${ $scope->{special} }->{'return'}
                     )
                 ],
                 $scope, undef, 11.1
@@ -121,14 +122,14 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')->call_u(
+            $$scope->{'say'}->call_u(
                 [
                     add(
                         $scope,
                         str( $f, "found '" ),
-                        $scope->{special}->property_u('this'),
+                        ${ $scope->{special} }->{'this'},
                         str( $f, "' length to be " ),
-                        $scope->{special}->property_u('return')
+                        ${ $scope->{special} }->{'return'}
                     )
                 ],
                 $scope, undef, 22.1
@@ -137,29 +138,27 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(String) );
-    $scope->property_u('say')
-      ->call_u( [ str( $f, "test" ) ], $scope, undef, 1.2 );
-    $scope->set_property( str => str( $f, "hi" ), 3.2 );
+    $$scope->{'say'}->call_u( [ str( $f, "test" ) ], $scope, undef, 1.2 );
+    my $lv_str = FF::lex_assign( $scope, str => str( $f, "hi" ), undef, 3.2 );
     FF::on(
-        $scope->property_u('str'),
+        $$scope->{'str'},
         'length',
         $self,
         $scope,
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    $scope->property_u('str')->property_u('length')
-      ->call_u( {}, $scope, undef, 14.3 );
-    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 16.3 );
+    ${ $$scope->{'str'} }->{'length'}->call_u( {}, $scope, undef, 14.3 );
+    ${ str( $f, "hello" ) }->{'length'}->call_u( {}, $scope, undef, 16.3 );
     FF::on(
-        $scope->property_u('String')->property_u('proto'),
+        ${ $$scope->{'String'} }->{'proto'},
         'length',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    str( $f, "hello" )->property_u('length')->call_u( {}, $scope, undef, 25.3 );
+    ${ str( $f, "hello" ) }->{'length'}->call_u( {}, $scope, undef, 25.3 );
 };
 
 FF::after_content();

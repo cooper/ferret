@@ -117,7 +117,8 @@ FF::before_content('3-nested-functions.frt');
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Function event 'hello1' definition
@@ -128,20 +129,18 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->set_property_ow(
-                $context,
+            my $lv_hello = FF::lex_assign(
+                $scope,
                 hello => str( $f, "Hello" ),
-                17.2
+                $file_scope, 17.2
             );
-            $scope->property_u('hello')
-              ->set_property( name => $scope->property_u('name1'), 18.3 );
-            $scope->property_u('say')->call_u(
+            $$scope->{'hello'}
+              ->set_property( name => $$scope->{'name1'}, 18.3 );
+            $$scope->{'say'}->call_u(
                 [
                     add(
-                        $scope,
-                        $scope->property_u('hello'),
-                        str( $f, " " ),
-                        $scope->property_u('hello')->property_u('name')
+                        $scope, $$scope->{'hello'},
+                        str( $f, " " ), ${ $$scope->{'hello'} }->{'name'}
                     )
                 ],
                 $scope, undef, 19.1
@@ -158,15 +157,9 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')->call_u(
-                [
-                    add(
-                        $scope, str( $f, "Hello " ),
-                        $scope->property_u('name2')
-                    )
-                ],
-                $scope, undef, 23.2
-            );
+            $$scope->{'say'}->call_u(
+                [ add( $scope, str( $f, "Hello " ), $$scope->{'name2'} ) ],
+                $scope, undef, 23.2 );
             return $ret->return;
         }
     );
@@ -203,8 +196,8 @@ my $result = do {
             );
             FF::need( $scope, $args, 'name1', 11.2 ) or return;
             FF::need( $scope, $args, 'name2', 11.4 ) or return;
-            $scope->property_u('hello1')->call_u( {}, $scope, undef, 13.2 );
-            $scope->property_u('hello2')->call_u( {}, $scope, undef, 14.2 );
+            $$scope->{'hello1'}->call_u( {}, $scope, undef, 13.2 );
+            $$scope->{'hello2'}->call_u( {}, $scope, undef, 14.2 );
             return $ret->return;
         }
     );
@@ -212,21 +205,22 @@ my $result = do {
         helloWorld => $scope,
         $context, undef, undef, undef
     );
-    $scope->property_u('helloWorld')
+    $$scope->{'helloWorld'}
       ->call_u( { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
         $scope, undef, 1.1 );
-    $scope->property_u('helloWorld')
+    $$scope->{'helloWorld'}
       ->call_u( { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
         $scope, undef, 3.2 );
-    $scope->property_u('helloWorld')
+    $$scope->{'helloWorld'}
       ->call_u( [ str( $f, "Benjamin" ), str( $f, "George" ) ],
         $scope, undef, 8.2 );
-    $scope->set_property(
+    my $lv_pi = FF::lex_assign(
+        $scope,
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ),
-        28.2
+        undef, 28.2
     );
-    $scope->property_u('say')
-      ->call_u( [ add( $scope, str( $f, "Pi = " ), $scope->property_u('pi') ) ],
+    $$scope->{'say'}
+      ->call_u( [ add( $scope, str( $f, "Pi = " ), $$scope->{'pi'} ) ],
         $scope, undef, 29.2 );
 };
 

@@ -96,7 +96,8 @@ FF::before_content('27-http.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Anonymous function definition
@@ -107,7 +108,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')
+            $$scope->{'say'}
               ->call_u( [ str( $f, "Connected!" ) ], $scope, undef, 4.2 );
             return $ret->return;
         }
@@ -129,12 +130,11 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'location', 8.2 ) or return;
-            $scope->property_u('say')->call_u(
+            $$scope->{'say'}->call_u(
                 [
                     add(
-                        $scope,
-                        str( $f, "Redirected to " ),
-                        $scope->property_u('location')
+                        $scope, str( $f, "Redirected to " ),
+                        $$scope->{'location'}
                     )
                 ],
                 $scope, undef, 9.2
@@ -159,12 +159,12 @@ my $result = do {
             my $self = $_self || $self;
             $ret->inc;
             FF::need( $scope, $args, 'content', 14.2 ) or return;
-            $scope->property_u('say')->call_u(
+            $$scope->{'say'}->call_u(
                 [
                     add(
                         $scope,
                         str( $f, "Got content! Length " ),
-                        $scope->property_u('content')->property_u('length')
+                        ${ $$scope->{'content'} }->{'length'}
                     )
                 ],
                 $scope, undef, 15.2
@@ -181,7 +181,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')
+            $$scope->{'say'}
               ->call_u( [ str( $f, "Got error!" ) ], $scope, undef, 20.2 );
             return $ret->return;
         }
@@ -191,7 +191,7 @@ my $result = do {
     # Inside
     FF::inside(
         $f, $scope,
-        $scope->property_u('HTTP')->property_u('get')
+        ${ $$scope->{'HTTP'} }->{'get'}
           ->call_u( [ str( $f, "http://google.com" ) ], $scope, undef, 1.4 ),
         sub {
             my ( $scope, $ins ) = @_;
@@ -233,7 +233,7 @@ my $result = do {
                 ),
                 {}
             );
-            $ins->property_u('connect')->call_u( {}, $scope, undef, 23.3 );
+            $$ins->{'connect'}->call_u( {}, $scope, undef, 23.3 );
         }
     );
 };

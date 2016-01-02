@@ -45,29 +45,26 @@ FF::before_content('19-foreach.frt');
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
-    $scope->set_property(
-        words => str( $f, "how are you?" )->property_u('split')
+    my $lv_words = FF::lex_assign(
+        $scope,
+        words => ${ str( $f, "how are you?" ) }->{'split'}
           ->call_u( [ str( $f, " " ) ], $scope, undef, 1.5 ),
-        1.2
+        undef, 1.2
     );
     FF::iterate(
         $f, $scope,
-        $scope->property_u('words'),
+        $$scope->{'words'},
         'word',
         sub {
-            my $scope = shift;
-            $scope->property_u('say')->call_u(
-                [
-                    add(
-                        $scope, str( $f, "part: " ),
-                        $scope->property_u('word')
-                    )
-                ],
-                $scope, undef, 4.2
-            );
+            my $scope   = shift;
+            my $lv_word = $scope->property_u('word');
+            $$scope->{'say'}->call_u(
+                [ add( $scope, str( $f, "part: " ), $$scope->{'word'} ) ],
+                $scope, undef, 4.2 );
         },
         3.1
     );

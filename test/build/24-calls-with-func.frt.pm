@@ -67,7 +67,8 @@ FF::before_content('24-calls-with-func.frt');
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my ( $scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my $scope = $file_scope;
     FF::load_core('main');
 
     # Function event 'something' definition
@@ -81,8 +82,7 @@ my $result = do {
             $ret->inc;
             FF::need( $scope, $args, 'code', 17.2 ) or return;
             $ret->set_property(
-                message =>
-                  $scope->property_u('code')->call_u( {}, $scope, undef, 18.4 ),
+                message => $$scope->{'code'}->call_u( {}, $scope, undef, 18.4 ),
                 18.2
             );
             return $ret->return;
@@ -97,7 +97,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $ret->inc;
-            $scope->property_u('say')
+            $$scope->{'say'}
               ->call_u( [ str( $f, "been five seconds" ) ], $scope, undef,
                 4.2 );
             return $ret->return;
@@ -117,7 +117,7 @@ my $result = do {
         }
     );
     $func_0->inside_scope( something => $scope, $context, undef, undef, undef );
-    $scope->property_u('delay')->call_u(
+    $$scope->{'delay'}->call_u(
         [
             num( $f, 5 ),
             $func_1->inside_scope(
@@ -127,19 +127,20 @@ my $result = do {
         ],
         $scope, undef, 3.2
     );
-    $scope->property_u('say')
-      ->call_u( [ str( $f, "waiting..." ) ], $scope, undef, 7.2 );
-    $scope->property_u('say')->call_u(
+    $$scope->{'say'}->call_u( [ str( $f, "waiting..." ) ], $scope, undef, 7.2 );
+    $$scope->{'say'}->call_u(
         [
-            $scope->property_u('something')->call_u(
-                [
-                    $func_2->inside_scope(
-                        (undef) => $scope,
-                        undef, undef, undef, undef
-                    )
-                ],
-                $scope, undef, 12.4
-            )->property_u('message')
+            ${
+                $$scope->{'something'}->call_u(
+                    [
+                        $func_2->inside_scope(
+                            (undef) => $scope,
+                            undef, undef, undef, undef
+                        )
+                    ],
+                    $scope, undef, 12.4
+                )
+            }->{'message'}
         ],
         $scope, undef, 12.2
     );

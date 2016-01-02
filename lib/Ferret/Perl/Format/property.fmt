@@ -1,1 +1,1 @@
-<<left>>->property_u('<<name>>')
+${<<left>>}->{'<<name>>'}
