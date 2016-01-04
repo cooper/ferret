@@ -207,7 +207,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $self, $args, 'x' ) or return;
                 FF::need( $self, $args, 'y' ) or return;
                 return $ret->return;
@@ -228,7 +227,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $scope, $args, 'pt2', 9.2 ) or return;
                 my $lv_dx = FF::lex_assign(
                     $scope,
@@ -269,7 +267,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     $$self->{'distanceTo'}->(
                         [
@@ -291,7 +288,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     add(
                         $scope,        str( $f, "(" ),
@@ -310,7 +306,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return( $$self->{'pretty'} );
                 return $ret->return;
             }
@@ -323,7 +318,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     add( $scope, str( $f, "Point" ), $$self->{'pretty'} ) );
                 return $ret->return;
@@ -350,7 +344,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $scope, $args, 'pt1', 32.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 32.3 ) or return;
                 return $ret->return(
@@ -402,7 +395,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $scope, $args, 'pt1', 40.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 40.3 ) or return;
                 return $ret->return( ${ $$scope->{'pt1'} }->{'distanceTo'}

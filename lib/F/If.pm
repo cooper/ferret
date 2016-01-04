@@ -27,7 +27,7 @@ sub new {
     return $if;
 }
 
-sub perl_fmt {
+sub simple_fmt {
     my $if = shift;
     $if->document->{required_operations}{bool}++;
 
@@ -40,6 +40,38 @@ sub perl_fmt {
         content   => $content
     };
 }
+
+sub maybe_fmt {
+    my ($if, $maybe_n) = (shift, 0);
+    my @maybes = @{ $if->{maybes} };
+    my $doc = $if->document;
+
+    # my $maybe...
+    my $definitions = '';
+    foreach my $maybe (@maybes) {
+        $doc->{required_operations}{bool}++;
+        $maybe->{n} = $maybe_n++;
+        $definitions .= sprintf "my %s = %s;\n",
+            $maybe->perl_fmt_do,
+            $maybe->exp_fmt_do;
+    }
+
+    # if ($maybe...)
+    my $conditionals = join ' && ', map { $_->perl_fmt_do } @maybes;
+
+    return maybe_owner => {
+        definitions  => $definitions,
+        conditionals => $conditionals,
+        format       => $if->get_format($if->simple_fmt)
+    };
+}
+
+sub perl_fmt {
+    my $if = shift;
+    return $if->maybe_fmt if $if->{maybes};
+    return $if->simple_fmt;
+}
+
 
 sub param_exp  { shift->{param_exp} }
 sub body       { shift->{body}      }
@@ -59,6 +91,10 @@ sub new {
     );
 }
 
-
+sub add_maybe {
+    my ($exp, $maybe) = @_;
+    my $if = $exp->parent;
+    push @{ $if->{maybes} ||= [] }, $maybe;
+}
 
 1

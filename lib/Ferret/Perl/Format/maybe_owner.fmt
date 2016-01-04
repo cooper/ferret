@@ -1,6 +1,6 @@
 {
     <<definitions>>
     if (bool(<<conditionals>>)) {
-        <<instruction>>
+        <<format>>
     }
 }

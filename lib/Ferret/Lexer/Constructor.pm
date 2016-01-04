@@ -1397,7 +1397,16 @@ sub c_OP_MAYBE {
 
     # if this is a list, it can only have one item.
     if ($last_el->type eq 'List' && $last_el->children > 1) {
-        return $c->expected('a single-element list', 'before');
+        return $c->expected(
+            'a single-element list',
+            'before ' . Ferret::Lexer::pretty_token('OP_MAYBE')
+        );
+    }
+
+    # nothing to capture the maybe.
+    my $owner = $c->maybe_owner;
+    if (!$owner) {
+        # TODO: error!
     }
 
     # create a maybe, adopting the last element.
@@ -1405,7 +1414,7 @@ sub c_OP_MAYBE {
     $maybe->adopt($last_el);
 
     # add the maybe to the instruction.
-    $c->instruction->add_maybe($maybe);
+    $owner->add_maybe($maybe);
 
     return $maybe;
 }

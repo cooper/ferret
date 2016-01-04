@@ -162,7 +162,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             $$self->{'send'}->(
                 [
                     add(
@@ -194,7 +193,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'data', 18.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
@@ -237,7 +235,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $self, $args, 'addr' ) or return;
                 FF::need( $self, $args, 'nick' ) or return;
                 FF::need( $self, $args, 'user' ) or return;
@@ -285,7 +282,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 25.3 );
                 return $ret->return;
             }
@@ -304,7 +300,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $scope, $args, 'line', 29.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],

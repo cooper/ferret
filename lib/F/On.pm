@@ -106,7 +106,7 @@ sub add_after_clause {
     push @{ $on->{afters} }, $name;
 }
 
-sub perl_fmt {
+sub simple_fmt {
     my $on = shift;
     return on => {
         event_name => $on->event_name,
@@ -116,13 +116,42 @@ sub perl_fmt {
     };
 }
 
+sub maybe_fmt {
+    my ($on, $maybe_n) = (shift, 0);
+    my @maybes = @{ $on->{maybes} };
+    my $doc = $on->document;
+
+    # my $maybe...
+    my $definitions = '';
+    foreach my $maybe (@maybes) {
+        $doc->{required_operations}{bool}++;
+        $maybe->{n} = $maybe_n++;
+        $definitions .= sprintf "my %s = %s;\n",
+            $maybe->perl_fmt_do,
+            $maybe->exp_fmt_do;
+    }
+
+    # if ($maybe...)
+    my $conditionals = join ' && ', map { $_->perl_fmt_do } @maybes;
+
+    return maybe_owner => {
+        definitions  => $definitions,
+        conditionals => $conditionals,
+        format       => $on->get_format($on->simple_fmt)
+    };
+}
+
+sub perl_fmt {
+    my $on = shift;
+    return $on->maybe_fmt if $on->{maybes};
+    return $on->simple_fmt;
+}
+
 package F::OnParameter;
 
 use warnings;
 use strict;
 use parent qw(F::NodeExpression);
-
-
 
 sub new {
     my ($class, %opts) = @_;
@@ -131,6 +160,12 @@ sub new {
         generated_expression => 1,
         %opts
     );
+}
+
+sub add_maybe {
+    my ($exp, $maybe) = @_;
+    my $on = $exp->parent;
+    push @{ $on->{maybes} ||= [] }, $maybe;
 }
 
 1

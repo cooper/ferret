@@ -143,7 +143,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'data', 5.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
@@ -160,7 +159,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'data', 10.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
@@ -177,7 +175,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             ${ $$scope->{'sock'} }->{'println'}
               ->( [ str( $f, "NICK k" ) ], $scope, undef, 15.3 );
             ${ $$scope->{'sock'} }->{'println'}->(
@@ -204,7 +201,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             ${ $$scope->{'sock'} }->{'println'}
               ->( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.3 );
             return $ret->return;

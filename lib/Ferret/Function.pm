@@ -246,6 +246,7 @@ sub call {
     );
 
     $return ||= Ferret::Return->new($func->f);
+    $return->inc if $return->isa('Ferret::Return');
 
     # find self.
     my $self =

@@ -78,7 +78,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'url', 12.2 ) or return;
             return $ret->return( ${ $$scope->{'client'} }->{'get'}
                   ->( { url => $$scope->{'url'} }, $scope, undef, 13.4 ) );
@@ -93,7 +92,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'url', 17.2 ) or return;
             return $ret->return( ${ $$scope->{'client'} }->{'post'}
                   ->( { url => $$scope->{'url'} }, $scope, undef, 18.4 ) );

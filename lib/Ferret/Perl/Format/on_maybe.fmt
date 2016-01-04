@@ -1,0 +1,6 @@
+{
+    <<definitions>>
+    if (bool(<<conditionals>>)) {
+        <<on_fmt>>
+    }
+}

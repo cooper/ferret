@@ -42,10 +42,10 @@ sub maybe_fmt {
     # if ($maybe...)
     my $conditionals = join ' && ', map { $_->perl_fmt_do } @maybes;
 
-    return instruction_maybe => {
+    return maybe_owner => {
         definitions  => $definitions,
         conditionals => $conditionals,
-        instruction  => $instr->get_format($instr->simple_fmt)
+        format       => $instr->get_format($instr->simple_fmt)
     };
 }
 

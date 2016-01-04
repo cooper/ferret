@@ -205,7 +205,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $self, $args, 'line' ) or return;
                 my $lv_lineSplit = FF::lex_assign(
                     $scope,
@@ -266,7 +265,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 if (
                     bool(
                         ${
@@ -309,7 +307,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     nequal(
                         $scope,
@@ -335,7 +332,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $ret->return(
                     ${ $$self->{'message'} }->{'split'}->(

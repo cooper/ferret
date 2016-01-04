@@ -66,7 +66,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'who', 2.2 ) or return;
             $$scope->{'say'}->(
                 [

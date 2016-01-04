@@ -102,7 +102,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $scope, $args, 'client', 7.2 ) or return;
                 $self->set_property( client => $$scope->{'client'}, 8.2 );
                 $self->weaken_property( 'client', 9.1 );
@@ -119,7 +118,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 ${ $$scope->{'NATIVE::HTTPClient'} }->{'connect'}->(
                     [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
                     $scope, undef, 17.25
@@ -135,7 +133,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
 
                 return $ret->return;
             }
@@ -148,7 +145,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
 
                 return $ret->return;
             }
@@ -160,7 +156,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
 
                 return $ret->return;
             }
@@ -173,7 +168,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
 
                 return $ret->return;
             }

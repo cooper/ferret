@@ -129,6 +129,16 @@ sub types_upward {
     return @types;
 }
 
+sub all_ancestors {
+    my $el = shift;
+    my @ancestors;
+    while (my $p = $el->parent) {
+        push @ancestors, $p;
+        $el = $p;
+    }
+    return @ancestors;
+}
+
 sub document { first_self_or_parent(shift, 'Document') }
 sub class    { first_self_or_parent(shift, 'Class')    }
 

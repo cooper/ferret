@@ -107,7 +107,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             $$scope->{'say'}
               ->( [ str( $f, "Connected!" ) ], $scope, undef, 4.2 );
             return $ret->return;
@@ -128,7 +127,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'location', 8.2 ) or return;
             $$scope->{'say'}->(
                 [
@@ -157,7 +155,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'content', 14.2 ) or return;
             $$scope->{'say'}->(
                 [
@@ -180,7 +177,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             $$scope->{'say'}
               ->( [ str( $f, "Got error!" ) ], $scope, undef, 20.2 );
             return $ret->return;

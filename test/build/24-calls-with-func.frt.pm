@@ -79,7 +79,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'code', 17.2 ) or return;
             $ret->set_property(
                 message => $$scope->{'code'}->( {}, $scope, undef, 18.4 ),
@@ -96,7 +95,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             $$scope->{'say'}
               ->( [ str( $f, "been five seconds" ) ], $scope, undef, 4.2 );
             return $ret->return;
@@ -110,7 +108,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             return $ret->return( str( $f, "any second now" ) );
             return $ret->return;
         }

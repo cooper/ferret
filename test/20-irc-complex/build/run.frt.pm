@@ -515,7 +515,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'msg', 66.2 ) or return;
             if ( bool( _not( ${ $$scope->{'msg'} }->{'commandHasParameters'} ) )
               )
@@ -594,7 +593,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'string', 79.2 ) or return;
             return $ret->return(
                 ${
@@ -613,7 +611,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'msg', 6.2 ) or return;
             ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
@@ -633,7 +630,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'msg', 11.2 ) or return;
             if ( bool( _not( ${ $$scope->{'msg'} }->{'commandHasParameters'} ) )
               )
@@ -695,7 +691,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'msg', 24.2 ) or return;
             if ( bool( _not( ${ $$scope->{'msg'} }->{'commandHasParameters'} ) )
               )
@@ -757,7 +752,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'msg', 37.2 ) or return;
             if ( bool( _not( ${ $$scope->{'msg'} }->{'commandHasParameters'} ) )
               )
@@ -828,7 +822,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             FF::need( $scope, $args, 'msg', 50.2 ) or return;
             if ( bool( _not( ${ $$scope->{'msg'} }->{'commandHasParameters'} ) )
               )

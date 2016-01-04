@@ -5,6 +5,8 @@ use warnings;
 use strict;
 use 5.010;
 
+use List::Util qw(first);
+
 sub new {
     my ($class, %opts) = @_;
     return bless \%opts, $class;
@@ -220,6 +222,16 @@ sub close_class {
 sub close_end_cap {
     my $c = shift;
     $c->{end_cap} = $c->{end_cap}{parent_end_cap};
+}
+
+##############
+### MAYBES ###
+##############
+
+sub maybe_owner {
+    my $c = shift;
+    my %allowed = map { $_ => 1 } qw(Instruction IfParameter OnParameter);
+    return first { $allowed{ $_->type } } $c->node, $c->node->all_ancestors;
 }
 
 ##################

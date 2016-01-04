@@ -261,7 +261,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $scope, $args, 'x', 5.1 ) or return;
                 FF::need( $scope, $args, 'y', 5.3 ) or return;
                 FF::need( $self, $args, 'width' )  or return;
@@ -284,7 +283,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     FF::create_list(
                         $f,
@@ -305,7 +303,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return( $$self->{'origin'} );
                 return $ret->return;
             }
@@ -318,7 +315,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     $$scope->{'Point'}->(
                         [
@@ -343,7 +339,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     $$scope->{'Point'}->(
                         [
@@ -368,7 +363,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     $$scope->{'Point'}->(
                         [
@@ -397,7 +391,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     $$scope->{'Line'}->(
                         [ $$self->{'bottomLeft'}, $$self->{'bottomRight'} ],
@@ -415,7 +408,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     $$scope->{'Line'}->(
                         [ $$self->{'topLeft'}, $$self->{'topRight'} ], $scope,
@@ -432,7 +424,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 my $lv_x = FF::lex_assign(
                     $scope,
                     x => add(
@@ -470,7 +461,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 my $lv_o = FF::lex_assign(
                     $scope,
                     o => $$self->{'origin'},

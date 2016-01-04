@@ -131,7 +131,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     ${ $$scope->{'Math'} }->{'sqrt'}->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
@@ -148,7 +147,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     $$self->{'root'}->( [ num( $f, 3 ) ], $scope, undef, 25.3 )
                 );
@@ -162,7 +160,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     pow(
                         $scope,
@@ -180,7 +177,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     equal(
                         $scope,
@@ -202,7 +198,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 return $ret->return(
                     nequal(
                         $scope,
@@ -231,7 +226,6 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $ret->inc;
                 FF::need( $scope, $args, 'root', 41.2 ) or return;
                 return $ret->return(
                     ${ $$scope->{'Math'} }->{'root'}->(

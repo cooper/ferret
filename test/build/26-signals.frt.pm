@@ -93,7 +93,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             $$scope->{'say'}
               ->( [ str( $f, "Got TERM. Terminating!" ) ], $scope, undef, 3.2 );
             return $ret->return;
@@ -107,7 +106,6 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $ret->inc;
             if ( bool( _not( $$scope->{'asked'} ) ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 

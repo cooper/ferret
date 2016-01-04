@@ -2,7 +2,6 @@
 my $func_<<id>> = FF::function_event_def($f, <<owner>>, <<name>>, [ <<arguments>> ], sub {
     my ($_self, $args, $call_scope, $scope, $ret) = @_;
     my $self = $_self || $self;
-    $ret->inc;
     <<statements>>
     return $ret->return;
 });

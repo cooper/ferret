@@ -321,7 +321,8 @@ helpful to manually check the rule definition to see what it means.
 Let's say, for example, that you wrote `$x = 1 1` and got an error message
 which ends with `Exception raised by rule Instruction[0]`. This is because there
 is a rule that says instructions can only contain one element. You could then
-search [Rules.pm](../lib/Ferret/Lexer/Rules.pm) for `Instruction[0]`.
+search [Rules.pm](../lib/Ferret/Lexer/Rules.pm) and
+[Constructor.pm](../lib/Ferret/Lexer/Constructor.pm) for `Instruction[0]`.
 
 #### Compiler process "exited prematurely"
 
