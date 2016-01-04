@@ -7,6 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
+use Scalar::Util qw(weaken);
 use Ferret::Core::Conversion qw(pstring fstring);
 
 my @methods = (
@@ -51,7 +52,9 @@ sub get_sym {
     my $sym  = shift;
     my $f    = $sym->f;
     my $name = $sym->{sym_value};
-    return $f->{symbols}{ $name } ||= $sym;
+    return $f->{symbols}{$name} if $f->{symbols}{$name};
+    weaken($f->{symbols}{$name} = $sym);
+    return $sym;
 }
 
 sub description {

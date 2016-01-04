@@ -289,8 +289,6 @@ sub F::Element::rule_set {
         push @rules, rule_hash($parent->t, 'child_rules', $el->type);
         push @rules, rule_hash($parent->t, "child_${my_place}_rules");
 
-        print $parent->t, ":child_${my_place}_rules; for ", $el->type, "\n";
-
         $set2 = Ferret::Lexer::RuleSet->new(@rules);
 
         # Set 3: Rules from self, when certain ancestors are above

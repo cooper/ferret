@@ -7,6 +7,7 @@ use utf8;
 use 5.010;
 
 use Ferret::Core::Conversion qw(fstring ffunction pbool);
+use Scalar::Util qw(weaken);
 use List::Util qw(any all);
 
 # fetch the global Ferret.
@@ -118,9 +119,15 @@ sub get_set_type {
 
 sub get_symbol {
     my ($f, $name) = @_;
-    return $f->{symbols}{$name} || Ferret::Symbol->new($f, init_args => {
-        from => fstring($name)
-    });
+
+    # the symbol exists.
+    return $f->{symbols}{$name} if $f->{symbols}{$name};
+
+    # create a new one.
+    my $sym = Ferret::Symbol->new($f, init_args => { from => fstring($name) });
+    weaken($f->{symbols}{$name} = $sym);
+    
+    return $sym;
 }
 
 # attach an event callback.
