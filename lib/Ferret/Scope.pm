@@ -6,6 +6,7 @@ use strict;
 use utf8;
 
 use parent 'Ferret::Object';
+use Scalar::Util 'weaken';
 use List::Util 'first';
 
 # creates a new scope.
@@ -41,7 +42,7 @@ sub new {
 
 sub closest_context {
     my $scope = shift;
-    return first { $_->isa('Ferret::Context') } $scope, $scope->parents;
+    return first { $_->isa('Ferret::Context') } $scope, $scope->all_ancestors;
 }
 
 1

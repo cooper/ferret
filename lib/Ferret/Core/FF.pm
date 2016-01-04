@@ -218,7 +218,7 @@ sub inside {
 
 # class definition or extension.
 sub get_class {
-    my ($f, $context, $name, $version) = @_;
+    my ($f, $context, $file_scope, $name, $version) = @_;
     my $class;
 
     # create the class only if it does not exist.
@@ -230,8 +230,8 @@ sub get_class {
         $context->set_property($name => $class);
     }
 
-    # create a scope inheriting from the class and the context.
-    my $scope = Ferret::Scope->new($f, parent_scope => $context);
+    # create a scope inheriting from the class and the file scope.
+    my $scope = Ferret::Scope->new($f, parent_scope => $file_scope);
     $scope->add_parent($class);
 
     # special properties, accessible in class variables.
@@ -384,16 +384,7 @@ sub typedef_check {
 
 sub lex_assign {
     my ($owner, $name, $value, $scope_limit_if_ow, $pos) = @_;
-
-    # if a context is passed, use _ow.
-    if ($scope_limit_if_ow) {
-        $owner->set_property_ow($scope_limit_if_ow, $name => $value, $pos);
-    }
-
-    else {
-        $owner->set_property($name => $value, $pos);
-    }
-
+    $owner->set_property_ow($scope_limit_if_ow, $name => $value, $pos);
     return $value;
 }
 

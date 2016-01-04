@@ -20,7 +20,8 @@ sub perl_fmt {
 
     return index => {
         collection => $col->perl_fmt_do,
-        arguments  => $arg_string
+        arguments  => $arg_string,
+        pos        => $index->{create_pos}
     };
 }
 

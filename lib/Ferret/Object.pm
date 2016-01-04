@@ -115,7 +115,7 @@ sub set_property_ow {
 
     # if the owner is the scope limit or any scope inheriting from it,
     # it's OK to overwrite
-    if (any { $_ == $scope_limit } $owner, $owner->parents) {
+    if (any { $_ == $scope_limit } $owner, $owner->all_ancestors) {
         return $owner->set_property($prop_name => $value, $pos);
     }
 
@@ -353,6 +353,26 @@ sub parents {
     };
     $add->(@{ $obj->{isa} });
     return @parents;
+}
+
+# returns a flattened and simplified list of all ancestors.
+sub all_ancestors {
+    my $obj = shift;
+    my (@ancestors, %done);
+    my $push = sub {
+        my $obj = shift;
+        return if $done{$obj}++;
+        push @ancestors, $obj;
+    };
+    my $add; $add = sub {
+        my $obj = shift;
+        foreach my $p ($obj->parents) {
+            $push->($p);
+            $add->($p);
+        }
+    };
+    $add->($obj);
+    return @ancestors;
 }
 
 # returns a flattened and simplified list of parent names as Perl strings.
@@ -607,18 +627,43 @@ sub __code {
 
 # call getValue.
 sub get_index_value {
-    my ($obj, $args, $call_scope) = @_;
-    # TODO: runtime error if $obj is undefined
-    print "$obj->{last_name}!\n" if $obj == Ferret::undefined;
-    return $obj->call_prop(getValue => $args, $call_scope);
+    my ($obj, $args, $call_scope, $pos) = @_;
+
+    my $evt = $obj->property_u('getValue');
+    undef $evt if !$evt->isa('Ferret::Event');
+
+    # no event getValue
+    my $caller = [caller];
+    throw(IndexOnNonCollection => $caller, [
+        Value    => $obj->description_ol,
+        Name     => $obj->{last_name} // 'unknown',
+        File     => $Ferret::file_map{ $caller->[1] } || 'unknown file',
+        Line     => int $pos
+    ]) if !$evt;
+
+    return $evt->call_u($args, $call_scope);
 }
 
 # call setValue.
-# because the number of indices can be variable, the value is always first.
 sub set_index_value {
-    my ($obj, $args, $value, $call_scope) = @_;
+    my ($obj, $args, $value, $call_scope, $pos) = @_;
+
+    # because the number of indices can be variable, the value is always first.
     unshift @$args, $value;
-    return $obj->call_prop(setValue => $args, $call_scope);
+
+    my $evt = $obj->property_u('setValue');
+    undef $evt if !$evt->isa('Ferret::Event');
+
+    # no event setValue
+    my $caller = [caller];
+    throw(SetIndexOnNonCollection => $caller, [
+        Value    => $obj->description_ol,
+        Name     => $obj->{last_name} // 'unknown',
+        File     => $Ferret::file_map{ $caller->[1] } || 'unknown file',
+        Line     => int $pos
+    ]) if !$evt;
+
+    return $evt->call_u($args, $call_scope);
 }
 
 ###############################

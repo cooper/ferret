@@ -15,6 +15,12 @@ our %errors = (
     CallOnNonFunction => {
         message => "Cannot call non-function value"
     },
+    IndexOnNonCollection => {
+        message => "Cannot access index on non-indexable value"
+    },
+    SetIndexOnNonCollection => {
+        message => "Cannot assign to index on non-indexable value"
+    },
     AssignmentToSpecialProperty => {
         message => "Cannot assign to special property '%s'"
     },
