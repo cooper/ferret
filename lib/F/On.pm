@@ -3,7 +3,7 @@ package F::On;
 
 use warnings;
 use strict;
-use parent 'F::Closure';
+use parent qw(F::Closure F::MaybeOwner);
 
 use Scalar::Util 'weaken';
 
@@ -116,35 +116,10 @@ sub simple_fmt {
     };
 }
 
-sub maybe_fmt {
-    my ($on, $maybe_n) = (shift, 0);
-    my @maybes = @{ $on->{maybes} };
-    my $doc = $on->document;
-
-    # my $maybe...
-    my $definitions = '';
-    foreach my $maybe (@maybes) {
-        $doc->{required_operations}{bool}++;
-        $maybe->{n} = $maybe_n++;
-        $definitions .= sprintf "my %s = %s;\n",
-            $maybe->perl_fmt_do,
-            $maybe->exp_fmt_do;
-    }
-
-    # if ($maybe...)
-    my $conditionals = join ' && ', map { $_->perl_fmt_do } @maybes;
-
-    return maybe_owner => {
-        definitions  => $definitions,
-        conditionals => $conditionals,
-        format       => $on->get_format($on->simple_fmt)
-    };
-}
-
 sub perl_fmt {
-    my $on = shift;
-    return $on->maybe_fmt if $on->{maybes};
-    return $on->simple_fmt;
+    my $node = shift;
+    return $node->maybe_fmt if $node->{maybes};
+    return $node->simple_fmt;
 }
 
 package F::OnParameter;

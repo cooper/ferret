@@ -3,7 +3,7 @@ package F::Instruction;
 
 use warnings;
 use strict;
-use parent qw(F::Node);
+use parent qw(F::Node F::MaybeOwner);
 
 
 sub detail {
@@ -24,35 +24,10 @@ sub simple_fmt {
     return instruction => { instruction => $code };
 }
 
-sub maybe_fmt {
-    my ($instr, $maybe_n) = (shift, 0);
-    my @maybes = @{ $instr->{maybes} };
-    my $doc = $instr->document;
-
-    # my $maybe...
-    my $definitions = '';
-    foreach my $maybe (@maybes) {
-        $doc->{required_operations}{bool}++;
-        $maybe->{n} = $maybe_n++;
-        $definitions .= sprintf "my %s = %s;\n",
-            $maybe->perl_fmt_do,
-            $maybe->exp_fmt_do;
-    }
-
-    # if ($maybe...)
-    my $conditionals = join ' && ', map { $_->perl_fmt_do } @maybes;
-
-    return maybe_owner => {
-        definitions  => $definitions,
-        conditionals => $conditionals,
-        format       => $instr->get_format($instr->simple_fmt)
-    };
-}
-
 sub perl_fmt {
-    my $instr = shift;
-    return $instr->maybe_fmt if $instr->{maybes};
-    return $instr->simple_fmt;
+    my $node = shift;
+    return $node->maybe_fmt if $node->{maybes};
+    return $node->simple_fmt;
 }
 
 1
