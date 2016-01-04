@@ -111,6 +111,17 @@ our %token_rules = (
             0
         ]
 
+    ],
+
+    OP_PROP => [
+
+        next_token_must_be => [                                                 # OP_PROP[0]
+            'BRACKET_S',
+            'Property operator (.) must be followed by either a bareword '.
+            'property or a bracket-delimited expression',
+            0
+        ]
+
     ]
 
 );
@@ -202,6 +213,7 @@ our %element_rules = (
         ],
 
         min_children => [ 1, undef, 3 ],                                        # WantNeed[3]
+
         max_children => [ 3, undef, 4 ]                                         # WantNeed[4]
 
     },
@@ -708,6 +720,50 @@ our %element_rules = (
             'Function must be inside a scope owner',
             0
         ]
+
+    },
+
+    Property => {
+
+        children_must_be => [                                                   # Property[0]
+            '@Expression',
+            'Properties can only be accessed on expressions on sorts',
+            0
+        ],
+
+        # it has to be a list.
+        child_1_must_be => [
+            'List',
+            'Properties with evaluated (non-bareword) names must only contain '.#Property[1]
+            'a bracket-delimited expression: $obj.[someExpression]',
+            1
+        ],
+
+        # it has to be "[" .. "]" list.
+        child_1_must_satisfy => [
+            sub {
+                my $list = shift;
+                return 1 if $list->type ne 'List';
+                return $list->{list_terminator} eq 'BRACKET_E';
+            },
+            'Properties with evaluated (non-bareword) names must only contain '.#Property[2]
+            'a bracket-delimited expression: $obj.[someExpression]',
+            2
+        ],
+
+        # rules for the list.
+        child_1_rules => {
+
+            # it has to have exactly one list item.
+            num_children => [ 1, undef, 3 ]                                     # Property[3]
+
+        },
+
+        # no less than 1 child (the left side)
+        min_children => [ 1, undef, 4 ],                                        # Property[4]
+
+        # no more than 2 children (the left side and the index list)
+        max_children => [ 2, undef, 5 ]                                         # Property[5]
 
     },
 

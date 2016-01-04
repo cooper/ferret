@@ -119,7 +119,6 @@ my @token_formats = (
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
     [ OP_ELLIP      => qr/\.\.\./                                           ],  # ellipsis
     [ OP_RANGE      => qr/\.\./                                             ],  # range
-   #[ OP_PROP       => qr/\./                                               ],  # property
     [ OP_COMMA      => qr/,/                                                ],  # list separator
     [ PROP_VALUE    => qr/$prop_reg:/,  \&remove_last_char                  ],  # property: value
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
@@ -127,8 +126,9 @@ my @token_formats = (
     # other
     [ BAREWORD      => qr/[A-Za-z_]+[A-Za-z0-9:_]*/                         ],  # bareword (and keywords)
     [ NUMBER        => qr/\d+(?:\.\d+(?:e\d+)?)?/                           ],  # number
+    [ OP_PROP       => qr/\./                                               ],  # non-bareword property
     [ NEWLINE       => qr/\n/,          \&ignore_increment                  ],  # newline
-    [ SPACE         => qr/\s*/,         \&ignore                            ],  # whitespace
+    [ SPACE         => qr/\s*/,         \&ignore                            ]   # whitespace
 
 );
 

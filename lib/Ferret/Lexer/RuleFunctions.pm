@@ -22,7 +22,8 @@ our %error_reasons = (
     must_be_inside          => 'outside of a containing %s',
     must_be_set             => "without a current '%s'",
     must_not_be_set         => "with already a current '%s'",
-    must_be_equal           => "with mismatching current '%s' and '%s'"
+    must_be_equal           => "with mismatching current '%s' and '%s'",
+    expected_next_token     => "without %s immediately following it"
 );
 
 sub err { sprintf $error_reasons{+shift}, @_ }
@@ -69,7 +70,8 @@ my %token_checkers = (
     current_must_not_have   => \&t_current_must_not_have,
     current_node_must_be    => \&t_current_node_must_be,
     current_must_be_equal   => \&t_current_must_be_equal,
-    current_must_satisfy    => \&t_current_must_satisfy
+    current_must_satisfy    => \&t_current_must_satisfy,
+    next_token_must_be      => \&t_next_token_must_be
 );
 
 # token check.
@@ -170,7 +172,27 @@ sub t_current_must_be_equal {
 sub t_current_must_satisfy {
     my ($label, $c, $value, $set) = @_;
     my $code = $set->rule_code('current_must_satisfy');
-    return $set->err() if !$code->($c);
+    return $set->err() if !$code->($c); # FIXME
+}
+
+sub t_next_token_must_be {
+    my ($label, $c, $value, $set) = @_;
+    my $next_t = $c->{upcoming}[0];
+
+    my ($pass, $err_tok);
+    foreach my $tok ($set->list_items('next_token_must_be')) {
+        $err_tok ||= $tok;
+        last if !$next_t;
+        $pass = $next_t->[0] eq $tok;
+        last if $pass;
+    }
+
+    if (!$pass) {
+        my $pretty = Ferret::Lexer::pretty_token($err_tok);
+        return $set->err(expected_next_token => $pretty);
+    }
+
+    return $ok;
 }
 
 #####################
@@ -254,7 +276,7 @@ sub F::Element::rule_set {
 
     # rules from ancestors
     if ($parent) {
-        my $my_place = scalar $parent->children;
+        my $my_place = $after ? $el->index : scalar $parent->children;
 
         # Set 2: Rules from ancestors above
 
@@ -266,6 +288,8 @@ sub F::Element::rule_set {
         # rules directly from parent.
         push @rules, rule_hash($parent->t, 'child_rules', $el->type);
         push @rules, rule_hash($parent->t, "child_${my_place}_rules");
+
+        print $parent->t, ":child_${my_place}_rules; for ", $el->type, "\n";
 
         $set2 = Ferret::Lexer::RuleSet->new(@rules);
 
@@ -390,6 +414,13 @@ sub F::Element::allows_child {
     if ($set->{children_must_be}) {
         return $set->err(child_not_allowed => $parent_maybe->detail)
             if !$must_be->('children_must_be');
+    }
+
+    # this specific child must match a subroutine.
+    $idx_name = "child_${my_place}_must_satisfy";
+    if (my $code = $set->rule_code($idx_name)) {
+        return $set->err(child_not_allowed => $parent_maybe->detail)
+            if !$code->($child_maybe, $parent_maybe);
     }
 
     # children must match a subroutine.

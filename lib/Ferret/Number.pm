@@ -204,6 +204,11 @@ sub _product {
     return fnumber($sum);
 }
 
+sub _hash_value {
+    my $num = shift;
+    return fsym($num->{num_value});
+}
+
 sub equal {
     shift if !blessed $_[0];
     my ($num1, $num2) = @_;

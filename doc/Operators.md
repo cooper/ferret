@@ -50,9 +50,10 @@ Accesses a property on an object.
 
 Tokenized as `OP_PROP`.
 
-Currently, the `OP_PROP` token always raises a tokenizer error. This is because
-properties, including the period (`.`) are tokenized as a single `PROPERTY`
-token.
+Bareword properties such as `.propName`, including the period (`.`), are
+tokenized as a single `PROPERTY` token. For non-barewords, `OP_PROP` is used.
+This allows property names to be evaluated at runtime. The same example would
+be written like so: `.["propName"]`.
 
     $value = $object.someValue
 

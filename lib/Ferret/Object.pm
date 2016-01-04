@@ -11,7 +11,7 @@ use List::Util qw(first any);
 
 use Ferret::Core::Conversion qw(
     _pdescription _pstring
-    _pnumber _pbool
+    _pnumber _pbool _psym
 );
 use Ferret::Core::Errors qw(throw);
 
@@ -142,14 +142,33 @@ sub delete_property {
 # if the property exists but is undefined, returns Ferret::undefined.
 # if the property does not exist, returns Perl undef.
 #
-sub property   { (shift->_property(@_))[0] }
+sub property { (shift->_property(@_))[0] }
+
+# wraps ->property, returning Ferret::undefined rather than Perl undef.
 sub property_u {
     my ($obj, $prop_name) = (shift, shift);
-    return $obj->property($prop_name, @_) || do {
-        my $undef = Ferret::undefined;
-        $undef->{last_name} = $prop_name;
-        $undef;
-    };
+    return _U(scalar $obj->property($prop_name, @_), $prop_name);
+}
+
+# wraps ->property, evaluating the $prop_name_exp object to a string.
+sub property_eval {
+    my ($obj, $prop_name_exp) = (shift, shift);
+    my $hashable   = $obj->f->core_context->property('Hashable') or return;
+    my $hash_value = $hashable->call_u([ $prop_name_exp ]);
+
+    # TODO: runtime error if not hashable.
+    if (Ferret::undefined($hash_value)) {
+        die;
+    }
+
+    my $prop_name = _psym($hash_value);
+    return $obj->property($prop_name, @_);
+}
+
+# wraps ->property_eval, returning Ferret::undefined rather than Perl undef.
+sub property_eval_u {
+    my ($obj, $prop_name) = (shift, shift);
+    return _U(scalar $obj->property_eval($prop_name, @_), $prop_name);
 }
 
 # this should not be used directly.
@@ -619,6 +638,18 @@ sub __scalar {
 sub __code {
     my $obj = shift;
     return sub { $obj->call_u(@_) };
+}
+
+sub _U {
+    my ($val, $prop_name) = @_;
+    return $val || do {
+
+        # remember the name for runtime error.
+        my $undef = Ferret::undefined;
+        $undef->{last_name} = $prop_name;
+
+        $undef;
+    };
 }
 
 ###############

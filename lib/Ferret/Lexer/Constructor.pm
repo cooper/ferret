@@ -795,7 +795,18 @@ sub c_BRACKET_E {
     #       as a special case, close indices here as well, since they are
     #       terminated by the end of their argument list.
     #
-    $c->close_node_maybe('Index');
+    my $closed_index = $c->close_node_maybe('Index');
+
+    # property.
+    #
+    #       additionally, the termination of the index can close a
+    #       non-bareword property, such as in 2.["even"]
+    #
+    #       only do it though if the property is marked as indexed
+    #       and if we have not closed an index above.
+    #
+    $c->close_node_maybe('Property')
+        if !$closed_index && $c->node->{is_index};
 
     # finally, the current list becomes the next list up in the tree.
 
@@ -1215,6 +1226,25 @@ sub c_PROP_VALUE {
 sub c_PROPERTY {
     my ($c, $value) = @_;
 
+    # Rule Property[0]:
+    #   Direct children must be Expressions of sorts.
+
+    # Rule Property[1]:
+    #   The second direct must be a List.
+
+    # Rule Property[2]:
+    #   The second direct child, if a list, must have "[" ... "]" delimiters.
+
+    # Rule Property[3]:
+    #   The second direct child must be a parent of exactly one direct child.
+
+    # Rule Property[4]:
+    #   Number of direct children must be no less than one (1).
+
+    # Rule Property[5]:
+    #   Number of direct children must not exceed two (2).
+
+    # last element must be an expression.
     my $last_el = $c->last_el;
     return $c->expected(
         'an expression',
@@ -1223,6 +1253,33 @@ sub c_PROPERTY {
 
     my $prop = F::Property->new(prop_name => $value);
     $c->node->adopt($prop);
+    $prop->adopt($last_el);
+
+    return $prop;
+}
+
+# property operator is used for non-bareword properties.
+# e.g. $prop = "odd"; 2.[$prop] # false
+sub c_OP_PROP {
+    my ($c, $value) = @_;
+
+    # Rule OP_PROP[0]:
+    #   Next token must be an opening bracket "[".
+
+    # Rules for Property:
+    #   See c_PROPERTY().
+
+    # last element must be an expression.
+    my $last_el = $c->last_el;
+    return $c->expected(
+        'an expression',
+        'at left of '.Ferret::Lexer::pretty_token($c->label)
+    ) unless $last_el->is_type('Expression');
+
+    # make the property the current node.
+    # it will capture the upcoming value list.
+    my $prop = F::Property->new(prop_name => $value, is_index => 1);
+    $c->adopt_and_set_node($prop);
     $prop->adopt($last_el);
 
     return $prop;
@@ -1386,7 +1443,6 @@ sub c_OP_PACK {
     $l_word->{bareword_value} .= '::';
     return $l_word;
 }
-
 
 sub c_OP_MAYBE {
     my ($c, $value) = @_;
@@ -1568,7 +1624,7 @@ sub c_eof {
     # when all is said and done, the current node should be the main node.
     if ($c->node != $main_node) {
         my $node = $c->node;
-        my $desc = $node->desc;
+        my $desc = $node->detail;
 
         # if the node started on a different line than current,
         # mention where it started.

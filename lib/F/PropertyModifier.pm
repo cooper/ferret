@@ -20,7 +20,7 @@ sub perl_fmt {
 
     if ($c->type eq 'Property') {
         $left = $c->first_child->perl_fmt_do;
-        $name = $c->{prop_name};
+        $name = $c->prop_name;
     }
     elsif ($c->type eq 'InstanceVariable') {
         $left = '$self';

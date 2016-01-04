@@ -18,6 +18,7 @@ sub list_type {
         return 'hash'               if $list->is_hash;
         return 'value list'         if $list->is_array;
     }
+    return 'property index'         if $list->is_property;
     return 'named argument list'    if $list->is_call && $list->is_hash;
     return 'mixed argument list'    if $list->is_call && $list->is_mixed;
     return 'argument list'          if $list->is_call;
@@ -39,6 +40,7 @@ sub is_array      { shift->{array}      }
 sub is_hash       { shift->{hash}       }
 sub is_mixed      { shift->{mixed}      }
 sub is_collection { shift->{collection} }
+sub is_property   { shift->{property}   }
 
 sub is_callidx { shift->{is_callidx} }
 sub is_call    { $_[0]->is_callidx && !$_[0]->{is_index} }
@@ -129,6 +131,13 @@ sub close : method {
         ]);
 
     }
+
+    # if the parent is a property, it's not a collection.
+    if ($list->parent->type eq 'Property') {
+        delete @$list{ qw(collection hash array) };
+        $list->{property} = 1;
+    }
+
     $list->SUPER::close(@_);
 }
 
