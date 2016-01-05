@@ -258,7 +258,10 @@ sub simple_property {
     return $obj->property($prop_name, undef, 1);
 }
 
-sub simple_property_u { (shift->simple_property(@_)) || Ferret::undefined }
+sub simple_property_u {
+    my ($obj, $prop_name) = (shift, shift);
+    return _U($obj->simple_property($prop_name, @_), $prop_name);
+}
 
 # fetches a property.
 # does not take inheritance into account.
@@ -271,7 +274,10 @@ sub own_property {
     shift->{properties}{+shift};
 }
 
-sub own_property_u { (shift->own_property(@_)) || Ferret::undefined }
+sub own_property_u {
+    my ($obj, $prop_name) = (shift, shift);
+    return _U($obj->own_property($prop_name, @_), $prop_name);
+}
 
 # weaken a property.
 # this only applies to local properties.
