@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 use Ferret::Core::Conversion qw(fstring ffunction pbool);
-use Scalar::Util qw(weaken);
+use Scalar::Util qw(blessed weaken);
 use List::Util qw(any all);
 
 # fetch the global Ferret.
@@ -126,15 +126,18 @@ sub get_symbol {
     # create a new one.
     my $sym = Ferret::Symbol->new($f, init_args => { from => fstring($name) });
     weaken($f->{symbols}{$name} = $sym);
-    
+
     return $sym;
 }
 
 # attach an event callback.
 sub on {
     my ($obj, $event_name, $self, $scope, $on_func, $_opts) = @_;
+    my %opts = $_opts && ref $_opts eq 'HASH' ? %$_opts : ();
+
+    # if $event_name is an object, hashify it.
+    $event_name = $event_name->hash_string if blessed $event_name;
     my $event = $obj->property($event_name);
-    my %opts  = $_opts && ref $_opts eq 'HASH' ? %$_opts : ();
 
     # if $event exists and is not an event, runtime error.
     if ($event && !$event->isa('Ferret::Event')) { # TODO: proper type checking

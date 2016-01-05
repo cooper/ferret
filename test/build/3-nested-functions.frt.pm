@@ -144,7 +144,7 @@ my $result = do {
                 ],
                 $scope, undef, 19.1
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -159,7 +159,7 @@ my $result = do {
                 [ add( $scope, str( $f, "Hello " ), $$scope->{'name2'} ) ],
                 $scope, undef, 23.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -196,7 +196,7 @@ my $result = do {
             FF::need( $scope, $args, 'name2', 11.4 ) or return;
             $$scope->{'hello1'}->( {}, $scope, undef, 13.2 );
             $$scope->{'hello2'}->( {}, $scope, undef, 14.2 );
-            return $ret->return;
+            return $ret;
         }
     );
     $func_2->inside_scope(

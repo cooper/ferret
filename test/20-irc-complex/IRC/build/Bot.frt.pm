@@ -579,7 +579,7 @@ my $result = do {
                 [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
                 $scope, undef, 31.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -594,7 +594,7 @@ my $result = do {
             FF::need( $scope, $args, 'data', 36.2 ) or return;
             $$self->{'handleLine'}
               ->( [ $$scope->{'data'} ], $scope, undef, 37.2 );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -609,7 +609,7 @@ my $result = do {
             if ( bool( $$self->{'_joinedChannels'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret->return();
+                return;
             }
             if ( bool( $$self->{'autojoin'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -635,7 +635,7 @@ my $result = do {
                 );
             }
             $self->set_property( _joinedChannels => $true, 103.2 );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -658,7 +658,7 @@ my $result = do {
                 ],
                 $scope, undef, 110.1
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -706,7 +706,7 @@ my $result = do {
                     }
                 }
             }
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -734,7 +734,7 @@ my $result = do {
                 ],
                 $scope, undef, 133.1
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -782,7 +782,7 @@ my $result = do {
                 ],
                 $scope, undef, 148.1
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -808,7 +808,7 @@ my $result = do {
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'response'} ],
                 $scope, undef, 154.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -885,7 +885,7 @@ my $result = do {
                     ),
                     {}
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -927,7 +927,7 @@ my $result = do {
                 $$self->{'commands'}->set_index_value( [ $$scope->{'command'} ],
                     $$scope->{'callback'}, $scope, 46.5 );
                 $ret->set_property( added => $true, 47.2 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -939,7 +939,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 51.3 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -963,7 +963,7 @@ my $result = do {
                 );
                 ${ $$self->{'sock'} }->{'println'}
                   ->( [ $$scope->{'line'} ], $scope, undef, 57.3 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -1043,7 +1043,7 @@ my $result = do {
                         );
                     }
                 }
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -1106,7 +1106,7 @@ my $result = do {
                     },
                     85.05
                 );
-                return $ret->return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

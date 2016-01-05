@@ -8,7 +8,7 @@ $str = "hi"
 on $str.length {
     # note that *self and @variables may not refer to the string
     # instead, *this refers to the string.
-    say("found '*this' length to be *return")
+    say("found '*this' length to be *return.override")
 }
 
 $str.length()
@@ -19,7 +19,7 @@ $str.length()
 # it applies to all objects on which the length event is fired
 
 on String.proto.length {
-    say("found '*this' length to be *return")
+    say("found '*this' length to be *return.override")
 }
 
 "hello".length()

@@ -65,7 +65,7 @@ my $result = do {
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "it works!" ) ], $scope, undef, 8.2 );
-            return $ret->return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );

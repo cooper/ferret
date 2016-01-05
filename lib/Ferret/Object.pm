@@ -153,15 +153,7 @@ sub property_u {
 # wraps ->property, evaluating the $prop_name_exp object to a string.
 sub property_eval {
     my ($obj, $prop_name_exp) = (shift, shift);
-    my $hashable   = $obj->f->core_context->property('Hashable') or return;
-    my $hash_value = $hashable->call_u([ $prop_name_exp ]);
-
-    # TODO: runtime error if not hashable.
-    if (Ferret::undefined($hash_value)) {
-        die;
-    }
-
-    my $prop_name = _psym($hash_value);
+    my $prop_name = $prop_name_exp->hash_string;
     return $obj->property($prop_name, @_);
 }
 
@@ -650,6 +642,22 @@ sub _U {
 
         $undef;
     };
+}
+
+# convert a hashable object to a Perl string.
+sub hash_string {
+    my $obj = shift;
+    my $hashable = $obj->f->core_context->property('Hashable') or return;
+
+    # convert to the hash value.
+    my $hash_value = $hashable->call_u([ $obj ]);
+
+    # TODO: runtime error if not hashable.
+    if (Ferret::undefined($hash_value)) {
+        die;
+    }
+
+    return  _psym($hash_value);
 }
 
 ###############

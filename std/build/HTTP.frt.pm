@@ -79,9 +79,9 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'url', 12.2 ) or return;
-            return $ret->return( ${ $$scope->{'client'} }->{'get'}
-                  ->( { url => $$scope->{'url'} }, $scope, undef, 13.4 ) );
-            return $ret->return;
+            return ${ $$scope->{'client'} }->{'get'}
+              ->( { url => $$scope->{'url'} }, $scope, undef, 13.4 );
+            return $ret;
         }
     );
 
@@ -93,9 +93,9 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'url', 17.2 ) or return;
-            return $ret->return( ${ $$scope->{'client'} }->{'post'}
-                  ->( { url => $$scope->{'url'} }, $scope, undef, 18.4 ) );
-            return $ret->return;
+            return ${ $$scope->{'client'} }->{'post'}
+              ->( { url => $$scope->{'url'} }, $scope, undef, 18.4 );
+            return $ret;
         }
     );
     $func_0->inside_scope( get  => $scope, $context, undef, undef, undef );

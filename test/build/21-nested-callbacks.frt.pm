@@ -106,7 +106,7 @@ my $result = do {
                 ],
                 $scope, undef, 5.1
             );
-            return $ret->return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );

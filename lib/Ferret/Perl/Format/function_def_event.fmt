@@ -3,5 +3,5 @@ my $func_<<id>> = FF::function_event_def($f, <<owner>>, <<name>>, [ <<arguments>
     my ($_self, $args, $call_scope, $scope, $ret) = @_;
     my $self = $_self || $self;
     <<statements>>
-    return $ret->return;
+    return $ret;
 });

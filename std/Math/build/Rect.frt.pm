@@ -272,7 +272,7 @@ my $result = do {
                     ),
                     6.1
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -283,16 +283,14 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    FF::create_list(
-                        $f,
-                        [
-                            $$self->{'topLeft'},    $$self->{'topRight'},
-                            $$self->{'bottomLeft'}, $$self->{'bottomRight'}
-                        ]
-                    )
+                return FF::create_list(
+                    $f,
+                    [
+                        $$self->{'topLeft'},    $$self->{'topRight'},
+                        $$self->{'bottomLeft'}, $$self->{'bottomRight'}
+                    ]
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -303,8 +301,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return( $$self->{'origin'} );
-                return $ret->return;
+                return $$self->{'origin'};
+                return $ret;
             }
         );
 
@@ -315,20 +313,17 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    $$scope->{'Point'}->(
-                        [
-                            add(
-                                $scope,
-                                ${ $$self->{'origin'} }->{'x'},
-                                $$self->{'width'}
-                            ),
-                            ${ $$self->{'origin'} }->{'y'}
-                        ],
-                        $scope, undef, 23.15
-                    )
+                return $$scope->{'Point'}->(
+                    [
+                        add(
+                            $scope, ${ $$self->{'origin'} }->{'x'},
+                            $$self->{'width'}
+                        ),
+                        ${ $$self->{'origin'} }->{'y'}
+                    ],
+                    $scope, undef, 23.15
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -339,20 +334,18 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    $$scope->{'Point'}->(
-                        [
-                            ${ $$self->{'origin'} }->{'x'},
-                            add(
-                                $scope,
-                                ${ $$self->{'origin'} }->{'y'},
-                                $$self->{'height'}
-                            )
-                        ],
-                        $scope, undef, 27.15
-                    )
+                return $$scope->{'Point'}->(
+                    [
+                        ${ $$self->{'origin'} }->{'x'},
+                        add(
+                            $scope,
+                            ${ $$self->{'origin'} }->{'y'},
+                            $$self->{'height'}
+                        )
+                    ],
+                    $scope, undef, 27.15
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -363,24 +356,21 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    $$scope->{'Point'}->(
-                        [
-                            add(
-                                $scope,
-                                ${ $$self->{'origin'} }->{'x'},
-                                $$self->{'width'}
-                            ),
-                            add(
-                                $scope,
-                                ${ $$self->{'origin'} }->{'y'},
-                                $$self->{'height'}
-                            )
-                        ],
-                        $scope, undef, 31.15
-                    )
+                return $$scope->{'Point'}->(
+                    [
+                        add(
+                            $scope, ${ $$self->{'origin'} }->{'x'},
+                            $$self->{'width'}
+                        ),
+                        add(
+                            $scope,
+                            ${ $$self->{'origin'} }->{'y'},
+                            $$self->{'height'}
+                        )
+                    ],
+                    $scope, undef, 31.15
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -391,13 +381,11 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    $$scope->{'Line'}->(
-                        [ $$self->{'bottomLeft'}, $$self->{'bottomRight'} ],
-                        $scope, undef, 35.3
-                    )
+                return $$scope->{'Line'}->(
+                    [ $$self->{'bottomLeft'}, $$self->{'bottomRight'} ],
+                    $scope, undef, 35.3
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -408,13 +396,11 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    $$scope->{'Line'}->(
-                        [ $$self->{'topLeft'}, $$self->{'topRight'} ], $scope,
-                        undef, 39.3
-                    )
+                return $$scope->{'Line'}->(
+                    [ $$self->{'topLeft'}, $$self->{'topRight'} ],
+                    $scope, undef, 39.3
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -444,13 +430,9 @@ my $result = do {
                     $file_scope,
                     44.1
                 );
-                return $ret->return(
-                    $$scope->{'Point'}->(
-                        [ $$scope->{'x'}, $$scope->{'y'} ], $scope,
-                        undef, 45.3
-                    )
-                );
-                return $ret->return;
+                return $$scope->{'Point'}
+                  ->( [ $$scope->{'x'}, $$scope->{'y'} ], $scope, undef, 45.3 );
+                return $ret;
             }
         );
 
@@ -471,25 +453,23 @@ my $result = do {
                     c => $$self->{'center'},
                     $file_scope, 50.2
                 );
-                return $ret->return(
-                    add(
-                        $scope,
-                        str( $f, "Rect( Origin(" ),
-                        ${ $$scope->{'o'} }->{'x'},
-                        str( $f, ", " ),
-                        ${ $$scope->{'o'} }->{'y'},
-                        str( $f, ") Center(" ),
-                        ${ $$scope->{'c'} }->{'x'},
-                        str( $f, ", " ),
-                        ${ $$scope->{'c'} }->{'y'},
-                        str( $f, ") Width = " ),
-                        $$self->{'width'},
-                        str( $f, " Height = " ),
-                        $$self->{'height'},
-                        str( $f, " )" )
-                    )
+                return add(
+                    $scope,
+                    str( $f, "Rect( Origin(" ),
+                    ${ $$scope->{'o'} }->{'x'},
+                    str( $f, ", " ),
+                    ${ $$scope->{'o'} }->{'y'},
+                    str( $f, ") Center(" ),
+                    ${ $$scope->{'c'} }->{'x'},
+                    str( $f, ", " ),
+                    ${ $$scope->{'c'} }->{'y'},
+                    str( $f, ") Width = " ),
+                    $$self->{'width'},
+                    str( $f, " Height = " ),
+                    $$self->{'height'},
+                    str( $f, " )" )
                 );
-                return $ret->return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

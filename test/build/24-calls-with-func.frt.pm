@@ -84,7 +84,7 @@ my $result = do {
                 message => $$scope->{'code'}->( {}, $scope, undef, 18.4 ),
                 18.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -97,7 +97,7 @@ my $result = do {
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "been five seconds" ) ], $scope, undef, 4.2 );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -108,8 +108,8 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            return $ret->return( str( $f, "any second now" ) );
-            return $ret->return;
+            return str( $f, "any second now" );
+            return $ret;
         }
     );
     $func_0->inside_scope( something => $scope, $context, undef, undef, undef );

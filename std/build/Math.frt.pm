@@ -73,9 +73,9 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'num', 4.2 ) or return;
-            return $ret->return( ${ $$scope->{'NATIVE::Math'} }->{'sqrt'}
-                  ->( [ $$scope->{'num'} ], $scope, undef, 5.3 ) );
-            return $ret->return;
+            return ${ $$scope->{'NATIVE::Math'} }->{'sqrt'}
+              ->( [ $$scope->{'num'} ], $scope, undef, 5.3 );
+            return $ret;
         }
     );
 
@@ -91,13 +91,9 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'root', 9.1 ) or return;
             FF::need( $scope, $args, 'num',  9.3 ) or return;
-            return $ret->return(
-                pow(
-                    $scope, $$scope->{'num'},
-                    div( $scope, num( $f, 1 ), $$scope->{'root'} )
-                )
-            );
-            return $ret->return;
+            return pow( $scope, $$scope->{'num'},
+                div( $scope, num( $f, 1 ), $$scope->{'root'} ) );
+            return $ret;
         }
     );
     $func_0->inside_scope( sqrt => $scope, $context, undef, undef, undef );

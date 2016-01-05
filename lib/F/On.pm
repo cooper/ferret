@@ -59,12 +59,20 @@ sub event_object {
     die;
 }
 
-sub event_name {
+sub event_exp {
     my $on = shift;
     my $c  = $on->param_exp->first_child;
-    return $c->{var_name}       if substr($c->type, -8) eq 'Variable';
-    return $c->{bareword_value} if $c->type eq 'Bareword';
-    return $c->prop_name        if $c->type eq 'Property';
+
+    # variables and barewords are -- just use their names.
+    return q(').$c->{var_name}.q(')       if substr($c->type, -8) eq 'Variable';
+    return q(').$c->{bareword_value}.q(') if $c->type eq 'Bareword';
+
+    # for properties, it could be a name, or it might be an expression.
+    if ($c->type eq 'Property') {
+        return q(').$c->prop_name.q(') if !$c->{is_index};
+        return $c->index_fmt;
+    }
+
     die;
 }
 
@@ -109,7 +117,7 @@ sub add_after_clause {
 sub simple_fmt {
     my $on = shift;
     return on => {
-        event_name => $on->event_name,
+        event_exp  => $on->event_exp,
         object     => $on->event_object,
         function   => $on->function->perl_fmt_do,
         opts       => $on->opts_string

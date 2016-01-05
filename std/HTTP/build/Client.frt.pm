@@ -202,7 +202,7 @@ my $result = do {
                     [ ${ $scope->{special} }->{'self'} ],
                     $scope, undef, 25.5
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -220,16 +220,14 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'url', 29.2 ) or return;
-                return $ret->return(
-                    $$self->{'request'}->(
-                        {
-                            httpMethod => FF::get_symbol( $f, 'GET' ),
-                            url        => $$scope->{'url'}
-                        },
-                        $scope, undef, 30.3
-                    )
+                return $$self->{'request'}->(
+                    {
+                        httpMethod => FF::get_symbol( $f, 'GET' ),
+                        url        => $$scope->{'url'}
+                    },
+                    $scope, undef, 30.3
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -247,16 +245,14 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'url', 37.2 ) or return;
-                return $ret->return(
-                    $$self->{'request'}->(
-                        {
-                            httpMethod => FF::get_symbol( $f, 'POST' ),
-                            url        => $$scope->{'url'}
-                        },
-                        $scope, undef, 38.3
-                    )
+                return $$self->{'request'}->(
+                    {
+                        httpMethod => FF::get_symbol( $f, 'POST' ),
+                        url        => $$scope->{'url'}
+                    },
+                    $scope, undef, 38.3
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -282,17 +278,15 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'httpMethod', 45.1 ) or return;
                 FF::need( $scope, $args, 'url',        45.3 ) or return;
-                return $ret->return(
-                    $$scope->{'HTTP::Request'}->(
-                        {
-                            client     => ${ $scope->{special} }->{'self'},
-                            httpMethod => $$scope->{'httpMethod'},
-                            url        => $$scope->{'url'}
-                        },
-                        $scope, undef, 46.5
-                    )
+                return $$scope->{'HTTP::Request'}->(
+                    {
+                        client     => ${ $scope->{special} }->{'self'},
+                        httpMethod => $$scope->{'httpMethod'},
+                        url        => $$scope->{'url'}
+                    },
+                    $scope, undef, 46.5
                 );
-                return $ret->return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

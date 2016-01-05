@@ -197,7 +197,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::want( $self, $args, 'moos', 6.2, $true );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -210,10 +210,10 @@ my $result = do {
                 if ( bool( $$self->{'moos'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return $ret->return( str( $f, "moo" ) );
+                    return str( $f, "moo" );
                 }
-                return $ret->return( str( $f, "I am a nonverbal cow" ) );
-                return $ret->return;
+                return str( $f, "I am a nonverbal cow" );
+                return $ret;
             }
         );
         $method_0->inside_scope(
@@ -243,7 +243,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::want( $self, $args, 'barks', 18.2, $false );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -256,11 +256,10 @@ my $result = do {
                 if ( bool( $$self->{'barks'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return $ret->return( str( $f, "bark" ) );
+                    return str( $f, "bark" );
                 }
-                return $ret->return(
-                    str( $f, "I had my bark box bred out of me" ) );
-                return $ret->return;
+                return str( $f, "I had my bark box bred out of me" );
+                return $ret;
             }
         );
         $method_0->inside_scope(
@@ -283,7 +282,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::want( $self, $args, 'mean', 30.2, $false );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -293,8 +292,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return( str( $f, "meow" ) );
-                return $ret->return;
+                return str( $f, "meow" );
+                return $ret;
             }
         );
 
@@ -322,17 +321,15 @@ my $result = do {
                 if ( bool( ${ $$scope->{'cat1'} }->{'mean'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return $ret->return(
-                        str( $f, "Cat 1 started a catfight!" ) );
+                    return str( $f, "Cat 1 started a catfight!" );
                 }
                 if ( bool( ${ $$scope->{'cat2'} }->{'mean'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return $ret->return(
-                        str( $f, "Cat 2 started a catfight!" ) );
+                    return str( $f, "Cat 2 started a catfight!" );
                 }
-                return $ret->return( str( $f, "nice cats don't fight" ) );
-                return $ret->return;
+                return str( $f, "nice cats don't fight" );
+                return $ret;
             }
         );
         $method_0->inside_scope(

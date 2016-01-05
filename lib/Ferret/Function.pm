@@ -271,7 +271,7 @@ sub call {
         $func
     );
 
-    return $ret // Ferret::undefined;
+    return $return->return($ret // Ferret::undefined);
 }
 
 sub inside_scope {

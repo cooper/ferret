@@ -125,15 +125,13 @@ sub add_function_with_opts {
             $arguments->{_self} || $self_maybe || $obj,
             $arguments,
             $call_scope,
-            $fire->{override_return} // $return
-            # call with override_return such that special property
-            # *return will accurately represent the current return
+            $return
         );
 
         # override the return if it returns something besides $return.
-        $fire->{override_return} = $ret if $ret && $ret != $return;
+        # if $ret were undef, Function.pm would have returned Ferret::undefined.
+        return $return->return($ret);
 
-        return $ret;
     };
 
     # choose the appropriate target.
@@ -196,7 +194,7 @@ sub call {
     );
     $event->{most_recent_fire} = $fire;
 
-    return $fire->{override_return} // $return;
+    return $return->final_return;
 }
 
 sub signature_string {

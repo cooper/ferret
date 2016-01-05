@@ -17,40 +17,59 @@ sub new {
     );
 }
 
+# called in Function.pm to increment how many callbacks were satisfied.
+# used to determine the truth of the return.
 sub inc {
     my $ret = shift;
     $ret->{call_count}++;
 }
 
+# if ->true_return returns true, the return yields boolean true.
 sub true_return {
     my $ret = shift;
     return $ret->{call_count};
 }
 
+# defer a code until the next ->return().
 sub defer {
     my ($ret, $code) = @_;
     push @{ $ret->{defers} ||= [] }, $code;
 }
 
+# called in Function.pm with the value of the actual return.
 sub return {
     my ($ret, $force) = @_;
-    $ret->run_defers;
-    return $force if $force;
+    $ret->_run_defers;
+
+    # if returned an object other than $ret,
+    # it will override the current return.
+    if ($force && $force != $ret) {
+        $ret->set_property_weak(override => $force);
+        return $ret->{override} = $force;
+    }
+
     return $ret;
 }
 
-sub run_defers {
+# called in Event.pm; yields the event fire's ultimate return value.
+sub final_return {
     my $ret = shift;
-    my $defers = $ret->{defers} or return;
-    $_->() foreach @$defers;
-    @$defers = ();
+    return delete $ret->{override} // $ret;
 }
 
-# stop further propagation.
+# stops further event propagation.
 sub stop {
     # FIXME: if this isn't an event, raise a runtime error.
     my $fire = shift->{fire} or return;
     $fire->stop;
+}
+
+# called internally after each ->return().
+sub _run_defers {
+    my $ret = shift;
+    my $defers = $ret->{defers} or return;
+    $_->() foreach @$defers;
+    @$defers = ();
 }
 
 1

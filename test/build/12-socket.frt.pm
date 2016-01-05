@@ -148,7 +148,7 @@ my $result = do {
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
                 $scope, undef, 6.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -164,7 +164,7 @@ my $result = do {
                 [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
                 $scope, undef, 11.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -190,7 +190,7 @@ my $result = do {
                 ],
                 $scope, undef, 16.15
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -203,7 +203,7 @@ my $result = do {
             my $self = $_self || $self;
             ${ $$scope->{'sock'} }->{'println'}
               ->( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.3 );
-            return $ret->return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Socket Socket::TCP Timer) );

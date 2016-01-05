@@ -28,7 +28,8 @@
 #                                      Addition operator (+)
 #                                      String '' length t...'
 #                                      Addition operator (+)
-#                                      Special variable '*return'
+#                                      Property 'override'
+#                                          Special variable '*return'
 #      Instruction
 #          Call
 #              Property 'length'
@@ -58,7 +59,8 @@
 #                                      Addition operator (+)
 #                                      String '' length t...'
 #                                      Addition operator (+)
-#                                      Special variable '*return'
+#                                      Property 'override'
+#                                          Special variable '*return'
 #      Instruction
 #          Call
 #              Property 'length'
@@ -104,12 +106,12 @@ my $result = do {
                         str( $f, "found '" ),
                         ${ $scope->{special} }->{'this'},
                         str( $f, "' length to be " ),
-                        ${ $scope->{special} }->{'return'}
+                        ${ ${ $scope->{special} }->{'return'} }->{'override'}
                     )
                 ],
                 $scope, undef, 11.1
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -127,12 +129,12 @@ my $result = do {
                         str( $f, "found '" ),
                         ${ $scope->{special} }->{'this'},
                         str( $f, "' length to be " ),
-                        ${ $scope->{special} }->{'return'}
+                        ${ ${ $scope->{special} }->{'return'} }->{'override'}
                     )
                 ],
                 $scope, undef, 22.1
             );
-            return $ret->return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(String) );

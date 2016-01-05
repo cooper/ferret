@@ -95,7 +95,7 @@ my $result = do {
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "Got TERM. Terminating!" ) ], $scope, undef, 3.2 );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -114,13 +114,13 @@ my $result = do {
                 my $lv_asked =
                   FF::lex_assign( $scope, asked => $true, $file_scope, 14.2 );
                 $ret->stop;
-                return $ret->return();
+                return;
             }
             $$scope->{'say'}->(
                 [ str( $f, "Got second INT. Terminating!" ) ],
                 $scope, undef, 19.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Signal Timer) );

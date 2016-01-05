@@ -131,13 +131,11 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    ${ $$scope->{'Math'} }->{'sqrt'}->(
-                        [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                21.4
-                    )
+                return ${ $$scope->{'Math'} }->{'sqrt'}->(
+                    [ ${ $scope->{special} }->{'self'} ],
+                    $scope, undef, 21.4
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -147,10 +145,9 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    $$self->{'root'}->( [ num( $f, 3 ) ], $scope, undef, 25.3 )
-                );
-                return $ret->return;
+                return $$self->{'root'}
+                  ->( [ num( $f, 3 ) ], $scope, undef, 25.3 );
+                return $ret;
             }
         );
 
@@ -160,14 +157,9 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    pow(
-                        $scope,
-                        ${ $scope->{special} }->{'self'},
-                        num( $f, 2 )
-                    )
-                );
-                return $ret->return;
+                return pow( $scope, ${ $scope->{special} }->{'self'},
+                    num( $f, 2 ) );
+                return $ret;
             }
         );
 
@@ -177,18 +169,16 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    equal(
+                return equal(
+                    $scope,
+                    mod(
                         $scope,
-                        mod(
-                            $scope,
-                            ${ $scope->{special} }->{'self'},
-                            num( $f, 2 )
-                        ),
-                        num( $f, 0 )
-                    )
+                        ${ $scope->{special} }->{'self'},
+                        num( $f, 2 )
+                    ),
+                    num( $f, 0 )
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -198,18 +188,16 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    nequal(
+                return nequal(
+                    $scope,
+                    mod(
                         $scope,
-                        mod(
-                            $scope,
-                            ${ $scope->{special} }->{'self'},
-                            num( $f, 2 )
-                        ),
-                        num( $f, 0 )
-                    )
+                        ${ $scope->{special} }->{'self'},
+                        num( $f, 2 )
+                    ),
+                    num( $f, 0 )
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -227,15 +215,11 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'root', 41.2 ) or return;
-                return $ret->return(
-                    ${ $$scope->{'Math'} }->{'root'}->(
-                        [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
-                        $scope,
-                        undef,
-                        42.2
-                    )
+                return ${ $$scope->{'Math'} }->{'root'}->(
+                    [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
+                    $scope, undef, 42.2
                 );
-                return $ret->return;
+                return $ret;
             }
         );
         $method_0->inside_scope( sqrt   => $scope, $proto, $class, 1, undef );

@@ -109,7 +109,7 @@ my $result = do {
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "Connected!" ) ], $scope, undef, 4.2 );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -137,7 +137,7 @@ my $result = do {
                 ],
                 $scope, undef, 9.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -166,7 +166,7 @@ my $result = do {
                 ],
                 $scope, undef, 15.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -179,7 +179,7 @@ my $result = do {
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "Got error!" ) ], $scope, undef, 20.2 );
-            return $ret->return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(HTTP Str) );

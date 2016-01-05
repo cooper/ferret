@@ -173,7 +173,7 @@ my $result = do {
                 [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
                 $scope, undef, 15.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -189,7 +189,7 @@ my $result = do {
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
                 $scope, undef, 21.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -205,7 +205,7 @@ my $result = do {
                 [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
                 $scope, undef, 26.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -285,7 +285,7 @@ my $result = do {
                     ),
                     {}
                 );
-                return $ret->return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

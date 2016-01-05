@@ -182,7 +182,7 @@ my $result = do {
                 [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
                 $scope, undef, 13.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -198,7 +198,7 @@ my $result = do {
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
                 $scope, undef, 19.2
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -271,7 +271,7 @@ my $result = do {
                     ),
                     {}
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -283,7 +283,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 25.3 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -307,7 +307,7 @@ my $result = do {
                 );
                 ${ $$self->{'sock'} }->{'println'}
                   ->( [ $$scope->{'line'} ], $scope, undef, 31.3 );
-                return $ret->return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

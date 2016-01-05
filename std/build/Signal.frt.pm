@@ -134,7 +134,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'type' ) or return;
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -145,7 +145,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 $$scope->{'_exit'}->( [ num( $f, 0 ) ], $scope, undef, 25.2 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -171,7 +171,7 @@ my $result = do {
                         ${$maybe_0}->{'catch'}->( {}, $scope, undef, 32.35 );
                     }
                 }
-                return $ret->return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

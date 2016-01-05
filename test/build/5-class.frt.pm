@@ -224,7 +224,7 @@ my $result = do {
                 FF::need( $scope, $args, 'y', 4.4 ) or return;
                 $self->set_property( x => $$scope->{'x'}, 5.2 );
                 $self->set_property( y => $$scope->{'y'}, 6.2 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -247,8 +247,8 @@ my $result = do {
                     $file_scope,
                     10.1
                 );
-                return $ret->return( $$scope->{'pt'} );
-                return $ret->return;
+                return $$scope->{'pt'};
+                return $ret;
             }
         );
 
@@ -258,14 +258,12 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    add(
-                        $scope,        str( $f, "(" ),
-                        $$self->{'x'}, str( $f, ", " ),
-                        $$self->{'y'}, str( $f, ")" )
-                    )
+                return add(
+                    $scope,        str( $f, "(" ),
+                    $$self->{'x'}, str( $f, ", " ),
+                    $$self->{'y'}, str( $f, ")" )
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -276,9 +274,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    $$self->{'pretty'}->( {}, $scope, undef, 19.3 ) );
-                return $ret->return;
+                return $$self->{'pretty'}->( {}, $scope, undef, 19.3 );
+                return $ret;
             }
         );
 
@@ -304,32 +301,30 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'pt1', 23.2 ) or return;
                 FF::need( $scope, $args, 'pt2', 23.4 ) or return;
-                return $ret->return(
-                    $$scope->{'Point'}->(
-                        {
-                            x => div(
+                return $$scope->{'Point'}->(
+                    {
+                        x => div(
+                            $scope,
+                            add(
                                 $scope,
-                                add(
-                                    $scope,
-                                    ${ $$scope->{'pt1'} }->{'x'},
-                                    ${ $$scope->{'pt2'} }->{'x'}
-                                ),
-                                num( $f, 2 )
+                                ${ $$scope->{'pt1'} }->{'x'},
+                                ${ $$scope->{'pt2'} }->{'x'}
                             ),
-                            y => div(
+                            num( $f, 2 )
+                        ),
+                        y => div(
+                            $scope,
+                            add(
                                 $scope,
-                                add(
-                                    $scope,
-                                    ${ $$scope->{'pt1'} }->{'y'},
-                                    ${ $$scope->{'pt2'} }->{'y'}
-                                ),
-                                num( $f, 2 )
-                            )
-                        },
-                        $scope, undef, 24.3
-                    )
+                                ${ $$scope->{'pt1'} }->{'y'},
+                                ${ $$scope->{'pt2'} }->{'y'}
+                            ),
+                            num( $f, 2 )
+                        )
+                    },
+                    $scope, undef, 24.3
                 );
-                return $ret->return;
+                return $ret;
             }
         );
         $method_0->inside_scope(

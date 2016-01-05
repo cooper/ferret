@@ -85,7 +85,7 @@ my $result = do {
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "five seconds up" ) ], $scope, undef, 4.2 );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -98,7 +98,7 @@ my $result = do {
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "this shouldn't be said" ) ], $scope, undef, 9.2 );
-            return $ret->return;
+            return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );

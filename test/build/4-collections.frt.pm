@@ -126,7 +126,7 @@ my $result = do {
                 4.2
             );
             $ret->set_property( point => $$scope->{'point'}, 8.2 );
-            return $ret->return;
+            return $ret;
         }
     );
     $func_0->inside_scope( makePoint => $scope, $context, undef, undef, undef );

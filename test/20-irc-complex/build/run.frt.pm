@@ -521,7 +521,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret->return();
+                return;
             }
             my $lv_c = FF::lex_assign(
                 $scope,
@@ -565,7 +565,7 @@ my $result = do {
                     ],
                     $scope, undef, 72.15
                 );
-                return $ret->return();
+                return;
             }
             ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
@@ -574,7 +574,7 @@ my $result = do {
                 ],
                 $scope, undef, 75.15
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -594,13 +594,11 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'string', 79.2 ) or return;
-            return $ret->return(
-                ${
-                    ${ $$scope->{'string'} }->{'split'}
-                      ->( [ str( $f, "_NL_" ) ], $scope, undef, 80.2 )
-                }->{'join'}->( [ str( $f, "\n" ) ], $scope, undef, 80.4 )
-            );
-            return $ret->return;
+            return
+              ${ ${ $$scope->{'string'} }->{'split'}
+                  ->( [ str( $f, "_NL_" ) ], $scope, undef, 80.2 ) }->{'join'}
+              ->( [ str( $f, "\n" ) ], $scope, undef, 80.4 );
+            return $ret;
         }
     );
 
@@ -619,7 +617,7 @@ my $result = do {
                 ],
                 $scope, undef, 7.15
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -636,7 +634,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret->return();
+                return;
             }
             my $lv_c = FF::lex_assign(
                 $scope,
@@ -671,7 +669,7 @@ my $result = do {
                     ],
                     $scope, undef, 17.15
                 );
-                return $ret->return();
+                return;
             }
             ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
@@ -680,7 +678,7 @@ my $result = do {
                 ],
                 $scope, undef, 20.15
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -697,7 +695,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret->return();
+                return;
             }
             my $lv_c = FF::lex_assign(
                 $scope,
@@ -732,7 +730,7 @@ my $result = do {
                     ],
                     $scope, undef, 30.15
                 );
-                return $ret->return();
+                return;
             }
             ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
@@ -741,7 +739,7 @@ my $result = do {
                 ],
                 $scope, undef, 33.15
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -758,7 +756,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret->return();
+                return;
             }
             my $lv_res = FF::lex_assign(
                 $scope,
@@ -791,7 +789,7 @@ my $result = do {
                     ],
                     $scope, undef, 42.15
                 );
-                return $ret->return();
+                return;
             }
             my $lv_string = FF::lex_assign(
                 $scope,
@@ -811,7 +809,7 @@ my $result = do {
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'string'} ],
                 $scope, undef, 46.15
             );
-            return $ret->return;
+            return $ret;
         }
     );
 
@@ -828,7 +826,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret->return();
+                return;
             }
             my $lv_res = FF::lex_assign(
                 $scope,
@@ -861,7 +859,7 @@ my $result = do {
                     ],
                     $scope, undef, 55.15
                 );
-                return $ret->return();
+                return;
             }
             my $lv_string = FF::lex_assign(
                 $scope,
@@ -881,7 +879,7 @@ my $result = do {
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'string'} ],
                 $scope, undef, 59.15
             );
-            return $ret->return;
+            return $ret;
         }
     );
     $func_0->inside_scope(

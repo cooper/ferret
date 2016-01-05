@@ -254,7 +254,7 @@ my $result = do {
                       ->( [ str( $f, " " ) ], $scope, undef, 18.5 ),
                     18.2
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -292,11 +292,11 @@ my $result = do {
                     if ( bool( ${ $$scope->{'cmd'} }->{'length'} ) ) {
                         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                        return $ret->return( $$scope->{'cmd'} );
+                        return $$scope->{'cmd'};
                     }
                 }
-                return $ret->return($false);
-                return $ret->return;
+                return $false;
+                return $ret;
             }
         );
 
@@ -307,14 +307,12 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    nequal(
-                        $scope,
-                        ${ $$self->{'parts'} }->{'length'},
-                        num( $f, 1 )
-                    )
+                return nequal(
+                    $scope,
+                    ${ $$self->{'parts'} }->{'length'},
+                    num( $f, 1 )
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -333,19 +331,14 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'wordN', 41.2 ) or return;
-                return $ret->return(
-                    ${ $$self->{'message'} }->{'split'}->(
-                        {
-                            separator => str( $f, " " ),
-                            limit =>
-                              add( $scope, $$scope->{'wordN'}, num( $f, 1 ) )
-                        },
-                        $scope, undef, 42.2
-                      )->get_index_value(
-                        [ $$scope->{'wordN'} ], $scope, 42.65
-                      )
-                );
-                return $ret->return;
+                return ${ $$self->{'message'} }->{'split'}->(
+                    {
+                        separator => str( $f, " " ),
+                        limit => add( $scope, $$scope->{'wordN'}, num( $f, 1 ) )
+                    },
+                    $scope, undef, 42.2
+                )->get_index_value( [ $$scope->{'wordN'} ], $scope, 42.65 );
+                return $ret;
             }
         );
         $method_0->inside_scope(

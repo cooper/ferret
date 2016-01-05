@@ -209,7 +209,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'x' ) or return;
                 FF::need( $self, $args, 'y' ) or return;
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -244,19 +244,17 @@ my $result = do {
                     $file_scope,
                     11.2
                 );
-                return $ret->return(
-                    $$scope->{'sqrt'}->(
-                        [
-                            add(
-                                $scope,
-                                pow( $scope, $$scope->{'dx'}, num( $f, 2 ) ),
-                                pow( $scope, $$scope->{'dy'}, num( $f, 2 ) )
-                            )
-                        ],
-                        $scope, undef, 12.15
-                    )
+                return $$scope->{'sqrt'}->(
+                    [
+                        add(
+                            $scope,
+                            pow( $scope, $$scope->{'dx'}, num( $f, 2 ) ),
+                            pow( $scope, $$scope->{'dy'}, num( $f, 2 ) )
+                        )
+                    ],
+                    $scope, undef, 12.15
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -267,18 +265,16 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    $$self->{'distanceTo'}->(
-                        [
-                            ${ $scope->{special} }->{'class'}->(
-                                [ num( $f, 0 ), num( $f, 0 ) ], $scope,
-                                undef, 16.25
-                            )
-                        ],
-                        $scope, undef, 16.15
-                    )
+                return $$self->{'distanceTo'}->(
+                    [
+                        ${ $scope->{special} }->{'class'}->(
+                            [ num( $f, 0 ), num( $f, 0 ) ], $scope,
+                            undef, 16.25
+                        )
+                    ],
+                    $scope, undef, 16.15
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -288,14 +284,12 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    add(
-                        $scope,        str( $f, "(" ),
-                        $$self->{'x'}, str( $f, ", " ),
-                        $$self->{'y'}, str( $f, ")" )
-                    )
+                return add(
+                    $scope,        str( $f, "(" ),
+                    $$self->{'x'}, str( $f, ", " ),
+                    $$self->{'y'}, str( $f, ")" )
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -306,8 +300,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return( $$self->{'pretty'} );
-                return $ret->return;
+                return $$self->{'pretty'};
+                return $ret;
             }
         );
 
@@ -318,9 +312,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret->return(
-                    add( $scope, str( $f, "Point" ), $$self->{'pretty'} ) );
-                return $ret->return;
+                return add( $scope, str( $f, "Point" ), $$self->{'pretty'} );
+                return $ret;
             }
         );
 
@@ -346,32 +339,30 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'pt1', 32.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 32.3 ) or return;
-                return $ret->return(
-                    ${ $scope->{special} }->{'class'}->(
-                        {
-                            x => div(
+                return ${ $scope->{special} }->{'class'}->(
+                    {
+                        x => div(
+                            $scope,
+                            add(
                                 $scope,
-                                add(
-                                    $scope,
-                                    ${ $$scope->{'pt1'} }->{'x'},
-                                    ${ $$scope->{'pt2'} }->{'x'}
-                                ),
-                                num( $f, 2 )
+                                ${ $$scope->{'pt1'} }->{'x'},
+                                ${ $$scope->{'pt2'} }->{'x'}
                             ),
-                            y => div(
+                            num( $f, 2 )
+                        ),
+                        y => div(
+                            $scope,
+                            add(
                                 $scope,
-                                add(
-                                    $scope,
-                                    ${ $$scope->{'pt1'} }->{'y'},
-                                    ${ $$scope->{'pt2'} }->{'y'}
-                                ),
-                                num( $f, 2 )
-                            )
-                        },
-                        $scope, undef, 33.3
-                    )
+                                ${ $$scope->{'pt1'} }->{'y'},
+                                ${ $$scope->{'pt2'} }->{'y'}
+                            ),
+                            num( $f, 2 )
+                        )
+                    },
+                    $scope, undef, 33.3
                 );
-                return $ret->return;
+                return $ret;
             }
         );
 
@@ -397,9 +388,9 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'pt1', 40.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 40.3 ) or return;
-                return $ret->return( ${ $$scope->{'pt1'} }->{'distanceTo'}
-                      ->( [ $$scope->{'pt2'} ], $scope, undef, 41.4 ) );
-                return $ret->return;
+                return ${ $$scope->{'pt1'} }->{'distanceTo'}
+                  ->( [ $$scope->{'pt2'} ], $scope, undef, 41.4 );
+                return $ret;
             }
         );
         $method_0->inside_scope(
