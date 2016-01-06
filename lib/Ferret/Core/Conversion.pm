@@ -159,12 +159,18 @@ sub plist {
 }
 
 sub plistref {
-    my $list = shift;
-    return [ @{ $list->{all_objs} } ]
+    my ($list, $recursive) = @_;
+    my $r = sub {
+        my @items = @_;
+        return $recursive                   ?
+            [ map perlize($_, 1), @items ]  :
+            \@items;
+    };
+    return $r->(@{ $list->{all_objs} })
         if blessed $list && $list->isa('Ferret::Set');
     return [ ]
         if !blessed $list || !$list->isa('Ferret::List');
-    return [ @{ $list->{list_items} || [] } ]; # make a copy
+    return $r->(@{ $list->{list_items} || [] }); # make a copy
 }
 
 sub fset {
@@ -253,6 +259,9 @@ sub ferretize {
     if (ref $val eq 'HASH') {
         return fhash(%$val);
     }
+    if (ref $val eq 'CODE') {
+        return ffunction($val);
+    }
     if (looks_like_number($val)) {
         return fnumber($val);
     }
@@ -261,11 +270,14 @@ sub ferretize {
 
 # for lists and hashes, references are returned.
 sub perlize {
-    my $val = shift;
+    my ($val, $r) = @_;
     return $val if !blessed $val || !$val->isa('Ferret::Object');
-    return plistref($val)       if $val->{list_items};
-    return phashref($val)       if $val->{hash_values};
-    return $val->{num_value}    if defined $val->{num_value};
+    return plistref($val, $r)   if $val->{list_items};
+    return phashref($val, $r)   if $val->{hash_values};
+    return psym($val)           if defined $val->{sym_value};
+    return pnumber($val)        if defined $val->{num_value};
+    return 1                    if $val == Ferret::true;
+    return 0                    if $val == Ferret::false;
     return pstring($val);
 }
 
