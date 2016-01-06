@@ -8,13 +8,17 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(reftype refaddr weaken blessed);
-use Ferret::Core::Conversion qw(perlize ffunction ferretize);
+use Ferret::Core::Conversion qw(perlize pargs ferretize ffunction_smart);
 
 my @functions = (
     require => {
         need => '$file:Str',
         want => '$args...',
         code => \&_require
+    },
+    wrapPackageVariable => {
+        need => '$pkg:Str $var:Str',
+        code => \&_wrap_package_variable
     }
 );
 
@@ -47,7 +51,7 @@ sub init {
 
         # create the object.
         my $real_obj = $pobj->{real_obj} =
-            eval { $class->$cnstr(_handle_args($args)) };
+            eval { $class->$cnstr(pargs($args)) };
 
         # an error occurred, or the constructor returned false.
         if (!$real_obj || !blessed $real_obj) {
@@ -69,14 +73,12 @@ sub init {
 sub _wrap {
     my ($f, $real_obj) = @_;
 
+    # if it isn't blessed, we can't create a PerlObject.
+    return Ferret::undefined if !$real_obj || !blessed $real_obj;
+
     # a PerlObject already exists.
     my $pobj = $objects{ refaddr($real_obj) || 0 };
     return $pobj if $pobj;
-
-    # if it isn't blessed, we can't create a PerlObject.
-    if (!blessed $real_obj) {
-        return Ferret::undefined;
-    }
 
     # create one.
     $pobj = __PACKAGE__->new;
@@ -106,6 +108,14 @@ sub _require {
     return Ferret::true;
 }
 
+sub _wrap_package_variable {
+    my ($class, $args) = @_;
+    my $pkg_name = $args->pstring('pkg');
+    my $var_name = $args->pstring('var');
+    my $value = Evented::Object::Hax::get_symbol($pkg_name, $var_name);
+    return _wrap($class->f, $value);
+}
+
 sub _property {
     my ($pobj, $prop_name, $borrow_obj, $simple_only, $no_compute) = (shift, @_);
     my $real_obj = $pobj->{real_obj};
@@ -113,11 +123,11 @@ sub _property {
 
     # use the Perl method.
     my $code = $real_obj->can($prop_name);
-    return _create_function($f, $code, $prop_name, $real_obj) if $code;
+    return ffunction_smart($code, $prop_name, $real_obj) if $code;
 
     # use the Perl hash value.
     if ($pobj->_has_hash_key($prop_name)) {
-        return _ferretize($f, $pobj->_get_hash_value($prop_name));
+        return ferretize($pobj->_get_hash_value($prop_name), 1, 1);
     }
 
     return $pobj->SUPER::_property(@_);
@@ -146,7 +156,7 @@ sub set_property {
 
     # otherwise, just assign to a hash value.
     if (reftype $real_obj eq 'HASH') {
-        _get_hash_value($prop_name) = $value;
+        $pobj->_get_hash_value($prop_name) = $value;
         return 1;
     }
 
@@ -164,72 +174,6 @@ sub _has_hash_key {
 sub _get_hash_value : lvalue {
     my $real_obj = shift->{real_obj};
     return $real_obj->{ +shift };
-}
-
-# handles argument as a list, key:value pairs, or a mixture.
-# returns a single list for passing to a Perl function.
-sub _handle_args {
-    my $args = shift;
-
-    # if there is $args, the arguments were passed as a list.
-    my @args = map perlize($_, 1), $args->plist('args');
-    delete $args->{args};
-
-    # all other arguments are key => value.
-    my %args = map { $_ => perlize($args->{$_}, 1) } keys %$args;
-
-    return (@args, %args);
-}
-
-# creates a Ferret function from a Perl code.
-# if $real_obj is provided, it's assumed to be a method.
-sub _create_function {
-    my ($f, $code, $name, $real_obj) = @_;
-    my $needs_obj = defined $real_obj;
-    weaken(my $weak_obj = $real_obj) if $real_obj;
-
-    return ffunction(sub {
-        my (undef, $args) = @_;
-
-        # if it's supposed to be a method and $weak_obj is gone,
-        # it has been disposed of.
-        return if $needs_obj && !$weak_obj;
-
-        # handle the other args. add the object if it's a method.
-        my @args = _handle_args($args);
-        unshift @args, $weak_obj if $needs_obj;
-
-        # ferretize the return value.
-        my $ret = $code->(@args);
-        return _ferretize($f, $ret);
-
-    }, $name, undef, '$args...');
-}
-
-# wrapper for ferretize() which creates a PerlObject if necessary.
-sub _ferretize {
-    my ($f, $val) = @_;
-    my $recursive = 1;
-
-    # if it's a code reference, use _create_function().
-    return _create_function($f, $val) if ref $val eq 'CODE';
-
-    # blessed. could be a Ferret object or another Perl object.
-    if (blessed $val) {
-
-        # normal object. pass it on.
-        if ($val->isa('Ferret::Object')) {
-            return ferretize($val, $recursive);
-        }
-
-        # non-ferret object.
-        return _wrap($f, $val);
-
-    }
-
-    # not blessed. pass it on.
-    return ferretize($val, $recursive);
-
 }
 
 sub description {
