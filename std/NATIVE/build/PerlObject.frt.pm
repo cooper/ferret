@@ -18,7 +18,6 @@ my @functions = (
     }
 );
 
-
 Ferret::bind_class(
     package   => 'NATIVE',
     name      => 'PerlObject',
@@ -48,10 +47,17 @@ sub init {
         delete $args->{INIT};
 
         # create the object.
-        # TODO: error handling if it fails. make sure it's blessed.
-        my $real_obj = $pobj->{real_obj} = $class->$cnstr(_handle_args($args));
-        weaken($objects{ refaddr($real_obj) } = $pobj);
+        my $real_obj = $pobj->{real_obj} =
+            eval { $class->$cnstr(_handle_args($args)) };
 
+        # an error occurred, or the constructor returned false.
+        if (!$real_obj || !blessed $real_obj) {
+            $pobj->{override_init_obj} = Ferret::undefined;
+            return;
+            # TODO: return error -> some error object if $@ is set.
+        }
+
+        weaken($objects{ refaddr($real_obj) } = $pobj);
     }
 
     # otherwise, hope that we are wrapping an existing object.
@@ -64,10 +70,13 @@ sub _wrap {
     my ($f, $real_obj) = @_;
 
     # a PerlObject already exists.
-    my $pobj = $objects{ refaddr($real_obj) };
+    my $pobj = $objects{ refaddr($real_obj) || 0 };
     return $pobj if $pobj;
 
-    # TODO: make sure it's blessed.
+    # if it isn't blessed, we can't create a PerlObject.
+    if (!blessed $real_obj) {
+        return Ferret::undefined;
+    }
 
     # create one.
     $pobj = __PACKAGE__->new;
@@ -88,8 +97,11 @@ sub _require {
         $file .= '.pm';
     }
 
-    # TODO: error handling if it fails.
-    require $file;
+    # if this eval returns false, there was an error.
+    if (!eval { require $file; 1 }) {
+        return Ferret::false;
+        # TODO: return error -> some error object wrapping $@.
+    }
 
     return Ferret::true;
 }
