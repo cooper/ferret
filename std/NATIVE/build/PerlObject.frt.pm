@@ -22,7 +22,6 @@ Ferret::bind_class(
     package   => 'NATIVE',
     name      => 'PerlObject',
     functions => \@functions,
-    #methods   => \@methods,
     init      => \&init,
     init_want => '$CLASS:Str $args...'
 );
@@ -53,6 +52,7 @@ sub init {
         # an error occurred, or the constructor returned false.
         if (!$real_obj || !blessed $real_obj) {
             $pobj->{override_init_obj} = Ferret::undefined;
+            print "E: $@\n";
             return;
             # TODO: return error -> some error object if $@ is set.
         }
@@ -116,11 +116,54 @@ sub _property {
     return _create_function($f, $code, $prop_name, $real_obj) if $code;
 
     # use the Perl hash value.
-    if (reftype $real_obj eq 'HASH' && exists $real_obj->{$prop_name}) {
-        return _ferretize($f, $real_obj->{$prop_name});
+    if ($pobj->_has_hash_key($prop_name)) {
+        return _ferretize($f, $pobj->_get_hash_value($prop_name));
     }
 
     return $pobj->SUPER::_property(@_);
+}
+
+sub set_property {
+    my ($pobj, $prop_name, $value) = (shift, @_);
+    my $real_obj = $pobj->{real_obj};
+    $value = perlize($value);
+
+    # if we have a method set_$prop_name, use that.
+    # also try set$prop_name. If it's camel case, it would be like setSomething.
+    my $code = $real_obj->can("set_$prop_name") ||
+        $real_obj->can("set$prop_name");
+    if ($code) {
+        $code->($real_obj, $value);
+        return 1;
+    }
+
+    # if we have a method $prop_name, it might be a Moose-style setter.
+    $code = $real_obj->can($prop_name);
+    if ($code) {
+        $code->($real_obj, $value);
+        return 1;
+    }
+
+    # otherwise, just assign to a hash value.
+    if (reftype $real_obj eq 'HASH') {
+        _get_hash_value($prop_name) = $value;
+        return 1;
+    }
+
+    # at this point, the object isn't a hash ref.
+    # we can't store anything in it, so store it in the PerlObject.
+    return $pobj->SUPER::set_property(@_);
+
+}
+
+sub _has_hash_key {
+    my $real_obj = shift->{real_obj};
+    return reftype $real_obj eq 'HASH' && exists $real_obj->{ +shift };
+}
+
+sub _get_hash_value : lvalue {
+    my $real_obj = shift->{real_obj};
+    return $real_obj->{ +shift };
 }
 
 # handles argument as a list, key:value pairs, or a mixture.
@@ -133,7 +176,7 @@ sub _handle_args {
     delete $args->{args};
 
     # all other arguments are key => value.
-    my %args = map { perlize($args->{$_}, 1) } keys %$args;
+    my %args = map { $_ => perlize($args->{$_}, 1) } keys %$args;
 
     return (@args, %args);
 }

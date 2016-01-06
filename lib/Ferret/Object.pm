@@ -65,9 +65,6 @@ sub new {
 # b) a special Ferret value such as Ferret::undefined, true, false
 # c) a Perl reference to code that returns a Ferret::Object or special value
 #
-# consider: since the addition of the ! operator, should we give up the
-# concept of computed properties altogether?
-#
 # returns true if set successfully, false otherwise.
 #
 sub set_property {
