@@ -6,9 +6,8 @@ use strict;
 use utf8;
 use 5.010;
 
-use List::Util 'max';
-
-use Ferret::Core::Operations 'import';
+use List::Util qw(max);
+use Ferret::Core::Operations qw(import);
 
 our %errors = (
     CallOnNonFunction => {
@@ -41,7 +40,7 @@ sub throw {
     return $fmt if !exists $errors{$fmt};
 
     # main error.
-    my $err = "Runtime error: ".sprintf($errors{$fmt}{message}, @args).".\n";
+    my $err = sprintf($errors{$fmt}{message}, @args).".\n";
 
     # hints.
     my %hints = @hints;
@@ -56,7 +55,8 @@ sub throw {
     }
 
     $err .= "Exception $fmt raised at $file line $line.\n";
-    die $err;
+
+    die Ferret::Core::Conversion::ferror($err, $fmt);
 }
 
 1

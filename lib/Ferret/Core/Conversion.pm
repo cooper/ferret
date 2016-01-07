@@ -9,6 +9,7 @@ use 5.010;
 use Ferret::Core::Errors qw(throw);
 use Scalar::Util qw(blessed weaken looks_like_number);
 use List::Util qw(any);
+
 our $po;
 
 # special import to handle underscore prefix

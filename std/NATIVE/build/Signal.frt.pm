@@ -7,6 +7,8 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
+use Scalar::Util qw(blessed);
+
 @SIG{ qw(INT HUP TERM) } = (\&_handle_signal) x 3;
 
 sub _handle_signal {
@@ -19,7 +21,8 @@ sub _handle_signal {
 # TODO: make it possible to handle these
 
 $SIG{__DIE__} = sub {
-    #print "@_";
+    my $e = shift;
+    die $e->description if blessed $e and $e->can('description');
 };
 
 $SIG{__WARN__} = sub {
