@@ -110,7 +110,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    my $lv_parts = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         parts => ${ str( $f, "s p a m" ) }->{'split'}
           ->( [ str( $f, " " ) ], $scope, undef, 1.5 ),
@@ -121,9 +121,8 @@ my $result = do {
         $$scope->{'parts'},
         'i', 'part',
         sub {
-            my $scope   = shift;
-            my $lv_i    = $scope->property_u('i');
-            my $lv_part = $scope->property_u('part');
+            my ($scope) = @_;
+
             FF::on(
                 ${
                     $$scope->{'Timer'}
@@ -144,8 +143,8 @@ my $result = do {
         FF::create_list( $f, [ num( $f, 1 ), num( $f, 2 ), num( $f, 3 ) ] ),
         'part',
         sub {
-            my $scope   = shift;
-            my $lv_part = $scope->property_u('part');
+            my ($scope) = @_;
+
             $$scope->{'say'}->( [ $$scope->{'part'} ], $scope, undef, 10.2 );
         },
         9.05

@@ -6,9 +6,9 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Core::Conversion qw(fstring ffunction pbool);
+use Ferret::Core::Conversion qw(fstring ffunction ferror pbool);
 use Scalar::Util qw(blessed weaken);
-use List::Util qw(any all);
+use List::Util qw(any all none);
 
 # fetch the global Ferret.
 sub get_ferret {
@@ -396,6 +396,42 @@ sub lex_assign {
     my ($owner, $name, $value, $scope_limit_if_ow, $pos) = @_;
     $owner->set_property_ow($scope_limit_if_ow, $name => $value, $pos);
     return $value;
+}
+
+sub try_catch {
+    my ($f, $outer_scope, $instr_code, $catch_code, $var_name) = @_;
+
+    # called if there's an error, fatal or nonfatal.
+    my $do_error = sub {
+        my $err = shift;
+
+        # create a scope for the catch body.
+        my $scope = Ferret::Scope->new($f, parent_scope => $outer_scope);
+        $scope->set_property($var_name => $err) if defined $var_name;
+
+        # call the body.
+        return $catch_code->($scope);
+    };
+
+    # attempt the instruction.
+    my $ret = eval { $instr_code->() };
+
+    # a fatal error occured.
+    if (!$ret && $@) {
+        my $err = ferror($@);
+        return $do_error->($err);
+    }
+
+    # a nonfatal error was returned.
+    if (blessed $ret && $ret->isa('Ferret::Return')) {
+        my $err = $ret->property('error');
+        undef $err if none { $_ eq 'Error' } $err->parent_names;
+        return $do_error->($err) if $err;
+    }
+
+    # all is good.
+    return $ret;
+
 }
 
 1

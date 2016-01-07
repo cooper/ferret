@@ -32,8 +32,7 @@ my $result = do {
     my $scope = $file_scope;
     FF::load_core('main');
 
-    my $lv_x =
-      FF::lex_assign( $scope, x => FF::create_object( $f, {} ), undef, 1.2 );
+    FF::lex_assign( $scope, x => FF::create_object( $f, {} ), undef, 1.2 );
     $scope->weaken_property( 'x', 2.1 );
 };
 

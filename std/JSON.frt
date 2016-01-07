@@ -49,13 +49,18 @@ init {
     want @indent: Bool = false
 
     # require JSON::XS.
-    _PO.require("JSON::XS")
+    _PO.require("JSON::XS") catch $err:
+        fail Error(:NativeCodeError,
+            "Unable to load JSON::XS",
+            subError: $err
+        )
 
     # create the underlying JSON::XS object.
-    @xs = _PO("JSON::XS")
-    if !@xs {
-        # TODO: error -> Error
-    }
+    @xs = _PO("JSON::XS") catch $err:
+        fail Error(:NativeCodeError,
+            "Could not create JSON::XS object",
+            subError: $err
+        )
 
     # set properties.
     @xs.[@charset]!                                     # charset
@@ -73,14 +78,14 @@ init {
 
 method encode {
     need $data
-    json -> @xs.encode($data)
-    # TODO: don't ever die. just return error -> some Error
+    json -> @xs.encode($data) catch $err:
+        fail Error(:JSONError, "JSON encode error", subError: $err)
 }
 
 method decode {
     need $json: Str
-    data -> @xs.decode($json)
-    # TODO: don't ever die. just return error -> some Error
+    data -> @xs.decode($json) catch $err:
+        fail Error(:JSONError, "JSON decode error", subError: $err)
 }
 
 # method alias stringify = encode

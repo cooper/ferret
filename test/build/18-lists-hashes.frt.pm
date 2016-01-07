@@ -130,7 +130,7 @@ my $result = do {
     my $scope = $file_scope;
     FF::load_core('main');
 
-    my $lv_list = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         list => FF::create_list( $f, [ str( $f, "hi" ) ] ),
         undef, 1.2
@@ -154,8 +154,8 @@ my $result = do {
         $$scope->{'list'},
         'item',
         sub {
-            my $scope   = shift;
-            my $lv_item = $scope->property_u('item');
+            my ($scope) = @_;
+
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "item: " ), $$scope->{'item'} ) ],
                 $scope, undef, 8.2
@@ -163,7 +163,7 @@ my $result = do {
         },
         7.1
     );
-    my $lv_hash = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         hash => FF::create_hash( $f, { hi => str( $f, "there" ) } ),
         undef, 11.2
@@ -192,9 +192,8 @@ my $result = do {
         $$scope->{'hash'},
         'key', 'val',
         sub {
-            my $scope  = shift;
-            my $lv_key = $scope->property_u('key');
-            my $lv_val = $scope->property_u('val');
+            my ($scope) = @_;
+
             $$scope->{'say'}->(
                 [
                     add(

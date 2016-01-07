@@ -619,8 +619,8 @@ my $result = do {
                     $$self->{'autojoin'},
                     'chan',
                     sub {
-                        my $scope   = shift;
-                        my $lv_chan = $scope->property_u('chan');
+                        my ($scope) = @_;
+
                         $$self->{'send'}->(
                             [
                                 add(
@@ -675,7 +675,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'line', 114.2 ) or return;
             FF::need( $scope, $args, 's',    114.4 ) or return;
-            my $lv_msg = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 msg => $$scope->{'IRC::Message'}
                   ->( [ $$scope->{'line'} ], $scope, undef, 117.3 ),
@@ -719,7 +719,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 131.2 ) or return;
-            my $lv_nickname = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 nickname => ${ $$scope->{'msg'} }->{'nickname'},
                 $file_scope, 132.2
@@ -749,13 +749,13 @@ my $result = do {
             FF::need( $scope, $args, 'msg', 137.2 ) or return;
             $$scope->{'inspect'}
               ->( [ $$scope->{'msg'} ], $scope, undef, 138.2 );
-            my $lv_trigger = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 trigger => ${ $$scope->{'msg'} }->{'parts'}
                   ->get_index_value( [ num( $f, 1 ) ], $scope, 141.5 ),
                 $file_scope, 141.2
             );
-            my $lv_response = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 response => ${ $$scope->{'msg'} }->{'fromWord'}
                   ->( [ num( $f, 2 ) ], $scope, undef, 142.5 ),
@@ -795,7 +795,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 152.2 ) or return;
-            my $lv_response = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 response => $$self->{'factoids'}->get_index_value(
                     [ ${ $$scope->{'msg'} }->{'command'} ],
@@ -982,13 +982,13 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'line', 61.2 ) or return;
-                my $lv_s = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     s => ${ $$scope->{'line'} }->{'split'}
                       ->( [ str( $f, " " ) ], $scope, undef, 64.5 ),
                     $file_scope, 64.2
                 );
-                my $lv_command = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     command => $$scope->{'s'}
                       ->get_index_value( [ num( $f, 1 ) ], $scope, 65.4 ),
@@ -1009,7 +1009,7 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    my $lv_command = FF::lex_assign(
+                    FF::lex_assign(
                         $scope,
                         command => $$scope->{'s'}
                           ->get_index_value( [ num( $f, 0 ) ], $scope, 69.4 ),
@@ -1075,8 +1075,8 @@ my $result = do {
                       ->( [ str( $f, "\n" ) ], $scope, undef, 85.3 ),
                     'line',
                     sub {
-                        my $scope   = shift;
-                        my $lv_line = $scope->property_u('line');
+                        my ($scope) = @_;
+
                         if (
                             bool(
                                 nequal(
@@ -1151,7 +1151,7 @@ my $result = do {
             _commandFactoid => $scope,
             $scope, $class, undef, undef
         );
-        my $lv_handlers = FF::lex_assign(
+        FF::lex_assign(
             $class,
             handlers => FF::create_hash(
                 $f,
@@ -1164,7 +1164,7 @@ my $result = do {
             undef,
             4.3
         );
-        my $lv_initialCommands = FF::lex_assign(
+        FF::lex_assign(
             $class,
             initialCommands => FF::create_hash(
                 $f,

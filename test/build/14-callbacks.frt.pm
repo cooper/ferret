@@ -139,7 +139,7 @@ my $result = do {
     );
     FF::load_namespaces( $context, qw(String) );
     $$scope->{'say'}->( [ str( $f, "test" ) ], $scope, undef, 1.2 );
-    my $lv_str = FF::lex_assign( $scope, str => str( $f, "hi" ), undef, 3.2 );
+    FF::lex_assign( $scope, str => str( $f, "hi" ), undef, 3.2 );
     FF::on(
         $$scope->{'str'},
         'length',

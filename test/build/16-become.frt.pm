@@ -52,7 +52,7 @@ my $result = do {
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Math Math::Point) );
-    my $lv_obj = FF::lex_assign( $scope, obj => str( $f, "hi" ), undef, 2.2 );
+    FF::lex_assign( $scope, obj => str( $f, "hi" ), undef, 2.2 );
     ${ $$scope->{'Math::Point'} }->{'init'}
       ->( [ $$scope->{'obj'} ], $scope, undef, 9.25 )
       ->( [ num( $f, 1 ), num( $f, 1 ) ], $scope, undef, 9.4 );

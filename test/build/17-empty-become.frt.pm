@@ -69,8 +69,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    my $lv_obj =
-      FF::lex_assign( $scope, obj => FF::create_object( $f, {} ), undef, 2.2 );
+    FF::lex_assign( $scope, obj => FF::create_object( $f, {} ), undef, 2.2 );
     ${ $$scope->{'Timer'} }->{'init'}
       ->( [ $$scope->{'obj'} ], $scope, undef, 5.15 )
       ->( [ num( $f, 5 ) ], $scope, undef, 5.3 );

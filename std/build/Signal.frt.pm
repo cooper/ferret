@@ -63,7 +63,7 @@
 #                          Instance variable '@type'
 #                          Argument type
 #                              Bareword 'Sym'
-#          Method 'catch'
+#          Method 'trap'
 #              Body ('method' scope)
 #                  Instruction
 #                      Call
@@ -80,7 +80,7 @@
 #                              Bareword 'Sym'
 #                  Instruction
 #                      Call
-#                          Property 'catch'
+#                          Property 'trap'
 #                              Maybe
 #                                  Index
 #                                      Lexical variable '$signals'
@@ -138,9 +138,9 @@ my $result = do {
             }
         );
 
-        # Method event 'catch' definition
+        # Method event 'trap' definition
         my $method_1 = FF::method_event_def(
-            $f, $scope, 'catch',
+            $f, $scope, 'trap',
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
@@ -168,7 +168,7 @@ my $result = do {
                     my $maybe_0 = $$scope->{'signals'}
                       ->get_index_value( [ $$scope->{'type'} ], $scope, 32.1 );
                     if ( bool($maybe_0) ) {
-                        ${$maybe_0}->{'catch'}->( {}, $scope, undef, 32.35 );
+                        ${$maybe_0}->{'trap'}->( {}, $scope, undef, 32.35 );
                     }
                 }
                 return $ret;
@@ -178,16 +178,13 @@ my $result = do {
             initializer__ => $scope,
             $class, $class, undef, undef
         );
-        $method_1->inside_scope(
-            catch => $scope,
-            $proto, $class, undef, undef
-        );
+        $method_1->inside_scope( trap => $scope, $proto, $class, undef, undef );
         $method_2->inside_scope(
             fireSignal => $scope,
             $class, $class, undef, undef
         );
 
-        my $lv_INT = FF::lex_assign(
+        FF::lex_assign(
             $class,
             INT => [
                 sub {
@@ -198,7 +195,7 @@ my $result = do {
             undef,
             7.3
         );
-        my $lv_HUP = FF::lex_assign(
+        FF::lex_assign(
             $class,
             HUP => [
                 sub {
@@ -209,7 +206,7 @@ my $result = do {
             undef,
             8.3
         );
-        my $lv_TERM = FF::lex_assign(
+        FF::lex_assign(
             $class,
             TERM => [
                 sub {
@@ -221,7 +218,7 @@ my $result = do {
             undef,
             9.3
         );
-        my $lv_ALRM = FF::lex_assign(
+        FF::lex_assign(
             $class,
             ALRM => [
                 sub {
@@ -234,7 +231,7 @@ my $result = do {
             undef,
             10.3
         );
-        my $lv_signals = FF::lex_assign(
+        FF::lex_assign(
             $scope,
             signals => [
                 sub {

@@ -128,7 +128,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            my $lv_hello = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 hello => str( $f, "Hello" ),
                 $file_scope, 17.2
@@ -213,7 +213,7 @@ my $result = do {
     );
     $$scope->{'helloWorld'}
       ->( [ str( $f, "Benjamin" ), str( $f, "George" ) ], $scope, undef, 8.2 );
-    my $lv_pi = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ),
         undef, 28.2

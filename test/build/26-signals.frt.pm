@@ -2,7 +2,7 @@
 #  Document './test/26-signals.frt'
 #      On
 #          Expression ('on' parameter)
-#              Property 'catch'
+#              Property 'trap'
 #                  Property 'TERM'
 #                      Bareword 'Signal'
 #          Anonymous function
@@ -21,7 +21,7 @@
 #              Boolean false
 #      On
 #          Expression ('on' parameter)
-#              Property 'catch'
+#              Property 'trap'
 #                  Property 'INT'
 #                      Bareword 'Signal'
 #          Anonymous function
@@ -111,8 +111,7 @@ my $result = do {
 
                 $$scope->{'say'}
                   ->( [ str( $f, "Are you sure?" ) ], $scope, undef, 13.2 );
-                my $lv_asked =
-                  FF::lex_assign( $scope, asked => $true, $file_scope, 14.2 );
+                FF::lex_assign( $scope, asked => $true, $file_scope, 14.2 );
                 $ret->stop;
                 return;
             }
@@ -126,17 +125,17 @@ my $result = do {
     FF::load_namespaces( $context, qw(Signal Timer) );
     FF::on(
         ${ $$scope->{'Signal'} }->{'TERM'},
-        'catch',
+        'trap',
         $self,
         $scope,
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
     str( $f, "are you sure?" );
-    my $lv_asked = FF::lex_assign( $scope, asked => $false, undef, 8.2 );
+    FF::lex_assign( $scope, asked => $false, undef, 8.2 );
     FF::on(
         ${ $$scope->{'Signal'} }->{'INT'},
-        'catch',
+        'trap',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),

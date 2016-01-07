@@ -9,7 +9,6 @@ use 5.010;
 use List::Util 'max';
 
 use Ferret::Core::Operations 'import';
-use Ferret::Core::ErrorSubs;
 
 our %errors = (
     CallOnNonFunction => {
@@ -29,6 +28,9 @@ our %errors = (
     },
     InvalidIteration => {
         message => "Cannot iterate over this object"
+    },
+    NativeCodeError => {
+        message => "An error occurred in a Perl routine: %s"
     }
 );
 

@@ -64,6 +64,7 @@ use F::InterfaceMethod;
 use F::NodeExpression;
 use F::Alias;
 use F::MaybeOwner;
+use F::Catch;
 
 # this needs to stay here in case Tokenizer isn't loaded.
 our %pretty_tokens = (

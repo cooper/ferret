@@ -85,6 +85,21 @@
 #                          Argument list [1 items]
 #                              Item 0
 #                                  String 'JSON::XS'
+#                      Catch
+#                          Expression ('catch' parameter)
+#                              Lexical variable '$err'
+#                          Body ('catch' scope)
+#                              Instruction
+#                                  Call
+#                                      Bareword 'failError'
+#                                      Mixed argument list [3 items]
+#                                          Item 0
+#                                              Symbol :NativeCodeError
+#                                          Item 1
+#                                              String 'Unable to ...'
+#                                          Item 2
+#                                              Pair 'subError'
+#                                                  Lexical variable '$err'
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@xs'
@@ -93,11 +108,21 @@
 #                              Argument list [1 items]
 #                                  Item 0
 #                                      String 'JSON::XS'
-#                  If
-#                      Expression ('if' parameter)
-#                          Negation
-#                              Instance variable '@xs'
-#                      Body ('if' scope)
+#                      Catch
+#                          Expression ('catch' parameter)
+#                              Lexical variable '$err'
+#                          Body ('catch' scope)
+#                              Instruction
+#                                  Call
+#                                      Bareword 'failError'
+#                                      Mixed argument list [3 items]
+#                                          Item 0
+#                                              Symbol :NativeCodeError
+#                                          Item 1
+#                                              String 'Could not ...'
+#                                          Item 2
+#                                              Pair 'subError'
+#                                                  Lexical variable '$err'
 #                  Instruction
 #                      Call
 #                          Property (name evaluated at runtime)
@@ -176,6 +201,21 @@
 #                              Argument list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$data'
+#                      Catch
+#                          Expression ('catch' parameter)
+#                              Lexical variable '$err'
+#                          Body ('catch' scope)
+#                              Instruction
+#                                  Call
+#                                      Bareword 'failError'
+#                                      Mixed argument list [3 items]
+#                                          Item 0
+#                                              Symbol :JSONError
+#                                          Item 1
+#                                              String 'JSON encod...'
+#                                          Item 2
+#                                              Pair 'subError'
+#                                                  Lexical variable '$err'
 #          Method 'decode'
 #              Body ('method' scope)
 #                  Instruction
@@ -191,6 +231,21 @@
 #                              Argument list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$json'
+#                      Catch
+#                          Expression ('catch' parameter)
+#                              Lexical variable '$err'
+#                          Body ('catch' scope)
+#                              Instruction
+#                                  Call
+#                                      Bareword 'failError'
+#                                      Mixed argument list [3 items]
+#                                          Item 0
+#                                              Symbol :JSONError
+#                                          Item 1
+#                                              String 'JSON decod...'
+#                                          Item 2
+#                                              Pair 'subError'
+#                                                  Lexical variable '$err'
 #          Class method 'encode'
 #              Body ('method' scope)
 #                  Instruction
@@ -325,61 +380,92 @@ my $result = do {
                 FF::want( $self, $args, 'spaceBefore', 43.2, $false );
                 FF::want( $self, $args, 'spaceAfter',  44.2, $false );
                 FF::want( $self, $args, 'indent',      49.2, $false );
-                ${ $$scope->{'_PO'} }->{'require'}
-                  ->( [ str( $f, "JSON::XS" ) ], $scope, undef, 52.3 );
-                $self->set_property(
-                    xs => $$scope->{'_PO'}
-                      ->( [ str( $f, "JSON::XS" ) ], $scope, undef, 55.4 ),
-                    55.2
+                FF::try_catch(
+                    $f, $scope,
+                    sub {
+                        ${ $$scope->{'_PO'} }->{'require'}
+                          ->( [ str( $f, "JSON::XS" ) ], $scope, undef, 52.3 );
+                    },
+                    sub {
+                        my ($scope) = @_;
+                        $$scope->{'failError'}->(
+                            [
+                                FF::get_symbol( $f, 'NativeCodeError' ),
+                                str( $f, "Unable to load JSON::XS" ),
+                                { subError => $$scope->{'err'} }
+                            ],
+                            $scope, undef, 53.3
+                        );
+                    },
+                    'err'
                 );
-
-                if ( bool( _not( $$self->{'xs'} ) ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                }
+                FF::try_catch(
+                    $f, $scope,
+                    sub {
+                        $self->set_property(
+                            xs => $$scope->{'_PO'}->(
+                                [ str( $f, "JSON::XS" ) ], $scope,
+                                undef, 59.2
+                            ),
+                            59.1
+                        );
+                    },
+                    sub {
+                        my ($scope) = @_;
+                        $$scope->{'failError'}->(
+                            [
+                                FF::get_symbol( $f, 'NativeCodeError' ),
+                                str( $f, "Could not create JSON::XS object" ),
+                                { subError => $$scope->{'err'} }
+                            ],
+                            $scope, undef, 60.3
+                        );
+                    },
+                    'err'
+                );
                 $$self->{'xs'}->property_eval_u( $$self->{'charset'} )
-                  ->( {}, $scope, undef, 61.6 );
+                  ->( {}, $scope, undef, 66.6 );
                 if ( bool( $$self->{'pretty'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'pretty'}
-                      ->( {}, $scope, undef, 62.6 );
+                      ->( {}, $scope, undef, 67.6 );
                 }
                 if ( bool( $$self->{'spaceBefore'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'spaceBefore'}
-                      ->( {}, $scope, undef, 63.6 );
+                      ->( {}, $scope, undef, 68.6 );
                 }
                 if ( bool( $$self->{'spaceAfter'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'spaceAfter'}
-                      ->( {}, $scope, undef, 64.6 );
+                      ->( {}, $scope, undef, 69.6 );
                 }
                 if ( bool( $$self->{'indent'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'indent'}
-                      ->( {}, $scope, undef, 65.6 );
+                      ->( {}, $scope, undef, 70.6 );
                 }
                 if ( bool( _not( $$self->{'strict'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'relaxed'}
-                      ->( {}, $scope, undef, 66.7 );
+                      ->( {}, $scope, undef, 71.7 );
                 }
                 if ( bool( $$self->{'consistent'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'canonical'}
-                      ->( {}, $scope, undef, 67.6 );
+                      ->( {}, $scope, undef, 72.6 );
                 }
                 if ( bool( _not( $$self->{'strictRoot'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'allow_nonref'}
-                      ->( {}, $scope, undef, 68.7 );
+                      ->( {}, $scope, undef, 73.7 );
                 }
                 return $ret;
             }
@@ -398,11 +484,28 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'data', 75.2 ) or return;
-                $ret->set_property(
-                    json => ${ $$self->{'xs'} }->{'encode'}
-                      ->( [ $$scope->{'data'} ], $scope, undef, 76.5 ),
-                    76.2
+                FF::need( $scope, $args, 'data', 80.2 ) or return;
+                FF::try_catch(
+                    $f, $scope,
+                    sub {
+                        $ret->set_property(
+                            json => ${ $$self->{'xs'} }->{'encode'}
+                              ->( [ $$scope->{'data'} ], $scope, undef, 81.25 ),
+                            81.1
+                        );
+                    },
+                    sub {
+                        my ($scope) = @_;
+                        $$scope->{'failError'}->(
+                            [
+                                FF::get_symbol( $f, 'JSONError' ),
+                                str( $f, "JSON encode error" ),
+                                { subError => $$scope->{'err'} }
+                            ],
+                            $scope, undef, 82.15
+                        );
+                    },
+                    'err'
                 );
                 return $ret;
             }
@@ -421,11 +524,28 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'json', 81.2 ) or return;
-                $ret->set_property(
-                    data => ${ $$self->{'xs'} }->{'decode'}
-                      ->( [ $$scope->{'json'} ], $scope, undef, 82.5 ),
-                    82.2
+                FF::need( $scope, $args, 'json', 86.2 ) or return;
+                FF::try_catch(
+                    $f, $scope,
+                    sub {
+                        $ret->set_property(
+                            data => ${ $$self->{'xs'} }->{'decode'}
+                              ->( [ $$scope->{'json'} ], $scope, undef, 87.25 ),
+                            87.1
+                        );
+                    },
+                    sub {
+                        my ($scope) = @_;
+                        $$scope->{'failError'}->(
+                            [
+                                FF::get_symbol( $f, 'JSONError' ),
+                                str( $f, "JSON decode error" ),
+                                { subError => $$scope->{'err'} }
+                            ],
+                            $scope, undef, 88.15
+                        );
+                    },
+                    'err'
                 );
                 return $ret;
             }
@@ -444,9 +564,9 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'data', 94.2 ) or return;
+                FF::need( $scope, $args, 'data', 99.2 ) or return;
                 return ${ $$scope->{'default'} }->{'encode'}
-                  ->( [ $$scope->{'data'} ], $scope, undef, 95.4 );
+                  ->( [ $$scope->{'data'} ], $scope, undef, 100.4 );
                 return $ret;
             }
         );
@@ -464,9 +584,9 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'json', 99.2 ) or return;
+                FF::need( $scope, $args, 'json', 104.2 ) or return;
                 return ${ $$scope->{'default'} }->{'decode'}
-                  ->( [ $$scope->{'json'} ], $scope, undef, 100.4 );
+                  ->( [ $$scope->{'json'} ], $scope, undef, 105.4 );
                 return $ret;
             }
         );
@@ -491,7 +611,7 @@ my $result = do {
             $class, $class, undef, undef
         );
         $class->set_property( _PO => $$scope->{'NATIVE::PerlObject'}, 3.3 );
-        my $lv_default = FF::lex_assign(
+        FF::lex_assign(
             $scope,
             default => [
                 sub {
@@ -519,8 +639,8 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( stringify => $$scope->{'encode'}, 103.3 );
-        $class->set_property( parse     => $$scope->{'decode'}, 104.3 );
+        $class->set_property( stringify => $$scope->{'encode'}, 108.3 );
+        $class->set_property( parse     => $$scope->{'decode'}, 109.3 );
     }
     FF::load_namespaces( $context,
         qw(Bool Charset NATIVE NATIVE::PerlObject Str) );

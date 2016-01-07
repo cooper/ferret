@@ -194,37 +194,37 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                my $lv_mp = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     mp => $$self->{'midpoint'},
                     $file_scope, 13.2
                 );
-                my $lv_pox = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     pox => ${ $$self->{'pt1'} }->{'x'},
                     $file_scope, 14.1
                 );
-                my $lv_poy = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     poy => ${ $$self->{'pt1'} }->{'y'},
                     $file_scope, 14.35
                 );
-                my $lv_ptx = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     ptx => ${ $$self->{'pt2'} }->{'x'},
                     $file_scope, 15.1
                 );
-                my $lv_pty = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     pty => ${ $$self->{'pt2'} }->{'y'},
                     $file_scope, 15.35
                 );
-                my $lv_mx = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     mx => ${ $$scope->{'mp'} }->{'x'},
                     $file_scope, 16.1
                 );
-                my $lv_my = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     my => ${ $$scope->{'mp'} }->{'y'},
                     $file_scope, 16.35

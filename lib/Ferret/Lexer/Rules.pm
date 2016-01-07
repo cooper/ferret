@@ -122,6 +122,16 @@ our %token_rules = (
             0
         ]
 
+    ],
+
+    KEYWORD_CATCH => [
+
+        current_must_have => [                                                  # KEYWORD_CATCH[0]
+            'instruction',
+            'Attempted to catch an error on a failable instruction, but no '.
+            "instruction is open. Make sure the 'catch' keyword comes before ".
+            "instruction terminator (semicolon or newline)."
+        ]
     ]
 
 );
@@ -141,7 +151,22 @@ our %element_rules = (
 
     Instruction => {
 
-        max_children => [ 1, undef, 0 ]                                         # Instruction[0]
+        min_children => [ 1, undef, 0 ],                                        # Instruction[0]
+
+        # we could have up to two children. the second could be a catch.
+        max_children => [ 2, undef, 0 ],                                        # Instruction[1]
+
+
+        after_rules => {
+
+            child_1_must_be => [                                                # Instruction[2]
+                'Catch',
+                "Instructions can only contain at most one element and a ".
+                " possible 'catch' following it",
+                2
+            ]
+
+        }
 
     },
 
@@ -764,6 +789,19 @@ our %element_rules = (
 
         # no more than 2 children (the left side and the index list)
         max_children => [ 2, undef, 5 ]                                         # Property[5]
+
+    },
+
+    CatchParameter => {
+
+        children_must_be => [                                                   # CatchParameter[0]
+            'LexicalVariable',
+            '"Catch" parameter must be a lexical variable representing an '.
+            'error object',
+            0
+        ],
+
+        max_children => [ 1, undef, 1 ]                                         # CatchParameter[1]
 
     },
 

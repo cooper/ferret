@@ -207,6 +207,29 @@ sub identify_lexical_variable_declarations {
 
     }
 
+    # Catch
+    # --------------
+
+    # find all catch parameters.
+    my @catches = $main_node->filter_descendants(type => 'Catch');
+
+    foreach my $catch (@catches) {
+        my $var = $catch->param_exp->first_child or next;
+
+        # the scope of interest is the catch body.
+        my $soi = $catch->body->scope;
+        my $p = $catch->body->{create_pos};
+
+        # remember the location.
+        $v->{lex_declarations}{$p} = [ $catch, $var ];
+
+        # process the declaration.
+        $var->{could_be_declaration} = 1;
+        $var->{available_scope} = $soi;
+        $soi->process_lex_declaration($var->{var_name}, $p);
+
+    }
+
     return;
 }
 

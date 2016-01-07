@@ -228,7 +228,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'pt2', 9.2 ) or return;
-                my $lv_dx = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     dx => _sub(
                         $scope, $$self->{'x'}, ${ $$scope->{'pt2'} }->{'x'}
@@ -236,7 +236,7 @@ my $result = do {
                     $file_scope,
                     10.2
                 );
-                my $lv_dy = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     dy => _sub(
                         $scope, $$self->{'y'}, ${ $$scope->{'pt2'} }->{'y'}

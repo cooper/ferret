@@ -410,7 +410,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                my $lv_x = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     x => add(
                         $scope,
@@ -420,7 +420,7 @@ my $result = do {
                     $file_scope,
                     43.1
                 );
-                my $lv_y = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     y => add(
                         $scope,
@@ -443,12 +443,12 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                my $lv_o = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     o => $$self->{'origin'},
                     $file_scope, 49.2
                 );
-                my $lv_c = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     c => $$self->{'center'},
                     $file_scope, 50.2

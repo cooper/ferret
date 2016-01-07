@@ -206,7 +206,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'line' ) or return;
-                my $lv_lineSplit = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     lineSplit => ${ $$self->{'line'} }->{'split'}->(
                         { separator => str( $f, " " ), limit => num( $f, 4 ) },
@@ -278,7 +278,7 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    my $lv_cmd = FF::lex_assign(
+                    FF::lex_assign(
                         $scope,
                         cmd => ${
                             $$self->{'parts'}

@@ -235,7 +235,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                my $lv_pt = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     pt => ${ $scope->{special} }->{'class'}->(
                         [
@@ -349,7 +349,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context, qw(Point) );
-    my $lv_pt = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         pt => $$scope->{'Point'}
           ->( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32.2 ),
@@ -359,7 +359,7 @@ my $result = do {
         [ add( $scope, str( $f, "Point" ), $$scope->{'pt'} ) ],
         $scope, undef, 33.2
     );
-    my $lv_rpt = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         rpt =>
           ${ $$scope->{'pt'} }->{'oneToRight'}->( {}, $scope, undef, 35.5 ),
@@ -369,7 +369,7 @@ my $result = do {
         [ add( $scope, str( $f, "Right" ), $$scope->{'rpt'} ) ],
         $scope, undef, 36.2
     );
-    my $lv_mdpt = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         mdpt => ${ $$scope->{'Point'} }->{'midpoint'}
           ->( [ $$scope->{'pt'}, $$scope->{'rpt'} ], $scope, undef, 38.25 ),
@@ -379,7 +379,7 @@ my $result = do {
         [ add( $scope, str( $f, "Midpoint" ), $$scope->{'mdpt'} ) ],
         $scope, undef, 39.2
     );
-    my $lv_nineteen = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         nineteen => add(
             $scope,

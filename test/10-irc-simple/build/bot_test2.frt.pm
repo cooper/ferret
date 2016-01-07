@@ -54,7 +54,7 @@ my $result = do {
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Bot2) );
-    my $lv_bot = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         bot => $$scope->{'Bot2'}->(
             {

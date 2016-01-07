@@ -117,7 +117,7 @@ my $result = do {
             FF::need( $scope, $args, 'x', 2.2 ) or return;
             FF::need( $scope, $args, 'y', 2.4 ) or return;
             FF::want( $scope, $args, 'z', 3.2 );
-            my $lv_point = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 point => FF::create_object(
                     $f, { x => $$scope->{'x'}, y => $$scope->{'y'} }
@@ -130,7 +130,7 @@ my $result = do {
         }
     );
     $func_0->inside_scope( makePoint => $scope, $context, undef, undef, undef );
-    my $lv_pt = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         pt => ${
             $$scope->{'makePoint'}
@@ -152,7 +152,7 @@ my $result = do {
         ],
         $scope, undef, 12.1
     );
-    my $lv_numbers = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         numbers => FF::create_list(
             $f,
@@ -167,12 +167,12 @@ my $result = do {
         undef,
         14.1
     );
-    my $lv_emptyArray = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         emptyArray => FF::create_list( $f, [] ),
         undef, 16.2
     );
-    my $lv_emptyHash = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         emptyHash => FF::create_hash( $f, {} ),
         undef, 17.2

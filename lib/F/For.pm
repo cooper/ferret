@@ -48,7 +48,7 @@ sub perl_fmt {
         var1_name   => $var1->{var_name},
         var2_name   => $var2->{var_name},
         body        => $content,
-        mys         => $mys,
+        #mys         => $mys,
         pos         => $for->{create_pos}
     };
 }

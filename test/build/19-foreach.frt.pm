@@ -49,7 +49,7 @@ my $result = do {
     my $scope = $file_scope;
     FF::load_core('main');
 
-    my $lv_words = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         words => ${ str( $f, "how are you?" ) }->{'split'}
           ->( [ str( $f, " " ) ], $scope, undef, 1.5 ),
@@ -60,8 +60,8 @@ my $result = do {
         $$scope->{'words'},
         'word',
         sub {
-            my $scope   = shift;
-            my $lv_word = $scope->property_u('word');
+            my ($scope) = @_;
+
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "part: " ), $$scope->{'word'} ) ],
                 $scope, undef, 4.2

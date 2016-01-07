@@ -21,7 +21,21 @@ sub simple_fmt {
     my $instr = shift;
     my $code  = join('', map $_->perl_fmt_do, $instr->children);
     return unless length $code;
+
+    # instruction with 'catch' following.
+    my $catch = ($instr->children)[1];
+    if ($catch) {
+        my $var_name = $catch->var_name;
+        return instruction_catch => {
+            instruction      => $code,
+            catch_statements => $catch->body->body_fmt_do,
+            var_name         => defined $var_name ? "'$var_name'" : 'undef'
+        };
+    }
+
+    # simple instruction.
     return instruction => { instruction => $code };
+
 }
 
 sub perl_fmt {

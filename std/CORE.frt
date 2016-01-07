@@ -1,5 +1,6 @@
 package CORE
 
+load Error
 load Signal
 
 load Extension::Number

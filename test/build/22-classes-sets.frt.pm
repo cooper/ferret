@@ -343,7 +343,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context, qw(Cat Cow Dog) );
-    my $lv_animal = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         animal => $$scope->{'Cow'}->( {}, $scope, undef, 50.4 ),
         undef, 50.2
@@ -363,12 +363,12 @@ my $result = do {
       ->( [ $$scope->{'animal'} ], $scope, undef, 60.15 )
       ->( { mean => $true }, $scope, undef, 60.3 );
     $$scope->{'inspect'}->( [ $$scope->{'animal'} ], $scope, undef, 62.2 );
-    my $lv_cat = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         cat => $$scope->{'Cat'}->( {}, $scope, undef, 65.4 ),
         undef, 65.2
     );
-    my $lv_aftermath = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         aftermath =>
           ${ FF::create_set( $scope, $$scope->{'animal'}, $$scope->{'cat'} ) }

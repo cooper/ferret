@@ -115,7 +115,7 @@ my $result = do {
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Math Math::Point Math::Rect) );
-    my $lv_rect = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         rect => $$scope->{'Math::Rect'}->(
             {
@@ -129,7 +129,7 @@ my $result = do {
         undef,
         1.06667
     );
-    my $lv_center = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         center => ${ $$scope->{'rect'} }->{'center'},
         undef, 3.2
@@ -148,13 +148,13 @@ my $result = do {
         ],
         $scope, undef, 5.2
     );
-    my $lv_otherPt = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         otherPt => $$scope->{'Math::Point'}
           ->( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7.3 ),
         undef, 7.1
     );
-    my $lv_midpoint = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         midpoint => ${
             ${

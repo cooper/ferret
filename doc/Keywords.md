@@ -407,7 +407,7 @@ no pending callbacks, it has no effect and raises no error or warning.
 
 $asked = false
 
-on Signal.INT.catch before :default {
+on Signal.INT.trap before :default {
     if !$asked {
         say("Are you sure?")
         $asked = true

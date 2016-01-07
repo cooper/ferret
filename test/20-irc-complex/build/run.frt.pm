@@ -523,7 +523,7 @@ my $result = do {
 
                 return;
             }
-            my $lv_c = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 c => $$scope->{'COMPILER'}->(
                     [
@@ -540,7 +540,7 @@ my $result = do {
                 $file_scope,
                 69.1
             );
-            my $lv_res = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 res => ${ $$scope->{'c'} }->{'compile'}->(
                     [
@@ -636,7 +636,7 @@ my $result = do {
 
                 return;
             }
-            my $lv_c = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 c => $$scope->{'COMPILER'}->(
                     [
@@ -653,7 +653,7 @@ my $result = do {
                 $file_scope,
                 14.1
             );
-            my $lv_res = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 res => ${ $$scope->{'c'} }->{'tokenize'}
                   ->( { pretty => $true }, $scope, undef, 15.25 ),
@@ -697,7 +697,7 @@ my $result = do {
 
                 return;
             }
-            my $lv_c = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 c => $$scope->{'COMPILER'}->(
                     [
@@ -714,7 +714,7 @@ my $result = do {
                 $file_scope,
                 27.1
             );
-            my $lv_res = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 res => ${ $$scope->{'c'} }->{'construct'}
                   ->( { pretty => $true }, $scope, undef, 28.25 ),
@@ -758,7 +758,7 @@ my $result = do {
 
                 return;
             }
-            my $lv_res = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 res => ${
                     $$scope->{'COMPILER'}->(
@@ -791,7 +791,7 @@ my $result = do {
                 );
                 return;
             }
-            my $lv_string = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 string => ${
                     $$scope->{'inspect'}->(
@@ -828,7 +828,7 @@ my $result = do {
 
                 return;
             }
-            my $lv_res = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 res => ${
                     $$scope->{'COMPILER'}->(
@@ -861,7 +861,7 @@ my $result = do {
                 );
                 return;
             }
-            my $lv_string = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 string => ${
                     $$scope->{'inspect'}->(
@@ -891,7 +891,7 @@ my $result = do {
         $context, undef, undef, undef
     );
     FF::load_namespaces( $context, qw(COMPILER IRC IRC::Bot Str) );
-    my $lv_bot = FF::lex_assign(
+    FF::lex_assign(
         $context,
         bot => $$scope->{'IRC::Bot'}->(
             {

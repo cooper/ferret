@@ -116,7 +116,7 @@ my $result = do {
         },
         undef
     );
-    my $lv_client = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         client =>
           [ sub { $$scope->{'HTTP::Client'}->( {}, $scope, undef, 9.6 ) } ],

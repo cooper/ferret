@@ -81,6 +81,14 @@ my @functions = (
     equal => {
         need => '$nums:Num...',
         code => \&_equal
+    },
+    min => {
+        need => '$nums:Num...',
+        code => \&_min
+    },
+    max => {
+        need => '$nums:Num...',
+        code => \&_max
     }
 );
 
@@ -207,6 +215,18 @@ sub _product {
 sub _hash_value {
     my $num = shift;
     return fsym($num->{num_value});
+}
+
+sub _min {
+    my ($class, $args) = @_;
+    my $min = min map { pnumber($_) } plist($args->{nums});
+    return fnumber($min);
+}
+
+sub _max {
+    my ($class, $args) = @_;
+    my $max = max map { pnumber($_) } plist($args->{nums});
+    return fnumber($max);
 }
 
 sub equal {

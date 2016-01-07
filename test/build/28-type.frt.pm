@@ -118,7 +118,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'name',   7.1 ) or return;
             FF::need( $scope, $args, 'gender', 7.3 ) or return;
-            my $lv_what = FF::lex_assign(
+            FF::lex_assign(
                 $scope,
                 what => ${
                     $$scope->{'Str'}

@@ -1,5 +1,5 @@
 FF::iterate($f, $scope, <<collection>>, '<<var1_name>>', sub {
-    my $scope = shift;
+    my ($scope) = @_;
     <<mys>>
     <<body>>
 }, <<pos>>);

@@ -299,7 +299,7 @@ my $result = do {
             request => $scope,
             $proto, $class, undef, undef
         );
-        my $lv_defaultUA = FF::lex_assign(
+        FF::lex_assign(
             $scope,
             defaultUA => add(
                 $scope,
@@ -309,7 +309,7 @@ my $result = do {
             undef,
             4.2
         );
-        my $lv_defaultLength = FF::lex_assign(
+        FF::lex_assign(
             $scope,
             defaultLength => mul( $scope, num( $f, 64 ), num( $f, 1024 ) ),
             undef, 5.2

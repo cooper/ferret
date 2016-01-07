@@ -20,7 +20,7 @@ init {
     need @type: Sym
 }
 
-method catch {
+method trap {
     # here, do the default thing
     _exit(0)
 }
@@ -29,5 +29,5 @@ method catch {
 # it is called from NATIVE::Signal.
 func fireSignal {
     need $type: Sym
-    $signals[$type]?.catch()
+    $signals[$type]?.trap()
 }

@@ -112,7 +112,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    my $lv_t2 = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         t2 => $$scope->{'Timer'}->( [ num( $f, 2 ) ], $scope, undef, 7.4 ),
         undef, 7.2

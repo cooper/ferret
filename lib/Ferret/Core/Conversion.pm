@@ -6,7 +6,9 @@ use strict;
 use utf8;
 use 5.010;
 
+use Ferret::Core::Errors qw(throw);
 use Scalar::Util qw(blessed weaken looks_like_number);
+use List::Util qw(any);
 our $po;
 
 # special import to handle underscore prefix
@@ -262,6 +264,30 @@ sub fset {
     return $set;
 }
 
+##############
+### ERRORS ###
+##############
+
+sub ferror {
+    my $err  = shift;
+    my $type = shift || 'NativeCodeError';
+    my $f    = $Ferret::ferret;
+
+    # already an error object.
+    return $err if
+        blessed $err                    &&
+        $err->isa('Ferret::Object')     &&
+        any { $_ eq 'Error' } $err->parent_names;
+
+    # create a new error.
+    my $error_class = $f->get_class($f->main_context, 'Error');
+    return $error_class->call({
+        type => fsym($type),
+        msg  => fstring($err)
+    });
+
+}
+
 ###########################
 ### FUNCTIONS & METHODS ###
 ###########################
@@ -280,7 +306,10 @@ sub ffunction {
 
 # creates a Ferret function from a Perl code.
 # it is smarter than ffunction() in that it attempts to automatically convert
-# the Perl function's arguments to Ferret named arguments.
+# Ferret named arguments into Perl list/pair arguments.
+#
+# additionally, the call is wrapped with eval{}, and failure will not die
+# but rather raise a runtime exception.
 #
 # if $real_obj is provided, it must be a NATIVE::PerlObject, and the code is
 # assumed to be a method on that object.
@@ -309,8 +338,18 @@ sub ffunction_smart {
         my @args = pargs($args);
         unshift @args, $weak_obj if $needs_obj;
 
+        # call the Perl function.
+        my $ret = eval { $code->(@args) };
+
+        # an error occurred.
+        if (!defined $ret && $@) {
+            throw(NativeCodeError => [caller], [
+                Name     => $name || 'unknown function'
+            ], $@);
+            return;
+        }
+
         # ferretize the return value.
-        my $ret = $code->(@args);
         return ferretize($ret, 1);
 
     }, $name, undef, '$args...');

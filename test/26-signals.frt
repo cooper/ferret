@@ -1,12 +1,12 @@
 # on TERM, exit immediately
-on Signal.TERM.catch before :default {
+on Signal.TERM.trap before :default {
     say("Got TERM. Terminating!")
 }
 
 # on INT, ask "are you sure?"
 # then kill on the second INT
 $asked = false
-on Signal.INT.catch before :default {
+on Signal.INT.trap before :default {
 
     # have we asked if sure?
     if !$asked {

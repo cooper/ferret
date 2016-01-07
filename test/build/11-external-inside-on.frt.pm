@@ -169,7 +169,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Math Math::Point) );
-    my $lv_point = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         point => $$scope->{'Math::Point'}
           ->( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1.3 ),
@@ -189,10 +189,8 @@ my $result = do {
         $$scope->{'point'},
         sub {
             my ( $scope, $ins ) = @_;
-            my $lv_x =
-              FF::lex_assign( $scope, x => num( $f, 5 ), $file_scope, 9.2 );
-            my $lv_y =
-              FF::lex_assign( $scope, y => num( $f, 10 ), $file_scope, 10.2 );
+            FF::lex_assign( $scope, x => num( $f, 5 ),  $file_scope, 9.2 );
+            FF::lex_assign( $scope, y => num( $f, 10 ), $file_scope, 10.2 );
         }
     );
     $$scope->{'say'}->(
@@ -207,7 +205,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    my $lv_r = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         r => $$scope->{'say'}->(
             [ str( $f, "It was said" ), { twice => $true } ], $scope,

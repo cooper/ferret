@@ -421,7 +421,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                my $lv_failed = FF::lex_assign(
+                FF::lex_assign(
                     $scope,
                     failed =>
                       _sub( $scope, $$self->{'tested'}, $$self->{'passed'} ),

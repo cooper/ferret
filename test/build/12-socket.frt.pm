@@ -207,7 +207,7 @@ my $result = do {
         }
     );
     FF::load_namespaces( $context, qw(Socket Socket::TCP Timer) );
-    my $lv_sock = FF::lex_assign(
+    FF::lex_assign(
         $scope,
         sock => $$scope->{'Socket::TCP'}->(
             {

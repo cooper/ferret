@@ -346,6 +346,10 @@ sub c_CLOSURE_E {
 
     }
 
+    # if the closure we just terminated is a 'catch' body,
+    # we need to also terminate the parent instruction.
+    $c->close_node if $closure->type eq 'CatchBody';
+
     return;
 }
 
@@ -626,6 +630,37 @@ sub c_KEYWORD_DEFER {
     $c->node->adopt($defer);
 
     return $defer;
+}
+
+sub c_KEYWORD_CATCH {
+    my ($c, $value) = @_;
+
+    # Rule KEYWORD_CATCH[0]:
+    #   The current 'instruction' must exist.
+
+    # store the instruction, then simulate a semicolon.
+    my $instr = $c->instruction;
+    $c->simulate('OP_SEMI');
+
+    # TODO: make sure there is only one catch.
+
+    # create a catch and add it to the instruction.
+    my $catch = F::Catch->new;
+    $instr->adopt($catch);
+
+    # capture a closure with the catch body.
+    $c->capture_closure_with($catch->body);
+
+    # Rule CatchParameter[0]:
+    #   Direct children must be of type LexicalVariable.
+
+    # Rule CatchParameter[1]:
+    #   Number of direct children must not exceed one (1).
+
+    # set the current node to the catch variable expression.
+    $c->set_node($catch->param_exp);
+
+    return $catch;
 }
 
 sub c_PAREN_S {
@@ -1595,6 +1630,15 @@ sub c_any {
         ^KEYWORD_DEFER$
     );
     foreach (@ignore) { return if $label =~ $_ }
+
+    # Rule Instruction[0]:
+    #   Number of direct children must be no less than one (1).
+
+    # Rule Instruction[1]:
+    #   Number of direct children must not exceed two (2).
+
+    # Rule Instruction[3]:
+    #   The second direct child, if present, must be of type Catch.
 
     my $instr = F::Instruction->new;
     $c->set_instruction($instr);

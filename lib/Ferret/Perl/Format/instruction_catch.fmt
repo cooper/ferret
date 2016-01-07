@@ -1,0 +1,6 @@
+FF::try_catch($f, $scope, sub {
+    <<instruction>>;
+}, sub {
+    my ($scope) = @_;
+    <<catch_statements>>
+}, <<var_name>>);

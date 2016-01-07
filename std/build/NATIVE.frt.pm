@@ -57,7 +57,7 @@ my $result = do {
 
     FF::load_namespaces( $context, qw(PerlObject) );
 
-    my $lv_ferret = FF::lex_assign(
+    FF::lex_assign(
         $context,
         ferret => [
             sub {
@@ -70,7 +70,7 @@ my $result = do {
         undef,
         3.15
     );
-    my $lv_coreContext = FF::lex_assign(
+    FF::lex_assign(
         $context,
         coreContext => [
             sub {
@@ -81,7 +81,7 @@ my $result = do {
         undef,
         4.3
     );
-    my $lv_mainContext = FF::lex_assign(
+    FF::lex_assign(
         $context,
         mainContext => [
             sub {
