@@ -7,6 +7,7 @@ use utf8;
 use 5.010;
 
 use List::Util qw(max);
+use Scalar::Util qw(blessed);
 use Ferret::Core::Operations qw(import);
 
 our %errors = (
@@ -35,6 +36,12 @@ our %errors = (
 
 sub throw {
     my ($fmt, $caller, $hints, @args) = @_;
+
+    # we may have been passed an already-prepared error object.
+    if (blessed $fmt && $fmt->isa('Ferret::Error')) {
+        die Ferret::Core::Conversion::ferror($fmt);
+    }
+
     my (undef, $file, $line) = @$caller;
     return $fmt if !exists $errors{$fmt};
 

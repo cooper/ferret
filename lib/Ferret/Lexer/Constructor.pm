@@ -663,8 +663,11 @@ sub c_KEYWORD_CATCH {
     return $catch;
 }
 
-sub c_KEYWORD_FAIL {
-    my ($c, $value) = @_;
+sub c_KEYWORD_FAIL  { handle_failthrow(shift, 'fail')  }
+sub c_KEYWORD_THROW { handle_failthrow(shift, 'throw') }
+
+sub handle_failthrow {
+    my ($c, $type) = @_;
 
     # Rule Fail[0]:
     #   Direct parent must be of type Instruction.
@@ -676,9 +679,10 @@ sub c_KEYWORD_FAIL {
     #   Number of direct children must be exactly one (1).
 
     # Rule Fail[3]:
-    #   Must be somewhere inside a Function or Method.
+    #   If it's a fail statement (rather than throw), it must be somewhere
+    #   inside a Function or Method.
 
-    my $fail = F::Fail->new;
+    my $fail = F::Fail->new(fail_type => $type);
     $c->adopt_and_set_node($fail);
 
     return $fail;

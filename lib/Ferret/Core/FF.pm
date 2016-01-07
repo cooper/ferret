@@ -436,4 +436,9 @@ sub try_catch {
 
 }
 
+sub throw {
+    my $err = shift;
+    Ferret::Core::Errors::throw($err);
+}
+
 1

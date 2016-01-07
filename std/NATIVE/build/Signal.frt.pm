@@ -22,11 +22,12 @@ sub _handle_signal {
 
 $SIG{__DIE__} = sub {
     my $e = shift;
-    die $e->description if
+    $e = $e->description        if
         !$Ferret::in_catch      &&
         blessed $e              &&
         $e->can('description');
-    die $e;
+    $e =~ s/\n$//g;
+    die $e."\n";
 };
 
 $SIG{__WARN__} = sub {

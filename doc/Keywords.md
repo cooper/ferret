@@ -418,44 +418,6 @@ on Signal.INT.trap before :default {
 }
 ```
 
-### fail
-
-```
-fail <error_expression>
-```
-
-Throws a nonfatal exception. `fail` is valid only within functions, methods, and
-callbacks. It requires one argument: an error object.
-
-When `fail` is reached, the `error` return pair is set to the provided error
-object. The current function yields the
-[return object](Variables.md#special-variables) `*return` with this error
-property set. If used within an event, it will stop the propagation, cancelling
-any remaining callbacks.
-
-This is useful because the [`catch`](#catch) keyword relies on the `error`
-property for nonfatal error handling.
-
-Based on its behavior, `fail $x` is functionally equivalent to the following:
-`error -> $x; stop; return`.
-
-```
-func alwaysFails {
-    fail Error(:Unimplemented, "This function is not yet implemented")
-
-    # this will never be reached because fail returns
-    say("goodbye")
-
-}
-
-alwaysFails() catch $e {
-
-    # this will be reached
-    say("Found an error! $e")
-
-}
-```
-
 ## Classes
 
 These keywords are to be used within classes only.
@@ -837,6 +799,115 @@ sayUC("Hello World!")   # HELLO WORLD!
 Note that the type in the example exists in the standard library as
 `String::UC`.
 
+## Error handling
+
+### throw
+
+```
+throw <error_expression>
+```
+
+Throws a fatal exception. `throw` requires one argument: an error object.
+
+When `throw` is reached, the default behavior is to print the human-readable
+version of the error and terminate the process with a nonzero status. This is
+similar to Perl's [`die`](http://perldoc.perl.org/functions/die.html) function.
+
+However, these "fatal" errors can be handled with a [`catch`](#catch) statement.
+If a fatal error occurs in an instruction with a `catch` clause, that clause
+will be executed, and the process will continue from the next statement,
+respecting standard control flow.
+
+```
+func somethingFatal {
+    throw Error(:Unimplemented, "This function is not yet implemented")
+}
+
+somethingFatal() catch $e {
+    say("Caught an error! $e")
+}
+```
+
+### fail
+
+```
+fail <error_expression>
+```
+
+Throws a nonfatal exception. `fail` is valid only within functions, methods, and
+callbacks. It requires one argument: an error object.
+
+When `fail` is reached, the `error` return pair is set to the provided error
+object. The current function yields the
+[return object](Variables.md#special-variables) `*return` with this error
+property set. If used within an event, it will stop the propagation, cancelling
+any remaining callbacks.
+
+This is useful because the [`catch`](#catch) keyword relies on the `error`
+property for nonfatal error handling.
+
+Based on its behavior, `fail $x` is functionally equivalent to the following:
+`error -> $x; stop; return`.
+
+```
+func alwaysFails {
+    fail Error(:Unimplemented, "This function is not yet implemented")
+
+    # this will never be reached because fail returns
+    say("goodbye")
+
+}
+
+alwaysFails() catch $e {
+
+    # this will be reached
+    say("Found an error! $e")
+
+}
+```
+
+### catch
+
+```
+catch [$<err_var>] { [<statements>...] }
+```
+
+Allows handling of both fatal and nonfatal exceptions. Unlike in many
+programming languages, `catch` does not have a compliment keyword `try`.
+Instead, `catch` must occur at the end of a potentially failable instruction.
+
+If a fatal exception occurs in the execution of the instruction, the `catch`
+block will be immediately executed, optionally with the error object as its
+sole argument.
+
+If no fatal exception occurs, and the instruction was a function or method call,
+`catch` will look for a nonfatal exception within the call's return object. This
+`error` property is generally set automatically by a [`fail`](#fail) statement.
+
+Example involving a fatal exception
+
+```
+undefined() catch $e {
+    # this will be executed because cannot call undefined.
+    say("Found a fatal $e.type!")      # "Found a fatal :CallOnNonFunction!"
+}
+```
+
+Example involving a nonfatal exception
+
+```
+func alwaysFails {
+    fail Error(:Unimplemented, "This function is not yet implemented")
+}
+
+alwaysFails() catch $e {
+    # this will be reached
+
+    # "Found a nonfatal error! This function..."
+    say("Found a nonfatal error! $e")
+}
+```
+
 ## Miscellaneous
 
 ### alias
@@ -880,46 +951,4 @@ inside $person {
 }
 
 inspect($person) # (age: 26, name: "Pam")
-```
-
-### catch
-
-```
-catch [$<err_var>] { [<statements>...] }
-```
-
-Allows handling of both fatal and nonfatal exceptions. Unlike in many
-programming languages, `catch` does not have a compliment keyword `try`.
-Instead, `catch` must occur at the end of a potentially failable instruction.
-
-If a fatal exception occurs in the execution of the instruction, the `catch`
-block will be immediately executed, optionally with the error object as its
-sole argument.
-
-If no fatal exception occurs, and the instruction was a function or method call,
-`catch` will look for a nonfatal exception within the call's return object. This
-`error` property is generally set automatically by a [`fail`](#fail) statement.
-
-Example involving a fatal exception
-
-```
-undefined() catch $e {
-    # this will be executed because cannot call undefined.
-    say("Found a fatal $e.type!")      # "Found a fatal :CallOnNonFunction!"
-}
-```
-
-Example involving a nonfatal exception
-
-```
-func alwaysFails {
-    fail Error(:Unimplemented, "This function is not yet implemented")
-}
-
-alwaysFails() catch $e {
-    # this will be reached
-
-    # "Found a nonfatal error! This function..."
-    say("Found a nonfatal error! $e")
-}
 ```

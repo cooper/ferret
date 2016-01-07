@@ -270,13 +270,12 @@ sub fset {
 ##############
 
 sub ferror {
-    my $err   = shift;
-    my $type  = shift() // 'NativeCodeError';
-    my @hints = @_;
-    my $f     = $Ferret::ferret;
+    my ($err, $type, @hints) = @_;
+    my $f = $Ferret::ferret;
 
     # already an error object.
     if (blessed $err && $err->isa('Ferret::Error')) {
+        $type = 'NativeCodeError' if !$type && !$err->has_property('type');
         $err->set_property(type => fsym($type)) if $type;
         return $err;
     }

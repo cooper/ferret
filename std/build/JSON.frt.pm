@@ -90,7 +90,7 @@
 #                              Lexical variable '$err'
 #                          Body ('catch' scope)
 #                              Instruction
-#                                  Fail
+#                                  Fail (nonfatal exception)
 #                                      Call
 #                                          Bareword 'Error'
 #                                          Mixed argument list [3 items]
@@ -114,7 +114,7 @@
 #                              Lexical variable '$err'
 #                          Body ('catch' scope)
 #                              Instruction
-#                                  Fail
+#                                  Fail (nonfatal exception)
 #                                      Call
 #                                          Bareword 'Error'
 #                                          Mixed argument list [3 items]
@@ -208,7 +208,7 @@
 #                              Lexical variable '$err'
 #                          Body ('catch' scope)
 #                              Instruction
-#                                  Fail
+#                                  Fail (nonfatal exception)
 #                                      Call
 #                                          Bareword 'Error'
 #                                          Mixed argument list [3 items]
@@ -239,7 +239,7 @@
 #                              Lexical variable '$err'
 #                          Body ('catch' scope)
 #                              Instruction
-#                                  Fail
+#                                  Fail (nonfatal exception)
 #                                      Call
 #                                          Bareword 'Error'
 #                                          Mixed argument list [3 items]

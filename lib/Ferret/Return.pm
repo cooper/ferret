@@ -73,6 +73,13 @@ sub fail {
     return $ret;
 }
 
+# die with an error. this is fatal.
+sub throw {
+    my ($ret, $err) = @_;
+    $ret->fail($err);
+    Ferret::Core::Errors::throw($err);
+}
+
 # called internally after each ->return().
 sub _run_defers {
     my $ret = shift;

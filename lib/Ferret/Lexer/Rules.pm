@@ -811,17 +811,28 @@ our %element_rules = (
 
         children_must_be => [                                                   # Fail[1]
             '@Expression',
-            'Fail statement must consume an expression of sorts',
+            'Fail/throw statement must consume an expression of sorts',
             1
         ],
 
         num_children => [ 1, undef, 2 ],                                        # Fail[2]
 
-        must_be_somewhere_inside => [                                           # Fail[3]
-            'Function Method',
+        parent_must_satisfy => [                                                # Fail[3]
+            sub {
+                my ($p, $fail) = @_;
+
+                # throws can be anywhere.
+                return 1 if $fail->{fail_type} eq 'throw';
+
+                # fails can only be in functions.
+                return
+                    $p->first_self_or_parent('Function') ||
+                    $p->first_self_or_parent('Method');
+
+            },
             'Fail statement must be inside a function, method, or callback',
             3
-        ]
+        ],
 
     },
 
