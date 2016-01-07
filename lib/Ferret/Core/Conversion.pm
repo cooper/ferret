@@ -315,8 +315,12 @@ sub ffunction {
 # if $real_obj is provided, it must be a NATIVE::PerlObject, and the code is
 # assumed to be a method on that object.
 #
+# $ret_ctx indicates in what context the function should be called. Perl
+# functions often yield different results from void, scalar, and list context.
+# valid values: 'void', 'scalar', 'list' with 'scalar' the default.
+#
 sub ffunction_smart {
-    my ($code, $name, $real_obj) = @_;
+    my ($code, $name, $real_obj, $ret_ctx) = @_;
     my $needs_obj = defined $real_obj;
     my $f = $Ferret::ferret;
 
@@ -339,8 +343,25 @@ sub ffunction_smart {
         my @args = pargs($args);
         unshift @args, $weak_obj if $needs_obj;
 
-        # call the Perl function.
-        my $ret = eval { $code->(@args) };
+        my $ret;
+        $ret_ctx ||= 'scalar';
+
+        # call the Perl function in list context.
+        if ($ret_ctx eq 'list') {
+            my @ret = eval { $code->(@args) };
+            $ret = \@ret if @ret;
+        }
+
+        # call the Perl function in void context.
+        elsif ($ret_ctx eq 'void') {
+            eval { $code->(@args) };
+            $ret = Ferret::undefined if !$@;
+        }
+
+        # call the Perl function in scalar context.
+        else {
+            $ret = eval { $code->(@args) };
+        }
 
         # an error occurred.
         if (!defined $ret && $@) {

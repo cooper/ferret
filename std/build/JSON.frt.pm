@@ -250,6 +250,97 @@
 #                                              Item 2
 #                                                  Pair 'subError'
 #                                                      Lexical variable '$err'
+#          Method 'decoderAdd'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$fragment'
+#                          Argument type
+#                              Bareword 'Str'
+#                  Instruction
+#                      Call
+#                          Property 'perlCall'
+#                              Instance variable '@xs'
+#                          Mixed argument list [3 items]
+#                              Item 0
+#                                  String 'incr_parse'
+#                              Item 1
+#                                  Lexical variable '$fragment'
+#                              Item 2
+#                                  Pair 'CONTEXT'
+#                                      String 'void'
+#                      Catch
+#                          Expression ('catch' parameter)
+#                              Lexical variable '$err'
+#                          Body ('catch' scope)
+#                              Instruction
+#                                  Fail (nonfatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Mixed argument list [3 items]
+#                                              Item 0
+#                                                  Symbol :JSONError
+#                                              Item 1
+#                                                  String 'JSON incr_...'
+#                                              Item 2
+#                                                  Pair 'subError'
+#                                                      Lexical variable '$err'
+#                  Instruction
+#                      Return pair 'added'
+#                          Boolean true
+#          Method 'decoderDone'
+#              Body ('method' scope)
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$objects'
+#                          Call
+#                              Property 'perlCall'
+#                                  Instance variable '@xs'
+#                              Mixed argument list [2 items]
+#                                  Item 0
+#                                      String 'incr_parse'
+#                                  Item 1
+#                                      Pair 'CONTEXT'
+#                                          String 'list'
+#                      Catch
+#                          Expression ('catch' parameter)
+#                              Lexical variable '$err'
+#                          Body ('catch' scope)
+#                              Instruction
+#                                  Fail (nonfatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Mixed argument list [3 items]
+#                                              Item 0
+#                                                  Symbol :JSONError
+#                                              Item 1
+#                                                  String 'JSON incr_...'
+#                                              Item 2
+#                                                  Pair 'subError'
+#                                                      Lexical variable '$err'
+#                  If
+#                      Expression ('if' parameter)
+#                          Call
+#                              Special property '*instanceOf'
+#                                  Lexical variable '$objects'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Bareword 'List'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Return pair 'found'
+#                                  Property 'length'
+#                                      Lexical variable '$objects'
+#                  Instruction
+#                      Return pair 'data'
+#                          Lexical variable '$objects'
+#          Method 'decoderReset'
+#              Body ('method' scope)
+#                  Instruction
+#                      Call
+#                          Property 'incr_reset'
+#                              Instance variable '@xs'
+#                          Argument list [0 items]
 #          Class method 'encode'
 #              Body ('method' scope)
 #                  Instruction
@@ -288,7 +379,7 @@
 #                  Assignment
 #                      Bareword 'parse'
 #                      Bareword 'decode'
-#      Include (Bool, Charset, Error, NATIVE, NATIVE::PerlObject, Str)
+#      Include (Bool, Charset, Error, List, NATIVE, NATIVE::PerlObject, Str)
 use warnings;
 use strict;
 use 5.010;
@@ -496,14 +587,14 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'data', 80.2 ) or return;
+                FF::need( $scope, $args, 'data', 81.2 ) or return;
                 FF::try_catch(
                     $f, $scope,
                     sub {
                         $ret->set_property(
                             json => ${ $$self->{'xs'} }->{'encode'}
-                              ->( [ $$scope->{'data'} ], $scope, undef, 81.25 ),
-                            81.1
+                              ->( [ $$scope->{'data'} ], $scope, undef, 82.25 ),
+                            82.1
                         );
                     },
                     sub {
@@ -515,7 +606,7 @@ my $result = do {
                                     str( $f, "JSON encode error" ),
                                     { subError => $$scope->{'err'} }
                                 ],
-                                $scope, undef, 82.15
+                                $scope, undef, 83.15
                             )
                         );
                     },
@@ -538,14 +629,14 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'json', 86.2 ) or return;
+                FF::need( $scope, $args, 'json', 88.2 ) or return;
                 FF::try_catch(
                     $f, $scope,
                     sub {
                         $ret->set_property(
                             data => ${ $$self->{'xs'} }->{'decode'}
-                              ->( [ $$scope->{'json'} ], $scope, undef, 87.25 ),
-                            87.1
+                              ->( [ $$scope->{'json'} ], $scope, undef, 89.25 ),
+                            89.1
                         );
                     },
                     sub {
@@ -557,7 +648,7 @@ my $result = do {
                                     str( $f, "JSON decode error" ),
                                     { subError => $$scope->{'err'} }
                                 ],
-                                $scope, undef, 88.15
+                                $scope, undef, 90.15
                             )
                         );
                     },
@@ -567,8 +658,125 @@ my $result = do {
             }
         );
 
-        # Method event 'encode' definition
+        # Method event 'decoderAdd' definition
         my $method_3 = FF::method_event_def(
+            $f, $scope,
+            'decoderAdd',
+            [
+                {
+                    name     => 'fragment',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'fragment', 121.2 ) or return;
+                FF::try_catch(
+                    $f, $scope,
+                    sub {
+                        ${ $$self->{'xs'} }->{'perlCall'}->(
+                            [
+                                str( $f, "incr_parse" ),
+                                $$scope->{'fragment'},
+                                { CONTEXT => str( $f, "void" ) }
+                            ],
+                            $scope, undef, 125.15
+                        );
+                    },
+                    sub {
+                        my ($scope) = @_;
+                        return $ret->fail(
+                            $$scope->{'Error'}->(
+                                [
+                                    FF::get_symbol( $f, 'JSONError' ),
+                                    str( $f, "JSON incr_parse() error" ),
+                                    { subError => $$scope->{'err'} }
+                                ],
+                                $scope, undef, 126.15
+                            )
+                        );
+                    },
+                    'err'
+                );
+                $ret->set_property( added => $true, 128.2 );
+                return $ret;
+            }
+        );
+
+        # Method event 'decoderDone' definition
+        my $method_4 = FF::method_event_def(
+            $f, $scope,
+            'decoderDone',
+            [],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::try_catch(
+                    $f, $scope,
+                    sub {
+                        FF::lex_assign(
+                            $scope,
+                            objects => ${ $$self->{'xs'} }->{'perlCall'}->(
+                                [
+                                    str( $f, "incr_parse" ),
+                                    { CONTEXT => str( $f, "list" ) }
+                                ],
+                                $scope, undef, 136.25
+                            ),
+                            $file_scope,
+                            136.1
+                        );
+                    },
+                    sub {
+                        my ($scope) = @_;
+                        return $ret->fail(
+                            $$scope->{'Error'}->(
+                                [
+                                    FF::get_symbol( $f, 'JSONError' ),
+                                    str( $f, "JSON incr_parse() error" ),
+                                    { subError => $$scope->{'err'} }
+                                ],
+                                $scope, undef, 137.15
+                            )
+                        );
+                    },
+                    'err'
+                );
+                if (
+                    bool(
+                        ${ $$scope->{'objects'} }->{'*instanceOf'}
+                          ->( [ $$scope->{'List'} ], $scope, undef, 139.4 )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    $ret->set_property(
+                        found => ${ $$scope->{'objects'} }->{'length'},
+                        140.2
+                    );
+                }
+                $ret->set_property( data => $$scope->{'objects'}, 142.2 );
+                return $ret;
+            }
+        );
+
+        # Method event 'decoderReset' definition
+        my $method_5 = FF::method_event_def(
+            $f, $scope,
+            'decoderReset',
+            [],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                ${ $$self->{'xs'} }->{'incr_reset'}
+                  ->( {}, $scope, undef, 147.3 );
+                return $ret;
+            }
+        );
+
+        # Method event 'encode' definition
+        my $method_6 = FF::method_event_def(
             $f, $scope, 'encode',
             [
                 {
@@ -580,15 +788,15 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'data', 99.2 ) or return;
+                FF::need( $scope, $args, 'data', 158.2 ) or return;
                 return ${ $$scope->{'default'} }->{'encode'}
-                  ->( [ $$scope->{'data'} ], $scope, undef, 100.4 );
+                  ->( [ $$scope->{'data'} ], $scope, undef, 159.4 );
                 return $ret;
             }
         );
 
         # Method event 'decode' definition
-        my $method_4 = FF::method_event_def(
+        my $method_7 = FF::method_event_def(
             $f, $scope, 'decode',
             [
                 {
@@ -600,9 +808,9 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'json', 104.2 ) or return;
+                FF::need( $scope, $args, 'json', 163.2 ) or return;
                 return ${ $$scope->{'default'} }->{'decode'}
-                  ->( [ $$scope->{'json'} ], $scope, undef, 105.4 );
+                  ->( [ $$scope->{'json'} ], $scope, undef, 164.4 );
                 return $ret;
             }
         );
@@ -619,10 +827,22 @@ my $result = do {
             $proto, $class, undef, undef
         );
         $method_3->inside_scope(
+            decoderAdd => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_4->inside_scope(
+            decoderDone => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_5->inside_scope(
+            decoderReset => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_6->inside_scope(
             encode => $scope,
             $class, $class, undef, undef
         );
-        $method_4->inside_scope(
+        $method_7->inside_scope(
             decode => $scope,
             $class, $class, undef, undef
         );
@@ -655,11 +875,11 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( stringify => $$scope->{'encode'}, 108.3 );
-        $class->set_property( parse     => $$scope->{'decode'}, 109.3 );
+        $class->set_property( stringify => $$scope->{'encode'}, 167.3 );
+        $class->set_property( parse     => $$scope->{'decode'}, 168.3 );
     }
     FF::load_namespaces( $context,
-        qw(Bool Charset Error NATIVE NATIVE::PerlObject Str) );
+        qw(Bool Charset Error List NATIVE NATIVE::PerlObject Str) );
 };
 
 FF::after_content();

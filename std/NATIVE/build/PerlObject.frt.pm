@@ -22,10 +22,19 @@ my @functions = (
     }
 );
 
+my @methods = (
+    perlCall => {
+        need => '$FUNC:Str',
+        want => '$args...',
+        code => \&_perlCall
+    }
+);
+
 Ferret::bind_class(
     package   => 'NATIVE',
     name      => 'PerlObject',
     functions => \@functions,
+    methods   => \@methods,
     init      => \&init,
     init_want => '$CLASS:Str $args...'
 );
@@ -112,6 +121,32 @@ sub _wrap_package_variable {
     my $var_name = $args->pstring('var');
     my $value = Evented::Object::Hax::get_symbol($pkg_name, $var_name);
     return _wrap($class->f, $value);
+}
+
+sub _perlCall {
+    my ($pobj, $args, undef, undef, $ret) = @_;
+    my $real_obj = $pobj->{real_obj};
+
+    # method name.
+    my $func_name = $args->pstring('FUNC');
+    delete $args->{FUNC};
+
+    # call context.
+    my $ctx = $args->pstring('CONTEXT');
+    delete $args->{CONTEXT};
+
+    # find the method.
+    my $code = $real_obj->can($func_name);
+    return $ret->fail(
+        ferror("No such Perl method '$func_name'", 'NativeCodeError')
+    ) if !$code;
+
+    # create a function.
+    my $func = ffunction_smart($code, $func_name, $real_obj, $ctx);
+
+    # call it.
+    return $func->call([ pargs($args) ]);
+
 }
 
 sub _property {

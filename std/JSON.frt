@@ -76,16 +76,75 @@ init {
 
 }
 
+# encode some data.
 method encode {
     need $data
     json -> @xs.encode($data) catch $err:
         fail Error(:JSONError, "JSON encode error", subError: $err)
 }
 
+# decode a JSON text.
 method decode {
     need $json: Str
     data -> @xs.decode($json) catch $err:
         fail Error(:JSONError, "JSON decode error", subError: $err)
+}
+
+# Fragment parsing
+# ================
+#
+# The methods .decoderAdd() and .decoderDone() are for parsing fragments
+# of JSON data. This is useful when a very large JSON text is read from a
+# network or file stream.
+#
+# Each call to .decoderAdd() will append a fragment of JSON text to the decoder
+# buffer. Once the buffer has enough JSON data to create a value, it will do
+# so, and it will add the value to its return buffer.
+#
+# At the end of a JSON stream, the user should use the .decoderDone() method to
+# extract the JSON value(s) from the return buffer. If the JSON decoder found
+# multiple values back-to-back, such as '[1,2][3,4]', it will return a list of
+# those values, such as [ [1,2], [3,4] ]. If the decoder found a single value,
+# only that value is returned.
+#
+# Because .decoderDone() returns a single value as-is, consider the following:
+#
+# .decoderAdd('[1,2]')  # this is a JSON list
+# .decoderAdd('1 2')    # these are two back-to-back JSON values
+#
+# .decoderDone().data following either of these would yield the same result,
+# a list [1, 2].
+#
+
+# add a JSON text fragment to the decoder buffer.
+method decoderAdd {
+    need $fragment: Str
+
+    # call ->incr_parse in void context.
+    # this is to just add text to the buffer.
+    @xs.perlCall("incr_parse", $fragment, CONTEXT: "void") catch $err:
+        fail Error(:JSONError, "JSON incr_parse() error", subError: $err)
+
+    added -> true
+}
+
+# handle the decoder buffer
+method decoderDone {
+
+    # call ->incr_parse in list context.
+    # this will extract as many objects as possible.
+    $objects = @xs.perlCall("incr_parse", CONTEXT: "list") catch $err:
+        fail Error(:JSONError, "JSON incr_parse() error", subError: $err)
+
+    if $objects.*instanceOf(List):
+        found -> $objects.length
+
+    data -> $objects
+}
+
+# reset the decoder buffer
+method decoderReset {
+    @xs.incr_reset()
 }
 
 # method alias stringify = encode
