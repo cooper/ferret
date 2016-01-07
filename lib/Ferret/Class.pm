@@ -90,7 +90,11 @@ sub call {
     my $ret = $class->init($obj, $args);
 
     # if it failed, return the return object.
-    return $ret if $ret->{failed};
+    if ($ret->{failed}) {
+        $ret->delete_property('instance');
+        $ret->delete_property(lc $class->{name});
+        return $ret;
+    }
 
     # otherwise, return the instance.
     return $ret->property(lc $class->{name});

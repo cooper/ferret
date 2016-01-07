@@ -276,7 +276,10 @@ sub ferror {
     my $f     = $Ferret::ferret;
 
     # already an error object.
-    return $err if blessed $err && $err->isa('Ferret::Error');
+    if (blessed $err && $err->isa('Ferret::Error')) {
+        $err->set_property(type => fsym($type)) if $type;
+        return $err;
+    }
 
     # create a new error.
     my $error_class = $f->get_class($f->main_context, 'Error');

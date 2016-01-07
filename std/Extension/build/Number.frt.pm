@@ -94,6 +94,24 @@
 #                                      Lexical variable '$root'
 #                                  Item 1
 #                                      Special variable '*self'
+#          Instruction
+#              Shared variable declaration
+#                  Assignment
+#                      Lexical variable '$inf'
+#                      Call
+#                          Bareword 'Num'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  String 'inf'
+#          Instruction
+#              Shared variable declaration
+#                  Assignment
+#                      Lexical variable '$nan'
+#                      Call
+#                          Bareword 'Num'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  String 'nan'
 #      Include (Int, Integer, Math, Num)
 use warnings;
 use strict;
@@ -114,7 +132,7 @@ my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('Number.frt');
 
-use Ferret::Core::Operations qw(equal mod nequal num pow);
+use Ferret::Core::Operations qw(equal mod nequal num pow str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -284,6 +302,18 @@ my $result = do {
             undef
         );
         $class->set_property( Int => $$scope->{'Integer'}, 18.3 );
+        FF::lex_assign(
+            $class,
+            inf =>
+              $$scope->{'Num'}->( [ str( $f, "inf" ) ], $scope, undef, 45.5 ),
+            undef, 45.3
+        );
+        FF::lex_assign(
+            $class,
+            nan =>
+              $$scope->{'Num'}->( [ str( $f, "nan" ) ], $scope, undef, 46.5 ),
+            undef, 46.3
+        );
     }
     FF::load_namespaces( $context, qw(Int Integer Math Num) );
 };

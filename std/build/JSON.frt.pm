@@ -95,7 +95,7 @@
 #                                          Bareword 'Error'
 #                                          Mixed argument list [3 items]
 #                                              Item 0
-#                                                  Symbol :NativeCodeError
+#                                                  Symbol :PerlRequireFailed
 #                                              Item 1
 #                                                  String 'Unable to ...'
 #                                              Item 2
@@ -119,7 +119,7 @@
 #                                          Bareword 'Error'
 #                                          Mixed argument list [3 items]
 #                                              Item 0
-#                                                  Symbol :NativeCodeError
+#                                                  Symbol :PerlConstructorFailed
 #                                              Item 1
 #                                                  String 'Could not ...'
 #                                              Item 2
@@ -395,7 +395,7 @@ my $result = do {
                         return $ret->fail(
                             $$scope->{'Error'}->(
                                 [
-                                    FF::get_symbol( $f, 'NativeCodeError' ),
+                                    FF::get_symbol( $f, 'PerlRequireFailed' ),
                                     str( $f, "Unable to load JSON::XS" ),
                                     { subError => $$scope->{'err'} }
                                 ],
@@ -421,7 +421,9 @@ my $result = do {
                         return $ret->fail(
                             $$scope->{'Error'}->(
                                 [
-                                    FF::get_symbol( $f, 'NativeCodeError' ),
+                                    FF::get_symbol(
+                                        $f, 'PerlConstructorFailed'
+                                    ),
                                     str(
                                         $f, "Could not create JSON::XS object"
                                     ),

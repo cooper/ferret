@@ -41,3 +41,6 @@ method root {
     need $root: Num
     return Math.root($root, *self)
 }
+
+share $inf = Num("inf")
+share $nan = Num("nan")

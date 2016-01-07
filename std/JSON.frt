@@ -50,14 +50,14 @@ init {
 
     # require JSON::XS.
     _PO.require("JSON::XS") catch $err:
-        fail Error(:NativeCodeError,
+        fail Error(:PerlRequireFailed,
             "Unable to load JSON::XS",
             subError: $err
         )
 
     # create the underlying JSON::XS object.
     @xs = _PO("JSON::XS") catch $err:
-        fail Error(:NativeCodeError,
+        fail Error(:PerlConstructorFailed,
             "Could not create JSON::XS object",
             subError: $err
         )

@@ -55,7 +55,7 @@ sub init {
 
         # an error occurred, or the constructor returned false.
         if (!$real_obj || !blessed $real_obj) {
-            my $err = ferror($@);
+            my $err = ferror($@, 'PerlConstructorFailed');
             return $ret->fail($err);
         }
 
@@ -99,7 +99,7 @@ sub _require {
 
     # if this eval returns false, there was an error.
     if (!eval { require $file; 1 }) {
-        my $err = ferror($@);
+        my $err = ferror($@, 'PerlRequireFailed');
         return $ret->fail($err);
     }
 
