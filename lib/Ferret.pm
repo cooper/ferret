@@ -357,6 +357,7 @@ use Ferret::Hash;
 use Ferret::Set;
 use Ferret::Boolean;
 use Ferret::Symbol;
+use Ferret::Error;
 
 use Ferret::Core::Functions;
 use Ferret::Core::Specials;

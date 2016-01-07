@@ -271,14 +271,11 @@ sub fset {
 
 sub ferror {
     my $err  = shift;
-    my $type = shift || 'NativeCodeError';
+    my $type = shift() // 'NativeCodeError';
     my $f    = $Ferret::ferret;
 
     # already an error object.
-    return $err if
-        blessed $err                    &&
-        $err->isa('Ferret::Object')     &&
-        any { $_ eq 'Error' } $err->parent_names;
+    return $err if blessed $err && $err->isa('Ferret::Error');
 
     # create a new error.
     my $error_class = $f->get_class($f->main_context, 'Error');

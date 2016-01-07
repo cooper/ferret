@@ -29,7 +29,25 @@
 #                      Property 'main_context'
 #                          Lexical variable '$ferret'
 #                      Argument list [0 items]
-#      Include (PerlObject)
+#      Function 'bless'
+#          Body ('function' scope)
+#              Instruction
+#                  Need
+#                      Lexical variable '$obj'
+#              Instruction
+#                  Need
+#                      Lexical variable '$class'
+#                      Argument type
+#                          Bareword 'Str'
+#              Instruction
+#                  Call
+#                      Bareword '_bless'
+#                      Argument list [2 items]
+#                          Item 0
+#                              Lexical variable '$obj'
+#                          Item 1
+#                              Lexical variable '$class'
+#      Include (PerlObject, Str)
 use warnings;
 use strict;
 use 5.010;
@@ -55,7 +73,31 @@ my $result = do {
     my $scope = $file_scope;
     FF::load_core('NATIVE');
 
-    FF::load_namespaces( $context, qw(PerlObject) );
+    # Function event 'bless' definition
+    my $func_0 = FF::function_event_def(
+        $f, $context, 'bless',
+        [
+            { name => 'obj', type => undef, optional => undef, more => undef },
+            {
+                name     => 'class',
+                type     => 'Str',
+                optional => undef,
+                more     => undef
+            }
+        ],
+        sub {
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my $self = $_self || $self;
+            FF::need( $scope, $args, 'obj',   8.2 ) or return;
+            FF::need( $scope, $args, 'class', 8.4 ) or return;
+            $$scope->{'_bless'}
+              ->( [ $$scope->{'obj'}, $$scope->{'class'} ], $scope, undef,
+                9.2 );
+            return $ret;
+        }
+    );
+    $func_0->inside_scope( bless => $scope, $context, undef, undef, undef );
+    FF::load_namespaces( $context, qw(PerlObject Str) );
 
     FF::lex_assign(
         $context,

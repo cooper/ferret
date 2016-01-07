@@ -18,6 +18,8 @@ init {
         @hints = [:]
 
     want @subError: Error
+
+    NATIVE.bless(*self, "Ferret::Error")
 }
 
 method description {

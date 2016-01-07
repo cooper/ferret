@@ -57,6 +57,15 @@
 #                          Instance variable '@subError'
 #                          Argument type
 #                              Bareword 'Error'
+#                  Instruction
+#                      Call
+#                          Property 'bless'
+#                              Bareword 'NATIVE'
+#                          Argument list [2 items]
+#                              Item 0
+#                                  Special variable '*self'
+#                              Item 1
+#                                  String 'Ferret::Error'
 #          Method 'description'
 #              Body ('method' scope)
 #                  If
@@ -83,7 +92,7 @@
 #                          Lexical variable '$hints'
 #                          Argument type
 #                              Bareword 'Hash'
-#      Include (Error, Hash, Str, Sym)
+#      Include (Error, Hash, NATIVE, Str, Sym)
 use warnings;
 use strict;
 use 5.010;
@@ -124,7 +133,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'hints', 30.2 ) or return;
+            FF::need( $scope, $args, 'hints', 32.2 ) or return;
             return $ret;
         }
     );
@@ -185,6 +194,13 @@ my $result = do {
                     );
                 }
                 FF::want( $self, $args, 'subError', 20.2 );
+                ${ $$scope->{'NATIVE'} }->{'bless'}->(
+                    [
+                        ${ $scope->{special} }->{'self'},
+                        str( $f, "Ferret::Error" )
+                    ],
+                    $scope, undef, 22.3
+                );
                 return $ret;
             }
         );
@@ -201,7 +217,7 @@ my $result = do {
 
                     return add( $scope, $$self->{'msg'}, str( $f, ": " ),
                         ${ $$self->{'subError'} }->{'description'}
-                          ->( {}, $scope, undef, 25.4 ) );
+                          ->( {}, $scope, undef, 27.4 ) );
                 }
                 return $$self->{'msg'};
                 return $ret;
@@ -234,7 +250,7 @@ my $result = do {
             3.2
         );
     }
-    FF::load_namespaces( $context, qw(Error Hash Str Sym) );
+    FF::load_namespaces( $context, qw(Error Hash NATIVE Str Sym) );
 };
 
 FF::after_content();

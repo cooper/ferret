@@ -46,6 +46,10 @@ our %functions = (
     _exit => {
         want => '$status:Num',
         code => \&_exit
+    },
+    _bless => {
+        want => '$obj $class:Str',
+        code => \&_bless
     }
 );
 
@@ -134,6 +138,14 @@ sub _exit {
     my (undef, $args) = @_;
     my $status = $args->pnumber('status', 0);
     exit $status;
+}
+
+sub _bless {
+    my (undef, $args) = @_;
+    my $class = $args->pstring('class');
+    my $obj = $args->{obj};
+    bless $obj, $class;
+    return Ferret::true;
 }
 
 1

@@ -414,18 +414,20 @@ sub try_catch {
     };
 
     # attempt the instruction.
+    $Ferret::in_catch++;
     my $ret = eval { $instr_code->() };
+    $Ferret::in_catch--;
 
     # a fatal error occured.
     if (!$ret && $@) {
-        my $err = ferror($@);
-        return $do_error->($err);
+        my $err = ferror($@) if !blessed $@ || !$@->isa('Ferret::Error');
+        return $do_error->($err || $@);
     }
 
     # a nonfatal error was returned.
     if (blessed $ret && $ret->isa('Ferret::Return')) {
         my $err = $ret->property('error');
-        undef $err if none { $_ eq 'Error' } $err->parent_names;
+        undef $err if !blessed $@ || !$@->isa('Ferret::Error');;
         return $do_error->($err) if $err;
     }
 
