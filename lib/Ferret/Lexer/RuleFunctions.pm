@@ -90,7 +90,7 @@ sub token_check {
 
     # create an unknown element because token_check() can occur
     # later than $c through simulation.
-    return F::Unknown->new(
+    return F::new('Unknown', 
         token_label => $label,
         token_value => $value
     )->unexpected($e) if $e;

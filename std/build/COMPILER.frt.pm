@@ -99,7 +99,7 @@ sub construct {
     my @tokens = @$tokens;
 
     # construct
-    my $doc = F::Document->new(name => '(stdin)');
+    my $doc = F::new('Document', name => '(stdin)');
     my $err = Ferret::Lexer::Constructor::construct($doc, @tokens);
 
     return $err if $err;

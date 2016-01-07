@@ -138,7 +138,7 @@ sub c_PKG_DEC {
     my ($c, $value) = @_;
 
     # create a package.
-    my $pkg = F::Package->new(pkg_name => $value->{name});
+    my $pkg = F::new('Package', pkg_name => $value->{name});
     $c->set_package($pkg);
 
     # Rule Package[0]:
@@ -155,7 +155,7 @@ sub c_CLASS_DEC {
     $c->close_node_maybe('Class');
 
     # create class.
-    my $class = F::Class->new(%$value);
+    my $class = F::new('Class', %$value);
     $c->set_class($class);
 
     # Rule Class[0]:
@@ -223,7 +223,7 @@ sub c_METHOD {
     # Rule Method[0]:
     #   Must be a direct child of a Class.
 
-    my $method = F::Method->new(%$value, event_cb => 1);
+    my $method = F::new('Method', %$value, event_cb => 1);
 
     $c->node->adopt($method);
     $c->capture_closure_with($method->body);
@@ -246,7 +246,7 @@ sub c_FUNCTION {
         return $c->simulate('METHOD', $value);
     }
 
-    my $function = F::Function->new(
+    my $function = F::new('Function',
         %$value,
         event_cb => !$value->{anonymous}
         # anonymous functions are not implemented as events
@@ -273,7 +273,7 @@ sub c_CLOSURE_S {
         $call->{call_capturing_closure} = 1;
 
         # create a function.
-        my $func = F::Function->new(anonymous => 1, call_closure => 1);
+        my $func = F::new('Function', anonymous => 1, call_closure => 1);
         $func->body->{call_closure} = 1;
 
         # make it an argument to the call.
@@ -357,7 +357,7 @@ sub c_KEYWORD_INSIDE {
     my ($c, $value) = @_;
 
     # create a closure to be opened soon.
-    my $inside = F::Inside->new;
+    my $inside = F::new('Inside');
     $c->capture_closure_with($inside->body);
     $c->node->adopt($inside);
 
@@ -371,7 +371,7 @@ sub c_TYPE {
     my ($c, $opts) = @_;
 
     # create a closure to be opened soon.
-    my $type = F::Type->new(
+    my $type = F::new('Type',
         type_name => $opts->{name},
         lazy => $opts->{lazy}
     );
@@ -410,7 +410,7 @@ sub start_type_requirement {
 
 
     # create a type requirement.
-    my $req = F::TypeRequirement->new(req_type => $type);
+    my $req = F::new('TypeRequirement', req_type => $type);
     $c->adopt_and_set_node($req);
 
     return $req;
@@ -432,7 +432,7 @@ sub c_ALIAS {
     #   See c_OP_ASSIGN().
 
     # create alias.
-    my $alias = F::Alias->new(lazy => $opts->{lazy});
+    my $alias = F::new('Alias', lazy => $opts->{lazy});
     $c->adopt_and_set_node($alias);
 
     return $alias;
@@ -442,7 +442,7 @@ sub c_KEYWORD_ON {
     my ($c, $value) = @_;
 
     # create on.
-    my $on = F::On->new;
+    my $on = F::new('On');
 
     # set the closure to the function of on.
     $c->capture_closure_with($on->function->body);
@@ -497,7 +497,7 @@ sub c_KEYWORD_IF {
     my ($c, $value) = @_;
 
     # create an if statement which expects a closure to be opened soon.
-    my $if = F::If->new(if_type => 'if');
+    my $if = F::new('If', if_type => 'if');
     $c->node->adopt($if);
     $c->capture_closure_with($if->body);
 
@@ -527,7 +527,7 @@ sub c_KEYWORD_ELSIF {
     }
 
     # create an if statement which expects a closure to be opened soon.
-    my $if = F::If->new(if_type => 'elsif');
+    my $if = F::new('If', if_type => 'elsif');
     $c->node->adopt($if);
     $c->capture_closure_with($if->body);
 
@@ -550,7 +550,7 @@ sub c_KEYWORD_ELSE {
     }
 
     # create else.
-    my $else = F::Else->new;
+    my $else = F::new('Else');
     $c->capture_closure_with($else->body);
     $c->node->adopt($else);
 
@@ -561,7 +561,7 @@ sub c_KEYWORD_FOR {
     my ($c, $value) = @_;
 
     # create a closure to be opened soon.
-    my $for = F::For->new;
+    my $for = F::new('For');
 
     $c->node->adopt($for);
     $c->capture_closure_with($for->body);
@@ -601,7 +601,7 @@ sub c_KEYWORD_LOAD {
     # Rule Load[3]:
     #   Number of direct children must be exactly one (1).
 
-    my $load = F::Load->new;
+    my $load = F::new('Load');
     $c->adopt_and_set_node($load);
 }
 
@@ -614,7 +614,7 @@ sub c_KEYWORD_STOP {
     # Rule Stop[1]:
     #   Direct children must be of type Function or Method.
 
-    my $stop = F::Stop->new;
+    my $stop = F::new('Stop');
     $c->adopt_and_set_node($stop);
 }
 
@@ -625,7 +625,7 @@ sub c_KEYWORD_DEFER {
     #   Must be somewhere inside a Function or Method.
 
     # create closure.
-    my $defer = F::Defer->new;
+    my $defer = F::new('Defer');
     $c->capture_closure_with($defer->body);
     $c->node->adopt($defer);
 
@@ -645,7 +645,7 @@ sub c_KEYWORD_CATCH {
     # TODO: make sure there is only one catch.
 
     # create a catch and add it to the instruction.
-    my $catch = F::Catch->new;
+    my $catch = F::new('Catch');
     $instr->adopt($catch);
 
     # capture a closure with the catch body.
@@ -682,7 +682,7 @@ sub handle_failthrow {
     #   If it's a fail statement (rather than throw), it must be somewhere
     #   inside a Function or Method.
 
-    my $fail = F::Fail->new(fail_type => $type);
+    my $fail = F::new('Fail', fail_type => $type);
     $c->adopt_and_set_node($fail);
 
     return $fail;
@@ -750,15 +750,15 @@ sub handle_call {
 
     # determine list terminator and call package.
     my $terminator = $is_index ? 'BRACKET_E'          : 'PAREN_E';
-    my $package    = $is_index ? 'F::Index'           :
-                     $is_req   ? 'F::InterfaceMethod' : 'F::Call';
+    my $package    = $is_index ? 'Index'              :
+                     $is_req   ? 'InterfaceMethod'    : 'Call';
 
     # a call can only come after an expression.
     my $last_el = $c->last_el;
     return $c->unexpected unless $last_el->is_type('Expression');
 
     # create a function call, adopting the last element.
-    my $call = $c->node->adopt($package->new);
+    my $call = $c->node->adopt(F::new($package));
     $call->adopt($last_el);
 
     # handle the list, then adopt it.
@@ -875,7 +875,7 @@ sub c_BRACKET_E {
 
 sub c_STRING {
     my ($c, $value) = @_;
-    my $string = F::String->new(value => $value);
+    my $string = F::new('String', value => $value);
     return $c->node->adopt($string);
 }
 
@@ -883,7 +883,7 @@ sub c_NUMBER {
     my ($c, $value) = @_;
 
     # create the number...
-    my $num = F::Number->new(value => $value);
+    my $num = F::new('Number', value => $value);
 
     # add to the current node.
     $c->node->adopt($num);
@@ -895,7 +895,7 @@ sub c_KEYWORD_UNDEFINED {
     my ($c, $value) = @_;
 
     # create the bool...
-    my $b = F::Boolean->new(value => undef);
+    my $b = F::new('Boolean', value => undef);
 
     # add to the current node.
     $c->node->adopt($b);
@@ -907,7 +907,7 @@ sub c_KEYWORD_TRUE {
     my ($c, $value) = @_;
 
     # create the bool...
-    my $b = F::Boolean->new(value => 1);
+    my $b = F::new('Boolean', value => 1);
 
     # add to the current node.
     $c->node->adopt($b);
@@ -919,7 +919,7 @@ sub c_KEYWORD_FALSE {
     my ($c, $value) = @_;
 
     # create the bool...
-    my $b = F::Boolean->new(value => 0);
+    my $b = F::new('Boolean', value => 0);
 
     # add to the current node.
     $c->node->adopt($b);
@@ -948,7 +948,7 @@ sub c_VAR_SYM {
     }
 
     # create the symbol...
-    my $b = F::Symbol->new(sym_value => $value);
+    my $b = F::new('Symbol', sym_value => $value);
 
     # add to the current node.
     $c->node->adopt($b);
@@ -981,10 +981,10 @@ sub c_OP_COMMA {
         $c->simulate('OP_SEMI');
 
         # create new want/need.
-        my $wn = F::WantNeed->new(arg_type => $old_wn->{arg_type});
+        my $wn = F::new('WantNeed', arg_type => $old_wn->{arg_type});
 
         # wrap it with an instruction.
-        my $instr = F::Instruction->new;
+        my $instr = F::new('Instruction');
         $c->set_instruction($instr);
         $c->adopt_and_set_node($instr);
 
@@ -1024,7 +1024,7 @@ sub c_BAREWORD {
     }
 
     # otherwise, create a new bareword.
-    my $word = F::Bareword->new(bareword_value => $value);
+    my $word = F::new('Bareword', bareword_value => $value);
     $c->node->adopt($word);
 
     # not yet in function call at this point.
@@ -1075,7 +1075,7 @@ sub c_OP_SEMI {
 
 sub c_VAR_LEX {
     my ($c, $value) = @_;
-    my $var = F::LexicalVariable->new(var_name => $value);
+    my $var = F::new('LexicalVariable', var_name => $value);
     return $c->node->adopt($var);
 }
 
@@ -1085,19 +1085,19 @@ sub c_VAR_THIS {
     # Rule InstanceVariable[0]:
     #   Must be somewhere inside a Function or Method.
 
-    my $var = F::InstanceVariable->new(var_name => $value);
+    my $var = F::new('InstanceVariable', var_name => $value);
     return $c->node->adopt($var);
 }
 
 sub c_VAR_SPEC {
     my ($c, $value) = @_;
-    my $var = F::SpecialVariable->new(var_name => $value);
+    my $var = F::new('SpecialVariable', var_name => $value);
     return $c->node->adopt($var);
 }
 
 sub c_VAR_SET {
     my ($c, $value) = @_;
-    my $var = F::SetTypeVariable->new(var_name => $value);
+    my $var = F::new('SetTypeVariable', var_name => $value);
     return $c->node->adopt($var);
 }
 
@@ -1111,7 +1111,7 @@ sub c_VAR_PROP {
     #   Must be somewhere inside the parent's first ancestor Inside's body,
     #   if such an ancestor exists.
 
-    my $var = F::PropertyVariable->new(var_name => $value);
+    my $var = F::new('PropertyVariable', var_name => $value);
     return $c->node->adopt($var);
 }
 
@@ -1164,7 +1164,7 @@ sub c_KEYWORD_WANT {
     # Rule WantNeedValue[3]:
     #   Number of direct children must be exactly one (1).
 
-    my $want = F::WantNeed->new(arg_type => 'want');
+    my $want = F::new('WantNeed', arg_type => 'want');
     return $c->adopt_and_set_node($want);
 }
 
@@ -1174,7 +1174,7 @@ sub c_KEYWORD_NEED {
     # Rules:
     #   See rules in c_KEYWORD_WANT() above.
 
-    my $need = F::WantNeed->new(arg_type => 'need');
+    my $need = F::new('WantNeed', arg_type => 'need');
     return $c->adopt_and_set_node($need);
 }
 
@@ -1276,7 +1276,7 @@ sub c_PROP_VALUE {
     #   Must be a direct child of a List item.
 
     # create a new node which is a pair.
-    my $pair = F::Pair->new(key => $value);
+    my $pair = F::new('Pair', key => $value);
     $c->adopt_and_set_node($pair);
 
     return $pair;
@@ -1310,7 +1310,7 @@ sub c_PROPERTY {
         'at left of '.Ferret::Lexer::pretty_token($c->label)
     ) unless $last_el->is_type('Expression');
 
-    my $prop = F::Property->new(prop_name => $value);
+    my $prop = F::new('Property', prop_name => $value);
     $c->node->adopt($prop);
     $prop->adopt($last_el);
 
@@ -1337,7 +1337,7 @@ sub c_OP_PROP {
 
     # make the property the current node.
     # it will capture the upcoming value list.
-    my $prop = F::Property->new(prop_name => $value, is_index => 1);
+    my $prop = F::new('Property', prop_name => $value, is_index => 1);
     $c->adopt_and_set_node($prop);
     $prop->adopt($last_el);
 
@@ -1397,7 +1397,7 @@ sub c_OP_ASSIGN {
     #   When the direct parent is of type Alias, voids Assignment[3].
 
     # remember the last element as the left side of the assignment.
-    my $a = F::Assignment->new;
+    my $a = F::new('Assignment');
     $c->adopt_and_set_node($a);
     $a->adopt($c->last_el);
 
@@ -1411,7 +1411,7 @@ sub c_OP_LASSIGN {
     #   See c_OP_ASSIGN().
 
     # remember the last element as the left side of the assignment.
-    my $a = F::Assignment->new(lazy => 1);
+    my $a = F::new('Assignment', lazy => 1);
     $c->adopt_and_set_node($a);
     $a->adopt($c->last_el);
 
@@ -1442,14 +1442,14 @@ sub c_operator {
     ) if $last_el && !$last_el->is_type('Expression');
 
     # if the current node is an operation, just add another thing.
-    my $operator = F::Operator->new(token => $c->label);
+    my $operator = F::new('Operator', token => $c->label);
     if ($c->node->type eq 'Operation') {
         $c->node->adopt($operator);
         return $operator;
     }
 
     # adopt the last element as the left side of the operation.
-    my $op = F::Operation->new;
+    my $op = F::new('Operation');
     $c->adopt_and_set_node($op);
     $op->adopt($last_el) if $last_el;
     $op->adopt($operator);
@@ -1471,7 +1471,7 @@ sub c_OP_RETURN {
     $word->parent->abandon($word);
 
     # create a return pair with the proper key.
-    my $pair = F::ReturnPair->new(key => $word->{bareword_value});
+    my $pair = F::new('ReturnPair', key => $word->{bareword_value});
     $c->adopt_and_set_node($pair);
 
     return $pair;
@@ -1479,7 +1479,7 @@ sub c_OP_RETURN {
 
 sub c_KEYWORD_RETURN {
     my ($c, $value) = @_;
-    my $ret = F::Return->new;
+    my $ret = F::new('Return');
     return $c->adopt_and_set_node($ret);
 }
 
@@ -1525,7 +1525,7 @@ sub c_OP_MAYBE {
     }
 
     # create a maybe, adopting the last element.
-    my $maybe = $c->node->adopt(F::Maybe->new);
+    my $maybe = $c->node->adopt(F::new('Maybe'));
     $maybe->adopt($last_el);
 
     # add the maybe to the instruction.
@@ -1536,7 +1536,7 @@ sub c_OP_MAYBE {
 
 sub c_OP_NOT {
     my ($c, $value) = @_;
-    my $not = F::Negation->new;
+    my $not = F::new('Negation');
     $c->adopt_and_set_node($not);
 }
 
@@ -1564,7 +1564,7 @@ sub start_modifier {
     # Rule PropertyModifier[3]:
     #   Number of direct children must be exactly one (1).
 
-    my $mod = F::PropertyModifier->new(mod_type => $type);
+    my $mod = F::new('PropertyModifier', mod_type => $type);
     return $c->adopt_and_set_node($mod);
 }
 
@@ -1603,7 +1603,7 @@ sub c_KEYWORD_SHARE {
     # Rule SharedDeclaration[3]:
     #   Number of direct children must be exactly one (1).
 
-    my $share = F::SharedDeclaration->new;
+    my $share = F::new('SharedDeclaration');
     return $c->adopt_and_set_node($share);
 }
 
@@ -1631,7 +1631,7 @@ sub c_KEYWORD_LOCAL {
     #   Number of direct children must be exactly one (1).
 
 
-    my $local = F::LocalDeclaration->new;
+    my $local = F::new('LocalDeclaration');
     return $c->adopt_and_set_node($local);
 }
 
@@ -1664,7 +1664,7 @@ sub c_any {
     # Rule Instruction[3]:
     #   The second direct child, if present, must be of type Catch.
 
-    my $instr = F::Instruction->new;
+    my $instr = F::new('Instruction');
     $c->set_instruction($instr);
     $c->adopt_and_set_node($instr);
 
@@ -1673,7 +1673,7 @@ sub c_any {
 
 sub c_spaces {
     my ($c, $main_node) = @_;
-    my $spaces = F::Spaces->new;
+    my $spaces = F::new('Spaces');
     $main_node->adopt($spaces);
     return;
 }

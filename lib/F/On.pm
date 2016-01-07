@@ -29,12 +29,12 @@ sub new {
     # the expression is marked as the parameter to the on keyword.
     # it is also marked as generated, so we know it can be terminated
     # automatically by certain tokens.
-    my $exp = F::OnParameter->new;
+    my $exp = F::new('OnParameter');
     $on->adopt($exp);
     weaken($on->{param_exp} = $exp);
 
     # create a function.
-    my $func = F::Function->new(
+    my $func = F::new('Function',
         anonymous => 1
     );
     $on->adopt($func);
@@ -128,27 +128,6 @@ sub perl_fmt {
     my $node = shift;
     return $node->maybe_fmt if $node->{maybes};
     return $node->simple_fmt;
-}
-
-package F::OnParameter;
-
-use warnings;
-use strict;
-use parent qw(F::NodeExpression);
-
-sub new {
-    my ($class, %opts) = @_;
-    return $class->SUPER::new(
-        parameter_for        => 'on',
-        generated_expression => 1,
-        %opts
-    );
-}
-
-sub add_maybe {
-    my ($exp, $maybe) = @_;
-    my $on = $exp->parent;
-    push @{ $on->{maybes} ||= [] }, $maybe;
 }
 
 1

@@ -15,12 +15,12 @@ sub new {
     # the expression is marked as the parameter to the if keyword.
     # it is also marked as generated, so we know it can be terminated
     # automatically by certain tokens.
-    my $exp = F::IfParameter->new;
+    my $exp = F::new('IfParameter');
     $if->adopt($exp);
     weaken($if->{param_exp} = $exp);
 
     # body.
-    my $body = F::Body->new;
+    my $body = F::new('Body');
     weaken($if->{body} = $body);
     $if->adopt($body);
 
@@ -51,24 +51,5 @@ sub param_exp  { shift->{param_exp} }
 sub body       { shift->{body}      }
 sub is_closure { 1 }
 sub hold_instr { 1 }
-
-
-package F::IfParameter;
-
-use parent qw(F::NodeExpression);
-
-sub new {
-    my ($class, %opts) = @_;
-    return $class->SUPER::new(
-        parameter_for        => 'if',
-        generated_expression => 1
-    );
-}
-
-sub add_maybe {
-    my ($exp, $maybe) = @_;
-    my $if = $exp->parent;
-    push @{ $if->{maybes} ||= [] }, $maybe;
-}
 
 1

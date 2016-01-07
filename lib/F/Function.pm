@@ -20,7 +20,7 @@ sub desc {
 sub new {
     my ($class, %opts) = @_;
     my $func = $class->SUPER::new(
-        body => F::FunctionMethodBody->new,
+        body => F::new('FunctionMethodBody'),
         %opts
     );
     $func->adopt($func->body);
@@ -84,13 +84,5 @@ sub perl_fmt {
         name => $info->{anonymous} ? '(undef)' : $info->{name}
     };
 }
-
-package F::FunctionMethodBody;
-
-use warnings;
-use strict;
-use 5.010;
-use parent 'F::Body';
-
 
 1

@@ -20,7 +20,7 @@ sub adopt {
     # don't worry about anything except signs (+/-)
     # because the constructor will not allow that to happen.
     if (!$before && is_op($maybe)) {
-        $before = F::Number->new(value => 0, zero => 1);
+        $before = F::new('Number', value => 0, zero => 1);
         $op->SUPER::adopt($before);
         $maybe->{token} = 'OP_S'.uc($maybe->op_type); # super sub
     }
@@ -40,13 +40,13 @@ sub adopt {
             my $super = is_op($before, 'ssub');
             if (is_op($before, 'sub') || $super) {
                 $op->abandon($before);
-                return $op->adopt(F::Operator->new(token =>
+                return $op->adopt(F::new('Operator', token =>
                     $super ? 'OP_SADD' : 'OP_ADD' # super add
                 ));
             }
 
             # otherwise it's just a normal negation.
-            $op->SUPER::adopt(F::Number->new(value => 0, zero => 1));
+            $op->SUPER::adopt(F::new('Number', value => 0, zero => 1));
             $maybe->{token} = 'OP_S'.uc($maybe->op_type); # super sub
 
             return $op->SUPER::adopt(@_);

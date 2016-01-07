@@ -13,12 +13,12 @@ sub new {
 
     # create an expression.
     # the expression is marked as the parameter to the catch keyword.
-    my $exp = F::CatchParameter->new;
+    my $exp = F::new('CatchParameter');
     $catch->adopt($exp);
     weaken($catch->{param_exp} = $exp);
 
     # body.
-    my $body = F::CatchBody->new;
+    my $body = F::new('CatchBody');
     weaken($catch->{body} = $body);
     $catch->adopt($body);
 
@@ -37,22 +37,5 @@ sub param_exp  { shift->{param_exp} }
 sub body       { shift->{body}      }
 sub is_closure { 1 }
 sub hold_instr { 1 }
-
-
-package F::CatchParameter;
-
-use parent qw(F::NodeExpression);
-
-sub new {
-    my ($class, %opts) = @_;
-    return $class->SUPER::new(
-        parameter_for        => 'catch',
-        generated_expression => 1
-    );
-}
-
-package F::CatchBody;
-
-use parent 'F::Body';
 
 1

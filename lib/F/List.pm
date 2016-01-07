@@ -48,7 +48,7 @@ sub is_index   { $_[0]->is_callidx &&  $_[0]->{is_index} }
 
 sub new_item {
     my $list = shift;
-    my $item = F::ListItem->new(
+    my $item = F::new('ListItem', 
         item_num => $list->{item_c}++
     );
     return $list->adopt($item);

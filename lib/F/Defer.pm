@@ -12,7 +12,7 @@ sub new {
     my $defer = $class->SUPER::new(%opts);
 
     # body.
-    my $body = F::Body->new;
+    my $body = F::new('Body');
     weaken($defer->{body} = $body);
     $defer->adopt($body);
 

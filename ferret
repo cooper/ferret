@@ -186,7 +186,7 @@ sub do_file {
     return error($ret, $fh, $pm, $$err) if $err;
 
     # construct elements.
-    my $doc = F::Document->new(name => $file);
+    my $doc = F::new('Document', name => $file);
        $err = Ferret::Lexer::Constructor::construct($doc, @tok);
     if ($o->dom || $err) {
         my $dom = Ferret::Lexer::show_dom($doc, $o->show_all);

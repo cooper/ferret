@@ -23,7 +23,7 @@ sub next_tok        { shift->{next_tok}[shift || 0] }
 
 sub unknown_el {
     my $c = shift;
-    return $c->{unknown_el} ||= F::Unknown->new(
+    return $c->{unknown_el} ||= F::new('Unknown', 
         token_label => $c->{label},
         token_value => $c->{value}
     );
@@ -138,7 +138,7 @@ sub start_list {
     my ($c, $terminator) = @_;
 
     # for any of PAREN_S, PAREN_CALL, ... create a list.
-    my $list = F::List->new;
+    my $list = F::new('List');
     $list->{parent_list} = $c->{list};
     $list->{list_terminator} = $terminator;
 

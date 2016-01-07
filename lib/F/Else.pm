@@ -12,7 +12,7 @@ sub new {
     my $else = $class->SUPER::new(%opts);
 
     # body.
-    my $body = F::Body->new;
+    my $body = F::new('Body');
     weaken($else->{body} = $body);
     $else->adopt($body);
 

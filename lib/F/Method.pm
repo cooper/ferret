@@ -22,7 +22,7 @@ sub desc {
 sub new {
     my ($class, %opts) = @_;
     my $method = $class->SUPER::new(
-        body => F::FunctionMethodBody->new,
+        body => F::new('FunctionMethodBody'),
         %opts
     );
     $method->adopt($method->body);

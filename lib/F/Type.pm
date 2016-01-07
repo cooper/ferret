@@ -12,7 +12,7 @@ sub new {
     my $type = $class->SUPER::new(%opts);
 
     # create the body.
-    my $body = F::TypeBody->new;
+    my $body = F::new('TypeBody');
     weaken($type->{body} = $body);
     $type->adopt($body);
 
@@ -97,12 +97,5 @@ sub desc       {
     my $name = $type->type_name;
     return 'type definition'.($name ? " ('$name')" : '');
 }
-
-package F::TypeBody;
-
-use warnings;
-use strict;
-use 5.010;
-use parent 'F::Body';
 
 1

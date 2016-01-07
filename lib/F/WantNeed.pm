@@ -34,7 +34,7 @@ sub create_arg_type_exp {
     # note that we do not ->adopt here.
     # that is done in Constructor once we know
     # there is not already a WantNeedType.
-    my $type = F::WantNeedType->new;
+    my $type = F::new('WantNeedType');
     weaken($wn->{arg_type_exp} = $type);
 
     return $type;
@@ -49,7 +49,7 @@ sub create_value_exp {
     # note that we do not ->adopt here.
     # that is done in Constructor once we know
     # there is not already a WantNeedValue.
-    my $type = F::WantNeedValue->new;
+    my $type = F::new('WantNeedValue');
     weaken($wn->{value_exp} = $type);
 
     return $type;
@@ -76,21 +76,5 @@ sub perl_fmt {
 
     return $wn->{arg_type}.$typ.$val => $info;
 }
-
-package F::WantNeedType;
-
-use parent 'F::Node';
-
-
-sub desc { 'argument type' }
-
-package F::WantNeedValue;
-
-use parent 'F::Node';
-
-
-sub desc { 'argument value' }
-
-sub perl_fmt_do { shift->first_child->perl_fmt_do }
 
 1

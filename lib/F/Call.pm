@@ -5,7 +5,6 @@ use warnings;
 use strict;
 use parent qw(F::NodeExpression);
 
-
 sub fake { 1 }
 
 sub perl_fmt {
