@@ -7,6 +7,7 @@ use 5.010;
 
 use Scalar::Util qw(blessed);
 
+use F;
 use Ferret::Lexer::Current;
 use Ferret::Lexer::Rules;
 use Ferret::Lexer::Scope;
@@ -800,7 +801,7 @@ sub c_PAREN_E {
 
     # this must be the expected list terminator.
     my $t = $c->list->{list_terminator};
-    my $p = Ferret::Lexer::pretty_token($t);
+    my $p = F::pretty_token($t);
     return $c->unexpected("to close list (instead of $p)")
         if $t ne 'PAREN_E';
 
@@ -835,7 +836,7 @@ sub c_BRACKET_E {
 
     # this must be the expected list terminator.
     my $t = $c->list->{list_terminator};
-    my $p = Ferret::Lexer::pretty_token($t);
+    my $p = F::pretty_token($t);
     return $c->unexpected("to close list (instead of $p)")
         if $t ne 'BRACKET_E';
 
@@ -1307,7 +1308,7 @@ sub c_PROPERTY {
     my $last_el = $c->last_el;
     return $c->expected(
         'an expression',
-        'at left of '.Ferret::Lexer::pretty_token($c->label)
+        'at left of '.F::pretty_token($c->label)
     ) unless $last_el->is_type('Expression');
 
     my $prop = F::new('Property', prop_name => $value);
@@ -1332,7 +1333,7 @@ sub c_OP_PROP {
     my $last_el = $c->last_el;
     return $c->expected(
         'an expression',
-        'at left of '.Ferret::Lexer::pretty_token($c->label)
+        'at left of '.F::pretty_token($c->label)
     ) unless $last_el->is_type('Expression');
 
     # make the property the current node.
@@ -1438,7 +1439,7 @@ sub c_operator {
 
     return $c->expected(
         'an expression',
-        'at left of '.Ferret::Lexer::pretty_token($c->label)
+        'at left of '.F::pretty_token($c->label)
     ) if $last_el && !$last_el->is_type('Expression');
 
     # if the current node is an operation, just add another thing.
@@ -1514,7 +1515,7 @@ sub c_OP_MAYBE {
     if ($last_el->type eq 'List' && $last_el->children > 1) {
         return $c->expected(
             'a single-element list',
-            'before ' . Ferret::Lexer::pretty_token('OP_MAYBE')
+            'before ' . F::pretty_token('OP_MAYBE')
         );
     }
 

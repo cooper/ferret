@@ -80,7 +80,7 @@ sub _tokenize {
 
     # pretty
     if ($args->pbool('pretty')) {
-        my $pretty = Ferret::Lexer::show_tok(@$tokens);
+        my $pretty = F::show_tok(@$tokens);
         $ret->set_property(pretty => fstring($pretty));
     }
 
@@ -118,7 +118,7 @@ sub _construct {
 
     # pretty
     if ($args->pbool('pretty')) {
-        my $pretty = Ferret::Lexer::show_dom($doc);
+        my $pretty = F::show_dom($doc);
         $ret->set_property(pretty => fstring($pretty));
     }
 
@@ -201,7 +201,7 @@ sub _perl_eval {
 sub _prettyToken {
     my ($class, $args) = @_;
     my $tok = $args->pstring('token');
-       $tok = Ferret::Lexer::pretty_token($tok);
+       $tok = F::pretty_token($tok);
     return $tok ? fstring($tok) : Ferret::undefined;
 }
 

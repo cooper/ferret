@@ -9,7 +9,7 @@ use parent qw(F::Element);
 
 sub desc {
     my $op = shift;
-    return Ferret::Lexer::pretty_token($op->{token});
+    return F::pretty_token($op->{token});
 }
 
 sub op_type {

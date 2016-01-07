@@ -125,7 +125,7 @@ sub t_current_must_have {
     }
 
     return $ok if $pass;
-    return $set->err(must_be_set => Ferret::Lexer::pretty_current($err_type));
+    return $set->err(must_be_set => F::pretty_current($err_type));
 }
 
 
@@ -134,7 +134,7 @@ sub t_current_must_not_have {
 
     # one of the items in the list must exist in $current.
     foreach my $type ($set->list_items('current_must_not_have')) {
-        return $set->err(must_not_be_set => Ferret::Lexer::pretty_current($type))
+        return $set->err(must_not_be_set => F::pretty_current($type))
             if defined $c->{$type};
     }
 
@@ -188,7 +188,7 @@ sub t_next_token_must_be {
     }
 
     if (!$pass) {
-        my $pretty = Ferret::Lexer::pretty_token($err_tok);
+        my $pretty = F::pretty_token($err_tok);
         return $set->err(expected_next_token => $pretty);
     }
 

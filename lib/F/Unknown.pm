@@ -9,7 +9,7 @@ use parent 'F::Element';
 
 sub desc {
     my $el = shift;
-    my $desc  = Ferret::Lexer::pretty_token($el->{token_label});
+    my $desc  = F::pretty_token($el->{token_label});
        $desc .= " (value '$$el{token_value}')"
            if defined $el->{token_value} && !ref $el->{token_value};
     return $desc;

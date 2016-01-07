@@ -178,7 +178,7 @@ sub do_file {
     # tokenize.
     my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize("$str\n", $file);
     if ($o->tokens && !$err) {
-        my $tok = Ferret::Lexer::show_tok(@tok);
+        my $tok = F::show_tok(@tok);
         print $fh "# === Tokenization ===\n";
         print $fh commentize($tok), "\n";
         $ret->{tokenization} = $tok if $o->verbose;
@@ -189,7 +189,7 @@ sub do_file {
     my $doc = F::new('Document', name => $file);
        $err = Ferret::Lexer::Constructor::construct($doc, @tok);
     if ($o->dom || $err) {
-        my $dom = Ferret::Lexer::show_dom($doc, $o->show_all);
+        my $dom = F::show_dom($doc, $o->show_all);
         print $fh "# === Document Model ===\n"  unless $err;
         print $fh commentize($dom), "\n"        unless $err;
         $ret->{construction} = $dom if $o->verbose || $err;

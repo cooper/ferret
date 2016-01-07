@@ -5,6 +5,7 @@ use warnings;
 use strict;
 use 5.010;
 
+use F;
 use Ferret::Shared::Utils;
 use Ferret::Lexer::Rules;
 use Ferret::Lexer::Lexer qw(string_lexer);
@@ -513,7 +514,7 @@ sub _tokenize {
     while (my $token = &$lexer) {
 
         # something wasn't tokenized.
-        return (Ferret::Lexer::fatal(sprintf
+        return (F::fatal(sprintf
             "Unable to tokenize '%s' at line %d.",
             $token, $position
         ), @tokens) if ref $token ne 'ARRAY';

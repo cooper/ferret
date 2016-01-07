@@ -316,7 +316,7 @@ sub next_token_must_be {
     my ($c, $tok, $err_desc) = @_;
     my $next_t = $c->{upcoming}[0];
     if (!$next_t || $next_t->[0] ne $tok) {
-        my $pretty = Ferret::Lexer::pretty_token($tok);
+        my $pretty = F::pretty_token($tok);
         my $desc   = $c->node->detail;
         my $e = "following $desc";
            $e = [ $e, $err_desc ] if length $err_desc;
@@ -369,7 +369,7 @@ sub fatal {
     $err .= "\n     Parent  -> ".$parent        if $parent;
     $err .= "\n\nException$err_name raised by $err_from.";
 
-    return Ferret::Lexer::fatal($err);
+    return F::fatal($err);
 }
 
 sub expected {
@@ -399,7 +399,7 @@ sub unexpected {
     # otherwise, use the pretty representation of the token.
     my $what = $c->rule_el  ?
         $c->rule_el->detail :
-        Ferret::Lexer::pretty_token($c->label);
+        F::pretty_token($c->label);
 
     fatal($c,
         "Unexpected $what$reason.$err_desc",
@@ -423,7 +423,7 @@ sub throw {
     # otherwise, use the pretty representation of the token.
     my $what = $c->rule_el ?
         $c->rule_el->detail :
-        Ferret::Lexer::pretty_token($c->label);
+        F::pretty_token($c->label);
 
     # stringify.
     my $err_string = Ferret::Lexer::Verifier::error_string(
