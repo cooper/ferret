@@ -624,7 +624,7 @@ my $result = do {
             decode => $scope,
             $class, $class, undef, undef
         );
-        $class->set_property( _PO => $$scope->{'NATIVE::PerlObject'}, 3.3 );
+        $scope->set_property( _PO => $$scope->{'NATIVE::PerlObject'}, 3.3 );
         FF::lex_assign(
             $scope,
             default => [

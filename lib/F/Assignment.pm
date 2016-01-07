@@ -20,7 +20,8 @@ sub owner {
     # this $public is only respected if we're at document or class level.
     my $public =
         $a->parent->type eq 'SharedDeclaration' ||
-        $a->parent->type eq 'Alias';
+        ($a->parent->type eq 'Alias' &&
+         substr($a->assign_to->{bareword_value}, 0, 1) ne '_');
 
     # find instruction. assignment will always be below an instruction
     # unless it is within an if parameter.

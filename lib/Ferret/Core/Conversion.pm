@@ -7,6 +7,7 @@ use utf8;
 use 5.010;
 
 use Ferret::Core::Errors qw(throw);
+use Types::Serialiser;
 use Scalar::Util qw(blessed weaken looks_like_number);
 use List::Util qw(any);
 
@@ -143,7 +144,6 @@ sub fbool {
 sub pbool {
     return Ferret::truth(@_);
 }
-
 
 ###############
 ### SYMBOLS ###
@@ -411,6 +411,12 @@ sub _ferretize {
     # it's already a Ferret object.
     return $val if blessed $val && $val->isa('Ferret::Object');
 
+    # it's a boolean.
+    if (Types::Serialiser::is_bool($val)) {
+        return Ferret::true if $val;
+        return Ferret::false;
+    }
+
     # if it's blessed and we're allowing PerlObjects, use that.
     if (blessed $val && $allow_perlobject) {
         return Ferret::Native::PerlObject::_wrap($Ferret::ferret, $val);
@@ -440,11 +446,11 @@ sub perlize {
     # not a Ferret object, so leave it as-is.
     return $val if !blessed $val || !$val->isa('Ferret::Object');
 
-    # it's the constant true. return 1.
-    return 1 if $val == Ferret::true;
+    # it's the constant true. return something like 1.
+    return Types::Serialiser::true if $val == Ferret::true;
 
-    # it's the constant false. return 0.
-    return 0 if $val == Ferret::false;
+    # it's the constant false. return something like 0.
+    return Types::Serialiser::false if $val == Ferret::false;
 
     # it's a list. return an arrayref.
     return plistref($val, $r) if $val->{list_items};
