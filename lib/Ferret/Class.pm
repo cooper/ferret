@@ -86,8 +86,13 @@ sub call {
     # create a new object.
     my $obj = Ferret::Object->new($class->f);
 
-    # initialize it; return the instance.
+    # initialize it.
     my $ret = $class->init($obj, $args);
+
+    # if it failed, return the return object.
+    return $ret if $ret->{failed};
+
+    # otherwise, return the instance.
     return $ret->property(lc $class->{name});
 
 }

@@ -8,7 +8,7 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(reftype refaddr weaken blessed);
-use Ferret::Core::Conversion qw(perlize pargs ferretize ffunction_smart);
+use Ferret::Core::Conversion qw(perlize pargs ferretize ffunction_smart ferror);
 
 my @functions = (
     require => {
@@ -35,7 +35,7 @@ Ferret::bind_class(
 my %objects;
 
 sub init {
-    my ($pobj, $args) = @_;
+    my ($pobj, $args, undef, undef, $ret) = @_;
 
     # creating a new object.
     if ($args->{CLASS}) {
@@ -55,10 +55,8 @@ sub init {
 
         # an error occurred, or the constructor returned false.
         if (!$real_obj || !blessed $real_obj) {
-            $pobj->{override_init_obj} = Ferret::undefined;
-            print "E: $@\n";
-            return;
-            # TODO: return error -> some error object if $@ is set.
+            my $err = ferror($@);
+            return $ret->fail($err);
         }
 
         weaken($objects{ refaddr($real_obj) } = $pobj);
@@ -89,7 +87,7 @@ sub _wrap {
 }
 
 sub _require {
-    my (undef, $args) = @_;
+    my (undef, $args, undef, undef, $ret) = @_;
     my $file = $args->pstring('file');
     my @args = $args->plist('args');
 
@@ -101,8 +99,8 @@ sub _require {
 
     # if this eval returns false, there was an error.
     if (!eval { require $file; 1 }) {
-        return Ferret::false;
-        # TODO: return error -> some error object wrapping $@.
+        my $err = ferror($@);
+        return $ret->fail($err);
     }
 
     return Ferret::true;
