@@ -108,6 +108,12 @@ sub _filter_children {
     return @final;
 }
 
+sub open : method {
+    my $node = shift;
+    $node->{open_pos} ||= $Ferret::Lexer::Constructor::current->{position};
+    return $node;
+}
+
 sub close : method {
     my $node = shift;
     $node->{close_pos} ||= $Ferret::Lexer::Constructor::current->{position};

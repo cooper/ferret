@@ -187,7 +187,7 @@ sub identify_lexical_variable_declarations {
 
         # the scope of interest is the body of the loop.
         my $soi = $for->body->scope;
-        my $p = $for->body->{create_pos};
+        my $p = $for->body->{open_pos};
 
         # remember the location.
         $v->{lex_declarations}{$p} = [ $for, $var1 ];
@@ -218,7 +218,7 @@ sub identify_lexical_variable_declarations {
 
         # the scope of interest is the catch body.
         my $soi = $catch->body->scope;
-        my $p = $catch->body->{create_pos};
+        my $p = $catch->body->{open_pos};
 
         # remember the location.
         $v->{lex_declarations}{$p} = [ $catch, $var ];

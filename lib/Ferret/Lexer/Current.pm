@@ -23,7 +23,7 @@ sub next_tok        { shift->{next_tok}[shift || 0] }
 
 sub unknown_el {
     my $c = shift;
-    return $c->{unknown_el} ||= F::new('Unknown', 
+    return $c->{unknown_el} ||= F::new('Unknown',
         token_label => $c->{label},
         token_value => $c->{value}
     );
@@ -46,6 +46,7 @@ sub node { shift->{node} }
 sub set_node {
     my ($c, $new) = @_;
     $c->node->close if $c->node->type ne 'Document';
+    $new->open;
     return $c->{node} = $new;
 }
 
