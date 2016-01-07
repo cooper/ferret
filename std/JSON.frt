@@ -38,7 +38,7 @@ init {
     # @indent, @spaceBefore, and @spaceAfter.
     want @pretty: Bool = false
 
-    # if true, .stingify() will add an extra optional space before or after the
+    # if true, .stringify() will add an extra optional space before or after the
     # colon separating keys from values in JSON objects.
     want @spaceBefore: Bool = false
     want @spaceAfter:  Bool = false
