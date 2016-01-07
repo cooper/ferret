@@ -26,8 +26,11 @@ $SIG{__DIE__} = sub {
         !$Ferret::in_catch      &&
         blessed $e              &&
         $e->can('description');
-    $e =~ s/\n$//g;
-    die $e."\n";
+    if (!blessed $e) {
+        $e =~ s/\n$//g;
+        die $e."\n";
+    }
+    die $e;
 };
 
 $SIG{__WARN__} = sub {
