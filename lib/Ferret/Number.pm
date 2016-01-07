@@ -113,6 +113,9 @@ sub init {
     }
     $num->{num_value} = 0 if !defined $num->{num_value};
 
+    # force numeric context.
+    $num->{num_value} += 0;
+    
 }
 
 # number plus number

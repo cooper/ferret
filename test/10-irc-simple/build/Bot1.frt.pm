@@ -238,7 +238,7 @@ my $result = do {
                 FF::need( $self, $args, 'addr' ) or return;
                 FF::need( $self, $args, 'nick' ) or return;
                 FF::need( $self, $args, 'user' ) or return;
-                FF::want( $self, $args, 'port', 5.1, num( $f, 6667 ) );
+                FF::want( $self, $args, 'port', 5.1, num( $f, "6667" ) );
                 FF::want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(

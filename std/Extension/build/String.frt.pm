@@ -80,7 +80,7 @@ my $result = do {
                         $ins->instance_of_u(
                             ${ $scope->{special} }->{'class'}
                         ),
-                        nequal( $scope, $$ins->{'length'}, num( $f, 0 ) )
+                        nequal( $scope, $$ins->{'length'}, num( $f, "0" ) )
                     ],
                     equal_to => undef
                 ) ? $ins : undef;

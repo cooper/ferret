@@ -248,8 +248,8 @@ my $result = do {
                     [
                         add(
                             $scope,
-                            pow( $scope, $$scope->{'dx'}, num( $f, 2 ) ),
-                            pow( $scope, $$scope->{'dy'}, num( $f, 2 ) )
+                            pow( $scope, $$scope->{'dx'}, num( $f, "2" ) ),
+                            pow( $scope, $$scope->{'dy'}, num( $f, "2" ) )
                         )
                     ],
                     $scope, undef, 12.15
@@ -268,7 +268,7 @@ my $result = do {
                 return $$self->{'distanceTo'}->(
                     [
                         ${ $scope->{special} }->{'class'}->(
-                            [ num( $f, 0 ), num( $f, 0 ) ], $scope,
+                            [ num( $f, "0" ), num( $f, "0" ) ], $scope,
                             undef, 16.25
                         )
                     ],
@@ -348,7 +348,7 @@ my $result = do {
                                 ${ $$scope->{'pt1'} }->{'x'},
                                 ${ $$scope->{'pt2'} }->{'x'}
                             ),
-                            num( $f, 2 )
+                            num( $f, "2" )
                         ),
                         y => div(
                             $scope,
@@ -357,7 +357,7 @@ my $result = do {
                                 ${ $$scope->{'pt1'} }->{'y'},
                                 ${ $$scope->{'pt2'} }->{'y'}
                             ),
-                            num( $f, 2 )
+                            num( $f, "2" )
                         )
                     },
                     $scope, undef, 33.3

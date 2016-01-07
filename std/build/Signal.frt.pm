@@ -144,7 +144,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $$scope->{'_exit'}->( [ num( $f, 0 ) ], $scope, undef, 25.2 );
+                $$scope->{'_exit'}->( [ num( $f, "0" ) ], $scope, undef, 25.2 );
                 return $ret;
             }
         );

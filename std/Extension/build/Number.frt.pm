@@ -146,7 +146,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $$self->{'root'}
-                  ->( [ num( $f, 3 ) ], $scope, undef, 25.3 );
+                  ->( [ num( $f, "3" ) ], $scope, undef, 25.3 );
                 return $ret;
             }
         );
@@ -157,8 +157,11 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return pow( $scope, ${ $scope->{special} }->{'self'},
-                    num( $f, 2 ) );
+                return pow(
+                    $scope,
+                    ${ $scope->{special} }->{'self'},
+                    num( $f, "2" )
+                );
                 return $ret;
             }
         );
@@ -174,9 +177,9 @@ my $result = do {
                     mod(
                         $scope,
                         ${ $scope->{special} }->{'self'},
-                        num( $f, 2 )
+                        num( $f, "2" )
                     ),
-                    num( $f, 0 )
+                    num( $f, "0" )
                 );
                 return $ret;
             }
@@ -193,9 +196,9 @@ my $result = do {
                     mod(
                         $scope,
                         ${ $scope->{special} }->{'self'},
-                        num( $f, 2 )
+                        num( $f, "2" )
                     ),
-                    num( $f, 0 )
+                    num( $f, "0" )
                 );
                 return $ret;
             }

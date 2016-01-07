@@ -61,7 +61,7 @@ my $result = do {
                 return mul(
                     $scope,
                     $$self->{'length'}->( {}, $scope, undef, 4.3 ),
-                    num( $f, 2 )
+                    num( $f, "2" )
                 );
                 return $ret;
             }

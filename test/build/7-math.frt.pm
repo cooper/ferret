@@ -119,10 +119,10 @@ my $result = do {
         $scope,
         rect => $$scope->{'Math::Rect'}->(
             {
-                x      => num( $f, 5 ),
-                y      => num( $f, 4 ),
-                width  => num( $f, 12 ),
-                height => num( $f, 10 )
+                x      => num( $f, "5" ),
+                y      => num( $f, "4" ),
+                width  => num( $f, "12" ),
+                height => num( $f, "10" )
             },
             $scope, undef, 1.2
         ),
@@ -151,7 +151,7 @@ my $result = do {
     FF::lex_assign(
         $scope,
         otherPt => $$scope->{'Math::Point'}
-          ->( [ num( $f, 9 ), num( $f, 2 ) ], $scope, undef, 7.3 ),
+          ->( [ num( $f, "9" ), num( $f, "2" ) ], $scope, undef, 7.3 ),
         undef, 7.1
     );
     FF::lex_assign(
@@ -175,7 +175,7 @@ my $result = do {
                 $scope,
                 str( $f, "Square root of four: " ),
                 ${ $$scope->{'Math'} }->{'sqrt'}
-                  ->( [ num( $f, 4 ) ], $scope, undef, 11.35 )
+                  ->( [ num( $f, "4" ) ], $scope, undef, 11.35 )
             )
         ],
         $scope, undef, 11.1

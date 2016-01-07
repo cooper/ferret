@@ -134,7 +134,7 @@ my $result = do {
         $scope,
         pt => ${
             $$scope->{'makePoint'}
-              ->( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 11.2 )
+              ->( [ num( $f, "5" ), num( $f, "3" ) ], $scope, undef, 11.2 )
           }->{'point'},
         undef,
         11.1
@@ -157,11 +157,11 @@ my $result = do {
         numbers => FF::create_list(
             $f,
             [
-                num( $f, 1 ),
-                num( $f, 2 ),
-                num( $f, 3 ),
-                num( $f, 4 ),
-                add( $scope, num( $f, 4 ), num( $f, 1 ) )
+                num( $f, "1" ),
+                num( $f, "2" ),
+                num( $f, "3" ),
+                num( $f, "4" ),
+                add( $scope, num( $f, "4" ), num( $f, "1" ) )
             ]
         ),
         undef,

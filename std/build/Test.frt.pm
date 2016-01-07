@@ -279,8 +279,8 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::want( $self, $args, 'name', 4.2, str( $f, "Test" ) );
                 FF::want( $self, $args, 'fatal', 5.2, $true );
-                $self->set_property( tested => num( $f, 0 ), 6.2 );
-                $self->set_property( passed => num( $f, 0 ), 7.2 );
+                $self->set_property( tested => num( $f, "0" ), 6.2 );
+                $self->set_property( passed => num( $f, "0" ), 7.2 );
                 return $ret;
             }
         );
@@ -468,7 +468,7 @@ my $result = do {
                 FF::want( $scope, $args, 'yes',     57.2 );
                 FF::want( $scope, $args, 'message', 57.4 );
                 $self->set_property(
-                    tested => add( $scope, $$self->{'tested'}, num( $f, 1 ) ),
+                    tested => add( $scope, $$self->{'tested'}, num( $f, "1" ) ),
                     59.2
                 );
                 $ret->set_property( pass => $$scope->{'yes'}, 60.2 );
@@ -477,7 +477,7 @@ my $result = do {
 
                     $self->set_property(
                         passed =>
-                          add( $scope, $$self->{'passed'}, num( $f, 1 ) ),
+                          add( $scope, $$self->{'passed'}, num( $f, "1" ) ),
                         63.2
                     );
                     return;

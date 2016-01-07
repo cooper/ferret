@@ -92,7 +92,7 @@ my $result = do {
             FF::need( $scope, $args, 'root', 9.1 ) or return;
             FF::need( $scope, $args, 'num',  9.3 ) or return;
             return pow( $scope, $$scope->{'num'},
-                div( $scope, num( $f, 1 ), $$scope->{'root'} ) );
+                div( $scope, num( $f, "1" ), $$scope->{'root'} ) );
             return $ret;
         }
     );

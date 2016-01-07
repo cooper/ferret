@@ -215,7 +215,8 @@ my $result = do {
       ->( [ str( $f, "Benjamin" ), str( $f, "George" ) ], $scope, undef, 8.2 );
     FF::lex_assign(
         $scope,
-        pi => add( $scope, num( $f, 3 ), num( $f, 0.1 ), num( $f, 0.04 ) ),
+        pi =>
+          add( $scope, num( $f, "3" ), num( $f, "0.1" ), num( $f, "0.04" ) ),
         undef, 28.2
     );
     $$scope->{'say'}->(

@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent 'F::Expression';
 
-use Data::Dump qw(dump);
+use Data::Dump qw(quote);
 
 
 sub desc {
@@ -20,7 +20,7 @@ sub perl_fmt {
     my $str = shift;
     my $doc = $str->document;
     $doc->{required_operations}{str}++;
-    return string => { string => dump($str->{value}) };
+    return string => { string => quote($str->{value}) };
 }
 
 1

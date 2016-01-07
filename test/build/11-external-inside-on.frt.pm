@@ -172,7 +172,7 @@ my $result = do {
     FF::lex_assign(
         $scope,
         point => $$scope->{'Math::Point'}
-          ->( [ num( $f, 0 ), num( $f, 0 ) ], $scope, undef, 1.3 ),
+          ->( [ num( $f, "0" ), num( $f, "0" ) ], $scope, undef, 1.3 ),
         undef, 1.1
     );
     if ( bool( $$scope->{'point'} ) ) {
@@ -189,8 +189,8 @@ my $result = do {
         $$scope->{'point'},
         sub {
             my ( $scope, $ins ) = @_;
-            FF::lex_assign( $scope, x => num( $f, 5 ),  $file_scope, 9.2 );
-            FF::lex_assign( $scope, y => num( $f, 10 ), $file_scope, 10.2 );
+            FF::lex_assign( $scope, x => num( $f, "5" ),  $file_scope, 9.2 );
+            FF::lex_assign( $scope, y => num( $f, "10" ), $file_scope, 10.2 );
         }
     );
     $$scope->{'say'}->(

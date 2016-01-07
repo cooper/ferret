@@ -115,7 +115,7 @@ my $result = do {
     $func_0->inside_scope( something => $scope, $context, undef, undef, undef );
     $$scope->{'delay'}->(
         [
-            num( $f, 5 ),
+            num( $f, "5" ),
             $func_1->inside_scope(
                 (undef) => $scope,
                 undef, undef, undef, undef

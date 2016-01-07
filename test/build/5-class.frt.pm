@@ -239,7 +239,7 @@ my $result = do {
                     $scope,
                     pt => ${ $scope->{special} }->{'class'}->(
                         [
-                            add( $scope, $$self->{'x'}, num( $f, 1 ) ),
+                            add( $scope, $$self->{'x'}, num( $f, "1" ) ),
                             $$self->{'y'}
                         ],
                         $scope, undef, 10.2
@@ -310,7 +310,7 @@ my $result = do {
                                 ${ $$scope->{'pt1'} }->{'x'},
                                 ${ $$scope->{'pt2'} }->{'x'}
                             ),
-                            num( $f, 2 )
+                            num( $f, "2" )
                         ),
                         y => div(
                             $scope,
@@ -319,7 +319,7 @@ my $result = do {
                                 ${ $$scope->{'pt1'} }->{'y'},
                                 ${ $$scope->{'pt2'} }->{'y'}
                             ),
-                            num( $f, 2 )
+                            num( $f, "2" )
                         )
                     },
                     $scope, undef, 24.3
@@ -352,7 +352,7 @@ my $result = do {
     FF::lex_assign(
         $scope,
         pt => $$scope->{'Point'}
-          ->( [ num( $f, 5 ), num( $f, 3 ) ], $scope, undef, 32.2 ),
+          ->( [ num( $f, "5" ), num( $f, "3" ) ], $scope, undef, 32.2 ),
         undef, 32.1
     );
     $$scope->{'say'}->(
@@ -383,8 +383,8 @@ my $result = do {
         $scope,
         nineteen => add(
             $scope,
-            num( $f, 4 ),
-            div( $scope, num( $f, 45 ), num( $f, 3 ) )
+            num( $f, "4" ),
+            div( $scope, num( $f, "45" ), num( $f, "3" ) )
         ),
         undef,
         41.2

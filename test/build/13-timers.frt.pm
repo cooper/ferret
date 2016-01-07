@@ -104,7 +104,7 @@ my $result = do {
     FF::load_namespaces( $context, qw(Timer) );
     $$scope->{'say'}->( [ str( $f, "hello" ) ], $scope, undef, 1.2 );
     FF::on(
-        ${ $$scope->{'Timer'}->( [ num( $f, 5 ) ], $scope, undef, 3.15 ) }
+        ${ $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, 3.15 ) }
           ->{'once'}->( {}, $scope, undef, 3.35 ),
         'expire',
         $self,
@@ -114,7 +114,7 @@ my $result = do {
     );
     FF::lex_assign(
         $scope,
-        t2 => $$scope->{'Timer'}->( [ num( $f, 2 ) ], $scope, undef, 7.4 ),
+        t2 => $$scope->{'Timer'}->( [ num( $f, "2" ) ], $scope, undef, 7.4 ),
         undef, 7.2
     );
     FF::on(

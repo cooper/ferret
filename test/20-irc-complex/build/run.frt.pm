@@ -529,8 +529,9 @@ my $result = do {
                     [
                         $$scope->{'convertNewlines'}->(
                             [
-                                ${ $$scope->{'msg'} }->{'fromWord'}
-                                  ->( [ num( $f, 1 ) ], $scope, undef, 69.45 )
+                                ${ $$scope->{'msg'} }->{'fromWord'}->(
+                                    [ num( $f, "1" ) ], $scope, undef, 69.45
+                                )
                             ],
                             $scope, undef, 69.3
                         )
@@ -642,8 +643,9 @@ my $result = do {
                     [
                         $$scope->{'convertNewlines'}->(
                             [
-                                ${ $$scope->{'msg'} }->{'fromWord'}
-                                  ->( [ num( $f, 1 ) ], $scope, undef, 14.45 )
+                                ${ $$scope->{'msg'} }->{'fromWord'}->(
+                                    [ num( $f, "1" ) ], $scope, undef, 14.45
+                                )
                             ],
                             $scope, undef, 14.3
                         )
@@ -703,8 +705,9 @@ my $result = do {
                     [
                         $$scope->{'convertNewlines'}->(
                             [
-                                ${ $$scope->{'msg'} }->{'fromWord'}
-                                  ->( [ num( $f, 1 ) ], $scope, undef, 27.45 )
+                                ${ $$scope->{'msg'} }->{'fromWord'}->(
+                                    [ num( $f, "1" ) ], $scope, undef, 27.45
+                                )
                             ],
                             $scope, undef, 27.3
                         )
@@ -766,7 +769,7 @@ my $result = do {
                             $$scope->{'convertNewlines'}->(
                                 [
                                     ${ $$scope->{'msg'} }->{'fromWord'}->(
-                                        [ num( $f, 1 ) ], $scope,
+                                        [ num( $f, "1" ) ], $scope,
                                         undef, 40.45
                                     )
                                 ],
@@ -836,7 +839,7 @@ my $result = do {
                             $$scope->{'convertNewlines'}->(
                                 [
                                     ${ $$scope->{'msg'} }->{'fromWord'}->(
-                                        [ num( $f, 1 ) ], $scope,
+                                        [ num( $f, "1" ) ], $scope,
                                         undef, 53.45
                                     )
                                 ],

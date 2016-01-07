@@ -140,7 +140,9 @@ my $result = do {
     );
     FF::iterate(
         $f, $scope,
-        FF::create_list( $f, [ num( $f, 1 ), num( $f, 2 ), num( $f, 3 ) ] ),
+        FF::create_list(
+            $f, [ num( $f, "1" ), num( $f, "2" ), num( $f, "3" ) ]
+        ),
         'part',
         sub {
             my ($scope) = @_;

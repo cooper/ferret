@@ -212,7 +212,7 @@ my $result = do {
         sock => $$scope->{'Socket::TCP'}->(
             {
                 address  => str( $f,            "k.notroll.net" ),
-                port     => num( $f,            6667 ),
+                port     => num( $f,            "6667" ),
                 readMode => FF::get_symbol( $f, 'line' )
             },
             $scope, undef, 1.3
@@ -247,7 +247,7 @@ my $result = do {
     );
     ${ $$scope->{'sock'} }->{'connect'}->( {}, $scope, undef, 19.3 );
     FF::on(
-        ${ $$scope->{'Timer'}->( [ num( $f, 5 ) ], $scope, undef, 21.15 ) }
+        ${ $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, 21.15 ) }
           ->{'once'}->( {}, $scope, undef, 21.35 ),
         'expire',
         $self,

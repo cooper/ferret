@@ -192,7 +192,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::want( $self, $args, 'userAgent', 10.2,
                     $$scope->{'defaultUA'} );
-                FF::want( $self, $args, 'timeout', 13.2, num( $f, 10 ) );
+                FF::want( $self, $args, 'timeout', 13.2, num( $f, "10" ) );
                 FF::want( $self, $args, 'maxContentLength', 19.2 );
                 FF::want( $self, $args, 'readLength', 22.2,
                     $$scope->{'defaultLength'} );
@@ -311,7 +311,7 @@ my $result = do {
         );
         FF::lex_assign(
             $scope,
-            defaultLength => mul( $scope, num( $f, 64 ), num( $f, 1024 ) ),
+            defaultLength => mul( $scope, num( $f, "64" ), num( $f, "1024" ) ),
             undef, 5.2
         );
     }

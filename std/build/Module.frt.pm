@@ -93,7 +93,7 @@ my $result = do {
                 FF::need( $self, $args, 'name' ) or return;
                 str( $f, "::" );
                 FF::want( $self, $args, 'prefix', 9.2, str( $f, "CORE" ) );
-                FF::want( $self, $args, 'version', 12.2, num( $f, 1.0 ) );
+                FF::want( $self, $args, 'version', 12.2, num( $f, "1.0" ) );
                 $self->set_property(
                     fullName => add(
                         $scope, $$self->{'prefix'},

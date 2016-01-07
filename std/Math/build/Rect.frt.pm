@@ -415,7 +415,7 @@ my $result = do {
                     x => add(
                         $scope,
                         ${ $$self->{'origin'} }->{'x'},
-                        mul( $scope, $$self->{'width'}, num( $f, 0.5 ) )
+                        mul( $scope, $$self->{'width'}, num( $f, "0.5" ) )
                     ),
                     $file_scope,
                     43.1
@@ -425,7 +425,7 @@ my $result = do {
                     y => add(
                         $scope,
                         ${ $$self->{'origin'} }->{'y'},
-                        mul( $scope, $$self->{'height'}, num( $f, 0.5 ) )
+                        mul( $scope, $$self->{'height'}, num( $f, "0.5" ) )
                     ),
                     $file_scope,
                     44.1

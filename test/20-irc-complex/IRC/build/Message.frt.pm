@@ -209,29 +209,31 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     lineSplit => ${ $$self->{'line'} }->{'split'}->(
-                        { separator => str( $f, " " ), limit => num( $f, 4 ) },
-                        $scope,
-                        undef,
-                        6.25
+                        {
+                            separator => str( $f, " " ),
+                            limit     => num( $f, "4" )
+                        },
+                        $scope, undef, 6.25
                     ),
                     $file_scope,
                     6.1
                 );
                 $self->set_property(
                     channel => $$scope->{'lineSplit'}
-                      ->get_index_value( [ num( $f, 2 ) ], $scope, 7.4 ),
+                      ->get_index_value( [ num( $f, "2" ) ], $scope, 7.4 ),
                     7.2
                 );
                 $self->set_property(
                     nickname => ${
                         $$scope->{'lineSplit'}
-                          ->get_index_value( [ num( $f, 0 ) ], $scope, 10.2 )
+                          ->get_index_value( [ num( $f, "0" ) ], $scope, 10.2 )
                       }->{'split'}->(
-                        { separator => str( $f, "!" ), limit => num( $f, 2 ) },
-                        $scope,
-                        undef,
-                        10.4
-                      )->get_index_value( [ num( $f, 0 ) ], $scope, 10.75 ),
+                        {
+                            separator => str( $f, "!" ),
+                            limit     => num( $f, "2" )
+                        },
+                        $scope, undef, 10.4
+                      )->get_index_value( [ num( $f, "0" ) ], $scope, 10.75 ),
                     10.1
                 );
                 $self->set_property(
@@ -241,7 +243,7 @@ my $result = do {
                 );
                 $self->set_property(
                     message => $$scope->{'lineSplit'}
-                      ->get_index_value( [ num( $f, 3 ) ], $scope, 14.4 ),
+                      ->get_index_value( [ num( $f, "3" ) ], $scope, 14.4 ),
                     14.2
                 );
                 $self->set_property(
@@ -269,7 +271,7 @@ my $result = do {
                     bool(
                         ${
                             $$self->{'parts'}
-                              ->get_index_value( [ num( $f, 0 ) ],
+                              ->get_index_value( [ num( $f, "0" ) ],
                                 $scope, 26.15 )
                           }->{'hasPrefix'}
                           ->( [ str( $f, "." ) ], $scope, undef, 26.35 )
@@ -282,7 +284,7 @@ my $result = do {
                         $scope,
                         cmd => ${
                             $$self->{'parts'}
-                              ->get_index_value( [ num( $f, 0 ) ],
+                              ->get_index_value( [ num( $f, "0" ) ],
                                 $scope, 27.2 )
                           }->{'trimPrefix'}
                           ->( [ str( $f, "." ) ], $scope, undef, 27.4 ),
@@ -310,7 +312,7 @@ my $result = do {
                 return nequal(
                     $scope,
                     ${ $$self->{'parts'} }->{'length'},
-                    num( $f, 1 )
+                    num( $f, "1" )
                 );
                 return $ret;
             }
@@ -334,7 +336,8 @@ my $result = do {
                 return ${ $$self->{'message'} }->{'split'}->(
                     {
                         separator => str( $f, " " ),
-                        limit => add( $scope, $$scope->{'wordN'}, num( $f, 1 ) )
+                        limit =>
+                          add( $scope, $$scope->{'wordN'}, num( $f, "1" ) )
                     },
                     $scope, undef, 42.2
                 )->get_index_value( [ $$scope->{'wordN'} ], $scope, 42.65 );

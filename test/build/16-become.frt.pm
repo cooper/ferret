@@ -55,7 +55,7 @@ my $result = do {
     FF::lex_assign( $scope, obj => str( $f, "hi" ), undef, 2.2 );
     ${ $$scope->{'Math::Point'} }->{'init'}
       ->( [ $$scope->{'obj'} ], $scope, undef, 9.25 )
-      ->( [ num( $f, 1 ), num( $f, 1 ) ], $scope, undef, 9.4 );
+      ->( [ num( $f, "1" ), num( $f, "1" ) ], $scope, undef, 9.4 );
     $$scope->{'say'}->(
         [ ${ $$scope->{'obj'} }->{'pretty'}->( {}, $scope, undef, 11.5 ) ],
         $scope, undef, 11.2

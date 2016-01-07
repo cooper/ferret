@@ -141,7 +141,7 @@ my $result = do {
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
-    ${ $$scope->{'Timer'}->( [ num( $f, 5 ) ], $scope, undef, 23.2 ) }
+    ${ $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, 23.2 ) }
       ->{'start'}->( {}, $scope, undef, 23.6 );
 };
 

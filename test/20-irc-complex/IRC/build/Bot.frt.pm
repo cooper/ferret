@@ -652,8 +652,9 @@ my $result = do {
                     add(
                         $scope,
                         str( $f, "PONG " ),
-                        $$scope->{'s'}
-                          ->get_index_value( [ num( $f, 1 ) ], $scope, 110.3 )
+                        $$scope->{'s'}->get_index_value(
+                            [ num( $f, "1" ) ], $scope, 110.3
+                        )
                     )
                 ],
                 $scope, undef, 110.1
@@ -752,13 +753,13 @@ my $result = do {
             FF::lex_assign(
                 $scope,
                 trigger => ${ $$scope->{'msg'} }->{'parts'}
-                  ->get_index_value( [ num( $f, 1 ) ], $scope, 141.5 ),
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, 141.5 ),
                 $file_scope, 141.2
             );
             FF::lex_assign(
                 $scope,
                 response => ${ $$scope->{'msg'} }->{'fromWord'}
-                  ->( [ num( $f, 2 ) ], $scope, undef, 142.5 ),
+                  ->( [ num( $f, "2" ) ], $scope, undef, 142.5 ),
                 $file_scope, 142.2
             );
             $$self->{'factoids'}->set_index_value( [ $$scope->{'trigger'} ],
@@ -842,7 +843,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'addr' ) or return;
                 FF::need( $self, $args, 'nick' ) or return;
-                FF::want( $self, $args, 'port', 18.2, num( $f, 6667 ) );
+                FF::want( $self, $args, 'port', 18.2, num( $f, "6667" ) );
                 FF::want( $self, $args, 'user', 19.2, str( $f, "ferret" ) );
                 FF::want( $self, $args, 'real', 20.2, str( $f, "Ferret IRC" ) );
                 $self->set_property(
@@ -991,7 +992,7 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     command => $$scope->{'s'}
-                      ->get_index_value( [ num( $f, 1 ) ], $scope, 65.4 ),
+                      ->get_index_value( [ num( $f, "1" ) ], $scope, 65.4 ),
                     $file_scope, 65.2
                 );
                 if (
@@ -999,7 +1000,7 @@ my $result = do {
                         equal(
                             $scope,
                             $$scope->{'s'}->get_index_value(
-                                [ num( $f, 0 ) ],
+                                [ num( $f, "0" ) ],
                                 $scope, 68.3
                             ),
                             str( $f, "PING" )
@@ -1012,7 +1013,7 @@ my $result = do {
                     FF::lex_assign(
                         $scope,
                         command => $$scope->{'s'}
-                          ->get_index_value( [ num( $f, 0 ) ], $scope, 69.4 ),
+                          ->get_index_value( [ num( $f, "0" ) ], $scope, 69.4 ),
                         $file_scope, 69.2
                     );
                 }
@@ -1082,7 +1083,7 @@ my $result = do {
                                 nequal(
                                     $scope,
                                     ${ $$scope->{'line'} }->{'length'},
-                                    num( $f, 0 )
+                                    num( $f, "0" )
                                 )
                             )
                           )

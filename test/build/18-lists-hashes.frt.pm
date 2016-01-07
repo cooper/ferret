@@ -138,7 +138,7 @@ my $result = do {
     ${ $$scope->{'list'} }->{'push'}
       ->( [ str( $f, "there" ) ], $scope, undef, 2.3 );
     $$scope->{'list'}
-      ->set_index_value( [ num( $f, 4 ) ], str( $f, "yeah" ), $scope, 3.5 );
+      ->set_index_value( [ num( $f, "4" ) ], str( $f, "yeah" ), $scope, 3.5 );
     $$scope->{'say'}->(
         [
             add(
