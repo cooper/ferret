@@ -29,34 +29,21 @@ our %errors = (
         message => "Cannot iterate over this object"
     },
     NativeCodeError => {
-        message => "An error occurred in a Perl routine: %s"
+        message => "%s"
     }
 );
 
 sub throw {
     my ($fmt, $caller, $hints, @args) = @_;
-    my @hints = @$hints;
     my (undef, $file, $line) = @$caller;
     return $fmt if !exists $errors{$fmt};
 
     # main error.
-    my $err = sprintf($errors{$fmt}{message}, @args).".\n";
+    my $err = sprintf($errors{$fmt}{message}, @args);
+    $err =~ s/(\.|\n)$//g;
+    $err .= ".\n";
 
-    # hints.
-    my %hints = @hints;
-    my $max = 2 + max(map length($_), keys %hints);
-    while (@hints) {
-        my ($key, $value) = (shift @hints, shift @hints);
-        next if !defined $key || !defined $value;
-
-        $value     = join "\n    ", split /\n/, $value;
-        my $spaces = ' ' x ($max - length $key);
-        $err      .= "    $key$spaces-> $value\n";
-    }
-
-    $err .= "Exception $fmt raised at $file line $line.\n";
-
-    die Ferret::Core::Conversion::ferror($err, $fmt);
+    die Ferret::Core::Conversion::ferror($err, $fmt, @$hints);
 }
 
 1

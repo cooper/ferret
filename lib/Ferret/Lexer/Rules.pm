@@ -805,6 +805,26 @@ our %element_rules = (
 
     },
 
+    Fail => {
+
+        parent_must_be => [ 'Instruction', undef, 0 ],                          # Fail[0]
+
+        children_must_be => [                                                   # Fail[1]
+            '@Expression',
+            'Fail statement must consume an expression of sorts',
+            1
+        ],
+
+        num_children => [ 1, undef, 2 ],                                        # Fail[2]
+
+        must_be_somewhere_inside => [                                           # Fail[3]
+            'Function Method',
+            'Fail statement must be inside a function, method, or callback',
+            3
+        ]
+
+    },
+
     Token => {
 
         # tokens cannot be astray.

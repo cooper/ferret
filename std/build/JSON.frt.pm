@@ -90,16 +90,17 @@
 #                              Lexical variable '$err'
 #                          Body ('catch' scope)
 #                              Instruction
-#                                  Call
-#                                      Bareword 'failError'
-#                                      Mixed argument list [3 items]
-#                                          Item 0
-#                                              Symbol :NativeCodeError
-#                                          Item 1
-#                                              String 'Unable to ...'
-#                                          Item 2
-#                                              Pair 'subError'
-#                                                  Lexical variable '$err'
+#                                  Fail
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Mixed argument list [3 items]
+#                                              Item 0
+#                                                  Symbol :NativeCodeError
+#                                              Item 1
+#                                                  String 'Unable to ...'
+#                                              Item 2
+#                                                  Pair 'subError'
+#                                                      Lexical variable '$err'
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@xs'
@@ -113,16 +114,17 @@
 #                              Lexical variable '$err'
 #                          Body ('catch' scope)
 #                              Instruction
-#                                  Call
-#                                      Bareword 'failError'
-#                                      Mixed argument list [3 items]
-#                                          Item 0
-#                                              Symbol :NativeCodeError
-#                                          Item 1
-#                                              String 'Could not ...'
-#                                          Item 2
-#                                              Pair 'subError'
-#                                                  Lexical variable '$err'
+#                                  Fail
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Mixed argument list [3 items]
+#                                              Item 0
+#                                                  Symbol :NativeCodeError
+#                                              Item 1
+#                                                  String 'Could not ...'
+#                                              Item 2
+#                                                  Pair 'subError'
+#                                                      Lexical variable '$err'
 #                  Instruction
 #                      Call
 #                          Property (name evaluated at runtime)
@@ -206,16 +208,17 @@
 #                              Lexical variable '$err'
 #                          Body ('catch' scope)
 #                              Instruction
-#                                  Call
-#                                      Bareword 'failError'
-#                                      Mixed argument list [3 items]
-#                                          Item 0
-#                                              Symbol :JSONError
-#                                          Item 1
-#                                              String 'JSON encod...'
-#                                          Item 2
-#                                              Pair 'subError'
-#                                                  Lexical variable '$err'
+#                                  Fail
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Mixed argument list [3 items]
+#                                              Item 0
+#                                                  Symbol :JSONError
+#                                              Item 1
+#                                                  String 'JSON encod...'
+#                                              Item 2
+#                                                  Pair 'subError'
+#                                                      Lexical variable '$err'
 #          Method 'decode'
 #              Body ('method' scope)
 #                  Instruction
@@ -236,16 +239,17 @@
 #                              Lexical variable '$err'
 #                          Body ('catch' scope)
 #                              Instruction
-#                                  Call
-#                                      Bareword 'failError'
-#                                      Mixed argument list [3 items]
-#                                          Item 0
-#                                              Symbol :JSONError
-#                                          Item 1
-#                                              String 'JSON decod...'
-#                                          Item 2
-#                                              Pair 'subError'
-#                                                  Lexical variable '$err'
+#                                  Fail
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Mixed argument list [3 items]
+#                                              Item 0
+#                                                  Symbol :JSONError
+#                                              Item 1
+#                                                  String 'JSON decod...'
+#                                              Item 2
+#                                                  Pair 'subError'
+#                                                      Lexical variable '$err'
 #          Class method 'encode'
 #              Body ('method' scope)
 #                  Instruction
@@ -284,7 +288,7 @@
 #                  Assignment
 #                      Bareword 'parse'
 #                      Bareword 'decode'
-#      Include (Bool, Charset, NATIVE, NATIVE::PerlObject, Str)
+#      Include (Bool, Charset, Error, NATIVE, NATIVE::PerlObject, Str)
 use warnings;
 use strict;
 use 5.010;
@@ -388,13 +392,15 @@ my $result = do {
                     },
                     sub {
                         my ($scope) = @_;
-                        $$scope->{'failError'}->(
-                            [
-                                FF::get_symbol( $f, 'NativeCodeError' ),
-                                str( $f, "Unable to load JSON::XS" ),
-                                { subError => $$scope->{'err'} }
-                            ],
-                            $scope, undef, 53.3
+                        return $ret->fail(
+                            $$scope->{'Error'}->(
+                                [
+                                    FF::get_symbol( $f, 'NativeCodeError' ),
+                                    str( $f, "Unable to load JSON::XS" ),
+                                    { subError => $$scope->{'err'} }
+                                ],
+                                $scope, undef, 53.3
+                            )
                         );
                     },
                     'err'
@@ -412,13 +418,17 @@ my $result = do {
                     },
                     sub {
                         my ($scope) = @_;
-                        $$scope->{'failError'}->(
-                            [
-                                FF::get_symbol( $f, 'NativeCodeError' ),
-                                str( $f, "Could not create JSON::XS object" ),
-                                { subError => $$scope->{'err'} }
-                            ],
-                            $scope, undef, 60.3
+                        return $ret->fail(
+                            $$scope->{'Error'}->(
+                                [
+                                    FF::get_symbol( $f, 'NativeCodeError' ),
+                                    str(
+                                        $f, "Could not create JSON::XS object"
+                                    ),
+                                    { subError => $$scope->{'err'} }
+                                ],
+                                $scope, undef, 60.3
+                            )
                         );
                     },
                     'err'
@@ -496,13 +506,15 @@ my $result = do {
                     },
                     sub {
                         my ($scope) = @_;
-                        $$scope->{'failError'}->(
-                            [
-                                FF::get_symbol( $f, 'JSONError' ),
-                                str( $f, "JSON encode error" ),
-                                { subError => $$scope->{'err'} }
-                            ],
-                            $scope, undef, 82.15
+                        return $ret->fail(
+                            $$scope->{'Error'}->(
+                                [
+                                    FF::get_symbol( $f, 'JSONError' ),
+                                    str( $f, "JSON encode error" ),
+                                    { subError => $$scope->{'err'} }
+                                ],
+                                $scope, undef, 82.15
+                            )
                         );
                     },
                     'err'
@@ -536,13 +548,15 @@ my $result = do {
                     },
                     sub {
                         my ($scope) = @_;
-                        $$scope->{'failError'}->(
-                            [
-                                FF::get_symbol( $f, 'JSONError' ),
-                                str( $f, "JSON decode error" ),
-                                { subError => $$scope->{'err'} }
-                            ],
-                            $scope, undef, 88.15
+                        return $ret->fail(
+                            $$scope->{'Error'}->(
+                                [
+                                    FF::get_symbol( $f, 'JSONError' ),
+                                    str( $f, "JSON decode error" ),
+                                    { subError => $$scope->{'err'} }
+                                ],
+                                $scope, undef, 88.15
+                            )
                         );
                     },
                     'err'
@@ -643,7 +657,7 @@ my $result = do {
         $class->set_property( parse     => $$scope->{'decode'}, 109.3 );
     }
     FF::load_namespaces( $context,
-        qw(Bool Charset NATIVE NATIVE::PerlObject Str) );
+        qw(Bool Charset Error NATIVE NATIVE::PerlObject Str) );
 };
 
 FF::after_content();

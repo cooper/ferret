@@ -427,7 +427,7 @@ sub try_catch {
     # a nonfatal error was returned.
     if (blessed $ret && $ret->isa('Ferret::Return')) {
         my $err = $ret->property('error');
-        undef $err if !blessed $@ || !$@->isa('Ferret::Error');;
+        undef $err if !blessed $err || !$err->isa('Ferret::Error');
         return $do_error->($err) if $err;
     }
 

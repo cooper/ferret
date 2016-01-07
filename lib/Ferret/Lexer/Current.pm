@@ -282,21 +282,14 @@ sub maybe_owner {
 #
 #       Same as Return above.
 #
-# Node groups
-# ================================
-#
-#   2. Normal nodes, usually expressions.
-#   3. Statement nodes which are direct descendants of instructions.
-#
 my (@closes, %precedence);
 {
     @closes = (
-        qw( PropertyModifier ),                                # 1
-        qw( Negation Operation Pair ListItem List Call ),               # 2
-        qw( Assignment Return ReturnPair Load Stop ),                   # 3
+        qw( Negation Operation Pair ListItem List Call ),
+        qw( Assignment Return ReturnPair Load Stop ),
+        qw( PropertyModifier Alias Fail ),
         qw( WantNeedValue WantNeedType WantNeed ),
         qw( SharedDeclaration LocalDeclaration TypeRequirement ),
-        qw( PropertyModifier Alias ),
         qw( Instruction )
     );
     my $i = 0;

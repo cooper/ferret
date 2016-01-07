@@ -663,6 +663,27 @@ sub c_KEYWORD_CATCH {
     return $catch;
 }
 
+sub c_KEYWORD_FAIL {
+    my ($c, $value) = @_;
+
+    # Rule Fail[0]:
+    #   Direct parent must be of type Instruction.
+
+    # Rule Fail[1]:
+    #   Direct children must be Expressions of sorts.
+
+    # Rule Fail[2]:
+    #   Number of direct children must be exactly one (1).
+
+    # Rule Fail[3]:
+    #   Must be somewhere inside a Function or Method.
+
+    my $fail = F::Fail->new;
+    $c->adopt_and_set_node($fail);
+
+    return $fail;
+}
+
 sub c_PAREN_S {
     my ($c, $value) = @_;
 
@@ -1014,9 +1035,8 @@ sub c_OP_SEMI {
 
     # close these things.
     $c->close_nodes(qw(
-        WantNeed WantNeedType WantNeedValue
-        PropertyModifier Negation Operation Alias
-        Assignment Return ReturnPair TypeRequirement
+        WantNeed WantNeedType WantNeedValue PropertyModifier Negation
+        Alias Fail Assignment Return ReturnPair TypeRequirement Operation
         SharedDeclaration LocalDeclaration Load Stop
     ));
 

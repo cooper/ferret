@@ -270,9 +270,10 @@ sub fset {
 ##############
 
 sub ferror {
-    my $err  = shift;
-    my $type = shift() // 'NativeCodeError';
-    my $f    = $Ferret::ferret;
+    my $err   = shift;
+    my $type  = shift() // 'NativeCodeError';
+    my @hints = @_;
+    my $f     = $Ferret::ferret;
 
     # already an error object.
     return $err if blessed $err && $err->isa('Ferret::Error');

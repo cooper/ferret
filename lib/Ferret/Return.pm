@@ -27,7 +27,7 @@ sub inc {
 # if ->true_return returns true, the return yields boolean true.
 sub true_return {
     my $ret = shift;
-    return $ret->{call_count};
+    return !$ret->{failed} && $ret->{call_count};
 }
 
 # defer a code until the next ->return().
@@ -62,6 +62,15 @@ sub stop {
     # FIXME: if this isn't an event, raise a runtime error.
     my $fire = shift->{fire} or return;
     $fire->stop;
+}
+
+# fail with an error. stops propagation. this is nonfatal.
+sub fail {
+    my ($ret, $err) = @_;
+    $ret->{failed}++;
+    $ret->set_property(error => $err);
+    $ret->stop;
+    return $ret;
 }
 
 # called internally after each ->return().
