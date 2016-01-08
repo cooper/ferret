@@ -52,18 +52,6 @@ sub owner       { }     # no owner
 sub is_node     { }     # isn't a node
 sub hold_instr  { }     # can't hold an instruction
 sub tok         { }     # has no token label
-sub perl_fmt    { }     # must be overriden
-
-sub perl_fmt_do {
-    my @args = shift->perl_fmt;
-    my @fmts;
-    while (my @a = splice @args, 0, 2) {
-        push @fmts, Ferret::Perl::get_format(@a);
-    }
-    return join ";\n", @fmts;
-}
-
-sub get_format { Ferret::Perl::get_format(@_[1..$#_]) }
 
 sub unexpected {
     my $el = shift;

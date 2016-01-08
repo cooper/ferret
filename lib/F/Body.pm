@@ -29,7 +29,7 @@ sub body_fmt_do {
         next unless wantarray;
         next unless $wn && $wn->type eq 'WantNeed';
 
-        push @arguments, $body->get_format(func_arg => {
+        push @arguments, F::get_perl_fmt(func_arg => {
             name => $wn->variable->{var_name},
             want => $wn->{arg_type} eq 'want' ? '1' : 'undef',
             type => $wn->type_string,

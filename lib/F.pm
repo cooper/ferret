@@ -157,4 +157,36 @@ sub fatal($) {
     return bless \$err, 'F::Error';
 }
 
+sub get_format {
+    my ($type, $name, $info) = @_;
+
+    # no format.
+    return '' if not defined $name;
+    $name = lc $name;
+
+    open my $fh, '<', "$Ferret::ferret_root/lib/Ferret/$type/Format/$name.fmt"
+        or die "can't open $type format $name: $!\n";
+
+    # read line-by-line to preserve indentation.
+    my @lines;
+    while (my $line = <$fh>) {
+        chomp $line;
+        my ($indent) = ($line =~ m/^(\s*).*$/);
+        my $add_indent = sub {
+            defined(my $key = $info->{+shift}) or return;
+            my @lines = split "\n", $key;
+            return join "\n$indent", @lines;
+        };
+        $line =~ s/<<\s*(\w+)\s*>>/@{[ $add_indent->($1) ]}/g;
+        push @lines, $line;
+    }
+
+    # join, trim.
+    my $format = join "\n", @lines;
+    $format =~ s/^\s+|\s+$//g;
+
+    return $format;
+}
+
+
 1

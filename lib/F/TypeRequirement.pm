@@ -41,11 +41,11 @@ sub perl_fmt_do {
     return $fmt_do if $type eq 'satisfies';
 
     # transform.
-    return $req->get_format(transform => { expression => $fmt_do })
+    return F::get_perl_fmt(transform => { expression => $fmt_do })
         if $type eq 'transform';
 
     # isa.
-    return $req->get_format(isa => { expression => $fmt_do })
+    return F::get_perl_fmt(isa => { expression => $fmt_do })
         if $type eq 'isa';
 
     return '';

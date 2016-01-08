@@ -17,42 +17,24 @@ sub main {
     }
 
     my $doc_perl = $doc->perl_fmt_do;
-    return get_format(main => {
+    return F::get_format('Perl', main => {
         content   => $doc_perl,
         file_name => $doc->{name},
         base_name => basename($doc->{name})
     });
 }
 
-sub get_format {
-    my ($name, $info) = @_;
+sub F::Element::perl_fmt { }
 
-    # no format.
-    return '' if not defined $name;
-    $name = lc $name;
-
-    open my $fh, '<', "$Ferret::ferret_root/lib/Ferret/Perl/Format/$name.fmt"
-        or die "can't open Perl format $name: $!\n";
-
-    # read line-by-line to preserve indentation.
-    my @lines;
-    while (my $line = <$fh>) {
-        chomp $line;
-        my ($indent) = ($line =~ m/^(\s*).*$/);
-        my $add_indent = sub {
-            defined(my $key = $info->{+shift}) or return;
-            my @lines = split "\n", $key;
-            return join "\n$indent", @lines;
-        };
-        $line =~ s/<<\s*(\w+)\s*>>/@{[ $add_indent->($1) ]}/g;
-        push @lines, $line;
+sub F::Element::perl_fmt_do {
+    my @args = shift->perl_fmt;
+    my @fmts;
+    while (my @a = splice @args, 0, 2) {
+        push @fmts, F::get_format('Perl', @a);
     }
-
-    # join, trim.
-    my $format = join "\n", @lines;
-    $format =~ s/^\s+|\s+$//g;
-
-    return $format;
+    return join ";\n", @fmts;
 }
+
+sub F::get_perl_fmt { F::get_format('Perl', @_) }
 
 1

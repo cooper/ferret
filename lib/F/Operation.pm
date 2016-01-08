@@ -126,7 +126,7 @@ sub op_fmt {
         operation => $op_name,
         items     => join ', ', map {
             ref $_ eq 'ARRAY' ?
-                $op->get_format($op->op_fmt($_)) :
+                F::get_perl_fmt($op->op_fmt($_)) :
             $_->perl_fmt_do
         } @items
     };

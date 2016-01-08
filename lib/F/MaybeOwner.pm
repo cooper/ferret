@@ -26,7 +26,7 @@ sub maybe_fmt {
     return maybe_owner => {
         definitions  => $definitions,
         conditionals => $conditionals,
-        format       => $node->get_format($node->simple_fmt)
+        format       => F::get_perl_fmt($node->simple_fmt)
     };
 }
 

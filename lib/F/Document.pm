@@ -46,7 +46,7 @@ sub perl_fmt {
             "'$$info{name}'"                                   :
             'undef';
 
-        $doc->get_format($fmt => $_);
+        F::get_perl_fmt($fmt => $_);
     } @{ $doc->{function_defs} };
 
     return document => {

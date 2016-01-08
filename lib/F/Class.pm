@@ -32,7 +32,7 @@ sub perl_fmt {
     #     foreach my $var ($wn->variables) {
     #         my $type  = $var->type eq 'InstanceVariable' ? 'ivar' : 'var';
     #         my $fmt   = sprintf 'class_%s_%s', $type, $wn->{arg_type};
-    #         $after_c .= $wn->get_format($fmt => {
+    #         $after_c .= F::get_perl_fmt($fmt => {
     #             name => $var->{var_name}
     #         }).";\n"
     #     }
@@ -45,7 +45,7 @@ sub perl_fmt {
 
     # add each method definition.
     foreach my $def (@{ $class->{method_defs} }) {
-        my $fmt = $class->get_format(method_def_event => $def);
+        my $fmt = F::get_perl_fmt(method_def_event => $def);
         $before_c .= "$fmt\n";
     }
 
