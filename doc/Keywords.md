@@ -490,7 +490,7 @@ $line.midpoint  # returns a Point, created on the spot
 ### if
 
 ```
-( if <condition> { [<statements>...] } ) | ( if <condition>: <instruction> )
+if <condition> { [<statements>...] }
 ```
 
 Conditional statement. The code within the block will be executed only if
@@ -515,8 +515,10 @@ if 1.even {
     doOtherStuff()
 }
 ```
+
+One-line example
+
 ```
-# one-line example
 if "hi".length == 2:
     doOneThingOnly()
 ```
@@ -538,6 +540,15 @@ if false {
 else {
     say("This will be said")
 }
+```
+
+One-line example
+
+```
+if false:
+    say("Nothing here will happen")
+else:
+    say("This will be said")
 ```
 
 ### else if
