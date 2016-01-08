@@ -2,8 +2,9 @@ class JSON 1.0
 
 #< Provides JSON serialising/deserialising, done correctly and fast.
 #| Based on [JSON::XS](http://search.cpan.org/perldoc?JSON%3A%3AXS).
-#| Basic operations are accessible via class functions. Advanced options are
-#| available through the use of a JSON class instance.
+#| Basic operations are accessible via [class functions](#class-functions).
+#| Advanced options are available through the use of a JSON
+#| [class instance](#initializer).
 
 alias _PO = NATIVE::PerlObject
 
@@ -11,6 +12,7 @@ alias _PO = NATIVE::PerlObject
 $default ?= *class()
 
 #> Defines the various character sets available for JSON encoding and decoding.
+#| Used for the `.charset` property. See the [`initializer`](#initializer).
 type Charset {
     :ascii      #<  RFC4627,      range 0..127, ignores otherwise
     :latin1     #<  iso-8859-1,   range 0..255, ignores otherwise
@@ -34,7 +36,7 @@ init {
 
     want @charset: Charset = :utf8
     #<  Specifies the character set used for both encoding and decoding. See
-    #|  this class's `Charset` type for available options.
+    #|  this class's [`Charset`](#charset) type for available options.
 
     want @strictRoot: Bool = false
     #<  If enabled, the root level of any JSON text (encoded or decoded) must be
@@ -42,22 +44,22 @@ init {
     #|  is an extension to RFC4627.
 
     want @pretty: Bool = false
-    #<  If true, `.encode()` output will span multiple lines and be properly
-    #|  indented with extra whitespace. This is equivalent to providing all of
-    #|  `indent`, `spaceBefore`, and `spaceAfter`.
+    #<  If true, [`.encode()`](#encode) output will span multiple lines and be
+    #|  properly indented with extra whitespace. This is equivalent to providing
+    #|  all of `indent`, `spaceBefore`, and `spaceAfter`.
 
     want @spaceBefore: Bool = false
-    #<  If true, `.encode()` will add an extra optional space before the
-    #|  colon separating keys from values in JSON objects.
+    #<  If true, [`.encode()`](#encode) will add an extra optional space before
+    #|  the colon separating keys from values in JSON objects.
 
     want @spaceAfter:  Bool = false
-    #<  If true, `.encode()` will add an extra optional space after
+    #<  If true, [`.encode()`](#encode) will add an extra optional space after
     #|  the colon separating keys from values in JSON objects.
 
     want @indent: Bool = false
-    #<  If true, `.encode()` will use a multiline format as output, putting
-    #|  every array member or object/hash key-value pair into its own line,
-    #|  identifying them properly.
+    #<  If true, [`.encode()`](#encode) will use a multiline format as output,
+    #|  putting every array member or object/hash key-value pair into its own
+    #|  line, identifying them properly.
 
     # require JSON::XS.
     _PO.require("JSON::XS") catch $err:
@@ -88,6 +90,8 @@ init {
 }
 
 #> Encodes some data as JSON text.
+#| The output of this method is dependent on the various options provided at
+#| initialization.
 method encode {
     need $data
     json -> @xs.encode($data) catch $err:
@@ -95,6 +99,8 @@ method encode {
 }
 
 #> Decodes a JSON text.
+#| The success or failure of this method is dependent on the various options
+#| provided at initialization.
 method decode {
     need $json: Str
     data -> @xs.decode($json) catch $err:
@@ -103,22 +109,24 @@ method decode {
 
 #>  Adds a JSON text fragment to the decoder buffer.
 #|
-#|  The methods `.decoderAdd()` and `.decoderDone()` are for parsing fragments
+#|  The methods [`.decoderAdd()`](#decoderadd) and
+#|  [`.decoderDone()`](#decoderdone) are for parsing fragments
 #|  of JSON data. This is useful when a very large JSON text is read from a
 #|  network or file stream.
 #|
-#|  Each call to `.decoderAdd()` will append a fragment of JSON text to the
-#|  decoder buffer. Once the buffer has enough JSON data to create a value, it
-#|  will do so, and it will add the value to its return buffer.
+#|  Each call to [`.decoderAdd()`](#decoderadd) will append a fragment of JSON
+#|  text to the decoder buffer. Once the buffer has enough JSON data to create a
+#|  value, it will do so, and it will add the value to its return buffer.
 #|
-#|  At the end of a JSON stream, the user should use the .decoderDone() method
+#|  At the end of a JSON stream, the user should use the
+#|  [`.decoderDone()`](#decoderdone) method
 #|  to extract the JSON value(s) from the return buffer. If the JSON decoder
 #|  found multiple values back-to-back, such as `[1,2][3,4]`, it will return a
 #|  list of those values, such as `[ [1,2], [3,4] ]`. If the decoder found a
 #|  single value, only that value is returned.
 #|
-#|  Because .`decoderDone()` returns a single value as-is, consider the
-#|  following:
+#|  Because [`.decoderDone()`](#decoderdone) returns a single value as-is,
+#|  different inputs can have the same output. Consider the following:
 #|
 #|  * A JSON list: `.decoderAdd('[1,2]')`
 #|  * Two back-to-back values: `.decoderAdd('1 2')`
@@ -139,7 +147,7 @@ method decoderAdd {
 
 
 #> Handles the decoder buffer.
-#| See `.decoderAdd()` for an explanation of decoder buffers.
+#| See [`.decoderAdd()`](#decoderadd) for an explanation of decoder buffers.
 method decoderDone {
 
     # call ->incr_parse in list context.
@@ -154,7 +162,7 @@ method decoderDone {
 }
 
 #> Resets the decoder buffer.
-#| See `.decoderAdd()` for an explanation of decoder buffers.
+#| See [`.decoderAdd()`](#decoderadd) for an explanation of decoder buffers.
 method decoderReset {
     @xs.incr_reset()
 }
@@ -167,14 +175,14 @@ method decoderReset {
 #######################
 
 #> Convenient class function to encode data to a UTF-8 JSON text.
-#| See the `.encode()` method for more options.
+#| See the [`.encode()`](#encode) method for more options.
 func encode {
     need $data
     return $default.encode($data)
 }
 
 #> Convenient class function to decode UTF-8 JSON data.
-#| See the `.decode()` method for more options.
+#| See the [`.decode()`](#decode) method for more options.
 func decode {
     need $json: Str
     return $default.decode($json)

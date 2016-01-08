@@ -16,4 +16,9 @@ sub perl_fmt {
     return symbol => { name => $name };
 }
 
+sub markdown_fmt {
+    my $name = shift->{sym_value};
+    return symbol => { name => $name };
+}
+
 1

@@ -32,11 +32,18 @@ sub close : method {
     return $type->SUPER::close(@_);
 }
 
+sub public {
+    my $t = shift;
+    $t->owner;
+    return $t->{public};
+}
+
 sub owner {
     my ($type, $owner, $owner_str) = shift;
 
     # private if starts with _
     my $private = substr($type->type_name, 0, 1) eq '_';
+    $type->{public} = !$private;
 
     if ($type->parent->type eq 'Class') {
         $owner_str = $private ? '$scope' : '$class';
@@ -84,6 +91,47 @@ sub perl_fmt {
         conditions => $conditions,
         equal_to   => $equal_to,
         lazy       => $type->{lazy} ? 1 : 'undef'
+    };
+}
+
+sub markdown_fmt {
+    my $type = shift;
+    my $head = $type->get_markdown_heading($type->type_name);
+
+    my (@equal_possibly, @conditions);
+    foreach my $item (map $_->first_child, $type->body->children) {
+
+        # it's some sort of requirement or transform.
+        if (defined $item->{req_type}) {
+            my $format = $item->markdown_fmt_do;
+            push @conditions, $format;
+            next;
+        }
+
+        # it's just an expression.
+        push @equal_possibly, $item->markdown_fmt_do;
+
+    }
+
+    # accepted expression values.
+    my $equal_to = '';
+    if (@equal_possibly) {
+        $type->{markdown_heading_level}++;
+        $equal_to .= $type->get_markdown_heading('Accepted values')."\n\n";
+        $equal_to .= "In order to comply, the test object must be equal ".
+                     "(according to the `==` ".
+                     "[`OP_EQUAL`](/doc/Operators.md#equality-operator) ".
+                     "operator) to any one of these values.\n";
+        $equal_to .= F::get_markdown_fmt(type_exp => { expression => $_ })
+            foreach @equal_possibly;
+        $type->{markdown_heading_level}--;
+    }
+
+    return type => {
+        heading     => $head,
+        description => $type->{doc_comment},
+        name        => $type->type_name,
+        equal_to    => $equal_to
     };
 }
 

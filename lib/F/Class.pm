@@ -47,6 +47,7 @@ sub markdown_fmt {
     # separate into parts.
     my @all_methods  = $class->filter_children(type => 'Method');
     my @aliases      = grep $_->public, $class->filter_children(type => 'Alias');
+    my @types        = grep $_->public, $class->filter_children(type => 'Type');
 
     # separate methods into initializer, class functions, and normal.
     my (@methods, @class_funcs, $init);
@@ -67,6 +68,21 @@ sub markdown_fmt {
         # it's a true method.
         push @methods, $method;
 
+    }
+
+    # type interfaces.
+    my $types = '';
+    if (@types) {
+
+        # add the heading. increase the class heading.
+        $class->{markdown_heading_level}++;
+        $types .= $class->get_markdown_heading('Type interfaces')."\n";
+
+        foreach my $type (@types) {
+            $types .= $type->markdown_fmt_do."\n";
+        }
+
+        $class->{markdown_heading_level}--;
     }
 
     # methods.
@@ -109,6 +125,7 @@ sub markdown_fmt {
         heading         => $head || '',
         initializer     => $init ? $init->markdown_fmt_do : '',
         methods         => $methods,
+        types           => $types,
         class_functions => $class_functions
     };
 }

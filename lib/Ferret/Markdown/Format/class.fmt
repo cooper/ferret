@@ -1,7 +1,7 @@
 <<heading>>
 
 This is the <<name>> class<<version_str>>.
-  
+
 <<description>>
 
 <<initializer>>
@@ -9,3 +9,7 @@ This is the <<name>> class<<version_str>>.
 <<method_aliases>>
 <<class_functions>>
 <<class_function_aliases>>
+<<types>>
+
+
+End of <<name>> class.

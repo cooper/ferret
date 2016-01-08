@@ -23,4 +23,9 @@ sub perl_fmt {
     return string => { string => quote($str->{value}) };
 }
 
+sub markdown_fmt {
+    my $str = shift;
+    return string => { string => quote($str->{value}) };
+}
+
 1

@@ -467,20 +467,20 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::want( $self, $args, 'strict',     22.2, $true );
-                FF::want( $self, $args, 'consistent', 28.2, $false );
-                FF::want( $self, $args, 'charset', 35.2,
+                FF::want( $self, $args, 'strict',     24.2, $true );
+                FF::want( $self, $args, 'consistent', 30.2, $false );
+                FF::want( $self, $args, 'charset', 37.2,
                     FF::get_symbol( $f, 'utf8' ) );
-                FF::want( $self, $args, 'strictRoot',  39.2, $false );
-                FF::want( $self, $args, 'pretty',      44.2, $false );
-                FF::want( $self, $args, 'spaceBefore', 49.2, $false );
-                FF::want( $self, $args, 'spaceAfter',  53.2, $false );
-                FF::want( $self, $args, 'indent',      57.2, $false );
+                FF::want( $self, $args, 'strictRoot',  41.2, $false );
+                FF::want( $self, $args, 'pretty',      46.2, $false );
+                FF::want( $self, $args, 'spaceBefore', 51.2, $false );
+                FF::want( $self, $args, 'spaceAfter',  55.2, $false );
+                FF::want( $self, $args, 'indent',      59.2, $false );
                 FF::try_catch(
                     $f, $scope,
                     sub {
                         ${ $$scope->{'_PO'} }->{'require'}
-                          ->( [ str( $f, "JSON::XS" ) ], $scope, undef, 63.3 );
+                          ->( [ str( $f, "JSON::XS" ) ], $scope, undef, 65.3 );
                     },
                     sub {
                         my ($scope) = @_;
@@ -491,7 +491,7 @@ my $result = do {
                                     str( $f, "Unable to load JSON::XS" ),
                                     { subError => $$scope->{'err'} }
                                 ],
-                                $scope, undef, 64.3
+                                $scope, undef, 66.3
                             )
                         );
                     },
@@ -503,9 +503,9 @@ my $result = do {
                         $self->set_property(
                             xs => $$scope->{'_PO'}->(
                                 [ str( $f, "JSON::XS" ) ], $scope,
-                                undef, 70.2
+                                undef, 72.2
                             ),
-                            70.1
+                            72.1
                         );
                     },
                     sub {
@@ -521,55 +521,55 @@ my $result = do {
                                     ),
                                     { subError => $$scope->{'err'} }
                                 ],
-                                $scope, undef, 71.3
+                                $scope, undef, 73.3
                             )
                         );
                     },
                     'err'
                 );
                 $$self->{'xs'}->property_eval_u( $$self->{'charset'} )
-                  ->( {}, $scope, undef, 77.6 );
+                  ->( {}, $scope, undef, 79.6 );
                 if ( bool( $$self->{'pretty'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'pretty'}
-                      ->( {}, $scope, undef, 78.6 );
+                      ->( {}, $scope, undef, 80.6 );
                 }
                 if ( bool( $$self->{'spaceBefore'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'spaceBefore'}
-                      ->( {}, $scope, undef, 79.6 );
+                      ->( {}, $scope, undef, 81.6 );
                 }
                 if ( bool( $$self->{'spaceAfter'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'spaceAfter'}
-                      ->( {}, $scope, undef, 80.6 );
+                      ->( {}, $scope, undef, 82.6 );
                 }
                 if ( bool( $$self->{'indent'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'indent'}
-                      ->( {}, $scope, undef, 81.6 );
+                      ->( {}, $scope, undef, 83.6 );
                 }
                 if ( bool( _not( $$self->{'strict'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'relaxed'}
-                      ->( {}, $scope, undef, 82.7 );
+                      ->( {}, $scope, undef, 84.7 );
                 }
                 if ( bool( $$self->{'consistent'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'canonical'}
-                      ->( {}, $scope, undef, 83.6 );
+                      ->( {}, $scope, undef, 85.6 );
                 }
                 if ( bool( _not( $$self->{'strictRoot'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'allow_nonref'}
-                      ->( {}, $scope, undef, 84.7 );
+                      ->( {}, $scope, undef, 86.7 );
                 }
                 return $ret;
             }
@@ -588,14 +588,14 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'data', 92.2 ) or return;
+                FF::need( $scope, $args, 'data', 96.2 ) or return;
                 FF::try_catch(
                     $f, $scope,
                     sub {
                         $ret->set_property(
                             json => ${ $$self->{'xs'} }->{'encode'}
-                              ->( [ $$scope->{'data'} ], $scope, undef, 93.25 ),
-                            93.1
+                              ->( [ $$scope->{'data'} ], $scope, undef, 97.25 ),
+                            97.1
                         );
                     },
                     sub {
@@ -607,7 +607,7 @@ my $result = do {
                                     str( $f, "JSON encode error" ),
                                     { subError => $$scope->{'err'} }
                                 ],
-                                $scope, undef, 94.15
+                                $scope, undef, 98.15
                             )
                         );
                     },
@@ -630,15 +630,15 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'json', 99.2 ) or return;
+                FF::need( $scope, $args, 'json', 105.2 ) or return;
                 FF::try_catch(
                     $f, $scope,
                     sub {
                         $ret->set_property(
                             data => ${ $$self->{'xs'} }->{'decode'}->(
-                                [ $$scope->{'json'} ], $scope, undef, 100.25
+                                [ $$scope->{'json'} ], $scope, undef, 106.25
                             ),
-                            100.1
+                            106.1
                         );
                     },
                     sub {
@@ -650,7 +650,7 @@ my $result = do {
                                     str( $f, "JSON decode error" ),
                                     { subError => $$scope->{'err'} }
                                 ],
-                                $scope, undef, 101.15
+                                $scope, undef, 107.15
                             )
                         );
                     },
@@ -674,7 +674,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'fragment', 130.2 ) or return;
+                FF::need( $scope, $args, 'fragment', 138.2 ) or return;
                 FF::try_catch(
                     $f, $scope,
                     sub {
@@ -684,7 +684,7 @@ my $result = do {
                                 $$scope->{'fragment'},
                                 { CONTEXT => str( $f, "void" ) }
                             ],
-                            $scope, undef, 134.15
+                            $scope, undef, 142.15
                         );
                     },
                     sub {
@@ -696,13 +696,13 @@ my $result = do {
                                     str( $f, "JSON incr_parse() error" ),
                                     { subError => $$scope->{'err'} }
                                 ],
-                                $scope, undef, 135.15
+                                $scope, undef, 143.15
                             )
                         );
                     },
                     'err'
                 );
-                $ret->set_property( added => $true, 137.2 );
+                $ret->set_property( added => $true, 145.2 );
                 return $ret;
             }
         );
@@ -724,10 +724,10 @@ my $result = do {
                                     str( $f, "incr_parse" ),
                                     { CONTEXT => str( $f, "list" ) }
                                 ],
-                                $scope, undef, 147.25
+                                $scope, undef, 155.25
                             ),
                             $file_scope,
-                            147.1
+                            155.1
                         );
                     },
                     sub {
@@ -739,7 +739,7 @@ my $result = do {
                                     str( $f, "JSON incr_parse() error" ),
                                     { subError => $$scope->{'err'} }
                                 ],
-                                $scope, undef, 148.15
+                                $scope, undef, 156.15
                             )
                         );
                     },
@@ -748,7 +748,7 @@ my $result = do {
                 if (
                     bool(
                         ${ $$scope->{'objects'} }->{'*instanceOf'}
-                          ->( [ $$scope->{'List'} ], $scope, undef, 150.4 )
+                          ->( [ $$scope->{'List'} ], $scope, undef, 158.4 )
                     )
                   )
                 {
@@ -756,10 +756,10 @@ my $result = do {
 
                     $ret->set_property(
                         found => ${ $$scope->{'objects'} }->{'length'},
-                        151.2
+                        159.2
                     );
                 }
-                $ret->set_property( data => $$scope->{'objects'}, 153.2 );
+                $ret->set_property( data => $$scope->{'objects'}, 161.2 );
                 return $ret;
             }
         );
@@ -772,7 +772,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 ${ $$self->{'xs'} }->{'incr_reset'}
-                  ->( {}, $scope, undef, 159.3 );
+                  ->( {}, $scope, undef, 167.3 );
                 return $ret;
             }
         );
@@ -790,9 +790,9 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'data', 172.2 ) or return;
+                FF::need( $scope, $args, 'data', 180.2 ) or return;
                 return ${ $$scope->{'default'} }->{'encode'}
-                  ->( [ $$scope->{'data'} ], $scope, undef, 173.4 );
+                  ->( [ $$scope->{'data'} ], $scope, undef, 181.4 );
                 return $ret;
             }
         );
@@ -810,9 +810,9 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'json', 179.2 ) or return;
+                FF::need( $scope, $args, 'json', 187.2 ) or return;
                 return ${ $$scope->{'default'} }->{'decode'}
-                  ->( [ $$scope->{'json'} ], $scope, undef, 180.4 );
+                  ->( [ $$scope->{'json'} ], $scope, undef, 188.4 );
                 return $ret;
             }
         );
@@ -848,17 +848,17 @@ my $result = do {
             decode => $scope,
             $class, $class, undef, undef
         );
-        $scope->set_property( _PO => $$scope->{'NATIVE::PerlObject'}, 8.3 );
+        $scope->set_property( _PO => $$scope->{'NATIVE::PerlObject'}, 9.3 );
         FF::lex_assign(
             $scope,
             default => [
                 sub {
                     ${ $scope->{special} }->{'class'}
-                      ->( {}, $scope, undef, 11.4 );
+                      ->( {}, $scope, undef, 12.4 );
                 }
             ],
             undef,
-            11.2
+            12.2
         );
         FF::typedef(
             $scope, $class,
@@ -877,8 +877,8 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( stringify => $$scope->{'encode'}, 183.3 );
-        $class->set_property( parse     => $$scope->{'decode'}, 184.3 );
+        $class->set_property( stringify => $$scope->{'encode'}, 191.3 );
+        $class->set_property( parse     => $$scope->{'decode'}, 192.3 );
     }
     FF::load_namespaces( $context,
         qw(Bool Charset Error List NATIVE NATIVE::PerlObject Str) );

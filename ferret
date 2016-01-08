@@ -148,7 +148,7 @@ sub do_file {
     # check if it's been changed
     my ($name, $path) = fileparse($file);
     my $build = "$path/build";
-    my $docs  = "$path/docs";
+    my $docs  = "$path/doc";
     my $pm    = "$build/$name.pm";
     my $md    = "$docs/$name.md";
 
