@@ -116,18 +116,28 @@ sub fnumber {
             return $to_num->call;
         }
 
+        # it's an object with no number value.
+        return Ferret::Number->new($f, num_value => 'nan');
+
     }
 
-    # it's an object with no number value.
-    return Ferret::Number->new($f, num_value => 0);
+    # it's another Perl object. maybe it's overloaded?
+    return Ferret::Number->new($f, num_value => $val)
+        if looks_like_number("$val");
 
+    return Ferret::Number->new($f, num_value => 'nan');
 }
 
 # return a perl string value.
 sub pnumber {
     my $val = shift;
-    return $val if !blessed $val && looks_like_number($val);
+
+    # it's either a non-blessed number or an overloaded blessed number.
+    return $val if looks_like_number("$val");
+
+    # it's probably some Ferret object.
     return fnumber($val)->{num_value} // 0;
+
 }
 
 ################

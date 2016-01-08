@@ -975,6 +975,11 @@ Temporarily sets a focal object for a shorthand syntax using
 `$obj.x`, simply `.x` works within the block. This is useful when accessing or
 altering several properties at once.
 
+This is similar to JavaScript's
+[`with`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with),
+but it is safer and lacks the ambiguity because the sigil `.` distinguishes
+properties from lexical variables with `$`.
+
 ```
 $x = 5
 

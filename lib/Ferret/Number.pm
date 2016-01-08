@@ -115,7 +115,7 @@ sub init {
 
     # force numeric context.
     $num->{num_value} += 0;
-    
+
 }
 
 # number plus number
@@ -180,7 +180,7 @@ sub op_range {
 
 sub _to_string {
     my $num = shift;
-    return Ferret::String->new($num->f, str_value => $num->{num_value});
+    return Ferret::String->new($num->f, str_value => "$$num{num_value}");
 }
 
 sub _round {
@@ -200,7 +200,9 @@ sub _floor {
 }
 
 sub description {
-    return shift->{num_value};
+    my $str = "$_[0]{num_value}";
+    undef while $str =~ s/^(-?\d+)(\d{3})/$1,$2/;
+    return $str;
 }
 
 sub _sum {
