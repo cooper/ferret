@@ -11,6 +11,13 @@ use Scalar::Util qw(weaken);
 sub anonymous  { shift->{anonymous} }
 sub body       { shift->{body}      }
 
+sub public {
+    my $f = shift;
+    return if $f->anonymous;
+    $f->owner;
+    return $f->{public};
+}
+
 sub desc {
     my $func = shift;
     return 'anonymous function' if $func->anonymous;
@@ -48,6 +55,7 @@ sub owner {
     # document-level function.
     my $public_ctx = $func->parent->type eq 'Document';
     undef $public_ctx if $func->{name} && substr($func->{name}, 0, 1) eq '_';
+    $func->{public} = $public_ctx;
 
     if ($public_ctx) {
         return ($func->parent, '$context');

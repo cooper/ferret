@@ -22,6 +22,7 @@ sub owner {
         $a->parent->type eq 'SharedDeclaration' ||
         ($a->parent->type eq 'Alias' &&
          substr($a->assign_to->{bareword_value}, 0, 1) ne '_');
+    $a->{public} = $public;
 
     # find instruction. assignment will always be below an instruction
     # unless it is within an if parameter.
@@ -71,6 +72,7 @@ sub perl_fmt {
     return "assign_$fmt_name" => $fmt_args;
 }
 
+sub public       { shift->public        }
 sub assign_to    { shift->first_child   }
 sub assign_value { (shift->children)[1] }
 

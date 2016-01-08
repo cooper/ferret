@@ -10,6 +10,7 @@ sub adopt {
     $alias->SUPER::adopt(@_);
 }
 
+sub public      { shift->first_child->public      }
 sub perl_fmt_do { shift->first_child->perl_fmt_do }
 
 1

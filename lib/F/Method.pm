@@ -12,6 +12,14 @@ sub is_closure { 1 }
 sub hold_instr { 1 }
 sub body { shift->{body} }
 
+sub public {
+    my $m = shift;
+    return unless $m->{main};
+    $m->owner;
+    return $m->{public};
+}
+
+
 sub desc {
     my $method = shift;
     my $main = $method->{main}    ? 'class '            : '';
@@ -35,6 +43,7 @@ sub owner {
     my ($method, $owner_str, $owner) = shift;
     my $class = $method->class;
     if ($method->{main}) {
+        $method->{public} =
         my $public = $method->{name} && substr($method->{name}, 0, 1) ne '_';
         $owner_str = $public ? '$class' : '$scope';
         $owner     = $class;
@@ -66,6 +75,32 @@ sub perl_fmt {
     push @{ $class->{method_defs} }, $info;
 
     return method => $info;
+}
+
+sub markdown_fmt {
+    my $method = shift;
+
+    # create heading.
+    my $head = $method->get_markdown_heading(
+        $method->{name} eq 'initializer__' ?
+        'Initializer'                      :
+        $method->{name}
+    );
+
+    # show class name or instance variable?
+    # TODO: show signature with '...' for wants
+    my $class_name = $method->class->{name};
+    my $instn_name = '$'.lc($class_name);
+    my $owner_name = $method->{main} ? $class_name : $instn_name;
+    my $example = $method->{name} eq 'initializer__' ?
+        $instn_name.' = '.$class_name.'()'           :
+        $owner_name.'.'.$method->{name}.'()';
+
+    return method => {
+        name    => $method->{name},
+        heading => $head,
+        example => $example
+    };
 }
 
 1

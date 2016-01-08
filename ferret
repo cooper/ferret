@@ -29,15 +29,17 @@ use Ferret::Perl;
 
 my ($o, $usage) = describe_options(
     "$0 %o [file ...]",
-    [ 'no-skip|n'       => 'do not skip unchanged files'                ],
+    [ 'noskip|n'        => 'do not skip unchanged files'                ],
+    [ 'synchronous|y'   => 'work one file at a time in a single thread '],
+    [ 'clean|c'  => 'clean up build directories', {implies => 'noskip'} ],
     [ 'tokens|t'        => 'write tokenization'                         ],
     [ 'dom|d'           => 'write lexer object tree (DOM)'              ],
-    [ 'verbose|v'       => 'print tokens/DOM to STDOUT (with -d/t)'     ],
     [ 'show-all'        => 'include unknown objects in DOM'             ],
+    [ 'verbose|v'       => 'print tokens/DOM to STDOUT (with -d/t)'     ],
     #[ 'stdout|s'        => 'write to STDOUT instead of file'            ],
-    [ 'synchronous|y'   => 'work one file at a time in a single thread '],
     [ 'beautify|p'      => 'beautify code with perltidy'                ],
     [ 'minify|m'        => 'minify code'                                ],
+    [ 'gendocs|D'       => 'generate documentation'                     ],
     [ 'help|h'          => 'show help'                                  ]
 );
 
@@ -97,8 +99,8 @@ sub handle_result {
 
     # error.
     elsif ($ret->{error}) {
-        print "ERROR\n";
-        push @errors, [ $file, $ret->{error} ];
+        print $o->clean ? "CLEAN\n" : "ERROR\n";
+        push @errors, [ $file, $ret->{error}, $o->clean ];
     }
 
     # good status
@@ -126,7 +128,7 @@ sub finish {
         print "\n\n[ $file ]\n\n$msg\n";
     }
 
-    my $e = scalar(@errors) || 'no';
+    my $e = scalar(grep !$_->[2], @errors) || 'no';
     my $s = $e ne '1' ? 's' : '';
     print "\nCompilation completed with $e error$s.\n";
 }
@@ -146,7 +148,9 @@ sub do_file {
     # check if it's been changed
     my ($name, $path) = fileparse($file);
     my $build = "$path/build";
+    my $docs  = "$path/docs";
     my $pm    = "$build/$name.pm";
+    my $md    = "$docs/$name.md";
 
     my $ret = {
         file  => $file,
@@ -155,7 +159,7 @@ sub do_file {
     };
 
     # we might be able to skip this
-    if (!$o->no_skip) {
+    if (!$o->noskip) {
         my @stat1 = stat $pm;
         my @stat2 = stat $file;
         if (@stat1 && $stat1[9] > $stat2[9]) {
@@ -164,16 +168,27 @@ sub do_file {
         }
     }
 
-    # open the output file.
-    my $fh;
+    # clean.
+    if ($o->clean) {
+        return error($ret, undef, undef, $pm, $md, 'Clean');
+    }
+
+    # open the output files.
+    my ($fh, $dfh);
     # if ($o->stdout) { $fh = \*STDOUT }
-    #else {
-        mkdir $build or die "Couldn't create $build" if !-d $build;
-        open $fh, '>', $pm or die "Couldn't open $pm to write";
-    #}
+
+    mkdir $build or die "Couldn't create $build" if !-d $build;
+    open $fh, '>', $pm or die "Couldn't open $pm to write";
+
+    if ($o->gendocs) {
+        require Ferret::Markdown;
+        mkdir $docs or die "Couldn't create $docs" if !-d $docs;
+        open $dfh, '>', $md or die "Couldn't open $md to write";
+        $ret->{md} = $md;
+    }
 
     # parse the input file.
-    my $str = eval { slurp($file) } or return error($ret, $fh, $pm, $!);
+    my $str = eval { slurp($file) } or return error($ret, $fh, $dfh, $pm, $md, $!);
 
     # tokenize.
     my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize("$str\n", $file);
@@ -183,7 +198,7 @@ sub do_file {
         print $fh commentize($tok), "\n";
         $ret->{tokenization} = $tok if $o->verbose;
     }
-    return error($ret, $fh, $pm, $$err) if $err;
+    return error($ret, $fh, $dfh, $pm, $md, $$err) if $err;
 
     # construct elements.
     my $doc = F::new('Document', name => $file);
@@ -194,16 +209,27 @@ sub do_file {
         print $fh commentize($dom), "\n"        unless $err;
         $ret->{construction} = $dom if $o->verbose || $err;
     }
-    return error($ret, $fh, $pm, $$err) if $err;
+    return error($ret, $fh, $dfh, $pm, $md, $$err) if $err;
 
     # compile to Perl.
     my $compiled = Ferret::Perl::main($doc);
     beautify(\$compiled) if $o->beautify;
     minify(\$compiled)   if $o->minify;
 
-    # write to file.
+    # write to .pm
     print $fh $compiled;
     close $fh;
+
+    # generate documentation.
+    if ($o->gendocs) {
+        my $markdown = Ferret::Markdown::main($doc);
+
+        # write to .md
+        print $dfh $markdown;
+        close $dfh;
+
+    }
+
 
     return $ret;
 }
@@ -236,9 +262,11 @@ sub commentize {
 }
 
 sub error {
-    my ($ret, $fh, $pm, $msg) = @_;
-    close $fh;
-    unlink $pm;
+    my ($ret, $fh, $fh2, $pm, $md, $msg) = @_;
+    close $fh   if $fh;
+    close $fh2  if $fh2;
+    unlink $pm  if $pm;
+    unlink $md  if $md;
     $ret->{error} = $msg;
     return $ret;
 }
