@@ -94,24 +94,41 @@ for a breakdown of the process.
 
 ### Installation
 
-After cloning the repository, Ferret requires a configuration.
+After cloning the repository, Ferret requires a configuration. It's truly as
+simple as specifying where on your system the repository exists.
 
 **Using a systemwide configuration**
 
 Copy [`ferret.conf.example`](ferret.conf.example) to `/etc/ferret.conf` and
 change the top line to the full path of wherever you cloned this repository.
 
-Make sure that all users have read permission (i.e. `chmod 755`).
+```sh
+sudo cp ferret.conf.example /etc/ferret.conf
+```
 
-After that, try running `./ferret -pdn` from the repository root directory
-(recompile the standard library) to verify that all is working.
+Make sure that all users have read permission.
+
+```sh
+sudo chmod 755 /etc/ferret.conf
+```
+
+After that, try running the compiler from the repository root directory
+(which recompiles the standard library) to verify that all is working.
+
+```sh
+./ferret -pdn
+```
 
 **Configuration elsewhere**
 
 If you cannot write to `/etc/ferret.conf`, you can store your configuration
 elsewhere. Just set the environment variable `$FERRET_CONFIG` to the absolute
-path of your configuration file. To set it semi-permanently, add, for example,
-`export FERRET_CONFIG="/path/to/my/ferret.conf"` to `~/.bashrc` or the like.
+path of your configuration file. To set it semi-permanently, add it to your
+`~/.bashrc` or the like.
+
+```sh
+export FERRET_CONFIG="/path/to/my/ferret.conf"
+```
 
 ### Writing
 
