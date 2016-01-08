@@ -952,3 +952,30 @@ inside $person {
 
 inspect($person) # (age: 26, name: "Pam")
 ```
+
+### gather
+
+Constructs a list by consolidating the provided expression values of each
+[`take`](#take) statement within its body.
+
+`gather` constructs are standard expressions and can therefore be used in
+assignments, function calls, and almost anywhere else.
+
+```
+$evenSingleDigits = gather {
+    for $n in 0..9 {
+        if $n.even:
+            take $n
+    }
+}
+
+inspect($evenSingleDigits)  # [ 0, 2, 4, 6, 8 ]
+```
+
+### take
+
+```
+take <expression>
+```
+
+Compliment to [`gather`](#gather). Adds a value to a consolidated list.

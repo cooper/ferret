@@ -110,13 +110,18 @@ sub _filter_children {
 
 sub open : method {
     my $node = shift;
+
+    # the FIRST position at which the node was opened.
     $node->{open_pos} ||= $Ferret::Lexer::Constructor::current->{position};
+
     return $node;
 }
 
 sub close : method {
     my $node = shift;
-    $node->{close_pos} ||= $Ferret::Lexer::Constructor::current->{position};
+
+    # the LAST position at which the node was closed.
+    $node->{close_pos} = $Ferret::Lexer::Constructor::current->{position};
 
     # check if this makes sense.
     my $err = $node->can_close;

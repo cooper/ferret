@@ -35,7 +35,7 @@ sub error_string {
     my @hints = @$hints;
     my @hint_msgs;
     for my $i (keys @hints) {
-        my $found = $hints[$i];
+        my $found = $hints[$i] or next;
 
         # it's hint $i with arguments
         if (ref $found eq 'ARRAY') {
@@ -50,7 +50,7 @@ sub error_string {
     }
 
     my $msg = sprintf $errors{$type}{message}, @args;
-    $msg .= ".\n$_" foreach @hint_msgs;
+    $msg .= ".\n$_" foreach grep length, @hint_msgs;
 
     return $msg;
 }
@@ -156,18 +156,19 @@ sub identify_lexical_variable_declarations {
         $_->assign_to->type eq 'LexicalVariable'
     } @assignments;
 
-    foreach my $a (@assignments) {
+    foreach my $as (@assignments) {
 
         # the scope of interest is the one containing the assignment
-        my $soi = $a->first_upper_scope;
+        my $soi = $as->first_upper_scope;
+        my $p = $as->{close_pos};
 
         # remember the location.
-        $v->{lex_declarations}{ $a->{close_pos} } = [ $a, $a->assign_to ];
+        $v->{lex_declarations}{$p} = [ $as, $as->assign_to ];
 
         # process the assignment.
-        my $var = $a->assign_to;
+        my $var = $as->assign_to;
         $var->{could_be_declaration} = 1;
-        $soi->process_lex_declaration($var->{var_name}, $a->{close_pos});
+        $soi->process_lex_declaration($var->{var_name}, $p);
 
     }
 
@@ -291,17 +292,16 @@ sub verify_lexical_variables {
 
         # maybe we can provide useful info on when it was first declared.
         my $earliest = $soi->earliest_lex_declaration($var->{var_name});
-        my ($this_line, $other_line) = ($var->{create_line}, $earliest);
         if (defined $earliest) {
-            $hints[0] = [ $var->{var_name}, int $other_line ];
+            $hints[0] = [ $var->{var_name}, int $earliest ];
         }
 
-        # maybe if the variable is within the assignment, that's helpful.
-        if (defined $earliest and my $a = $v->{lex_declarations}{$earliest}) {
-            if ($var->somewhere_inside($a)) {
-                delete $hints[0];
-                $hints[1] = [ $var->{var_name} ];
-            }
+        # if the variable is within the assignment, that's helpful
+        $earliest ||= $soi->where_lex_declared($var->{var_name});
+        if (defined $earliest &&
+          $var->somewhere_inside($v->{lex_declarations}{$earliest}[0])) {
+            delete $hints[0];
+            $hints[1] = [ $var->{var_name} ];
         }
 
         # throw an exception.

@@ -336,6 +336,7 @@ sub c_CLOSURE_E {
     #
     # if the closure we just terminated is a function body,
     # check if it is anonymous. if so, possibly inject a semicolon.
+    # however, don't do this for 'on' functions.
     #
     # or if it's a gather body, we may need to inject a semicolon.
     #
@@ -345,6 +346,7 @@ sub c_CLOSURE_E {
         $closure->type eq 'FunctionMethodBody' &&
         $p->type eq 'Function'                 &&
         $p->anonymous;
+    undef $is_anon_func if $p->parent->type eq 'On';
 
     if (!$is_semi and $is_anon_func || $is_gather) {
 

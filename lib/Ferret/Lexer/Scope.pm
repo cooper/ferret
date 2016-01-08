@@ -44,6 +44,7 @@ sub earliest_lex_declaration {
 
 # returns the position of where a lex declaration occurred.
 # it might be in this scope or another parent scope.
+# this is similar to ->earliest_lex_declaration, except it checks parent scopes.
 sub where_lex_declared {
     my ($scope, $var_name) = @_;
 
