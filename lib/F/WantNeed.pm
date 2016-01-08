@@ -92,7 +92,7 @@ sub markdown_fmt {
     my $type = $arg->var_type;
 
     return argument => {
-        opt  => $arg->{arg_type} eq 'want' ? 'optional ' : '',
+        opt  => $arg->{arg_type} eq 'want' ? '**optional** ' : '',
         name => $name,
         desc => $desc,
         type => length $type ? $type : 'Any',

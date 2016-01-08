@@ -3,7 +3,7 @@ class JSON 1.0
 #< Provides JSON serialising/deserialising, done correctly and fast.
 #| Based on [JSON::XS](http://search.cpan.org/perldoc?JSON%3A%3AXS).
 #| Basic operations are accessible via class functions. Advanced options are
-#| available through the use a JSON class instance.
+#| available through the use of a JSON class instance.
 
 alias _PO = NATIVE::PerlObject
 
@@ -20,20 +20,21 @@ type Charset {
 init {
 
     want @strict: Bool = true
-    #<  Enables strict decoding. This is default.
-    #|  If disabled, shell-style (#) comments are allowed, and extra commas are
-    #|  silently ignored. You may want to disable strict decoding for
+    #<  Enables strict decoding. This is default. If explicitly disabled,
+    #|  shell-style (#) comments are allowed, and extra commas are
+    #|  silently ignored. You may want to disable `strict` decoding for
     #|  human-created texts such as configuration files.
 
     want @consistent: Bool = false
     #<  If true, the same data structure will output the same JSON text each
-    #|  time. This is not the default behavior. without `@consistent`, the pairs
+    #|  time. This is not the default behavior. Without `consistent`, the pairs
     #|  in JSON objects will be spit out in a random order. Encoding is
-    #|  considerably slower when `@consistent` is enabled because all object
+    #|  considerably slower when `consistent` is enabled because all object
     #|  keys have to be sorted.
 
     want @charset: Charset = :utf8
-    #<  The character set used for both encoding and decoding
+    #<  Specifies the character set used for both encoding and decoding. See
+    #|  this class's `Charset` type for available options.
 
     want @strictRoot: Bool = false
     #<  If enabled, the root level of any JSON text (encoded or decoded) must be
@@ -43,7 +44,7 @@ init {
     want @pretty: Bool = false
     #<  If true, `.encode()` output will span multiple lines and be properly
     #|  indented with extra whitespace. This is equivalent to providing all of
-    #|  `@indent`, `@spaceBefore`, and `@spaceAfter`.
+    #|  `indent`, `spaceBefore`, and `spaceAfter`.
 
     want @spaceBefore: Bool = false
     #<  If true, `.encode()` will add an extra optional space before the

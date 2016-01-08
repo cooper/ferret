@@ -8,7 +8,7 @@ This is the JSON class version 1.0.
 Provides JSON serialising/deserialising, done correctly and fast.
 Based on [JSON::XS](http://search.cpan.org/perldoc?JSON%3A%3AXS).
 Basic operations are accessible via class functions. Advanced options are
-available through the use a JSON class instance.
+available through the use of a JSON class instance.
 
 
 ## Initializer
@@ -22,34 +22,35 @@ Creates a new JSON class instance.
 
 ### Arguments
 
-* optional __strict__: *Bool* - Enables strict decoding. This is default.
-If disabled, shell-style (#) comments are allowed, and extra commas are
-silently ignored. You may want to disable strict decoding for
+* **optional** __strict__: Bool - Enables strict decoding. This is default. If explicitly disabled,
+shell-style (#) comments are allowed, and extra commas are
+silently ignored. You may want to disable `strict` decoding for
 human-created texts such as configuration files.
 
-* optional __consistent__: *Bool* - If true, the same data structure will output the same JSON text each
-time. This is not the default behavior. without `@consistent`, the pairs
+* **optional** __consistent__: Bool - If true, the same data structure will output the same JSON text each
+time. This is not the default behavior. Without `consistent`, the pairs
 in JSON objects will be spit out in a random order. Encoding is
-considerably slower when `@consistent` is enabled because all object
+considerably slower when `consistent` is enabled because all object
 keys have to be sorted.
 
-* optional __charset__: *Charset* - The character set used for both encoding and decoding
+* **optional** __charset__: Charset - Specifies the character set used for both encoding and decoding. See
+this class's `Charset` type for available options.
 
-* optional __strictRoot__: *Bool* - If enabled, the root level of any JSON text (encoded or decoded) must be
+* **optional** __strictRoot__: Bool - If enabled, the root level of any JSON text (encoded or decoded) must be
 an array or object. The default is to allow any root level value, which
 is an extension to RFC4627.
 
-* optional __pretty__: *Bool* - If true, `.encode()` output will span multiple lines and be properly
+* **optional** __pretty__: Bool - If true, `.encode()` output will span multiple lines and be properly
 indented with extra whitespace. This is equivalent to providing all of
-`@indent`, `@spaceBefore`, and `@spaceAfter`.
+`indent`, `spaceBefore`, and `spaceAfter`.
 
-* optional __spaceBefore__: *Bool* - If true, `.encode()` will add an extra optional space before the
+* **optional** __spaceBefore__: Bool - If true, `.encode()` will add an extra optional space before the
 colon separating keys from values in JSON objects.
 
-* optional __spaceAfter__: *Bool* - If true, `.encode()` will add an extra optional space after
+* **optional** __spaceAfter__: Bool - If true, `.encode()` will add an extra optional space after
 the colon separating keys from values in JSON objects.
 
-* optional __indent__: *Bool* - If true, `.encode()` will use a multiline format as output, putting
+* **optional** __indent__: Bool - If true, `.encode()` will use a multiline format as output, putting
 every array member or object/hash key-value pair into its own line,
 identifying them properly.
 
@@ -66,7 +67,7 @@ Encodes some data as JSON text.
 
 #### Arguments
 
-* __data__: *Any*  
+* __data__: Any  
 
 
 
@@ -81,7 +82,7 @@ Decodes a JSON text.
 
 #### Arguments
 
-* __json__: *Str*  
+* __json__: Str  
 
 
 
@@ -119,7 +120,7 @@ a list `[1, 2]`.
 
 #### Arguments
 
-* __fragment__: *Str*  
+* __fragment__: Str  
 
 
 
@@ -160,7 +161,7 @@ See the `.encode()` method for more options.
 
 #### Arguments
 
-* __data__: *Any*  
+* __data__: Any  
 
 
 
@@ -176,6 +177,6 @@ See the `.decode()` method for more options.
 
 #### Arguments
 
-* __json__: *Str*  
+* __json__: Str  
   
 This file generated automatically for [JSON.frt](../JSON.frt).
