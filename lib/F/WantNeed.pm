@@ -17,12 +17,20 @@ sub desc {
 
 sub variable   { shift->first_child }
 sub variables  { shift->variable }
+
 sub type_string {
     my $wn = shift;
     my $type = $wn->arg_type_exp  or return 'undef';
        $type = $type->first_child or return 'undef';
     return q(').$type->{bareword_value}.q('); # TODO: set type variables
     return 'undef';
+}
+
+sub var_type {
+    my $wn = shift;
+    my $type = $wn->arg_type_exp  or return;
+       $type = $type->first_child or return;
+    return $type->{bareword_value};
 }
 
 # argument type expression
@@ -75,6 +83,21 @@ sub perl_fmt {
     my $val = $value_exp ? '_val' : '';
 
     return $wn->{arg_type}.$typ.$val => $info;
+}
+
+sub markdown_fmt {
+    my $arg  = shift;
+    my $name = $arg->variable->{var_name};
+    my $desc = $arg->parent->find_doc_comment;  # might be on instruction
+    my $type = $arg->var_type;
+
+    return argument => {
+        opt  => $arg->{arg_type} eq 'want' ? 'optional ' : '',
+        name => $name,
+        desc => $desc,
+        type => length $type ? $type : 'Any',
+        hyph => length $desc ? '-' : ''
+    };
 }
 
 1

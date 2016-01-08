@@ -9,8 +9,6 @@
 #                          Argument type
 #                              Bareword 'Str'
 #                  Instruction
-#                      String '::'
-#                  Instruction
 #                      Want
 #                          Instance variable '@prefix'
 #                          Argument type
@@ -92,7 +90,6 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'name' ) or return;
-                str( $f, "::" );
                 FF::want( $self, $args, 'prefix', 9.2, str( $f, "CORE" ) );
                 FF::want( $self, $args, 'version', 12.2, num( $f, "1.0" ) );
                 $self->set_property(

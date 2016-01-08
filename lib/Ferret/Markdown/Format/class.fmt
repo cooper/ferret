@@ -1,6 +1,8 @@
 <<heading>>
 
 This is the <<name>> class<<version_str>>.
+  
+<<description>>
 
 <<initializer>>
 <<methods>>

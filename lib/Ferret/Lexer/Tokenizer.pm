@@ -58,23 +58,21 @@ my %semi_follows = map { $_ => 1 } qw(
 my $prop_reg    = $Ferret::Shared::Utils::prop_reg;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
 my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
+my $not_esc     = qr/(?<!\\)/;
 
 my @token_formats = (
 
-    # strings and regex at the same precedence
-    [ STR_REG       => qr/$string_reg|$regex_reg/, \&increment_lines        ],  # string or regex
-
     # comments
-    [ COMMENT_L     => qr/[#]+[^\n]*/,       \&ignore_increment          ],  # line comment
-    [ COMMENT_S     => qr/===.*===(?:\n)?/,     \&ignore_increment          ],  # section comment
-    [ COMMENT_B     => qr/\/#.*#\//,            \&ignore_increment          ],  # block comment
-    # comments don't really work
-    # I need to fix it by making comment start and end
+    [ COMMENT_LD    => qr/$not_esc#[<>\|]+[^\n]*/,  \&handle_doc_comment    ],  # doc comment
+    [ COMMENT_L     => qr/$not_esc#+[^\n]*/,        \&ignore_increment      ],  # normal line comment
+
+    # strings and regex at the same precedence
+    [ STR_REG       => qr/$string_reg|$regex_reg/,  \&increment_lines       ],  # string or regex
 
     # this is way up here because it must be above VAR_SYM and OP_VALUE.
     [ OP_PACK       => qr/::/                                               ],  # package
 
-    [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/, \&increment_lines           ],  # simple .property
+    [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/,     \&increment_lines       ],  # simple .property
 
     # variables
     [ VAR_LEX       => qr/\$$prop_reg/,   \&remove_first_char               ],  # lexical variable
@@ -339,6 +337,28 @@ sub _escape {
     return $char;
 }
 
+sub handle_doc_comment {
+    my ($tokens, $value) = @_;
+    increment_lines(@_); 
+    my $pfx = \substr($value, 0, 2);
+    if ($$pfx eq '#<') {
+        $$pfx = '';
+        $value =~ s/^\s+|\s+$//g;
+        return [ COMMENT_LDL => $value ];
+    }
+    if ($$pfx eq '#>') {
+        $$pfx = '';
+        $value =~ s/^\s+|\s+$//g;
+        return [ COMMENT_LDR => $value ];
+    }
+    if ($$pfx eq '#|') {
+        $$pfx = '';
+        $value =~ s/^\s+|\s+$//g;
+        return [ COMMENT_LDA => $value ];
+    }
+    return [];
+}
+
 sub tok_KEYWORD {
     my ($tokens, $value) = @_;
 
@@ -560,6 +580,11 @@ sub _tokenize {
     # inject semicolons.
     foreach my $line (@lines) {
         my $last = $line->[-1] or next;
+
+        # if it's a comment, look at the second-to-last.
+        $last = $line->[-2] if $last->[0] =~ m/^COMMENT/;
+        $last or next;
+
         next unless $semi_follows{ $last->[0] };
         push @$line, [ 'OP_SEMI', 1, $last->[2] ];
         $all_on_line[ $last->[2] ]++;

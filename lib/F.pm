@@ -17,6 +17,9 @@ sub new {
 our %pretty_tokens = (
     STR_REG     => 'string ("...") or regex (/.../)',
     COMMENT_L   => 'line comment (#...)',
+    COMMENT_LDL => 'left documentation comment (#<)',
+    COMMENT_LDR => 'right documentation comment (#>)',
+    COMMENT_LDA => 'append documentation comment (#|)',
     COMMENT_S   => 'section comment (=== ... ===)',
     COMMENT_B   => 'block comment (/* */)',
     VAR_LEX     => 'lexical variable ($)',
@@ -159,6 +162,7 @@ sub fatal($) {
 
 sub get_format {
     my ($type, $name, $info) = @_;
+    $info->{NL} = "\n";
 
     # no format.
     return '' if not defined $name;
@@ -181,11 +185,7 @@ sub get_format {
         push @lines, $line;
     }
 
-    # join, trim.
-    my $format = join "\n", @lines;
-    $format =~ s/^\s+|\s+$//g;
-
-    return $format;
+    return join "\n", @lines;
 }
 
 

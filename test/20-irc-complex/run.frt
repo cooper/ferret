@@ -1,6 +1,6 @@
 share $bot = IRC::Bot(addr: "k.notroll.net", nick: "bottie", user: "ferret")
 
-$bot.autojoin = ["#k"]
+$bot.autojoin = ["\#k"]
 
 $bot.addCommand("info") {
     need $msg

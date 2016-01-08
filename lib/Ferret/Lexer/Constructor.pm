@@ -76,6 +76,11 @@ sub handle_label {
     $position //= 0;
     my $err;
 
+    # pending comment.
+    if ($last_el != ($current->{last_el}||0) && $current->{doc_comment}) {
+        $last_el->{doc_comment} = delete $current->{doc_comment};
+    }
+
     # check for error.
     return $err if $err = check_error();
 
@@ -1718,6 +1723,48 @@ sub c_KEYWORD_LOCAL {
     return $c->adopt_and_set_node($local);
 }
 
+sub c_COMMENT_LDL {
+    my ($c, $comment) = @_;
+    my $last_el = $c->last_el;
+    $last_el->{doc_comment} = $comment;
+    return;
+}
+
+sub c_COMMENT_LDR {
+    my ($c, $comment) = @_;
+    $c->{doc_comment} = $comment;
+    return;
+}
+
+sub c_COMMENT_LDA {
+    my ($c, $comment) = @_;
+    my $last_tok = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
+
+    # use the last element comment.
+    if ($last_tok eq 'COMMENT_LDL') {
+        my $last_el = $c->last_el;
+        $c->{doc_comment_ref} = \$last_el->{doc_comment};
+    }
+
+    # use the pending comment.
+    if ($last_tok eq 'COMMENT_LDR') {
+        $c->{doc_comment_ref} = \$c->{doc_comment};
+    }
+
+    # use the current comment reference.
+    if ($c->{doc_comment_ref}) {
+        ${ $c->{doc_comment_ref} } .= "\n".$comment;
+        return;
+    }
+
+    # have to have a comment to append.
+    return $c->unexpected(
+        'without preceding documentation comment opener (#< or #>); found '.$last_tok
+    );
+
+    return;
+}
+
 sub c_any {
     my ($label, $c, $value) = @_;
 
@@ -1734,7 +1781,7 @@ sub c_any {
         ^KEYWORD_IF$        ^KEYWORD_ELSE$      ^KEYWORD_ELSIF$
         ^PKG_DEC$           ^CLASS_DEC$         ^KEYWORD_END$
         ^CLOSURE_.+$        ^OP_.+$             ^TYPE$
-        ^KEYWORD_DEFER$
+        ^KEYWORD_DEFER$     ^COMMENT_.+$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

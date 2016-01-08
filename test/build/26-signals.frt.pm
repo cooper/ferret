@@ -14,8 +14,6 @@
 #                              Item 0
 #                                  String 'Got TERM. ...'
 #      Instruction
-#          String 'are you sure?'
-#      Instruction
 #          Assignment
 #              Lexical variable '$asked'
 #              Boolean false
@@ -132,7 +130,6 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
-    str( $f, "are you sure?" );
     FF::lex_assign( $scope, asked => $false, undef, 8.2 );
     FF::on(
         ${ $$scope->{'Signal'} }->{'INT'},

@@ -77,13 +77,18 @@ sub perl_fmt {
     return method => $info;
 }
 
+sub is_init {
+    my $method = shift;
+    return $method->{main} && $method->{name} eq 'initializer__';
+}
+
 sub markdown_fmt {
     my $method = shift;
 
     # create heading.
     my $head = $method->get_markdown_heading(
-        $method->{name} eq 'initializer__' ?
-        'Initializer'                      :
+        $method->is_init    ?
+        'Initializer'       :
         $method->{name}
     );
 
@@ -92,14 +97,35 @@ sub markdown_fmt {
     my $class_name = $method->class->{name};
     my $instn_name = '$'.lc($class_name);
     my $owner_name = $method->{main} ? $class_name : $instn_name;
-    my $example = $method->{name} eq 'initializer__' ?
-        $instn_name.' = '.$class_name.'()'           :
+    my $example = $method->is_init              ?
+        $instn_name.' = '.$class_name.'()'      :
         $owner_name.'.'.$method->{name}.'()';
 
+    # handle arguments.
+    my $arguments = '';
+    my @args = map $_->first_child,
+        $method->body->filter_children(type => 'Instruction.WantNeed');
+    if (@args) {
+        $method->{markdown_heading_level}++;
+        $arguments .= $method->get_markdown_heading('Arguments')."\n";
+        foreach my $arg (@args) {
+            $arguments .= $arg->markdown_fmt_do."\n";
+        }
+        $method->{markdown_heading_level}--;
+    }
+
+    # handle comments.
+    my $comment = $method->{doc_comment};
+    if (!length $comment && $method->is_init) {
+        $comment = "Creates a new $class_name class instance.";
+    }
+
     return method => {
-        name    => $method->{name},
-        heading => $head,
-        example => $example
+        name        => $method->{name},
+        description => $comment,
+        heading     => $head,
+        example     => $example,
+        arguments   => $arguments
     };
 }
 

@@ -151,6 +151,21 @@ sub has_descendant {
     return $descendant->somewhere_inside($node);
 }
 
+# find the first doc comment we can.
+sub find_doc_comment {
+    my $do; $do = sub {
+        my $el = shift;
+        return $el->{doc_comment} if length $el->{doc_comment};
+        return if !$el->is_node;
+        for ($el->children) {
+            my $yes = $do->($_);
+            return $yes if length $yes;
+        }
+        return;
+    };
+    return $do->(shift);
+}
+
 sub is_node     { 1                       } # is a node
 sub is_closure  {                         } # isn't a closure
 sub children    { @{ shift->{children} }  } # all child elements

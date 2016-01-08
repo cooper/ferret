@@ -47,7 +47,7 @@ sub F::Element::get_markdown_heading {
     }
 
     my $level = $el->{markdown_heading_level} ||= 1;
-    return ("#" x $level)." $head";
+    return "\n".("#" x $level)." $head";
 }
 
 sub F::get_markdown_fmt { F::get_format('Markdown', @_) }
