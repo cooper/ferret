@@ -1,0 +1,4 @@
+FF::gather($f, $scope, sub {
+    my ($scope, $take) = @_;
+    <<statements>>
+})

@@ -4,9 +4,9 @@ package F::Function;
 use warnings;
 use strict;
 use 5.010;
+
 use parent qw(F::NodeExpression);
-
-
+use Scalar::Util qw(weaken);
 
 sub anonymous  { shift->{anonymous} }
 sub body       { shift->{body}      }
@@ -24,6 +24,7 @@ sub new {
         %opts
     );
     $func->adopt($func->body);
+    weaken($func->{body});
     return $func;
 }
 

@@ -162,7 +162,7 @@ our %element_rules = (
             child_1_must_be => [                                                # Instruction[2]
                 'Catch',
                 "Instructions can only contain at most one element and a ".
-                " possible 'catch' following it",
+                "possible 'catch' following it",
                 2
             ]
 
@@ -805,19 +805,19 @@ our %element_rules = (
 
     },
 
-    Fail => {
+    FailThrow => {
 
-        parent_must_be => [ 'Instruction', undef, 0 ],                          # Fail[0]
+        parent_must_be => [ 'Instruction', undef, 0 ],                          # FailThrow[0]
 
-        children_must_be => [                                                   # Fail[1]
+        children_must_be => [                                                   # FailThrow[1]
             '@Expression',
             'Fail/throw statement must consume an expression of sorts',
             1
         ],
 
-        num_children => [ 1, undef, 2 ],                                        # Fail[2]
+        num_children => [ 1, undef, 2 ],                                        # FailThrow[2]
 
-        parent_must_satisfy => [                                                # Fail[3]
+        parent_must_satisfy => [                                                # FailThrow[3]
             sub {
                 my ($p, $fail) = @_;
 
@@ -833,6 +833,26 @@ our %element_rules = (
             'Fail statement must be inside a function, method, or callback',
             3
         ],
+
+    },
+
+    Take => {
+
+        parent_must_be => [ 'Instruction', undef, 0 ],                          # Take[0]
+
+        children_must_be => [                                                   # Take[1]
+            '@Expression',
+            'Take statement must consume an expression of sorts',
+            1
+        ],
+
+        num_children => [ 1, undef, 2 ],                                        # Take[2]
+
+        must_be_somewhere_inside => [                                           # Take[3]
+            'Gather',
+            'Take statement must be somewhere inside a gather body',
+            3
+        ]
 
     },
 

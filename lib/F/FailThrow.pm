@@ -1,4 +1,4 @@
-package F::Fail;
+package F::FailThrow;
 
 use warnings;
 use strict;

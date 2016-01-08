@@ -288,7 +288,7 @@ my (@closes, %precedence);
     @closes = (
         qw( Negation Operation Pair ListItem List Call ),
         qw( Assignment Return ReturnPair Load Stop ),
-        qw( PropertyModifier Alias Fail ),
+        qw( PropertyModifier Alias FailThrow Take ),
         qw( WantNeedValue WantNeedType WantNeed ),
         qw( SharedDeclaration LocalDeclaration TypeRequirement ),
         qw( Instruction )

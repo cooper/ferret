@@ -436,6 +436,22 @@ sub try_catch {
 
 }
 
+sub gather {
+    my ($f, $outer_scope, $gather_code) = @_;
+
+    # create a list and a take function.
+    my $list = Ferret::List->new($f);
+    my $take = sub { $list->push(shift) };
+
+    # create a scope.
+    my $scope = Ferret::Scope->new($f, parent_scope => $outer_scope);
+
+    # call the gather code with the scope and take function.
+    $gather_code->($scope, $take);
+
+    return $list;
+}
+
 sub throw {
     my $err = shift;
     Ferret::Core::Errors::throw($err);

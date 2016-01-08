@@ -4,8 +4,9 @@ package F::Method;
 use warnings;
 use strict;
 use 5.010;
-use parent 'F::Node';
 
+use parent qw(F::Node);
+use Scalar::Util qw(weaken);
 
 sub is_closure { 1 }
 sub hold_instr { 1 }
@@ -26,6 +27,7 @@ sub new {
         %opts
     );
     $method->adopt($method->body);
+    weaken($method->{body});
     return $method;
 }
 

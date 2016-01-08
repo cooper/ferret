@@ -312,7 +312,8 @@ sub c_CLOSURE_E {
     # Rule CLOSURE_E[1]:
     #   The current 'node' must be equal to the current 'closure'.
 
-    (my $added)++, $c->simulate('OP_SEMI')
+    # simulate a semicolon on the last instruction of the closure body.
+    $c->simulate('OP_SEMI')
         if $c->instruction && $c->node != $c->closure;
 
     # close the closure and the node.
@@ -331,24 +332,40 @@ sub c_CLOSURE_E {
 
     }
 
+    # this section handles expression closures within instructions
+    #
     # if the closure we just terminated is a function body,
     # check if it is anonymous. if so, possibly inject a semicolon.
-    my $fm = $closure->parent;
-    if (!$is_semi && !$added && $closure->type eq 'FunctionMethodBody' &&
-      $fm->type eq 'Function' && $fm->anonymous) {
+    #
+    # or if it's a gather body, we may need to inject a semicolon.
+    #
+    my $p = $closure->parent;
+    my $is_gather = $closure->type eq 'GatherBody';
+    my $is_anon_func =
+        $closure->type eq 'FunctionMethodBody' &&
+        $p->type eq 'Function'                 &&
+        $p->anonymous;
+
+    if (!$is_semi and $is_anon_func || $is_gather) {
 
          # if the closing curly bracket is the last thing on the line,
          # inject a semicolon.
-         my $close_pos = $fm->{close_pos};
-         my $is_close  = $c->{token_pos}{$close_pos}[0] eq 'CLOSURE_E';
+         my $close_pos    = $p->{close_pos};
+         my $is_close     = $c->{token_pos}{$close_pos}[0] eq 'CLOSURE_E';
          my $last_on_line = $c->{token_lines}[ int $close_pos ][-1];
+
          $c->simulate('OP_SEMI')
             if $is_close && $close_pos == $last_on_line->[2];
-
     }
 
+    # catch: this is a very special case --
+    #
     # if the closure we just terminated is a 'catch' body,
     # we need to also terminate the parent instruction.
+    #
+    # note that a semicolon has already been processed at
+    # this point, so we don't simulate one here.
+    #
     $c->close_node if $closure->type eq 'CatchBody';
 
     return;
@@ -670,23 +687,55 @@ sub c_KEYWORD_THROW { handle_failthrow(shift, 'throw') }
 sub handle_failthrow {
     my ($c, $type) = @_;
 
-    # Rule Fail[0]:
+    # Rule FailThrow[0]:
     #   Direct parent must be of type Instruction.
 
-    # Rule Fail[1]:
+    # Rule FailThrow[1]:
     #   Direct children must be Expressions of sorts.
 
-    # Rule Fail[2]:
+    # Rule FailThrow[2]:
     #   Number of direct children must be exactly one (1).
 
-    # Rule Fail[3]:
+    # Rule FailThrow[3]:
     #   If it's a fail statement (rather than throw), it must be somewhere
     #   inside a Function or Method.
 
-    my $fail = F::new('Fail', fail_type => $type);
+    my $fail = F::new('FailThrow', fail_type => $type);
     $c->adopt_and_set_node($fail);
 
     return $fail;
+}
+
+sub c_KEYWORD_GATHER {
+    my ($c, $value) = @_;
+
+    # create a closure to be opened soon.
+    my $gather = F::new('Gather');
+    $c->capture_closure_with($gather->body);
+    $c->node->adopt($gather);
+
+    return $gather;
+}
+
+sub c_KEYWORD_TAKE {
+    my ($c, $value) = @_;
+
+    # Rule Take[0]:
+    #   Direct parent must be an Instruction.
+
+    # Rule Take[1]:
+    #   Direct children must be Expressions of sorts.
+
+    # Rule Take[2]:
+    #   Number of direct children must be exactly one (1).
+
+    # Rule Take[3]:
+    #   Must be somewhere inside a Gather.
+
+    my $take = F::new('Take');
+    $c->adopt_and_set_node($take);
+
+    return $take;
 }
 
 sub c_PAREN_S {
@@ -1041,8 +1090,8 @@ sub c_OP_SEMI {
     # close these things.
     $c->close_nodes(qw(
         WantNeed WantNeedType WantNeedValue PropertyModifier Negation
-        Alias Fail Assignment Return ReturnPair TypeRequirement Operation
-        SharedDeclaration LocalDeclaration Load Stop
+        Alias FailThrow Assignment Return ReturnPair TypeRequirement Operation
+        SharedDeclaration LocalDeclaration Load Stop Take
     ));
 
     # special case:
