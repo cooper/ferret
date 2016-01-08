@@ -94,16 +94,24 @@ for a breakdown of the process.
 
 ### Installation
 
-After cloning the repository, Ferret requires a systemwide configuration.
-Currently, it must be stored at `/etc/ferret.conf`. Make sure the whole system
-has read access. Later, alternative methods will be available which do not
-require root access.
+After cloning the repository, Ferret requires a configuration.
+
+**Using a systemwide configuration**
 
 Copy [`ferret.conf.example`](ferret.conf.example) to `/etc/ferret.conf` and
 change the top line to the full path of wherever you cloned this repository.
 
+Make sure that all users have read permission (i.e. `chmod 755`).
+
 After that, try running `./ferret -pdn` from the repository root directory
 (recompile the standard library) to verify that all is working.
+
+**Configuration elsewhere**
+
+If you cannot write to `/etc/ferret.conf`, you can store your configuration
+elsewhere. Just set the environment variable `$FERRET_CONFIG` to the absolute
+path of your configuration file. To set it semi-permanently, add, for example,
+`export FERRET_CONFIG="/path/to/my/ferret.conf"` to `~/.bashrc` or the like.
 
 ### Writing
 

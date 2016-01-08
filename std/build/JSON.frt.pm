@@ -388,7 +388,8 @@ use utf8;
 use open ':std', ':encoding(UTF-8)';
 
 BEGIN {
-    do '/etc/ferret.conf' or die "config error: " . ( $@ || $! );
+    my $config = $ENV{FERRET_CONFIG} || '/etc/ferret.conf';
+    do $config or die "config error: " . ( $@ || $! );
 }
 
 use Ferret;
