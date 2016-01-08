@@ -1,0 +1,181 @@
+
+
+
+# JSON
+
+This is the JSON class version 1.0.
+  
+Provides JSON serialising/deserialising, done correctly and fast.
+Based on [JSON::XS](http://search.cpan.org/perldoc?JSON%3A%3AXS).
+Basic operations are accessible via class functions. Advanced options are
+available through the use a JSON class instance.
+
+
+## Initializer
+
+```
+$json = JSON()
+```
+
+Creates a new JSON class instance.
+
+
+### Arguments
+
+* optional __strict__: *Bool* - Enables strict decoding. This is default.
+If disabled, shell-style (#) comments are allowed, and extra commas are
+silently ignored. You may want to disable strict decoding for
+human-created texts such as configuration files.
+
+* optional __consistent__: *Bool* - If true, the same data structure will output the same JSON text each
+time. This is not the default behavior. without `@consistent`, the pairs
+in JSON objects will be spit out in a random order. Encoding is
+considerably slower when `@consistent` is enabled because all object
+keys have to be sorted.
+
+* optional __charset__: *Charset* - The character set used for both encoding and decoding
+
+* optional __strictRoot__: *Bool* - If enabled, the root level of any JSON text (encoded or decoded) must be
+an array or object. The default is to allow any root level value, which
+is an extension to RFC4627.
+
+* optional __pretty__: *Bool* - If true, `.encode()` output will span multiple lines and be properly
+indented with extra whitespace. This is equivalent to providing all of
+`@indent`, `@spaceBefore`, and `@spaceAfter`.
+
+* optional __spaceBefore__: *Bool* - If true, `.encode()` will add an extra optional space before the
+colon separating keys from values in JSON objects.
+
+* optional __spaceAfter__: *Bool* - If true, `.encode()` will add an extra optional space after
+the colon separating keys from values in JSON objects.
+
+* optional __indent__: *Bool* - If true, `.encode()` will use a multiline format as output, putting
+every array member or object/hash key-value pair into its own line,
+identifying them properly.
+
+## Methods
+
+### encode
+
+```
+$json.encode()
+```
+
+Encodes some data as JSON text.
+
+
+#### Arguments
+
+* __data__: *Any*  
+
+
+
+### decode
+
+```
+$json.decode()
+```
+
+Decodes a JSON text.
+
+
+#### Arguments
+
+* __json__: *Str*  
+
+
+
+### decoderAdd
+
+```
+$json.decoderAdd()
+```
+
+Adds a JSON text fragment to the decoder buffer.
+
+The methods `.decoderAdd()` and `.decoderDone()` are for parsing fragments
+of JSON data. This is useful when a very large JSON text is read from a
+network or file stream.
+
+Each call to `.decoderAdd()` will append a fragment of JSON text to the
+decoder buffer. Once the buffer has enough JSON data to create a value, it
+will do so, and it will add the value to its return buffer.
+
+At the end of a JSON stream, the user should use the .decoderDone() method
+to extract the JSON value(s) from the return buffer. If the JSON decoder
+found multiple values back-to-back, such as `[1,2][3,4]`, it will return a
+list of those values, such as `[ [1,2], [3,4] ]`. If the decoder found a
+single value, only that value is returned.
+
+Because .`decoderDone()` returns a single value as-is, consider the
+following:
+
+* A JSON list: `.decoderAdd('[1,2]')`
+* Two back-to-back values: `.decoderAdd('1 2')`
+
+`.decoderDone().data` following either of these would yield the same result,
+a list `[1, 2]`.
+
+
+#### Arguments
+
+* __fragment__: *Str*  
+
+
+
+### decoderDone
+
+```
+$json.decoderDone()
+```
+
+Handles the decoder buffer.
+See `.decoderAdd()` for an explanation of decoder buffers.
+
+
+
+
+
+### decoderReset
+
+```
+$json.decoderReset()
+```
+
+Resets the decoder buffer.
+See `.decoderAdd()` for an explanation of decoder buffers.
+
+
+## Class functions
+
+### encode
+
+```
+JSON.encode()
+```
+
+Convenient class function to encode data to a UTF-8 JSON text.
+See the `.encode()` method for more options.
+
+
+#### Arguments
+
+* __data__: *Any*  
+
+
+
+### decode
+
+```
+JSON.decode()
+```
+
+Convenient class function to decode UTF-8 JSON data.
+See the `.decode()` method for more options.
+
+
+#### Arguments
+
+* __json__: *Str*  
+  
+This file generated automatically for [JSON.frt](../JSON.frt).

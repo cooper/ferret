@@ -86,14 +86,14 @@ init {
 
 }
 
-#>  Encodes some data as JSON text.
+#> Encodes some data as JSON text.
 method encode {
     need $data
     json -> @xs.encode($data) catch $err:
         fail Error(:JSONError, "JSON encode error", subError: $err)
 }
 
-#>  Decodes a JSON text.
+#> Decodes a JSON text.
 method decode {
     need $json: Str
     data -> @xs.decode($json) catch $err:
@@ -137,10 +137,8 @@ method decoderAdd {
 }
 
 
-#>  Handles the decoder buffer.
-#|
-#|  See `.decoderAdd()` for an explanation of decoder buffers.
-#|
+#> Handles the decoder buffer.
+#| See `.decoderAdd()` for an explanation of decoder buffers.
 method decoderDone {
 
     # call ->incr_parse in list context.
@@ -154,10 +152,8 @@ method decoderDone {
     data -> $objects
 }
 
-#>  Resets the decoder buffer.
-#|
-#|  See `.decoderAdd()` for an explanation of decoder buffers.
-#|
+#> Resets the decoder buffer.
+#| See `.decoderAdd()` for an explanation of decoder buffers.
 method decoderReset {
     @xs.incr_reset()
 }
@@ -169,13 +165,15 @@ method decoderReset {
 ### Class functions ###
 #######################
 
-#>  Convenient class function to encode JSON data. See the `.encode()` method.
+#> Convenient class function to encode data to a UTF-8 JSON text.
+#| See the `.encode()` method for more options.
 func encode {
     need $data
     return $default.encode($data)
 }
 
-#>  Convenient class function to decode JSON data. See the `.decode()` method.
+#> Convenient class function to decode UTF-8 JSON data.
+#| See the `.decode()` method for more options.
 func decode {
     need $json: Str
     return $default.decode($json)

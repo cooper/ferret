@@ -1,5 +1,5 @@
 # === Document Model ===
-#  Document './std/JSON.frt'
+#  Document 'std/JSON.frt'
 #      Class 'JSON' version 1.0
 #          Instruction
 #              Alias
@@ -723,10 +723,10 @@ my $result = do {
                                     str( $f, "incr_parse" ),
                                     { CONTEXT => str( $f, "list" ) }
                                 ],
-                                $scope, undef, 148.25
+                                $scope, undef, 146.25
                             ),
                             $file_scope,
-                            148.1
+                            146.1
                         );
                     },
                     sub {
@@ -738,7 +738,7 @@ my $result = do {
                                     str( $f, "JSON incr_parse() error" ),
                                     { subError => $$scope->{'err'} }
                                 ],
-                                $scope, undef, 149.15
+                                $scope, undef, 147.15
                             )
                         );
                     },
@@ -747,7 +747,7 @@ my $result = do {
                 if (
                     bool(
                         ${ $$scope->{'objects'} }->{'*instanceOf'}
-                          ->( [ $$scope->{'List'} ], $scope, undef, 151.4 )
+                          ->( [ $$scope->{'List'} ], $scope, undef, 149.4 )
                     )
                   )
                 {
@@ -755,10 +755,10 @@ my $result = do {
 
                     $ret->set_property(
                         found => ${ $$scope->{'objects'} }->{'length'},
-                        152.2
+                        150.2
                     );
                 }
-                $ret->set_property( data => $$scope->{'objects'}, 154.2 );
+                $ret->set_property( data => $$scope->{'objects'}, 152.2 );
                 return $ret;
             }
         );
@@ -771,7 +771,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 ${ $$self->{'xs'} }->{'incr_reset'}
-                  ->( {}, $scope, undef, 162.3 );
+                  ->( {}, $scope, undef, 158.3 );
                 return $ret;
             }
         );
@@ -789,9 +789,9 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'data', 174.2 ) or return;
+                FF::need( $scope, $args, 'data', 171.2 ) or return;
                 return ${ $$scope->{'default'} }->{'encode'}
-                  ->( [ $$scope->{'data'} ], $scope, undef, 175.4 );
+                  ->( [ $$scope->{'data'} ], $scope, undef, 172.4 );
                 return $ret;
             }
         );
@@ -809,9 +809,9 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'json', 180.2 ) or return;
+                FF::need( $scope, $args, 'json', 178.2 ) or return;
                 return ${ $$scope->{'default'} }->{'decode'}
-                  ->( [ $$scope->{'json'} ], $scope, undef, 181.4 );
+                  ->( [ $$scope->{'json'} ], $scope, undef, 179.4 );
                 return $ret;
             }
         );
@@ -876,8 +876,8 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( stringify => $$scope->{'encode'}, 184.3 );
-        $class->set_property( parse     => $$scope->{'decode'}, 185.3 );
+        $class->set_property( stringify => $$scope->{'encode'}, 182.3 );
+        $class->set_property( parse     => $$scope->{'decode'}, 183.3 );
     }
     FF::load_namespaces( $context,
         qw(Bool Charset Error List NATIVE NATIVE::PerlObject Str) );
