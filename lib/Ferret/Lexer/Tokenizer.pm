@@ -356,6 +356,15 @@ sub tok_KEYWORD {
         }
     }
 
+    # change gather for to gatherfor
+    if ($value eq 'for') {
+        my $last = $tokens->[-1];
+        if ($last && $last->[0] eq 'KEYWORD_GATHER') {
+            delete $tokens->[-1];
+            return [ KEYWORD_GATHFOR => 1 ];
+        }
+    }
+
     # init keyword = func .
     if ($value eq 'init') {
         return [ METHOD => { name => 'initializer__', main => 1 } ];

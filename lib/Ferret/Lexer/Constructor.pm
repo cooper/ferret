@@ -360,6 +360,18 @@ sub c_CLOSURE_E {
             if $is_close && $close_pos == $last_on_line->[2];
     }
 
+    # gather for: this is a special case --
+    #
+    # if the closure we just terminated is a 'for' body,
+    # check if the for's owner is a gather body. then, see
+    # if the gather is marked as a 'gatherfor' keyword.
+    #
+    # if those conditions are met, close another two nodes,
+    # which is the gather and its body.
+    #
+    $c->close_node(2) if $closure->type eq 'ForBody'
+        && $p->{is_gatherfor};
+
     # catch: this is a very special case --
     #
     # if the closure we just terminated is a 'catch' body,
@@ -717,6 +729,24 @@ sub c_KEYWORD_GATHER {
     $c->node->adopt($gather);
 
     return $gather;
+}
+
+sub c_KEYWORD_GATHFOR {
+    my $c = shift;
+
+    # create a gather.
+    my $gather = $c->simulate('KEYWORD_GATHER');
+    $gather->{is_gatherfor} = 1;
+
+    # create a for.
+    my $for = $c->simulate('KEYWORD_FOR');
+    $for->{is_gatherfor} = 1;
+
+    # add the for to the gather body.
+    # note: $gather->body->open will never be called.
+    $gather->body->adopt($for);
+
+    return $for;
 }
 
 sub c_KEYWORD_TAKE {
@@ -1103,13 +1133,14 @@ sub c_OP_SEMI {
 
     # at this point, the instruction must be the current node.
     if ($c->node != $c->instruction) {
+
+        # if this is an automatic semicolon, just discard it.
+        # if we were to respect it, the error would be "unexpected semicolon",
+        # which is not particularly useful when there is no semicolon at all.
+        return if $automatic;
+
         my $type = $c->node->desc;
-        return $c->unexpected($automatic ? [
-            "inside $type",
-            'This is an inferred semicolon. Perhaps you forgot a separator '.
-            '(comma) or terminator (closing parenthesis, bracket, etc.) '.
-            'at the end of the line'
-        ] : "inside $type");
+        return $c->unexpected("inside $type");
     }
 
     # close the instruction.

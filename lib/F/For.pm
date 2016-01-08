@@ -23,7 +23,7 @@ sub new {
     $for->adopt($exp);
 
     # create the body.
-    my $body = F::new('Body');
+    my $body = F::new('ForBody');
     weaken($for->{body} = $body);
     $for->adopt($body);
 

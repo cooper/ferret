@@ -47,8 +47,8 @@ See [Classes](Classes.md) for general information on classes.
 end
 ```
 
-Terminates a `class`. It is required for that purpose, except when multiple
-classes in a row are declared, in which case the `class` keyword alone
+Terminates a [`class`](#class). It is required for that purpose, except when
+multiple classes in a row are declared, in which case the `class` keyword alone
 terminates the previous class. When multiple package declarations per document
 become possible, this keyword will also terminate a `package`.
 
@@ -540,6 +540,29 @@ else {
 }
 ```
 
+### else if
+
+`else if` (always spelled as two separate words) is a combination keyword
+tokenized as `KEYWORD_ELSIF`.
+
+It allows you to chain [`if`](#if) conditional statements. The chain will
+continue until one of the conditions has a boolean true value. In that case,
+none of the remaining `else if` or `else` statements will be executed.
+
+```
+if false {
+    say("Nothing here will happen")
+}
+
+else if true {
+    say("This will be said")
+}
+
+else {
+    say("This will not be reached")
+}
+```
+
 ### return
 
 ```
@@ -955,6 +978,10 @@ inspect($person) # (age: 26, name: "Pam")
 
 ### gather
 
+```
+gather { [<take_statements>...] | [<other_statements>...] }
+```
+
 Constructs a list by consolidating the provided expression values of each
 [`take`](#take) statement within its body.
 
@@ -972,6 +999,8 @@ $evenSingleDigits = gather {
 inspect($evenSingleDigits)  # [ 0, 2, 4, 6, 8 ]
 ```
 
+See [`gather for`](#gather-for) for an even better version of the above example.
+
 ### take
 
 ```
@@ -979,3 +1008,19 @@ take <expression>
 ```
 
 Compliment to [`gather`](#gather). Adds a value to a consolidated list.
+
+### gather for
+
+`gather for` (always spelled as two separate words) is a combination keyword,
+tokenized as `KEYWORD_GATHFOR`. It provides a convenient way to write the common
+scenario of [`gather`](#gather) and [`for`](#for) together:
+`gather { for { ... } }` can be written simply as `gather for { ... }`.
+
+```
+$evenSingleDigits = gather for $n in 0..9 {
+    if $n.even:
+        take $n
+}
+
+inspect($evenSingleDigits)  # [ 0, 2, 4, 6, 8 ]
+```
