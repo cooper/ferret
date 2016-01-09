@@ -1,45 +1,56 @@
-class Test
+class Test 1.0
+#< Provides a basic test suite.
 
 init {
+
+    #> the test name
     want @name  = "Test"
+
+    #> If true, a failed test will throw a fatal error.
+    #| This is the default behavior.
     want @fatal = true
+
     @tested = 0
     @passed = 0
 }
 
-# bool($a) === true
+#> Test succeeds if `bool($a) === true`.
 method trueValue {
-    want $a
+    need $a #< test object
     return @_test(Bool($a), "Value must be true")
 }
 
-# $a === true
+#> Test succeeds if `$a === true`.
 method veryTrue {
-    want $a
+    need $a #< test object
     return @_test($a === true, "Value must be exactly true")
 }
 
-# $a == $b
+#> Test succeeds if `$a == $b`.
 method equal {
-    want $a, $b
+    need $a #< test object
+    need $b #< test object
     return @_test($a == $b, "Values must be equal")
 }
 
-# $a === $b
+#> Test succeeds if `$a === $b`.
 method objectsEqual {
-    want $a, $b
+    need $a #< test object
+    need $b #< test object
     return @_test($a === $b, "Objects must be exactly equal")
 }
 
-# $a != $b
+#> Test succeeds if `$a != $b`.
 method notEqual {
-    want $a, $b
+    need $a #< test object
+    need $b #< test object
     return @_test($a != $b, "Values must not be equal")
 }
 
-# $a !== $b
+#> Test succeeds if `$a !== $b`.
 method objectsNotEqual {
-    want $a, $b
+    need $a #< test object
+    need $b #< test object
     return @_test($a !== $b, "Objects must not be equal")
 }
 
@@ -54,7 +65,7 @@ method review {
 }
 
 method _test {
-    want $yes, $message
+    need $yes, $message
 
     @tested = @tested + 1
     pass -> $yes
@@ -65,7 +76,7 @@ method _test {
     }
 
     if @fatal:
-        Error($message).panic()
+        throw Error(:TestFailure, $message)
 
     message -> $message
 }

@@ -54,7 +54,8 @@ sub markdown_fmt {
     # separate methods into initializer, class functions, and normal.
     my (@methods, @class_funcs, $init);
     foreach my $method (@all_methods) {
-
+        next unless $method->public;
+        
         # this is the initializer.
         if ($method->{main} && $method->{name} eq 'initializer__') {
             $init = $method;
@@ -63,7 +64,7 @@ sub markdown_fmt {
 
         # this is a class function. ignore private ones.
         if ($method->{main}) {
-            push @class_funcs, $method if $method->public;
+            push @class_funcs, $method;
             next;
         }
 

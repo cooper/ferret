@@ -1,6 +1,6 @@
 # === Document Model ===
 #  Document './std/Test.frt'
-#      Class 'Test'
+#      Class 'Test' version 1.0
 #          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
@@ -24,7 +24,7 @@
 #          Method 'trueValue'
 #              Body ('method' scope)
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$a'
 #                  Instruction
 #                      Return
@@ -42,7 +42,7 @@
 #          Method 'veryTrue'
 #              Body ('method' scope)
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$a'
 #                  Instruction
 #                      Return
@@ -59,10 +59,10 @@
 #          Method 'equal'
 #              Body ('method' scope)
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$a'
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$b'
 #                  Instruction
 #                      Return
@@ -79,10 +79,10 @@
 #          Method 'objectsEqual'
 #              Body ('method' scope)
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$a'
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$b'
 #                  Instruction
 #                      Return
@@ -99,10 +99,10 @@
 #          Method 'notEqual'
 #              Body ('method' scope)
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$a'
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$b'
 #                  Instruction
 #                      Return
@@ -119,10 +119,10 @@
 #          Method 'objectsNotEqual'
 #              Body ('method' scope)
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$a'
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$b'
 #                  Instruction
 #                      Return
@@ -186,10 +186,10 @@
 #          Method '_test'
 #              Body ('method' scope)
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$yes'
 #                  Instruction
-#                      Want
+#                      Need
 #                          Lexical variable '$message'
 #                  Instruction
 #                      Assignment
@@ -219,14 +219,14 @@
 #                          Instance variable '@fatal'
 #                      Body ('if' scope)
 #                          Instruction
-#                              Call
-#                                  Property 'panic'
-#                                      Call
-#                                          Bareword 'Error'
-#                                          Argument list [1 items]
-#                                              Item 0
-#                                                  Lexical variable '$message'
-#                                  Argument list [0 items]
+#                              Throw (fatal exception)
+#                                  Call
+#                                      Bareword 'Error'
+#                                      Argument list [2 items]
+#                                          Item 0
+#                                              Symbol :TestFailure
+#                                          Item 1
+#                                              Lexical variable '$message'
 #                  Instruction
 #                      Return pair 'message'
 #                          Lexical variable '$message'
@@ -261,7 +261,7 @@ my $result = do {
     # Class 'Test'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Test', undef );
+          FF::get_class( $f, $context, $file_scope, 'Test', 1.0 );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
@@ -278,10 +278,10 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::want( $self, $args, 'name', 4.2, str( $f, "Test" ) );
-                FF::want( $self, $args, 'fatal', 5.2, $true );
-                $self->set_property( tested => num( $f, "0" ), 6.2 );
-                $self->set_property( passed => num( $f, "0" ), 7.2 );
+                FF::want( $self, $args, 'name', 7.2, str( $f, "Test" ) );
+                FF::want( $self, $args, 'fatal', 11.2, $true );
+                $self->set_property( tested => num( $f, "0" ), 13.2 );
+                $self->set_property( passed => num( $f, "0" ), 14.2 );
                 return $ret;
             }
         );
@@ -290,17 +290,24 @@ my $result = do {
         my $method_1 = FF::method_event_def(
             $f, $scope,
             'trueValue',
-            [ { name => 'a', type => undef, optional => 1, more => undef } ],
+            [
+                {
+                    name     => 'a',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::want( $scope, $args, 'a', 12.2 );
+                FF::need( $scope, $args, 'a', 19.2 ) or return;
                 return $$self->{'_test'}->(
                     [
                         $$scope->{'Bool'}
-                          ->( [ $$scope->{'a'} ], $scope, undef, 13.25 ),
+                          ->( [ $$scope->{'a'} ], $scope, undef, 20.25 ),
                         str( $f, "Value must be true" )
                     ],
-                    $scope, undef, 13.15
+                    $scope, undef, 20.15
                 );
                 return $ret;
             }
@@ -310,16 +317,23 @@ my $result = do {
         my $method_2 = FF::method_event_def(
             $f, $scope,
             'veryTrue',
-            [ { name => 'a', type => undef, optional => 1, more => undef } ],
+            [
+                {
+                    name     => 'a',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::want( $scope, $args, 'a', 18.2 );
+                FF::need( $scope, $args, 'a', 25.2 ) or return;
                 return $$self->{'_test'}->(
                     [
                         refs_equal( $scope, $$scope->{'a'}, $true ),
                         str( $f, "Value must be exactly true" )
                     ],
-                    $scope, undef, 19.15
+                    $scope, undef, 26.15
                 );
                 return $ret;
             }
@@ -329,19 +343,29 @@ my $result = do {
         my $method_3 = FF::method_event_def(
             $f, $scope, 'equal',
             [
-                { name => 'a', type => undef, optional => 1, more => undef },
-                { name => 'b', type => undef, optional => 1, more => undef }
+                {
+                    name     => 'a',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'b',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::want( $scope, $args, 'a', 24.2 );
-                FF::want( $scope, $args, 'b', 24.4 );
+                FF::need( $scope, $args, 'a', 31.2 ) or return;
+                FF::need( $scope, $args, 'b', 32.2 ) or return;
                 return $$self->{'_test'}->(
                     [
                         equal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
                         str( $f, "Values must be equal" )
                     ],
-                    $scope, undef, 25.15
+                    $scope, undef, 33.15
                 );
                 return $ret;
             }
@@ -352,19 +376,29 @@ my $result = do {
             $f, $scope,
             'objectsEqual',
             [
-                { name => 'a', type => undef, optional => 1, more => undef },
-                { name => 'b', type => undef, optional => 1, more => undef }
+                {
+                    name     => 'a',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'b',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::want( $scope, $args, 'a', 30.2 );
-                FF::want( $scope, $args, 'b', 30.4 );
+                FF::need( $scope, $args, 'a', 38.2 ) or return;
+                FF::need( $scope, $args, 'b', 39.2 ) or return;
                 return $$self->{'_test'}->(
                     [
                         refs_equal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
                         str( $f, "Objects must be exactly equal" )
                     ],
-                    $scope, undef, 31.15
+                    $scope, undef, 40.15
                 );
                 return $ret;
             }
@@ -375,19 +409,29 @@ my $result = do {
             $f, $scope,
             'notEqual',
             [
-                { name => 'a', type => undef, optional => 1, more => undef },
-                { name => 'b', type => undef, optional => 1, more => undef }
+                {
+                    name     => 'a',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'b',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::want( $scope, $args, 'a', 36.2 );
-                FF::want( $scope, $args, 'b', 36.4 );
+                FF::need( $scope, $args, 'a', 45.2 ) or return;
+                FF::need( $scope, $args, 'b', 46.2 ) or return;
                 return $$self->{'_test'}->(
                     [
                         nequal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
                         str( $f, "Values must not be equal" )
                     ],
-                    $scope, undef, 37.15
+                    $scope, undef, 47.15
                 );
                 return $ret;
             }
@@ -398,19 +442,29 @@ my $result = do {
             $f, $scope,
             'objectsNotEqual',
             [
-                { name => 'a', type => undef, optional => 1, more => undef },
-                { name => 'b', type => undef, optional => 1, more => undef }
+                {
+                    name     => 'a',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'b',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::want( $scope, $args, 'a', 42.2 );
-                FF::want( $scope, $args, 'b', 42.4 );
+                FF::need( $scope, $args, 'a', 52.2 ) or return;
+                FF::need( $scope, $args, 'b', 53.2 ) or return;
                 return $$self->{'_test'}->(
                     [
                         refs_nequal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
                         str( $f, "Objects must not be equal" )
                     ],
-                    $scope, undef, 43.15
+                    $scope, undef, 54.15
                 );
                 return $ret;
             }
@@ -426,7 +480,7 @@ my $result = do {
                     $scope,
                     failed =>
                       _sub( $scope, $$self->{'tested'}, $$self->{'passed'} ),
-                    $file_scope, 47.2
+                    $file_scope, 58.2
                 );
                 $$scope->{'say'}->(
                     [
@@ -438,15 +492,15 @@ my $result = do {
                             $$scope->{'failed'}, str( $f, " failed" )
                         )
                     ],
-                    $scope, undef, 48.06667
+                    $scope, undef, 59.06667
                 );
-                $ret->set_property( tests  => $$self->{'tested'},  50.2 );
-                $ret->set_property( fails  => $$scope->{'failed'}, 51.2 );
-                $ret->set_property( passes => $$self->{'passed'},  52.2 );
+                $ret->set_property( tests  => $$self->{'tested'},  61.2 );
+                $ret->set_property( fails  => $$scope->{'failed'}, 62.2 );
+                $ret->set_property( passes => $$self->{'passed'},  63.2 );
                 $ret->set_property(
                     allOK =>
                       equal( $scope, $$self->{'passed'}, $$self->{'tested'} ),
-                    53.2
+                    64.2
                 );
                 return $ret;
             }
@@ -456,41 +510,52 @@ my $result = do {
         my $method_8 = FF::method_event_def(
             $f, $scope, '_test',
             [
-                { name => 'yes', type => undef, optional => 1, more => undef },
+                {
+                    name     => 'yes',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                },
                 {
                     name     => 'message',
                     type     => undef,
-                    optional => 1,
+                    optional => undef,
                     more     => undef
                 }
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::want( $scope, $args, 'yes',     57.2 );
-                FF::want( $scope, $args, 'message', 57.4 );
+                FF::need( $scope, $args, 'yes',     68.2 ) or return;
+                FF::need( $scope, $args, 'message', 68.4 ) or return;
                 $self->set_property(
                     tested => add( $scope, $$self->{'tested'}, num( $f, "1" ) ),
-                    59.2
+                    70.2
                 );
-                $ret->set_property( pass => $$scope->{'yes'}, 60.2 );
+                $ret->set_property( pass => $$scope->{'yes'}, 71.2 );
                 if ( bool( $$scope->{'yes'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $self->set_property(
                         passed =>
                           add( $scope, $$self->{'passed'}, num( $f, "1" ) ),
-                        63.2
+                        74.2
                     );
                     return;
                 }
                 if ( bool( $$self->{'fatal'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    ${ $$scope->{'Error'}
-                          ->( [ $$scope->{'message'} ], $scope, undef, 68.2 ) }
-                      ->{'panic'}->( {}, $scope, undef, 68.6 );
+                    return $ret->throw(
+                        $$scope->{'Error'}->(
+                            [
+                                FF::get_symbol( $f, 'TestFailure' ),
+                                $$scope->{'message'}
+                            ],
+                            $scope, undef, 79.3
+                        )
+                    );
                 }
-                $ret->set_property( message => $$scope->{'message'}, 70.2 );
+                $ret->set_property( message => $$scope->{'message'}, 81.2 );
                 return $ret;
             }
         );

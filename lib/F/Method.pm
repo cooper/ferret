@@ -15,7 +15,7 @@ sub body { shift->{body} }
 
 sub public {
     my $m = shift;
-    return unless $m->{main};
+    #return unless $m->{main};
     $m->owner;
     return $m->{public};
 }
@@ -70,9 +70,9 @@ sub new {
 sub owner {
     my ($method, $owner_str, $owner) = shift;
     my $class = $method->class;
+    $method->{public} =
+    my $public = $method->{name} && substr($method->{name}, 0, 1) ne '_';
     if ($method->{main}) {
-        $method->{public} =
-        my $public = $method->{name} && substr($method->{name}, 0, 1) ne '_';
         $owner_str = $public ? '$class' : '$scope';
         $owner     = $class;
     }
