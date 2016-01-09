@@ -8,7 +8,9 @@ use 5.010;
 use utf8;
 use open ':std', ':encoding(UTF-8)';
 
+use Cwd             'abs_path';
 use File::Slurp     'slurp';
+use File::Find      'find';
 use Scalar::Util    'blessed';
 use File::Basename  'fileparse';
 use IO::Async::Function;
@@ -25,7 +27,6 @@ BEGIN {
 }
 
 use Ferret::Lexer;
-use Ferret::Perl;
 
 my ($o, $usage) = describe_options(
     "$0 %o [file ...]",
@@ -39,7 +40,6 @@ my ($o, $usage) = describe_options(
     #[ 'stdout|s'        => 'write to STDOUT instead of file'            ],
     [ 'beautify|p'      => 'beautify code with perltidy'                ],
     [ 'minify|m'        => 'minify code'                                ],
-    [ 'gendocs|D'       => 'generate documentation'                     ],
     [ 'help|h'          => 'show help'                                  ]
 );
 
@@ -50,13 +50,20 @@ my (
     $loop,      # IO::Async::Loop
     $function,  # IO::Async compile function
     $pending,   # number of files in progress
-    @errors     # postponed errors
+    @errors,    # postponed errors
+    %done       # files already done
 );
 
 # find the files.
-my @files = grep { substr($_, -4) eq '.frt' } @ARGV;
-   @files = split /\n/, `find . | grep '\\.frt\$'` if !@files;
-   # TODO: do this right, support Windows, etc.
+my @files = grep m/\.(frt|frtdoc)$/, @ARGV;
+if (!@files) {
+    find({ wanted => sub {
+        my $f = $File::Find::name;
+        if ($f =~ m/\.(frt|frtdoc)$/ ) {
+            push @files, $f;
+        }
+    }, no_chdir => 1 }, '.');
+}
 
 # do it synchronously.
 if ($o->synchronous) {
@@ -145,22 +152,34 @@ sub do_file {
     my $file = shift;
     print "[ $file ] " if $o->synchronous;
 
-    # check if it's been changed
+    # split file into parts.
+    my ($write_dir, $write_file);
     my ($name, $path, $ext) = fileparse($file, qr/\.[^.]*/);
-    my $build = "$path/build";
-    my $docs  = "$path/doc";
-    my $pm    = "$build/$name$ext.pm";
-    my $md    = "$docs/$name.md";
+    my $abs     = abs_path($file);
+    my $is_docs = $ext eq '.frtdoc';
+    my $ret     = { file => $file, abs => $abs };
 
-    my $ret = {
-        file  => $file,
-        build => $build,
-        pm    => $pm
-    };
+    # writing to .md.
+    if ($is_docs) {
+        my $docs        = "$path/doc";
+        $write_dir      = $docs;
+        $write_file     = "$docs/$name.md";
+        $ret->{docs}    = $docs;
+        $ret->{md}      = $write_file;
+    }
+
+    # writing to .pm.
+    else {
+        my $build       = "$path/build";
+        $write_dir      = $build;
+        $write_file     = "$build/$name$ext.pm";
+        $ret->{build}   = $build;
+        $ret->{pm}      = $write_file;
+    }
 
     # we might be able to skip this
     if (!$o->noskip) {
-        my @stat1 = stat $pm;
+        my @stat1 = stat $write_file;
         my @stat2 = stat $file;
         if (@stat1 && $stat1[9] > $stat2[9]) {
             $ret->{skipped} = 1;
@@ -170,66 +189,66 @@ sub do_file {
 
     # clean.
     if ($o->clean) {
-        return error($ret, undef, undef, $pm, $md, 'Clean');
+        return error($ret, $write_file, 'Clean');
     }
 
-    # open the output files.
-    my ($fh, $dfh);
-    # if ($o->stdout) { $fh = \*STDOUT }
+    # open the output file.
+    my $fh; # if ($o->stdout) { $fh = \*STDOUT }
+    mkdir $write_dir or die "Couldn't create $write_dir" if !-d $write_dir;
+    open $fh, '>', $write_file or die "Couldn't open $write_file to write";
 
-    mkdir $build or die "Couldn't create $build" if !-d $build;
-    open $fh, '>', $pm or die "Couldn't open $pm to write";
+    # see if we've already constructed it.
+    my $doc = $done{$abs};
+    if (!$doc) {
 
-    if ($o->gendocs) {
+        # parse the input file.
+        my $str = eval { slurp($file) } or return error($ret, $fh, $write_file, $!);
+
+        # tokenize.
+        my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize("$str\n", $file);
+        if ($o->tokens && !$err) {
+            my $tok = F::show_tok(@tok);
+            print $fh "# === Tokenization ===\n";
+            print $fh commentize($tok), "\n";
+            $ret->{tokenization} = $tok if $o->verbose;
+        }
+        return error($ret, $fh, $write_file, $$err) if $err;
+
+        # construct elements.
+        $doc = F::new('Document', name => $file);
+        $err = Ferret::Lexer::Constructor::construct($doc, @tok);
+        if ($o->dom || $err) {
+            my $dom = F::show_dom($doc, $o->show_all);
+            print $fh "# === Document Model ===\n"  unless $err;
+            print $fh commentize($dom), "\n"        unless $err;
+            $ret->{construction} = $dom if $o->verbose || $err;
+        }
+
+        return error($ret, $fh, $write_file, $$err) if $err;
+        $done{$abs} = $doc;
+    }
+
+    # compile to Markdown.
+    if ($is_docs) {
         require Ferret::Markdown;
-        mkdir $docs or die "Couldn't create $docs" if !-d $docs;
-        open $dfh, '>', $md or die "Couldn't open $md to write";
-        $ret->{md} = $md;
-    }
 
-    # parse the input file.
-    my $str = eval { slurp($file) } or return error($ret, $fh, $dfh, $pm, $md, $!);
-
-    # tokenize.
-    my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize("$str\n", $file);
-    if ($o->tokens && !$err) {
-        my $tok = F::show_tok(@tok);
-        print $fh "# === Tokenization ===\n";
-        print $fh commentize($tok), "\n";
-        $ret->{tokenization} = $tok if $o->verbose;
-    }
-    return error($ret, $fh, $dfh, $pm, $md, $$err) if $err;
-
-    # construct elements.
-    my $doc = F::new('Document', name => $file);
-       $err = Ferret::Lexer::Constructor::construct($doc, @tok);
-    if ($o->dom || $err) {
-        my $dom = F::show_dom($doc, $o->show_all);
-        print $fh "# === Document Model ===\n"  unless $err;
-        print $fh commentize($dom), "\n"        unless $err;
-        $ret->{construction} = $dom if $o->verbose || $err;
-    }
-    return error($ret, $fh, $dfh, $pm, $md, $$err) if $err;
-
-    # compile to Perl.
-    my $compiled = Ferret::Perl::main($doc);
-    beautify(\$compiled) if $o->beautify;
-    minify(\$compiled)   if $o->minify;
-
-    # write to .pm
-    print $fh $compiled;
-    close $fh;
-
-    # generate documentation.
-    if ($o->gendocs) {
         my $markdown = Ferret::Markdown::main($doc);
 
-        # write to .md
-        print $dfh $markdown;
-        close $dfh;
-
+        print $fh $markdown;
+        close $fh;
     }
 
+    # compile to Perl.
+    else {
+        require Ferret::Perl;
+
+        my $compiled = Ferret::Perl::main($doc);
+        beautify(\$compiled) if $o->beautify;
+        minify(\$compiled)   if $o->minify;
+
+        print $fh $compiled;
+        close $fh;
+    }
 
     return $ret;
 }
@@ -262,11 +281,9 @@ sub commentize {
 }
 
 sub error {
-    my ($ret, $fh, $fh2, $pm, $md, $msg) = @_;
-    close $fh   if $fh;
-    close $fh2  if $fh2;
-    unlink $pm  if $pm;
-    unlink $md  if $md;
+    my ($ret, $fh, $output_file, $msg) = @_;
+    close $fh if $fh;
+    unlink $output_file if $output_file;
     $ret->{error} = $msg;
     return $ret;
 }

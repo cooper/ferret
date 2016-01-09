@@ -1,5 +1,5 @@
 # === Document Model ===
-#  Document 'std/JSON.frt'
+#  Document './std/JSON.frt'
 #      Class 'JSON' version 1.0
 #          Instruction
 #              Alias

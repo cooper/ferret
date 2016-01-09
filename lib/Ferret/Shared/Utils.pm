@@ -63,13 +63,39 @@ sub dot_trim {
 }
 
 state $link_map = {
-    Bool    => '[Bool](/doc/std/Bool.md)',
-    Num     => '[Number](/doc/std/Number.md)',
-    Number  => '[Number](/doc/std/Number.md)',
-    Str     => '[String](/doc/std/String.md)',
-    String  => '[String](/doc/std/String.md)',
-    Sym     => '[Symbol](/doc/std/Symbol.md)',
-    Symbol  => '[Symbol](/doc/std/Symbol.md)'
+
+    # numbers
+    'Num'               => '[Number](/doc/std/Number.md)',
+    'Number'            => '[Number](/doc/std/Number.md)',
+    'Num::Even'         => '[Even number](/doc/std/Number.md)',
+    'Number::Even'      => '[Even number](/doc/std/Number.md)',
+    'Num::Odd'          => '[Odd number](/doc/std/Number.md)',
+    'Number::Odd'       => '[Odd number](/doc/std/Number.md)',
+    'Num::Integer'      => '[Number (auto-integer)](/doc/std/Number.md)',
+    'Number::Integer'   => '[Number (auto-integer)](/doc/std/Number.md)',
+
+    # strings
+    'Str'               => '[String](/doc/std/String.md)',
+    'String'            => '[String](/doc/std/String.md)',
+    'Str::UC'           => '[String (auto-uppercase)](/doc/std/String.md)',
+    'String::UC'        => '[String (auto-uppercase)](/doc/std/String.md)',
+    'Str::LC'           => '[String (auto-lowercase)](/doc/std/String.md)',
+    'String::LC'        => '[String (auto-lowercase)](/doc/std/String.md)',
+    'Str::NonEmpty'     => '[Nonempty string](/doc/std/String.md)',
+    'String::NonEmpty'  => '[Nonempty string](/doc/std/String.md)',
+
+    # symbols
+    'Sym'               => '[Symbol](/doc/std/Symbol.md)',
+    'Symbol'            => '[Symbol](/doc/std/Symbol.md)',
+
+    # other
+    'Bool'              => '[Bool](/doc/std/Bool.md)',
+
+    # Math
+    'Math::Point'       => '[Math::Point](/doc/std/Math/Point.md)',
+    'Math::Line'        => '[Math::Point](/doc/std/Math/Line.md)',
+    'Math::Rect'        => '[Math::Rect](/doc/std/Math/Rect.md)'
+
 };
 
 # link for a built-in type.

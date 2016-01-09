@@ -1,6 +1,6 @@
 class JSON 1.0
 
-#< Provides JSON serialising/deserialising, done correctly and fast.
+#< Provides JSON serialising and deserialising, done correctly and fast.
 #| Based on [JSON::XS](http://search.cpan.org/perldoc?JSON%3A%3AXS).
 #| Basic operations are accessible via [class functions](#class-functions).
 #| Advanced options are available through the use of a JSON
