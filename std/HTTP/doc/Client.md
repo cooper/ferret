@@ -1,6 +1,6 @@
-# Client
+# HTTP::Client
 
-This is the Client class version 1.0.
+This is the HTTP::Client class version 1.0.
 
 Represents an HTTP user agent.
 
@@ -16,7 +16,7 @@ Creates a new Client class instance.
 
 ### Arguments
 
-* *optional* __userAgent__: [String](/doc/std/String.md) - HTTP user agent.
+* *optional* __userAgent__: [String](/doc/std/String.md) - HTTP user agent. Default is `"ferret-http/<version>"`.
 
 * *optional* __timeout__: [Number](/doc/std/Number.md) - Request timeout. Set to undefined for no timeout.
 
@@ -25,9 +25,9 @@ If reached, the connection will be closed
 and the response will be truncated to this length.
 By default, there is no limit.
 
-* *optional* __readLength__: [Number](/doc/std/Number.md) - Read length. Default is 64 KB.
+* *optional* __readLength__: [Number](/doc/std/Number.md) - Read length in bytes. Default is 64 KB.
 
-* *optional* __writeLength__: [Number](/doc/std/Number.md) - Write length. Default is 64 KB.
+* *optional* __writeLength__: [Number](/doc/std/Number.md) - Write length in bytes. Default is 64 KB.
 
 ## Methods
 
@@ -84,7 +84,7 @@ See [HTTPMethod](../HTTP.md#httpmethod) interface.
 
 
 
-End of Client class.
+End of HTTP::Client class.
 
 This file was generated automatically by the Ferret compiler from
 [Client.frtdoc](../Client.frtdoc).

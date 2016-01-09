@@ -44,7 +44,9 @@ sub markdown_fmt {
     my $content = '';
 
     # this must be called before calling ->markdown_fmt_do on children.
-    my $head = $class->get_markdown_heading($class->{name});
+    my $pkg = $class->document->{package};
+    my $class_full_name = $pkg ? $pkg.'::'.$class->{name} : $class->{name};
+    my $head = $class->get_markdown_heading($class_full_name);
 
     # separate into parts.
     my @all_methods  = $class->filter_children(type => 'Method');
@@ -55,7 +57,7 @@ sub markdown_fmt {
     my (@methods, @class_funcs, $init);
     foreach my $method (@all_methods) {
         next unless $method->public;
-        
+
         # this is the initializer.
         if ($method->{main} && $method->{name} eq 'initializer__') {
             $init = $method;
@@ -119,7 +121,7 @@ sub markdown_fmt {
     }
 
     return class => {
-        name            => $class->{name},
+        name            => $class_full_name,
         description     => dot_trim($class->{doc_comment}),
         version         => $class->{version},
         version_str     => $class->{version}    ?

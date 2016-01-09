@@ -7,7 +7,7 @@ $defaultLength = 64 * 1024
 
 init {
 
-    #> HTTP user agent
+    #> HTTP user agent. Default is `"ferret-http/<version>"`.
     want @userAgent: Str = $defaultUA
 
     #> Request timeout. Set to undefined for no timeout.
@@ -19,10 +19,10 @@ init {
     #| By default, there is no limit.
     want @maxContentLength: Num
 
-    #> Read length. Default is 64 KB.
+    #> Read length in bytes. Default is 64 KB.
     want @readLength:  Num = $defaultLength
 
-    #> Write length. Default is 64 KB.
+    #> Write length in bytes. Default is 64 KB.
     want @writeLength: Num = $defaultLength
 
     NATIVE::HTTPClient.initialize(*self)

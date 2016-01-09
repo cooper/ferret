@@ -1,6 +1,6 @@
-# Request
+# HTTP::Request
 
-This is the Request class; it is not versioned.
+This is the HTTP::Request class; it is not versioned.
 
 
 
@@ -89,7 +89,7 @@ Hook. Called when an HTTP response is constructed.
 
 
 
-End of Request class.
+End of HTTP::Request class.
 
 This file was generated automatically by the Ferret compiler from
 [Request.frtdoc](../Request.frtdoc).
