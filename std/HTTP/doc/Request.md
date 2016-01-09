@@ -46,7 +46,8 @@ event will be called.
 $request.connected()
 ```
 
-Hook. May be called multiple times if the request is redirected or retried.
+Hook. Called when the connection opens.
+May be called multiple times if the request is redirected or retried.
 
 
 

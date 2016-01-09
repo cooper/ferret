@@ -127,11 +127,13 @@ sub markdown_fmt {
     $signature = Ferret::Shared::Utils::signature_to_string($signature, 1);
 
     # show class name or instance variable?
-    # TODO: show signature with '...' for wants
     my $class_name = $method->class->{name};
     my $instn_name = '$'.lc($class_name);
     my $owner_name = $method->{main} ? $class_name : $instn_name;
-    my $example = $method->is_init                      ?
+    my $example =
+        $method->{is_prop}                              ?
+        $owner_name.'.'.$method->{name}                 :
+        $method->is_init                                ?
         $instn_name.' = '.$class_name."($signature)"    :
         $owner_name.'.'.$method->{name}."($signature)"  ;
 
@@ -153,7 +155,9 @@ sub markdown_fmt {
         $comment = "Creates a new $class_name class instance.";
     }
 
-    return method => {
+
+    my $fmt = $method->{is_prop} ? 'computed' : 'method';
+    return $fmt => {
         name        => $method->{name},
         hook        => $no_body ? 'Hook. ' : '',
         description => dot_trim($comment),

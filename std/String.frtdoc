@@ -1,0 +1,79 @@
+class String 1.0
+#< A string is basic datatype which stores an arbitrary sequence of bytes,
+#| typically representing characters. String literals are delimited by
+#| double quotes, like so: `"The quick brown fox jumps over the lazy dog"`.
+
+#> The length of the string
+prop length
+
+#> A string based on the original with an uppercase transformation
+prop uppercase
+
+#> A string based on the original with a lowercase transformation
+prop lowercase
+
+#> Returns a list of substrings based on the division of the original
+#| string by the provided separator.
+method split {
+
+    #> the substring separator. The default is the empty string, which results
+    #| in a list of individual characters.
+    want $separator: Str = ""
+
+    #> the number of substrings to extract.
+    #| If specified, the returned list will have at most this number
+    #| of strings. The final string in that list may include occurrences
+    #| of the separator.
+    want $limit: Num
+
+}
+
+#> Returns a string based on the original string with placeholders within
+#| the delimiters `<<` and `>>` replaced with the provided values.
+#|
+#| This method takes named arguments whose values should be strings or
+#| objects capable of string conversion.
+#|
+#| For example, `"Hi <<name>>!".fill(name: "Steve")` returns `"Hi Steve!"`.
+#|
+method fill {
+    #> If provided, the keys and values in this hash will be used to
+    #| fill the placeholders rather than the named argument pairs.
+    want $valueHash: Hash
+}
+
+#> Looks for the provided substring at the beginning of the string.
+#> Returns a boolean true value if the prefix exists.
+method hasPrefix {
+    #> the prefix to look for
+    need $prefix: Str
+}
+
+#> Returns a string with the provided substring removed from the
+#| beginning of the original string. If the string does not
+#| have that prefix, the original string is returned.
+method trimPrefix {
+    #> the prefix to remove
+    need $prefix: Str
+}
+
+#> An interface to which only non-empty strings comply.
+type NonEmpty {
+    isa *class
+    satisfies .length != 0
+}
+
+#> Performs an uppercase transformation.
+type Uppercase {
+    isa *class
+    transform .uppercase
+}
+
+#> Performs a lowercase transformation.
+type Lowercase {
+    isa *class
+    transform .lowercase
+}
+
+alias UC = Uppercase
+alias LC = Lowercase

@@ -27,7 +27,7 @@ method connect {
 }
 
 #> Called when the connection opens.
-#> May be called multiple times if the request is redirected or retried.
+#| May be called multiple times if the request is redirected or retried.
 method connected
 
 #> Called when the request was redirected by an HTTP location header.
