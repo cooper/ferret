@@ -146,10 +146,10 @@ sub do_file {
     print "[ $file ] " if $o->synchronous;
 
     # check if it's been changed
-    my ($name, $path) = fileparse($file);
+    my ($name, $path, $ext) = fileparse($file, qr/\.[^.]*/);
     my $build = "$path/build";
     my $docs  = "$path/doc";
-    my $pm    = "$build/$name.pm";
+    my $pm    = "$build/$name$ext.pm";
     my $md    = "$docs/$name.md";
 
     my $ret = {

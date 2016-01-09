@@ -7,6 +7,7 @@ use 5.010;
 
 use parent qw(F::Node);
 use Scalar::Util qw(weaken);
+use Ferret::Shared::Utils qw(dot_trim);
 
 sub is_closure { 1 }
 sub hold_instr { 1 }
@@ -153,7 +154,7 @@ sub markdown_fmt {
 
     return method => {
         name        => $method->{name},
-        description => $comment,
+        description => dot_trim($comment),
         heading     => $head,
         example     => $example,
         arguments   => $arguments

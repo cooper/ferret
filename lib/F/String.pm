@@ -6,7 +6,7 @@ use strict;
 use parent 'F::Expression';
 
 use Data::Dump qw(quote);
-
+use Ferret::Shared::Utils qw(dot_trim);
 
 sub desc {
     my $str = shift;
@@ -25,7 +25,11 @@ sub perl_fmt {
 
 sub markdown_fmt {
     my $str = shift;
-    return string => { string => quote($str->{value}) };
+    return string => {
+        string  => quote($str->{value}),
+        hyph    => length $str->{doc_comment} ? ' - ' : '',
+        comment => dot_trim($str->{doc_comment})
+    };
 }
 
 1

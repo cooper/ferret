@@ -6,16 +6,17 @@ use strict;
 use 5.010;
 
 use File::Basename 'basename';
+use Ferret::Shared::Utils qw(trim);
 
 sub main {
     my ($doc) = @_;
 
     my $doc_markdown = $doc->markdown_fmt_do;
-    return F::get_format('Markdown', main => {
+    return trim(F::get_format('Markdown', main => {
         content   => $doc_markdown,
         file_name => $doc->{name},
         base_name => basename($doc->{name})
-    });
+    }));
 }
 
 sub F::Element::markdown_fmt { }

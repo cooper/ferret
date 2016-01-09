@@ -1,6 +1,3 @@
-
-
-
 # JSON
 
 This is the JSON class version 1.0.
@@ -23,12 +20,12 @@ Creates a new JSON class instance.
 
 ### Arguments
 
-* *optional* __strict__: Bool - Enables strict decoding. This is default. If explicitly disabled,
+* *optional* __strict__: [Bool](/doc/std/Bool.md) - Enables strict decoding. This is default. If explicitly disabled,
 shell-style (#) comments are allowed, and extra commas are
 silently ignored. You may want to disable `strict` decoding for
 human-created texts such as configuration files.
 
-* *optional* __consistent__: Bool - If true, the same data structure will output the same JSON text each
+* *optional* __consistent__: [Bool](/doc/std/Bool.md) - If true, the same data structure will output the same JSON text each
 time. This is not the default behavior. Without `consistent`, the pairs
 in JSON objects will be spit out in a random order. Encoding is
 considerably slower when `consistent` is enabled because all object
@@ -37,21 +34,21 @@ keys have to be sorted.
 * *optional* __charset__: Charset - Specifies the character set used for both encoding and decoding. See
 this class's [`Charset`](#charset) type for available options.
 
-* *optional* __strictRoot__: Bool - If enabled, the root level of any JSON text (encoded or decoded) must be
+* *optional* __strictRoot__: [Bool](/doc/std/Bool.md) - If enabled, the root level of any JSON text (encoded or decoded) must be
 an array or object. The default is to allow any root level value, which
 is an extension to RFC4627.
 
-* *optional* __pretty__: Bool - If true, [`.encode()`](#encode) output will span multiple lines and be
+* *optional* __pretty__: [Bool](/doc/std/Bool.md) - If true, [`.encode()`](#encode) output will span multiple lines and be
 properly indented with extra whitespace. This is equivalent to providing
 all of `indent`, `spaceBefore`, and `spaceAfter`.
 
-* *optional* __spaceBefore__: Bool - If true, [`.encode()`](#encode) will add an extra optional space before
+* *optional* __spaceBefore__: [Bool](/doc/std/Bool.md) - If true, [`.encode()`](#encode) will add an extra optional space before
 the colon separating keys from values in JSON objects.
 
-* *optional* __spaceAfter__: Bool - If true, [`.encode()`](#encode) will add an extra optional space after
+* *optional* __spaceAfter__: [Bool](/doc/std/Bool.md) - If true, [`.encode()`](#encode) will add an extra optional space after
 the colon separating keys from values in JSON objects.
 
-* *optional* __indent__: Bool - If true, [`.encode()`](#encode) will use a multiline format as output,
+* *optional* __indent__: [Bool](/doc/std/Bool.md) - If true, [`.encode()`](#encode) will use a multiline format as output,
 putting every array member or object/hash key-value pair into its own
 line, identifying them properly.
 
@@ -70,14 +67,14 @@ initialization.
 
 #### Arguments
 
-* __data__: Any  
+* __data__: Any - an object to convert to JSON text.
 
 
 
 ### decode
 
 ```
-$json.decode($json:Str)
+$json.decode($json: Str)
 ```
 
 Decodes a JSON text.
@@ -87,14 +84,14 @@ provided at initialization.
 
 #### Arguments
 
-* __json__: Str  
+* __json__: [String](/doc/std/String.md) - a JSON text to parse and convert to a Ferret object.
 
 
 
 ### decoderAdd
 
 ```
-$json.decoderAdd($fragment:Str)
+$json.decoderAdd($fragment: Str)
 ```
 
 Adds a JSON text fragment to the decoder buffer.
@@ -127,7 +124,7 @@ a list `[1, 2]`.
 
 #### Arguments
 
-* __fragment__: Str  
+* __fragment__: [String](/doc/std/String.md) - a fragment of JSON text to add to the decoder buffer.
 
 
 
@@ -168,14 +165,14 @@ See the [`.encode()`](#encode) method for more options.
 
 #### Arguments
 
-* __data__: Any  
+* __data__: Any - an object to convert to JSON text.
 
 
 
 ### decode
 
 ```
-JSON.decode($json:Str)
+JSON.decode($json: Str)
 ```
 
 Convenient class function to decode UTF-8 JSON data.
@@ -184,7 +181,7 @@ See the [`.decode()`](#decode) method for more options.
 
 #### Arguments
 
-* __json__: Str  
+* __json__: [String](/doc/std/String.md) - a JSON text to parse and convert to a Ferret object.
 
 
 ## Type interfaces
@@ -200,11 +197,12 @@ Used for the `.charset` property. See the [`initializer`](#initializer).
 
 In order to comply, the test object must be equal (according to the `==` [`OP_EQUAL`](/doc/Operators.md#equality-operator) operator) to any one of these values.
 
-* `:ascii`
-* `:latin1`
-* `:utf8`
+* `:ascii` - RFC4627,      range 0..127, ignores otherwise.
+* `:latin1` - iso-8859-1,   range 0..255, ignores otherwise.
+* `:utf8` - expects utf8-encoded input and outputs utf8.
 
 
 End of JSON class.
-  
-This file generated automatically for [JSON.frt](../JSON.frt).
+
+This file was generated automatically by the Ferret compiler from
+[JSON.frt](../JSON.frt).

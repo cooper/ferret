@@ -42,6 +42,42 @@ sub build_name {
     return join '/', @parts, 'build', $base;
 }
 
+###############
+### STRINGS ###
+###############
+
+# remove leading and trailing whitespace, including newlines.
+sub trim {
+    my $str = shift;
+    return undef if !defined $str;
+    $str =~ s/^\s+|\s+$//g;
+    return $str;
+}
+
+# trim and add a period at the end, if there isn't one already.
+sub dot_trim {
+    my $str = trim(shift);
+    return undef if !defined $str;
+    $str .= '.' unless $str =~ m/\.$/;
+    return $str;
+}
+
+state $link_map = {
+    Bool    => '[Bool](/doc/std/Bool.md)',
+    Num     => '[Number](/doc/std/Number.md)',
+    Number  => '[Number](/doc/std/Number.md)',
+    Str     => '[String](/doc/std/String.md)',
+    String  => '[String](/doc/std/String.md)',
+    Sym     => '[Symbol](/doc/std/Symbol.md)',
+    Symbol  => '[Symbol](/doc/std/Symbol.md)'
+};
+
+# link for a built-in type.
+sub type_link {
+    my $type_name = shift;
+    return $link_map->{$type_name} || $type_name;
+}
+
 ###########################
 ### FUNCTION SIGNATURES ###
 ###########################
@@ -58,16 +94,17 @@ sub build_name {
 #
 
 sub signature_to_string {
-    my ($signature, $add_commas) = @_;
+    my ($signature, $pretty) = @_;
     my @parts;
+    my $col = $pretty ? ': ' : ':';
+    my $sep = $pretty ? ', ' : ' ';
     foreach my $sig (@$signature) {
         my $s =
-            ($sig->{optional} ? '?'              : '') . '$' . $sig->{name} .
-            ($sig->{type}     ? ':'.$sig->{type} : '') .
-            ($sig->{more}     ? '...'            : '');
+            ($sig->{optional} ? '?'               : '') . '$' . $sig->{name} .
+            ($sig->{type}     ? $col.$sig->{type} : '') .
+            ($sig->{more}     ? '...'             : '');
         push @parts, $s;
     }
-    my $sep = $add_commas ? ', ' : ' ';
     return join $sep, @parts;
 }
 

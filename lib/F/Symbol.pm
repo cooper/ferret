@@ -5,6 +5,7 @@ use warnings;
 use strict;
 use parent 'F::Expression';
 
+use Ferret::Shared::Utils qw(dot_trim);
 
 sub desc {
     my $sym = shift;
@@ -17,8 +18,12 @@ sub perl_fmt {
 }
 
 sub markdown_fmt {
-    my $name = shift->{sym_value};
-    return symbol => { name => $name };
+    my $sym = shift;
+    return symbol => {
+        name    => $sym->{sym_value},
+        hyph    => length $sym->{doc_comment} ? ' - ' : '',
+        comment => dot_trim($sym->{doc_comment})
+    };
 }
 
 1

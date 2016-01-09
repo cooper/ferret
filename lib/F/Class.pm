@@ -5,6 +5,8 @@ use warnings;
 use strict;
 use parent 'F::ScopeOwner';
 
+use Ferret::Shared::Utils qw(dot_trim);
+
 sub hold_instr { 1 }
 
 sub desc {
@@ -117,7 +119,7 @@ sub markdown_fmt {
 
     return class => {
         name            => $class->{name},
-        description     => $class->{doc_comment},
+        description     => dot_trim($class->{doc_comment}),
         version         => $class->{version},
         version_str     => $class->{version}    ?
             " version $$class{version}"         :

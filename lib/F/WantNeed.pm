@@ -6,7 +6,7 @@ use strict;
 use parent 'F::Node';
 
 use Scalar::Util qw(weaken);
-
+use Ferret::Shared::Utils qw(dot_trim type_link);
 
 sub desc {
     my $wn = shift;
@@ -88,14 +88,14 @@ sub perl_fmt {
 sub markdown_fmt {
     my $arg  = shift;
     my $name = $arg->variable->{var_name};
-    my $desc = $arg->parent->find_doc_comment;  # might be on instruction
+    my $desc = dot_trim($arg->parent->find_doc_comment);  # might be on instruction
     my $type = $arg->var_type;
 
     return argument => {
         opt  => $arg->{arg_type} eq 'want' ? '*optional* ' : '',
         name => $name,
         desc => $desc,
-        type => length $type ? $type : 'Any',
+        type => type_link(length $type ? $type : 'Any'),
         hyph => length $desc ? '-' : ''
     };
 }

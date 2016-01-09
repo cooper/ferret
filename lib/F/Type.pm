@@ -5,6 +5,7 @@ use warnings;
 use strict;
 use parent 'F::Closure';
 
+use Ferret::Shared::Utils qw(dot_trim);
 use Scalar::Util qw(weaken);
 
 sub new {
@@ -122,14 +123,15 @@ sub markdown_fmt {
                      "(according to the `==` ".
                      "[`OP_EQUAL`](/doc/Operators.md#equality-operator) ".
                      "operator) to any one of these values.\n";
-        $equal_to .= F::get_markdown_fmt(type_exp => { expression => $_ })
+        $equal_to .= (F::get_markdown_fmt(type_exp => { expression => $_ }))
+            // '(a value evaluated at runtime)'
             foreach @equal_possibly;
         $type->{markdown_heading_level}--;
     }
 
     return type => {
         heading     => $head,
-        description => $type->{doc_comment},
+        description => dot_trim($type->{doc_comment}),
         name        => $type->type_name,
         equal_to    => $equal_to
     };
