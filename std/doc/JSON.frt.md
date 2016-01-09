@@ -60,7 +60,7 @@ line, identifying them properly.
 ### encode
 
 ```
-$json.encode()
+$json.encode($data)
 ```
 
 Encodes some data as JSON text.
@@ -77,7 +77,7 @@ initialization.
 ### decode
 
 ```
-$json.decode()
+$json.decode($json:Str)
 ```
 
 Decodes a JSON text.
@@ -94,7 +94,7 @@ provided at initialization.
 ### decoderAdd
 
 ```
-$json.decoderAdd()
+$json.decoderAdd($fragment:Str)
 ```
 
 Adds a JSON text fragment to the decoder buffer.
@@ -159,7 +159,7 @@ See [`.decoderAdd()`](#decoderadd) for an explanation of decoder buffers.
 ### encode
 
 ```
-JSON.encode()
+JSON.encode($data)
 ```
 
 Convenient class function to encode data to a UTF-8 JSON text.
@@ -175,7 +175,7 @@ See the [`.encode()`](#encode) method for more options.
 ### decode
 
 ```
-JSON.decode()
+JSON.decode($json:Str)
 ```
 
 Convenient class function to decode UTF-8 JSON data.

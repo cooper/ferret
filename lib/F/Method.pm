@@ -19,6 +19,33 @@ sub public {
     return $m->{public};
 }
 
+sub arguments {
+    my $method = shift;
+
+    # find all the WantNeed descendants.
+    my @wn = $method->filter_descendants(type => 'WantNeed');
+
+    # filter out the ones which belong to me.
+    @wn = grep {
+        my $m = $_->first_self_or_parent('Function', 'Method');
+        $method == $m;
+    } @wn;
+
+    return @wn;
+}
+
+sub signature {
+    my @args = map {
+        my $a = {
+            name => $_->variable->{var_name},
+            type => $_->var_type || undef,
+            more => $_->{ellipsis},
+            optional => $_->{arg_type} eq 'want'
+        };
+        $a
+    } shift->arguments;
+    return \@args;
+}
 
 sub desc {
     my $method = shift;
@@ -92,19 +119,23 @@ sub markdown_fmt {
         $method->{name}
     );
 
+    # arguments string (signature).
+    my $signature = $method->signature;
+    $signature = Ferret::Shared::Utils::signature_need_only($signature);
+    $signature = Ferret::Shared::Utils::signature_to_string($signature, 1);
+
     # show class name or instance variable?
     # TODO: show signature with '...' for wants
     my $class_name = $method->class->{name};
     my $instn_name = '$'.lc($class_name);
     my $owner_name = $method->{main} ? $class_name : $instn_name;
-    my $example = $method->is_init              ?
-        $instn_name.' = '.$class_name.'()'      :
-        $owner_name.'.'.$method->{name}.'()';
+    my $example = $method->is_init                      ?
+        $instn_name.' = '.$class_name."($signature)"    :
+        $owner_name.'.'.$method->{name}."($signature)"  ;
 
     # handle arguments.
     my $arguments = '';
-    my @args = map $_->first_child,
-        $method->body->filter_children(type => 'Instruction.WantNeed');
+    my @args = $method->arguments;
     if (@args) {
         $method->{markdown_heading_level}++;
         $arguments .= $method->get_markdown_heading('Arguments')."\n";

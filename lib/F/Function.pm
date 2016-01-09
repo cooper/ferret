@@ -18,6 +18,34 @@ sub public {
     return $f->{public};
 }
 
+sub arguments {
+    my $func = shift;
+
+    # find all the WantNeed descendants.
+    my @wn = $func->filter_descendants(type => 'WantNeed');
+
+    # filter out the ones which belong to me.
+    @wn = grep {
+        my $f = $_->first_self_or_parent('Function', 'Method');
+        $func == $f;
+    } @wn;
+
+    return @wn;
+}
+
+sub signature {
+    my @args = map {
+        my $a = {
+            name => $_->variable->{var_name},
+            type => $_->var_type || undef,
+            more => $_->{ellipsis},
+            optional => $_->{arg_type} eq 'want'
+        };
+        $a
+    } shift->arguments;
+    return \@args;
+}
+
 sub desc {
     my $func = shift;
     return 'anonymous function' if $func->anonymous;

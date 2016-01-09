@@ -58,7 +58,7 @@ sub build_name {
 #
 
 sub signature_to_string {
-    my $signature = shift;
+    my ($signature, $add_commas) = @_;
     my @parts;
     foreach my $sig (@$signature) {
         my $s =
@@ -67,7 +67,8 @@ sub signature_to_string {
             ($sig->{more}     ? '...'            : '');
         push @parts, $s;
     }
-    return join ' ', @parts;
+    my $sep = $add_commas ? ', ' : ' ';
+    return join $sep, @parts;
 }
 
 sub string_to_signature {
@@ -86,6 +87,17 @@ sub string_to_signature {
     }
 
     return \@parts;
+}
+
+# grep only needs, no wants.
+sub signature_need_only {
+    my $signature = shift;
+    my @final;
+    foreach my $sig (@$signature) {
+        next if $sig->{optional};
+        push @final, $sig;
+    }
+    return \@final;
 }
 
 # check if an argument signature fits into a function signature.

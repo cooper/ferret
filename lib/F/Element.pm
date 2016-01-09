@@ -80,9 +80,11 @@ sub first_parent {
 }
 
 sub first_self_or_parent {
-    my ($el, $type) = @_;
+    my ($el, @types) = @_;
     do {
-        return $el if _check_type($el, $type);
+        for (@types) {
+            return $el if _check_type($el, $_);
+        }
     } while $el = $el->{parent};
     return;
 }
