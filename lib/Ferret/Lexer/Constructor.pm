@@ -627,6 +627,25 @@ sub c_KEYWORD_IN {
 
 }
 
+sub c_KEYWORD_NEXT { handle_loop_statement('next', @_) }
+sub c_KEYWORD_LAST { handle_loop_statement('last', @_) }
+sub c_KEYWORD_REDO { handle_loop_statement('redo', @_) }
+
+sub handle_loop_statement {
+    my ($type, $c) = @_;
+
+    # Rule LoopStatement[0]:
+    #   Direct parent must be of type Instruction.
+
+    # Rule LoopStatement[1]:
+    #   Must be somewhere inside the body of a For loop.
+
+    my $stmt = F::new('LoopStatement', loop_stmt_name => $type);
+    $c->node->adopt($stmt);
+
+    return $stmt;
+}
+
 sub c_KEYWORD_LOAD {
     my ($c, $value) = @_;
 
@@ -1132,7 +1151,7 @@ sub c_OP_SEMI {
     $c->close_nodes(qw(
         WantNeed WantNeedType WantNeedValue PropertyModifier Negation
         Alias FailThrow Assignment Return ReturnPair TypeRequirement Operation
-        SharedDeclaration LocalDeclaration Load Stop Take
+        SharedDeclaration LocalDeclaration Load Stop LoopStatement Take
     ));
 
     # special case:

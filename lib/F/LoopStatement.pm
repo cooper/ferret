@@ -1,12 +1,13 @@
 # Copyright 2015, Mitchell Cooper
-package F::Stop;
+package F::LoopStatement;
 
 use warnings;
 use strict;
 use parent qw(F::Element);
 
 sub perl_fmt_do {
-    return '$ret->stop';
+    my $name = shift->{loop_stmt_name};
+    return "return \$loop->{$name}()";
 }
 
 1

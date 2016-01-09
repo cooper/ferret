@@ -24,6 +24,7 @@ my $keyword_reg = '\\b(?:'.join('|', qw{
     if          else        return      stop
     true        false       undefined   defer
     for         in          gather      take
+    next        last        redo        continue
     type        alias       delete      weaken
     can         satisfies   transform   isa
     __END__     throw       fail        catch
@@ -339,7 +340,7 @@ sub _escape {
 
 sub handle_doc_comment {
     my ($tokens, $value) = @_;
-    increment_lines(@_); 
+    increment_lines(@_);
     my $pfx = \substr($value, 0, 2);
     if ($$pfx eq '#<') {
         $$pfx = '';

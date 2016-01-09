@@ -534,6 +534,24 @@ our %element_rules = (
 
     },
 
+    LoopStatement => {
+
+        parent_must_be => [                                                     # LoopStatement[0]
+            'Instruction',
+            'Loop control statement (next/last/redo) must be a direct child '.
+            'of an instruction',
+            0
+        ],
+
+        must_be_somewhere_inside => [                                           # LoopStatement[1]
+            'ForBody',
+            'Loop control statement (next/last/redo) must be inside a for '.
+            'loop body',
+            1
+        ]
+
+    },
+
     PropertyVariable => {
 
         must_be_somewhere_inside => [                                           # PropertyVariable[0]

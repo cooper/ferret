@@ -163,7 +163,8 @@ sub markdown_fmt {
         description => dot_trim($comment),
         heading     => $head,
         example     => $example,
-        arguments   => $arguments
+        arguments   => $arguments,
+        computed    => $method->{p_set} ? 'Once-computed' : 'Computed'
     };
 }
 

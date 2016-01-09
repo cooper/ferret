@@ -1,5 +1,5 @@
 FF::iterate_pair($f, $scope, <<collection>>, '<<var1_name>>', '<<var2_name>>', sub {
-    my ($scope) = @_;
+    my ($scope, $loop) = @_;
     <<mys>>
     <<body>>
 }, <<pos>>);

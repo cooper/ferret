@@ -37,42 +37,63 @@ method split {
 #| For example, `"Hi <<name>>!".fill(name: "Steve")` returns `"Hi Steve!"`.
 #|
 method fill {
+
     #> If provided, the keys and values in this hash will be used to
     #| fill the placeholders rather than the named argument pairs.
     want $valueHash: Hash
+
 }
 
 #> Looks for the provided substring at the beginning of the string.
 #> Returns a boolean true value if the prefix exists.
 method hasPrefix {
+
     #> the prefix to look for
     need $prefix: Str
+
 }
 
 #> Returns a string with the provided substring removed from the
 #| beginning of the original string. If the string does not
 #| have that prefix, the original string is returned.
 method trimPrefix {
+
     #> the prefix to remove
     need $prefix: Str
+
 }
 
 #> An interface to which only non-empty strings comply.
 type NonEmpty {
+
+    #> The object is a string.
     isa *class
+
+    #> The string length is not zero.
     satisfies .length != 0
+
 }
 
 #> Performs an uppercase transformation.
 type Uppercase {
+
+    #> The object is a string.
     isa *class
+
+    #> Transform the string to an uppercase version.
     transform .uppercase
+
 }
 
 #> Performs a lowercase transformation.
 type Lowercase {
+
+    #> The object is a string.
     isa *class
+
+    #> Transform the string to a lowercase version.
     transform .lowercase
+
 }
 
 alias UC = Uppercase

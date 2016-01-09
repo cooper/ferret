@@ -160,13 +160,25 @@ sub on {
     return;
 }
 
+my %loop_returns = map {
+    my $r = $_;
+    $r => sub { return $r };
+} qw(next last redo);
+
 # iterate over a list.
 sub iterate {
     my ($f, $outer_scope, $collection, $var_name, $code, $pos) = @_;
     foreach ($collection->iterate($pos)) {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
         $scope->set_property($var_name => $_);
-        $code->($scope);
+
+        # call the code.
+        my $ret = $code->($scope, \%loop_returns);
+        next if !$ret;
+
+        next if $ret eq 'next';
+        last if $ret eq 'last';
+        redo if $ret eq 'redo';
     }
     return;
 }
@@ -176,13 +188,20 @@ sub iterate_pair {
     my ($f, $outer_scope, $collection,
         $var1_name, $var2_name, $code, $pos) = @_;
     foreach ($collection->iterate_pair($pos)) {
+
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
 
         # ->iterate_pair returns arrayref [key, value].
         $scope->set_property($var1_name => $_->[0]);
         $scope->set_property($var2_name => $_->[1]);
 
-        $code->($scope);
+        # call the code.
+        my $ret = $code->($scope, \%loop_returns);
+        next if !$ret;
+
+        next if $ret eq 'next';
+        last if $ret eq 'last';
+        redo if $ret eq 'redo';
     }
     return;
 }
