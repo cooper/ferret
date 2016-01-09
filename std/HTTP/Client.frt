@@ -1,48 +1,63 @@
 package HTTP
 class Client 1.0
+#< Represents an HTTP user agent.
 
 $defaultUA = "ferret-http/*class.version"
 $defaultLength = 64 * 1024
 
 init {
 
-    # HTTP user agent
+    #> HTTP user agent
     want @userAgent: Str = $defaultUA
 
-    # request timeout. set to undefined for no timeout.
+    #> Request timeout. Set to undefined for no timeout.
     want @timeout: Num = 10
 
-    # maximum length of content.
-    # if reached, the connection will be closed
-    # and the response will be truncated to this length.
-    # default is no limit
+    #> Maximum length of content.
+    #| If reached, the connection will be closed
+    #| and the response will be truncated to this length.
+    #| By default, there is no limit.
     want @maxContentLength: Num
 
-    # read/write lengths. default 64 KB.
+    #> Read length. Default is 64 KB.
     want @readLength:  Num = $defaultLength
+
+    #> Write length. Default is 64 KB.
     want @writeLength: Num = $defaultLength
 
     NATIVE::HTTPClient.initialize(*self)
 }
 
+#> Convenient method for a GET request.
+#| See the [`request`](#request) method.
 method get {
-    need $url: Str
+    need $url: Str  #< HTTP URL to request
     return @request(
         httpMethod: :GET,
         url:        $url
     )
 }
 
+#> Convenient method for a POST request.
+#| See the [`request`](#request) method.
 method post {
-    need $url: Str
+    need $url: Str  #< HTTP URL to request
     return @request(
         httpMethod: :POST,
         url:        $url
     )
 }
 
+#> Creates an [`HTTP::Request`](Request.md).
 method request {
-    need $httpMethod: HTTPMethod, $url: Str
+
+    #> Request HTTP method.
+    #| See [HTTPMethod](../HTTP.md#httpmethod) interface.
+    need $httpMethod: HTTPMethod
+
+    #> HTTP URL to request
+    need $url: Str
+
     return HTTP::Request(
         client:     *self,
         httpMethod: $httpMethod,

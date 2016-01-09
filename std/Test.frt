@@ -54,6 +54,7 @@ method objectsNotEqual {
     return @_test($a !== $b, "Objects must not be equal")
 }
 
+#> Prints the test review.
 method review {
     $failed = @tested - @passed
     say("[@name] @tested tests @passed passed $failed failed")

@@ -103,9 +103,9 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'client', 7.2 ) or return;
-                $self->set_property( client => $$scope->{'client'}, 8.2 );
-                $self->weaken_property( 'client', 9.1 );
+                FF::need( $scope, $args, 'client', 9.2 ) or return;
+                $self->set_property( client => $$scope->{'client'}, 10.2 );
+                $self->weaken_property( 'client', 11.1 );
                 FF::need( $self, $args, 'url' )        or return;
                 FF::need( $self, $args, 'httpMethod' ) or return;
                 return $ret;
@@ -121,7 +121,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 ${ $$scope->{'NATIVE::HTTPClient'} }->{'connect'}->(
                     [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, 17.25
+                    $scope, undef, 26.25
                 );
                 return $ret;
             }

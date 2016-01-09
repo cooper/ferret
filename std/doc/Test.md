@@ -127,6 +127,8 @@ Test succeeds if `$a !== $b`.
 $test.review()
 ```
 
+Prints the test review.
+
 
 
 

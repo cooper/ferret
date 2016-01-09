@@ -111,7 +111,8 @@ sub is_init {
 }
 
 sub markdown_fmt {
-    my $method = shift;
+    my $method  = shift;
+    my $no_body = !defined $method->body->{open_pos};
 
     # create heading.
     my $head = $method->get_markdown_heading(
@@ -154,6 +155,7 @@ sub markdown_fmt {
 
     return method => {
         name        => $method->{name},
+        hook        => $no_body ? 'Hook. ' : '',
         description => dot_trim($comment),
         heading     => $head,
         example     => $example,

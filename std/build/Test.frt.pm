@@ -480,7 +480,7 @@ my $result = do {
                     $scope,
                     failed =>
                       _sub( $scope, $$self->{'tested'}, $$self->{'passed'} ),
-                    $file_scope, 58.2
+                    $file_scope, 59.2
                 );
                 $$scope->{'say'}->(
                     [
@@ -492,15 +492,15 @@ my $result = do {
                             $$scope->{'failed'}, str( $f, " failed" )
                         )
                     ],
-                    $scope, undef, 59.06667
+                    $scope, undef, 60.06667
                 );
-                $ret->set_property( tests  => $$self->{'tested'},  61.2 );
-                $ret->set_property( fails  => $$scope->{'failed'}, 62.2 );
-                $ret->set_property( passes => $$self->{'passed'},  63.2 );
+                $ret->set_property( tests  => $$self->{'tested'},  62.2 );
+                $ret->set_property( fails  => $$scope->{'failed'}, 63.2 );
+                $ret->set_property( passes => $$self->{'passed'},  64.2 );
                 $ret->set_property(
                     allOK =>
                       equal( $scope, $$self->{'passed'}, $$self->{'tested'} ),
-                    64.2
+                    65.2
                 );
                 return $ret;
             }
@@ -525,20 +525,20 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'yes',     68.2 ) or return;
-                FF::need( $scope, $args, 'message', 68.4 ) or return;
+                FF::need( $scope, $args, 'yes',     69.2 ) or return;
+                FF::need( $scope, $args, 'message', 69.4 ) or return;
                 $self->set_property(
                     tested => add( $scope, $$self->{'tested'}, num( $f, "1" ) ),
-                    70.2
+                    71.2
                 );
-                $ret->set_property( pass => $$scope->{'yes'}, 71.2 );
+                $ret->set_property( pass => $$scope->{'yes'}, 72.2 );
                 if ( bool( $$scope->{'yes'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $self->set_property(
                         passed =>
                           add( $scope, $$self->{'passed'}, num( $f, "1" ) ),
-                        74.2
+                        75.2
                     );
                     return;
                 }
@@ -551,11 +551,11 @@ my $result = do {
                                 FF::get_symbol( $f, 'TestFailure' ),
                                 $$scope->{'message'}
                             ],
-                            $scope, undef, 79.3
+                            $scope, undef, 80.3
                         )
                     );
                 }
-                $ret->set_property( message => $$scope->{'message'}, 81.2 );
+                $ret->set_property( message => $$scope->{'message'}, 82.2 );
                 return $ret;
             }
         );

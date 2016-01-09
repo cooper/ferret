@@ -1,31 +1,40 @@
 package HTTP
 class Request
 
+#> HTTP request objects generally are not created directly. Instead, use the
+#| methods provided by the [`Client`](Client.md) class.
 init {
 
-    # hold a weak reference to the client.
+    #> an HTTP::Client, representing the user agent
     need $client: Client
     @client = $client
     weaken @client
 
+    #> HTTP URL to request
     need @url: Str
+
+    #> Request HTTP method.
+    #| See [HTTPMethod](../HTTP.md#httpmethod) interface.
     need @httpMethod: HTTPMethod
+
 }
 
-#
+#> Initializes the asynchronous HTTP connection.
+#| Afterward, either the [`connected`](#connected) or [`error`](#connected)
+#| event will be called.
 method connect {
     NATIVE::HTTPClient.connect(@client, *self)
 }
 
-# called when the connection opens
-# may be called multiple times if redirected or retried
+#> Called when the connection opens.
+#> May be called multiple times if the request is redirected or retried.
 method connected
 
-# called when redirected
+#> Called when the request was redirected by an HTTP location header.
 method redirect
 
-# called when a connection error occurs
+#> Called when a connection error occurs.
 method error
 
-# called when a response comes in
+#> Called when an HTTP response is constructed.
 method response

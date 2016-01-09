@@ -44,6 +44,17 @@ sub construct {
 
     while (my ($label, $value, $position) = @{ shift @tokens || [] }) {
         return $err if $err = handle_label($label, $value, $position);
+
+        # update last_el.
+        my $old_el  = $current->{last_el} || 0;
+        my $last_el = ($current->node->children)[-1] || $current->node;
+        $current->{last_el} = $last_el;
+
+        # pending comment.
+        if ($last_el != $old_el && $current->{doc_comment}) {
+            $last_el->{doc_comment} = delete $current->{doc_comment};
+        }
+
     }
 
     # inject includes and EOF.
@@ -71,25 +82,18 @@ sub check_error {
 
 sub handle_label {
     my ($label, $value, $position) = @_;
-    my $redo = sub { handle_label($label, $value, $position) };
-    my $last_el = ($current->node->children)[-1] || $current->node;
+    my $redo    = sub { handle_label($label, $value, $position) };
     $position //= 0;
     my $err;
-
-    # pending comment.
-    if ($last_el != ($current->{last_el}||0) && $current->{doc_comment}) {
-        $last_el->{doc_comment} = delete $current->{doc_comment};
-    }
 
     # check for error.
     return $err if $err = check_error();
 
     # current info.
-    @$current{ qw(label value line position next_tok last_el unknown_el) } = (
+    @$current{ qw(label value line position next_tok unknown_el) } = (
         $label, $value,
         int $position, $position,
         $current->{upcoming}[0],
-        $last_el,
         undef
     );
 
