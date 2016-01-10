@@ -104,6 +104,12 @@ sub type_link {
     return $link_map->{$type_name} || $type_name;
 }
 
+# regex string.
+sub regex_str {
+    my ($rgx, $mods) = @_;
+    return  "(?$mods:$rgx)";
+}
+
 ###########################
 ### FUNCTION SIGNATURES ###
 ###########################

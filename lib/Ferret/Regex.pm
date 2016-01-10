@@ -8,6 +8,7 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(blessed looks_like_number);
+use Ferret::Shared::Utils qw(regex_str);
 use Ferret::Core::Conversion qw(
     pstring pnumber phashref plist
     fstring flist fbool fnumber fsym
@@ -42,8 +43,11 @@ sub init {
     my ($rgx, $args) = @_;
     my $rgxs = $rgx->{regex_str} = $args->pstring('rgx');
     my $mods = $rgx->{mods_str}  = $args->pstring('mods');
-    my $rgx_string = "(?$mods:$rgxs)";
+    my $rgx_string = regex_str($rgxs, $mods);
+
+    # TODO: error handling if it is invalid / fails to compile.
     $rgx->{rgx_value} = qr/$rgx_string/;
+
 }
 
 sub description {

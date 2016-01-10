@@ -5,6 +5,8 @@ use warnings;
 use strict;
 use 5.010;
 
+use Ferret::Shared::Utils qw(regex_str);
+
 my $error;
 
 our %errors = (
@@ -25,6 +27,10 @@ our %errors = (
         message => "Found multiple declarations using the name '%s' in the same scope",
         hint_0  => "The first is a %s, declared on line %d",
         hint_1  => "The second is a %s, declared on line %d"
+    },
+    InvalidRegularExpression => {
+        message => "Failed to compile constant regular expression /%s/%s",
+        hint_0  => "Engine: %s"
     }
 );
 
@@ -40,6 +46,7 @@ sub error_string {
         # it's hint $i with arguments
         if (ref $found eq 'ARRAY') {
             my $hint_msg = sprintf $errors{$type}{"hint_$i"}, @$found;
+            $hint_msg =~ s/(\s|\.)$//g;
             push @hint_msgs, $hint_msg;
             next;
         }
@@ -71,6 +78,9 @@ sub verify {
 
     # raise error for multiple bareword declarations by same name in same scope
     identify_duplicate_barewords($v, $main_node) and return;
+
+    # check validity of constant regular expressions.
+    verify_regular_expressions($v, $main_node) and return;
 
 }
 
@@ -393,6 +403,20 @@ sub identify_duplicate_barewords {
     }
 
     return;
+}
+
+sub verify_regular_expressions {
+    my ($v, $main_node) = @_;
+    my @regexes = $main_node->filter_descendants(type => 'Regex');
+    foreach my $regex (@regexes) {
+        my $regex_str = regex_str(@$regex{'value', 'mods'});
+        next if eval { qr/$regex_str/; 1 };
+        (my $msg = $@) =~ s/ at (.+?)\.pm line (\d+)//g;
+        return $regex->throw([ [$msg] ], InvalidRegularExpression =>
+            $regex->{value} // '',
+            $regex->{mods}  // ''
+        );
+    }
 }
 
 1

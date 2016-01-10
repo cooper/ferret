@@ -6,7 +6,7 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Shared::Utils qw(import);
+use Ferret::Shared::Utils qw(import regex_str);
 use List::Util qw(any all);
 
 BEGIN {
@@ -88,7 +88,7 @@ sub num { Ferret::Number->new(shift, num_value => shift) }
 sub str { Ferret::String->new(shift, str_value => shift) }
 sub rgx {
     my ($f, $id, $rgx, $mods) = @_;
-    $id //= "(?$mods:$rgx)";
+    $id //= regex_str($rgx, $mods);
     return $f->{constant_expressions}{$id} ||= Ferret::Regex->new($f,
         init_args => {
             rgx  => $rgx,
