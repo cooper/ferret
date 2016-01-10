@@ -51,6 +51,10 @@ my @methods = (
         prop => 1,
         code => \&_lowercase
     },
+    match => {
+        need => '$rgx:Rgx',
+        code => \&_match
+    },
     hashValue => {
         code => \&_hash_value
     },
@@ -198,6 +202,18 @@ sub _to_number {
     return fnumber($str->{str_value} + 0)
         if looks_like_number($str->{str_value});
     return fnumber(0);
+}
+
+# consider: "hello".match(/anything/) will always be true.
+# if only there were a way for the return object to be false,
+# without fail. fail without an error? hmm...
+sub _match {
+    my ($str, $args, undef, undef, $ret) = @_;
+    my $rgx = $args->pregex('rgx');
+    my (@parts) = $str->{str_value} =~ m/$rgx/;
+    $ret->set_property(matched => fbool(scalar @parts));
+    $ret->set_property(parts   => flist(@parts)) if @parts;
+    return $ret;
 }
 
 sub description {

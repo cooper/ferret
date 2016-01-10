@@ -270,6 +270,8 @@ sub bind_constructor {
 
     # find init arguments.
     my $arguments = delete $opts{init_args} || {};
+    $arguments->{$_} = Ferret::Core::Conversion::ferretize($arguments->{$_})
+        for keys %$arguments;
 
     # create and bless an object.
     my $obj = Ferret::Object->new($f, %opts);
@@ -346,6 +348,7 @@ sub runtime {
 
 use Ferret::Object;
 use Ferret::String;
+use Ferret::Regex;
 use Ferret::Number;
 use Ferret::Context;
 use Ferret::Function;

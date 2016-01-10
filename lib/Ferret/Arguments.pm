@@ -8,6 +8,7 @@ use 5.010;
 
 use Ferret::Core::Conversion qw(
     _pstring
+    _pregex
     _pnumber
     _pbool
     _plist
@@ -19,6 +20,11 @@ sub pstring {
     my $value = _pstring($obj->{$prop_name});
     $value = length $value ? $value : ($fallback // '');
     return $value;
+}
+
+sub pregex {
+    my ($obj, $prop_name) = @_;
+    return _pregex($obj->{$prop_name});
 }
 
 sub pnumber {

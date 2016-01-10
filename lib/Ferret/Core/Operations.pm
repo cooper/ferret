@@ -84,5 +84,9 @@ sub _not {
 
 sub num { Ferret::Number->new(shift, num_value => shift) }
 sub str { Ferret::String->new(shift, str_value => shift) }
-sub rgx { Ferret::Regex->new(shift, rgx_string => shift, rgx_mods => shift ) }
+sub rgx { Ferret::Regex->new(shift, init_args => {
+    rgx  => shift,
+    mods => shift
+}) }
+
 1

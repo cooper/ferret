@@ -140,6 +140,20 @@ sub pnumber {
 
 }
 
+#############
+### REGEX ###
+#############
+
+sub fregex {
+    
+}
+
+sub pregex {
+    my $rgx = shift;
+    return $rgx if !blessed $rgx;
+    return $rgx->{rgx_value}; # FIXME: fregex($rgx)->{rgx_value}
+}
+
 ################
 ### BOOLEANS ###
 ################
