@@ -155,7 +155,7 @@ my $result = do {
         $$scope->{'list'},
         'item',
         sub {
-            my ($scope) = @_;
+            my ( $scope, $loop ) = @_;
 
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "item: " ), $$scope->{'item'} ) ],
@@ -193,7 +193,7 @@ my $result = do {
         $$scope->{'hash'},
         'key', 'val',
         sub {
-            my ($scope) = @_;
+            my ( $scope, $loop ) = @_;
 
             $$scope->{'say'}->(
                 [

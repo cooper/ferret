@@ -620,7 +620,7 @@ my $result = do {
                     $$self->{'autojoin'},
                     'chan',
                     sub {
-                        my ($scope) = @_;
+                        my ( $scope, $loop ) = @_;
 
                         $$self->{'send'}->(
                             [
@@ -1077,7 +1077,7 @@ my $result = do {
                       ->( [ str( $f, "\n" ) ], $scope, undef, 85.3 ),
                     'line',
                     sub {
-                        my ($scope) = @_;
+                        my ( $scope, $loop ) = @_;
 
                         if (
                             bool(

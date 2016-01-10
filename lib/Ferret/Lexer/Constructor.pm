@@ -675,7 +675,8 @@ sub c_KEYWORD_STOP {
     #   Direct children must be of type Function or Method.
 
     my $stop = F::new('Stop');
-    $c->adopt_and_set_node($stop);
+    $c->node->adopt($stop);
+    # $c->adopt_and_set_node($stop); # once it takes an arg
 }
 
 sub c_KEYWORD_DEFER {

@@ -247,7 +247,7 @@ my $result = do {
                             $$scope->{'nums'},
                             'n',
                             sub {
-                                my ($scope) = @_;
+                                my ( $scope, $loop ) = @_;
 
                                 if ( bool( ${ $$scope->{'n'} }->{'even'} ) ) {
                                     my $scope =
@@ -300,7 +300,7 @@ my $result = do {
         ),
         'pt',
         sub {
-            my ($scope) = @_;
+            my ( $scope, $loop ) = @_;
 
             $$scope->{'inspect'}->(
                 [

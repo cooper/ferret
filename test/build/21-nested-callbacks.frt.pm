@@ -122,7 +122,7 @@ my $result = do {
         $$scope->{'parts'},
         'i', 'part',
         sub {
-            my ($scope) = @_;
+            my ( $scope, $loop ) = @_;
 
             FF::on(
                 ${
@@ -146,7 +146,7 @@ my $result = do {
         ),
         'part',
         sub {
-            my ($scope) = @_;
+            my ( $scope, $loop ) = @_;
 
             $$scope->{'say'}->( [ $$scope->{'part'} ], $scope, undef, 10.2 );
         },

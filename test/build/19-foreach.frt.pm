@@ -61,7 +61,7 @@ my $result = do {
         $$scope->{'words'},
         'word',
         sub {
-            my ($scope) = @_;
+            my ( $scope, $loop ) = @_;
 
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "part: " ), $$scope->{'word'} ) ],
