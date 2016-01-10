@@ -641,7 +641,34 @@ for ($firstWord, $others) in $hash {
 
 ### in
 
-Compliment to the [`for`](#for) keyword.
+Compliment to the [`for`](#for) while iterating over a collection. Expects
+an expression over which to iterate.
+
+## next
+
+```
+next
+```
+
+Jumps to the next iteration of the current [`for`](#for) loop. This is like
+`continue` in C.
+
+## last
+
+```
+last
+```
+
+Immediately exits the current [`for`](#for) loop. This is like `break` in C.
+
+## redo
+
+```
+redo
+```
+
+Restarts the current [`for`](#for) loop iteration without reevaluating the
+conditional.
 
 ### \_\_END\_\_
 
@@ -691,7 +718,7 @@ ok()    # says "hello" then "goodbye"
 ### type
 
 ```
-type <name> { [(<conditions>|<transforms>|<expresions>)...] }
+type[?] <name> { [(<conditions>|<transforms>|<expresions>)...] }
 ```
 
 Defines a type interface for dynamic type checking. This is especially useful
@@ -732,6 +759,12 @@ or another object returned by a [`transform`](#transform). If it fails,
 
 The finished type function will be available only within the
 [scope of interest](Scopes.md#scope-of-interest).
+
+If the keyword is spelled `type?` with a question mark
+([`OP_MAYBE`](Operators.md#inline-if-operator)) suffixing it, the interface
+function will not be created until the first time it is referenced.
+This works similarly to lazy assignment with the `?=` operator
+([`OP_LASSIGN`](Operators.md#lazy-assignment-operator)).
 
 Below is an example with only expressions provided. For examples with various
 conditions or transforms, see the respective keywords.
@@ -947,7 +980,7 @@ alwaysFails() catch $e {
 ### alias
 
 ```
-alias (<type_name>|<func_name>) = (<other_type_name>|<other_func_name>)
+alias[?] (<type_name>|<func_name>) = (<other_type_name>|<other_func_name>)
 ```
 
 Declares that a function, method, or type is an alias for another.
@@ -955,6 +988,13 @@ Declares that a function, method, or type is an alias for another.
 For functions, this is similar to `func <func_name> { <other_func_name>() }`,
 without considering arguments. For types, this is functionally equivalent to
 `type <type_name> { isa <other_type_name> }`.
+
+If the keyword is spelled `alias?` with a question mark
+([`OP_MAYBE`](Operators.md#inline-if-operator)) suffixing it, the alias
+will not be created until the first time it is referenced. This is only useful
+when the target itself is lazy-evaluated, such as a `type?` or `prop?`.
+This works similarly to lazy assignment with the `?=` operator
+([`OP_LASSIGN`](Operators.md#lazy-assignment-operator)).
 
 The finished type or function will be available only within the
 [scope of interest](Scopes.md#scope-of-interest).

@@ -426,6 +426,18 @@ Tokenized as `OP_EQUAL_I`.
     false === false             # true
      true === true === false    # false
 
+### Similarity operator
+
+    =~
+
+Tests the logical similarity of two or more values. The result is dependent
+on the combination of data types and their similarity method implementations.
+
+Tokenized as `OP_SIM`.
+
+    "hi" =~ /^h/    # true
+    "hi" =~ /k/     # false
+
 ### Negated equality operator
 
     !=
@@ -449,3 +461,15 @@ Tokenized as `OP_NEQUAL_I`.
     false !== true  # true
      "hi" !== "hi"  # true
      true !== true  # false
+
+### Negated similarity operator
+
+    !~
+
+Tests the logical dissimilarity of two or more values. The result is dependent
+on the combination of data types and their similarity method implementations.
+
+Tokenized as `OP_NSIM`.
+
+    "hi" !~ /^h/    # false
+    "hi" !~ /k/     # true
