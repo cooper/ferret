@@ -989,6 +989,14 @@ sub c_STRING {
     return $c->node->adopt($string);
 }
 
+sub c_REGEX {
+    my ($c, $value) = @_;
+    my ($rgx, $mods) = $value;
+       ($rgx, $mods) = @$value if ref $value;
+    my $regex = F::new('Regex', value => $rgx, mods => $mods);
+    return $c->node->adopt($regex);
+}
+
 sub c_NUMBER {
     my ($c, $value) = @_;
 

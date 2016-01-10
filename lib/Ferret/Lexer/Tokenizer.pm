@@ -50,7 +50,7 @@ my %semi_follows = map { $_ => 1 } qw(
     PROPERTY        NUMBER          STRING
     BAREWORD        VAR_THIS        VAR_SPEC
     VAR_SET         VAR_SYM         VAR_LEX
-    OP_CALL         OP_ELLIP
+    OP_CALL         OP_ELLIP        REGEX
     KEYWORD_TRUE    KEYWORD_FALSE   KEYWORD_UNDEFINED
     KEYWORD_RETURN  KEYWORD_STOP
 );
@@ -188,7 +188,7 @@ sub possibly_call {
 # differentiate strings and regex.
 sub tok_STR_REG {
     my ($tokens, $value) = @_;
-    my ($dat, $is_str, $in_str, $in_exp, $escaped, $var, @parts) = '';
+    my ($dat, $is_str, $in_str, $in_exp, $start_mod, $escaped, $var, @parts) = '';
 
     my $next_works = sub {
         my ($var, $char) = @_;
@@ -199,9 +199,8 @@ sub tok_STR_REG {
     for my $char (split //, $value) {
 
         # this char was escaped.
-        # TODO: consider how this should be handled in regex.
         if ($escaped) {
-            $dat .= _escape($char);
+            $dat .= _escape($char, $is_str);
             undef $escaped;
             next;
         }
@@ -221,6 +220,7 @@ sub tok_STR_REG {
 
         # start or end the regex.
         if ($char eq '/' && !$in_str) {
+            $start_mod = $in_exp;  # if we were in regex, these are modifiers now
             $in_exp = !$in_exp;
             next;
         }
@@ -256,8 +256,22 @@ sub tok_STR_REG {
 
         }
 
-        # regex is fallback because of modifiers.
-        $dat .= $char;
+        # this is the start of the modifiers.
+        if ($start_mod) {
+            undef $start_mod;
+            push @parts, [ $dat, '' ];
+            $dat = '';
+        }
+
+        # array - this is a regex and here are the modifiers.
+        if (ref $parts[-1] eq 'ARRAY') {
+            $parts[-1][1] .= $char;
+        }
+
+        # either $in_exp or $in_str.
+        else {
+            $dat .= $char;
+        }
 
     }
 
@@ -267,6 +281,13 @@ sub tok_STR_REG {
     # tokenize the variables.
     my $i = -1;
     foreach my $part (@parts) { $i++;
+
+        # if it's an ARRAY, it's a regex with modifiers.
+        if (!$is_str && ref $part eq 'ARRAY') {
+            $parts[$i] = [ REGEX =>  $part, int $position ];
+            next;
+        }
+
         ref $part eq 'HASH' or next;
 
         # no length for the variable. just insert the sigil.
@@ -279,6 +300,7 @@ sub tok_STR_REG {
         $parts[$i] = (_tokenize($code, undef, 1))[1];
     }
 
+    @parts = grep length, @parts;
     @parts = "" if !@parts;
     return $is_str ? [ STRING => \@parts ] : [ REGEX => \@parts ];
 }
@@ -311,10 +333,10 @@ sub handle_strings {
             $line = $part->[2] if ref $part;
             my $add = [ 'OP_ADD', undef, $line ];
 
-            # simple string.
+            # simple string or regex.
             if (!ref $part) {
                 push @parts, $add if @parts;
-                push @parts, [ STRING => $part, $line ];
+                push @parts, [ $type => $part, $line ];
                 next;
             }
 
@@ -331,11 +353,18 @@ sub handle_strings {
 }
 
 sub _escape {
-    my $char = shift;
-    # TODO: do this correctly
+    my ($char, $is_str) = @_;
+
+    # if this is regex, escape the escape.
+    return "\\$char" if !$is_str;
+
+    # in a string, actually insert the escape character.
     return "\n" if $char eq 'n';
     return "\r" if $char eq 'r';
+
+    # fall back to the original character.
     return $char;
+
 }
 
 sub handle_doc_comment {
