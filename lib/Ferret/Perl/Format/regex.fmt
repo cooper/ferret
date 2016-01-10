@@ -1,1 +1,1 @@
-rgx($f, <<regex>>, <<mods>>)
+rgx($f, <<id>>, <<regex>>, <<mods>>)

@@ -22,6 +22,7 @@ sub perl_fmt {
     $doc->{required_operations}{rgx}++;
     return regex => {
         regex => quote($rgx->{value}),
+        id    => 'undef',
         mods  => length $rgx->{mods} ? quote($rgx->{mods}) : 'undef'
     };
 }

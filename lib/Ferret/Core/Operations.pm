@@ -86,9 +86,15 @@ sub nsim { _not(&sim) }
 
 sub num { Ferret::Number->new(shift, num_value => shift) }
 sub str { Ferret::String->new(shift, str_value => shift) }
-sub rgx { Ferret::Regex ->new(shift, init_args => {
-    rgx  => shift,
-    mods => shift
-}) }
+sub rgx {
+    my ($f, $id, $rgx, $mods) = @_;
+    $id //= "(?$mods:$rgx)";
+    return $f->{constant_expressions}{$id} ||= Ferret::Regex->new($f,
+        init_args => {
+            rgx  => $rgx,
+            mods => $mods
+        }
+    );
+}
 
 1
