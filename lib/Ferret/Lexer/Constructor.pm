@@ -1538,13 +1538,14 @@ sub c_OP_LASSIGN {
     return $a;
 }
 
-*c_OP_ADD    = *c_OP_SUB      =
-*c_OP_MUL    = *c_OP_DIV      =
-*c_OP_POW    = *c_OP_MOD      =
-*c_OP_AND    = *c_OP_OR       =
-*c_OP_EQUAL  = *c_OP_EQUAL_I  =
-*c_OP_NEQUAL = *c_OP_NEQUAL_I =
-*c_OP_RANGE  = *c_operator;
+*c_OP_ADD     = *c_OP_SUB      =
+*c_OP_MUL     = *c_OP_DIV      =
+*c_OP_POW     = *c_OP_MOD      =
+*c_OP_AND     = *c_OP_OR       =
+*c_OP_SIM     = *c_OP_NSIM     =
+*c_OP_EQUAL   = *c_OP_NEQUAL   =
+*c_OP_EQUAL_I = *c_OP_NEQUAL_I =
+*c_OP_RANGE   = *c_operator;
 
 sub c_operator {
     my ($c, $value) = @_;

@@ -717,7 +717,6 @@ sub equal_to {
     my ($left_obj, $right_obj, $scope) = @_;
 
     # try normal equality first.
-    # TODO: maybe check equality for each class implementing comparison?
     if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('equal')) {
         return $cmp->call;
     }

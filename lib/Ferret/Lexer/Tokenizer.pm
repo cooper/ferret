@@ -42,6 +42,7 @@ my %no_value = map { $_ => 1 } qw(
     OP_ASSIGN   OP_COMMA    OP_RETURN   OP_SEMI
     OP_NOT      OP_MAYBE    OP_ELLIP    OP_RANGE
     OP_MOD      OP_LASSIGN  OP_AND      OP_OR
+    OP_SIM      OP_NSIM
 );
 
 # inject semicolons after these at the end of a line.
@@ -106,7 +107,9 @@ my @token_formats = (
     [ OP_NEQUAL_I   => qr/!==/                                              ],  # negated object equality
     [ OP_EQUAL      => qr/==/                                               ],  # equality
     [ OP_NEQUAL     => qr/!=/                                               ],  # negated equality
-    [ OP_LASSIGN    => qr/\?=/                                              ],
+    [ OP_SIM        => qr/=~/                                               ],  # similarity
+    [ OP_NSIM       => qr/!~/                                               ],  # negated similarity
+    [ OP_LASSIGN    => qr/\?=/                                              ],  # lazy assignment
     [ OP_ASSIGN     => qr/=/                                                ],  # assignment
     [ OP_ADD        => qr/\+/                                               ],  # addition
     [ OP_SUB        => qr/\-/                                               ],  # subtraction

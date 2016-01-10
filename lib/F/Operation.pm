@@ -71,9 +71,14 @@ sub compile {
 
     # for each operator, while there are instances of that operator
     foreach my $op_type (qw/
-        ssub sadd range
-        pow mod mul div sub add
-        equal_i nequal_i equal nequal and or
+        ssub    sadd    range
+        pow     mod
+        mul     div
+        sub     add
+        equal_i nequal_i
+        equal   nequal
+        sim     nsim
+        and     or
     /) {
     while (grep { is_op($_, $op_type) } @children) {
         my ($i, $left, $right) = -1;

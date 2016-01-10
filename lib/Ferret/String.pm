@@ -18,6 +18,10 @@ my @methods = (
         need => '$other',
         code => \&op_add
     },
+    opSim => {
+        need => '$other:Rgx',
+        code => \&op_sim
+    },
     length => {
         code => \&_length,
         prop => 1
@@ -100,6 +104,15 @@ sub op_add {
     my $other = $args->{other};
     my $new_value = pstring($str).pstring($other);
     return fstring($new_value);
+}
+
+sub op_sim {
+    my ($str, $args, $call_scope) = @_;
+    my $rgx = $args->{other};
+    my $crt = $str->call_prop(match => [ $rgx ]);
+    # FIXME: the below is temporary
+    $call_scope->{special}->set_property(match => $crt->property('parts'));
+    return $crt->property('matched');
 }
 
 sub length : method {

@@ -11,7 +11,7 @@ use List::Util qw(any all);
 
 BEGIN {
     no strict 'refs';
-    foreach my $star (qw/range pow mod mul div add _sub/) {
+    foreach my $star (qw/range pow mod mul div add _sub sim/) {
         *$star = sub { op_star($star, @_) };
     }
 }
@@ -82,9 +82,11 @@ sub _not {
     return $val == Ferret::false ? Ferret::true : Ferret::false;
 }
 
+sub nsim { _not(&sim) }
+
 sub num { Ferret::Number->new(shift, num_value => shift) }
 sub str { Ferret::String->new(shift, str_value => shift) }
-sub rgx { Ferret::Regex->new(shift, init_args => {
+sub rgx { Ferret::Regex ->new(shift, init_args => {
     rgx  => shift,
     mods => shift
 }) }
