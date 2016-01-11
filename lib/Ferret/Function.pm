@@ -67,152 +67,14 @@ sub new {
     return $func;
 }
 
-# add an argument to the signature.
-sub add_argument {
-    my ($func, %opts) = @_;
-
-    # possible options:
-    #
-    #   name        the name of the argument (required)
-    #   type        the type, which should be a Perl string
-    #   optional    true if it's a want, not a need
-    #   more        true if the argument consumes multiple values; i.e. ellipsis
-    #
-    foreach (qw(name type more)) {
-        delete $opts{$_} if !length $opts{$_};
-    }
-
-    # for optimization, remember if the function has an ellipsis.
-    $func->{hungry} ||= $opts{name} if $opts{more};
-
-    $func->{signature}{ $opts{name} } = \%opts;
-    push @{ $func->{signatures} }, \%opts;
-}
-
-# convert a list of arguments into a hash using the signature.
-# this does NOT check if the requirements were satisfied.
-sub handle_arguments {
-    my ($func, @args, %args) = (shift, @{ +shift });
-    my @sigs = @{ $func->{signatures} };
-
-    # the last argument may be a hash ref with named arguments.
-    my %named_args;
-    if (ref $args[$#args] eq 'HASH') {
-        %named_args = %{ pop @args };
-    }
-
-    while (@sigs) {
-        my $sig = shift @sigs;
-
-        # ellipsis
-        if ($sig->{more}) {
-            $args{ $sig->{name} } = flist(@args);
-            last;
-        }
-
-        my $val = shift @args;
-        $args{ $sig->{name} } = $val if $val;
-    }
-
-    @args{ keys %named_args } = values %named_args;
-    return \%args;
-}
-
-# check that the requirements are present and of correct types.
-sub arguments_satisfy_signature {
-    my ($func, $arguments) = @_;
-    foreach my $sig (@{ $func->{signatures} }) {
-        my ($name, $type) = @$sig{ qw(name type) };
-
-        next if $sig->{optional} && !length $type;
-
-        # check things.
-        my $arg = $arguments->{ $name };
-        return if !$arg && !$sig->{optional};   # need must be present
-        next   if !$arg;                        # want with no value
-        next   if !length $type;                # want/need with no type check
-
-        # if this is an ellipsis, check all of the items.
-        my $type_obj = $func->_get_type($type) if $type;
-        if ($sig->{more}) {
-            my $flist = $arguments->{$name};
-            my @plist = plist($flist);
-
-            # if we couldn't resolve a type, use a List.
-            # FIXME: what if a type was provided but does not exist?
-            if (!$type_obj) {
-                $arguments->{$name} = $flist;
-                next if @plist;
-            }
-
-            # otherwise, make a set.
-            my @items = grep defined,
-                map $func->obj_type_works($_, $type_obj), @plist;
-            $arguments->{$name} =
-                !@items                                              ?
-                $flist                                               :
-                $type_obj->isa('Ferret::Class')                      ?
-                fset($type_obj, grep !Ferret::undefined($_), @items) :
-                fset(grep !Ferret::undefined($_), @items);
-
-            next if @items;
-        }
-
-        # check that it works.
-        else {
-            next if $arguments->{$name} = $func->obj_type_works($arg, $type);
-        }
-
-        # bad news.
-        return if !$sig->{optional};   # bad type for need
-        delete $arguments->{$name};    # bad type for want
-
-    }
-    return 1;
-}
-
-sub _get_type {
-    my ($func, $type) = @_;
-    return $type if blessed $type;
-
-    # find scope of interest.
-    my $soi = $func->{outer_scope} || $func->f->main_context;
-    $soi = $soi->closest_context;
-
-    # get object.
-    return $soi->property($type) or return;
-}
-
-sub obj_type_works {
-    my ($func, $obj, $type) = @_;
-    $type = $func->_get_type($type) or return;
-
-    # if this is a function, use its return value.
-    if ($type->isa('Ferret::Function') || $type->isa('Ferret::Event')) {
-        return if !$type->{is_typedef};
-        return $type->call_u([ $obj ]);
-    }
-
-    return $obj if $obj->instance_of($type);
-    return;
-}
-
-sub signature_string {
-    my $func = shift;
-    return Ferret::Shared::Utils::signature_to_string($func->{signatures});
-}
+############################
+### CALLING THE FUNCTION ###
+############################
 
 sub call_with_self {
     my ($func, $self) = (shift, shift);
     $func->{force_self} = $self;
     return $func->call(@_);
-}
-
-sub description {
-    my $func = shift;
-    my $type = $func->{is_typedef} ? 'Interface' : 'Function';
-    return $type if !length $func->{name};
-    return "$type '$$func{name}'";
 }
 
 sub call {
@@ -221,11 +83,11 @@ sub call {
     # list of arguments. must use signature.
     $arguments ||= {};
     if (ref $arguments eq 'ARRAY') {
-        $arguments = $func->handle_arguments($arguments);
+        $arguments = $func->_handle_arguments($arguments);
     }
 
     # hash ref of arguments.
-    return unless $func->arguments_satisfy_signature($arguments);
+    return unless $func->_arguments_satisfy_signature($arguments);
     bless $arguments, 'Ferret::Arguments';
 
     # at this point, invalid wants have been deleted.
@@ -273,6 +135,171 @@ sub call {
 
     return $return->return($ret // Ferret::undefined);
 }
+
+
+#########################
+### ARGUMENT HANDLING ###
+#########################
+
+# add an argument to the signature.
+sub add_argument {
+    my ($func, %opts) = @_;
+
+    # possible options:
+    #
+    #   name        the name of the argument (required)
+    #   type        the type, which should be a Perl string
+    #   optional    true if it's a want, not a need
+    #   more        true if the argument consumes multiple values; i.e. ellipsis
+    #
+    foreach (qw(name type more)) {
+        delete $opts{$_} if !length $opts{$_};
+    }
+
+    # for optimization, remember if the function has an ellipsis.
+    $func->{hungry} ||= $opts{name} if $opts{more};
+
+    $func->{signature}{ $opts{name} } = \%opts;
+    push @{ $func->{signatures} }, \%opts;
+}
+
+# convert a list of arguments into a hash using the signature.
+# this does NOT check if the requirements were satisfied.
+sub _handle_arguments {
+    my ($func, @args, %args) = (shift, @{ +shift });
+    my @sigs = @{ $func->{signatures} };
+
+    # the last argument may be a hash ref with named arguments.
+    my %named_args;
+    if (ref $args[$#args] eq 'HASH') {
+        %named_args = %{ pop @args };
+    }
+
+    while (@sigs) {
+        my $sig = shift @sigs;
+
+        # ellipsis
+        if ($sig->{more}) {
+            $args{ $sig->{name} } = flist(@args);
+            last;
+        }
+
+        my $val = shift @args;
+        $args{ $sig->{name} } = $val if $val;
+    }
+
+    @args{ keys %named_args } = values %named_args;
+    return \%args;
+}
+
+# check that the requirements are present and of correct types.
+sub _arguments_satisfy_signature {
+    my ($func, $arguments) = @_;
+    foreach my $sig (@{ $func->{signatures} }) {
+        my ($name, $type) = @$sig{ qw(name type) };
+
+        next if $sig->{optional} && !length $type;
+
+        # check things.
+        my $arg = $arguments->{ $name };
+        return if !$arg && !$sig->{optional};   # need must be present
+        next   if !$arg;                        # want with no value
+        next   if !length $type;                # want/need with no type check
+
+        # if this is an ellipsis, check all of the items.
+        my $type_obj = $func->_get_type($type) if $type;
+        if ($sig->{more}) {
+            my $flist = $arguments->{$name};
+            my @plist = plist($flist);
+
+            # if we couldn't resolve a type, use a List.
+            # FIXME: what if a type was provided but does not exist?
+            if (!$type_obj) {
+                $arguments->{$name} = $flist;
+                next if @plist;
+            }
+
+            # otherwise, make a set.
+            my @items = grep defined,
+                map $func->_obj_type_works($_, $type_obj), @plist;
+            $arguments->{$name} =
+                !@items                                              ?
+                $flist                                               :
+                $type_obj->isa('Ferret::Class')                      ?
+                fset($type_obj, grep !Ferret::undefined($_), @items) :
+                fset(grep !Ferret::undefined($_), @items);
+
+            next if @items;
+        }
+
+        # check that it works.
+        else {
+            next if $arguments->{$name} = $func->_obj_type_works($arg, $type);
+        }
+
+        # bad news.
+        return if !$sig->{optional};   # bad type for need
+        delete $arguments->{$name};    # bad type for want
+
+    }
+    return 1;
+}
+
+sub _get_type {
+    my ($func, $type) = @_;
+    return $type if blessed $type;
+
+    # find scope of interest.
+    my $soi = $func->{outer_scope} || $func->f->main_context;
+    $soi = $soi->closest_context;
+
+    # get object.
+    return $soi->property($type) or return;
+}
+
+sub _obj_type_works {
+    my ($func, $obj, $type) = @_;
+    $type = $func->_get_type($type) or return;
+
+    # if this is a function, use its return value.
+    if ($type->isa('Ferret::Function') || $type->isa('Ferret::Event')) {
+        return if !$type->{is_typedef};
+        return $type->call_u([ $obj ]);
+    }
+
+    return $obj if $obj->instance_of($type);
+    return;
+}
+
+sub _parse_method_args {
+    my ($str, @args) = shift;
+    return if not defined $str;
+    foreach my $arg (split /\s+/, $str) {
+        my $more;
+
+        # ellipsis
+        my $last_three = \substr($arg, -3);
+        if ($$last_three eq '...') {
+            $$last_three = '';
+            $more = 1;
+        }
+
+        # split $name:type
+        my ($name, $type) = split /:/, $arg, 2;
+        $name =~ s/^\$//;
+
+        push @args, {
+            name => $name,
+            type => $type,
+            more => $more
+        };
+    }
+    return @args;
+}
+
+###################################
+### LEXICAL ENVIRONMENT (SCOPE) ###
+###################################
 
 sub inside_scope {
     #
@@ -332,37 +359,8 @@ sub inside_scope {
     return $func;
 }
 
-sub name          { shift->{name}          }
-sub has_name      { length shift->{name}   }
-sub is_method     { shift->{is_method}     }
-sub is_class_func { shift->{is_class_func} }
-
-sub _parse_method_args {
-    my ($str, @args) = shift;
-    return if not defined $str;
-    foreach my $arg (split /\s+/, $str) {
-        my $more;
-
-        # ellipsis
-        my $last_three = \substr($arg, -3);
-        if ($$last_three eq '...') {
-            $$last_three = '';
-            $more = 1;
-        }
-
-        # split $name:type
-        my ($name, $type) = split /:/, $arg, 2;
-        $name =~ s/^\$//;
-
-        push @args, {
-            name => $name,
-            type => $type,
-            more => $more
-        };
-    }
-    return @args;
-}
-
+# helper function for computed properties.
+# also called directly from Event.pm with $_[0] an event.
 sub _handle_property {
     my ($func_or_event, $p_set, $borrow_obj) = @_;
 
@@ -384,5 +382,26 @@ sub _handle_property {
     return [ $res, $func_or_event ];
 
 }
+
+#####################
+### MISCELLANEOUS ###
+#####################
+
+sub signature_string {
+    my $func = shift;
+    return Ferret::Shared::Utils::signature_to_string($func->{signatures});
+}
+
+sub description {
+    my $func = shift;
+    my $type = $func->{is_typedef} ? 'Interface' : 'Function';
+    return $type if !length $func->{name};
+    return "$type '$$func{name}'";
+}
+
+sub name          { shift->{name}          }
+sub has_name      { length shift->{name}   }
+sub is_method     { shift->{is_method}     }
+sub is_class_func { shift->{is_class_func} }
 
 1
