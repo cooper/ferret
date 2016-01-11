@@ -58,6 +58,7 @@ my %semi_follows = map { $_ => 1 } qw(
 
 # reused formats
 my $prop_reg    = $Ferret::Shared::Utils::prop_reg;
+my $prop_reg_n  = qr/(?:$prop_reg)|(?:[0-9]+)/;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
 my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
 my $not_esc     = qr/(?<!\\)/;
@@ -77,7 +78,7 @@ my @token_formats = (
     [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/,     \&increment_lines       ],  # simple .property
 
     # variables
-    [ VAR_LEX       => qr/\$$prop_reg/,   \&remove_first_char               ],  # lexical variable
+    [ VAR_LEX       => qr/\$$prop_reg_n/, \&remove_first_char               ],  # lexical variable
     [ VAR_THIS      => qr/\@$prop_reg/,   \&remove_first_char               ],  # object variable
     [ VAR_SPEC      => qr/\*$prop_reg/,   \&remove_first_char               ],  # special variable
     [ VAR_SYM       => qr/\:$prop_reg/,   \&remove_first_char               ],  # symbol variable

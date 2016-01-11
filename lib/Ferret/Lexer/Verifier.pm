@@ -13,7 +13,11 @@ our %errors = (
     UndeclaredVariableReference => {
         message => "Reference to lexical variable '\$%s' without previous declaration",
         hint_0  => "Note that '\$%s' is later declared in this scope on line %d",
-        hint_1  => "Note that '\$%s' is the variable being assigned to; it cannot be referenced within its own assignment value"
+        hint_1  => "Note that '\$%s' is the variable being assigned to; it cannot be referenced within its own assignment value",
+        hint_2  => "This variable is reserved for regular expression matches; it is only valid in a scope with an expression"
+    },
+    InvalidLexicalAssignment => {
+        message => "Attempted to assign to '\$%s' which is not permitted"
     },
     RedundantPrivateIndicator => {
         message => "Redundant private indicator (underscore) on lexical variable '\$%s'",
@@ -67,7 +71,12 @@ sub verify {
     my $v = { };
     undef $error;
 
+    # check validity of constant regular expressions.
+    # this must occur before verify_lexical_variables().
+    verify_regular_expressions($v, $main_node) and return;
+
     # determine where variables become available
+    # this must occur before verify_lexical_variables().
     identify_lexical_variable_declarations($v, $main_node) and return;
 
     # raise error if referring to an undeclared variable
@@ -78,9 +87,6 @@ sub verify {
 
     # raise error for multiple bareword declarations by same name in same scope
     identify_duplicate_barewords($v, $main_node) and return;
-
-    # check validity of constant regular expressions.
-    verify_regular_expressions($v, $main_node) and return;
 
 }
 
@@ -167,16 +173,21 @@ sub identify_lexical_variable_declarations {
     } @assignments;
 
     foreach my $as (@assignments) {
+        my $var = $as->assign_to;
+
+        # assignment to $1, $2 etc. is not permitted.
+        if ($var->{var_name} =~ m/^[0-9]+$/) {
+            return $var->throw(InvalidLexicalAssignment => $var->{var_name});
+        }
 
         # the scope of interest is the one containing the assignment
         my $soi = $as->first_upper_scope;
         my $p = $as->{close_pos};
 
         # remember the location.
-        $v->{lex_declarations}{$p} = [ $as, $as->assign_to ];
+        $v->{lex_declarations}{$p} = [ $as, $var ];
 
         # process the assignment.
-        my $var = $as->assign_to;
         $var->{could_be_declaration} = 1;
         $soi->process_lex_declaration($var->{var_name}, $p);
 
@@ -314,6 +325,11 @@ sub verify_lexical_variables {
             $hints[1] = [ $var->{var_name} ];
         }
 
+        # if this is a match variable ($0..9), add that hint.
+        if ($var->{var_name} =~ m/^[0-9]+$/) {
+            $hints[2] = 2;
+        }
+
         # throw an exception.
         return $var->throw(\@hints,
             UndeclaredVariableReference => $var->{var_name}
@@ -409,13 +425,22 @@ sub verify_regular_expressions {
     my ($v, $main_node) = @_;
     my @regexes = $main_node->filter_descendants(type => 'Regex');
     foreach my $regex (@regexes) {
+
+        # process declarations for $0..9
+        my $soi = $regex->first_upper_scope;
+        $soi->process_lex_declaration($_, $regex->{create_pos}) for 0..9;
+
+        # now check if it compiles and is valid.
         my $regex_str = regex_str(@$regex{'value', 'mods'});
         next if eval { qr/$regex_str/; 1 };
         (my $msg = $@) =~ s/ at (.+?)\.pm line (\d+)//g;
+
+        # invalid.
         return $regex->throw([ [$msg] ], InvalidRegularExpression =>
             $regex->{value} // '',
             $regex->{mods}  // ''
         );
+
     }
 }
 
