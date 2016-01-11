@@ -1,0 +1,4 @@
+FF::while_true($f, $scope, sub { <<condition>> }, sub {
+    my ($scope, $loop) = @_;
+    <<body>>
+}, <<pos>>);

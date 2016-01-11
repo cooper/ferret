@@ -200,12 +200,10 @@ sub identify_lexical_variable_declarations {
     my @fors = $main_node->filter_descendants(type => 'For');
 
     # filter the ones which are iterations.
-    @fors = grep {
-        $_->{for_type} eq 'iteration'
-    } @fors;
+    @fors = grep { $_->for_type eq 'pairs' || $_->for_type eq 'values' } @fors;
 
     foreach my $for (@fors) {
-        my ($var1, $var2) = $for->handle_vars;
+        my (undef, $var1, $var2) = $for->handle_vars;
 
         # the scope of interest is the body of the loop.
         my $soi = $for->body->scope;
@@ -427,7 +425,7 @@ sub verify_regular_expressions {
     foreach my $regex (@regexes) {
 
         # process declarations for $0..9
-        my $soi = $regex->first_upper_scope;
+        my $soi = $regex->regex_scope;
         $soi->process_lex_declaration($_, $regex->{create_pos}) for 0..9;
 
         # now check if it compiles and is valid.

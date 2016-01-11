@@ -206,6 +206,38 @@ sub iterate_pair {
     return;
 }
 
+sub indefinitely {
+    my ($f, $outer_scope, $code, $pos) = @_;
+    for (;;) {
+        my $scope = Ferret::Scope->new($f, parent => $outer_scope);
+
+        # call the code.
+        my $ret = $code->($scope, \%loop_returns);
+        next if !$ret;
+
+        next if $ret eq 'next';
+        last if $ret eq 'last';
+        redo if $ret eq 'redo';
+    }
+    return;
+}
+
+sub while_true {
+    my ($f, $outer_scope, $condition_code, $code, $pos) = @_;
+    while (Ferret::truth($condition_code->())) {
+        my $scope = Ferret::Scope->new($f, parent => $outer_scope);
+
+        # call the code.
+        my $ret = $code->($scope, \%loop_returns);
+        next if !$ret;
+
+        next if $ret eq 'next';
+        last if $ret eq 'last';
+        redo if $ret eq 'redo';
+    }
+    return;
+}
+
 # set a required function argument.
 # return false if failed.
 sub need {

@@ -110,8 +110,12 @@ sub op_sim {
     my ($str, $args, $call_scope) = @_;
     my $rgx = $args->{other};
     my $crt = $str->call_prop(match => [ $rgx ]);
+
     # FIXME: the below is temporary
     $call_scope->{special}->set_property(match => $crt->property('parts'));
+    my @captures = plist($crt->property('parts'));
+    $call_scope->set_property($_ + 1 => $captures[$_]) for 0..$#captures;
+
     return $crt->property('matched');
 }
 

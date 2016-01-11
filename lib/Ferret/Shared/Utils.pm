@@ -107,6 +107,8 @@ sub type_link {
 # regex string.
 sub regex_str {
     my ($rgx, $mods) = @_;
+    $rgx  //= '';
+    $mods //= '';
     return  "(?$mods:$rgx)";
 }
 

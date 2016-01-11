@@ -8,6 +8,23 @@ use parent 'F::Expression';
 use Data::Dump qw(quote);
 use Ferret::Shared::Utils qw(dot_trim);
 
+# returns the regex scope of interest.
+sub regex_scope {
+    my $rgx = shift;
+    my $ifp = $rgx->first_self_or_parent('IfParameter');
+    my $soi = $rgx->first_upper_scope;
+
+    # if we have an if parameter, and the first upper scope
+    # is the same as the if parameter's first upper scope,
+    # we have something like if $blah =~ // { ... }.
+    # in this case, we only want the regex available within the { }.
+    if ($ifp && $ifp->first_upper_scope == $soi) {
+        return $ifp->parent->body->scope;
+    }
+
+    return $soi;
+}
+
 sub desc {
     my $rgx = shift;
     my $first = length $rgx->{value} > 13  ?

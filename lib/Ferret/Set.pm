@@ -6,7 +6,7 @@ use strict;
 use utf8;
 
 use parent 'Ferret::Object';
-use Ferret::Core::Conversion qw(pdescription flist plist);
+use Ferret::Core::Conversion qw(pdescription flist fnumber plist);
 
 *new = *Ferret::bind_constructor;
 

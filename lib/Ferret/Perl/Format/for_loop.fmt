@@ -1,0 +1,4 @@
+FF::indefinitely($f, $scope, sub {
+    my ($scope, $loop) = @_;
+    <<body>>
+}, <<pos>>);

@@ -619,7 +619,6 @@ sub c_KEYWORD_IN {
     # 'in' must terminate a generated expression for 'for'.
     return $c->unexpected("(where is 'for'?)") unless
         $c->node->{parameter_for} && $c->node->{parameter_for} eq 'for';
-        # FIXME: if wrapped in parentheses, this will fail.
 
     # set the node to the 'in' parameter.
     my $for = $c->close_node;
