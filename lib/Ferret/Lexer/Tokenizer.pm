@@ -103,7 +103,10 @@ my @token_formats = (
     [ OP_SUB_A      => qr/-=/                                               ],  # subtraction assignment
     [ OP_MUL_A      => qr/\*=/                                              ],  # multiplication assignment
     [ OP_DIV_A      => qr/\/=/                                              ],  # division assignment
+    [ OP_XOR_A      => qr/\^\^=/                                            ],  # bitwise xor assignment
     [ OP_POW_A      => qr/\^=/                                              ],  # power assignment
+    [ OP_BOR_A      => qr/\|=/                                              ],  # bitwise or assignment
+    [ OP_BAND_A     => qr/\&=/                                              ],  # bitwise and assignment
     [ OP_EQUAL_I    => qr/===/                                              ],  # object equality
     [ OP_NEQUAL_I   => qr/!==/                                              ],  # negated object equality
     [ OP_EQUAL      => qr/==/                                               ],  # equality
@@ -116,7 +119,10 @@ my @token_formats = (
     [ OP_SUB        => qr/\-/                                               ],  # subtraction
     [ OP_MUL        => qr/\*/                                               ],  # multiplication
     [ OP_DIV        => qr/\//                                               ],  # division
+    [ OP_XOR        => qr/\^\^/                                             ],  # bitwise xor
     [ OP_POW        => qr/\^/                                               ],  # power
+    [ OP_BOR        => qr/\|/                                               ],  # bitwise or
+    [ OP_BAND =>    => qr/\&/                                               ],  # bitwise and
     [ OP_NOT        => qr/!/                                                ],  # call without arguments
     [ OP_MOD        => qr/%/                                                ],  # modulus operator
     [ OP_MAYBE      => qr/\?/                                               ],  # inline if operator

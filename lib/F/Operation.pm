@@ -78,6 +78,7 @@ sub compile {
         equal_i nequal_i
         equal   nequal
         sim     nsim
+        band    xor     bor
         and     or
     /) {
     while (grep { is_op($_, $op_type) } @children) {
