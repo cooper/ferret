@@ -76,6 +76,7 @@ my $result = do {
     my $func_0 = FF::function_event_def(
         $f, $context,
         'something',
+        undef,
         [ { name => 'code', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;

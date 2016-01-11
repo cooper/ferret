@@ -287,7 +287,7 @@
 #                          Lexical variable '$message'
 #                          Argument type
 #                              Bareword 'Str'
-#                  For
+#                  For (values)
 #                      Expression ('for' parameter)
 #                          Lexical variable '$line'
 #                      Expression ('in' parameter)
@@ -331,7 +331,7 @@
 #                      Expression ('if' parameter)
 #                          Instance variable '@autojoin'
 #                      Body ('if' scope)
-#                          For
+#                          For (values)
 #                              Expression ('for' parameter)
 #                                  Lexical variable '$chan'
 #                              Expression ('in' parameter)
@@ -603,6 +603,7 @@ my $result = do {
     my $func_2 = FF::function_event_def(
         $f, $scope,
         '_joinChannels',
+        undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -621,7 +622,6 @@ my $result = do {
                     'chan',
                     sub {
                         my ( $scope, $loop ) = @_;
-
                         $$self->{'send'}->(
                             [
                                 add(
@@ -642,7 +642,7 @@ my $result = do {
 
     # Function event '_pong' definition
     my $func_3 = FF::function_event_def(
-        $f, $scope, '_pong',
+        $f, $scope, '_pong', undef,
         [ { name => 's', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -668,6 +668,7 @@ my $result = do {
     my $func_4 = FF::function_event_def(
         $f, $scope,
         '_handleMessage',
+        undef,
         [
             { name => 'line', type => undef, optional => undef, more => undef },
             { name => 's',    type => undef, optional => undef, more => undef }
@@ -716,6 +717,7 @@ my $result = do {
     my $func_5 = FF::function_event_def(
         $f, $scope,
         '_commandHello',
+        undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -744,6 +746,7 @@ my $result = do {
     my $func_6 = FF::function_event_def(
         $f, $scope,
         '_commandAdd',
+        undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -792,6 +795,7 @@ my $result = do {
     my $func_7 = FF::function_event_def(
         $f, $scope,
         '_commandFactoid',
+        undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -1078,7 +1082,6 @@ my $result = do {
                     'line',
                     sub {
                         my ( $scope, $loop ) = @_;
-
                         if (
                             bool(
                                 nequal(

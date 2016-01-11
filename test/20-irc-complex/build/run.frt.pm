@@ -512,6 +512,7 @@ my $result = do {
     my $func_0 = FF::function_event_def(
         $f, $context,
         'handlePerl',
+        undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -584,6 +585,7 @@ my $result = do {
     my $func_1 = FF::function_event_def(
         $f, $context,
         'convertNewlines',
+        undef,
         [
             {
                 name     => 'string',

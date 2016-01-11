@@ -31,19 +31,14 @@ sub add_global_functions {
 
         # create function with proper requirements.
         my $func = Ferret::Function->new($f,
-            name => 'default',
+            name => $opts{cb_name} // 'default',
             code => $opts{code},
             need => $opts{need},
-            want => $opts{want}
+            want => $opts{want},
+            pending_add => 1
         );
 
-        # create and bind an event for the function.
-        my $event = Ferret::Event->new($f,
-            name => $name,
-            default_func => [ undef, $func ]
-        );
-
-        $event->inside_scope($name, $context, $context, undef);
+        $func->inside_scope($name, $context, $context, undef);
     }
 }
 

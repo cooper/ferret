@@ -150,7 +150,7 @@ sub on {
         $obj->set_property($event_name =>
             Ferret::Event->new($obj->f, name => $event_name)
         );
-        $event = $obj->property($event_name); # set last_parent.
+        $event = $obj->own_property($event_name); # set last_parent.
     }
 
     # add the function.
@@ -321,25 +321,22 @@ sub function_def {
 
 # function definition as event.
 sub function_event_def {
-    my ($f, $owner, $name, $arg_ref, $code) = @_;
+    my ($f, $owner, $name, $callback_name, $arg_ref, $code) = @_;
     undef $name if !length $name;
 
     # create a default function.
     my $func = Ferret::Function->new($f,
-        name => 'default',
-        code => $code
+        name => $callback_name // 'default',
+        code => $code,
+
+        # tell Function.pm we want to be added to an event
+        pending_add => 1
     );
 
     # add arguments.
     $func->add_argument(%$_) foreach @$arg_ref;
 
-    # create the event.
-    my $event = Ferret::Event->new($f,
-        name => $name,
-        default_func => [ undef, $func ]
-    );
-
-    return $event;
+    return $func;
 }
 
 # method definition as event.
@@ -350,19 +347,14 @@ sub method_event_def {
     my $func = Ferret::Function->new($f,
         name => 'default',
         code => $code,
-        is_method => 1
+        is_method => 1,
+        pending_add => 1
     );
 
     # add arguments.
     $func->add_argument(%$_) foreach @$arg_ref;
 
-    # create the event.
-    my $event = Ferret::Event->new($f,
-        name => $name,
-        default_func => [ undef, $func ]
-    );
-
-    return $event;
+    return $func;
 }
 
 # shared variable declaration without a value.

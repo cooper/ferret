@@ -9,7 +9,7 @@
 #                  Argument list [1 items]
 #                      Item 0
 #                          String ' '
-#      For
+#      For (values)
 #          Expression ('for' parameter)
 #              Lexical variable '$word'
 #          Expression ('in' parameter)
@@ -62,7 +62,6 @@ my $result = do {
         'word',
         sub {
             my ( $scope, $loop ) = @_;
-
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "part: " ), $$scope->{'word'} ) ],
                 $scope, undef, 4.2

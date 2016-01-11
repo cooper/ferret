@@ -124,7 +124,7 @@ my $result = do {
 
     # Function event 'hello1' definition
     my $func_0 = FF::function_event_def(
-        $f, $scope, 'hello1',
+        $f, $scope, 'hello1', undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -151,7 +151,7 @@ my $result = do {
 
     # Function event 'hello2' definition
     my $func_1 = FF::function_event_def(
-        $f, $scope, 'hello2',
+        $f, $scope, 'hello2', undef,
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -168,6 +168,7 @@ my $result = do {
     my $func_2 = FF::function_event_def(
         $f, $context,
         'helloWorld',
+        undef,
         [
             {
                 name     => 'name1',

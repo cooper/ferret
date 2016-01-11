@@ -68,7 +68,7 @@ my $result = do {
 
     # Function event 'sqrt' definition
     my $func_0 = FF::function_event_def(
-        $f, $context, 'sqrt',
+        $f, $context, 'sqrt', undef,
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -82,7 +82,7 @@ my $result = do {
 
     # Function event 'root' definition
     my $func_1 = FF::function_event_def(
-        $f, $context, 'root',
+        $f, $context, 'root', undef,
         [
             { name => 'root', type => 'Num', optional => undef, more => undef },
             { name => 'num',  type => 'Num', optional => undef, more => undef }

@@ -267,8 +267,10 @@ sub simple_property_u {
 # if the property does not exist, returns Perl undef.
 #
 sub own_property {
-    # TODO: this needs to do the same extras as ->property.
-    shift->{properties}{+shift};
+    my $obj = shift;
+    my ($value, $owner) = $obj->_property(@_);
+    return undef if !$value || $owner != $obj;
+    return $value;
 }
 
 sub own_property_u {

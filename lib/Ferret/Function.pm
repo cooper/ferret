@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 use parent 'Ferret::Object';
-use Scalar::Util 'blessed';
+use Scalar::Util qw(blessed weaken);
 use Ferret::Core::Conversion qw(plist flist fset);
 
 use Ferret::Arguments;
@@ -295,13 +295,36 @@ sub inside_scope {
     # $p_set    =   the computed property should be set after evaluating
     #               only makes sense with $is_prop.
     #
-    my ($func, $name, $scope, $owner, $class, $is_prop, $p_set) = @_;
+    my ($func, $name, $scope, $owner, $class, $is_prop, $p_set) = (shift, @_);
 
     $func->{class} = $class;
     $func->{outer_scope} = $scope;
     $func->{is_class_func} = 1 if $owner && $owner->isa('Ferret::Class');
     $func->{is_method}     = 1 if $owner && $owner->{is_proto};
 
+    my $event;
+
+    # FIXME: not currently handling if $owner->own_property($name)
+    # is something other than an Event
+
+    # we've already added to an event.
+    if ($func->{added_to}) {
+        $event = $func->{added_to};
+    }
+
+    # add it to the event. create the event if needed.
+    elsif ($func->{pending_add}) {
+        $event = $owner->own_property($name) || do {
+            Ferret::Event->new($func->f, name => $name);
+        };
+        $event->add_function(undef, $func);
+        weaken($func->{added_to} = $event);
+        delete $func->{pending_add};
+    }
+
+    return $event->inside_scope(@_) if $event;
+
+    # set the property on the func or event.
     $owner->set_property($name => $is_prop ? sub {
         _handle_property($func, $p_set ? $name : undef, @_);
     } : $func) if defined $name;

@@ -123,6 +123,7 @@ my $result = do {
     my $func_0 = FF::function_event_def(
         $f, $scope,
         '_handleHints',
+        undef,
         [
             {
                 name     => 'hints',

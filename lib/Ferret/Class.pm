@@ -151,37 +151,26 @@ sub _bind_function {
     my ($is_method, $class, $name, %opts) = @_;
     my $f = $class->f;
 
-    # fetch or create event.
-    my $where = $is_method ? $class->prototype : $class;
-    my $event = $where->has_property($name) ?
-        $class->property($name) : do {
-        my $e = Ferret::Event->new($f,
-            name      => $name,
-            is_method => $is_method,
-            class     => $class
-        );
-        $e->inside_scope($name =>
-            undef,          # outer scope
-            $where,         # owner
-            $class,         # class
-            $opts{prop},    # is computer property?
-            $opts{pset}     # set property after evaluating?
-        );
-        $e;
-    };
-
     # create function.
     my $func = Ferret::Function->new($f,
-        name        => $opts{callback} || 'default',
-        code        => $opts{code} || $dummy_cb_func,
+        name        => $opts{cb_name} || 'default',
+        code        => $opts{code}    || $dummy_cb_func,
         need        => $opts{need},
         want        => $opts{want},
         mimic       => $opts{mimic},
-        is_method   => $is_method
+        is_method   => $is_method,
+        pending_add => 1
     );
 
-    # add the function.
-    $event->add_function(undef, $func);
+    # assign the event to the property.
+    my $where = $is_method ? $class->prototype : $class;
+    $func->inside_scope($name =>
+        undef,          # outer scope
+        $where,         # owner
+        $class,         # class
+        $opts{prop},    # is computer property?
+        $opts{pset}     # set property after evaluating?
+    );
 
 }
 

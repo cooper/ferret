@@ -1,0 +1,68 @@
+package Socket
+class TCP 1.0
+
+alias _PO = NATIVE::PerlObject
+
+type ReadMode {
+    :default
+    :line
+}
+
+$readModeMap = [
+    default:    _onReadDefault,
+    line:       _onReadLine
+]
+
+init {
+    need @address: Str
+    need @port: Num
+    want @readMode: ReadMode = :default
+}
+
+method connect {
+    _PO.require("IO::Socket::IP")    catch $e: fail $e
+    _PO.require("IO::Async::Stream") catch $e: fail $e
+
+    # establish the socket.
+    $conn = _PO("IO::Socket::IP",
+        PeerHost:   @address,
+        PeerPort:   @port,
+        Type:       1  # FIXME: Socket::SOCK_STREAM()
+    ) catch $e:
+        fail Error(:SocketOpenFailed, "Failed to establish connection", $e)
+
+    # create the stream.
+    @stream = _PO("IO::Async::Stream",
+        handle:         $conn,
+        encoding:       "utf8",
+        on_read:        func {       _onRead(_self: *self) },
+        on_read_error:  func { _disconnected(_self: *self) },
+        on_write_error: func { _disconnected(_self: *self) },
+    ) catch $e:
+        fail Error(:SocketOpenFailed, "Failed to create connection stream", $e)
+
+    # add the stream to the Ferret runtime notifiers.
+    NATIVE.ferret.add_notifier(@stream)
+
+    # connected event
+    @connected()
+
+}
+
+method connected
+
+func _onRead {
+
+}
+
+func _onReadDefault {
+
+}
+
+func _onReadLine {
+
+}
+
+func _disconnected {
+
+}

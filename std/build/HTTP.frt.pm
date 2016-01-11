@@ -74,7 +74,7 @@ my $result = do {
 
     # Function event 'get' definition
     my $func_0 = FF::function_event_def(
-        $f, $context, 'get',
+        $f, $context, 'get', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -88,7 +88,7 @@ my $result = do {
 
     # Function event 'post' definition
     my $func_1 = FF::function_event_def(
-        $f, $context, 'post',
+        $f, $context, 'post', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;

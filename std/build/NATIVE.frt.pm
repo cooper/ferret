@@ -76,7 +76,7 @@ my $result = do {
 
     # Function event 'bless' definition
     my $func_0 = FF::function_event_def(
-        $f, $context, 'bless',
+        $f, $context, 'bless', undef,
         [
             { name => 'obj', type => undef, optional => undef, more => undef },
             {

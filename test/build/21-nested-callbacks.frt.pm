@@ -9,7 +9,7 @@
 #                  Argument list [1 items]
 #                      Item 0
 #                          String ' '
-#      For
+#      For (pairs)
 #          Expression ('for' parameter)
 #              Set [2 items]
 #                  Item 0
@@ -45,7 +45,7 @@
 #                                              String ') '
 #                                              Addition operator (+)
 #                                              Lexical variable '$part'
-#      For
+#      For (values)
 #          Expression ('for' parameter)
 #              Lexical variable '$part'
 #          Expression ('in' parameter)
@@ -123,7 +123,6 @@ my $result = do {
         'i', 'part',
         sub {
             my ( $scope, $loop ) = @_;
-
             FF::on(
                 ${
                     $$scope->{'Timer'}
@@ -147,7 +146,6 @@ my $result = do {
         'part',
         sub {
             my ( $scope, $loop ) = @_;
-
             $$scope->{'say'}->( [ $$scope->{'part'} ], $scope, undef, 10.2 );
         },
         9.05

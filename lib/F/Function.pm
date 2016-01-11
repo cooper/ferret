@@ -105,6 +105,7 @@ sub perl_fmt {
         owner      => $func->owner_str,
         id         => $func->document->{function_cid}++,
         name       => length $func->{name} ? $func->{name} : '(undef)',
+        cb_name    => length $func->{cb_name} ? "'$$func{cb_name}'" : 'undef',
         class      => $class ? '$class' : 'undef',
         semi       => $func->{anonymous} ? ''        : ';', # probably temporary hack
         is_prop    => $func->{is_prop}   ? '1'       : 'undef',

@@ -107,6 +107,7 @@ my $result = do {
     my $func_0 = FF::function_event_def(
         $f, $context,
         'makePoint',
+        undef,
         [
             { name => 'x', type => undef, optional => undef, more => undef },
             { name => 'y', type => undef, optional => undef, more => undef },

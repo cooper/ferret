@@ -31,7 +31,7 @@
 #                          Addition operator (+)
 #                          Property 'length'
 #                              Lexical variable '$list'
-#      For
+#      For (values)
 #          Expression ('for' parameter)
 #              Lexical variable '$item'
 #          Expression ('in' parameter)
@@ -82,7 +82,7 @@
 #                              Index list [1 items]
 #                                  Item 0
 #                                      String 'whats'
-#      For
+#      For (pairs)
 #          Expression ('for' parameter)
 #              Set [2 items]
 #                  Item 0
@@ -156,7 +156,6 @@ my $result = do {
         'item',
         sub {
             my ( $scope, $loop ) = @_;
-
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "item: " ), $$scope->{'item'} ) ],
                 $scope, undef, 8.2
@@ -194,7 +193,6 @@ my $result = do {
         'key', 'val',
         sub {
             my ( $scope, $loop ) = @_;
-
             $$scope->{'say'}->(
                 [
                     add(

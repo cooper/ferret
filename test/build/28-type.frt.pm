@@ -105,6 +105,7 @@ my $result = do {
     my $func_0 = FF::function_event_def(
         $f, $context,
         'announce',
+        undef,
         [
             { name => 'name', type => 'Str', optional => undef, more => undef },
             {

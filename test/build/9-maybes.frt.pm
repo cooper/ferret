@@ -63,6 +63,7 @@ my $result = do {
     my $func_0 = FF::function_event_def(
         $f, $context,
         'sayHello',
+        undef,
         [ { name => 'who', type => 'Str', optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;

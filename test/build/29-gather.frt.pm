@@ -65,7 +65,7 @@
 #                          Number '1'
 #                      Item 1
 #                          Number '0'
-#      For
+#      For (values)
 #          Expression ('for' parameter)
 #              Lexical variable '$pt'
 #          Expression ('in' parameter)
@@ -98,7 +98,7 @@
 #                  Return pair 'even'
 #                      Gather
 #                          Body ('gather' scope)
-#                              For
+#                              For (values)
 #                                  Expression ('for' parameter)
 #                                      Lexical variable '$n'
 #                                  Expression ('in' parameter)
@@ -178,6 +178,7 @@ my $result = do {
     my $func_0 = FF::function_event_def(
         $f, $context,
         'nonZeroCoodinates',
+        undef,
         [
             {
                 name     => 'pt',
@@ -232,6 +233,7 @@ my $result = do {
     my $func_1 = FF::function_event_def(
         $f, $context,
         'evenNumbers',
+        undef,
         [ { name => 'nums', type => 'Num', optional => undef, more => 1 } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
@@ -248,7 +250,6 @@ my $result = do {
                             'n',
                             sub {
                                 my ( $scope, $loop ) = @_;
-
                                 if ( bool( ${ $$scope->{'n'} }->{'even'} ) ) {
                                     my $scope =
                                       Ferret::Scope->new( $f,
@@ -301,7 +302,6 @@ my $result = do {
         'pt',
         sub {
             my ( $scope, $loop ) = @_;
-
             $$scope->{'inspect'}->(
                 [
                     $$scope->{'nonZeroCoodinates'}
