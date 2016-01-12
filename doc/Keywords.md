@@ -613,18 +613,29 @@ See also the return operator [`OP_RETURN`](Operators.md#return-operator) (`->`).
 
 ### for
 
+`for` is a diverse keyword whose behavior depends on its arguments. The single
+keyword is used for all forms of loops. See the proper section.
+
+* [__Iterations__](#for-iteration): `for..in {}`; like `foreach`.
+* [__Conditional loops__](#for-conditional): `for condition {}`; like `while`.
+* [__Infinite loops__](#for-infinite): `for {}`; like `while (true)`.
+
+### for (iteration)
+
 ```
-for ( <value_var> | <key_value_set> ) in <collection> { [<statements>...] }
+for $<value_var> in <collection> { [<statements>...] }
 ```
 ```
-key_value_set = '('<key_var>, <value_var>')'
+for ($<key_var>, $<value_var>) in <collection> { [<statements>...] }
 ```
 
-Performs an iteration over a collection. Collection types include List, Hash,
-and Set. Right of the keyword must be a lexical variable representing the
-current value. If the `collection` has a key or index, you may optionally
-specify two lexical variables in the form of `($key, $val)`. The variable(s) are
-defined only within the body of the `for` statement.
+Performs an iteration over a collection. Collection types include `List`,
+`Hash`, and `Set`. Right of the keyword must be a lexical variable representing
+the current value. If the `collection` has a key or index, you may optionally
+specify two lexical variables in the form of `($key, $val)`.
+
+The parentheses are required when using two variables and forbidden when using
+one. The variable(s) are defined only within the body of the `for` statement.
 
 ```
 $list = [ 1, 2, 3 ]
@@ -639,10 +650,65 @@ for ($firstWord, $others) in $hash {
 }
 ```
 
+### for (conditional)
+
+```
+for <condition> { [<statements>...] }
+```
+
+Loops while the provided `condition` is true. The statements in the block will
+be executed repeatedly until the first time the condition evaluates to boolean
+false or an exit of the loop via [`last`](#last) or some other form of goto
+statement.
+
+If the `condition` is not true at the time when the `for` is reached, the block
+will never be executed.
+
+This is functionally equivalent to `while (condition)` in C and others alike.
+
+```
+$fiveEs = ""
+
+for $fiveEs.length < 5 {
+    $fiveEs += "e"
+}
+
+say($fiveEs)    # eeeee
+```
+
+### for (infinite)
+
+```
+for { [<statements>...] }
+```
+
+Loops indefinitely. The statements in the block will be executed repeatedly
+until a possible exit of the loop via [`last`](#last) or some other form of
+goto statement.
+
+Only use `for {}` when you have intentions of eventually exiting the loop.
+It is not advisable to base a program around a master loop. The runtime itself
+is a master loop which manages asynchronous I/O among other things, so truly
+infinite loops will block it. Instead utilize runtime notifiers.
+
+This is functionally equivalent to `while (true)` or `while (1)` in many
+languages.
+
+```
+$dontSayIt = true
+
+for {
+    if $dontSayIt:
+        last
+    say("Hey!")
+    last
+}
+```
+
 ### in
 
-Compliment to the [`for`](#for) while iterating over a collection. Expects
-an expression over which to iterate.
+Compliment to the [`for`](#for-iteration) while iterating over a collection.
+Expects an expression over which to iterate.
 
 ## next
 

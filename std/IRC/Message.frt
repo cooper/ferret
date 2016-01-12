@@ -13,5 +13,5 @@ init {
 
 method parse {
     need $data: Str::NonEmpty
-    #$words = $data.split(/\s+/)
+    $words = $data.split(/\s+/)
 }
