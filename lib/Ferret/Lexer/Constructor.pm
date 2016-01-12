@@ -144,6 +144,11 @@ sub handle_label {
     return;
 }
 
+###############################
+### DOCUMENT-LEVEL KEYWORDS ###
+################################################################################
+
+# package declaration.
 sub c_PKG_DEC {
     my ($c, $value) = @_;
 
@@ -158,6 +163,7 @@ sub c_PKG_DEC {
     return $pkg;
 }
 
+# class declaration.
 sub c_CLASS_DEC {
     my ($c, $value) = @_;
 
@@ -194,7 +200,7 @@ sub c_CLASS_DEC {
     return $class;
 }
 
-# end a class or package.
+# end of a class or package.
 sub c_KEYWORD_END {
     my ($c, $value) = @_;
 
@@ -227,48 +233,35 @@ sub c_KEYWORD_END {
     return;
 }
 
-sub c_METHOD {
+# namespace load statement.
+sub c_KEYWORD_LOAD {
     my ($c, $value) = @_;
 
-    # Rule Method[0]:
-    #   Must be a direct child of a Class.
+    # Rule Load[0]:
+    #   Must be a direct child of an Instruction.
 
-    my $method = F::new('Method', %$value, event_cb => 1);
+    # Rule Load[1]:
+    #   Parent must be a direct child of a Class or Document.
 
-    $c->node->adopt($method);
-    $c->capture_closure_with($method->body);
+    # Rule Load[2]:
+    #   Direct children must be of type Bareword.
 
-    return $method;
+    # Rule Load[3]:
+    #   Number of direct children must be exactly one (1).
+
+    my $load = F::new('Load');
+    $c->adopt_and_set_node($load);
 }
 
-sub c_FUNCTION {
-    my ($c, $value) = @_;
+#################
+### OPERATORS ###
+################################################################################
 
-    # Rule Function[0]:
-    #   If the function is named (not anonymous), it must be a direct child
-    #   of a subtype of ScopeOwner.
+##########################################
+### BRACKETS, PARENTHESES (DELIMITERS) ###
+##########################################
 
-    # if the current node is a class and this is not a private function,
-    # it's a class method.
-    my $first_char = length $value->{name} ? substr $value->{name}, 0, 1 : '';
-    if ($c->node->type eq 'Class' && $first_char ne '_') {
-        $value->{main} = 1;
-        return $c->simulate('METHOD', $value);
-    }
-
-    my $function = F::new('Function',
-        %$value,
-        event_cb => !$value->{anonymous}
-        # anonymous functions are not implemented as events
-    );
-
-    $c->node->adopt($function);
-    $c->capture_closure_with($function->body);
-
-    return $function;
-}
-
-# start of a closure
+# start of a closure (opening curly bracket).
 sub c_CLOSURE_S {
     my ($c, $value, $is_colon) = @_;
 
@@ -310,7 +303,7 @@ sub c_CLOSURE_S {
     return;
 }
 
-# end of a closure
+# end of a closure (closing curly bracket).
 sub c_CLOSURE_E {
     my ($c, $value, $is_semi) = @_;
 
@@ -394,410 +387,32 @@ sub c_CLOSURE_E {
     return;
 }
 
-sub c_KEYWORD_INSIDE {
-    my ($c, $value) = @_;
-
-    # create a closure to be opened soon.
-    my $inside = F::new('Inside');
-    $c->capture_closure_with($inside->body);
-    $c->node->adopt($inside);
-
-    # set the current node to the inside expression.
-    $c->set_node($inside->param_exp);
-
-    return $inside;
-}
-
-sub c_TYPE {
-    my ($c, $opts) = @_;
-
-    # create a closure to be opened soon.
-    my $type = F::new('Type',
-        type_name => $opts->{name},
-        lazy => $opts->{lazy}
-    );
-    $c->capture_closure_with($type->body);
-    $c->node->adopt($type);
-
-    # Rule TypeBody[0]:
-    #   Direct children must of type Instruction.
-
-    # Rule TypeBody[1]:
-    #   If direct child is an Instruction, its statement has an be an
-    #   Expression of some sort.
-
-    return $type;
-}
-
-sub c_KEYWORD_CAN       { start_type_requirement(shift, 'can')       }
-sub c_KEYWORD_ISA       { start_type_requirement(shift, 'isa')       }
-sub c_KEYWORD_SATISFIES { start_type_requirement(shift, 'satisfies') }
-sub c_KEYWORD_TRANSFORM { start_type_requirement(shift, 'transform') }
-
-sub start_type_requirement {
-    my ($c, $type) = @_;
-
-    # Rule TypeRequirement[0]:
-    #   Must be a direct child of an Instruction.
-
-    # Rule TypeRequirement[1]:
-    #   Must be somewhere inside a Type declaration.
-
-    # Rule TypeRequirement[2]:
-    #   Direct children must be a subtype of Expression.
-
-    # Rule TypeRequirement[3]:
-    #   Number of direct children must be exactly one (1).
-
-
-    # create a type requirement.
-    my $req = F::new('TypeRequirement', req_type => $type);
-    $c->adopt_and_set_node($req);
-
-    return $req;
-}
-
-sub c_ALIAS {
-    my ($c, $opts) = @_;
-
-    # Rule Alias[0]:
-    #   Direct parent must be of type Instruction.
-
-    # Rule Alias[1]:
-    #   Direct children must be of type Assignment.
-
-    # Rule Alias[2]:
-    #   Number of direct children must be exactly one (1).
-
-    # Rules for Assignment while inside Alias:
-    #   See c_OP_ASSIGN().
-
-    # create alias.
-    my $alias = F::new('Alias', lazy => $opts->{lazy});
-    $c->adopt_and_set_node($alias);
-
-    return $alias;
-}
-
-sub c_KEYWORD_ON {
-    my ($c, $value) = @_;
-
-    # create on.
-    my $on = F::new('On');
-
-    # set the closure to the function of on.
-    $c->capture_closure_with($on->function->body);
-    $c->node->adopt($on);
-
-    # set the current node to the on expression.
-    $c->set_node($on->param_exp);
-
-    # Rule OnParameter[0]:
-    #   Direct children must be one of the following:
-    #
-    #       Property            (e.g. $obj.prop)
-    #       Lexical variable    (e.g. $var)
-    #       Instance variable   (e.g. $var)
-    #       Property variable   (e.g. .var)
-    #       Bareword            (i.e. function name)
-
-    # Rule OnParameter[1]:
-    #   If a direct child is a Property, it must not be a special property.
-
-    # Rule OnParameter[2]:
-    #   Number of direct children must be exactly one (1).
-
-    return $on;
-}
-
-sub c_KEYWORD_BEFORE { handle_callback_clause(shift, 'before') }
-sub c_KEYWORD_AFTER  { handle_callback_clause(shift, 'after')  }
-
-sub handle_callback_clause {
-    my ($c, $type) = @_;
-
-    # must be inside an on expression.
-    my $exp = $c->node->first_self_or_parent('OnParameter');
-    return $c->unexpected("without preceding 'on' expression") if !$exp;
-
-    # next token must be a symbol.
-    my $e = $c->next_token_must_be(
-        'VAR_SYM',
-        "Following '$type' keyword must be a symbol callback name"
-    );
-    return $e if $e;
-
-    # make the on expression the current node.
-    $exp->{cb_method} = "add_${type}_clause";
-    $c->set_node($exp);
-
-    return;
-}
-
-sub c_KEYWORD_IF {
-    my ($c, $value) = @_;
-
-    # create an if statement which expects a closure to be opened soon.
-    my $if = F::new('If', if_type => 'if');
-    $c->node->adopt($if);
-    $c->capture_closure_with($if->body);
-
-    # Rule IfParameter[0]:
-    #   Direct children must be an Expression of some sort.
-    #   If direct child is an Assignment, it cannot be a lazy assignment.
-
-    # Rule IfParameter[1]:
-    #   Number of direct children must be exactly one (1).
-
-    # set the current node to the conditional expression.
-    $c->set_node($if->param_exp);
-
-    return $if;
-}
-
-sub c_KEYWORD_ELSIF {
-    my ($c, $value) = @_;
-
-    # ensure that the last element is an if.
-    my $last_el = $c->last_el;
-    if ($last_el->type ne 'If') {
-        return $c->unexpected([
-            'without preceding if',
-            'Else if must immediately follow the termination of an if body'
-        ]);
-    }
-
-    # create an if statement which expects a closure to be opened soon.
-    my $if = F::new('If', if_type => 'elsif');
-    $c->node->adopt($if);
-    $c->capture_closure_with($if->body);
-
-    # set the current node to the conditional expression.
-    $c->set_node($if->param_exp);
-
-    return $if;
-}
-
-sub c_KEYWORD_ELSE {
-    my ($c, $value) = @_;
-
-    # ensure that the last element is an if.
-    my $last_el = $c->last_el;
-    if ($last_el->type ne 'If') {
-        return $c->unexpected([
-            'without preceding if',
-            'Else must immediately follow the termination of an if body'
-        ]);
-    }
-
-    # create else.
-    my $else = F::new('Else');
-    $c->capture_closure_with($else->body);
-    $c->node->adopt($else);
-
-    return $else;
-}
-
-sub c_KEYWORD_FOR {
-    my ($c, $value) = @_;
-
-    # create a closure to be opened soon.
-    my $for = F::new('For');
-
-    $c->node->adopt($for);
-    $c->capture_closure_with($for->body);
-
-    # set the node to the for parameter.
-    $c->set_node($for->param_exp);
-
-    return $for;
-}
-
-sub c_KEYWORD_IN {
-    my ($c, $value) = @_;
-
-    # 'in' must terminate a generated expression for 'for'.
-    return $c->unexpected("(where is 'for'?)") unless
-        $c->node->{parameter_for} && $c->node->{parameter_for} eq 'for';
-
-    # set the node to the 'in' parameter.
-    my $for = $c->close_node;
-    return $c->set_node($for->in_param_exp);
-
-}
-
-sub c_KEYWORD_NEXT { handle_loop_statement('next', @_) }
-sub c_KEYWORD_LAST { handle_loop_statement('last', @_) }
-sub c_KEYWORD_REDO { handle_loop_statement('redo', @_) }
-
-sub handle_loop_statement {
-    my ($type, $c) = @_;
-
-    # Rule LoopStatement[0]:
-    #   Direct parent must be of type Instruction.
-
-    # Rule LoopStatement[1]:
-    #   Must be somewhere inside the body of a For loop.
-
-    my $stmt = F::new('LoopStatement', loop_stmt_name => $type);
-    $c->node->adopt($stmt);
-
-    return $stmt;
-}
-
-sub c_KEYWORD_LOAD {
-    my ($c, $value) = @_;
-
-    # Rule Load[0]:
-    #   Must be a direct child of an Instruction.
-
-    # Rule Load[1]:
-    #   Parent must be a direct child of a Class or Document.
-
-    # Rule Load[2]:
-    #   Direct children must be of type Bareword.
-
-    # Rule Load[3]:
-    #   Number of direct children must be exactly one (1).
-
-    my $load = F::new('Load');
-    $c->adopt_and_set_node($load);
-}
-
-sub c_KEYWORD_STOP {
-    my ($c, $value) = @_;
-
-    # Rule Stop[0]:
-    #   Direct parent must be of type Instruction.
-
-    # Rule Stop[1]:
-    #   Direct children must be of type Function or Method.
-
-    my $stop = F::new('Stop');
-    $c->node->adopt($stop);
-    # $c->adopt_and_set_node($stop); # once it takes an arg
-}
-
-sub c_KEYWORD_DEFER {
-    my ($c, $value) = @_;
-
-    # Rule Defer[0]:
-    #   Must be somewhere inside a Function or Method.
-
-    # create closure.
-    my $defer = F::new('Defer');
-    $c->capture_closure_with($defer->body);
-    $c->node->adopt($defer);
-
-    return $defer;
-}
-
-sub c_KEYWORD_CATCH {
-    my ($c, $value) = @_;
-
-    # Rule KEYWORD_CATCH[0]:
-    #   The current 'instruction' must exist.
-
-    # store the instruction, then simulate a semicolon.
-    my $instr = $c->instruction;
-    $c->simulate('OP_SEMI');
-
-    # TODO: make sure there is only one catch.
-
-    # create a catch and add it to the instruction.
-    my $catch = F::new('Catch');
-    $instr->adopt($catch);
-
-    # capture a closure with the catch body.
-    $c->capture_closure_with($catch->body);
-
-    # Rule CatchParameter[0]:
-    #   Direct children must be of type LexicalVariable.
-
-    # Rule CatchParameter[1]:
-    #   Number of direct children must not exceed one (1).
-
-    # set the current node to the catch variable expression.
-    $c->set_node($catch->param_exp);
-
-    return $catch;
-}
-
-sub c_KEYWORD_FAIL  { handle_failthrow(shift, 'fail')  }
-sub c_KEYWORD_THROW { handle_failthrow(shift, 'throw') }
-
-sub handle_failthrow {
-    my ($c, $type) = @_;
-
-    # Rule FailThrow[0]:
-    #   Direct parent must be of type Instruction.
-
-    # Rule FailThrow[1]:
-    #   Direct children must be Expressions of sorts.
-
-    # Rule FailThrow[2]:
-    #   Number of direct children must be exactly one (1).
-
-    # Rule FailThrow[3]:
-    #   If it's a fail statement (rather than throw), it must be somewhere
-    #   inside a Function or Method.
-
-    my $fail = F::new('FailThrow', fail_type => $type);
-    $c->adopt_and_set_node($fail);
-
-    return $fail;
-}
-
-sub c_KEYWORD_GATHER {
-    my ($c, $value) = @_;
-
-    # create a closure to be opened soon.
-    my $gather = F::new('Gather');
-    $c->capture_closure_with($gather->body);
-    $c->node->adopt($gather);
-
-    return $gather;
-}
-
-sub c_KEYWORD_GATHFOR {
+# tests whether a statement followed by a colon could be a one-line closure.
+sub could_be_one_liner {
     my $c = shift;
 
-    # create a gather.
-    my $gather = $c->simulate('KEYWORD_GATHER');
-    $gather->{is_gatherfor} = 1;
+    # clos_cap gotta be there.
+    return unless $c->clos_cap;
 
-    # create a for.
-    my $for = $c->simulate('KEYWORD_FOR');
-    $for->{is_gatherfor} = 1;
+    # if we're inside a generated expression, all good.
+    # this could be problematic if a generated expression had an anonymous
+    # function or other sort of closure in it, but that would be ridiculous.
+    my $el = $c->node;
+    do {
+        return 1 if $el->{generated_expression};
+    } while $el = $el->parent;
 
-    # add the for to the gather body.
-    # note: $gather->body->open will never be called.
-    $gather->body->adopt($for);
+    # if the last token is any of these, good.
+    my %is_reasonable = map { $_ => 1 } qw(
+        KEYWORD_ELSE
+        KEYWORD_DEFER
+    );
 
-    return $for;
+    my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
+    return $is_reasonable{$l_label};
 }
 
-sub c_KEYWORD_TAKE {
-    my ($c, $value) = @_;
-
-    # Rule Take[0]:
-    #   Direct parent must be an Instruction.
-
-    # Rule Take[1]:
-    #   Direct children must be Expressions of sorts.
-
-    # Rule Take[2]:
-    #   Number of direct children must be exactly one (1).
-
-    # Rule Take[3]:
-    #   Must be somewhere inside a Gather.
-
-    my $take = F::new('Take');
-    $c->adopt_and_set_node($take);
-
-    return $take;
-}
-
+# opening parenthesis.
 sub c_PAREN_S {
     my ($c, $value) = @_;
 
@@ -824,6 +439,43 @@ sub c_PAREN_S {
     return $list;
 }
 
+# closing parenthesis.
+sub c_PAREN_E {
+    my ($c, $value) = @_;
+
+    # Rule PAREN_E[0]:
+    #   The current 'list' must exist.
+
+    # this must be the expected list terminator.
+    my $t = $c->list->{list_terminator};
+    my $p = F::pretty_token($t);
+    return $c->unexpected("to close list (instead of $p)")
+        if $t ne 'PAREN_E';
+
+    # closes these things.
+    $c->close_nodes(qw(Negation Operation Pair));
+
+    # close the list itself.
+    #
+    #       the current node becomes
+    #       the current node (list item)'s parent (list)'s parent
+    #
+    return $c->unexpected if $c->node->parent != $c->list;
+    $c->close_node(2);
+
+    # function call.
+    #
+    #       as a special case, close function calls here as well, since they are
+    #       terminated by the end of their argument list.
+    #
+    $c->close_node_maybe('Call') || $c->close_node_maybe('InterfaceMethod');
+
+    # finally, the current list becomes the next list up in the tree.
+
+    return $c->close_list;
+}
+
+# opening bracket.
 sub c_BRACKET_S {
     my ($c, $value) = @_;
 
@@ -836,20 +488,56 @@ sub c_BRACKET_S {
     return $list;
 }
 
-sub c_BRACKET_IDX {
+# closing bracket.
+sub c_BRACKET_E {
     my ($c, $value) = @_;
-    return handle_call($c, $value, 1, 1);
+
+    # Rule BRACKET_E[0]:
+    #   The current 'list' must exist.
+
+    # this must be the expected list terminator.
+    my $t = $c->list->{list_terminator};
+    my $p = F::pretty_token($t);
+    return $c->unexpected("to close list (instead of $p)")
+        if $t ne 'BRACKET_E';
+
+    # closes these things.
+    $c->close_nodes(qw(Operation Pair));
+
+    # close the list itself.
+    #
+    #       the current node becomes
+    #       the current node (list item)'s parent (list)'s parent
+    #
+    return $c->unexpected if $c->node->parent != $c->list;
+    $c->close_node(2);
+
+    # index.
+    #
+    #       as a special case, close indices here as well, since they are
+    #       terminated by the end of their argument list.
+    #
+    my $closed_index = $c->close_node_maybe('Index');
+
+    # property.
+    #
+    #       additionally, the termination of the index can close a
+    #       non-bareword property, such as in 2.["even"]
+    #
+    #       only do it though if the property is marked as indexed
+    #       and if we have not closed an index above.
+    #
+    $c->close_node_maybe('Property')
+        if !$closed_index && $c->node->{is_index};
+
+    # finally, the current list becomes the next list up in the tree.
+
+    return $c->close_list;
 }
 
-sub c_PAREN_CALL {
-    my ($c, $value) = @_;
-    return handle_call($c, $value, 1);
-}
-
-sub c_OP_CALL {
-    my ($c, $value) = @_;
-    return handle_call($c, $value);
-}
+#########################
+### CALLS AND INDICES ###
+#########################
 
 # handle_call() is used for calls as well as indices.
 sub handle_call {
@@ -902,566 +590,29 @@ sub handle_call {
     return $call;
 }
 
-sub c_PAREN_E {
+# opening bracket for an index.
+sub c_BRACKET_IDX {
     my ($c, $value) = @_;
-
-    # Rule PAREN_E[0]:
-    #   The current 'list' must exist.
-
-    # this must be the expected list terminator.
-    my $t = $c->list->{list_terminator};
-    my $p = F::pretty_token($t);
-    return $c->unexpected("to close list (instead of $p)")
-        if $t ne 'PAREN_E';
-
-    # closes these things.
-    $c->close_nodes(qw(Negation Operation Pair));
-
-    # close the list itself.
-    #
-    #       the current node becomes
-    #       the current node (list item)'s parent (list)'s parent
-    #
-    return $c->unexpected if $c->node->parent != $c->list;
-    $c->close_node(2);
-
-    # function call.
-    #
-    #       as a special case, close function calls here as well, since they are
-    #       terminated by the end of their argument list.
-    #
-    $c->close_node_maybe('Call') || $c->close_node_maybe('InterfaceMethod');
-
-    # finally, the current list becomes the next list up in the tree.
-
-    return $c->close_list;
+    return handle_call($c, $value, 1, 1);
 }
 
-sub c_BRACKET_E {
+# opening parenthesis for a call.
+sub c_PAREN_CALL {
     my ($c, $value) = @_;
-
-    # Rule BRACKET_E[0]:
-    #   The current 'list' must exist.
-
-    # this must be the expected list terminator.
-    my $t = $c->list->{list_terminator};
-    my $p = F::pretty_token($t);
-    return $c->unexpected("to close list (instead of $p)")
-        if $t ne 'BRACKET_E';
-
-    # closes these things.
-    $c->close_nodes(qw(Operation Pair));
-
-    # close the list itself.
-    #
-    #       the current node becomes
-    #       the current node (list item)'s parent (list)'s parent
-    #
-    return $c->unexpected if $c->node->parent != $c->list;
-    $c->close_node(2);
-
-    # index.
-    #
-    #       as a special case, close indices here as well, since they are
-    #       terminated by the end of their argument list.
-    #
-    my $closed_index = $c->close_node_maybe('Index');
-
-    # property.
-    #
-    #       additionally, the termination of the index can close a
-    #       non-bareword property, such as in 2.["even"]
-    #
-    #       only do it though if the property is marked as indexed
-    #       and if we have not closed an index above.
-    #
-    $c->close_node_maybe('Property')
-        if !$closed_index && $c->node->{is_index};
-
-    # finally, the current list becomes the next list up in the tree.
-
-    return $c->close_list;
+    return handle_call($c, $value, 1);
 }
 
-sub c_STRING {
+# zero-argument call operator.
+sub c_OP_CALL {
     my ($c, $value) = @_;
-    my $string = F::new('String', value => $value);
-    return $c->node->adopt($string);
+    return handle_call($c, $value);
 }
 
-sub c_REGEX {
-    my ($c, $value) = @_;
-    my ($rgx, $mods) = $value;
-       ($rgx, $mods) = @$value if ref $value;
-    my $regex = F::new('Regex', value => $rgx, mods => $mods);
-    return $c->node->adopt($regex);
-}
-
-sub c_NUMBER {
-    my ($c, $value) = @_;
-
-    # create the number...
-    my $num = F::new('Number', value => $value);
-
-    # add to the current node.
-    $c->node->adopt($num);
-
-    return $num;
-}
-
-sub c_KEYWORD_UNDEFINED {
-    my ($c, $value) = @_;
-
-    # create the bool...
-    my $b = F::new('Boolean', value => undef);
-
-    # add to the current node.
-    $c->node->adopt($b);
-
-    return $b;
-}
-
-sub c_KEYWORD_TRUE {
-    my ($c, $value) = @_;
-
-    # create the bool...
-    my $b = F::new('Boolean', value => 1);
-
-    # add to the current node.
-    $c->node->adopt($b);
-
-    return $b;
-}
-
-sub c_KEYWORD_FALSE {
-    my ($c, $value) = @_;
-
-    # create the bool...
-    my $b = F::new('Boolean', value => 0);
-
-    # add to the current node.
-    $c->node->adopt($b);
-
-    return $b;
-}
-
-sub c_VAR_SYM {
-    my ($c, $value) = @_;
-
-    # if the current node is an OnParameter, it's a callback name.
-    if ($c->node->type eq 'OnParameter' && $c->node->{cb_method}) {
-        my $method = delete $c->node->{cb_method};
-
-        # cannot use ':default' when it's the primary callback name
-        if ($value eq 'default' && $method eq 'set_cb_name') {
-            return $c->unexpected([
-                ":default for callback name",
-                "Cannot dynamically add default callback. ".
-                "Use 'func' keyword instead"
-            ]);
-        }
-
-        $c->node->parent->$method($value);
-        return;
-    }
-
-    # create the symbol...
-    my $b = F::new('Symbol', sym_value => $value);
-
-    # add to the current node.
-    $c->node->adopt($b);
-
-    return $b;
-}
-
-sub c_OP_COMMA {
-    my ($c, $value) = @_;
-
-    # we're in a list.
-    if ($c->list) {
-
-        # Rules for ListItem:
-        #   See c_PAREN_S().
-
-        # set the current node to a new list item.
-        $c->set_node($c->list->new_item);
-
-        return $c->node;
-    }
-
-    # we're in a want/need. this starts another.
-    $c->close_nodes(qw(WantNeedType WantNeedValue));
-    if ($c->node->type eq 'WantNeed') {
-        my $old_wn = $c->node;
-
-        # fake a semicolon to terminate the instruction
-        # wrapping the previous WantNeed.
-        $c->simulate('OP_SEMI');
-
-        # create new want/need.
-        my $wn = F::new('WantNeed', arg_type => $old_wn->{arg_type});
-
-        # wrap it with an instruction.
-        my $instr = F::new('Instruction');
-        $c->set_instruction($instr);
-        $c->adopt_and_set_node($instr);
-
-        return $c->adopt_and_set_node($wn);
-    }
-
-    # we're inside an OnParameter, so this comma could separate from a
-    # symbol callback name.
-    if (my $exp = $c->node->first_self_or_parent('OnParameter')) {
-        my $e = $c->next_token_must_be(
-            'VAR_SYM',
-            "Following a comma within 'on' parameter ".
-            "must be a symbol callback name"
-        );
-        return $e if $e;
-        $exp->{cb_method} = 'set_cb_name';
-        $c->set_node($exp);
-        return;
-    }
-
-    return $c->unexpected('outside of list');
-}
-
-sub c_BAREWORD {
-    my ($c, $value) = @_;
-
-    # if the last element is a bareword, combine them.
-    # ex: Math :: Point == Math::Point
-    # ex: A B = AB
-    my $l_word  = $c->last_el;
-    my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
-    if ($l_label eq 'OP_PACK' && $l_word->type eq 'Bareword') {
-        $l_word->{bareword_value} .= $value;
-        $l_word->{parent}->adopt($l_word); # to redo after_adopt()
-        return $l_word;
-    }
-
-    # otherwise, create a new bareword.
-    my $word = F::new('Bareword', bareword_value => $value);
-    $c->node->adopt($word);
-
-    # not yet in function call at this point.
-    return $word;
-}
-
-sub c_OP_SEMI {
-    my ($c, $automatic) = @_;
-
-    # Rule OP_SEMI[0]:
-    #   The current 'instruction' must exist.
-
-    # close these things.
-    $c->close_nodes(qw(
-        WantNeed WantNeedType WantNeedValue PropertyModifier Negation
-        Alias FailThrow Assignment Return ReturnPair TypeRequirement Operation
-        SharedDeclaration LocalDeclaration Load Stop LoopStatement Take
-    ));
-
-    # special case:
-    # if it's an automatic semicolon and the node is a list item, ignore it.
-    return if $automatic and
-        $c->node->type eq 'ListItem' || $c->node->type eq 'Pair';
-
-    # at this point, the instruction must be the current node.
-    if ($c->node != $c->instruction) {
-
-        # if this is an automatic semicolon, just discard it.
-        # if we were to respect it, the error would be "unexpected semicolon",
-        # which is not particularly useful when there is no semicolon at all.
-        return if $automatic;
-
-        my $type = $c->node->desc;
-        return $c->unexpected("inside $type");
-    }
-
-    # close the instruction.
-    my $instr = $c->instruction;
-    $c->close_node;
-    $c->close_instruction;
-
-    # possibly terminate a closure.
-    if (delete $instr->{will_close_closure}) {
-        $c->simulate('CLOSURE_E', undef, 1);
-    }
-
-    return;
-}
-
-sub c_VAR_LEX {
-    my ($c, $value) = @_;
-    my $var = F::new('LexicalVariable', var_name => $value);
-    return $c->node->adopt($var);
-}
-
-sub c_VAR_THIS {
-    my ($c, $value) = @_;
-
-    # Rule InstanceVariable[0]:
-    #   Must be somewhere inside a Function or Method.
-
-    my $var = F::new('InstanceVariable', var_name => $value);
-    return $c->node->adopt($var);
-}
-
-sub c_VAR_SPEC {
-    my ($c, $value) = @_;
-    my $var = F::new('SpecialVariable', var_name => $value);
-    return $c->node->adopt($var);
-}
-
-sub c_VAR_SET {
-    my ($c, $value) = @_;
-    my $var = F::new('SetTypeVariable', var_name => $value);
-    return $c->node->adopt($var);
-}
-
-sub c_VAR_PROP {
-    my ($c, $value) = @_;
-
-    # Rule PropertyVariable[0]:
-    #   Must be somewhere inside an Inside or Type.
-
-    # Rule PropertyVariable[1]:
-    #   Must be somewhere inside the parent's first ancestor Inside's body,
-    #   if such an ancestor exists.
-
-    my $var = F::new('PropertyVariable', var_name => $value);
-    return $c->node->adopt($var);
-}
-
-sub c_KEYWORD_WANT {
-    my ($c, $value) = @_;
-
-    # Rule WantNeed[0]:
-    #   Must be a direct child of an Instruction.
-
-    # Rule WantNeed[1]:
-    #   Must be somewhere inside a Function or a Method.
-
-    # Rule WantNeed[2]:
-    #   Direct children must be one of the following types:
-    #       InstanceVariable
-    #       LexicalVariable
-    #       WantNeedType
-    #       WantNeedValue
-
-    # Rule WantNeed[3]:
-    #   Number of direct children must be no less than one (1).
-
-    # Rule WantNeed[4]:
-    #   Number of direct children must not exceed three (3).
-
-    # Rule WantNeedType[0]:
-    #   Direct parent must be of type WantNeed.
-
-    # Rule WantNeedType[1]:
-    #   Direct children must be of type Bareword.
-
-    # Rule WantNeedType[2]:
-    #   Must directly follow a lexical variable or instance variable.
-
-    # Rule WantNeedType[3]:
-    #   Number of direct children must be no less than one (1).
-
-    # Rule WantNeedValue[0]:
-    #   Direct parent must be of type WantNeed.
-
-    # Rule WantNeedValue[1]:
-    #   Direct children must be some sort of Expression.
-
-    # Rule WantNeedValue[2]:
-    #   Must directly follow one of the following types:
-    #       LexicalVariable
-    #       InstanceVariable
-    #       WantNeedType
-
-    # Rule WantNeedValue[3]:
-    #   Number of direct children must be exactly one (1).
-
-    my $want = F::new('WantNeed', arg_type => 'want');
-    return $c->adopt_and_set_node($want);
-}
-
-sub c_KEYWORD_NEED {
-    my ($c, $value) = @_;
-
-    # Rules:
-    #   See rules in c_KEYWORD_WANT() above.
-
-    my $need = F::new('WantNeed', arg_type => 'need');
-    return $c->adopt_and_set_node($need);
-}
-
-sub c_OP_VALUE {
-    my $c = shift;
-
-    # if the current node is a WantNeed, this is likely the type
-    # for the argument variable.
-    if ($c->node->type eq 'WantNeed') {
-        my $wn = $c->node;
-
-        # Rules for WantNeedType:
-        #   See c_KEYWORD_WANT().
-
-        # if the argument already has a type, that's an issue.
-        if ($wn->arg_type_exp) {
-            return $c->unexpected([
-                "inside $$wn{arg_type}",
-                'This argument declaration already has a type expression'
-            ]);
-        }
-
-        my $exp = $wn->create_arg_type_exp;
-        $c->adopt_and_set_node($exp);
-        return $exp;
-    }
-
-    # if something is waiting to capture a closure,
-    # maybe that's what this is, a single-statement closure.
-    if (could_be_one_liner($c)) {
-
-        # simulate a {
-        $c->simulate('CLOSURE_S', 1);
-
-        # remember that the coming intruction will terminate closure.
-        $c->instruction_opens_closure;
-
-        return;
-    }
-
-    # otherwise just throw the token back in.
-    $c->node->adopt($c->unknown_el);
-
-}
-
-sub could_be_one_liner {
-    my $c = shift;
-
-    # clos_cap gotta be there.
-    return unless $c->clos_cap;
-
-    # if we're inside a generated expression, all good.
-    # this could be problematic if a generated expression had an anonymous
-    # function or other sort of closure in it, but that would be ridiculous.
-    my $el = $c->node;
-    do {
-        return 1 if $el->{generated_expression};
-    } while $el = $el->parent;
-
-    # if the last token is any of these, good.
-    my %is_reasonable = map { $_ => 1 } qw(
-        KEYWORD_ELSE
-        KEYWORD_DEFER
-    );
-
-    my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
-    return $is_reasonable{$l_label};
-}
-
-sub c_OP_ELLIP {
-    my ($c, $value) = @_;
-
-    # Rule OP_ELLIP[0]:
-    #   The current node must be of one of the following types:
-    #       WantNeed
-    #       WantNeedType
-    #       WantNeedValue
-
-    # ellipsis can only exist on the end of a WantNeed.
-    # consider: no way to handle need $var...: Type = exp.
-    # not really a big deal because it has the same effect as
-    # need $var: Type = exp...
-    $c->close_nodes(qw(WantNeedType WantNeedValue));
-    if ($c->node->type eq 'WantNeed') {
-        $c->node->{ellipsis} = 1;
-        return;
-    }
-
-    $c->node->adopt($c->unknown_el);
-}
-
-sub c_PROP_VALUE {
-    my ($c, $value) = @_;
-
-    # Rule Pair[0]:
-    #   Must be somewhere inside a List.
-
-    # Rule Pair[1]:
-    #   Must be a direct child of a List item.
-
-    # create a new node which is a pair.
-    my $pair = F::new('Pair', key => $value);
-    $c->adopt_and_set_node($pair);
-
-    return $pair;
-}
-
-sub c_PROPERTY {
-    my ($c, $value) = @_;
-
-    # Rule Property[0]:
-    #   Direct children must be Expressions of sorts.
-
-    # Rule Property[1]:
-    #   The second direct must be a List.
-
-    # Rule Property[2]:
-    #   The second direct child, if a list, must have "[" ... "]" delimiters.
-
-    # Rule Property[3]:
-    #   The second direct child must be a parent of exactly one direct child.
-
-    # Rule Property[4]:
-    #   Number of direct children must be no less than one (1).
-
-    # Rule Property[5]:
-    #   Number of direct children must not exceed two (2).
-
-    # last element must be an expression.
-    my $last_el = $c->last_el;
-    return $c->expected(
-        'an expression',
-        'at left of '.F::pretty_token($c->label)
-    ) unless $last_el->is_type('Expression');
-
-    my $prop = F::new('Property', prop_name => $value);
-    $c->node->adopt($prop);
-    $prop->adopt($last_el);
-
-    return $prop;
-}
-
-# property operator is used for non-bareword properties.
-# e.g. $prop = "odd"; 2.[$prop] # false
-sub c_OP_PROP {
-    my ($c, $value) = @_;
-
-    # Rule OP_PROP[0]:
-    #   Next token must be an opening bracket "[".
-
-    # Rules for Property:
-    #   See c_PROPERTY().
-
-    # last element must be an expression.
-    my $last_el = $c->last_el;
-    return $c->expected(
-        'an expression',
-        'at left of '.F::pretty_token($c->label)
-    ) unless $last_el->is_type('Expression');
-
-    # make the property the current node.
-    # it will capture the upcoming value list.
-    my $prop = F::new('Property', prop_name => $value, is_index => 1);
-    $c->adopt_and_set_node($prop);
-    $prop->adopt($last_el);
-
-    return $prop;
-}
-
+###################
+### ASSIGNMENTS ###
+###################
+
+# standard assignment operator.
 sub c_OP_ASSIGN {
     my ($c, $value) = @_;
 
@@ -1522,6 +673,7 @@ sub c_OP_ASSIGN {
     return $a;
 }
 
+# lazy assignment operator.
 sub c_OP_LASSIGN {
     my ($c, $value) = @_;
 
@@ -1536,6 +688,10 @@ sub c_OP_LASSIGN {
     return $a;
 }
 
+##################
+### OPERATIONS ###
+##################
+
 *c_OP_ADD     = *c_OP_SUB      =
 *c_OP_MUL     = *c_OP_DIV      =
 *c_OP_POW     = *c_OP_MOD      =
@@ -1545,6 +701,7 @@ sub c_OP_LASSIGN {
 *c_OP_EQUAL_I = *c_OP_NEQUAL_I =
 *c_OP_RANGE   = *c_operator;
 
+# used for all operators managed by the Operation node.
 sub c_operator {
     my ($c, $value) = @_;
     my $last_el = $c->last_el;
@@ -1576,32 +733,176 @@ sub c_operator {
     return $op;
 }
 
-sub c_OP_RETURN {
+#######################
+### MISC. OPERATORS ###
+#######################
+
+# the comma. separates list items and whatnot.
+sub c_OP_COMMA {
     my ($c, $value) = @_;
 
-    # the previous element MUST be a bareword.
-    my $word = $c->last_el;
-    return $c->expected(
-        'a bareword key',
-        'at left of return operator (->)'
-    ) unless $word->type eq 'Bareword';
+    # we're in a list.
+    if ($c->list) {
 
-    # forget about the bareword.
-    $word->parent->abandon($word);
+        # Rules for ListItem:
+        #   See c_PAREN_S().
 
-    # create a return pair with the proper key.
-    my $pair = F::new('ReturnPair', key => $word->{bareword_value});
-    $c->adopt_and_set_node($pair);
+        # set the current node to a new list item.
+        $c->set_node($c->list->new_item);
 
-    return $pair;
+        return $c->node;
+    }
+
+    # we're in a want/need. this starts another.
+    $c->close_nodes(qw(WantNeedType WantNeedValue));
+    if ($c->node->type eq 'WantNeed') {
+        my $old_wn = $c->node;
+
+        # fake a semicolon to terminate the instruction
+        # wrapping the previous WantNeed.
+        $c->simulate('OP_SEMI');
+
+        # create new want/need.
+        my $wn = F::new('WantNeed', arg_type => $old_wn->{arg_type});
+
+        # wrap it with an instruction.
+        my $instr = F::new('Instruction');
+        $c->set_instruction($instr);
+        $c->adopt_and_set_node($instr);
+
+        return $c->adopt_and_set_node($wn);
+    }
+
+    # we're inside an OnParameter, so this comma could separate from a
+    # symbol callback name.
+    if (my $exp = $c->node->first_self_or_parent('OnParameter')) {
+        my $e = $c->next_token_must_be(
+            'VAR_SYM',
+            "Following a comma within 'on' parameter ".
+            "must be a symbol callback name"
+        );
+        return $e if $e;
+        $exp->{cb_method} = 'set_cb_name';
+        $c->set_node($exp);
+        return;
+    }
+
+    return $c->unexpected('outside of list');
 }
 
-sub c_KEYWORD_RETURN {
+# the semicolon. terminates an instruction.
+sub c_OP_SEMI {
+    my ($c, $automatic) = @_;
+
+    # Rule OP_SEMI[0]:
+    #   The current 'instruction' must exist.
+
+    # close these things.
+    $c->close_nodes(qw(
+        WantNeed WantNeedType WantNeedValue PropertyModifier Negation
+        Alias FailThrow Assignment Return ReturnPair TypeRequirement Operation
+        SharedDeclaration LocalDeclaration Load Stop LoopStatement Take
+    ));
+
+    # special case:
+    # if it's an automatic semicolon and the node is a list item, ignore it.
+    return if $automatic and
+        $c->node->type eq 'ListItem' || $c->node->type eq 'Pair';
+
+    # at this point, the instruction must be the current node.
+    if ($c->node != $c->instruction) {
+
+        # if this is an automatic semicolon, just discard it.
+        # if we were to respect it, the error would be "unexpected semicolon",
+        # which is not particularly useful when there is no semicolon at all.
+        return if $automatic;
+
+        my $type = $c->node->desc;
+        return $c->unexpected("inside $type");
+    }
+
+    # close the instruction.
+    my $instr = $c->instruction;
+    $c->close_node;
+    $c->close_instruction;
+
+    # possibly terminate a closure.
+    if (delete $instr->{will_close_closure}) {
+        $c->simulate('CLOSURE_E', undef, 1);
+    }
+
+    return;
+}
+
+# the colon. separates variables from their types, keys from their values, etc.
+# additionally, it can start a closure which captures only one instruction.
+# see also PROP_VALUE, which is a token combining a bareword and a colon.
+sub c_OP_VALUE {
+    my $c = shift;
+
+    # if the current node is a WantNeed, this is likely the type
+    # for the argument variable.
+    if ($c->node->type eq 'WantNeed') {
+        my $wn = $c->node;
+
+        # Rules for WantNeedType:
+        #   See c_KEYWORD_WANT().
+
+        # if the argument already has a type, that's an issue.
+        if ($wn->arg_type_exp) {
+            return $c->unexpected([
+                "inside $$wn{arg_type}",
+                'This argument declaration already has a type expression'
+            ]);
+        }
+
+        my $exp = $wn->create_arg_type_exp;
+        $c->adopt_and_set_node($exp);
+        return $exp;
+    }
+
+    # if something is waiting to capture a closure,
+    # maybe that's what this is, a single-statement closure.
+    if (could_be_one_liner($c)) {
+
+        # simulate a {
+        $c->simulate('CLOSURE_S', 1);
+
+        # remember that the coming intruction will terminate closure.
+        $c->instruction_opens_closure;
+
+        return;
+    }
+
+    # otherwise just throw the token back in.
+    $c->node->adopt($c->unknown_el);
+
+}
+
+# the ellipsis. indicates a variable argument count.
+sub c_OP_ELLIP {
     my ($c, $value) = @_;
-    my $ret = F::new('Return');
-    return $c->adopt_and_set_node($ret);
+
+    # Rule OP_ELLIP[0]:
+    #   The current node must be of one of the following types:
+    #       WantNeed
+    #       WantNeedType
+    #       WantNeedValue
+
+    # ellipsis can only exist on the end of a WantNeed.
+    # consider: no way to handle need $var...: Type = exp.
+    # not really a big deal because it has the same effect as
+    # need $var: Type = exp...
+    $c->close_nodes(qw(WantNeedType WantNeedValue));
+    if ($c->node->type eq 'WantNeed') {
+        $c->node->{ellipsis} = 1;
+        return;
+    }
+
+    $c->node->adopt($c->unknown_el);
 }
 
+# package (namespace) separator.
 sub c_OP_PACK {
     my ($c, $value) = @_;
     my $l_word = $c->last_el;
@@ -1622,17 +923,14 @@ sub c_OP_PACK {
     return $l_word;
 }
 
-sub c_OP_BOR {
+# negation operator.
+sub c_OP_NOT {
     my ($c, $value) = @_;
-
-    # this separating two bareword types.
-    if ($c->node->type eq 'WantNeedType') {
-        return;
-    }
-
-    return $c->node->adopt($c->unknown_el);
+    my $not = F::new('Negation');
+    $c->adopt_and_set_node($not);
 }
 
+# inline if operator.
 sub c_OP_MAYBE {
     my ($c, $value) = @_;
 
@@ -1664,12 +962,859 @@ sub c_OP_MAYBE {
     return $maybe;
 }
 
-sub c_OP_NOT {
+# bitwise or operator.
+sub c_OP_BOR {
     my ($c, $value) = @_;
-    my $not = F::new('Negation');
-    $c->adopt_and_set_node($not);
+
+    # this separating two bareword types.
+    if ($c->node->type eq 'WantNeedType') {
+        return;
+    }
+
+    return $c->node->adopt($c->unknown_el);
 }
 
+###################
+### EXPRESSIONS ###
+################################################################################
+
+############################
+### CONSTANT EXPRESSIONS ###
+############################
+
+# a constant string.
+sub c_STRING {
+    my ($c, $value) = @_;
+    my $string = F::new('String', value => $value);
+    return $c->node->adopt($string);
+}
+
+# a constant regular expression.
+sub c_REGEX {
+    my ($c, $value) = @_;
+    my ($rgx, $mods) = $value;
+       ($rgx, $mods) = @$value if ref $value;
+    my $regex = F::new('Regex', value => $rgx, mods => $mods);
+    return $c->node->adopt($regex);
+}
+
+# a constant number.
+sub c_NUMBER {
+    my ($c, $value) = @_;
+
+    # create the number...
+    my $num = F::new('Number', value => $value);
+
+    # add to the current node.
+    $c->node->adopt($num);
+
+    return $num;
+}
+
+# the undefined value constant.
+sub c_KEYWORD_UNDEFINED {
+    my ($c, $value) = @_;
+
+    # create the bool...
+    my $b = F::new('Boolean', value => undef);
+
+    # add to the current node.
+    $c->node->adopt($b);
+
+    return $b;
+}
+
+# the boolean true value constant.
+sub c_KEYWORD_TRUE {
+    my ($c, $value) = @_;
+
+    # create the bool...
+    my $b = F::new('Boolean', value => 1);
+
+    # add to the current node.
+    $c->node->adopt($b);
+
+    return $b;
+}
+
+# the boolean false value constant.
+sub c_KEYWORD_FALSE {
+    my ($c, $value) = @_;
+
+    # create the bool...
+    my $b = F::new('Boolean', value => 0);
+
+    # add to the current node.
+    $c->node->adopt($b);
+
+    return $b;
+}
+
+###################
+### IDENTIFIERS ###
+###################
+
+# a bareword, representing a function, method, type interface, etc.
+sub c_BAREWORD {
+    my ($c, $value) = @_;
+
+    # if the last element is a bareword, combine them.
+    # ex: Math :: Point == Math::Point
+    # ex: A B = AB
+    my $l_word  = $c->last_el;
+    my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
+    if ($l_label eq 'OP_PACK' && $l_word->type eq 'Bareword') {
+        $l_word->{bareword_value} .= $value;
+        $l_word->{parent}->adopt($l_word); # to redo after_adopt()
+        return $l_word;
+    }
+
+    # otherwise, create a new bareword.
+    my $word = F::new('Bareword', bareword_value => $value);
+    $c->node->adopt($word);
+
+    # not yet in function call at this point.
+    return $word;
+}
+
+# a lexical variable.
+sub c_VAR_LEX {
+    my ($c, $value) = @_;
+    my $var = F::new('LexicalVariable', var_name => $value);
+    return $c->node->adopt($var);
+}
+
+# an instance variable.
+sub c_VAR_THIS {
+    my ($c, $value) = @_;
+
+    # Rule InstanceVariable[0]:
+    #   Must be somewhere inside a Function or Method.
+
+    my $var = F::new('InstanceVariable', var_name => $value);
+    return $c->node->adopt($var);
+}
+
+# a special variable.
+sub c_VAR_SPEC {
+    my ($c, $value) = @_;
+    my $var = F::new('SpecialVariable', var_name => $value);
+    return $c->node->adopt($var);
+}
+
+# a symbol identifier.
+sub c_VAR_SYM {
+    my ($c, $value) = @_;
+
+    # if the current node is an OnParameter, it's a callback name.
+    if ($c->node->type eq 'OnParameter' && $c->node->{cb_method}) {
+        my $method = delete $c->node->{cb_method};
+
+        # cannot use ':default' when it's the primary callback name
+        if ($value eq 'default' && $method eq 'set_cb_name') {
+            return $c->unexpected([
+                ":default for callback name",
+                "Cannot dynamically add default callback. ".
+                "Use 'func' keyword instead"
+            ]);
+        }
+
+        $c->node->parent->$method($value);
+        return;
+    }
+
+    # create the symbol...
+    my $b = F::new('Symbol', sym_value => $value);
+
+    # add to the current node.
+    $c->node->adopt($b);
+
+    return $b;
+}
+
+# a set type variable.
+sub c_VAR_SET {
+    my ($c, $value) = @_;
+    my $var = F::new('SetTypeVariable', var_name => $value);
+    return $c->node->adopt($var);
+}
+
+# a shorthand property variable.
+sub c_VAR_PROP {
+    my ($c, $value) = @_;
+
+    # Rule PropertyVariable[0]:
+    #   Must be somewhere inside an Inside or Type.
+
+    # Rule PropertyVariable[1]:
+    #   Must be somewhere inside the parent's first ancestor Inside's body,
+    #   if such an ancestor exists.
+
+    my $var = F::new('PropertyVariable', var_name => $value);
+    return $c->node->adopt($var);
+}
+
+##################
+### PROPERTIES ###
+##################
+
+# a simple property.
+sub c_PROPERTY {
+    my ($c, $value) = @_;
+
+    # Rule Property[0]:
+    #   Direct children must be Expressions of sorts.
+
+    # Rule Property[1]:
+    #   The second direct must be a List.
+
+    # Rule Property[2]:
+    #   The second direct child, if a list, must have "[" ... "]" delimiters.
+
+    # Rule Property[3]:
+    #   The second direct child must be a parent of exactly one direct child.
+
+    # Rule Property[4]:
+    #   Number of direct children must be no less than one (1).
+
+    # Rule Property[5]:
+    #   Number of direct children must not exceed two (2).
+
+    # last element must be an expression.
+    my $last_el = $c->last_el;
+    return $c->expected(
+        'an expression',
+        'at left of '.F::pretty_token($c->label)
+    ) unless $last_el->is_type('Expression');
+
+    my $prop = F::new('Property', prop_name => $value);
+    $c->node->adopt($prop);
+    $prop->adopt($last_el);
+
+    return $prop;
+}
+
+# a bareword suffixed by a colon. used for bareword keys.
+sub c_PROP_VALUE {
+    my ($c, $value) = @_;
+
+    # Rule Pair[0]:
+    #   Must be somewhere inside a List.
+
+    # Rule Pair[1]:
+    #   Must be a direct child of a List item.
+
+    # create a new node which is a pair.
+    my $pair = F::new('Pair', key => $value);
+    $c->adopt_and_set_node($pair);
+
+    return $pair;
+}
+
+# the property operator. used for non-bareword properties.
+# e.g. $prop = "odd"; 2.[$prop] # false
+sub c_OP_PROP {
+    my ($c, $value) = @_;
+
+    # Rule OP_PROP[0]:
+    #   Next token must be an opening bracket "[".
+
+    # Rules for Property:
+    #   See c_PROPERTY().
+
+    # last element must be an expression.
+    my $last_el = $c->last_el;
+    return $c->expected(
+        'an expression',
+        'at left of '.F::pretty_token($c->label)
+    ) unless $last_el->is_type('Expression');
+
+    # make the property the current node.
+    # it will capture the upcoming value list.
+    my $prop = F::new('Property', prop_name => $value, is_index => 1);
+    $c->adopt_and_set_node($prop);
+    $prop->adopt($last_el);
+
+    return $prop;
+}
+
+####################
+### CONTROL FLOW ###
+################################################################################
+
+##################################
+### FUNCTIONS, METHODS, EVENTS ###
+##################################
+
+# method declaration.
+sub c_METHOD {
+    my ($c, $value) = @_;
+
+    # Rule Method[0]:
+    #   Must be a direct child of a Class.
+
+    my $method = F::new('Method', %$value, event_cb => 1);
+
+    $c->node->adopt($method);
+    $c->capture_closure_with($method->body);
+
+    return $method;
+}
+
+# function declaration or anonymous function.
+sub c_FUNCTION {
+    my ($c, $value) = @_;
+
+    # Rule Function[0]:
+    #   If the function is named (not anonymous), it must be a direct child
+    #   of a subtype of ScopeOwner.
+
+    # if the current node is a class and this is not a private function,
+    # it's a class method.
+    my $first_char = length $value->{name} ? substr $value->{name}, 0, 1 : '';
+    if ($c->node->type eq 'Class' && $first_char ne '_') {
+        $value->{main} = 1;
+        return $c->simulate('METHOD', $value);
+    }
+
+    my $function = F::new('Function',
+        %$value,
+        event_cb => !$value->{anonymous}
+        # anonymous functions are not implemented as events
+    );
+
+    $c->node->adopt($function);
+    $c->capture_closure_with($function->body);
+
+    return $function;
+}
+
+# event callback.
+sub c_KEYWORD_ON {
+    my ($c, $value) = @_;
+
+    # create on.
+    my $on = F::new('On');
+
+    # set the closure to the function of on.
+    $c->capture_closure_with($on->function->body);
+    $c->node->adopt($on);
+
+    # set the current node to the on expression.
+    $c->set_node($on->param_exp);
+
+    # Rule OnParameter[0]:
+    #   Direct children must be one of the following:
+    #
+    #       Property            (e.g. $obj.prop)
+    #       Lexical variable    (e.g. $var)
+    #       Instance variable   (e.g. $var)
+    #       Property variable   (e.g. .var)
+    #       Bareword            (i.e. function name)
+
+    # Rule OnParameter[1]:
+    #   If a direct child is a Property, it must not be a special property.
+
+    # Rule OnParameter[2]:
+    #   Number of direct children must be exactly one (1).
+
+    return $on;
+}
+
+# event callback priority hints.
+sub c_KEYWORD_BEFORE { handle_callback_clause(shift, 'before') }
+sub c_KEYWORD_AFTER  { handle_callback_clause(shift, 'after')  }
+
+sub handle_callback_clause {
+    my ($c, $type) = @_;
+
+    # must be inside an on expression.
+    my $exp = $c->node->first_self_or_parent('OnParameter');
+    return $c->unexpected("without preceding 'on' expression") if !$exp;
+
+    # next token must be a symbol.
+    my $e = $c->next_token_must_be(
+        'VAR_SYM',
+        "Following '$type' keyword must be a symbol callback name"
+    );
+    return $e if $e;
+
+    # make the on expression the current node.
+    $exp->{cb_method} = "add_${type}_clause";
+    $c->set_node($exp);
+
+    return;
+}
+
+# stop statement. cancels event propagation.
+sub c_KEYWORD_STOP {
+    my ($c, $value) = @_;
+
+    # Rule Stop[0]:
+    #   Direct parent must be of type Instruction.
+
+    # Rule Stop[1]:
+    #   Direct children must be of type Function or Method.
+
+    my $stop = F::new('Stop');
+    $c->node->adopt($stop);
+    # $c->adopt_and_set_node($stop); # once it takes an arg
+}
+
+# defer statement. postpones an instruction.
+sub c_KEYWORD_DEFER {
+    my ($c, $value) = @_;
+
+    # Rule Defer[0]:
+    #   Must be somewhere inside a Function or Method.
+
+    # create closure.
+    my $defer = F::new('Defer');
+    $c->capture_closure_with($defer->body);
+    $c->node->adopt($defer);
+
+    return $defer;
+}
+
+# function/method return statement.
+sub c_KEYWORD_RETURN {
+    my ($c, $value) = @_;
+    my $ret = F::new('Return');
+    return $c->adopt_and_set_node($ret);
+}
+
+# the return operator.
+sub c_OP_RETURN {
+    my ($c, $value) = @_;
+
+    # the previous element MUST be a bareword.
+    my $word = $c->last_el;
+    return $c->expected(
+        'a bareword key',
+        'at left of return operator (->)'
+    ) unless $word->type eq 'Bareword';
+
+    # forget about the bareword.
+    $word->parent->abandon($word);
+
+    # create a return pair with the proper key.
+    my $pair = F::new('ReturnPair', key => $word->{bareword_value});
+    $c->adopt_and_set_node($pair);
+
+    return $pair;
+}
+
+# optional function/method argument declaration.
+sub c_KEYWORD_WANT {
+    my ($c, $value) = @_;
+
+    # Rule WantNeed[0]:
+    #   Must be a direct child of an Instruction.
+
+    # Rule WantNeed[1]:
+    #   Must be somewhere inside a Function or a Method.
+
+    # Rule WantNeed[2]:
+    #   Direct children must be one of the following types:
+    #       InstanceVariable
+    #       LexicalVariable
+    #       WantNeedType
+    #       WantNeedValue
+
+    # Rule WantNeed[3]:
+    #   Number of direct children must be no less than one (1).
+
+    # Rule WantNeed[4]:
+    #   Number of direct children must not exceed three (3).
+
+    # Rule WantNeedType[0]:
+    #   Direct parent must be of type WantNeed.
+
+    # Rule WantNeedType[1]:
+    #   Direct children must be of type Bareword.
+
+    # Rule WantNeedType[2]:
+    #   Must directly follow a lexical variable or instance variable.
+
+    # Rule WantNeedType[3]:
+    #   Number of direct children must be no less than one (1).
+
+    # Rule WantNeedValue[0]:
+    #   Direct parent must be of type WantNeed.
+
+    # Rule WantNeedValue[1]:
+    #   Direct children must be some sort of Expression.
+
+    # Rule WantNeedValue[2]:
+    #   Must directly follow one of the following types:
+    #       LexicalVariable
+    #       InstanceVariable
+    #       WantNeedType
+
+    # Rule WantNeedValue[3]:
+    #   Number of direct children must be exactly one (1).
+
+    my $want = F::new('WantNeed', arg_type => 'want');
+    return $c->adopt_and_set_node($want);
+}
+
+# required function/method argument declaration.
+sub c_KEYWORD_NEED {
+    my ($c, $value) = @_;
+
+    # Rules:
+    #   See rules in c_KEYWORD_WANT() above.
+
+    my $need = F::new('WantNeed', arg_type => 'need');
+    return $c->adopt_and_set_node($need);
+}
+
+##########################
+### MISC. CONTROL FLOW ###
+##########################
+
+# inside block. allows for shorthand property access.
+sub c_KEYWORD_INSIDE {
+    my ($c, $value) = @_;
+
+    # create a closure to be opened soon.
+    my $inside = F::new('Inside');
+    $c->capture_closure_with($inside->body);
+    $c->node->adopt($inside);
+
+    # set the current node to the inside expression.
+    $c->set_node($inside->param_exp);
+
+    return $inside;
+}
+
+# gathering. consolidates items into a list.
+sub c_KEYWORD_GATHER {
+    my ($c, $value) = @_;
+
+    # create a closure to be opened soon.
+    my $gather = F::new('Gather');
+    $c->capture_closure_with($gather->body);
+    $c->node->adopt($gather);
+
+    return $gather;
+}
+
+# gathering loop. conveniently combines the 'gather' and 'for' keywords.
+sub c_KEYWORD_GATHFOR {
+    my $c = shift;
+
+    # create a gather.
+    my $gather = $c->simulate('KEYWORD_GATHER');
+    $gather->{is_gatherfor} = 1;
+
+    # create a for.
+    my $for = $c->simulate('KEYWORD_FOR');
+    $for->{is_gatherfor} = 1;
+
+    # add the for to the gather body.
+    # note: $gather->body->open will never be called.
+    $gather->body->adopt($for);
+
+    return $for;
+}
+
+# take statement. adds a value to the current gathering.
+sub c_KEYWORD_TAKE {
+    my ($c, $value) = @_;
+
+    # Rule Take[0]:
+    #   Direct parent must be an Instruction.
+
+    # Rule Take[1]:
+    #   Direct children must be Expressions of sorts.
+
+    # Rule Take[2]:
+    #   Number of direct children must be exactly one (1).
+
+    # Rule Take[3]:
+    #   Must be somewhere inside a Gather.
+
+    my $take = F::new('Take');
+    $c->adopt_and_set_node($take);
+
+    return $take;
+}
+
+#####################
+### MISCELLANEOUS ###
+################################################################################
+
+#######################
+### TYPE INTERFACES ###
+#######################
+
+# type interface declaration.
+sub c_TYPE {
+    my ($c, $opts) = @_;
+
+    # create a closure to be opened soon.
+    my $type = F::new('Type',
+        type_name => $opts->{name},
+        lazy => $opts->{lazy}
+    );
+    $c->capture_closure_with($type->body);
+    $c->node->adopt($type);
+
+    # Rule TypeBody[0]:
+    #   Direct children must of type Instruction.
+
+    # Rule TypeBody[1]:
+    #   If direct child is an Instruction, its statement has an be an
+    #   Expression of some sort.
+
+    return $type;
+}
+
+# type interface conditions and transformations.
+sub c_KEYWORD_CAN       { start_type_requirement(shift, 'can')       }
+sub c_KEYWORD_ISA       { start_type_requirement(shift, 'isa')       }
+sub c_KEYWORD_SATISFIES { start_type_requirement(shift, 'satisfies') }
+sub c_KEYWORD_TRANSFORM { start_type_requirement(shift, 'transform') }
+
+sub start_type_requirement {
+    my ($c, $type) = @_;
+
+    # Rule TypeRequirement[0]:
+    #   Must be a direct child of an Instruction.
+
+    # Rule TypeRequirement[1]:
+    #   Must be somewhere inside a Type declaration.
+
+    # Rule TypeRequirement[2]:
+    #   Direct children must be a subtype of Expression.
+
+    # Rule TypeRequirement[3]:
+    #   Number of direct children must be exactly one (1).
+
+
+    # create a type requirement.
+    my $req = F::new('TypeRequirement', req_type => $type);
+    $c->adopt_and_set_node($req);
+
+    return $req;
+}
+
+# alias for type declaration or function/method.
+sub c_ALIAS {
+    my ($c, $opts) = @_;
+
+    # Rule Alias[0]:
+    #   Direct parent must be of type Instruction.
+
+    # Rule Alias[1]:
+    #   Direct children must be of type Assignment.
+
+    # Rule Alias[2]:
+    #   Number of direct children must be exactly one (1).
+
+    # Rules for Assignment while inside Alias:
+    #   See c_OP_ASSIGN().
+
+    # create alias.
+    my $alias = F::new('Alias', lazy => $opts->{lazy});
+    $c->adopt_and_set_node($alias);
+
+    return $alias;
+}
+
+####################
+### CONDITIONALS ###
+####################
+
+# the basic conditional.
+sub c_KEYWORD_IF {
+    my ($c, $value) = @_;
+
+    # create an if statement which expects a closure to be opened soon.
+    my $if = F::new('If', if_type => 'if');
+    $c->node->adopt($if);
+    $c->capture_closure_with($if->body);
+
+    # Rule IfParameter[0]:
+    #   Direct children must be an Expression of some sort.
+    #   If direct child is an Assignment, it cannot be a lazy assignment.
+
+    # Rule IfParameter[1]:
+    #   Number of direct children must be exactly one (1).
+
+    # set the current node to the conditional expression.
+    $c->set_node($if->param_exp);
+
+    return $if;
+}
+
+# alternative/extended conditional.
+sub c_KEYWORD_ELSIF {
+    my ($c, $value) = @_;
+
+    # ensure that the last element is an if.
+    my $last_el = $c->last_el;
+    if ($last_el->type ne 'If') {
+        return $c->unexpected([
+            'without preceding if',
+            'Else if must immediately follow the termination of an if body'
+        ]);
+    }
+
+    # create an if statement which expects a closure to be opened soon.
+    my $if = F::new('If', if_type => 'elsif');
+    $c->node->adopt($if);
+    $c->capture_closure_with($if->body);
+
+    # set the current node to the conditional expression.
+    $c->set_node($if->param_exp);
+
+    return $if;
+}
+
+# conditional fallback.
+sub c_KEYWORD_ELSE {
+    my ($c, $value) = @_;
+
+    # ensure that the last element is an if.
+    my $last_el = $c->last_el;
+    if ($last_el->type ne 'If') {
+        return $c->unexpected([
+            'without preceding if',
+            'Else must immediately follow the termination of an if body'
+        ]);
+    }
+
+    # create else.
+    my $else = F::new('Else');
+    $c->capture_closure_with($else->body);
+    $c->node->adopt($else);
+
+    return $else;
+}
+
+#############
+### LOOPS ###
+#############
+
+# the loop.
+sub c_KEYWORD_FOR {
+    my ($c, $value) = @_;
+
+    # create a closure to be opened soon.
+    my $for = F::new('For');
+
+    $c->node->adopt($for);
+    $c->capture_closure_with($for->body);
+
+    # set the node to the for parameter.
+    $c->set_node($for->param_exp);
+
+    return $for;
+}
+
+# the collection indicator. used for iterations.
+sub c_KEYWORD_IN {
+    my ($c, $value) = @_;
+
+    # 'in' must terminate a generated expression for 'for'.
+    return $c->unexpected("(where is 'for'?)") unless
+        $c->node->{parameter_for} && $c->node->{parameter_for} eq 'for';
+
+    # set the node to the 'in' parameter.
+    my $for = $c->close_node;
+    return $c->set_node($for->in_param_exp);
+
+}
+
+# loop control flow statements.
+sub c_KEYWORD_NEXT { handle_loop_statement('next', @_) }
+sub c_KEYWORD_LAST { handle_loop_statement('last', @_) }
+sub c_KEYWORD_REDO { handle_loop_statement('redo', @_) }
+
+sub handle_loop_statement {
+    my ($type, $c) = @_;
+
+    # Rule LoopStatement[0]:
+    #   Direct parent must be of type Instruction.
+
+    # Rule LoopStatement[1]:
+    #   Must be somewhere inside the body of a For loop.
+
+    my $stmt = F::new('LoopStatement', loop_stmt_name => $type);
+    $c->node->adopt($stmt);
+
+    return $stmt;
+}
+
+######################
+### ERROR HANDLING ###
+######################
+
+# raising of runtime errors.
+sub c_KEYWORD_FAIL  { handle_failthrow(shift, 'fail')  }
+sub c_KEYWORD_THROW { handle_failthrow(shift, 'throw') }
+
+sub handle_failthrow {
+    my ($c, $type) = @_;
+
+    # Rule FailThrow[0]:
+    #   Direct parent must be of type Instruction.
+
+    # Rule FailThrow[1]:
+    #   Direct children must be Expressions of sorts.
+
+    # Rule FailThrow[2]:
+    #   Number of direct children must be exactly one (1).
+
+    # Rule FailThrow[3]:
+    #   If it's a fail statement (rather than throw), it must be somewhere
+    #   inside a Function or Method.
+
+    my $fail = F::new('FailThrow', fail_type => $type);
+    $c->adopt_and_set_node($fail);
+
+    return $fail;
+}
+
+# handling runtime errors.
+sub c_KEYWORD_CATCH {
+    my ($c, $value) = @_;
+
+    # Rule KEYWORD_CATCH[0]:
+    #   The current 'instruction' must exist.
+
+    # store the instruction, then simulate a semicolon.
+    my $instr = $c->instruction;
+    $c->simulate('OP_SEMI');
+
+    # TODO: make sure there is only one catch.
+
+    # create a catch and add it to the instruction.
+    my $catch = F::new('Catch');
+    $instr->adopt($catch);
+
+    # capture a closure with the catch body.
+    $c->capture_closure_with($catch->body);
+
+    # Rule CatchParameter[0]:
+    #   Direct children must be of type LexicalVariable.
+
+    # Rule CatchParameter[1]:
+    #   Number of direct children must not exceed one (1).
+
+    # set the current node to the catch variable expression.
+    $c->set_node($catch->param_exp);
+
+    return $catch;
+}
+
+##########################
+### PROPERTY MODIFIERS ###
+##########################
+
+# property modifier statements.
 sub start_modifier {
     my ($c, $type) = @_;
 
@@ -1698,18 +1843,25 @@ sub start_modifier {
     return $c->adopt_and_set_node($mod);
 }
 
+# property deletion statement.
 sub c_KEYWORD_DELETE {
     my ($c, $value) = @_;
     # see start_modifier() for rules.
     return start_modifier($c, 'delete');
 }
 
+# property weakening statement.
 sub c_KEYWORD_WEAKEN {
     my ($c, $value) = @_;
     # see start_modifier() for rules.
     return start_modifier($c, 'weaken');
 }
 
+#############################
+### VARIABLE DECLARATIONS ###
+#############################
+
+# shared variable declaration.
 sub c_KEYWORD_SHARE {
     my ($c, $value) = @_;
 
@@ -1737,6 +1889,7 @@ sub c_KEYWORD_SHARE {
     return $c->adopt_and_set_node($share);
 }
 
+# local variable declaration.
 sub c_KEYWORD_LOCAL {
     my ($c, $value) = @_;
 
@@ -1765,6 +1918,11 @@ sub c_KEYWORD_LOCAL {
     return $c->adopt_and_set_node($local);
 }
 
+##############################
+### DOCUMENTATION COMMENTS ###
+##############################
+
+# left-facing document line comment.
 sub c_COMMENT_LDL {
     my ($c, $comment) = @_;
     my $last_el = $c->last_el;
@@ -1772,12 +1930,14 @@ sub c_COMMENT_LDL {
     return;
 }
 
+# right-facing document line comment.
 sub c_COMMENT_LDR {
     my ($c, $comment) = @_;
     $c->{doc_comment} = $comment;
     return;
 }
 
+# appended document line comment.
 sub c_COMMENT_LDA {
     my ($c, $comment) = @_;
     my $last_tok = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
@@ -1807,6 +1967,11 @@ sub c_COMMENT_LDA {
     return;
 }
 
+###########################
+### MISC. MISCELLANEOUS ###
+###########################
+
+# called for all labels. possibly starts an instruction.
 sub c_any {
     my ($label, $c, $value) = @_;
 
@@ -1843,6 +2008,7 @@ sub c_any {
     return 1; # true = started an instruction
 }
 
+# injected by the constructor. indicates namespace requirements.
 sub c_spaces {
     my ($c, $main_node) = @_;
     my $spaces = F::new('Spaces');
@@ -1850,6 +2016,7 @@ sub c_spaces {
     return;
 }
 
+# represents the end of the document.
 sub c_eof {
     my ($c, $main_node) = @_;
 

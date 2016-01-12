@@ -26,6 +26,15 @@
 #                          Lexical variable '$data'
 #                          Argument type
 #                              Bareword 'Str::NonEmpty'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$words'
+#                          Call
+#                              Property 'split'
+#                                  Lexical variable '$data'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Regex /\s+/
 #      Include (Str, Str::NonEmpty)
 use warnings;
 use strict;
@@ -47,7 +56,7 @@ my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
 
 FF::before_content('Message.frt');
 
-use Ferret::Core::Operations qw(bool);
+use Ferret::Core::Operations qw(bool rgx);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
     my $scope = $file_scope;
@@ -97,6 +106,15 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'data', 15.2 ) or return;
+                FF::lex_assign(
+                    $scope,
+                    words => ${ $$scope->{'data'} }->{'split'}->(
+                        [ rgx( $f, undef, "\\s+", undef ) ], $scope,
+                        undef, 16.5
+                    ),
+                    $file_scope,
+                    16.2
+                );
                 return $ret;
             }
         );

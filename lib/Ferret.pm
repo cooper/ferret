@@ -10,10 +10,16 @@ use Scalar::Util 'blessed';
 use Ferret::Shared::Utils qw(ns_to_slash build_name);
 
 our (
-    $ferret,            $core_context,
-    %tried_files,       %file_map,
-    %class_bindings,    %delay_class_bindings,
-    %specials,          @ferret_libs
+    $ferret,                # the global Ferret instance
+    %tried_files,           # which .pm's have we tried to load?
+    %file_map,              # map .pm to .frt
+    %specials,              # special properties for all objects
+    $ferret_libs            # array ref of lib dirs from configuration
+);
+
+my (
+    %class_bindings,        # class bindings by Perl package name
+    %delay_class_bindings   # class bindings pending Class creation
 );
 
 # create a new ferret.
@@ -27,8 +33,7 @@ sub new {
         foreach keys %specials;
 
     # create the core and main context objects.
-    $f->{context}{CORE} ||=
-        $core_context   ||= Ferret::Core::Context->new($f,
+    $f->{context}{CORE} ||= Ferret::Core::Context->new($f,
         %opts,
         name => 'CORE'
     );
