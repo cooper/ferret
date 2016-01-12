@@ -37,12 +37,19 @@ Ferret::bind_class(
 );
 
 sub init {
-    my ($set, $args, $call_scope) = @_;
-    $set->{set_scope} = $call_scope;
+    my ($set, $args) = @_;
 
-    # add objects.
-    my @others          = $args->plist('items');
-    $set->{primary_obj} = delete $args->{item1};
+    my $first  = delete $args->{item1};
+    my @others = $args->plist('items');
+
+    # if only one object was given, and it's a list,
+    # we can assume it's like fromList.
+    if (!@others && $first->isa('Ferret::List')) {
+        @others = plist($first);
+        $first  = shift @others;
+    }
+
+    $set->{primary_obj} = $first;
     $set->{other_objs}  = \@others;
     $set->{all_objs}    = [ $set->{primary_obj}, @others ];
 
