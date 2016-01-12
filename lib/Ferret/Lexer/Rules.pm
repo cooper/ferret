@@ -259,7 +259,7 @@ our %element_rules = (
             2
         ],
 
-        num_children => [ 1, undef, 3 ]                                         # WantNeedType[3]
+        min_children => [ 1, undef, 3 ]                                         # WantNeedType[3]
 
     },
 
@@ -874,7 +874,7 @@ our %element_rules = (
 
     },
 
-    Token => {
+    Unknown => {
 
         # tokens cannot be astray.
         parent_must_be => [                                                     # Token[0]

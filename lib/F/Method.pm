@@ -39,7 +39,7 @@ sub signature {
     my @args = map {
         my $a = {
             name => $_->variable->{var_name},
-            type => $_->var_type || undef,
+            type => join('|', $_->var_types),
             more => $_->{ellipsis},
             optional => $_->{arg_type} eq 'want'
         };

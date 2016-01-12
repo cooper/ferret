@@ -42,7 +42,8 @@ my %no_value = map { $_ => 1 } qw(
     OP_ASSIGN   OP_COMMA    OP_RETURN   OP_SEMI
     OP_NOT      OP_MAYBE    OP_ELLIP    OP_RANGE
     OP_MOD      OP_LASSIGN  OP_AND      OP_OR
-    OP_SIM      OP_NSIM
+    OP_SIM      OP_NSIM     OP_XOR_A    OP_BOR_A
+    OP_BOR      OP_BAND     OP_XOR      OP_BAND_A
 );
 
 # inject semicolons after these at the end of a line.

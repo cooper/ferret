@@ -1134,8 +1134,7 @@ sub c_BAREWORD {
     # ex: A B = AB
     my $l_word  = $c->last_el;
     my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
-    if ($l_label eq 'OP_PACK' || $l_label eq 'BAREWORD'
-      and $l_word->type eq 'Bareword') {
+    if ($l_label eq 'OP_PACK' && $l_word->type eq 'Bareword') {
         $l_word->{bareword_value} .= $value;
         $l_word->{parent}->adopt($l_word); # to redo after_adopt()
         return $l_word;
@@ -1266,7 +1265,7 @@ sub c_KEYWORD_WANT {
     #   Must directly follow a lexical variable or instance variable.
 
     # Rule WantNeedType[3]:
-    #   Number of direct children must be exactly one (1).
+    #   Number of direct children must be no less than one (1).
 
     # Rule WantNeedValue[0]:
     #   Direct parent must be of type WantNeed.
@@ -1552,7 +1551,7 @@ sub c_operator {
 
     # if it's addition or subtraction, it might be a sign.
     my %signs = (OP_ADD => 1, OP_SUB => 1);
-    if (!$last_el->is_type('Expression') && $signs{ $c->label }) {
+    if ($last_el && !$last_el->is_type('Expression') && $signs{ $c->label }) {
         undef $last_el;
     }
 
@@ -1621,6 +1620,17 @@ sub c_OP_PACK {
 
     $l_word->{bareword_value} .= '::';
     return $l_word;
+}
+
+sub c_OP_BOR {
+    my ($c, $value) = @_;
+
+    # this separating two bareword types.
+    if ($c->node->type eq 'WantNeedType') {
+        return;
+    }
+
+    return $c->node->adopt($c->unknown_el);
 }
 
 sub c_OP_MAYBE {
@@ -1812,7 +1822,7 @@ sub c_any {
         ^KEYWORD_INSIDE$    ^KEYWORD_FOR$       ^KEYWORD_ON$
         ^KEYWORD_IF$        ^KEYWORD_ELSE$      ^KEYWORD_ELSIF$
         ^PKG_DEC$           ^CLASS_DEC$         ^KEYWORD_END$
-        ^CLOSURE_.+$        ^OP_.+$             ^TYPE$
+        ^CLOSURE_.+$        ^TYPE$              ^OP_(?!ADD|SUB).+$
         ^KEYWORD_DEFER$     ^COMMENT_.+$
     );
     foreach (@ignore) { return if $label =~ $_ }

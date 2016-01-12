@@ -207,29 +207,18 @@ sub _arguments_satisfy_signature {
         next   if !length $type;                # want/need with no type check
 
         # if this is an ellipsis, check all of the items.
-        my $type_obj = $func->_get_type($type) if $type;
         if ($sig->{more}) {
             my $flist = $arguments->{$name};
             my @plist = plist($flist);
+            next if @plist;
 
-            # if we couldn't resolve a type, use a List.
-            # FIXME: what if a type was provided but does not exist?
-            if (!$type_obj) {
-                $arguments->{$name} = $flist;
-                next if @plist;
-            }
+            # TODO: sets here. it used to work, but not anymore.
+            # now it always returns a list, and it checks nothing.
+            # not sure how to deal with $x: Multiple|Types...
+            #
+            # probably just make it invalid at compiler level to
+            # have an argument with an ellipsis and multiple types
 
-            # otherwise, make a set.
-            my @items = grep defined,
-                map $func->_obj_type_works($_, $type_obj), @plist;
-            $arguments->{$name} =
-                !@items                                              ?
-                $flist                                               :
-                $type_obj->isa('Ferret::Class')                      ?
-                fset($type_obj, grep !Ferret::undefined($_), @items) :
-                fset(grep !Ferret::undefined($_), @items);
-
-            next if @items;
         }
 
         # check that it works.
@@ -245,29 +234,46 @@ sub _arguments_satisfy_signature {
     return 1;
 }
 
-sub _get_type {
-    my ($func, $type) = @_;
-    return $type if blessed $type;
+sub _get_types {
+    my ($func, $t) = @_;
+    return $t if blessed $t;
+    my @final;
 
     # find scope of interest.
     my $soi = $func->{outer_scope} || $func->f->main_context;
     $soi = $soi->closest_context;
 
-    # get object.
-    return $soi->property($type) or return;
+    # either a single type or a list of types.
+    foreach my $type (ref $t eq 'ARRAY' ? @$t : ($t)) {
+
+        # already an object.
+        if (blessed $type) {
+            push @final, $type;
+            next;
+        }
+
+        # get object.
+        my $found = $soi->property($type);
+        push @final, $found if $found;
+
+    }
+
+    return @final;
 }
 
 sub _obj_type_works {
     my ($func, $obj, $type) = @_;
-    $type = $func->_get_type($type) or return;
+    foreach my $type ($func->_get_types($type)) {
 
-    # if this is a function, use its return value.
-    if ($type->isa('Ferret::Function') || $type->isa('Ferret::Event')) {
-        return if !$type->{is_typedef};
-        return $type->call_u([ $obj ]);
+        # if this is a function, use its return value.
+        if ($type->isa('Ferret::Function') || $type->isa('Ferret::Event')) {
+            next if !$type->{is_typedef};
+            my $worked = $type->call_u([ $obj ]);
+            return $worked if $worked;
+        }
+
+        return $obj if $obj->instance_of($type);
     }
-
-    return $obj if $obj->instance_of($type);
     return;
 }
 

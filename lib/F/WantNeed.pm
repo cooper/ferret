@@ -20,17 +20,16 @@ sub variables  { shift->variable }
 
 sub type_string {
     my $wn = shift;
-    my $type = $wn->arg_type_exp  or return 'undef';
-       $type = $type->first_child or return 'undef';
-    return q(').$type->{bareword_value}.q('); # TODO: set type variables
-    return 'undef';
+    my $type  = $wn->arg_type_exp  or return 'undef';
+    my @types = $type->children    or return 'undef';
+    my $type_str = join ', ', map "'$$_{bareword_value}'", @types;
+    return @types > 1 ? "[ $type_str ]" : $type_str;
 }
 
-sub var_type {
+sub var_types {
     my $wn = shift;
     my $type = $wn->arg_type_exp  or return;
-       $type = $type->first_child or return;
-    return $type->{bareword_value};
+    return map $_->{bareword_value}, $type->children;
 }
 
 # argument type expression
@@ -75,7 +74,7 @@ sub perl_fmt {
     };
 
     # if we have a value expression, set that.
-    my $value_exp = $wn->value_exp;
+    my $value_exp  = $wn->value_exp;
     $info->{value} = $value_exp->perl_fmt_do if $value_exp;
 
     # determine format name.
@@ -89,13 +88,13 @@ sub markdown_fmt {
     my $arg  = shift;
     my $name = $arg->variable->{var_name};
     my $desc = dot_trim($arg->parent->find_doc_comment);  # might be on instruction
-    my $type = $arg->var_type;
+    my $type = join ' | ', map type_link($_), $arg->var_types;
 
     return argument => {
         opt  => $arg->{arg_type} eq 'want' ? '*optional* ' : '',
         name => $name,
         desc => $desc,
-        type => type_link(length $type ? $type : 'Any'),
+        type => $type || 'Any',
         hyph => length $desc ? '-' : ''
     };
 }
