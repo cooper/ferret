@@ -18,7 +18,7 @@ method split {
 
     #> the substring separator. The default is the empty string, which results
     #| in a list of individual characters.
-    want $separator: Str = ""
+    want $separator: Str|Rgx = ""
 
     #> the number of substrings to extract.
     #| If specified, the returned list will have at most this number

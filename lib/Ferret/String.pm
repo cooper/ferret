@@ -27,7 +27,7 @@ my @methods = (
         prop => 1
     },
     split => {
-        want => '$separator:Str $limit:Num', # TODO: $separator:Str|Reg
+        want => '$separator:Str|Rgx $limit:Num',
         code => \&_split
     },
     hasPrefix => {
@@ -132,9 +132,23 @@ sub _length {
 # for now, this only accepts strings.
 sub _split {
     my ($str, $args) = @_;
-    my $sep     = $args->pstring('separator'); # undef returns ''
-    my $limit   = $args->pnumber('limit', 0);
-    my @strings = split /\Q$sep\E/, $str->{str_value}, $limit;
+    my $limit = $args->pnumber('limit', 0);
+
+    # default separator (characters).
+    my $sep = qr//;
+
+    # regex separator.
+    if ($args->{separator} && $args->{separator}->isa('Ferret::Regex')) {
+        $sep = $args->pregex('separator');
+    }
+
+    # string separator.
+    elsif ($args->{separator}) {
+        $sep = $args->pstring('separator');
+        $sep = qr/\Q$sep\E/;
+    }
+
+    my @strings = split $sep, $str->{str_value}, $limit;
     return flist(map fstring($_), @strings);
 }
 

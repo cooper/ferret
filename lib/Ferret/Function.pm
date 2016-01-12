@@ -294,9 +294,12 @@ sub _parse_method_args {
         my ($name, $type) = split /:/, $arg, 2;
         $name =~ s/^\$//;
 
+        # split types.
+        my @types = split /\|/, $type if length $type;
+
         push @args, {
             name => $name,
-            type => $type,
+            type => @types > 1 ? \@types : $types[0],
             more => $more
         };
     }

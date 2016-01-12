@@ -52,7 +52,7 @@ string by the provided separator.
 
 #### Arguments
 
-* *optional* __separator__: [String](/doc/std/String.md) - the substring separator. The default is the empty string, which results
+* *optional* __separator__: [String](/doc/std/String.md) | [Regex](/doc/std/Regex.md) - the substring separator. The default is the empty string, which results
 in a list of individual characters.
 
 * *optional* __limit__: [Number](/doc/std/Number.md) - the number of substrings to extract.

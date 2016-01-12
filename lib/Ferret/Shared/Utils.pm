@@ -84,6 +84,10 @@ state $link_map = {
     'Str::NonEmpty'     => '[Nonempty string](/doc/std/String.md)',
     'String::NonEmpty'  => '[Nonempty string](/doc/std/String.md)',
 
+    # regular expressions
+    'Rgx'               => '[Regex](/doc/std/Regex.md)',
+    'Regex'             => '[Regex](/doc/std/Regex.md)',
+
     # symbols
     'Sym'               => '[Symbol](/doc/std/Symbol.md)',
     'Symbol'            => '[Symbol](/doc/std/Symbol.md)',
