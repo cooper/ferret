@@ -38,6 +38,14 @@ my @methods = (
         need => '$prefix:Str',
         code => \&_trimPrefix
     },
+    hasSuffix => {
+        need => '$suffix:Str',
+        code => \&_hasSuffix
+    },
+    trimSuffix => {
+        need => '$suffix:Str',
+        code => \&_trimSuffix
+    },
     fill => {
         # all passed parameters are placeholder values,
         # or a single hash can be passed with values.
@@ -98,7 +106,11 @@ sub init {
     $str->{str_value} = '' if !defined $str->{str_value};
 }
 
-# string plus string
+##################
+### OPERATIONS ###
+##################
+
+# string plus string.
 sub op_add {
     my ($str, $args) = @_;
     my $other = $args->{other};
@@ -106,6 +118,7 @@ sub op_add {
     return fstring($new_value);
 }
 
+# string similar to regex.
 sub op_sim {
     my ($str, $args, $call_scope) = @_;
     my $rgx = $args->{other};
@@ -119,17 +132,34 @@ sub op_sim {
     return $crt->property('matched');
 }
 
-sub length : method {
-    my $str = shift;
-    return length $str->{str_value};
-}
+##################
+### PROPERTIES ###
+##################
 
+# string length.
 sub _length {
     my $str = shift;
-    return Ferret::Number->new($str->f, num_value => $str->length);
+    return Ferret::Number->new($str->f, num_value => length $str->{str_value});
 }
 
-# for now, this only accepts strings.
+# uppercase copy.
+sub _uppercase {
+    my $str = shift;
+    return fstring(uc $str->{str_value});
+}
+
+# lowercase copy.
+sub _lowercase {
+    my $str = shift;
+    return fstring(lc $str->{str_value});
+}
+
+###############
+### METHODS ###
+###############
+
+# split into substrings either by a string or regex separator.
+# returns a list of strings.
 sub _split {
     my ($str, $args) = @_;
     my $limit = $args->pnumber('limit', 0);
@@ -152,34 +182,54 @@ sub _split {
     return flist(map fstring($_), @strings);
 }
 
-sub hasPrefix {
-    my ($str, $prefix) = @_;
-    my $pfx = \substr($str->{str_value}, 0, length $prefix);
-    return $$pfx eq $prefix;
-}
-
+# true if string starts with something.
 sub _hasPrefix {
     my ($str, $args) = @_;
-    my $pfx = $args->pstring('prefix');
-    return fbool($str->hasPrefix($pfx));
+    my $prefix = $args->pstring('prefix');
+    my $pfx = \substr($str->{str_value}, 0, length $prefix);
+    return fbool($$pfx eq $prefix);
 }
 
-sub trimPrefix {
-    my ($str, $prefix) = @_;
+# remove something from beginning of string.
+sub _trimPrefix {
+    my ($str, $args) = @_;
+    my $prefix = $args->pstring('prefix');
     my $s   = $str->{str_value}; # make a copy
     my $pfx = \substr($s, 0, length $prefix);
     $$pfx   = '' if $$pfx eq $prefix;
     return fstring($s);
 }
 
-sub _trimPrefix {
+# true if string ends with something.
+sub _hasSuffix {
     my ($str, $args) = @_;
-    my $pfx = $args->pstring('prefix');
-    return $str->trimPrefix($pfx);
+    my $suffix = $args->pstring('suffix');
+    my $sfx = \substr($str->{str_value}, -length $suffix);
+    return fbool($$sfx eq $suffix);
 }
 
-sub fill {
-    my ($str, $info) = @_;
+# remove something from end of string.
+sub _trimSuffix {
+    my ($str, $args) = @_;
+    my $suffix = $args->pstring('suffix');
+    my $s   = $str->{str_value}; # make a copy
+    my $sfx = \substr($s, -length $suffix);
+    $$sfx   = '' if $$sfx eq $suffix;
+    return fstring($s);
+}
+
+# return a copy with <<placeholders>> replaced with values.
+sub _fill {
+    my ($str, $args) = @_;
+
+    # find the values.
+    my %info;
+    if (my $hash = $args->{valueHash}) {
+        %info = %{ phashref($hash, 1) };
+    }
+    else {
+        %info = map { $_ => $args->pstring($_) } keys %$args;
+    }
 
     # fill.
     my @lines;
@@ -187,7 +237,7 @@ sub fill {
         chomp $line;
         my ($indent) = ($line =~ m/^(\s*).*$/);
         my $add_indent = sub {
-            defined(my $key = $info->{+shift}) or return;
+            defined(my $key = $info{+shift}) or return;
             my @lines = split "\n", $key;
             return join "\n$indent", @lines;
         };
@@ -201,43 +251,12 @@ sub fill {
     return fstring($s);
 }
 
-sub _fill {
-    my ($str, $args) = @_;
-    my %info;
-    if (my $hash = $args->{valueHash}) {
-        %info = %{ phashref($hash, 1) };
-    }
-    else {
-        %info = map { $_ => $args->pstring($_) } keys %$args;
-    }
-    return $str->fill(\%info);
-}
-
-sub _uppercase {
-    my $str = shift;
-    return fstring(uc $str->{str_value});
-}
-
-sub _lowercase {
-    my $str = shift;
-    return fstring(lc $str->{str_value});
-}
-
-sub _hash_value {
-    my $str = shift;
-    return fsym($str->{str_value});
-}
-
-sub _to_number {
-    my $str = shift;
-    return fnumber($str->{str_value} + 0)
-        if looks_like_number($str->{str_value});
-    return fnumber(0);
-}
-
+# match a regex.
+#
 # consider: "hello".match(/anything/) will always be true.
 # if only there were a way for the return object to be false,
 # without fail. fail without an error? hmm...
+#
 sub _match {
     my ($str, $args, undef, undef, $ret) = @_;
     my $rgx = $args->pregex('rgx');
@@ -247,6 +266,28 @@ sub _match {
     return $ret;
 }
 
+# strings are hashable in nature.
+sub _hash_value {
+    my $str = shift;
+    return fsym($str->{str_value});
+}
+
+# convert to number. force Perl numeric context.
+sub _to_number {
+    my $str = shift;
+    return fnumber($str->{str_value} + 0)
+        if looks_like_number($str->{str_value});
+    return fnumber(0);
+}
+
+# return a copy of the string.
+# TODO: copy will eventually be an Object method.
+sub _copy {
+    my $str = shift;
+    return fstring($str->{str_value});
+}
+
+# string surrounded by double quotes.
 sub description {
     my ($str, $own_only) = @_;
     $str = q(").$str->{str_value}.q(");
@@ -254,13 +295,19 @@ sub description {
     return $str;
 }
 
-# TODO: copy will eventually be an Object method.
-sub _copy {
-    my $str = shift;
-    return fstring($str->{str_value});
+#######################
+### CLASS FUNCTIONS ###
+#######################
+
+# join strings.
+# e.g. ("hi", "there").join! -> "hithere"
+sub _join {
+    my (undef, $args) = @_;
+    my $list = flist(delete $args->{strs});
+    return fstring($list->join(''));
 }
 
-# any of these work
+# any of these work:
 #
 # Ferret::String->equal($str1, $str2)
 # $str1->equal($str2)
@@ -284,12 +331,6 @@ sub _equal {
         return Ferret::false if !$first_str->equal($_);
     }
     return Ferret::true;
-}
-
-sub _join {
-    my (undef, $args) = @_;
-    my $list = flist(delete $args->{strs});
-    return fstring($list->join(''));
 }
 
 1

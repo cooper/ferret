@@ -106,13 +106,45 @@ $string.trimPrefix($prefix: Str)
 ```
 
 Returns a string with the provided substring removed from the
-beginning of the original string. If the string does not
-have that prefix, the original string is returned.
+beginning (left side) of the original string. If the string does not
+have that prefix, a copy of the original string is returned.
 
 
 #### Arguments
 
 * __prefix__: [String](/std/doc/String.md) - the prefix to remove.
+
+
+
+### hasSuffix
+
+```
+$string.hasSuffix($suffix: Str)
+```
+
+Returns a boolean true value if the suffix exists.
+
+
+#### Arguments
+
+* __suffix__: [String](/std/doc/String.md) - the suffix to look for.
+
+
+
+### trimSuffix
+
+```
+$string.trimSuffix($suffix: Str)
+```
+
+Returns a string with the provided substring removed from the
+end (right side) of the original string. If the string does not
+have that suffix, a copy of the original string is returned.
+
+
+#### Arguments
+
+* __suffix__: [String](/std/doc/String.md) - the suffix to remove.
 
 
 

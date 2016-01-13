@@ -44,7 +44,7 @@ method fill {
 
 }
 
-#> Looks for the provided substring at the beginning of the string.
+#> Looks for the provided substring at the beginning (left side) of the string.
 #> Returns a boolean true value if the prefix exists.
 method hasPrefix {
 
@@ -54,12 +54,31 @@ method hasPrefix {
 }
 
 #> Returns a string with the provided substring removed from the
-#| beginning of the original string. If the string does not
-#| have that prefix, the original string is returned.
+#| beginning (left side) of the original string. If the string does not
+#| have that prefix, a copy of the original string is returned.
 method trimPrefix {
 
     #> the prefix to remove
     need $prefix: Str
+
+}
+
+#> Looks for the provided substring at the end (right side) of the string.
+#> Returns a boolean true value if the suffix exists.
+method hasSuffix {
+
+    #> the suffix to look for
+    need $suffix: Str
+
+}
+
+#> Returns a string with the provided substring removed from the
+#| end (right side) of the original string. If the string does not
+#| have that suffix, a copy of the original string is returned.
+method trimSuffix {
+
+    #> the suffix to remove
+    need $suffix: Str
 
 }
 
