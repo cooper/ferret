@@ -20,12 +20,12 @@ Creates a new JSON class instance.
 
 ### Arguments
 
-* *optional* __strict__: [Bool](/doc/std/Bool.md) - Enables strict decoding. This is default. If explicitly disabled,
+* *optional* __strict__: [Bool](/std/doc/Bool.md) - Enables strict decoding. This is default. If explicitly disabled,
 shell-style (#) comments are allowed, and extra commas are
 silently ignored. You may want to disable `strict` decoding for
 human-created texts such as configuration files.
 
-* *optional* __consistent__: [Bool](/doc/std/Bool.md) - If true, the same data structure will output the same JSON text each
+* *optional* __consistent__: [Bool](/std/doc/Bool.md) - If true, the same data structure will output the same JSON text each
 time. This is not the default behavior. Without `consistent`, the pairs
 in JSON objects will be spit out in a random order. Encoding is
 considerably slower when `consistent` is enabled because all object
@@ -34,21 +34,21 @@ keys have to be sorted.
 * *optional* __charset__: Charset - Specifies the character set used for both encoding and decoding. See
 this class's [`Charset`](#charset) type for available options.
 
-* *optional* __strictRoot__: [Bool](/doc/std/Bool.md) - If enabled, the root level of any JSON text (encoded or decoded) must be
+* *optional* __strictRoot__: [Bool](/std/doc/Bool.md) - If enabled, the root level of any JSON text (encoded or decoded) must be
 an array or object. The default is to allow any root level value, which
 is an extension to RFC4627.
 
-* *optional* __pretty__: [Bool](/doc/std/Bool.md) - If true, [`.encode()`](#encode) output will span multiple lines and be
+* *optional* __pretty__: [Bool](/std/doc/Bool.md) - If true, [`.encode()`](#encode) output will span multiple lines and be
 properly indented with extra whitespace. This is equivalent to providing
 all of `indent`, `spaceBefore`, and `spaceAfter`.
 
-* *optional* __spaceBefore__: [Bool](/doc/std/Bool.md) - If true, [`.encode()`](#encode) will add an extra optional space before
+* *optional* __spaceBefore__: [Bool](/std/doc/Bool.md) - If true, [`.encode()`](#encode) will add an extra optional space before
 the colon separating keys from values in JSON objects.
 
-* *optional* __spaceAfter__: [Bool](/doc/std/Bool.md) - If true, [`.encode()`](#encode) will add an extra optional space after
+* *optional* __spaceAfter__: [Bool](/std/doc/Bool.md) - If true, [`.encode()`](#encode) will add an extra optional space after
 the colon separating keys from values in JSON objects.
 
-* *optional* __indent__: [Bool](/doc/std/Bool.md) - If true, [`.encode()`](#encode) will use a multiline format as output,
+* *optional* __indent__: [Bool](/std/doc/Bool.md) - If true, [`.encode()`](#encode) will use a multiline format as output,
 putting every array member or object/hash key-value pair into its own
 line, identifying them properly.
 
@@ -84,7 +84,7 @@ provided at initialization.
 
 #### Arguments
 
-* __json__: [String](/doc/std/String.md) - a JSON text to parse and convert to a Ferret object.
+* __json__: [String](/std/doc/String.md) - a JSON text to parse and convert to a Ferret object.
 
 
 
@@ -124,7 +124,7 @@ a list `[1, 2]`.
 
 #### Arguments
 
-* __fragment__: [String](/doc/std/String.md) - a fragment of JSON text to add to the decoder buffer.
+* __fragment__: [String](/std/doc/String.md) - a fragment of JSON text to add to the decoder buffer.
 
 
 
@@ -181,7 +181,7 @@ See the [`.decode()`](#decode) method for more options.
 
 #### Arguments
 
-* __json__: [String](/doc/std/String.md) - a JSON text to parse and convert to a Ferret object.
+* __json__: [String](/std/doc/String.md) - a JSON text to parse and convert to a Ferret object.
 
 
 ## Type interfaces

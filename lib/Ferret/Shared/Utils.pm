@@ -65,40 +65,40 @@ sub dot_trim {
 state $link_map = {
 
     # numbers
-    'Num'               => '[Number](/doc/std/Number.md)',
-    'Number'            => '[Number](/doc/std/Number.md)',
-    'Num::Even'         => '[Even number](/doc/std/Number.md)',
-    'Number::Even'      => '[Even number](/doc/std/Number.md)',
-    'Num::Odd'          => '[Odd number](/doc/std/Number.md)',
-    'Number::Odd'       => '[Odd number](/doc/std/Number.md)',
-    'Num::Integer'      => '[Number (auto-integer)](/doc/std/Number.md)',
-    'Number::Integer'   => '[Number (auto-integer)](/doc/std/Number.md)',
+    'Num'               => '[Number](/std/doc/Number.md)',
+    'Number'            => '[Number](/std/doc/Number.md)',
+    'Num::Even'         => '[Even number](/std/doc/Number.md)',
+    'Number::Even'      => '[Even number](/std/doc/Number.md)',
+    'Num::Odd'          => '[Odd number](/std/doc/Number.md)',
+    'Number::Odd'       => '[Odd number](/std/doc/Number.md)',
+    'Num::Integer'      => '[Number (auto-integer)](/std/doc/Number.md)',
+    'Number::Integer'   => '[Number (auto-integer)](/std/doc/Number.md)',
 
     # strings
-    'Str'               => '[String](/doc/std/String.md)',
-    'String'            => '[String](/doc/std/String.md)',
-    'Str::UC'           => '[String (auto-uppercase)](/doc/std/String.md)',
-    'String::UC'        => '[String (auto-uppercase)](/doc/std/String.md)',
-    'Str::LC'           => '[String (auto-lowercase)](/doc/std/String.md)',
-    'String::LC'        => '[String (auto-lowercase)](/doc/std/String.md)',
-    'Str::NonEmpty'     => '[Nonempty string](/doc/std/String.md)',
-    'String::NonEmpty'  => '[Nonempty string](/doc/std/String.md)',
+    'Str'               => '[String](/std/doc/String.md)',
+    'String'            => '[String](/std/doc/String.md)',
+    'Str::UC'           => '[String (auto-uppercase)](/std/doc/String.md)',
+    'String::UC'        => '[String (auto-uppercase)](/std/doc/String.md)',
+    'Str::LC'           => '[String (auto-lowercase)](/std/doc/String.md)',
+    'String::LC'        => '[String (auto-lowercase)](/std/doc/String.md)',
+    'Str::NonEmpty'     => '[Nonempty string](/std/doc/String.md)',
+    'String::NonEmpty'  => '[Nonempty string](/std/doc/String.md)',
 
     # regular expressions
-    'Rgx'               => '[Regex](/doc/std/Regex.md)',
-    'Regex'             => '[Regex](/doc/std/Regex.md)',
+    'Rgx'               => '[Regex](/std/doc/Regex.md)',
+    'Regex'             => '[Regex](/std/doc/Regex.md)',
 
     # symbols
-    'Sym'               => '[Symbol](/doc/std/Symbol.md)',
-    'Symbol'            => '[Symbol](/doc/std/Symbol.md)',
+    'Sym'               => '[Symbol](/std/doc/Symbol.md)',
+    'Symbol'            => '[Symbol](/std/doc/Symbol.md)',
 
     # other
-    'Bool'              => '[Bool](/doc/std/Bool.md)',
+    'Bool'              => '[Bool](/std/doc/Bool.md)',
 
     # Math
-    'Math::Point'       => '[Math::Point](/doc/std/Math/Point.md)',
-    'Math::Line'        => '[Math::Point](/doc/std/Math/Line.md)',
-    'Math::Rect'        => '[Math::Rect](/doc/std/Math/Rect.md)'
+    'Math::Point'       => '[Math::Point](/std/doc/Math/Point.md)',
+    'Math::Line'        => '[Math::Point](/std/doc/Math/Line.md)',
+    'Math::Rect'        => '[Math::Rect](/std/doc/Math/Rect.md)'
 
 };
 
