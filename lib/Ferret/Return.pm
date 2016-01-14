@@ -77,7 +77,7 @@ sub fail {
 sub throw {
     my ($ret, $err) = @_;
     $ret->fail($err);
-    Ferret::Core::Errors::throw($err);
+    Ferret::Core::Errors::throw($err, [caller]);
 }
 
 # called internally after each ->return().

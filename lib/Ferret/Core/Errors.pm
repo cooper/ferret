@@ -38,7 +38,7 @@ sub throw {
     my ($fmt, $caller, $hints, @args) = @_;
 
     # we may have been passed an already-prepared error object.
-    if (blessed $fmt && $fmt->isa('Ferret::Error')) {
+    if (blessed $fmt) {
         die Ferret::Core::Conversion::ferror($fmt);
     }
 

@@ -1983,12 +1983,15 @@ sub c_any {
     # these things cannot start an instruction.
     # (tokens only) (this is horrendous)
     my @ignore = qw(
+        ^PKG_DEC$           ^CLASS_DEC$         ^KEYWORD_END$
         ^FUNCTION$          ^METHOD$            ^COMPUTED$
+        ^TYPE$              ^COMMENT_.+$
+
         ^KEYWORD_INSIDE$    ^KEYWORD_FOR$       ^KEYWORD_ON$
         ^KEYWORD_IF$        ^KEYWORD_ELSE$      ^KEYWORD_ELSIF$
-        ^PKG_DEC$           ^CLASS_DEC$         ^KEYWORD_END$
-        ^CLOSURE_.+$        ^TYPE$              ^OP_(?!ADD|SUB).+$
-        ^KEYWORD_DEFER$     ^COMMENT_.+$
+        ^KEYWORD_DEFER$
+
+        ^CLOSURE_.+$        ^OP_(?!(?:ADD|SUB|NOT)$).+$
     );
     foreach (@ignore) { return if $label =~ $_ }
 

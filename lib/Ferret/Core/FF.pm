@@ -497,7 +497,7 @@ sub gather {
 
 sub throw {
     my $err = shift;
-    Ferret::Core::Errors::throw($err);
+    Ferret::Core::Errors::throw($err, [caller]);
 }
 
 1

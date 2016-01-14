@@ -24,7 +24,7 @@
 #                          Special variable '*class'
 #                  Instruction
 #                      Transform
-#                          Property variable '.round'
+#                          Property variable '.floor'
 #          Instruction
 #              Alias
 #                  Assignment
@@ -295,7 +295,7 @@ my $result = do {
                         $ins->instance_of_u(
                             ${ $scope->{special} }->{'class'}
                         ),
-                        do { $ins = $transform->( $$ins->{'round'}, $ins ) }
+                        do { $ins = $transform->( $$ins->{'floor'}, $ins ) }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;

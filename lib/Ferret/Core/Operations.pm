@@ -79,7 +79,8 @@ sub bool {
 
 sub _not {
     my $val = shift;
-    return $val == Ferret::false ? Ferret::true : Ferret::false;
+    my $perl_truth = !Ferret::truth($val);
+    return $perl_truth ? Ferret::true : Ferret::false;
 }
 
 sub nsim { _not(&sim) }

@@ -12,7 +12,7 @@ type Odd {
 
 type Integer {
     isa *class
-    transform .round
+    transform .floor
 }
 
 alias Int = Integer
