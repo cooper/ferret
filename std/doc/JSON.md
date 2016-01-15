@@ -184,6 +184,7 @@ See the [`.decode()`](#decode) method for more options.
 * __json__: [String](/std/doc/String.md) - a JSON text to parse and convert to a Ferret object.
 
 
+
 ## Type interfaces
 
 ### Charset

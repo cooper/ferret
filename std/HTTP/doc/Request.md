@@ -90,6 +90,7 @@ Hook. Called when an HTTP response is constructed.
 
 
 
+
 End of HTTP::Request class.
 
 This file was generated automatically by the Ferret compiler from

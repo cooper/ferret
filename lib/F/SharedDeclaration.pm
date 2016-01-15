@@ -5,6 +5,7 @@ use warnings;
 use strict;
 use parent qw(F::Node);
 
+use Ferret::Shared::Utils qw(dot_trim);
 
 sub desc { 'shared variable declaration' }
 
@@ -27,6 +28,27 @@ sub perl_fmt {
 
     $child->{var1_declaration} = $share->{var1_declaration};
     return $child->perl_fmt;
+}
+
+sub markdown_fmt {
+    my $share   = shift;
+    my $var     = $share->variable;
+    my $head    = $share->get_markdown_heading($var->{var_name});
+    my $comment = $share->parent->find_doc_comment;
+
+    # create an example.
+    # later: when outside a class, show PackageName.varName.
+    my $example;
+    my $class = $share->first_self_or_parent('Class');
+    if ($class) {
+        $example = $class->{name}.'.'.$var->{var_name};
+    }
+
+    return share_lexical_var => {
+        name    => $var->{var_name},
+        example => $example,
+        comment => dot_trim($comment)
+    };
 }
 
 1

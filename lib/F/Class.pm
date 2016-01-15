@@ -52,6 +52,8 @@ sub markdown_fmt {
     my @all_methods  = $class->filter_children(type => 'Method');
     my @aliases      = grep $_->public, $class->filter_children(type => 'Alias');
     my @types        = grep $_->public, $class->filter_children(type => 'Type');
+    my @class_vars   = map $_->first_child,
+        $class->filter_children(type => 'Instruction.SharedDeclaration');
 
     # separate methods into initializer, class functions, and normal.
     my (@methods, @class_funcs, $init);
@@ -120,6 +122,21 @@ sub markdown_fmt {
         $class->{markdown_heading_level}--;
     }
 
+    # class variables.
+    my $class_variables = '';
+    if (@class_vars) {
+
+        # add the heading. increase the class heading.
+        $class->{markdown_heading_level}++;
+        $class_functions .= $class->get_markdown_heading('Class properties')."\n";
+
+        foreach my $share (@class_vars) {
+            $class_variables .= $share->markdown_fmt_do."\n";
+        }
+
+        $class->{markdown_heading_level}--;
+    }
+
     return class => {
         name            => $class_full_name,
         description     => dot_trim($class->{doc_comment}),
@@ -131,7 +148,8 @@ sub markdown_fmt {
         initializer     => $init ? $init->markdown_fmt_do : '',
         methods         => $methods,
         types           => $types,
-        class_functions => $class_functions
+        class_functions => $class_functions,
+        class_variables => $class_variables
     };
 }
 

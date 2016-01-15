@@ -2,7 +2,15 @@
 
 This is the Number class; it is not versioned.
 
+A number is a basic datatype for an arithmetical value which represents a
+particular quantity. Numbers are useful for counting things and for
+performing mathematical calculations.
 
+This class encompasses all sorts of
+[real numbers](https://en.wikipedia.org/wiki/Real_number), including integers
+and inexact floating-point values in the native architecture's
+double-precision representation; as well as the
+abstract concepts of [infinity](#inf) and [NaN](#nan).
 
 
 
@@ -162,6 +170,24 @@ Returns the largest of the provided numbers.
 
 * __nums__: [Number](/std/doc/Number.md)... - Variable number of arguments. A group of numbers.
 
+
+
+## Class properties
+
+
+
+```
+Number.inf
+```
+
+The constant infinity.
+
+
+```
+Number.nan
+```
+
+The constant NaN value (not a number).
 
 ## Type interfaces
 

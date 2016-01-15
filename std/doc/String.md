@@ -164,6 +164,7 @@ See also the `List` method [`.join()`](List.md#join).
 * __strs__: [String](/std/doc/String.md)... - Variable number of arguments. A group of strings.
 
 
+
 ## Type interfaces
 
 ### NonEmpty
