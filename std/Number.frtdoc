@@ -1,14 +1,5 @@
 class Number
 
-#> The square root of the number (`√n`)
-prop sqrt
-
-#> The cube root of the number (`3√n`)
-prop cbrt
-
-#> The square of the number (`n ^ 2`)
-prop square
-
 #> Boolean evenness of the number
 prop? even
 
@@ -23,6 +14,15 @@ prop ceil
 
 #> The greatest integer less than or equal to the number
 prop floor
+
+#> The square of the number (`n ^ 2`)
+prop square
+
+#> The square root of the number (`√n`)
+prop sqrt
+
+#> The cube root of the number (`3√n`)
+prop cbrt
 
 #> Returns the Nth root of the number
 method root {

@@ -8,36 +8,6 @@ This is the Number class; it is not versioned.
 
 ## Methods
 
-### sqrt
-
-```
-$number.sqrt
-```
-
-Computed property. The square root of the number (`ân`).
-
-
-
-### cbrt
-
-```
-$number.cbrt
-```
-
-Computed property. The cube root of the number (`3ân`).
-
-
-
-### square
-
-```
-$number.square
-```
-
-Computed property. The square of the number (`n ^ 2`).
-
-
-
 ### even
 
 ```
@@ -85,6 +55,36 @@ $number.floor
 ```
 
 Computed property. The greatest integer less than or equal to the number.
+
+
+
+### square
+
+```
+$number.square
+```
+
+Computed property. The square of the number (`n ^ 2`).
+
+
+
+### sqrt
+
+```
+$number.sqrt
+```
+
+Computed property. The square root of the number (`ân`).
+
+
+
+### cbrt
+
+```
+$number.cbrt
+```
+
+Computed property. The cube root of the number (`3ân`).
 
 
 

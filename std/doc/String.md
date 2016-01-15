@@ -156,7 +156,7 @@ String.join($strs: Str...)
 ```
 
 Concatenates strings.
-See also the `List` method [`.join`](List.md#join).
+See also the `List` method [`.join()`](List.md#join).
 
 
 #### Arguments

@@ -83,7 +83,7 @@ method trimSuffix {
 }
 
 #> Concatenates strings.
-#| See also the `List` method [`.join`](List.md#join)
+#| See also the `List` method [`.join()`](List.md#join)
 func join {
 
     #> A group of strings
