@@ -175,6 +175,7 @@ Returns the largest of the provided numbers.
 ## Class properties
 
 
+### inf
 
 ```
 Number.inf
@@ -182,6 +183,7 @@ Number.inf
 
 The constant infinity.
 
+### nan
 
 ```
 Number.nan

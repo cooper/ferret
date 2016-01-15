@@ -45,6 +45,7 @@ sub markdown_fmt {
     }
 
     return share_lexical_var => {
+        heading => $head,
         name    => $var->{var_name},
         example => $example,
         comment => dot_trim($comment)
