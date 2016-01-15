@@ -92,6 +92,8 @@ sub markdown_fmt {
 
     return argument => {
         opt  => $arg->{arg_type} eq 'want' ? '*optional* ' : '',
+        more => $arg->{ellipsis} ? 'Variable number of arguments. ' : '',
+        dots => $arg->{ellipsis} ? '...' : '',
         name => $name,
         desc => $desc,
         type => $type || 'Any',

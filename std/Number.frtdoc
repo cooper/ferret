@@ -1,0 +1,100 @@
+class Number
+
+#> The square root of the number (`√n`)
+prop sqrt
+
+#> The cube root of the number (`3√n`)
+prop cbrt
+
+#> The square of the number (`n ^ 2`)
+prop square
+
+#> Boolean evenness of the number
+prop? even
+
+#> Boolean oddness of the number
+prop? odd
+
+#> The nearest integer to the number
+prop round
+
+#> The smallest integer that is greater than or equal to the number
+prop ceil
+
+#> The greatest integer less than or equal to the number
+prop floor
+
+#> Returns the Nth root of the number
+method root {
+
+    #> The root. For example, `3` is the cube root.
+    need $root: Num
+
+}
+
+#> Returns the sum of the provided numbers
+func sum {
+
+    #> A group of numbers
+    need $nums: Num...
+
+}
+
+#> Returns the product of the provied numbers
+func product {
+
+    #> A group of numbers
+    need $nums: Num...
+
+}
+
+#> Returns the smallest of the provided numbers
+func min {
+
+    #> A group of numbers
+    need $nums: Num...
+
+}
+
+#> Returns the largest of the provided numbers
+func max {
+
+    #> A group of numbers
+    need $nums: Num...
+
+}
+
+#> An interface to which only even numbers conform
+type Even {
+    isa *class
+
+    #> The number is even (`.even`)
+    satisfies .even
+
+}
+
+#> An interface to which only odd numbers conform
+type Odd {
+    isa *class
+
+    #> The number is odd (`.odd`)
+    satisfies .odd
+
+}
+
+#> An interface which truncates floating point numbers to integers
+type Integer {
+    isa *class
+
+    #> The number is truncated to its `.floor` value
+    transform .floor
+
+}
+
+alias Int = Integer
+
+#> The constant infinity
+share $inf = Num("inf")
+
+#> The constant NaN value (not a number)
+share $nan = Num("nan")

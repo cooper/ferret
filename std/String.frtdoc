@@ -1,4 +1,4 @@
-class String 1.0
+class String
 #< A string is basic datatype which stores an arbitrary sequence of bytes,
 #| typically representing characters. String literals are delimited by
 #| double quotes, like so: `"The quick brown fox jumps over the lazy dog"`.
@@ -79,6 +79,15 @@ method trimSuffix {
 
     #> the suffix to remove
     need $suffix: Str
+
+}
+
+#> Concatenates strings.
+#| See also the `List` method [`.join`](List.md#join)
+func join {
+
+    #> A group of strings
+    need $strs: Str...
 
 }
 
