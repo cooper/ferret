@@ -74,7 +74,7 @@ Computed property. The square of the number (`n ^ 2`).
 $number.sqrt
 ```
 
-Computed property. The square root of the number (`ân`).
+Computed property. The square root of the number (`n ^ (1/2)`).
 
 
 
@@ -84,7 +84,7 @@ Computed property. The square root of the number (`ân`).
 $number.cbrt
 ```
 
-Computed property. The cube root of the number (`3ân`).
+Computed property. The cube root of the number (`n ^ (1/3)`).
 
 
 
