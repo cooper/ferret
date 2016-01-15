@@ -129,11 +129,23 @@ sub markdown_fmt {
         $type->{markdown_heading_level}--;
     }
 
+    # other requirements.
+    my $conditions = '';
+    if (@conditions) {
+        $type->{markdown_heading_level}++;
+        $conditions .= $type->get_markdown_heading('Restraints and transforms')."\n\n";
+        $conditions .= "In order to comply, the test object must satisfy ".
+                       "each of the following conditions and transforms.\n";
+        $conditions .= $_ foreach @conditions;
+        $type->{markdown_heading_level}--;
+    }
+
     return type => {
         heading     => $head,
         description => dot_trim($type->{doc_comment}),
         name        => $type->type_name,
-        equal_to    => $equal_to
+        equal_to    => $equal_to,
+        conditions  => $conditions
     };
 }
 

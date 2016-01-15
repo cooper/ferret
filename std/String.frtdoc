@@ -88,7 +88,7 @@ type NonEmpty {
     #> The object is a string.
     isa *class
 
-    #> The string length is not zero.
+    #> The string length is not zero (`.length != 0`)
     satisfies .length != 0
 
 }
@@ -99,7 +99,7 @@ type Uppercase {
     #> The object is a string.
     isa *class
 
-    #> Transform the string to an uppercase version.
+    #> The string transforms to an uppercase version (`.uppercase`)
     transform .uppercase
 
 }
@@ -110,7 +110,7 @@ type Lowercase {
     #> The object is a string.
     isa *class
 
-    #> Transform the string to a lowercase version.
+    #> The string transforms to an lowercase version (`.lowercase`)
     transform .lowercase
 
 }
