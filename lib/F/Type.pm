@@ -99,11 +99,12 @@ sub markdown_fmt {
     my $type = shift;
     my $head = $type->get_markdown_heading($type->type_name);
 
-    my (@equal_possibly, @conditions);
+    my ($item_n, @equal_possibly, @conditions);
     foreach my $item (map $_->first_child, $type->body->children) {
 
         # it's some sort of requirement or transform.
         if (defined $item->{req_type}) {
+            $item->{markdown_req_n} = ++$item_n;
             my $format = $item->markdown_fmt_do;
             push @conditions, $format;
             next;

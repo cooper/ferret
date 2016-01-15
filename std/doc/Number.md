@@ -174,8 +174,8 @@ An interface to which only even numbers conform.
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
-* __isa__: Must be an instance of [Number](/std/doc/Number.md).
-* __satisfies__: The number is even (`.even`).
+1. __isa__: Must be an instance of [Number](/std/doc/Number.md).
+2. __satisfies__: The number is even (`.even`).
 
 
 ### Odd
@@ -187,8 +187,8 @@ An interface to which only odd numbers conform.
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
-* __isa__: Must be an instance of [Number](/std/doc/Number.md).
-* __satisfies__: The number is odd (`.odd`).
+1. __isa__: Must be an instance of [Number](/std/doc/Number.md).
+2. __satisfies__: The number is odd (`.odd`).
 
 
 ### Integer
@@ -200,8 +200,8 @@ An interface which truncates floating point numbers to integers.
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
-* __isa__: Must be an instance of [Number](/std/doc/Number.md).
-* __transform__: The number is truncated to its `.floor` value.
+1. __isa__: Must be an instance of [Number](/std/doc/Number.md).
+2. __transform__: The number is truncated to its `.floor` value.
 
 
 End of Number class.

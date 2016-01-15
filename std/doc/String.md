@@ -175,8 +175,8 @@ An interface to which only non-empty strings comply.
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
-* __isa__: Must be an instance of [String](/std/doc/String.md).
-* __satisfies__: The string length is not zero (`.length != 0`).
+1. __isa__: Must be an instance of [String](/std/doc/String.md).
+2. __satisfies__: The string length is not zero (`.length != 0`).
 
 
 ### Uppercase
@@ -188,8 +188,8 @@ Performs an uppercase transformation.
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
-* __isa__: Must be an instance of [String](/std/doc/String.md).
-* __transform__: The string transforms to an uppercase version (`.uppercase`).
+1. __isa__: Must be an instance of [String](/std/doc/String.md).
+2. __transform__: The string transforms to an uppercase version (`.uppercase`).
 
 
 ### Lowercase
@@ -201,8 +201,8 @@ Performs a lowercase transformation.
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
-* __isa__: Must be an instance of [String](/std/doc/String.md).
-* __transform__: The string transforms to an lowercase version (`.lowercase`).
+1. __isa__: Must be an instance of [String](/std/doc/String.md).
+2. __transform__: The string transforms to an lowercase version (`.lowercase`).
 
 
 End of String class.
