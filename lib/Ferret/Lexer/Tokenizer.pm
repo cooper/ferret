@@ -34,16 +34,22 @@ my $keyword_reg = '\\b(?:'.join('|', qw{
 # some which are handled manually are not in this list.
 my %no_value = map { $_ => 1 } qw(
     CLOSURE_S   CLOSURE_E   PAREN_S     PAREN_E
-    BRACKET_S   BRACKET_E   OP_ADD_A    OP_SUB_A
-    OP_ADD      OP_SUB      OP_CALL     OP_PROP
+    BRACKET_S   BRACKET_E   ANGLE_S     ANGLE_E
+
+    OP_ADD_A    OP_SUB_A    OP_ADD      OP_SUB
     OP_DIV      OP_DIV_A    OP_MUL      OP_MUL_A
-    OP_POW      OP_POW_A    OP_VALUE    OP_PACK
+    OP_POW      OP_POW_A    OP_MOD
+
     OP_EQUAL    OP_EQUAL_I  OP_NEQUAL   OP_NEQUAL_I
-    OP_ASSIGN   OP_COMMA    OP_RETURN   OP_SEMI
-    OP_NOT      OP_MAYBE    OP_ELLIP    OP_RANGE
-    OP_MOD      OP_LASSIGN  OP_AND      OP_OR
-    OP_SIM      OP_NSIM     OP_XOR_A    OP_BOR_A
-    OP_BOR      OP_BAND     OP_XOR      OP_BAND_A
+    OP_ASSIGN   OP_LASSIGN  OP_SIM      OP_NSIM
+    OP_LESS     OP_GR8R     OP_LESS_E   OP_GR8R_E
+
+    OP_AND      OP_OR       OP_BAND     OP_BOR
+    OP_BAND_A   OP_BOR_A    OP_XOR      OP_XOR_A
+
+    OP_NOT      OP_MAYBE    OP_CALL     OP_COMMA
+    OP_PROP     OP_VALUE    OP_PACK     OP_SEMI
+    OP_RETURN   OP_ELLIP    OP_RANGE
 );
 
 # inject semicolons after these at the end of a line.
@@ -100,6 +106,8 @@ my @token_formats = (
     [ OP_AND        => qr/&&/                                               ],  # logical and
     [ OP_OR         => qr/\|\|/                                             ],  # logical or
     [ OP_RETURN     => qr/->/                                               ],  # return property
+    [ OP_LESS_E     => qr/<=/                                               ],  # less than or equal to
+    [ OP_GR8R_E     => qr/>=/                                               ],  # greater than or equal to
     [ OP_ADD_A      => qr/\+=/                                              ],  # addition assignment
     [ OP_SUB_A      => qr/-=/                                               ],  # subtraction assignment
     [ OP_MUL_A      => qr/\*=/                                              ],  # multiplication assignment
@@ -123,12 +131,10 @@ my @token_formats = (
     [ OP_XOR        => qr/\^\^/                                             ],  # bitwise xor
     [ OP_POW        => qr/\^/                                               ],  # power
     [ OP_BOR        => qr/\|/                                               ],  # bitwise or
-    [ OP_BAND =>    => qr/\&/                                               ],  # bitwise and
+    [ OP_BAND       => qr/\&/                                               ],  # bitwise and
     [ OP_NOT        => qr/!/                                                ],  # call without arguments
     [ OP_MOD        => qr/%/                                                ],  # modulus operator
     [ OP_MAYBE      => qr/\?/                                               ],  # inline if operator
-    [ OP_LESS_E     => qr/<=/                                               ],  # less than or equal to
-    [ OP_GR8R_E     => qr/>=/                                               ],  # greater than or equal to
     [ ANGLE_S       => qr/<[^\S\n]*/,       \&increment_lines               ],  # opening angle
     [ ANGLE_E       => qr/[^\S\n]*>/,       \&increment_lines               ],  # closing angle
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
@@ -200,20 +206,30 @@ sub possibly_call {
     return 1;
 }
 
+my $in_angle;
+
 sub tok_ANGLE_S {
     my ($tokens, $value) = @_;
 
-    # if it ends with whitespace, it's a less than operator.
-    return [ OP_LESS => ] if $value =~ m/\s$/;
+    # last token must be a class declaration or bareword.
+    my $last = $tokens->[-1];
+       $last = $last && ($last->[0] eq 'CLASS_DEC' || $last->[0] eq 'BAREWORD');
 
+    # if it ends with whitespace, it's a less than operator.
+    return [ OP_LESS => ] if !$last || $value =~ m/\s$/;
+
+    $in_angle++;
+    return;
 }
 
 sub tok_ANGLE_E {
     my ($tokens, $value) = @_;
 
     # if it starts with whitespace, it's a greater than operator.
-    return [ OP_GR8R => ] if $value =~ m/^\s/;
+    return [ OP_GR8R => ] if !$in_angle || $value =~ m/^\s/;
 
+    $in_angle--;
+    return;
 }
 
 # differentiate strings and regex.
