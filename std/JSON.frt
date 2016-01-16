@@ -12,7 +12,7 @@ alias _PO = NATIVE::PerlObject
 $default ?= *class()
 
 #> Defines the various character sets available for JSON encoding and decoding.
-#| Used for the `.charset` property. See the [`initializer`](#initializer).
+#| Used for the `.charset` property. See the [initializer](#initializer).
 type Charset {
     :ascii      #<  RFC4627,      range 0..127, ignores otherwise
     :latin1     #<  iso-8859-1,   range 0..255, ignores otherwise

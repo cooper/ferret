@@ -79,10 +79,10 @@ my @token_formats = (
     [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/,     \&increment_lines       ],  # simple .property
 
     # variables
-    [ VAR_LEX       => qr/\$$prop_reg_n/, \&remove_first_char               ],  # lexical variable
-    [ VAR_THIS      => qr/\@$prop_reg/,   \&remove_first_char               ],  # object variable
-    [ VAR_SPEC      => qr/\*$prop_reg/,   \&remove_first_char               ],  # special variable
-    [ VAR_SYM       => qr/\:$prop_reg/,   \&remove_first_char               ],  # symbol variable
+    [ VAR_LEX       => qr/\$$prop_reg_n/,   \&remove_first_char             ],  # lexical variable
+    [ VAR_THIS      => qr/\@$prop_reg/,     \&remove_first_char             ],  # object variable
+    [ VAR_SPEC      => qr/\*$prop_reg/,     \&remove_first_char             ],  # special variable
+    [ VAR_SYM       => qr/\:$prop_reg/,     \&remove_first_char             ],  # symbol variable
     [ VAR_SET       => qr/\<[A-Za-z_]+[A-Za-z0-9:_]*\>/, \&remove_firstlast ],  # set type variable
 
     # wrappers
@@ -127,19 +127,23 @@ my @token_formats = (
     [ OP_NOT        => qr/!/                                                ],  # call without arguments
     [ OP_MOD        => qr/%/                                                ],  # modulus operator
     [ OP_MAYBE      => qr/\?/                                               ],  # inline if operator
+    [ OP_LESS_E     => qr/<=/                                               ],  # less than or equal to
+    [ OP_GR8R_E     => qr/>=/                                               ],  # greater than or equal to
+    [ ANGLE_S       => qr/<[^\S\n]*/,       \&increment_lines               ],  # opening angle
+    [ ANGLE_E       => qr/[^\S\n]*>/,       \&increment_lines               ],  # closing angle
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
     [ OP_ELLIP      => qr/\.\.\./                                           ],  # ellipsis
     [ OP_RANGE      => qr/\.\./                                             ],  # range
     [ OP_COMMA      => qr/,/                                                ],  # list separator
-    [ PROP_VALUE    => qr/$prop_reg:/,  \&remove_last_char                  ],  # property: value
+    [ PROP_VALUE    => qr/$prop_reg:/,      \&remove_last_char              ],  # property: value
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other
     [ BAREWORD      => qr/[A-Za-z_]+[A-Za-z0-9:_]*/                         ],  # bareword (and keywords)
     [ NUMBER        => qr/\d+(?:\.\d+(?:e\d+)?)?/                           ],  # number
     [ OP_PROP       => qr/\./                                               ],  # non-bareword property
-    [ NEWLINE       => qr/\n/,          \&ignore_increment                  ],  # newline
-    [ SPACE         => qr/\s*/,         \&ignore                            ]   # whitespace
+    [ NEWLINE       => qr/\n/,              \&ignore_increment              ],  # newline
+    [ SPACE         => qr/\s*/,             \&ignore                         ]   # whitespace
 
 );
 
@@ -194,6 +198,22 @@ sub possibly_call {
     );
 
     return 1;
+}
+
+sub tok_ANGLE_S {
+    my ($tokens, $value) = @_;
+
+    # if it ends with whitespace, it's a less than operator.
+    return [ OP_LESS => ] if $value =~ m/\s$/;
+
+}
+
+sub tok_ANGLE_E {
+    my ($tokens, $value) = @_;
+
+    # if it starts with whitespace, it's a greater than operator.
+    return [ OP_GR8R => ] if $value =~ m/^\s/;
+
 }
 
 # differentiate strings and regex.

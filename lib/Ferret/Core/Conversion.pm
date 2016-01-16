@@ -145,7 +145,7 @@ sub pnumber {
 #############
 
 sub fregex {
-    
+
 }
 
 sub pregex {
@@ -449,8 +449,8 @@ sub ferretize {
 }
 
 sub _ferretize {
-    my ($val, $allow_perlobject) = @_;
-    $po = $allow_perlobject;
+    my ($val, $create_perlobject) = @_;
+    $po = $create_perlobject;
 
     # undefined value.
     return Ferret::undefined if !defined $val;
@@ -465,7 +465,7 @@ sub _ferretize {
     }
 
     # if it's blessed and we're allowing PerlObjects, use that.
-    if (blessed $val && $allow_perlobject) {
+    if (blessed $val && $create_perlobject) {
         return Ferret::Native::PerlObject::_wrap($Ferret::ferret, $val);
     }
 

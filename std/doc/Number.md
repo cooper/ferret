@@ -163,7 +163,7 @@ Returns the smallest of the provided numbers.
 Number.max($nums: Num...)
 ```
 
-Returns the largest of the provided numbers.
+Returns the greatest of the provided numbers.
 
 
 #### Arguments

@@ -190,7 +190,7 @@ See the [`.decode()`](#decode) method for more options.
 ### Charset
 
 Defines the various character sets available for JSON encoding and decoding.
-Used for the `.charset` property. See the [`initializer`](#initializer).
+Used for the `.charset` property. See the [initializer](#initializer).
 
 
 
