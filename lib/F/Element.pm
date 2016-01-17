@@ -146,7 +146,7 @@ sub replace_with {
 
 sub index {
     my $el = shift;
-    return undef if !$el->parent;
+    return undef if !$el->parent || $el->{parent_fake};
     my @children = $el->parent->children;
     return (grep { $children[$_] == $el } 0..$#children)[0];
 }

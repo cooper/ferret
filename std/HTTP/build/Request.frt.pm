@@ -75,7 +75,7 @@ my $result = do {
     # Class 'Request'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Request', undef );
+          FF::get_class( $f, $context, $file_scope, 'Request', undef, undef );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(

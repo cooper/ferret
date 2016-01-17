@@ -50,7 +50,7 @@ my $result = do {
     # Class 'String'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'String', undef );
+          FF::get_class( $f, $context, $file_scope, 'String', undef, undef );
 
         # Method event 'doubledLength' definition
         my $method_0 = FF::method_event_def(

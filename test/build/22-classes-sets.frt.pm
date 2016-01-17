@@ -188,7 +188,7 @@ my $result = do {
     # Class 'Cow'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Cow', undef );
+          FF::get_class( $f, $context, $file_scope, 'Cow', undef, undef );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
@@ -227,7 +227,7 @@ my $result = do {
     # Class 'Dog'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Dog', undef );
+          FF::get_class( $f, $context, $file_scope, 'Dog', undef, undef );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
@@ -273,7 +273,7 @@ my $result = do {
     # Class 'Cat'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Cat', undef );
+          FF::get_class( $f, $context, $file_scope, 'Cat', undef, undef );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(

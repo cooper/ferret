@@ -213,7 +213,7 @@ my $result = do {
     # Class 'Bot2'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Bot2', undef );
+          FF::get_class( $f, $context, $file_scope, 'Bot2', undef, undef );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(

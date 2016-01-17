@@ -56,8 +56,8 @@ my %no_value = map { $_ => 1 } qw(
 my %semi_follows = map { $_ => 1 } qw(
     PAREN_E         BRACKET_E       PAREN_E
     PROPERTY        NUMBER          STRING
-    BAREWORD        VAR_THIS        VAR_SPEC
-    VAR_SET         VAR_SYM         VAR_LEX
+    BAREWORD        VAR_LEX
+    VAR_THIS        VAR_SPEC        VAR_SYM
     OP_CALL         OP_ELLIP        REGEX
     KEYWORD_TRUE    KEYWORD_FALSE   KEYWORD_UNDEFINED
     KEYWORD_RETURN  KEYWORD_STOP
@@ -89,7 +89,6 @@ my @token_formats = (
     [ VAR_THIS      => qr/\@$prop_reg/,     \&remove_first_char             ],  # object variable
     [ VAR_SPEC      => qr/\*$prop_reg/,     \&remove_first_char             ],  # special variable
     [ VAR_SYM       => qr/\:$prop_reg/,     \&remove_first_char             ],  # symbol variable
-    [ VAR_SET       => qr/\<[A-Za-z_]+[A-Za-z0-9:_]*\>/, \&remove_firstlast ],  # set type variable
 
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start

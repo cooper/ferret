@@ -48,21 +48,6 @@ event was called
 
 Tokenized as `VAR_SPEC`.
 
-## Set type variables
-
-Set type variables are identified by the `<` and `>` delimiters.
-
-Set type variables represent a class for a set type. They are useful for set
-argument declarations, e.g. `need $nums: <Num>`, and for explicitly specifying
-the type to which elements in a set must conform, e.g. `<Num>(1, 2, 3)` (as
-opposed to simply `(1, 2, 3)`, where the runtime will choose a set type in a
-best-guess effort).
-
-`<Type>` is functionally equivalent to `Type.Set`. If the type specified does
-not exist, the set type variable will possess the `undefined` value.
-
-Tokenized as `VAR_SET`.
-
 ## Symbols
 
 Symbols are identified by the `:` sigil.

@@ -186,7 +186,7 @@ my $result = do {
     # Class 'Point'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Point', undef );
+          FF::get_class( $f, $context, $file_scope, 'Point', undef, undef );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(

@@ -148,7 +148,7 @@ my $result = do {
     # Class 'Line'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Line', undef );
+          FF::get_class( $f, $context, $file_scope, 'Line', undef, undef );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(

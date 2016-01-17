@@ -279,16 +279,18 @@ sub inside {
 
 # class definition or extension.
 sub get_class {
-    my ($f, $context, $file_scope, $name, $version) = @_;
+    my ($f, $context, $file_scope, $name, $version, $generics) = @_;
     my $class;
 
     # create the class only if it does not exist.
+    my $created;
     if (not $class = $f->get_class($context, $name)) {
         $class = Ferret::Class->new($f,
             name    => $name,
             version => $version
         );
         $context->set_property($name => $class);
+        $created++;
     }
 
     # create a scope inheriting from the class and the file scope.
@@ -297,6 +299,10 @@ sub get_class {
 
     # special properties, accessible in class variables.
     $scope->{special}->set_property_weak(class => $class);
+
+    # consider: what should we do if $created is true, and generics were
+    # provided? we can't add generics to an existing class.
+    $class->add_generics(@$generics) if $generics;
 
     return ($class, $class, $class->prototype, $scope);
 }

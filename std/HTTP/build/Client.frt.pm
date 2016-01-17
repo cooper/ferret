@@ -151,7 +151,7 @@ my $result = do {
     # Class 'Client'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Client', 1.0 );
+          FF::get_class( $f, $context, $file_scope, 'Client', 1.0, undef );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(

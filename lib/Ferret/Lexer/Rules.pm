@@ -874,6 +874,16 @@ our %element_rules = (
 
     },
 
+    TypedClass => {
+
+        children_must_be => [
+            'Bareword',
+            'Type generics can only consist of bareword types',
+            0
+        ]
+
+    },
+
     Unknown => {
 
         # tokens cannot be astray.

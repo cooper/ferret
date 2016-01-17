@@ -142,7 +142,7 @@ my $result = do {
     # Class 'Number'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Number', undef );
+          FF::get_class( $f, $context, $file_scope, 'Number', undef, undef );
 
         # Method event 'sqrt' definition
         my $method_0 = FF::method_event_def(

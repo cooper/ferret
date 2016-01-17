@@ -118,7 +118,7 @@ my $result = do {
     # Class 'Signal'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Signal', undef );
+          FF::get_class( $f, $context, $file_scope, 'Signal', undef, undef );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(

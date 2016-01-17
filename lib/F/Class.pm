@@ -13,7 +13,16 @@ sub desc {
     my $class = shift;
     my $desc  = "class '$$class{name}'";
     $desc    .= " version $$class{version}" if defined $class->{version};
+    $desc    .= ' <'.join(', ', @{ $class->{generics} }).'>'
+                if $class->{generics};
     return $desc;
+}
+
+sub add_generic {
+    my ($class, $tc) = @_;
+    my @barewords = map $_->{bareword_value},
+        grep $_->type eq 'Bareword', $tc->children;
+    push @{ $class->{generics} ||= [] }, @barewords;
 }
 
 sub perl_fmt {
@@ -26,9 +35,16 @@ sub perl_fmt {
     $after_c .= $_->perl_fmt_do."\n" foreach $class->ordered_children;
 
     # add each method definition.
-    foreach my $def (@{ $class->{method_defs} }) {
+    foreach my $def (@{ $class->{method_defs} || [] }) {
         my $fmt = F::get_perl_fmt(method_def_event => $def);
         $before_c .= "$fmt\n";
+    }
+
+    # add generics.
+    my ($generics, @generics) = ('undef', @{ $class->{generics} || [] });
+    if (@generics) {
+        @generics = map "'$_'", @generics;
+        $generics = '[ '.join(', ', @generics).' ]';
     }
 
     return class => {
@@ -36,6 +52,7 @@ sub perl_fmt {
         version        => $class->{version} // 'undef',
         upper_content  => $before_c,    # function declarations
         lower_content  => $after_c,     # all other children
+        generics       => $generics
     };
 }
 

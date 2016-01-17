@@ -257,9 +257,9 @@ sub c_KEYWORD_LOAD {
 ### OPERATORS ###
 ################################################################################
 
-##########################################
-### BRACKETS, PARENTHESES (DELIMITERS) ###
-##########################################
+##################################################
+### BRACKETS, PARENTHESES, ANGLES (DELIMITERS) ###
+##################################################
 
 # start of a closure (opening curly bracket).
 sub c_CLOSURE_S {
@@ -535,6 +535,54 @@ sub c_BRACKET_E {
     return $c->close_list;
 }
 
+# opening angle.
+sub c_ANGLE_S {
+    my $c = shift;
+
+    # it is guaranteed by the tokenizer that the opening angle is
+    # immediately preceded by a bareword or class declaration.
+
+    my $last_el = $c->last_el;
+    my $tc = F::new('TypedClass', ready_for_another => 2);
+
+    # it's a class declaration.
+    if ($last_el->type eq 'Class') {
+
+        # remember that it belongs to this class.
+        # on close, it will be abandoned,
+        # but the class will remember its generics.
+        $tc->set_tc_class($last_el);
+
+        # set the typed class as the current node.
+        # DO NOT adopt it. classes cannot contain them.
+        # TypedClass will always return the class as
+        # its ->parent, but it will not be a true child.
+        $c->set_node($tc);
+
+    }
+
+    # for everything else, adopt the previous element.
+    else {
+        $tc->adopt($last_el);
+        $c->adopt_and_set_node($tc);
+    }
+
+    return $tc;
+}
+
+# closing angle.
+sub c_ANGLE_E {
+    my $c = shift;
+
+    # it is guaranteed by the tokenizer that this closing angle has
+    # an opening angle to correspond with.
+
+    return $c->unexpected if $c->node->type ne 'TypedClass';
+    $c->close_node;
+
+    return;
+}
+
 #########################
 ### CALLS AND INDICES ###
 #########################
@@ -751,6 +799,13 @@ sub c_OP_COMMA {
         $c->set_node($c->list->new_item);
 
         return $c->node;
+    }
+
+    # we're in a typed class.
+    if ($c->node->type eq 'TypedClass') {
+        my $tc = $c->node;
+        $tc->{ready_for_another}++;
+        return $tc;
     }
 
     # we're in a want/need. this starts another.
@@ -1130,13 +1185,6 @@ sub c_VAR_SYM {
     $c->node->adopt($b);
 
     return $b;
-}
-
-# a set type variable.
-sub c_VAR_SET {
-    my ($c, $value) = @_;
-    my $var = F::new('SetTypeVariable', var_name => $value);
-    return $c->node->adopt($var);
 }
 
 # a shorthand property variable.
@@ -1991,7 +2039,8 @@ sub c_any {
         ^KEYWORD_IF$        ^KEYWORD_ELSE$      ^KEYWORD_ELSIF$
         ^KEYWORD_DEFER$
 
-        ^CLOSURE_.+$        ^OP_(?!(?:ADD|SUB|NOT)$).+$
+        ^CLOSURE_.+$        ^ANGLE_.+$
+        ^OP_(?!(?:ADD|SUB|NOT)$).+$
     );
     foreach (@ignore) { return if $label =~ $_ }
 
