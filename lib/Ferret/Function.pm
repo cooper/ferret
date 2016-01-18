@@ -80,14 +80,28 @@ sub call_with_self {
 sub call {
     my ($func, $arguments, $call_scope, $return) = @_;
 
-    # list of arguments. must use signature.
+    # a list of arguments was provided. must use signature to convert.
     $arguments ||= {};
     if (ref $arguments eq 'ARRAY') {
         $arguments = $func->_handle_arguments($arguments);
     }
 
-    # hash ref of arguments.
-    return unless $func->_arguments_satisfy_signature($arguments);
+    # find self.
+    my $class = $func->{class};
+    my $self  =
+        ( delete $func->{force_self}                          ) ||
+        ( $arguments->{_self}                                 ) ||
+        ( $func->is_method     ? $func->{last_parent} : undef ) ||
+        ( $func->is_class_func ? $class               : undef ) ;
+
+    # handle the generics.
+    # we have to do this before dynamic type checking.
+    my $generics = $class && $class->{force_generics} ?
+        delete $class->{force_generics}               :
+        $self->{generics};
+
+    # hash ref of arguments was provided.
+    return unless $func->_arguments_satisfy_signature($arguments, $generics);
     bless $arguments, 'Ferret::Arguments';
 
     # at this point, invalid wants have been deleted.
@@ -110,18 +124,17 @@ sub call {
     $return ||= Ferret::Return->new($func->f);
     $return->inc if $return->isa('Ferret::Return');
 
-    # find self.
-    my $self =
-        ( delete $func->{force_self}                          ) ||
-        ( $arguments->{_self}                                 ) ||
-        ( $func->is_method     ? $func->{last_parent} : undef ) ||
-        ( $func->is_class_func ? $func->{class}       : undef ) ;
-
     # class/instance argument.
     $scope->{special}->set_property(self   => $self) if $self;
-    $scope->{special}->set_property(class  => $func->{class})       if $func->{class};
+    $scope->{special}->set_property(class  => $class)               if $class;
     $scope->{special}->set_property(this   => delete $func->{this}) if $func->{this};
     $scope->{special}->set_property(return => $return);
+
+    # add any possible generics.
+    if ($generics) {
+        $scope->set_property($_ => $generics->{$_})
+            foreach keys %$generics;
+    }
 
     # call the function.
     my $ret = $func->{code}(
@@ -194,7 +207,7 @@ sub _handle_arguments {
 
 # check that the requirements are present and of correct types.
 sub _arguments_satisfy_signature {
-    my ($func, $arguments) = @_;
+    my ($func, $arguments, $generics_maybe) = @_;
     foreach my $sig (@{ $func->{signatures} }) {
         my ($name, $type) = @$sig{ qw(name type) };
 
@@ -223,7 +236,8 @@ sub _arguments_satisfy_signature {
 
         # check that it works.
         else {
-            next if $arguments->{$name} = $func->_obj_type_works($arg, $type);
+            next if $arguments->{$name} =
+                $func->_obj_type_works($arg, $type, $generics_maybe);
         }
 
         # bad news.
@@ -235,8 +249,12 @@ sub _arguments_satisfy_signature {
 }
 
 sub _get_types {
-    my ($func, $t) = @_;
+    my ($func, $t, $generics_maybe) = @_;
+
+    # already an object type.
     return $t if blessed $t;
+
+    my %generics = $generics_maybe ? %$generics_maybe : ();
     my @final;
 
     # find scope of interest.
@@ -253,7 +271,7 @@ sub _get_types {
         }
 
         # get object.
-        my $found = $soi->property($type);
+        my $found = $generics{$type} || $soi->property($type);
         push @final, $found if $found;
 
     }
@@ -262,8 +280,8 @@ sub _get_types {
 }
 
 sub _obj_type_works {
-    my ($func, $obj, $type) = @_;
-    foreach my $type ($func->_get_types($type)) {
+    my ($func, $obj, $type, $generics_maybe) = @_;
+    foreach my $type ($func->_get_types($type, $generics_maybe)) {
 
         # if this is a function, use its return value.
         if ($type->isa('Ferret::Function') || $type->isa('Ferret::Event')) {
@@ -295,7 +313,7 @@ sub _parse_method_args {
         $name =~ s/^\$//;
 
         # split types.
-        my @types = split /\|/, $type if length $type;
+        my @types = split m/\|/, $type if length $type;
 
         push @args, {
             name => $name,

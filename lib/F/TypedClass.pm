@@ -6,6 +6,8 @@ use parent qw(F::NodeExpression);
 
 use Scalar::Util qw(weaken);
 
+sub desc { 'class name with generics' }
+
 sub set_tc_class {
     my ($tc, $class) = @_;
     $tc->{parent_fake} = 1;
@@ -43,5 +45,16 @@ sub close : method {
 }
 
 sub tc_class { shift->{tc_class} }
+
+sub perl_fmt {
+    my $tc = shift;
+    my ($main_bw, @others) = $tc->children;
+    my @barewords = map $_->perl_fmt_do,
+        grep $_->type eq 'Bareword', @others;
+    return typed_class => {
+        bareword_exp => $main_bw->perl_fmt_do,
+        generics     => join(', ', @barewords)
+    };
+}
 
 1

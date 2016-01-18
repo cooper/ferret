@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(plist);
+use Ferret::Core::Conversion qw(plist ferror);
 use Scalar::Util qw(weaken);
 
 Ferret::bind_class(
@@ -64,15 +64,9 @@ sub new {
     return $class;
 }
 
-sub add_var {
-    # add a class variable
-}
-
-sub add_ivar {
-    # add an instance variable
-}
-
-sub prototype { shift->{prototype} }
+######################
+### INITIALIZATION ###
+######################
 
 # "calling" a class is creating an instance.
 sub call {
@@ -89,7 +83,8 @@ sub call {
     # initialize it.
     my $ret = $class->init($obj, $args);
 
-    # if it failed, return the return object.
+    # if it failed, return the return object with no instance.
+    # it will yield a boolean false value.
     if ($ret->{failed}) {
         $ret->delete_property('instance');
         $ret->delete_property(lc $class->{name});
@@ -109,9 +104,26 @@ sub init {
     $obj->add_parent($class->prototype)
         unless $obj->has_parent($class->prototype);
 
+    # before the initializer is called, the generics are still available.
+    if ($class->{force_generics}) {
+        $obj->{generics} = $class->{force_generics};
+    }
+
+
     # fetch or create return object.
     my $fire;
     my $ret = Ferret::Return->new($class->f);
+
+    # make sure the right number of generics are available.
+    my $need = $class->generics_required;
+    my $have = $obj->{generics} ? scalar keys %{ $obj->{generics} } : 0;
+    if ($have < $need) {
+        return $ret->fail(ferror(
+            "Not enough generic types. $need generics are required."
+        ));
+    }
+
+    # call the initializer.
     if ($class->has_property('initializer__')) {
         my $init = $class->property('initializer__');
         $init->call_with_self(
@@ -140,6 +152,10 @@ sub init {
 
     return $ret;
 }
+
+###############
+### BINDING ###
+###############
 
 my $dummy_cb_func = sub { $_[4] };
 
@@ -173,6 +189,49 @@ sub _bind_function {
     );
 
 }
+
+################
+### GENERICS ###
+################
+
+# set the generic types tempoarily.
+# this is deleted on the first class function call.
+sub set_generics {
+    my ($class, $generics) = @_;
+
+    # not enough generics.
+    return if scalar @$generics < $class->generics_required;
+
+    # map letter to type.
+    my %generic_map = map {
+        $class->{generic_letters}[$_] => $generics->[$_]
+    } 0..$#$generics;
+
+    # this is deleted after first use.
+    # it is intended for class functions only, including the initializer.
+    # for methods, the generics are fetched from the instance itself.
+    $class->{force_generics} = \%generic_map;
+
+    return 1;
+}
+
+# add generic leters.
+sub add_generics {
+    my ($class, @generic_letters) = @_;
+    push @{ $class->{generic_letters} ||= [] }, @generic_letters;
+}
+
+# returns the number of generics required.
+sub generics_required {
+    my $class = shift;
+    return scalar @{ $class->{generic_letters} || [] };
+}
+
+#####################
+### MISCELLANEOUS ###
+#####################
+
+sub prototype { shift->{prototype} }
 
 # return the global ferret prototype from which all classes inherit.
 sub _global_class_prototype {

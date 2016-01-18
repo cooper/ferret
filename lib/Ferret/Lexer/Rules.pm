@@ -880,7 +880,13 @@ our %element_rules = (
             'Bareword',
             'Type generics can only consist of bareword types',
             0
-        ]
+        ],
+
+        # note that when TypedClass is used with class declarations,
+        # this rule is not satisfied. it doesn't matter because this
+        # rule isn't checked until the tree is fully constructed, and
+        # by that time, the TypedClass is gone from the document tree.
+        min_children => [ 2, undef, 1 ]
 
     },
 

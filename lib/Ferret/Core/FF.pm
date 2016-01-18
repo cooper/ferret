@@ -506,4 +506,27 @@ sub throw {
     Ferret::Core::Errors::throw($err, [caller]);
 }
 
+sub type_with_generics {
+    my ($f, $scope, $class, $generics) = @_;
+
+    # make sure that the class actually is a class.
+    if (Ferret::undefined($class) || !$class->isa('Ferret::Class')) {
+        # TODO: throw()
+        return Ferret::undefined;
+    }
+
+    # make sure none of the generics are undefined.
+    foreach my $type (@$generics) {
+        next unless Ferret::undefined($type);
+        # TODO: throw()
+        return Ferret::undefined;
+    }
+
+    require Ferret::TypedClass;
+    return Ferret::TypedClass->new($f,
+        main_class  => $class,
+        other_types => $generics
+    );
+}
+
 1

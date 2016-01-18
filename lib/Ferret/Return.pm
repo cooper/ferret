@@ -5,8 +5,10 @@ use warnings;
 use strict;
 use utf8;
 use 5.010;
-
 use parent 'Ferret::Object';
+
+use Ferret::Core::Conversion qw(ferror);
+use Scalar::Util qw(blessed);
 
 sub new {
     my ($class, $f, %opts) = @_;
@@ -67,6 +69,7 @@ sub stop {
 # fail with an error. stops propagation. this is nonfatal.
 sub fail {
     my ($ret, $err) = @_;
+    $err = ferror($err) if !blessed $err;
     $ret->{failed}++;
     $ret->set_property(error => $err);
     $ret->stop;
