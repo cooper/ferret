@@ -224,6 +224,7 @@ sub _handle_call {
     weaken($return->{fire} = $fire);
 
     # call the function.
+    $func->{force_is_event} = 1;
     my $ret = $func->call_with_self(
         $arguments->{_self} || $self_maybe || $obj,
         $arguments,

@@ -405,8 +405,10 @@ sub _escape {
     return "\\$char" if !$is_str;
 
     # in a string, actually insert the escape character.
+    return "\0" if $char eq '0';
     return "\n" if $char eq 'n';
     return "\r" if $char eq 'r';
+    return "\t" if $char eq 't';
 
     # fall back to the original character.
     return $char;

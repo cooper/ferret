@@ -9,15 +9,6 @@ method push {
     return @items.push($item)
 }
 
-method unshift {
-    need $item: Element
-    return @items.unshift($item)
-}
-
-method shift {
-    return @items.shift()
-}
-
 method pop {
     return @items.pop()
 }

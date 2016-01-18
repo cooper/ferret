@@ -8,7 +8,7 @@ use 5.010;
 
 use parent 'Ferret::Object';
 use Scalar::Util qw(blessed weaken);
-use Ferret::Core::Conversion qw(plist flist fset);
+use Ferret::Core::Conversion qw(plist flist fset ferror);
 
 use Ferret::Arguments;
 use Ferret::Return;
@@ -79,6 +79,7 @@ sub call_with_self {
 
 sub call {
     my ($func, $arguments, $call_scope, $return) = @_;
+    my $is_event = delete $func->{force_is_event};
 
     # a list of arguments was provided. must use signature to convert.
     $arguments ||= {};
@@ -100,8 +101,24 @@ sub call {
         delete $class->{force_generics}               :
         $self->{generics};
 
-    # hash ref of arguments was provided.
-    return unless $func->_arguments_satisfy_signature($arguments, $generics);
+    # create the return object.
+    $return ||= Ferret::Return->new($func->f);
+
+    # hash ref of arguments. check if matches signature.
+    if (!$func->_arguments_satisfy_signature($arguments, $generics)) {
+
+        # if this is not an event callback, the success of the function
+        # depends on whether its arguments were satisfied.
+        if (!$is_event) {
+            return $return->fail(ferror(
+                "The '$$func{last_unsatisfied}' argument was not satisfied",
+                'UnsatisfiedArguments'
+            ));
+        }
+
+        return;
+    }
+
     bless $arguments, 'Ferret::Arguments';
 
     # at this point, invalid wants have been deleted.
@@ -121,7 +138,7 @@ sub call {
         parent => $func->{outer_scope}
     );
 
-    $return ||= Ferret::Return->new($func->f);
+    # increment the number of callbacks actually called.
     $return->inc if $return->isa('Ferret::Return');
 
     # class/instance argument.
@@ -241,6 +258,7 @@ sub _arguments_satisfy_signature {
         }
 
         # bad news.
+        $func->{last_unsatisfied} = $sig->{name};
         return if !$sig->{optional};   # bad type for need
         delete $arguments->{$name};    # bad type for want
 

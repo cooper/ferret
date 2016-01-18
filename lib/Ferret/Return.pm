@@ -56,6 +56,16 @@ sub return {
 # called in Event.pm; yields the event fire's ultimate return value.
 sub final_return {
     my $ret = shift;
+
+    # if it didn't fail and the call count is zero,
+    # then fail for that reason.
+    if (!$ret->{failed} && !$ret->{call_count}) {
+        return $ret->fail(ferror(
+            'Unsatisfied arguments; no callbacks were executed',
+            'UnsatisfiedArguments'
+        ));
+    }
+
     return delete $ret->{override} // $ret;
 }
 
@@ -73,6 +83,7 @@ sub fail {
     $ret->{failed}++;
     $ret->set_property(error => $err);
     $ret->stop;
+    delete $ret->{override};
     return $ret;
 }
 

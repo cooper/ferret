@@ -22,29 +22,6 @@
 #                              Argument list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$item'
-#          Method 'unshift'
-#              Body ('method' scope)
-#                  Instruction
-#                      Need
-#                          Lexical variable '$item'
-#                          Argument type
-#                              Bareword 'Element'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'unshift'
-#                                  Instance variable '@items'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      Lexical variable '$item'
-#          Method 'shift'
-#              Body ('method' scope)
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'shift'
-#                                  Instance variable '@items'
-#                              Argument list [0 items]
 #          Method 'pop'
 #              Body ('method' scope)
 #                  Instruction
@@ -181,53 +158,20 @@ my $result = do {
             }
         );
 
-        # Method event 'unshift' definition
-        my $method_2 = FF::method_event_def(
-            $f, $scope,
-            'unshift',
-            [
-                {
-                    name     => 'item',
-                    type     => 'Element',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'item', 13.2 ) or return;
-                return ${ $$self->{'items'} }->{'unshift'}
-                  ->( [ $$scope->{'item'} ], $scope, undef, 14.4 );
-                return $ret;
-            }
-        );
-
-        # Method event 'shift' definition
-        my $method_3 = FF::method_event_def(
-            $f, $scope, 'shift',
-            [],
-            sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return ${ $$self->{'items'} }->{'shift'}
-                  ->( {}, $scope, undef, 18.4 );
-                return $ret;
-            }
-        );
-
         # Method event 'pop' definition
-        my $method_4 = FF::method_event_def(
+        my $method_2 = FF::method_event_def(
             $f, $scope, 'pop',
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return ${ $$self->{'items'} }->{'pop'}
-                  ->( {}, $scope, undef, 22.4 );
+                  ->( {}, $scope, undef, 13.4 );
                 return $ret;
             }
         );
 
         # Method event 'description' definition
-        my $method_5 = FF::method_event_def(
+        my $method_3 = FF::method_event_def(
             $f, $scope,
             'description',
             [],
@@ -246,16 +190,8 @@ my $result = do {
             $class, $class, undef, undef
         );
         $method_1->inside_scope( push => $scope, $proto, $class, undef, undef );
-        $method_2->inside_scope(
-            unshift => $scope,
-            $proto, $class, undef, undef
-        );
+        $method_2->inside_scope( pop  => $scope, $proto, $class, undef, undef );
         $method_3->inside_scope(
-            shift => $scope,
-            $proto, $class, undef, undef
-        );
-        $method_4->inside_scope( pop => $scope, $proto, $class, undef, undef );
-        $method_5->inside_scope(
             description => $scope,
             $proto, $class, undef, undef
         );
@@ -266,15 +202,15 @@ my $result = do {
         sub {
             FF::lex_assign(
                 $scope,
-                stack => $$scope->{'Stack'}->( {}, $scope, undef, 32.4 ),
-                undef, 32.2
+                stack => $$scope->{'Stack'}->( {}, $scope, undef, 23.4 ),
+                undef, 23.2
             );
         },
         sub {
             my ($scope) = @_;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "Error! " ), $$scope->{'e'} ) ],
-                $scope, undef, 33.2
+                $scope, undef, 24.2
             );
         },
         'e'
@@ -282,17 +218,17 @@ my $result = do {
     FF::lex_assign(
         $scope,
         numstack => FF::type_with_generics( $f, $scope, $$scope->{'Stack'},
-            [ $$scope->{'Num'} ] )->( {}, $scope, undef, 36.35 ),
+            [ $$scope->{'Num'} ] )->( {}, $scope, undef, 27.35 ),
         undef,
-        36.1
+        27.1
     );
     ${ $$scope->{'numstack'} }->{'push'}
-      ->( [ num( $f, "1" ) ], $scope, undef, 38.3 );
+      ->( [ num( $f, "1" ) ], $scope, undef, 29.3 );
     ${ $$scope->{'numstack'} }->{'push'}
-      ->( [ str( $f, "this should be ignored" ) ], $scope, undef, 39.3 );
+      ->( [ str( $f, "this should be ignored" ) ], $scope, undef, 30.3 );
     ${ $$scope->{'numstack'} }->{'push'}
-      ->( [ num( $f, "2" ) ], $scope, undef, 40.3 );
-    $$scope->{'inspect'}->( [ $$scope->{'numstack'} ], $scope, undef, 42.2 );
+      ->( [ num( $f, "2" ) ], $scope, undef, 31.3 );
+    $$scope->{'inspect'}->( [ $$scope->{'numstack'} ], $scope, undef, 33.2 );
 };
 
 FF::after_content();
