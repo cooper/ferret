@@ -7,6 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
+use Scalar::Util qw(blessed);
 use Ferret::Core::Conversion qw(
     fnumber pnumber
     fstring pstring
@@ -82,8 +83,8 @@ sub init {
 sub _item_method {
     my ($list, $args, undef, undef, undef, $func) = @_;
     my $code = $list->can($func->{event_name}) or return;
-    $code->($list, $args->{item});
-    return $list;
+    my $ret  = $code->($list, $args->{item});
+    return blessed $ret ? $ret : $list;
 }
 
 sub length : method {
@@ -96,8 +97,8 @@ sub _length {
 }
 
 sub shift : method {
-    my ($list, $item) = @_;
-    shift @{ $list->{list_items} }, $item;
+    my ($list) = @_;
+    shift @{ $list->{list_items} };
 }
 
 sub unshift : method {
@@ -111,8 +112,8 @@ sub push : method {
 }
 
 sub pop : method {
-    my ($list, $item) = @_;
-    pop @{ $list->{list_items} }, $item;
+    my ($list) = @_;
+    pop @{ $list->{list_items} };
 }
 
 sub insert {

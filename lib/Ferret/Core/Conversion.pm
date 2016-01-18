@@ -307,7 +307,7 @@ sub ferror {
     # create a new error.
     my $error_class = $f->get_class($f->main_context, 'Error');
     return $error_class->call({
-        type => fsym($type),
+        type => fsym($type || 'NativeCodeError'),
         msg  => fstring($err)
     });
 
