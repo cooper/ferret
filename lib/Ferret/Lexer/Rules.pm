@@ -876,8 +876,12 @@ our %element_rules = (
 
     TypedClass => {
 
+        # note that Maybes can contain more than barewords, which is undesired;
+        # but we don't have to worry about it because the expression will be
+        # checked to be a bareword before reaching the ? operator.
+        # FIXME: we don't want Maybes unless it's part of the class declaration.
         children_must_be => [
-            'Bareword',
+            'Bareword Maybe',
             'Type generics can only consist of bareword types',
             0
         ],

@@ -20,9 +20,18 @@ sub desc {
 
 sub add_generic {
     my ($class, $tc) = @_;
+
+    # find the optionals.
+    foreach my $maybe_bw (map $_->first_child,
+      grep $_->type eq 'Maybe', $tc->children) {
+        $class->{generic_maybes}{ $maybe_bw->{bareword_value} }++;
+    }
+
+    # add the barewords.
     my @barewords = map $_->{bareword_value},
-        grep $_->type eq 'Bareword', $tc->children;
+        grep $_->type eq 'Bareword', $tc->descendants;
     push @{ $class->{generics} ||= [] }, @barewords;
+
 }
 
 sub perl_fmt {
@@ -43,7 +52,10 @@ sub perl_fmt {
     # add generics.
     my ($generics, @generics) = ('undef', @{ $class->{generics} || [] });
     if (@generics) {
-        @generics = map "'$_'", @generics;
+        @generics = map {
+            my $is_maybe = $class->{generic_maybes}{$_};
+            $is_maybe ? "\\'$_'" : "'$_'"
+        } @generics;
         $generics = '[ '.join(', ', @generics).' ]';
     }
 

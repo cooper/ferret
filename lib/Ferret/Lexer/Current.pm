@@ -231,7 +231,8 @@ sub close_end_cap {
 
 sub maybe_owner {
     my $c = shift;
-    my %allowed = map { $_ => 1 } qw(Instruction IfParameter OnParameter);
+    my %allowed = map { $_ => 1 }
+        qw(Instruction IfParameter OnParameter TypedClass);
     return first { $allowed{ $_->type } } $c->node, $c->node->all_ancestors;
 }
 

@@ -105,10 +105,10 @@ sub init {
         unless $obj->has_parent($class->prototype);
 
     # before the initializer is called, the generics are still available.
-    if ($class->{force_generics}) {
-        $obj->{generics} = $class->{force_generics};
+    if (!$class->{force_generics}) {
+        $class->set_generics([]);
     }
-
+    $obj->{generics} = delete $class->{force_generics};
 
     # fetch or create return object.
     my $fire;
@@ -203,9 +203,12 @@ sub set_generics {
     return if scalar @$generics < $class->generics_required;
 
     # map letter to type.
+    my $any = $class->f->core_context->property('Any');
     my %generic_map = map {
-        $class->{generic_letters}[$_] => $generics->[$_]
-    } 0..$#$generics;
+        my $letter = $class->{generic_letters}[$_];
+        $letter    = $$letter if ref $letter;
+        $letter => $generics->[$_] || $any
+    } 0..$#{ $class->{generic_letters} };
 
     # this is deleted after first use.
     # it is intended for class functions only, including the initializer.
@@ -216,6 +219,7 @@ sub set_generics {
 }
 
 # add generic leters.
+# if passed as a reference, it is optional.
 sub add_generics {
     my ($class, @generic_letters) = @_;
     push @{ $class->{generic_letters} ||= [] }, @generic_letters;
@@ -224,7 +228,7 @@ sub add_generics {
 # returns the number of generics required.
 sub generics_required {
     my $class = shift;
-    return scalar @{ $class->{generic_letters} || [] };
+    return scalar grep !ref, @{ $class->{generic_letters} || [] };
 }
 
 #####################

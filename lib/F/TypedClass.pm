@@ -32,6 +32,11 @@ sub adopt {
     return $tc->SUPER::adopt(@_);
 }
 
+sub add_maybe {
+    my ($tc, $maybe) = @_;
+    push @{ $tc->{maybes} ||= [] }, $maybe;
+}
+
 sub close : method {
     my $tc = shift;
 

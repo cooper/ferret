@@ -300,7 +300,7 @@ sub get_class {
     # special properties, accessible in class variables.
     $scope->{special}->set_property_weak(class => $class);
 
-    # consider: what should we do if $created is true, and generics were
+    # FIXME: what should we do if $created is true, and generics were
     # provided? we can't add generics to an existing class.
     $class->add_generics(@$generics) if $generics;
 

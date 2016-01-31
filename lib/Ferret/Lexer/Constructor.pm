@@ -1005,6 +1005,7 @@ sub c_OP_MAYBE {
     my $owner = $c->maybe_owner;
     if (!$owner) {
         # TODO: error!
+        die;
     }
 
     # create a maybe, adopting the last element.
