@@ -150,6 +150,10 @@ func _commandAdd {
 
 func _commandFactoid {
     need $msg
-    $response = @factoids[ $msg.command ]
+    $response = @factoids[ $msg.command ].fill(
+        nick:   $msg.nickname,
+        cmd:    $msg.command,
+        chan:   $msg.channel
+    )
     @privmsg($msg.channel, $response)
 }

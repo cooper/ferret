@@ -154,6 +154,12 @@ sub _set_value {
 
 sub get_value {
     my ($list, $index) = @_;
+
+    # handle negative indices (from right side).
+    if ($index < 0) {
+        $index = $#{ $list->{list_items} } + $index;
+    }
+
     return $list->{list_items}[$index];
 }
 

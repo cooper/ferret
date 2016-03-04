@@ -454,6 +454,15 @@ sub tok_KEYWORD {
         }
     }
 
+    # change if inside to infins
+    if ($value eq 'inside') {
+        my $last = $tokens->[-1];
+        if ($last && $last->[0] eq 'KEYWORD_IF') {
+            delete $tokens->[-1];
+            return [ KEYWORD_IFINS => 1 ];
+        }
+    }
+
     # change gather for to gatherfor
     if ($value eq 'for') {
         my $last = $tokens->[-1];

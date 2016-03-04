@@ -1098,6 +1098,37 @@ inside $person {
 inspect($person) # (age: 26, name: "Pam")
 ```
 
+### if inside
+
+`if inside` (always spelled as two separate words) is a combination keyword,
+tokenized as `KEYWORD_IFINS`. It provides a convenient way to write the common
+scenario of [`if`](#if) and [`inside`](#for) together:
+`if $x { inside $x { ... } }` can be written simply as `if inside $x { ... }`.
+
+```
+func getNames {
+    need $first: Str, $last: Str
+    firstName -> $first
+    lastName -> $last
+}
+
+# this will work. it will say "Hello, Sam Smith!"
+if inside getNames("Sam", "Smith") {
+    $name = .firstName + " " + .lastName
+    say("Hello, $name!")
+}
+
+# this will do nothing because the second argument is unsatisfied,
+# and therefore, the function returns false.
+if inside getNames("Sam", 0) {
+    $name = .firstName + " " + .lastName
+    say("Hello, $name!")
+}
+else {
+    say("This will be reached")
+}
+```
+
 ### gather
 
 ```

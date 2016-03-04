@@ -510,12 +510,27 @@
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$response'
-#                          Index
-#                              Instance variable '@factoids'
-#                              Index list [1 items]
+#                          Call
+#                              Property 'fill'
+#                                  Index
+#                                      Instance variable '@factoids'
+#                                      Index list [1 items]
+#                                          Item 0
+#                                              Property 'command'
+#                                                  Lexical variable '$msg'
+#                              Named argument list [3 items]
 #                                  Item 0
-#                                      Property 'command'
-#                                          Lexical variable '$msg'
+#                                      Pair 'nick'
+#                                          Property 'nickname'
+#                                              Lexical variable '$msg'
+#                                  Item 1
+#                                      Pair 'cmd'
+#                                          Property 'command'
+#                                              Lexical variable '$msg'
+#                                  Item 2
+#                                      Pair 'chan'
+#                                          Property 'channel'
+#                                              Lexical variable '$msg'
 #                  Instruction
 #                      Call
 #                          Instance variable '@privmsg'
@@ -803,16 +818,25 @@ my $result = do {
             FF::need( $scope, $args, 'msg', 152.2 ) or return;
             FF::lex_assign(
                 $scope,
-                response => $$self->{'factoids'}->get_index_value(
-                    [ ${ $$scope->{'msg'} }->{'command'} ],
-                    $scope, 153.4
-                ),
+                response => ${
+                    $$self->{'factoids'}->get_index_value(
+                        [ ${ $$scope->{'msg'} }->{'command'} ], $scope,
+                        153.2
+                    )
+                  }->{'fill'}->(
+                    {
+                        nick => ${ $$scope->{'msg'} }->{'nickname'},
+                        cmd  => ${ $$scope->{'msg'} }->{'command'},
+                        chan => ${ $$scope->{'msg'} }->{'channel'}
+                    },
+                    $scope, undef, 153.45
+                  ),
                 $file_scope,
-                153.2
+                153.1
             );
             $$self->{'privmsg'}->(
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'response'} ],
-                $scope, undef, 154.2
+                $scope, undef, 158.2
             );
             return $ret;
         }
