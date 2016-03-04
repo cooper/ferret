@@ -138,7 +138,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Client.frt');
 
@@ -221,12 +221,14 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'url', 34.2 ) or return;
-                return $$self->{'request'}->(
-                    {
-                        httpMethod => FF::get_symbol( $f, 'GET' ),
-                        url        => $$scope->{'url'}
-                    },
-                    $scope, undef, 35.3
+                return $ret_func->(
+                    $$self->{'request'}->(
+                        {
+                            httpMethod => FF::get_symbol( $f, 'GET' ),
+                            url        => $$scope->{'url'}
+                        },
+                        $scope, undef, 35.3
+                    )
                 );
                 return $ret;
             }
@@ -246,12 +248,14 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'url', 44.2 ) or return;
-                return $$self->{'request'}->(
-                    {
-                        httpMethod => FF::get_symbol( $f, 'POST' ),
-                        url        => $$scope->{'url'}
-                    },
-                    $scope, undef, 45.3
+                return $ret_func->(
+                    $$self->{'request'}->(
+                        {
+                            httpMethod => FF::get_symbol( $f, 'POST' ),
+                            url        => $$scope->{'url'}
+                        },
+                        $scope, undef, 45.3
+                    )
                 );
                 return $ret;
             }
@@ -279,13 +283,15 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'httpMethod', 56.2 ) or return;
                 FF::need( $scope, $args, 'url',        59.2 ) or return;
-                return $$scope->{'HTTP::Request'}->(
-                    {
-                        client     => ${ $scope->{special} }->{'self'},
-                        httpMethod => $$scope->{'httpMethod'},
-                        url        => $$scope->{'url'}
-                    },
-                    $scope, undef, 61.5
+                return $ret_func->(
+                    $$scope->{'HTTP::Request'}->(
+                        {
+                            client     => ${ $scope->{special} }->{'self'},
+                            httpMethod => $$scope->{'httpMethod'},
+                            url        => $$scope->{'url'}
+                        },
+                        $scope, undef, 61.5
+                    )
                 );
                 return $ret;
             }

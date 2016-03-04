@@ -396,7 +396,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('JSON.frt');
 
@@ -791,8 +791,8 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'data', 180.2 ) or return;
-                return ${ $$scope->{'default'} }->{'encode'}
-                  ->( [ $$scope->{'data'} ], $scope, undef, 181.4 );
+                return $ret_func->( ${ $$scope->{'default'} }->{'encode'}
+                      ->( [ $$scope->{'data'} ], $scope, undef, 181.4 ) );
                 return $ret;
             }
         );
@@ -811,8 +811,8 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'json', 187.2 ) or return;
-                return ${ $$scope->{'default'} }->{'decode'}
-                  ->( [ $$scope->{'json'} ], $scope, undef, 188.4 );
+                return $ret_func->( ${ $$scope->{'default'} }->{'decode'}
+                      ->( [ $$scope->{'json'} ], $scope, undef, 188.4 ) );
                 return $ret;
             }
         );

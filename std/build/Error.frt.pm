@@ -109,7 +109,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Error.frt');
 
@@ -217,11 +217,17 @@ my $result = do {
                 if ( bool( $$self->{'subError'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return add( $scope, $$self->{'msg'}, str( $f, ": " ),
-                        ${ $$self->{'subError'} }->{'description'}
-                          ->( {}, $scope, undef, 27.4 ) );
+                    return $ret_func->(
+                        add(
+                            $scope,
+                            $$self->{'msg'},
+                            str( $f, ": " ),
+                            ${ $$self->{'subError'} }->{'description'}
+                              ->( {}, $scope, undef, 27.4 )
+                        )
+                    );
                 }
-                return $$self->{'msg'};
+                return $ret_func->( $$self->{'msg'} );
                 return $ret;
             }
         );

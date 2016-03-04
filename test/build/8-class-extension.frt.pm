@@ -37,7 +37,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('8-class-extension.frt');
 
@@ -59,10 +59,12 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return mul(
-                    $scope,
-                    $$self->{'length'}->( {}, $scope, undef, 4.3 ),
-                    num( $f, "2" )
+                return $ret_func->(
+                    mul(
+                        $scope,
+                        $$self->{'length'}->( {}, $scope, undef, 4.3 ),
+                        num( $f, "2" )
+                    )
                 );
                 return $ret;
             }

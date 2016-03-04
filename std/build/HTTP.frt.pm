@@ -62,7 +62,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('HTTP.frt');
 
@@ -80,8 +80,8 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'url', 12.2 ) or return;
-            return ${ $$scope->{'client'} }->{'get'}
-              ->( { url => $$scope->{'url'} }, $scope, undef, 13.4 );
+            return $ret_func->( ${ $$scope->{'client'} }->{'get'}
+                  ->( { url => $$scope->{'url'} }, $scope, undef, 13.4 ) );
             return $ret;
         }
     );
@@ -94,8 +94,8 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'url', 17.2 ) or return;
-            return ${ $$scope->{'client'} }->{'post'}
-              ->( { url => $$scope->{'url'} }, $scope, undef, 18.4 );
+            return $ret_func->( ${ $$scope->{'client'} }->{'post'}
+                  ->( { url => $$scope->{'url'} }, $scope, undef, 18.4 ) );
             return $ret;
         }
     );

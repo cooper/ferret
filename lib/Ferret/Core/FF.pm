@@ -10,6 +10,8 @@ use Ferret::Core::Conversion qw(fstring ffunction ferror pbool);
 use Scalar::Util qw(blessed weaken);
 use List::Util qw(any all none);
 
+my $ret_func = sub { wantarray ? (@_) : shift };
+
 # fetch the global Ferret.
 sub get_ferret {
     return $Ferret::ferret ||= Ferret->new;
@@ -17,7 +19,7 @@ sub get_ferret {
 
 # fetch true, false, undefined objects
 sub get_constant_objects {
-    return (Ferret::true, Ferret::false, Ferret::undefined);
+    return (Ferret::true, Ferret::false, Ferret::undefined, $ret_func);
 }
 
 # fetch the current context and private file scope.
@@ -160,27 +162,44 @@ sub on {
     return;
 }
 
-my %loop_returns = map {
-    my $r = $_;
-    $r => sub { return $r };
-} qw(next last redo);
+# $ret_func within loops returns 'return' as the status.
+# other statuses include: 'last', 'next', 'redo'
+my $loop_ret_func = sub {
+    return ('return', @_);
+};
+
+# $ret_func within other once-executed constructs such as
+# inside and do work the same way.
+my $once_ret_func = $loop_ret_func;
 
 # iterate over a list.
 sub iterate {
     my ($f, $outer_scope, $collection, $var_name, $code, $pos) = @_;
     foreach ($collection->iterate($pos)) {
+
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
         $scope->set_property($var_name => $_);
 
         # call the code.
-        my $ret = $code->($scope, \%loop_returns);
-        next if !$ret;
+        my ($status, $ret) = $code->($scope, $loop_ret_func);
 
-        next if $ret eq 'next';
-        last if $ret eq 'last';
-        redo if $ret eq 'redo';
+        if ($status) {
+
+            # loop control.
+            next if $status eq 'next';
+            last if $status eq 'last';
+            redo if $status eq 'redo';
+
+            # return the outside function.
+            return $ret if $status eq 'return';
+
+        }
+
     }
+
+    # if we never reached 'return' status, the loop returns nothing.
     return;
+
 }
 
 # iterate over a hash.
@@ -196,14 +215,25 @@ sub iterate_pair {
         $scope->set_property($var2_name => $_->[1]);
 
         # call the code.
-        my $ret = $code->($scope, \%loop_returns);
-        next if !$ret;
+        my ($status, $ret) = $code->($scope, $loop_ret_func);
 
-        next if $ret eq 'next';
-        last if $ret eq 'last';
-        redo if $ret eq 'redo';
+        if ($status) {
+
+            # loop control.
+            next if $status eq 'next';
+            last if $status eq 'last';
+            redo if $status eq 'redo';
+
+            # return the outside function.
+            return $ret if $status eq 'return';
+
+        }
+
     }
+
+    # if we never reached 'return' status, the loop returns nothing.
     return;
+
 }
 
 sub indefinitely {
@@ -212,14 +242,25 @@ sub indefinitely {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
 
         # call the code.
-        my $ret = $code->($scope, \%loop_returns);
-        next if !$ret;
+        my ($status, $ret) = $code->($scope, $loop_ret_func);
 
-        next if $ret eq 'next';
-        last if $ret eq 'last';
-        redo if $ret eq 'redo';
+        if ($status) {
+
+            # loop control.
+            next if $status eq 'next';
+            last if $status eq 'last';
+            redo if $status eq 'redo';
+
+            # return the outside function.
+            return $ret if $status eq 'return';
+
+        }
+
     }
+
+    # if we never reached 'return' status, the loop returns nothing.
     return;
+
 }
 
 sub while_true {
@@ -228,14 +269,25 @@ sub while_true {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
 
         # call the code.
-        my $ret = $code->($scope, \%loop_returns);
-        next if !$ret;
+        my ($status, $ret) = $code->($scope, $loop_ret_func);
 
-        next if $ret eq 'next';
-        last if $ret eq 'last';
-        redo if $ret eq 'redo';
+        if ($status) {
+
+            # loop control.
+            next if $status eq 'next';
+            last if $status eq 'last';
+            redo if $status eq 'redo';
+
+            # return the outside function.
+            return $ret if $status eq 'return';
+
+        }
+
     }
+
+    # if we never reached 'return' status, the loop returns nothing.
     return;
+
 }
 
 # set a required function argument.
@@ -273,7 +325,8 @@ sub want {
 sub inside {
     my ($f, $outer_scope, $obj, $code) = @_;
     my $scope = Ferret::Scope->new($f, parent => $outer_scope);
-    $code->($scope, $obj);
+    my ($status, $ret) = $code->($scope, $obj, $once_ret_func);
+    return $ret if $status eq 'return';
     return;
 }
 
@@ -496,9 +549,19 @@ sub gather {
     my $scope = Ferret::Scope->new($f, parent_scope => $outer_scope);
 
     # call the gather code with the scope and take function.
-    $gather_code->($scope, $take);
+    my ($status, $ret) = $gather_code->($scope, $take, $once_ret_func);
 
-    return $list;
+    # Gather return is interesting.
+    # unlike loops and inside and such, it actually has a return value
+    # of its own, since gather is an expression. as a result, we must return
+    # a status here, either 'list' or 'return'
+
+    # if the gather returned, return the outer.
+    return ($status, $ret) if $status eq 'return';
+
+    # otherwise, return 'list' status.
+    return ('list', $list);
+
 }
 
 sub throw {

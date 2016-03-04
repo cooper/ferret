@@ -135,7 +135,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Line.frt');
 
@@ -183,8 +183,9 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return FF::create_list( $f,
-                    [ $$self->{'pt1'}, $$self->{'pt2'} ] );
+                return $ret_func->(
+                    FF::create_list( $f, [ $$self->{'pt1'}, $$self->{'pt2'} ] )
+                );
                 return $ret;
             }
         );
@@ -230,15 +231,17 @@ my $result = do {
                     my => ${ $$scope->{'mp'} }->{'y'},
                     $file_scope, 16.35
                 );
-                return add(
-                    $scope,             str( $f, "Segment( |(" ),
-                    $$scope->{'pox'},   str( $f, ", " ),
-                    $$scope->{'poy'},   str( $f, ")---(" ),
-                    $$scope->{'mx'},    str( $f, ", " ),
-                    $$scope->{'my'},    str( $f, ")---(" ),
-                    $$scope->{'ptx'},   str( $f, ", " ),
-                    $$scope->{'pty'},   str( $f, ")| Length = " ),
-                    $$self->{'length'}, str( $f, " )" )
+                return $ret_func->(
+                    add(
+                        $scope,             str( $f, "Segment( |(" ),
+                        $$scope->{'pox'},   str( $f, ", " ),
+                        $$scope->{'poy'},   str( $f, ")---(" ),
+                        $$scope->{'mx'},    str( $f, ", " ),
+                        $$scope->{'my'},    str( $f, ")---(" ),
+                        $$scope->{'ptx'},   str( $f, ", " ),
+                        $$scope->{'pty'},   str( $f, ")| Length = " ),
+                        $$self->{'length'}, str( $f, " )" )
+                    )
                 );
                 return $ret;
             }
@@ -251,7 +254,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $$self->{'pretty'};
+                return $ret_func->( $$self->{'pretty'} );
                 return $ret;
             }
         );
@@ -263,9 +266,12 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return
-                  ${ FF::create_set( $scope, $$self->{'pt1'}, $$self->{'pt2'} )
-                  }->{'midpoint'}->( {}, $scope, undef, 25.4 );
+                return $ret_func->(
+                    ${
+                        FF::create_set( $scope, $$self->{'pt1'},
+                            $$self->{'pt2'} )
+                    }->{'midpoint'}->( {}, $scope, undef, 25.4 )
+                );
                 return $ret;
             }
         );
@@ -276,8 +282,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return ${ $$self->{'pt1'} }->{'distanceTo'}
-                  ->( [ $$self->{'pt2'} ], $scope, undef, 29.4 );
+                return $ret_func->( ${ $$self->{'pt1'} }->{'distanceTo'}
+                      ->( [ $$self->{'pt2'} ], $scope, undef, 29.4 ) );
                 return $ret;
             }
         );

@@ -121,7 +121,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('11-external-inside-on.frt');
 
@@ -185,15 +185,22 @@ my $result = do {
     }
 
     # Inside
-    FF::inside(
-        $f, $scope,
-        $$scope->{'point'},
-        sub {
-            my ( $scope, $ins ) = @_;
-            FF::lex_assign( $scope, x => num( $f, "5" ),  $file_scope, 9.2 );
-            FF::lex_assign( $scope, y => num( $f, "10" ), $file_scope, 10.2 );
-        }
-    );
+    {
+        my $inside_return = FF::inside(
+            $f, $scope,
+            $$scope->{'point'},
+            sub {
+                my ( $scope, $ins, $ret_func ) = @_;
+                FF::lex_assign( $scope, x => num( $f, "5" ), $file_scope, 9.2 );
+                FF::lex_assign(
+                    $scope,
+                    y => num( $f, "10" ),
+                    $file_scope, 10.2
+                );
+            }
+        );
+        return $ret_func->($inside_return) if $inside_return;
+    }
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Point: " ), $$scope->{'point'} ) ],
         $scope, undef, 13.2

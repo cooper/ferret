@@ -173,7 +173,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Point.frt');
 
@@ -245,15 +245,17 @@ my $result = do {
                     $file_scope,
                     11.2
                 );
-                return $$scope->{'sqrt'}->(
-                    [
-                        add(
-                            $scope,
-                            pow( $scope, $$scope->{'dx'}, num( $f, "2" ) ),
-                            pow( $scope, $$scope->{'dy'}, num( $f, "2" ) )
-                        )
-                    ],
-                    $scope, undef, 12.15
+                return $ret_func->(
+                    $$scope->{'sqrt'}->(
+                        [
+                            add(
+                                $scope,
+                                pow( $scope, $$scope->{'dx'}, num( $f, "2" ) ),
+                                pow( $scope, $$scope->{'dy'}, num( $f, "2" ) )
+                            )
+                        ],
+                        $scope, undef, 12.15
+                    )
                 );
                 return $ret;
             }
@@ -266,14 +268,16 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $$self->{'distanceTo'}->(
-                    [
-                        ${ $scope->{special} }->{'class'}->(
-                            [ num( $f, "0" ), num( $f, "0" ) ], $scope,
-                            undef, 16.25
-                        )
-                    ],
-                    $scope, undef, 16.15
+                return $ret_func->(
+                    $$self->{'distanceTo'}->(
+                        [
+                            ${ $scope->{special} }->{'class'}->(
+                                [ num( $f, "0" ), num( $f, "0" ) ], $scope,
+                                undef, 16.25
+                            )
+                        ],
+                        $scope, undef, 16.15
+                    )
                 );
                 return $ret;
             }
@@ -285,10 +289,12 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return add(
-                    $scope,        str( $f, "(" ),
-                    $$self->{'x'}, str( $f, ", " ),
-                    $$self->{'y'}, str( $f, ")" )
+                return $ret_func->(
+                    add(
+                        $scope,        str( $f, "(" ),
+                        $$self->{'x'}, str( $f, ", " ),
+                        $$self->{'y'}, str( $f, ")" )
+                    )
                 );
                 return $ret;
             }
@@ -301,7 +307,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $$self->{'pretty'};
+                return $ret_func->( $$self->{'pretty'} );
                 return $ret;
             }
         );
@@ -313,7 +319,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return add( $scope, str( $f, "Point" ), $$self->{'pretty'} );
+                return $ret_func->(
+                    add( $scope, str( $f, "Point" ), $$self->{'pretty'} ) );
                 return $ret;
             }
         );
@@ -340,28 +347,30 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'pt1', 32.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 32.3 ) or return;
-                return ${ $scope->{special} }->{'class'}->(
-                    {
-                        x => div(
-                            $scope,
-                            add(
+                return $ret_func->(
+                    ${ $scope->{special} }->{'class'}->(
+                        {
+                            x => div(
                                 $scope,
-                                ${ $$scope->{'pt1'} }->{'x'},
-                                ${ $$scope->{'pt2'} }->{'x'}
+                                add(
+                                    $scope,
+                                    ${ $$scope->{'pt1'} }->{'x'},
+                                    ${ $$scope->{'pt2'} }->{'x'}
+                                ),
+                                num( $f, "2" )
                             ),
-                            num( $f, "2" )
-                        ),
-                        y => div(
-                            $scope,
-                            add(
+                            y => div(
                                 $scope,
-                                ${ $$scope->{'pt1'} }->{'y'},
-                                ${ $$scope->{'pt2'} }->{'y'}
-                            ),
-                            num( $f, "2" )
-                        )
-                    },
-                    $scope, undef, 33.3
+                                add(
+                                    $scope,
+                                    ${ $$scope->{'pt1'} }->{'y'},
+                                    ${ $$scope->{'pt2'} }->{'y'}
+                                ),
+                                num( $f, "2" )
+                            )
+                        },
+                        $scope, undef, 33.3
+                    )
                 );
                 return $ret;
             }
@@ -389,8 +398,8 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'pt1', 40.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 40.3 ) or return;
-                return ${ $$scope->{'pt1'} }->{'distanceTo'}
-                  ->( [ $$scope->{'pt2'} ], $scope, undef, 41.4 );
+                return $ret_func->( ${ $$scope->{'pt1'} }->{'distanceTo'}
+                      ->( [ $$scope->{'pt2'} ], $scope, undef, 41.4 ) );
                 return $ret;
             }
         );

@@ -1,4 +1,9 @@
-FF::gather($f, $scope, sub {
-    my ($scope, $take) = @_;
-    <<statements>>
-})
+do {
+    my ($gather_status, $gather_ret) =
+    FF::gather($f, $scope, sub {
+        my ($scope, $take, $ret_func) = @_;
+        <<statements>>
+    });
+    return $ret_func->($gather_ret) if $gather_status eq 'return';
+    $gather_ret;
+}

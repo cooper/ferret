@@ -164,7 +164,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('29-gather.frt');
 
@@ -191,39 +191,48 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'pt', 4.2 ) or return;
-            return FF::gather(
-                $f, $scope,
-                sub {
-                    my ( $scope, $take ) = @_;
-                    if (
-                        bool(
-                            nequal(
-                                $scope,
-                                ${ $$scope->{'pt'} }->{'x'},
-                                num( $f, "0" )
-                            )
-                        )
-                      )
-                    {
-                        my $scope = Ferret::Scope->new( $f, parent => $scope );
+            return $ret_func->(
+                do {
+                    my ( $gather_status, $gather_ret ) = FF::gather(
+                        $f, $scope,
+                        sub {
+                            my ( $scope, $take, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    nequal(
+                                        $scope,
+                                        ${ $$scope->{'pt'} }->{'x'},
+                                        num( $f, "0" )
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
 
-                        $take->( ${ $$scope->{'pt'} }->{'x'} );
-                    }
-                    if (
-                        bool(
-                            nequal(
-                                $scope,
-                                ${ $$scope->{'pt'} }->{'y'},
-                                num( $f, "0" )
-                            )
-                        )
-                      )
-                    {
-                        my $scope = Ferret::Scope->new( $f, parent => $scope );
+                                $take->( ${ $$scope->{'pt'} }->{'x'} );
+                            }
+                            if (
+                                bool(
+                                    nequal(
+                                        $scope,
+                                        ${ $$scope->{'pt'} }->{'y'},
+                                        num( $f, "0" )
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
 
-                        $take->( ${ $$scope->{'pt'} }->{'y'} );
-                    }
-                }
+                                $take->( ${ $$scope->{'pt'} }->{'y'} );
+                            }
+                        }
+                    );
+                    return $ret_func->($gather_ret)
+                      if $gather_status eq 'return';
+                    $gather_ret;
+                  }
             );
             return $ret;
         }
@@ -240,28 +249,41 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'nums', 27.2 ) or return;
             $ret->set_property(
-                even => FF::gather(
-                    $f, $scope,
-                    sub {
-                        my ( $scope, $take ) = @_;
-                        FF::iterate(
-                            $f, $scope,
-                            $$scope->{'nums'},
-                            'n',
-                            sub {
-                                my ( $scope, $loop ) = @_;
-                                if ( bool( ${ $$scope->{'n'} }->{'even'} ) ) {
-                                    my $scope =
-                                      Ferret::Scope->new( $f,
-                                        parent => $scope );
+                even => do {
+                    my ( $gather_status, $gather_ret ) = FF::gather(
+                        $f, $scope,
+                        sub {
+                            my ( $scope, $take, $ret_func ) = @_;
+                            {
+                                my $loop_ret = FF::iterate(
+                                    $f, $scope,
+                                    $$scope->{'nums'},
+                                    'n',
+                                    sub {
+                                        my ( $scope, $ret_func ) = @_;
+                                        if (
+                                            bool(
+                                                ${ $$scope->{'n'} }->{'even'}
+                                            )
+                                          )
+                                        {
+                                            my $scope =
+                                              Ferret::Scope->new( $f,
+                                                parent => $scope );
 
-                                    $take->( $$scope->{'n'} );
-                                }
-                            },
-                            28.3
-                        );
-                    }
-                ),
+                                            $take->( $$scope->{'n'} );
+                                        }
+                                    },
+                                    28.3
+                                );
+                                return $ret_func->($loop_ret) if $loop_ret;
+                            }
+                        }
+                    );
+                    return $ret_func->($gather_ret)
+                      if $gather_status eq 'return';
+                    $gather_ret;
+                },
                 28.2
             );
             return $ret;
@@ -294,24 +316,27 @@ my $result = do {
           ->( [ num( $f, "1" ), num( $f, "0" ) ], $scope, undef, 15.3 ),
         undef, 15.1
     );
-    FF::iterate(
-        $f, $scope,
-        FF::create_list(
-            $f, [ $$scope->{'pt1'}, $$scope->{'pt2'}, $$scope->{'pt3'} ]
-        ),
-        'pt',
-        sub {
-            my ( $scope, $loop ) = @_;
-            $$scope->{'inspect'}->(
-                [
-                    $$scope->{'nonZeroCoodinates'}
-                      ->( [ $$scope->{'pt'} ], $scope, undef, 21.4 )
-                ],
-                $scope, undef, 21.2
-            );
-        },
-        17.05
-    );
+    {
+        my $loop_ret = FF::iterate(
+            $f, $scope,
+            FF::create_list(
+                $f, [ $$scope->{'pt1'}, $$scope->{'pt2'}, $$scope->{'pt3'} ]
+            ),
+            'pt',
+            sub {
+                my ( $scope, $ret_func ) = @_;
+                $$scope->{'inspect'}->(
+                    [
+                        $$scope->{'nonZeroCoodinates'}
+                          ->( [ $$scope->{'pt'} ], $scope, undef, 21.4 )
+                    ],
+                    $scope, undef, 21.2
+                );
+            },
+            17.05
+        );
+        return $ret_func->($loop_ret) if $loop_ret;
+    }
     $$scope->{'inspect'}->(
         [
             $$scope->{'evenNumbers'}->(

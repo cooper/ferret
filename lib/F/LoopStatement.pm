@@ -7,7 +7,7 @@ use parent qw(F::Element);
 
 sub perl_fmt_do {
     my $name = shift->{loop_stmt_name};
-    return "return \$loop->{$name}()";
+    return "return '$name'";
 }
 
 1

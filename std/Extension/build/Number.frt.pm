@@ -129,7 +129,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Number.frt');
 
@@ -150,9 +150,11 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return ${ $$scope->{'Math'} }->{'sqrt'}->(
-                    [ ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, 21.4
+                return $ret_func->(
+                    ${ $$scope->{'Math'} }->{'sqrt'}->(
+                        [ ${ $scope->{special} }->{'self'} ], $scope,
+                        undef,                                21.4
+                    )
                 );
                 return $ret;
             }
@@ -164,8 +166,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $$self->{'root'}
-                  ->( [ num( $f, "3" ) ], $scope, undef, 25.3 );
+                return $ret_func->( $$self->{'root'}
+                      ->( [ num( $f, "3" ) ], $scope, undef, 25.3 ) );
                 return $ret;
             }
         );
@@ -176,10 +178,12 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return pow(
-                    $scope,
-                    ${ $scope->{special} }->{'self'},
-                    num( $f, "2" )
+                return $ret_func->(
+                    pow(
+                        $scope,
+                        ${ $scope->{special} }->{'self'},
+                        num( $f, "2" )
+                    )
                 );
                 return $ret;
             }
@@ -191,14 +195,16 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return equal(
-                    $scope,
-                    mod(
+                return $ret_func->(
+                    equal(
                         $scope,
-                        ${ $scope->{special} }->{'self'},
-                        num( $f, "2" )
-                    ),
-                    num( $f, "0" )
+                        mod(
+                            $scope,
+                            ${ $scope->{special} }->{'self'},
+                            num( $f, "2" )
+                        ),
+                        num( $f, "0" )
+                    )
                 );
                 return $ret;
             }
@@ -210,14 +216,16 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return nequal(
-                    $scope,
-                    mod(
+                return $ret_func->(
+                    nequal(
                         $scope,
-                        ${ $scope->{special} }->{'self'},
-                        num( $f, "2" )
-                    ),
-                    num( $f, "0" )
+                        mod(
+                            $scope,
+                            ${ $scope->{special} }->{'self'},
+                            num( $f, "2" )
+                        ),
+                        num( $f, "0" )
+                    )
                 );
                 return $ret;
             }
@@ -237,9 +245,13 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'root', 41.2 ) or return;
-                return ${ $$scope->{'Math'} }->{'root'}->(
-                    [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, 42.2
+                return $ret_func->(
+                    ${ $$scope->{'Math'} }->{'root'}->(
+                        [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
+                        $scope,
+                        undef,
+                        42.2
+                    )
                 );
                 return $ret;
             }

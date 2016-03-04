@@ -247,7 +247,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Test.frt');
 
@@ -301,13 +301,15 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'a', 19.2 ) or return;
-                return $$self->{'_test'}->(
-                    [
-                        $$scope->{'Bool'}
-                          ->( [ $$scope->{'a'} ], $scope, undef, 20.25 ),
-                        str( $f, "Value must be true" )
-                    ],
-                    $scope, undef, 20.15
+                return $ret_func->(
+                    $$self->{'_test'}->(
+                        [
+                            $$scope->{'Bool'}
+                              ->( [ $$scope->{'a'} ], $scope, undef, 20.25 ),
+                            str( $f, "Value must be true" )
+                        ],
+                        $scope, undef, 20.15
+                    )
                 );
                 return $ret;
             }
@@ -328,12 +330,14 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'a', 25.2 ) or return;
-                return $$self->{'_test'}->(
-                    [
-                        refs_equal( $scope, $$scope->{'a'}, $true ),
-                        str( $f, "Value must be exactly true" )
-                    ],
-                    $scope, undef, 26.15
+                return $ret_func->(
+                    $$self->{'_test'}->(
+                        [
+                            refs_equal( $scope, $$scope->{'a'}, $true ),
+                            str( $f, "Value must be exactly true" )
+                        ],
+                        $scope, undef, 26.15
+                    )
                 );
                 return $ret;
             }
@@ -360,12 +364,14 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'a', 31.2 ) or return;
                 FF::need( $scope, $args, 'b', 32.2 ) or return;
-                return $$self->{'_test'}->(
-                    [
-                        equal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
-                        str( $f, "Values must be equal" )
-                    ],
-                    $scope, undef, 33.15
+                return $ret_func->(
+                    $$self->{'_test'}->(
+                        [
+                            equal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
+                            str( $f, "Values must be equal" )
+                        ],
+                        $scope, undef, 33.15
+                    )
                 );
                 return $ret;
             }
@@ -393,12 +399,16 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'a', 38.2 ) or return;
                 FF::need( $scope, $args, 'b', 39.2 ) or return;
-                return $$self->{'_test'}->(
-                    [
-                        refs_equal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
-                        str( $f, "Objects must be exactly equal" )
-                    ],
-                    $scope, undef, 40.15
+                return $ret_func->(
+                    $$self->{'_test'}->(
+                        [
+                            refs_equal(
+                                $scope, $$scope->{'a'}, $$scope->{'b'}
+                            ),
+                            str( $f, "Objects must be exactly equal" )
+                        ],
+                        $scope, undef, 40.15
+                    )
                 );
                 return $ret;
             }
@@ -426,12 +436,14 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'a', 45.2 ) or return;
                 FF::need( $scope, $args, 'b', 46.2 ) or return;
-                return $$self->{'_test'}->(
-                    [
-                        nequal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
-                        str( $f, "Values must not be equal" )
-                    ],
-                    $scope, undef, 47.15
+                return $ret_func->(
+                    $$self->{'_test'}->(
+                        [
+                            nequal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
+                            str( $f, "Values must not be equal" )
+                        ],
+                        $scope, undef, 47.15
+                    )
                 );
                 return $ret;
             }
@@ -459,12 +471,16 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'a', 52.2 ) or return;
                 FF::need( $scope, $args, 'b', 53.2 ) or return;
-                return $$self->{'_test'}->(
-                    [
-                        refs_nequal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
-                        str( $f, "Objects must not be equal" )
-                    ],
-                    $scope, undef, 54.15
+                return $ret_func->(
+                    $$self->{'_test'}->(
+                        [
+                            refs_nequal(
+                                $scope, $$scope->{'a'}, $$scope->{'b'}
+                            ),
+                            str( $f, "Objects must not be equal" )
+                        ],
+                        $scope, undef, 54.15
+                    )
                 );
                 return $ret;
             }
@@ -540,7 +556,7 @@ my $result = do {
                           add( $scope, $$self->{'passed'}, num( $f, "1" ) ),
                         75.2
                     );
-                    return;
+                    return $ret_func->();
                 }
                 if ( bool( $$self->{'fatal'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );

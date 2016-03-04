@@ -121,7 +121,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('18-lists-hashes.frt');
 
@@ -150,19 +150,22 @@ my $result = do {
         ],
         $scope, undef, 5.2
     );
-    FF::iterate(
-        $f, $scope,
-        $$scope->{'list'},
-        'item',
-        sub {
-            my ( $scope, $loop ) = @_;
-            $$scope->{'say'}->(
-                [ add( $scope, str( $f, "item: " ), $$scope->{'item'} ) ],
-                $scope, undef, 8.2
-            );
-        },
-        7.1
-    );
+    {
+        my $loop_ret = FF::iterate(
+            $f, $scope,
+            $$scope->{'list'},
+            'item',
+            sub {
+                my ( $scope, $ret_func ) = @_;
+                $$scope->{'say'}->(
+                    [ add( $scope, str( $f, "item: " ), $$scope->{'item'} ) ],
+                    $scope, undef, 8.2
+                );
+            },
+            7.1
+        );
+        return $ret_func->($loop_ret) if $loop_ret;
+    }
     FF::lex_assign(
         $scope,
         hash => FF::create_hash( $f, { hi => str( $f, "there" ) } ),
@@ -187,25 +190,28 @@ my $result = do {
         ],
         $scope, undef, 15.1
     );
-    FF::iterate_pair(
-        $f, $scope,
-        $$scope->{'hash'},
-        'key', 'val',
-        sub {
-            my ( $scope, $loop ) = @_;
-            $$scope->{'say'}->(
-                [
-                    add(
-                        $scope,           str( $f, "pair: key=" ),
-                        $$scope->{'key'}, str( $f, " value=" ),
-                        $$scope->{'val'}
-                    )
-                ],
-                $scope, undef, 18.1
-            );
-        },
-        17.05
-    );
+    {
+        my $loop_ret = FF::iterate_pair(
+            $f, $scope,
+            $$scope->{'hash'},
+            'key', 'val',
+            sub {
+                my ( $scope, $ret_func ) = @_;
+                $$scope->{'say'}->(
+                    [
+                        add(
+                            $scope,           str( $f, "pair: key=" ),
+                            $$scope->{'key'}, str( $f, " value=" ),
+                            $$scope->{'val'}
+                        )
+                    ],
+                    $scope, undef, 18.1
+                );
+            },
+            17.05
+        );
+        return $ret_func->($loop_ret) if $loop_ret;
+    }
 };
 
 FF::after_content();

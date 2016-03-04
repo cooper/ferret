@@ -1,4 +1,8 @@
-FF::iterate($f, $scope, <<collection>>, '<<var1_name>>', sub {
-    my ($scope, $loop) = @_;
-    <<body>>
-}, <<pos>>);
+{
+    my $loop_ret =
+    FF::iterate($f, $scope, <<collection>>, '<<var1_name>>', sub {
+        my ($scope, $ret_func) = @_;
+        <<body>>
+    }, <<pos>>);
+    return $ret_func->($loop_ret) if $loop_ret;
+}

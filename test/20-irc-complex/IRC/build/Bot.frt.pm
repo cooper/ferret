@@ -536,17 +536,6 @@
 #                                          String '␤'
 #                  Instruction
 #                      Call
-#                          Bareword 'say'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  Operation
-#                                      String 'response: '
-#                                      Addition operator (+)
-#                                      Lexical variable '$response'
-#                                      Addition operator (+)
-#                                      String '␤'
-#                  Instruction
-#                      Call
 #                          Instance variable '@privmsg'
 #                          Argument list [2 items]
 #                              Item 0
@@ -571,7 +560,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Bot.frt');
 
@@ -640,29 +629,32 @@ my $result = do {
             if ( bool( $$self->{'_joinedChannels'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return;
+                return $ret_func->();
             }
             if ( bool( $$self->{'autojoin'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                FF::iterate(
-                    $f, $scope,
-                    $$self->{'autojoin'},
-                    'chan',
-                    sub {
-                        my ( $scope, $loop ) = @_;
-                        $$self->{'send'}->(
-                            [
-                                add(
-                                    $scope, str( $f, "JOIN " ),
-                                    $$scope->{'chan'}
-                                )
-                            ],
-                            $scope, undef, 99.2
-                        );
-                    },
-                    98.1
-                );
+                {
+                    my $loop_ret = FF::iterate(
+                        $f, $scope,
+                        $$self->{'autojoin'},
+                        'chan',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            $$self->{'send'}->(
+                                [
+                                    add(
+                                        $scope, str( $f, "JOIN " ),
+                                        $$scope->{'chan'}
+                                    )
+                                ],
+                                $scope, undef, 99.2
+                            );
+                        },
+                        98.1
+                    );
+                    return $ret_func->($loop_ret) if $loop_ret;
+                }
             }
             $self->set_property( _joinedChannels => $true, 103.2 );
             return $ret;
@@ -849,18 +841,9 @@ my $result = do {
                 $file_scope,
                 153.1
             );
-            $$scope->{'say'}->(
-                [
-                    add(
-                        $scope,                str( $f, "response: " ),
-                        $$scope->{'response'}, str( $f, "\n" )
-                    )
-                ],
-                $scope, undef, 159.1
-            );
             $$self->{'privmsg'}->(
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'response'} ],
-                $scope, undef, 160.2
+                $scope, undef, 159.2
             );
             return $ret;
         }
@@ -1123,42 +1106,45 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'channel', 84.1 ) or return;
                 FF::need( $scope, $args, 'message', 84.3 ) or return;
-                FF::iterate(
-                    $f, $scope,
-                    ${ $$scope->{'message'} }->{'split'}
-                      ->( [ str( $f, "\n" ) ], $scope, undef, 85.3 ),
-                    'line',
-                    sub {
-                        my ( $scope, $loop ) = @_;
-                        if (
-                            bool(
-                                nequal(
-                                    $scope,
-                                    ${ $$scope->{'line'} }->{'length'},
-                                    num( $f, "0" )
-                                )
-                            )
-                          )
-                        {
-                            my $scope =
-                              Ferret::Scope->new( $f, parent => $scope );
-
-                            $$self->{'send'}->(
-                                [
-                                    add(
+                {
+                    my $loop_ret = FF::iterate(
+                        $f, $scope,
+                        ${ $$scope->{'message'} }->{'split'}
+                          ->( [ str( $f, "\n" ) ], $scope, undef, 85.3 ),
+                        'line',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    nequal(
                                         $scope,
-                                        str( $f, "PRIVMSG " ),
-                                        $$scope->{'channel'},
-                                        str( $f, " :" ),
-                                        $$scope->{'line'}
+                                        ${ $$scope->{'line'} }->{'length'},
+                                        num( $f, "0" )
                                     )
-                                ],
-                                $scope, undef, 87.1
-                            );
-                        }
-                    },
-                    85.05
-                );
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                $$self->{'send'}->(
+                                    [
+                                        add(
+                                            $scope,
+                                            str( $f, "PRIVMSG " ),
+                                            $$scope->{'channel'},
+                                            str( $f, " :" ),
+                                            $$scope->{'line'}
+                                        )
+                                    ],
+                                    $scope, undef, 87.1
+                                );
+                            }
+                        },
+                        85.05
+                    );
+                    return $ret_func->($loop_ret) if $loop_ret;
+                }
                 return $ret;
             }
         );

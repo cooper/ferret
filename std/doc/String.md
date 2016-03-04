@@ -74,6 +74,9 @@ the delimiters `<<` and `>>` replaced with the provided values.
 This method takes named arguments whose values should be strings or
 objects capable of string conversion.
 
+`.fill()` will also respect indentation. If the provided values are
+multi-line, they will be indented at the same depth as the placeholder.
+
 For example, `"Hi <<name>>!".fill(name: "Steve")` returns `"Hi Steve!"`.
 
 

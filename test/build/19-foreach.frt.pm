@@ -40,7 +40,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('19-foreach.frt');
 
@@ -56,19 +56,22 @@ my $result = do {
           ->( [ str( $f, " " ) ], $scope, undef, 1.5 ),
         undef, 1.2
     );
-    FF::iterate(
-        $f, $scope,
-        $$scope->{'words'},
-        'word',
-        sub {
-            my ( $scope, $loop ) = @_;
-            $$scope->{'say'}->(
-                [ add( $scope, str( $f, "part: " ), $$scope->{'word'} ) ],
-                $scope, undef, 4.2
-            );
-        },
-        3.1
-    );
+    {
+        my $loop_ret = FF::iterate(
+            $f, $scope,
+            $$scope->{'words'},
+            'word',
+            sub {
+                my ( $scope, $ret_func ) = @_;
+                $$scope->{'say'}->(
+                    [ add( $scope, str( $f, "part: " ), $$scope->{'word'} ) ],
+                    $scope, undef, 4.2
+                );
+            },
+            3.1
+        );
+        return $ret_func->($loop_ret) if $loop_ret;
+    }
 };
 
 FF::after_content();

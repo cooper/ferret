@@ -75,7 +75,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('26-signals.frt');
 
@@ -112,7 +112,7 @@ my $result = do {
                   ->( [ str( $f, "Are you sure?" ) ], $scope, undef, 13.2 );
                 FF::lex_assign( $scope, asked => $true, $file_scope, 14.2 );
                 $ret->stop;
-                return;
+                return $ret_func->();
             }
             $$scope->{'say'}->(
                 [ str( $f, "Got second INT. Terminating!" ) ],

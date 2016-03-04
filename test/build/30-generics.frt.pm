@@ -110,7 +110,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('30-generics.frt');
 
@@ -152,8 +152,8 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'item', 8.2 ) or return;
-                return ${ $$self->{'items'} }->{'push'}
-                  ->( [ $$scope->{'item'} ], $scope, undef, 9.4 );
+                return $ret_func->( ${ $$self->{'items'} }->{'push'}
+                      ->( [ $$scope->{'item'} ], $scope, undef, 9.4 ) );
                 return $ret;
             }
         );
@@ -164,8 +164,9 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return ${ $$self->{'items'} }->{'pop'}
-                  ->( {}, $scope, undef, 13.4 );
+                return $ret_func->(
+                    ${ $$self->{'items'} }->{'pop'}->( {}, $scope, undef, 13.4 )
+                );
                 return $ret;
             }
         );
@@ -177,10 +178,12 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return add(
-                    $scope,
-                    str( $f, "Stack " ),
-                    ${ $$self->{'items'} }->{'*description'}
+                return $ret_func->(
+                    add(
+                        $scope,
+                        str( $f, "Stack " ),
+                        ${ $$self->{'items'} }->{'*description'}
+                    )
                 );
                 return $ret;
             }

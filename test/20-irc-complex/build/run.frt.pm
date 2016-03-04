@@ -498,7 +498,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('run.frt');
 
@@ -523,7 +523,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return;
+                return $ret_func->();
             }
             FF::lex_assign(
                 $scope,
@@ -568,7 +568,7 @@ my $result = do {
                     ],
                     $scope, undef, 72.15
                 );
-                return;
+                return $ret_func->();
             }
             ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
@@ -598,10 +598,12 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'string', 79.2 ) or return;
-            return
-              ${ ${ $$scope->{'string'} }->{'split'}
-                  ->( [ str( $f, "_NL_" ) ], $scope, undef, 80.2 ) }->{'join'}
-              ->( [ str( $f, "\n" ) ], $scope, undef, 80.4 );
+            return $ret_func->(
+                ${
+                    ${ $$scope->{'string'} }->{'split'}
+                      ->( [ str( $f, "_NL_" ) ], $scope, undef, 80.2 )
+                }->{'join'}->( [ str( $f, "\n" ) ], $scope, undef, 80.4 )
+            );
             return $ret;
         }
     );
@@ -638,7 +640,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return;
+                return $ret_func->();
             }
             FF::lex_assign(
                 $scope,
@@ -674,7 +676,7 @@ my $result = do {
                     ],
                     $scope, undef, 17.15
                 );
-                return;
+                return $ret_func->();
             }
             ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
@@ -700,7 +702,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return;
+                return $ret_func->();
             }
             FF::lex_assign(
                 $scope,
@@ -736,7 +738,7 @@ my $result = do {
                     ],
                     $scope, undef, 30.15
                 );
-                return;
+                return $ret_func->();
             }
             ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
@@ -762,7 +764,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return;
+                return $ret_func->();
             }
             FF::lex_assign(
                 $scope,
@@ -795,7 +797,7 @@ my $result = do {
                     ],
                     $scope, undef, 42.15
                 );
-                return;
+                return $ret_func->();
             }
             FF::lex_assign(
                 $scope,
@@ -832,7 +834,7 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return;
+                return $ret_func->();
             }
             FF::lex_assign(
                 $scope,
@@ -865,7 +867,7 @@ my $result = do {
                     ],
                     $scope, undef, 55.15
                 );
-                return;
+                return $ret_func->();
             }
             FF::lex_assign(
                 $scope,

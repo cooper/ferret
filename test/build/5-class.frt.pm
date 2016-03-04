@@ -186,7 +186,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('5-class.frt');
 
@@ -248,7 +248,7 @@ my $result = do {
                     $file_scope,
                     10.1
                 );
-                return $$scope->{'pt'};
+                return $ret_func->( $$scope->{'pt'} );
                 return $ret;
             }
         );
@@ -259,10 +259,12 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return add(
-                    $scope,        str( $f, "(" ),
-                    $$self->{'x'}, str( $f, ", " ),
-                    $$self->{'y'}, str( $f, ")" )
+                return $ret_func->(
+                    add(
+                        $scope,        str( $f, "(" ),
+                        $$self->{'x'}, str( $f, ", " ),
+                        $$self->{'y'}, str( $f, ")" )
+                    )
                 );
                 return $ret;
             }
@@ -275,7 +277,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $$self->{'pretty'}->( {}, $scope, undef, 19.3 );
+                return $ret_func->(
+                    $$self->{'pretty'}->( {}, $scope, undef, 19.3 ) );
                 return $ret;
             }
         );
@@ -302,28 +305,30 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'pt1', 23.2 ) or return;
                 FF::need( $scope, $args, 'pt2', 23.4 ) or return;
-                return $$scope->{'Point'}->(
-                    {
-                        x => div(
-                            $scope,
-                            add(
+                return $ret_func->(
+                    $$scope->{'Point'}->(
+                        {
+                            x => div(
                                 $scope,
-                                ${ $$scope->{'pt1'} }->{'x'},
-                                ${ $$scope->{'pt2'} }->{'x'}
+                                add(
+                                    $scope,
+                                    ${ $$scope->{'pt1'} }->{'x'},
+                                    ${ $$scope->{'pt2'} }->{'x'}
+                                ),
+                                num( $f, "2" )
                             ),
-                            num( $f, "2" )
-                        ),
-                        y => div(
-                            $scope,
-                            add(
+                            y => div(
                                 $scope,
-                                ${ $$scope->{'pt1'} }->{'y'},
-                                ${ $$scope->{'pt2'} }->{'y'}
-                            ),
-                            num( $f, "2" )
-                        )
-                    },
-                    $scope, undef, 24.3
+                                add(
+                                    $scope,
+                                    ${ $$scope->{'pt1'} }->{'y'},
+                                    ${ $$scope->{'pt2'} }->{'y'}
+                                ),
+                                num( $f, "2" )
+                            )
+                        },
+                        $scope, undef, 24.3
+                    )
                 );
                 return $ret;
             }

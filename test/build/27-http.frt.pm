@@ -91,7 +91,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('27-http.frt');
 
@@ -186,53 +186,56 @@ my $result = do {
     FF::load_namespaces( $context, qw(HTTP Str) );
 
     # Inside
-    FF::inside(
-        $f, $scope,
-        ${ $$scope->{'HTTP'} }->{'get'}
-          ->( [ str( $f, "http://google.com" ) ], $scope, undef, 1.4 ),
-        sub {
-            my ( $scope, $ins ) = @_;
-            FF::on(
-                $ins,
-                'connected',
-                $self, $scope,
-                $func_0->inside_scope(
-                    (undef) => $scope,
-                    undef, undef, undef, undef
-                ),
-                {}
-            );
-            FF::on(
-                $ins,
-                'redirect',
-                $self, $scope,
-                $func_1->inside_scope(
-                    (undef) => $scope,
-                    undef, undef, undef, undef
-                ),
-                {}
-            );
-            FF::on(
-                $ins,
-                'response',
-                $self, $scope,
-                $func_2->inside_scope(
-                    (undef) => $scope,
-                    undef, undef, undef, undef
-                ),
-                {}
-            );
-            FF::on(
-                $ins, 'error', $self, $scope,
-                $func_3->inside_scope(
-                    (undef) => $scope,
-                    undef, undef, undef, undef
-                ),
-                {}
-            );
-            $$ins->{'connect'}->( {}, $scope, undef, 23.3 );
-        }
-    );
+    {
+        my $inside_return = FF::inside(
+            $f, $scope,
+            ${ $$scope->{'HTTP'} }->{'get'}
+              ->( [ str( $f, "http://google.com" ) ], $scope, undef, 1.4 ),
+            sub {
+                my ( $scope, $ins, $ret_func ) = @_;
+                FF::on(
+                    $ins,
+                    'connected',
+                    $self, $scope,
+                    $func_0->inside_scope(
+                        (undef) => $scope,
+                        undef, undef, undef, undef
+                    ),
+                    {}
+                );
+                FF::on(
+                    $ins,
+                    'redirect',
+                    $self, $scope,
+                    $func_1->inside_scope(
+                        (undef) => $scope,
+                        undef, undef, undef, undef
+                    ),
+                    {}
+                );
+                FF::on(
+                    $ins,
+                    'response',
+                    $self, $scope,
+                    $func_2->inside_scope(
+                        (undef) => $scope,
+                        undef, undef, undef, undef
+                    ),
+                    {}
+                );
+                FF::on(
+                    $ins, 'error', $self, $scope,
+                    $func_3->inside_scope(
+                        (undef) => $scope,
+                        undef, undef, undef, undef
+                    ),
+                    {}
+                );
+                $$ins->{'connect'}->( {}, $scope, undef, 23.3 );
+            }
+        );
+        return $ret_func->($inside_return) if $inside_return;
+    }
 };
 
 FF::after_content();

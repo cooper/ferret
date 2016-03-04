@@ -273,6 +273,7 @@ sub tok_STR_REG {
 
         # if interpolating.
         if ($is_str) {
+            # FIXME: regex will interpolate as well, once regex addition is possible
 
             # start of a variable.
             if ($char =~ m/[\$\@\*]/) {

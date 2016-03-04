@@ -56,7 +56,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Math.frt');
 
@@ -74,8 +74,8 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'num', 4.2 ) or return;
-            return ${ $$scope->{'NATIVE::Math'} }->{'sqrt'}
-              ->( [ $$scope->{'num'} ], $scope, undef, 5.3 );
+            return $ret_func->( ${ $$scope->{'NATIVE::Math'} }->{'sqrt'}
+                  ->( [ $$scope->{'num'} ], $scope, undef, 5.3 ) );
             return $ret;
         }
     );
@@ -92,8 +92,12 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'root', 9.1 ) or return;
             FF::need( $scope, $args, 'num',  9.3 ) or return;
-            return pow( $scope, $$scope->{'num'},
-                div( $scope, num( $f, "1" ), $$scope->{'root'} ) );
+            return $ret_func->(
+                pow(
+                    $scope, $$scope->{'num'},
+                    div( $scope, num( $f, "1" ), $$scope->{'root'} )
+                )
+            );
             return $ret;
         }
     );

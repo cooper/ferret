@@ -175,7 +175,7 @@ use Ferret;
 
 my $self;
 my $f = FF::get_ferret();
-my ( $true, $false, $undefined ) = FF::get_constant_objects($f);
+my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('22-classes-sets.frt');
 
@@ -211,9 +211,9 @@ my $result = do {
                 if ( bool( $$self->{'moos'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return str( $f, "moo" );
+                    return $ret_func->( str( $f, "moo" ) );
                 }
-                return str( $f, "I am a nonverbal cow" );
+                return $ret_func->( str( $f, "I am a nonverbal cow" ) );
                 return $ret;
             }
         );
@@ -257,9 +257,10 @@ my $result = do {
                 if ( bool( $$self->{'barks'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return str( $f, "bark" );
+                    return $ret_func->( str( $f, "bark" ) );
                 }
-                return str( $f, "I had my bark box bred out of me" );
+                return $ret_func->(
+                    str( $f, "I had my bark box bred out of me" ) );
                 return $ret;
             }
         );
@@ -293,7 +294,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return str( $f, "meow" );
+                return $ret_func->( str( $f, "meow" ) );
                 return $ret;
             }
         );
@@ -322,14 +323,16 @@ my $result = do {
                 if ( bool( ${ $$scope->{'cat1'} }->{'mean'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return str( $f, "Cat 1 started a catfight!" );
+                    return $ret_func->(
+                        str( $f, "Cat 1 started a catfight!" ) );
                 }
                 if ( bool( ${ $$scope->{'cat2'} }->{'mean'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return str( $f, "Cat 2 started a catfight!" );
+                    return $ret_func->(
+                        str( $f, "Cat 2 started a catfight!" ) );
                 }
-                return str( $f, "nice cats don't fight" );
+                return $ret_func->( str( $f, "nice cats don't fight" ) );
                 return $ret;
             }
         );

@@ -1,5 +1,9 @@
 # Inside
-FF::inside($f, $scope, <<expression>>, sub {
-    my ($scope, $ins) = @_;
-    <<content>>
-});
+{
+    my $inside_return =
+    FF::inside($f, $scope, <<expression>>, sub {
+        my ($scope, $ins, $ret_func) = @_;
+        <<content>>
+    });
+    return $ret_func->($inside_return) if $inside_return;
+}
