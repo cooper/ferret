@@ -518,7 +518,7 @@
 #                                          Item 0
 #                                              Property 'command'
 #                                                  Lexical variable '$msg'
-#                              Named argument list [3 items]
+#                              Named argument list [4 items]
 #                                  Item 0
 #                                      Pair 'nick'
 #                                          Property 'nickname'
@@ -531,6 +531,20 @@
 #                                      Pair 'chan'
 #                                          Property 'channel'
 #                                              Lexical variable '$msg'
+#                                  Item 3
+#                                      Pair 'nl'
+#                                          String '␤'
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String 'response: '
+#                                      Addition operator (+)
+#                                      Lexical variable '$response'
+#                                      Addition operator (+)
+#                                      String '␤'
 #                  Instruction
 #                      Call
 #                          Instance variable '@privmsg'
@@ -827,16 +841,26 @@ my $result = do {
                     {
                         nick => ${ $$scope->{'msg'} }->{'nickname'},
                         cmd  => ${ $$scope->{'msg'} }->{'command'},
-                        chan => ${ $$scope->{'msg'} }->{'channel'}
+                        chan => ${ $$scope->{'msg'} }->{'channel'},
+                        nl   => str( $f, "\n" )
                     },
                     $scope, undef, 153.45
                   ),
                 $file_scope,
                 153.1
             );
+            $$scope->{'say'}->(
+                [
+                    add(
+                        $scope,                str( $f, "response: " ),
+                        $$scope->{'response'}, str( $f, "\n" )
+                    )
+                ],
+                $scope, undef, 159.1
+            );
             $$self->{'privmsg'}->(
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'response'} ],
-                $scope, undef, 158.2
+                $scope, undef, 160.2
             );
             return $ret;
         }

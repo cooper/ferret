@@ -153,7 +153,8 @@ func _commandFactoid {
     $response = @factoids[ $msg.command ].fill(
         nick:   $msg.nickname,
         cmd:    $msg.command,
-        chan:   $msg.channel
+        chan:   $msg.channel,
+        nl:     "\n"
     )
     @privmsg($msg.channel, $response)
 }

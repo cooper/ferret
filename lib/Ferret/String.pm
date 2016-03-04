@@ -235,14 +235,29 @@ sub _fill {
     my @lines;
     foreach my $line (split /\n/, $str->{str_value}) {
         chomp $line;
+
+        # determine the indent.
         my ($indent) = ($line =~ m/^(\s*).*$/);
+
+        # add the indent, if necessary.
         my $add_indent = sub {
             defined(my $key = $info{+shift}) or return;
+
+            # because we split by newline, if the fill info itself
+            # is a newline, @lines will be empty. this fixes that.
+            return $key if $key eq "\n";
+
+            # split into lines; add indents.
             my @lines = split "\n", $key;
             return join "\n$indent", @lines;
+
         };
+
+        # replace each occurrence with the indented version of the
+        # corresponding value.
         $line =~ s/<<\s*(\w+)\s*>>/@{[ $add_indent->($1) ]}/g;
         push @lines, $line;
+
     }
 
     # join.
