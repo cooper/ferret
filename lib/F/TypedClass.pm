@@ -19,6 +19,12 @@ sub set_tc_class {
 sub adopt {
     my ($tc, $bw) = (shift, @_);
 
+    # if it's a maybe, just forward the adoption.
+    # the bareword has already been handled.
+    return $tc->SUPER::adopt(@_) if $bw->type eq 'Maybe';
+
+    # otherwise, it's a bareword.
+
     # there was no comma.
     # I don't like this, but it works.
     if (!$tc->{ready_for_another}) {

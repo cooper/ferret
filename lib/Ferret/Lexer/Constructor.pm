@@ -543,7 +543,7 @@ sub c_ANGLE_S {
     # immediately preceded by a bareword or class declaration.
 
     my $last_el = $c->last_el;
-    my $tc = F::new('TypedClass', ready_for_another => 2);
+    my $tc = F::new('TypedClass', ready_for_another => 1);
 
     # it's a class declaration.
     if ($last_el->type eq 'Class') {
