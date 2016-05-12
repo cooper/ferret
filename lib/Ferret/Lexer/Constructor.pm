@@ -564,6 +564,7 @@ sub c_ANGLE_S {
     # for everything else, adopt the previous element.
     else {
         $tc->adopt($last_el);
+        $tc->{ready_for_another}++;
         $c->adopt_and_set_node($tc);
     }
 
