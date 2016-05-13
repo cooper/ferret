@@ -93,24 +93,19 @@
 #                          Operation
 #                              Property 'length'
 #                                  Instance variable '@parts'
-#                              Equality operator (==)
+#                              Negated equality operator (!=)
 #                              Number '0'
-#                      Body ('if' scope)
-#                          Instruction
-#                              Return
-#                                  Boolean false
-#                  If
-#                      Expression ('if' parameter)
-#                          Call
-#                              Property 'hasPrefix'
-#                                  Index
-#                                      Instance variable '@parts'
-#                                      Index list [1 items]
-#                                          Item 0
-#                                              Number '0'
-#                              Argument list [1 items]
-#                                  Item 0
-#                                      String '.'
+#                              Logical and operator (&&)
+#                              Call
+#                                  Property 'hasPrefix'
+#                                      Index
+#                                          Instance variable '@parts'
+#                                          Index list [1 items]
+#                                              Item 0
+#                                                  Number '0'
+#                                  Argument list [1 items]
+#                                      Item 0
+#                                          String '.'
 #                      Body ('if' scope)
 #                          Instruction
 #                              Assignment
@@ -192,7 +187,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Message.frt');
 
-use Ferret::Core::Operations qw(add bool equal nequal num str);
+use Ferret::Core::Operations qw(add all_true bool nequal num str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
     my $scope = $file_scope;
@@ -281,26 +276,24 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 if (
                     bool(
-                        equal(
+                        all_true(
                             $scope,
-                            ${ $$self->{'parts'} }->{'length'},
-                            num( $f, "0" )
+                            sub {
+                                nequal(
+                                    $scope,
+                                    ${ $$self->{'parts'} }->{'length'},
+                                    num( $f, "0" )
+                                );
+                            },
+                            sub {
+                                ${
+                                    $$self->{'parts'}
+                                      ->get_index_value( [ num( $f, "0" ) ],
+                                        $scope, 26.4 )
+                                  }->{'hasPrefix'}
+                                  ->( [ str( $f, "." ) ], $scope, undef, 26.6 );
+                            }
                         )
-                    )
-                  )
-                {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    return $ret_func->($false);
-                }
-                if (
-                    bool(
-                        ${
-                            $$self->{'parts'}
-                              ->get_index_value( [ num( $f, "0" ) ],
-                                $scope, 29.15 )
-                          }->{'hasPrefix'}
-                          ->( [ str( $f, "." ) ], $scope, undef, 29.35 )
                     )
                   )
                 {
@@ -311,11 +304,11 @@ my $result = do {
                         cmd => ${
                             $$self->{'parts'}
                               ->get_index_value( [ num( $f, "0" ) ],
-                                $scope, 30.2 )
+                                $scope, 27.2 )
                           }->{'trimPrefix'}
-                          ->( [ str( $f, "." ) ], $scope, undef, 30.4 ),
+                          ->( [ str( $f, "." ) ], $scope, undef, 27.4 ),
                         $file_scope,
-                        30.1
+                        27.1
                     );
                     if ( bool( ${ $$scope->{'cmd'} }->{'length'} ) ) {
                         my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -360,7 +353,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'wordN', 44.2 ) or return;
+                FF::need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $ret_func->(
                     ${ $$self->{'message'} }->{'split'}->(
                         {
@@ -368,9 +361,9 @@ my $result = do {
                             limit =>
                               add( $scope, $$scope->{'wordN'}, num( $f, "1" ) )
                         },
-                        $scope, undef, 45.2
+                        $scope, undef, 42.2
                       )->get_index_value(
-                        [ $$scope->{'wordN'} ], $scope, 45.65
+                        [ $$scope->{'wordN'} ], $scope, 42.65
                       )
                 );
                 return $ret;

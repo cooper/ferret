@@ -121,6 +121,12 @@ my %map = (
     'nequal_i'  => 'refs_nequal'
 );
 
+# these are wrapped with sub because they are evaluated only as needed
+my %wrap_sub = map { $_ => 1 } qw(
+    any_true
+    all_true
+);
+
 sub op_fmt {
     my ($op, $op_name, @items) = (shift, @{ +shift });
     $op_name = $map{$op_name} || $op_name;
@@ -128,12 +134,14 @@ sub op_fmt {
     my $doc = $op->document;
     $doc->{required_operations}{$op_name}++;
 
+    # consider return when wrapped with sub{}?
     return operation => {
         operation => $op_name,
         items     => join ', ', map {
-            ref $_ eq 'ARRAY' ?
+            my $fmt = ref $_ eq 'ARRAY'          ?
                 F::get_perl_fmt($op->op_fmt($_)) :
-            $_->perl_fmt_do
+                $_->perl_fmt_do;
+            $wrap_sub{$op_name} ? "sub { $fmt }" : $fmt
         } @items
     };
 }

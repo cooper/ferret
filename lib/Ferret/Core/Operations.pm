@@ -63,13 +63,13 @@ sub refs_nequal { _not(&refs_equal) }
 
 sub all_true {
     shift;
-    return Ferret::true if all { bool($_) } @_;
+    return Ferret::true if all { bool($_->()) } @_;
     return Ferret::false;
 }
 
 sub any_true {
     shift;
-    return Ferret::true if any { bool($_) } @_;
+    return Ferret::true if any { bool($_->()) } @_;
     return Ferret::false;
 }
 
