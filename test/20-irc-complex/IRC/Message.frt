@@ -23,6 +23,9 @@ init {
 prop? command {
 
     # find it
+    if @parts.length == 0:
+        return false
+
     if @parts[0].hasPrefix(".") {
         $cmd = @parts[0].trimPrefix(".")
         if $cmd.length:

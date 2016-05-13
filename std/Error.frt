@@ -11,7 +11,7 @@ init {
     need @type: Sym
     need @msg: Str
 
-    want $hints: Hash
+    want $hints
     if $hints:
         @hints = _handleHints($hints)
     else:
@@ -23,12 +23,14 @@ init {
 }
 
 method description {
+    inspect(@hints) # FIXME
     if @subError:
         return @msg + ": " + @subError.description!
     return @msg
 }
 
 func _handleHints {
-    need $hints: Hash
-
+    need $hints
+    # TODO
+    return $hints
 }

@@ -32,8 +32,6 @@
 #                  Instruction
 #                      Want
 #                          Lexical variable '$hints'
-#                          Argument type
-#                              Bareword 'Hash'
 #                  If
 #                      Expression ('if' parameter)
 #                          Lexical variable '$hints'
@@ -68,6 +66,12 @@
 #                                  String 'Ferret::Error'
 #          Method 'description'
 #              Body ('method' scope)
+#                  Instruction
+#                      Call
+#                          Bareword 'inspect'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Instance variable '@hints'
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@subError'
@@ -90,9 +94,10 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$hints'
-#                          Argument type
-#                              Bareword 'Hash'
-#      Include (Error, Hash, NATIVE, Str, Sym)
+#                  Instruction
+#                      Return
+#                          Lexical variable '$hints'
+#      Include (Error, NATIVE, Str, Sym)
 use warnings;
 use strict;
 use 5.010;
@@ -127,7 +132,7 @@ my $result = do {
         [
             {
                 name     => 'hints',
-                type     => 'Hash',
+                type     => undef,
                 optional => undef,
                 more     => undef
             }
@@ -135,7 +140,8 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'hints', 32.2 ) or return;
+            FF::need( $scope, $args, 'hints', 33.2 ) or return;
+            return $ret_func->( $$scope->{'hints'} );
             return $ret;
         }
     );
@@ -164,7 +170,7 @@ my $result = do {
                 },
                 {
                     name     => 'hints',
-                    type     => 'Hash',
+                    type     => undef,
                     optional => 1,
                     more     => undef
                 },
@@ -214,6 +220,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $$scope->{'inspect'}
+                  ->( [ $$self->{'hints'} ], $scope, undef, 26.2 );
                 if ( bool( $$self->{'subError'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -223,7 +231,7 @@ my $result = do {
                             $$self->{'msg'},
                             str( $f, ": " ),
                             ${ $$self->{'subError'} }->{'description'}
-                              ->( {}, $scope, undef, 27.4 )
+                              ->( {}, $scope, undef, 28.4 )
                         )
                     );
                 }
@@ -258,7 +266,7 @@ my $result = do {
             3.2
         );
     }
-    FF::load_namespaces( $context, qw(Error Hash NATIVE Str Sym) );
+    FF::load_namespaces( $context, qw(Error NATIVE Str Sym) );
 };
 
 FF::after_content();
