@@ -13,6 +13,9 @@
 #      Instruction
 #          Load
 #              Bareword 'Extension::String'
+#      Instruction
+#          Load
+#              Bareword 'Extension::List'
 #      Type definition ('Any')
 #          Body ('type' scope)
 #      Instruction
@@ -56,7 +59,7 @@
 #                              Item 1
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
-#      Include (Any, Error, Extension, Extension::Number, Extension::String, Hashable, Obj, Object, Signal)
+#      Include (Any, Error, Extension, Extension::List, Extension::Number, Extension::String, Hashable, Obj, Object, Signal)
 use warnings;
 use strict;
 use 5.010;
@@ -84,7 +87,7 @@ my $result = do {
     FF::load_core('CORE');
 
     FF::load_namespaces( $context,
-        qw(Any Error Extension Extension::Number Extension::String Hashable Obj Object Signal)
+        qw(Any Error Extension Extension::List Extension::Number Extension::String Hashable Obj Object Signal)
     );
 
     FF::typedef(
@@ -99,8 +102,8 @@ my $result = do {
         },
         undef
     );
-    $context->set_property( Obj    => $$scope->{'Any'}, 11.3 );
-    $context->set_property( Object => $$scope->{'Any'}, 12.3 );
+    $context->set_property( Obj    => $$scope->{'Any'}, 12.3 );
+    $context->set_property( Object => $$scope->{'Any'}, 13.3 );
     FF::typedef(
         $scope, $context,
         'Hashable',
@@ -110,7 +113,7 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
-                      ->( {}, $scope, undef, 15.3 ),
+                      ->( {}, $scope, undef, 16.3 ),
                     do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                 ],
                 equal_to => undef
@@ -128,14 +131,14 @@ my $result = do {
                 conditions => [
                     $create_can->( 'getValue', $ins )->(
                         { index => $$scope->{'Hashable'} }, $scope,
-                        undef, 20.3
+                        undef, 21.3
                     ),
                     $create_can->( 'setValue', $ins )->(
                         {
                             value => $$scope->{'Obj'},
                             index => $$scope->{'Hashable'}
                         },
-                        $scope, undef, 21.15
+                        $scope, undef, 22.15
                     )
                 ],
                 equal_to => undef
