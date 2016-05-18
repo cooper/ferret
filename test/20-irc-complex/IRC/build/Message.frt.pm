@@ -138,7 +138,7 @@
 #                          Operation
 #                              Property 'length'
 #                                  Instance variable '@parts'
-#                              Negated equality operator (!=)
+#                              Greater than operator (>)
 #                              Number '1'
 #          Method 'fromWord'
 #              Body ('method' scope)
@@ -187,7 +187,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Message.frt');
 
-use Ferret::Core::Operations qw(add all_true bool nequal num str);
+use Ferret::Core::Operations qw(add all_true bool gr8r nequal num str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
     my $scope = $file_scope;
@@ -329,7 +329,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $ret_func->(
-                    nequal(
+                    gr8r(
                         $scope,
                         ${ $$self->{'parts'} }->{'length'},
                         num( $f, "1" )

@@ -33,7 +33,7 @@ prop? command {
 }
 
 prop? commandHasParameters {
-    return @parts.length != 1 # ge once implemented
+    return @parts.length > 1
 }
 
 # get a phrase starting with word N.

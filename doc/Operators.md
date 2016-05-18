@@ -399,7 +399,7 @@ Tokenized as `OP_RANGE`.
     $set = 1..5 # $set is <Number>(1, 2, 3, 4, 5)
     $set = 5..1 # $set is <Number>(5, 4, 3, 2, 1)
 
-## Equality and inequality
+## Equality, inequality, and similarity
 
 ### Equality operator
 
@@ -473,3 +473,51 @@ Tokenized as `OP_NSIM`.
 
     "hi" !~ /^h/    # false
     "hi" !~ /k/     # true
+
+### Less than operator
+
+    <
+
+Tests if the value of left operand is less than the value of right.
+
+Tokenized as `OP_LESS`.
+
+    1 < 2   # true
+    6 < 5   # false
+
+### Less than or equal to operator
+
+    <=
+
+Tests if the value of left operand is [less than](#less-than-operator) or
+[equal to](#equality-operator) the value of right.
+
+Tokenized as `OP_LESS_E`.
+
+    1 <= 2  # true
+    1 <= 1  # true
+    6 <= 5  # false
+
+### Greater than operator
+
+    >
+
+Tests if the value of left operand is greater than the value of right.
+
+Tokenized as `OP_GR8R`.
+
+    1 > 2   # false
+    6 > 5   # true
+
+### Greater than or equal to operator
+
+    >=
+
+Tests if the value of left operand is [greater than](#greater-than-operator) or
+[equal to](#equality-operator) the value of right.
+
+Tokenized as `OP_GR8R_E`.
+
+    1 >= 2  # false
+    1 >= 1  # true
+    6 >= 5  # true
