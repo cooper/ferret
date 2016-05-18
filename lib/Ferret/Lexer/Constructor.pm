@@ -1937,12 +1937,15 @@ sub c_KEYWORD_SHARE {
     # Rule SharedDeclaration[3]:
     #   Number of direct children must be exactly one (1).
 
+    # Rule SharedDeclaration[4]:
+    #   Parent must be a direct child of a Class or Document.
+
     my $share = F::new('SharedDeclaration');
     return $c->adopt_and_set_node($share);
 }
 
 # local variable declaration.
-sub c_KEYWORD_LOCAL {
+sub c_KEYWORD_VAR {
     my ($c, $value) = @_;
 
     # Rule LocalDeclaration[0]:

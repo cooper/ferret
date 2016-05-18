@@ -19,7 +19,7 @@ my ($position, $file);
 my $keyword_reg = '\\b(?:'.join('|', qw{
     package     class       end         init
     method      func        prop        load
-    want        need        share       local
+    want        need        share       var
     on          before      after       inside
     if          else        return      stop
     true        false       undefined   defer

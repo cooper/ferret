@@ -427,6 +427,19 @@ our %element_rules = (
         # must be a direct child an instruction.
         parent_must_be => [ 'Instruction', undef, 0 ],                          # SharedDeclaration[0]
 
+        # rules for the parent instruction
+        parent_rules => {
+
+            # the instruction's parent must be a class or document.
+            parent_must_be => [                                                 # SharedDeclaration[4]
+                'Class Document',
+                'Shared variable declaration can only exist at class or '.
+                'document level',
+                1
+            ]
+
+        },
+
         # it can be lexical variables or an assignment of a lexical variable.
         children_must_be => [                                                   # SharedDeclaration[1]
             'LexicalVariable Assignment',

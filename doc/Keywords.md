@@ -129,31 +129,40 @@ share $<name> [= <value>]
 ```
 
 Shared variable declaration. It is named such to reflect its behavior, which is
-to share a variable from an external scope. If such a variable does not exist,
-it is created within the scope containing this keyword.
+to share a variable from a package or class.
+
+Sharing a variable inside a class makes it a public property of the class
+itself. Sharing a variable at file scope makes it a public variable of the
+current package. The keyword is also used to access public package variables
+in files other than where they are declared.
+
+`share` is valid only at file and class scopes.
 
 ```
 package Hello
-share $x        # perhaps $x already exists in another file
+share $x        # perhaps $x already exists in another
+                # file with the same package name
 $x              # no reference error since shared
 ```
 
-### local
+### var
 
 ```
-local $<name> [= <value>]
+var $<name> [= <value>]
 ```
 
 Local variable declaration. When a variable is declared with this keyword, the
 operations involving the variable will not affect a variable of the same name in
-any outer scope. `local` is only to be used when the variable already exists
-outside of the declaration's scope.
+any outer scope. Because a simple assignment to a nonexistent variable has the
+same effect, `var` is typically used as a convenient way to declare a variable
+with an initial undefined value. However, it is also useful when creating a new
+variable distinct from another of the same name in an external scope.
 
 ```
 $x = 1
 
 func wontChangeX {
-    local $x = 2
+    var $x = 2
     return $x
 }
 

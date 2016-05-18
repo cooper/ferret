@@ -15,13 +15,12 @@ method parse {
     need $data: Str::NonEmpty
     $words = $data.split(/\s+/)
 
-    # FIXME: change share to var?
     # FIXME: allow commas
-    share $got_tags
-    share $got_source
-    share $got_command
-    share $word
-    share $last_word
+    var $got_tags
+    var $got_source
+    var $got_command
+    var $word
+    var $last_word
 
     $params = []
     $word_i = 0
@@ -89,5 +88,4 @@ method parse {
     # }
 
     @params = $params
-    params -> $params
 }
