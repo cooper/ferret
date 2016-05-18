@@ -831,6 +831,24 @@ sub c_OP_COMMA {
         return $c->adopt_and_set_node($wn);
     }
 
+    # we're in a var. this starts another.
+    if ($c->node->type eq 'LocalDeclaration') {
+
+        # fake a semicolon to terminate the instruction
+        # wrapping the previous var.
+        $c->simulate('OP_SEMI');
+
+        # create new var.
+        my $local = F::new('LocalDeclaration');
+
+        # wrap it with an instruction.
+        my $instr = F::new('Instruction');
+        $c->set_instruction($instr);
+        $c->adopt_and_set_node($instr);
+
+        return $c->adopt_and_set_node($local);
+    }
+
     # we're inside an OnParameter, so this comma could separate from a
     # symbol callback name.
     if (my $exp = $c->node->first_self_or_parent('OnParameter')) {

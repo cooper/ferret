@@ -16,11 +16,7 @@ method parse {
     $words = $data.split(/\s+/)
 
     # FIXME: allow commas
-    var $got_tags
-    var $got_source
-    var $got_command
-    var $word
-    var $last_word
+    var $got_tags, $got_source, $got_command, $word, $last_word
 
     $params = []
     $word_i = 0
