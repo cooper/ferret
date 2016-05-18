@@ -319,11 +319,11 @@ my $result = do {
                     $file_scope,
                     16.2
                 );
-                $scope->set_property( got_tags    => Ferret::undefined, );
-                $scope->set_property( got_source  => Ferret::undefined, );
-                $scope->set_property( got_command => Ferret::undefined, );
-                $scope->set_property( word        => Ferret::undefined, );
-                $scope->set_property( last_word   => Ferret::undefined, );
+                $scope->set_property( got_tags    => Ferret::undefined, 19.2 );
+                $scope->set_property( got_source  => Ferret::undefined, 20.2 );
+                $scope->set_property( got_command => Ferret::undefined, 21.2 );
+                $scope->set_property( word        => Ferret::undefined, 22.2 );
+                $scope->set_property( last_word   => Ferret::undefined, 23.2 );
                 FF::lex_assign(
                     $scope,
                     params => FF::create_list( $f, [] ),

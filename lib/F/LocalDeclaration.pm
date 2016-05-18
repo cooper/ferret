@@ -30,7 +30,8 @@ sub perl_fmt {
 
     return assign_local => {
         name         => $var->{var_name},
-        assign_value => $assign_value
+        pos          => $var->{create_pos},
+        assign_value => $assign_value,
     };
 }
 
