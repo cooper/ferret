@@ -35,6 +35,10 @@ sub op_star {
     return $left;
 }
 
+################
+### EQUALITY ###
+################
+
 sub equal {
     shift;
     my $obj = shift;
@@ -61,6 +65,58 @@ sub refs_equal {
 
 sub refs_nequal { _not(&refs_equal) }
 
+##################
+### INEQUALITY ###
+##################
+
+sub less {
+    shift;
+    my $obj = shift;
+    while (@_) {
+        my $right = shift;
+        return Ferret::false if !bool($obj->less_than($right));
+        $obj = $right;
+    }
+    return Ferret::true;
+}
+
+sub less_e {
+    shift;
+    my $obj = shift;
+    while (@_) {
+        my $right = shift;
+        return Ferret::false if !bool($obj->less_than_equal($right));
+        $obj = $right;
+    }
+    return Ferret::true;
+}
+
+sub gr8r {
+    shift;
+    my $obj = shift;
+    while (@_) {
+        my $right = shift;
+        return Ferret::false if !bool($obj->gr8r_than($right));
+        $obj = $right;
+    }
+    return Ferret::true;
+}
+
+sub gr8r_e {
+    shift;
+    my $obj = shift;
+    while (@_) {
+        my $right = shift;
+        return Ferret::false if !bool($obj->gr8r_than_equal($right));
+        $obj = $right;
+    }
+    return Ferret::true;
+}
+
+###############
+### BOOLEAN ###
+###############
+
 sub all_true {
     shift;
     return Ferret::true if all { bool($_->()) } @_;
@@ -84,6 +140,10 @@ sub _not {
 }
 
 sub nsim { _not(&sim) }
+
+##############
+### OTHERS ###
+##############
 
 sub num { Ferret::Number->new(shift, num_value => shift) }
 sub str { Ferret::String->new(shift, str_value => shift) }

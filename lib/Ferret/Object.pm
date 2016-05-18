@@ -734,6 +734,56 @@ sub equal_to_exactly {
     return $left_obj == $right_obj ? Ferret::true : Ferret::false;
 }
 
+# test object inequality, return Ferret boolean
+sub less_than {
+    my ($left_obj, $right_obj, $scope) = @_;
+
+    # try to find a method first.
+    if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('less')) {
+        return $cmp->call;
+    }
+
+    return Ferret::false;
+}
+
+# test object inequality or equality, return Ferret boolean
+sub less_than_equal {
+    my ($left_obj, $right_obj, $scope) = @_;
+
+    # try to find a method first.
+    if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('less')) {
+        return $cmp->call;
+    }
+
+    # fall back to equality.
+    return $left_obj->equal_to($right_obj, $scope);
+}
+
+# test object inequality, return Ferret boolean
+sub gr8r_than {
+    my ($left_obj, $right_obj, $scope) = @_;
+
+    # try to find a method first.
+    if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('gr8r')) {
+        return $cmp->call;
+    }
+
+    return Ferret::false;
+}
+
+# test object inequality or equality, return Ferret boolean
+sub gr8r_than_equal {
+    my ($left_obj, $right_obj, $scope) = @_;
+
+    # try to find a method first.
+    if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('gr8r')) {
+        return $cmp->call;
+    }
+
+    # fall back to equality.
+    return $left_obj->equal_to($right_obj, $scope);
+}
+
 ############################
 ### PROPERTY CONVENIENCE ###
 ############################
