@@ -82,6 +82,22 @@ my @functions = (
         need => '$nums:Num...',
         code => \&_equal
     },
+    less => {
+        need => '$nums:Num...',
+        code => \&_less
+    },
+    gr8r => {
+        need => '$nums:Num...',
+        code => \&_gr8r
+    },
+    less_e => {
+        need => '$nums:Num...',
+        code => \&_less_e
+    },
+    gr8r_e => {
+        need => '$nums:Num...',
+        code => \&_gr8r_e
+    },
     min => {
         need => '$nums:Num...',
         code => \&_min
@@ -247,6 +263,58 @@ sub _equal {
         return Ferret::false if !$first_num->equal($_);
     }
     return Ferret::true;
+}
+
+sub _less {
+    my ($num_class, $args) = @_;
+    my ($left, @rest_nums) = map { pnumber($_) } plist($args->{nums});
+    while (@rest_nums) {
+        my $right = shift @rest_nums;
+        if ($left < $right) {
+            $left = $right;
+            next;
+        }
+        return Ferret::false;
+    }
+}
+
+sub _less_e {
+    my ($num_class, $args) = @_;
+    my ($left, @rest_nums) = map { pnumber($_) } plist($args->{nums});
+    while (@rest_nums) {
+        my $right = shift @rest_nums;
+        if ($left <= $right) {
+            $left = $right;
+            next;
+        }
+        return Ferret::false;
+    }
+}
+
+sub _gr8r {
+    my ($num_class, $args) = @_;
+    my ($left, @rest_nums) = map { pnumber($_) } plist($args->{nums});
+    while (@rest_nums) {
+        my $right = shift @rest_nums;
+        if ($left > $right) {
+            $left = $right;
+            next;
+        }
+        return Ferret::false;
+    }
+}
+
+sub _gr8r_e {
+    my ($num_class, $args) = @_;
+    my ($left, @rest_nums) = map { pnumber($_) } plist($args->{nums});
+    while (@rest_nums) {
+        my $right = shift @rest_nums;
+        if ($left >= $right) {
+            $left = $right;
+            next;
+        }
+        return Ferret::false;
+    }
 }
 
 1
