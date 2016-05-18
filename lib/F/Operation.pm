@@ -75,6 +75,8 @@ sub compile {
         pow     mod
         mul     div
         sub     add
+        less    less_e
+        gr8r    gr8r_e
         equal_i nequal_i
         equal   nequal
         sim     nsim
