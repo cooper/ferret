@@ -327,17 +327,17 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     params => FF::create_list( $f, [] ),
-                    $file_scope, 21.2
+                    $file_scope, 20.2
                 );
                 FF::lex_assign(
                     $scope,
                     word_i => num( $f, "0" ),
-                    $file_scope, 22.2
+                    $file_scope, 21.2
                 );
                 FF::lex_assign(
                     $scope,
                     word_n => num( $f, "0" ),
-                    $file_scope, 23.2
+                    $file_scope, 22.2
                 );
                 {
                     my $loop_ret = FF::iterate(
@@ -380,7 +380,7 @@ my $result = do {
                                                                 ],
                                                                 $scope,
                                                                 undef,
-                                                                28.7
+                                                                27.7
                                                               );
                                                         }
                                                     )
@@ -396,18 +396,18 @@ my $result = do {
 
                                 ${ $$scope->{'word'} }->{'trimPrefix'}
                                   ->( [ str( $f, "\@" ) ], $scope, undef,
-                                    29.3 );
+                                    28.3 );
                                 FF::lex_assign(
                                     $scope,
                                     tags => FF::create_hash( $f, {} ),
-                                    $file_scope, 30.2
+                                    $file_scope, 29.2
                                 );
                                 {
                                     my $loop_ret = FF::iterate(
                                         $f, $scope,
                                         ${ $$scope->{'word'} }->{'split'}->(
                                             [ str( $f, ";" ) ], $scope,
-                                            undef, 33.3
+                                            undef, 32.3
                                         ),
                                         'tag',
                                         sub {
@@ -425,10 +425,10 @@ my $result = do {
                                                         }
                                                     ],
                                                     $scope, undef,
-                                                    36.25
+                                                    35.25
                                                   ),
                                                 $file_scope,
-                                                36.1
+                                                35.1
                                             );
                                             if (
                                                 bool(
@@ -454,34 +454,34 @@ my $result = do {
                                                           ->get_index_value(
                                                             [ num( $f, "0" ) ],
                                                             $scope,
-                                                            38.2
+                                                            37.2
                                                           )
                                                     ],
                                                     $$scope->{'tagParts'}
                                                       ->get_index_value(
                                                         [ num( $f, "1" ) ],
-                                                        $scope, 38.5
+                                                        $scope, 37.5
                                                       ),
-                                                    $scope, 38.4
+                                                    $scope, 37.4
                                                   );
                                                 return 'next';
                                             }
                                             $$scope->{'tags'}->set_index_value(
                                                 [ $$scope->{'tag'} ],
-                                                $true, $scope, 43.5 );
+                                                $true, $scope, 42.5 );
                                         },
-                                        33.05
+                                        32.05
                                     );
                                     return $ret_func->($loop_ret) if $loop_ret;
                                 }
                                 FF::lex_assign(
                                     $scope,
                                     got_tags => $true,
-                                    $file_scope, 48.2
+                                    $file_scope, 47.2
                                 );
                                 $self->set_property(
                                     tags => $$scope->{'tags'},
-                                    49.2
+                                    48.2
                                 );
                                 return 'next';
                             }
@@ -511,7 +511,7 @@ my $result = do {
                                                                 ],
                                                                 $scope,
                                                                 undef,
-                                                                56.5
+                                                                55.5
                                                               );
                                                         }
                                                     )
@@ -526,15 +526,15 @@ my $result = do {
                                   Ferret::Scope->new( $f, parent => $scope );
 
                                 ${ $$scope->{'word'} }->{'trimPrefix'}
-                                  ->( [ str( $f, ":" ) ], $scope, undef, 57.3 );
+                                  ->( [ str( $f, ":" ) ], $scope, undef, 56.3 );
                                 FF::lex_assign(
                                     $scope,
                                     got_source => $true,
-                                    $file_scope, 58.2
+                                    $file_scope, 57.2
                                 );
                                 $self->set_property(
                                     source => $$scope->{'word'},
-                                    59.2
+                                    58.2
                                 );
                                 return 'next';
                             }
@@ -542,7 +542,7 @@ my $result = do {
                                 bool(
                                     ${ $$scope->{'word'} }->{'hasPrefix'}->(
                                         [ str( $f, ":" ) ], $scope,
-                                        undef, 69.4
+                                        undef, 68.4
                                     )
                                 )
                               )
@@ -554,21 +554,21 @@ my $result = do {
                                     [
                                         $$self->{'_rest'}->get_index_value(
                                             [ $$scope->{'word_n'} ], $scope,
-                                            70.25
+                                            69.25
                                         )
                                     ],
-                                    $scope, undef, 70.15
+                                    $scope, undef, 69.15
                                 );
                                 return 'last';
                             }
                             ${ $$self->{'params'} }->{'push'}
-                              ->( [ $$scope->{'word'} ], $scope, undef, 75.3 );
+                              ->( [ $$scope->{'word'} ], $scope, undef, 74.3 );
                         },
-                        25.1
+                        24.1
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
-                $self->set_property( params => $$scope->{'params'}, 86.2 );
+                $self->set_property( params => $$scope->{'params'}, 85.2 );
                 return $ret;
             }
         );

@@ -15,10 +15,9 @@
 #                          Call
 #                              Property 'split'
 #                                  Instance variable '@line'
-#                              Named argument list [2 items]
+#                              Mixed argument list [2 items]
 #                                  Item 0
-#                                      Pair 'separator'
-#                                          String ' '
+#                                      String ' '
 #                                  Item 1
 #                                      Pair 'limit'
 #                                          Number '4'
@@ -41,10 +40,9 @@
 #                                          Index list [1 items]
 #                                              Item 0
 #                                                  Number '0'
-#                                  Named argument list [2 items]
+#                                  Mixed argument list [2 items]
 #                                      Item 0
-#                                          Pair 'separator'
-#                                              String '!'
+#                                          String '!'
 #                                      Item 1
 #                                          Pair 'limit'
 #                                              Number '2'
@@ -153,10 +151,9 @@
 #                              Call
 #                                  Property 'split'
 #                                      Instance variable '@message'
-#                                  Named argument list [2 items]
+#                                  Mixed argument list [2 items]
 #                                      Item 0
-#                                          Pair 'separator'
-#                                              String ' '
+#                                          String ' '
 #                                      Item 1
 #                                          Pair 'limit'
 #                                              Operation
@@ -216,10 +213,7 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     lineSplit => ${ $$self->{'line'} }->{'split'}->(
-                        {
-                            separator => str( $f, " " ),
-                            limit     => num( $f, "4" )
-                        },
+                        [ str( $f, " " ), { limit => num( $f, "4" ) } ],
                         $scope, undef, 6.25
                     ),
                     $file_scope,
@@ -235,12 +229,9 @@ my $result = do {
                         $$scope->{'lineSplit'}
                           ->get_index_value( [ num( $f, "0" ) ], $scope, 10.2 )
                       }->{'split'}->(
-                        {
-                            separator => str( $f, "!" ),
-                            limit     => num( $f, "2" )
-                        },
+                        [ str( $f, "!" ), { limit => num( $f, "2" ) } ],
                         $scope, undef, 10.4
-                      )->get_index_value( [ num( $f, "0" ) ], $scope, 10.75 ),
+                      )->get_index_value( [ num( $f, "0" ) ], $scope, 10.7 ),
                     10.1
                 );
                 $self->set_property(
@@ -356,15 +347,17 @@ my $result = do {
                 FF::need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $ret_func->(
                     ${ $$self->{'message'} }->{'split'}->(
-                        {
-                            separator => str( $f, " " ),
-                            limit =>
-                              add( $scope, $$scope->{'wordN'}, num( $f, "1" ) )
-                        },
+                        [
+                            str( $f, " " ),
+                            {
+                                limit => add(
+                                    $scope, $$scope->{'wordN'},
+                                    num( $f, "1" )
+                                )
+                            }
+                        ],
                         $scope, undef, 42.2
-                      )->get_index_value(
-                        [ $$scope->{'wordN'} ], $scope, 42.65
-                      )
+                    )->get_index_value( [ $$scope->{'wordN'} ], $scope, 42.6 )
                 );
                 return $ret;
             }

@@ -15,9 +15,8 @@ method parse {
     need $data: Str::NonEmpty
     $words = $data.split(/\s+/)
 
-    # FIXME: allow commas
+    # message parse state
     var $got_tags, $got_source, $got_command, $word, $last_word
-
     $params = []
     $word_i = 0
     $word_n = 0

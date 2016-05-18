@@ -3,11 +3,11 @@ class Message
 
 init {
     need @line: Str
-    $lineSplit = @line.split(separator: " ", limit: 4)
+    $lineSplit = @line.split(" ", limit: 4)
     @channel = $lineSplit[2]
 
     # find nickname
-    @nickname = $lineSplit[0].split(separator: "!", limit: 2)[0]
+    @nickname = $lineSplit[0].split("!", limit: 2)[0]
     @nickname = @nickname.trimPrefix(":")
 
     # find message
@@ -39,5 +39,5 @@ prop? commandHasParameters {
 # get a phrase starting with word N.
 method fromWord {
     need $wordN: Num
-    return @message.split(separator: " ", limit: $wordN + 1)[$wordN]
+    return @message.split(" ", limit: $wordN + 1)[$wordN]
 }

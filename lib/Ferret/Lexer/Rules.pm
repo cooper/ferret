@@ -435,7 +435,7 @@ our %element_rules = (
                 'Class Document',
                 'Shared variable declaration can only exist at class or '.
                 'document level',
-                1
+                4
             ]
 
         },
