@@ -748,6 +748,8 @@ sub c_OP_LASSIGN {
 *c_OP_SIM     = *c_OP_NSIM     =
 *c_OP_EQUAL   = *c_OP_NEQUAL   =
 *c_OP_EQUAL_I = *c_OP_NEQUAL_I =
+*c_OP_LESS    = *c_OP_LESS_E   =
+*c_OP_GR8R    = *c_OP_GR8R_E   =
 *c_OP_RANGE   = *c_operator;
 
 # used for all operators managed by the Operation node.
@@ -992,7 +994,7 @@ sub c_OP_MAYBE {
 
     # must come after expression.
     my $last_el = $c->last_el;
-    return $c->unexpected unless $last_el->is_type('Expression');
+    return $c->unexpected if !$last_el || !$last_el->is_type('Expression');
 
     # if this is a list, it can only have one item.
     if ($last_el->type eq 'List' && $last_el->children > 1) {
@@ -1235,7 +1237,7 @@ sub c_PROPERTY {
     return $c->expected(
         'an expression',
         'at left of '.F::pretty_token($c->label)
-    ) unless $last_el->is_type('Expression');
+    ) if !$last_el || !$last_el->is_type('Expression');
 
     my $prop = F::new('Property', prop_name => $value);
     $c->node->adopt($prop);
