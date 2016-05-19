@@ -483,16 +483,19 @@ our %element_rules = (
         ],
 
         # if it's an assignment, it must be of a lexical variable.
-        children_must_satisfy => [                                              # LocalDeclaration[2]
-            sub {
-                my $el = shift;
-                return 1 if $el->type ne 'Assignment';
-                return $el->assign_to->type eq 'LexicalVariable';
-            },
-            'Local variable declaration can capture an assignment only '.
-            'of a lexical variable',
-            2
-        ],
+        after_rules => {
+            children_must_satisfy => [                                          # LocalDeclaration[2]
+                sub {
+                    my $el = shift;
+                    my $parent = shift;
+                    return 1 if $el->type ne 'Assignment';
+                    return $el->assign_to->type eq 'LexicalVariable';
+                },
+                'Local variable declaration can capture an assignment only '.
+                'of a lexical variable',
+                2
+            ]
+        },
 
         # there can only be one child.
         num_children => [ 1, undef, 0 ]                                         # LocalDeclaration[3]

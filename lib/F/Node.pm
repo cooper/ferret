@@ -18,7 +18,7 @@ sub new {
 
 sub adopt {
     my ($node, $el) = @_;
-
+    
     # check if this makes sense.
     my $err = $node->can_adopt($el);
     return $el->unexpected($err) if $err;
