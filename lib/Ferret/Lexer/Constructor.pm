@@ -602,7 +602,7 @@ sub handle_call {
 
     # a call can only come after an expression.
     my $last_el = $c->last_el;
-    return $c->unexpected unless $last_el->is_type('Expression');
+    return $c->unexpected if !$last_el || !$last_el->is_type('Expression');
 
     # create a function call, adopting the last element.
     my $call = $c->node->adopt(F::new($package));
@@ -1297,7 +1297,7 @@ sub c_OP_PROP {
     return $c->expected(
         'an expression',
         'at left of '.F::pretty_token($c->label)
-    ) unless $last_el->is_type('Expression');
+    ) if !$last_el || !$last_el->is_type('Expression');
 
     # make the property the current node.
     # it will capture the upcoming value list.

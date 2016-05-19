@@ -1,6 +1,6 @@
 # === Document Model ===
-#  Document './test/20-irc-complex/IRC/Bot.frt'
-#      Package 'IRC'
+#  Document './test/20-irc-complex/IRCBot/Bot.frt'
+#      Package 'IRCBot'
 #      Class 'Bot'
 #          Instruction
 #              Shared variable declaration
@@ -380,7 +380,7 @@
 #                      Assignment
 #                          Lexical variable '$msg'
 #                          Call
-#                              Bareword 'IRC::Message'
+#                              Bareword 'Message'
 #                              Argument list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$line'
@@ -543,7 +543,7 @@
 #                                      Lexical variable '$msg'
 #                              Item 1
 #                                  Lexical variable '$response'
-#      Include (IRC, IRC::Message, Num, Socket, Socket::TCP, Str, Str::LC)
+#      Include (Message, Num, Socket, Socket::TCP, Str, Str::LC)
 use warnings;
 use strict;
 use 5.010;
@@ -566,9 +566,9 @@ FF::before_content('Bot.frt');
 
 use Ferret::Core::Operations qw(add bool equal nequal num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = FF::get_context( $f, 'IRCBot' );
     my $scope = $file_scope;
-    FF::load_core('IRC');
+    FF::load_core('IRCBot');
 
     # Anonymous function definition
     my $func_0 = FF::function_def(
@@ -701,9 +701,9 @@ my $result = do {
             FF::need( $scope, $args, 's',    114.4 ) or return;
             FF::lex_assign(
                 $scope,
-                msg => $$scope->{'IRC::Message'}
-                  ->( [ $$scope->{'line'} ], $scope, undef, 117.3 ),
-                $file_scope, 117.1
+                msg => $$scope->{'Message'}
+                  ->( [ $$scope->{'line'} ], $scope, undef, 117.4 ),
+                $file_scope, 117.2
             );
             $ret->set_property( msg => $$scope->{'msg'}, 118.2 );
             if ( bool( ${ $$scope->{'msg'} }->{'command'} ) ) {
@@ -1218,7 +1218,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context,
-        qw(IRC IRC::Message Num Socket Socket::TCP Str Str::LC) );
+        qw(Message Num Socket Socket::TCP Str Str::LC) );
 };
 
 FF::after_content();

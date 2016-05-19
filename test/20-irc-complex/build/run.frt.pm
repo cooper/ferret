@@ -5,7 +5,7 @@
 #              Assignment
 #                  Lexical variable '$bot'
 #                  Call
-#                      Bareword 'IRC::Bot'
+#                      Bareword 'IRCBot::Bot'
 #                      Named argument list [3 items]
 #                          Item 0
 #                              Pair 'addr'
@@ -481,7 +481,7 @@
 #              Property 'connect'
 #                  Lexical variable '$bot'
 #              Argument list [0 items]
-#      Include (COMPILER, IRC, IRC::Bot, Str)
+#      Include (COMPILER, IRCBot, IRCBot::Bot, Str)
 use warnings;
 use strict;
 use 5.010;
@@ -898,10 +898,10 @@ my $result = do {
         convertNewlines => $scope,
         $context, undef, undef, undef
     );
-    FF::load_namespaces( $context, qw(COMPILER IRC IRC::Bot Str) );
+    FF::load_namespaces( $context, qw(COMPILER IRCBot IRCBot::Bot Str) );
     FF::lex_assign(
         $context,
-        bot => $$scope->{'IRC::Bot'}->(
+        bot => $$scope->{'IRCBot::Bot'}->(
             {
                 addr => str( $f, "k.notroll.net" ),
                 nick => str( $f, "bottie" ),

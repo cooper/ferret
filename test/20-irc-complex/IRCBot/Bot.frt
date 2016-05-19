@@ -1,4 +1,4 @@
-package IRC
+package IRCBot
 class Bot
 
 share $handlers = [
@@ -114,7 +114,7 @@ func _handleMessage {
     need $line, $s
 
     # parse the message
-    $msg = IRC::Message($line)
+    $msg = Message($line)
     msg -> $msg
 
     # found a command
