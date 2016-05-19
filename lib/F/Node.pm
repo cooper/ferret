@@ -18,7 +18,11 @@ sub new {
 
 sub adopt {
     my ($node, $el) = @_;
-    
+    return $node->unexpected([
+        'without child element',
+        'Something is missing. That\'s all we know'
+    ]) if !$el;
+
     # check if this makes sense.
     my $err = $node->can_adopt($el);
     return $el->unexpected($err) if $err;
