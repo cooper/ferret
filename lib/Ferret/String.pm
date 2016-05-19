@@ -70,6 +70,10 @@ my @methods = (
     hashValue => {
         code => \&_hash_value
     },
+    getValue => {
+        need => '$index:Num',
+        code => \&_get_value
+    },
     copy => {
         code => \&_copy
     }
@@ -293,6 +297,13 @@ sub _to_number {
     return fnumber($str->{str_value} + 0)
         if looks_like_number($str->{str_value});
     return fnumber(0);
+}
+
+# get substring
+sub _get_value {
+    my ($str, $args) = @_;
+    my $index = $args->pnumber('index');
+    return fstring(substr $str->{str_value}, $index, 1);
 }
 
 # return a copy of the string.

@@ -476,6 +476,27 @@
 #                          Argument list [1 items]
 #                              Item 0
 #                                  String '␤'
+#      Function 'ircsay'
+#          Body ('function' scope)
+#              Instruction
+#                  Need
+#                      Lexical variable '$str'
+#                      Argument type
+#                          Bareword 'Str'
+#              Instruction
+#                  Call
+#                      Property 'privmsg'
+#                          Lexical variable '$bot'
+#                      Argument list [2 items]
+#                          Item 0
+#                              Index
+#                                  Property 'autojoin'
+#                                      Lexical variable '$bot'
+#                                  Index list [1 items]
+#                                      Item 0
+#                                          Number '0'
+#                          Item 1
+#                              Lexical variable '$str'
 #      Instruction
 #          Call
 #              Property 'connect'
@@ -608,8 +629,28 @@ my $result = do {
         }
     );
 
+    # Function event 'ircsay' definition
+    my $func_2 = FF::function_event_def(
+        $f, $context, 'ircsay', undef,
+        [ { name => 'str', type => 'Str', optional => undef, more => undef } ],
+        sub {
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my $self = $_self || $self;
+            FF::need( $scope, $args, 'str', 84.2 ) or return;
+            ${ $$scope->{'bot'} }->{'privmsg'}->(
+                [
+                    ${ $$scope->{'bot'} }->{'autojoin'}
+                      ->get_index_value( [ num( $f, "0" ) ], $scope, 85.3 ),
+                    $$scope->{'str'}
+                ],
+                $scope, undef, 85.15
+            );
+            return $ret;
+        }
+    );
+
     # Anonymous function definition
-    my $func_2 = FF::function_def(
+    my $func_3 = FF::function_def(
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
@@ -628,7 +669,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_3 = FF::function_def(
+    my $func_4 = FF::function_def(
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
@@ -690,7 +731,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_4 = FF::function_def(
+    my $func_5 = FF::function_def(
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
@@ -752,7 +793,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_5 = FF::function_def(
+    my $func_6 = FF::function_def(
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
@@ -822,7 +863,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_6 = FF::function_def(
+    my $func_7 = FF::function_def(
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
@@ -898,6 +939,7 @@ my $result = do {
         convertNewlines => $scope,
         $context, undef, undef, undef
     );
+    $func_2->inside_scope( ircsay => $scope, $context, undef, undef, undef );
     FF::load_namespaces( $context, qw(COMPILER IRCBot IRCBot::Bot Str) );
     FF::lex_assign(
         $context,
@@ -919,7 +961,7 @@ my $result = do {
     ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
             str( $f, "info" ),
-            $func_2->inside_scope(
+            $func_3->inside_scope(
                 (undef) => $scope,
                 undef, undef, undef, undef
             )
@@ -929,7 +971,7 @@ my $result = do {
     ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
             str( $f, "t" ),
-            $func_3->inside_scope(
+            $func_4->inside_scope(
                 (undef) => $scope,
                 undef, undef, undef, undef
             )
@@ -939,7 +981,7 @@ my $result = do {
     ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
             str( $f, "c" ),
-            $func_4->inside_scope(
+            $func_5->inside_scope(
                 (undef) => $scope,
                 undef, undef, undef, undef
             )
@@ -949,7 +991,7 @@ my $result = do {
     ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
             str( $f, "e" ),
-            $func_5->inside_scope(
+            $func_6->inside_scope(
                 (undef) => $scope,
                 undef, undef, undef, undef
             )
@@ -959,7 +1001,7 @@ my $result = do {
     ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
             str( $f, "pe" ),
-            $func_6->inside_scope(
+            $func_7->inside_scope(
                 (undef) => $scope,
                 undef, undef, undef, undef
             )
@@ -970,7 +1012,7 @@ my $result = do {
       ->( [ str( $f, "p" ), $$scope->{'handlePerl'} ], $scope, undef, 62.3 );
     ${ $$scope->{'bot'} }->{'addCommand'}
       ->( [ str( $f, "pp" ), $$scope->{'handlePerl'} ], $scope, undef, 63.3 );
-    ${ $$scope->{'bot'} }->{'connect'}->( {}, $scope, undef, 83.3 );
+    ${ $$scope->{'bot'} }->{'connect'}->( {}, $scope, undef, 88.3 );
 };
 
 FF::after_content();

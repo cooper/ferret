@@ -755,7 +755,10 @@ sub c_OP_LASSIGN {
 # used for all operators managed by the Operation node.
 sub c_operator {
     my ($c, $value) = @_;
+
+    # we're only interested in the previous element at the same level.
     my $last_el = $c->last_el;
+    undef $last_el if $last_el == $c->node;
 
     # if it's addition or subtraction, it might be a sign.
     my %signs = (OP_ADD => 1, OP_SUB => 1);

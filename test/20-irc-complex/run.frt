@@ -80,4 +80,9 @@ func convertNewlines {
     return $string.split("_NL_").join("\n")
 }
 
+func ircsay {
+    need $str: Str
+    $bot.privmsg($bot.autojoin[0], $str)
+}
+
 $bot.connect()

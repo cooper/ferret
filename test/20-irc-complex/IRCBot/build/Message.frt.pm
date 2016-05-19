@@ -1,5 +1,5 @@
 # === Document Model ===
-#  Document './test/20-irc-complex/IRC/Message.frt'
+#  Document './test/20-irc-complex/IRCBot/Message.frt'
 #      Package 'IRCBot'
 #      Class 'Message'
 #          Class method 'initializer__'

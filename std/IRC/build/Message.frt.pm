@@ -41,30 +41,30 @@
 #                                      Regex /\s+/
 #                  Instruction
 #                      Local variable declaration
-#                          Lexical variable '$got_tags'
+#                          Lexical variable '$gotTags'
 #                  Instruction
 #                      Local variable declaration
-#                          Lexical variable '$got_source'
+#                          Lexical variable '$gotSource'
 #                  Instruction
 #                      Local variable declaration
-#                          Lexical variable '$got_command'
+#                          Lexical variable '$gotCommand'
 #                  Instruction
 #                      Local variable declaration
 #                          Lexical variable '$word'
 #                  Instruction
 #                      Local variable declaration
-#                          Lexical variable '$last_word'
+#                          Lexical variable '$lastWord'
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$params'
 #                          Value list [0 items]
 #                  Instruction
 #                      Assignment
-#                          Lexical variable '$word_i'
+#                          Lexical variable '$wordI'
 #                          Number '0'
 #                  Instruction
 #                      Assignment
-#                          Lexical variable '$word_n'
+#                          Lexical variable '$wordN'
 #                          Number '0'
 #                  For (values)
 #                      Expression ('for' parameter)
@@ -76,13 +76,13 @@
 #                              Expression ('if' parameter)
 #                                  Negation
 #                                      Operation
-#                                          Lexical variable '$got_source'
+#                                          Lexical variable '$gotSource'
 #                                          Logical and operator (&&)
 #                                          Negation
 #                                              Operation
-#                                                  Lexical variable '$got_tags'
+#                                                  Lexical variable '$gotTags'
 #                                                  Logical and operator (&&)
-#                                                  Lexical variable '$word_i'
+#                                                  Lexical variable '$wordI'
 #                                                  Equality operator (==)
 #                                                  Number '0'
 #                                                  Logical and operator (&&)
@@ -163,7 +163,7 @@
 #                                                  Boolean true
 #                                  Instruction
 #                                      Assignment
-#                                          Lexical variable '$got_tags'
+#                                          Lexical variable '$gotTags'
 #                                          Boolean true
 #                                  Instruction
 #                                      Assignment
@@ -175,11 +175,11 @@
 #                              Expression ('if' parameter)
 #                                  Negation
 #                                      Operation
-#                                          Lexical variable '$got_command'
+#                                          Lexical variable '$gotCommand'
 #                                          Logical and operator (&&)
 #                                          Negation
 #                                              Operation
-#                                                  Lexical variable '$got_source'
+#                                                  Lexical variable '$gotSource'
 #                                                  Logical and operator (&&)
 #                                                  Call
 #                                                      Property 'hasPrefix'
@@ -197,7 +197,7 @@
 #                                                  String ':'
 #                                  Instruction
 #                                      Assignment
-#                                          Lexical variable '$got_source'
+#                                          Lexical variable '$gotSource'
 #                                          Boolean true
 #                                  Instruction
 #                                      Assignment
@@ -224,7 +224,7 @@
 #                                                      Instance variable '@_rest'
 #                                                      Index list [1 items]
 #                                                          Item 0
-#                                                              Lexical variable '$word_n'
+#                                                              Lexical variable '$wordN'
 #                                  Instruction
 #                                      LoopStatement
 #                          Instruction
@@ -319,11 +319,11 @@ my $result = do {
                     $file_scope,
                     16.2
                 );
-                $scope->set_property( got_tags    => Ferret::undefined, 19.1 );
-                $scope->set_property( got_source  => Ferret::undefined, 19.2 );
-                $scope->set_property( got_command => Ferret::undefined, 19.3 );
-                $scope->set_property( word        => Ferret::undefined, 19.4 );
-                $scope->set_property( last_word   => Ferret::undefined, 19.5 );
+                $scope->set_property( gotTags    => Ferret::undefined, 19.1 );
+                $scope->set_property( gotSource  => Ferret::undefined, 19.2 );
+                $scope->set_property( gotCommand => Ferret::undefined, 19.3 );
+                $scope->set_property( word       => Ferret::undefined, 19.4 );
+                $scope->set_property( lastWord   => Ferret::undefined, 19.5 );
                 FF::lex_assign(
                     $scope,
                     params => FF::create_list( $f, [] ),
@@ -331,12 +331,12 @@ my $result = do {
                 );
                 FF::lex_assign(
                     $scope,
-                    word_i => num( $f, "0" ),
+                    wordI => num( $f, "0" ),
                     $file_scope, 21.2
                 );
                 FF::lex_assign(
                     $scope,
-                    word_n => num( $f, "0" ),
+                    wordN => num( $f, "0" ),
                     $file_scope, 22.2
                 );
                 {
@@ -351,20 +351,20 @@ my $result = do {
                                     _not(
                                         all_true(
                                             $scope,
-                                            sub { $$scope->{'got_source'} },
+                                            sub { $$scope->{'gotSource'} },
                                             sub {
                                                 _not(
                                                     all_true(
                                                         $scope,
                                                         sub {
                                                             $$scope->{
-                                                                'got_tags'};
+                                                                'gotTags'};
                                                         },
                                                         sub {
                                                             equal(
                                                                 $scope,
                                                                 $$scope->{
-                                                                    'word_i'},
+                                                                    'wordI'},
                                                                 num( $f, "0" )
                                                             );
                                                         },
@@ -476,7 +476,7 @@ my $result = do {
                                 }
                                 FF::lex_assign(
                                     $scope,
-                                    got_tags => $true,
+                                    gotTags => $true,
                                     $file_scope, 47.2
                                 );
                                 $self->set_property(
@@ -490,14 +490,14 @@ my $result = do {
                                     _not(
                                         all_true(
                                             $scope,
-                                            sub { $$scope->{'got_command'} },
+                                            sub { $$scope->{'gotCommand'} },
                                             sub {
                                                 _not(
                                                     all_true(
                                                         $scope,
                                                         sub {
                                                             $$scope->{
-                                                                'got_source'};
+                                                                'gotSource'};
                                                         },
                                                         sub {
                                                             ${ $$scope->{'word'}
@@ -529,7 +529,7 @@ my $result = do {
                                   ->( [ str( $f, ":" ) ], $scope, undef, 56.3 );
                                 FF::lex_assign(
                                     $scope,
-                                    got_source => $true,
+                                    gotSource => $true,
                                     $file_scope, 57.2
                                 );
                                 $self->set_property(
@@ -553,7 +553,7 @@ my $result = do {
                                 ${ $$scope->{'params'} }->{'push'}->(
                                     [
                                         $$self->{'_rest'}->get_index_value(
-                                            [ $$scope->{'word_n'} ], $scope,
+                                            [ $$scope->{'wordN'} ], $scope,
                                             69.25
                                         )
                                     ],

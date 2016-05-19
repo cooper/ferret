@@ -16,15 +16,15 @@ method parse {
     $words = $data.split(/\s+/)
 
     # message parse state
-    var $got_tags, $got_source, $got_command, $word, $last_word
+    var $gotTags, $gotSource, $gotCommand, $word, $lastWord
     $params = []
-    $word_i = 0
-    $word_n = 0
+    $wordI = 0
+    $wordN = 0
 
     for $word in $words {
 
         # first word could be message tags.
-        if !$got_source && !$got_tags && $word_i == 0 && $word.hasPrefix("@") {
+        if !$gotSource && !$gotTags && $wordI == 0 && $word.hasPrefix("@") {
             $word.trimPrefix("@")
             $tags = [:]
 
@@ -44,29 +44,29 @@ method parse {
             }
 
             # store tags
-            $got_tags = true
+            $gotTags = true
             @tags = $tags
 
-            #$word_n-- FIXME
+            #$wordN-- FIXME
             next # word
         }
 
         # could be the source if we haven't gotten it.
-        if !$got_command && !$got_source && $word.hasPrefix(":") {
+        if !$gotCommand && !$gotSource && $word.hasPrefix(":") {
             $word.trimPrefix(":")
-            $got_source = true
+            $gotSource = true
             @source = $word
 
-            #$word_n-- # FIXME
+            #$wordN-- # FIXME
             next #word
         }
 
         # this is for :rest.
-        #@_rest[$word_n] FIXME
+        #@_rest[$wordN] FIXME
 
         # sentinel-prefixed final parameter.
         if $word.hasPrefix(":") {
-            $params.push(@_rest[$word_n])
+            $params.push(@_rest[$wordN])
             last # word
         }
 
@@ -77,8 +77,8 @@ method parse {
 
     # FIXME
     # continue {
-    #     $word_i++
-    #     $word_n++
+    #     $wordI++
+    #     $wordN++
     #     $last_word = $word
     # }
 
