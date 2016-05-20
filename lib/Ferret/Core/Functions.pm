@@ -9,7 +9,7 @@ use 5.010;
 
 use Ferret::Core::Conversion qw(
     pstring         fstring
-    pbool        fbool
+    pbool           fbool
     pnumber         fnumber
     pdescription
 );
@@ -41,6 +41,7 @@ our %functions = (
         code => \&_fetchObject
     },
     activeObjectCount => {
+        want => '$perlType $classType',
         code => \&_activeObjectCount
     },
     _exit => {
@@ -128,8 +129,16 @@ sub _fetchObject {
 }
 
 sub _activeObjectCount {
-    my (undef, undef, $call_scope) = @_;
+    my (undef, $args, $call_scope) = @_;
     my $f = $call_scope->f;
+    if (my $str = $args->pstring('perlType')) {
+        return fnumber(scalar grep $_->isa($str), values %{ $f->{objects} })
+    }
+    if (my $class = $args->{classType}) {
+        return fnumber(0) if !$class->isa('Ferret::Class');
+        return fnumber(scalar
+            grep $_->instance_of($class), values %{ $f->{objects} });
+    }
     return fnumber(scalar keys %{ $f->{objects} });
 }
 
