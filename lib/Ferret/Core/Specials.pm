@@ -59,13 +59,6 @@ sub _isa {
     my $obj = shift;
     return $obj->{_isa_ferret} if $obj->{_isa_ferret};
     my $list = flist_wrap($obj->{isa});
-
-    # as a function, it tests whether it's an instance of a class
-    $list->set_property(toFunction => Ferret::Function->new($obj->f,
-        name => 'toFunction',
-        code => sub { $specials{instanceOf}($obj) }
-    ));
-
     return $obj->{_isa_ferret} = $list;
 }
 
