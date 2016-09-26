@@ -102,6 +102,10 @@ sub call {
         $self->{generics};
 
     # create the return object.
+    if ($return && blessed $return && !$return->isa('Ferret::Return')) {
+        undef $return;
+        warn '$return is not a return object';
+    }
     $return ||= Ferret::Return->new($func->f);
 
     # hash ref of arguments. check if matches signature.
@@ -229,6 +233,7 @@ sub _arguments_satisfy_signature {
         my ($name, $type) = @$sig{ qw(name type) };
 
         next if $sig->{optional} && !length $type;
+        $func->{last_unsatisfied} = $sig->{name};
 
         # check things.
         my $arg = $arguments->{ $name };
@@ -258,7 +263,6 @@ sub _arguments_satisfy_signature {
         }
 
         # bad news.
-        $func->{last_unsatisfied} = $sig->{name};
         return if !$sig->{optional};   # bad type for need
         delete $arguments->{$name};    # bad type for want
 
