@@ -161,6 +161,7 @@ sub pregex {
 sub fbool {
     my $val = shift;
     return $val if blessed $val && defined $val->{bool_value};
+    return Ferret::false if blessed $val && Ferret::undefined($val);
     my $truth = !!$val;
     return $truth ? Ferret::true : Ferret::false;
 }
