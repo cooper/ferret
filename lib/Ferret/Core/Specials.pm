@@ -87,18 +87,7 @@ sub _instanceOf {
 sub _fitsType {
     my ($obj, $args) = @_;
     my $class_or_func = $args->{type};
-
-    if ($class_or_func->isa('Ferret::Class')) {
-        return fbool($obj->instance_of($class_or_func));
-    }
-
-    if ($class_or_func->isa('Ferret::Function') ||
-        $class_or_func->isa('Ferret::Event')) {
-        return Ferret::false if !$class_or_func->{is_typedef};
-        return fbool($class_or_func->call([ $obj ]));
-    }
-
-    return Ferret::false;
+    return fbool($obj->fits_type($class_or_func));
 }
 
 sub _get {

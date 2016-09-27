@@ -466,6 +466,26 @@ sub instance_of {
 
 sub instance_of_u { &instance_of ? Ferret::true : Ferret::undefined }
 
+sub fits_type {
+    my ($obj, $class_or_func) = @_;
+
+    # could be a class
+    if ($class_or_func->isa('Ferret::Class')) {
+        return $obj->instance_of($class_or_func);
+    }
+
+    # could be a type interface
+    if ($class_or_func->isa('Ferret::Function') ||
+        $class_or_func->isa('Ferret::Event')) {
+        return if !$class_or_func->{is_typedef};
+        return _pbool($class_or_func->call([ $obj ]));
+    }
+
+    return;
+}
+
+sub fits_type_u { &fits_type ? Ferret::true : Ferret::undefined }
+
 #####################
 ### MISCELLANEOUS ###
 #####################
