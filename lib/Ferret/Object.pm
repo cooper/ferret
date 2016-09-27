@@ -455,35 +455,45 @@ sub best_common_class {
     # TODO: if ever implemented an Object class, return it here.
 }
 
-# FIXME: should .*instanceOf() return true for all objs for Obj?
+# FIXME: should ->instance_of() return true for all objs for Obj?
 # currently it does not. But this does not affect arguments, etc.
-# because they use .*fitsType() instead.
+# because they use ->fits_type() instead.
+
+# returns Perl true if the object is an instance of a class
 sub instance_of {
     my ($obj, $class_maybe) = @_;
     return if !$class_maybe;
     return defined first { $_ == $class_maybe } $obj->parent_classes;
 }
 
+# returns Ferret true or undefined
 sub instance_of_u { &instance_of ? Ferret::true : Ferret::undefined }
 
+# returns Perl true if the object fits a type
+# more specifically, returns the object or a transformed version of it
 sub fits_type {
     my ($obj, $class_or_func) = @_;
 
-    # could be a class
+    return if !blessed $class_or_func;
+
+    # could be an instance of this class
     if ($class_or_func->isa('Ferret::Class')) {
-        return $obj->instance_of($class_or_func);
+        return $obj if $obj->instance_of($class_or_func);
     }
 
-    # could be a type interface
+    # could satisfy this type interface
     if ($class_or_func->isa('Ferret::Function') ||
         $class_or_func->isa('Ferret::Event')) {
         return if !$class_or_func->{is_typedef};
-        return _pbool($class_or_func->call([ $obj ]));
+        my $ret = $class_or_func->call([ $obj ]);
+        return $ret unless Ferret::undefined($ret);
+        return;
     }
 
     return;
 }
 
+# returns Ferret true or undefined
 sub fits_type_u { &fits_type ? Ferret::true : Ferret::undefined }
 
 #####################
