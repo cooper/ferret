@@ -23,7 +23,7 @@ init {
 }
 
 method description {
-    inspect(@hints) # FIXME
+    #inspect(@hints) # FIXME
     if @subError:
         return @msg + ": " + @subError.description!
     return @msg

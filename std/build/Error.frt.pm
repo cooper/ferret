@@ -66,12 +66,6 @@
 #                                  String 'Ferret::Error'
 #          Method 'description'
 #              Body ('method' scope)
-#                  Instruction
-#                      Call
-#                          Bareword 'inspect'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  Instance variable '@hints'
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@subError'
@@ -220,8 +214,6 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $$scope->{'inspect'}
-                  ->( [ $$self->{'hints'} ], $scope, undef, 26.2 );
                 if ( bool( $$self->{'subError'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
