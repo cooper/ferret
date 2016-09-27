@@ -102,4 +102,10 @@ sub _run_defers {
     @$defers = ();
 }
 
+sub description {
+    my $obj = shift;
+    return "[ No return ]" if !scalar $obj->properties(1);
+    return $obj->SUPER::description(@_);
+}
+
 1
