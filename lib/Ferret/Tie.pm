@@ -9,7 +9,7 @@ use Scalar::Util 'weaken';
 
 sub TIEHASH {
     my ($class, $obj) = @_;
-    my $a = [ $obj ];
+    my $a = [ $obj ]; # form: [ obj, keys ]
     weaken($a->[0]);
     return bless $a, $class;
 }
@@ -34,6 +34,18 @@ sub DELETE {
 sub EXISTS {
     my ($self, $key) = @_;
     return !!$$self[0]->has_property($key);
+}
+
+sub FIRSTKEY {
+    my ($self) = @_;
+    my @keys = grep EXISTS($self, $_), keys %{ $$self[0]->{properties} };
+    $self->[1] = \@keys;
+    return shift @keys;
+}
+
+sub NEXTKEY {
+    my ($self) = @_;
+    return shift @{ $self->[1] };
 }
 
 1
