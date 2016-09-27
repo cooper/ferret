@@ -87,7 +87,7 @@ sub _instanceOf {
 sub _fitsType {
     my ($obj, $args) = @_;
     my $class_or_func = $args->{type};
-    return fbool($obj->fits_type($class_or_func));
+    return $obj->fits_type_u($class_or_func);
 }
 
 sub _get {

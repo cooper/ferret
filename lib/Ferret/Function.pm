@@ -304,15 +304,8 @@ sub _get_types {
 sub _obj_type_works {
     my ($func, $obj, $type, $generics_maybe) = @_;
     foreach my $type ($func->_get_types($type, $generics_maybe)) {
-
-        # if this is a function, use its return value.
-        if ($type->isa('Ferret::Function') || $type->isa('Ferret::Event')) {
-            next if !$type->{is_typedef};
-            my $worked = $type->call_u([ $obj ]);
-            return $worked if $worked;
-        }
-
-        return $obj if $obj->instance_of($type);
+        my $worked = $obj->fits_type($type);
+        return $worked if $worked;
     }
     return;
 }
