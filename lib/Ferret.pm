@@ -28,7 +28,7 @@ sub new {
     my $f = bless {}, $class;
 
     # create the global special object.
-    $f->{special} = Ferret::Object->new($f);
+    $f->{special} = Ferret::Object->new($f, is_special => 1);
     $f->{special}->set_property($_ => $specials{$_})
         foreach keys %specials;
 
@@ -345,6 +345,18 @@ sub runtime {
     }
     undef $looping;
     return 1;
+}
+
+#################
+### UTILITIES ###
+#################
+
+# This is for very commonly used runtime-specific utilities. Those which may be
+# shared between the compiler and runtime must be in Ferret::Shared::Utils.
+
+sub inspect {
+    my $f = $ferret or return;
+    $f->main_context->property('inspect')->call([ $_ ]) for @_;
 }
 
 ################
