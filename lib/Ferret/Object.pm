@@ -168,7 +168,7 @@ sub property_eval_u {
 # only rely on whichever custom implemention of ->_property exists.
 #
 sub _property {
-    my ($obj, $prop_name, $borrow_obj, $simple_only, $no_compute) = @_;
+    my ($obj, $prop_name, $borrow_obj, $simple_only, $no_compute, $no_recursion) = @_;
 
     # if the prop name starts with asterisk, it's a special property.
     my $first = \substr($prop_name, 0, 1);
@@ -230,7 +230,8 @@ sub _property {
     }
 
     # try inheritance.
-    foreach my $o ($obj->parents) {
+    my $i = 0;
+    foreach my $o ($obj->parents) { $i++;
         my @v = $o->_property(
             $prop_name, $borrow_obj, $simple_only, $no_compute
         );
@@ -494,7 +495,7 @@ sub description {
     return 'false'     if $obj == Ferret::false;
 
     # description method
-    if (!$no_method && !$obj->{is_proto} and
+    if (!$no_method && !$obj->{is_proto} && !$obj->{is_special} and
       my $d_func = $obj->property('description')) {
         return _pstring($d_func->call);
     }
@@ -506,7 +507,7 @@ sub description {
         # fetch value
         # if it's computed, it will return the arrayref or coderef.
         my ($value, $owner) =
-            $obj->_property($prop_name, undef, undef, !$compute);
+            $obj->_property($prop_name, undef, undef, !$compute, 1);
 
         # skip other contexts
         if ($owner != $obj && $owner->isa('Ferret::Context')) {

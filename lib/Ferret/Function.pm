@@ -146,7 +146,7 @@ sub call {
     $return->inc if $return->isa('Ferret::Return');
 
     # class/instance argument.
-    $scope->{special}->set_property(self   => $self) if $self;
+    $scope->{special}->set_property(self   => $self)                if $self;
     $scope->{special}->set_property(class  => $class)               if $class;
     $scope->{special}->set_property(this   => delete $func->{this}) if $func->{this};
     $scope->{special}->set_property(return => $return);
