@@ -78,9 +78,7 @@ my $result = do {
                 FF::typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
-                        $ins->instance_of_u(
-                            ${ $scope->{special} }->{'class'}
-                        ),
+                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         nequal( $scope, $$ins->{'length'}, num( $f, "0" ) )
                     ],
                     equal_to => undef
@@ -96,9 +94,7 @@ my $result = do {
                 FF::typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
-                        $ins->instance_of_u(
-                            ${ $scope->{special} }->{'class'}
-                        ),
+                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         do { $ins = $transform->( $$ins->{'uppercase'}, $ins ) }
                     ],
                     equal_to => undef
@@ -115,9 +111,7 @@ my $result = do {
                 FF::typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
-                        $ins->instance_of_u(
-                            ${ $scope->{special} }->{'class'}
-                        ),
+                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         do { $ins = $transform->( $$ins->{'lowercase'}, $ins ) }
                     ],
                     equal_to => undef

@@ -1,1 +1,1 @@
-$ins->instance_of_u(<<expression>>)
+$ins->fits_type_u(<<expression>>)

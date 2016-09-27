@@ -269,9 +269,7 @@ my $result = do {
                 FF::typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
-                        $ins->instance_of_u(
-                            ${ $scope->{special} }->{'class'}
-                        ),
+                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         $$ins->{'even'}
                     ],
                     equal_to => undef
@@ -286,9 +284,7 @@ my $result = do {
                 FF::typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
-                        $ins->instance_of_u(
-                            ${ $scope->{special} }->{'class'}
-                        ),
+                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         $$ins->{'odd'}
                     ],
                     equal_to => undef
@@ -304,9 +300,7 @@ my $result = do {
                 FF::typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
-                        $ins->instance_of_u(
-                            ${ $scope->{special} }->{'class'}
-                        ),
+                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         do { $ins = $transform->( $$ins->{'floor'}, $ins ) }
                     ],
                     equal_to => undef
