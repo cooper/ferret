@@ -80,8 +80,8 @@ sub _inspect {
     my $obj = $args->{value};
 
     # use Object's ->description if detailed
-    my $code = $args->pbool('detailed') ?
-        Ferret::Object->can('description') :
+    my $code = $args->pbool('detailed')     ?
+        Ferret::Object->can('description')  :
         Ferret::Core::Conversion->can('pdescription');
 
     my $str = $code->(

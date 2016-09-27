@@ -9,7 +9,7 @@ use parent 'Ferret::Object';
 
 use Scalar::Util qw(blessed looks_like_number);
 use Ferret::Core::Conversion qw(
-    pstring pnumber phashref plist
+    pstring pnumber phashref plist flist_fromref
     fstring flist fbool fnumber fsym
 );
 
@@ -329,7 +329,7 @@ sub description {
 # e.g. ("hi", "there").join! -> "hithere"
 sub _join {
     my (undef, $args) = @_;
-    my $list = flist(delete $args->{strs});
+    my $list = flist_fromref(delete $args->{strs});
     return fstring($list->join(''));
 }
 

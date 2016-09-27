@@ -189,18 +189,22 @@ sub psym {
 ### ARRAYS ###
 ##############
 
+sub flist         { _flist(undef, @_) }
+sub flist_fromref { _flist(1,     @_) }
+
 # return a ferret list object.
 # if @vals are not ferret objects, they will be ferretized.
-sub flist {
+sub _flist {
+    my $allow_ref = shift; # convert single array ref to list
     my @vals = @_;
 
     # already an object, probably a list.
-    if (@vals == 1 && blessed $vals[0] && exists $vals[0]{list_items}) {
-        return $vals[0] if $vals[0];
+    if ($allow_ref && @vals == 1 && blessed $vals[0] && $vals[0]{list_items}) {
+        return $vals[0];
     }
 
     # array ref.
-    if (@vals == 1 && ref $vals[0] eq 'ARRAY') {
+    if ($allow_ref && @vals == 1 && ref $vals[0] eq 'ARRAY') {
         @vals = @{ $vals[0] };
     }
 
@@ -472,7 +476,7 @@ sub _ferretize {
     }
 
     # it's an array. convert to a list.
-    return flist(@$val) if ref $val eq 'ARRAY';
+    return flist_fromref($val) if ref $val eq 'ARRAY';
 
     # it's a hash.
     return fhash(%$val) if ref $val eq 'HASH';

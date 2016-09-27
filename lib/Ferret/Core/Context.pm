@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Context';
 
-use Ferret::Core::Conversion qw(flist);
+use Ferret::Core::Conversion qw(flist_fromref);
 
 # creates a new context.
 sub new {
@@ -15,7 +15,7 @@ sub new {
     my $context = $class->SUPER::new($f, %opts, is_core => 1);
 
     # global special variables.
-    $context->{special}->set_property(argv => [ sub { flist(\@ARGV) }]);
+    $context->{special}->set_property(argv => [ sub { flist_fromref(\@ARGV) }]);
 
     return $context;
 }

@@ -6,7 +6,7 @@ use strict;
 use utf8;
 
 use parent 'Ferret::Object';
-use Ferret::Core::Conversion qw(pdescription flist fnumber plist);
+use Ferret::Core::Conversion qw(pdescription flist fnumber plist flist_fromref);
 
 *new = *Ferret::bind_constructor;
 
@@ -122,7 +122,7 @@ sub _methods {
 
 sub _to_list {
     my $set = shift;
-    flist(@{ $set->{all_objs} });
+    flist_fromref($set->{all_objs});
 }
 
 sub _from_list {
