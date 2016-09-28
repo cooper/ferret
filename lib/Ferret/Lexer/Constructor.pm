@@ -545,6 +545,12 @@ sub c_ANGLE_S {
     my $last_el = $c->last_el;
     my $tc = F::new('TypedClass', ready_for_another => 1);
 
+    # Rule TypedClass[0]:
+    #   Direct children must be of type Bareword or Maybe.
+
+    # Rule TypedClass[1]:
+    #   Number of children must be no less than two (2).
+
     # it's a class declaration.
     if ($last_el->type eq 'Class') {
 
@@ -655,6 +661,13 @@ sub c_PAREN_CALL {
 sub c_OP_CALL {
     my ($c, $value) = @_;
     return handle_call($c, $value);
+}
+
+# detailed return values.
+sub c_KEYWORD_DETAIL {
+    my ($c, $value) = @_;
+    my $det = F::new('Detail');
+    return $c->adopt_and_set_node($det);
 }
 
 ###################
@@ -880,7 +893,7 @@ sub c_OP_SEMI {
     $c->close_nodes(qw(
         WantNeed WantNeedType WantNeedValue PropertyModifier Negation
         Alias FailThrow Assignment Return ReturnPair TypeRequirement Operation
-        SharedDeclaration LocalDeclaration Load Stop LoopStatement Take
+        SharedDeclaration LocalDeclaration Load Stop LoopStatement Take Detail
     ));
 
     # special case:

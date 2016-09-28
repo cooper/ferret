@@ -35,7 +35,8 @@ sub perl_fmt {
         "[ $list_args ]"                       :
         "{ $hash_args }"                       ;
 
-    return call => {
+    my $fmt = $call->parent->type eq 'Detail' ? 'call_detail' : 'call';
+    return $fmt => {
         coderef   => $call->func_fmt_do,
         arguments => $arg_string,
         pos       => $call->{create_pos}

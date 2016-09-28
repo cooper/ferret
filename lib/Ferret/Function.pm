@@ -78,7 +78,7 @@ sub call_with_self {
 }
 
 sub call {
-    my ($func, $arguments, $call_scope, $return) = @_;
+    my ($func, $arguments, $call_scope, $return, $pos, $detail) = @_;
     my $is_event = delete $func->{force_is_event};
 
     # a list of arguments was provided. must use signature to convert.
@@ -167,6 +167,7 @@ sub call {
         $func
     );
 
+    $return->detail if $detail;
     return $return->return($ret // Ferret::undefined);
 }
 

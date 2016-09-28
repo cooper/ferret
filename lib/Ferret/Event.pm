@@ -156,7 +156,7 @@ sub call_with_self {
 
 # fire the event.
 sub call {
-    my ($event, $arguments, $call_scope, $return) = @_;
+    my ($event, $arguments, $call_scope, $return, $pos, $detail) = @_;
 
     # if the arguments are provided as an arrayref, use the signature of the
     # default function to translate them.
@@ -194,6 +194,7 @@ sub call {
     );
     $event->{most_recent_fire} = $fire;
 
+    $return->detail if $detail;
     return $return->final_return;
 }
 

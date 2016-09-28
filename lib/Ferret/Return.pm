@@ -47,15 +47,22 @@ sub return {
     # it will override the current return.
     if ($force && $force != $ret) {
         $ret->set_property_weak(default => $force);
-        return $ret->{default} = $force;
+        return $ret->{default} = $force unless $ret->{detail};
     }
 
     return $ret;
 }
 
+# called in Function.pm and Event.pm; tells us to always yield the return object
+sub detail {
+    my $ret = shift;
+    $ret->{detail}++;
+}
+
 # called in Event.pm; yields the event fire's ultimate return value.
 sub final_return {
     my $ret = shift;
+    return $ret if $ret->{detail};
 
     # if it didn't fail and the call count is zero,
     # then fail for that reason.

@@ -890,7 +890,7 @@ our %element_rules = (
 
     },
 
-    TypedClass => {
+    TypedClass => {                                                             # TypedClass[0]
 
         # note that Maybes can contain more than barewords, which is undesired;
         # but we don't have to worry about it because the expression will be
@@ -906,8 +906,22 @@ our %element_rules = (
         # this rule is not satisfied. it doesn't matter because this
         # rule isn't checked until the tree is fully constructed, and
         # by that time, the TypedClass is gone from the document tree.
-        min_children => [ 2, undef, 1 ]
+        min_children => [ 2, undef, 1 ]                                         # TypedClass[1]
 
+    },
+
+    Detail => {
+        after_rules => {
+
+            children_must_be => [                                               # Detail[0]
+                'Call',
+                'Detail can only capture the return object of a call',
+                0
+            ],
+
+            num_children => [ 1, undef, 1 ]                                     # Detail[1]
+
+        }
     },
 
     Unknown => {

@@ -27,7 +27,8 @@ my $keyword_reg = '\\b(?:'.join('|', qw{
     next        last        redo        continue
     type        alias       delete      weaken
     can         satisfies   transform   isa
-    __END__     throw       fail        catch
+    detail      throw       fail        catch
+    __END__
 }).')\\b';
 
 # these tokens do not have values.
