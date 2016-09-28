@@ -19,6 +19,7 @@ sub new {
     my $scope = $class->SUPER::new($f,
         faketype => 'Scope',
         scope_id => $f->{_scope_cid}++,
+        is_scope => 1,
         %opts
     );
 

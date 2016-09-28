@@ -94,6 +94,7 @@ sub add_function_with_opts {
         $func = $obj;
         $obj  = $event->{last_parent};
         $obj  = undef if $obj->{is_proto}; # adding to proto is for all objs
+        $obj  = undef if $obj->{is_scope};
     }
 
     # if 'self' option is specified, the event holds a strong reference to
@@ -119,9 +120,10 @@ sub add_function_with_opts {
     weaken(my $weak_event = $event);
     weaken(my $weak_func  = $func);
     my $code = sub {
-
-        # TODO: raise a warning if $weak_event is gone?
-        return if !$weak_event || !$weak_func;
+        if (!$weak_event || !$weak_func) {
+            warn 'event or function was destroyed during call';
+            return;
+        }
 
         # find and call the function(s) by this name.
         $weak_event->_handle_call(
@@ -214,7 +216,6 @@ sub _handle_call {
     $func->{outer_scope}   = $outer_scope if $outer_scope_maybe;
     $func->{is_method}     = $event->{is_method};
     $func->{event_name}    = $event->{name};
-
 
     # *this is like *self except it's always the object
     # from which the event is being fired
