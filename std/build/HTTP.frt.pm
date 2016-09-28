@@ -79,9 +79,9 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'url', 12.2 ) or return;
+            FF::need( $scope, $args, 'url', 14.2 ) or return;
             return $ret_func->( ${ $$scope->{'client'} }->{'get'}
-                  ->( { url => $$scope->{'url'} }, $scope, undef, 13.4 ) );
+                  ->( { url => $$scope->{'url'} }, $scope, undef, 15.4 ) );
             return $ret;
         }
     );
@@ -93,9 +93,9 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'url', 17.2 ) or return;
+            FF::need( $scope, $args, 'url', 20.2 ) or return;
             return $ret_func->( ${ $$scope->{'client'} }->{'post'}
-                  ->( { url => $$scope->{'url'} }, $scope, undef, 18.4 ) );
+                  ->( { url => $$scope->{'url'} }, $scope, undef, 21.4 ) );
             return $ret;
         }
     );
@@ -120,8 +120,8 @@ my $result = do {
     FF::lex_assign(
         $scope,
         client =>
-          [ sub { $$scope->{'HTTP::Client'}->( {}, $scope, undef, 9.6 ) } ],
-        undef, 9.2
+          [ sub { $$scope->{'HTTP::Client'}->( {}, $scope, undef, 10.6 ) } ],
+        undef, 10.2
     );
 };
 

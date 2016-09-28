@@ -34,3 +34,21 @@ method first {
     }
     return undefined
 }
+
+#> Returns true if at least one element satisfies a code.
+method any {
+    need $code
+    for $el in *self {
+        if $code($el): return true
+    }
+    return false
+}
+
+#> Returns true if all elements satisfy a code.
+method all {
+    need $code
+    for $el in *self {
+        if !$code($el): return false
+    }
+    return true
+}

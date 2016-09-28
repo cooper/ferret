@@ -97,6 +97,57 @@
 #                  Instruction
 #                      Return
 #                          Undefined
+#          Method 'any'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$code'
+#                  For (values)
+#                      Expression ('for' parameter)
+#                          Lexical variable '$el'
+#                      Expression ('in' parameter)
+#                          Special variable '*self'
+#                      Body ('for' scope)
+#                          If
+#                              Expression ('if' parameter)
+#                                  Call
+#                                      Lexical variable '$code'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Lexical variable '$el'
+#                              Body ('if' scope)
+#                                  Instruction
+#                                      Return
+#                                          Boolean true
+#                  Instruction
+#                      Return
+#                          Boolean false
+#          Method 'all'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$code'
+#                  For (values)
+#                      Expression ('for' parameter)
+#                          Lexical variable '$el'
+#                      Expression ('in' parameter)
+#                          Special variable '*self'
+#                      Body ('for' scope)
+#                          If
+#                              Expression ('if' parameter)
+#                                  Negation
+#                                      Call
+#                                          Lexical variable '$code'
+#                                          Argument list [1 items]
+#                                              Item 0
+#                                                  Lexical variable '$el'
+#                              Body ('if' scope)
+#                                  Instruction
+#                                      Return
+#                                          Boolean false
+#                  Instruction
+#                      Return
+#                          Boolean true
 use warnings;
 use strict;
 use 5.010;
@@ -117,7 +168,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('List.frt');
 
-use Ferret::Core::Operations qw(bool);
+use Ferret::Core::Operations qw(_not bool);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -270,12 +321,106 @@ my $result = do {
                 return $ret;
             }
         );
+
+        # Method event 'any' definition
+        my $method_3 = FF::method_event_def(
+            $f, $scope, 'any',
+            [
+                {
+                    name     => 'code',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'code', 40.2 ) or return;
+                {
+                    my $loop_ret = FF::iterate(
+                        $f, $scope,
+                        ${ $scope->{special} }->{'self'},
+                        'el',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    $$scope->{'code'}->(
+                                        [ $$scope->{'el'} ], $scope,
+                                        undef,               42.15
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                return $ret_func->($true);
+                            }
+                        },
+                        41.1
+                    );
+                    return $ret_func->($loop_ret) if $loop_ret;
+                }
+                return $ret_func->($false);
+                return $ret;
+            }
+        );
+
+        # Method event 'all' definition
+        my $method_4 = FF::method_event_def(
+            $f, $scope, 'all',
+            [
+                {
+                    name     => 'code',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'code', 49.2 ) or return;
+                {
+                    my $loop_ret = FF::iterate(
+                        $f, $scope,
+                        ${ $scope->{special} }->{'self'},
+                        'el',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    _not(
+                                        $$scope->{'code'}->(
+                                            [ $$scope->{'el'} ], $scope,
+                                            undef,               51.2
+                                        )
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                return $ret_func->($false);
+                            }
+                        },
+                        50.1
+                    );
+                    return $ret_func->($loop_ret) if $loop_ret;
+                }
+                return $ret_func->($true);
+                return $ret;
+            }
+        );
         $method_0->inside_scope( map  => $scope, $proto, $class, undef, undef );
         $method_1->inside_scope( grep => $scope, $proto, $class, undef, undef );
         $method_2->inside_scope(
             first => $scope,
             $proto, $class, undef, undef
         );
+        $method_3->inside_scope( any => $scope, $proto, $class, undef, undef );
+        $method_4->inside_scope( all => $scope, $proto, $class, undef, undef );
         FF::typedef(
             $scope, $class, 'Pairs',
             sub {
