@@ -46,8 +46,8 @@ sub return {
     # if returned an object other than $ret,
     # it will override the current return.
     if ($force && $force != $ret) {
-        $ret->set_property_weak(override => $force);
-        return $ret->{override} = $force;
+        $ret->set_property_weak(default => $force);
+        return $ret->{default} = $force;
     }
 
     return $ret;
@@ -66,7 +66,7 @@ sub final_return {
         ));
     }
 
-    return delete $ret->{override} // $ret;
+    return delete $ret->{default} // $ret;
 }
 
 # stops further event propagation.
@@ -83,7 +83,7 @@ sub fail {
     $ret->{failed}++;
     $ret->set_property(error => $err);
     $ret->stop;
-    delete $ret->{override};
+    delete $ret->{default};
     return $ret;
 }
 
