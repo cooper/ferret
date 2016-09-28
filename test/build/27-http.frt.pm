@@ -179,7 +179,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $$scope->{'say'}
-              ->( [ str( $f, "Got error!" ) ], $scope, undef, 20.2 );
+              ->( [ str( $f, "Got error!" ) ], $scope, undef, 21.2 );
             return $ret;
         }
     );
@@ -231,7 +231,7 @@ my $result = do {
                     ),
                     {}
                 );
-                $$ins->{'connect'}->( {}, $scope, undef, 23.3 );
+                $$ins->{'connect'}->( {}, $scope, undef, 24.3 );
             }
         );
         return $ret_func->($inside_return) if $inside_return;

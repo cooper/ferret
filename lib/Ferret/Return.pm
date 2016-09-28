@@ -61,7 +61,7 @@ sub final_return {
     # then fail for that reason.
     if (!$ret->{failed} && !$ret->{call_count}) {
         return $ret->fail(ferror(
-            'Unsatisfied arguments; no callbacks were executed',
+            'Unsatisfied arguments',
             'UnsatisfiedArguments'
         ));
     }
