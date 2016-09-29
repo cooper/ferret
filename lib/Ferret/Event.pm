@@ -105,7 +105,7 @@ sub add_function_with_opts {
     # the optional outer scope will be set as each function's outer scope
     # only if there is not a scope set already.
     #
-    my $self_maybe        = delete $opts{self};
+    my $outer_self        = delete $opts{self};
     my $outer_scope_maybe = delete $opts{outer_scope};
 
     # the function name translates to the Evented::Object callback name.
@@ -128,7 +128,7 @@ sub add_function_with_opts {
         # find and call the function(s) by this name.
         $weak_event->_handle_call(
             $weak_func,
-            $self_maybe,
+            $outer_self,
             $outer_scope_maybe,
             @_
         );
@@ -138,6 +138,7 @@ sub add_function_with_opts {
     # for object-specific callbacks, the callback is registered to
     # the object (instance) itself. otherwise, it is registered to
     # this event object.
+    Ferret::inspect($obj) if $obj;
       $obj->on($event->{id} => $code, %opts)  if  $obj;
     $event->on(call         => $code, %opts)  if !$obj;
 
@@ -147,7 +148,7 @@ sub add_function_with_opts {
 ### CALLING (FIRING) THE EVENT ###
 ##################################
 
-# fire with certaintly that *self will be the provided object.
+# fire with certainty that *self will be the provided object.
 sub call_with_self {
     my ($event, $self) = (shift, shift);
     $event->{force_self} = $self;
@@ -170,11 +171,8 @@ sub call {
 
     # find the object. this will certainly be *this.
     # it may also be *self, depending on the context.
-    my $obj =
-        $arguments->{_self}         ||
-        delete $event->{force_self} ||
-        $event->{last_parent}
-    or warn "no last parent for $$event{name}" and return;
+    my $obj = $event->{last_parent}
+        or warn "no last parent for $$event{name}" and return;
 
     # create the return object and call arguments.
     $return ||= Ferret::Return->new($event->f);
@@ -201,7 +199,7 @@ sub call {
 # this CODE is used for all Evented::Object callbacks.
 sub _handle_call {
     my (
-        $event, $func, $self_maybe, $outer_scope_maybe,
+        $event, $func, $outer_self, $outer_scope_maybe,
         $fire, $obj, $class, $outer_scope,
         $arguments, $call_scope, $return
     ) = @_;
@@ -225,10 +223,16 @@ sub _handle_call {
     # store the fire object in the return object.
     weaken($return->{fire} = $fire);
 
+    # determine self
+    my $self = $arguments->{_self}  ||
+        delete $event->{force_self} ||
+        $outer_self                 ||
+        $obj;
+
     # call the function.
     $func->{force_is_event} = 1;
     my $ret = $func->call_with_self(
-        $arguments->{_self} || $self_maybe || $obj,
+        $self,
         $arguments,
         $call_scope,
         $return

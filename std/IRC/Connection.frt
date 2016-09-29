@@ -65,9 +65,9 @@ method _handleLine {
 
     # handle command maybe
     @handlers.[ $msg.command ]?(
-        _self: *self,   # call with the connection object as self
-        line:  $line,
-        msg:   $msg
+        _self:  *self,   # call with the connection object as self
+        line:   $line,
+        msg:    $msg
     )
 }
 
