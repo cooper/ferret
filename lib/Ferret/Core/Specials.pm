@@ -25,7 +25,8 @@ my %specials = (
     commonClass     => _function('commonClass', '$other:Object'),
     fullName        => _function('fullName', '$property:Str'),
     description     => \&_description,
-    addr            => \&_addr
+    addr            => \&_addr,
+    addParent       => _function('addParent', '$object')
 );
 
 @Ferret::specials{keys %specials} = values %specials;
@@ -138,6 +139,12 @@ sub _fullName {
     my ($obj, $args) = @_;
     my $prop_name = pstring($args->{property});
     return fstring($obj->full_name($prop_name));
+}
+
+sub _addParent {
+    my ($obj, $args) = @_;
+    $obj->add_parent($args->{object});
+    return _isa($obj);
 }
 
 1

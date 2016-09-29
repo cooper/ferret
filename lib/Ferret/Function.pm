@@ -112,7 +112,7 @@ sub call {
     if (!$func->_arguments_satisfy_signature($arguments, $generics)) {
 
         my $error = ferror(
-            "The '$$func{last_unsatisfied}' argument was not satisfied",
+            "Unsatisfied argument '$$func{last_unsatisfied}'",
             'UnsatisfiedArguments'
         );
 
