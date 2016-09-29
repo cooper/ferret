@@ -141,7 +141,7 @@ my @token_formats = (
     [ OP_ELLIP      => qr/\.\.\./                                           ],  # ellipsis
     [ OP_RANGE      => qr/\.\./                                             ],  # range
     [ OP_COMMA      => qr/,/                                                ],  # list separator
-    [ PROP_VALUE    => qr/$prop_reg:/,      \&remove_last_char              ],  # property: value
+    [ PROP_VALUE    => qr/$prop_reg_n:/,    \&remove_last_char              ],  # property: value
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other

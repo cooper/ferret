@@ -2,6 +2,9 @@
 #  Document './std/IRC/Connection.frt'
 #      Package 'IRC'
 #      Class 'Connection'
+#          Instruction
+#              Load
+#                  Bareword 'Outgoing'
 #          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
@@ -35,6 +38,23 @@
 #                              Bareword 'Str'
 #                          Argument value
 #                              String 'Ferret IRC'
+#                  Instruction
+#                      Want
+#                          Instance variable '@autojoin'
+#                          Argument type
+#                              Bareword 'List'
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@users'
+#                          Hash [0 items]
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@channels'
+#                          Hash [0 items]
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@servers'
+#                          Hash [0 items]
 #                  Instruction
 #                      Want
 #                          Instance variable '@handlers'
@@ -114,6 +134,24 @@
 #                                      Argument list [1 items]
 #                                          Item 0
 #                                              Lexical variable '$data'
+#                  On ('reset' callback)
+#                      Expression ('on' parameter)
+#                          Property 'disconnected'
+#                              Instance variable '@sock'
+#                      Anonymous function
+#                          Body ('function' scope)
+#                              Instruction
+#                                  Assignment
+#                                      Instance variable '@users'
+#                                      Hash [0 items]
+#                              Instruction
+#                                  Assignment
+#                                      Instance variable '@channels'
+#                                      Hash [0 items]
+#                              Instruction
+#                                  Assignment
+#                                      Instance variable '@servers'
+#                                      Hash [0 items]
 #          Method 'connect'
 #              Body ('method' scope)
 #                  Instruction
@@ -187,7 +225,103 @@
 #                              Item 2
 #                                  Pair 'msg'
 #                                      Lexical variable '$msg'
-#      Include (IRC, IRC::Handlers, IRC::Massage, Num, Socket, Socket::TCP, Str)
+#          Method 'getChannel'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$name'
+#                          Argument type
+#                              Bareword 'Str'
+#                  If
+#                      Expression ('if' parameter)
+#                          Assignment
+#                              Lexical variable '$channel'
+#                              Index
+#                                  Instance variable '@channels'
+#                                  Index list [1 items]
+#                                      Item 0
+#                                          Property 'lowercase'
+#                                              Lexical variable '$name'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Return
+#                                  Lexical variable '$channel'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'Channel'
+#                              Named argument list [2 items]
+#                                  Item 0
+#                                      Pair 'connection'
+#                                          Special variable '*self'
+#                                  Item 1
+#                                      Pair 'name'
+#                                          Lexical variable '$name'
+#          Method 'getUser'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$nick'
+#                          Argument type
+#                              Bareword 'Str'
+#                  If
+#                      Expression ('if' parameter)
+#                          Assignment
+#                              Lexical variable '$user'
+#                              Index
+#                                  Instance variable '@users'
+#                                  Index list [1 items]
+#                                      Item 0
+#                                          Property 'lowercase'
+#                                              Lexical variable '$nick'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Return
+#                                  Lexical variable '$user'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'User'
+#                              Named argument list [2 items]
+#                                  Item 0
+#                                      Pair 'connection'
+#                                          Special variable '*self'
+#                                  Item 1
+#                                      Pair 'nick'
+#                                          Lexical variable '$nick'
+#          Method 'getServer'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$name'
+#                          Argument type
+#                              Bareword 'Str'
+#                  If
+#                      Expression ('if' parameter)
+#                          Assignment
+#                              Lexical variable '$server'
+#                              Index
+#                                  Instance variable '@servers'
+#                                  Index list [1 items]
+#                                      Item 0
+#                                          Property 'lowercase'
+#                                              Lexical variable '$name'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Return
+#                                  Lexical variable '$server'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'Server'
+#                              Named argument list [2 items]
+#                                  Item 0
+#                                      Pair 'connection'
+#                                          Special variable '*self'
+#                                  Item 1
+#                                      Pair 'name'
+#                                          Lexical variable '$name'
+#      Include (Channel, IRC, IRC::Handlers, IRC::Massage, List, Num, Outgoing, Server, Socket, Socket::TCP, Str, User)
 use warnings;
 use strict;
 use 5.010;
@@ -236,11 +370,11 @@ my $result = do {
                         $$self->{'real'}
                     )
                 ],
-                $scope, undef, 19.06667
+                $scope, undef, 26.06667
             );
             $$self->{'send'}->(
                 [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, 20.2
+                $scope, undef, 27.2
             );
             return $ret;
         }
@@ -254,9 +388,23 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'data', 25.2 ) or return;
+            FF::need( $scope, $args, 'data', 32.2 ) or return;
             $$self->{'_handleLine'}
-              ->( [ $$scope->{'data'} ], $scope, undef, 26.2 );
+              ->( [ $$scope->{'data'} ], $scope, undef, 33.2 );
+            return $ret;
+        }
+    );
+
+    # Anonymous function definition
+    my $func_2 = FF::function_def(
+        $f, undef, 'reset',
+        [],
+        sub {
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my $self = $_self || $self;
+            $self->set_property( users    => FF::create_hash( $f, {} ), 38.2 );
+            $self->set_property( channels => FF::create_hash( $f, {} ), 39.2 );
+            $self->set_property( servers  => FF::create_hash( $f, {} ), 40.2 );
             return $ret;
         }
     );
@@ -288,6 +436,12 @@ my $result = do {
                 { name => 'user', type => 'Str', optional => 1, more => undef },
                 { name => 'real', type => 'Str', optional => 1, more => undef },
                 {
+                    name     => 'autojoin',
+                    type     => 'List',
+                    optional => 1,
+                    more     => undef
+                },
+                {
                     name     => 'handlers',
                     type     => undef,
                     optional => 1,
@@ -298,14 +452,24 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'addr' ) or return;
                 FF::need( $self, $args, 'nick' ) or return;
-                FF::want( $self, $args, 'port', 6.2, num( $f, "6667" ) );
-                FF::want( $self, $args, 'user', 7.2, str( $f, "ferret" ) );
-                FF::want( $self, $args, 'real', 8.2, str( $f, "Ferret IRC" ) );
-                FF::want( $self, $args, 'handlers', 11.2,
+                FF::want( $self, $args, 'port', 8.2, num( $f, "6667" ) );
+                FF::want( $self, $args, 'user', 9.2,  str( $f, "ferret" ) );
+                FF::want( $self, $args, 'real', 10.2, str( $f, "Ferret IRC" ) );
+                FF::want( $self, $args, 'autojoin', 11.2 );
+                $self->set_property( users => FF::create_hash( $f, {} ), 13.2 );
+                $self->set_property(
+                    channels => FF::create_hash( $f, {} ),
+                    14.2
+                );
+                $self->set_property(
+                    servers => FF::create_hash( $f, {} ),
+                    15.2
+                );
+                FF::want( $self, $args, 'handlers', 18.2,
                     FF::create_object( $f, {} ) );
                 ${ $$self->{'handlers'} }->{'*addParent'}->(
                     [ ${ $$scope->{'IRC::Handlers'} }->{'handlers'} ],
-                    $scope, undef, 12.15
+                    $scope, undef, 19.15
                 );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
@@ -314,9 +478,9 @@ my $result = do {
                             port     => $$self->{'port'},
                             readMode => FF::get_symbol( $f, 'line' )
                         },
-                        $scope, undef, 15.3
+                        $scope, undef, 22.3
                     ),
-                    15.1
+                    22.1
                 );
                 FF::on(
                     $$self->{'sock'},
@@ -338,6 +502,16 @@ my $result = do {
                     ),
                     {}
                 );
+                FF::on(
+                    $$self->{'sock'},
+                    'disconnected',
+                    $self, $scope,
+                    $func_2->inside_scope(
+                        (undef) => $scope,
+                        undef, $class, undef, undef
+                    ),
+                    {}
+                );
                 return $ret;
             }
         );
@@ -349,7 +523,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 32.3 );
+                ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 48.3 );
                 return $ret;
             }
         );
@@ -367,13 +541,13 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'line', 36.2 ) or return;
+                FF::need( $scope, $args, 'line', 53.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, 37.2
+                    $scope, undef, 54.2
                 );
                 ${ $$self->{'sock'} }->{'println'}
-                  ->( [ $$scope->{'line'} ], $scope, undef, 38.3 );
+                  ->( [ $$scope->{'line'} ], $scope, undef, 55.3 );
                 return $ret;
             }
         );
@@ -392,16 +566,16 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'line', 42.2 ) or return;
+                FF::need( $scope, $args, 'line', 60.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
-                    $scope, undef, 43.2
+                    $scope, undef, 61.2
                 );
                 FF::lex_assign(
                     $scope,
                     msg => $$scope->{'IRC::Massage'}
-                      ->( [ $$scope->{'line'} ], $scope, undef, 46.3 ),
-                    $file_scope, 46.1
+                      ->( [ $$scope->{'line'} ], $scope, undef, 64.3 ),
+                    $file_scope, 64.1
                 );
                 {
                     my $maybe_0 = $$self->{'handlers'}
@@ -413,10 +587,148 @@ my $result = do {
                                 line  => $$scope->{'line'},
                                 msg   => $$scope->{'msg'}
                             },
-                            $scope, undef, 49.8
+                            $scope, undef, 67.8
                         );
                     }
                 }
+                return $ret;
+            }
+        );
+
+        # Method event 'getChannel' definition
+        my $method_4 = FF::method_event_def(
+            $f, $scope,
+            'getChannel',
+            [
+                {
+                    name     => 'name',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'name', 81.2 ) or return;
+                if (
+                    bool(
+                        FF::lex_assign(
+                            $scope,
+                            channel => $$self->{'channels'}->get_index_value(
+                                [ ${ $$scope->{'name'} }->{'lowercase'} ],
+                                $scope, 82.25
+                            ),
+                            $file_scope,
+                            82.15
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->( $$scope->{'channel'} );
+                }
+                return $ret_func->(
+                    $$scope->{'Channel'}->(
+                        {
+                            connection => ${ $scope->{special} }->{'self'},
+                            name       => $$scope->{'name'}
+                        },
+                        $scope, undef, 84.15
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'getUser' definition
+        my $method_5 = FF::method_event_def(
+            $f, $scope,
+            'getUser',
+            [
+                {
+                    name     => 'nick',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'nick', 89.2 ) or return;
+                if (
+                    bool(
+                        FF::lex_assign(
+                            $scope,
+                            user => $$self->{'users'}->get_index_value(
+                                [ ${ $$scope->{'nick'} }->{'lowercase'} ],
+                                $scope, 90.25
+                            ),
+                            $file_scope,
+                            90.15
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->( $$scope->{'user'} );
+                }
+                return $ret_func->(
+                    $$scope->{'User'}->(
+                        {
+                            connection => ${ $scope->{special} }->{'self'},
+                            nick       => $$scope->{'nick'}
+                        },
+                        $scope, undef, 92.15
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'getServer' definition
+        my $method_6 = FF::method_event_def(
+            $f, $scope,
+            'getServer',
+            [
+                {
+                    name     => 'name',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'name', 97.2 ) or return;
+                if (
+                    bool(
+                        FF::lex_assign(
+                            $scope,
+                            server => $$self->{'servers'}->get_index_value(
+                                [ ${ $$scope->{'name'} }->{'lowercase'} ],
+                                $scope, 98.25
+                            ),
+                            $file_scope,
+                            98.15
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->( $$scope->{'server'} );
+                }
+                return $ret_func->(
+                    $$scope->{'Server'}->(
+                        {
+                            connection => ${ $scope->{special} }->{'self'},
+                            name       => $$scope->{'name'}
+                        },
+                        $scope, undef, 100.15
+                    )
+                );
                 return $ret;
             }
         );
@@ -433,9 +745,22 @@ my $result = do {
             _handleLine => $scope,
             $proto, $class, undef, undef
         );
+        $method_4->inside_scope(
+            getChannel => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_5->inside_scope(
+            getUser => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_6->inside_scope(
+            getServer => $scope,
+            $proto, $class, undef, undef
+        );
     }
     FF::load_namespaces( $context,
-        qw(IRC IRC::Handlers IRC::Massage Num Socket Socket::TCP Str) );
+        qw(Channel IRC IRC::Handlers IRC::Massage List Num Outgoing Server Socket Socket::TCP Str User)
+    );
 };
 
 FF::after_content();

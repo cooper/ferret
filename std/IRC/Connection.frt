@@ -1,17 +1,24 @@
 package IRC
 class Connection
 
+load Outgoing
+
 init {
     need @addr: Str, @nick: Str
     want @port: Num = 6667
     want @user: Str = "ferret"
     want @real: Str = "Ferret IRC"
+    want @autojoin: List
+
+    @users    = [:] # map lc nicknames to user objects
+    @channels = [:] # map lc channel names to channel objects
+    @servers  = [:] # map lc server names to server objects
 
     # IRC command handlers. inherit from core handlers.
     want @handlers = (:)
     @handlers.*addParent(IRC::Handlers.handlers)
 
-    # create a socket
+    # create a line-stream socket
     @sock = Socket::TCP(address: @addr, port: @port, readMode: :line)
 
     # connect event
@@ -26,18 +33,29 @@ init {
         @_handleLine($data)
     }
 
+    # on disconnect, clear object pool
+    on @sock.disconnected, :reset {
+        @users    = [:]
+        @channels = [:]
+        @servers  = [:]
+    }
 }
 
+#=== Data ===
+
+#> Initiates the connection
 method connect {
     @sock.connect()
 }
 
+#> Sends a line of IRC data
 method send {
     need $line: Str
     say("send: $line")
     @sock.println($line)
 }
 
+#> Handles a raw line of IRC data
 method _handleLine {
     need $line: Str
     say("recv: $line")
@@ -51,4 +69,33 @@ method _handleLine {
         line:  $line,
         msg:   $msg
     )
+}
+
+#=== Objects ===
+
+# TODO: rather than using .lowercase, use proper IRC casemapping.
+# respect the CASEMAPPING token in RPL_ISUPPORT.
+
+#> Fetches a channel object from a channel name
+method getChannel {
+    need $name: Str
+    if $channel = @channels[$name.lowercase]:
+        return $channel
+    return Channel(connection: *self, name: $name)
+}
+
+#> Fetches a user object from a nickname
+method getUser {
+    need $nick: Str
+    if $user = @users[$nick.lowercase]:
+        return $user
+    return User(connection: *self, nick: $nick)
+}
+
+#> Fetches a server object from a server name
+method getServer {
+    need $name: Str
+    if $server = @servers[$name.lowercase]:
+        return $server
+    return Server(connection: *self, name: $name)
 }
