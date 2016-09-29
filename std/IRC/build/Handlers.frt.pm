@@ -12,17 +12,28 @@
 #      Function 'ping'
 #          Body ('function' scope)
 #              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 items]
-#                          Item 0
-#                              String 'handling ping'
+#                  Need
+#                      Lexical variable '$msg'
+#                      Argument type
+#                          Bareword 'Massage'
 #              Instruction
 #                  Call
 #                      Instance variable '@send'
 #                      Argument list [1 items]
 #                          Item 0
-#                              String 'PONG'
+#                              Operation
+#                                  String 'PONG :'
+#                                  Addition operator (+)
+#                                  Index
+#                                      Property 'params'
+#                                          Lexical variable '$msg'
+#                                      Index list [1 items]
+#                                          Item 0
+#                                              Operation
+#                                                  Constant zero
+#                                                  Negation operator (-)
+#                                                  Number '1'
+#      Include (Massage)
 use warnings;
 use strict;
 use 5.010;
@@ -43,7 +54,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Handlers.frt');
 
-use Ferret::Core::Operations qw(str);
+use Ferret::Core::Operations qw(_sub add num str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'IRC::Handlers' );
     my $scope = $file_scope;
@@ -52,17 +63,36 @@ my $result = do {
     # Function event 'ping' definition
     my $func_0 = FF::function_event_def(
         $f, $context, 'ping', undef,
-        [],
+        [
+            {
+                name     => 'msg',
+                type     => 'Massage',
+                optional => undef,
+                more     => undef
+            }
+        ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $$scope->{'say'}
-              ->( [ str( $f, "handling ping" ) ], $scope, undef, 8.2 );
-            $$self->{'send'}->( [ str( $f, "PONG" ) ], $scope, undef, 9.2 );
+            FF::need( $scope, $args, 'msg', 8.2 ) or return;
+            $$self->{'send'}->(
+                [
+                    add(
+                        $scope,
+                        str( $f, "PONG :" ),
+                        ${ $$scope->{'msg'} }->{'params'}->get_index_value(
+                            [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
+                            $scope, 9.35
+                        )
+                    )
+                ],
+                $scope, undef, 9.1
+            );
             return $ret;
         }
     );
     $func_0->inside_scope( ping => $scope, $context, undef, undef, undef );
+    FF::load_namespaces( $context, qw(Massage) );
 
     FF::lex_assign(
         $context,

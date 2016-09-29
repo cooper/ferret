@@ -5,7 +5,6 @@ init {
 
     #> a complete IRC message
     want $data: Str::NE
-    @_rest = []
 
     if $data:
         @parse($data)
@@ -22,8 +21,10 @@ method parse {
     $wordN = 0
 
     func updateWord {
+        want $incN: Bool
         $wordI = $wordI + 1 #$wordI++ # FIXME
-        $wordN = $wordN + 1 #$wordN++ # FIXME
+        if $incN:
+            $wordN = $wordN + 1 #$wordN++ # FIXME
         $lastWord = $word
     }
 
@@ -53,7 +54,6 @@ method parse {
             $gotTags = true
             @tags = $tags
 
-            $wordN = $wordN - 1 #$wordN-- FIXME
             updateWord()
             next # word
         }
@@ -64,7 +64,6 @@ method parse {
             $gotSource = true
             @source = $word
 
-            $wordN = $wordN - 1 #$wordN-- # FIXME
             updateWord()
             next # word
         }
@@ -74,25 +73,21 @@ method parse {
             $gotCommand = true
             @command = $word
 
-            $wordN = $wordN - 1 #$wordN-- # FIXME
             updateWord()
             next # word
         }
 
-        # this is for :rest.
-        if $wordN >= 0:
-            @_rest[$wordN] = $data.split(/\s+/, limit: $wordI + 1)[$wordI].trimPrefix(":")
-
         # sentinel-prefixed final parameter.
         if $word.hasPrefix(":") {
-            $params.push(@_rest[$wordN])
+            $rest = $data.split(/\s+/, limit: $wordI + 1)[$wordI].trimPrefix(":")
+            $params.push($rest)
             last # word
         }
 
         # all other parameters.
         $params.push($word)
 
-        updateWord()
+        updateWord(true)
     }
 
     @params = $params
