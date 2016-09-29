@@ -45,7 +45,7 @@
 #                              Bareword 'List'
 #                  Instruction
 #                      Call
-#                          Instance variable '@resetState'
+#                          Instance variable '@_resetState'
 #                          Argument list [0 items]
 #                  Instruction
 #                      Want
@@ -134,7 +134,7 @@
 #                          Body ('function' scope)
 #                              Instruction
 #                                  Call
-#                                      Bareword 'resetState'
+#                                      Instance variable '@_resetState'
 #                                      Argument list [0 items]
 #          Method 'connect'
 #              Body ('method' scope)
@@ -305,11 +305,14 @@
 #                                  Item 1
 #                                      Pair 'name'
 #                                          Lexical variable '$name'
-#          Method 'resetState'
+#          Method '_resetState'
 #              Body ('method' scope)
 #                  Instruction
 #                      Delete modifier
 #                          Instance variable '@registered'
+#                  Instruction
+#                      Delete modifier
+#                          Instance variable '@_didAutojoin'
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@server'
@@ -431,7 +434,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $$scope->{'resetState'}->( {}, $scope, undef, 36.2 );
+            $$self->{'_resetState'}->( {}, $scope, undef, 36.2 );
             return $ret;
         }
     );
@@ -483,7 +486,7 @@ my $result = do {
                 FF::want( $self, $args, 'user', 9.2,  str( $f, "ferret" ) );
                 FF::want( $self, $args, 'real', 10.2, str( $f, "Ferret IRC" ) );
                 FF::want( $self, $args, 'autojoin', 11.2 );
-                $$self->{'resetState'}->( {}, $scope, undef, 13.2 );
+                $$self->{'_resetState'}->( {}, $scope, undef, 13.2 );
                 FF::want( $self, $args, 'handlers', 16.2,
                     FF::create_object( $f, {} ) );
                 ${ $$self->{'handlers'} }->{'*addParent'}->(
@@ -752,23 +755,24 @@ my $result = do {
             }
         );
 
-        # Method event 'resetState' definition
+        # Method event '_resetState' definition
         my $method_7 = FF::method_event_def(
             $f, $scope,
-            'resetState',
+            '_resetState',
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $self->delete_property( 'registered', 102.1 );
+                $self->delete_property( 'registered',   102.1 );
+                $self->delete_property( '_didAutojoin', 103.1 );
                 $self->set_property(
                     server => $$scope->{'Server'}->(
                         {
                             connection => ${ $scope->{special} }->{'self'},
                             name       => $$self->{'addr'}
                         },
-                        $scope, undef, 103.2
+                        $scope, undef, 104.2
                     ),
-                    103.1
+                    104.1
                 );
                 $self->set_property(
                     me => $$scope->{'User'}->(
@@ -777,21 +781,21 @@ my $result = do {
                             nick       => $$self->{'nick'},
                             user       => $$self->{'user'}
                         },
-                        $scope, undef, 104.2
+                        $scope, undef, 105.2
                     ),
-                    104.1
+                    105.1
                 );
                 $self->set_property(
                     users => FF::create_hash( $f, {} ),
-                    105.2
-                );
-                $self->set_property(
-                    channels => FF::create_hash( $f, {} ),
                     106.2
                 );
                 $self->set_property(
-                    servers => FF::create_hash( $f, {} ),
+                    channels => FF::create_hash( $f, {} ),
                     107.2
+                );
+                $self->set_property(
+                    servers => FF::create_hash( $f, {} ),
+                    108.2
                 );
                 return $ret;
             }
@@ -822,7 +826,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
         $method_7->inside_scope(
-            resetState => $scope,
+            _resetState => $scope,
             $proto, $class, undef, undef
         );
     }

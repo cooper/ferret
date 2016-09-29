@@ -100,6 +100,7 @@ method getServer {
 
 method _resetState {
     delete @registered
+    delete @_didAutojoin
     @server   = Server(connection: *self, name: @addr)
     @me       = User(connection: *self, nick: @nick, user: @user)
     @users    = [:]

@@ -49,6 +49,22 @@
 #                                      String ' :'
 #                                      Addition operator (+)
 #                                      Lexical variable '$message'
+#          Method 'requestNick'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$nick'
+#                          Argument type
+#                              Bareword 'Str'
+#                  Instruction
+#                      Call
+#                          Instance variable '@send'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String 'NICK '
+#                                      Addition operator (+)
+#                                      Lexical variable '$nick'
 #      Include (Str)
 use warnings;
 use strict;
@@ -156,9 +172,36 @@ my $result = do {
                 return $ret;
             }
         );
+
+        # Method event 'requestNick' definition
+        my $method_2 = FF::method_event_def(
+            $f, $scope,
+            'requestNick',
+            [
+                {
+                    name     => 'nick',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'nick', 20.2 ) or return;
+                $$self->{'send'}->(
+                    [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],
+                    $scope, undef, 21.2
+                );
+                return $ret;
+            }
+        );
         $method_0->inside_scope( join => $scope, $proto, $class, undef, undef );
         $method_1->inside_scope(
             privmsg => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_2->inside_scope(
+            requestNick => $scope,
             $proto, $class, undef, undef
         );
     }

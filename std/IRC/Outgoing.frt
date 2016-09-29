@@ -13,3 +13,10 @@ method privmsg {
     need $target: Str, $message: Str
     @send("PRIVMSG $target :$message")
 }
+
+#> Request a new nickname
+# note that we don't set @me.nick until it is acknowledged
+method requestNick {
+    need $nick: Str
+    @send("NICK $nick")
+}

@@ -6,7 +6,8 @@ share $handlers = (
     004:    myInfo,
     376:    endOfMOTD,      # end of motd
     396:    hiddenHost,     # is now your hidden host
-    422:    endOfMOTD       # no motd found
+    422:    endOfMOTD,      # no motd found
+    433:    nickInUse       # nickname already in use
 )
 
 func ping {
@@ -37,13 +38,22 @@ func myInfo {
 }
 
 func endOfMOTD {
-    if !@autojoin:
+    if !@autojoin || @_didAutojoin:
         return
     @join(channelNames: @autojoin)
+    @_didAutojoin = true
 }
 
 # recv: :k.notroll.net 396 booby 73.88.xkw.t :is now your hidden host
 func hiddenHost {
     need $msg
     @me.host = $msg.params[1]
+}
+
+# during registration, add underscores to nickname as necessary
+func nickInUse {
+    if @registered:
+        return
+    @me.nick = @me.nick + "_"
+    @requestNick(@me.nick)
 }

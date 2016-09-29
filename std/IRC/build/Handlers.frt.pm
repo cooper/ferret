@@ -5,7 +5,7 @@
 #          Shared variable declaration
 #              Assignment
 #                  Lexical variable '$handlers'
-#                  Object [6 items]
+#                  Object [7 items]
 #                      Item 0
 #                          Pair 'PING'
 #                              Bareword 'ping'
@@ -24,6 +24,9 @@
 #                      Item 5
 #                          Pair '422'
 #                              Bareword 'endOfMOTD'
+#                      Item 6
+#                          Pair '433'
+#                              Bareword 'nickInUse'
 #      Function 'ping'
 #          Body ('function' scope)
 #              Instruction
@@ -129,8 +132,11 @@
 #          Body ('function' scope)
 #              If
 #                  Expression ('if' parameter)
-#                      Negation
-#                          Instance variable '@autojoin'
+#                      Operation
+#                          Negation
+#                              Instance variable '@autojoin'
+#                          Logical or operator (||)
+#                          Instance variable '@_didAutojoin'
 #                  Body ('if' scope)
 #                      Instruction
 #                          Return
@@ -141,6 +147,10 @@
 #                          Item 0
 #                              Pair 'channelNames'
 #                                  Instance variable '@autojoin'
+#              Instruction
+#                  Assignment
+#                      Instance variable '@_didAutojoin'
+#                      Boolean true
 #      Function 'hiddenHost'
 #          Body ('function' scope)
 #              Instruction
@@ -156,6 +166,30 @@
 #                          Index list [1 items]
 #                              Item 0
 #                                  Number '1'
+#      Function 'nickInUse'
+#          Body ('function' scope)
+#              If
+#                  Expression ('if' parameter)
+#                      Instance variable '@registered'
+#                  Body ('if' scope)
+#                      Instruction
+#                          Return
+#              Instruction
+#                  Assignment
+#                      Property 'nick'
+#                          Instance variable '@me'
+#                      Operation
+#                          Property 'nick'
+#                              Instance variable '@me'
+#                          Addition operator (+)
+#                          String '_'
+#              Instruction
+#                  Call
+#                      Instance variable '@requestNick'
+#                      Argument list [1 items]
+#                          Item 0
+#                              Property 'nick'
+#                                  Instance variable '@me'
 use warnings;
 use strict;
 use 5.010;
@@ -176,7 +210,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Handlers.frt');
 
-use Ferret::Core::Operations qw(_not _sub add bool num rgx sim str);
+use Ferret::Core::Operations qw(_not _sub add any_true bool num rgx sim str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'IRC::Handlers' );
     my $scope = $file_scope;
@@ -189,7 +223,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 13.2 ) or return;
+            FF::need( $scope, $args, 'msg', 14.2 ) or return;
             $$self->{'send'}->(
                 [
                     add(
@@ -197,11 +231,11 @@ my $result = do {
                         str( $f, "PONG :" ),
                         ${ $$scope->{'msg'} }->{'params'}->get_index_value(
                             [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
-                            $scope, 14.35
+                            $scope, 15.35
                         )
                     )
                 ],
-                $scope, undef, 14.1
+                $scope, undef, 15.1
             );
             return $ret;
         }
@@ -216,12 +250,12 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 18.2 ) or return;
-            $self->set_property( registered => $true, 19.2 );
+            FF::need( $scope, $args, 'msg', 19.2 ) or return;
+            $self->set_property( registered => $true, 20.2 );
             $$self->{'me'}->set_property(
                 nick => ${ $$scope->{'msg'} }->{'params'}
-                  ->get_index_value( [ num( $f, "0" ) ], $scope, 20.3 ),
-                20.15
+                  ->get_index_value( [ num( $f, "0" ) ], $scope, 21.3 ),
+                21.15
             );
             if (
                 bool(
@@ -229,7 +263,7 @@ my $result = do {
                         $scope,
                         ${ $$scope->{'msg'} }->{'params'}->get_index_value(
                             [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
-                            $scope, 25.2
+                            $scope, 26.2
                         ),
                         rgx( $f, undef, "^(.+)!(.+)\\\@(.+)\$", undef )
                     )
@@ -238,11 +272,11 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $$self->{'me'}->set_property( nick => $$scope->{'1'}, 26.3 );
-                $$self->{'me'}->set_property( user => $$scope->{'2'}, 27.3 );
-                $$self->{'me'}->set_property( host => $$scope->{'3'}, 28.3 );
+                $$self->{'me'}->set_property( nick => $$scope->{'1'}, 27.3 );
+                $$self->{'me'}->set_property( user => $$scope->{'2'}, 28.3 );
+                $$self->{'me'}->set_property( host => $$scope->{'3'}, 29.3 );
                 $$self->{'me'}
-                  ->set_property( realHost => $$scope->{'3'}, 29.3 );
+                  ->set_property( realHost => $$scope->{'3'}, 30.3 );
             }
             return $ret;
         }
@@ -255,16 +289,16 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 34.2 ) or return;
+            FF::need( $scope, $args, 'msg', 35.2 ) or return;
             $$self->{'server'}->set_property(
                 name => ${ $$scope->{'msg'} }->{'params'}
-                  ->get_index_value( [ num( $f, "1" ) ], $scope, 35.3 ),
-                35.15
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, 36.3 ),
+                36.15
             );
             $$self->{'server'}->set_property(
                 version => ${ $$scope->{'msg'} }->{'params'}
-                  ->get_index_value( [ num( $f, "2" ) ], $scope, 36.3 ),
-                36.15
+                  ->get_index_value( [ num( $f, "2" ) ], $scope, 37.3 ),
+                37.15
             );
             return $ret;
         }
@@ -279,15 +313,25 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            if ( bool( _not( $$self->{'autojoin'} ) ) ) {
+            if (
+                bool(
+                    any_true(
+                        $scope,
+                        sub { _not( $$self->{'autojoin'} ) },
+                        sub { $$self->{'_didAutojoin'} }
+                    )
+                )
+              )
+            {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 return $ret_func->();
             }
             $$self->{'join'}->(
                 { channelNames => $$self->{'autojoin'} },
-                $scope, undef, 42.2
+                $scope, undef, 43.2
             );
+            $self->set_property( _didAutojoin => $true, 44.2 );
             return $ret;
         }
     );
@@ -301,12 +345,37 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 47.2 ) or return;
+            FF::need( $scope, $args, 'msg', 49.2 ) or return;
             $$self->{'me'}->set_property(
                 host => ${ $$scope->{'msg'} }->{'params'}
-                  ->get_index_value( [ num( $f, "1" ) ], $scope, 48.3 ),
-                48.15
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, 50.3 ),
+                50.15
             );
+            return $ret;
+        }
+    );
+
+    # Function event 'nickInUse' definition
+    my $func_5 = FF::function_event_def(
+        $f, $context,
+        'nickInUse',
+        undef,
+        [],
+        sub {
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my $self = $_self || $self;
+            if ( bool( $$self->{'registered'} ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                return $ret_func->();
+            }
+            $$self->{'me'}->set_property(
+                nick =>
+                  add( $scope, ${ $$self->{'me'} }->{'nick'}, str( $f, "_" ) ),
+                57.3
+            );
+            $$self->{'requestNick'}
+              ->( [ ${ $$self->{'me'} }->{'nick'} ], $scope, undef, 58.2 );
             return $ret;
         }
     );
@@ -318,6 +387,7 @@ my $result = do {
         hiddenHost => $scope,
         $context, undef, undef, undef
     );
+    $func_5->inside_scope( nickInUse => $scope, $context, undef, undef, undef );
 
     FF::lex_assign(
         $context,
@@ -329,7 +399,8 @@ my $result = do {
                 '004' => $$scope->{'myInfo'},
                 '376' => $$scope->{'endOfMOTD'},
                 '396' => $$scope->{'hiddenHost'},
-                '422' => $$scope->{'endOfMOTD'}
+                '422' => $$scope->{'endOfMOTD'},
+                '433' => $$scope->{'nickInUse'}
             }
         ),
         undef,
