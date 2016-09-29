@@ -157,7 +157,10 @@ sub get_value {
 
     # handle negative indices (from right side).
     if ($index < 0) {
-        $index = $#{ $list->{list_items} } + $index;
+        # [1,2,3]
+        # -1    2   $#
+        # -2    1   $# - 1
+        $index = $#{ $list->{list_items} } + $index + 1;
     }
 
     return $list->{list_items}[$index];
