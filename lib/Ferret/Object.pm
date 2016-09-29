@@ -519,7 +519,7 @@ sub create_set {
 }
 
 sub description {
-    my ($obj, $own_only, $compute, $no_method) = @_;
+    my ($obj, $own_only, $compute, $no_method, $ignore) = @_;
 
     return 'undefined' if Ferret::undefined($obj);
     return 'true'      if $obj == Ferret::true;
@@ -558,8 +558,9 @@ sub description {
         $prop_name = "($prop_name)" if $owner != $obj;
 
         # indent lines
-        $value = blessed $value ? join "\n    ", split /\n/,
-            _pdescription($value, $own_only, $compute) : '(computed)';
+        $value = $value == $ignore ? '(recursion)' :
+            blessed $value ? join "\n    ", split /\n/,
+            _pdescription($value, $own_only, $compute, $obj) : '(computed)';
         $prop_str .= '    '.$prop_name." = $value\n";
 
     }

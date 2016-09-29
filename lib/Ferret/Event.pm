@@ -138,7 +138,6 @@ sub add_function_with_opts {
     # for object-specific callbacks, the callback is registered to
     # the object (instance) itself. otherwise, it is registered to
     # this event object.
-    Ferret::inspect($obj) if $obj;
       $obj->on($event->{id} => $code, %opts)  if  $obj;
     $event->on(call         => $code, %opts)  if !$obj;
 
