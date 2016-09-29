@@ -252,7 +252,8 @@
 #                                  Instruction
 #                                      Assignment
 #                                          Instance variable '@command'
-#                                          Lexical variable '$word'
+#                                          Property 'uppercase'
+#                                              Lexical variable '$word'
 #                                  Instruction
 #                                      Call
 #                                          Bareword 'updateWord'
@@ -318,6 +319,49 @@
 #                      Assignment
 #                          Instance variable '@params'
 #                          Lexical variable '$params'
+#          Computed property '_parsedSource' (lazy)
+#              Body ('method' scope)
+#                  If
+#                      Expression ('if' parameter)
+#                          Negation
+#                              Instance variable '@source'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Return
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Instance variable '@source'
+#                              Similarity operator (=~)
+#                              Regex /^(.+)!(.+).../
+#                      Body ('if' scope)
+#                          Instruction
+#                              Return pair 'nick'
+#                                  Lexical variable '$1'
+#                          Instruction
+#                              Return pair 'ident'
+#                                  Lexical variable '$2'
+#                          Instruction
+#                              Return pair 'host'
+#                                  Lexical variable '$3'
+#          Computed property 'nick'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Property 'nick'
+#                              Instance variable '@_parsedSource'
+#          Computed property 'ident'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Property 'ident'
+#                              Instance variable '@_parsedSource'
+#          Computed property 'host'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Property 'host'
+#                              Instance variable '@_parsedSource'
 #      Include (Bool, Str, Str::NE)
 use warnings;
 use strict;
@@ -339,7 +383,8 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Massage.frt');
 
-use Ferret::Core::Operations qw(_not add all_true bool equal gr8r num rgx str);
+use Ferret::Core::Operations
+  qw(_not add all_true bool equal gr8r num rgx sim str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
     my $scope = $file_scope;
@@ -524,10 +569,10 @@ my $result = do {
                                                         }
                                                     ],
                                                     $scope, undef,
-                                                    42.25
+                                                    43.25
                                                   ),
                                                 $file_scope,
-                                                42.1
+                                                43.1
                                             );
                                             if (
                                                 bool(
@@ -553,21 +598,21 @@ my $result = do {
                                                           ->get_index_value(
                                                             [ num( $f, "0" ) ],
                                                             $scope,
-                                                            44.2
+                                                            45.2
                                                           )
                                                     ],
                                                     $$scope->{'tagParts'}
                                                       ->get_index_value(
                                                         [ num( $f, "1" ) ],
-                                                        $scope, 44.5
+                                                        $scope, 45.5
                                                       ),
-                                                    $scope, 44.4
+                                                    $scope, 45.4
                                                   );
                                                 return 'next';
                                             }
                                             $$scope->{'tags'}->set_index_value(
                                                 [ $$scope->{'tag'} ],
-                                                $true, $scope, 49.5 );
+                                                $true, $scope, 50.5 );
                                         },
                                         39.05
                                     );
@@ -576,14 +621,14 @@ my $result = do {
                                 FF::lex_assign(
                                     $scope,
                                     gotTags => $true,
-                                    $file_scope, 54.2
+                                    $file_scope, 55.2
                                 );
                                 $self->set_property(
                                     tags => $$scope->{'tags'},
-                                    55.2
+                                    56.2
                                 );
                                 $$scope->{'updateWord'}
-                                  ->( {}, $scope, undef, 57.2 );
+                                  ->( {}, $scope, undef, 58.2 );
                                 return 'next';
                             }
                             if (
@@ -596,7 +641,7 @@ my $result = do {
                                             ${ $$scope->{'word'} }
                                               ->{'hasPrefix'}->(
                                                 [ str( $f, ":" ) ],
-                                                $scope, undef, 62.5
+                                                $scope, undef, 63.5
                                               );
                                         }
                                     )
@@ -611,22 +656,22 @@ my $result = do {
                                     word =>
                                       ${ $$scope->{'word'} }->{'trimPrefix'}->(
                                         [ str( $f, ":" ) ], $scope,
-                                        undef, 63.5
+                                        undef, 64.5
                                       ),
                                     $file_scope,
-                                    63.2
+                                    64.2
                                 );
                                 FF::lex_assign(
                                     $scope,
                                     gotSource => $true,
-                                    $file_scope, 64.2
+                                    $file_scope, 65.2
                                 );
                                 $self->set_property(
                                     source => $$scope->{'word'},
-                                    65.2
+                                    66.2
                                 );
                                 $$scope->{'updateWord'}
-                                  ->( {}, $scope, undef, 67.2 );
+                                  ->( {}, $scope, undef, 68.2 );
                                 return 'next';
                             }
                             if ( bool( _not( $$scope->{'gotCommand'} ) ) ) {
@@ -636,21 +681,22 @@ my $result = do {
                                 FF::lex_assign(
                                     $scope,
                                     gotCommand => $true,
-                                    $file_scope, 73.2
+                                    $file_scope, 74.2
                                 );
                                 $self->set_property(
-                                    command => $$scope->{'word'},
-                                    74.2
+                                    command =>
+                                      ${ $$scope->{'word'} }->{'uppercase'},
+                                    75.2
                                 );
                                 $$scope->{'updateWord'}
-                                  ->( {}, $scope, undef, 76.2 );
+                                  ->( {}, $scope, undef, 77.2 );
                                 return 'next';
                             }
                             if (
                                 bool(
                                     ${ $$scope->{'word'} }->{'hasPrefix'}->(
                                         [ str( $f, ":" ) ], $scope,
-                                        undef, 81.4
+                                        undef, 82.4
                                     )
                                 )
                               )
@@ -672,34 +718,98 @@ my $result = do {
                                                     )
                                                 }
                                             ],
-                                            $scope, undef, 82.16667
+                                            $scope, undef, 83.16667
                                           )->get_index_value(
                                             [ $$scope->{'wordI'} ], $scope,
-                                            82.43333
+                                            83.43333
                                           )
                                       }->{'trimPrefix'}->(
                                         [ str( $f, ":" ) ], $scope,
-                                        undef, 82.56667
+                                        undef, 83.56667
                                       ),
                                     $file_scope,
-                                    82.06667
+                                    83.06667
                                 );
                                 ${ $$scope->{'params'} }->{'push'}->(
                                     [ $$scope->{'rest'} ],
-                                    $scope, undef, 83.3
+                                    $scope, undef, 84.3
                                 );
                                 return 'last';
                             }
                             ${ $$scope->{'params'} }->{'push'}
-                              ->( [ $$scope->{'word'} ], $scope, undef, 88.3 );
+                              ->( [ $$scope->{'word'} ], $scope, undef, 89.3 );
                             $$scope->{'updateWord'}
-                              ->( [$true], $scope, undef, 90.2 );
+                              ->( [$true], $scope, undef, 91.2 );
                         },
                         31.1
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
-                $self->set_property( params => $$scope->{'params'}, 93.2 );
+                $self->set_property( params => $$scope->{'params'}, 94.2 );
+                return $ret;
+            }
+        );
+
+        # Method event '_parsedSource' definition
+        my $method_2 = FF::method_event_def(
+            $f, $scope,
+            '_parsedSource',
+            [],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                if ( bool( _not( $$self->{'source'} ) ) ) {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->();
+                }
+                if (
+                    bool(
+                        sim(
+                            $scope, $$self->{'source'},
+                            rgx( $f, undef, "^(.+)!(.+)\\\@(.+)\$", undef )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    $ret->set_property( nick  => $$scope->{'1'}, 101.2 );
+                    $ret->set_property( ident => $$scope->{'2'}, 102.2 );
+                    $ret->set_property( host  => $$scope->{'3'}, 103.2 );
+                }
+                return $ret;
+            }
+        );
+
+        # Method event 'nick' definition
+        my $method_3 = FF::method_event_def(
+            $f, $scope, 'nick',
+            [],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                return $ret_func->( ${ $$self->{'_parsedSource'} }->{'nick'} );
+                return $ret;
+            }
+        );
+
+        # Method event 'ident' definition
+        my $method_4 = FF::method_event_def(
+            $f, $scope, 'ident',
+            [],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                return $ret_func->( ${ $$self->{'_parsedSource'} }->{'ident'} );
+                return $ret;
+            }
+        );
+
+        # Method event 'host' definition
+        my $method_5 = FF::method_event_def(
+            $f, $scope, 'host',
+            [],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                return $ret_func->( ${ $$self->{'_parsedSource'} }->{'host'} );
                 return $ret;
             }
         );
@@ -711,6 +821,13 @@ my $result = do {
             parse => $scope,
             $proto, $class, undef, undef
         );
+        $method_2->inside_scope(
+            _parsedSource => $scope,
+            $proto, $class, 1, 1
+        );
+        $method_3->inside_scope( nick  => $scope, $proto, $class, 1, undef );
+        $method_4->inside_scope( ident => $scope, $proto, $class, 1, undef );
+        $method_5->inside_scope( host  => $scope, $proto, $class, 1, undef );
     }
     FF::load_namespaces( $context, qw(Bool Str Str::NE) );
 };

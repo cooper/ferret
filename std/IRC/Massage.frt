@@ -39,6 +39,7 @@ method parse {
             for $tag in $word.split(";") {
 
                 # does the tag have a value?
+                # TODO: handle standardized escapes
                 $tagParts = $tag.split("=", limit: 2)
                 if $tagParts.length > 1 {
                     $tags[ $tagParts[0] ] = $tagParts[1]
@@ -71,7 +72,7 @@ method parse {
         # otherwise this is the command if we haven't determined it.
         if !$gotCommand {
             $gotCommand = true
-            @command = $word
+            @command = $word.uppercase
 
             updateWord()
             next # word
@@ -92,3 +93,17 @@ method parse {
 
     @params = $params
 }
+
+prop? _parsedSource {
+    if !@source:
+        return
+    if @source =~ /^(.+)!(.+)\@(.+)$/ {
+        nick  -> $1
+        ident -> $2
+        host  -> $3
+    }
+}
+
+prop nick   { return @_parsedSource.nick    }
+prop ident  { return @_parsedSource.ident   }
+prop host   { return @_parsedSource.host    }
