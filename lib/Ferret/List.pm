@@ -148,7 +148,7 @@ sub set_value {
 sub _set_value {
     my ($list, $args) = @_;
     my $index = $args->pnumber('index');
-    $list->set_value($index, $args->{value});
+    $list->set_value($index, $args->{item});
     return $list;
 }
 

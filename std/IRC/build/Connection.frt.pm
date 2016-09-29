@@ -160,7 +160,34 @@
 #                                      String 'recv: '
 #                                      Addition operator (+)
 #                                      Lexical variable '$line'
-#      Include (IRC, IRC::Handlers, Num, Socket, Socket::TCP, Str)
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$msg'
+#                          Call
+#                              Bareword 'IRC::Massage'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$line'
+#                  Instruction
+#                      Call
+#                          Maybe
+#                              Property (name evaluated at runtime)
+#                                  Instance variable '@handlers'
+#                                  Property index [1 items]
+#                                      Item 0
+#                                          Property 'command'
+#                                              Lexical variable '$msg'
+#                          Named argument list [3 items]
+#                              Item 0
+#                                  Pair '_self'
+#                                      Special variable '*self'
+#                              Item 1
+#                                  Pair 'line'
+#                                      Lexical variable '$line'
+#                              Item 2
+#                                  Pair 'msg'
+#                                      Lexical variable '$msg'
+#      Include (IRC, IRC::Handlers, IRC::Massage, Num, Socket, Socket::TCP, Str)
 use warnings;
 use strict;
 use 5.010;
@@ -181,7 +208,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 FF::before_content('Connection.frt');
 
-use Ferret::Core::Operations qw(add num str);
+use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
     my $scope = $file_scope;
@@ -370,6 +397,26 @@ my $result = do {
                     [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
                     $scope, undef, 43.2
                 );
+                FF::lex_assign(
+                    $scope,
+                    msg => $$scope->{'IRC::Massage'}
+                      ->( [ $$scope->{'line'} ], $scope, undef, 46.3 ),
+                    $file_scope, 46.1
+                );
+                {
+                    my $maybe_0 = $$self->{'handlers'}
+                      ->property_eval_u( ${ $$scope->{'msg'} }->{'command'} );
+                    if ( bool($maybe_0) ) {
+                        $maybe_0->(
+                            {
+                                _self => ${ $scope->{special} }->{'self'},
+                                line  => $$scope->{'line'},
+                                msg   => $$scope->{'msg'}
+                            },
+                            $scope, undef, 49.8
+                        );
+                    }
+                }
                 return $ret;
             }
         );
@@ -388,7 +435,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context,
-        qw(IRC IRC::Handlers Num Socket Socket::TCP Str) );
+        qw(IRC IRC::Handlers IRC::Massage Num Socket Socket::TCP Str) );
 };
 
 FF::after_content();

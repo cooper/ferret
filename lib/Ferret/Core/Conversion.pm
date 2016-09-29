@@ -81,6 +81,7 @@ sub pstring {
 # return a perl object description.
 sub pdescription {
     my ($val, $own_only, $compute) = @_;
+    return if !defined $val || !blessed $val;
     return $val->description($own_only, $compute) if $val->can('description');
 }
 

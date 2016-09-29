@@ -9,6 +9,10 @@
 #                          Lexical variable '$data'
 #                          Argument type
 #                              Bareword 'Str::NE'
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@_rest'
+#                          Value list [0 items]
 #                  If
 #                      Expression ('if' parameter)
 #                          Lexical variable '$data'
@@ -19,10 +23,6 @@
 #                                  Argument list [1 items]
 #                                      Item 0
 #                                          Lexical variable '$data'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@_rest'
-#                          Value list [0 items]
 #          Method 'parse'
 #              Body ('method' scope)
 #                  Instruction
@@ -251,6 +251,67 @@
 #                                      LoopStatement
 #                          If
 #                              Expression ('if' parameter)
+#                                  Negation
+#                                      Lexical variable '$gotCommand'
+#                              Body ('if' scope)
+#                                  Instruction
+#                                      Assignment
+#                                          Lexical variable '$gotCommand'
+#                                          Boolean true
+#                                  Instruction
+#                                      Assignment
+#                                          Instance variable '@command'
+#                                          Lexical variable '$word'
+#                                  Instruction
+#                                      Assignment
+#                                          Lexical variable '$wordN'
+#                                          Operation
+#                                              Lexical variable '$wordN'
+#                                              Subtraction operator (-)
+#                                              Number '1'
+#                                  Instruction
+#                                      Call
+#                                          Bareword 'updateWord'
+#                                          Argument list [0 items]
+#                                  Instruction
+#                                      LoopStatement
+#                          If
+#                              Expression ('if' parameter)
+#                                  Operation
+#                                      Lexical variable '$wordN'
+#                                      Greater than or equal to operator (>=)
+#                                      Number '0'
+#                              Body ('if' scope)
+#                                  Instruction
+#                                      Assignment
+#                                          Index
+#                                              Instance variable '@_rest'
+#                                              Index list [1 items]
+#                                                  Item 0
+#                                                      Lexical variable '$wordN'
+#                                          Call
+#                                              Property 'trimPrefix'
+#                                                  Index
+#                                                      Call
+#                                                          Property 'split'
+#                                                              Lexical variable '$data'
+#                                                          Mixed argument list [2 items]
+#                                                              Item 0
+#                                                                  Regex /\s+/
+#                                                              Item 1
+#                                                                  Pair 'limit'
+#                                                                      Operation
+#                                                                          Lexical variable '$wordI'
+#                                                                          Addition operator (+)
+#                                                                          Number '1'
+#                                                      Index list [1 items]
+#                                                          Item 0
+#                                                              Lexical variable '$wordI'
+#                                              Argument list [1 items]
+#                                                  Item 0
+#                                                      String ':'
+#                          If
+#                              Expression ('if' parameter)
 #                                  Call
 #                                      Property 'hasPrefix'
 #                                          Lexical variable '$word'
@@ -308,7 +369,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 FF::before_content('Massage.frt');
 
 use Ferret::Core::Operations
-  qw(_not _sub add all_true bool equal gr8r num rgx str);
+  qw(_not _sub add all_true bool equal gr8r gr8r_e num rgx str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
     my $scope = $file_scope;
@@ -362,13 +423,13 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::want( $scope, $args, 'data', 7.2 );
+                $self->set_property( _rest => FF::create_list( $f, [] ), 8.2 );
                 if ( bool( $$scope->{'data'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $$self->{'parse'}
-                      ->( [ $$scope->{'data'} ], $scope, undef, 9.2 );
+                      ->( [ $$scope->{'data'} ], $scope, undef, 11.2 );
                 }
-                $self->set_property( _rest => FF::create_list( $f, [] ), 11.2 );
                 return $ret;
             }
         );
@@ -612,11 +673,75 @@ my $result = do {
                                   ->( {}, $scope, undef, 68.2 );
                                 return 'next';
                             }
+                            if ( bool( _not( $$scope->{'gotCommand'} ) ) ) {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                FF::lex_assign(
+                                    $scope,
+                                    gotCommand => $true,
+                                    $file_scope, 74.2
+                                );
+                                $self->set_property(
+                                    command => $$scope->{'word'},
+                                    75.2
+                                );
+                                FF::lex_assign(
+                                    $scope,
+                                    wordN => _sub(
+                                        $scope, $$scope->{'wordN'},
+                                        num( $f, "1" )
+                                    ),
+                                    $file_scope,
+                                    77.2
+                                );
+                                $$scope->{'updateWord'}
+                                  ->( {}, $scope, undef, 78.2 );
+                                return 'next';
+                            }
+                            if (
+                                bool(
+                                    gr8r_e(
+                                        $scope, $$scope->{'wordN'},
+                                        num( $f, "0" )
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                $$self->{'_rest'}->set_index_value(
+                                    [ $$scope->{'wordN'} ],
+                                    ${
+                                        ${ $$scope->{'data'} }->{'split'}->(
+                                            [
+                                                rgx( $f, undef, "\\s+", undef ),
+                                                {
+                                                    limit => add(
+                                                        $scope,
+                                                        $$scope->{'wordI'},
+                                                        num( $f, "1" )
+                                                    )
+                                                }
+                                            ],
+                                            $scope, undef, 84.26667
+                                          )->get_index_value(
+                                            [ $$scope->{'wordI'} ], $scope,
+                                            84.53333
+                                          )
+                                      }->{'trimPrefix'}->(
+                                        [ str( $f, ":" ) ], $scope,
+                                        undef, 84.66667
+                                      ),
+                                    $scope, 84.16667
+                                );
+                            }
                             if (
                                 bool(
                                     ${ $$scope->{'word'} }->{'hasPrefix'}->(
                                         [ str( $f, ":" ) ], $scope,
-                                        undef, 76.4
+                                        undef, 87.4
                                     )
                                 )
                               )
@@ -628,23 +753,23 @@ my $result = do {
                                     [
                                         $$self->{'_rest'}->get_index_value(
                                             [ $$scope->{'wordN'} ], $scope,
-                                            77.25
+                                            88.25
                                         )
                                     ],
-                                    $scope, undef, 77.15
+                                    $scope, undef, 88.15
                                 );
                                 return 'last';
                             }
                             ${ $$scope->{'params'} }->{'push'}
-                              ->( [ $$scope->{'word'} ], $scope, undef, 82.3 );
+                              ->( [ $$scope->{'word'} ], $scope, undef, 93.3 );
                             $$scope->{'updateWord'}
-                              ->( {}, $scope, undef, 84.2 );
+                              ->( {}, $scope, undef, 95.2 );
                         },
                         30.1
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
-                $self->set_property( params => $$scope->{'params'}, 87.2 );
+                $self->set_property( params => $$scope->{'params'}, 98.2 );
                 return $ret;
             }
         );

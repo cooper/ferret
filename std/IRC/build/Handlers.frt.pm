@@ -17,6 +17,12 @@
 #                      Argument list [1 items]
 #                          Item 0
 #                              String 'handling ping'
+#              Instruction
+#                  Call
+#                      Instance variable '@send'
+#                      Argument list [1 items]
+#                          Item 0
+#                              String 'PONG'
 use warnings;
 use strict;
 use 5.010;
@@ -52,6 +58,7 @@ my $result = do {
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "handling ping" ) ], $scope, undef, 8.2 );
+            $$self->{'send'}->( [ str( $f, "PONG" ) ], $scope, undef, 9.2 );
             return $ret;
         }
     );

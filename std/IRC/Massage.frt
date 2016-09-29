@@ -5,10 +5,10 @@ init {
 
     #> a complete IRC message
     want $data: Str::NE
+    @_rest = []
+
     if $data:
         @parse($data)
-
-    @_rest = []
 }
 
 method parse {
@@ -69,8 +69,19 @@ method parse {
             next # word
         }
 
+        # otherwise this is the command if we haven't determined it.
+        if !$gotCommand {
+            $gotCommand = true
+            @command = $word
+
+            $wordN = $wordN - 1 #$wordN-- # FIXME
+            updateWord()
+            next # word
+        }
+
         # this is for :rest.
-        #@_rest[$wordN] FIXME
+        if $wordN >= 0:
+            @_rest[$wordN] = $data.split(/\s+/, limit: $wordI + 1)[$wordI].trimPrefix(":")
 
         # sentinel-prefixed final parameter.
         if $word.hasPrefix(":") {

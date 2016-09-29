@@ -6,4 +6,5 @@ share $handlers = (
 
 func ping {
     say("handling ping")
+    @send("PONG")
 }

@@ -43,8 +43,12 @@ method _handleLine {
     say("recv: $line")
 
     # create message
+    $msg = IRC::Massage($line)
 
     # handle command maybe
-    #@handlers[$command]?(...)
-
+    @handlers.[ $msg.command ]?(
+        _self: *self,   # call with the connection object as self
+        line:  $line,
+        msg:   $msg
+    )
 }
