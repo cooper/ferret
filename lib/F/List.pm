@@ -48,7 +48,7 @@ sub is_index   { $_[0]->is_callidx &&  $_[0]->{is_index} }
 
 sub new_item {
     my $list = shift;
-    my $item = F::new('ListItem', 
+    my $item = F::new('ListItem',
         item_num => $list->{item_c}++
     );
     return $list->adopt($item);
@@ -61,6 +61,7 @@ sub perl_fmt {
     my $get_pairs = sub {
         join ', ', map {
             my $key = $_->first_child->key;
+               $key = "'$key'" if $key =~ m/^\d/;
             my $val = $_->first_child->value->perl_fmt_do;
             "$key => $val"
         } @children;
