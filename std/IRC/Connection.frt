@@ -10,7 +10,7 @@ init {
     want @real: Str = "Ferret IRC"
     want @autojoin: List
 
-    @resetState()
+    @_resetState()
 
     # IRC command handlers. inherit from core handlers.
     want @handlers = (:)
@@ -33,7 +33,7 @@ init {
 
     # on disconnect, clear object pool
     on @sock.disconnected, :resetState:
-        resetState()
+        @_resetState()
 
 }
 
@@ -98,7 +98,7 @@ method getServer {
 
 #=== Miscellaneous ===
 
-method resetState {
+method _resetState {
     delete @registered
     @server   = Server(connection: *self, name: @addr)
     @me       = User(connection: *self, nick: @nick, user: @user)

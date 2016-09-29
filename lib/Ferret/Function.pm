@@ -444,9 +444,11 @@ sub signature_string {
 
 sub description {
     my $func = shift;
+    my $sig  = $func->signature_string;
     my $type = $func->{is_typedef} ? 'Interface' : 'Function';
-    return $type if !length $func->{name};
-    return "$type '$$func{name}'";
+    $type   .= " '$$func{name}'" if length $func->{name};
+    $type   .= " { $sig }"       if length $sig;
+    return $type;
 }
 
 sub name          { shift->{name}          }

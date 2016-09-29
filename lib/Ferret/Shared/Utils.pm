@@ -137,9 +137,14 @@ sub signature_to_string {
     my $col = $pretty ? ': ' : ':';
     my $sep = $pretty ? ', ' : ' ';
     foreach my $sig (@$signature) {
+        my $type;
+        if ($sig->{type}) {
+            $type = $sig->{type};
+            $type = join '|', @$type if ref $type eq 'ARRAY';
+        }
         my $s =
             ($sig->{optional} ? '?'               : '') . '$' . $sig->{name} .
-            ($sig->{type}     ? $col.$sig->{type} : '') .
+            ($type            ? $col.$type        : '') .
             ($sig->{more}     ? '...'             : '');
         push @parts, $s;
     }

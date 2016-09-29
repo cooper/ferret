@@ -9,7 +9,7 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken);
-use Ferret::Core::Conversion qw(fmethod fhash);
+use Ferret::Core::Conversion qw(fmethod fhash pdescription);
 
 Ferret::bind_class(
     name => 'Event',
@@ -297,10 +297,8 @@ sub _global_event_prototype {
     return $f->{event_proto} ||= do {
         my $proto = Ferret::Prototype->new($f);
         $proto->set_property(callbacks => [ sub {
-            fmethod(sub {
-                my $event = shift;
-                return fhash($event->{function});
-            })
+            my $event = shift;
+            return fhash($event->{function});
         } ]);
         $proto;
     };
@@ -311,8 +309,19 @@ sub is_method    { shift->{is_method} }
 
 sub description {
     my $event = shift;
-    return "Event" if !length $event->{name};
-    return "Event '$$event{name}'";
+    my $type = 'Event';
+    $type .= " '$$event{name}'" if length $event->{name};
+
+    my @functions = values %{ $event->{function} };
+    if (@functions == 1) {
+        my $sig = $functions[0]->signature_string;
+        $type .= " { $sig }" if length $sig;
+    }
+    elsif (@functions) {
+        $type .= ' '.pdescription(fhash($event->{function}))
+    }
+
+    return $type;
 }
 
 1
