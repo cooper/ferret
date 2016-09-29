@@ -170,8 +170,7 @@ sub call {
 
     # find the object. this will certainly be *this.
     # it may also be *self, depending on the context.
-    my $obj = $event->{last_parent}
-        or warn "no last parent for $$event{name}" and return;
+    my $obj = $event->{last_parent};
 
     # create the return object and call arguments.
     $return ||= Ferret::Return->new($event->f);
@@ -185,10 +184,9 @@ sub call {
     );
 
     # fire the event.
-    my $fire = Evented::Object::fire_events_together(
-        [ $event, call         => @args ],
-        [ $obj,   $event->{id} => @args ]
-    );
+    my @events  = [ $event, call         => @args ];
+    push @events, [ $obj,   $event->{id} => @args ] if $obj;
+    my $fire = Evented::Object::fire_events_together(@events);
     $event->{most_recent_fire} = $fire;
 
     $return->detail if $detail;
@@ -199,7 +197,7 @@ sub call {
 sub _handle_call {
     my (
         $event, $func, $outer_self, $outer_scope_maybe,
-        $fire, $obj, $class, $outer_scope,
+        $fire, $obj_maybe, $class, $outer_scope,
         $arguments, $call_scope, $return
     ) = @_;
 
@@ -217,7 +215,7 @@ sub _handle_call {
 
     # *this is like *self except it's always the object
     # from which the event is being fired
-    $func->{this} = $obj;
+    $func->{this} = $obj_maybe;
 
     # store the fire object in the return object.
     weaken($return->{fire} = $fire);
@@ -226,7 +224,7 @@ sub _handle_call {
     my $self = $arguments->{_self}  ||
         delete $event->{force_self} ||
         $outer_self                 ||
-        $obj;
+        $obj_maybe;
 
     # call the function.
     $func->{force_is_event} = 1;
