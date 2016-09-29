@@ -10,6 +10,7 @@ init {
     want @real: Str = "Ferret IRC"
     want @autojoin: List
 
+    @me       = User(connection: *self, nick: @nick, user: @user)
     @users    = [:] # map lc nicknames to user objects
     @channels = [:] # map lc channel names to channel objects
     @servers  = [:] # map lc server names to server objects
@@ -34,11 +35,9 @@ init {
     }
 
     # on disconnect, clear object pool
-    on @sock.disconnected, :reset {
-        @users    = [:]
-        @channels = [:]
-        @servers  = [:]
-    }
+    on @sock.disconnected, :resetState:
+        resetState()
+
 }
 
 #=== Data ===
@@ -98,4 +97,14 @@ method getServer {
     if $server = @servers[$name.lowercase]:
         return $server
     return Server(connection: *self, name: $name)
+}
+
+#=== Miscellaneous ===
+
+method resetState {
+    delete @registered
+    @me       = User(connection: *self, nick: @nick, user: @user)
+    @users    = [:]
+    @channels = [:]
+    @servers  = [:]
 }

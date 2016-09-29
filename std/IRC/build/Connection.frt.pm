@@ -45,6 +45,21 @@
 #                              Bareword 'List'
 #                  Instruction
 #                      Assignment
+#                          Instance variable '@me'
+#                          Call
+#                              Bareword 'User'
+#                              Named argument list [3 items]
+#                                  Item 0
+#                                      Pair 'connection'
+#                                          Special variable '*self'
+#                                  Item 1
+#                                      Pair 'nick'
+#                                          Instance variable '@nick'
+#                                  Item 2
+#                                      Pair 'user'
+#                                          Instance variable '@user'
+#                  Instruction
+#                      Assignment
 #                          Instance variable '@users'
 #                          Hash [0 items]
 #                  Instruction
@@ -134,24 +149,16 @@
 #                                      Argument list [1 items]
 #                                          Item 0
 #                                              Lexical variable '$data'
-#                  On ('reset' callback)
+#                  On ('resetState' callback)
 #                      Expression ('on' parameter)
 #                          Property 'disconnected'
 #                              Instance variable '@sock'
 #                      Anonymous function
 #                          Body ('function' scope)
 #                              Instruction
-#                                  Assignment
-#                                      Instance variable '@users'
-#                                      Hash [0 items]
-#                              Instruction
-#                                  Assignment
-#                                      Instance variable '@channels'
-#                                      Hash [0 items]
-#                              Instruction
-#                                  Assignment
-#                                      Instance variable '@servers'
-#                                      Hash [0 items]
+#                                  Call
+#                                      Bareword 'resetState'
+#                                      Argument list [0 items]
 #          Method 'connect'
 #              Body ('method' scope)
 #                  Instruction
@@ -321,6 +328,38 @@
 #                                  Item 1
 #                                      Pair 'name'
 #                                          Lexical variable '$name'
+#          Method 'resetState'
+#              Body ('method' scope)
+#                  Instruction
+#                      Delete modifier
+#                          Instance variable '@registered'
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@me'
+#                          Call
+#                              Bareword 'User'
+#                              Named argument list [3 items]
+#                                  Item 0
+#                                      Pair 'connection'
+#                                          Special variable '*self'
+#                                  Item 1
+#                                      Pair 'nick'
+#                                          Instance variable '@nick'
+#                                  Item 2
+#                                      Pair 'user'
+#                                          Instance variable '@user'
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@users'
+#                          Hash [0 items]
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@channels'
+#                          Hash [0 items]
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@servers'
+#                          Hash [0 items]
 #      Include (Channel, IRC, IRC::Handlers, IRC::Massage, List, Num, Outgoing, Server, Socket, Socket::TCP, Str, User)
 use warnings;
 use strict;
@@ -370,11 +409,11 @@ my $result = do {
                         $$self->{'real'}
                     )
                 ],
-                $scope, undef, 26.06667
+                $scope, undef, 27.06667
             );
             $$self->{'send'}->(
                 [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, 27.2
+                $scope, undef, 28.2
             );
             return $ret;
         }
@@ -388,23 +427,22 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'data', 32.2 ) or return;
+            FF::need( $scope, $args, 'data', 33.2 ) or return;
             $$self->{'_handleLine'}
-              ->( [ $$scope->{'data'} ], $scope, undef, 33.2 );
+              ->( [ $$scope->{'data'} ], $scope, undef, 34.2 );
             return $ret;
         }
     );
 
     # Anonymous function definition
     my $func_2 = FF::function_def(
-        $f, undef, 'reset',
+        $f, undef,
+        'resetState',
         [],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $self->set_property( users    => FF::create_hash( $f, {} ), 38.2 );
-            $self->set_property( channels => FF::create_hash( $f, {} ), 39.2 );
-            $self->set_property( servers  => FF::create_hash( $f, {} ), 40.2 );
+            $$scope->{'resetState'}->( {}, $scope, undef, 39.2 );
             return $ret;
         }
     );
@@ -456,20 +494,31 @@ my $result = do {
                 FF::want( $self, $args, 'user', 9.2,  str( $f, "ferret" ) );
                 FF::want( $self, $args, 'real', 10.2, str( $f, "Ferret IRC" ) );
                 FF::want( $self, $args, 'autojoin', 11.2 );
-                $self->set_property( users => FF::create_hash( $f, {} ), 13.2 );
+                $self->set_property(
+                    me => $$scope->{'User'}->(
+                        {
+                            connection => ${ $scope->{special} }->{'self'},
+                            nick       => $$self->{'nick'},
+                            user       => $$self->{'user'}
+                        },
+                        $scope, undef, 13.2
+                    ),
+                    13.1
+                );
+                $self->set_property( users => FF::create_hash( $f, {} ), 14.2 );
                 $self->set_property(
                     channels => FF::create_hash( $f, {} ),
-                    14.2
+                    15.2
                 );
                 $self->set_property(
                     servers => FF::create_hash( $f, {} ),
-                    15.2
+                    16.2
                 );
-                FF::want( $self, $args, 'handlers', 18.2,
+                FF::want( $self, $args, 'handlers', 19.2,
                     FF::create_object( $f, {} ) );
                 ${ $$self->{'handlers'} }->{'*addParent'}->(
                     [ ${ $$scope->{'IRC::Handlers'} }->{'handlers'} ],
-                    $scope, undef, 19.15
+                    $scope, undef, 20.15
                 );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
@@ -478,9 +527,9 @@ my $result = do {
                             port     => $$self->{'port'},
                             readMode => FF::get_symbol( $f, 'line' )
                         },
-                        $scope, undef, 22.3
+                        $scope, undef, 23.3
                     ),
-                    22.1
+                    23.1
                 );
                 FF::on(
                     $$self->{'sock'},
@@ -523,7 +572,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 48.3 );
+                ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 47.3 );
                 return $ret;
             }
         );
@@ -541,13 +590,13 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'line', 53.2 ) or return;
+                FF::need( $scope, $args, 'line', 52.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, 54.2
+                    $scope, undef, 53.2
                 );
                 ${ $$self->{'sock'} }->{'println'}
-                  ->( [ $$scope->{'line'} ], $scope, undef, 55.3 );
+                  ->( [ $$scope->{'line'} ], $scope, undef, 54.3 );
                 return $ret;
             }
         );
@@ -566,16 +615,16 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'line', 60.2 ) or return;
+                FF::need( $scope, $args, 'line', 59.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
-                    $scope, undef, 61.2
+                    $scope, undef, 60.2
                 );
                 FF::lex_assign(
                     $scope,
                     msg => $$scope->{'IRC::Massage'}
-                      ->( [ $$scope->{'line'} ], $scope, undef, 64.3 ),
-                    $file_scope, 64.1
+                      ->( [ $$scope->{'line'} ], $scope, undef, 63.3 ),
+                    $file_scope, 63.1
                 );
                 {
                     my $maybe_0 = $$self->{'handlers'}
@@ -587,7 +636,7 @@ my $result = do {
                                 line  => $$scope->{'line'},
                                 msg   => $$scope->{'msg'}
                             },
-                            $scope, undef, 67.8
+                            $scope, undef, 66.8
                         );
                     }
                 }
@@ -609,17 +658,17 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'name', 81.2 ) or return;
+                FF::need( $scope, $args, 'name', 80.2 ) or return;
                 if (
                     bool(
                         FF::lex_assign(
                             $scope,
                             channel => $$self->{'channels'}->get_index_value(
                                 [ ${ $$scope->{'name'} }->{'lowercase'} ],
-                                $scope, 82.25
+                                $scope, 81.25
                             ),
                             $file_scope,
-                            82.15
+                            81.15
                         )
                     )
                   )
@@ -634,7 +683,7 @@ my $result = do {
                             connection => ${ $scope->{special} }->{'self'},
                             name       => $$scope->{'name'}
                         },
-                        $scope, undef, 84.15
+                        $scope, undef, 83.15
                     )
                 );
                 return $ret;
@@ -655,17 +704,17 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'nick', 89.2 ) or return;
+                FF::need( $scope, $args, 'nick', 88.2 ) or return;
                 if (
                     bool(
                         FF::lex_assign(
                             $scope,
                             user => $$self->{'users'}->get_index_value(
                                 [ ${ $$scope->{'nick'} }->{'lowercase'} ],
-                                $scope, 90.25
+                                $scope, 89.25
                             ),
                             $file_scope,
-                            90.15
+                            89.15
                         )
                     )
                   )
@@ -680,7 +729,7 @@ my $result = do {
                             connection => ${ $scope->{special} }->{'self'},
                             nick       => $$scope->{'nick'}
                         },
-                        $scope, undef, 92.15
+                        $scope, undef, 91.15
                     )
                 );
                 return $ret;
@@ -701,17 +750,17 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'name', 97.2 ) or return;
+                FF::need( $scope, $args, 'name', 96.2 ) or return;
                 if (
                     bool(
                         FF::lex_assign(
                             $scope,
                             server => $$self->{'servers'}->get_index_value(
                                 [ ${ $$scope->{'name'} }->{'lowercase'} ],
-                                $scope, 98.25
+                                $scope, 97.25
                             ),
                             $file_scope,
-                            98.15
+                            97.15
                         )
                     )
                   )
@@ -726,8 +775,43 @@ my $result = do {
                             connection => ${ $scope->{special} }->{'self'},
                             name       => $$scope->{'name'}
                         },
-                        $scope, undef, 100.15
+                        $scope, undef, 99.15
                     )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'resetState' definition
+        my $method_7 = FF::method_event_def(
+            $f, $scope,
+            'resetState',
+            [],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                $self->delete_property( 'registered', 105.1 );
+                $self->set_property(
+                    me => $$scope->{'User'}->(
+                        {
+                            connection => ${ $scope->{special} }->{'self'},
+                            nick       => $$self->{'nick'},
+                            user       => $$self->{'user'}
+                        },
+                        $scope, undef, 106.2
+                    ),
+                    106.1
+                );
+                $self->set_property(
+                    users => FF::create_hash( $f, {} ),
+                    107.2
+                );
+                $self->set_property(
+                    channels => FF::create_hash( $f, {} ),
+                    108.2
+                );
+                $self->set_property(
+                    servers => FF::create_hash( $f, {} ),
+                    109.2
                 );
                 return $ret;
             }
@@ -755,6 +839,10 @@ my $result = do {
         );
         $method_6->inside_scope(
             getServer => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_7->inside_scope(
+            resetState => $scope,
             $proto, $class, undef, undef
         );
     }
