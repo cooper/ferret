@@ -16,17 +16,17 @@ Creates a new Connection class instance.
 
 ### Arguments
 
-* __addr__: [String](/std/doc/String.md)  
+* __addr__: [String](/std/doc/String.md) - IRC server address.
 
-* __nick__: [String](/std/doc/String.md)  
+* *optional* __port__: [Number](/std/doc/Number.md) - IRC server port.
 
-* *optional* __port__: [Number](/std/doc/Number.md)  
+* __nick__: [String](/std/doc/String.md) - Preferred nickname.
 
-* *optional* __user__: [String](/std/doc/String.md)  
+* *optional* __user__: [String](/std/doc/String.md) - Username (ident).
 
-* *optional* __real__: [String](/std/doc/String.md)  
+* *optional* __real__: [String](/std/doc/String.md) - Real name.
 
-* *optional* __autojoin__: List  
+* *optional* __autojoin__: List - Channels to join on connect.
 
 * *optional* __handlers__: Any  
 

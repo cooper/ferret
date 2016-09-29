@@ -30,4 +30,4 @@ Creates a new Server class instance.
 End of IRC::Server class.
 
 This file was generated automatically by the Ferret compiler from
-[Server.frtdoc](../Server.frtdoc).
+[Server.frt](../Server.frt).

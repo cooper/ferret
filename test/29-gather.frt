@@ -3,9 +3,9 @@
 func nonZeroCoodinates {
     need $pt: Math::Point
     return gather {
-        if $pt.x != 0:
+        if $pt.x != 0 :
             take $pt.x
-        if $pt.y != 0:
+        if $pt.y != 0 :
             take $pt.y
     }
 }

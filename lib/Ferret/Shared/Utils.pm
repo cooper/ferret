@@ -59,7 +59,7 @@ sub dot_trim {
     my $str = trim(shift);
     return undef if !defined $str;
     $str .= '.' unless $str =~ m/\.$/;
-    return $str;
+    return ucfirst $str;
 }
 
 state $link_map = {

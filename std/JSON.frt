@@ -15,7 +15,7 @@ $default ?= *class()
 #| Used for the `.charset` property. See the [initializer](#initializer).
 type Charset {
     :ascii      #<  RFC4627,      range 0..127, ignores otherwise
-    :latin1     #<  iso-8859-1,   range 0..255, ignores otherwise
+    :latin1     #<  ISO-8859-1,   range 0..255, ignores otherwise
     :utf8       #<  expects utf8-encoded input and outputs utf8
 }
 

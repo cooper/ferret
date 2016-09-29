@@ -17,7 +17,7 @@ methods provided by the [`Client`](Client.md) class.
 
 ### Arguments
 
-* __client__: Client - an HTTP::Client, representing the user agent.
+* __client__: Client - An HTTP::Client, representing the user agent.
 
 * __url__: [String](/std/doc/String.md) - HTTP URL to request.
 

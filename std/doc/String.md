@@ -52,10 +52,10 @@ string by the provided separator.
 
 #### Arguments
 
-* *optional* __separator__: [String](/std/doc/String.md) | [Regex](/std/doc/Regex.md) - the substring separator. The default is the empty string, which results
+* *optional* __separator__: [String](/std/doc/String.md) | [Regex](/std/doc/Regex.md) - The substring separator. The default is the empty string, which results
 in a list of individual characters.
 
-* *optional* __limit__: [Number](/std/doc/Number.md) - the number of substrings to extract.
+* *optional* __limit__: [Number](/std/doc/Number.md) - The number of substrings to extract.
 If specified, the returned list will have at most this number
 of strings. The final string in that list may include occurrences
 of the separator.
@@ -98,7 +98,7 @@ Returns a boolean true value if the prefix exists.
 
 #### Arguments
 
-* __prefix__: [String](/std/doc/String.md) - the prefix to look for.
+* __prefix__: [String](/std/doc/String.md) - The prefix to look for.
 
 
 
@@ -115,7 +115,7 @@ have that prefix, a copy of the original string is returned.
 
 #### Arguments
 
-* __prefix__: [String](/std/doc/String.md) - the prefix to remove.
+* __prefix__: [String](/std/doc/String.md) - The prefix to remove.
 
 
 
@@ -130,7 +130,7 @@ Returns a boolean true value if the suffix exists.
 
 #### Arguments
 
-* __suffix__: [String](/std/doc/String.md) - the suffix to look for.
+* __suffix__: [String](/std/doc/String.md) - The suffix to look for.
 
 
 
@@ -147,7 +147,7 @@ have that suffix, a copy of the original string is returned.
 
 #### Arguments
 
-* __suffix__: [String](/std/doc/String.md) - the suffix to remove.
+* __suffix__: [String](/std/doc/String.md) - The suffix to remove.
 
 
 ## Class functions

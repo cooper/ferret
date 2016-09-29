@@ -28,7 +28,7 @@ Creates a new Channel class instance.
 $channel.privmsg($message: Str)
 ```
 
-
+Sends a message to the channel.
 
 
 #### Arguments

@@ -16,7 +16,7 @@ Creates a new Test class instance.
 
 ### Arguments
 
-* *optional* __name__: Any - the test name.
+* *optional* __name__: Any - The test name.
 
 * *optional* __fatal__: Any - If true, a failed test will throw a fatal error.
 This is the default behavior.
@@ -34,7 +34,7 @@ Test succeeds if `bool($a) === true`.
 
 #### Arguments
 
-* __a__: Any - test object.
+* __a__: Any - Test object.
 
 
 
@@ -49,7 +49,7 @@ Test succeeds if `$a === true`.
 
 #### Arguments
 
-* __a__: Any - test object.
+* __a__: Any - Test object.
 
 
 
@@ -64,9 +64,9 @@ Test succeeds if `$a == $b`.
 
 #### Arguments
 
-* __a__: Any - test object.
+* __a__: Any - Test object.
 
-* __b__: Any - test object.
+* __b__: Any - Test object.
 
 
 
@@ -81,9 +81,9 @@ Test succeeds if `$a === $b`.
 
 #### Arguments
 
-* __a__: Any - test object.
+* __a__: Any - Test object.
 
-* __b__: Any - test object.
+* __b__: Any - Test object.
 
 
 
@@ -98,9 +98,9 @@ Test succeeds if `$a != $b`.
 
 #### Arguments
 
-* __a__: Any - test object.
+* __a__: Any - Test object.
 
-* __b__: Any - test object.
+* __b__: Any - Test object.
 
 
 
@@ -115,9 +115,9 @@ Test succeeds if `$a !== $b`.
 
 #### Arguments
 
-* __a__: Any - test object.
+* __a__: Any - Test object.
 
-* __b__: Any - test object.
+* __b__: Any - Test object.
 
 
 

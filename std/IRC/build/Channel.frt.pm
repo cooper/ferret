@@ -106,10 +106,10 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'message', 11.2 ) or return;
+                FF::need( $scope, $args, 'message', 12.2 ) or return;
                 ${ $$self->{'connection'} }->{'privmsg'}->(
                     [ $$self->{'name'}, $$scope->{'message'} ],
-                    $scope, undef, 12.3
+                    $scope, undef, 13.3
                 );
                 return $ret;
             }

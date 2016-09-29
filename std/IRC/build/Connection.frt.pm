@@ -13,17 +13,17 @@
 #                          Argument type
 #                              Bareword 'Str'
 #                  Instruction
-#                      Need
-#                          Instance variable '@nick'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
 #                      Want
 #                          Instance variable '@port'
 #                          Argument type
 #                              Bareword 'Num'
 #                          Argument value
 #                              Number '6667'
+#                  Instruction
+#                      Need
+#                          Instance variable '@nick'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Want
 #                          Instance variable '@user'
@@ -401,11 +401,11 @@ my $result = do {
                         $$self->{'real'}
                     )
                 ],
-                $scope, undef, 24.06667
+                $scope, undef, 25.06667
             );
             $$self->{'send'}->(
                 [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, 25.2
+                $scope, undef, 26.2
             );
             return $ret;
         }
@@ -419,9 +419,9 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'data', 30.2 ) or return;
+            FF::need( $scope, $args, 'data', 31.2 ) or return;
             $$self->{'_handleLine'}
-              ->( [ $$scope->{'data'} ], $scope, undef, 31.2 );
+              ->( [ $$scope->{'data'} ], $scope, undef, 32.2 );
             return $ret;
         }
     );
@@ -434,7 +434,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $$self->{'_resetState'}->( {}, $scope, undef, 36.2 );
+            $$self->{'_resetState'}->( {}, $scope, undef, 37.2 );
             return $ret;
         }
     );
@@ -456,13 +456,13 @@ my $result = do {
                     optional => undef,
                     more     => undef
                 },
+                { name => 'port', type => 'Num', optional => 1, more => undef },
                 {
                     name     => 'nick',
                     type     => 'Str',
                     optional => undef,
                     more     => undef
                 },
-                { name => 'port', type => 'Num', optional => 1, more => undef },
                 { name => 'user', type => 'Str', optional => 1, more => undef },
                 { name => 'real', type => 'Str', optional => 1, more => undef },
                 {
@@ -481,17 +481,17 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'addr' ) or return;
-                FF::need( $self, $args, 'nick' ) or return;
                 FF::want( $self, $args, 'port', 8.2, num( $f, "6667" ) );
-                FF::want( $self, $args, 'user', 9.2,  str( $f, "ferret" ) );
-                FF::want( $self, $args, 'real', 10.2, str( $f, "Ferret IRC" ) );
-                FF::want( $self, $args, 'autojoin', 11.2 );
-                $$self->{'_resetState'}->( {}, $scope, undef, 13.2 );
-                FF::want( $self, $args, 'handlers', 16.2,
+                FF::need( $self, $args, 'nick' ) or return;
+                FF::want( $self, $args, 'user', 10.2, str( $f, "ferret" ) );
+                FF::want( $self, $args, 'real', 11.2, str( $f, "Ferret IRC" ) );
+                FF::want( $self, $args, 'autojoin', 12.2 );
+                $$self->{'_resetState'}->( {}, $scope, undef, 14.2 );
+                FF::want( $self, $args, 'handlers', 17.2,
                     FF::create_object( $f, {} ) );
                 ${ $$self->{'handlers'} }->{'*addParent'}->(
                     [ ${ $$scope->{'IRC::Handlers'} }->{'handlers'} ],
-                    $scope, undef, 17.15
+                    $scope, undef, 18.15
                 );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
@@ -500,9 +500,9 @@ my $result = do {
                             port     => $$self->{'port'},
                             readMode => FF::get_symbol( $f, 'line' )
                         },
-                        $scope, undef, 20.3
+                        $scope, undef, 21.3
                     ),
-                    20.1
+                    21.1
                 );
                 FF::on(
                     $$self->{'sock'},
@@ -545,7 +545,7 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 44.3 );
+                ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 45.3 );
                 return $ret;
             }
         );
@@ -563,13 +563,13 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'line', 49.2 ) or return;
+                FF::need( $scope, $args, 'line', 50.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, 50.2
+                    $scope, undef, 51.2
                 );
                 ${ $$self->{'sock'} }->{'println'}
-                  ->( [ $$scope->{'line'} ], $scope, undef, 51.3 );
+                  ->( [ $$scope->{'line'} ], $scope, undef, 52.3 );
                 return $ret;
             }
         );
@@ -588,16 +588,16 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'line', 56.2 ) or return;
+                FF::need( $scope, $args, 'line', 57.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
-                    $scope, undef, 57.2
+                    $scope, undef, 58.2
                 );
                 FF::lex_assign(
                     $scope,
                     msg => $$scope->{'IRC::Massage'}
-                      ->( [ $$scope->{'line'} ], $scope, undef, 60.3 ),
-                    $file_scope, 60.1
+                      ->( [ $$scope->{'line'} ], $scope, undef, 61.3 ),
+                    $file_scope, 61.1
                 );
                 {
                     my $maybe_0 = $$self->{'handlers'}
@@ -609,7 +609,7 @@ my $result = do {
                                 line  => $$scope->{'line'},
                                 msg   => $$scope->{'msg'}
                             },
-                            $scope, undef, 63.8
+                            $scope, undef, 64.8
                         );
                     }
                 }
@@ -631,17 +631,17 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'name', 77.2 ) or return;
+                FF::need( $scope, $args, 'name', 78.2 ) or return;
                 if (
                     bool(
                         FF::lex_assign(
                             $scope,
                             channel => $$self->{'channels'}->get_index_value(
                                 [ ${ $$scope->{'name'} }->{'lowercase'} ],
-                                $scope, 78.25
+                                $scope, 79.25
                             ),
                             $file_scope,
-                            78.15
+                            79.15
                         )
                     )
                   )
@@ -656,7 +656,7 @@ my $result = do {
                             connection => ${ $scope->{special} }->{'self'},
                             name       => $$scope->{'name'}
                         },
-                        $scope, undef, 80.15
+                        $scope, undef, 81.15
                     )
                 );
                 return $ret;
@@ -677,17 +677,17 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'nick', 85.2 ) or return;
+                FF::need( $scope, $args, 'nick', 86.2 ) or return;
                 if (
                     bool(
                         FF::lex_assign(
                             $scope,
                             user => $$self->{'users'}->get_index_value(
                                 [ ${ $$scope->{'nick'} }->{'lowercase'} ],
-                                $scope, 86.25
+                                $scope, 87.25
                             ),
                             $file_scope,
-                            86.15
+                            87.15
                         )
                     )
                   )
@@ -702,7 +702,7 @@ my $result = do {
                             connection => ${ $scope->{special} }->{'self'},
                             nick       => $$scope->{'nick'}
                         },
-                        $scope, undef, 88.15
+                        $scope, undef, 89.15
                     )
                 );
                 return $ret;
@@ -723,17 +723,17 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'name', 93.2 ) or return;
+                FF::need( $scope, $args, 'name', 94.2 ) or return;
                 if (
                     bool(
                         FF::lex_assign(
                             $scope,
                             server => $$self->{'servers'}->get_index_value(
                                 [ ${ $$scope->{'name'} }->{'lowercase'} ],
-                                $scope, 94.25
+                                $scope, 95.25
                             ),
                             $file_scope,
-                            94.15
+                            95.15
                         )
                     )
                   )
@@ -748,7 +748,7 @@ my $result = do {
                             connection => ${ $scope->{special} }->{'self'},
                             name       => $$scope->{'name'}
                         },
-                        $scope, undef, 96.15
+                        $scope, undef, 97.15
                     )
                 );
                 return $ret;
@@ -762,17 +762,17 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $self->delete_property( 'registered',   102.1 );
-                $self->delete_property( '_didAutojoin', 103.1 );
+                $self->delete_property( 'registered',   103.1 );
+                $self->delete_property( '_didAutojoin', 104.1 );
                 $self->set_property(
                     server => $$scope->{'Server'}->(
                         {
                             connection => ${ $scope->{special} }->{'self'},
                             name       => $$self->{'addr'}
                         },
-                        $scope, undef, 104.2
+                        $scope, undef, 105.2
                     ),
-                    104.1
+                    105.1
                 );
                 $self->set_property(
                     me => $$scope->{'User'}->(
@@ -781,21 +781,21 @@ my $result = do {
                             nick       => $$self->{'nick'},
                             user       => $$self->{'user'}
                         },
-                        $scope, undef, 105.2
+                        $scope, undef, 106.2
                     ),
-                    105.1
+                    106.1
                 );
                 $self->set_property(
                     users => FF::create_hash( $f, {} ),
-                    106.2
-                );
-                $self->set_property(
-                    channels => FF::create_hash( $f, {} ),
                     107.2
                 );
                 $self->set_property(
-                    servers => FF::create_hash( $f, {} ),
+                    channels => FF::create_hash( $f, {} ),
                     108.2
+                );
+                $self->set_property(
+                    servers => FF::create_hash( $f, {} ),
+                    109.2
                 );
                 return $ret;
             }

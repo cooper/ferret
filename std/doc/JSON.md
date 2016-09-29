@@ -67,7 +67,7 @@ initialization.
 
 #### Arguments
 
-* __data__: Any - an object to convert to JSON text.
+* __data__: Any - An object to convert to JSON text.
 
 
 
@@ -84,7 +84,7 @@ provided at initialization.
 
 #### Arguments
 
-* __json__: [String](/std/doc/String.md) - a JSON text to parse and convert to a Ferret object.
+* __json__: [String](/std/doc/String.md) - A JSON text to parse and convert to a Ferret object.
 
 
 
@@ -124,7 +124,7 @@ a list `[1, 2]`.
 
 #### Arguments
 
-* __fragment__: [String](/std/doc/String.md) - a fragment of JSON text to add to the decoder buffer.
+* __fragment__: [String](/std/doc/String.md) - A fragment of JSON text to add to the decoder buffer.
 
 
 
@@ -165,7 +165,7 @@ See the [`.encode()`](#encode) method for more options.
 
 #### Arguments
 
-* __data__: Any - an object to convert to JSON text.
+* __data__: Any - An object to convert to JSON text.
 
 
 
@@ -181,7 +181,7 @@ See the [`.decode()`](#decode) method for more options.
 
 #### Arguments
 
-* __json__: [String](/std/doc/String.md) - a JSON text to parse and convert to a Ferret object.
+* __json__: [String](/std/doc/String.md) - A JSON text to parse and convert to a Ferret object.
 
 
 
@@ -199,8 +199,8 @@ Used for the `.charset` property. See the [initializer](#initializer).
 In order to comply, the test object must be equal (according to the `==` [`OP_EQUAL`](/doc/Operators.md#equality-operator) operator) to any one of these values.
 
 * `:ascii` - RFC4627,      range 0..127, ignores otherwise.
-* `:latin1` - iso-8859-1,   range 0..255, ignores otherwise.
-* `:utf8` - expects utf8-encoded input and outputs utf8.
+* `:latin1` - ISO-8859-1,   range 0..255, ignores otherwise.
+* `:utf8` - Expects utf8-encoded input and outputs utf8.
 
 
 End of JSON class.

@@ -10,6 +10,7 @@ init {
         @parse($data)
 }
 
+#> Parses IRC data
 method parse {
     need $data: Str::NE
     $words = $data.split(/\s+/)
@@ -104,6 +105,6 @@ prop? _parsedSource {
     }
 }
 
-prop nick   { return @_parsedSource.nick    }
-prop ident  { return @_parsedSource.ident   }
-prop host   { return @_parsedSource.host    }
+prop nick   { return @_parsedSource.nick    }   #< source's nickname
+prop ident  { return @_parsedSource.ident   }   #< source's username (ident)
+prop host   { return @_parsedSource.host    }   #< source's host

@@ -16,7 +16,7 @@ Creates a new Massage class instance.
 
 ### Arguments
 
-* *optional* __data__: Str::NE - a complete IRC message.
+* *optional* __data__: Str::NE - A complete IRC message.
 
 ## Methods
 
@@ -26,7 +26,7 @@ Creates a new Massage class instance.
 $massage.parse($data: Str::NE)
 ```
 
-
+Parses IRC data.
 
 
 #### Arguments
@@ -41,7 +41,7 @@ $massage.parse($data: Str::NE)
 $massage.nick
 ```
 
-Computed property. 
+Computed property. Source's nickname.
 
 
 
@@ -51,7 +51,7 @@ Computed property.
 $massage.ident
 ```
 
-Computed property. 
+Computed property. Source's username (ident).
 
 
 
@@ -61,7 +61,7 @@ Computed property.
 $massage.host
 ```
 
-Computed property. 
+Computed property. Source's host.
 
 
 

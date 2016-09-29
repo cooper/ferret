@@ -4,11 +4,12 @@ class Connection
 load Outgoing
 
 init {
-    need @addr: Str, @nick: Str
-    want @port: Num = 6667
-    want @user: Str = "ferret"
-    want @real: Str = "Ferret IRC"
-    want @autojoin: List
+    need @addr: Str                     #< IRC server address
+    want @port: Num = 6667              #< IRC server port
+    need @nick: Str                     #< preferred nickname
+    want @user: Str = "ferret"          #< username (ident)
+    want @real: Str = "Ferret IRC"      #< real name
+    want @autojoin: List                #< channels to join on connect
 
     @_resetState()
 
