@@ -2,8 +2,10 @@ package IRC::Handlers
 
 share $handlers = (
     PING:   ping,
-    001:    myInfo,
+    001:    welcome,
+    004:    myInfo,
     376:    endOfMOTD,      # end of motd
+    396:    hiddenHost,     # is now your hidden host
     422:    endOfMOTD       # no motd found
 )
 
@@ -12,7 +14,7 @@ func ping {
     @send("PONG :" + $msg.params[-1])
 }
 
-func myInfo {
+func welcome {
     need $msg
     @registered = true          # remember that we've finished registration
     @me.nick = $msg.params[0]   # assume the target is our actual nickname
@@ -24,11 +26,24 @@ func myInfo {
         @me.nick = $1
         @me.user = $2
         @me.host = $3
+        @me.realHost = $3
     }
+}
+
+func myInfo {
+    need $msg
+    @server.name    = $msg.params[1]
+    @server.version = $msg.params[2]
 }
 
 func endOfMOTD {
     if !@autojoin:
         return
     @join(channelNames: @autojoin)
+}
+
+# recv: :k.notroll.net 396 booby 73.88.xkw.t :is now your hidden host
+func hiddenHost {
+    need $msg
+    @me.host = $msg.params[1]
 }

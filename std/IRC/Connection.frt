@@ -10,10 +10,7 @@ init {
     want @real: Str = "Ferret IRC"
     want @autojoin: List
 
-    @me       = User(connection: *self, nick: @nick, user: @user)
-    @users    = [:] # map lc nicknames to user objects
-    @channels = [:] # map lc channel names to channel objects
-    @servers  = [:] # map lc server names to server objects
+    @resetState()
 
     # IRC command handlers. inherit from core handlers.
     want @handlers = (:)
@@ -103,6 +100,7 @@ method getServer {
 
 method resetState {
     delete @registered
+    @server   = Server(connection: *self, name: @addr)
     @me       = User(connection: *self, nick: @nick, user: @user)
     @users    = [:]
     @channels = [:]

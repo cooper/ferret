@@ -1,7 +1,7 @@
 # === Document Model ===
-#  Document './std/IRC/User.frt'
+#  Document './std/IRC/Server.frt'
 #      Package 'IRC'
-#      Class 'User'
+#      Class 'Server'
 #          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
@@ -11,22 +11,7 @@
 #                              Bareword 'Connection'
 #                  Instruction
 #                      Need
-#                          Instance variable '@nick'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Want
-#                          Instance variable '@user'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Want
-#                          Instance variable '@host'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Want
-#                          Instance variable '@real'
+#                          Instance variable '@name'
 #                          Argument type
 #                              Bareword 'Str'
 #                  Instruction
@@ -51,7 +36,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('User.frt');
+FF::before_content('Server.frt');
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -59,10 +44,10 @@ my $result = do {
     my $scope = $file_scope;
     FF::load_core('IRC');
 
-    # Class 'User'
+    # Class 'Server'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'User', undef, undef );
+          FF::get_class( $f, $context, $file_scope, 'Server', undef, undef );
 
         # Method event 'initializer__' definition
         my $method_0 = FF::method_event_def(
@@ -76,22 +61,16 @@ my $result = do {
                     more     => undef
                 },
                 {
-                    name     => 'nick',
+                    name     => 'name',
                     type     => 'Str',
                     optional => undef,
                     more     => undef
-                },
-                { name => 'user', type => 'Str', optional => 1, more => undef },
-                { name => 'host', type => 'Str', optional => 1, more => undef },
-                { name => 'real', type => 'Str', optional => 1, more => undef }
+                }
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'connection' ) or return;
-                FF::need( $self, $args, 'nick' )       or return;
-                FF::want( $self, $args, 'user', 6.1 );
-                FF::want( $self, $args, 'host', 6.3 );
-                FF::want( $self, $args, 'real', 6.5 );
+                FF::need( $self, $args, 'name' )       or return;
                 $self->weaken_property( 'connection', 7.1 );
                 return $ret;
             }

@@ -5,17 +5,23 @@
 #          Shared variable declaration
 #              Assignment
 #                  Lexical variable '$handlers'
-#                  Object [4 items]
+#                  Object [6 items]
 #                      Item 0
 #                          Pair 'PING'
 #                              Bareword 'ping'
 #                      Item 1
 #                          Pair '001'
-#                              Bareword 'myInfo'
+#                              Bareword 'welcome'
 #                      Item 2
+#                          Pair '004'
+#                              Bareword 'myInfo'
+#                      Item 3
 #                          Pair '376'
 #                              Bareword 'endOfMOTD'
-#                      Item 3
+#                      Item 4
+#                          Pair '396'
+#                              Bareword 'hiddenHost'
+#                      Item 5
 #                          Pair '422'
 #                              Bareword 'endOfMOTD'
 #      Function 'ping'
@@ -40,7 +46,7 @@
 #                                                  Constant zero
 #                                                  Negation operator (-)
 #                                                  Number '1'
-#      Function 'myInfo'
+#      Function 'welcome'
 #          Body ('function' scope)
 #              Instruction
 #                  Need
@@ -89,6 +95,36 @@
 #                              Property 'host'
 #                                  Instance variable '@me'
 #                              Lexical variable '$3'
+#                      Instruction
+#                          Assignment
+#                              Property 'realHost'
+#                                  Instance variable '@me'
+#                              Lexical variable '$3'
+#      Function 'myInfo'
+#          Body ('function' scope)
+#              Instruction
+#                  Need
+#                      Lexical variable '$msg'
+#              Instruction
+#                  Assignment
+#                      Property 'name'
+#                          Instance variable '@server'
+#                      Index
+#                          Property 'params'
+#                              Lexical variable '$msg'
+#                          Index list [1 items]
+#                              Item 0
+#                                  Number '1'
+#              Instruction
+#                  Assignment
+#                      Property 'version'
+#                          Instance variable '@server'
+#                      Index
+#                          Property 'params'
+#                              Lexical variable '$msg'
+#                          Index list [1 items]
+#                              Item 0
+#                                  Number '2'
 #      Function 'endOfMOTD'
 #          Body ('function' scope)
 #              If
@@ -105,6 +141,21 @@
 #                          Item 0
 #                              Pair 'channelNames'
 #                                  Instance variable '@autojoin'
+#      Function 'hiddenHost'
+#          Body ('function' scope)
+#              Instruction
+#                  Need
+#                      Lexical variable '$msg'
+#              Instruction
+#                  Assignment
+#                      Property 'host'
+#                          Instance variable '@me'
+#                      Index
+#                          Property 'params'
+#                              Lexical variable '$msg'
+#                          Index list [1 items]
+#                              Item 0
+#                                  Number '1'
 use warnings;
 use strict;
 use 5.010;
@@ -138,7 +189,7 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 11.2 ) or return;
+            FF::need( $scope, $args, 'msg', 13.2 ) or return;
             $$self->{'send'}->(
                 [
                     add(
@@ -146,29 +197,31 @@ my $result = do {
                         str( $f, "PONG :" ),
                         ${ $$scope->{'msg'} }->{'params'}->get_index_value(
                             [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
-                            $scope, 12.35
+                            $scope, 14.35
                         )
                     )
                 ],
-                $scope, undef, 12.1
+                $scope, undef, 14.1
             );
             return $ret;
         }
     );
 
-    # Function event 'myInfo' definition
+    # Function event 'welcome' definition
     my $func_1 = FF::function_event_def(
-        $f, $context, 'myInfo', undef,
+        $f, $context,
+        'welcome',
+        undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 16.2 ) or return;
-            $self->set_property( registered => $true, 17.2 );
+            FF::need( $scope, $args, 'msg', 18.2 ) or return;
+            $self->set_property( registered => $true, 19.2 );
             $$self->{'me'}->set_property(
                 nick => ${ $$scope->{'msg'} }->{'params'}
-                  ->get_index_value( [ num( $f, "0" ) ], $scope, 18.3 ),
-                18.15
+                  ->get_index_value( [ num( $f, "0" ) ], $scope, 20.3 ),
+                20.15
             );
             if (
                 bool(
@@ -176,7 +229,7 @@ my $result = do {
                         $scope,
                         ${ $$scope->{'msg'} }->{'params'}->get_index_value(
                             [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
-                            $scope, 23.2
+                            $scope, 25.2
                         ),
                         rgx( $f, undef, "^(.+)!(.+)\\\@(.+)\$", undef )
                     )
@@ -185,16 +238,40 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $$self->{'me'}->set_property( nick => $$scope->{'1'}, 24.3 );
-                $$self->{'me'}->set_property( user => $$scope->{'2'}, 25.3 );
-                $$self->{'me'}->set_property( host => $$scope->{'3'}, 26.3 );
+                $$self->{'me'}->set_property( nick => $$scope->{'1'}, 26.3 );
+                $$self->{'me'}->set_property( user => $$scope->{'2'}, 27.3 );
+                $$self->{'me'}->set_property( host => $$scope->{'3'}, 28.3 );
+                $$self->{'me'}
+                  ->set_property( realHost => $$scope->{'3'}, 29.3 );
             }
             return $ret;
         }
     );
 
-    # Function event 'endOfMOTD' definition
+    # Function event 'myInfo' definition
     my $func_2 = FF::function_event_def(
+        $f, $context, 'myInfo', undef,
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
+        sub {
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my $self = $_self || $self;
+            FF::need( $scope, $args, 'msg', 34.2 ) or return;
+            $$self->{'server'}->set_property(
+                name => ${ $$scope->{'msg'} }->{'params'}
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, 35.3 ),
+                35.15
+            );
+            $$self->{'server'}->set_property(
+                version => ${ $$scope->{'msg'} }->{'params'}
+                  ->get_index_value( [ num( $f, "2" ) ], $scope, 36.3 ),
+                36.15
+            );
+            return $ret;
+        }
+    );
+
+    # Function event 'endOfMOTD' definition
+    my $func_3 = FF::function_event_def(
         $f, $context,
         'endOfMOTD',
         undef,
@@ -209,14 +286,38 @@ my $result = do {
             }
             $$self->{'join'}->(
                 { channelNames => $$self->{'autojoin'} },
-                $scope, undef, 33.2
+                $scope, undef, 42.2
+            );
+            return $ret;
+        }
+    );
+
+    # Function event 'hiddenHost' definition
+    my $func_4 = FF::function_event_def(
+        $f, $context,
+        'hiddenHost',
+        undef,
+        [ { name => 'msg', type => undef, optional => undef, more => undef } ],
+        sub {
+            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my $self = $_self || $self;
+            FF::need( $scope, $args, 'msg', 47.2 ) or return;
+            $$self->{'me'}->set_property(
+                host => ${ $$scope->{'msg'} }->{'params'}
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, 48.3 ),
+                48.15
             );
             return $ret;
         }
     );
     $func_0->inside_scope( ping      => $scope, $context, undef, undef, undef );
-    $func_1->inside_scope( myInfo    => $scope, $context, undef, undef, undef );
-    $func_2->inside_scope( endOfMOTD => $scope, $context, undef, undef, undef );
+    $func_1->inside_scope( welcome   => $scope, $context, undef, undef, undef );
+    $func_2->inside_scope( myInfo    => $scope, $context, undef, undef, undef );
+    $func_3->inside_scope( endOfMOTD => $scope, $context, undef, undef, undef );
+    $func_4->inside_scope(
+        hiddenHost => $scope,
+        $context, undef, undef, undef
+    );
 
     FF::lex_assign(
         $context,
@@ -224,8 +325,10 @@ my $result = do {
             $f,
             {
                 PING  => $$scope->{'ping'},
-                '001' => $$scope->{'myInfo'},
+                '001' => $$scope->{'welcome'},
+                '004' => $$scope->{'myInfo'},
                 '376' => $$scope->{'endOfMOTD'},
+                '396' => $$scope->{'hiddenHost'},
                 '422' => $$scope->{'endOfMOTD'}
             }
         ),
