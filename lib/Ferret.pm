@@ -119,22 +119,39 @@ sub core_context { shift->{context}{CORE}   }
 # fetch a context or create it.
 sub get_context  {
     my ($f, $name) = @_;
-    return $f->{context}{$name} if $f->{context}{$name};
 
-    # something exists here which is not a context.
-    if (my $c = $f->core_context->property($name)) {
-        return $c if $c->isa('Ferret::Context');
-        return;
+    # might already have this context cached.
+    return $f->{context}{$name} if $f->{context}{$name};
+    my @parts = split /::/, $name;
+
+    # find the context.
+    my $c = $f->core_context;
+    for (@parts) {
+        last if !$c;
+        $c = $c->property($_);
     }
 
-    # create a context.
-    my $context = Ferret::Context->new($f,
-        name   => $name,
-        parent => $f->core_context
-    );
-    $f->core_context->set_property($name => $context);
+    # something exists here which is not a context.
+    return if $c && !$c->isa('Ferret::Context');
 
-    return $f->{context}{$name} = $context;
+
+    # create new contexts
+    $c = $f->core_context;
+    for my $part (@parts) {
+        my $new = $c->property($part);
+        if ($new) {
+            $c = $new;
+            next;
+        }
+        $new = Ferret::Context->new($f,
+            name => $part,
+            parent => $c
+        );
+        $c->set_property($part => $new);
+        $c = $new;
+    }
+
+    return $f->{context}{$name} = $c;
 }
 
 sub get_context_or_class { &get_context || &_bind_get_class }
