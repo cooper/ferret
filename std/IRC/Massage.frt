@@ -75,7 +75,6 @@ method parse {
 
     }
 
-    # FIXME
     continue {
          $wordI = $wordI + 1 #$wordI++ # FIXME
          $wordN = $wordN + 1 #$wordN++ # FIXME

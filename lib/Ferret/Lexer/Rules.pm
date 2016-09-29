@@ -924,6 +924,13 @@ our %element_rules = (
         }
     },
 
+    Continue => {
+        parent_must_be => [ 'For', undef, 0 ],
+        must_come_after => [ 'ForBody', undef, 1 ],
+        children_must_be => [ 'ContinueBody', undef, 2 ],
+        num_children => [ 1, undef, 3 ]
+    },
+
     Unknown => {
 
         # tokens cannot be astray.

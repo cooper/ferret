@@ -374,6 +374,12 @@ sub c_CLOSURE_E {
     $c->close_node(2) if $closure->type eq 'ForBody'
         && $p->{is_gatherfor};
 
+    # continue: this is a special case --
+    #
+    # if the closure we just terminated is a 'continue' body,
+    # terminate the for as well.
+    $c->close_node if $closure->type eq 'ContinueBody';
+
     # catch: this is a very special case --
     #
     # if the closure we just terminated is a 'catch' body,
@@ -1834,6 +1840,23 @@ sub handle_loop_statement {
     return $stmt;
 }
 
+sub c_KEYWORD_CONTINUE {
+    my ($c, $value) = @_;
+
+    # find the for
+    my $for = $c->last_el;
+    return $c->unexpected("(where is 'for'?)")
+        unless $for->type eq 'For';
+
+    # create a closure to be opened soon.
+    my $cont = F::new('Continue');
+
+    $for->adopt($cont);
+    $c->capture_closure_with($cont->body);
+
+    return $cont;
+}
+
 ######################
 ### ERROR HANDLING ###
 ######################
@@ -2078,7 +2101,7 @@ sub c_any {
 
         ^KEYWORD_INSIDE$    ^KEYWORD_FOR$       ^KEYWORD_ON$
         ^KEYWORD_IF$        ^KEYWORD_ELSE$      ^KEYWORD_ELSIF$
-        ^KEYWORD_DEFER$
+        ^KEYWORD_DEFER$     ^KEYWORD_CONTINUE$
 
         ^CLOSURE_.+$        ^ANGLE_.+$
         ^OP_(?!(?:ADD|SUB|NOT)$).+$

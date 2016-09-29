@@ -154,13 +154,14 @@ sub index {
 sub previous_element {
     my $el  = shift;
     my $idx = $el->index or return; # can't be first.
-    return ($el->parent->children)[$el->index - 1];
+    return ($el->parent->children)[$idx - 1];
 }
 
 sub next_element {
     my $el  = shift;
     my $idx = $el->index;
-    return ($el->parent->children)[$el->index + 1];
+    return if !defined $idx;
+    return ($el->parent->children)[$idx + 1];
 }
 
 sub somewhere_inside {
