@@ -32,8 +32,14 @@ method connect {
     @sock.connect()
 }
 
+method send {
+    need $line: Str
+    say("send: $line")
+    @sock.println($line)
+}
+
 method _handleLine {
-    need $line
+    need $line: Str
     say("recv: $line")
 
     # create message

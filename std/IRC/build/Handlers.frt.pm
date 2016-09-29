@@ -5,7 +5,7 @@
 #          Shared variable declaration
 #              Assignment
 #                  Lexical variable '$handlers'
-#                  Hash [1 items]
+#                  Object [1 items]
 #                      Item 0
 #                          Pair 'PING'
 #                              Bareword 'ping'
@@ -59,7 +59,7 @@ my $result = do {
 
     FF::lex_assign(
         $context,
-        handlers => FF::create_hash( $f, { PING => $$scope->{'ping'} } ),
+        handlers => FF::create_object( $f, { PING => $$scope->{'ping'} } ),
         undef, 3.3
     );
 };

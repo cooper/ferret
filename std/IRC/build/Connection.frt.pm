@@ -121,11 +121,36 @@
 #                          Property 'connect'
 #                              Instance variable '@sock'
 #                          Argument list [0 items]
+#          Method 'send'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$line'
+#                          Argument type
+#                              Bareword 'Str'
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String 'send: '
+#                                      Addition operator (+)
+#                                      Lexical variable '$line'
+#                  Instruction
+#                      Call
+#                          Property 'println'
+#                              Instance variable '@sock'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Lexical variable '$line'
 #          Method '_handleLine'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
+#                          Argument type
+#                              Bareword 'Str'
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
@@ -302,14 +327,13 @@ my $result = do {
             }
         );
 
-        # Method event '_handleLine' definition
+        # Method event 'send' definition
         my $method_2 = FF::method_event_def(
-            $f, $scope,
-            '_handleLine',
+            $f, $scope, 'send',
             [
                 {
                     name     => 'line',
-                    type     => undef,
+                    type     => 'Str',
                     optional => undef,
                     more     => undef
                 }
@@ -318,8 +342,33 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'line', 36.2 ) or return;
                 $$scope->{'say'}->(
-                    [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
+                    [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
                     $scope, undef, 37.2
+                );
+                ${ $$self->{'sock'} }->{'println'}
+                  ->( [ $$scope->{'line'} ], $scope, undef, 38.3 );
+                return $ret;
+            }
+        );
+
+        # Method event '_handleLine' definition
+        my $method_3 = FF::method_event_def(
+            $f, $scope,
+            '_handleLine',
+            [
+                {
+                    name     => 'line',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'line', 42.2 ) or return;
+                $$scope->{'say'}->(
+                    [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
+                    $scope, undef, 43.2
                 );
                 return $ret;
             }
@@ -332,7 +381,8 @@ my $result = do {
             connect => $scope,
             $proto, $class, undef, undef
         );
-        $method_2->inside_scope(
+        $method_2->inside_scope( send => $scope, $proto, $class, undef, undef );
+        $method_3->inside_scope(
             _handleLine => $scope,
             $proto, $class, undef, undef
         );

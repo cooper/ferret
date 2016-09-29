@@ -1,10 +1,10 @@
 package IRC
-class Message
+class Massage
 
 init {
 
     #> a complete IRC message
-    want $data: Str::NonEmpty
+    want $data: Str::NE
     if $data:
         @parse($data)
 
@@ -12,7 +12,7 @@ init {
 }
 
 method parse {
-    need $data: Str::NonEmpty
+    need $data: Str::NE
     $words = $data.split(/\s+/)
 
     # message parse state
@@ -35,7 +35,7 @@ method parse {
                 $tagParts = $tag.split("=", limit: 2)
                 if $tagParts.length > 1 {
                     $tags[ $tagParts[0] ] = $tagParts[1]
-                    next #tag
+                    next # tag
                 }
 
                 # no value; it's a boolean
@@ -47,7 +47,7 @@ method parse {
             $gotTags = true
             @tags = $tags
 
-            #$wordN-- FIXME
+            $wordN = $wordN - 1 #$wordN-- FIXME
             next # word
         }
 
@@ -57,8 +57,8 @@ method parse {
             $gotSource = true
             @source = $word
 
-            #$wordN-- # FIXME
-            next #word
+            $wordN = $wordN - 1 #$wordN-- # FIXME
+            next # word
         }
 
         # this is for :rest.
@@ -76,11 +76,11 @@ method parse {
     }
 
     # FIXME
-    # continue {
-    #     $wordI++
-    #     $wordN++
-    #     $last_word = $word
-    # }
+    continue {
+         $wordI = $wordI + 1 #$wordI++ # FIXME
+         $wordN = $wordN + 1 #$wordN++ # FIXME
+         $lastWord = $word
+     }
 
     @params = $params
 }
