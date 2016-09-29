@@ -21,11 +21,17 @@ method parse {
     $wordI = 0
     $wordN = 0
 
+    func updateWord {
+        $wordI = $wordI + 1 #$wordI++ # FIXME
+        $wordN = $wordN + 1 #$wordN++ # FIXME
+        $lastWord = $word
+    }
+
     for $word in $words {
 
         # first word could be message tags.
         if !$gotSource && !$gotTags && $wordI == 0 && $word.hasPrefix("@") {
-            $word.trimPrefix("@")
+            $word = $word.trimPrefix("@")
             $tags = [:]
 
             # separate tags by semicolon.
@@ -48,16 +54,18 @@ method parse {
             @tags = $tags
 
             $wordN = $wordN - 1 #$wordN-- FIXME
+            updateWord()
             next # word
         }
 
         # could be the source if we haven't gotten it.
         if !$gotCommand && !$gotSource && $word.hasPrefix(":") {
-            $word.trimPrefix(":")
+            $word = $word.trimPrefix(":")
             $gotSource = true
             @source = $word
 
             $wordN = $wordN - 1 #$wordN-- # FIXME
+            updateWord()
             next # word
         }
 
@@ -71,15 +79,10 @@ method parse {
         }
 
         # all other parameters.
-        @params.push($word)
+        $params.push($word)
 
+        updateWord()
     }
-
-    continue {
-         $wordI = $wordI + 1 #$wordI++ # FIXME
-         $wordN = $wordN + 1 #$wordN++ # FIXME
-         $lastWord = $word
-     }
 
     @params = $params
 }

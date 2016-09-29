@@ -785,10 +785,17 @@ sub c_operator {
         undef $last_el;
     }
 
+    # it has to be an expression
     return $c->expected(
         'an expression',
         'at left of '.F::pretty_token($c->label)
     ) if $last_el && !$last_el->is_type('Expression');
+
+    # FIXES NEGATING THE ENTIRE OPERATION
+    if ($c->node->type eq 'Negation') {
+        $last_el = $c->node;
+        $c->close_node;
+    }
 
     # if the current node is an operation, just add another thing.
     my $operator = F::new('Operator', token => $c->label);
