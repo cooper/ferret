@@ -453,7 +453,7 @@ sub c_PAREN_E {
         if $t ne 'PAREN_E';
 
     # closes these things.
-    $c->close_nodes(qw(Negation Operation Pair));
+    $c->close_nodes(qw(Negation Operation Pair Detail));
 
     # close the list itself.
     #
@@ -502,7 +502,7 @@ sub c_BRACKET_E {
         if $t ne 'BRACKET_E';
 
     # closes these things.
-    $c->close_nodes(qw(Operation Pair));
+    $c->close_nodes(qw(Negation Operation Pair));
 
     # close the list itself.
     #

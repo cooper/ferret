@@ -111,14 +111,21 @@ sub call {
     # hash ref of arguments. check if matches signature.
     if (!$func->_arguments_satisfy_signature($arguments, $generics)) {
 
+        my $error = ferror(
+            "The '$$func{last_unsatisfied}' argument was not satisfied",
+            'UnsatisfiedArguments'
+        );
+
         # if this is not an event callback, the success of the function
         # depends on whether its arguments were satisfied.
         if (!$is_event) {
-            return $return->fail(ferror(
-                "The '$$func{last_unsatisfied}' argument was not satisfied",
-                'UnsatisfiedArguments'
-            ));
+            return $return->fail($error);
         }
+
+        # if it is an event callback, remember this in the return object.
+        # it will be used if the entire event call fails.
+        $return->{function_arg_error} ||= $error;
+        $return->{function_arg_error}   = $error if $func->{name} eq 'default';
 
         return;
     }
