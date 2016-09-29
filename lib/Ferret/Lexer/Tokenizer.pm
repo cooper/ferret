@@ -149,7 +149,7 @@ my @token_formats = (
     [ NUMBER        => qr/\d+(?:\.\d+(?:e\d+)?)?/                           ],  # number
     [ OP_PROP       => qr/\./                                               ],  # non-bareword property
     [ NEWLINE       => qr/\n/,              \&ignore_increment              ],  # newline
-    [ SPACE         => qr/\s*/,             \&ignore                         ]   # whitespace
+    [ SPACE         => qr/\s*/,             \&ignore                        ]   # whitespace
 
 );
 
@@ -501,6 +501,12 @@ sub tok_BAREWORD {
         return [ PKG_DEC => { name => $value } ];
     }
 
+    # add more to a package name.
+    if ($last->[0] eq 'PKG_DEC' && substr($last->[1]{name}, -2) eq '::') {
+        $last->[1]{name} .= $value;
+        return [];
+    }
+
     # function.
     if ($last->[0] eq 'KEYWORD_FUNC') {
         delete $tokens->[-1];
@@ -530,6 +536,18 @@ sub tok_BAREWORD {
         return [ TYPE => { name => $value, lazy => $last->[1] } ];
     }
 
+}
+
+# add another level to a package name.
+sub tok_OP_PACK {
+    my ($tokens, $value) = @_;
+    my $last = $tokens->[-1] or return;
+    if ($last->[0] eq 'PKG_DEC') {
+        $last->[1]{name} .= '::';
+        return [];
+    }
+
+    return;
 }
 
 sub tok_NUMBER {

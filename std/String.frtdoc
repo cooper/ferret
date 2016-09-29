@@ -127,5 +127,6 @@ type Lowercase {
 
 }
 
+alias NE = NonEmpty
 alias UC = Uppercase
 alias LC = Lowercase

@@ -12,6 +12,11 @@
 #                              Property variable '.length'
 #                              Negated equality operator (!=)
 #                              Number '0'
+#          Instruction
+#              Alias
+#                  Assignment
+#                      Bareword 'NE'
+#                      Bareword 'NonEmpty'
 #          Type definition ('Uppercase')
 #              Body ('type' scope)
 #                  Instruction
@@ -38,7 +43,7 @@
 #                  Assignment
 #                      Bareword 'LC'
 #                      Bareword 'Lowercase'
-#      Include (LC, Lowercase, UC, Uppercase)
+#      Include (LC, Lowercase, NE, NonEmpty, UC, Uppercase)
 use warnings;
 use strict;
 use 5.010;
@@ -86,6 +91,7 @@ my $result = do {
             },
             undef
         );
+        $class->set_property( NE => $$scope->{'NonEmpty'}, 8.3 );
         FF::typedef(
             $scope, $class,
             'Uppercase',
@@ -102,7 +108,7 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( UC => $$scope->{'Uppercase'}, 13.3 );
+        $class->set_property( UC => $$scope->{'Uppercase'}, 15.3 );
         FF::typedef(
             $scope, $class,
             'Lowercase',
@@ -119,9 +125,9 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( LC => $$scope->{'Lowercase'}, 20.3 );
+        $class->set_property( LC => $$scope->{'Lowercase'}, 22.3 );
     }
-    FF::load_namespaces( $context, qw(LC Lowercase UC Uppercase) );
+    FF::load_namespaces( $context, qw(LC Lowercase NE NonEmpty UC Uppercase) );
 };
 
 FF::after_content();

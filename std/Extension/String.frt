@@ -5,6 +5,8 @@ type NonEmpty {
     satisfies .length != 0
 }
 
+alias NE = NonEmpty
+
 type Uppercase {
     isa *class
     transform .uppercase

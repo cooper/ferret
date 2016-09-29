@@ -67,7 +67,7 @@ sub final_return {
     # if it didn't fail and the call count is zero,
     # then fail for that reason.
     if (!$ret->{failed} && !$ret->{call_count}) {
-        return $ret->fail($ret->{function_error} || ferror(
+        return $ret->fail($ret->{function_arg_error} || ferror(
             'Unsatisfied arguments',
             'UnsatisfiedArguments'
         ));
