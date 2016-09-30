@@ -88,4 +88,4 @@ See [HTTPMethod](../HTTP.md#httpmethod) interface.
 End of HTTP::Client class.
 
 This file was generated automatically by the Ferret compiler from
-[Client.frtdoc](../Client.frtdoc).
+[Client.frt](../Client.frt).

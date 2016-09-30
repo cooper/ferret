@@ -1506,7 +1506,9 @@ sub c_OP_RETURN {
                 'at left of return operator (->)'
             ) unless $word->type eq 'Bareword';
         }
-        return c_KEYWORD_RETURN(@_);
+
+        # if it does start the instruction, pretend it's a return keyword
+        return $c->simulate('KEYWORD_RETURN');
 
     }
 

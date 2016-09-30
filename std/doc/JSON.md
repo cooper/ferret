@@ -206,4 +206,4 @@ In order to comply, the test object must be equal (according to the `==` [`OP_EQ
 End of JSON class.
 
 This file was generated automatically by the Ferret compiler from
-[JSON.frtdoc](../JSON.frtdoc).
+[JSON.frt](../JSON.frt).

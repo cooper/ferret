@@ -111,4 +111,4 @@ Fetches a server object from a server name.
 End of IRC::Connection class.
 
 This file was generated automatically by the Ferret compiler from
-[Connection.frtdoc](../Connection.frtdoc).
+[Connection.frt](../Connection.frt).

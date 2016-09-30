@@ -44,4 +44,4 @@ Sends a message to the channel.
 End of IRC::Channel class.
 
 This file was generated automatically by the Ferret compiler from
-[Channel.frtdoc](../Channel.frtdoc).
+[Channel.frt](../Channel.frt).

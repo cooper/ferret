@@ -232,6 +232,7 @@ sub do_file {
     if ($is_docs) {
         require Ferret::Markdown;
 
+        $doc->{name} = $abs;
         my $markdown = Ferret::Markdown::main($doc);
 
         print $fh $markdown;
