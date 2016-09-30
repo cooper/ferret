@@ -1494,12 +1494,21 @@ sub c_KEYWORD_RETURN {
 sub c_OP_RETURN {
     my ($c, $value) = @_;
 
-    # the previous element MUST be a bareword.
+    # check the last element.
     my $word = $c->last_el;
-    return $c->expected(
-        'a bareword key',
-        'at left of return operator (->)'
-    ) unless $word->type eq 'Bareword';
+    if ($word->type ne 'Bareword') {
+
+        # the previous element MUST be a bareword if this operator is not
+        # starting an instruction.
+        if ($c->node->type ne 'Instruction' || $c->node->children != 0) {
+            return $c->expected(
+                'a bareword key (or nothing)',
+                'at left of return operator (->)'
+            ) unless $word->type eq 'Bareword';
+        }
+        return c_KEYWORD_RETURN(@_);
+
+    }
 
     # forget about the bareword.
     $word->parent->abandon($word);
@@ -2119,7 +2128,7 @@ sub c_any {
         ^KEYWORD_DEFER$     ^KEYWORD_CONTINUE$
 
         ^CLOSURE_.+$        ^ANGLE_.+$
-        ^OP_(?!(?:ADD|SUB|NOT)$).+$
+        ^OP_(?!(?:ADD|SUB|NOT|RETURN)$).+$
     );
     foreach (@ignore) { return if $label =~ $_ }
 
