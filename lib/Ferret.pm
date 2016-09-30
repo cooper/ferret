@@ -82,23 +82,7 @@ sub truth {
 # returns Perl boolean of whether or not a value is a valid Ferret value.
 sub valid_value {
     defined(my $value = shift) or return;
-
-    # everything below this line is pending deletion
     return blessed $value && $value->isa('Ferret::Object');
-
-    # if it's one of these non-object values, it's good.
-    if ($value == undefined || $value == true || $value == false) {
-        return 1;
-    }
-
-    # if it's an object, it's good.
-    if (blessed($value) && $value->isa('Ferret::Object')) {
-        return 1;
-    }
-
-    # it is none of these; not good.
-    return;
-
 }
 
 sub zero {
@@ -122,18 +106,18 @@ sub get_context  {
 
     # might already have this context cached.
     return $f->{context}{$name} if $f->{context}{$name};
-    my @parts = split /::/, $name;
 
     # find the context.
     my $c = $f->core_context;
+    my @parts = split /::/, $name;
     for (@parts) {
         last if !$c;
         $c = $c->property($_);
     }
 
     # something exists here which is not a context.
+    # TODO: raise a runtime error?
     return if $c && !$c->isa('Ferret::Context');
-
 
     # create new contexts
     $c = $f->core_context;

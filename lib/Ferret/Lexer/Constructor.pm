@@ -1170,8 +1170,16 @@ sub c_BAREWORD {
     my $l_word  = $c->last_el;
     my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
     if ($l_label eq 'OP_PACK' && $l_word->type eq 'Bareword') {
+
+        # if it's a typed class, allow another adopt
+        if ($c->node->type eq 'TypedClass') {
+            $c->node->{ready_for_another}++;
+        }
+
+        # update value and re-adopt (to call after_adopt again)
         $l_word->{bareword_value} .= $value;
-        $l_word->{parent}->adopt($l_word); # to redo after_adopt()
+        $l_word->{parent}->adopt($l_word);
+
         return $l_word;
     }
 
