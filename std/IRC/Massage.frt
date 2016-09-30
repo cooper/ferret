@@ -12,7 +12,7 @@ init {
 
 #> Parses IRC data
 method parse {
-    need $data: Str::NE
+    need $data: Str::NE #< a string of IRC-encoded data
     $words = $data.split(/\s+/)
 
     # message parse state

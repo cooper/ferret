@@ -47,7 +47,7 @@ method connect {
 
 #> Sends a line of IRC data
 method send {
-    need $line: Str
+    need $line: Str #< a string outgoing data
     say("send: $line")
     @sock.println($line)
 }
@@ -75,7 +75,7 @@ method _handleLine {
 
 #> Fetches a channel object from a channel name
 method getChannel {
-    need $name: Str
+    need $name: Str #< channel name
     if $channel = @channels[$name.lowercase]:
         return $channel
     return Channel(connection: *self, name: $name)
@@ -83,7 +83,7 @@ method getChannel {
 
 #> Fetches a user object from a nickname
 method getUser {
-    need $nick: Str
+    need $nick: Str #< nickname associated with the user
     if $user = @users[$nick.lowercase]:
         return $user
     return User(connection: *self, nick: $nick)
@@ -91,7 +91,7 @@ method getUser {
 
 #> Fetches a server object from a server name
 method getServer {
-    need $name: Str
+    need $name: Str #< server name
     if $server = @servers[$name.lowercase]:
         return $server
     return Server(connection: *self, name: $name)

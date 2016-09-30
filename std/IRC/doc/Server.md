@@ -1,6 +1,6 @@
 # IRC::Server
 
-This is the IRC::Server class; it is not versioned.
+This is the IRC::Server class.
 
 
 

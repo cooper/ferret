@@ -1,6 +1,6 @@
 # Number
 
-This is the Number class; it is not versioned.
+This is the Number class.
 
 A number is a basic datatype for an arithmetical value which represents a
 particular quantity. Numbers are useful for counting things and for

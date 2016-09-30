@@ -1,6 +1,6 @@
 # HTTP::Request
 
-This is the HTTP::Request class; it is not versioned.
+This is the HTTP::Request class.
 
 
 

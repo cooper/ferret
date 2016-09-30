@@ -172,7 +172,7 @@ sub markdown_fmt {
         version         => $class->{version},
         version_str     => $class->{version}    ?
             " version $$class{version}"         :
-            '; it is not versioned',
+            '',
         heading         => $head || '',
         initializer     => $init ? $init->markdown_fmt_do : '',
         methods         => $methods,

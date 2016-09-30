@@ -1,6 +1,6 @@
 # IRC::Massage
 
-This is the IRC::Massage class; it is not versioned.
+This is the IRC::Massage class.
 
 
 
@@ -31,7 +31,7 @@ Parses IRC data.
 
 #### Arguments
 
-* __data__: Str::NE  
+* __data__: Str::NE - A string of IRC-encoded data.
 
 
 

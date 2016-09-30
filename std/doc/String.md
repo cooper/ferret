@@ -1,6 +1,6 @@
 # String
 
-This is the String class; it is not versioned.
+This is the String class.
 
 A string is basic datatype which stores an arbitrary sequence of bytes,
 typically representing characters. String literals are delimited by

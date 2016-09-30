@@ -1,6 +1,6 @@
 # IRC::User
 
-This is the IRC::User class; it is not versioned.
+This is the IRC::User class.
 
 
 

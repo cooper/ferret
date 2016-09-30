@@ -1,6 +1,6 @@
 # IRC::Channel
 
-This is the IRC::Channel class; it is not versioned.
+This is the IRC::Channel class.
 
 
 

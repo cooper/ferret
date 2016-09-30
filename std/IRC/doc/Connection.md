@@ -1,6 +1,6 @@
 # IRC::Connection
 
-This is the IRC::Connection class; it is not versioned.
+This is the IRC::Connection class.
 
 
 
@@ -55,7 +55,7 @@ Sends a line of IRC data.
 
 #### Arguments
 
-* __line__: [String](/std/doc/String.md)  
+* __line__: [String](/std/doc/String.md) - A string outgoing data.
 
 
 
@@ -70,7 +70,7 @@ Fetches a channel object from a channel name.
 
 #### Arguments
 
-* __name__: [String](/std/doc/String.md)  
+* __name__: [String](/std/doc/String.md) - Channel name.
 
 
 
@@ -85,7 +85,7 @@ Fetches a user object from a nickname.
 
 #### Arguments
 
-* __nick__: [String](/std/doc/String.md)  
+* __nick__: [String](/std/doc/String.md) - Nickname associated with the user.
 
 
 
@@ -100,7 +100,7 @@ Fetches a server object from a server name.
 
 #### Arguments
 
-* __name__: [String](/std/doc/String.md)  
+* __name__: [String](/std/doc/String.md) - Server name.
 
 
 
