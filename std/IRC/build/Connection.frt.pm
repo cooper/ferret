@@ -59,7 +59,7 @@
 #                          Argument list [1 items]
 #                              Item 0
 #                                  Property 'handlers'
-#                                      Bareword 'IRC::Handlers'
+#                                      Bareword 'Handlers'
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@sock'
@@ -352,7 +352,7 @@
 #                      Assignment
 #                          Instance variable '@servers'
 #                          Hash [0 items]
-#      Include (Channel, IRC, IRC::Handlers, IRC::Massage, List, Num, Outgoing, Server, Socket, Socket::TCP, Str, User)
+#      Include (Channel, Handlers, IRC, IRC::Massage, List, Num, Outgoing, Server, Socket, Socket::TCP, Str, User)
 use warnings;
 use strict;
 use 5.010;
@@ -490,8 +490,8 @@ my $result = do {
                 FF::want( $self, $args, 'handlers', 17.2,
                     FF::create_object( $f, {} ) );
                 ${ $$self->{'handlers'} }->{'*addParent'}->(
-                    [ ${ $$scope->{'IRC::Handlers'} }->{'handlers'} ],
-                    $scope, undef, 18.15
+                    [ ${ $$scope->{'Handlers'} }->{'handlers'} ],
+                    $scope, undef, 18.3
                 );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
@@ -831,7 +831,7 @@ my $result = do {
         );
     }
     FF::load_namespaces( $context,
-        qw(Channel IRC IRC::Handlers IRC::Massage List Num Outgoing Server Socket Socket::TCP Str User)
+        qw(Channel Handlers IRC IRC::Massage List Num Outgoing Server Socket Socket::TCP Str User)
     );
 };
 

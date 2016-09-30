@@ -24,6 +24,14 @@ insignificant. It does not require termination.
 package Hello 1.0
 ```
 
+Packages may be organized into different namespaces using the namespace operator
+(`::`). When doing so, the package inherits all global variables and functions
+of the broader ones.
+
+```
+package A::B    # A::B inherits all of A's symbols
+```
+
 See [Contexts](Scopes.md#context) for general information on namespaces.
 
 ### class
@@ -425,6 +433,38 @@ on Signal.INT.trap before :default {
     }
     say("Got second INT. Terminating!")
 }
+```
+
+### detail
+
+```
+$ret = detail someFunction()
+```
+
+Requests "more detail" in the return value of a function call. This means that,
+regardless of any explicit `return` statements that may exist, the call will
+always return the [return object](Variables.md#special-variables).
+
+If at least one explicit `return` did exist, the most recent one determines the
+value of the `default` property in the return object.
+
+Consider this example:
+```
+func A {
+    x -> "a return value"
+    y -> "another value"
+    return "the ultimate value"
+}
+A()
+```
+
+`A()` will always be `"the ultimate value"`, and the others are inaccessible.
+Detail fixes this:
+```
+$ret = detail A()
+$ret.x          # "a return value"
+$ret.y          # "another value"
+$ret.default    # "the ultimate value"
 ```
 
 ## Classes

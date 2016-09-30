@@ -15,7 +15,7 @@ init {
 
     # IRC command handlers. inherit from core handlers.
     want @handlers = (:)
-    @handlers.*addParent(IRC::Handlers.handlers)
+    @handlers.*addParent(Handlers.handlers)
 
     # create a line-stream socket
     @sock = Socket::TCP(address: @addr, port: @port, readMode: :line)
