@@ -16,62 +16,48 @@
 #                      Need
 #                          Lexical variable '$code'
 #                  Instruction
-#                      Assignment
-#                          Lexical variable '$new'
-#                          Value list [0 items]
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$el'
-#                      Expression ('in' parameter)
-#                          Special variable '*self'
-#                      Body ('for' scope)
-#                          Instruction
-#                              Call
-#                                  Property 'push'
-#                                      Lexical variable '$new'
-#                                  Argument list [1 items]
-#                                      Item 0
-#                                          Call
-#                                              Lexical variable '$code'
-#                                              Argument list [1 items]
-#                                                  Item 0
-#                                                      Lexical variable '$el'
-#                  Instruction
 #                      Return
-#                          Lexical variable '$new'
+#                          Gather
+#                              Body ('gather' scope)
+#                                  For (values)
+#                                      Expression ('for' parameter)
+#                                          Lexical variable '$el'
+#                                      Expression ('in' parameter)
+#                                          Special variable '*self'
+#                                      Body ('for' scope)
+#                                          Instruction
+#                                              Take
+#                                                  Call
+#                                                      Lexical variable '$code'
+#                                                      Argument list [1 items]
+#                                                          Item 0
+#                                                              Lexical variable '$el'
 #          Method 'grep'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
 #                  Instruction
-#                      Assignment
-#                          Lexical variable '$new'
-#                          Value list [0 items]
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$el'
-#                      Expression ('in' parameter)
-#                          Special variable '*self'
-#                      Body ('for' scope)
-#                          If
-#                              Expression ('if' parameter)
-#                                  Call
-#                                      Lexical variable '$code'
-#                                      Argument list [1 items]
-#                                          Item 0
-#                                              Lexical variable '$el'
-#                              Body ('if' scope)
-#                                  Instruction
-#                                      Call
-#                                          Property 'push'
-#                                              Lexical variable '$new'
-#                                          Argument list [1 items]
-#                                              Item 0
-#                                                  Lexical variable '$el'
-#                  Instruction
 #                      Return
-#                          Lexical variable '$new'
+#                          Gather
+#                              Body ('gather' scope)
+#                                  For (values)
+#                                      Expression ('for' parameter)
+#                                          Lexical variable '$el'
+#                                      Expression ('in' parameter)
+#                                          Special variable '*self'
+#                                      Body ('for' scope)
+#                                          If
+#                                              Expression ('if' parameter)
+#                                                  Call
+#                                                      Lexical variable '$code'
+#                                                      Argument list [1 items]
+#                                                          Item 0
+#                                                              Lexical variable '$el'
+#                                              Body ('if' scope)
+#                                                  Instruction
+#                                                      Take
+#                                                          Lexical variable '$el'
 #          Method 'first'
 #              Body ('method' scope)
 #                  Instruction
@@ -193,33 +179,37 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'code', 12.2 ) or return;
-                FF::lex_assign(
-                    $scope,
-                    new => FF::create_list( $f, [] ),
-                    $file_scope, 13.2
+                return $ret_func->(
+                    do {
+                        my ( $gather_status, $gather_ret ) = FF::gather(
+                            $f, $scope,
+                            sub {
+                                my ( $scope, $take, $ret_func ) = @_;
+                                {
+                                    my $loop_ret = FF::iterate(
+                                        $f, $scope,
+                                        ${ $scope->{special} }->{'self'},
+                                        'el',
+                                        sub {
+                                            my ( $scope, $ret_func ) = @_;
+                                            $take->(
+                                                $$scope->{'code'}->(
+                                                    [ $$scope->{'el'} ],
+                                                    $scope, undef, 14.3
+                                                )
+                                            );
+                                        },
+                                        13.2
+                                    );
+                                    return $ret_func->($loop_ret) if $loop_ret;
+                                }
+                            }
+                        );
+                        return $ret_func->($gather_ret)
+                          if $gather_status eq 'return';
+                        $gather_ret;
+                      }
                 );
-                {
-                    my $loop_ret = FF::iterate(
-                        $f, $scope,
-                        ${ $scope->{special} }->{'self'},
-                        'el',
-                        sub {
-                            my ( $scope, $ret_func ) = @_;
-                            ${ $$scope->{'new'} }->{'push'}->(
-                                [
-                                    $$scope->{'code'}->(
-                                        [ $$scope->{'el'} ], $scope,
-                                        undef,               15.25
-                                    )
-                                ],
-                                $scope, undef, 15.15
-                            );
-                        },
-                        14.1
-                    );
-                    return $ret_func->($loop_ret) if $loop_ret;
-                }
-                return $ret_func->( $$scope->{'new'} );
                 return $ret;
             }
         );
@@ -237,42 +227,47 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'code', 21.2 ) or return;
-                FF::lex_assign(
-                    $scope,
-                    new => FF::create_list( $f, [] ),
-                    $file_scope, 22.2
-                );
-                {
-                    my $loop_ret = FF::iterate(
-                        $f, $scope,
-                        ${ $scope->{special} }->{'self'},
-                        'el',
-                        sub {
-                            my ( $scope, $ret_func ) = @_;
-                            if (
-                                bool(
-                                    $$scope->{'code'}->(
-                                        [ $$scope->{'el'} ], $scope,
-                                        undef,               24.15
-                                    )
-                                )
-                              )
-                            {
-                                my $scope =
-                                  Ferret::Scope->new( $f, parent => $scope );
+                FF::need( $scope, $args, 'code', 20.2 ) or return;
+                return $ret_func->(
+                    do {
+                        my ( $gather_status, $gather_ret ) = FF::gather(
+                            $f, $scope,
+                            sub {
+                                my ( $scope, $take, $ret_func ) = @_;
+                                {
+                                    my $loop_ret = FF::iterate(
+                                        $f, $scope,
+                                        ${ $scope->{special} }->{'self'},
+                                        'el',
+                                        sub {
+                                            my ( $scope, $ret_func ) = @_;
+                                            if (
+                                                bool(
+                                                    $$scope->{'code'}->(
+                                                        [ $$scope->{'el'} ],
+                                                        $scope, undef, 22.15
+                                                    )
+                                                )
+                                              )
+                                            {
+                                                my $scope =
+                                                  Ferret::Scope->new( $f,
+                                                    parent => $scope );
 
-                                ${ $$scope->{'new'} }->{'push'}->(
-                                    [ $$scope->{'el'} ],
-                                    $scope, undef, 24.45
-                                );
+                                                $take->( $$scope->{'el'} );
+                                            }
+                                        },
+                                        21.2
+                                    );
+                                    return $ret_func->($loop_ret) if $loop_ret;
+                                }
                             }
-                        },
-                        23.1
-                    );
-                    return $ret_func->($loop_ret) if $loop_ret;
-                }
-                return $ret_func->( $$scope->{'new'} );
+                        );
+                        return $ret_func->($gather_ret)
+                          if $gather_status eq 'return';
+                        $gather_ret;
+                      }
+                );
                 return $ret;
             }
         );
@@ -290,7 +285,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'code', 31.2 ) or return;
+                FF::need( $scope, $args, 'code', 28.2 ) or return;
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,
@@ -302,7 +297,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               33.15
+                                        undef,               30.15
                                     )
                                 )
                               )
@@ -313,7 +308,7 @@ my $result = do {
                                 return $ret_func->( $$scope->{'el'} );
                             }
                         },
-                        32.1
+                        29.1
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -335,7 +330,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'code', 40.2 ) or return;
+                FF::need( $scope, $args, 'code', 37.2 ) or return;
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,
@@ -347,7 +342,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               42.15
+                                        undef,               39.15
                                     )
                                 )
                               )
@@ -358,7 +353,7 @@ my $result = do {
                                 return $ret_func->($true);
                             }
                         },
-                        41.1
+                        38.1
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -380,7 +375,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'code', 49.2 ) or return;
+                FF::need( $scope, $args, 'code', 46.2 ) or return;
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,
@@ -393,7 +388,7 @@ my $result = do {
                                     _not(
                                         $$scope->{'code'}->(
                                             [ $$scope->{'el'} ], $scope,
-                                            undef,               51.2
+                                            undef,               48.2
                                         )
                                     )
                                 )
@@ -405,7 +400,7 @@ my $result = do {
                                 return $ret_func->($false);
                             }
                         },
-                        50.1
+                        47.1
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
