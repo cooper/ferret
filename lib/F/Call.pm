@@ -73,7 +73,23 @@ sub started_instr {
 sub func_fmt_do { shift->function->perl_fmt_do }
 
 sub function { shift->first_child   }
-sub arg_list { (shift->children)[1] }
 sub args     { my $l = shift->arg_list; $l ? $l->ordered_children : () }
+sub arg_list {
+    my $call = shift;
+    my $list_maybe = ($call->children)[1];
+    return $list_maybe if $list_maybe;
+
+    # if the list doesn't exist, this is a no-arg call.
+    # the only time this is probably used is when doing something like
+    # someFunc! { }
+
+    # create a list
+    my $list = F::new('List');
+    $list->{is_callidx} = 1;
+    $list->{collection} = 1; # pretend to be array/hash for checks.
+    $call->adopt($list);
+
+    return $list;
+}
 
 1

@@ -631,21 +631,21 @@ sub handle_call {
         $list->{is_index} = $is_index;
         $list->{collection} = 1; # pretend to be array/hash for checks.
         $call->adopt($list);
+    }
 
-        # if it's not an index or method requirement,
-        # it might be a closure-capturing call.
-        if (!$is_index && !$is_req) {
+    # if it's not an index or method requirement,
+    # it might be a closure-capturing call.
+    if (!$is_index && !$is_req) {
 
-            # found a more likely thing to capture a closure -
-            # something that's not a call like an 'if' or 'on'
-            my $more_likely = $c->clos_cap
-                if $c->clos_cap && $c->clos_cap->type ne 'Call';
+        # found a more likely thing to capture a closure -
+        # something that's not a call like an 'if' or 'on'
+        my $more_likely = $c->clos_cap
+            if $c->clos_cap && $c->clos_cap->type ne 'Call';
 
-            # clos_cap is just a call or nothing;
-            # use this call as the new clos_cap.
-            $c->capture_closure_with($call) if !$more_likely;
+        # clos_cap is just a call or nothing;
+        # use this call as the new clos_cap.
+        $c->capture_closure_with($call) if !$more_likely;
 
-        }
     }
 
     return $call;
