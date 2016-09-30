@@ -127,11 +127,21 @@ sub set_property_ow {
 # an undefined value is still a value. deleting a property makes it valueless.
 #
 # returns true if something was deleted, false otherwise.
+# only deletes the object's own property.
 #
 sub delete_property {
     my ($obj, $prop_name, $pos) = @_;
     $obj->_check_prop_alteration($prop_name, [caller], $pos);
     return defined delete $obj->{properties}{$prop_name};
+}
+
+# deletes a property, even if inherited.
+sub delete_property_ow {
+    my ($obj, $prop_name, $pos) = @_;
+    $obj->_check_prop_alteration($prop_name, [caller], $pos);
+    my $owner = $obj->has_property($prop_name);
+    return if !$owner;
+    return $owner->delete_property($prop_name, $pos);
 }
 
 # fetches a property.
