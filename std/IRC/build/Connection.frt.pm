@@ -762,8 +762,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $self->delete_property( 'registered',   103.1 );
-                $self->delete_property( '_didAutojoin', 104.1 );
+                $self->delete_property_ow( 'registered',   103.1 );
+                $self->delete_property_ow( '_didAutojoin', 104.1 );
                 $self->set_property(
                     server => $$scope->{'Server'}->(
                         {

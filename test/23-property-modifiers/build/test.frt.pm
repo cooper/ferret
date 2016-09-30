@@ -38,7 +38,7 @@ my $result = do {
 
     FF::load_namespaces( $context, qw(Second) );
     FF::lex_assign( $scope, x => FF::create_object( $f, {} ), undef, 1.2 );
-    $scope->delete_property( 'x', 2.1 );
+    $scope->delete_property_ow( 'x', 2.1 );
     $$scope->{'Second'};
 };
 
