@@ -4,12 +4,10 @@
 #          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
-#                      Want
+#                      Want (...)
 #                          Instance variable '@items'
 #                          Argument type
-#                              Bareword 'List'
-#                          Argument value
-#                              Value list [0 items]
+#                              Bareword 'T'
 #          Method 'push'
 #              Body ('method' scope)
 #                  Instruction
@@ -50,7 +48,7 @@
 #                              Addition operator (+)
 #                              Special property '*description'
 #                                  Instance variable '@items'
-#      Include (List, T)
+#      Include (T)
 use warnings;
 use strict;
 use 5.010;
@@ -86,18 +84,10 @@ my $result = do {
         my $method_0 = FF::method_event_def(
             $f, $scope,
             'initializer__',
-            [
-                {
-                    name     => 'items',
-                    type     => 'List',
-                    optional => 1,
-                    more     => undef
-                }
-            ],
+            [ { name => 'items', type => 'T', optional => 1, more => 1 } ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::want( $self, $args, 'items', 4.2,
-                    FF::create_list( $f, [] ) );
+                FF::want( $self, $args, 'items', 4.2 );
                 return $ret;
             }
         );
@@ -169,7 +159,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(List T) );
+    FF::load_namespaces( $context, qw(T) );
 };
 
 FF::after_content();

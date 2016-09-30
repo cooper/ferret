@@ -1,7 +1,7 @@
 class Stack <T?>
 
 init {
-    want @items: List = []  # TODO: List<T>
+    want @items: T...
 }
 
 method push {

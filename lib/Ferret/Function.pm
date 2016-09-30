@@ -238,36 +238,37 @@ sub _handle_arguments {
 sub _arguments_satisfy_signature {
     my ($func, $arguments, $generics_maybe) = @_;
     foreach my $sig (@{ $func->{signatures} }) {
-        my ($name, $type) = @$sig{ qw(name type) };
+        my ($name, $types) = @$sig{ qw(name type) };
 
-        next if $sig->{optional} && !length $type;
+        next if $sig->{optional} && !length $types;
         $func->{last_unsatisfied} = $sig->{name};
 
         # check things.
         my $arg = $arguments->{ $name };
         return if !$arg && !$sig->{optional};   # need must be present
         next   if !$arg;                        # want with no value
-        next   if !length $type;                # want/need with no type check
+        next   if !length $types;               # want/need with no type check
 
         # if this is an ellipsis, check all of the items.
         if ($sig->{more}) {
-            my $flist = $arguments->{$name};
-            my @plist = plist($flist);
-            next if @plist;
+            my @plist = plist($arguments->{$name});
 
-            # TODO: sets here. it used to work, but not anymore.
-            # now it always returns a list, and it checks nothing.
-            # not sure how to deal with $x: Multiple|Types...
-            #
-            # probably just make it invalid at compiler level to
-            # have an argument with an ellipsis and multiple types
+            # weed out things of improper type.
+            @plist = grep $_,
+                map $func->_obj_type_works($_, $types, $generics_maybe), @plist;
+            Ferret::inspect(flist(@plist));
+
+            # if there is at least one thing left, we're good.
+            # otherwise, we might have to fail below if it wasn't optional.
+            $arguments->{$name} = flist(@plist);
+            next if @plist;
 
         }
 
         # check that it works.
         else {
             next if $arguments->{$name} =
-                $func->_obj_type_works($arg, $type, $generics_maybe);
+                $func->_obj_type_works($arg, $types, $generics_maybe);
         }
 
         # bad news.
@@ -310,8 +311,8 @@ sub _get_types {
 }
 
 sub _obj_type_works {
-    my ($func, $obj, $type, $generics_maybe) = @_;
-    foreach my $type ($func->_get_types($type, $generics_maybe)) {
+    my ($func, $obj, $types, $generics_maybe) = @_;
+    foreach my $type ($func->_get_types($types, $generics_maybe)) {
         my $worked = $obj->fits_type($type);
         return $worked if $worked;
     }
@@ -332,11 +333,11 @@ sub _parse_method_args {
         }
 
         # split $name:type
-        my ($name, $type) = split /:/, $arg, 2;
+        my ($name, $types) = split /:/, $arg, 2;
         $name =~ s/^\$//;
 
         # split types.
-        my @types = split m/\|/, $type if length $type;
+        my @types = split m/\|/, $types if length $types;
 
         push @args, {
             name => $name,
