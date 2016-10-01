@@ -49,13 +49,6 @@ sub new {
         $event->add_function(@$func);
     }
 
-    # the default function's signature.
-    # consider: this could change if default func changes.
-    $event->set_property(signature => [ sub {
-        my $event = $_[1];
-        Ferret::String->new($f, str_value => $event->signature_string)
-    } ]);
-
     # the name of the event, mostly for debugging purposes.
     $event->set_property(name => [ sub {
         my $event = $_[1];
@@ -114,7 +107,8 @@ sub add_function_with_opts {
     $opts{priority} = 100 if $opts{name} eq 'default';
 
     # store the function.
-    $event->{function}{ $opts{name} } = $func;
+    weaken($event->{default_func} = $func) if !$event->{default_func};
+    push @{ $event->{all_funcs} ||= [] }, $func;
 
     # create the code.
     weaken(my $weak_event = $event);
@@ -294,31 +288,23 @@ sub _global_event_prototype {
     my $f = shift;
     return $f->{event_proto} ||= do {
         my $proto = Ferret::Prototype->new($f);
-        $proto->set_property(callbacks => [ sub {
-            my $event = shift;
-            return fhash($event->{function});
+        $proto->set_property(signature => [ sub {
+            my ($event) = @_;
+            Ferret::String->new($f, str_value => $event->signature_string)
         } ]);
         $proto;
     };
 }
 
-sub default_func { shift->{function}{default} }
+sub default_func { shift->{default_func} }
 sub is_method    { shift->{is_method} }
 
 sub description {
     my $event = shift;
     my $type = 'Event';
-    $type .= " '$$event{name}'" if length $event->{name};
-
-    my @functions = values %{ $event->{function} };
-    if (@functions == 1) {
-        my $sig = $functions[0]->signature_string;
-        $type .= " { $sig }" if length $sig;
-    }
-    elsif (@functions) {
-        $type .= ' '.pdescription(fhash($event->{function}))
-    }
-
+    $type  .= " '$$event{name}'" if length $event->{name};
+    my $sig = $event->signature_string;
+    $type  .= "{ $sig }" if length $sig;
     return $type;
 }
 
