@@ -13,6 +13,23 @@ use Ferret::Core::Conversion qw(plist flist fset ferror);
 use Ferret::Arguments;
 use Ferret::Return;
 
+Ferret::bind_class(
+    name => 'Function',
+
+    # this relates to the class called Function.
+    # it emulates a real class, but it's not truly such.
+    #
+    # explicitly setting the proto and proto class allows
+    # functions such as say.*fitsType(Function) to behave as expected.
+    #
+    on_bind => sub {
+        my $class = shift;
+        my $proto = _global_function_prototype($class->f);
+        $class->set_property_weak(proto => $proto);
+        weaken($proto->{proto_class} = $class);
+    }
+);
+
 # creates a new function.
 sub new {
     my ($class, $f, %opts) = @_;
@@ -24,6 +41,9 @@ sub new {
         %opts
     );
     $func->{id} = 'F'.($func + 0);
+
+    # make the function inherit from the global function prototype.
+    $func->add_parent(_global_function_prototype($f));
 
     # mimic = copy the signature.
     if (my $mimic = delete $func->{mimic}) {
@@ -48,11 +68,6 @@ sub new {
             optional => 1
         ) foreach _parse_method_args($want);
     }
-
-    $func->set_property(signature => sub {
-        my $func = $_[1];
-        Ferret::String->new($f, str_value => $func->signature_string)
-    });
 
     $func->set_property(name => [ sub {
         my $func = $_[1];
@@ -441,6 +456,19 @@ sub _handle_property {
 sub signature_string {
     my $func = shift;
     return Ferret::Shared::Utils::signature_to_string($func->{signatures});
+}
+
+# fetch the global ferret prototype from which all functions inherit.
+sub _global_function_prototype {
+    my $f = shift;
+    return $f->{function_proto} ||= do {
+        my $proto = Ferret::Prototype->new($f);
+        $proto->set_property(signature => [ sub {
+            my ($func) = @_;
+            Ferret::String->new($f, str_value => $func->signature_string)
+        } ]);
+        $proto;
+    };
 }
 
 sub description {
