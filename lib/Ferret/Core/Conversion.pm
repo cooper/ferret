@@ -525,7 +525,7 @@ sub perlize {
 
     # it is a function. return a CODE reference which perlizes its return.
     return pfunction_smart($val)
-        if $val->isa('Ferret::Function') || $val->isa('Ferret::Event');
+        if $val->is_code;
 
     # fall back to string.
     return pstring($val);

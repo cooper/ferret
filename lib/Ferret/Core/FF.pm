@@ -456,8 +456,7 @@ sub typedef {
 
             # if it's not a function, just use the value. it is likely the
             # value of a method or property or other expression
-            return $func
-                if !$func->isa('Ferret::Function') && !$func->isa('Ferret::Event');
+            return $func if !$func->is_code;
 
             # return whatever the transform returns.
             return $func->call([ $obj ], $scope);

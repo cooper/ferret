@@ -492,8 +492,7 @@ sub fits_type {
     }
 
     # could satisfy this type interface
-    if ($class_or_func->isa('Ferret::Function') ||
-        $class_or_func->isa('Ferret::Event')) {
+    if ($class_or_func->is_code) {
         return if !$class_or_func->{is_typedef};
         my $ret = $class_or_func->call([ $obj ]);
         return $ret unless Ferret::undefined($ret);
@@ -587,6 +586,12 @@ sub description_ol {
     $d = substr $d, 0, 30;
     $d .= '...' if length $d < $length;
     return $d;
+}
+
+# true if Event or Function
+sub is_code {
+    my $func = shift;
+    return $func->isa('Ferret::Function') || $func->isa('Ferret::Event');
 }
 
 # calling a non-function.
