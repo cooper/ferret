@@ -1,0 +1,8 @@
+# Anonymous function definition
+my $func_<<id>> = FF::function_def($f, <<owner>>, <<name>>, [ { name => '_' } ], sub {
+    my ($_self, $args, $call_scope, $scope, $ret) = @_;
+    my $self = $_self || $self;
+    my $ins = $args->{_};
+    <<statements>>
+    return $ret;
+});

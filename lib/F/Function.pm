@@ -99,7 +99,12 @@ sub perl_fmt {
     # this is for private class-level functions.
     my $class = $func->first_self_or_parent('Class');
 
+    # we might need to set $ins within the function.
+    my $vp = scalar $func->body->filter_descendants(type => 'PropertyVariable');
+    my $need_topic = $vp && $func->anonymous && !$func->arguments;
+
     my $info = {
+        need_topic => $need_topic,
         anonymous  => $func->{anonymous},
         event_cb   => $func->{event_cb},
         owner      => $func->owner_str,

@@ -39,7 +39,8 @@ sub perl_fmt {
     # add each function definition.
     $before_c .= "$_\n" foreach map {
         my $info = $_;
-        my $fmt  = $_->{event_cb} ? 'function_def_event' : 'function_def';
+        my $fmt  = $_->{event_cb}   ? 'function_def_event' :
+                   $_->{need_topic} ? 'function_def_topic' : 'function_def';
 
         $info->{name} =
             length $info->{name} && $info->{name} ne '(undef)' ?
