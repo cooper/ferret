@@ -622,6 +622,12 @@ sub tok_VAR_SPEC {
     return;
 }
 
+sub tok_VAR_LEX {
+    my ($tokens, $value) = @_;
+    return [ VAR_PROP => '*self' ] if $value eq '_';
+    return;
+}
+
 # common token modifiers.
 sub remove_first_char { [ $_[0], substr $_[1], 1     ] }
 sub remove_last_char  { [ $_[0], substr $_[1], 0, -1 ] }

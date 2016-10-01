@@ -9,11 +9,14 @@ use parent qw(F::Expression F::Assignable);
 
 sub desc {
     my $var = shift;
+    return "topic variable '\$_'" if $var->{var_name} eq '*self';
     return "property variable '.$$var{var_name}'";
 }
 
 sub perl_fmt {
-    property_var => { name => shift->{var_name} };
+    my $var = shift;
+    return topic_var => { } if $var->{var_name} eq '*self';
+    return property_var => { name => $var->{var_name} };
 }
 
 1
