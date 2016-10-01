@@ -28,6 +28,14 @@
 #              Assignment
 #                  Bareword 'Object'
 #                  Bareword 'Any'
+#      Type definition ('Code')
+#          Body ('type' scope)
+#              Instruction
+#                  Satisfies
+#                      Property variable '.name'
+#              Instruction
+#                  Satisfies
+#                      Property variable '.signature'
 #      Type definition ('Hashable')
 #          Body ('type' scope)
 #              Instruction
@@ -105,6 +113,18 @@ my $result = do {
     $context->set_property( Obj    => $$scope->{'Any'}, 12.3 );
     $context->set_property( Object => $$scope->{'Any'}, 13.3 );
     FF::typedef(
+        $scope, $context, 'Code',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            FF::typedef_check(
+                $scope, $scope, $ins,
+                conditions => [ $$ins->{'name'}, $$ins->{'signature'} ],
+                equal_to   => undef
+            ) ? $ins : undef;
+        },
+        undef
+    );
+    FF::typedef(
         $scope, $context,
         'Hashable',
         sub {
@@ -113,7 +133,7 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
-                      ->( {}, $scope, undef, 16.3 ),
+                      ->( {}, $scope, undef, 22.3 ),
                     do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                 ],
                 equal_to => undef
@@ -131,14 +151,14 @@ my $result = do {
                 conditions => [
                     $create_can->( 'getValue', $ins )->(
                         { index => $$scope->{'Hashable'} }, $scope,
-                        undef, 21.3
+                        undef, 27.3
                     ),
                     $create_can->( 'setValue', $ins )->(
                         {
                             value => $$scope->{'Obj'},
                             index => $$scope->{'Hashable'}
                         },
-                        $scope, undef, 22.15
+                        $scope, undef, 28.15
                     )
                 ],
                 equal_to => undef

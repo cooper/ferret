@@ -57,7 +57,7 @@ my %no_value = map { $_ => 1 } qw(
 my %semi_follows = map { $_ => 1 } qw(
     PAREN_E         BRACKET_E       PAREN_E
     PROPERTY        NUMBER          STRING
-    BAREWORD        VAR_LEX
+    BAREWORD        VAR_LEX         VAR_PROP
     VAR_THIS        VAR_SPEC        VAR_SYM
     OP_CALL         OP_ELLIP        REGEX
     KEYWORD_TRUE    KEYWORD_FALSE   KEYWORD_UNDEFINED

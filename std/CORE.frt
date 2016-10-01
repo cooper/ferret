@@ -12,6 +12,12 @@ type Any { }
 alias Obj = Any
 alias Object = Any
 
+# FIXME: this is a bad way to match events and functions
+type Code {
+    satisfies .name
+    satisfies .signature
+}
+
 type Hashable {
     can .hashValue()
     transform .hashValue
