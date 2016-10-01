@@ -1251,11 +1251,11 @@ sub c_VAR_PROP {
     my ($c, $value) = @_;
 
     # Rule PropertyVariable[0]:
-    #   Must be somewhere inside an Inside or Type.
+    #   Must be somewhere inside an InsideBody, FunctionMethodBody, or Type.
 
     # Rule PropertyVariable[1]:
-    #   Must be somewhere inside the parent's first ancestor Inside's body,
-    #   if such an ancestor exists.
+    #   If not somewhere inside an InsideBody or Type, the nearest Function
+    #   must be anonymous and have no WantNeeds associated with it.
 
     my $var = F::new('PropertyVariable', var_name => $value);
     return $c->node->adopt($var);

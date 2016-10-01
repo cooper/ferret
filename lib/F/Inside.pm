@@ -20,7 +20,7 @@ sub new {
     weaken($ins->{param_exp} = $exp);
 
     # create the body.
-    my $body = F::new('Body');
+    my $body = F::new('InsideBody');
     weaken($ins->{body} = $body);
     $ins->adopt($body);
 

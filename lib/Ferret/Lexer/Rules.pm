@@ -571,9 +571,9 @@ our %element_rules = (
     PropertyVariable => {
 
         must_be_somewhere_inside => [                                           # PropertyVariable[0]
-            'Inside Type',
+            'InsideBody Type FunctionMethodBody',
             "Property variable (standalone .property) can only exist within ".
-            "'inside' or 'type' block",
+            "'inside', 'type', or 'function' block",
             0
         ],
 
@@ -581,11 +581,19 @@ our %element_rules = (
         parent_must_satisfy => [                                                # PropertyVariable[1]
             sub {
                 my $el = shift;
-                my $inside = $el->first_self_or_parent('Inside') or return 1;
-                return $el->somewhere_inside($inside->body);
+
+                # if it's somewhere in one of these, we're ok
+                return 1 if $el->first_self_or_parent('InsideBody');
+                return 1 if $el->first_self_or_parent('Type');
+
+                # otherwise, it's a function
+                my $func = $el->first_self_or_parent('Function') or return;
+                return $func->anonymous && !$func->arguments;
+
             },
-            "Property variable (standalone .property) cannot exist within ".
-            "'inside' parameter expression; it must be in the body instead",
+            'Property variable (standalone .property) is only valid within '.
+            'a function if it is anonymous and has no additional argument '.
+            'requirements',
             1
         ]
 
