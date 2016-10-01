@@ -340,7 +340,8 @@ sub get_class {
     if (not $class = $f->get_class($context, $name)) {
         $class = Ferret::Class->new($f,
             name    => $name,
-            version => $version
+            version => $version,
+            just_created => 1
         );
         $context->set_property($name => $class);
         $created++;
@@ -350,13 +351,16 @@ sub get_class {
     my $scope = Ferret::Scope->new($f, parent_scope => $file_scope);
     $scope->add_parent($class);
 
-    # special properties, accessible in class variables.
+    # special properties, accessible in class scope.
     $scope->{special}->set_property_weak(class => $class);
 
-    # FIXME: what should we do if $created is true, and generics were
-    # provided? we can't add generics to an existing class.
-    $class->add_generics(@$generics) if $generics;
+    # add generics. if this fails, ->add_generics() returns false.
+    if ($generics && !$class->add_generics(@$generics)) {
+        # TODO: throw()
+        die; # FIXME
+    }
 
+    delete $class->{just_created};
     return ($class, $class, $class->prototype, $scope);
 }
 

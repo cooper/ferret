@@ -254,9 +254,9 @@ sub _arguments_satisfy_signature {
             my @plist = plist($arguments->{$name});
 
             # weed out things of improper type.
+            # use map such that transformations will apply to every arg.
             @plist = grep $_,
                 map $func->_obj_type_works($_, $types, $generics_maybe), @plist;
-            Ferret::inspect(flist(@plist));
 
             # if there is at least one thing left, we're good.
             # otherwise, we might have to fail below if it wasn't optional.

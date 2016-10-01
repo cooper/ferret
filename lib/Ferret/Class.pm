@@ -222,7 +222,38 @@ sub set_generics {
 # if passed as a reference, it is optional.
 sub add_generics {
     my ($class, @generic_letters) = @_;
-    push @{ $class->{generic_letters} ||= [] }, @generic_letters;
+
+    # making no changes = success.
+    return 1 if !@generic_letters;
+
+    my $g = $class->{generic_letters} ||= [];
+    my $had_any = !$class->{just_created};
+    my @final;
+
+    for my $i (0..$#generic_letters) {
+
+        # if the existing def doesn't have one at this spot, accept it.
+        # if it does exist, it better be the same.
+        if (length $g->[$i]) {
+            if (ref $g->[$i]) {
+                return if !ref $generic_letters[$i];
+                return if ${ $g->[$i] } ne ${ $generic_letters[$i] };
+            }
+            else {
+                return if ref $generic_letters[$i];
+                return if $g->[$i] ne $generic_letters[$i];
+            }
+        }
+
+        # if this is an extension, all new ones must be optional.
+        if ($had_any && !$g->[$i] && !ref $generic_letters[$i]) {
+            return;
+        }
+
+        $g->[$i] = $generic_letters[$i];
+    }
+
+    return 1;
 }
 
 # returns the number of generics required.
