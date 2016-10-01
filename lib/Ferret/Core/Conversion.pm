@@ -311,15 +311,11 @@ sub ferror {
         return $err;
     }
 
-    # FIXME: this is temporary until we have a decent way to show hints
-    require Data::Dumper;
-    $Data::Dumper::Maxdepth = 1;
-
     # create a new error.
     my $error_class = $f->get_class($f->main_context, 'Error');
     return $error_class->call({
         type  => fsym($type || 'NativeCodeError'),
-        msg   => fstring($err.' '.Data::Dumper::Dumper(\@hints)),
+        msg   => fstring($err),
         hints => ferretize(\@hints)
     });
 

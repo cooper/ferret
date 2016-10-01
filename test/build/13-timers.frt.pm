@@ -69,7 +69,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('13-timers.frt');
+my $pos = FF::before_content( '13-timers.frt', './test/13-timers.frt' );
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
@@ -84,8 +84,8 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $$scope->{'say'}
-              ->( [ str( $f, "five seconds up" ) ], $scope, undef, 4.2 );
+            $$scope->{'say'}->( [ str( $f, "five seconds up" ) ], $scope, undef,
+                $pos->(4.2) );
             return $ret;
         }
     );
@@ -97,36 +97,39 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $$scope->{'say'}
-              ->( [ str( $f, "this shouldn't be said" ) ], $scope, undef, 9.2 );
+            $$scope->{'say'}->(
+                [ str( $f, "this shouldn't be said" ) ],
+                $scope, undef, $pos->(9.2)
+            );
             return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    $$scope->{'say'}->( [ str( $f, "hello" ) ], $scope, undef, 1.2 );
+    $$scope->{'say'}->( [ str( $f, "hello" ) ], $scope, undef, $pos->(1.2) );
     FF::on(
-        ${ $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, 3.15 ) }
-          ->{'once'}->( {}, $scope, undef, 3.35 ),
-        'expire',
-        $self,
-        $scope,
+        ${
+            $$scope->{'Timer'}
+              ->( [ num( $f, "5" ) ], $scope, undef, $pos->(3.15) )
+          }->{'once'}->( {}, $scope, undef, $pos->(3.35) ),
+        'expire', $self, $scope,
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
     FF::lex_assign(
         $scope,
-        t2 => $$scope->{'Timer'}->( [ num( $f, "2" ) ], $scope, undef, 7.4 ),
-        undef, 7.2
+        t2 => $$scope->{'Timer'}
+          ->( [ num( $f, "2" ) ], $scope, undef, $pos->(7.4) ),
+        undef, $pos->(7.2)
     );
     FF::on(
-        ${ $$scope->{'t2'} }->{'once'}->( {}, $scope, undef, 8.4 ),
+        ${ $$scope->{'t2'} }->{'once'}->( {}, $scope, undef, $pos->(8.4) ),
         'expire',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'t2'} }->{'cancel'}->( {}, $scope, undef, 12.3 );
+    ${ $$scope->{'t2'} }->{'cancel'}->( {}, $scope, undef, $pos->(12.3) );
 };
 
 FF::after_content();

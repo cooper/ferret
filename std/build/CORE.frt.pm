@@ -86,7 +86,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('CORE.frt');
+my $pos = FF::before_content( 'CORE.frt', './std/CORE.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -110,8 +110,8 @@ my $result = do {
         },
         undef
     );
-    $context->set_property( Obj    => $$scope->{'Any'}, 12.3 );
-    $context->set_property( Object => $$scope->{'Any'}, 13.3 );
+    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(12.3) );
+    $context->set_property( Object => $$scope->{'Any'}, $pos->(13.3) );
     FF::typedef(
         $scope, $context, 'Code',
         sub {
@@ -133,7 +133,7 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
-                      ->( {}, $scope, undef, 22.3 ),
+                      ->( {}, $scope, undef, $pos->(22.3) ),
                     do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                 ],
                 equal_to => undef
@@ -151,14 +151,15 @@ my $result = do {
                 conditions => [
                     $create_can->( 'getValue', $ins )->(
                         { index => $$scope->{'Hashable'} }, $scope,
-                        undef, 27.3
+                        undef, $pos->(27.3)
                     ),
                     $create_can->( 'setValue', $ins )->(
                         {
                             value => $$scope->{'Obj'},
                             index => $$scope->{'Hashable'}
                         },
-                        $scope, undef, 28.15
+                        $scope, undef,
+                        $pos->(28.15)
                     )
                 ],
                 equal_to => undef

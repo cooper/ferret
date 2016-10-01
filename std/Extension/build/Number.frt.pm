@@ -131,7 +131,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Number.frt');
+my $pos = FF::before_content( 'Number.frt', './std/Extension/Number.frt' );
 
 use Ferret::Core::Operations qw(equal mod nequal num pow str);
 my $result = do {
@@ -153,7 +153,7 @@ my $result = do {
                 return $ret_func->(
                     ${ $$scope->{'Math'} }->{'sqrt'}->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                21.4
+                        undef,                                $pos->(21.4)
                     )
                 );
                 return $ret;
@@ -167,7 +167,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $ret_func->( $$self->{'root'}
-                      ->( [ num( $f, "3" ) ], $scope, undef, 25.3 ) );
+                      ->( [ num( $f, "3" ) ], $scope, undef, $pos->(25.3) ) );
                 return $ret;
             }
         );
@@ -250,7 +250,7 @@ my $result = do {
                         [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
                         $scope,
                         undef,
-                        42.2
+                        $pos->(42.2)
                     )
                 );
                 return $ret;
@@ -308,18 +308,18 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( Int => $$scope->{'Integer'}, 18.3 );
+        $class->set_property( Int => $$scope->{'Integer'}, $pos->(18.3) );
         FF::lex_assign(
             $class,
-            inf =>
-              $$scope->{'Num'}->( [ str( $f, "inf" ) ], $scope, undef, 45.5 ),
-            undef, 45.3
+            inf => $$scope->{'Num'}
+              ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(45.5) ),
+            undef, $pos->(45.3)
         );
         FF::lex_assign(
             $class,
-            nan =>
-              $$scope->{'Num'}->( [ str( $f, "nan" ) ], $scope, undef, 46.5 ),
-            undef, 46.3
+            nan => $$scope->{'Num'}
+              ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(46.5) ),
+            undef, $pos->(46.3)
         );
     }
     FF::load_namespaces( $context, qw(Int Integer Math Num) );

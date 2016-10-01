@@ -148,7 +148,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Bot1.frt');
+my $pos = FF::before_content( 'Bot1.frt', './test/10-irc-simple/Bot1.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -177,11 +177,12 @@ my $result = do {
                         $$self->{'real'}
                     )
                 ],
-                $scope, undef, 12.06667
+                $scope, undef,
+                $pos->(12.06667)
             );
             $$self->{'send'}->(
                 [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, 13.2
+                $scope, undef, $pos->(13.2)
             );
             return $ret;
         }
@@ -197,7 +198,7 @@ my $result = do {
             FF::need( $scope, $args, 'data', 18.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
-                $scope, undef, 19.2
+                $scope, undef, $pos->(19.2)
             );
             return $ret;
         }
@@ -248,9 +249,10 @@ my $result = do {
                             port     => $$self->{'port'},
                             readMode => FF::get_symbol( $f, 'line' )
                         },
-                        $scope, undef, 8.3
+                        $scope, undef,
+                        $pos->(8.3)
                     ),
-                    8.1
+                    $pos->(8.1)
                 );
                 FF::on(
                     $$self->{'sock'},
@@ -283,7 +285,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 25.3 );
+                ${ $$self->{'sock'} }->{'connect'}
+                  ->( {}, $scope, undef, $pos->(25.3) );
                 return $ret;
             }
         );
@@ -304,10 +307,10 @@ my $result = do {
                 FF::need( $scope, $args, 'line', 29.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, 30.2
+                    $scope, undef, $pos->(30.2)
                 );
                 ${ $$self->{'sock'} }->{'println'}
-                  ->( [ $$scope->{'line'} ], $scope, undef, 31.3 );
+                  ->( [ $$scope->{'line'} ], $scope, undef, $pos->(31.3) );
                 return $ret;
             }
         );

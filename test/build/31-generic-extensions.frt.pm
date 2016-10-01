@@ -21,7 +21,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('31-generic-extensions.frt');
+my $pos = FF::before_content( '31-generic-extensions.frt',
+    './test/31-generic-extensions.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {

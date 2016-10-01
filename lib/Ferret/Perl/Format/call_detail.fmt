@@ -1,1 +1,1 @@
-<<coderef>>->(<<arguments>>, $scope, undef, <<pos>>, 1)
+<<coderef>>->(<<arguments>>, $scope, undef, $pos->(<<pos>>), 1)

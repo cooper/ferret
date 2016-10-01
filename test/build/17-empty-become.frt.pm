@@ -49,7 +49,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('17-empty-become.frt');
+my $pos =
+  FF::before_content( '17-empty-become.frt', './test/17-empty-become.frt' );
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
@@ -65,17 +66,21 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $$scope->{'say'}
-              ->( [ str( $f, "it works!" ) ], $scope, undef, 8.2 );
+              ->( [ str( $f, "it works!" ) ], $scope, undef, $pos->(8.2) );
             return $ret;
         }
     );
     FF::load_namespaces( $context, qw(Timer) );
-    FF::lex_assign( $scope, obj => FF::create_object( $f, {} ), undef, 2.2 );
+    FF::lex_assign(
+        $scope,
+        obj => FF::create_object( $f, {} ),
+        undef, $pos->(2.2)
+    );
     ${ $$scope->{'Timer'} }->{'init'}
-      ->( [ $$scope->{'obj'} ], $scope, undef, 5.15 )
-      ->( [ num( $f, "5" ) ], $scope, undef, 5.3 );
+      ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(5.15) )
+      ->( [ num( $f, "5" ) ], $scope, undef, $pos->(5.3) );
     FF::on(
-        ${ $$scope->{'obj'} }->{'once'}->( {}, $scope, undef, 7.4 ),
+        ${ $$scope->{'obj'} }->{'once'}->( {}, $scope, undef, $pos->(7.4) ),
         'expire',
         $self,
         $scope,

@@ -137,7 +137,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Line.frt');
+my $pos = FF::before_content( 'Line.frt', './std/Math/Line.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -199,37 +199,37 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     mp => $$self->{'midpoint'},
-                    $file_scope, 13.2
+                    $file_scope, $pos->(13.2)
                 );
                 FF::lex_assign(
                     $scope,
                     pox => ${ $$self->{'pt1'} }->{'x'},
-                    $file_scope, 14.1
+                    $file_scope, $pos->(14.1)
                 );
                 FF::lex_assign(
                     $scope,
                     poy => ${ $$self->{'pt1'} }->{'y'},
-                    $file_scope, 14.35
+                    $file_scope, $pos->(14.35)
                 );
                 FF::lex_assign(
                     $scope,
                     ptx => ${ $$self->{'pt2'} }->{'x'},
-                    $file_scope, 15.1
+                    $file_scope, $pos->(15.1)
                 );
                 FF::lex_assign(
                     $scope,
                     pty => ${ $$self->{'pt2'} }->{'y'},
-                    $file_scope, 15.35
+                    $file_scope, $pos->(15.35)
                 );
                 FF::lex_assign(
                     $scope,
                     mx => ${ $$scope->{'mp'} }->{'x'},
-                    $file_scope, 16.1
+                    $file_scope, $pos->(16.1)
                 );
                 FF::lex_assign(
                     $scope,
                     my => ${ $$scope->{'mp'} }->{'y'},
-                    $file_scope, 16.35
+                    $file_scope, $pos->(16.35)
                 );
                 return $ret_func->(
                     add(
@@ -270,7 +270,7 @@ my $result = do {
                     ${
                         FF::create_set( $scope, $$self->{'pt1'},
                             $$self->{'pt2'} )
-                    }->{'midpoint'}->( {}, $scope, undef, 25.4 )
+                    }->{'midpoint'}->( {}, $scope, undef, $pos->(25.4) )
                 );
                 return $ret;
             }
@@ -283,7 +283,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $ret_func->( ${ $$self->{'pt1'} }->{'distanceTo'}
-                      ->( [ $$self->{'pt2'} ], $scope, undef, 29.4 ) );
+                      ->( [ $$self->{'pt2'} ], $scope, undef, $pos->(29.4) ) );
                 return $ret;
             }
         );

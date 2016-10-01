@@ -51,7 +51,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('User.frt');
+my $pos = FF::before_content( 'User.frt', './std/IRC/User.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -92,7 +92,7 @@ my $result = do {
                 FF::want( $self, $args, 'user', 6.1 );
                 FF::want( $self, $args, 'host', 6.3 );
                 FF::want( $self, $args, 'real', 6.5 );
-                $self->weaken_property( 'connection', 7.1 );
+                $self->weaken_property( 'connection', $pos->(7.1) );
                 return $ret;
             }
         );

@@ -107,7 +107,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Signal.frt');
+my $pos = FF::before_content( 'Signal.frt', './std/Signal.frt' );
 
 use Ferret::Core::Operations qw(bool num);
 my $result = do {
@@ -145,7 +145,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $$scope->{'_exit'}->( [ num( $f, "0" ) ], $scope, undef, 25.2 );
+                $$scope->{'_exit'}
+                  ->( [ num( $f, "0" ) ], $scope, undef, $pos->(25.2) );
                 return $ret;
             }
         );
@@ -166,10 +167,13 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'type', 31.2 ) or return;
                 {
-                    my $maybe_0 = $$scope->{'signals'}
-                      ->get_index_value( [ $$scope->{'type'} ], $scope, 32.1 );
+                    my $maybe_0 =
+                      $$scope->{'signals'}
+                      ->get_index_value( [ $$scope->{'type'} ],
+                        $scope, $pos->(32.1) );
                     if ( bool($maybe_0) ) {
-                        ${$maybe_0}->{'trap'}->( {}, $scope, undef, 32.35 );
+                        ${$maybe_0}->{'trap'}
+                          ->( {}, $scope, undef, $pos->(32.35) );
                     }
                 }
                 return $ret;
@@ -189,35 +193,40 @@ my $result = do {
             $class,
             INT => [
                 sub {
-                    ${ $scope->{special} }->{'class'}
-                      ->( [ FF::get_symbol( $f, 'INT' ) ], $scope, undef, 7.5 );
+                    ${ $scope->{special} }->{'class'}->(
+                        [ FF::get_symbol( $f, 'INT' ) ],
+                        $scope, undef, $pos->(7.5)
+                    );
                 }
             ],
             undef,
-            7.3
+            $pos->(7.3)
         );
         FF::lex_assign(
             $class,
             HUP => [
                 sub {
-                    ${ $scope->{special} }->{'class'}
-                      ->( [ FF::get_symbol( $f, 'HUP' ) ], $scope, undef, 8.5 );
+                    ${ $scope->{special} }->{'class'}->(
+                        [ FF::get_symbol( $f, 'HUP' ) ],
+                        $scope, undef, $pos->(8.5)
+                    );
                 }
             ],
             undef,
-            8.3
+            $pos->(8.3)
         );
         FF::lex_assign(
             $class,
             TERM => [
                 sub {
-                    ${ $scope->{special} }->{'class'}
-                      ->( [ FF::get_symbol( $f, 'TERM' ) ], $scope, undef,
-                        9.5 );
+                    ${ $scope->{special} }->{'class'}->(
+                        [ FF::get_symbol( $f, 'TERM' ) ],
+                        $scope, undef, $pos->(9.5)
+                    );
                 }
             ],
             undef,
-            9.3
+            $pos->(9.3)
         );
         FF::lex_assign(
             $class,
@@ -225,12 +234,12 @@ my $result = do {
                 sub {
                     ${ $scope->{special} }->{'class'}->(
                         [ FF::get_symbol( $f, 'ALRM' ) ],
-                        $scope, undef, 10.5
+                        $scope, undef, $pos->(10.5)
                     );
                 }
             ],
             undef,
-            10.3
+            $pos->(10.3)
         );
         FF::lex_assign(
             $scope,
@@ -248,7 +257,7 @@ my $result = do {
                 }
             ],
             undef,
-            12.2
+            $pos->(12.2)
         );
     }
     FF::load_namespaces( $context, qw(NATIVE NATIVE::Signal Sym) );

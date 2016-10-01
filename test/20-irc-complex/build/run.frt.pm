@@ -549,7 +549,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('run.frt');
+my $pos = FF::before_content( 'run.frt', './test/20-irc-complex/run.frt' );
 
 use Ferret::Core::Operations qw(_not bool equal num str);
 my $result = do {
@@ -581,16 +581,19 @@ my $result = do {
                         $$scope->{'convertNewlines'}->(
                             [
                                 ${ $$scope->{'msg'} }->{'fromWord'}->(
-                                    [ num( $f, "1" ) ], $scope, undef, 70.45
+                                    [ num( $f, "1" ) ], $scope,
+                                    undef, $pos->(70.45)
                                 )
                             ],
-                            $scope, undef, 70.3
+                            $scope, undef,
+                            $pos->(70.3)
                         )
                     ],
-                    $scope, undef, 70.2
+                    $scope, undef,
+                    $pos->(70.2)
                 ),
                 $file_scope,
-                70.1
+                $pos->(70.1)
             );
             FF::lex_assign(
                 $scope,
@@ -602,10 +605,11 @@ my $result = do {
                             str( $f, "p" )
                         )
                     ],
-                    $scope, undef, 71.25
+                    $scope, undef,
+                    $pos->(71.25)
                 ),
                 $file_scope,
-                71.1
+                $pos->(71.1)
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -615,7 +619,8 @@ my $result = do {
                         ${ $$scope->{'msg'} }->{'channel'},
                         ${ $$scope->{'res'} }->{'error'}
                     ],
-                    $scope, undef, 73.15
+                    $scope, undef,
+                    $pos->(73.15)
                 );
                 return $ret_func->();
             }
@@ -624,7 +629,8 @@ my $result = do {
                     ${ $$scope->{'msg'} }->{'channel'},
                     ${ $$scope->{'res'} }->{'perl'}
                 ],
-                $scope, undef, 76.15
+                $scope, undef,
+                $pos->(76.15)
             );
             return $ret;
         }
@@ -650,8 +656,9 @@ my $result = do {
             return $ret_func->(
                 ${
                     ${ $$scope->{'string'} }->{'split'}
-                      ->( [ str( $f, "_NL_" ) ], $scope, undef, 81.2 )
-                }->{'join'}->( [ str( $f, "\n" ) ], $scope, undef, 81.4 )
+                      ->( [ str( $f, "_NL_" ) ], $scope, undef, $pos->(81.2) )
+                  }->{'join'}
+                  ->( [ str( $f, "\n" ) ], $scope, undef, $pos->(81.4) )
             );
             return $ret;
         }
@@ -667,11 +674,14 @@ my $result = do {
             FF::need( $scope, $args, 'str', 85.2 ) or return;
             ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [
-                    ${ $$scope->{'bot'} }->{'autojoin'}
-                      ->get_index_value( [ num( $f, "0" ) ], $scope, 86.3 ),
+                    ${ $$scope->{'bot'} }->{'autojoin'}->get_index_value(
+                        [ num( $f, "0" ) ],
+                        $scope, $pos->(86.3)
+                    ),
                     $$scope->{'str'}
                 ],
-                $scope, undef, 86.15
+                $scope, undef,
+                $pos->(86.15)
             );
             return $ret;
         }
@@ -690,7 +700,8 @@ my $result = do {
                     ${ $$scope->{'msg'} }->{'channel'},
                     str( $f, "Ferret IRC bot" )
                 ],
-                $scope, undef, 8.15
+                $scope, undef,
+                $pos->(8.15)
             );
             return $ret;
         }
@@ -718,22 +729,25 @@ my $result = do {
                         $$scope->{'convertNewlines'}->(
                             [
                                 ${ $$scope->{'msg'} }->{'fromWord'}->(
-                                    [ num( $f, "1" ) ], $scope, undef, 15.45
+                                    [ num( $f, "1" ) ], $scope,
+                                    undef, $pos->(15.45)
                                 )
                             ],
-                            $scope, undef, 15.3
+                            $scope, undef,
+                            $pos->(15.3)
                         )
                     ],
-                    $scope, undef, 15.2
+                    $scope, undef,
+                    $pos->(15.2)
                 ),
                 $file_scope,
-                15.1
+                $pos->(15.1)
             );
             FF::lex_assign(
                 $scope,
                 res => ${ $$scope->{'c'} }->{'tokenize'}
-                  ->( { pretty => $true }, $scope, undef, 16.25 ),
-                $file_scope, 16.1
+                  ->( { pretty => $true }, $scope, undef, $pos->(16.25) ),
+                $file_scope, $pos->(16.1)
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -743,7 +757,8 @@ my $result = do {
                         ${ $$scope->{'msg'} }->{'channel'},
                         ${ $$scope->{'res'} }->{'error'}
                     ],
-                    $scope, undef, 18.15
+                    $scope, undef,
+                    $pos->(18.15)
                 );
                 return $ret_func->();
             }
@@ -752,7 +767,8 @@ my $result = do {
                     ${ $$scope->{'msg'} }->{'channel'},
                     ${ $$scope->{'res'} }->{'pretty'}
                 ],
-                $scope, undef, 21.15
+                $scope, undef,
+                $pos->(21.15)
             );
             return $ret;
         }
@@ -780,22 +796,25 @@ my $result = do {
                         $$scope->{'convertNewlines'}->(
                             [
                                 ${ $$scope->{'msg'} }->{'fromWord'}->(
-                                    [ num( $f, "1" ) ], $scope, undef, 28.45
+                                    [ num( $f, "1" ) ], $scope,
+                                    undef, $pos->(28.45)
                                 )
                             ],
-                            $scope, undef, 28.3
+                            $scope, undef,
+                            $pos->(28.3)
                         )
                     ],
-                    $scope, undef, 28.2
+                    $scope, undef,
+                    $pos->(28.2)
                 ),
                 $file_scope,
-                28.1
+                $pos->(28.1)
             );
             FF::lex_assign(
                 $scope,
                 res => ${ $$scope->{'c'} }->{'construct'}
-                  ->( { pretty => $true }, $scope, undef, 29.25 ),
-                $file_scope, 29.1
+                  ->( { pretty => $true }, $scope, undef, $pos->(29.25) ),
+                $file_scope, $pos->(29.1)
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -805,7 +824,8 @@ my $result = do {
                         ${ $$scope->{'msg'} }->{'channel'},
                         ${ $$scope->{'res'} }->{'error'}
                     ],
-                    $scope, undef, 31.15
+                    $scope, undef,
+                    $pos->(31.15)
                 );
                 return $ret_func->();
             }
@@ -814,7 +834,8 @@ my $result = do {
                     ${ $$scope->{'msg'} }->{'channel'},
                     ${ $$scope->{'res'} }->{'pretty'}
                 ],
-                $scope, undef, 34.15
+                $scope, undef,
+                $pos->(34.15)
             );
             return $ret;
         }
@@ -844,17 +865,19 @@ my $result = do {
                                 [
                                     ${ $$scope->{'msg'} }->{'fromWord'}->(
                                         [ num( $f, "1" ) ], $scope,
-                                        undef, 41.45
+                                        undef, $pos->(41.45)
                                     )
                                 ],
-                                $scope, undef, 41.3
+                                $scope, undef,
+                                $pos->(41.3)
                             )
                         ],
-                        $scope, undef, 41.2
+                        $scope, undef,
+                        $pos->(41.2)
                     )
-                  }->{'eval'}->( {}, $scope, undef, 41.75 ),
+                  }->{'eval'}->( {}, $scope, undef, $pos->(41.75) ),
                 $file_scope,
-                41.1
+                $pos->(41.1)
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -864,7 +887,8 @@ my $result = do {
                         ${ $$scope->{'msg'} }->{'channel'},
                         ${ $$scope->{'res'} }->{'error'}
                     ],
-                    $scope, undef, 43.15
+                    $scope, undef,
+                    $pos->(43.15)
                 );
                 return $ret_func->();
             }
@@ -876,15 +900,16 @@ my $result = do {
                             value => ${ $$scope->{'res'} }->{'result'},
                             quiet => $true
                         },
-                        $scope, undef, 46.2
+                        $scope, undef,
+                        $pos->(46.2)
                     )
                   }->{'string'},
                 $file_scope,
-                46.1
+                $pos->(46.1)
             );
             ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'string'} ],
-                $scope, undef, 47.15
+                $scope, undef, $pos->(47.15)
             );
             return $ret;
         }
@@ -914,17 +939,19 @@ my $result = do {
                                 [
                                     ${ $$scope->{'msg'} }->{'fromWord'}->(
                                         [ num( $f, "1" ) ], $scope,
-                                        undef, 54.45
+                                        undef, $pos->(54.45)
                                     )
                                 ],
-                                $scope, undef, 54.3
+                                $scope, undef,
+                                $pos->(54.3)
                             )
                         ],
-                        $scope, undef, 54.2
+                        $scope, undef,
+                        $pos->(54.2)
                     )
-                  }->{'perlEval'}->( {}, $scope, undef, 54.75 ),
+                  }->{'perlEval'}->( {}, $scope, undef, $pos->(54.75) ),
                 $file_scope,
-                54.1
+                $pos->(54.1)
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -934,7 +961,8 @@ my $result = do {
                         ${ $$scope->{'msg'} }->{'channel'},
                         ${ $$scope->{'res'} }->{'error'}
                     ],
-                    $scope, undef, 56.15
+                    $scope, undef,
+                    $pos->(56.15)
                 );
                 return $ret_func->();
             }
@@ -946,15 +974,16 @@ my $result = do {
                             value => ${ $$scope->{'res'} }->{'result'},
                             quiet => $true
                         },
-                        $scope, undef, 59.2
+                        $scope, undef,
+                        $pos->(59.2)
                     )
                   }->{'string'},
                 $file_scope,
-                59.1
+                $pos->(59.1)
             );
             ${ $$scope->{'bot'} }->{'privmsg'}->(
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'string'} ],
-                $scope, undef, 60.15
+                $scope, undef, $pos->(60.15)
             );
             return $ret;
         }
@@ -978,10 +1007,11 @@ my $result = do {
                 nick => str( $f, "bottie" ),
                 user => str( $f, "ferret" )
             },
-            $scope, undef, 1.35
+            $scope, undef,
+            $pos->(1.35)
         ),
         undef,
-        1.15
+        $pos->(1.15)
     );
     FF::lex_assign(
         $context,
@@ -991,18 +1021,19 @@ my $result = do {
                 nick => str( $f, "booby" ),
                 user => str( $f, "ferret" )
             },
-            $scope, undef, 2.35
+            $scope, undef,
+            $pos->(2.35)
         ),
         undef,
-        2.15
+        $pos->(2.15)
     );
     $$scope->{'bot'}->set_property(
         autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ),
-        3.3
+        $pos->(3.3)
     );
     $$scope->{'i'}->set_property(
         autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ),
-        4.3
+        $pos->(4.3)
     );
     ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
@@ -1012,7 +1043,8 @@ my $result = do {
                 undef, undef, undef, undef
             )
         ],
-        $scope, undef, 6.3
+        $scope, undef,
+        $pos->(6.3)
     );
     ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
@@ -1022,7 +1054,8 @@ my $result = do {
                 undef, undef, undef, undef
             )
         ],
-        $scope, undef, 11.3
+        $scope, undef,
+        $pos->(11.3)
     );
     ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
@@ -1032,7 +1065,8 @@ my $result = do {
                 undef, undef, undef, undef
             )
         ],
-        $scope, undef, 24.3
+        $scope, undef,
+        $pos->(24.3)
     );
     ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
@@ -1042,7 +1076,8 @@ my $result = do {
                 undef, undef, undef, undef
             )
         ],
-        $scope, undef, 37.3
+        $scope, undef,
+        $pos->(37.3)
     );
     ${ $$scope->{'bot'} }->{'addCommand'}->(
         [
@@ -1052,14 +1087,19 @@ my $result = do {
                 undef, undef, undef, undef
             )
         ],
-        $scope, undef, 50.3
+        $scope, undef,
+        $pos->(50.3)
     );
-    ${ $$scope->{'bot'} }->{'addCommand'}
-      ->( [ str( $f, "p" ), $$scope->{'handlePerl'} ], $scope, undef, 63.3 );
-    ${ $$scope->{'bot'} }->{'addCommand'}
-      ->( [ str( $f, "pp" ), $$scope->{'handlePerl'} ], $scope, undef, 64.3 );
-    ${ $$scope->{'bot'} }->{'connect'}->( {}, $scope, undef, 89.3 );
-    ${ $$scope->{'i'} }->{'connect'}->( {}, $scope, undef, 90.3 );
+    ${ $$scope->{'bot'} }->{'addCommand'}->(
+        [ str( $f, "p" ), $$scope->{'handlePerl'} ],
+        $scope, undef, $pos->(63.3)
+    );
+    ${ $$scope->{'bot'} }->{'addCommand'}->(
+        [ str( $f, "pp" ), $$scope->{'handlePerl'} ],
+        $scope, undef, $pos->(64.3)
+    );
+    ${ $$scope->{'bot'} }->{'connect'}->( {}, $scope, undef, $pos->(89.3) );
+    ${ $$scope->{'i'} }->{'connect'}->( {}, $scope, undef, $pos->(90.3) );
 };
 
 FF::after_content();

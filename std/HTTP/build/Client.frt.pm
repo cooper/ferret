@@ -140,7 +140,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Client.frt');
+my $pos = FF::before_content( 'Client.frt', './std/HTTP/Client.frt' );
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
@@ -201,7 +201,7 @@ my $result = do {
                     $$scope->{'defaultLength'} );
                 ${ $$scope->{'NATIVE::HTTPClient'} }->{'initialize'}->(
                     [ ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, 28.5
+                    $scope, undef, $pos->(28.5)
                 );
                 return $ret;
             }
@@ -227,7 +227,8 @@ my $result = do {
                             httpMethod => FF::get_symbol( $f, 'GET' ),
                             url        => $$scope->{'url'}
                         },
-                        $scope, undef, 35.3
+                        $scope, undef,
+                        $pos->(35.3)
                     )
                 );
                 return $ret;
@@ -254,7 +255,8 @@ my $result = do {
                             httpMethod => FF::get_symbol( $f, 'POST' ),
                             url        => $$scope->{'url'}
                         },
-                        $scope, undef, 45.3
+                        $scope, undef,
+                        $pos->(45.3)
                     )
                 );
                 return $ret;
@@ -290,7 +292,8 @@ my $result = do {
                             httpMethod => $$scope->{'httpMethod'},
                             url        => $$scope->{'url'}
                         },
-                        $scope, undef, 61.5
+                        $scope, undef,
+                        $pos->(61.5)
                     )
                 );
                 return $ret;
@@ -314,12 +317,12 @@ my $result = do {
                 ${ ${ $scope->{special} }->{'class'} }->{'version'}
             ),
             undef,
-            5.2
+            $pos->(5.2)
         );
         FF::lex_assign(
             $scope,
             defaultLength => mul( $scope, num( $f, "64" ), num( $f, "1024" ) ),
-            undef, 6.2
+            undef, $pos->(6.2)
         );
     }
     FF::load_namespaces( $context,

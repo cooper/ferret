@@ -16,7 +16,7 @@ my $self;
 my $f = FF::get_ferret();
 my ($true, $false, $undefined, $ret_func) = FF::get_constant_objects($f);
 
-FF::before_content('<<base_name>>');
+my $pos = FF::before_content('<<base_name>>', '<<file_name>>');
 
 <<content>>
 

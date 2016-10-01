@@ -1,1 +1,1 @@
-<<left>>->set_property(<<name>> => <<assign_value>>, <<pos>>)
+<<left>>->set_property(<<name>> => <<assign_value>>, $pos->(<<pos>>))

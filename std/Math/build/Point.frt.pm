@@ -175,7 +175,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Point.frt');
+my $pos = FF::before_content( 'Point.frt', './std/Math/Point.frt' );
 
 use Ferret::Core::Operations qw(_sub add div num pow str);
 my $result = do {
@@ -235,7 +235,7 @@ my $result = do {
                         $scope, $$self->{'x'}, ${ $$scope->{'pt2'} }->{'x'}
                     ),
                     $file_scope,
-                    10.2
+                    $pos->(10.2)
                 );
                 FF::lex_assign(
                     $scope,
@@ -243,7 +243,7 @@ my $result = do {
                         $scope, $$self->{'y'}, ${ $$scope->{'pt2'} }->{'y'}
                     ),
                     $file_scope,
-                    11.2
+                    $pos->(11.2)
                 );
                 return $ret_func->(
                     $$scope->{'sqrt'}->(
@@ -254,7 +254,8 @@ my $result = do {
                                 pow( $scope, $$scope->{'dy'}, num( $f, "2" ) )
                             )
                         ],
-                        $scope, undef, 12.15
+                        $scope, undef,
+                        $pos->(12.15)
                     )
                 );
                 return $ret;
@@ -272,11 +273,12 @@ my $result = do {
                     $$self->{'distanceTo'}->(
                         [
                             ${ $scope->{special} }->{'class'}->(
-                                [ num( $f, "0" ), num( $f, "0" ) ], $scope,
-                                undef, 16.25
+                                [ num( $f, "0" ), num( $f, "0" ) ],
+                                $scope, undef, $pos->(16.25)
                             )
                         ],
-                        $scope, undef, 16.15
+                        $scope, undef,
+                        $pos->(16.15)
                     )
                 );
                 return $ret;
@@ -369,7 +371,8 @@ my $result = do {
                                 num( $f, "2" )
                             )
                         },
-                        $scope, undef, 33.3
+                        $scope, undef,
+                        $pos->(33.3)
                     )
                 );
                 return $ret;
@@ -399,7 +402,7 @@ my $result = do {
                 FF::need( $scope, $args, 'pt1', 40.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 40.3 ) or return;
                 return $ret_func->( ${ $$scope->{'pt1'} }->{'distanceTo'}
-                      ->( [ $$scope->{'pt2'} ], $scope, undef, 41.4 ) );
+                      ->( [ $$scope->{'pt2'} ], $scope, undef, $pos->(41.4) ) );
                 return $ret;
             }
         );

@@ -93,7 +93,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('27-http.frt');
+my $pos = FF::before_content( '27-http.frt', './test/27-http.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -109,7 +109,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $$scope->{'say'}
-              ->( [ str( $f, "Connected!" ) ], $scope, undef, 4.2 );
+              ->( [ str( $f, "Connected!" ) ], $scope, undef, $pos->(4.2) );
             return $ret;
         }
     );
@@ -136,7 +136,8 @@ my $result = do {
                         $$scope->{'location'}
                     )
                 ],
-                $scope, undef, 9.2
+                $scope, undef,
+                $pos->(9.2)
             );
             return $ret;
         }
@@ -165,7 +166,8 @@ my $result = do {
                         ${ $$scope->{'content'} }->{'length'}
                     )
                 ],
-                $scope, undef, 15.2
+                $scope, undef,
+                $pos->(15.2)
             );
             return $ret;
         }
@@ -179,7 +181,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             $$scope->{'say'}
-              ->( [ str( $f, "Got error!" ) ], $scope, undef, 21.2 );
+              ->( [ str( $f, "Got error!" ) ], $scope, undef, $pos->(21.2) );
             return $ret;
         }
     );
@@ -189,8 +191,10 @@ my $result = do {
     {
         my $inside_return = FF::inside(
             $f, $scope,
-            ${ $$scope->{'HTTP'} }->{'get'}
-              ->( [ str( $f, "http://google.com" ) ], $scope, undef, 1.4 ),
+            ${ $$scope->{'HTTP'} }->{'get'}->(
+                [ str( $f, "http://google.com" ) ], $scope,
+                undef, $pos->(1.4)
+            ),
             sub {
                 my ( $scope, $ins, $ret_func ) = @_;
                 FF::on(
@@ -231,7 +235,7 @@ my $result = do {
                     ),
                     {}
                 );
-                $$ins->{'connect'}->( {}, $scope, undef, 24.3 );
+                $$ins->{'connect'}->( {}, $scope, undef, $pos->(24.3) );
             }
         );
         return $ret_func->($inside_return) if $inside_return;

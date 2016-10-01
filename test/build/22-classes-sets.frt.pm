@@ -177,7 +177,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('22-classes-sets.frt');
+my $pos =
+  FF::before_content( '22-classes-sets.frt', './test/22-classes-sets.frt' );
 
 use Ferret::Core::Operations qw(bool str);
 my $result = do {
@@ -349,37 +350,47 @@ my $result = do {
     FF::load_namespaces( $context, qw(Cat Cow Dog) );
     FF::lex_assign(
         $scope,
-        animal => $$scope->{'Cow'}->( {}, $scope, undef, 50.4 ),
-        undef, 50.2
+        animal => $$scope->{'Cow'}->( {}, $scope, undef, $pos->(50.4) ),
+        undef, $pos->(50.2)
     );
     ${ $$scope->{'Dog'} }->{'init'}
-      ->( [ $$scope->{'animal'} ], $scope, undef, 53.3 )
-      ->( {}, $scope, undef, 53.6 );
+      ->( [ $$scope->{'animal'} ], $scope, undef, $pos->(53.3) )
+      ->( {}, $scope, undef, $pos->(53.6) );
     $$scope->{'say'}->(
-        [ ${ $$scope->{'animal'} }->{'moo'}->( {}, $scope, undef, 56.5 ) ],
-        $scope, undef, 56.2
+        [
+            ${ $$scope->{'animal'} }->{'moo'}
+              ->( {}, $scope, undef, $pos->(56.5) )
+        ],
+        $scope, undef,
+        $pos->(56.2)
     );
     $$scope->{'say'}->(
-        [ ${ $$scope->{'animal'} }->{'bark'}->( {}, $scope, undef, 57.5 ) ],
-        $scope, undef, 57.2
+        [
+            ${ $$scope->{'animal'} }->{'bark'}
+              ->( {}, $scope, undef, $pos->(57.5) )
+        ],
+        $scope, undef,
+        $pos->(57.2)
     );
     ${ $$scope->{'Cat'} }->{'init'}
-      ->( [ $$scope->{'animal'} ], $scope, undef, 60.15 )
-      ->( { mean => $true }, $scope, undef, 60.3 );
-    $$scope->{'inspect'}->( [ $$scope->{'animal'} ], $scope, undef, 62.2 );
+      ->( [ $$scope->{'animal'} ], $scope, undef, $pos->(60.15) )
+      ->( { mean => $true }, $scope, undef, $pos->(60.3) );
+    $$scope->{'inspect'}
+      ->( [ $$scope->{'animal'} ], $scope, undef, $pos->(62.2) );
     FF::lex_assign(
         $scope,
-        cat => $$scope->{'Cat'}->( {}, $scope, undef, 65.4 ),
-        undef, 65.2
+        cat => $$scope->{'Cat'}->( {}, $scope, undef, $pos->(65.4) ),
+        undef, $pos->(65.2)
     );
     FF::lex_assign(
         $scope,
         aftermath =>
           ${ FF::create_set( $scope, $$scope->{'animal'}, $$scope->{'cat'} ) }
-          ->{'fight'}->( {}, $scope, undef, 71.45 ),
-        undef, 71.1
+          ->{'fight'}->( {}, $scope, undef, $pos->(71.45) ),
+        undef, $pos->(71.1)
     );
-    $$scope->{'say'}->( [ $$scope->{'aftermath'} ], $scope, undef, 72.2 );
+    $$scope->{'say'}
+      ->( [ $$scope->{'aftermath'} ], $scope, undef, $pos->(72.2) );
 };
 
 FF::after_content();

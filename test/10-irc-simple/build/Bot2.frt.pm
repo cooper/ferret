@@ -139,7 +139,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Bot2.frt');
+my $pos = FF::before_content( 'Bot2.frt', './test/10-irc-simple/Bot2.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -168,11 +168,12 @@ my $result = do {
                         $$self->{'real'}
                     )
                 ],
-                $scope, undef, 14.06667
+                $scope, undef,
+                $pos->(14.06667)
             );
             $$self->{'send'}->(
                 [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, 15.2
+                $scope, undef, $pos->(15.2)
             );
             return $ret;
         }
@@ -188,7 +189,7 @@ my $result = do {
             FF::need( $scope, $args, 'data', 20.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
-                $scope, undef, 21.2
+                $scope, undef, $pos->(21.2)
             );
             return $ret;
         }
@@ -204,7 +205,7 @@ my $result = do {
             FF::need( $scope, $args, 'data', 25.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
-                $scope, undef, 26.2
+                $scope, undef, $pos->(26.2)
             );
             return $ret;
         }
@@ -250,12 +251,15 @@ my $result = do {
                 FF::want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
                 ${ $$scope->{'Socket::TCP'} }->{'init'}->(
                     [ ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, 8.25
+                    $scope, undef, $pos->(8.25)
                   )->(
                     { addr => $$self->{'address'}, port => $$self->{'port'} },
-                    $scope, undef, 8.4
+                    $scope, undef, $pos->(8.4)
                   );
-                $self->set_property( send => $$self->{'println'}, 10.2 );
+                $self->set_property(
+                    send => $$self->{'println'},
+                    $pos->(10.2)
+                );
                 FF::on(
                     $self,
                     'connected',

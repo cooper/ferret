@@ -64,7 +64,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('HTTP.frt');
+my $pos = FF::before_content( 'HTTP.frt', './std/HTTP.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -80,8 +80,11 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'url', 14.2 ) or return;
-            return $ret_func->( ${ $$scope->{'client'} }->{'get'}
-                  ->( { url => $$scope->{'url'} }, $scope, undef, 15.4 ) );
+            return $ret_func->(
+                ${ $$scope->{'client'} }->{'get'}->(
+                    { url => $$scope->{'url'} }, $scope, undef, $pos->(15.4)
+                )
+            );
             return $ret;
         }
     );
@@ -94,8 +97,11 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'url', 20.2 ) or return;
-            return $ret_func->( ${ $$scope->{'client'} }->{'post'}
-                  ->( { url => $$scope->{'url'} }, $scope, undef, 21.4 ) );
+            return $ret_func->(
+                ${ $$scope->{'client'} }->{'post'}->(
+                    { url => $$scope->{'url'} }, $scope, undef, $pos->(21.4)
+                )
+            );
             return $ret;
         }
     );
@@ -119,9 +125,13 @@ my $result = do {
     );
     FF::lex_assign(
         $scope,
-        client =>
-          [ sub { $$scope->{'HTTP::Client'}->( {}, $scope, undef, 10.6 ) } ],
-        undef, 10.2
+        client => [
+            sub {
+                $$scope->{'HTTP::Client'}->( {}, $scope, undef, $pos->(10.6) );
+            }
+        ],
+        undef,
+        $pos->(10.2)
     );
 };
 

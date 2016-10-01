@@ -50,7 +50,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Module.frt');
+my $pos = FF::before_content( 'Module.frt', './std/Module.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -97,7 +97,7 @@ my $result = do {
                         $scope, $$self->{'prefix'},
                         str( $f, "::" ), $$self->{'name'}
                     ),
-                    15.2
+                    $pos->(15.2)
                 );
                 return $ret;
             }

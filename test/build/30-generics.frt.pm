@@ -112,7 +112,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('30-generics.frt');
+my $pos = FF::before_content( '30-generics.frt', './test/30-generics.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -133,7 +133,10 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $self->set_property( items => FF::create_list( $f, [] ), 4.2 );
+                $self->set_property(
+                    items => FF::create_list( $f, [] ),
+                    $pos->(4.2)
+                );
                 return $ret;
             }
         );
@@ -153,7 +156,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'item', 8.2 ) or return;
                 return $ret_func->( ${ $$self->{'items'} }->{'push'}
-                      ->( [ $$scope->{'item'} ], $scope, undef, 9.4 ) );
+                      ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.4) ) );
                 return $ret;
             }
         );
@@ -164,9 +167,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret_func->(
-                    ${ $$self->{'items'} }->{'pop'}->( {}, $scope, undef, 13.4 )
-                );
+                return $ret_func->( ${ $$self->{'items'} }->{'pop'}
+                      ->( {}, $scope, undef, $pos->(13.4) ) );
                 return $ret;
             }
         );
@@ -205,15 +207,16 @@ my $result = do {
         sub {
             FF::lex_assign(
                 $scope,
-                stack => $$scope->{'Stack'}->( {}, $scope, undef, 23.4 ),
-                undef, 23.2
+                stack =>
+                  $$scope->{'Stack'}->( {}, $scope, undef, $pos->(23.4) ),
+                undef, $pos->(23.2)
             );
         },
         sub {
             my ($scope) = @_;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "Error! " ), $$scope->{'e'} ) ],
-                $scope, undef, 24.2
+                $scope, undef, $pos->(24.2)
             );
         },
         'e'
@@ -221,17 +224,19 @@ my $result = do {
     FF::lex_assign(
         $scope,
         numstack => FF::type_with_generics( $f, $scope, $$scope->{'Stack'},
-            [ $$scope->{'Num'} ] )->( {}, $scope, undef, 27.35 ),
+            [ $$scope->{'Num'} ] )->( {}, $scope, undef, $pos->(27.35) ),
         undef,
-        27.1
+        $pos->(27.1)
     );
     ${ $$scope->{'numstack'} }->{'push'}
-      ->( [ num( $f, "1" ) ], $scope, undef, 29.3 );
+      ->( [ num( $f, "1" ) ], $scope, undef, $pos->(29.3) );
     ${ $$scope->{'numstack'} }->{'push'}
-      ->( [ str( $f, "this should be ignored" ) ], $scope, undef, 30.3 );
+      ->( [ str( $f, "this should be ignored" ) ], $scope, undef,
+        $pos->(30.3) );
     ${ $$scope->{'numstack'} }->{'push'}
-      ->( [ num( $f, "2" ) ], $scope, undef, 31.3 );
-    $$scope->{'inspect'}->( [ $$scope->{'numstack'} ], $scope, undef, 33.2 );
+      ->( [ num( $f, "2" ) ], $scope, undef, $pos->(31.3) );
+    $$scope->{'inspect'}
+      ->( [ $$scope->{'numstack'} ], $scope, undef, $pos->(33.2) );
 };
 
 FF::after_content();

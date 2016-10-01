@@ -1,8 +1,8 @@
 # === Document Model ===
-#  Document './test/34-function-topic-var.frt'
+#  Document './test/33-function-prop-var.frt'
 #      Instruction
 #          Assignment
-#              Lexical variable '$doubles'
+#              Lexical variable '$roots'
 #              Call
 #                  Property 'map'
 #                      Value list [3 items]
@@ -17,16 +17,14 @@
 #                          Anonymous function
 #                              Body ('function' scope)
 #                                  Instruction
-#                                      Operation
-#                                          Topic variable '$_'
-#                                          Multiplication operator (*)
-#                                          Number '2'
+#                                      Return
+#                                          Property variable '.sqrt'
 #      Instruction
 #          Call
 #              Bareword 'inspect'
 #              Argument list [1 items]
 #                  Item 0
-#                      Lexical variable '$doubles'
+#                      Lexical variable '$roots'
 use warnings;
 use strict;
 use 5.010;
@@ -45,10 +43,10 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-my $pos = FF::before_content( '34-function-topic-var.frt',
-    './test/34-function-topic-var.frt' );
+my $pos = FF::before_content( '33-function-prop-var.frt',
+    './test/33-function-prop-var.frt' );
 
-use Ferret::Core::Operations qw(mul num);
+use Ferret::Core::Operations qw(num);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -62,13 +60,13 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             my $ins = $args->{_};
-            mul( $scope, $ins, num( $f, "2" ) );
+            return $ret_func->( $$ins->{'sqrt'} );
             return $ret;
         }
     );
     FF::lex_assign(
         $scope,
-        doubles => ${
+        roots => ${
             FF::create_list( $f,
                 [ num( $f, "4" ), num( $f, "16" ), num( $f, "25" ) ] )
           }->{'map'}->(
@@ -85,7 +83,7 @@ my $result = do {
         $pos->(1.1)
     );
     $$scope->{'inspect'}
-      ->( [ $$scope->{'doubles'} ], $scope, undef, $pos->(2.2) );
+      ->( [ $$scope->{'roots'} ], $scope, undef, $pos->(2.2) );
 };
 
 FF::after_content();

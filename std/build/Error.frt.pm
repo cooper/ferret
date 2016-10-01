@@ -1,22 +1,6 @@
 # === Document Model ===
 #  Document './std/Error.frt'
 #      Class 'Error' version 1.0
-#          Instruction
-#              Assignment
-#                  Lexical variable '$hintsAvailable'
-#                  Hash [4 items]
-#                      Item 0
-#                          Pair 'lastName'
-#                              String 'Name'
-#                      Item 1
-#                          Pair 'object'
-#                              String 'Object'
-#                      Item 2
-#                          Pair 'file'
-#                              String 'File'
-#                      Item 3
-#                          Pair 'line'
-#                              String 'Line'
 #          Class method 'initializer__'
 #              Body ('method' scope)
 #                  Instruction
@@ -31,25 +15,9 @@
 #                              Bareword 'Str'
 #                  Instruction
 #                      Want
-#                          Lexical variable '$hints'
-#                  If
-#                      Expression ('if' parameter)
-#                          Lexical variable '$hints'
-#                      Body ('if' scope)
-#                          Instruction
-#                              Assignment
-#                                  Instance variable '@hints'
-#                                  Call
-#                                      Bareword '_handleHints'
-#                                      Argument list [1 items]
-#                                          Item 0
-#                                              Lexical variable '$hints'
-#                  Else
-#                      Body ('else' scope)
-#                          Instruction
-#                              Assignment
-#                                  Instance variable '@hints'
-#                                  Hash [0 items]
+#                          Instance variable '@hints'
+#                          Argument type
+#                              Bareword 'List'
 #                  Instruction
 #                      Want
 #                          Instance variable '@subError'
@@ -80,18 +48,81 @@
 #                                      Call
 #                                          Property 'description'
 #                                              Instance variable '@subError'
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Instance variable '@hints'
+#                              Logical and operator (&&)
+#                              Property 'length'
+#                                  Instance variable '@hints'
+#                              Negated equality operator (!=)
+#                              Number '0'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Return
+#                                  Operation
+#                                      Instance variable '@msg'
+#                                      Addition operator (+)
+#                                      Call
+#                                          Bareword '_prettyHints'
+#                                          Argument list [1 items]
+#                                              Item 0
+#                                                  Instance variable '@hints'
 #                  Instruction
 #                      Return
 #                          Instance variable '@msg'
-#          Function '_handleHints'
+#          Function '_prettyHints'
 #              Body ('function' scope)
 #                  Instruction
 #                      Need
-#                          Lexical variable '$hints'
+#                          Lexical variable '$list'
+#                          Argument type
+#                              Bareword 'List'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$str'
+#                          String '␤'
+#                  For (pairs)
+#                      Expression ('for' parameter)
+#                          Set [2 items]
+#                              Item 0
+#                                  Lexical variable '$i'
+#                              Item 1
+#                                  Lexical variable '$el'
+#                      Expression ('in' parameter)
+#                          Lexical variable '$list'
+#                      Body ('for' scope)
+#                          If
+#                              Expression ('if' parameter)
+#                                  Property 'even'
+#                                      Lexical variable '$i'
+#                              Body ('if' scope)
+#                                  Instruction
+#                                      Assignment
+#                                          Lexical variable '$str'
+#                                          Operation
+#                                              Lexical variable '$str'
+#                                              Addition operator (+)
+#                                              String '    '
+#                                              Addition operator (+)
+#                                              Lexical variable '$el'
+#                                              Addition operator (+)
+#                                              String ': '
+#                          Else
+#                              Body ('else' scope)
+#                                  Instruction
+#                                      Assignment
+#                                          Lexical variable '$str'
+#                                          Operation
+#                                              Lexical variable '$str'
+#                                              Addition operator (+)
+#                                              Lexical variable '$el'
+#                                              Addition operator (+)
+#                                              String '␤'
 #                  Instruction
 #                      Return
-#                          Lexical variable '$hints'
-#      Include (Error, NATIVE, Str, Sym)
+#                          Lexical variable '$str'
+#      Include (Error, List, NATIVE, Str, Sym)
 use warnings;
 use strict;
 use 5.010;
@@ -110,23 +141,23 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Error.frt');
+my $pos = FF::before_content( 'Error.frt', './std/Error.frt' );
 
-use Ferret::Core::Operations qw(add bool str);
+use Ferret::Core::Operations qw(add all_true bool nequal num str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
     my $scope = $file_scope;
     FF::load_core('main');
 
-    # Function event '_handleHints' definition
+    # Function event '_prettyHints' definition
     my $func_0 = FF::function_event_def(
         $f, $scope,
-        '_handleHints',
+        '_prettyHints',
         undef,
         [
             {
-                name     => 'hints',
-                type     => undef,
+                name     => 'list',
+                type     => 'List',
                 optional => undef,
                 more     => undef
             }
@@ -134,8 +165,51 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'hints', 33.2 ) or return;
-            return $ret_func->( $$scope->{'hints'} );
+            FF::need( $scope, $args, 'list', 21.2 ) or return;
+            FF::lex_assign(
+                $scope,
+                str => str( $f, "\n" ),
+                $file_scope, $pos->(22.2)
+            );
+            {
+                my $loop_ret = FF::iterate_pair(
+                    $f, $scope,
+                    $$scope->{'list'},
+                    'i', 'el',
+                    sub {
+                        my ( $scope, $ret_func ) = @_;
+                        if ( bool( ${ $$scope->{'i'} }->{'even'} ) ) {
+                            my $scope =
+                              Ferret::Scope->new( $f, parent => $scope );
+
+                            FF::lex_assign(
+                                $scope,
+                                str => add(
+                                    $scope, $$scope->{'str'},
+                                    str( $f, "    " ), $$scope->{'el'},
+                                    str( $f, ": " )
+                                ),
+                                $file_scope,
+                                $pos->(25.1)
+                            );
+                        }
+                        else {
+                            FF::lex_assign(
+                                $scope,
+                                str => add(
+                                    $scope, $$scope->{'str'},
+                                    $$scope->{'el'}, str( $f, "\n" )
+                                ),
+                                $file_scope,
+                                $pos->(27.2)
+                            );
+                        }
+                    },
+                    $pos->(23.05)
+                );
+                return $ret_func->($loop_ret) if $loop_ret;
+            }
+            return $ret_func->( $$scope->{'str'} );
             return $ret;
         }
     );
@@ -164,7 +238,7 @@ my $result = do {
                 },
                 {
                     name     => 'hints',
-                    type     => undef,
+                    type     => 'List',
                     optional => 1,
                     more     => undef
                 },
@@ -179,29 +253,15 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'type' ) or return;
                 FF::need( $self, $args, 'msg' )  or return;
-                FF::want( $scope, $args, 'hints', 14.2 );
-                if ( bool( $$scope->{'hints'} ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $self->set_property(
-                        hints => $$scope->{'_handleHints'}
-                          ->( [ $$scope->{'hints'} ], $scope, undef, 16.4 ),
-                        16.2
-                    );
-                }
-                else {
-                    $self->set_property(
-                        hints => FF::create_hash( $f, {} ),
-                        18.2
-                    );
-                }
-                FF::want( $self, $args, 'subError', 20.2 );
+                FF::want( $self, $args, 'hints',    7.2 );
+                FF::want( $self, $args, 'subError', 8.2 );
                 ${ $$scope->{'NATIVE'} }->{'bless'}->(
                     [
                         ${ $scope->{special} }->{'self'},
                         str( $f, "Ferret::Error" )
                     ],
-                    $scope, undef, 22.3
+                    $scope, undef,
+                    $pos->(10.3)
                 );
                 return $ret;
             }
@@ -223,7 +283,36 @@ my $result = do {
                             $$self->{'msg'},
                             str( $f, ": " ),
                             ${ $$self->{'subError'} }->{'description'}
-                              ->( {}, $scope, undef, 28.4 )
+                              ->( {}, $scope, undef, $pos->(15.4) )
+                        )
+                    );
+                }
+                if (
+                    bool(
+                        all_true(
+                            $scope,
+                            sub { $$self->{'hints'} },
+                            sub {
+                                nequal(
+                                    $scope,
+                                    ${ $$self->{'hints'} }->{'length'},
+                                    num( $f, "0" )
+                                );
+                            }
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->(
+                        add(
+                            $scope,
+                            $$self->{'msg'},
+                            $$scope->{'_prettyHints'}->(
+                                [ $$self->{'hints'} ], $scope,
+                                undef,                 $pos->(17.5)
+                            )
                         )
                     );
                 }
@@ -240,25 +329,11 @@ my $result = do {
             $proto, $class, undef, undef
         );
         $func_0->inside_scope(
-            _handleHints => $scope,
+            _prettyHints => $scope,
             $scope, $class, undef, undef
         );
-        FF::lex_assign(
-            $scope,
-            hintsAvailable => FF::create_hash(
-                $f,
-                {
-                    lastName => str( $f, "Name" ),
-                    object   => str( $f, "Object" ),
-                    file     => str( $f, "File" ),
-                    line     => str( $f, "Line" )
-                }
-            ),
-            undef,
-            3.2
-        );
     }
-    FF::load_namespaces( $context, qw(Error NATIVE Str Sym) );
+    FF::load_namespaces( $context, qw(Error List NATIVE Str Sym) );
 };
 
 FF::after_content();

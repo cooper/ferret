@@ -182,7 +182,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Message.frt');
+my $pos =
+  FF::before_content( 'Message.frt', './test/20-irc-complex/IRC/Message.frt' );
 
 use Ferret::Core::Operations qw(add all_true bool gr8r nequal num str);
 my $result = do {
@@ -214,45 +215,53 @@ my $result = do {
                     $scope,
                     lineSplit => ${ $$self->{'line'} }->{'split'}->(
                         [ str( $f, " " ), { limit => num( $f, "4" ) } ],
-                        $scope, undef, 6.25
+                        $scope, undef, $pos->(6.25)
                     ),
                     $file_scope,
-                    6.1
+                    $pos->(6.1)
                 );
                 $self->set_property(
-                    channel => $$scope->{'lineSplit'}
-                      ->get_index_value( [ num( $f, "2" ) ], $scope, 7.4 ),
-                    7.2
+                    channel => $$scope->{'lineSplit'}->get_index_value(
+                        [ num( $f, "2" ) ],
+                        $scope, $pos->(7.4)
+                    ),
+                    $pos->(7.2)
                 );
                 $self->set_property(
                     nickname => ${
                         $$scope->{'lineSplit'}
-                          ->get_index_value( [ num( $f, "0" ) ], $scope, 10.2 )
+                          ->get_index_value( [ num( $f, "0" ) ],
+                            $scope, $pos->(10.2) )
                       }->{'split'}->(
                         [ str( $f, "!" ), { limit => num( $f, "2" ) } ],
-                        $scope, undef, 10.4
-                      )->get_index_value( [ num( $f, "0" ) ], $scope, 10.7 ),
-                    10.1
+                        $scope, undef, $pos->(10.4)
+                      )->get_index_value(
+                        [ num( $f, "0" ) ],
+                        $scope, $pos->(10.7)
+                      ),
+                    $pos->(10.1)
                 );
                 $self->set_property(
                     nickname => ${ $$self->{'nickname'} }->{'trimPrefix'}
-                      ->( [ str( $f, ":" ) ], $scope, undef, 11.5 ),
-                    11.2
+                      ->( [ str( $f, ":" ) ], $scope, undef, $pos->(11.5) ),
+                    $pos->(11.2)
                 );
                 $self->set_property(
-                    message => $$scope->{'lineSplit'}
-                      ->get_index_value( [ num( $f, "3" ) ], $scope, 14.4 ),
-                    14.2
+                    message => $$scope->{'lineSplit'}->get_index_value(
+                        [ num( $f, "3" ) ],
+                        $scope, $pos->(14.4)
+                    ),
+                    $pos->(14.2)
                 );
                 $self->set_property(
                     message => ${ $$self->{'message'} }->{'trimPrefix'}
-                      ->( [ str( $f, ":" ) ], $scope, undef, 15.5 ),
-                    15.2
+                      ->( [ str( $f, ":" ) ], $scope, undef, $pos->(15.5) ),
+                    $pos->(15.2)
                 );
                 $self->set_property(
                     parts => ${ $$self->{'message'} }->{'split'}
-                      ->( [ str( $f, " " ) ], $scope, undef, 18.5 ),
-                    18.2
+                      ->( [ str( $f, " " ) ], $scope, undef, $pos->(18.5) ),
+                    $pos->(18.2)
                 );
                 return $ret;
             }
@@ -278,11 +287,14 @@ my $result = do {
                             },
                             sub {
                                 ${
-                                    $$self->{'parts'}
-                                      ->get_index_value( [ num( $f, "0" ) ],
-                                        $scope, 26.4 )
-                                  }->{'hasPrefix'}
-                                  ->( [ str( $f, "." ) ], $scope, undef, 26.6 );
+                                    $$self->{'parts'}->get_index_value(
+                                        [ num( $f, "0" ) ], $scope,
+                                        $pos->(26.4)
+                                    )
+                                  }->{'hasPrefix'}->(
+                                    [ str( $f, "." ) ],
+                                    $scope, undef, $pos->(26.6)
+                                  );
                             }
                         )
                     )
@@ -295,11 +307,11 @@ my $result = do {
                         cmd => ${
                             $$self->{'parts'}
                               ->get_index_value( [ num( $f, "0" ) ],
-                                $scope, 27.2 )
+                                $scope, $pos->(27.2) )
                           }->{'trimPrefix'}
-                          ->( [ str( $f, "." ) ], $scope, undef, 27.4 ),
+                          ->( [ str( $f, "." ) ], $scope, undef, $pos->(27.4) ),
                         $file_scope,
-                        27.1
+                        $pos->(27.1)
                     );
                     if ( bool( ${ $$scope->{'cmd'} }->{'length'} ) ) {
                         my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -356,8 +368,12 @@ my $result = do {
                                 )
                             }
                         ],
-                        $scope, undef, 42.2
-                    )->get_index_value( [ $$scope->{'wordN'} ], $scope, 42.6 )
+                        $scope, undef,
+                        $pos->(42.2)
+                      )->get_index_value(
+                        [ $$scope->{'wordN'} ],
+                        $scope, $pos->(42.6)
+                      )
                 );
                 return $ret;
             }

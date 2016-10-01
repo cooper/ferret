@@ -58,7 +58,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Math.frt');
+my $pos = FF::before_content( 'Math.frt', './std/Math.frt' );
 
 use Ferret::Core::Operations qw(div num pow);
 my $result = do {
@@ -75,7 +75,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'num', 4.2 ) or return;
             return $ret_func->( ${ $$scope->{'NATIVE::Math'} }->{'sqrt'}
-                  ->( [ $$scope->{'num'} ], $scope, undef, 5.3 ) );
+                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(5.3) ) );
             return $ret;
         }
     );

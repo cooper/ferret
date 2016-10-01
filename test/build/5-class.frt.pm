@@ -188,7 +188,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('5-class.frt');
+my $pos = FF::before_content( '5-class.frt', './test/5-class.frt' );
 
 use Ferret::Core::Operations qw(add div num str);
 my $result = do {
@@ -223,8 +223,8 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'x', 4.2 ) or return;
                 FF::need( $scope, $args, 'y', 4.4 ) or return;
-                $self->set_property( x => $$scope->{'x'}, 5.2 );
-                $self->set_property( y => $$scope->{'y'}, 6.2 );
+                $self->set_property( x => $$scope->{'x'}, $pos->(5.2) );
+                $self->set_property( y => $$scope->{'y'}, $pos->(6.2) );
                 return $ret;
             }
         );
@@ -243,10 +243,11 @@ my $result = do {
                             add( $scope, $$self->{'x'}, num( $f, "1" ) ),
                             $$self->{'y'}
                         ],
-                        $scope, undef, 10.2
+                        $scope, undef,
+                        $pos->(10.2)
                     ),
                     $file_scope,
-                    10.1
+                    $pos->(10.1)
                 );
                 return $ret_func->( $$scope->{'pt'} );
                 return $ret;
@@ -278,7 +279,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $ret_func->(
-                    $$self->{'pretty'}->( {}, $scope, undef, 19.3 ) );
+                    $$self->{'pretty'}->( {}, $scope, undef, $pos->(19.3) ) );
                 return $ret;
             }
         );
@@ -327,7 +328,8 @@ my $result = do {
                                 num( $f, "2" )
                             )
                         },
-                        $scope, undef, 24.3
+                        $scope, undef,
+                        $pos->(24.3)
                     )
                 );
                 return $ret;
@@ -358,32 +360,35 @@ my $result = do {
     FF::lex_assign(
         $scope,
         pt => $$scope->{'Point'}
-          ->( [ num( $f, "5" ), num( $f, "3" ) ], $scope, undef, 32.2 ),
-        undef, 32.1
+          ->( [ num( $f, "5" ), num( $f, "3" ) ], $scope, undef, $pos->(32.2) ),
+        undef, $pos->(32.1)
     );
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Point" ), $$scope->{'pt'} ) ],
-        $scope, undef, 33.2
+        $scope, undef, $pos->(33.2)
     );
     FF::lex_assign(
         $scope,
-        rpt =>
-          ${ $$scope->{'pt'} }->{'oneToRight'}->( {}, $scope, undef, 35.5 ),
-        undef, 35.2
+        rpt => ${ $$scope->{'pt'} }->{'oneToRight'}
+          ->( {}, $scope, undef, $pos->(35.5) ),
+        undef, $pos->(35.2)
     );
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Right" ), $$scope->{'rpt'} ) ],
-        $scope, undef, 36.2
+        $scope, undef, $pos->(36.2)
     );
     FF::lex_assign(
         $scope,
-        mdpt => ${ $$scope->{'Point'} }->{'midpoint'}
-          ->( [ $$scope->{'pt'}, $$scope->{'rpt'} ], $scope, undef, 38.25 ),
-        undef, 38.1
+        mdpt => ${ $$scope->{'Point'} }->{'midpoint'}->(
+            [ $$scope->{'pt'}, $$scope->{'rpt'} ], $scope,
+            undef, $pos->(38.25)
+        ),
+        undef,
+        $pos->(38.1)
     );
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Midpoint" ), $$scope->{'mdpt'} ) ],
-        $scope, undef, 39.2
+        $scope, undef, $pos->(39.2)
     );
     FF::lex_assign(
         $scope,
@@ -393,11 +398,11 @@ my $result = do {
             div( $scope, num( $f, "45" ), num( $f, "3" ) )
         ),
         undef,
-        41.2
+        $pos->(41.2)
     );
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Nineteen: " ), $$scope->{'nineteen'} ) ],
-        $scope, undef, 42.2
+        $scope, undef, $pos->(42.2)
     );
 };
 

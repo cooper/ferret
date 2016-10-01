@@ -66,7 +66,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('NATIVE.frt');
+my $pos = FF::before_content( 'NATIVE.frt', './std/NATIVE.frt' );
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
@@ -91,9 +91,10 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'obj',   8.2 ) or return;
             FF::need( $scope, $args, 'class', 8.4 ) or return;
-            $$scope->{'_bless'}
-              ->( [ $$scope->{'obj'}, $$scope->{'class'} ], $scope, undef,
-                9.2 );
+            $$scope->{'_bless'}->(
+                [ $$scope->{'obj'}, $$scope->{'class'} ],
+                $scope, undef, $pos->(9.2)
+            );
             return $ret;
         }
     );
@@ -106,34 +107,34 @@ my $result = do {
             sub {
                 ${ $$scope->{'PerlObject'} }->{'wrapPackageVariable'}->(
                     [ str( $f, "Ferret" ), str( $f, "\$ferret" ) ],
-                    $scope, undef, 3.3
+                    $scope, undef, $pos->(3.3)
                 );
             }
         ],
         undef,
-        3.15
+        $pos->(3.15)
     );
     FF::lex_assign(
         $context,
         coreContext => [
             sub {
                 ${ $$scope->{'ferret'} }->{'core_context'}
-                  ->( {}, $scope, undef, 4.6 );
+                  ->( {}, $scope, undef, $pos->(4.6) );
             }
         ],
         undef,
-        4.3
+        $pos->(4.3)
     );
     FF::lex_assign(
         $context,
         mainContext => [
             sub {
                 ${ $$scope->{'ferret'} }->{'main_context'}
-                  ->( {}, $scope, undef, 5.6 );
+                  ->( {}, $scope, undef, $pos->(5.6) );
             }
         ],
         undef,
-        5.3
+        $pos->(5.3)
     );
 };
 

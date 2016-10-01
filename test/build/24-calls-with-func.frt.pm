@@ -64,7 +64,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('24-calls-with-func.frt');
+my $pos = FF::before_content( '24-calls-with-func.frt',
+    './test/24-calls-with-func.frt' );
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
@@ -83,8 +84,9 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'code', 17.2 ) or return;
             $ret->set_property(
-                message => $$scope->{'code'}->( {}, $scope, undef, 18.4 ),
-                18.2
+                message =>
+                  $$scope->{'code'}->( {}, $scope, undef, $pos->(18.4) ),
+                $pos->(18.2)
             );
             return $ret;
         }
@@ -97,8 +99,10 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $$scope->{'say'}
-              ->( [ str( $f, "been five seconds" ) ], $scope, undef, 4.2 );
+            $$scope->{'say'}->(
+                [ str( $f, "been five seconds" ) ],
+                $scope, undef, $pos->(4.2)
+            );
             return $ret;
         }
     );
@@ -123,9 +127,11 @@ my $result = do {
                 undef, undef, undef, undef
             )
         ],
-        $scope, undef, 3.2
+        $scope, undef,
+        $pos->(3.2)
     );
-    $$scope->{'say'}->( [ str( $f, "waiting..." ) ], $scope, undef, 7.2 );
+    $$scope->{'say'}
+      ->( [ str( $f, "waiting..." ) ], $scope, undef, $pos->(7.2) );
     $$scope->{'say'}->(
         [
             ${
@@ -136,11 +142,13 @@ my $result = do {
                             undef, undef, undef, undef
                         )
                     ],
-                    $scope, undef, 12.4
+                    $scope, undef,
+                    $pos->(12.4)
                 )
             }->{'message'}
         ],
-        $scope, undef, 12.2
+        $scope, undef,
+        $pos->(12.2)
     );
 };
 

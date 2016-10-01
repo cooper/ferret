@@ -42,7 +42,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('19-foreach.frt');
+my $pos = FF::before_content( '19-foreach.frt', './test/19-foreach.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -53,8 +53,8 @@ my $result = do {
     FF::lex_assign(
         $scope,
         words => ${ str( $f, "how are you?" ) }->{'split'}
-          ->( [ str( $f, " " ) ], $scope, undef, 1.5 ),
-        undef, 1.2
+          ->( [ str( $f, " " ) ], $scope, undef, $pos->(1.5) ),
+        undef, $pos->(1.2)
     );
     {
         my $loop_ret = FF::iterate(
@@ -65,10 +65,10 @@ my $result = do {
                 my ( $scope, $ret_func ) = @_;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "part: " ), $$scope->{'word'} ) ],
-                    $scope, undef, 4.2
+                    $scope, undef, $pos->(4.2)
                 );
             },
-            3.1
+            $pos->(3.1)
         );
         return $ret_func->($loop_ret) if $loop_ret;
     }

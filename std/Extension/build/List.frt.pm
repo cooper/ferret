@@ -152,7 +152,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('List.frt');
+my $pos = FF::before_content( 'List.frt', './std/Extension/List.frt' );
 
 use Ferret::Core::Operations qw(_not bool);
 my $result = do {
@@ -195,11 +195,13 @@ my $result = do {
                                             $take->(
                                                 $$scope->{'code'}->(
                                                     [ $$scope->{'el'} ],
-                                                    $scope, undef, 14.3
+                                                    $scope,
+                                                    undef,
+                                                    $pos->(14.3)
                                                 )
                                             );
                                         },
-                                        13.2
+                                        $pos->(13.2)
                                     );
                                     return $ret_func->($loop_ret) if $loop_ret;
                                 }
@@ -245,7 +247,9 @@ my $result = do {
                                                 bool(
                                                     $$scope->{'code'}->(
                                                         [ $$scope->{'el'} ],
-                                                        $scope, undef, 22.15
+                                                        $scope,
+                                                        undef,
+                                                        $pos->(22.15)
                                                     )
                                                 )
                                               )
@@ -257,7 +261,7 @@ my $result = do {
                                                 $take->( $$scope->{'el'} );
                                             }
                                         },
-                                        21.2
+                                        $pos->(21.2)
                                     );
                                     return $ret_func->($loop_ret) if $loop_ret;
                                 }
@@ -297,7 +301,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               30.15
+                                        undef,               $pos->(30.15)
                                     )
                                 )
                               )
@@ -308,7 +312,7 @@ my $result = do {
                                 return $ret_func->( $$scope->{'el'} );
                             }
                         },
-                        29.1
+                        $pos->(29.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -342,7 +346,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               39.15
+                                        undef,               $pos->(39.15)
                                     )
                                 )
                               )
@@ -353,7 +357,7 @@ my $result = do {
                                 return $ret_func->($true);
                             }
                         },
-                        38.1
+                        $pos->(38.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -388,7 +392,7 @@ my $result = do {
                                     _not(
                                         $$scope->{'code'}->(
                                             [ $$scope->{'el'} ], $scope,
-                                            undef,               48.2
+                                            undef,               $pos->(48.2)
                                         )
                                     )
                                 )
@@ -400,7 +404,7 @@ my $result = do {
                                 return $ret_func->($false);
                             }
                         },
-                        47.1
+                        $pos->(47.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }

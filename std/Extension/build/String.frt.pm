@@ -62,7 +62,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('String.frt');
+my $pos = FF::before_content( 'String.frt', './std/Extension/String.frt' );
 
 use Ferret::Core::Operations qw(nequal num);
 my $result = do {
@@ -91,7 +91,7 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( NE => $$scope->{'NonEmpty'}, 8.3 );
+        $class->set_property( NE => $$scope->{'NonEmpty'}, $pos->(8.3) );
         FF::typedef(
             $scope, $class,
             'Uppercase',
@@ -108,7 +108,7 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( UC => $$scope->{'Uppercase'}, 15.3 );
+        $class->set_property( UC => $$scope->{'Uppercase'}, $pos->(15.3) );
         FF::typedef(
             $scope, $class,
             'Lowercase',
@@ -125,7 +125,7 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( LC => $$scope->{'Lowercase'}, 22.3 );
+        $class->set_property( LC => $$scope->{'Lowercase'}, $pos->(22.3) );
     }
     FF::load_namespaces( $context, qw(LC Lowercase NE NonEmpty UC Uppercase) );
 };

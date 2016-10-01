@@ -25,7 +25,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Second.frt');
+my $pos =
+  FF::before_content( 'Second.frt', './test/23-property-modifiers/Second.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -33,8 +34,12 @@ my $result = do {
     my $scope = $file_scope;
     FF::load_core('main');
 
-    FF::lex_assign( $scope, x => FF::create_object( $f, {} ), undef, 1.2 );
-    $scope->weaken_property( 'x', 2.1 );
+    FF::lex_assign(
+        $scope,
+        x => FF::create_object( $f, {} ),
+        undef, $pos->(1.2)
+    );
+    $scope->weaken_property( 'x', $pos->(2.1) );
 };
 
 FF::after_content();

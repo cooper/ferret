@@ -77,7 +77,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('26-signals.frt');
+my $pos = FF::before_content( '26-signals.frt', './test/26-signals.frt' );
 
 use Ferret::Core::Operations qw(_not bool num str);
 my $result = do {
@@ -92,8 +92,10 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $$scope->{'say'}
-              ->( [ str( $f, "Got TERM. Terminating!" ) ], $scope, undef, 3.2 );
+            $$scope->{'say'}->(
+                [ str( $f, "Got TERM. Terminating!" ) ],
+                $scope, undef, $pos->(3.2)
+            );
             return $ret;
         }
     );
@@ -108,15 +110,21 @@ my $result = do {
             if ( bool( _not( $$scope->{'asked'} ) ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $$scope->{'say'}
-                  ->( [ str( $f, "Are you sure?" ) ], $scope, undef, 13.2 );
-                FF::lex_assign( $scope, asked => $true, $file_scope, 14.2 );
+                $$scope->{'say'}->(
+                    [ str( $f, "Are you sure?" ) ],
+                    $scope, undef, $pos->(13.2)
+                );
+                FF::lex_assign(
+                    $scope,
+                    asked => $true,
+                    $file_scope, $pos->(14.2)
+                );
                 $ret->stop;
                 return $ret_func->();
             }
             $$scope->{'say'}->(
                 [ str( $f, "Got second INT. Terminating!" ) ],
-                $scope, undef, 19.2
+                $scope, undef, $pos->(19.2)
             );
             return $ret;
         }
@@ -130,7 +138,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
-    FF::lex_assign( $scope, asked => $false, undef, 8.2 );
+    FF::lex_assign( $scope, asked => $false, undef, $pos->(8.2) );
     FF::on(
         ${ $$scope->{'Signal'} }->{'INT'},
         'trap',
@@ -139,8 +147,8 @@ my $result = do {
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
-    ${ $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, 23.2 ) }
-      ->{'start'}->( {}, $scope, undef, 23.6 );
+    ${ $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(23.2) ) }
+      ->{'start'}->( {}, $scope, undef, $pos->(23.6) );
 };
 
 FF::after_content();

@@ -1,1 +1,1 @@
-<<left>>->weaken_property('<<name>>', <<pos>>)
+<<left>>->weaken_property('<<name>>', $pos->(<<pos>>))

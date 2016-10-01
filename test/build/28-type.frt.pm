@@ -93,7 +93,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('28-type.frt');
+my $pos = FF::before_content( '28-type.frt', './test/28-type.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -124,10 +124,11 @@ my $result = do {
                 $scope,
                 what => ${
                     $$scope->{'Str'}
-                      ->( [ $$scope->{'gender'} ], $scope, undef, 8.2 )
-                  }->{'trimPrefix'}->( [ str( $f, ":" ) ], $scope, undef, 8.4 ),
+                      ->( [ $$scope->{'gender'} ], $scope, undef, $pos->(8.2) )
+                  }->{'trimPrefix'}
+                  ->( [ str( $f, ":" ) ], $scope, undef, $pos->(8.4) ),
                 $file_scope,
-                8.1
+                $pos->(8.1)
             );
             $$scope->{'say'}->(
                 [
@@ -136,7 +137,8 @@ my $result = do {
                         str( $f, " is " ), $$scope->{'what'}
                     )
                 ],
-                $scope, undef, 9.1
+                $scope, undef,
+                $pos->(9.1)
             );
             return $ret;
         }
@@ -160,19 +162,19 @@ my $result = do {
     );
     $$scope->{'announce'}->(
         [ str( $f, "Robert" ), FF::get_symbol( $f, 'male' ) ],
-        $scope, undef, 12.2
+        $scope, undef, $pos->(12.2)
     );
     $$scope->{'announce'}->(
         [ str( $f, "Kris" ), FF::get_symbol( $f, 'female' ) ],
-        $scope, undef, 13.2
+        $scope, undef, $pos->(13.2)
     );
     $$scope->{'announce'}->(
         [ str( $f, "Kylie" ), FF::get_symbol( $f, 'female' ) ],
-        $scope, undef, 14.2
+        $scope, undef, $pos->(14.2)
     );
     $$scope->{'announce'}->(
         [ str( $f, "Caitlyn" ), FF::get_symbol( $f, 'other' ) ],
-        $scope, undef, 15.2
+        $scope, undef, $pos->(15.2)
     );
 };
 

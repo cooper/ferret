@@ -1,1 +1,1 @@
-$ins->set_property(<<name>> => <<assign_value>>, <<pos>>)
+$ins->set_property(<<name>> => <<assign_value>>, $pos->(<<pos>>))

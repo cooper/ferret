@@ -217,7 +217,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Rect.frt');
+my $pos = FF::before_content( 'Rect.frt', './std/Math/Rect.frt' );
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
@@ -269,9 +269,9 @@ my $result = do {
                 $self->set_property(
                     origin => $$scope->{'Point'}->(
                         [ $$scope->{'x'}, $$scope->{'y'} ], $scope,
-                        undef, 6.2
+                        undef, $pos->(6.2)
                     ),
-                    6.1
+                    $pos->(6.1)
                 );
                 return $ret;
             }
@@ -326,7 +326,8 @@ my $result = do {
                             ),
                             ${ $$self->{'origin'} }->{'y'}
                         ],
-                        $scope, undef, 23.15
+                        $scope, undef,
+                        $pos->(23.15)
                     )
                 );
                 return $ret;
@@ -350,7 +351,8 @@ my $result = do {
                                 $$self->{'height'}
                             )
                         ],
-                        $scope, undef, 27.15
+                        $scope, undef,
+                        $pos->(27.15)
                     )
                 );
                 return $ret;
@@ -378,7 +380,8 @@ my $result = do {
                                 $$self->{'height'}
                             )
                         ],
-                        $scope, undef, 31.15
+                        $scope, undef,
+                        $pos->(31.15)
                     )
                 );
                 return $ret;
@@ -395,7 +398,7 @@ my $result = do {
                 return $ret_func->(
                     $$scope->{'Line'}->(
                         [ $$self->{'bottomLeft'}, $$self->{'bottomRight'} ],
-                        $scope, undef, 35.3
+                        $scope, undef, $pos->(35.3)
                     )
                 );
                 return $ret;
@@ -411,8 +414,8 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $ret_func->(
                     $$scope->{'Line'}->(
-                        [ $$self->{'topLeft'}, $$self->{'topRight'} ], $scope,
-                        undef, 39.3
+                        [ $$self->{'topLeft'}, $$self->{'topRight'} ],
+                        $scope, undef, $pos->(39.3)
                     )
                 );
                 return $ret;
@@ -433,7 +436,7 @@ my $result = do {
                         mul( $scope, $$self->{'width'}, num( $f, "0.5" ) )
                     ),
                     $file_scope,
-                    43.1
+                    $pos->(43.1)
                 );
                 FF::lex_assign(
                     $scope,
@@ -443,12 +446,12 @@ my $result = do {
                         mul( $scope, $$self->{'height'}, num( $f, "0.5" ) )
                     ),
                     $file_scope,
-                    44.1
+                    $pos->(44.1)
                 );
                 return $ret_func->(
                     $$scope->{'Point'}->(
                         [ $$scope->{'x'}, $$scope->{'y'} ], $scope,
-                        undef, 45.3
+                        undef, $pos->(45.3)
                     )
                 );
                 return $ret;
@@ -465,12 +468,12 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     o => $$self->{'origin'},
-                    $file_scope, 49.2
+                    $file_scope, $pos->(49.2)
                 );
                 FF::lex_assign(
                     $scope,
                     c => $$self->{'center'},
-                    $file_scope, 50.2
+                    $file_scope, $pos->(50.2)
                 );
                 return $ret_func->(
                     add(

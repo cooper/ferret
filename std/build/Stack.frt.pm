@@ -67,7 +67,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Stack.frt');
+my $pos = FF::before_content( 'Stack.frt', './std/Stack.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -107,7 +107,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'item', 8.2 ) or return;
                 ${ $$self->{'items'} }->{'push'}
-                  ->( [ $$scope->{'item'} ], $scope, undef, 9.3 );
+                  ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.3) );
                 return $ret;
             }
         );
@@ -118,9 +118,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret_func->(
-                    ${ $$self->{'items'} }->{'pop'}->( {}, $scope, undef, 13.4 )
-                );
+                return $ret_func->( ${ $$self->{'items'} }->{'pop'}
+                      ->( {}, $scope, undef, $pos->(13.4) ) );
                 return $ret;
             }
         );
@@ -135,7 +134,7 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     name => ${ $$scope->{'T'} }->{'name'},
-                    $file_scope, 17.2
+                    $file_scope, $pos->(17.2)
                 );
                 return $ret_func->(
                     add(

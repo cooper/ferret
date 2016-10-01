@@ -114,7 +114,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('3-nested-functions.frt');
+my $pos = FF::before_content( '3-nested-functions.frt',
+    './test/3-nested-functions.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -132,10 +133,10 @@ my $result = do {
             FF::lex_assign(
                 $scope,
                 hello => str( $f, "Hello" ),
-                $file_scope, 17.2
+                $file_scope, $pos->(17.2)
             );
             $$scope->{'hello'}
-              ->set_property( name => $$scope->{'name1'}, 18.3 );
+              ->set_property( name => $$scope->{'name1'}, $pos->(18.3) );
             $$scope->{'say'}->(
                 [
                     add(
@@ -143,7 +144,8 @@ my $result = do {
                         str( $f, " " ), ${ $$scope->{'hello'} }->{'name'}
                     )
                 ],
-                $scope, undef, 19.1
+                $scope, undef,
+                $pos->(19.1)
             );
             return $ret;
         }
@@ -158,7 +160,7 @@ my $result = do {
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "Hello " ), $$scope->{'name2'} ) ],
-                $scope, undef, 23.2
+                $scope, undef, $pos->(23.2)
             );
             return $ret;
         }
@@ -196,8 +198,8 @@ my $result = do {
             );
             FF::need( $scope, $args, 'name1', 11.2 ) or return;
             FF::need( $scope, $args, 'name2', 11.4 ) or return;
-            $$scope->{'hello1'}->( {}, $scope, undef, 13.2 );
-            $$scope->{'hello2'}->( {}, $scope, undef, 14.2 );
+            $$scope->{'hello1'}->( {}, $scope, undef, $pos->(13.2) );
+            $$scope->{'hello2'}->( {}, $scope, undef, $pos->(14.2) );
             return $ret;
         }
     );
@@ -207,23 +209,25 @@ my $result = do {
     );
     $$scope->{'helloWorld'}->(
         { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
-        $scope, undef, 1.1
+        $scope, undef, $pos->(1.1)
     );
     $$scope->{'helloWorld'}->(
         { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
-        $scope, undef, 3.2
+        $scope, undef, $pos->(3.2)
     );
-    $$scope->{'helloWorld'}
-      ->( [ str( $f, "Benjamin" ), str( $f, "George" ) ], $scope, undef, 8.2 );
+    $$scope->{'helloWorld'}->(
+        [ str( $f, "Benjamin" ), str( $f, "George" ) ],
+        $scope, undef, $pos->(8.2)
+    );
     FF::lex_assign(
         $scope,
         pi =>
           add( $scope, num( $f, "3" ), num( $f, "0.1" ), num( $f, "0.04" ) ),
-        undef, 28.2
+        undef, $pos->(28.2)
     );
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Pi = " ), $$scope->{'pi'} ) ],
-        $scope, undef, 29.2
+        $scope, undef, $pos->(29.2)
     );
 };
 

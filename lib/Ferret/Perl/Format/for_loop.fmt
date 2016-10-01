@@ -3,6 +3,6 @@
     FF::indefinitely($f, $scope, sub {
         my ($scope, $ret_func) = @_;
         <<body>>
-    }, <<pos>>);
+    }, $pos->(<<pos>>));
     return $ret_func->($loop_ret) if $loop_ret;
 }

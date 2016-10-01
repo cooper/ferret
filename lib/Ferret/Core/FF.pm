@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 use Ferret::Core::Conversion qw(fstring ffunction ferror pbool);
-use Scalar::Util qw(blessed weaken);
+use Scalar::Util qw(blessed weaken dualvar);
 use List::Util qw(any all none);
 
 my $ret_func = sub { wantarray ? (@_) : shift };
@@ -43,13 +43,16 @@ sub load_core {
 
 # things to do before evaluating runtime content.
 sub before_content {
-    my $base = shift;
+    my ($base, $file) = @_;
 
     # remember we tried this file.
     $Ferret::file_map{ (caller)[1] } = $base;
     $Ferret::tried_files{"$base.pm"}++;
 
-    return;
+    # create a function to make dualvar positions.
+    my $pos = sub { dualvar shift, $file };
+
+    return $pos;
 }
 
 # things to do after evaluating runtime content.

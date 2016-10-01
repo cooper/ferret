@@ -1,1 +1,1 @@
-<<left>>->delete_property_ow('<<name>>', <<pos>>)
+<<left>>->delete_property_ow('<<name>>', $pos->(<<pos>>))

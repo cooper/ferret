@@ -249,7 +249,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Test.frt');
+my $pos = FF::before_content( 'Test.frt', './std/Test.frt' );
 
 use Ferret::Core::Operations
   qw(_sub add bool equal nequal num refs_equal refs_nequal str);
@@ -280,8 +280,8 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::want( $self, $args, 'name', 7.2, str( $f, "Test" ) );
                 FF::want( $self, $args, 'fatal', 11.2, $true );
-                $self->set_property( tested => num( $f, "0" ), 13.2 );
-                $self->set_property( passed => num( $f, "0" ), 14.2 );
+                $self->set_property( tested => num( $f, "0" ), $pos->(13.2) );
+                $self->set_property( passed => num( $f, "0" ), $pos->(14.2) );
                 return $ret;
             }
         );
@@ -304,11 +304,14 @@ my $result = do {
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
-                            $$scope->{'Bool'}
-                              ->( [ $$scope->{'a'} ], $scope, undef, 20.25 ),
+                            $$scope->{'Bool'}->(
+                                [ $$scope->{'a'} ], $scope,
+                                undef,              $pos->(20.25)
+                            ),
                             str( $f, "Value must be true" )
                         ],
-                        $scope, undef, 20.15
+                        $scope, undef,
+                        $pos->(20.15)
                     )
                 );
                 return $ret;
@@ -336,7 +339,8 @@ my $result = do {
                             refs_equal( $scope, $$scope->{'a'}, $true ),
                             str( $f, "Value must be exactly true" )
                         ],
-                        $scope, undef, 26.15
+                        $scope, undef,
+                        $pos->(26.15)
                     )
                 );
                 return $ret;
@@ -370,7 +374,8 @@ my $result = do {
                             equal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
                             str( $f, "Values must be equal" )
                         ],
-                        $scope, undef, 33.15
+                        $scope, undef,
+                        $pos->(33.15)
                     )
                 );
                 return $ret;
@@ -407,7 +412,8 @@ my $result = do {
                             ),
                             str( $f, "Objects must be exactly equal" )
                         ],
-                        $scope, undef, 40.15
+                        $scope, undef,
+                        $pos->(40.15)
                     )
                 );
                 return $ret;
@@ -442,7 +448,8 @@ my $result = do {
                             nequal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
                             str( $f, "Values must not be equal" )
                         ],
-                        $scope, undef, 47.15
+                        $scope, undef,
+                        $pos->(47.15)
                     )
                 );
                 return $ret;
@@ -479,7 +486,8 @@ my $result = do {
                             ),
                             str( $f, "Objects must not be equal" )
                         ],
-                        $scope, undef, 54.15
+                        $scope, undef,
+                        $pos->(54.15)
                     )
                 );
                 return $ret;
@@ -496,7 +504,7 @@ my $result = do {
                     $scope,
                     failed =>
                       _sub( $scope, $$self->{'tested'}, $$self->{'passed'} ),
-                    $file_scope, 59.2
+                    $file_scope, $pos->(59.2)
                 );
                 $$scope->{'say'}->(
                     [
@@ -508,15 +516,22 @@ my $result = do {
                             $$scope->{'failed'}, str( $f, " failed" )
                         )
                     ],
-                    $scope, undef, 60.06667
+                    $scope, undef,
+                    $pos->(60.06667)
                 );
-                $ret->set_property( tests  => $$self->{'tested'},  62.2 );
-                $ret->set_property( fails  => $$scope->{'failed'}, 63.2 );
-                $ret->set_property( passes => $$self->{'passed'},  64.2 );
+                $ret->set_property( tests => $$self->{'tested'}, $pos->(62.2) );
+                $ret->set_property(
+                    fails => $$scope->{'failed'},
+                    $pos->(63.2)
+                );
+                $ret->set_property(
+                    passes => $$self->{'passed'},
+                    $pos->(64.2)
+                );
                 $ret->set_property(
                     allOK =>
                       equal( $scope, $$self->{'passed'}, $$self->{'tested'} ),
-                    65.2
+                    $pos->(65.2)
                 );
                 return $ret;
             }
@@ -545,16 +560,16 @@ my $result = do {
                 FF::need( $scope, $args, 'message', 69.4 ) or return;
                 $self->set_property(
                     tested => add( $scope, $$self->{'tested'}, num( $f, "1" ) ),
-                    71.2
+                    $pos->(71.2)
                 );
-                $ret->set_property( pass => $$scope->{'yes'}, 72.2 );
+                $ret->set_property( pass => $$scope->{'yes'}, $pos->(72.2) );
                 if ( bool( $$scope->{'yes'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $self->set_property(
                         passed =>
                           add( $scope, $$self->{'passed'}, num( $f, "1" ) ),
-                        75.2
+                        $pos->(75.2)
                     );
                     return $ret_func->();
                 }
@@ -567,11 +582,15 @@ my $result = do {
                                 FF::get_symbol( $f, 'TestFailure' ),
                                 $$scope->{'message'}
                             ],
-                            $scope, undef, 80.3
+                            $scope, undef,
+                            $pos->(80.3)
                         )
                     );
                 }
-                $ret->set_property( message => $$scope->{'message'}, 82.2 );
+                $ret->set_property(
+                    message => $$scope->{'message'},
+                    $pos->(82.2)
+                );
                 return $ret;
             }
         );

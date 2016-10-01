@@ -107,7 +107,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('7-math.frt');
+my $pos = FF::before_content( '7-math.frt', './test/7-math.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -125,19 +125,20 @@ my $result = do {
                 width  => num( $f, "12" ),
                 height => num( $f, "10" )
             },
-            $scope, undef, 1.2
+            $scope, undef,
+            $pos->(1.2)
         ),
         undef,
-        1.06667
+        $pos->(1.06667)
     );
     FF::lex_assign(
         $scope,
         center => ${ $$scope->{'rect'} }->{'center'},
-        undef, 3.2
+        undef, $pos->(3.2)
     );
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Center of rect: " ), $$scope->{'center'} ) ],
-        $scope, undef, 4.2
+        $scope, undef, $pos->(4.2)
     );
     $$scope->{'say'}->(
         [
@@ -147,13 +148,14 @@ my $result = do {
                 ${ $$scope->{'center'} }->{'distanceFromOrigin'}
             )
         ],
-        $scope, undef, 5.2
+        $scope, undef,
+        $pos->(5.2)
     );
     FF::lex_assign(
         $scope,
         otherPt => $$scope->{'Math::Point'}
-          ->( [ num( $f, "9" ), num( $f, "2" ) ], $scope, undef, 7.3 ),
-        undef, 7.1
+          ->( [ num( $f, "9" ), num( $f, "2" ) ], $scope, undef, $pos->(7.3) ),
+        undef, $pos->(7.1)
     );
     FF::lex_assign(
         $scope,
@@ -161,14 +163,14 @@ my $result = do {
             ${
                 FF::create_set( $scope, $$scope->{'center'},
                     $$scope->{'otherPt'} )
-            }->{'midpoint'}->( {}, $scope, undef, 8.45 )
-          }->{'pretty'}->( {}, $scope, undef, 8.6 ),
+            }->{'midpoint'}->( {}, $scope, undef, $pos->(8.45) )
+          }->{'pretty'}->( {}, $scope, undef, $pos->(8.6) ),
         undef,
-        8.1
+        $pos->(8.1)
     );
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Midpoint: " ), $$scope->{'midpoint'} ) ],
-        $scope, undef, 9.2
+        $scope, undef, $pos->(9.2)
     );
     $$scope->{'say'}->(
         [
@@ -176,10 +178,11 @@ my $result = do {
                 $scope,
                 str( $f, "Square root of four: " ),
                 ${ $$scope->{'Math'} }->{'sqrt'}
-                  ->( [ num( $f, "4" ) ], $scope, undef, 11.35 )
+                  ->( [ num( $f, "4" ) ], $scope, undef, $pos->(11.35) )
             )
         ],
-        $scope, undef, 11.1
+        $scope, undef,
+        $pos->(11.1)
     );
 };
 

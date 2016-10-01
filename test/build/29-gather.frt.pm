@@ -166,7 +166,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('29-gather.frt');
+my $pos = FF::before_content( '29-gather.frt', './test/29-gather.frt' );
 
 use Ferret::Core::Operations qw(bool nequal num range);
 my $result = do {
@@ -274,7 +274,7 @@ my $result = do {
                                             $take->( $$scope->{'n'} );
                                         }
                                     },
-                                    28.3
+                                    $pos->(28.3)
                                 );
                                 return $ret_func->($loop_ret) if $loop_ret;
                             }
@@ -284,7 +284,7 @@ my $result = do {
                       if $gather_status eq 'return';
                     $gather_ret;
                 },
-                28.2
+                $pos->(28.2)
             );
             return $ret;
         }
@@ -301,20 +301,20 @@ my $result = do {
     FF::lex_assign(
         $scope,
         pt1 => $$scope->{'Math::Point'}
-          ->( [ num( $f, "0" ), num( $f, "0" ) ], $scope, undef, 13.3 ),
-        undef, 13.1
+          ->( [ num( $f, "0" ), num( $f, "0" ) ], $scope, undef, $pos->(13.3) ),
+        undef, $pos->(13.1)
     );
     FF::lex_assign(
         $scope,
         pt2 => $$scope->{'Math::Point'}
-          ->( [ num( $f, "1" ), num( $f, "1" ) ], $scope, undef, 14.3 ),
-        undef, 14.1
+          ->( [ num( $f, "1" ), num( $f, "1" ) ], $scope, undef, $pos->(14.3) ),
+        undef, $pos->(14.1)
     );
     FF::lex_assign(
         $scope,
         pt3 => $$scope->{'Math::Point'}
-          ->( [ num( $f, "1" ), num( $f, "0" ) ], $scope, undef, 15.3 ),
-        undef, 15.1
+          ->( [ num( $f, "1" ), num( $f, "0" ) ], $scope, undef, $pos->(15.3) ),
+        undef, $pos->(15.1)
     );
     {
         my $loop_ret = FF::iterate(
@@ -327,13 +327,15 @@ my $result = do {
                 my ( $scope, $ret_func ) = @_;
                 $$scope->{'inspect'}->(
                     [
-                        $$scope->{'nonZeroCoodinates'}
-                          ->( [ $$scope->{'pt'} ], $scope, undef, 21.4 )
+                        $$scope->{'nonZeroCoodinates'}->(
+                            [ $$scope->{'pt'} ], $scope, undef, $pos->(21.4)
+                        )
                     ],
-                    $scope, undef, 21.2
+                    $scope, undef,
+                    $pos->(21.2)
                 );
             },
-            17.05
+            $pos->(17.05)
         );
         return $ret_func->($loop_ret) if $loop_ret;
     }
@@ -351,22 +353,26 @@ my $result = do {
                         ]
                     )
                 ],
-                $scope, undef, 34.2
+                $scope, undef,
+                $pos->(34.2)
             )
         ],
-        $scope, undef, 34.1
+        $scope, undef,
+        $pos->(34.1)
     );
     $$scope->{'inspect'}->(
         [
             $$scope->{'evenNumbers'}->(
                 [
                     ${ range( $scope, num( $f, "0" ), num( $f, "9" ) ) }
-                      ->{'toList'}->( {}, $scope, undef, 35.55 )
+                      ->{'toList'}->( {}, $scope, undef, $pos->(35.55) )
                 ],
-                $scope, undef, 35.2
+                $scope, undef,
+                $pos->(35.2)
             )
         ],
-        $scope, undef, 35.1
+        $scope, undef,
+        $pos->(35.1)
     );
 };
 

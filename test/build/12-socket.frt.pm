@@ -129,7 +129,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('12-socket.frt');
+my $pos = FF::before_content( '12-socket.frt', './test/12-socket.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -147,7 +147,7 @@ my $result = do {
             FF::need( $scope, $args, 'data', 5.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
-                $scope, undef, 6.2
+                $scope, undef, $pos->(6.2)
             );
             return $ret;
         }
@@ -163,7 +163,7 @@ my $result = do {
             FF::need( $scope, $args, 'data', 10.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
-                $scope, undef, 11.2
+                $scope, undef, $pos->(11.2)
             );
             return $ret;
         }
@@ -177,7 +177,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             ${ $$scope->{'sock'} }->{'println'}
-              ->( [ str( $f, "NICK k" ) ], $scope, undef, 15.3 );
+              ->( [ str( $f, "NICK k" ) ], $scope, undef, $pos->(15.3) );
             ${ $$scope->{'sock'} }->{'println'}->(
                 [
                     add(
@@ -189,7 +189,8 @@ my $result = do {
                         str( $f, " :k" )
                     )
                 ],
-                $scope, undef, 16.15
+                $scope, undef,
+                $pos->(16.15)
             );
             return $ret;
         }
@@ -203,7 +204,7 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             ${ $$scope->{'sock'} }->{'println'}
-              ->( [ str( $f, "JOIN #k" ) ], $scope, undef, 22.3 );
+              ->( [ str( $f, "JOIN #k" ) ], $scope, undef, $pos->(22.3) );
             return $ret;
         }
     );
@@ -216,12 +217,13 @@ my $result = do {
                 port     => num( $f,            "6667" ),
                 readMode => FF::get_symbol( $f, 'line' )
             },
-            $scope, undef, 1.3
+            $scope, undef,
+            $pos->(1.3)
         ),
         undef,
-        1.1
+        $pos->(1.1)
     );
-    $$scope->{'inspect'}->( [ $$scope->{'sock'} ], $scope, undef, 2.2 );
+    $$scope->{'inspect'}->( [ $$scope->{'sock'} ], $scope, undef, $pos->(2.2) );
     FF::on(
         $$scope->{'sock'},
         'gotLine',
@@ -246,13 +248,13 @@ my $result = do {
         $func_2->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'sock'} }->{'connect'}->( {}, $scope, undef, 19.3 );
+    ${ $$scope->{'sock'} }->{'connect'}->( {}, $scope, undef, $pos->(19.3) );
     FF::on(
-        ${ $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, 21.15 ) }
-          ->{'once'}->( {}, $scope, undef, 21.35 ),
-        'expire',
-        $self,
-        $scope,
+        ${
+            $$scope->{'Timer'}
+              ->( [ num( $f, "5" ) ], $scope, undef, $pos->(21.15) )
+          }->{'once'}->( {}, $scope, undef, $pos->(21.35) ),
+        'expire', $self, $scope,
         $func_3->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );

@@ -82,7 +82,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('21-nested-callbacks.frt');
+my $pos = FF::before_content( '21-nested-callbacks.frt',
+    './test/21-nested-callbacks.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -105,7 +106,8 @@ my $result = do {
                         $$scope->{'part'}
                     )
                 ],
-                $scope, undef, 5.1
+                $scope, undef,
+                $pos->(5.1)
             );
             return $ret;
         }
@@ -114,8 +116,8 @@ my $result = do {
     FF::lex_assign(
         $scope,
         parts => ${ str( $f, "s p a m" ) }->{'split'}
-          ->( [ str( $f, " " ) ], $scope, undef, 1.5 ),
-        undef, 1.2
+          ->( [ str( $f, " " ) ], $scope, undef, $pos->(1.5) ),
+        undef, $pos->(1.2)
     );
     {
         my $loop_ret = FF::iterate_pair(
@@ -127,8 +129,8 @@ my $result = do {
                 FF::on(
                     ${
                         $$scope->{'Timer'}
-                          ->( [ $$scope->{'i'} ], $scope, undef, 4.15 )
-                      }->{'once'}->( {}, $scope, undef, 4.35 ),
+                          ->( [ $$scope->{'i'} ], $scope, undef, $pos->(4.15) )
+                      }->{'once'}->( {}, $scope, undef, $pos->(4.35) ),
                     'expire', $self, $scope,
                     $func_0->inside_scope(
                         (undef) => $scope,
@@ -137,7 +139,7 @@ my $result = do {
                     {}
                 );
             },
-            3.05
+            $pos->(3.05)
         );
         return $ret_func->($loop_ret) if $loop_ret;
     }
@@ -151,9 +153,9 @@ my $result = do {
             sub {
                 my ( $scope, $ret_func ) = @_;
                 $$scope->{'say'}
-                  ->( [ $$scope->{'part'} ], $scope, undef, 10.2 );
+                  ->( [ $$scope->{'part'} ], $scope, undef, $pos->(10.2) );
             },
-            9.05
+            $pos->(9.05)
         );
         return $ret_func->($loop_ret) if $loop_ret;
     }

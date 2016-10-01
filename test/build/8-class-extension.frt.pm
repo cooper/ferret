@@ -39,7 +39,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('8-class-extension.frt');
+my $pos =
+  FF::before_content( '8-class-extension.frt', './test/8-class-extension.frt' );
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
@@ -62,7 +63,7 @@ my $result = do {
                 return $ret_func->(
                     mul(
                         $scope,
-                        $$self->{'length'}->( {}, $scope, undef, 4.3 ),
+                        $$self->{'length'}->( {}, $scope, undef, $pos->(4.3) ),
                         num( $f, "2" )
                     )
                 );
@@ -80,10 +81,11 @@ my $result = do {
                 $scope,
                 str( $f, "Length times two: " ),
                 ${ str( $f, "hi there" ) }->{'doubledLength'}
-                  ->( {}, $scope, undef, 9.35 )
+                  ->( {}, $scope, undef, $pos->(9.35) )
             )
         ],
-        $scope, undef, 9.1
+        $scope, undef,
+        $pos->(9.1)
     );
 };
 

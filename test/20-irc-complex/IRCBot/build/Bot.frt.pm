@@ -562,7 +562,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Bot.frt');
+my $pos =
+  FF::before_content( 'Bot.frt', './test/20-irc-complex/IRCBot/Bot.frt' );
 
 use Ferret::Core::Operations qw(add bool equal nequal num str);
 my $result = do {
@@ -592,11 +593,12 @@ my $result = do {
                         $$self->{'real'}
                     )
                 ],
-                $scope, undef, 30.06667
+                $scope, undef,
+                $pos->(30.06667)
             );
             $$self->{'send'}->(
                 [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, 31.2
+                $scope, undef, $pos->(31.2)
             );
             return $ret;
         }
@@ -612,7 +614,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'data', 36.2 ) or return;
             $$self->{'handleLine'}
-              ->( [ $$scope->{'data'} ], $scope, undef, 37.2 );
+              ->( [ $$scope->{'data'} ], $scope, undef, $pos->(37.2) );
             return $ret;
         }
     );
@@ -648,15 +650,16 @@ my $result = do {
                                         $$scope->{'chan'}
                                     )
                                 ],
-                                $scope, undef, 99.2
+                                $scope, undef,
+                                $pos->(99.2)
                             );
                         },
-                        98.1
+                        $pos->(98.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
             }
-            $self->set_property( _joinedChannels => $true, 103.2 );
+            $self->set_property( _joinedChannels => $true, $pos->(103.2) );
             return $ret;
         }
     );
@@ -675,11 +678,13 @@ my $result = do {
                         $scope,
                         str( $f, "PONG " ),
                         $$scope->{'s'}->get_index_value(
-                            [ num( $f, "1" ) ], $scope, 110.3
+                            [ num( $f, "1" ) ],
+                            $scope, $pos->(110.3)
                         )
                     )
                 ],
-                $scope, undef, 110.1
+                $scope, undef,
+                $pos->(110.1)
             );
             return $ret;
         }
@@ -702,10 +707,10 @@ my $result = do {
             FF::lex_assign(
                 $scope,
                 msg => $$scope->{'Message'}
-                  ->( [ $$scope->{'line'} ], $scope, undef, 117.4 ),
-                $file_scope, 117.2
+                  ->( [ $$scope->{'line'} ], $scope, undef, $pos->(117.4) ),
+                $file_scope, $pos->(117.2)
             );
-            $ret->set_property( msg => $$scope->{'msg'}, 118.2 );
+            $ret->set_property( msg => $$scope->{'msg'}, $pos->(118.2) );
             if ( bool( ${ $$scope->{'msg'} }->{'command'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -715,7 +720,8 @@ my $result = do {
                             ${ ${ $$scope->{'msg'} }->{'command'} }
                               ->{'lowercase'}
                         ],
-                        $scope, 121.3
+                        $scope,
+                        $pos->(121.3)
                     );
                     if ( bool($maybe_0) ) {
                         $maybe_0->(
@@ -725,7 +731,8 @@ my $result = do {
                                 s     => $$scope->{'s'},
                                 msg   => $$scope->{'msg'}
                             },
-                            $scope, undef, 121.6
+                            $scope, undef,
+                            $pos->(121.6)
                         );
                     }
                 }
@@ -747,7 +754,7 @@ my $result = do {
             FF::lex_assign(
                 $scope,
                 nickname => ${ $$scope->{'msg'} }->{'nickname'},
-                $file_scope, 132.2
+                $file_scope, $pos->(132.2)
             );
             $$self->{'privmsg'}->(
                 [
@@ -757,7 +764,8 @@ my $result = do {
                         $$scope->{'nickname'}, str( $f, "!" )
                     )
                 ],
-                $scope, undef, 133.1
+                $scope, undef,
+                $pos->(133.1)
             );
             return $ret;
         }
@@ -774,25 +782,27 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 137.2 ) or return;
             $$scope->{'inspect'}
-              ->( [ $$scope->{'msg'} ], $scope, undef, 138.2 );
+              ->( [ $$scope->{'msg'} ], $scope, undef, $pos->(138.2) );
             FF::lex_assign(
                 $scope,
-                trigger => ${ $$scope->{'msg'} }->{'parts'}
-                  ->get_index_value( [ num( $f, "1" ) ], $scope, 141.5 ),
-                $file_scope, 141.2
+                trigger => ${ $$scope->{'msg'} }->{'parts'}->get_index_value(
+                    [ num( $f, "1" ) ], $scope, $pos->(141.5)
+                ),
+                $file_scope,
+                $pos->(141.2)
             );
             FF::lex_assign(
                 $scope,
                 response => ${ $$scope->{'msg'} }->{'fromWord'}
-                  ->( [ num( $f, "2" ) ], $scope, undef, 142.5 ),
-                $file_scope, 142.2
+                  ->( [ num( $f, "2" ) ], $scope, undef, $pos->(142.5) ),
+                $file_scope, $pos->(142.2)
             );
             $$self->{'factoids'}->set_index_value( [ $$scope->{'trigger'} ],
-                $$scope->{'response'}, $scope, 145.5 );
+                $$scope->{'response'}, $scope, $pos->(145.5) );
             $$self->{'commands'}->set_index_value(
                 [ $$scope->{'trigger'} ],
                 $$scope->{'_commandFactoid'},
-                $scope, 146.5
+                $scope, $pos->(146.5)
             );
             $$self->{'privmsg'}->(
                 [
@@ -806,7 +816,8 @@ my $result = do {
                         str( $f, "'" )
                     )
                 ],
-                $scope, undef, 148.1
+                $scope, undef,
+                $pos->(148.1)
             );
             return $ret;
         }
@@ -827,7 +838,7 @@ my $result = do {
                 response => ${
                     $$self->{'factoids'}->get_index_value(
                         [ ${ $$scope->{'msg'} }->{'command'} ], $scope,
-                        153.2
+                        $pos->(153.2)
                     )
                   }->{'fill'}->(
                     {
@@ -836,14 +847,15 @@ my $result = do {
                         chan => ${ $$scope->{'msg'} }->{'channel'},
                         nl   => str( $f, "\n" )
                     },
-                    $scope, undef, 153.45
+                    $scope, undef,
+                    $pos->(153.45)
                   ),
                 $file_scope,
-                153.1
+                $pos->(153.1)
             );
             $$self->{'privmsg'}->(
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'response'} ],
-                $scope, undef, 159.2
+                $scope, undef, $pos->(159.2)
             );
             return $ret;
         }
@@ -884,12 +896,12 @@ my $result = do {
                 FF::want( $self, $args, 'real', 20.2, str( $f, "Ferret IRC" ) );
                 $self->set_property(
                     commands => ${ $$scope->{'initialCommands'} }->{'copy'}
-                      ->( {}, $scope, undef, 22.5 ),
-                    22.2
+                      ->( {}, $scope, undef, $pos->(22.5) ),
+                    $pos->(22.2)
                 );
                 $self->set_property(
                     factoids => FF::create_hash( $f, {} ),
-                    23.2
+                    $pos->(23.2)
                 );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
@@ -898,9 +910,10 @@ my $result = do {
                             port     => $$self->{'port'},
                             readMode => FF::get_symbol( $f, 'line' )
                         },
-                        $scope, undef, 26.3
+                        $scope, undef,
+                        $pos->(26.3)
                     ),
-                    26.1
+                    $pos->(26.1)
                 );
                 FF::on(
                     $$self->{'sock'},
@@ -952,18 +965,18 @@ my $result = do {
                     bool(
                         $$self->{'commands'}->get_index_value(
                             [ $$scope->{'command'} ],
-                            $scope, 44.3
+                            $scope, $pos->(44.3)
                         )
                     )
                   )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $ret->set_property( overwrote => $true, 45.2 );
+                    $ret->set_property( overwrote => $true, $pos->(45.2) );
                 }
                 $$self->{'commands'}->set_index_value( [ $$scope->{'command'} ],
-                    $$scope->{'callback'}, $scope, 46.5 );
-                $ret->set_property( added => $true, 47.2 );
+                    $$scope->{'callback'}, $scope, $pos->(46.5) );
+                $ret->set_property( added => $true, $pos->(47.2) );
                 return $ret;
             }
         );
@@ -975,7 +988,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                ${ $$self->{'sock'} }->{'connect'}->( {}, $scope, undef, 51.3 );
+                ${ $$self->{'sock'} }->{'connect'}
+                  ->( {}, $scope, undef, $pos->(51.3) );
                 return $ret;
             }
         );
@@ -996,10 +1010,10 @@ my $result = do {
                 FF::need( $scope, $args, 'line', 55.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, 56.2
+                    $scope, undef, $pos->(56.2)
                 );
                 ${ $$self->{'sock'} }->{'println'}
-                  ->( [ $$scope->{'line'} ], $scope, undef, 57.3 );
+                  ->( [ $$scope->{'line'} ], $scope, undef, $pos->(57.3) );
                 return $ret;
             }
         );
@@ -1022,14 +1036,17 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     s => ${ $$scope->{'line'} }->{'split'}
-                      ->( [ str( $f, " " ) ], $scope, undef, 64.5 ),
-                    $file_scope, 64.2
+                      ->( [ str( $f, " " ) ], $scope, undef, $pos->(64.5) ),
+                    $file_scope, $pos->(64.2)
                 );
                 FF::lex_assign(
                     $scope,
-                    command => $$scope->{'s'}
-                      ->get_index_value( [ num( $f, "1" ) ], $scope, 65.4 ),
-                    $file_scope, 65.2
+                    command => $$scope->{'s'}->get_index_value(
+                        [ num( $f, "1" ) ],
+                        $scope, $pos->(65.4)
+                    ),
+                    $file_scope,
+                    $pos->(65.2)
                 );
                 if (
                     bool(
@@ -1037,7 +1054,7 @@ my $result = do {
                             $scope,
                             $$scope->{'s'}->get_index_value(
                                 [ num( $f, "0" ) ],
-                                $scope, 68.3
+                                $scope, $pos->(68.3)
                             ),
                             str( $f, "PING" )
                         )
@@ -1048,9 +1065,12 @@ my $result = do {
 
                     FF::lex_assign(
                         $scope,
-                        command => $$scope->{'s'}
-                          ->get_index_value( [ num( $f, "0" ) ], $scope, 69.4 ),
-                        $file_scope, 69.2
+                        command => $$scope->{'s'}->get_index_value(
+                            [ num( $f, "0" ) ],
+                            $scope, $pos->(69.4)
+                        ),
+                        $file_scope,
+                        $pos->(69.2)
                     );
                 }
                 $$scope->{'say'}->(
@@ -1061,13 +1081,14 @@ my $result = do {
                             $$scope->{'line'}
                         )
                     ],
-                    $scope, undef, 71.1
+                    $scope, undef,
+                    $pos->(71.1)
                 );
                 {
                     my $maybe_0 =
                       $$scope->{'handlers'}
                       ->get_index_value( [ $$scope->{'command'} ],
-                        $scope, 74.2 );
+                        $scope, $pos->(74.2) );
                     if ( bool($maybe_0) ) {
                         $maybe_0->(
                             {
@@ -1076,7 +1097,8 @@ my $result = do {
                                 command => $$scope->{'command'},
                                 s       => $$scope->{'s'}
                             },
-                            $scope, undef, 74.6
+                            $scope, undef,
+                            $pos->(74.6)
                         );
                     }
                 }
@@ -1109,8 +1131,9 @@ my $result = do {
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,
-                        ${ $$scope->{'message'} }->{'split'}
-                          ->( [ str( $f, "\n" ) ], $scope, undef, 85.3 ),
+                        ${ $$scope->{'message'} }->{'split'}->(
+                            [ str( $f, "\n" ) ], $scope, undef, $pos->(85.3)
+                        ),
                         'line',
                         sub {
                             my ( $scope, $ret_func ) = @_;
@@ -1137,11 +1160,12 @@ my $result = do {
                                             $$scope->{'line'}
                                         )
                                     ],
-                                    $scope, undef, 87.1
+                                    $scope, undef,
+                                    $pos->(87.1)
                                 );
                             }
                         },
-                        85.05
+                        $pos->(85.05)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -1201,7 +1225,7 @@ my $result = do {
                 }
             ),
             undef,
-            4.3
+            $pos->(4.3)
         );
         FF::lex_assign(
             $class,
@@ -1214,7 +1238,7 @@ my $result = do {
                 }
             ),
             undef,
-            10.3
+            $pos->(10.3)
         );
     }
     FF::load_namespaces( $context,

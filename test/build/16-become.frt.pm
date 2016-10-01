@@ -44,7 +44,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('16-become.frt');
+my $pos = FF::before_content( '16-become.frt', './test/16-become.frt' );
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
@@ -53,13 +53,17 @@ my $result = do {
     FF::load_core('main');
 
     FF::load_namespaces( $context, qw(Math Math::Point) );
-    FF::lex_assign( $scope, obj => str( $f, "hi" ), undef, 2.2 );
+    FF::lex_assign( $scope, obj => str( $f, "hi" ), undef, $pos->(2.2) );
     ${ $$scope->{'Math::Point'} }->{'init'}
-      ->( [ $$scope->{'obj'} ], $scope, undef, 9.25 )
-      ->( [ num( $f, "1" ), num( $f, "1" ) ], $scope, undef, 9.4 );
+      ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(9.25) )
+      ->( [ num( $f, "1" ), num( $f, "1" ) ], $scope, undef, $pos->(9.4) );
     $$scope->{'say'}->(
-        [ ${ $$scope->{'obj'} }->{'pretty'}->( {}, $scope, undef, 11.5 ) ],
-        $scope, undef, 11.2
+        [
+            ${ $$scope->{'obj'} }->{'pretty'}
+              ->( {}, $scope, undef, $pos->(11.5) )
+        ],
+        $scope, undef,
+        $pos->(11.2)
     );
 };
 

@@ -46,7 +46,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('bot_test2.frt');
+my $pos =
+  FF::before_content( 'bot_test2.frt', './test/10-irc-simple/bot_test2.frt' );
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
@@ -63,14 +64,15 @@ my $result = do {
                 nick    => str( $f, "ferret" ),
                 user    => str( $f, "bot" )
             },
-            $scope, undef, 1.2
+            $scope, undef,
+            $pos->(1.2)
         ),
         undef,
-        1.1
+        $pos->(1.1)
     );
     $$scope->{'say'}
-      ->( [ ${ $$scope->{'bot'} }->{'address'} ], $scope, undef, 2.2 );
-    ${ $$scope->{'bot'} }->{'connect'}->( {}, $scope, undef, 3.3 );
+      ->( [ ${ $$scope->{'bot'} }->{'address'} ], $scope, undef, $pos->(2.2) );
+    ${ $$scope->{'bot'} }->{'connect'}->( {}, $scope, undef, $pos->(3.3) );
 };
 
 FF::after_content();

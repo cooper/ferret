@@ -84,7 +84,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Outgoing.frt');
+my $pos = FF::before_content( 'Outgoing.frt', './std/IRC/Outgoing.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -126,10 +126,11 @@ my $result = do {
                                         $$scope->{'name'}
                                     )
                                 ],
-                                $scope, undef, 8.2
+                                $scope, undef,
+                                $pos->(8.2)
                             );
                         },
-                        7.1
+                        $pos->(7.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -167,7 +168,8 @@ my $result = do {
                             $$scope->{'message'}
                         )
                     ],
-                    $scope, undef, 14.1
+                    $scope, undef,
+                    $pos->(14.1)
                 );
                 return $ret;
             }
@@ -190,7 +192,7 @@ my $result = do {
                 FF::need( $scope, $args, 'nick', 20.2 ) or return;
                 $$self->{'send'}->(
                     [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],
-                    $scope, undef, 21.2
+                    $scope, undef, $pos->(21.2)
                 );
                 return $ret;
             }

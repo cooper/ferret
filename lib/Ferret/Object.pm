@@ -78,7 +78,7 @@ sub set_property {
         throw(AssignmentToSpecialProperty => $caller, [
             Object   => $obj->description,
             Property => $prop_name,
-            File     => $Ferret::file_map{ $caller->[1] } || 'unknown file',
+            File     => "$pos",
             Line     => int $pos
         ], $prop_name);
     }
@@ -331,7 +331,7 @@ sub _check_prop_alteration {
     throw(AlterationOfReadOnlyProperty => $caller, [
         Object   => $obj->description,
         Property => $prop_name,
-        File     => $Ferret::file_map{ $caller->[1] } || 'unknown file',
+        File     => "$pos",
         Line     => int $pos
     ], $prop_name);
 }
@@ -608,10 +608,11 @@ sub call {
     my $caller = [caller 0];
     $caller = [caller 1] if $caller->[0] eq __PACKAGE__;
 
-    throw(CallOnNonFunction => $caller, [
+    throw(Ferret::undefined($obj) ? 'CallOnUndefined' : 'CallOnNonFunction' =>
+    $caller, [
         Name  => $obj->{last_name},
         Value => $obj->description_ol,
-        File  => $Ferret::file_map{ $caller->[1] } || 'unknown file',
+        File  => "$pos",
         Line  => int($pos || 0)
     ]);
 
@@ -635,7 +636,7 @@ sub iterate {
     throw(InvalidIteration => $caller, [
         Name  => $obj->{last_name},
         Value => $obj->description_ol,
-        File  => $Ferret::file_map{ $caller->[1] } || 'unknown file',
+        File  => "$pos",
         Line  => int $pos
     ]);
 }
@@ -729,7 +730,7 @@ sub get_index_value {
     throw(IndexOnNonCollection => $caller, [
         Value    => $obj->description_ol,
         Name     => $obj->{last_name} // 'unknown',
-        File     => $Ferret::file_map{ $caller->[1] } || 'unknown file',
+        File     => "$pos",
         Line     => int $pos
     ]) if !$evt;
 
@@ -751,7 +752,7 @@ sub set_index_value {
     throw(SetIndexOnNonCollection => $caller, [
         Value    => $obj->description_ol,
         Name     => $obj->{last_name} // 'unknown',
-        File     => $Ferret::file_map{ $caller->[1] } || 'unknown file',
+        File     => "$pos",
         Line     => int $pos
     ]) if !$evt;
 

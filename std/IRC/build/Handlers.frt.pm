@@ -208,7 +208,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Handlers.frt');
+my $pos = FF::before_content( 'Handlers.frt', './std/IRC/Handlers.frt' );
 
 use Ferret::Core::Operations qw(_not _sub add any_true bool num rgx sim str);
 my $result = do {
@@ -231,11 +231,12 @@ my $result = do {
                         str( $f, "PONG :" ),
                         ${ $$scope->{'msg'} }->{'params'}->get_index_value(
                             [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
-                            $scope, 15.35
+                            $scope, $pos->(15.35)
                         )
                     )
                 ],
-                $scope, undef, 15.1
+                $scope, undef,
+                $pos->(15.1)
             );
             return $ret;
         }
@@ -251,11 +252,11 @@ my $result = do {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 19.2 ) or return;
-            $self->set_property( registered => $true, 20.2 );
+            $self->set_property( registered => $true, $pos->(20.2) );
             $$self->{'me'}->set_property(
                 nick => ${ $$scope->{'msg'} }->{'params'}
-                  ->get_index_value( [ num( $f, "0" ) ], $scope, 21.3 ),
-                21.15
+                  ->get_index_value( [ num( $f, "0" ) ], $scope, $pos->(21.3) ),
+                $pos->(21.15)
             );
             if (
                 bool(
@@ -263,7 +264,7 @@ my $result = do {
                         $scope,
                         ${ $$scope->{'msg'} }->{'params'}->get_index_value(
                             [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
-                            $scope, 26.2
+                            $scope, $pos->(26.2)
                         ),
                         rgx( $f, undef, "^(.+)!(.+)\\\@(.+)\$", undef )
                     )
@@ -272,11 +273,14 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $$self->{'me'}->set_property( nick => $$scope->{'1'}, 27.3 );
-                $$self->{'me'}->set_property( user => $$scope->{'2'}, 28.3 );
-                $$self->{'me'}->set_property( host => $$scope->{'3'}, 29.3 );
                 $$self->{'me'}
-                  ->set_property( realHost => $$scope->{'3'}, 30.3 );
+                  ->set_property( nick => $$scope->{'1'}, $pos->(27.3) );
+                $$self->{'me'}
+                  ->set_property( user => $$scope->{'2'}, $pos->(28.3) );
+                $$self->{'me'}
+                  ->set_property( host => $$scope->{'3'}, $pos->(29.3) );
+                $$self->{'me'}
+                  ->set_property( realHost => $$scope->{'3'}, $pos->(30.3) );
             }
             return $ret;
         }
@@ -292,13 +296,13 @@ my $result = do {
             FF::need( $scope, $args, 'msg', 35.2 ) or return;
             $$self->{'server'}->set_property(
                 name => ${ $$scope->{'msg'} }->{'params'}
-                  ->get_index_value( [ num( $f, "1" ) ], $scope, 36.3 ),
-                36.15
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(36.3) ),
+                $pos->(36.15)
             );
             $$self->{'server'}->set_property(
                 version => ${ $$scope->{'msg'} }->{'params'}
-                  ->get_index_value( [ num( $f, "2" ) ], $scope, 37.3 ),
-                37.15
+                  ->get_index_value( [ num( $f, "2" ) ], $scope, $pos->(37.3) ),
+                $pos->(37.15)
             );
             return $ret;
         }
@@ -329,9 +333,9 @@ my $result = do {
             }
             $$self->{'join'}->(
                 { channelNames => $$self->{'autojoin'} },
-                $scope, undef, 43.2
+                $scope, undef, $pos->(43.2)
             );
-            $self->set_property( _didAutojoin => $true, 44.2 );
+            $self->set_property( _didAutojoin => $true, $pos->(44.2) );
             return $ret;
         }
     );
@@ -348,8 +352,8 @@ my $result = do {
             FF::need( $scope, $args, 'msg', 49.2 ) or return;
             $$self->{'me'}->set_property(
                 host => ${ $$scope->{'msg'} }->{'params'}
-                  ->get_index_value( [ num( $f, "1" ) ], $scope, 50.3 ),
-                50.15
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(50.3) ),
+                $pos->(50.15)
             );
             return $ret;
         }
@@ -372,10 +376,12 @@ my $result = do {
             $$self->{'me'}->set_property(
                 nick =>
                   add( $scope, ${ $$self->{'me'} }->{'nick'}, str( $f, "_" ) ),
-                57.3
+                $pos->(57.3)
             );
-            $$self->{'requestNick'}
-              ->( [ ${ $$self->{'me'} }->{'nick'} ], $scope, undef, 58.2 );
+            $$self->{'requestNick'}->(
+                [ ${ $$self->{'me'} }->{'nick'} ],
+                $scope, undef, $pos->(58.2)
+            );
             return $ret;
         }
     );
@@ -404,7 +410,7 @@ my $result = do {
             }
         ),
         undef,
-        3.3
+        $pos->(3.3)
     );
 };
 

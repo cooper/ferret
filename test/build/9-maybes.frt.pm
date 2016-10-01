@@ -51,7 +51,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('9-maybes.frt');
+my $pos = FF::before_content( '9-maybes.frt', './test/9-maybes.frt' );
 
 use Ferret::Core::Operations qw(add bool str);
 my $result = do {
@@ -76,7 +76,8 @@ my $result = do {
                         $$scope->{'who'}, str( $f, "!" )
                     )
                 ],
-                $scope, undef, 3.1
+                $scope, undef,
+                $pos->(3.1)
             );
             return $ret;
         }
@@ -86,13 +87,13 @@ my $result = do {
     {
         my $maybe_0 = $$scope->{'sayHello'};
         if ( bool($maybe_0) ) {
-            $maybe_0->( [ str( $f, "World" ) ], $scope, undef, 6.3 );
+            $maybe_0->( [ str( $f, "World" ) ], $scope, undef, $pos->(6.3) );
         }
     }
     {
         my $maybe_0 = $$scope->{'sayGoodbye'};
         if ( bool($maybe_0) ) {
-            $maybe_0->( [ str( $f, "World" ) ], $scope, undef, 7.3 );
+            $maybe_0->( [ str( $f, "World" ) ], $scope, undef, $pos->(7.3) );
         }
     }
 };

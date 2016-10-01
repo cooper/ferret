@@ -1,1 +1,1 @@
-FF::share($scope, '<<name>>', <<pos>>)
+FF::share($scope, '<<name>>', $pos->(<<pos>>))

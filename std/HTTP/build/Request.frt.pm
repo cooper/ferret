@@ -64,7 +64,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Request.frt');
+my $pos = FF::before_content( 'Request.frt', './std/HTTP/Request.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -104,8 +104,11 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'client', 9.2 ) or return;
-                $self->set_property( client => $$scope->{'client'}, 10.2 );
-                $self->weaken_property( 'client', 11.1 );
+                $self->set_property(
+                    client => $$scope->{'client'},
+                    $pos->(10.2)
+                );
+                $self->weaken_property( 'client', $pos->(11.1) );
                 FF::need( $self, $args, 'url' )        or return;
                 FF::need( $self, $args, 'httpMethod' ) or return;
                 return $ret;
@@ -121,7 +124,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 ${ $$scope->{'NATIVE::HTTPClient'} }->{'connect'}->(
                     [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, 26.25
+                    $scope, undef, $pos->(26.25)
                 );
                 return $ret;
             }

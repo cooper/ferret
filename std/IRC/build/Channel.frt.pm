@@ -52,7 +52,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('Channel.frt');
+my $pos = FF::before_content( 'Channel.frt', './std/IRC/Channel.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -87,7 +87,7 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $self, $args, 'connection' ) or return;
                 FF::need( $self, $args, 'name' )       or return;
-                $self->weaken_property( 'connection', 7.1 );
+                $self->weaken_property( 'connection', $pos->(7.1) );
                 return $ret;
             }
         );
@@ -109,7 +109,7 @@ my $result = do {
                 FF::need( $scope, $args, 'message', 12.2 ) or return;
                 ${ $$self->{'connection'} }->{'privmsg'}->(
                     [ $$self->{'name'}, $$scope->{'message'} ],
-                    $scope, undef, 13.3
+                    $scope, undef, $pos->(13.3)
                 );
                 return $ret;
             }

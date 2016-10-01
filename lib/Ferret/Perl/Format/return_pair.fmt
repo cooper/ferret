@@ -1,1 +1,1 @@
-$ret->set_property(<<key>> => <<value>>, <<pos>>)
+$ret->set_property(<<key>> => <<value>>, $pos->(<<pos>>))

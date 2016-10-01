@@ -95,7 +95,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('4-collections.frt');
+my $pos = FF::before_content( '4-collections.frt', './test/4-collections.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -125,9 +125,9 @@ my $result = do {
                     $f, { x => $$scope->{'x'}, y => $$scope->{'y'} }
                 ),
                 $file_scope,
-                4.2
+                $pos->(4.2)
             );
-            $ret->set_property( point => $$scope->{'point'}, 8.2 );
+            $ret->set_property( point => $$scope->{'point'}, $pos->(8.2) );
             return $ret;
         }
     );
@@ -135,11 +135,13 @@ my $result = do {
     FF::lex_assign(
         $scope,
         pt => ${
-            $$scope->{'makePoint'}
-              ->( [ num( $f, "5" ), num( $f, "3" ) ], $scope, undef, 11.2 )
+            $$scope->{'makePoint'}->(
+                [ num( $f, "5" ), num( $f, "3" ) ], $scope,
+                undef, $pos->(11.2)
+            )
           }->{'point'},
         undef,
-        11.1
+        $pos->(11.1)
     );
     $$scope->{'say'}->(
         [
@@ -152,7 +154,8 @@ my $result = do {
                 str( $f, ")" )
             )
         ],
-        $scope, undef, 12.1
+        $scope, undef,
+        $pos->(12.1)
     );
     FF::lex_assign(
         $scope,
@@ -167,17 +170,17 @@ my $result = do {
             ]
         ),
         undef,
-        14.1
+        $pos->(14.1)
     );
     FF::lex_assign(
         $scope,
         emptyArray => FF::create_list( $f, [] ),
-        undef, 16.2
+        undef, $pos->(16.2)
     );
     FF::lex_assign(
         $scope,
         emptyHash => FF::create_hash( $f, {} ),
-        undef, 17.2
+        undef, $pos->(17.2)
     );
 };
 

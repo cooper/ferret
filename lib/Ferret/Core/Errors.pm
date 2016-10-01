@@ -11,6 +11,9 @@ use Scalar::Util qw(blessed);
 use Ferret::Core::Operations qw(import);
 
 our %errors = (
+    CallOnUndefined => {
+        message => "Cannot call undefined value"
+    },
     CallOnNonFunction => {
         message => "Cannot call non-function value"
     },
@@ -48,7 +51,6 @@ sub throw {
     # main error.
     my $err = sprintf($errors{$fmt}{message}, @args);
     $err =~ s/(\.|\n)$//g;
-    $err .= ".\n";
 
     die Ferret::Core::Conversion::ferror($err, $fmt, @$hints);
 }

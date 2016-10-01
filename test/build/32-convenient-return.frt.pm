@@ -31,7 +31,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('32-convenient-return.frt');
+my $pos = FF::before_content( '32-convenient-return.frt',
+    './test/32-convenient-return.frt' );
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
@@ -52,8 +53,10 @@ my $result = do {
     );
     $func_0->inside_scope( A => $scope, $context, undef, undef, undef );
     FF::load_namespaces( $context, qw(A) );
-    $$scope->{'say'}
-      ->( [ $$scope->{'A'}->( {}, $scope, undef, 5.4 ) ], $scope, undef, 5.2 );
+    $$scope->{'say'}->(
+        [ $$scope->{'A'}->( {}, $scope, undef, $pos->(5.4) ) ],
+        $scope, undef, $pos->(5.2)
+    );
 };
 
 FF::after_content();

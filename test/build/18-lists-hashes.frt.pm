@@ -123,7 +123,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('18-lists-hashes.frt');
+my $pos =
+  FF::before_content( '18-lists-hashes.frt', './test/18-lists-hashes.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -134,12 +135,15 @@ my $result = do {
     FF::lex_assign(
         $scope,
         list => FF::create_list( $f, [ str( $f, "hi" ) ] ),
-        undef, 1.2
+        undef, $pos->(1.2)
     );
     ${ $$scope->{'list'} }->{'push'}
-      ->( [ str( $f, "there" ) ], $scope, undef, 2.3 );
-    $$scope->{'list'}
-      ->set_index_value( [ num( $f, "4" ) ], str( $f, "yeah" ), $scope, 3.5 );
+      ->( [ str( $f, "there" ) ], $scope, undef, $pos->(2.3) );
+    $$scope->{'list'}->set_index_value(
+        [ num( $f, "4" ) ],
+        str( $f, "yeah" ),
+        $scope, $pos->(3.5)
+    );
     $$scope->{'say'}->(
         [
             add(
@@ -148,7 +152,8 @@ my $result = do {
                 ${ $$scope->{'list'} }->{'length'}
             )
         ],
-        $scope, undef, 5.2
+        $scope, undef,
+        $pos->(5.2)
     );
     {
         my $loop_ret = FF::iterate(
@@ -159,36 +164,41 @@ my $result = do {
                 my ( $scope, $ret_func ) = @_;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "item: " ), $$scope->{'item'} ) ],
-                    $scope, undef, 8.2
+                    $scope, undef, $pos->(8.2)
                 );
             },
-            7.1
+            $pos->(7.1)
         );
         return $ret_func->($loop_ret) if $loop_ret;
     }
     FF::lex_assign(
         $scope,
         hash => FF::create_hash( $f, { hi => str( $f, "there" ) } ),
-        undef, 11.2
+        undef, $pos->(11.2)
     );
-    $$scope->{'hash'}
-      ->set_index_value( [ str( $f, "whats" ) ], str( $f, "up" ), $scope,
-        12.5 );
+    $$scope->{'hash'}->set_index_value(
+        [ str( $f, "whats" ) ],
+        str( $f, "up" ),
+        $scope, $pos->(12.5)
+    );
     $$scope->{'hash'}->set_index_value(
         [ str( $f, "thank" ) ],
         str( $f, "you" ),
-        $scope, 13.5
+        $scope, $pos->(13.5)
     );
     $$scope->{'say'}->(
         [
             add(
                 $scope,
                 str( $f, "whats " ),
-                $$scope->{'hash'}
-                  ->get_index_value( [ str( $f, "whats" ) ], $scope, 15.3 )
+                $$scope->{'hash'}->get_index_value(
+                    [ str( $f, "whats" ) ],
+                    $scope, $pos->(15.3)
+                )
             )
         ],
-        $scope, undef, 15.1
+        $scope, undef,
+        $pos->(15.1)
     );
     {
         my $loop_ret = FF::iterate_pair(
@@ -205,10 +215,11 @@ my $result = do {
                             $$scope->{'val'}
                         )
                     ],
-                    $scope, undef, 18.1
+                    $scope, undef,
+                    $pos->(18.1)
                 );
             },
-            17.05
+            $pos->(17.05)
         );
         return $ret_func->($loop_ret) if $loop_ret;
     }

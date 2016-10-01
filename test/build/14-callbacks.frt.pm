@@ -85,7 +85,7 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('14-callbacks.frt');
+my $pos = FF::before_content( '14-callbacks.frt', './test/14-callbacks.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -110,7 +110,8 @@ my $result = do {
                         ${ ${ $scope->{special} }->{'return'} }->{'default'}
                     )
                 ],
-                $scope, undef, 11.1
+                $scope, undef,
+                $pos->(11.1)
             );
             return $ret;
         }
@@ -133,14 +134,15 @@ my $result = do {
                         ${ ${ $scope->{special} }->{'return'} }->{'default'}
                     )
                 ],
-                $scope, undef, 22.1
+                $scope, undef,
+                $pos->(22.1)
             );
             return $ret;
         }
     );
     FF::load_namespaces( $context, qw(String) );
-    $$scope->{'say'}->( [ str( $f, "test" ) ], $scope, undef, 1.2 );
-    FF::lex_assign( $scope, str => str( $f, "hi" ), undef, 3.2 );
+    $$scope->{'say'}->( [ str( $f, "test" ) ], $scope, undef, $pos->(1.2) );
+    FF::lex_assign( $scope, str => str( $f, "hi" ), undef, $pos->(3.2) );
     FF::on(
         $$scope->{'str'},
         'length',
@@ -149,8 +151,8 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'str'} }->{'length'}->( {}, $scope, undef, 14.3 );
-    ${ str( $f, "hello" ) }->{'length'}->( {}, $scope, undef, 16.3 );
+    ${ $$scope->{'str'} }->{'length'}->( {}, $scope, undef, $pos->(14.3) );
+    ${ str( $f, "hello" ) }->{'length'}->( {}, $scope, undef, $pos->(16.3) );
     FF::on(
         ${ $$scope->{'String'} }->{'proto'},
         'length',
@@ -159,7 +161,7 @@ my $result = do {
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ str( $f, "hello" ) }->{'length'}->( {}, $scope, undef, 25.3 );
+    ${ str( $f, "hello" ) }->{'length'}->( {}, $scope, undef, $pos->(25.3) );
 };
 
 FF::after_content();

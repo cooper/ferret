@@ -123,7 +123,8 @@ my $self;
 my $f = FF::get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
-FF::before_content('11-external-inside-on.frt');
+my $pos = FF::before_content( '11-external-inside-on.frt',
+    './test/11-external-inside-on.frt' );
 
 use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
@@ -162,10 +163,11 @@ my $result = do {
                             $scope, $$scope->{'message'}, str( $f, " again" )
                         )
                     ],
-                    $scope, undef, 18.2
+                    $scope, undef,
+                    $pos->(18.2)
                 );
             }
-            $ret->set_property( didTwice => $$scope->{'twice'}, 19.2 );
+            $ret->set_property( didTwice => $$scope->{'twice'}, $pos->(19.2) );
             return $ret;
         }
     );
@@ -173,15 +175,16 @@ my $result = do {
     FF::lex_assign(
         $scope,
         point => $$scope->{'Math::Point'}
-          ->( [ num( $f, "0" ), num( $f, "0" ) ], $scope, undef, 1.3 ),
-        undef, 1.1
+          ->( [ num( $f, "0" ), num( $f, "0" ) ], $scope, undef, $pos->(1.3) ),
+        undef, $pos->(1.1)
     );
     if ( bool( $$scope->{'point'} ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
         $$scope->{'say'}
-          ->( [ str( $f, "The point exists!" ) ], $scope, undef, 4.2 );
-        $$scope->{'inspect'}->( [ $$scope->{'point'} ], $scope, undef, 5.2 );
+          ->( [ str( $f, "The point exists!" ) ], $scope, undef, $pos->(4.2) );
+        $$scope->{'inspect'}
+          ->( [ $$scope->{'point'} ], $scope, undef, $pos->(5.2) );
     }
 
     # Inside
@@ -191,11 +194,15 @@ my $result = do {
             $$scope->{'point'},
             sub {
                 my ( $scope, $ins, $ret_func ) = @_;
-                FF::lex_assign( $scope, x => num( $f, "5" ), $file_scope, 9.2 );
+                FF::lex_assign(
+                    $scope,
+                    x => num( $f, "5" ),
+                    $file_scope, $pos->(9.2)
+                );
                 FF::lex_assign(
                     $scope,
                     y => num( $f, "10" ),
-                    $file_scope, 10.2
+                    $file_scope, $pos->(10.2)
                 );
             }
         );
@@ -203,7 +210,7 @@ my $result = do {
     }
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Point: " ), $$scope->{'point'} ) ],
-        $scope, undef, 13.2
+        $scope, undef, $pos->(13.2)
     );
     FF::on(
         $scope,
@@ -217,20 +224,22 @@ my $result = do {
         $scope,
         r => $$scope->{'say'}->(
             [ str( $f, "It was said" ), { twice => $true } ], $scope,
-            undef, 23.2
+            undef, $pos->(23.2)
         ),
         undef,
-        23.1
+        $pos->(23.1)
     );
     if ( bool( ${ $$scope->{'r'} }->{'didTwice'} ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-        $$scope->{'say'}
-          ->( [ str( $f, "Did the first one twice!" ) ], $scope, undef, 26.2 );
+        $$scope->{'say'}->(
+            [ str( $f, "Did the first one twice!" ) ],
+            $scope, undef, $pos->(26.2)
+        );
     }
     $$scope->{'say'}->(
         [ str( $f, "this should ignore the second parameter" ), $true ],
-        $scope, undef, 28.2
+        $scope, undef, $pos->(28.2)
     );
 };
 
