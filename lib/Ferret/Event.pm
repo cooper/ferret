@@ -9,10 +9,19 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken);
-use Ferret::Core::Conversion qw(fmethod fhash pdescription);
+use Ferret::Core::Conversion qw(fmethod fhash pdescription ferror);
 
 Ferret::bind_class(
     name => 'Event',
+    init => sub {
+        my $ret = $_[4];
+        my $err = ferror(
+            'Events cannot be created with the Event class constructor; '.
+            'use the func keyword instead',
+            'InvalidInitialization'
+        );
+        return $ret->fail($err);
+    },
 
     # this relates to the class called Event.
     # it emulates a real class, but it's not truly such.

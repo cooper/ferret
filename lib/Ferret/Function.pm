@@ -15,7 +15,16 @@ use Ferret::Return;
 
 Ferret::bind_class(
     name => 'Function',
-
+    init => sub {
+        my $ret = $_[4];
+        my $err = ferror(
+            'Functions cannot be created with the Function class constructor; '.
+            'use the func keyword instead',
+            'InvalidInitialization'
+        );
+        return $ret->fail($err);
+    },
+    alias => 'Func',
     # this relates to the class called Function.
     # it emulates a real class, but it's not truly such.
     #
