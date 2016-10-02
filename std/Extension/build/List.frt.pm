@@ -1,6 +1,6 @@
 # === Document Model ===
 #  Document './std/Extension/List.frt'
-#      Class 'List'
+#      Class 'List' <T>
 #          Type definition ('Pairs')
 #              Body ('type' scope)
 #                  Instruction
@@ -144,7 +144,7 @@
 #                  Instruction
 #                      Return
 #                          Boolean true
-#      Include (Code)
+#      Include (Code, T)
 use warnings;
 use strict;
 use 5.010;
@@ -174,7 +174,7 @@ my $result = do {
     # Class 'List'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'List', undef, undef );
+          FF::get_class( $f, $context, $file_scope, 'List', undef, [ \'T' ] );
 
         # Method event 'map' definition
         my $method_0 = FF::method_event_def(
@@ -447,7 +447,7 @@ my $result = do {
             undef
         );
     }
-    FF::load_namespaces( $context, qw(Code) );
+    FF::load_namespaces( $context, qw(Code T) );
 };
 
 FF::after_content();

@@ -1,4 +1,4 @@
-class List
+class List <T?>
 
 #> Represents a list with an event number of elements, treated as pairs.
 #| This is similar to a hash with ordered keys.

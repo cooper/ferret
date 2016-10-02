@@ -20,7 +20,7 @@ my @methods = (
         prop => 1
     },
     insert => {
-        need => '$index:Num $item',
+        need => '$index:Num $item:T',
         code => \&_insert
     },
     join => {
@@ -28,7 +28,7 @@ my @methods = (
         code => \&_join
     },
     setValue => {
-        need => '$item $index:Num',
+        need => '$item:T $index:Num',
         code => \&_set_value
     },
     getValue => {
@@ -45,11 +45,11 @@ my @methods = (
         code => \&_item_method
     },
     unshift => {
-        need => '$item',
+        need => '$item:T',
         code => \&_item_method
     },
     push => {
-        need => '$item',
+        need => '$item:T',
         code => \&_item_method
     }
 );
@@ -58,7 +58,8 @@ Ferret::bind_class(
     name      => 'List',
     methods   => \@methods,
     init      => \&init,
-    desc      => \&description
+    desc      => \&description,
+    generics  => [\'T']
 );
 
 *new = *Ferret::bind_constructor;

@@ -252,6 +252,11 @@ sub add_binding {
         }, need => $opts{init_need}, want => $opts{init_want});
     }
 
+    # add generics.
+    if (my $generics = $opts{generics}) {
+        $class->add_generics(@$generics);
+    }
+
     # define the event in the context.
     $context->set_property($_ => $class)
         foreach ($class->{name}, split /\s+/, $opts{alias} || '');
