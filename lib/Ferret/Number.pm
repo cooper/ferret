@@ -15,6 +15,7 @@ use Ferret::Core::Conversion qw(
     fnumber pnumber
     plist flist
     fbool fsym
+    FUNC_SELF
 );
 
 my @methods = (
@@ -251,7 +252,7 @@ sub _max {
 }
 
 sub equal {
-    shift if !blessed $_[0];
+    shift if !blessed $_[FUNC_SELF];
     my ($num1, $num2) = @_;
     return $num1->{num_value} == $num2->{num_value};
 }

@@ -325,6 +325,13 @@ sub ferror {
 ### FUNCTIONS & METHODS ###
 ###########################
 
+sub FUNC_SELF   () { 0 }
+sub FUNC_ARGS   () { 1 }
+sub FUNC_CSCOPE () { 2 }
+sub FUNC_SCOPE  () { 3 }
+sub FUNC_RET    () { 4 }
+sub FUNC_FUNC   () { 5 }
+
 # returns a Ferret function with the provided wants and needs, if any.
 sub ffunction {
     my ($code, $name, $need, $want) = @_;

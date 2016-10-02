@@ -8,7 +8,7 @@ use 5.010;
 
 use parent 'Ferret::Object';
 use Scalar::Util qw(blessed weaken);
-use Ferret::Core::Conversion qw(plist flist fset ferror);
+use Ferret::Core::Conversion qw(plist flist fset ferror FUNC_RET);
 
 use Ferret::Arguments;
 use Ferret::Return;
@@ -16,7 +16,7 @@ use Ferret::Return;
 Ferret::bind_class(
     name => 'Function',
     init => sub {
-        my $ret = $_[4];
+        my $ret = $_[FUNC_RET];
         my $err = ferror(
             'Functions cannot be created with the Function class constructor; '.
             'use the func keyword instead',
@@ -190,12 +190,12 @@ sub call {
 
     # call the function.
     my $ret = $func->{code}(
-        $self,
-        $arguments,
-        $call_scope,
-        $scope,
-        $return,
-        $func
+        $self,                  # FUNC_SELF
+        $arguments,             # FUNC_ARGS
+        $call_scope,            # FUNC_CSCOPE
+        $scope,                 # FUNC_SCOPE
+        $return,                # FUNC_RET
+        $func                   # FUNC_FUNC
     );
 
     $return->detail if $detail;

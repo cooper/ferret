@@ -9,12 +9,12 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken);
-use Ferret::Core::Conversion qw(fmethod fhash pdescription ferror);
+use Ferret::Core::Conversion qw(fmethod fhash pdescription ferror FUNC_RET);
 
 Ferret::bind_class(
     name => 'Event',
     init => sub {
-        my $ret = $_[4];
+        my $ret = $_[FUNC_RET];
         my $err = ferror(
             'Events cannot be created with the Event class constructor; '.
             'use the func keyword instead',

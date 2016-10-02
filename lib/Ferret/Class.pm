@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(plist ferror);
+use Ferret::Core::Conversion qw(plist ferror FUNC_RET FUNC_SELF);
 use Scalar::Util qw(weaken);
 
 Ferret::bind_class(
@@ -157,7 +157,7 @@ sub init {
 ### BINDING ###
 ###############
 
-my $dummy_cb_func = sub { $_[4] };
+my $dummy_cb_func = sub { $_[FUNC_RET] };
 
 # bind a method or class function, creating an event
 sub bind_function { _bind_function(0, @_) }
@@ -302,7 +302,7 @@ sub _global_init {
 }
 
 sub _get_set_type {
-    my ($class, $f) = ($_[1], $_[1]->f);
+    my ($class, $f) = ($_[FUNC_SELF], $_[FUNC_SELF]->f);
     my $global_set_class = $f->get_class($f->core_context, 'Set');
 
     # create a class for the set type.
