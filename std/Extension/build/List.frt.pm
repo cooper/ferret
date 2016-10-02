@@ -15,6 +15,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
+#                          Argument type
+#                              Bareword 'Code'
 #                  Instruction
 #                      Return
 #                          Gather
@@ -37,6 +39,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
+#                          Argument type
+#                              Bareword 'Code'
 #                  Instruction
 #                      Return
 #                          Gather
@@ -63,6 +67,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
+#                          Argument type
+#                              Bareword 'Code'
 #                  For (values)
 #                      Expression ('for' parameter)
 #                          Lexical variable '$el'
@@ -88,6 +94,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
+#                          Argument type
+#                              Bareword 'Code'
 #                  For (values)
 #                      Expression ('for' parameter)
 #                          Lexical variable '$el'
@@ -113,6 +121,8 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
+#                          Argument type
+#                              Bareword 'Code'
 #                  For (values)
 #                      Expression ('for' parameter)
 #                          Lexical variable '$el'
@@ -134,6 +144,7 @@
 #                  Instruction
 #                      Return
 #                          Boolean true
+#      Include (Code)
 use warnings;
 use strict;
 use 5.010;
@@ -171,7 +182,7 @@ my $result = do {
             [
                 {
                     name     => 'code',
-                    type     => undef,
+                    type     => 'Code',
                     optional => undef,
                     more     => undef
                 }
@@ -222,7 +233,7 @@ my $result = do {
             [
                 {
                     name     => 'code',
-                    type     => undef,
+                    type     => 'Code',
                     optional => undef,
                     more     => undef
                 }
@@ -282,7 +293,7 @@ my $result = do {
             [
                 {
                     name     => 'code',
-                    type     => undef,
+                    type     => 'Code',
                     optional => undef,
                     more     => undef
                 }
@@ -327,7 +338,7 @@ my $result = do {
             [
                 {
                     name     => 'code',
-                    type     => undef,
+                    type     => 'Code',
                     optional => undef,
                     more     => undef
                 }
@@ -372,7 +383,7 @@ my $result = do {
             [
                 {
                     name     => 'code',
-                    type     => undef,
+                    type     => 'Code',
                     optional => undef,
                     more     => undef
                 }
@@ -436,6 +447,7 @@ my $result = do {
             undef
         );
     }
+    FF::load_namespaces( $context, qw(Code) );
 };
 
 FF::after_content();

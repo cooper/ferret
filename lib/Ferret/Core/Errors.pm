@@ -15,7 +15,7 @@ our %errors = (
         message => "Cannot call undefined value"
     },
     CallOnNonFunction => {
-        message => "Cannot call non-function value"
+        message => "Cannot call non-code value"
     },
     IndexOnNonCollection => {
         message => "Cannot access index on non-indexable value"

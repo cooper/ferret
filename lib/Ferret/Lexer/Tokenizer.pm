@@ -699,7 +699,7 @@ sub _tokenize {
         $last or next;
 
         next unless $semi_follows{ $last->[0] };
-        push @$line, [ 'OP_SEMI', 1, $last->[2] ];
+        push @$line, [ 'OP_SEMI', 'simulated', $last->[2] ];
         $all_on_line[ $last->[2] ]++;
     }
 

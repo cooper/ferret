@@ -9,7 +9,7 @@ type Pairs {
 
 #> Maps each element to another value based on a transformation code.
 method map {
-    need $code
+    need $code: Code
     return gather for $el in *self {
         take $code($el)
     }
@@ -17,7 +17,7 @@ method map {
 
 #> Picks out elements that satisfy a code.
 method grep {
-    need $code
+    need $code: Code
     return gather for $el in *self {
         if $code($el): take $el
     }
@@ -25,7 +25,7 @@ method grep {
 
 #> Finds the first element to satisfy a code.
 method first {
-    need $code
+    need $code: Code
     for $el in *self {
         if $code($el): return $el
     }
@@ -34,7 +34,7 @@ method first {
 
 #> Returns true if at least one element satisfies a code.
 method any {
-    need $code
+    need $code: Code
     for $el in *self {
         if $code($el): return true
     }
@@ -43,7 +43,7 @@ method any {
 
 #> Returns true if all elements satisfy a code.
 method all {
-    need $code
+    need $code: Code
     for $el in *self {
         if !$code($el): return false
     }
