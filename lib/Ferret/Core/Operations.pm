@@ -23,11 +23,16 @@ sub op_star {
     # TODO: errors.
     my $ucst = ucfirst $star;
     my $op   = "op$ucst";
-    #@items   = grep { $_->has_property($op) } @items;
     my $left = shift @items or return;
 
     while (@items) {
+
+        # neither of the operands can be undefined.
         my $right = shift @items;
+        if (Ferret::undefined($left) || Ferret::undefined($right)) {
+            return Ferret::undefined;
+        }
+
         my $f = $left->property($op) or next;
         $left = $f->call({ other => $right }, $scope);
     }
