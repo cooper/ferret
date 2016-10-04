@@ -101,9 +101,16 @@ sub _length {
     return fnumber(shift->length);
 }
 
-sub _last_index {
+sub last_index {
     my $list = shift;
-    return fnumber($#{ $list->{list_items} });
+    my $idx = $#{ $list->{list_items} };
+    return undef if $idx == -1; # so that for 0..$l.lastIndex does nothing
+    return $idx;
+}
+
+sub _last_index {
+    my $idx = shift->last_index;
+    return defined $idx ? fnumber($idx) : Ferret::undefined;
 }
 
 sub shift : method {
