@@ -107,19 +107,10 @@ sub get_context  {
     # might already have this context cached.
     return $f->{context}{$name} if $f->{context}{$name};
 
-    # find the context.
     my $c = $f->core_context;
     my @parts = split /::/, $name;
-    for (@parts) {
-        last if !$c;
-        $c = $c->property($_);
-    }
 
-    # something exists here which is not a context.
-    # TODO: raise a runtime error?
-    return if $c && !$c->isa('Ferret::Context');
-
-    # create new contexts
+    # create/find contexts
     $c = $f->core_context;
     for my $part (@parts) {
         my $new = $c->property($part);
@@ -134,11 +125,15 @@ sub get_context  {
         $c->set_property($part => $new);
         $c = $new;
     }
+    continue {
+        die "trying to extend non-context $name" if !$c->isa('Ferret::Context');
+        # FIXME
+    }
 
     return $f->{context}{$name} = $c;
 }
 
-sub get_context_or_class { &get_context || &_bind_get_class }
+sub get_context_or_class { eval { &get_context } || &_bind_get_class }
 
 # determine whether to reuse or create a class.
 sub get_class {
@@ -384,6 +379,7 @@ use Ferret::Boolean;
 use Ferret::Symbol;
 use Ferret::Error;
 
+use Ferret::Core::Conversion;
 use Ferret::Core::Functions;
 use Ferret::Core::Specials;
 use Ferret::Core::Context;
