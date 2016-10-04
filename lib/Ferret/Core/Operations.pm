@@ -27,12 +27,10 @@ sub op_star {
 
     while (@items) {
 
-        # neither of the operands can be undefined.
-        my $right = shift @items;
-        if (Ferret::undefined($left) || Ferret::undefined($right)) {
-            return Ferret::undefined;
-        }
+        # the left operand cannot be undefined.
+        return Ferret::undefined if Ferret::undefined($left);
 
+        my $right = shift @items;
         my $f = $left->property($op) or next;
         $left = $f->call({ other => $right }, $scope);
     }
