@@ -512,24 +512,6 @@ sub fits_type_u { &fits_type ? Ferret::true : Ferret::undefined }
 ### MISCELLANEOUS ###
 #####################
 
-# create an object that represents a set of objects.
-sub create_set {
-    my ($obj, $call_scope, @other_objs) = @_;
-
-    # class might be provided. otherwise guess.
-    my $first = $other_objs[0];
-    my $class = $first && $first->isa('Ferret::Class') ?
-        shift @other_objs                              :
-        $obj->best_common_class(@other_objs);
-
-    # find the constructor.
-    my $new = $class                ?
-        $class->property_u('Set')   :
-        $obj->f->get_class($obj->f->core_context, 'Set');
-
-    return $new->call([ $obj, @other_objs ], $call_scope);
-}
-
 sub description {
     my ($obj, $own_only, $compute, $no_method, $ignore) = @_;
 

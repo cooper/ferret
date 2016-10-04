@@ -380,7 +380,6 @@ use Ferret::Class;
 use Ferret::Prototype;
 use Ferret::List;
 use Ferret::Hash;
-use Ferret::Set;
 use Ferret::Boolean;
 use Ferret::Symbol;
 use Ferret::Error;

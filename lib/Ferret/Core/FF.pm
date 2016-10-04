@@ -106,7 +106,11 @@ sub create_list {
 # create a set.
 sub create_set {
     my ($scope, $first_item, @other_items) = @_;
-    return $first_item->create_set($scope, @other_items);
+
+    # TODO: use ->best_common_class to determine the
+    # type the list should be.
+
+    return Ferret::List->new($scope->f, items => [ $first_item, @other_items ]);
 }
 
 # get a set type.
