@@ -8,11 +8,17 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken);
-use Ferret::Core::Conversion qw(pstring fstring);
+use Ferret::Core::Conversion qw(pstring fstring fnumber);
 
 my @methods = (
     hashValue => {
         code => \&_hash_value
+    }
+);
+
+my @functions = (
+    activeCount => {
+        code => \&_active_symbol_count
     }
 );
 
@@ -22,7 +28,8 @@ Ferret::bind_class(
     init      => \&init,
     init_want => '$from',
     desc      => \&description,
-    methods   => \@methods
+    methods   => \@methods,
+    functions => \@functions
 );
 
 *new = *Ferret::bind_constructor;
@@ -55,6 +62,11 @@ sub get_sym {
     return $f->{symbols}{$name} if $f->{symbols}{$name};
     weaken($f->{symbols}{$name} = $sym);
     return $sym;
+}
+
+sub _active_symbol_count {
+    my $f = shift->f;
+    return fnumber(scalar grep defined, values %{ $f->{symbols} || {} });
 }
 
 sub description {
