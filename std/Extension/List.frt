@@ -49,3 +49,25 @@ method all {
     }
     return true
 }
+
+#> Returns the sum of all elements in the list or `undefined` if the list is
+#| empty.
+prop sum {
+    if @length == 0 :
+        return undefined
+    $c = *self[0]
+    for $i in 1 .. *self.lastIndex {
+        $c = $c + *self[$i]
+    }
+    return $c
+}
+
+#> Returns the sum of all elements in the list or `0` (zero) if the list is
+#| empty. Useful for lists of numbers.
+prop sum0 {
+    $c = 0
+    for $el in *self {
+        $c = $c + $el
+    }
+    return $c
+}

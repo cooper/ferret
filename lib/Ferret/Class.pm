@@ -12,12 +12,21 @@ use Scalar::Util qw(weaken);
 
 Ferret::bind_class(
     name => 'Class',
+    init => sub {
+        my $ret = $_[FUNC_RET];
+        my $err = ferror(
+            'Classes cannot be created with the Class class constructor; '.
+            'use the class keyword instead',
+            'InvalidInitialization'
+        );
+        return $ret->fail($err);
+    },
 
     # this relates to the class called Class.
     # it emulates a real class, but it's not truly such.
     #
     # explicitly setting the proto and proto class allows
-    # functions such as Str.*isa(Class) to behave as expected.
+    # functions such as Str.*instanceOf(Class) to behave as expected.
     #
     on_bind => sub {
         my $class = shift;

@@ -19,6 +19,10 @@ my @methods = (
         code => \&_length,
         prop => 1
     },
+    lastIndex => {
+        code => \&_last_index,
+        prop => 1
+    },
     insert => {
         need => '$index:Num $item:T',
         code => \&_insert
@@ -95,6 +99,11 @@ sub length : method {
 
 sub _length {
     return fnumber(shift->length);
+}
+
+sub _last_index {
+    my $list = shift;
+    return fnumber($#{ $list->{list_items} });
 }
 
 sub shift : method {
