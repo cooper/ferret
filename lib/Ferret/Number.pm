@@ -18,6 +18,18 @@ use Ferret::Core::Conversion qw(
 );
 
 my @methods = (
+    opEqual => {
+        code => \&op_equal,
+        need => '$rhs:Num'
+    },
+    opLess => {
+        code => \&op_less,
+        need => '$rhs:Num'
+    },
+    opGr8r => {
+        code => \&op_gr8r,
+        need => '$rhs:Num'
+    },
     opAdd => {
         code => \&op_add,
         need => '$rhs:Num'
@@ -69,50 +81,10 @@ my @methods = (
     }
 );
 
-my @functions = (
-    sum => {
-        need => '$nums:Num...',
-        code => \&_sum
-    },
-    product => {
-        need => '$nums:Num...',
-        code => \&_product
-    },
-    equal => {
-        need => '$nums:Num...',
-        code => \&_equal
-    },
-    less => {
-        need => '$nums:Num...',
-        code => \&_less
-    },
-    gr8r => {
-        need => '$nums:Num...',
-        code => \&_gr8r
-    },
-    less_e => {
-        need => '$nums:Num...',
-        code => \&_less_e
-    },
-    gr8r_e => {
-        need => '$nums:Num...',
-        code => \&_gr8r_e
-    },
-    min => {
-        need => '$nums:Num...',
-        code => \&_min
-    },
-    max => {
-        need => '$nums:Num...',
-        code => \&_max
-    }
-);
-
 Ferret::bind_class(
     name      => 'Number',
     alias     => 'Num',
     methods   => \@methods,
-    functions => \@functions,
     init      => \&init,
     init_want => '$from',
     desc      => \&description
@@ -226,33 +198,9 @@ sub description {
     return $str;
 }
 
-sub _sum {
-    my ($class, $args) = @_;
-    my $sum = sum map { pnumber($_) } plist($args->{nums});
-    return fnumber($sum);
-}
-
-sub _product {
-    my ($class, $args) = @_;
-    my $sum = product map { pnumber($_) } plist($args->{nums});
-    return fnumber($sum);
-}
-
 sub _hash_value {
     my $num = shift;
     return fsym($num->{num_value});
-}
-
-sub _min {
-    my ($class, $args) = @_;
-    my $min = min map { pnumber($_) } plist($args->{nums});
-    return fnumber($min);
-}
-
-sub _max {
-    my ($class, $args) = @_;
-    my $max = max map { pnumber($_) } plist($args->{nums});
-    return fnumber($max);
 }
 
 sub equal {
@@ -261,13 +209,31 @@ sub equal {
     return $num1->{num_value} == $num2->{num_value};
 }
 
-sub _equal {
-    my ($num_class, $args) = @_;
-    my ($first_num, @rest_nums) = plist($args->{nums});
-    foreach (@rest_nums) {
-        return Ferret::false if !$first_num->equal($_);
-    }
-    return Ferret::true;
+sub gr8r {
+    shift if !blessed $_[FUNC_SELF];
+    my ($num1, $num2) = @_;
+    return $num1->{num_value} > $num2->{num_value};
+}
+
+sub less {
+    shift if !blessed $_[FUNC_SELF];
+    my ($num1, $num2) = @_;
+    return $num1->{num_value} < $num2->{num_value};
+}
+
+sub op_equal {
+    my ($num, $args) = @_;
+    return fbool($num->equal($args->{rhs}));
+}
+
+sub op_gr8r {
+    my ($num, $args) = @_;
+    return fbool($num->gr8r($args->{rhs}));
+}
+
+sub op_less {
+    my ($num, $args) = @_;
+    return fbool($num->less($args->{rhs}));
 }
 
 sub _less {

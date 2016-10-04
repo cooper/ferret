@@ -12,12 +12,12 @@ use List::Util qw(any all);
 BEGIN {
     no strict 'refs';
     foreach my $star (qw/range pow mod mul div add _sub sim/) {
-        *$star = sub { op_star($star, @_) };
+        *$star = sub { op_star(undef, $star, @_) };
     }
 }
 
 sub op_star {
-    my ($star, $scope, @items) = @_;
+    my ($strict, $star, $scope, @items) = @_;
     $star    = 'sub' if $star eq '_sub';
     my $op   = 'op'.ucfirst($star);
     my $left = shift @items or return;
@@ -32,7 +32,10 @@ sub op_star {
         # if it's a bad return object, the operation isn't defined for this
         # type of object. just move on to the next operand.
         # consider: produce a warning?
-        next if $next->isa('Ferret::Return') && $next->{failed};
+        if ($next->isa('Ferret::Return') && $next->{failed}) {
+            return if $strict;
+            next;
+        }
 
         # if the return value is undefined, the operator implementation
         # is explicitly requesting that we do not continue.

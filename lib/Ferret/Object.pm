@@ -771,8 +771,8 @@ sub equal_to {
     my ($left_obj, $right_obj, $scope) = @_;
 
     # try normal equality first.
-    if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('equal')) {
-        return $cmp->call;
+    if (my $cmp = $left_obj->property('opEqual')) {
+        return $cmp->call({ rhs => $right_obj });
     }
 
     # fallback to object equality.
@@ -791,8 +791,8 @@ sub less_than {
     my ($left_obj, $right_obj, $scope) = @_;
 
     # try to find a method first.
-    if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('less')) {
-        return $cmp->call;
+    if (my $cmp = $left_obj->property('opLess')) {
+        return $cmp->call({ rhs => $right_obj });
     }
 
     return Ferret::false;
@@ -803,8 +803,9 @@ sub less_than_equal {
     my ($left_obj, $right_obj, $scope) = @_;
 
     # try to find a method first.
-    if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('less')) {
-        return $cmp->call;
+    if (my $cmp = $left_obj->property('opLess')) {
+        my $ret = $cmp->call({ rhs => $right_obj });
+        return Ferret::true if Ferret::truth($ret);
     }
 
     # fall back to equality.
@@ -816,8 +817,8 @@ sub gr8r_than {
     my ($left_obj, $right_obj, $scope) = @_;
 
     # try to find a method first.
-    if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('gr8r')) {
-        return $cmp->call;
+    if (my $cmp = $left_obj->property('opGr8r')) {
+        return $cmp->call({ rhs => $right_obj });
     }
 
     return Ferret::false;
@@ -828,8 +829,9 @@ sub gr8r_than_equal {
     my ($left_obj, $right_obj, $scope) = @_;
 
     # try to find a method first.
-    if (my $cmp = $left_obj->create_set($scope, $right_obj)->property('gr8r')) {
-        return $cmp->call;
+    if (my $cmp = $left_obj->property('opGr8r')) {
+        my $ret = $cmp->call({ rhs => $right_obj });
+        return Ferret::true if Ferret::truth($ret);
     }
 
     # fall back to equality.

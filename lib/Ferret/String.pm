@@ -22,6 +22,10 @@ my @methods = (
         need => '$rhs:Rgx',
         code => \&op_sim
     },
+    opEqual => {
+        need => '$rhs:Str',
+        code => \&op_equal
+    },
     length => {
         code => \&_length,
         prop => 1
@@ -79,22 +83,10 @@ my @methods = (
     }
 );
 
-my @functions = (
-    equal => {
-        need => '$strs:Str...',
-        code => \&_equal
-    },
-    join => {
-        need => '$strs:Str...',
-        code => \&_join
-    }
-);
-
 Ferret::bind_class(
     name      => 'String',
     alias     => 'Str',
     methods   => \@methods,
-    functions => \@functions,
     init      => \&init,
     init_want => '$from',
     desc      => \&description
@@ -321,28 +313,11 @@ sub description {
     return $str;
 }
 
-#######################
-### CLASS FUNCTIONS ###
-#######################
-
-# join strings.
-# e.g. ("hi", "there").join! -> "hithere"
-sub _join {
-    my (undef, $args) = @_;
-    my $list = flist_fromref(delete $args->{strs});
-    return fstring($list->join(''));
-}
-
 # any of these work:
 #
 # Ferret::String->equal($str1, $str2)
 # $str1->equal($str2)
 # equal($str1, $str2)
-#
-# but usage from Ferret is
-#
-# String.equal($str1, $str2)
-# ($str1, $str2).equal()
 #
 sub equal {
     shift if !blessed $_[0];
@@ -350,13 +325,9 @@ sub equal {
     return $str1->{str_value} eq $str2->{str_value};
 }
 
-sub _equal {
-    my (undef, $args) = @_;
-    my ($first_str, @rest_strs) = $args->plist('strs');
-    foreach (@rest_strs) {
-        return Ferret::false if !$first_str->equal($_);
-    }
-    return Ferret::true;
+sub op_equal {
+    my ($str, $args) = @_;
+    return fbool($str->equal($args->{rhs}));
 }
 
 1
