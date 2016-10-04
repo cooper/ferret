@@ -18,21 +18,27 @@ BEGIN {
 
 sub op_star {
     my ($star, $scope, @items) = @_;
-    $star = 'sub' if $star eq '_sub';
-
-    # TODO: errors.
-    my $ucst = ucfirst $star;
-    my $op   = "op$ucst";
+    $star    = 'sub' if $star eq '_sub';
+    my $op   = 'op'.ucfirst($star);
     my $left = shift @items or return;
 
     while (@items) {
-
-        # the left operand cannot be undefined.
         return Ferret::undefined if Ferret::undefined($left);
 
         my $right = shift @items;
-        my $f = $left->property($op) or next;
-        $left = $f->call({ rhs => $right }, $scope);
+        my $func  = $left->property($op) or next;
+        my $next  = $func->call({ rhs => $right }, $scope);
+
+        # if it's a bad return object, the operation isn't defined for this
+        # type of object. just move on to the next operand.
+        # consider: produce a warning?
+        next if $next->isa('Ferret::Return') && $next->{failed};
+
+        # if the return value is undefined, the operator implementation
+        # is explicitly requesting that we do not continue.
+        return Ferret::undefined if Ferret::undefined($next);
+
+        $left = $next;
     }
 
     return $left;

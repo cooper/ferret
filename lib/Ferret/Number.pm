@@ -44,7 +44,7 @@ my @methods = (
     },
     opRange => {
         code => \&op_range,
-        need => '$rhs:Num'
+        need => '$rhs:Num|undefined'
     },
     toString => {
         code => \&_to_string
