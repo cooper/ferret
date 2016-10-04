@@ -319,6 +319,12 @@ sub _get_types {
     # either a single type or a list of types.
     foreach my $type (ref $t eq 'ARRAY' ? @$t : ($t)) {
 
+        # undefined.
+        if ($type eq 'undefined') {
+            push @final, Ferret::undefined;
+            next;
+        }
+
         # already an object.
         if (blessed $type) {
             push @final, $type;

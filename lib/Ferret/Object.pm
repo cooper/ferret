@@ -483,8 +483,11 @@ sub instance_of_u { &instance_of ? Ferret::true : Ferret::undefined }
 # more specifically, returns the object or a transformed version of it
 sub fits_type {
     my ($obj, $class_or_func) = @_;
-
     return if !blessed $class_or_func;
+
+    # undefined fits undefined
+    return Ferret::undefined
+        if Ferret::undefined($obj) && Ferret::undefined($class_or_func);
 
     # could be an instance of this class
     if ($class_or_func->isa('Ferret::Class')) {
