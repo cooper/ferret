@@ -12,9 +12,8 @@ use List::Util qw(sum product min max);
 use POSIX qw(ceil floor);
 
 use Ferret::Core::Conversion qw(
-    fnumber pnumber
-    plist flist
-    fbool fsym
+    fnumber pnumber plist flist fbool
+    fsym flist_fromref
     FUNC_SELF
 );
 
@@ -185,14 +184,19 @@ sub op_mod {
 sub op_range {
     my ($num, $args, $call_scope) = @_;
     my $other = $args->{other};
+
+    # if the right operand is undefined, the result must be empty.
+    if (Ferret::undefined($other)) {
+        return flist_fromref([]);
+    }
+
+    # create the range.
     my @input = map pnumber($_), $num, $other;
     my @range = (min @input)..(max @input);
        @range = map fnumber($_), @range;
        @range = reverse @range if $input[0] > $input[1];
 
-    return Ferret::undefined if !@range;
-    my $class = $num->f->get_class($num->f->core_context, 'Number');
-    return $range[0]->create_set($call_scope, $class, @range[1..$#range]);
+    return flist(@range);
 }
 
 sub _to_string {
