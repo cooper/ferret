@@ -20,31 +20,31 @@ use Ferret::Core::Conversion qw(
 my @methods = (
     opAdd => {
         code => \&op_add,
-        need => '$other:Num'
+        need => '$rhs:Num'
     },
     opSub => {
         code => \&op_sub,
-        need => '$other:Num'
+        need => '$rhs:Num'
     },
     opDiv => {
         code => \&op_div,
-        need => '$other:Num'
+        need => '$rhs:Num'
     },
     opMul => {
         code => \&op_mul,
-        need => '$other:Num'
+        need => '$rhs:Num'
     },
     opPow => {
         code => \&op_pow,
-        need => '$other:Num'
+        need => '$rhs:Num'
     },
     opMod => {
         code => \&op_mod,
-        need => '$other:Num'
+        need => '$rhs:Num'
     },
     opRange => {
         code => \&op_range,
-        need => '$other:Num'
+        need => '$rhs:Num'
     },
     toString => {
         code => \&_to_string
@@ -137,61 +137,61 @@ sub init {
 # number plus number
 sub op_add {
     my ($num, $args) = @_;
-    my $other = $args->{other};
-    my $new_value = pnumber($num) + pnumber($other);
+    my $rhs = $args->{rhs};
+    my $new_value = pnumber($num) + pnumber($rhs);
     return fnumber($new_value);
 }
 
 # number minus number
 sub op_sub {
     my ($num, $args) = @_;
-    my $other = $args->{other};
-    my $new_value = pnumber($num) - pnumber($other);
+    my $rhs = $args->{rhs};
+    my $new_value = pnumber($num) - pnumber($rhs);
     return fnumber($new_value);
 }
 
 # number divided by number
 sub op_div {
     my ($num, $args) = @_;
-    my $other = $args->{other};
-    my $new_value = pnumber($num) / pnumber($other);
+    my $rhs = $args->{rhs};
+    my $new_value = pnumber($num) / pnumber($rhs);
     return fnumber($new_value);
 }
 
 # number times number
 sub op_mul {
     my ($num, $args) = @_;
-    my $other = $args->{other};
-    my $new_value = pnumber($num) * pnumber($other);
+    my $rhs = $args->{rhs};
+    my $new_value = pnumber($num) * pnumber($rhs);
     return fnumber($new_value);
 }
 
 # number to a number power
 sub op_pow {
     my ($num, $args) = @_;
-    my $other = $args->{other};
-    my $new_value = pnumber($num) ** pnumber($other);
+    my $rhs = $args->{rhs};
+    my $new_value = pnumber($num) ** pnumber($rhs);
     return fnumber($new_value);
 }
 
 sub op_mod {
     my ($num, $args) = @_;
-    my $other = $args->{other};
-    my $new_value = pnumber($num) % pnumber($other);
+    my $rhs = $args->{rhs};
+    my $new_value = pnumber($num) % pnumber($rhs);
     return fnumber($new_value);
 }
 
 sub op_range {
     my ($num, $args, $call_scope) = @_;
-    my $other = $args->{other};
+    my $rhs = $args->{rhs};
 
     # if the right operand is undefined, the result must be empty.
-    if (Ferret::undefined($other)) {
+    if (Ferret::undefined($rhs)) {
         return flist_fromref([]);
     }
 
     # create the range.
-    my @input = map pnumber($_), $num, $other;
+    my @input = map pnumber($_), $num, $rhs;
     my @range = (min @input)..(max @input);
        @range = map fnumber($_), @range;
        @range = reverse @range if $input[0] > $input[1];

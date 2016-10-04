@@ -15,11 +15,11 @@ use Ferret::Core::Conversion qw(
 
 my @methods = (
     opAdd => {
-        need => '$other',
+        need => '$rhs',
         code => \&op_add
     },
     opSim => {
-        need => '$other:Rgx',
+        need => '$rhs:Rgx',
         code => \&op_sim
     },
     length => {
@@ -117,15 +117,15 @@ sub init {
 # string plus string.
 sub op_add {
     my ($str, $args) = @_;
-    my $other = $args->{other};
-    my $new_value = pstring($str).pstring($other);
+    my $rhs = $args->{rhs};
+    my $new_value = pstring($str).pstring($rhs);
     return fstring($new_value);
 }
 
 # string similar to regex.
 sub op_sim {
     my ($str, $args, $call_scope) = @_;
-    my $rgx = $args->{other};
+    my $rgx = $args->{rhs};
     my $crt = $str->call_prop(match => [ $rgx ]);
 
     # FIXME: the below is temporary

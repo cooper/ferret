@@ -32,7 +32,7 @@ sub op_star {
 
         my $right = shift @items;
         my $f = $left->property($op) or next;
-        $left = $f->call({ other => $right }, $scope);
+        $left = $f->call({ rhs => $right }, $scope);
     }
 
     return $left;

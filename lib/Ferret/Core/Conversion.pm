@@ -58,13 +58,7 @@ sub fstring {
         }
 
         # it's an object with a description converter.
-        if ($val->can('description')) {
-            return fstring($val->description);
-        }
-        if (my $to_desc = $val->property('description')) {
-            return $to_desc->call;
-        }
-
+        return fstring($val->description);
     }
 
     return "$val";
