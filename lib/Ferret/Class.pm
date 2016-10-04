@@ -66,10 +66,6 @@ sub new {
         Ferret::Number->new($f, num_value => $version)
     ) if $version;
 
-    # set type.
-    $class->set_property(Set => [ \&_get_set_type ])
-        unless $class->{name} eq 'Set';
-
     return $class;
 }
 
@@ -308,38 +304,6 @@ sub _global_init {
         $func->add_argument(name => 'obj');
         $func;
     };
-}
-
-sub _get_set_type {
-    my ($class, $f) = ($_[FUNC_SELF], $_[FUNC_SELF]->f);
-    my $global_set_class = $f->get_class($f->core_context, 'Set');
-
-    # create a class for the set type.
-    my $set_type = Ferret::Class->new($f,
-        name => 'Set',
-        parent_class => $global_set_class
-    );
-
-    # create an initializer.
-    $set_type->bind_function('initializer__', code => sub {
-        my ($set, $args) = @_;
-
-        # call the normal Set initializer.
-        $global_set_class->init($set, $args);
-
-        # force the set class.
-        $set->{set_class} = $class;
-
-        return $set;
-    }, mimic => $global_set_class->property('initializer__'));
-
-    $set_type->bind_function('fromList', code => sub {
-        my ($set_class, $args, $call_scope) = @_;
-        my @items = $args->plist('list');
-        return $set_class->call([ @items ], $call_scope);
-    }, need => '$list:List');
-
-    return $set_type;
 }
 
 1
