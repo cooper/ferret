@@ -112,6 +112,10 @@ return object is represented by the
 This operator, in the form of `propName -> $value`, provides a more appealing
 syntax for the functionally equivalent `*return.propName = $value`.
 
+Additionally, it can be used in place of the [`return`](Keywords.md#return)
+keyword in the form `-> $returnValue`. This is only valid when exactly one
+value is returned.
+
 Tokenized as `OP_RETURN`.
 
     func addOneToEach {

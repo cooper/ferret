@@ -200,7 +200,6 @@ sub _bind_function {
 ################
 
 # set the generic types tempoarily.
-# this is deleted on the first class function call.
 sub set_generics {
     my ($class, $generics) = @_;
 
@@ -221,6 +220,12 @@ sub set_generics {
     $class->{force_generics} = \%generic_map;
 
     return 1;
+}
+
+# unset generics.
+sub reset_generics {
+    my $class = shift;
+    $class->set_generics([]);
 }
 
 # add generic leters.

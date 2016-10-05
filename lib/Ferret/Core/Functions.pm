@@ -6,6 +6,7 @@ use strict;
 use utf8;
 use 5.010;
 
+use Scalar::Util qw(blessed);
 
 use Ferret::Core::Conversion qw(
     pstring         fstring
@@ -139,6 +140,20 @@ sub _activeObjectCount {
         return fnumber(scalar
             grep $_->instance_of($class), values %{ $f->{objects} });
     }
+
+    # my $d = {};
+    # for my $obj (values %{ $f->{objects} }) {
+    #     next if !blessed $obj;
+    #     Ferret::inspect($obj) if ($obj->parent_names)[0] eq 'Scope';
+    #     $d->{$_}++ for ($obj->parent_names)[0];
+    # }
+    #
+    # use Data::Dumper;
+    # print Data::Dumper::Dumper([
+    #     map { [ $_ => $d->{$_} ] }
+    #     sort { $d->{$b} <=> $d->{$a} } keys %$d
+    # ]), "\n";
+
     return fnumber(scalar keys %{ $f->{objects} });
 }
 

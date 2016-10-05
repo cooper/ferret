@@ -37,13 +37,17 @@ sub init {
 sub call {
     my $tc = shift;
     $tc->{main_class}->set_generics($tc->{other_types});
-    return $tc->{main_class}->call(@_);
+    my $ret = $tc->{main_class}->call(@_);
+    $tc->{main_class}->reset_generics;
+    return $ret;
 }
 
 sub _property {
     my $tc = shift;
     $tc->{main_class}->set_generics($tc->{other_types});
-    return $tc->SUPER::_property(@_);
+    my $ret = $tc->SUPER::_property(@_);
+    $tc->{main_class}->reset_generics;
+    return $ret;
 }
 
 sub description {

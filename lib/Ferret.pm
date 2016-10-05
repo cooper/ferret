@@ -304,9 +304,9 @@ sub _bind_get_class {
     return undef;
 }
 
-###############
-### RUNTIME ###
-###############
+####################
+### RUNTIME LOOP ###
+####################
 
 my ($loop, @notifiers);
 our $keep_alive = 0;

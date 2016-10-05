@@ -313,7 +313,7 @@ sub description {
     my $type = 'Event';
     $type  .= " '$$event{name}'" if length $event->{name};
     my $sig = $event->signature_string;
-    $type  .= "{ $sig }" if length $sig;
+    $type  .= " { $sig }" if length $sig;
     return $type;
 }
 
