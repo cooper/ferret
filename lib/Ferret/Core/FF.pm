@@ -6,7 +6,7 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Core::Conversion qw(fstring ffunction ferror pbool);
+use Ferret::Core::Conversion qw(fstring ffunction ferror pbool pstring);
 use Scalar::Util qw(blessed weaken dualvar);
 use List::Util qw(any all none);
 
@@ -88,13 +88,21 @@ sub load_namespaces {
 # create a simple object.
 sub create_object {
     my ($f, $pairs) = @_;
-    return Ferret::Object->new($f, initial_props => $pairs);
+    my %pairs;
+    while (my ($key, $value) = splice @$pairs, 0, 2) {
+        $pairs{ pstring($key) } = $value;
+    }
+    return Ferret::Object->new($f, initial_props => \%pairs);
 }
 
 # create a hash.
 sub create_hash {
     my ($f, $pairs) = @_;
-    return Ferret::Hash->new($f, pairs => $pairs);
+    my %pairs;
+    while (my ($key, $value) = splice @$pairs, 0, 2) {
+        $pairs{ pstring($key) } = $value;
+    }
+    return Ferret::Hash->new($f, pairs => \%pairs);
 }
 
 # create a list.

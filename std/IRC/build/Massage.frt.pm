@@ -549,7 +549,7 @@ my $result = do {
                                 );
                                 FF::lex_assign(
                                     $scope,
-                                    tags => FF::create_hash( $f, {} ),
+                                    tags => FF::create_hash( $f, [] ),
                                     $file_scope, $pos->(37.2)
                                 );
                                 {

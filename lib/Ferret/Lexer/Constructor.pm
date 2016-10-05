@@ -459,7 +459,7 @@ sub c_PAREN_E {
         if $t ne 'PAREN_E';
 
     # closes these things.
-    $c->close_nodes(qw(Negation Operation Pair Detail));
+    $c->close_nodes(qw(Negation Operation Pair NamedPair Detail));
 
     # close the list itself.
     #
@@ -508,7 +508,7 @@ sub c_BRACKET_E {
         if $t ne 'BRACKET_E';
 
     # closes these things.
-    $c->close_nodes(qw(Negation Operation Pair));
+    $c->close_nodes(qw(Negation Operation Pair NamedPair));
 
     # close the list itself.
     #
@@ -933,7 +933,8 @@ sub c_OP_SEMI {
     # special case:
     # if it's an automatic semicolon and the node is a list item, ignore it.
     return if $automatic and
-        $c->node->type eq 'ListItem' || $c->node->type eq 'Pair';
+        $c->node->type eq 'ListItem' ||
+        $c->node->type eq 'Pair' || $c->node->type eq 'NamedPair';
 
     # at this point, the instruction must be the current node.
     if ($c->node != $c->instruction) {
@@ -985,6 +986,34 @@ sub c_OP_VALUE {
         my $exp = $wn->create_arg_type_exp;
         $c->adopt_and_set_node($exp);
         return $exp;
+    }
+
+    # if we're in a list, this can separate the key from the value.
+    if (my $list = $c->list) {
+
+        # if the colon immediately follows the list delimiter, that
+        # is the (:) or [:] syntax indiciating an empty object/hash.
+        my $last_tok = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
+        (my $starter = $list->{list_terminator}) =~ s/E$/S/;
+        if ($last_tok eq $starter) {
+            delete $list->{array};
+            $list->{hash} = 1;
+            $list->{must_be_empty} = 1;
+            return;
+        }
+
+        # the last element must be an expression.
+        my $last = $c->last_el;
+        return $c->expected(
+            'an expression',
+            'at left of key/value separator (:)'
+        ) if !$last || !$last->is_type('Expression');
+
+        my $pair = F::new('Pair');
+        $pair->adopt($last);
+        $c->adopt_and_set_node($pair);
+
+        return $pair;
     }
 
     # if something is waiting to capture a closure,
@@ -1333,7 +1362,7 @@ sub c_PROP_VALUE {
     #   Must be a direct child of a List item.
 
     # create a new node which is a pair.
-    my $pair = F::new('Pair', key => $value);
+    my $pair = F::new('NamedPair', key => $value);
     $c->adopt_and_set_node($pair);
 
     return $pair;

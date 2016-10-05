@@ -122,7 +122,7 @@ my $result = do {
             FF::lex_assign(
                 $scope,
                 point => FF::create_object(
-                    $f, { x => $$scope->{'x'}, y => $$scope->{'y'} }
+                    $f, [ x => $$scope->{'x'}, y => $$scope->{'y'} ]
                 ),
                 $file_scope,
                 $pos->(4.2)
@@ -179,7 +179,7 @@ my $result = do {
     );
     FF::lex_assign(
         $scope,
-        emptyHash => FF::create_hash( $f, {} ),
+        emptyHash => FF::create_hash( $f, [] ),
         undef, $pos->(17.2)
     );
 };

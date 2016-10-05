@@ -900,7 +900,7 @@ my $result = do {
                     $pos->(22.2)
                 );
                 $self->set_property(
-                    factoids => FF::create_hash( $f, {} ),
+                    factoids => FF::create_hash( $f, [] ),
                     $pos->(23.2)
                 );
                 $self->set_property(
@@ -1218,11 +1218,11 @@ my $result = do {
             $class,
             handlers => FF::create_hash(
                 $f,
-                {
+                [
                     MODE    => $$scope->{'_joinChannels'},
                     PING    => $$scope->{'_pong'},
                     PRIVMSG => $$scope->{'_handleMessage'}
-                }
+                ]
             ),
             undef,
             $pos->(4.3)
@@ -1231,11 +1231,11 @@ my $result = do {
             $class,
             initialCommands => FF::create_hash(
                 $f,
-                {
+                [
                     hello => $$scope->{'_commandHello'},
                     hi    => $$scope->{'_commandHello'},
                     add   => $$scope->{'_commandAdd'}
-                }
+                ]
             ),
             undef,
             $pos->(10.3)

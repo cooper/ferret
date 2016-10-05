@@ -15,8 +15,8 @@ sub perl_fmt {
     foreach my $child (map $_->first_child, $call->args) {
 
         # pair -- add to pair string.
-        if ($child->type eq 'Pair') {
-            my ($key, $value) = ($child->key, $child->value->perl_fmt_do);
+        if ($child->type eq 'NamedPair') {
+            my ($key, $value) = ($child->key_name, $child->value->perl_fmt_do);
             $hash_args .= ', ' if length $hash_args;
             $hash_args .= "$key => $value";
             next;

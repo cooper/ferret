@@ -40,7 +40,7 @@ my $result = do {
     FF::load_namespaces( $context, qw(Second) );
     FF::lex_assign(
         $scope,
-        x => FF::create_object( $f, {} ),
+        x => FF::create_object( $f, [] ),
         undef, $pos->(1.2)
     );
     $scope->delete_property_ow( 'x', $pos->(2.1) );

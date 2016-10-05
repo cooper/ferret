@@ -247,12 +247,12 @@ my $result = do {
                 sub {
                     FF::create_hash(
                         $f,
-                        {
+                        [
                             INT  => $$scope->{'INT'},
                             HUP  => $$scope->{'HUP'},
                             TERM => $$scope->{'TERM'},
                             ALRM => $$scope->{'ALRM'}
-                        }
+                        ]
                     );
                 }
             ],

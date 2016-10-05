@@ -19,25 +19,16 @@ sub adopt {
 
         # if the element is a pair, it's a hash.
         # otherwise, it's an array.
-        # also, if this is a colon (OP_VALUE), it's an empty hash.
-        my $is_empty = $el->type_or_tok eq 'OP_VALUE';
-        if ($el->type eq 'Pair' || $is_empty) {
+        if ($el->type eq 'Pair' || $el->type eq 'NamedPair') {
             $list->{hash} = 1;
             delete $list->{array};
-
-            # if it's empty, remember this, and don't adopt the operator.
-            if ($is_empty) {
-                $list->{must_be_empty} = 1;
-                return $el;
-            }
-
         }
     }
 
     # for all items, check whether they're acceptable.
 
     # hashes must contain ONLY pairs.
-    if ($list->{hash} && $el->type ne 'Pair') {
+    if ($list->{hash} && $el->type !~ /Pair$/) {
         return $el->unexpected([
             'inside hash',
             'Hashes can only contain key-value pairs'
@@ -47,7 +38,7 @@ sub adopt {
     # arrays CANNOT contain pairs.
     # more specifically, it can only contain expressions...
     # we'll get to that.
-    if ($list->{array} && $el->type eq 'Pair') {
+    if ($list->{array} && $el->type =~ /Pair$/) {
         return $el->unexpected([
             'inside list',
             'Value lists cannot contain key-value pairs'

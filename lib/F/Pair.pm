@@ -1,17 +1,11 @@
-# Copyright 2015, Mitchell Cooper
+# Copyright 2016, Mitchell Cooper
 package F::Pair;
 
 use warnings;
 use strict;
 use parent qw(F::Node);
 
-
-sub desc {
-    my $pair = shift;
-    return "pair '$$pair{key}'";
-}
-
-sub key   { shift->{key} }
-sub value { shift->first_child }
+sub key     { (shift->children)[0] }
+sub value   { (shift->children)[1] }
 
 1

@@ -173,7 +173,7 @@ my $result = do {
     }
     FF::lex_assign(
         $scope,
-        hash => FF::create_hash( $f, { hi => str( $f, "there" ) } ),
+        hash => FF::create_hash( $f, [ hi => str( $f, "there" ) ] ),
         undef, $pos->(11.2)
     );
     $$scope->{'hash'}->set_index_value(

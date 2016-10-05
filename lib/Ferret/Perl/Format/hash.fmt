@@ -1,1 +1,1 @@
-FF::create_hash($f, { <<pairs>> })
+FF::create_hash($f, [ <<pairs>> ])

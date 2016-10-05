@@ -36,7 +36,7 @@ my $result = do {
 
     FF::lex_assign(
         $scope,
-        x => FF::create_object( $f, {} ),
+        x => FF::create_object( $f, [] ),
         undef, $pos->(1.2)
     );
     $scope->weaken_property( 'x', $pos->(2.1) );

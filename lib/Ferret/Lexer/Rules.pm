@@ -325,6 +325,28 @@ our %element_rules = (
 
     },
 
+    NamedPair => {
+
+        # pairs can only be inside of lists (specifically, hashes or objects).
+        must_be_somewhere_inside => [                                           # Pair[0]
+            'List',
+            'Pair must be inside a list',
+            0
+        ],
+
+        # each pair must be a direct child of a list item.
+        parent_must_be => [                                                     # Pair[1]
+            'ListItem',
+            'Pair must be a direct child of a list item',
+            1
+        ],
+
+        num_children => [ 1, undef, 2 ],
+
+        children_must_be => [ '@Expression', undef, 3 ]
+
+    },
+
     Pair => {
 
         # pairs can only be inside of lists (specifically, hashes or objects).
@@ -339,7 +361,11 @@ our %element_rules = (
             'ListItem',
             'Pair must be a direct child of a list item',
             1
-        ]
+        ],
+
+        num_children => [ 2, undef, 2 ],
+
+        children_must_be => [ '@Expression', undef, 3 ]
 
     },
 
@@ -357,7 +383,7 @@ our %element_rules = (
 
         # list items can only contain expressions and pairs.
         children_must_be => [                                                   # ListItem[0]
-            '@Expression Pair',
+            '@Expression NamedPair Pair',
             'Lists can only contain expressions of sorts',
             0
         ],

@@ -489,7 +489,7 @@ my $result = do {
                 FF::want( $self, $args, 'autojoin', 12.2 );
                 $$self->{'_resetState'}->( {}, $scope, undef, $pos->(14.2) );
                 FF::want( $self, $args, 'handlers', 17.2,
-                    FF::create_object( $f, {} ) );
+                    FF::create_object( $f, [] ) );
                 ${ $$self->{'handlers'} }->{'*addParent'}->(
                     [ ${ $$scope->{'Handlers'} }->{'handlers'} ],
                     $scope, undef, $pos->(18.3)
@@ -795,15 +795,15 @@ my $result = do {
                     $pos->(106.1)
                 );
                 $self->set_property(
-                    users => FF::create_hash( $f, {} ),
+                    users => FF::create_hash( $f, [] ),
                     $pos->(107.2)
                 );
                 $self->set_property(
-                    channels => FF::create_hash( $f, {} ),
+                    channels => FF::create_hash( $f, [] ),
                     $pos->(108.2)
                 );
                 $self->set_property(
-                    servers => FF::create_hash( $f, {} ),
+                    servers => FF::create_hash( $f, [] ),
                     $pos->(109.2)
                 );
                 return $ret;

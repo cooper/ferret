@@ -60,9 +60,16 @@ sub perl_fmt {
 
     my $get_pairs = sub {
         join ', ', map {
-            my $key = $_->first_child->key;
-               $key = "'$key'" if $key =~ m/^\d/;
-            my $val = $_->first_child->value->perl_fmt_do;
+            my $key;
+            my $child = $_->first_child;
+            if ($child->type eq 'NamedPair') {
+                $key = $child->key_name;
+                $key = "'$key'" if $key =~ m/^\d/;
+            }
+            elsif ($child->type eq 'Pair') {
+                $key = $child->key->perl_fmt_do;
+            }
+            my $val = $child->value->perl_fmt_do;
             "$key => $val"
         } @children;
     };
@@ -110,9 +117,12 @@ sub close : method {
             $list->abandon($item);
             next;
         }
-        $type ||= $child->type eq 'Pair' ? 'pairs' : 'items';
 
-        my $this_type = $child->type eq 'Pair' ? 'pairs' : 'items';
+        # check for type inconsistencies.
+        # note that Pairs are intentionally excluded from calls.
+        my $this_type = $child->type eq 'NamedPair' ? 'pairs' : 'items';
+        $type ||= $this_type;
+
         next if $this_type eq $type;
 
         # mismatching types -- pairs and items.

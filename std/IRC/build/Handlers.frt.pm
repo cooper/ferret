@@ -399,7 +399,7 @@ my $result = do {
         $context,
         handlers => FF::create_object(
             $f,
-            {
+            [
                 PING  => $$scope->{'ping'},
                 '001' => $$scope->{'welcome'},
                 '004' => $$scope->{'myInfo'},
@@ -407,7 +407,7 @@ my $result = do {
                 '396' => $$scope->{'hiddenHost'},
                 '422' => $$scope->{'endOfMOTD'},
                 '433' => $$scope->{'nickInUse'}
-            }
+            ]
         ),
         undef,
         $pos->(3.3)
