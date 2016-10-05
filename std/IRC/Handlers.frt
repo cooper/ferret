@@ -1,13 +1,13 @@
 package IRC::Handlers
 
 share $handlers = (
-    PING:   ping,
-    001:    welcome,
-    004:    myInfo,
-    376:    endOfMOTD,      # end of motd
-    396:    hiddenHost,     # is now your hidden host
-    422:    endOfMOTD,      # no motd found
-    433:    nickInUse       # nickname already in use
+    PING:       ping,
+    "001":      welcome,
+    "004":      myInfo,
+    "376":      endOfMOTD,      # end of motd
+    "396":      hiddenHost,     # is now your hidden host
+    "422":      endOfMOTD,      # no motd found
+    "433":      nickInUse       # nickname already in use
 )
 
 func ping {

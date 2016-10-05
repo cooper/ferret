@@ -119,8 +119,8 @@ sub close : method {
         }
 
         # check for type inconsistencies.
-        # note that Pairs are intentionally excluded from calls.
-        my $this_type = $child->type eq 'NamedPair' ? 'pairs' : 'items';
+        my $this_type = $child->type eq 'Pair' || $child->type eq 'NamedPair'
+            ? 'pairs' : 'items';
         $type ||= $this_type;
 
         next if $this_type eq $type;

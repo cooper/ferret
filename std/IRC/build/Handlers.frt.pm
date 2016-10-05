@@ -10,22 +10,28 @@
 #                          Pair 'PING'
 #                              Bareword 'ping'
 #                      Item 1
-#                          Pair '001'
+#                          Pair
+#                              String '001'
 #                              Bareword 'welcome'
 #                      Item 2
-#                          Pair '004'
+#                          Pair
+#                              String '004'
 #                              Bareword 'myInfo'
 #                      Item 3
-#                          Pair '376'
+#                          Pair
+#                              String '376'
 #                              Bareword 'endOfMOTD'
 #                      Item 4
-#                          Pair '396'
+#                          Pair
+#                              String '396'
 #                              Bareword 'hiddenHost'
 #                      Item 5
-#                          Pair '422'
+#                          Pair
+#                              String '422'
 #                              Bareword 'endOfMOTD'
 #                      Item 6
-#                          Pair '433'
+#                          Pair
+#                              String '433'
 #                              Bareword 'nickInUse'
 #      Function 'ping'
 #          Body ('function' scope)
@@ -400,13 +406,13 @@ my $result = do {
         handlers => FF::create_object(
             $f,
             [
-                PING  => $$scope->{'ping'},
-                '001' => $$scope->{'welcome'},
-                '004' => $$scope->{'myInfo'},
-                '376' => $$scope->{'endOfMOTD'},
-                '396' => $$scope->{'hiddenHost'},
-                '422' => $$scope->{'endOfMOTD'},
-                '433' => $$scope->{'nickInUse'}
+                PING => $$scope->{'ping'},
+                str( $f, "001" ) => $$scope->{'welcome'},
+                str( $f, "004" ) => $$scope->{'myInfo'},
+                str( $f, "376" ) => $$scope->{'endOfMOTD'},
+                str( $f, "396" ) => $$scope->{'hiddenHost'},
+                str( $f, "422" ) => $$scope->{'endOfMOTD'},
+                str( $f, "433" ) => $$scope->{'nickInUse'}
             ]
         ),
         undef,
