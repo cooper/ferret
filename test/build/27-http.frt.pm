@@ -235,7 +235,8 @@ my $result = do {
                     ),
                     {}
                 );
-                $$ins->{'connect'}->( {}, $scope, undef, $pos->(24.3) );
+                $$ins->{'connect'}
+                  ->( [ undef, [] ], $scope, undef, $pos->(24.3) );
             }
         );
         return $ret_func->($inside_return) if $inside_return;

@@ -133,7 +133,7 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
-                      ->( {}, $scope, undef, $pos->(22.3) ),
+                      ->( [ undef, [] ], $scope, undef, $pos->(22.3) ),
                     do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                 ],
                 equal_to => undef
@@ -150,14 +150,17 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'getValue', $ins )->(
-                        { index => $$scope->{'Hashable'} }, $scope,
-                        undef, $pos->(27.3)
+                        [ undef, [ index => $$scope->{'Hashable'} ] ],
+                        $scope, undef, $pos->(27.3)
                     ),
                     $create_can->( 'setValue', $ins )->(
-                        {
-                            value => $$scope->{'Obj'},
-                            index => $$scope->{'Hashable'}
-                        },
+                        [
+                            undef,
+                            [
+                                value => $$scope->{'Obj'},
+                                index => $$scope->{'Hashable'}
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(28.15)
                     )

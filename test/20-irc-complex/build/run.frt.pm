@@ -745,9 +745,12 @@ my $result = do {
             );
             FF::lex_assign(
                 $scope,
-                res => ${ $$scope->{'c'} }->{'tokenize'}
-                  ->( { pretty => $true }, $scope, undef, $pos->(16.25) ),
-                $file_scope, $pos->(16.1)
+                res => ${ $$scope->{'c'} }->{'tokenize'}->(
+                    [ undef, [ pretty => $true ] ], $scope,
+                    undef, $pos->(16.25)
+                ),
+                $file_scope,
+                $pos->(16.1)
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -812,9 +815,12 @@ my $result = do {
             );
             FF::lex_assign(
                 $scope,
-                res => ${ $$scope->{'c'} }->{'construct'}
-                  ->( { pretty => $true }, $scope, undef, $pos->(29.25) ),
-                $file_scope, $pos->(29.1)
+                res => ${ $$scope->{'c'} }->{'construct'}->(
+                    [ undef, [ pretty => $true ] ], $scope,
+                    undef, $pos->(29.25)
+                ),
+                $file_scope,
+                $pos->(29.1)
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -875,7 +881,7 @@ my $result = do {
                         $scope, undef,
                         $pos->(41.2)
                     )
-                  }->{'eval'}->( {}, $scope, undef, $pos->(41.75) ),
+                  }->{'eval'}->( [ undef, [] ], $scope, undef, $pos->(41.75) ),
                 $file_scope,
                 $pos->(41.1)
             );
@@ -896,10 +902,13 @@ my $result = do {
                 $scope,
                 string => ${
                     $$scope->{'inspect'}->(
-                        {
-                            value => ${ $$scope->{'res'} }->{'result'},
-                            quiet => $true
-                        },
+                        [
+                            undef,
+                            [
+                                value => ${ $$scope->{'res'} }->{'result'},
+                                quiet => $true
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(46.2)
                     )
@@ -949,7 +958,8 @@ my $result = do {
                         $scope, undef,
                         $pos->(54.2)
                     )
-                  }->{'perlEval'}->( {}, $scope, undef, $pos->(54.75) ),
+                  }->{'perlEval'}
+                  ->( [ undef, [] ], $scope, undef, $pos->(54.75) ),
                 $file_scope,
                 $pos->(54.1)
             );
@@ -970,10 +980,13 @@ my $result = do {
                 $scope,
                 string => ${
                     $$scope->{'inspect'}->(
-                        {
-                            value => ${ $$scope->{'res'} }->{'result'},
-                            quiet => $true
-                        },
+                        [
+                            undef,
+                            [
+                                value => ${ $$scope->{'res'} }->{'result'},
+                                quiet => $true
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(59.2)
                     )
@@ -1002,11 +1015,14 @@ my $result = do {
     FF::lex_assign(
         $context,
         bot => $$scope->{'IRCBot::Bot'}->(
-            {
-                addr => str( $f, "k.notroll.net" ),
-                nick => str( $f, "bottie" ),
-                user => str( $f, "ferret" )
-            },
+            [
+                undef,
+                [
+                    addr => str( $f, "k.notroll.net" ),
+                    nick => str( $f, "bottie" ),
+                    user => str( $f, "ferret" )
+                ]
+            ],
             $scope, undef,
             $pos->(1.35)
         ),
@@ -1016,11 +1032,14 @@ my $result = do {
     FF::lex_assign(
         $context,
         i => $$scope->{'IRC::Connection'}->(
-            {
-                addr => str( $f, "k.notroll.net" ),
-                nick => str( $f, "booby" ),
-                user => str( $f, "ferret" )
-            },
+            [
+                undef,
+                [
+                    addr => str( $f, "k.notroll.net" ),
+                    nick => str( $f, "booby" ),
+                    user => str( $f, "ferret" )
+                ]
+            ],
             $scope, undef,
             $pos->(2.35)
         ),
@@ -1098,8 +1117,10 @@ my $result = do {
         [ str( $f, "pp" ), $$scope->{'handlePerl'} ],
         $scope, undef, $pos->(64.3)
     );
-    ${ $$scope->{'bot'} }->{'connect'}->( {}, $scope, undef, $pos->(89.3) );
-    ${ $$scope->{'i'} }->{'connect'}->( {}, $scope, undef, $pos->(90.3) );
+    ${ $$scope->{'bot'} }->{'connect'}
+      ->( [ undef, [] ], $scope, undef, $pos->(89.3) );
+    ${ $$scope->{'i'} }->{'connect'}
+      ->( [ undef, [] ], $scope, undef, $pos->(90.3) );
 };
 
 FF::after_content();

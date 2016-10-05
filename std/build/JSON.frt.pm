@@ -491,7 +491,7 @@ my $result = do {
                                 [
                                     FF::get_symbol( $f, 'PerlRequireFailed' ),
                                     str( $f, "Unable to load JSON::XS" ),
-                                    { subError => $$scope->{'err'} }
+                                    [ subError => $$scope->{'err'} ]
                                 ],
                                 $scope, undef,
                                 $pos->(66.3)
@@ -522,7 +522,7 @@ my $result = do {
                                     str(
                                         $f, "Could not create JSON::XS object"
                                     ),
-                                    { subError => $$scope->{'err'} }
+                                    [ subError => $$scope->{'err'} ]
                                 ],
                                 $scope, undef,
                                 $pos->(73.3)
@@ -532,48 +532,48 @@ my $result = do {
                     'err'
                 );
                 $$self->{'xs'}->property_eval_u( $$self->{'charset'} )
-                  ->( {}, $scope, undef, $pos->(79.6) );
+                  ->( [ undef, [] ], $scope, undef, $pos->(79.6) );
                 if ( bool( $$self->{'pretty'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'pretty'}
-                      ->( {}, $scope, undef, $pos->(80.6) );
+                      ->( [ undef, [] ], $scope, undef, $pos->(80.6) );
                 }
                 if ( bool( $$self->{'spaceBefore'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'spaceBefore'}
-                      ->( {}, $scope, undef, $pos->(81.6) );
+                      ->( [ undef, [] ], $scope, undef, $pos->(81.6) );
                 }
                 if ( bool( $$self->{'spaceAfter'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'spaceAfter'}
-                      ->( {}, $scope, undef, $pos->(82.6) );
+                      ->( [ undef, [] ], $scope, undef, $pos->(82.6) );
                 }
                 if ( bool( $$self->{'indent'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'indent'}
-                      ->( {}, $scope, undef, $pos->(83.6) );
+                      ->( [ undef, [] ], $scope, undef, $pos->(83.6) );
                 }
                 if ( bool( _not( $$self->{'strict'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'relaxed'}
-                      ->( {}, $scope, undef, $pos->(84.7) );
+                      ->( [ undef, [] ], $scope, undef, $pos->(84.7) );
                 }
                 if ( bool( $$self->{'consistent'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'canonical'}
-                      ->( {}, $scope, undef, $pos->(85.6) );
+                      ->( [ undef, [] ], $scope, undef, $pos->(85.6) );
                 }
                 if ( bool( _not( $$self->{'strictRoot'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     ${ $$self->{'xs'} }->{'allow_nonref'}
-                      ->( {}, $scope, undef, $pos->(86.7) );
+                      ->( [ undef, [] ], $scope, undef, $pos->(86.7) );
                 }
                 return $ret;
             }
@@ -611,7 +611,7 @@ my $result = do {
                                 [
                                     FF::get_symbol( $f, 'JSONError' ),
                                     str( $f, "JSON encode error" ),
-                                    { subError => $$scope->{'err'} }
+                                    [ subError => $$scope->{'err'} ]
                                 ],
                                 $scope, undef,
                                 $pos->(98.15)
@@ -656,7 +656,7 @@ my $result = do {
                                 [
                                     FF::get_symbol( $f, 'JSONError' ),
                                     str( $f, "JSON decode error" ),
-                                    { subError => $$scope->{'err'} }
+                                    [ subError => $$scope->{'err'} ]
                                 ],
                                 $scope, undef,
                                 $pos->(107.15)
@@ -691,7 +691,7 @@ my $result = do {
                             [
                                 str( $f, "incr_parse" ),
                                 $$scope->{'fragment'},
-                                { CONTEXT => str( $f, "void" ) }
+                                [ CONTEXT => str( $f, "void" ) ]
                             ],
                             $scope, undef,
                             $pos->(142.15)
@@ -704,7 +704,7 @@ my $result = do {
                                 [
                                     FF::get_symbol( $f, 'JSONError' ),
                                     str( $f, "JSON incr_parse() error" ),
-                                    { subError => $$scope->{'err'} }
+                                    [ subError => $$scope->{'err'} ]
                                 ],
                                 $scope, undef,
                                 $pos->(143.15)
@@ -733,7 +733,7 @@ my $result = do {
                             objects => ${ $$self->{'xs'} }->{'perlCall'}->(
                                 [
                                     str( $f, "incr_parse" ),
-                                    { CONTEXT => str( $f, "list" ) }
+                                    [ CONTEXT => str( $f, "list" ) ]
                                 ],
                                 $scope, undef,
                                 $pos->(155.25)
@@ -749,7 +749,7 @@ my $result = do {
                                 [
                                     FF::get_symbol( $f, 'JSONError' ),
                                     str( $f, "JSON incr_parse() error" ),
-                                    { subError => $$scope->{'err'} }
+                                    [ subError => $$scope->{'err'} ]
                                 ],
                                 $scope, undef,
                                 $pos->(156.15)
@@ -790,7 +790,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 ${ $$self->{'xs'} }->{'incr_reset'}
-                  ->( {}, $scope, undef, $pos->(167.3) );
+                  ->( [ undef, [] ], $scope, undef, $pos->(167.3) );
                 return $ret;
             }
         );
@@ -877,7 +877,7 @@ my $result = do {
             default => [
                 sub {
                     ${ $scope->{special} }->{'class'}
-                      ->( {}, $scope, undef, $pos->(12.4) );
+                      ->( [ undef, [] ], $scope, undef, $pos->(12.4) );
                 }
             ],
             undef,

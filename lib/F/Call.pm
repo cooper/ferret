@@ -16,11 +16,20 @@ sub perl_fmt {
 
         # pair -- add to pair string.
         if ($child->type eq 'NamedPair') {
-            my ($key, $value) = ($child->key_name, $child->value->perl_fmt_do);
+            my ($key, $value) =
+                ($child->key_name, $child->value->perl_fmt_do);
+            $key = "'$key'" if $key =~ m/^\d/;
             $hash_args .= ', ' if length $hash_args;
             $hash_args .= "$key => $value";
             next;
         }
+        elsif ($child->type eq 'Pair') {
+            my ($key, $value) =
+                ($child->key->perl_fmt_do, $child->value->perl_fmt_do);
+            $hash_args .= ', ' if length $hash_args;
+            $hash_args .= "$key => $value";
+        }
+
 
         # non-pairs -- add to normal string.
         $list_args .= ', ' if length $list_args;
@@ -30,10 +39,10 @@ sub perl_fmt {
 
     my $arg_string =
         length $list_args && length $hash_args ?
-        "[ $list_args, { $hash_args } ]"       :
+        "[ $list_args, [ $hash_args ] ]"       :
         length $list_args                      ?
         "[ $list_args ]"                       :
-        "{ $hash_args }"                       ;
+        "[ undef, [ $hash_args ] ]"            ;
 
     my $fmt = $call->parent->type eq 'Detail' ? 'call_detail' : 'call';
     return $fmt => {

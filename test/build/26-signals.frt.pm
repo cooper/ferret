@@ -148,7 +148,7 @@ my $result = do {
         { before => ['default'] }
     );
     ${ $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(23.2) ) }
-      ->{'start'}->( {}, $scope, undef, $pos->(23.6) );
+      ->{'start'}->( [ undef, [] ], $scope, undef, $pos->(23.6) );
 };
 
 FF::after_content();

@@ -173,7 +173,7 @@ my $result = do {
                         $scope, $pos->(32.1) );
                     if ( bool($maybe_0) ) {
                         ${$maybe_0}->{'trap'}
-                          ->( {}, $scope, undef, $pos->(32.35) );
+                          ->( [ undef, [] ], $scope, undef, $pos->(32.35) );
                     }
                 }
                 return $ret;

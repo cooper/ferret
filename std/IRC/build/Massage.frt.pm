@@ -569,10 +569,10 @@ my $result = do {
                                                   ->{'split'}->(
                                                     [
                                                         str( $f, "=" ),
-                                                        {
+                                                        [
                                                             limit =>
                                                               num( $f, "2" )
-                                                        }
+                                                        ]
                                                     ],
                                                     $scope, undef,
                                                     $pos->(44.25)
@@ -635,8 +635,10 @@ my $result = do {
                                     tags => $$scope->{'tags'},
                                     $pos->(57.2)
                                 );
-                                $$scope->{'updateWord'}
-                                  ->( {}, $scope, undef, $pos->(59.2) );
+                                $$scope->{'updateWord'}->(
+                                    [ undef, [] ],
+                                    $scope, undef, $pos->(59.2)
+                                );
                                 return 'next';
                             }
                             if (
@@ -678,8 +680,10 @@ my $result = do {
                                     source => $$scope->{'word'},
                                     $pos->(67.2)
                                 );
-                                $$scope->{'updateWord'}
-                                  ->( {}, $scope, undef, $pos->(69.2) );
+                                $$scope->{'updateWord'}->(
+                                    [ undef, [] ],
+                                    $scope, undef, $pos->(69.2)
+                                );
                                 return 'next';
                             }
                             if ( bool( _not( $$scope->{'gotCommand'} ) ) ) {
@@ -696,8 +700,10 @@ my $result = do {
                                       ${ $$scope->{'word'} }->{'uppercase'},
                                     $pos->(76.2)
                                 );
-                                $$scope->{'updateWord'}
-                                  ->( {}, $scope, undef, $pos->(78.2) );
+                                $$scope->{'updateWord'}->(
+                                    [ undef, [] ],
+                                    $scope, undef, $pos->(78.2)
+                                );
                                 return 'next';
                             }
                             if (
@@ -718,13 +724,13 @@ my $result = do {
                                         ${ $$scope->{'data'} }->{'split'}->(
                                             [
                                                 rgx( $f, undef, "\\s+", undef ),
-                                                {
+                                                [
                                                     limit => add(
                                                         $scope,
                                                         $$scope->{'wordI'},
                                                         num( $f, "1" )
                                                     )
-                                                }
+                                                ]
                                             ],
                                             $scope, undef,
                                             $pos->(84.16667)

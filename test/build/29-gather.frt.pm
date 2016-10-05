@@ -365,7 +365,8 @@ my $result = do {
             $$scope->{'evenNumbers'}->(
                 [
                     ${ range( $scope, num( $f, "0" ), num( $f, "9" ) ) }
-                      ->{'toList'}->( {}, $scope, undef, $pos->(35.55) )
+                      ->{'toList'}
+                      ->( [ undef, [] ], $scope, undef, $pos->(35.55) )
                 ],
                 $scope, undef,
                 $pos->(35.2)

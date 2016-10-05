@@ -168,7 +168,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $ret_func->( ${ $$self->{'items'} }->{'pop'}
-                      ->( {}, $scope, undef, $pos->(13.4) ) );
+                      ->( [ undef, [] ], $scope, undef, $pos->(13.4) ) );
                 return $ret;
             }
         );
@@ -207,8 +207,8 @@ my $result = do {
         sub {
             FF::lex_assign(
                 $scope,
-                stack =>
-                  $$scope->{'Stack'}->( {}, $scope, undef, $pos->(23.4) ),
+                stack => $$scope->{'Stack'}
+                  ->( [ undef, [] ], $scope, undef, $pos->(23.4) ),
                 undef, $pos->(23.2)
             );
         },
@@ -224,7 +224,8 @@ my $result = do {
     FF::lex_assign(
         $scope,
         numstack => FF::type_with_generics( $f, $scope, $$scope->{'Stack'},
-            [ $$scope->{'Num'} ] )->( {}, $scope, undef, $pos->(27.35) ),
+            [ $$scope->{'Num'} ] )
+          ->( [ undef, [] ], $scope, undef, $pos->(27.35) ),
         undef,
         $pos->(27.1)
     );

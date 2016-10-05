@@ -60,7 +60,7 @@ my $result = do {
     $$scope->{'say'}->(
         [
             ${ $$scope->{'obj'} }->{'pretty'}
-              ->( {}, $scope, undef, $pos->(11.5) )
+              ->( [ undef, [] ], $scope, undef, $pos->(11.5) )
         ],
         $scope, undef,
         $pos->(11.2)

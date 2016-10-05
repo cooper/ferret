@@ -54,7 +54,7 @@ my $result = do {
     $func_0->inside_scope( A => $scope, $context, undef, undef, undef );
     FF::load_namespaces( $context, qw(A) );
     $$scope->{'say'}->(
-        [ $$scope->{'A'}->( {}, $scope, undef, $pos->(5.4) ) ],
+        [ $$scope->{'A'}->( [ undef, [] ], $scope, undef, $pos->(5.4) ) ],
         $scope, undef, $pos->(5.2)
     );
 };

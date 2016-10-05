@@ -286,7 +286,7 @@ my $result = do {
                             $$self->{'msg'},
                             str( $f, ": " ),
                             ${ $$self->{'subError'} }->{'description'}
-                              ->( {}, $scope, undef, $pos->(15.4) )
+                              ->( [ undef, [] ], $scope, undef, $pos->(15.4) )
                         )
                     );
                 }

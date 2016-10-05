@@ -151,8 +151,10 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'str'} }->{'length'}->( {}, $scope, undef, $pos->(14.3) );
-    ${ str( $f, "hello" ) }->{'length'}->( {}, $scope, undef, $pos->(16.3) );
+    ${ $$scope->{'str'} }->{'length'}
+      ->( [ undef, [] ], $scope, undef, $pos->(14.3) );
+    ${ str( $f, "hello" ) }->{'length'}
+      ->( [ undef, [] ], $scope, undef, $pos->(16.3) );
     FF::on(
         ${ $$scope->{'String'} }->{'proto'},
         'length',
@@ -161,7 +163,8 @@ my $result = do {
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ str( $f, "hello" ) }->{'length'}->( {}, $scope, undef, $pos->(25.3) );
+    ${ str( $f, "hello" ) }->{'length'}
+      ->( [ undef, [] ], $scope, undef, $pos->(25.3) );
 };
 
 FF::after_content();

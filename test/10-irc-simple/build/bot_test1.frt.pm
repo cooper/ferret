@@ -52,18 +52,22 @@ my $result = do {
     FF::lex_assign(
         $scope,
         bot => $$scope->{'Bot1'}->(
-            {
-                addr => str( $f, "k.notroll.net" ),
-                nick => str( $f, "ferret" ),
-                user => str( $f, "bot" )
-            },
+            [
+                undef,
+                [
+                    addr => str( $f, "k.notroll.net" ),
+                    nick => str( $f, "ferret" ),
+                    user => str( $f, "bot" )
+                ]
+            ],
             $scope, undef,
             $pos->(1.2)
         ),
         undef,
         $pos->(1.1)
     );
-    ${ $$scope->{'bot'} }->{'connect'}->( {}, $scope, undef, $pos->(2.3) );
+    ${ $$scope->{'bot'} }->{'connect'}
+      ->( [ undef, [] ], $scope, undef, $pos->(2.3) );
 };
 
 FF::after_content();

@@ -253,8 +253,15 @@ my $result = do {
                     [ ${ $scope->{special} }->{'self'} ],
                     $scope, undef, $pos->(8.25)
                   )->(
-                    { addr => $$self->{'address'}, port => $$self->{'port'} },
-                    $scope, undef, $pos->(8.4)
+                    [
+                        undef,
+                        [
+                            addr => $$self->{'address'},
+                            port => $$self->{'port'}
+                        ]
+                    ],
+                    $scope, undef,
+                    $pos->(8.4)
                   );
                 $self->set_property(
                     send => $$self->{'println'},

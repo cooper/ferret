@@ -119,12 +119,15 @@ my $result = do {
     FF::lex_assign(
         $scope,
         rect => $$scope->{'Math::Rect'}->(
-            {
-                x      => num( $f, "5" ),
-                y      => num( $f, "4" ),
-                width  => num( $f, "12" ),
-                height => num( $f, "10" )
-            },
+            [
+                undef,
+                [
+                    x      => num( $f, "5" ),
+                    y      => num( $f, "4" ),
+                    width  => num( $f, "12" ),
+                    height => num( $f, "10" )
+                ]
+            ],
             $scope, undef,
             $pos->(1.2)
         ),
@@ -163,8 +166,8 @@ my $result = do {
             ${
                 FF::create_set( $scope, $$scope->{'center'},
                     $$scope->{'otherPt'} )
-            }->{'midpoint'}->( {}, $scope, undef, $pos->(8.45) )
-          }->{'pretty'}->( {}, $scope, undef, $pos->(8.6) ),
+            }->{'midpoint'}->( [ undef, [] ], $scope, undef, $pos->(8.45) )
+          }->{'pretty'}->( [ undef, [] ], $scope, undef, $pos->(8.6) ),
         undef,
         $pos->(8.1)
     );

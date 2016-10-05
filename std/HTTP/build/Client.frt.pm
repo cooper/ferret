@@ -223,10 +223,13 @@ my $result = do {
                 FF::need( $scope, $args, 'url', 34.2 ) or return;
                 return $ret_func->(
                     $$self->{'request'}->(
-                        {
-                            httpMethod => FF::get_symbol( $f, 'GET' ),
-                            url        => $$scope->{'url'}
-                        },
+                        [
+                            undef,
+                            [
+                                httpMethod => FF::get_symbol( $f, 'GET' ),
+                                url        => $$scope->{'url'}
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(35.3)
                     )
@@ -251,10 +254,13 @@ my $result = do {
                 FF::need( $scope, $args, 'url', 44.2 ) or return;
                 return $ret_func->(
                     $$self->{'request'}->(
-                        {
-                            httpMethod => FF::get_symbol( $f, 'POST' ),
-                            url        => $$scope->{'url'}
-                        },
+                        [
+                            undef,
+                            [
+                                httpMethod => FF::get_symbol( $f, 'POST' ),
+                                url        => $$scope->{'url'}
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(45.3)
                     )
@@ -287,11 +293,14 @@ my $result = do {
                 FF::need( $scope, $args, 'url',        59.2 ) or return;
                 return $ret_func->(
                     $$scope->{'HTTP::Request'}->(
-                        {
-                            client     => ${ $scope->{special} }->{'self'},
-                            httpMethod => $$scope->{'httpMethod'},
-                            url        => $$scope->{'url'}
-                        },
+                        [
+                            undef,
+                            [
+                                client     => ${ $scope->{special} }->{'self'},
+                                httpMethod => $$scope->{'httpMethod'},
+                                url        => $$scope->{'url'}
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(61.5)
                     )

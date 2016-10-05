@@ -198,8 +198,8 @@ my $result = do {
             );
             FF::need( $scope, $args, 'name1', 11.2 ) or return;
             FF::need( $scope, $args, 'name2', 11.4 ) or return;
-            $$scope->{'hello1'}->( {}, $scope, undef, $pos->(13.2) );
-            $$scope->{'hello2'}->( {}, $scope, undef, $pos->(14.2) );
+            $$scope->{'hello1'}->( [ undef, [] ], $scope, undef, $pos->(13.2) );
+            $$scope->{'hello2'}->( [ undef, [] ], $scope, undef, $pos->(14.2) );
             return $ret;
         }
     );
@@ -208,12 +208,15 @@ my $result = do {
         $context, undef, undef, undef
     );
     $$scope->{'helloWorld'}->(
-        { name2 => str( $f, "USA" ), name1 => str( $f, "World" ) },
+        [ undef, [ name2 => str( $f, "USA" ), name1 => str( $f, "World" ) ] ],
         $scope, undef, $pos->(1.1)
     );
     $$scope->{'helloWorld'}->(
-        { name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) },
-        $scope, undef, $pos->(3.2)
+        [
+            undef, [ name1 => str( $f, "Earth" ), name2 => str( $f, "Humans" ) ]
+        ],
+        $scope, undef,
+        $pos->(3.2)
     );
     $$scope->{'helloWorld'}->(
         [ str( $f, "Benjamin" ), str( $f, "George" ) ],

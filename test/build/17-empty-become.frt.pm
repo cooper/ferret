@@ -80,7 +80,8 @@ my $result = do {
       ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(5.15) )
       ->( [ num( $f, "5" ) ], $scope, undef, $pos->(5.3) );
     FF::on(
-        ${ $$scope->{'obj'} }->{'once'}->( {}, $scope, undef, $pos->(7.4) ),
+        ${ $$scope->{'obj'} }->{'once'}
+          ->( [ undef, [] ], $scope, undef, $pos->(7.4) ),
         'expire',
         $self,
         $scope,

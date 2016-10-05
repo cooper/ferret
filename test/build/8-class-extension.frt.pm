@@ -63,7 +63,8 @@ my $result = do {
                 return $ret_func->(
                     mul(
                         $scope,
-                        $$self->{'length'}->( {}, $scope, undef, $pos->(4.3) ),
+                        $$self->{'length'}
+                          ->( [ undef, [] ], $scope, undef, $pos->(4.3) ),
                         num( $f, "2" )
                     )
                 );
@@ -81,7 +82,7 @@ my $result = do {
                 $scope,
                 str( $f, "Length times two: " ),
                 ${ str( $f, "hi there" ) }->{'doubledLength'}
-                  ->( {}, $scope, undef, $pos->(9.35) )
+                  ->( [ undef, [] ], $scope, undef, $pos->(9.35) )
             )
         ],
         $scope, undef,

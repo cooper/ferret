@@ -130,7 +130,8 @@ my $result = do {
                     ${
                         $$scope->{'Timer'}
                           ->( [ $$scope->{'i'} ], $scope, undef, $pos->(4.15) )
-                      }->{'once'}->( {}, $scope, undef, $pos->(4.35) ),
+                      }->{'once'}
+                      ->( [ undef, [] ], $scope, undef, $pos->(4.35) ),
                     'expire', $self, $scope,
                     $func_0->inside_scope(
                         (undef) => $scope,

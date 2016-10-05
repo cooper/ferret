@@ -725,12 +725,15 @@ my $result = do {
                     );
                     if ( bool($maybe_0) ) {
                         $maybe_0->(
-                            {
-                                _self => ${ $scope->{special} }->{'self'},
-                                line  => $$scope->{'line'},
-                                s     => $$scope->{'s'},
-                                msg   => $$scope->{'msg'}
-                            },
+                            [
+                                undef,
+                                [
+                                    _self => ${ $scope->{special} }->{'self'},
+                                    line  => $$scope->{'line'},
+                                    s     => $$scope->{'s'},
+                                    msg   => $$scope->{'msg'}
+                                ]
+                            ],
                             $scope, undef,
                             $pos->(121.6)
                         );
@@ -841,12 +844,15 @@ my $result = do {
                         $pos->(153.2)
                     )
                   }->{'fill'}->(
-                    {
-                        nick => ${ $$scope->{'msg'} }->{'nickname'},
-                        cmd  => ${ $$scope->{'msg'} }->{'command'},
-                        chan => ${ $$scope->{'msg'} }->{'channel'},
-                        nl   => str( $f, "\n" )
-                    },
+                    [
+                        undef,
+                        [
+                            nick => ${ $$scope->{'msg'} }->{'nickname'},
+                            cmd  => ${ $$scope->{'msg'} }->{'command'},
+                            chan => ${ $$scope->{'msg'} }->{'channel'},
+                            nl   => str( $f, "\n" )
+                        ]
+                    ],
                     $scope, undef,
                     $pos->(153.45)
                   ),
@@ -896,7 +902,7 @@ my $result = do {
                 FF::want( $self, $args, 'real', 20.2, str( $f, "Ferret IRC" ) );
                 $self->set_property(
                     commands => ${ $$scope->{'initialCommands'} }->{'copy'}
-                      ->( {}, $scope, undef, $pos->(22.5) ),
+                      ->( [ undef, [] ], $scope, undef, $pos->(22.5) ),
                     $pos->(22.2)
                 );
                 $self->set_property(
@@ -905,11 +911,14 @@ my $result = do {
                 );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
-                        {
-                            address  => $$self->{'addr'},
-                            port     => $$self->{'port'},
-                            readMode => FF::get_symbol( $f, 'line' )
-                        },
+                        [
+                            undef,
+                            [
+                                address  => $$self->{'addr'},
+                                port     => $$self->{'port'},
+                                readMode => FF::get_symbol( $f, 'line' )
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(26.3)
                     ),
@@ -989,7 +998,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 ${ $$self->{'sock'} }->{'connect'}
-                  ->( {}, $scope, undef, $pos->(51.3) );
+                  ->( [ undef, [] ], $scope, undef, $pos->(51.3) );
                 return $ret;
             }
         );
@@ -1091,12 +1100,15 @@ my $result = do {
                         $scope, $pos->(74.2) );
                     if ( bool($maybe_0) ) {
                         $maybe_0->(
-                            {
-                                _self   => ${ $scope->{special} }->{'self'},
-                                line    => $$scope->{'line'},
-                                command => $$scope->{'command'},
-                                s       => $$scope->{'s'}
-                            },
+                            [
+                                undef,
+                                [
+                                    _self   => ${ $scope->{special} }->{'self'},
+                                    line    => $$scope->{'line'},
+                                    command => $$scope->{'command'},
+                                    s       => $$scope->{'s'}
+                                ]
+                            ],
                             $scope, undef,
                             $pos->(74.6)
                         );

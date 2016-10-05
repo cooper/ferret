@@ -338,7 +338,7 @@ my $result = do {
                 return $ret_func->();
             }
             $$self->{'join'}->(
-                { channelNames => $$self->{'autojoin'} },
+                [ undef, [ channelNames => $$self->{'autojoin'} ] ],
                 $scope, undef, $pos->(43.2)
             );
             $self->set_property( _didAutojoin => $true, $pos->(44.2) );

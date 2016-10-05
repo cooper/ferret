@@ -82,7 +82,8 @@ my $result = do {
             FF::need( $scope, $args, 'url', 14.2 ) or return;
             return $ret_func->(
                 ${ $$scope->{'client'} }->{'get'}->(
-                    { url => $$scope->{'url'} }, $scope, undef, $pos->(15.4)
+                    [ undef, [ url => $$scope->{'url'} ] ], $scope,
+                    undef, $pos->(15.4)
                 )
             );
             return $ret;
@@ -99,7 +100,8 @@ my $result = do {
             FF::need( $scope, $args, 'url', 20.2 ) or return;
             return $ret_func->(
                 ${ $$scope->{'client'} }->{'post'}->(
-                    { url => $$scope->{'url'} }, $scope, undef, $pos->(21.4)
+                    [ undef, [ url => $$scope->{'url'} ] ], $scope,
+                    undef, $pos->(21.4)
                 )
             );
             return $ret;
@@ -127,7 +129,8 @@ my $result = do {
         $scope,
         client => [
             sub {
-                $$scope->{'HTTP::Client'}->( {}, $scope, undef, $pos->(10.6) );
+                $$scope->{'HTTP::Client'}
+                  ->( [ undef, [] ], $scope, undef, $pos->(10.6) );
             }
         ],
         undef,

@@ -119,7 +119,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 return $ret_func->( ${ $$self->{'items'} }->{'pop'}
-                      ->( {}, $scope, undef, $pos->(13.4) ) );
+                      ->( [ undef, [] ], $scope, undef, $pos->(13.4) ) );
                 return $ret;
             }
         );

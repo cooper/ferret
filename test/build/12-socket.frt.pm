@@ -212,11 +212,14 @@ my $result = do {
     FF::lex_assign(
         $scope,
         sock => $$scope->{'Socket::TCP'}->(
-            {
-                address  => str( $f,            "k.notroll.net" ),
-                port     => num( $f,            "6667" ),
-                readMode => FF::get_symbol( $f, 'line' )
-            },
+            [
+                undef,
+                [
+                    address  => str( $f,            "k.notroll.net" ),
+                    port     => num( $f,            "6667" ),
+                    readMode => FF::get_symbol( $f, 'line' )
+                ]
+            ],
             $scope, undef,
             $pos->(1.3)
         ),
@@ -248,12 +251,13 @@ my $result = do {
         $func_2->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'sock'} }->{'connect'}->( {}, $scope, undef, $pos->(19.3) );
+    ${ $$scope->{'sock'} }->{'connect'}
+      ->( [ undef, [] ], $scope, undef, $pos->(19.3) );
     FF::on(
         ${
             $$scope->{'Timer'}
               ->( [ num( $f, "5" ) ], $scope, undef, $pos->(21.15) )
-          }->{'once'}->( {}, $scope, undef, $pos->(21.35) ),
+          }->{'once'}->( [ undef, [] ], $scope, undef, $pos->(21.35) ),
         'expire', $self, $scope,
         $func_3->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}

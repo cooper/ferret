@@ -244,11 +244,14 @@ my $result = do {
                 FF::want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
-                        {
-                            address  => $$self->{'addr'},
-                            port     => $$self->{'port'},
-                            readMode => FF::get_symbol( $f, 'line' )
-                        },
+                        [
+                            undef,
+                            [
+                                address  => $$self->{'addr'},
+                                port     => $$self->{'port'},
+                                readMode => FF::get_symbol( $f, 'line' )
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(8.3)
                     ),
@@ -286,7 +289,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 ${ $$self->{'sock'} }->{'connect'}
-                  ->( {}, $scope, undef, $pos->(25.3) );
+                  ->( [ undef, [] ], $scope, undef, $pos->(25.3) );
                 return $ret;
             }
         );

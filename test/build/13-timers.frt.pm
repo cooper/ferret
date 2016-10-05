@@ -110,7 +110,7 @@ my $result = do {
         ${
             $$scope->{'Timer'}
               ->( [ num( $f, "5" ) ], $scope, undef, $pos->(3.15) )
-          }->{'once'}->( {}, $scope, undef, $pos->(3.35) ),
+          }->{'once'}->( [ undef, [] ], $scope, undef, $pos->(3.35) ),
         'expire', $self, $scope,
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
@@ -122,14 +122,16 @@ my $result = do {
         undef, $pos->(7.2)
     );
     FF::on(
-        ${ $$scope->{'t2'} }->{'once'}->( {}, $scope, undef, $pos->(8.4) ),
+        ${ $$scope->{'t2'} }->{'once'}
+          ->( [ undef, [] ], $scope, undef, $pos->(8.4) ),
         'expire',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'t2'} }->{'cancel'}->( {}, $scope, undef, $pos->(12.3) );
+    ${ $$scope->{'t2'} }->{'cancel'}
+      ->( [ undef, [] ], $scope, undef, $pos->(12.3) );
 };
 
 FF::after_content();

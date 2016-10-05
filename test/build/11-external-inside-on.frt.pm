@@ -223,7 +223,7 @@ my $result = do {
     FF::lex_assign(
         $scope,
         r => $$scope->{'say'}->(
-            [ str( $f, "It was said" ), { twice => $true } ], $scope,
+            [ str( $f, "It was said" ), [ twice => $true ] ], $scope,
             undef, $pos->(23.2)
         ),
         undef,

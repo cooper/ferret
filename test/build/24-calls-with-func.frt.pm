@@ -84,8 +84,8 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'code', 17.2 ) or return;
             $ret->set_property(
-                message =>
-                  $$scope->{'code'}->( {}, $scope, undef, $pos->(18.4) ),
+                message => $$scope->{'code'}
+                  ->( [ undef, [] ], $scope, undef, $pos->(18.4) ),
                 $pos->(18.2)
             );
             return $ret;

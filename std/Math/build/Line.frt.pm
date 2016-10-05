@@ -270,7 +270,8 @@ my $result = do {
                     ${
                         FF::create_set( $scope, $$self->{'pt1'},
                             $$self->{'pt2'} )
-                    }->{'midpoint'}->( {}, $scope, undef, $pos->(25.4) )
+                      }->{'midpoint'}
+                      ->( [ undef, [] ], $scope, undef, $pos->(25.4) )
                 );
                 return $ret;
             }

@@ -8,7 +8,7 @@ use 5.010;
 
 use parent 'Ferret::Object';
 use Scalar::Util qw(blessed weaken);
-use Ferret::Core::Conversion qw(plist flist fset ferror FUNC_RET);
+use Ferret::Core::Conversion qw(plist pstring flist fset ferror FUNC_RET);
 
 use Ferret::Arguments;
 use Ferret::Return;
@@ -235,10 +235,19 @@ sub _handle_arguments {
     my ($func, @args, %args) = (shift, @{ +shift });
     my @sigs = @{ $func->{signatures} };
 
-    # the last argument may be a hash ref with named arguments.
+    # the last argument may be a array ref with named arguments.
     my %named_args;
-    if (ref $args[$#args] eq 'HASH') {
-        %named_args = %{ pop @args };
+    if (ref $args[$#args] eq 'ARRAY') {
+
+        # pop the named arg list of the back.
+        # shift a potential undef (signifying no unnamed arguments).
+        my @named_args_list = @{ pop @args };
+        shift @args if !defined $args[$#args];
+
+        # stringify all the keys
+        while (my ($key, $value) = splice @named_args_list, 0, 2) {
+            $named_args{ pstring($key) } = $value;
+        }
     }
 
     while (@sigs) {

@@ -119,7 +119,7 @@ my $result = do {
         coreContext => [
             sub {
                 ${ $$scope->{'ferret'} }->{'core_context'}
-                  ->( {}, $scope, undef, $pos->(4.6) );
+                  ->( [ undef, [] ], $scope, undef, $pos->(4.6) );
             }
         ],
         undef,
@@ -130,7 +130,7 @@ my $result = do {
         mainContext => [
             sub {
                 ${ $$scope->{'ferret'} }->{'main_context'}
-                  ->( {}, $scope, undef, $pos->(5.6) );
+                  ->( [ undef, [] ], $scope, undef, $pos->(5.6) );
             }
         ],
         undef,

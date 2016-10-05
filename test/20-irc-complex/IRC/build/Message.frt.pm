@@ -214,7 +214,7 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     lineSplit => ${ $$self->{'line'} }->{'split'}->(
-                        [ str( $f, " " ), { limit => num( $f, "4" ) } ],
+                        [ str( $f, " " ), [ limit => num( $f, "4" ) ] ],
                         $scope, undef, $pos->(6.25)
                     ),
                     $file_scope,
@@ -233,7 +233,7 @@ my $result = do {
                           ->get_index_value( [ num( $f, "0" ) ],
                             $scope, $pos->(10.2) )
                       }->{'split'}->(
-                        [ str( $f, "!" ), { limit => num( $f, "2" ) } ],
+                        [ str( $f, "!" ), [ limit => num( $f, "2" ) ] ],
                         $scope, undef, $pos->(10.4)
                       )->get_index_value(
                         [ num( $f, "0" ) ],
@@ -361,12 +361,12 @@ my $result = do {
                     ${ $$self->{'message'} }->{'split'}->(
                         [
                             str( $f, " " ),
-                            {
+                            [
                                 limit => add(
                                     $scope, $$scope->{'wordN'},
                                     num( $f, "1" )
                                 )
-                            }
+                            ]
                         ],
                         $scope, undef,
                         $pos->(42.2)

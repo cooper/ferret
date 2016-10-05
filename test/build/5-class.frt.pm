@@ -278,8 +278,8 @@ my $result = do {
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                return $ret_func->(
-                    $$self->{'pretty'}->( {}, $scope, undef, $pos->(19.3) ) );
+                return $ret_func->( $$self->{'pretty'}
+                      ->( [ undef, [] ], $scope, undef, $pos->(19.3) ) );
                 return $ret;
             }
         );
@@ -308,26 +308,29 @@ my $result = do {
                 FF::need( $scope, $args, 'pt2', 23.4 ) or return;
                 return $ret_func->(
                     $$scope->{'Point'}->(
-                        {
-                            x => div(
-                                $scope,
-                                add(
+                        [
+                            undef,
+                            [
+                                x => div(
                                     $scope,
-                                    ${ $$scope->{'pt1'} }->{'x'},
-                                    ${ $$scope->{'pt2'} }->{'x'}
+                                    add(
+                                        $scope,
+                                        ${ $$scope->{'pt1'} }->{'x'},
+                                        ${ $$scope->{'pt2'} }->{'x'}
+                                    ),
+                                    num( $f, "2" )
                                 ),
-                                num( $f, "2" )
-                            ),
-                            y => div(
-                                $scope,
-                                add(
+                                y => div(
                                     $scope,
-                                    ${ $$scope->{'pt1'} }->{'y'},
-                                    ${ $$scope->{'pt2'} }->{'y'}
-                                ),
-                                num( $f, "2" )
-                            )
-                        },
+                                    add(
+                                        $scope,
+                                        ${ $$scope->{'pt1'} }->{'y'},
+                                        ${ $$scope->{'pt2'} }->{'y'}
+                                    ),
+                                    num( $f, "2" )
+                                )
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(24.3)
                     )
@@ -370,7 +373,7 @@ my $result = do {
     FF::lex_assign(
         $scope,
         rpt => ${ $$scope->{'pt'} }->{'oneToRight'}
-          ->( {}, $scope, undef, $pos->(35.5) ),
+          ->( [ undef, [] ], $scope, undef, $pos->(35.5) ),
         undef, $pos->(35.2)
     );
     $$scope->{'say'}->(

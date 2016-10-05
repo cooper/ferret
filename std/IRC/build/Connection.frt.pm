@@ -435,7 +435,8 @@ my $result = do {
         sub {
             my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
             my $self = $_self || $self;
-            $$self->{'_resetState'}->( {}, $scope, undef, $pos->(37.2) );
+            $$self->{'_resetState'}
+              ->( [ undef, [] ], $scope, undef, $pos->(37.2) );
             return $ret;
         }
     );
@@ -487,7 +488,8 @@ my $result = do {
                 FF::want( $self, $args, 'user', 10.2, str( $f, "ferret" ) );
                 FF::want( $self, $args, 'real', 11.2, str( $f, "Ferret IRC" ) );
                 FF::want( $self, $args, 'autojoin', 12.2 );
-                $$self->{'_resetState'}->( {}, $scope, undef, $pos->(14.2) );
+                $$self->{'_resetState'}
+                  ->( [ undef, [] ], $scope, undef, $pos->(14.2) );
                 FF::want( $self, $args, 'handlers', 17.2,
                     FF::create_object( $f, [] ) );
                 ${ $$self->{'handlers'} }->{'*addParent'}->(
@@ -496,11 +498,14 @@ my $result = do {
                 );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
-                        {
-                            address  => $$self->{'addr'},
-                            port     => $$self->{'port'},
-                            readMode => FF::get_symbol( $f, 'line' )
-                        },
+                        [
+                            undef,
+                            [
+                                address  => $$self->{'addr'},
+                                port     => $$self->{'port'},
+                                readMode => FF::get_symbol( $f, 'line' )
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(21.3)
                     ),
@@ -548,7 +553,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 ${ $$self->{'sock'} }->{'connect'}
-                  ->( {}, $scope, undef, $pos->(45.3) );
+                  ->( [ undef, [] ], $scope, undef, $pos->(45.3) );
                 return $ret;
             }
         );
@@ -607,11 +612,14 @@ my $result = do {
                       ->property_eval_u( ${ $$scope->{'msg'} }->{'command'} );
                     if ( bool($maybe_0) ) {
                         $maybe_0->(
-                            {
-                                _self => ${ $scope->{special} }->{'self'},
-                                line  => $$scope->{'line'},
-                                msg   => $$scope->{'msg'}
-                            },
+                            [
+                                undef,
+                                [
+                                    _self => ${ $scope->{special} }->{'self'},
+                                    line  => $$scope->{'line'},
+                                    msg   => $$scope->{'msg'}
+                                ]
+                            ],
                             $scope, undef,
                             $pos->(64.8)
                         );
@@ -656,10 +664,13 @@ my $result = do {
                 }
                 return $ret_func->(
                     $$scope->{'Channel'}->(
-                        {
-                            connection => ${ $scope->{special} }->{'self'},
-                            name       => $$scope->{'name'}
-                        },
+                        [
+                            undef,
+                            [
+                                connection => ${ $scope->{special} }->{'self'},
+                                name       => $$scope->{'name'}
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(81.15)
                     )
@@ -703,10 +714,13 @@ my $result = do {
                 }
                 return $ret_func->(
                     $$scope->{'User'}->(
-                        {
-                            connection => ${ $scope->{special} }->{'self'},
-                            nick       => $$scope->{'nick'}
-                        },
+                        [
+                            undef,
+                            [
+                                connection => ${ $scope->{special} }->{'self'},
+                                nick       => $$scope->{'nick'}
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(89.15)
                     )
@@ -750,10 +764,13 @@ my $result = do {
                 }
                 return $ret_func->(
                     $$scope->{'Server'}->(
-                        {
-                            connection => ${ $scope->{special} }->{'self'},
-                            name       => $$scope->{'name'}
-                        },
+                        [
+                            undef,
+                            [
+                                connection => ${ $scope->{special} }->{'self'},
+                                name       => $$scope->{'name'}
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(97.15)
                     )
@@ -773,10 +790,13 @@ my $result = do {
                 $self->delete_property_ow( '_didAutojoin', $pos->(104.1) );
                 $self->set_property(
                     server => $$scope->{'Server'}->(
-                        {
-                            connection => ${ $scope->{special} }->{'self'},
-                            name       => $$self->{'addr'}
-                        },
+                        [
+                            undef,
+                            [
+                                connection => ${ $scope->{special} }->{'self'},
+                                name       => $$self->{'addr'}
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(105.2)
                     ),
@@ -784,11 +804,14 @@ my $result = do {
                 );
                 $self->set_property(
                     me => $$scope->{'User'}->(
-                        {
-                            connection => ${ $scope->{special} }->{'self'},
-                            nick       => $$self->{'nick'},
-                            user       => $$self->{'user'}
-                        },
+                        [
+                            undef,
+                            [
+                                connection => ${ $scope->{special} }->{'self'},
+                                nick       => $$self->{'nick'},
+                                user       => $$self->{'user'}
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(106.2)
                     ),

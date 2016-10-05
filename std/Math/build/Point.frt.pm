@@ -351,26 +351,29 @@ my $result = do {
                 FF::need( $scope, $args, 'pt2', 32.3 ) or return;
                 return $ret_func->(
                     ${ $scope->{special} }->{'class'}->(
-                        {
-                            x => div(
-                                $scope,
-                                add(
+                        [
+                            undef,
+                            [
+                                x => div(
                                     $scope,
-                                    ${ $$scope->{'pt1'} }->{'x'},
-                                    ${ $$scope->{'pt2'} }->{'x'}
+                                    add(
+                                        $scope,
+                                        ${ $$scope->{'pt1'} }->{'x'},
+                                        ${ $$scope->{'pt2'} }->{'x'}
+                                    ),
+                                    num( $f, "2" )
                                 ),
-                                num( $f, "2" )
-                            ),
-                            y => div(
-                                $scope,
-                                add(
+                                y => div(
                                     $scope,
-                                    ${ $$scope->{'pt1'} }->{'y'},
-                                    ${ $$scope->{'pt2'} }->{'y'}
-                                ),
-                                num( $f, "2" )
-                            )
-                        },
+                                    add(
+                                        $scope,
+                                        ${ $$scope->{'pt1'} }->{'y'},
+                                        ${ $$scope->{'pt2'} }->{'y'}
+                                    ),
+                                    num( $f, "2" )
+                                )
+                            ]
+                        ],
                         $scope, undef,
                         $pos->(33.3)
                     )
