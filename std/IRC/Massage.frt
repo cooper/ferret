@@ -23,9 +23,9 @@ method parse {
 
     func updateWord {
         want $incN: Bool
-        $wordI = $wordI + 1 #$wordI++ # FIXME
+        $wordI += 1 #$wordI++ # FIXME
         if $incN:
-            $wordN = $wordN + 1 #$wordN++ # FIXME
+            $wordN += 1 #$wordN++ # FIXME
         $lastWord = $word
     }
 

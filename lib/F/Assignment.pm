@@ -9,7 +9,7 @@ use parent 'F::Node';
 
 sub desc {
     my $a = shift;
-    return 'lazy assignmnet'            if $a->{lazy};
+    return 'lazy assignment'            if $a->{lazy};
     return 'assignment'                 if !$a->{operation};
     return 'addition assignment'        if $a->{operation} eq 'add';
     return 'subtraction assignment'     if $a->{operation} eq '_sub';

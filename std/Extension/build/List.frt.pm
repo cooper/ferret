@@ -171,8 +171,7 @@
 #                          Operation
 #                              Number '1'
 #                              Range operator (..)
-#                              Property 'lastIndex'
-#                                  Special variable '*self'
+#                              Instance variable '@lastIndex'
 #                      Body ('for' scope)
 #                          Instruction
 #                              Assignment
@@ -515,11 +514,7 @@ my $result = do {
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,
-                        range(
-                            $scope,
-                            num( $f, "1" ),
-                            ${ ${ $scope->{special} }->{'self'} }->{'lastIndex'}
-                        ),
+                        range( $scope, num( $f, "1" ), $$self->{'lastIndex'} ),
                         'i',
                         sub {
                             my ( $scope, $ret_func ) = @_;

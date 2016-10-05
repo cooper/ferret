@@ -13,7 +13,7 @@ use POSIX qw(ceil floor);
 
 use Ferret::Core::Conversion qw(
     fnumber pnumber plist flist fbool
-    fsym flist_fromref
+    fsym flist_fromref fstring
     FUNC_SELF
 );
 
@@ -32,7 +32,7 @@ my @methods = (
     },
     opAdd => {
         code => \&op_add,
-        need => '$rhs:Num'
+        need => '$rhs:Num|Str'
     },
     opSub => {
         code => \&op_sub,
@@ -110,8 +110,16 @@ sub init {
 sub op_add {
     my ($num, $args) = @_;
     my $rhs = $args->{rhs};
+
+    # if the RHS is a string, use string concatentation.
+    if (defined $rhs->{str_value}) {
+        return fstring($num->{num_value}.$rhs->{str_value});
+    }
+
+    # otherwise, it better be a number
     my $new_value = pnumber($num) + pnumber($rhs);
     return fnumber($new_value);
+
 }
 
 # number minus number

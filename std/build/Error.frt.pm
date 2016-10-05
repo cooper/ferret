@@ -98,11 +98,9 @@
 #                                      Lexical variable '$i'
 #                              Body ('if' scope)
 #                                  Instruction
-#                                      Assignment
+#                                      Addition assignment
 #                                          Lexical variable '$str'
 #                                          Operation
-#                                              Lexical variable '$str'
-#                                              Addition operator (+)
 #                                              String '    '
 #                                              Addition operator (+)
 #                                              Lexical variable '$el'
@@ -111,11 +109,9 @@
 #                          Else
 #                              Body ('else' scope)
 #                                  Instruction
-#                                      Assignment
+#                                      Addition assignment
 #                                          Lexical variable '$str'
 #                                          Operation
-#                                              Lexical variable '$str'
-#                                              Addition operator (+)
 #                                              Lexical variable '$el'
 #                                              Addition operator (+)
 #                                              String '␤'
@@ -185,20 +181,27 @@ my $result = do {
                             FF::lex_assign(
                                 $scope,
                                 str => add(
-                                    $scope, $$scope->{'str'},
-                                    str( $f, "    " ), $$scope->{'el'},
-                                    str( $f, ": " )
+                                    $scope,
+                                    $$scope->{'str'},
+                                    add(
+                                        $scope,          str( $f, "    " ),
+                                        $$scope->{'el'}, str( $f, ": " )
+                                    )
                                 ),
                                 $file_scope,
-                                $pos->(25.1)
+                                $pos->(25.2)
                             );
                         }
                         else {
                             FF::lex_assign(
                                 $scope,
                                 str => add(
-                                    $scope, $$scope->{'str'},
-                                    $$scope->{'el'}, str( $f, "\n" )
+                                    $scope,
+                                    $$scope->{'str'},
+                                    add(
+                                        $scope, $$scope->{'el'},
+                                        str( $f, "\n" )
+                                    )
                                 ),
                                 $file_scope,
                                 $pos->(27.2)

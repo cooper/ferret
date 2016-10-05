@@ -22,9 +22,9 @@ method description {
      $str = "\n"
      for ($i, $el) in $list {
          if $i.even:
-             $str = $str + "    " + $el + ": "
+             $str += "    " + $el + ": "
          else:
-             $str = $str + $el + "\n"
+             $str += $el + "\n"
      }
      return $str
  }

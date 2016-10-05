@@ -70,23 +70,17 @@
 #                                  Argument type
 #                                      Bareword 'Bool'
 #                          Instruction
-#                              Assignment
+#                              Addition assignment
 #                                  Lexical variable '$wordI'
-#                                  Operation
-#                                      Lexical variable '$wordI'
-#                                      Addition operator (+)
-#                                      Number '1'
+#                                  Number '1'
 #                          If
 #                              Expression ('if' parameter)
 #                                  Lexical variable '$incN'
 #                              Body ('if' scope)
 #                                  Instruction
-#                                      Assignment
+#                                      Addition assignment
 #                                          Lexical variable '$wordN'
-#                                          Operation
-#                                              Lexical variable '$wordN'
-#                                              Addition operator (+)
-#                                              Number '1'
+#                                          Number '1'
 #                          Instruction
 #                              Assignment
 #                                  Lexical variable '$lastWord'

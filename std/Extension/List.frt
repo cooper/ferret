@@ -56,7 +56,7 @@ prop sum {
     if @length == 0 :
         return undefined
     $c = *self[0]
-    for $i in 1 .. *self.lastIndex {
+    for $i in 1 .. @lastIndex {
         $c = $c + *self[$i]
     }
     return $c
