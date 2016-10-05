@@ -9,8 +9,13 @@ use parent 'F::Node';
 
 sub desc {
     my $a = shift;
-    my $lazy = $a->{lazy} ? 'lazy ' : '';
-    return "${lazy}assignment";
+    return 'lazy assignmnet'            if $a->{lazy};
+    return 'assignment'                 if !$a->{operation};
+    return 'addition assignment'        if $a->{operation} eq 'add';
+    return 'subtraction assignment'     if $a->{operation} eq '_sub';
+    return 'multiplication assignment'  if $a->{operation} eq 'mul';
+    return 'division assignment'        if $a->{operation} eq 'div';
+    return 'altering assignment';
 }
 
 sub owner {
@@ -57,7 +62,20 @@ sub perl_fmt {
     # the assignment value should be wrapped in sub{} if it's a lazy property.
     my $val = $a->assign_value->perl_fmt_do;
     $val = "[ sub { $val } ]" if $a->{lazy};
+
+    # the assignment value should be wrapped in an operation if it's an
+    # altering assignment operator.
+    if (my $op = $a->{operation}) {
+        my $old = $a->assign_to->perl_fmt_do;
+        $val = F::get_perl_fmt(operation => {
+            operation => $op,
+            items     => "$old, $val"
+        });
+        $a->document->{required_operations}{$op}++;
+    }
+
     $fmt_args->{assign_value} = $val;
+
 
     # fix *special properties
     # consider: will it ever even be allowed to assign to special property?

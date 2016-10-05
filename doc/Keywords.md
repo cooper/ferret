@@ -291,13 +291,15 @@ weaken $person.parent
 func [<name>] [ { [<statements>...] } ]
 ```
 
-Declares an event. It is spelled `func` because all functions are implemented as
-events.
+Declares an event or anonymous function. It is spelled `func` because all
+named functions are implemented as events.
 
 If `name` is provided, the event will be assigned to that property of the
 [scope of interest](Scopes.md#scope-of-interest) and will be available only
-within that scope. Without a name, `func` acts as an inline expression
-representing an anonymous event.
+within that scope.
+
+Without a name, `func` acts as an inline expression representing an anonymous
+function.
 
 The curly bracket delimiters `{` and `}` may be omitted if the function has no
 body. This is useful for declaring an event with no default callback.
@@ -310,12 +312,11 @@ func spam {
     }
 }
 
-spam(stop: 30)
+spam(end: 30)
 ```
 
 ```
-# Anonymous event
-
+# Anonymous function
 $anon = func {
     need $x: Num, $y: Num
     return $x + $y

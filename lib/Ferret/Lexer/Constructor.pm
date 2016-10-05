@@ -756,6 +756,27 @@ sub c_OP_LASSIGN {
     return $a;
 }
 
+*c_OP_ADD_A     = *c_OP_SUB_A   =
+*c_OP_MUL_A     = *c_OP_DIV_A   = *c_altering_assignment;
+
+sub c_altering_assignment {
+    my ($c, $value) = @_;
+
+    # determine the operation type
+    my $op = lc $c->label;
+    $op =~ s/^op_(.+)_a/$1/;
+    $op = '_sub' if $op eq 'sub';
+
+    # Rules for Assignment:
+    #   See c_OP_ASSIGN().
+
+    # remember the last element as the left side of the assignment.
+    my $a = F::new('Assignment', operation => $op);
+    $c->adopt_and_set_node($a);
+    $a->adopt($c->last_el);
+
+}
+
 ##################
 ### OPERATIONS ###
 ##################

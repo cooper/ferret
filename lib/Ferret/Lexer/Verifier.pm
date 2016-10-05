@@ -169,7 +169,8 @@ sub identify_lexical_variable_declarations {
 
     # filter the ones which are lexical variable assignments.
     @assignments = grep {
-        $_->assign_to->type eq 'LexicalVariable'
+        $_->assign_to->type eq 'LexicalVariable' &&
+        !$_->{operation} # ignore things like +=, *=
     } @assignments;
 
     foreach my $as (@assignments) {
