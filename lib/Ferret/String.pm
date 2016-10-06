@@ -11,6 +11,7 @@ use Scalar::Util qw(blessed looks_like_number);
 use Ferret::Core::Conversion qw(
     pstring pnumber phashref plist flist_fromref
     fstring flist fbool fnumber fsym
+    FUNC_SELF FUNC_ARGS FUNC_RET
 );
 
 my @methods = (
@@ -188,11 +189,21 @@ sub _hasPrefix {
 
 # remove something from beginning of string.
 sub _trimPrefix {
-    my ($str, $args) = @_;
+    my ($str, $args, $ret) = @_[FUNC_SELF, FUNC_ARGS, FUNC_RET];
     my $prefix = $args->pstring('prefix');
-    my $s   = $str->{str_value}; # make a copy
+    my $s = $str->{str_value}; # make a copy
+
+    # trim the prefix
+    my $trimmed;
     my $pfx = \substr($s, 0, length $prefix);
-    $$pfx   = '' if $$pfx eq $prefix;
+    if ($$pfx eq $prefix) {
+        $$pfx = '';
+        $trimmed++;
+    }
+
+    # store whether we did trim it
+    $ret->set_property(trimmed => fbool($trimmed));
+
     return fstring($s);
 }
 
@@ -206,11 +217,21 @@ sub _hasSuffix {
 
 # remove something from end of string.
 sub _trimSuffix {
-    my ($str, $args) = @_;
+    my ($str, $args, $ret) = @_[FUNC_SELF, FUNC_ARGS, FUNC_RET];
     my $suffix = $args->pstring('suffix');
-    my $s   = $str->{str_value}; # make a copy
+    my $s = $str->{str_value}; # make a copy
+
+    # trim the suffix
+    my $trimmed;
     my $sfx = \substr($s, -length $suffix);
-    $$sfx   = '' if $$sfx eq $suffix;
+    if ($$sfx eq $suffix) {
+        $$sfx = '';
+        $trimmed++;
+    }
+
+    # store whether we did trim it
+    $ret->set_property(trimmed => fbool($trimmed));
+
     return fstring($s);
 }
 
