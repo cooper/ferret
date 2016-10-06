@@ -29,7 +29,7 @@ sub maybe_fmt {
         $doc->{required_operations}{all_true}++;
         $conditionals = F::get_perl_fmt(operation => {
             operation => 'all_true',
-            items     => join(', ', map $_->perl_fmt_do, @maybes)
+            items     => join(', ', map 'sub { '.$_->perl_fmt_do.' }', @maybes)
         });
     }
 
