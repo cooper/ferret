@@ -26,7 +26,7 @@
 #                              Bareword 'Str'
 #                  Instruction
 #                      Call
-#                          Property 'privmsg'
+#                          Property 'sendPrivmsg'
 #                              Instance variable '@connection'
 #                          Argument list [2 items]
 #                              Item 0
@@ -107,7 +107,7 @@ my $result = do {
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'message', 12.2 ) or return;
-                ${ $$self->{'connection'} }->{'privmsg'}->(
+                ${ $$self->{'connection'} }->{'sendPrivmsg'}->(
                     [ $$self->{'name'}, $$scope->{'message'} ],
                     $scope, undef, $pos->(13.3)
                 );

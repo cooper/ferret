@@ -187,9 +187,11 @@
 #                          Lexical variable '$msg'
 #                          Call
 #                              Bareword 'IRC::Massage'
-#                              Argument list [1 items]
+#                              Argument list [2 items]
 #                                  Item 0
 #                                      Lexical variable '$line'
+#                                  Item 1
+#                                      Special variable '*self'
 #                  Instruction
 #                      Call
 #                          Maybe
@@ -637,9 +639,14 @@ my $result = do {
                 );
                 FF::lex_assign(
                     $scope,
-                    msg => $$scope->{'IRC::Massage'}
-                      ->( [ $$scope->{'line'} ], $scope, undef, $pos->(61.3) ),
-                    $file_scope, $pos->(61.1)
+                    msg => $$scope->{'IRC::Massage'}->(
+                        [ $$scope->{'line'}, ${ $scope->{special} }->{'self'} ],
+                        $scope,
+                        undef,
+                        $pos->(61.3)
+                    ),
+                    $file_scope,
+                    $pos->(61.1)
                 );
                 {
                     my $maybe_0 = $$self->{'handlers'}

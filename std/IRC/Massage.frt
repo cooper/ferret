@@ -102,7 +102,7 @@ method parse {
 
 #> User or channel object from the first parameter.
 prop target {
-    return @connection?.getTarget(@params[0]?)
+    return @connection?.getTarget(@params[0])
 }
 
 prop? _parsedSource {

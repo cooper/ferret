@@ -10,5 +10,5 @@ init {
 #> Sends a message to the channel
 method privmsg {
     need $message: Str
-    @connection.privmsg(@name, $message)
+    @connection.sendPrivmsg(@name, $message)
 }

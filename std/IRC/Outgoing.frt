@@ -11,7 +11,8 @@ method sendJoin {
 #> Sends a message
 method sendPrivmsg {
     need $target: Str, $message: Str
-    @send("PRIVMSG $target :$message")
+    for $line in $message.split("\n"):
+        @send("PRIVMSG $target :$line")
 }
 
 #> Request a new nickname

@@ -331,12 +331,11 @@
 #                                      Instance variable '@connection'
 #                              Argument list [1 items]
 #                                  Item 0
-#                                      Maybe
-#                                          Index
-#                                              Instance variable '@params'
-#                                              Index list [1 items]
-#                                                  Item 0
-#                                                      Number '0'
+#                                      Index
+#                                          Instance variable '@params'
+#                                          Index list [1 items]
+#                                              Item 0
+#                                                  Number '0'
 #          Computed property '_parsedSource' (lazy)
 #              Body ('method' scope)
 #                  If
@@ -810,12 +809,19 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 {
                     my $maybe_0 = $$self->{'connection'};
-                    my $maybe_1 =
-                      $$self->{'params'}->get_index_value( [ num( $f, "0" ) ],
-                        $scope, $pos->(105.35) );
-                    if ( bool( all_true( $maybe_0, $maybe_1 ) ) ) {
-                        return $ret_func->( ${$maybe_0}->{'getTarget'}
-                              ->( [$maybe_1], $scope, undef, $pos->(105.25) ) );
+                    if ( bool($maybe_0) ) {
+                        return $ret_func->(
+                            ${$maybe_0}->{'getTarget'}->(
+                                [
+                                    $$self->{'params'}->get_index_value(
+                                        [ num( $f, "0" ) ], $scope,
+                                        $pos->(105.35)
+                                    )
+                                ],
+                                $scope, undef,
+                                $pos->(105.25)
+                            )
+                        );
                     }
                 }
                 return $ret;

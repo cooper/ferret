@@ -36,19 +36,30 @@
 #                          Lexical variable '$message'
 #                          Argument type
 #                              Bareword 'Str'
-#                  Instruction
-#                      Call
-#                          Instance variable '@send'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  Operation
-#                                      String 'PRIVMSG '
-#                                      Addition operator (+)
-#                                      Lexical variable '$target'
-#                                      Addition operator (+)
-#                                      String ' :'
-#                                      Addition operator (+)
-#                                      Lexical variable '$message'
+#                  For (values)
+#                      Expression ('for' parameter)
+#                          Lexical variable '$line'
+#                      Expression ('in' parameter)
+#                          Call
+#                              Property 'split'
+#                                  Lexical variable '$message'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      String '␤'
+#                      Body ('for' scope)
+#                          Instruction
+#                              Call
+#                                  Instance variable '@send'
+#                                  Argument list [1 items]
+#                                      Item 0
+#                                          Operation
+#                                              String 'PRIVMSG '
+#                                              Addition operator (+)
+#                                              Lexical variable '$target'
+#                                              Addition operator (+)
+#                                              String ' :'
+#                                              Addition operator (+)
+#                                              Lexical variable '$line'
 #          Method 'sendNick'
 #              Body ('method' scope)
 #                  Instruction
@@ -161,17 +172,33 @@ my $result = do {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
                 FF::need( $scope, $args, 'target',  13.1 ) or return;
                 FF::need( $scope, $args, 'message', 13.3 ) or return;
-                $$self->{'send'}->(
-                    [
-                        add(
-                            $scope,              str( $f, "PRIVMSG " ),
-                            $$scope->{'target'}, str( $f, " :" ),
-                            $$scope->{'message'}
-                        )
-                    ],
-                    $scope, undef,
-                    $pos->(14.1)
-                );
+                {
+                    my $loop_ret = FF::iterate(
+                        $f, $scope,
+                        ${ $$scope->{'message'} }->{'split'}->(
+                            [ str( $f, "\n" ) ], $scope, undef, $pos->(14.3)
+                        ),
+                        'line',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            $$self->{'send'}->(
+                                [
+                                    add(
+                                        $scope,
+                                        str( $f, "PRIVMSG " ),
+                                        $$scope->{'target'},
+                                        str( $f, " :" ),
+                                        $$scope->{'line'}
+                                    )
+                                ],
+                                $scope, undef,
+                                $pos->(15.1)
+                            );
+                        },
+                        $pos->(14.05)
+                    );
+                    return $ret_func->($loop_ret) if $loop_ret;
+                }
                 return $ret;
             }
         );
@@ -190,10 +217,10 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'nick', 20.2 ) or return;
+                FF::need( $scope, $args, 'nick', 21.2 ) or return;
                 $$self->{'send'}->(
                     [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],
-                    $scope, undef, $pos->(21.2)
+                    $scope, undef, $pos->(22.2)
                 );
                 return $ret;
             }
