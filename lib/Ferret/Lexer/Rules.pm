@@ -292,7 +292,7 @@ our %element_rules = (
         # it can be variables or properties.
         # however, it cannot be a special variable.
         children_must_be => [                                                   # PropertyModifier[1]
-            'LexicalVariable InstanceVariable Property',
+            'LexicalVariable InstanceVariable ThisVariable Property',
             'Property modifier can only capture non-special variables '.
             'or properties',
             1
@@ -318,6 +318,17 @@ our %element_rules = (
 
         # instance variables only make sense inside of classes.
         must_be_somewhere_inside => [                                           # InstanceVariable[0]
+            'Function Method',
+            'Instance variables must be inside a class function or method',
+            0
+        ]
+
+    },
+
+    ThisVariable => {
+
+        # instance variables only make sense inside of classes.
+        must_be_somewhere_inside => [                                           # ThisVariable[0]
             'Function Method',
             'Instance variables must be inside a class function or method',
             0
@@ -425,7 +436,8 @@ our %element_rules = (
 
             # children can only be non-special variables or properties.
             children_must_be => [                                               # OnParameter[0]
-                'Property LexicalVariable InstanceVariable PropertyVariable Bareword',
+                'Property LexicalVariable InstanceVariable ThisVariable '.
+                'PropertyVariable Bareword',
                 "'On' parameter can only be a non-special variable or property",
                 0
             ],

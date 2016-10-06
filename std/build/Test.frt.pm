@@ -277,7 +277,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::want( $self, $args, 'name', 7.2, str( $f, "Test" ) );
                 FF::want( $self, $args, 'fatal', 11.2, $true );
                 $self->set_property( tested => num( $f, "0" ), $pos->(13.2) );
@@ -299,7 +299,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'a', 19.2 ) or return;
                 return $ret_func->(
                     $$self->{'_test'}->(
@@ -331,7 +331,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'a', 25.2 ) or return;
                 return $ret_func->(
                     $$self->{'_test'}->(
@@ -365,7 +365,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'a', 31.2 ) or return;
                 FF::need( $scope, $args, 'b', 32.2 ) or return;
                 return $ret_func->(
@@ -401,7 +401,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'a', 38.2 ) or return;
                 FF::need( $scope, $args, 'b', 39.2 ) or return;
                 return $ret_func->(
@@ -439,7 +439,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'a', 45.2 ) or return;
                 FF::need( $scope, $args, 'b', 46.2 ) or return;
                 return $ret_func->(
@@ -475,7 +475,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'a', 52.2 ) or return;
                 FF::need( $scope, $args, 'b', 53.2 ) or return;
                 return $ret_func->(
@@ -499,7 +499,7 @@ my $result = do {
             $f, $scope, 'review',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::lex_assign(
                     $scope,
                     failed =>
@@ -555,7 +555,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'yes',     69.2 ) or return;
                 FF::need( $scope, $args, 'message', 69.4 ) or return;
                 $self->set_property(

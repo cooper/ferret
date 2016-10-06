@@ -149,7 +149,7 @@ my $result = do {
             $f, $scope, 'sqrt',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     ${ $$scope->{'Math'} }->{'sqrt'}->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
@@ -165,7 +165,7 @@ my $result = do {
             $f, $scope, 'cbrt',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( $$self->{'root'}
                       ->( [ num( $f, "3" ) ], $scope, undef, $pos->(25.3) ) );
                 return $ret;
@@ -177,7 +177,7 @@ my $result = do {
             $f, $scope, 'square',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     pow(
                         $scope,
@@ -194,7 +194,7 @@ my $result = do {
             $f, $scope, 'even',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     equal(
                         $scope,
@@ -215,7 +215,7 @@ my $result = do {
             $f, $scope, 'odd',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     nequal(
                         $scope,
@@ -243,7 +243,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'root', 41.2 ) or return;
                 return $ret_func->(
                     ${ $$scope->{'Math'} }->{'root'}->(

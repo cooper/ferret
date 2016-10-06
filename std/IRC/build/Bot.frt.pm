@@ -155,7 +155,7 @@ my $result = do {
         'handleCommand',
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 18.2 ) or return;
             if (
@@ -243,7 +243,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::want( $self, $args, 'commands', 5.2,
                     FF::create_object( $f, [] ) );
                 $self->set_property(
@@ -267,7 +267,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'connection', 10.2 ) or return;
                 ${ $$self->{'conns'} }->{'push'}
                   ->( [ $$scope->{'connection'} ], $scope, undef,
@@ -298,7 +298,7 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,

@@ -152,7 +152,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $$self->{'send'}->(
                 [
@@ -184,7 +184,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'data', 20.2 ) or return;
             $$scope->{'say'}->(
@@ -200,7 +200,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'data', 25.2 ) or return;
             $$scope->{'say'}->(
@@ -243,7 +243,7 @@ my $result = do {
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'address' ) or return;
                 FF::need( $self, $args, 'nick' )    or return;
                 FF::need( $self, $args, 'user' )    or return;

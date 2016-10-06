@@ -87,7 +87,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'obj',   8.2 ) or return;
             FF::need( $scope, $args, 'class', 8.4 ) or return;

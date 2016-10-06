@@ -6,9 +6,12 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Core::Conversion qw(fstring ffunction ferror pbool pstring);
 use Scalar::Util qw(blessed weaken dualvar);
 use List::Util qw(any all none);
+use Ferret::Core::Conversion qw(
+    fstring ffunction ferror pbool pstring
+    FUNC_SCOPE FUNC_SELF FUNC_THIS FUNC_RET FUNC_ARGS
+);
 
 my $ret_func = sub { wantarray ? (@_) : shift };
 
@@ -608,6 +611,14 @@ sub type_with_generics {
         main_class  => $class,
         other_types => $generics
     );
+}
+
+# function args
+# never change this, just add new versions
+sub args_v1 {
+    # my ($scope, $self, $this, $args, $ret) = &FF::args_v1;
+    state $v1 = [FUNC_SCOPE, FUNC_SELF, FUNC_THIS, FUNC_ARGS, FUNC_RET];
+    return @_[@$v1];
 }
 
 1

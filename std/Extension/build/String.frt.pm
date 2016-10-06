@@ -135,7 +135,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'wordI', 25.2 ) or return;
                 return $ret_func->(
                     $$self->{'split'}->(
@@ -172,7 +172,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'wordN', 30.2 ) or return;
                 return $ret_func->(
                     $$self->{'split'}->(

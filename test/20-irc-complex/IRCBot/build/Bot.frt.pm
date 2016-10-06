@@ -577,7 +577,7 @@ my $result = do {
         'sendRegistration',
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $$self->{'send'}->(
                 [
@@ -610,7 +610,7 @@ my $result = do {
         'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'data', 36.2 ) or return;
             $$self->{'handleLine'}
@@ -626,7 +626,7 @@ my $result = do {
         undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             if ( bool( $$self->{'_joinedChannels'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -669,7 +669,7 @@ my $result = do {
         $f, $scope, '_pong', undef,
         [ { name => 's', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 's', 109.2 ) or return;
             $$self->{'send'}->(
@@ -700,7 +700,7 @@ my $result = do {
             { name => 's',    type => undef, optional => undef, more => undef }
         ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'line', 114.2 ) or return;
             FF::need( $scope, $args, 's',    114.4 ) or return;
@@ -751,7 +751,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 131.2 ) or return;
             FF::lex_assign(
@@ -781,7 +781,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 137.2 ) or return;
             $$scope->{'inspect'}
@@ -833,7 +833,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 152.2 ) or return;
             FF::lex_assign(
@@ -894,7 +894,7 @@ my $result = do {
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'addr' ) or return;
                 FF::need( $self, $args, 'nick' ) or return;
                 FF::want( $self, $args, 'port', 18.2, num( $f, "6667" ) );
@@ -967,7 +967,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'command',  43.1 ) or return;
                 FF::need( $scope, $args, 'callback', 43.4 ) or return;
                 if (
@@ -996,7 +996,7 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 ${ $$self->{'sock'} }->{'connect'}
                   ->( [ undef, [] ], $scope, undef, $pos->(51.3) );
                 return $ret;
@@ -1015,7 +1015,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'line', 55.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
@@ -1040,7 +1040,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'line', 61.2 ) or return;
                 FF::lex_assign(
                     $scope,
@@ -1137,7 +1137,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'channel', 84.1 ) or return;
                 FF::need( $scope, $args, 'message', 84.3 ) or return;
                 {

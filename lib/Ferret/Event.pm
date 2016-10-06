@@ -218,7 +218,7 @@ sub _handle_call {
 
     # *this is like *self except it's always the object
     # from which the event is being fired
-    $func->{this} = $obj_maybe;
+    $func->{this} = $arguments->{_this} || $obj_maybe;
 
     # store the fire object in the return object.
     weaken($return->{fire} = $fire);

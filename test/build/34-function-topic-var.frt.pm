@@ -59,7 +59,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => '_' } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             my $ins = $args->{_};
             mul( $scope, $ins, num( $f, "2" ) );

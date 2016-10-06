@@ -414,7 +414,7 @@ my $result = do {
         undef,
         [ { name => 'incN', type => 'Bool', optional => 1, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::want( $scope, $args, 'incN', 30.2 );
             FF::lex_assign(
@@ -464,7 +464,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::want( $scope, $args, 'data', 7.2 );
                 if ( bool( $$scope->{'data'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -490,7 +490,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 $func_0->inside_scope(
                     updateWord => $scope,
                     $scope, $class, undef, undef
@@ -806,7 +806,7 @@ my $result = do {
             $f, $scope, 'target',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 {
                     my $maybe_0 = $$self->{'connection'};
                     if ( bool($maybe_0) ) {
@@ -834,7 +834,7 @@ my $result = do {
             '_parsedSource',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 if ( bool( _not( $$self->{'source'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -867,7 +867,7 @@ my $result = do {
             $f, $scope, 'nick',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( ${ $$self->{'_parsedSource'} }->{'nick'} );
                 return $ret;
             }
@@ -878,7 +878,7 @@ my $result = do {
             $f, $scope, 'ident',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( ${ $$self->{'_parsedSource'} }->{'ident'} );
                 return $ret;
             }
@@ -889,7 +889,7 @@ my $result = do {
             $f, $scope, 'host',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( ${ $$self->{'_parsedSource'} }->{'host'} );
                 return $ret;
             }

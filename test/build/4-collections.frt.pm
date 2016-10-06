@@ -114,7 +114,7 @@ my $result = do {
             { name => 'z', type => undef, optional => 1,     more => undef }
         ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'x', 2.2 ) or return;
             FF::need( $scope, $args, 'y', 2.4 ) or return;

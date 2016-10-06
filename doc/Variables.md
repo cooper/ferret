@@ -21,11 +21,26 @@ Tokenized as `VAR_LEX`.
 
 Instance variables are identified by the `@` sigil.
 
-Instance variables are only valid within class functions and methods. They refer
+Instance variables are only valid within class methods. They refer
 to properties of the current class instance. For this reason, `@var` is
 functionally equivalent to `*self.var`.
 
 Tokenized as `VAR_SELF`.
+
+## This variables
+
+This variables are identified by the `%` sigil.
+
+This variables are valid within any function or method. They refer
+to properties of the object on which the event was fired. For this reason,
+`%var` is functionally equivalent to `*this.var`.
+
+Often times, `*self` and `*this` refer to the same object. However, this is not
+always the case. Within an `on` block, you should always use `*this` and `%`
+variables to reference the object on which the event is fired, because `*self`
+will refer to the same `*self` as the containing scope.
+
+Tokenized as `VAR_THIS`.
 
 ## Special variables
 

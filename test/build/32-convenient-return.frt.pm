@@ -45,7 +45,7 @@ my $result = do {
         $f, $context, 'A', undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             return $ret_func->( str( $f, "return value" ) );
             return $ret;

@@ -584,7 +584,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 67.2 ) or return;
             if ( bool( _not( ${ $$scope->{'msg'} }->{'commandHasParameters'} ) )
@@ -673,7 +673,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'string', 80.2 ) or return;
             return $ret_func->(
@@ -692,7 +692,7 @@ my $result = do {
         $f, $context, 'ircsay', undef,
         [ { name => 'str', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'str', 85.2 ) or return;
             ${ $$scope->{'bot'} }->{'privmsg'}->(
@@ -715,7 +715,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 7.2 ) or return;
             ${ $$scope->{'bot'} }->{'privmsg'}->(
@@ -735,7 +735,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 12.2 ) or return;
             if ( bool( _not( ${ $$scope->{'msg'} }->{'commandHasParameters'} ) )
@@ -808,7 +808,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 25.2 ) or return;
             if ( bool( _not( ${ $$scope->{'msg'} }->{'commandHasParameters'} ) )
@@ -881,7 +881,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 38.2 ) or return;
             if ( bool( _not( ${ $$scope->{'msg'} }->{'commandHasParameters'} ) )
@@ -961,7 +961,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 51.2 ) or return;
             if ( bool( _not( ${ $$scope->{'msg'} }->{'commandHasParameters'} ) )

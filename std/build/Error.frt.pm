@@ -159,7 +159,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'list', 21.2 ) or return;
             FF::lex_assign(
@@ -253,7 +253,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'type' ) or return;
                 FF::need( $self, $args, 'msg' )  or return;
                 FF::want( $self, $args, 'hints',    7.2 );
@@ -276,7 +276,7 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 if ( bool( $$self->{'subError'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 

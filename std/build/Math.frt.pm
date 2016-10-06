@@ -71,7 +71,7 @@ my $result = do {
         $f, $context, 'sqrt', undef,
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'num', 4.2 ) or return;
             return $ret_func->( ${ $$scope->{'NATIVE::Math'} }->{'sqrt'}
@@ -88,7 +88,7 @@ my $result = do {
             { name => 'num',  type => 'Num', optional => undef, more => undef }
         ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'root', 9.1 ) or return;
             FF::need( $scope, $args, 'num',  9.3 ) or return;

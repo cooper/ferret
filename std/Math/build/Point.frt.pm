@@ -207,7 +207,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'x' ) or return;
                 FF::need( $self, $args, 'y' ) or return;
                 return $ret;
@@ -227,7 +227,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'pt2', 9.2 ) or return;
                 FF::lex_assign(
                     $scope,
@@ -268,7 +268,7 @@ my $result = do {
             'distanceFromOrigin',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     $$self->{'distanceTo'}->(
                         [
@@ -290,7 +290,7 @@ my $result = do {
             $f, $scope, 'pretty',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     add(
                         $scope,        str( $f, "(" ),
@@ -308,7 +308,7 @@ my $result = do {
             'toString',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( $$self->{'pretty'} );
                 return $ret;
             }
@@ -320,7 +320,7 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     add( $scope, str( $f, "Point" ), $$self->{'pretty'} ) );
                 return $ret;
@@ -346,7 +346,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'pt1', 32.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 32.3 ) or return;
                 return $ret_func->(
@@ -401,7 +401,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'pt1', 40.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 40.3 ) or return;
                 return $ret_func->( ${ $$scope->{'pt1'} }->{'distanceTo'}

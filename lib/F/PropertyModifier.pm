@@ -26,6 +26,10 @@ sub perl_fmt {
         $left = '$self';
         $name = $c->{var_name};
     }
+    elsif ($c->type eq 'ThisVariable') {
+        $left = '$this';
+        $name = $c->{var_name};
+    }
     elsif ($c->type eq 'LexicalVariable') {
         $left = '$scope';
         $name = $c->{var_name};

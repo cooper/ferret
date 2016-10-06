@@ -66,7 +66,7 @@ my $result = do {
         undef,
         [ { name => 'who', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'who', 2.2 ) or return;
             $$scope->{'say'}->(

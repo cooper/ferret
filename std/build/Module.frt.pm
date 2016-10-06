@@ -88,7 +88,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'name' ) or return;
                 FF::want( $self, $args, 'prefix', 9.2, str( $f, "CORE" ) );
                 FF::want( $self, $args, 'version', 12.2, num( $f, "1.0" ) );

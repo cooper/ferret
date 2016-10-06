@@ -197,7 +197,7 @@ my $result = do {
             'initializer__',
             [ { name => 'moos', type => undef, optional => 1, more => undef } ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::want( $self, $args, 'moos', 6.2, $true );
                 return $ret;
             }
@@ -208,7 +208,7 @@ my $result = do {
             $f, $scope, 'moo',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 if ( bool( $$self->{'moos'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -243,7 +243,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::want( $self, $args, 'barks', 18.2, $false );
                 return $ret;
             }
@@ -254,7 +254,7 @@ my $result = do {
             $f, $scope, 'bark',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 if ( bool( $$self->{'barks'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -283,7 +283,7 @@ my $result = do {
             'initializer__',
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::want( $self, $args, 'mean', 30.2, $false );
                 return $ret;
             }
@@ -294,7 +294,7 @@ my $result = do {
             $f, $scope, 'meow',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( str( $f, "meow" ) );
                 return $ret;
             }
@@ -318,7 +318,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'cat1', 39.1 ) or return;
                 FF::need( $scope, $args, 'cat2', 39.3 ) or return;
                 if ( bool( ${ $$scope->{'cat1'} }->{'mean'} ) ) {

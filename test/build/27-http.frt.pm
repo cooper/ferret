@@ -106,7 +106,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "Connected!" ) ], $scope, undef, $pos->(4.2) );
@@ -126,7 +126,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'location', 8.2 ) or return;
             $$scope->{'say'}->(
@@ -155,7 +155,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'content', 14.2 ) or return;
             $$scope->{'say'}->(
@@ -178,7 +178,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "Got error!" ) ], $scope, undef, $pos->(21.2) );

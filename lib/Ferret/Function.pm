@@ -118,6 +118,7 @@ sub call {
         ( $arguments->{_self}                                 ) ||
         ( $func->is_method     ? $func->{last_parent} : undef ) ||
         ( $func->is_class_func ? $class               : undef ) ;
+    my $this = $arguments->{_this} || delete $func->{this};
 
     # handle the generics.
     # we have to do this before dynamic type checking.
@@ -179,7 +180,7 @@ sub call {
     # class/instance argument.
     $scope->{special}->set_property(self   => $self)                if $self;
     $scope->{special}->set_property(class  => $class)               if $class;
-    $scope->{special}->set_property(this   => delete $func->{this}) if $func->{this};
+    $scope->{special}->set_property(this   => $this)                if $this;
     $scope->{special}->set_property(return => $return);
 
     # add any possible generics.
@@ -195,7 +196,8 @@ sub call {
         $call_scope,            # FUNC_CSCOPE
         $scope,                 # FUNC_SCOPE
         $return,                # FUNC_RET
-        $func                   # FUNC_FUNC
+        $func,                  # FUNC_FUNC
+        $this                   # FUNC_THIS
     );
 
     $return->detail if $detail;

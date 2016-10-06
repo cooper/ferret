@@ -132,7 +132,7 @@ my $result = do {
             'initializer__',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 $self->set_property(
                     items => FF::create_list( $f, [] ),
                     $pos->(4.2)
@@ -153,7 +153,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'item', 8.2 ) or return;
                 return $ret_func->( ${ $$self->{'items'} }->{'push'}
                       ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.4) ) );
@@ -166,7 +166,7 @@ my $result = do {
             $f, $scope, 'pop',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( ${ $$self->{'items'} }->{'pop'}
                       ->( [ undef, [] ], $scope, undef, $pos->(13.4) ) );
                 return $ret;
@@ -179,7 +179,7 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     add(
                         $scope,

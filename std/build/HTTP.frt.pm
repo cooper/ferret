@@ -77,7 +77,7 @@ my $result = do {
         $f, $context, 'get', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'url', 14.2 ) or return;
             return $ret_func->(
@@ -95,7 +95,7 @@ my $result = do {
         $f, $context, 'post', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'url', 20.2 ) or return;
             return $ret_func->(

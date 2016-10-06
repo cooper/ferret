@@ -80,7 +80,7 @@ my $result = do {
         undef,
         [ { name => 'code', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'code', 17.2 ) or return;
             $ret->set_property(
@@ -97,7 +97,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ str( $f, "been five seconds" ) ],
@@ -112,7 +112,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             return $ret_func->( str( $f, "any second now" ) );
             return $ret;

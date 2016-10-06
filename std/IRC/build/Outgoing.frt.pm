@@ -122,7 +122,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'channelNames', 6.2 ) or return;
                 {
                     my $loop_ret = FF::iterate(
@@ -169,7 +169,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'target',  13.1 ) or return;
                 FF::need( $scope, $args, 'message', 13.3 ) or return;
                 {
@@ -216,7 +216,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'nick', 21.2 ) or return;
                 $$self->{'send'}->(
                     [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],

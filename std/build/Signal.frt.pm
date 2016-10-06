@@ -133,7 +133,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'type' ) or return;
                 return $ret;
             }
@@ -144,7 +144,7 @@ my $result = do {
             $f, $scope, 'trap',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 $$scope->{'_exit'}
                   ->( [ num( $f, "0" ) ], $scope, undef, $pos->(25.2) );
                 return $ret;
@@ -164,7 +164,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'type', 31.2 ) or return;
                 {
                     my $maybe_0 =

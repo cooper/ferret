@@ -128,7 +128,7 @@ my $result = do {
         $f, $scope, 'hello1', undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::lex_assign(
                 $scope,
@@ -156,7 +156,7 @@ my $result = do {
         $f, $scope, 'hello2', undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "Hello " ), $$scope->{'name2'} ) ],
@@ -186,7 +186,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $func_0->inside_scope(
                 hello1 => $scope,

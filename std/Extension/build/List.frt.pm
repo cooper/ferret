@@ -253,7 +253,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'code', 12.2 ) or return;
                 return $ret_func->(
                     do {
@@ -304,7 +304,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'code', 20.2 ) or return;
                 return $ret_func->(
                     do {
@@ -364,7 +364,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'code', 28.2 ) or return;
                 {
                     my $loop_ret = FF::iterate(
@@ -409,7 +409,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'code', 37.2 ) or return;
                 {
                     my $loop_ret = FF::iterate(
@@ -454,7 +454,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'code', 46.2 ) or return;
                 {
                     my $loop_ret = FF::iterate(
@@ -494,7 +494,7 @@ my $result = do {
             $f, $scope, 'sum',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 if ( bool( equal( $scope, $$self->{'length'}, num( $f, "0" ) ) )
                   )
                 {
@@ -547,7 +547,7 @@ my $result = do {
             $f, $scope, 'sum0',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::lex_assign(
                     $scope,
                     c => num( $f, "0" ),

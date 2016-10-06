@@ -102,7 +102,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'client', 9.2 ) or return;
                 $self->set_property(
                     client => $$scope->{'client'},
@@ -121,7 +121,7 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 ${ $$scope->{'NATIVE::HTTPClient'} }->{'connect'}->(
                     [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
                     $scope, undef, $pos->(26.25)
@@ -136,7 +136,7 @@ my $result = do {
             'connected',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
 
                 return $ret;
             }
@@ -148,7 +148,7 @@ my $result = do {
             'redirect',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
 
                 return $ret;
             }
@@ -159,7 +159,7 @@ my $result = do {
             $f, $scope, 'error',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
 
                 return $ret;
             }
@@ -171,7 +171,7 @@ my $result = do {
             'response',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
 
                 return $ret;
             }

@@ -68,7 +68,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'connection' ) or return;
                 FF::need( $self, $args, 'name' )       or return;
                 $self->weaken_property( 'connection', $pos->(7.1) );

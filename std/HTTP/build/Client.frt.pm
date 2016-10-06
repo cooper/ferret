@@ -190,7 +190,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::want( $self, $args, 'userAgent', 11.2,
                     $$scope->{'defaultUA'} );
                 FF::want( $self, $args, 'timeout', 14.2, num( $f, "10" ) );
@@ -219,7 +219,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'url', 34.2 ) or return;
                 return $ret_func->(
                     $$self->{'request'}->(
@@ -250,7 +250,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'url', 44.2 ) or return;
                 return $ret_func->(
                     $$self->{'request'}->(
@@ -288,7 +288,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'httpMethod', 56.2 ) or return;
                 FF::need( $scope, $args, 'url',        59.2 ) or return;
                 return $ret_func->(

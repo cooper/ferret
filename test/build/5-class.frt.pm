@@ -220,7 +220,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'x', 4.2 ) or return;
                 FF::need( $scope, $args, 'y', 4.4 ) or return;
                 $self->set_property( x => $$scope->{'x'}, $pos->(5.2) );
@@ -235,7 +235,7 @@ my $result = do {
             'oneToRight',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::lex_assign(
                     $scope,
                     pt => ${ $scope->{special} }->{'class'}->(
@@ -259,7 +259,7 @@ my $result = do {
             $f, $scope, 'pretty',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     add(
                         $scope,        str( $f, "(" ),
@@ -277,7 +277,7 @@ my $result = do {
             'toString',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( $$self->{'pretty'}
                       ->( [ undef, [] ], $scope, undef, $pos->(19.3) ) );
                 return $ret;
@@ -303,7 +303,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'pt1', 23.2 ) or return;
                 FF::need( $scope, $args, 'pt2', 23.4 ) or return;
                 return $ret_func->(

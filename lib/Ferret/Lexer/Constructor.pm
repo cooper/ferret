@@ -1259,6 +1259,17 @@ sub c_VAR_SELF {
     return $c->node->adopt($var);
 }
 
+# a this variable.
+sub c_VAR_THIS {
+    my ($c, $value) = @_;
+
+    # Rule ThisVariable[0]:
+    #   Must be somewhere inside a Function or Method.
+
+    my $var = F::new('ThisVariable', var_name => $value);
+    return $c->node->adopt($var);
+}
+
 # a special variable.
 sub c_VAR_SPEC {
     my ($c, $value) = @_;

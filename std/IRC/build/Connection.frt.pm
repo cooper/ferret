@@ -203,7 +203,7 @@
 #                                              Lexical variable '$msg'
 #                          Named argument list [3 items]
 #                              Item 0
-#                                  Pair '_self'
+#                                  Pair '_this'
 #                                      Special variable '*self'
 #                              Item 1
 #                                  Pair 'line'
@@ -421,7 +421,7 @@ my $result = do {
         'sendRegistration',
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $$self->{'send'}->(
                 [
@@ -454,7 +454,7 @@ my $result = do {
         'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'data', 31.2 ) or return;
             $$self->{'_handleLine'}
@@ -469,7 +469,7 @@ my $result = do {
         'resetState',
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $$self->{'_resetState'}
               ->( [ undef, [] ], $scope, undef, $pos->(37.2) );
@@ -517,7 +517,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'addr' ) or return;
                 FF::want( $self, $args, 'port', 8.2, num( $f, "6667" ) );
                 FF::need( $self, $args, 'nick' ) or return;
@@ -587,7 +587,7 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 ${ $$self->{'sock'} }->{'connect'}
                   ->( [ undef, [] ], $scope, undef, $pos->(45.3) );
                 return $ret;
@@ -606,7 +606,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'line', 50.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
@@ -631,7 +631,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'line', 57.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
@@ -656,7 +656,7 @@ my $result = do {
                             [
                                 undef,
                                 [
-                                    _self => ${ $scope->{special} }->{'self'},
+                                    _this => ${ $scope->{special} }->{'self'},
                                     line  => $$scope->{'line'},
                                     msg   => $$scope->{'msg'}
                                 ]
@@ -683,7 +683,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'target', 78.2 ) or return;
                 if (
                     bool(
@@ -726,7 +726,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'name', 88.2 ) or return;
                 if (
                     bool(
@@ -776,7 +776,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'nick', 96.2 ) or return;
                 if (
                     bool(
@@ -826,7 +826,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'name', 104.2 ) or return;
                 if (
                     bool(
@@ -869,7 +869,7 @@ my $result = do {
             'privmsg',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
 
                 return $ret;
             }
@@ -881,7 +881,7 @@ my $result = do {
             '_resetState',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 $self->delete_property_ow( 'registered',   $pos->(117.1) );
                 $self->delete_property_ow( '_didAutojoin', $pos->(118.1) );
                 $self->set_property(

@@ -86,7 +86,7 @@ my $result = do {
             'initializer__',
             [ { name => 'items', type => 'T', optional => 1, more => 1 } ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::want( $self, $args, 'items', 4.2 );
                 return $ret;
             }
@@ -104,7 +104,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'item', 8.2 ) or return;
                 ${ $$self->{'items'} }->{'push'}
                   ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.3) );
@@ -117,7 +117,7 @@ my $result = do {
             $f, $scope, 'pop',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( ${ $$self->{'items'} }->{'pop'}
                       ->( [ undef, [] ], $scope, undef, $pos->(13.4) ) );
                 return $ret;
@@ -130,7 +130,7 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::lex_assign(
                     $scope,
                     name => ${ $$scope->{'T'} }->{'name'},

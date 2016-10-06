@@ -161,7 +161,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $$self->{'send'}->(
                 [
@@ -193,7 +193,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'data', 18.2 ) or return;
             $$scope->{'say'}->(
@@ -236,7 +236,7 @@ my $result = do {
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'addr' ) or return;
                 FF::need( $self, $args, 'nick' ) or return;
                 FF::need( $self, $args, 'user' ) or return;
@@ -287,7 +287,7 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 ${ $$self->{'sock'} }->{'connect'}
                   ->( [ undef, [] ], $scope, undef, $pos->(25.3) );
                 return $ret;
@@ -306,7 +306,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'line', 29.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],

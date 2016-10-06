@@ -169,7 +169,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'pt1' ) or return;
                 FF::need( $self, $args, 'pt2' ) or return;
                 return $ret;
@@ -182,7 +182,7 @@ my $result = do {
             'endpoints',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     FF::create_list( $f, [ $$self->{'pt1'}, $$self->{'pt2'} ] )
                 );
@@ -195,7 +195,7 @@ my $result = do {
             $f, $scope, 'pretty',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::lex_assign(
                     $scope,
                     mp => $$self->{'midpoint'},
@@ -253,7 +253,7 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( $$self->{'pretty'} );
                 return $ret;
             }
@@ -265,7 +265,7 @@ my $result = do {
             'midpoint',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     ${
                         FF::create_set( $scope, $$self->{'pt1'},
@@ -282,7 +282,7 @@ my $result = do {
             $f, $scope, 'length',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->( ${ $$self->{'pt1'} }->{'distanceTo'}
                       ->( [ $$self->{'pt2'} ], $scope, undef, $pos->(29.4) ) );
                 return $ret;

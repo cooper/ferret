@@ -209,7 +209,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'line' ) or return;
                 FF::lex_assign(
                     $scope,
@@ -273,7 +273,7 @@ my $result = do {
             'command',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 if (
                     bool(
                         all_true(
@@ -330,7 +330,7 @@ my $result = do {
             'commandHasParameters',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     gr8r(
                         $scope,
@@ -355,7 +355,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $ret_func->(
                     ${ $$self->{'message'} }->{'split'}->(

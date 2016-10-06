@@ -59,7 +59,7 @@ my $result = do {
             'doubledLength',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
                     mul(
                         $scope,

@@ -466,7 +466,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::want( $self, $args, 'strict',     24.2, $true );
                 FF::want( $self, $args, 'consistent', 30.2, $false );
                 FF::want( $self, $args, 'charset', 37.2,
@@ -591,7 +591,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'data', 96.2 ) or return;
                 FF::try_catch(
                     $f, $scope,
@@ -636,7 +636,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'json', 105.2 ) or return;
                 FF::try_catch(
                     $f, $scope,
@@ -682,7 +682,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'fragment', 138.2 ) or return;
                 FF::try_catch(
                     $f, $scope,
@@ -724,7 +724,7 @@ my $result = do {
             'decoderDone',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::try_catch(
                     $f, $scope,
                     sub {
@@ -788,7 +788,7 @@ my $result = do {
             'decoderReset',
             [],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 ${ $$self->{'xs'} }->{'incr_reset'}
                   ->( [ undef, [] ], $scope, undef, $pos->(167.3) );
                 return $ret;
@@ -807,7 +807,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'data', 180.2 ) or return;
                 return $ret_func->( ${ $$scope->{'default'} }->{'encode'}
                       ->( [ $$scope->{'data'} ], $scope, undef, $pos->(181.4) )
@@ -828,7 +828,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'json', 187.2 ) or return;
                 return $ret_func->( ${ $$scope->{'default'} }->{'decode'}
                       ->( [ $$scope->{'json'} ], $scope, undef, $pos->(188.4) )

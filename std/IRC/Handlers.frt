@@ -12,48 +12,48 @@ share $handlers = (
 
 func ping {
     need $msg
-    @send("PONG :" + $msg.params[-1])
+    %send("PONG :" + $msg.params[-1])
 }
 
 func welcome {
     need $msg
-    @registered = true          # remember that we've finished registration
-    @me.nick = $msg.params[0]   # assume the target is our actual nickname
+    %registered = true          # remember that we've finished registration
+    %me.nick = $msg.params[0]   # assume the target is our actual nickname
 
     # we can't actually depend on this always being the case, but a
     # lot of IRC servers have nick!ident@host as the final word here.
-    # if not, we will get that info the first time we recv a message from @me.
+    # if not, we will get that info the first time we recv a message from %me.
     if $msg.params[-1] =~ /^(.+)!(.+)\@(.+)$/ {
-        @me.nick = $1
-        @me.user = $2
-        @me.host = $3
-        @me.realHost = $3
+        %me.nick = $1
+        %me.user = $2
+        %me.host = $3
+        %me.realHost = $3
     }
 }
 
 func myInfo {
     need $msg
-    @server.name    = $msg.params[1]
-    @server.version = $msg.params[2]
+    %server.name    = $msg.params[1]
+    %server.version = $msg.params[2]
 }
 
 func endOfMOTD {
-    if !@autojoin || @_didAutojoin:
+    if !%autojoin || %_didAutojoin:
         return
-    @sendJoin(channelNames: @autojoin)
-    @_didAutojoin = true
+    %sendJoin(channelNames: %autojoin)
+    %_didAutojoin = true
 }
 
 # recv: :k.notroll.net 396 booby 73.88.xkw.t :is now your hidden host
 func hiddenHost {
     need $msg
-    @me.host = $msg.params[1]
+    %me.host = $msg.params[1]
 }
 
 # during registration, add underscores to nickname as necessary
 func nickInUse {
-    if @registered:
+    if %registered:
         return
-    @me.nick = @me.nick + "_"
-    @sendNick(@me.nick)
+    %me.nick = %me.nick + "_"
+    %sendNick(%me.nick)
 }

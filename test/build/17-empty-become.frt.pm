@@ -63,7 +63,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "it works!" ) ], $scope, undef, $pos->(8.2) );

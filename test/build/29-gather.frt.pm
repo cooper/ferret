@@ -188,7 +188,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'pt', 4.2 ) or return;
             return $ret_func->(
@@ -245,7 +245,7 @@ my $result = do {
         undef,
         [ { name => 'nums', type => 'Num', optional => undef, more => 1 } ],
         sub {
-            my ( $_self, $args, $call_scope, $scope, $ret ) = @_;
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'nums', 27.2 ) or return;
             $ret->set_property(
