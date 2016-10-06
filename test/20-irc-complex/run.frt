@@ -15,7 +15,7 @@ $bot.addCommand("t") {
     $c = COMPILER(convertNewlines($msg.fromWord(1)))
     $res = $c.tokenize(pretty: true)
     if $res.error {
-        $bot.privmsg($msg.channel, $res.error)
+        $bot.privmsg($msg.channel, Str($res.error))
         return
     }
     $bot.privmsg($msg.channel, $res.pretty)
@@ -28,7 +28,7 @@ $bot.addCommand("c") {
     $c = COMPILER(convertNewlines($msg.fromWord(1)))
     $res = $c.construct(pretty: true)
     if $res.error {
-        $bot.privmsg($msg.channel, $res.error)
+        $bot.privmsg($msg.channel, Str($res.error))
         return
     }
     $bot.privmsg($msg.channel, $res.pretty)
@@ -40,7 +40,7 @@ $bot.addCommand("e") {
         return
     $res = COMPILER(convertNewlines($msg.fromWord(1))).eval()
     if $res.error {
-        $bot.privmsg($msg.channel, $res.error)
+        $bot.privmsg($msg.channel, Str($res.error))
         return
     }
     $string = inspect(value: $res.result, quiet: true).string
@@ -53,7 +53,7 @@ $bot.addCommand("pe") {
         return
     $res = COMPILER(convertNewlines($msg.fromWord(1))).perlEval()
     if $res.error {
-        $bot.privmsg($msg.channel, $res.error)
+        $bot.privmsg($msg.channel, Str($res.error))
         return
     }
     $string = inspect(value: $res.result, quiet: true).string
@@ -70,7 +70,7 @@ func handlePerl {
     $c = COMPILER(convertNewlines($msg.fromWord(1)))
     $res = $c.compile($msg.command == "p")
     if $res.error {
-        $bot.privmsg($msg.channel, $res.error)
+        $bot.privmsg($msg.channel, Str($res.error))
         return
     }
     $bot.privmsg($msg.channel, $res.perl)

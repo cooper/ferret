@@ -250,8 +250,8 @@ sub _handle_arguments {
         }
     }
 
-    while (@sigs) {
-        my $sig = shift @sigs;
+    # for each element in the signature, map unnamed arguments to their names
+    while (my $sig = shift @sigs) {
 
         # ellipsis
         if ($sig->{more}) {

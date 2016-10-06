@@ -131,8 +131,12 @@
 #                                                      Property 'channel'
 #                                                          Lexical variable '$msg'
 #                                                  Item 1
-#                                                      Property 'error'
-#                                                          Lexical variable '$res'
+#                                                      Call
+#                                                          Bareword 'String'
+#                                                          Argument list [1 items]
+#                                                              Item 0
+#                                                                  Property 'error'
+#                                                                      Lexical variable '$res'
 #                                      Instruction
 #                                          Return
 #                              Instruction
@@ -208,8 +212,12 @@
 #                                                      Property 'channel'
 #                                                          Lexical variable '$msg'
 #                                                  Item 1
-#                                                      Property 'error'
-#                                                          Lexical variable '$res'
+#                                                      Call
+#                                                          Bareword 'String'
+#                                                          Argument list [1 items]
+#                                                              Item 0
+#                                                                  Property 'error'
+#                                                                      Lexical variable '$res'
 #                                      Instruction
 #                                          Return
 #                              Instruction
@@ -278,8 +286,12 @@
 #                                                      Property 'channel'
 #                                                          Lexical variable '$msg'
 #                                                  Item 1
-#                                                      Property 'error'
-#                                                          Lexical variable '$res'
+#                                                      Call
+#                                                          Bareword 'String'
+#                                                          Argument list [1 items]
+#                                                              Item 0
+#                                                                  Property 'error'
+#                                                                      Lexical variable '$res'
 #                                      Instruction
 #                                          Return
 #                              Instruction
@@ -361,8 +373,12 @@
 #                                                      Property 'channel'
 #                                                          Lexical variable '$msg'
 #                                                  Item 1
-#                                                      Property 'error'
-#                                                          Lexical variable '$res'
+#                                                      Call
+#                                                          Bareword 'String'
+#                                                          Argument list [1 items]
+#                                                              Item 0
+#                                                                  Property 'error'
+#                                                                      Lexical variable '$res'
 #                                      Instruction
 #                                          Return
 #                              Instruction
@@ -464,8 +480,12 @@
 #                                      Property 'channel'
 #                                          Lexical variable '$msg'
 #                                  Item 1
-#                                      Property 'error'
-#                                          Lexical variable '$res'
+#                                      Call
+#                                          Bareword 'String'
+#                                          Argument list [1 items]
+#                                              Item 0
+#                                                  Property 'error'
+#                                                      Lexical variable '$res'
 #                      Instruction
 #                          Return
 #              Instruction
@@ -530,7 +550,7 @@
 #              Property 'connect'
 #                  Lexical variable '$i'
 #              Argument list [0 items]
-#      Include (COMPILER, IRC, IRC::Connection, IRCBot, IRCBot::Bot, Str)
+#      Include (COMPILER, IRC, IRC::Connection, IRCBot, IRCBot::Bot, Str, String)
 use warnings;
 use strict;
 use 5.010;
@@ -617,7 +637,10 @@ my $result = do {
                 ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
-                        ${ $$scope->{'res'} }->{'error'}
+                        $$scope->{'String'}->(
+                            [ ${ $$scope->{'res'} }->{'error'} ],
+                            $scope, undef, $pos->(73.4)
+                        )
                     ],
                     $scope, undef,
                     $pos->(73.15)
@@ -758,7 +781,10 @@ my $result = do {
                 ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
-                        ${ $$scope->{'res'} }->{'error'}
+                        $$scope->{'String'}->(
+                            [ ${ $$scope->{'res'} }->{'error'} ],
+                            $scope, undef, $pos->(18.4)
+                        )
                     ],
                     $scope, undef,
                     $pos->(18.15)
@@ -828,7 +854,10 @@ my $result = do {
                 ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
-                        ${ $$scope->{'res'} }->{'error'}
+                        $$scope->{'String'}->(
+                            [ ${ $$scope->{'res'} }->{'error'} ],
+                            $scope, undef, $pos->(31.4)
+                        )
                     ],
                     $scope, undef,
                     $pos->(31.15)
@@ -891,7 +920,10 @@ my $result = do {
                 ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
-                        ${ $$scope->{'res'} }->{'error'}
+                        $$scope->{'String'}->(
+                            [ ${ $$scope->{'res'} }->{'error'} ],
+                            $scope, undef, $pos->(43.4)
+                        )
                     ],
                     $scope, undef,
                     $pos->(43.15)
@@ -969,7 +1001,10 @@ my $result = do {
                 ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
-                        ${ $$scope->{'res'} }->{'error'}
+                        $$scope->{'String'}->(
+                            [ ${ $$scope->{'res'} }->{'error'} ],
+                            $scope, undef, $pos->(56.4)
+                        )
                     ],
                     $scope, undef,
                     $pos->(56.15)
@@ -1011,7 +1046,7 @@ my $result = do {
     );
     $func_2->inside_scope( ircsay => $scope, $context, undef, undef, undef );
     FF::load_namespaces( $context,
-        qw(COMPILER IRC IRC::Connection IRCBot IRCBot::Bot Str) );
+        qw(COMPILER IRC IRC::Connection IRCBot IRCBot::Bot Str String) );
     FF::lex_assign(
         $context,
         bot => $$scope->{'IRCBot::Bot'}->(
