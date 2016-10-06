@@ -59,6 +59,21 @@ Sends a line of IRC data.
 
 
 
+### getTarget
+
+```
+$connection.getTarget($target: Str)
+```
+
+Fetches a channel or user object.
+
+
+#### Arguments
+
+* __target__: [String](/std/doc/String.md) - Channel name or nickname.
+
+
+
 ### getChannel
 
 ```
@@ -101,6 +116,16 @@ Fetches a server object from a server name.
 #### Arguments
 
 * __name__: [String](/std/doc/String.md) - Server name.
+
+
+
+### privmsg
+
+```
+$connection.privmsg()
+```
+
+Hook. 
 
 
 

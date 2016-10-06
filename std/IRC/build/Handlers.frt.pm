@@ -148,7 +148,7 @@
 #                          Return
 #              Instruction
 #                  Call
-#                      Instance variable '@join'
+#                      Instance variable '@sendJoin'
 #                      Named argument list [1 items]
 #                          Item 0
 #                              Pair 'channelNames'
@@ -191,7 +191,7 @@
 #                          String '_'
 #              Instruction
 #                  Call
-#                      Instance variable '@requestNick'
+#                      Instance variable '@sendNick'
 #                      Argument list [1 items]
 #                          Item 0
 #                              Property 'nick'
@@ -337,7 +337,7 @@ my $result = do {
 
                 return $ret_func->();
             }
-            $$self->{'join'}->(
+            $$self->{'sendJoin'}->(
                 [ undef, [ channelNames => $$self->{'autojoin'} ] ],
                 $scope, undef, $pos->(43.2)
             );
@@ -384,7 +384,7 @@ my $result = do {
                   add( $scope, ${ $$self->{'me'} }->{'nick'}, str( $f, "_" ) ),
                 $pos->(57.3)
             );
-            $$self->{'requestNick'}->(
+            $$self->{'sendNick'}->(
                 [ ${ $$self->{'me'} }->{'nick'} ],
                 $scope, undef, $pos->(58.2)
             );

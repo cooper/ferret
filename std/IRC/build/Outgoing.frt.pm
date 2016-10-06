@@ -2,7 +2,7 @@
 #  Document './std/IRC/Outgoing.frt'
 #      Package 'IRC'
 #      Class 'Connection'
-#          Method 'join'
+#          Method 'sendJoin'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need (...)
@@ -24,7 +24,7 @@
 #                                              String 'JOIN '
 #                                              Addition operator (+)
 #                                              Lexical variable '$name'
-#          Method 'privmsg'
+#          Method 'sendPrivmsg'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
@@ -49,7 +49,7 @@
 #                                      String ' :'
 #                                      Addition operator (+)
 #                                      Lexical variable '$message'
-#          Method 'requestNick'
+#          Method 'sendNick'
 #              Body ('method' scope)
 #                  Instruction
 #                      Need
@@ -98,9 +98,10 @@ my $result = do {
           FF::get_class( $f, $context, $file_scope, 'Connection', undef,
             undef );
 
-        # Method event 'join' definition
+        # Method event 'sendJoin' definition
         my $method_0 = FF::method_event_def(
-            $f, $scope, 'join',
+            $f, $scope,
+            'sendJoin',
             [
                 {
                     name     => 'channelNames',
@@ -138,10 +139,10 @@ my $result = do {
             }
         );
 
-        # Method event 'privmsg' definition
+        # Method event 'sendPrivmsg' definition
         my $method_1 = FF::method_event_def(
             $f, $scope,
-            'privmsg',
+            'sendPrivmsg',
             [
                 {
                     name     => 'target',
@@ -175,10 +176,10 @@ my $result = do {
             }
         );
 
-        # Method event 'requestNick' definition
+        # Method event 'sendNick' definition
         my $method_2 = FF::method_event_def(
             $f, $scope,
-            'requestNick',
+            'sendNick',
             [
                 {
                     name     => 'nick',
@@ -197,13 +198,16 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope( join => $scope, $proto, $class, undef, undef );
+        $method_0->inside_scope(
+            sendJoin => $scope,
+            $proto, $class, undef, undef
+        );
         $method_1->inside_scope(
-            privmsg => $scope,
+            sendPrivmsg => $scope,
             $proto, $class, undef, undef
         );
         $method_2->inside_scope(
-            requestNick => $scope,
+            sendNick => $scope,
             $proto, $class, undef, undef
         );
     }

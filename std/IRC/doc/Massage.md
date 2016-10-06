@@ -18,6 +18,9 @@ Creates a new Massage class instance.
 
 * *optional* __data__: Str::NE - A complete IRC message.
 
+* *optional* __connection__: Connection - The connection object to associate the message with,
+used for source and target properties.
+
 ## Methods
 
 ### parse
@@ -32,6 +35,16 @@ Parses IRC data.
 #### Arguments
 
 * __data__: Str::NE - A string of IRC-encoded data.
+
+
+
+### target
+
+```
+$massage.target
+```
+
+Computed property. User or channel object from the first parameter.
 
 
 

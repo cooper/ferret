@@ -73,6 +73,16 @@ method _handleLine {
 # TODO: rather than using .lowercase, use proper IRC casemapping.
 # respect the CASEMAPPING token in RPL_ISUPPORT.
 
+#> Fetches a channel or user object.
+method getTarget {
+    need $target: Str #< channel name or nickname
+    # TODO: once we look at RPL_ISUPPORT, check that for channel prefixes
+    if $target.hasPrefix("\#"):
+        return @getChannel($target)
+    else:
+        return @getUser($target)
+}
+
 #> Fetches a channel object from a channel name
 method getChannel {
     need $name: Str #< channel name
@@ -96,6 +106,10 @@ method getServer {
         return $server
     return Server(connection: *self, name: $name)
 }
+
+#=== Hooks ===#
+
+method privmsg
 
 #=== Miscellaneous ===
 

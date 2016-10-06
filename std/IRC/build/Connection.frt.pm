@@ -209,6 +209,38 @@
 #                              Item 2
 #                                  Pair 'msg'
 #                                      Lexical variable '$msg'
+#          Method 'getTarget'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$target'
+#                          Argument type
+#                              Bareword 'Str'
+#                  If
+#                      Expression ('if' parameter)
+#                          Call
+#                              Property 'hasPrefix'
+#                                  Lexical variable '$target'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      String '#'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Return
+#                                  Call
+#                                      Instance variable '@getChannel'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Lexical variable '$target'
+#                  Else
+#                      Body ('else' scope)
+#                          Instruction
+#                              Return
+#                                  Call
+#                                      Instance variable '@getUser'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Lexical variable '$target'
 #          Method 'getChannel'
 #              Body ('method' scope)
 #                  Instruction
@@ -305,6 +337,8 @@
 #                                  Item 1
 #                                      Pair 'name'
 #                                          Lexical variable '$name'
+#          Method 'privmsg'
+#              Body ('method' scope)
 #          Method '_resetState'
 #              Body ('method' scope)
 #                  Instruction
@@ -629,8 +663,51 @@ my $result = do {
             }
         );
 
-        # Method event 'getChannel' definition
+        # Method event 'getTarget' definition
         my $method_4 = FF::method_event_def(
+            $f, $scope,
+            'getTarget',
+            [
+                {
+                    name     => 'target',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'target', 78.2 ) or return;
+                if (
+                    bool(
+                        ${ $$scope->{'target'} }->{'hasPrefix'}
+                          ->( [ str( $f, "#" ) ], $scope, undef, $pos->(80.4) )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->(
+                        $$self->{'getChannel'}->(
+                            [ $$scope->{'target'} ], $scope,
+                            undef,                   $pos->(81.3)
+                        )
+                    );
+                }
+                else {
+                    return $ret_func->(
+                        $$self->{'getUser'}->(
+                            [ $$scope->{'target'} ], $scope,
+                            undef,                   $pos->(83.3)
+                        )
+                    );
+                }
+                return $ret;
+            }
+        );
+
+        # Method event 'getChannel' definition
+        my $method_5 = FF::method_event_def(
             $f, $scope,
             'getChannel',
             [
@@ -643,17 +720,17 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'name', 78.2 ) or return;
+                FF::need( $scope, $args, 'name', 88.2 ) or return;
                 if (
                     bool(
                         FF::lex_assign(
                             $scope,
                             channel => $$self->{'channels'}->get_index_value(
                                 [ ${ $$scope->{'name'} }->{'lowercase'} ],
-                                $scope, $pos->(79.25)
+                                $scope, $pos->(89.25)
                             ),
                             $file_scope,
-                            $pos->(79.15)
+                            $pos->(89.15)
                         )
                     )
                   )
@@ -672,7 +749,7 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(81.15)
+                        $pos->(91.15)
                     )
                 );
                 return $ret;
@@ -680,7 +757,7 @@ my $result = do {
         );
 
         # Method event 'getUser' definition
-        my $method_5 = FF::method_event_def(
+        my $method_6 = FF::method_event_def(
             $f, $scope,
             'getUser',
             [
@@ -693,17 +770,17 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'nick', 86.2 ) or return;
+                FF::need( $scope, $args, 'nick', 96.2 ) or return;
                 if (
                     bool(
                         FF::lex_assign(
                             $scope,
                             user => $$self->{'users'}->get_index_value(
                                 [ ${ $$scope->{'nick'} }->{'lowercase'} ],
-                                $scope, $pos->(87.25)
+                                $scope, $pos->(97.25)
                             ),
                             $file_scope,
-                            $pos->(87.15)
+                            $pos->(97.15)
                         )
                     )
                   )
@@ -722,7 +799,7 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(89.15)
+                        $pos->(99.15)
                     )
                 );
                 return $ret;
@@ -730,7 +807,7 @@ my $result = do {
         );
 
         # Method event 'getServer' definition
-        my $method_6 = FF::method_event_def(
+        my $method_7 = FF::method_event_def(
             $f, $scope,
             'getServer',
             [
@@ -743,17 +820,17 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'name', 94.2 ) or return;
+                FF::need( $scope, $args, 'name', 104.2 ) or return;
                 if (
                     bool(
                         FF::lex_assign(
                             $scope,
                             server => $$self->{'servers'}->get_index_value(
                                 [ ${ $$scope->{'name'} }->{'lowercase'} ],
-                                $scope, $pos->(95.25)
+                                $scope, $pos->(105.25)
                             ),
                             $file_scope,
-                            $pos->(95.15)
+                            $pos->(105.15)
                         )
                     )
                   )
@@ -772,22 +849,34 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(97.15)
+                        $pos->(107.15)
                     )
                 );
                 return $ret;
             }
         );
 
+        # Method event 'privmsg' definition
+        my $method_8 = FF::method_event_def(
+            $f, $scope,
+            'privmsg',
+            [],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+
+                return $ret;
+            }
+        );
+
         # Method event '_resetState' definition
-        my $method_7 = FF::method_event_def(
+        my $method_9 = FF::method_event_def(
             $f, $scope,
             '_resetState',
             [],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                $self->delete_property_ow( 'registered',   $pos->(103.1) );
-                $self->delete_property_ow( '_didAutojoin', $pos->(104.1) );
+                $self->delete_property_ow( 'registered',   $pos->(117.1) );
+                $self->delete_property_ow( '_didAutojoin', $pos->(118.1) );
                 $self->set_property(
                     server => $$scope->{'Server'}->(
                         [
@@ -798,9 +887,9 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(105.2)
+                        $pos->(119.2)
                     ),
-                    $pos->(105.1)
+                    $pos->(119.1)
                 );
                 $self->set_property(
                     me => $$scope->{'User'}->(
@@ -813,21 +902,21 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(106.2)
+                        $pos->(120.2)
                     ),
-                    $pos->(106.1)
+                    $pos->(120.1)
                 );
                 $self->set_property(
                     users => FF::create_hash( $f, [] ),
-                    $pos->(107.2)
+                    $pos->(121.2)
                 );
                 $self->set_property(
                     channels => FF::create_hash( $f, [] ),
-                    $pos->(108.2)
+                    $pos->(122.2)
                 );
                 $self->set_property(
                     servers => FF::create_hash( $f, [] ),
-                    $pos->(109.2)
+                    $pos->(123.2)
                 );
                 return $ret;
             }
@@ -846,18 +935,26 @@ my $result = do {
             $proto, $class, undef, undef
         );
         $method_4->inside_scope(
-            getChannel => $scope,
+            getTarget => $scope,
             $proto, $class, undef, undef
         );
         $method_5->inside_scope(
-            getUser => $scope,
+            getChannel => $scope,
             $proto, $class, undef, undef
         );
         $method_6->inside_scope(
-            getServer => $scope,
+            getUser => $scope,
             $proto, $class, undef, undef
         );
         $method_7->inside_scope(
+            getServer => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_8->inside_scope(
+            privmsg => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_9->inside_scope(
             _resetState => $scope,
             $proto, $class, undef, undef
         );

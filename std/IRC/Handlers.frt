@@ -40,7 +40,7 @@ func myInfo {
 func endOfMOTD {
     if !@autojoin || @_didAutojoin:
         return
-    @join(channelNames: @autojoin)
+    @sendJoin(channelNames: @autojoin)
     @_didAutojoin = true
 }
 
@@ -55,5 +55,5 @@ func nickInUse {
     if @registered:
         return
     @me.nick = @me.nick + "_"
-    @requestNick(@me.nick)
+    @sendNick(@me.nick)
 }

@@ -8,6 +8,11 @@ init {
 
     if $data:
         @parse($data)
+
+    #> the connection object to associate the message with,
+    #| used for source and target properties.
+    want @connection: Connection
+    weaken @connection
 }
 
 #> Parses IRC data
@@ -93,6 +98,11 @@ method parse {
     }
 
     @params = $params
+}
+
+#> User or channel object from the first parameter.
+prop target {
+    return @connection?.getTarget(@params[0]?)
 }
 
 prop? _parsedSource {

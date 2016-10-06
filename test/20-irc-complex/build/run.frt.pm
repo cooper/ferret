@@ -12,7 +12,7 @@
 #                                  String 'k.notroll.net'
 #                          Item 1
 #                              Pair 'nick'
-#                                  String 'bottie'
+#                                  String 'bootie'
 #                          Item 2
 #                              Pair 'user'
 #                                  String 'ferret'
@@ -132,7 +132,7 @@
 #                                                          Lexical variable '$msg'
 #                                                  Item 1
 #                                                      Call
-#                                                          Bareword 'String'
+#                                                          Bareword 'Str'
 #                                                          Argument list [1 items]
 #                                                              Item 0
 #                                                                  Property 'error'
@@ -213,7 +213,7 @@
 #                                                          Lexical variable '$msg'
 #                                                  Item 1
 #                                                      Call
-#                                                          Bareword 'String'
+#                                                          Bareword 'Str'
 #                                                          Argument list [1 items]
 #                                                              Item 0
 #                                                                  Property 'error'
@@ -287,7 +287,7 @@
 #                                                          Lexical variable '$msg'
 #                                                  Item 1
 #                                                      Call
-#                                                          Bareword 'String'
+#                                                          Bareword 'Str'
 #                                                          Argument list [1 items]
 #                                                              Item 0
 #                                                                  Property 'error'
@@ -374,7 +374,7 @@
 #                                                          Lexical variable '$msg'
 #                                                  Item 1
 #                                                      Call
-#                                                          Bareword 'String'
+#                                                          Bareword 'Str'
 #                                                          Argument list [1 items]
 #                                                              Item 0
 #                                                                  Property 'error'
@@ -481,7 +481,7 @@
 #                                          Lexical variable '$msg'
 #                                  Item 1
 #                                      Call
-#                                          Bareword 'String'
+#                                          Bareword 'Str'
 #                                          Argument list [1 items]
 #                                              Item 0
 #                                                  Property 'error'
@@ -550,7 +550,7 @@
 #              Property 'connect'
 #                  Lexical variable '$i'
 #              Argument list [0 items]
-#      Include (COMPILER, IRC, IRC::Connection, IRCBot, IRCBot::Bot, Str, String)
+#      Include (COMPILER, IRC, IRC::Connection, IRCBot, IRCBot::Bot, Str)
 use warnings;
 use strict;
 use 5.010;
@@ -637,7 +637,7 @@ my $result = do {
                 ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
-                        $$scope->{'String'}->(
+                        $$scope->{'Str'}->(
                             [ ${ $$scope->{'res'} }->{'error'} ],
                             $scope, undef, $pos->(73.4)
                         )
@@ -781,7 +781,7 @@ my $result = do {
                 ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
-                        $$scope->{'String'}->(
+                        $$scope->{'Str'}->(
                             [ ${ $$scope->{'res'} }->{'error'} ],
                             $scope, undef, $pos->(18.4)
                         )
@@ -854,7 +854,7 @@ my $result = do {
                 ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
-                        $$scope->{'String'}->(
+                        $$scope->{'Str'}->(
                             [ ${ $$scope->{'res'} }->{'error'} ],
                             $scope, undef, $pos->(31.4)
                         )
@@ -920,7 +920,7 @@ my $result = do {
                 ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
-                        $$scope->{'String'}->(
+                        $$scope->{'Str'}->(
                             [ ${ $$scope->{'res'} }->{'error'} ],
                             $scope, undef, $pos->(43.4)
                         )
@@ -1001,7 +1001,7 @@ my $result = do {
                 ${ $$scope->{'bot'} }->{'privmsg'}->(
                     [
                         ${ $$scope->{'msg'} }->{'channel'},
-                        $$scope->{'String'}->(
+                        $$scope->{'Str'}->(
                             [ ${ $$scope->{'res'} }->{'error'} ],
                             $scope, undef, $pos->(56.4)
                         )
@@ -1046,7 +1046,7 @@ my $result = do {
     );
     $func_2->inside_scope( ircsay => $scope, $context, undef, undef, undef );
     FF::load_namespaces( $context,
-        qw(COMPILER IRC IRC::Connection IRCBot IRCBot::Bot Str String) );
+        qw(COMPILER IRC IRC::Connection IRCBot IRCBot::Bot Str) );
     FF::lex_assign(
         $context,
         bot => $$scope->{'IRCBot::Bot'}->(
@@ -1054,7 +1054,7 @@ my $result = do {
                 undef,
                 [
                     addr => str( $f, "k.notroll.net" ),
-                    nick => str( $f, "bottie" ),
+                    nick => str( $f, "bootie" ),
                     user => str( $f, "ferret" )
                 ]
             ],
