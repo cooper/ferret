@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 use Ferret::Shared::Utils qw(import regex_str);
-use List::Util qw(any all);
+use List::Util qw(all first);
 
 BEGIN {
     no strict 'refs';
@@ -137,8 +137,9 @@ sub all_true {
 
 sub any_true {
     shift;
-    return Ferret::true if any { bool($_->()) } @_;
-    return Ferret::false;
+    my $first;
+    first { bool($first = $_->()) } @_;
+    return $first || Ferret::undefined;
 }
 
 sub bool {
