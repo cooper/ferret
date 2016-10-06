@@ -63,12 +63,8 @@
 #                                      Lexical variable '$channel'
 #                                  Argument list [1 items]
 #                                      Item 0
-#                                          Call
-#                                              Bareword 'Str'
-#                                              Argument list [1 items]
-#                                                  Item 0
-#                                                      Property 'error'
-#                                                          Lexical variable '$res'
+#                                          Property 'error'
+#                                              Lexical variable '$res'
 #                          Instruction
 #                              Return
 #                  Instruction
@@ -178,12 +174,8 @@
 #                                  Lexical variable '$channel'
 #                              Argument list [1 items]
 #                                  Item 0
-#                                      Call
-#                                          Bareword 'Str'
-#                                          Argument list [1 items]
-#                                              Item 0
-#                                                  Property 'error'
-#                                                      Lexical variable '$res'
+#                                      Property 'error'
+#                                          Lexical variable '$res'
 #                      Instruction
 #                          Return
 #              Instruction
@@ -260,17 +252,13 @@
 #                  Lexical variable '$bot'
 #              Argument list [1 items]
 #                  Item 0
-#                      Call
-#                          Bareword 'IRC::Connection'
-#                          Argument list [1 items]
-#                              Item 0
-#                                  Lexical variable '$conn'
+#                      Lexical variable '$conn'
 #      Instruction
 #          Call
 #              Property 'connect'
 #                  Lexical variable '$bot'
 #              Argument list [0 items]
-#      Include (COMPILER, IRC, IRC::Bot, IRC::Connection, IRC::Massage, Str)
+#      Include (COMPILER, IRC, IRC::Bot, IRC::Connection, IRC::Massage)
 use warnings;
 use strict;
 use 5.010;
@@ -342,14 +330,8 @@ my $result = do {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 ${ $$scope->{'channel'} }->{'privmsg'}->(
-                    [
-                        $$scope->{'Str'}->(
-                            [ ${ $$scope->{'res'} }->{'error'} ],
-                            $scope, undef, $pos->(33.25)
-                        )
-                    ],
-                    $scope, undef,
-                    $pos->(33.15)
+                    [ ${ $$scope->{'res'} }->{'error'} ],
+                    $scope, undef, $pos->(33.3)
                 );
                 return $ret_func->();
             }
@@ -465,14 +447,8 @@ my $result = do {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 ${ $$scope->{'channel'} }->{'privmsg'}->(
-                    [
-                        $$scope->{'Str'}->(
-                            [ ${ $$scope->{'res'} }->{'error'} ],
-                            $scope, undef, $pos->(12.25)
-                        )
-                    ],
-                    $scope, undef,
-                    $pos->(12.15)
+                    [ ${ $$scope->{'res'} }->{'error'} ],
+                    $scope, undef, $pos->(12.3)
                 );
                 return $ret_func->();
             }
@@ -558,7 +534,7 @@ my $result = do {
         $context, undef, undef, undef
     );
     FF::load_namespaces( $context,
-        qw(COMPILER IRC IRC::Bot IRC::Connection IRC::Massage Str) );
+        qw(COMPILER IRC IRC::Bot IRC::Connection IRC::Massage) );
     FF::lex_assign(
         $context,
         bot =>
@@ -618,14 +594,8 @@ my $result = do {
         autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ),
         $pos->(46.3)
     );
-    ${ $$scope->{'bot'} }->{'addConnection'}->(
-        [
-            $$scope->{'IRC::Connection'}
-              ->( [ $$scope->{'conn'} ], $scope, undef, $pos->(47.35) )
-        ],
-        $scope, undef,
-        $pos->(47.15)
-    );
+    ${ $$scope->{'bot'} }->{'addConnection'}
+      ->( [ $$scope->{'conn'} ], $scope, undef, $pos->(47.3) );
     ${ $$scope->{'bot'} }->{'connect'}
       ->( [ undef, [] ], $scope, undef, $pos->(48.3) );
 };

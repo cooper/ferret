@@ -43,6 +43,15 @@
 #                  Assignment
 #                      Bareword 'LC'
 #                      Bareword 'Lowercase'
+#          Type definition ('Any')
+#              Body ('type' scope)
+#                  Instruction
+#                      Transform
+#                          Call
+#                              Bareword 'Str'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Topic variable '$_'
 #          Method 'word'
 #              Body ('method' scope)
 #                  Instruction
@@ -99,7 +108,7 @@
 #                              Instance variable '@length'
 #                              Equality operator (==)
 #                              Number '0'
-#      Include (LC, Lowercase, NE, NonEmpty, Num, UC, Uppercase)
+#      Include (LC, Lowercase, NE, NonEmpty, Num, Str, UC, Uppercase)
 use warnings;
 use strict;
 use 5.010;
@@ -144,7 +153,7 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'wordI', 25.2 ) or return;
+                FF::need( $scope, $args, 'wordI', 29.2 ) or return;
                 return $ret_func->(
                     $$self->{'split'}->(
                         [
@@ -157,10 +166,10 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(26.15)
+                        $pos->(30.15)
                       )->get_index_value(
                         [ $$scope->{'wordI'} ],
-                        $scope, $pos->(26.55)
+                        $scope, $pos->(30.55)
                       )
                 );
                 return $ret;
@@ -181,7 +190,7 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'wordN', 30.2 ) or return;
+                FF::need( $scope, $args, 'wordN', 34.2 ) or return;
                 return $ret_func->(
                     $$self->{'split'}->(
                         [
@@ -194,10 +203,10 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(31.15)
+                        $pos->(35.15)
                       )->get_index_value(
                         [ $$scope->{'wordN'} ],
-                        $scope, $pos->(31.55)
+                        $scope, $pos->(35.55)
                       )
                 );
                 return $ret;
@@ -272,9 +281,29 @@ my $result = do {
             undef
         );
         $class->set_property( LC => $$scope->{'Lowercase'}, $pos->(22.3) );
+        FF::typedef(
+            $scope, $class, 'Any',
+            sub {
+                my ( $ins, $create_can, $transform ) = @_;
+                FF::typedef_check(
+                    $scope, $scope, $ins,
+                    conditions => [
+                        do {
+                            $ins = $transform->(
+                                $$scope->{'Str'}
+                                  ->( [$ins], $scope, undef, $pos->(25.3) ),
+                                $ins
+                            );
+                          }
+                    ],
+                    equal_to => undef
+                ) ? $ins : undef;
+            },
+            undef
+        );
     }
     FF::load_namespaces( $context,
-        qw(LC Lowercase NE NonEmpty Num UC Uppercase) );
+        qw(LC Lowercase NE NonEmpty Num Str UC Uppercase) );
 };
 
 FF::after_content();

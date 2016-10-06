@@ -13,6 +13,10 @@ use Ferret::Core::Conversion qw(pstring fstring fnumber);
 my @methods = (
     hashValue => {
         code => \&_hash_value
+    },
+    name => {
+        code => \&_name,
+        prop => 1
     }
 );
 
@@ -47,6 +51,12 @@ sub init {
     # so force init to return one of them.
     $sym->{override_init_obj} = $sym->get_sym;
 
+}
+
+# the name is just Str($sym) without the colon
+sub _name {
+    my $sym = shift;
+    return fstring($sym->{sym_value});
 }
 
 # symbols are hashable by nature.

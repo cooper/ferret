@@ -11,20 +11,22 @@ init {
 }
 
 method description {
-    if @subError:
-        return @msg + ": " + @subError.description!
+    $desc = "[@type.name] " + @msg
     if @hints && !@hints.empty:
-        return @msg + _prettyHints(@hints)
-    return @msg
+        $desc += _prettyHints(@hints)
+    if @subError:
+        $desc += " ->" + @subError.*description
+    return $desc
 }
- func _prettyHints {
-     need $list: List
-     $str = "\n"
-     for ($i, $el) in $list {
-         if $i.even:
-             $str += "    " + $el + ": "
-         else:
-             $str += $el + "\n"
-     }
-     return $str
- }
+
+func _prettyHints {
+    need $list: List
+    $str = "\n"
+    for ($i, $el) in $list {
+        if $i.even:
+            $str += "    " + $el + ": "
+        else:
+            $str += $el + "\n"
+    }
+    return $str
+}

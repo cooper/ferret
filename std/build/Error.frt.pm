@@ -34,20 +34,18 @@
 #                                  String 'Ferret::Error'
 #          Method 'description'
 #              Body ('method' scope)
-#                  If
-#                      Expression ('if' parameter)
-#                          Instance variable '@subError'
-#                      Body ('if' scope)
-#                          Instruction
-#                              Return
-#                                  Operation
-#                                      Instance variable '@msg'
-#                                      Addition operator (+)
-#                                      String ': '
-#                                      Addition operator (+)
-#                                      Call
-#                                          Property 'description'
-#                                              Instance variable '@subError'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$desc'
+#                          Operation
+#                              String '['
+#                              Addition operator (+)
+#                              Property 'name'
+#                                  Instance variable '@type'
+#                              Addition operator (+)
+#                              String '] '
+#                              Addition operator (+)
+#                              Instance variable '@msg'
 #                  If
 #                      Expression ('if' parameter)
 #                          Operation
@@ -58,18 +56,28 @@
 #                                      Instance variable '@hints'
 #                      Body ('if' scope)
 #                          Instruction
-#                              Return
+#                              Addition assignment
+#                                  Lexical variable '$desc'
+#                                  Call
+#                                      Bareword '_prettyHints'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Instance variable '@hints'
+#                  If
+#                      Expression ('if' parameter)
+#                          Instance variable '@subError'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Addition assignment
+#                                  Lexical variable '$desc'
 #                                  Operation
-#                                      Instance variable '@msg'
+#                                      String ' ->'
 #                                      Addition operator (+)
-#                                      Call
-#                                          Bareword '_prettyHints'
-#                                          Argument list [1 items]
-#                                              Item 0
-#                                                  Instance variable '@hints'
+#                                      Special property '*description'
+#                                          Instance variable '@subError'
 #                  Instruction
 #                      Return
-#                          Instance variable '@msg'
+#                          Lexical variable '$desc'
 #          Function '_prettyHints'
 #              Body ('function' scope)
 #                  Instruction
@@ -160,11 +168,11 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'list', 21.2 ) or return;
+            FF::need( $scope, $args, 'list', 23.2 ) or return;
             FF::lex_assign(
                 $scope,
                 str => str( $f, "\n" ),
-                $file_scope, $pos->(22.2)
+                $file_scope, $pos->(24.2)
             );
             {
                 my $loop_ret = FF::iterate_pair(
@@ -188,7 +196,7 @@ my $result = do {
                                     )
                                 ),
                                 $file_scope,
-                                $pos->(25.2)
+                                $pos->(27.2)
                             );
                         }
                         else {
@@ -203,11 +211,11 @@ my $result = do {
                                     )
                                 ),
                                 $file_scope,
-                                $pos->(27.2)
+                                $pos->(29.2)
                             );
                         }
                     },
-                    $pos->(23.05)
+                    $pos->(25.05)
                 );
                 return $ret_func->($loop_ret) if $loop_ret;
             }
@@ -276,19 +284,18 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                if ( bool( $$self->{'subError'} ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    return $ret_func->(
-                        add(
-                            $scope,
-                            $$self->{'msg'},
-                            str( $f, ": " ),
-                            ${ $$self->{'subError'} }->{'description'}
-                              ->( [ undef, [] ], $scope, undef, $pos->(15.4) )
-                        )
-                    );
-                }
+                FF::lex_assign(
+                    $scope,
+                    desc => add(
+                        $scope,
+                        str( $f, "[" ),
+                        ${ $$self->{'type'} }->{'name'},
+                        str( $f, "] " ),
+                        $$self->{'msg'}
+                    ),
+                    $file_scope,
+                    $pos->(14.1)
+                );
                 if (
                     bool(
                         all_true(
@@ -301,18 +308,39 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return $ret_func->(
-                        add(
+                    FF::lex_assign(
+                        $scope,
+                        desc => add(
                             $scope,
-                            $$self->{'msg'},
+                            $$scope->{'desc'},
                             $$scope->{'_prettyHints'}->(
                                 [ $$self->{'hints'} ], $scope,
-                                undef,                 $pos->(17.5)
+                                undef,                 $pos->(16.4)
                             )
-                        )
+                        ),
+                        $file_scope,
+                        $pos->(16.2)
                     );
                 }
-                return $ret_func->( $$self->{'msg'} );
+                if ( bool( $$self->{'subError'} ) ) {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    FF::lex_assign(
+                        $scope,
+                        desc => add(
+                            $scope,
+                            $$scope->{'desc'},
+                            add(
+                                $scope,
+                                str( $f, " ->" ),
+                                ${ $$self->{'subError'} }->{'*description'}
+                            )
+                        ),
+                        $file_scope,
+                        $pos->(18.2)
+                    );
+                }
+                return $ret_func->( $$scope->{'desc'} );
                 return $ret;
             }
         );

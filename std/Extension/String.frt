@@ -21,6 +21,10 @@ type Lowercase {
 
 alias LC = Lowercase
 
+type Any {
+    transform Str($_)
+}
+
 method word {
     need $wordI: Num
     return @split(" ", limit: $wordI + 2)[$wordI]

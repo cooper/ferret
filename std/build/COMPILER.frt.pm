@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Scalar::Util qw(looks_like_number);
+use Scalar::Util qw(looks_like_number blessed);
 use Ferret::Core::Conversion qw(pstring pbool fstring ferretize ferror);
 
 use Ferret::Lexer;
@@ -66,19 +66,21 @@ sub tokenize {
         eval { Ferret::Lexer::Tokenizer::tokenize("$code\n", '(stdin)') };
 
     # either it returned an error or an exception occurred
-    bless($err = \"$@", 'F::Error') if !$err && $@;
-    return $err if $err;
+    if (my $bad = $err ? $$err : $@) {
+        return ferror($bad, 'TokenizeError');
+    }
 
-    return $compiler->{tokens} = \@tokens;
+    $compiler->{tokens} = \@tokens;
+    return (undef, \@tokens);
 }
 
 sub _tokenize {
     my ($compiler, $args, undef, undef, $ret) = @_;
 
     # tokenize
-    my $tokens = $compiler->tokenize;
-    if (ref $tokens eq 'F::Error') {
-        $ret->set_property(error => ferror($$tokens, 'CompileError'));
+    my ($err, $tokens) = $compiler->tokenize;
+    if ($err) {
+        $ret->set_property(error => $err);
         return $ret;
     }
 
@@ -96,30 +98,29 @@ sub construct {
     my $compiler = shift;
 
     # tokenize
-    my $tokens = $compiler->tokenize;
-    if (ref $tokens ne 'ARRAY') {
-        return $tokens;
-    }
+    my ($err, $tokens) = $compiler->tokenize;
+    return $err if $err;
     my @tokens = @$tokens;
 
     # construct
     my $doc = F::new('Document', name => '(stdin)');
-    my $err = eval { Ferret::Lexer::Constructor::construct($doc, @tokens) };
+    $err = eval { Ferret::Lexer::Constructor::construct($doc, @tokens) };
 
     # either it returned an error or an exception occurred
-    bless($err = \"$@", 'F::Error') if !$err && $@;
-    return $err if $err;
+    if (my $bad = $err ? $$err : $@) {
+        return ferror($bad, 'ConstructError');
+    }
 
-    return $doc;
+    return (undef, $doc);
 }
 
 sub _construct {
     my ($compiler, $args, undef, undef, $ret) = @_;
 
     # construct
-    my $doc = $compiler->construct();
-    if (ref $doc eq 'F::Error') {
-        $ret->set_property(error => ferror($$doc, 'CompileError'));
+    my ($err, $doc) = $compiler->construct();
+    if ($err) {
+        $ret->set_property(error => $err);
         return $ret;
     }
 
@@ -136,16 +137,12 @@ sub compile {
     my ($compiler, $mini) = @_;
 
     # construct
-    my $doc = eval { $compiler->construct };
-
-    # either it returned an error or an exception occurred
-    my $err = $doc if ref $doc eq 'F::Error';
-    bless($err = \"$@", 'F::Error') if !$err && $@;
+    my ($err, $doc) = eval { $compiler->construct };
     return $err if $err;
 
     # compile
-    return eval { Ferret::Perl::main($doc, $mini) } // \"$@";
-
+    my $ret = eval { Ferret::Perl::main($doc, $mini) };
+    return defined $ret ? (undef, $ret) : ferror($@, 'CompileError');
 }
 
 sub _compile {
@@ -153,9 +150,9 @@ sub _compile {
     my $mini = $args->pbool('mini');
 
     # compile
-    my $code = $compiler->compile($mini);
-    if (ref $code eq 'SCALAR') {
-        $ret->set_property(error => ferror($$code, 'CompileError'));
+    my ($err, $code) = $compiler->compile($mini);
+    if ($err) {
+        $ret->set_property(error => $err);
         return $ret;
     }
 
@@ -167,13 +164,18 @@ sub eval : method {
     my $compiler = shift;
 
     # compile
-    my $code = $compiler->compile;
-    return $code if ref $code eq 'SCALAR'; # error
+    my ($err, $code) = $compiler->compile;
+    return $err if $err;
 
     # eval
     my $res = __eval($code);
+    if (ref $res eq 'SCALAR') {
+        my $sig_err = $Ferret::Native::Signal::last_err;
+        return $sig_err if $sig_err;
+        return ferror($$res, 'EvalError');
+    }
 
-    return $res;
+    return (undef, $res);
 }
 
 sub __eval {
@@ -184,10 +186,13 @@ sub __eval {
 
 sub _eval {
     my ($compiler, undef, undef, undef, $ret) = @_;
-    my $res = $compiler->eval;
-    if (ref $res eq 'SCALAR') {
-        $ret->set_property(error => ferror($$res, 'CompileError'));
+    my ($err, $res) = $compiler->eval;
+
+    if ($err) {
+        $ret->set_property(error => $err);
+        return $ret;
     }
+
     $ret->set_property(result =>
         Ferret::valid_value($res) ? $res : Ferret::undefined
     );
@@ -200,9 +205,8 @@ sub _perl_eval {
     my $code = $compiler->_code;
        $code = "my \$result = do { $code };";
     my $res = __eval($code);
-
     if (ref $res eq 'SCALAR') {
-        $ret->set_property(error => ferror($$res, 'CompileError'));
+        $ret->set_property(error => ferror($$res, 'EvalError'));
     }
     $ret->set_property(result => ferretize($res));
 

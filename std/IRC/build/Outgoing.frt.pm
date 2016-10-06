@@ -35,7 +35,7 @@
 #                      Need
 #                          Lexical variable '$message'
 #                          Argument type
-#                              Bareword 'Str'
+#                              Bareword 'Str::Any'
 #                  For (values)
 #                      Expression ('for' parameter)
 #                          Lexical variable '$line'
@@ -83,7 +83,7 @@
 #                                      String 'NICK '
 #                                      Addition operator (+)
 #                                      Lexical variable '$nick'
-#      Include (Str)
+#      Include (Str, Str::Any)
 use warnings;
 use strict;
 use 5.010;
@@ -170,7 +170,7 @@ my $result = do {
                 },
                 {
                     name     => 'message',
-                    type     => 'Str',
+                    type     => 'Str::Any',
                     optional => undef,
                     more     => undef
                 }
@@ -251,7 +251,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Str) );
+    FF::load_namespaces( $context, qw(Str Str::Any) );
 };
 
 FF::after_content();

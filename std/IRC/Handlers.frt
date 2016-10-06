@@ -54,6 +54,6 @@ func hiddenHost {
 func nickInUse {
     if %registered:
         return
-    %me.nick = %me.nick + "_"
+    %me.nick += "_"
     %sendNick(%me.nick)
 }

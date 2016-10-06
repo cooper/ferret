@@ -20,8 +20,10 @@ sub _handle_signal {
 
 # TODO: make it possible to handle these
 
+our $last_err;
 $SIG{__DIE__} = sub {
     my $e = shift;
+    $last_err = blessed $e ? $e : undef;
     $e = $e->description        if
         !$Ferret::in_catch      &&
         blessed $e              &&

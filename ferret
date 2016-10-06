@@ -202,7 +202,8 @@ sub do_file {
     if (!$doc) {
 
         # parse the input file.
-        my $str = eval { slurp($file) } or return error($ret, $fh, $write_file, $!);
+        defined(my $str = eval { slurp($file) })
+            or return error($ret, $fh, $write_file, $!);
 
         # tokenize.
         my ($err, @tok) = Ferret::Lexer::Tokenizer::tokenize("$str\n", $file);
@@ -285,6 +286,6 @@ sub error {
     my ($ret, $fh, $output_file, $msg) = @_;
     close $fh if $fh;
     unlink $output_file if $output_file;
-    $ret->{error} = $msg;
+    $ret->{error} = 'Error: '.$msg;
     return $ret;
 }

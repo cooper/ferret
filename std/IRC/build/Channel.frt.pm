@@ -23,7 +23,7 @@
 #                      Need
 #                          Lexical variable '$message'
 #                          Argument type
-#                              Bareword 'Str'
+#                              Bareword 'Str::Any'
 #                  Instruction
 #                      Call
 #                          Property 'sendPrivmsg'
@@ -33,7 +33,7 @@
 #                                  Instance variable '@name'
 #                              Item 1
 #                                  Lexical variable '$message'
-#      Include (Connection, Str)
+#      Include (Connection, Str, Str::Any)
 use warnings;
 use strict;
 use 5.010;
@@ -99,7 +99,7 @@ my $result = do {
             [
                 {
                     name     => 'message',
-                    type     => 'Str',
+                    type     => 'Str::Any',
                     optional => undef,
                     more     => undef
                 }
@@ -123,7 +123,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Connection Str) );
+    FF::load_namespaces( $context, qw(Connection Str Str::Any) );
 };
 
 FF::after_content();

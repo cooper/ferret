@@ -25,7 +25,7 @@ Creates a new Channel class instance.
 ### privmsg
 
 ```
-$channel.privmsg($message: Str)
+$channel.privmsg($message: Str::Any)
 ```
 
 Sends a message to the channel.
@@ -33,7 +33,7 @@ Sends a message to the channel.
 
 #### Arguments
 
-* __message__: [String](/std/doc/String.md)  
+* __message__: Str::Any  
 
 
 

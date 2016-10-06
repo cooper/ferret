@@ -181,14 +181,10 @@
 #                      Instruction
 #                          Return
 #              Instruction
-#                  Assignment
+#                  Addition assignment
 #                      Property 'nick'
 #                          This variable '%me'
-#                      Operation
-#                          Property 'nick'
-#                              This variable '%me'
-#                          Addition operator (+)
-#                          String '_'
+#                      String '_'
 #              Instruction
 #                  Call
 #                      This variable '%sendNick'

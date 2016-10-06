@@ -9,7 +9,7 @@ on $bot.commands.e {
     need $msg, $channel
     $res = COMPILER(getParameter($msg)).eval()
     if $res.error {
-        $channel.privmsg(Str($res.error))
+        $channel.privmsg($res.error)
         return
     }
     $string = inspect(value: $res.result, quiet: true).string
@@ -30,7 +30,7 @@ func handlePerl {
     need $msg, $channel, $mini
     $res = COMPILER(getParameter($msg)).compile(mini: $mini)
     if $res.error {
-        $channel.privmsg(Str($res.error))
+        $channel.privmsg($res.error)
         return
     }
     $channel.privmsg($res.perl)
@@ -44,5 +44,5 @@ func getParameter {
 
 share $conn = IRC::Connection(addr: "k.notroll.net", nick: "booby",  user: "ferret");
 $conn.autojoin = ["\#k"]
-$bot.addConnection(IRC::Connection($conn))
+$bot.addConnection($conn)
 $bot.connect()
