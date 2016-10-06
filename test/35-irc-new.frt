@@ -16,6 +16,26 @@ on $bot.commands.e {
     $channel.privmsg($string)
 }
 
+on $bot.commands.p {
+    need $msg, $channel
+    handlePerl($msg, $channel, true)
+}
+
+on $bot.commands.pp {
+    need $msg, $channel
+    handlePerl($msg, $channel, false)
+}
+
+func handlePerl {
+    need $msg, $channel, $mini
+    $res = COMPILER(getParameter($msg)).compile(mini: $mini)
+    if $res.error {
+        $channel.privmsg(Str($res.error))
+        return
+    }
+    $channel.privmsg($res.perl)
+}
+
 func getParameter {
     need $msg: IRC::Massage
     $string = $msg.params[1].fromWord(1) || ""
