@@ -43,6 +43,30 @@
 #                  Assignment
 #                      Bareword 'LC'
 #                      Bareword 'Lowercase'
+#          Method 'word'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$wordI'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Index
+#                              Call
+#                                  Instance variable '@split'
+#                                  Mixed argument list [2 items]
+#                                      Item 0
+#                                          String ' '
+#                                      Item 1
+#                                          Pair 'limit'
+#                                              Operation
+#                                                  Lexical variable '$wordI'
+#                                                  Addition operator (+)
+#                                                  Number '2'
+#                              Index list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$wordI'
 #          Method 'fromWord'
 #              Body ('method' scope)
 #                  Instruction
@@ -99,8 +123,44 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, $file_scope, 'String', undef, undef );
 
-        # Method event 'fromWord' definition
+        # Method event 'word' definition
         my $method_0 = FF::method_event_def(
+            $f, $scope, 'word',
+            [
+                {
+                    name     => 'wordI',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'wordI', 25.2 ) or return;
+                return $ret_func->(
+                    $$self->{'split'}->(
+                        [
+                            str( $f, " " ),
+                            [
+                                limit => add(
+                                    $scope, $$scope->{'wordI'},
+                                    num( $f, "2" )
+                                )
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(26.15)
+                      )->get_index_value(
+                        [ $$scope->{'wordI'} ],
+                        $scope, $pos->(26.55)
+                      )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'fromWord' definition
+        my $method_1 = FF::method_event_def(
             $f, $scope,
             'fromWord',
             [
@@ -113,7 +173,7 @@ my $result = do {
             ],
             sub {
                 my ( $self, $args, $call_scope, $scope, $ret ) = @_;
-                FF::need( $scope, $args, 'wordN', 25.2 ) or return;
+                FF::need( $scope, $args, 'wordN', 30.2 ) or return;
                 return $ret_func->(
                     $$self->{'split'}->(
                         [
@@ -126,16 +186,17 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(26.15)
+                        $pos->(31.15)
                       )->get_index_value(
                         [ $$scope->{'wordN'} ],
-                        $scope, $pos->(26.55)
+                        $scope, $pos->(31.55)
                       )
                 );
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $method_0->inside_scope( word => $scope, $proto, $class, undef, undef );
+        $method_1->inside_scope(
             fromWord => $scope,
             $proto, $class, undef, undef
         );
