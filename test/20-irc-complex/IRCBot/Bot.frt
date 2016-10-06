@@ -72,7 +72,7 @@ method handleLine {
 
     # handle command maybe
     $handlers[$command]?(
-        _self:      *self,
+        _this:      *self,
         line:       $line,
         command:    $command,
         s:          $s
@@ -91,23 +91,23 @@ method privmsg {
 func _joinChannels {
 
     # check if already joined.
-    if @_joinedChannels:
+    if %_joinedChannels:
         return
 
-    if @autojoin {
-        for $chan in @autojoin {
-            @send("JOIN $chan")
+    if %autojoin {
+        for $chan in %autojoin {
+            %send("JOIN $chan")
         }
     }
 
-    @_joinedChannels = true
+    %_joinedChannels = true
 }
 
 # Default handlers and commands
 
 func _pong {
     need $s
-    @send("PONG " + $s[1])
+    %send("PONG " + $s[1])
 }
 
 func _handleMessage {
@@ -118,7 +118,7 @@ func _handleMessage {
     msg -> $msg
 
     # found a command
-    if $msg.command: @commands[ $msg.command.lowercase ]?(
+    if $msg.command: %commands[ $msg.command.lowercase ]?(
         _self:  *self,
         line:   $line,
         s:      $s,
@@ -130,7 +130,7 @@ func _handleMessage {
 func _commandHello {
     need $msg
     $nickname = $msg.nickname
-    @privmsg($msg.channel, "Hi $nickname!")
+    %privmsg($msg.channel, "Hi $nickname!")
 }
 
 func _commandAdd {
@@ -142,19 +142,19 @@ func _commandAdd {
     $response = $msg.fromWord(2)
 
     # remember this factoid
-    @factoids[$trigger] = $response
-    @commands[$trigger] = _commandFactoid
+    %factoids[$trigger] = $response
+    %commands[$trigger] = _commandFactoid
 
-    @privmsg($msg.channel, "alright, associating .$trigger with '$response'")
+    %privmsg($msg.channel, "alright, associating .$trigger with '$response'")
 }
 
 func _commandFactoid {
     need $msg
-    $response = @factoids[ $msg.command ].fill(
+    $response = %factoids[ $msg.command ].fill(
         nick:   $msg.nickname,
         cmd:    $msg.command,
         chan:   $msg.channel,
         nl:     "\n"
     )
-    @privmsg($msg.channel, $response)
+    %privmsg($msg.channel, $response)
 }

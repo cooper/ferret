@@ -318,8 +318,8 @@ our %element_rules = (
 
         # instance variables only make sense inside of classes.
         must_be_somewhere_inside => [                                           # InstanceVariable[0]
-            'Function Method',
-            'Instance variables must be inside a class function or method',
+            'Method',
+            'Instance variables must be inside a class instance method',
             0
         ]
 

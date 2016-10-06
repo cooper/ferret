@@ -264,7 +264,7 @@
 #                                          Lexical variable '$command'
 #                          Named argument list [4 items]
 #                              Item 0
-#                                  Pair '_self'
+#                                  Pair '_this'
 #                                      Special variable '*self'
 #                              Item 1
 #                                  Pair 'line'
@@ -323,23 +323,23 @@
 #              Body ('function' scope)
 #                  If
 #                      Expression ('if' parameter)
-#                          Instance variable '@_joinedChannels'
+#                          This variable '%_joinedChannels'
 #                      Body ('if' scope)
 #                          Instruction
 #                              Return
 #                  If
 #                      Expression ('if' parameter)
-#                          Instance variable '@autojoin'
+#                          This variable '%autojoin'
 #                      Body ('if' scope)
 #                          For (values)
 #                              Expression ('for' parameter)
 #                                  Lexical variable '$chan'
 #                              Expression ('in' parameter)
-#                                  Instance variable '@autojoin'
+#                                  This variable '%autojoin'
 #                              Body ('for' scope)
 #                                  Instruction
 #                                      Call
-#                                          Instance variable '@send'
+#                                          This variable '%send'
 #                                          Argument list [1 items]
 #                                              Item 0
 #                                                  Operation
@@ -348,7 +348,7 @@
 #                                                      Lexical variable '$chan'
 #                  Instruction
 #                      Assignment
-#                          Instance variable '@_joinedChannels'
+#                          This variable '%_joinedChannels'
 #                          Boolean true
 #          Function '_pong'
 #              Body ('function' scope)
@@ -357,7 +357,7 @@
 #                          Lexical variable '$s'
 #                  Instruction
 #                      Call
-#                          Instance variable '@send'
+#                          This variable '%send'
 #                          Argument list [1 items]
 #                              Item 0
 #                                  Operation
@@ -396,7 +396,7 @@
 #                              Call
 #                                  Maybe
 #                                      Index
-#                                          Instance variable '@commands'
+#                                          This variable '%commands'
 #                                          Index list [1 items]
 #                                              Item 0
 #                                                  Property 'lowercase'
@@ -427,7 +427,7 @@
 #                              Lexical variable '$msg'
 #                  Instruction
 #                      Call
-#                          Instance variable '@privmsg'
+#                          This variable '%privmsg'
 #                          Argument list [2 items]
 #                              Item 0
 #                                  Property 'channel'
@@ -471,7 +471,7 @@
 #                  Instruction
 #                      Assignment
 #                          Index
-#                              Instance variable '@factoids'
+#                              This variable '%factoids'
 #                              Index list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$trigger'
@@ -479,14 +479,14 @@
 #                  Instruction
 #                      Assignment
 #                          Index
-#                              Instance variable '@commands'
+#                              This variable '%commands'
 #                              Index list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$trigger'
 #                          Bareword '_commandFactoid'
 #                  Instruction
 #                      Call
-#                          Instance variable '@privmsg'
+#                          This variable '%privmsg'
 #                          Argument list [2 items]
 #                              Item 0
 #                                  Property 'channel'
@@ -513,7 +513,7 @@
 #                          Call
 #                              Property 'fill'
 #                                  Index
-#                                      Instance variable '@factoids'
+#                                      This variable '%factoids'
 #                                      Index list [1 items]
 #                                          Item 0
 #                                              Property 'command'
@@ -536,7 +536,7 @@
 #                                          String '␤'
 #                  Instruction
 #                      Call
-#                          Instance variable '@privmsg'
+#                          This variable '%privmsg'
 #                          Argument list [2 items]
 #                              Item 0
 #                                  Property 'channel'
@@ -628,22 +628,22 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            if ( bool( $$self->{'_joinedChannels'} ) ) {
+            if ( bool( $$this->{'_joinedChannels'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 return $ret_func->();
             }
-            if ( bool( $$self->{'autojoin'} ) ) {
+            if ( bool( $$this->{'autojoin'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,
-                        $$self->{'autojoin'},
+                        $$this->{'autojoin'},
                         'chan',
                         sub {
                             my ( $scope, $ret_func ) = @_;
-                            $$self->{'send'}->(
+                            $$this->{'send'}->(
                                 [
                                     add(
                                         $scope, str( $f, "JOIN " ),
@@ -659,7 +659,7 @@ my $result = do {
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
             }
-            $self->set_property( _joinedChannels => $true, $pos->(103.2) );
+            $this->set_property( _joinedChannels => $true, $pos->(103.2) );
             return $ret;
         }
     );
@@ -672,7 +672,7 @@ my $result = do {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 's', 109.2 ) or return;
-            $$self->{'send'}->(
+            $$this->{'send'}->(
                 [
                     add(
                         $scope,
@@ -715,7 +715,7 @@ my $result = do {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 {
-                    my $maybe_0 = $$self->{'commands'}->get_index_value(
+                    my $maybe_0 = $$this->{'commands'}->get_index_value(
                         [
                             ${ ${ $$scope->{'msg'} }->{'command'} }
                               ->{'lowercase'}
@@ -759,7 +759,7 @@ my $result = do {
                 nickname => ${ $$scope->{'msg'} }->{'nickname'},
                 $file_scope, $pos->(132.2)
             );
-            $$self->{'privmsg'}->(
+            $$this->{'privmsg'}->(
                 [
                     ${ $$scope->{'msg'} }->{'channel'},
                     add(
@@ -800,14 +800,14 @@ my $result = do {
                   ->( [ num( $f, "2" ) ], $scope, undef, $pos->(142.5) ),
                 $file_scope, $pos->(142.2)
             );
-            $$self->{'factoids'}->set_index_value( [ $$scope->{'trigger'} ],
+            $$this->{'factoids'}->set_index_value( [ $$scope->{'trigger'} ],
                 $$scope->{'response'}, $scope, $pos->(145.5) );
-            $$self->{'commands'}->set_index_value(
+            $$this->{'commands'}->set_index_value(
                 [ $$scope->{'trigger'} ],
                 $$scope->{'_commandFactoid'},
                 $scope, $pos->(146.5)
             );
-            $$self->{'privmsg'}->(
+            $$this->{'privmsg'}->(
                 [
                     ${ $$scope->{'msg'} }->{'channel'},
                     add(
@@ -839,7 +839,7 @@ my $result = do {
             FF::lex_assign(
                 $scope,
                 response => ${
-                    $$self->{'factoids'}->get_index_value(
+                    $$this->{'factoids'}->get_index_value(
                         [ ${ $$scope->{'msg'} }->{'command'} ], $scope,
                         $pos->(153.2)
                     )
@@ -859,7 +859,7 @@ my $result = do {
                 $file_scope,
                 $pos->(153.1)
             );
-            $$self->{'privmsg'}->(
+            $$this->{'privmsg'}->(
                 [ ${ $$scope->{'msg'} }->{'channel'}, $$scope->{'response'} ],
                 $scope, undef, $pos->(159.2)
             );
@@ -1103,7 +1103,7 @@ my $result = do {
                             [
                                 undef,
                                 [
-                                    _self   => ${ $scope->{special} }->{'self'},
+                                    _this   => ${ $scope->{special} }->{'self'},
                                     line    => $$scope->{'line'},
                                     command => $$scope->{'command'},
                                     s       => $$scope->{'s'}
