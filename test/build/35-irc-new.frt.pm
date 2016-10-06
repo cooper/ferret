@@ -90,6 +90,114 @@
 #                                  Lexical variable '$string'
 #      On
 #          Expression ('on' parameter)
+#              Property 't'
+#                  Property 'commands'
+#                      Lexical variable '$bot'
+#          Anonymous function
+#              Body ('function' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$channel'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$res'
+#                          Call
+#                              Property 'tokenize'
+#                                  Call
+#                                      Bareword 'COMPILER'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Call
+#                                                  Bareword 'getParameter'
+#                                                  Argument list [1 items]
+#                                                      Item 0
+#                                                          Lexical variable '$msg'
+#                              Named argument list [1 items]
+#                                  Item 0
+#                                      Pair 'pretty'
+#                                          Boolean true
+#                  If
+#                      Expression ('if' parameter)
+#                          Property 'error'
+#                              Lexical variable '$res'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Call
+#                                  Property 'privmsg'
+#                                      Lexical variable '$channel'
+#                                  Argument list [1 items]
+#                                      Item 0
+#                                          Property 'error'
+#                                              Lexical variable '$res'
+#                          Instruction
+#                              Return
+#                  Instruction
+#                      Call
+#                          Property 'privmsg'
+#                              Lexical variable '$channel'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Property 'pretty'
+#                                      Lexical variable '$res'
+#      On
+#          Expression ('on' parameter)
+#              Property 'c'
+#                  Property 'commands'
+#                      Lexical variable '$bot'
+#          Anonymous function
+#              Body ('function' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$channel'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$res'
+#                          Call
+#                              Property 'construct'
+#                                  Call
+#                                      Bareword 'COMPILER'
+#                                      Argument list [1 items]
+#                                          Item 0
+#                                              Call
+#                                                  Bareword 'getParameter'
+#                                                  Argument list [1 items]
+#                                                      Item 0
+#                                                          Lexical variable '$msg'
+#                              Named argument list [1 items]
+#                                  Item 0
+#                                      Pair 'pretty'
+#                                          Boolean true
+#                  If
+#                      Expression ('if' parameter)
+#                          Property 'error'
+#                              Lexical variable '$res'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Call
+#                                  Property 'privmsg'
+#                                      Lexical variable '$channel'
+#                                  Argument list [1 items]
+#                                      Item 0
+#                                          Property 'error'
+#                                              Lexical variable '$res'
+#                          Instruction
+#                              Return
+#                  Instruction
+#                      Call
+#                          Property 'privmsg'
+#                              Lexical variable '$channel'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Property 'pretty'
+#                                      Lexical variable '$res'
+#      On
+#          Expression ('on' parameter)
 #              Property 'p'
 #                  Property 'commands'
 #                      Lexical variable '$bot'
@@ -303,9 +411,9 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     30.2 ) or return;
-            FF::need( $scope, $args, 'channel', 30.4 ) or return;
-            FF::need( $scope, $args, 'mini',    30.6 ) or return;
+            FF::need( $scope, $args, 'msg',     50.2 ) or return;
+            FF::need( $scope, $args, 'channel', 50.4 ) or return;
+            FF::need( $scope, $args, 'mini',    50.6 ) or return;
             FF::lex_assign(
                 $scope,
                 res => ${
@@ -313,31 +421,31 @@ my $result = do {
                         [
                             $$scope->{'getParameter'}->(
                                 [ $$scope->{'msg'} ], $scope,
-                                undef,                $pos->(31.3)
+                                undef,                $pos->(51.3)
                             )
                         ],
                         $scope, undef,
-                        $pos->(31.2)
+                        $pos->(51.2)
                     )
                   }->{'compile'}->(
                     [ undef, [ mini => $$scope->{'mini'} ] ], $scope,
-                    undef, $pos->(31.55)
+                    undef, $pos->(51.55)
                   ),
                 $file_scope,
-                $pos->(31.1)
+                $pos->(51.1)
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 ${ $$scope->{'channel'} }->{'privmsg'}->(
                     [ ${ $$scope->{'res'} }->{'error'} ],
-                    $scope, undef, $pos->(33.3)
+                    $scope, undef, $pos->(53.3)
                 );
                 return $ret_func->();
             }
             ${ $$scope->{'channel'} }->{'privmsg'}->(
                 [ ${ $$scope->{'res'} }->{'perl'} ],
-                $scope, undef, $pos->(36.3)
+                $scope, undef, $pos->(56.3)
             );
             return $ret;
         }
@@ -359,7 +467,7 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 40.2 ) or return;
+            FF::need( $scope, $args, 'msg', 60.2 ) or return;
             FF::lex_assign(
                 $scope,
                 string => any_true(
@@ -368,21 +476,21 @@ my $result = do {
                         ${
                             ${ $$scope->{'msg'} }->{'params'}
                               ->get_index_value( [ num( $f, "1" ) ],
-                                $scope, $pos->(41.25) )
+                                $scope, $pos->(61.25) )
                           }->{'fromWord'}->( [ num( $f, "1" ) ], $scope, undef,
-                            $pos->(41.45) );
+                            $pos->(61.45) );
                     },
                     sub { str( $f, "" ) }
                 ),
                 $file_scope,
-                $pos->(41.1)
+                $pos->(61.1)
             );
             return $ret_func->(
                 ${
                     ${ $$scope->{'string'} }->{'split'}
-                      ->( [ str( $f, "_NL_" ) ], $scope, undef, $pos->(42.2) )
+                      ->( [ str( $f, "_NL_" ) ], $scope, undef, $pos->(62.2) )
                   }->{'join'}
-                  ->( [ str( $f, "\n" ) ], $scope, undef, $pos->(42.4) )
+                  ->( [ str( $f, "\n" ) ], $scope, undef, $pos->(62.4) )
             );
             return $ret;
         }
@@ -493,9 +601,38 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg',     20.2 ) or return;
             FF::need( $scope, $args, 'channel', 20.4 ) or return;
-            $$scope->{'handlePerl'}->(
-                [ $$scope->{'msg'}, $$scope->{'channel'}, $true ],
-                $scope, undef, $pos->(21.1)
+            FF::lex_assign(
+                $scope,
+                res => ${
+                    $$scope->{'COMPILER'}->(
+                        [
+                            $$scope->{'getParameter'}->(
+                                [ $$scope->{'msg'} ], $scope,
+                                undef,                $pos->(21.3)
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(21.2)
+                    )
+                  }->{'tokenize'}->(
+                    [ undef, [ pretty => $true ] ], $scope,
+                    undef, $pos->(21.55)
+                  ),
+                $file_scope,
+                $pos->(21.1)
+            );
+            if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                ${ $$scope->{'channel'} }->{'privmsg'}->(
+                    [ ${ $$scope->{'res'} }->{'error'} ],
+                    $scope, undef, $pos->(23.3)
+                );
+                return $ret_func->();
+            }
+            ${ $$scope->{'channel'} }->{'privmsg'}->(
+                [ ${ $$scope->{'res'} }->{'pretty'} ],
+                $scope, undef, $pos->(26.3)
             );
             return $ret;
         }
@@ -516,11 +653,90 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     25.2 ) or return;
-            FF::need( $scope, $args, 'channel', 25.4 ) or return;
+            FF::need( $scope, $args, 'msg',     30.2 ) or return;
+            FF::need( $scope, $args, 'channel', 30.4 ) or return;
+            FF::lex_assign(
+                $scope,
+                res => ${
+                    $$scope->{'COMPILER'}->(
+                        [
+                            $$scope->{'getParameter'}->(
+                                [ $$scope->{'msg'} ], $scope,
+                                undef,                $pos->(31.3)
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(31.2)
+                    )
+                  }->{'construct'}->(
+                    [ undef, [ pretty => $true ] ], $scope,
+                    undef, $pos->(31.55)
+                  ),
+                $file_scope,
+                $pos->(31.1)
+            );
+            if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                ${ $$scope->{'channel'} }->{'privmsg'}->(
+                    [ ${ $$scope->{'res'} }->{'error'} ],
+                    $scope, undef, $pos->(33.3)
+                );
+                return $ret_func->();
+            }
+            ${ $$scope->{'channel'} }->{'privmsg'}->(
+                [ ${ $$scope->{'res'} }->{'pretty'} ],
+                $scope, undef, $pos->(36.3)
+            );
+            return $ret;
+        }
+    );
+
+    # Anonymous function definition
+    my $func_6 = FF::function_def(
+        $f, undef, undef,
+        [
+            { name => 'msg', type => undef, optional => undef, more => undef },
+            {
+                name     => 'channel',
+                type     => undef,
+                optional => undef,
+                more     => undef
+            }
+        ],
+        sub {
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my $self = $_self || $self;
+            FF::need( $scope, $args, 'msg',     40.2 ) or return;
+            FF::need( $scope, $args, 'channel', 40.4 ) or return;
+            $$scope->{'handlePerl'}->(
+                [ $$scope->{'msg'}, $$scope->{'channel'}, $true ],
+                $scope, undef, $pos->(41.1)
+            );
+            return $ret;
+        }
+    );
+
+    # Anonymous function definition
+    my $func_7 = FF::function_def(
+        $f, undef, undef,
+        [
+            { name => 'msg', type => undef, optional => undef, more => undef },
+            {
+                name     => 'channel',
+                type     => undef,
+                optional => undef,
+                more     => undef
+            }
+        ],
+        sub {
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my $self = $_self || $self;
+            FF::need( $scope, $args, 'msg',     45.2 ) or return;
+            FF::need( $scope, $args, 'channel', 45.4 ) or return;
             $$scope->{'handlePerl'}->(
                 [ $$scope->{'msg'}, $$scope->{'channel'}, $false ],
-                $scope, undef, $pos->(26.1)
+                $scope, undef, $pos->(46.1)
             );
             return $ret;
         }
@@ -559,7 +775,7 @@ my $result = do {
     );
     FF::on(
         ${ $$scope->{'bot'} }->{'commands'},
-        'p',
+        't',
         $self,
         $scope,
         $func_4->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
@@ -567,10 +783,26 @@ my $result = do {
     );
     FF::on(
         ${ $$scope->{'bot'} }->{'commands'},
-        'pp',
+        'c',
         $self,
         $scope,
         $func_5->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        {}
+    );
+    FF::on(
+        ${ $$scope->{'bot'} }->{'commands'},
+        'p',
+        $self,
+        $scope,
+        $func_6->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        {}
+    );
+    FF::on(
+        ${ $$scope->{'bot'} }->{'commands'},
+        'pp',
+        $self,
+        $scope,
+        $func_7->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
     FF::lex_assign(
@@ -585,19 +817,19 @@ my $result = do {
                 ]
             ],
             $scope, undef,
-            $pos->(45.35)
+            $pos->(65.35)
         ),
         undef,
-        $pos->(45.15)
+        $pos->(65.15)
     );
     $$scope->{'conn'}->set_property(
         autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ),
-        $pos->(46.3)
+        $pos->(66.3)
     );
     ${ $$scope->{'bot'} }->{'addConnection'}
-      ->( [ $$scope->{'conn'} ], $scope, undef, $pos->(47.3) );
+      ->( [ $$scope->{'conn'} ], $scope, undef, $pos->(67.3) );
     ${ $$scope->{'bot'} }->{'connect'}
-      ->( [ undef, [] ], $scope, undef, $pos->(48.3) );
+      ->( [ undef, [] ], $scope, undef, $pos->(68.3) );
 };
 
 FF::after_content();

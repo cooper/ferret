@@ -16,6 +16,26 @@ on $bot.commands.e {
     $channel.privmsg($string)
 }
 
+on $bot.commands.t {
+    need $msg, $channel
+    $res = COMPILER(getParameter($msg)).tokenize(pretty: true)
+    if $res.error {
+        $channel.privmsg($res.error)
+        return
+    }
+    $channel.privmsg($res.pretty)
+}
+
+on $bot.commands.c {
+    need $msg, $channel
+    $res = COMPILER(getParameter($msg)).construct(pretty: true)
+    if $res.error {
+        $channel.privmsg($res.error)
+        return
+    }
+    $channel.privmsg($res.pretty)
+}
+
 on $bot.commands.p {
     need $msg, $channel
     handlePerl($msg, $channel, true)
