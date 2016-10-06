@@ -88,7 +88,7 @@
 #                              Instruction
 #                                  Assignment
 #                                      Lexical variable '$command'
-#                                      Property 'default'
+#                                      Property 'result'
 #                                          Lexical variable '$trim'
 #                              Instruction
 #                                  Call
@@ -195,7 +195,7 @@ my $result = do {
             }
             FF::lex_assign(
                 $scope,
-                command => ${ $$scope->{'trim'} }->{'default'},
+                command => ${ $$scope->{'trim'} }->{'result'},
                 $file_scope, $pos->(28.2)
             );
             {

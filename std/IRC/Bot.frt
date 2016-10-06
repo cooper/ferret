@@ -25,7 +25,7 @@ method addConnection {
         $trim = detail $msg.params[1].word(0).trimPrefix(".")
         if !$trim.trimmed:
             return
-        $command = $trim.default
+        $command = $trim.result
 
         # call the command
         $bot?.commands.[$command.lowercase]?(

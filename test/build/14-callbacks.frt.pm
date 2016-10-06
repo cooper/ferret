@@ -28,7 +28,7 @@
 #                                      Addition operator (+)
 #                                      String '' length t...'
 #                                      Addition operator (+)
-#                                      Property 'default'
+#                                      Property 'result'
 #                                          Special variable '*return'
 #      Instruction
 #          Call
@@ -59,7 +59,7 @@
 #                                      Addition operator (+)
 #                                      String '' length t...'
 #                                      Addition operator (+)
-#                                      Property 'default'
+#                                      Property 'result'
 #                                          Special variable '*return'
 #      Instruction
 #          Call
@@ -107,7 +107,7 @@ my $result = do {
                         str( $f, "found '" ),
                         ${ $scope->{special} }->{'this'},
                         str( $f, "' length to be " ),
-                        ${ ${ $scope->{special} }->{'return'} }->{'default'}
+                        ${ ${ $scope->{special} }->{'return'} }->{'result'}
                     )
                 ],
                 $scope, undef,
@@ -131,7 +131,7 @@ my $result = do {
                         str( $f, "found '" ),
                         ${ $scope->{special} }->{'this'},
                         str( $f, "' length to be " ),
-                        ${ ${ $scope->{special} }->{'return'} }->{'default'}
+                        ${ ${ $scope->{special} }->{'return'} }->{'result'}
                     )
                 ],
                 $scope, undef,
