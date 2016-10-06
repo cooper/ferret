@@ -16,6 +16,9 @@
 #      Instruction
 #          Load
 #              Bareword 'Extension::List'
+#      Instruction
+#          Load
+#              Bareword 'Extension::Hash'
 #      Type definition ('Any')
 #          Body ('type' scope)
 #      Instruction
@@ -67,7 +70,7 @@
 #                              Item 1
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
-#      Include (Any, Error, Extension, Extension::List, Extension::Number, Extension::String, Hashable, Obj, Object, Signal)
+#      Include (Any, Error, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Obj, Object, Signal)
 use warnings;
 use strict;
 use 5.010;
@@ -95,7 +98,7 @@ my $result = do {
     FF::load_core('CORE');
 
     FF::load_namespaces( $context,
-        qw(Any Error Extension Extension::List Extension::Number Extension::String Hashable Obj Object Signal)
+        qw(Any Error Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Obj Object Signal)
     );
 
     FF::typedef(
@@ -110,8 +113,8 @@ my $result = do {
         },
         undef
     );
-    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(12.3) );
-    $context->set_property( Object => $$scope->{'Any'}, $pos->(13.3) );
+    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(13.3) );
+    $context->set_property( Object => $$scope->{'Any'}, $pos->(14.3) );
     FF::typedef(
         $scope, $context, 'Code',
         sub {
@@ -133,7 +136,7 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
-                      ->( [ undef, [] ], $scope, undef, $pos->(22.3) ),
+                      ->( [ undef, [] ], $scope, undef, $pos->(23.3) ),
                     do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                 ],
                 equal_to => undef
@@ -151,7 +154,7 @@ my $result = do {
                 conditions => [
                     $create_can->( 'getValue', $ins )->(
                         [ undef, [ index => $$scope->{'Hashable'} ] ],
-                        $scope, undef, $pos->(27.3)
+                        $scope, undef, $pos->(28.3)
                     ),
                     $create_can->( 'setValue', $ins )->(
                         [
@@ -162,7 +165,7 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(28.15)
+                        $pos->(29.15)
                     )
                 ],
                 equal_to => undef

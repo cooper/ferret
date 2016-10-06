@@ -300,11 +300,9 @@
 #                      Body ('for' scope)
 #                          If
 #                              Expression ('if' parameter)
-#                                  Operation
-#                                      Property 'length'
+#                                  Negation
+#                                      Property 'empty'
 #                                          Lexical variable '$line'
-#                                      Negated equality operator (!=)
-#                                      Number '0'
 #                              Body ('if' scope)
 #                                  Instruction
 #                                      Call
@@ -565,7 +563,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 my $pos =
   FF::before_content( 'Bot.frt', './test/20-irc-complex/IRCBot/Bot.frt' );
 
-use Ferret::Core::Operations qw(add bool equal nequal num str);
+use Ferret::Core::Operations qw(_not add bool equal num str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'IRCBot' );
     my $scope = $file_scope;
@@ -1151,11 +1149,7 @@ my $result = do {
                             my ( $scope, $ret_func ) = @_;
                             if (
                                 bool(
-                                    nequal(
-                                        $scope,
-                                        ${ $$scope->{'line'} }->{'length'},
-                                        num( $f, "0" )
-                                    )
+                                    _not( ${ $$scope->{'line'} }->{'empty'} )
                                 )
                               )
                             {

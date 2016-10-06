@@ -20,7 +20,8 @@ my @methods = (
         code => \&_values
     },
     length => {
-        code => \&_length
+        code => \&_length,
+        prop => 1
     },
     setValue => {
         need => '$value $index:Hashable',

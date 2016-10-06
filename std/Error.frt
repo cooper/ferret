@@ -13,7 +13,7 @@ init {
 method description {
     if @subError:
         return @msg + ": " + @subError.description!
-    if @hints && @hints.length != 0 :
+    if @hints && !@hints.empty:
         return @msg + _prettyHints(@hints)
     return @msg
 }

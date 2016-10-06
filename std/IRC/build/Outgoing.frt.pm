@@ -47,6 +47,13 @@
 #                                  Item 0
 #                                      String '␤'
 #                      Body ('for' scope)
+#                          If
+#                              Expression ('if' parameter)
+#                                  Property 'empty'
+#                                      Lexical variable '$line'
+#                              Body ('if' scope)
+#                                  Instruction
+#                                      Next
 #                          Instruction
 #                              Call
 #                                  Instance variable '@send'
@@ -97,7 +104,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 my $pos = FF::before_content( 'Outgoing.frt', './std/IRC/Outgoing.frt' );
 
-use Ferret::Core::Operations qw(add str);
+use Ferret::Core::Operations qw(add bool str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
     my $scope = $file_scope;
@@ -181,6 +188,12 @@ my $result = do {
                         'line',
                         sub {
                             my ( $scope, $ret_func ) = @_;
+                            if ( bool( ${ $$scope->{'line'} }->{'empty'} ) ) {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                return 'next';
+                            }
                             $$self->{'send'}->(
                                 [
                                     add(
@@ -192,7 +205,7 @@ my $result = do {
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(15.1)
+                                $pos->(16.1)
                             );
                         },
                         $pos->(14.05)
@@ -217,10 +230,10 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'nick', 21.2 ) or return;
+                FF::need( $scope, $args, 'nick', 23.2 ) or return;
                 $$self->{'send'}->(
                     [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],
-                    $scope, undef, $pos->(22.2)
+                    $scope, undef, $pos->(24.2)
                 );
                 return $ret;
             }

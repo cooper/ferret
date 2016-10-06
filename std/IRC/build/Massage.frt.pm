@@ -180,7 +180,7 @@
 #                                                                  Item 0
 #                                                                      Number '1'
 #                                                  Instruction
-#                                                      LoopStatement
+#                                                      Next
 #                                          Instruction
 #                                              Assignment
 #                                                  Index
@@ -202,7 +202,7 @@
 #                                          Bareword 'updateWord'
 #                                          Argument list [0 items]
 #                                  Instruction
-#                                      LoopStatement
+#                                      Next
 #                          If
 #                              Expression ('if' parameter)
 #                                  Operation
@@ -241,7 +241,7 @@
 #                                          Bareword 'updateWord'
 #                                          Argument list [0 items]
 #                                  Instruction
-#                                      LoopStatement
+#                                      Next
 #                          If
 #                              Expression ('if' parameter)
 #                                  Negation
@@ -261,7 +261,7 @@
 #                                          Bareword 'updateWord'
 #                                          Argument list [0 items]
 #                                  Instruction
-#                                      LoopStatement
+#                                      Next
 #                          If
 #                              Expression ('if' parameter)
 #                                  Call
@@ -303,7 +303,7 @@
 #                                              Item 0
 #                                                  Lexical variable '$rest'
 #                                  Instruction
-#                                      LoopStatement
+#                                      Last
 #                          Instruction
 #                              Call
 #                                  Property 'push'

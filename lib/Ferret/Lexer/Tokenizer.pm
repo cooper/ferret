@@ -62,6 +62,7 @@ my %semi_follows = map { $_ => 1 } qw(
     OP_CALL         OP_ELLIP        REGEX
     KEYWORD_TRUE    KEYWORD_FALSE   KEYWORD_UNDEFINED
     KEYWORD_RETURN  KEYWORD_STOP    BAREWORD
+    KEYWORD_NEXT    KEYWORD_LAST    KEYWORD_REDO
 );
 
 # reused formats

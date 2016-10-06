@@ -91,6 +91,14 @@
 #                              Index list [1 items]
 #                                  Item 0
 #                                      Lexical variable '$wordN'
+#          Computed property 'empty' (lazy)
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Operation
+#                              Instance variable '@length'
+#                              Equality operator (==)
+#                              Number '0'
 #      Include (LC, Lowercase, NE, NonEmpty, Num, UC, Uppercase)
 use warnings;
 use strict;
@@ -112,7 +120,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 my $pos = FF::before_content( 'String.frt', './std/Extension/String.frt' );
 
-use Ferret::Core::Operations qw(add nequal num str);
+use Ferret::Core::Operations qw(add equal nequal num str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -195,11 +203,24 @@ my $result = do {
                 return $ret;
             }
         );
+
+        # Method event 'empty' definition
+        my $method_2 = FF::method_event_def(
+            $f, $scope, 'empty',
+            [],
+            sub {
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                return $ret_func->(
+                    equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
+                return $ret;
+            }
+        );
         $method_0->inside_scope( word => $scope, $proto, $class, undef, undef );
         $method_1->inside_scope(
             fromWord => $scope,
             $proto, $class, undef, undef
         );
+        $method_2->inside_scope( empty => $scope, $proto, $class, 1, 1 );
         FF::typedef(
             $scope, $class,
             'NonEmpty',

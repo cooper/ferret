@@ -53,10 +53,9 @@
 #                          Operation
 #                              Instance variable '@hints'
 #                              Logical and operator (&&)
-#                              Property 'length'
-#                                  Instance variable '@hints'
-#                              Negated equality operator (!=)
-#                              Number '0'
+#                              Negation
+#                                  Property 'empty'
+#                                      Instance variable '@hints'
 #                      Body ('if' scope)
 #                          Instruction
 #                              Return
@@ -139,7 +138,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 my $pos = FF::before_content( 'Error.frt', './std/Error.frt' );
 
-use Ferret::Core::Operations qw(add all_true bool nequal num str);
+use Ferret::Core::Operations qw(_not add all_true bool str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -295,13 +294,7 @@ my $result = do {
                         all_true(
                             $scope,
                             sub { $$self->{'hints'} },
-                            sub {
-                                nequal(
-                                    $scope,
-                                    ${ $$self->{'hints'} }->{'length'},
-                                    num( $f, "0" )
-                                );
-                            }
+                            sub { _not( ${ $$self->{'hints'} }->{'empty'} ) }
                         )
                     )
                   )

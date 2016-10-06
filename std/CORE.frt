@@ -6,6 +6,7 @@ load Signal
 load Extension::Number
 load Extension::String
 load Extension::List
+load Extension::Hash
 
 type Any { }
 

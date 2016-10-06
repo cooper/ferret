@@ -30,3 +30,7 @@ method fromWord {
     need $wordN: Num
     return @split(" ", limit: $wordN + 1)[$wordN]
 }
+
+prop? empty {
+    return @length == 0
+}

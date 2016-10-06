@@ -7,6 +7,11 @@ type Pairs {
     satisfies .length.even
 }
 
+#> True if the list is empty.
+prop empty {
+    return @length == 0
+}
+
 #> Maps each element to another value based on a transformation code.
 method map {
     need $code: Code
@@ -53,7 +58,7 @@ method all {
 #> Returns the sum of all elements in the list or `undefined` if the list is
 #| empty.
 prop sum {
-    if @length == 0 :
+    if @empty:
         return undefined
     $c = *self[0]
     for $i in 1 .. @lastIndex {

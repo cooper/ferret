@@ -10,6 +10,14 @@
 #                      Satisfies
 #                          Property 'even'
 #                              Property variable '.length'
+#          Computed property 'empty'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Operation
+#                              Instance variable '@length'
+#                              Equality operator (==)
+#                              Number '0'
 #          Method 'map'
 #              Body ('method' scope)
 #                  Instruction
@@ -148,10 +156,7 @@
 #              Body ('method' scope)
 #                  If
 #                      Expression ('if' parameter)
-#                          Operation
-#                              Instance variable '@length'
-#                              Equality operator (==)
-#                              Number '0'
+#                          Instance variable '@empty'
 #                      Body ('if' scope)
 #                          Instruction
 #                              Return
@@ -241,8 +246,20 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, $file_scope, 'List', undef, [ \'T' ] );
 
-        # Method event 'map' definition
+        # Method event 'empty' definition
         my $method_0 = FF::method_event_def(
+            $f, $scope, 'empty',
+            [],
+            sub {
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                return $ret_func->(
+                    equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
+                return $ret;
+            }
+        );
+
+        # Method event 'map' definition
+        my $method_1 = FF::method_event_def(
             $f, $scope, 'map',
             [
                 {
@@ -254,7 +271,7 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'code', 12.2 ) or return;
+                FF::need( $scope, $args, 'code', 17.2 ) or return;
                 return $ret_func->(
                     do {
                         my ( $gather_status, $gather_ret ) = FF::gather(
@@ -273,11 +290,11 @@ my $result = do {
                                                     [ $$scope->{'el'} ],
                                                     $scope,
                                                     undef,
-                                                    $pos->(14.3)
+                                                    $pos->(19.3)
                                                 )
                                             );
                                         },
-                                        $pos->(13.2)
+                                        $pos->(18.2)
                                     );
                                     return $ret_func->($loop_ret) if $loop_ret;
                                 }
@@ -293,7 +310,7 @@ my $result = do {
         );
 
         # Method event 'grep' definition
-        my $method_1 = FF::method_event_def(
+        my $method_2 = FF::method_event_def(
             $f, $scope, 'grep',
             [
                 {
@@ -305,7 +322,7 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'code', 20.2 ) or return;
+                FF::need( $scope, $args, 'code', 25.2 ) or return;
                 return $ret_func->(
                     do {
                         my ( $gather_status, $gather_ret ) = FF::gather(
@@ -325,7 +342,7 @@ my $result = do {
                                                         [ $$scope->{'el'} ],
                                                         $scope,
                                                         undef,
-                                                        $pos->(22.15)
+                                                        $pos->(27.15)
                                                     )
                                                 )
                                               )
@@ -337,7 +354,7 @@ my $result = do {
                                                 $take->( $$scope->{'el'} );
                                             }
                                         },
-                                        $pos->(21.2)
+                                        $pos->(26.2)
                                     );
                                     return $ret_func->($loop_ret) if $loop_ret;
                                 }
@@ -353,7 +370,7 @@ my $result = do {
         );
 
         # Method event 'first' definition
-        my $method_2 = FF::method_event_def(
+        my $method_3 = FF::method_event_def(
             $f, $scope, 'first',
             [
                 {
@@ -365,7 +382,7 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'code', 28.2 ) or return;
+                FF::need( $scope, $args, 'code', 33.2 ) or return;
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,
@@ -377,7 +394,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               $pos->(30.15)
+                                        undef,               $pos->(35.15)
                                     )
                                 )
                               )
@@ -388,7 +405,7 @@ my $result = do {
                                 return $ret_func->( $$scope->{'el'} );
                             }
                         },
-                        $pos->(29.1)
+                        $pos->(34.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -398,7 +415,7 @@ my $result = do {
         );
 
         # Method event 'any' definition
-        my $method_3 = FF::method_event_def(
+        my $method_4 = FF::method_event_def(
             $f, $scope, 'any',
             [
                 {
@@ -410,7 +427,7 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'code', 37.2 ) or return;
+                FF::need( $scope, $args, 'code', 42.2 ) or return;
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,
@@ -422,7 +439,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               $pos->(39.15)
+                                        undef,               $pos->(44.15)
                                     )
                                 )
                               )
@@ -433,7 +450,7 @@ my $result = do {
                                 return $ret_func->($true);
                             }
                         },
-                        $pos->(38.1)
+                        $pos->(43.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -443,7 +460,7 @@ my $result = do {
         );
 
         # Method event 'all' definition
-        my $method_4 = FF::method_event_def(
+        my $method_5 = FF::method_event_def(
             $f, $scope, 'all',
             [
                 {
@@ -455,7 +472,7 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'code', 46.2 ) or return;
+                FF::need( $scope, $args, 'code', 51.2 ) or return;
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,
@@ -468,7 +485,7 @@ my $result = do {
                                     _not(
                                         $$scope->{'code'}->(
                                             [ $$scope->{'el'} ], $scope,
-                                            undef,               $pos->(48.2)
+                                            undef,               $pos->(53.2)
                                         )
                                     )
                                 )
@@ -480,7 +497,7 @@ my $result = do {
                                 return $ret_func->($false);
                             }
                         },
-                        $pos->(47.1)
+                        $pos->(52.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -490,14 +507,12 @@ my $result = do {
         );
 
         # Method event 'sum' definition
-        my $method_5 = FF::method_event_def(
+        my $method_6 = FF::method_event_def(
             $f, $scope, 'sum',
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                if ( bool( equal( $scope, $$self->{'length'}, num( $f, "0" ) ) )
-                  )
-                {
+                if ( bool( $$self->{'empty'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret_func->($undefined);
@@ -506,10 +521,10 @@ my $result = do {
                     $scope,
                     c => ${ $scope->{special} }->{'self'}->get_index_value(
                         [ num( $f, "0" ) ],
-                        $scope, $pos->(58.4)
+                        $scope, $pos->(63.4)
                     ),
                     $file_scope,
-                    $pos->(58.2)
+                    $pos->(63.2)
                 );
                 {
                     my $loop_ret = FF::iterate(
@@ -526,14 +541,14 @@ my $result = do {
                                     ${ $scope->{special} }->{'self'}
                                       ->get_index_value(
                                         [ $$scope->{'i'} ], $scope,
-                                        $pos->(60.3)
+                                        $pos->(65.3)
                                       )
                                 ),
                                 $file_scope,
-                                $pos->(60.1)
+                                $pos->(65.1)
                             );
                         },
-                        $pos->(59.1)
+                        $pos->(64.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -543,7 +558,7 @@ my $result = do {
         );
 
         # Method event 'sum0' definition
-        my $method_6 = FF::method_event_def(
+        my $method_7 = FF::method_event_def(
             $f, $scope, 'sum0',
             [],
             sub {
@@ -551,7 +566,7 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     c => num( $f, "0" ),
-                    $file_scope, $pos->(68.2)
+                    $file_scope, $pos->(73.2)
                 );
                 {
                     my $loop_ret = FF::iterate(
@@ -566,10 +581,10 @@ my $result = do {
                                     $scope, $$scope->{'c'}, $$scope->{'el'}
                                 ),
                                 $file_scope,
-                                $pos->(70.2)
+                                $pos->(75.2)
                             );
                         },
-                        $pos->(69.1)
+                        $pos->(74.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -577,16 +592,17 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope( map  => $scope, $proto, $class, undef, undef );
-        $method_1->inside_scope( grep => $scope, $proto, $class, undef, undef );
-        $method_2->inside_scope(
+        $method_0->inside_scope( empty => $scope, $proto, $class, 1, undef );
+        $method_1->inside_scope( map  => $scope, $proto, $class, undef, undef );
+        $method_2->inside_scope( grep => $scope, $proto, $class, undef, undef );
+        $method_3->inside_scope(
             first => $scope,
             $proto, $class, undef, undef
         );
-        $method_3->inside_scope( any  => $scope, $proto, $class, undef, undef );
-        $method_4->inside_scope( all  => $scope, $proto, $class, undef, undef );
-        $method_5->inside_scope( sum  => $scope, $proto, $class, 1,     undef );
-        $method_6->inside_scope( sum0 => $scope, $proto, $class, 1,     undef );
+        $method_4->inside_scope( any  => $scope, $proto, $class, undef, undef );
+        $method_5->inside_scope( all  => $scope, $proto, $class, undef, undef );
+        $method_6->inside_scope( sum  => $scope, $proto, $class, 1,     undef );
+        $method_7->inside_scope( sum0 => $scope, $proto, $class, 1,     undef );
         FF::typedef(
             $scope, $class, 'Pairs',
             sub {
