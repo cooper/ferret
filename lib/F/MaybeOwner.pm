@@ -21,7 +21,17 @@ sub maybe_fmt {
     }
 
     # if ($maybe...)
-    my $conditionals = join ' && ', map { $_->perl_fmt_do } @maybes;
+    my $conditionals = '';
+    if (@maybes == 1) {
+        $conditionals = $maybes[0]->perl_fmt_do;
+    }
+    elsif (@maybes) {
+        $doc->{required_operations}{all_true}++;
+        $conditionals = F::get_perl_fmt(operation => {
+            operation => 'all_true',
+            items     => join(', ', map $_->perl_fmt_do, @maybes)
+        });
+    }
 
     return maybe_owner => {
         definitions  => $definitions,
