@@ -20,3 +20,8 @@ type Lowercase {
 }
 
 alias LC = Lowercase
+
+method fromWord {
+    need $wordN: Num
+    return @split(" ", limit: $wordN + 1)[$wordN]
+}

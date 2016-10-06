@@ -43,7 +43,31 @@
 #                  Assignment
 #                      Bareword 'LC'
 #                      Bareword 'Lowercase'
-#      Include (LC, Lowercase, NE, NonEmpty, UC, Uppercase)
+#          Method 'fromWord'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$wordN'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Index
+#                              Call
+#                                  Instance variable '@split'
+#                                  Mixed argument list [2 items]
+#                                      Item 0
+#                                          String ' '
+#                                      Item 1
+#                                          Pair 'limit'
+#                                              Operation
+#                                                  Lexical variable '$wordN'
+#                                                  Addition operator (+)
+#                                                  Number '1'
+#                              Index list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$wordN'
+#      Include (LC, Lowercase, NE, NonEmpty, Num, UC, Uppercase)
 use warnings;
 use strict;
 use 5.010;
@@ -64,7 +88,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 my $pos = FF::before_content( 'String.frt', './std/Extension/String.frt' );
 
-use Ferret::Core::Operations qw(nequal num);
+use Ferret::Core::Operations qw(add nequal num str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -75,6 +99,46 @@ my $result = do {
         my ( $class, $self, $proto, $scope ) =
           FF::get_class( $f, $context, $file_scope, 'String', undef, undef );
 
+        # Method event 'fromWord' definition
+        my $method_0 = FF::method_event_def(
+            $f, $scope,
+            'fromWord',
+            [
+                {
+                    name     => 'wordN',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $self, $args, $call_scope, $scope, $ret ) = @_;
+                FF::need( $scope, $args, 'wordN', 25.2 ) or return;
+                return $ret_func->(
+                    $$self->{'split'}->(
+                        [
+                            str( $f, " " ),
+                            [
+                                limit => add(
+                                    $scope, $$scope->{'wordN'},
+                                    num( $f, "1" )
+                                )
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(26.15)
+                      )->get_index_value(
+                        [ $$scope->{'wordN'} ],
+                        $scope, $pos->(26.55)
+                      )
+                );
+                return $ret;
+            }
+        );
+        $method_0->inside_scope(
+            fromWord => $scope,
+            $proto, $class, undef, undef
+        );
         FF::typedef(
             $scope, $class,
             'NonEmpty',
@@ -127,7 +191,8 @@ my $result = do {
         );
         $class->set_property( LC => $$scope->{'Lowercase'}, $pos->(22.3) );
     }
-    FF::load_namespaces( $context, qw(LC Lowercase NE NonEmpty UC Uppercase) );
+    FF::load_namespaces( $context,
+        qw(LC Lowercase NE NonEmpty Num UC Uppercase) );
 };
 
 FF::after_content();
