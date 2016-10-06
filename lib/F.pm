@@ -23,7 +23,7 @@ our %pretty_tokens = (
     COMMENT_S   => 'section comment (=== ... ===)',
     COMMENT_B   => 'block comment (/* */)',
     VAR_LEX     => 'lexical variable ($)',
-    VAR_THIS    => 'instance variable (@)',
+    VAR_SELF    => 'instance variable (@)',
     VAR_SPEC    => 'special variable (*)',
     VAR_SYM     => 'symbol (:)',
     CLOSURE_S   => 'opening curly bracket "{"',

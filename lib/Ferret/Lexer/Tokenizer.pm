@@ -58,7 +58,7 @@ my %semi_follows = map { $_ => 1 } qw(
     PAREN_E         BRACKET_E       PAREN_E
     PROPERTY        NUMBER          STRING
     BAREWORD        VAR_LEX         VAR_PROP
-    VAR_THIS        VAR_SPEC        VAR_SYM
+    VAR_SELF        VAR_SPEC        VAR_SYM
     OP_CALL         OP_ELLIP        REGEX
     KEYWORD_TRUE    KEYWORD_FALSE   KEYWORD_UNDEFINED
     KEYWORD_RETURN  KEYWORD_STOP
@@ -87,7 +87,7 @@ my @token_formats = (
 
     # variables
     [ VAR_LEX       => qr/\$$prop_reg_n/,   \&remove_first_char             ],  # lexical variable
-    [ VAR_THIS      => qr/\@$prop_reg/,     \&remove_first_char             ],  # object variable
+    [ VAR_SELF      => qr/\@$prop_reg/,     \&remove_first_char             ],  # object variable
     [ VAR_SPEC      => qr/\*$prop_reg/,     \&remove_first_char             ],  # special variable
     [ VAR_SYM       => qr/\:$prop_reg/,     \&remove_first_char             ],  # symbol variable
 

@@ -1249,7 +1249,7 @@ sub c_VAR_LEX {
 }
 
 # an instance variable.
-sub c_VAR_THIS {
+sub c_VAR_SELF {
     my ($c, $value) = @_;
 
     # Rule InstanceVariable[0]:

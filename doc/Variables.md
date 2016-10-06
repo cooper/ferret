@@ -25,7 +25,7 @@ Instance variables are only valid within class functions and methods. They refer
 to properties of the current class instance. For this reason, `@var` is
 functionally equivalent to `*self.var`.
 
-Tokenized as `VAR_THIS`.
+Tokenized as `VAR_SELF`.
 
 ## Special variables
 
