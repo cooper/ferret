@@ -120,6 +120,13 @@ sub set_property_ow {
     return $obj->set_property($prop_name => $value, $pos);
 }
 
+sub set_property_eval {
+    my ($obj, $prop_name_exp, $value, $pos) = @_;
+    my $prop_name = $prop_name_exp->hash_string;
+    $obj->_check_prop_alteration($prop_name, [caller], $pos); # pos
+    return $obj->set_property($prop_name, @_[2..$#_]);
+}
+
 # deletes a property.
 # $obj->delete_property('someProperty')
 #

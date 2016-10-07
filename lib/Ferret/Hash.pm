@@ -58,7 +58,8 @@ sub init {
 
 sub set_value {
     my ($hash, $key, $value) = @_;
-    # TODO: check for a hashValue function
+    # FIXME: check for a hashValue function
+    # if missing, use the address of the object
     $key = pstring($key);
     $hash->{hash_values}{$key} = $value;
 }
@@ -66,7 +67,6 @@ sub set_value {
 sub _set_value {
     my ($hash, $args) = @_;
     my $key = $args->psym('index');
-    print "VALUE: $$args{value}\n";
     $hash->set_value($key, $args->{value});
     return $hash;
 }
