@@ -63,7 +63,7 @@ sub false () { state $false = Ferret::Boolean->new($ferret, bool_value => 0, rea
 
 # fetch undefined value or test if a value is undefined.
 sub undefined(;$) {
-    $undefined ||= Ferret::Object->new($ferret, faketype => 'Undefined');
+    $undefined ||= Ferret::Undefined->new($ferret);
     return $undefined if !@_;
     my $test = shift;
     return 1 if !defined $test;
@@ -367,6 +367,7 @@ sub inspect {
 ################
 
 use Ferret::Object;
+use Ferret::Undefined;
 use Ferret::String;
 use Ferret::Regex;
 use Ferret::Number;

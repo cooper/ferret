@@ -17,6 +17,12 @@ our %errors = (
     CallOnNonFunction => {
         message => "Cannot call non-code value"
     },
+    PropertyOnUndefined => {
+        message => "Attempted to access property '%s' of undefined"
+    },
+    SetPropertyOnUndefined => {
+        message => "Attempted to set property '%s' of undefined"
+    },
     IndexOnNonCollection => {
         message => "Cannot access index on non-indexable value"
     },
