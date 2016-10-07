@@ -12,6 +12,7 @@ use Ferret::Core::Conversion qw(
     fnumber pnumber
     fstring pstring
     pdescription
+    FUNC_SELF FUNC_ARGS FUNC_RET FUNC_FUNC
 );
 
 my @methods = (
@@ -50,8 +51,8 @@ my @methods = (
         code => \&_item_method
     },
     push => {
-        need => '$item:T',
-        code => \&_item_method
+        need => '$items:T...',
+        code => \&_push
     }
 );
 
@@ -83,10 +84,17 @@ sub init {
 # wrapper for generic method bindings.
 # all of them return the list.
 sub _item_method {
-    my ($list, $args, undef, undef, undef, $func) = @_;
+    my ($list, $args, $func) = @_[FUNC_SELF, FUNC_ARGS, FUNC_FUNC];
     my $code = $list->can($func->{event_name}) or return;
     my $ret  = $code->($list, $args->{item});
     return blessed $ret ? $ret : $list;
+}
+
+sub _push {
+    my ($list, $args) = @_;
+    my @items = $args->plist('items');
+    $list->push($_) for @items;
+    return $list;
 }
 
 sub length : method {

@@ -37,4 +37,14 @@ sub set_property {
     ], $prop_name);
 }
 
+sub call {
+    my ($obj) = @_;
+    throw(CallOnUndefined => [caller], [
+        Name  => $obj->{last_name},
+        Value => $obj->description_ol,
+        File  => "$FF::pos",
+        Line  => int($FF::pos || 0)
+    ]);
+}
+
 1

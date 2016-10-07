@@ -888,7 +888,8 @@ my $result = do {
                         ],
                         $scope, undef,
                         $pos->(19.3)
-                    )
+                    ),
+                    $pos->(19.1)
                 );
             }
             FF::lex_assign(
@@ -918,7 +919,8 @@ my $result = do {
                         ],
                         $scope, undef,
                         $pos->(24.15)
-                    )
+                    ),
+                    $pos->(24.05)
                 );
             }
             FF::lex_assign(
@@ -1008,7 +1010,8 @@ my $result = do {
                         ],
                         $scope, undef,
                         $pos->(41.3)
-                    )
+                    ),
+                    $pos->(41.1)
                 );
             }
             FF::lex_assign(
@@ -1042,7 +1045,8 @@ my $result = do {
                         ],
                         $scope, undef,
                         $pos->(48.15)
-                    )
+                    ),
+                    $pos->(48.05)
                 );
             }
             $$scope->{'bot'}->property_u( 'commands', $pos->(52.3) )

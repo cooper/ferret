@@ -18,6 +18,8 @@
 #                          Instance variable '@hints'
 #                          Argument type
 #                              Bareword 'List'
+#                          Argument value
+#                              Value list [0 items]
 #                  Instruction
 #                      Want
 #                          Instance variable '@subError'
@@ -32,6 +34,31 @@
 #                                  Special variable '*self'
 #                              Item 1
 #                                  String 'Ferret::Error'
+#          Method 'setPosition'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$file'
+#                          Argument type
+#                              Bareword 'Str'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$line'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Call
+#                          Property 'push'
+#                              Instance variable '@hints'
+#                          Argument list [4 items]
+#                              Item 0
+#                                  String 'File'
+#                              Item 1
+#                                  Lexical variable '$file'
+#                              Item 2
+#                                  String 'Line'
+#                              Item 3
+#                                  Lexical variable '$line'
 #          Method 'description'
 #              Body ('method' scope)
 #                  Instruction
@@ -48,12 +75,9 @@
 #                              Instance variable '@msg'
 #                  If
 #                      Expression ('if' parameter)
-#                          Operation
-#                              Instance variable '@hints'
-#                              Logical and operator (&&)
-#                              Negation
-#                                  Property 'empty'
-#                                      Instance variable '@hints'
+#                          Negation
+#                              Property 'empty'
+#                                  Instance variable '@hints'
 #                      Body ('if' scope)
 #                          Instruction
 #                              Addition assignment
@@ -125,7 +149,7 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$str'
-#      Include (Error, List, NATIVE, Str, Sym)
+#      Include (Error, List, NATIVE, Num, Str, Sym)
 use warnings;
 use strict;
 use 5.010;
@@ -146,7 +170,7 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 my $pos = FF::before_content( 'Error.frt', './std/Error.frt' );
 
-use Ferret::Core::Operations qw(_not add all_true bool str);
+use Ferret::Core::Operations qw(_not add bool str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -168,11 +192,11 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'list', 23.2 ) or return;
+            FF::need( $scope, $args, 'list', 28.2 ) or return;
             FF::lex_assign(
                 $scope,
                 str => str( $f, "\n" ),
-                $file_scope, $pos->(24.2)
+                $file_scope, $pos->(29.2)
             );
             {
                 my $loop_ret = FF::iterate_pair(
@@ -184,7 +208,7 @@ my $result = do {
                         if (
                             bool(
                                 $$scope->{'i'}
-                                  ->property_u( 'even', $pos->(26.3) )
+                                  ->property_u( 'even', $pos->(31.3) )
                             )
                           )
                         {
@@ -202,7 +226,7 @@ my $result = do {
                                     )
                                 ),
                                 $file_scope,
-                                $pos->(27.2)
+                                $pos->(32.2)
                             );
                         }
                         else {
@@ -217,11 +241,11 @@ my $result = do {
                                     )
                                 ),
                                 $file_scope,
-                                $pos->(29.2)
+                                $pos->(34.2)
                             );
                         }
                     },
-                    $pos->(25.05)
+                    $pos->(30.05)
                 );
                 return $ret_func->($loop_ret) if $loop_ret;
             }
@@ -269,7 +293,8 @@ my $result = do {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $self, $args, 'type' ) or return;
                 FF::need( $self, $args, 'msg' )  or return;
-                FF::want( $self, $args, 'hints',    7.2 );
+                FF::want( $self, $args, 'hints', 7.2,
+                    FF::create_list( $f, [] ) );
                 FF::want( $self, $args, 'subError', 8.2 );
                 $$scope->{'NATIVE'}->property_u( 'bless', $pos->(10.2) )->(
                     [
@@ -283,8 +308,42 @@ my $result = do {
             }
         );
 
-        # Method event 'description' definition
+        # Method event 'setPosition' definition
         my $method_1 = FF::method_event_def(
+            $f, $scope,
+            'setPosition',
+            [
+                {
+                    name     => 'file',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'line',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                FF::need( $scope, $args, 'file', 14.1 ) or return;
+                FF::need( $scope, $args, 'line', 14.3 ) or return;
+                $$self->{'hints'}->property_u( 'push', $pos->(15.1) )->(
+                    [
+                        str( $f, "File" ), $$scope->{'file'},
+                        str( $f, "Line" ), $$scope->{'line'}
+                    ],
+                    $scope, undef,
+                    $pos->(15.15)
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'description' definition
+        my $method_2 = FF::method_event_def(
             $f, $scope,
             'description',
             [],
@@ -295,22 +354,18 @@ my $result = do {
                     desc => add(
                         $scope,
                         str( $f, "[" ),
-                        $$self->{'type'}->property_u( 'name', $pos->(14.3) ),
+                        $$self->{'type'}->property_u( 'name', $pos->(19.3) ),
                         str( $f, "] " ),
                         $$self->{'msg'}
                     ),
                     $file_scope,
-                    $pos->(14.1)
+                    $pos->(19.1)
                 );
                 if (
                     bool(
-                        all_true(
-                            $scope,
-                            sub { $$self->{'hints'} },
-                            sub {
-                                _not( $$self->{'hints'}
-                                      ->property_u( 'empty', $pos->(15.6) ) );
-                            }
+                        _not(
+                            $$self->{'hints'}
+                              ->property_u( 'empty', $pos->(20.4) )
                         )
                     )
                   )
@@ -324,11 +379,11 @@ my $result = do {
                             $$scope->{'desc'},
                             $$scope->{'_prettyHints'}->(
                                 [ $$self->{'hints'} ], $scope,
-                                undef,                 $pos->(16.4)
+                                undef,                 $pos->(21.4)
                             )
                         ),
                         $file_scope,
-                        $pos->(16.2)
+                        $pos->(21.2)
                     );
                 }
                 if ( bool( $$self->{'subError'} ) ) {
@@ -343,11 +398,11 @@ my $result = do {
                                 $scope,
                                 str( $f, " ->" ),
                                 $$self->{'subError'}
-                                  ->property_u( '*description', $pos->(18.6) )
+                                  ->property_u( '*description', $pos->(23.6) )
                             )
                         ),
                         $file_scope,
-                        $pos->(18.2)
+                        $pos->(23.2)
                     );
                 }
                 return $ret_func->( $$scope->{'desc'} );
@@ -359,6 +414,10 @@ my $result = do {
             $class, $class, undef, undef
         );
         $method_1->inside_scope(
+            setPosition => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_2->inside_scope(
             description => $scope,
             $proto, $class, undef, undef
         );
@@ -367,7 +426,7 @@ my $result = do {
             $scope, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Error List NATIVE Str Sym) );
+    FF::load_namespaces( $context, qw(Error List NATIVE Num Str Sym) );
 };
 
 FF::after_content();

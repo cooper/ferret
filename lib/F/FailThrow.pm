@@ -21,7 +21,8 @@ sub perl_fmt {
     }
 
     return $type => {
-        expression => $exp
+        expression => $exp,
+        pos => $fail->{create_pos}
     };
 }
 

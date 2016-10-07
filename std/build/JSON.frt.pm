@@ -496,7 +496,8 @@ my $result = do {
                                 ],
                                 $scope, undef,
                                 $pos->(66.3)
-                            )
+                            ),
+                            $pos->(66.1)
                         );
                     },
                     'err'
@@ -527,7 +528,8 @@ my $result = do {
                                 ],
                                 $scope, undef,
                                 $pos->(73.3)
-                            )
+                            ),
+                            $pos->(73.1)
                         );
                     },
                     'err'
@@ -618,7 +620,8 @@ my $result = do {
                                 ],
                                 $scope, undef,
                                 $pos->(98.15)
-                            )
+                            ),
+                            $pos->(98.05)
                         );
                     },
                     'err'
@@ -664,7 +667,8 @@ my $result = do {
                                 ],
                                 $scope, undef,
                                 $pos->(107.15)
-                            )
+                            ),
+                            $pos->(107.05)
                         );
                     },
                     'err'
@@ -713,7 +717,8 @@ my $result = do {
                                 ],
                                 $scope, undef,
                                 $pos->(143.15)
-                            )
+                            ),
+                            $pos->(143.05)
                         );
                     },
                     'err'
@@ -759,7 +764,8 @@ my $result = do {
                                 ],
                                 $scope, undef,
                                 $pos->(156.15)
-                            )
+                            ),
+                            $pos->(156.05)
                         );
                     },
                     'err'

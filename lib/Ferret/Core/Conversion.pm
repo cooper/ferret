@@ -301,6 +301,14 @@ sub fset {
 ##############
 
 sub ferror {
+    my $err = &_ferror;
+    my $pos = delete $err->{pos};
+    $err->call_prop(setPosition => [ fstring("$pos"), fnumber(int $pos) ])
+        if defined $pos;
+    return $err;
+}
+
+sub _ferror {
     my ($err, $type, @hints) = @_;
     my $f = $Ferret::ferret;
 

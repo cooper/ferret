@@ -71,7 +71,7 @@ sub new {
 sub set_property {
     my ($obj, $prop_name, $value, $_pos) = @_;
     my $caller = [caller];
-    $obj->_check_prop_alteration($prop_name, $caller, $FF::pos);
+    $obj->_check_prop_alteration($prop_name, $caller);
 
     # special properties can never be assigned to from Ferret.
     if (substr($prop_name, 0, 1) eq '*') {
@@ -102,28 +102,28 @@ sub set_property {
 # set a property or overwrite an inherited property.
 sub set_property_ow {
     my ($obj, $scope_limit, $prop_name, $value, $_pos) = @_;
-    $obj->_check_prop_alteration($prop_name, [caller], $FF::pos);
+    $obj->_check_prop_alteration($prop_name, [caller]);
     my $owner = $obj->has_property($prop_name);
 
     # never overwrite inherited context properties.
     # this saves time over reaching the bottom.
     if (!$owner || $owner->isa('Ferret::Context')) {
-        return $obj->set_property($prop_name => $value, $FF::pos);
+        return $obj->set_property($prop_name => $value);
     }
 
     # if the owner is the scope limit or any scope inheriting from it,
     # it's OK to overwrite
     if (any { $_ == $scope_limit } $owner, $owner->all_ancestors) {
-        return $owner->set_property($prop_name => $value, $FF::pos);
+        return $owner->set_property($prop_name => $value);
     }
 
-    return $obj->set_property($prop_name => $value, $FF::pos);
+    return $obj->set_property($prop_name => $value);
 }
 
 sub set_property_eval {
     my ($obj, $prop_name_exp, $value, $_pos) = @_;
     my $prop_name = $prop_name_exp->hash_string;
-    $obj->_check_prop_alteration($prop_name, [caller], $FF::pos); # pos
+    $obj->_check_prop_alteration($prop_name, [caller]); # pos
     return $obj->set_property($prop_name, @_[2..$#_]);
 }
 
@@ -138,30 +138,30 @@ sub set_property_eval {
 #
 sub delete_property {
     my ($obj, $prop_name, $_pos) = @_;
-    $obj->_check_prop_alteration($prop_name, [caller], $FF::pos);
+    $obj->_check_prop_alteration($prop_name, [caller]);
     return defined delete $obj->{properties}{$prop_name};
 }
 
 # deletes a property, even if inherited.
 sub delete_property_ow {
     my ($obj, $prop_name, $_pos) = @_;
-    $obj->_check_prop_alteration($prop_name, [caller], $FF::pos);
+    $obj->_check_prop_alteration($prop_name, [caller]);
     my $owner = $obj->has_property($prop_name);
     return if !$owner;
-    return $owner->delete_property($prop_name, $FF::pos);
+    return $owner->delete_property($prop_name);
 }
 
 sub delete_property_eval {
     my ($obj, $prop_name_exp, $_pos) = @_;
     my $prop_name = $prop_name_exp->hash_string;
-    $obj->_check_prop_alteration($prop_name, [caller], $FF::pos);
+    $obj->_check_prop_alteration($prop_name, [caller]);
     return $obj->delete_property($prop_name, @_[2..$#_]);
 }
 
 sub delete_property_ow_eval {
     my ($obj, $prop_name_exp, $_pos) = @_;
     my $prop_name = $prop_name_exp->hash_string;
-    $obj->_check_prop_alteration($prop_name, [caller], $FF::pos);
+    $obj->_check_prop_alteration($prop_name, [caller]);
     return $obj->delete_property_ow($prop_name, @_[2..$#_]);
 }
 
@@ -186,14 +186,14 @@ sub property_u {
 sub property_eval {
     my ($obj, $prop_name_exp, $_pos) = @_;
     my $prop_name = $prop_name_exp->hash_string;
-    return $obj->property($prop_name, $FF::pos);
+    return $obj->property($prop_name);
 }
 
 # wraps ->property_eval, returning Ferret::undefined rather than Perl undef.
 sub property_eval_u {
     my ($obj, $prop_name_exp, $_pos) = @_;
     my $prop_name = $prop_name_exp->hash_string;
-    return _U(scalar $obj->property($prop_name, $FF::pos), $prop_name);
+    return _U(scalar $obj->property($prop_name), $prop_name);
 }
 
 # this should not be used directly.
@@ -320,7 +320,7 @@ sub own_property_u {
 #
 sub weaken_property {
     my ($obj, $prop_name, $_pos) = @_;
-    $obj->_check_prop_alteration($prop_name, [caller], $FF::pos);
+    $obj->_check_prop_alteration($prop_name, [caller]);
     return if !defined $obj->{properties}{$prop_name};
     weaken($obj->{properties}{$prop_name});
     return 1;
@@ -329,7 +329,7 @@ sub weaken_property {
 sub weaken_property_eval {
     my ($obj, $prop_name_exp, $_pos) = @_;
     my $prop_name = $prop_name_exp->hash_string;
-    $obj->_check_prop_alteration($prop_name, [caller], $FF::pos);
+    $obj->_check_prop_alteration($prop_name, [caller]);
     return $obj->weaken_property($prop_name, @_[2..$#_]);
 }
 
@@ -338,7 +338,7 @@ sub weaken_property_eval {
 #
 sub set_property_weak {
     my ($obj, $prop_name, $value, $_pos) = @_;
-    $obj->_check_prop_alteration($prop_name, [caller], $FF::pos);
+    $obj->_check_prop_alteration($prop_name, [caller]);
     my $res = $obj->set_property($prop_name => $value);
     $obj->weaken_property($prop_name);
     return $res;
@@ -625,14 +625,12 @@ sub call {
     my $caller = [caller 0];
     $caller = [caller 1] if $caller->[0] eq __PACKAGE__;
 
-    throw(Ferret::undefined($obj) ? 'CallOnUndefined' : 'CallOnNonFunction' =>
-    $caller, [
+    throw(CallOnNonFunction => $caller, [
         Name  => $obj->{last_name},
         Value => $obj->description_ol,
         File  => "$FF::pos",
         Line  => int($FF::pos || 0)
     ]);
-
 }
 
 sub call_u {

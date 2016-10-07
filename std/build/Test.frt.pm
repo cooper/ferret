@@ -584,7 +584,8 @@ my $result = do {
                             ],
                             $scope, undef,
                             $pos->(80.3)
-                        )
+                        ),
+                        $pos->(80.1)
                     );
                 }
                 $ret->set_property(

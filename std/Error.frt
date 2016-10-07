@@ -4,15 +4,20 @@ init {
     need @type: Sym
     need @msg: Str
 
-    want @hints: List
+    want @hints: List = []
     want @subError: Error
 
     NATIVE.bless(*self, "Ferret::Error")
 }
 
+method setPosition {
+    need $file: Str, $line: Num
+    @hints.push("File", $file, "Line", $line)
+}
+
 method description {
     $desc = "[@type.name] " + @msg
-    if @hints && !@hints.empty:
+    if !@hints.empty:
         $desc += _prettyHints(@hints)
     if @subError:
         $desc += " ->" + @subError.*description

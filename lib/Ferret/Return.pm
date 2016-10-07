@@ -85,8 +85,9 @@ sub stop {
 
 # fail with an error. stops propagation. this is nonfatal.
 sub fail {
-    my ($ret, $err) = @_;
+    my ($ret, $err, $pos) = @_;
     $err = ferror($err) if !blessed $err;
+    $err->{pos} = $pos;
     $ret->{failed}++;
     $ret->set_property(error => $err);
     $ret->stop;
@@ -96,7 +97,8 @@ sub fail {
 
 # die with an error. this is fatal.
 sub throw {
-    my ($ret, $err) = @_;
+    my ($ret, $err, $pos) = @_;
+    $err->{pos} = $pos;
     $ret->fail($err);
     Ferret::Core::Errors::throw($err, [caller]);
 }

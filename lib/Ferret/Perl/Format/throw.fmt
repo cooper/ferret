@@ -1,1 +1,1 @@
-FF::throw(<<expression>>)
+FF::throw(<<expression>>, $pos->(<<pos>>))

@@ -587,7 +587,8 @@ sub gather {
 }
 
 sub throw {
-    my $err = shift;
+    my ($err, $pos) = @_;
+    $err->{pos} = $pos;
     Ferret::Core::Errors::throw($err, [caller]);
 }
 
