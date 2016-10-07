@@ -20,12 +20,35 @@ on $bot.commands.add {
     }
 
     # store
-    $command  = $parts[1]
+    $command = $parts[1].lowercase
     $response = $message.fromWord(2)
     %factoids[$command] = $response
     $bot.commands.[$command] = respondFactoid
 
     $channel.privmsg("OK, I will respond to .$command with '$response'")
+}
+
+on $bot.commands.del {
+    need $msg, $channel
+    $message = $msg.params[1]
+
+    # check params
+    $parts = $message.split(/\s+/)
+    if $parts.length < 2 {
+        fail Error(:ParameterError, "Not enough parameters")
+    }
+
+    # check that something existed
+    $command = $parts[1].lowercase
+    $existed = %factoids[$command]
+    if !$existed:
+        fail Error(:ParameterError, "No such factoid .$command")
+
+    # delete it
+    # TODO: delete %factoids[$command]
+    delete $bot.commands.[$command]
+
+    $channel.privmsg("OK, I will no longer respond to .$command with '$existed'")
 }
 
 func respondFactoid {
