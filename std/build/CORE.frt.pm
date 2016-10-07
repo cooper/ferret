@@ -39,6 +39,17 @@
 #              Instruction
 #                  Satisfies
 #                      Property variable '.signature'
+#      Type definition ('Char')
+#          Body ('type' scope)
+#              Instruction
+#                  Isa
+#                      Bareword 'Str'
+#              Instruction
+#                  Satisfies
+#                      Operation
+#                          Property variable '.length'
+#                          Equality operator (==)
+#                          Number '1'
 #      Type definition ('Hashable')
 #          Body ('type' scope)
 #              Instruction
@@ -70,7 +81,7 @@
 #                              Item 1
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
-#      Include (Any, Error, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Obj, Object, Signal)
+#      Include (Any, Error, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Obj, Object, Signal, Str)
 use warnings;
 use strict;
 use 5.010;
@@ -91,14 +102,14 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 my $pos = FF::before_content( 'CORE.frt', './std/CORE.frt' );
 
-use Ferret::Core::Operations qw();
+use Ferret::Core::Operations qw(equal num);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'CORE' );
     my $scope = $file_scope;
     FF::load_core('CORE');
 
     FF::load_namespaces( $context,
-        qw(Any Error Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Obj Object Signal)
+        qw(Any Error Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Obj Object Signal Str)
     );
 
     FF::typedef(
@@ -113,8 +124,8 @@ my $result = do {
         },
         undef
     );
-    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(13.3) );
-    $context->set_property( Object => $$scope->{'Any'}, $pos->(14.3) );
+    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(14.3) );
+    $context->set_property( Object => $$scope->{'Any'}, $pos->(15.3) );
     FF::typedef(
         $scope, $context, 'Code',
         sub {
@@ -128,6 +139,21 @@ my $result = do {
         undef
     );
     FF::typedef(
+        $scope, $context, 'Char',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            FF::typedef_check(
+                $scope, $scope, $ins,
+                conditions => [
+                    $ins->fits_type_u( $$scope->{'Str'} ),
+                    equal( $scope, $$ins->{'length'}, num( $f, "1" ) )
+                ],
+                equal_to => undef
+            ) ? $ins : undef;
+        },
+        undef
+    );
+    FF::typedef(
         $scope, $context,
         'Hashable',
         sub {
@@ -136,7 +162,7 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
-                      ->( [ undef, [] ], $scope, undef, $pos->(23.3) ),
+                      ->( [ undef, [] ], $scope, undef, $pos->(32.3) ),
                     do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                 ],
                 equal_to => undef
@@ -154,7 +180,7 @@ my $result = do {
                 conditions => [
                     $create_can->( 'getValue', $ins )->(
                         [ undef, [ index => $$scope->{'Hashable'} ] ],
-                        $scope, undef, $pos->(28.3)
+                        $scope, undef, $pos->(39.3)
                     ),
                     $create_can->( 'setValue', $ins )->(
                         [
@@ -165,7 +191,7 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(29.15)
+                        $pos->(40.15)
                     )
                 ],
                 equal_to => undef
