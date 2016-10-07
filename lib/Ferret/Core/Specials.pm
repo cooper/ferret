@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 use Ferret::Core::Conversion qw(
-    flist_wrap flist fbool
+    flist_wrap fhash_fromref flist fbool
     pdescription pstring fnumber fstring
 );
 
@@ -26,7 +26,8 @@ my %specials = (
     fullName        => _function('fullName', '$property:Str'),
     description     => \&_description,
     addr            => \&_addr,
-    addParent       => _function('addParent', '$object')
+    addParent       => _function('addParent', '$object'),
+    generics        => \&_generics
 );
 
 @Ferret::specials{keys %specials} = values %specials;
@@ -61,6 +62,14 @@ sub _isa {
     return $obj->{_isa_ferret} if $obj->{_isa_ferret};
     my $list = flist_wrap($obj->{isa});
     return $obj->{_isa_ferret} = $list;
+}
+
+# returns mutable ISA list.
+sub _generics {
+    my $obj = shift;
+    return $obj->{_generics_ferret} if $obj->{_generics_ferret};
+    my $list = fhash_fromref($obj->{generics});
+    return $obj->{_generics_ferret} = $list;
 }
 
 # returns immutable class list.
