@@ -180,7 +180,7 @@ sub eval : method {
 
 sub __eval {
     my $code = shift;
-    $code = "$code \$result";
+    $code = "$code \$result // Ferret::undefined";
     return eval($code) // \"$@";
 }
 
@@ -194,9 +194,7 @@ sub _eval {
     }
 
     $ret->set_property(result =>
-        Ferret::valid_value($res) ? $res : Ferret::undefined
-    );
-    $ret->set_property(stringResult => fstring($res));
+        Ferret::valid_value($res) ? $res : Ferret::undefined);
     return $ret;
 }
 
