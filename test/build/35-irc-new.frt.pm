@@ -24,6 +24,147 @@
 #                          Argument list [1 items]
 #                              Item 0
 #                                  String 'Ferret IRC...'
+#      Instruction
+#          Assignment
+#              Property 'factoids'
+#                  Lexical variable '$bot'
+#              Hash [0 items]
+#      On
+#          Expression ('on' parameter)
+#              Property 'add'
+#                  Property 'commands'
+#                      Lexical variable '$bot'
+#          Anonymous function
+#              Body ('function' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$channel'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$message'
+#                          Index
+#                              Property 'params'
+#                                  Lexical variable '$msg'
+#                              Index list [1 items]
+#                                  Item 0
+#                                      Number '1'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$parts'
+#                          Call
+#                              Property 'split'
+#                                  Lexical variable '$message'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Regex /\s+/
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Property 'length'
+#                                  Lexical variable '$parts'
+#                              Less than operator (<)
+#                              Number '3'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Fail (nonfatal exception)
+#                                  Call
+#                                      Bareword 'Error'
+#                                      Argument list [2 items]
+#                                          Item 0
+#                                              Symbol :ParameterError
+#                                          Item 1
+#                                              String 'Not enough...'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$command'
+#                          Index
+#                              Lexical variable '$parts'
+#                              Index list [1 items]
+#                                  Item 0
+#                                      Number '1'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$response'
+#                          Call
+#                              Property 'fromWord'
+#                                  Lexical variable '$message'
+#                              Argument list [1 items]
+#                                  Item 0
+#                                      Number '2'
+#                  Instruction
+#                      Assignment
+#                          Index
+#                              This variable '%factoids'
+#                              Index list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$command'
+#                          Lexical variable '$response'
+#                  Instruction
+#                      Assignment
+#                          Property (name evaluated at runtime)
+#                              Property 'commands'
+#                                  Lexical variable '$bot'
+#                              Property index [1 items]
+#                                  Item 0
+#                                      Lexical variable '$command'
+#                          Bareword 'respondFactoid'
+#                  Instruction
+#                      Call
+#                          Property 'privmsg'
+#                              Lexical variable '$channel'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Operation
+#                                      String 'OK, I will...'
+#                                      Addition operator (+)
+#                                      Lexical variable '$command'
+#                                      Addition operator (+)
+#                                      String ' with ''
+#                                      Addition operator (+)
+#                                      Lexical variable '$response'
+#                                      Addition operator (+)
+#                                      String '''
+#      Function 'respondFactoid'
+#          Body ('function' scope)
+#              Instruction
+#                  Need
+#                      Lexical variable '$msg'
+#              Instruction
+#                  Need
+#                      Lexical variable '$channel'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$command'
+#                      Call
+#                          Property 'trimPrefix'
+#                              Call
+#                                  Property 'word'
+#                                      Index
+#                                          Property 'params'
+#                                              Lexical variable '$msg'
+#                                          Index list [1 items]
+#                                              Item 0
+#                                                  Number '1'
+#                                  Argument list [1 items]
+#                                      Item 0
+#                                          Number '0'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  String '.'
+#              Instruction
+#                  Call
+#                      Property 'privmsg'
+#                          Lexical variable '$channel'
+#                      Argument list [1 items]
+#                          Item 0
+#                              Index
+#                                  This variable '%factoids'
+#                                  Index list [1 items]
+#                                      Item 0
+#                                          Lexical variable '$command'
 #      On
 #          Expression ('on' parameter)
 #              Property 'e'
@@ -366,7 +507,7 @@
 #              Property 'connect'
 #                  Lexical variable '$bot'
 #              Argument list [0 items]
-#      Include (COMPILER, IRC, IRC::Bot, IRC::Connection, IRC::Massage)
+#      Include (COMPILER, Error, IRC, IRC::Bot, IRC::Connection, IRC::Massage)
 use warnings;
 use strict;
 use 5.010;
@@ -387,14 +528,61 @@ my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
 
 my $pos = FF::before_content( '35-irc-new.frt', './test/35-irc-new.frt' );
 
-use Ferret::Core::Operations qw(any_true bool num str);
+use Ferret::Core::Operations qw(add any_true bool less num rgx str);
 my $result = do {
     my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
     my $scope = $file_scope;
     FF::load_core('main');
 
-    # Function event 'handlePerl' definition
+    # Function event 'respondFactoid' definition
     my $func_0 = FF::function_event_def(
+        $f, $context,
+        'respondFactoid',
+        undef,
+        [
+            { name => 'msg', type => undef, optional => undef, more => undef },
+            {
+                name     => 'channel',
+                type     => undef,
+                optional => undef,
+                more     => undef
+            }
+        ],
+        sub {
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my $self = $_self || $self;
+            FF::need( $scope, $args, 'msg',     32.2 ) or return;
+            FF::need( $scope, $args, 'channel', 32.4 ) or return;
+            FF::lex_assign(
+                $scope,
+                command => ${
+                    ${
+                        ${ $$scope->{'msg'} }->{'params'}
+                          ->get_index_value( [ num( $f, "1" ) ],
+                            $scope, $pos->(33.25) )
+                      }->{'word'}
+                      ->( [ num( $f, "0" ) ], $scope, undef, $pos->(33.45) )
+                  }->{'trimPrefix'}
+                  ->( [ str( $f, "." ) ], $scope, undef, $pos->(33.65) ),
+                $file_scope,
+                $pos->(33.1)
+            );
+            ${ $$scope->{'channel'} }->{'privmsg'}->(
+                [
+                    $$this->{'factoids'}->get_index_value(
+                        [ $$scope->{'command'} ],
+                        $scope, $pos->(34.25)
+                    )
+                ],
+                $scope, undef,
+                $pos->(34.15)
+            );
+            return $ret;
+        }
+    );
+
+    # Function event 'handlePerl' definition
+    my $func_1 = FF::function_event_def(
         $f, $context,
         'handlePerl',
         undef,
@@ -411,9 +599,9 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     50.2 ) or return;
-            FF::need( $scope, $args, 'channel', 50.4 ) or return;
-            FF::need( $scope, $args, 'mini',    50.6 ) or return;
+            FF::need( $scope, $args, 'msg',     81.2 ) or return;
+            FF::need( $scope, $args, 'channel', 81.4 ) or return;
+            FF::need( $scope, $args, 'mini',    81.6 ) or return;
             FF::lex_assign(
                 $scope,
                 res => ${
@@ -421,38 +609,38 @@ my $result = do {
                         [
                             $$scope->{'getParameter'}->(
                                 [ $$scope->{'msg'} ], $scope,
-                                undef,                $pos->(51.3)
+                                undef,                $pos->(82.3)
                             )
                         ],
                         $scope, undef,
-                        $pos->(51.2)
+                        $pos->(82.2)
                     )
                   }->{'compile'}->(
                     [ undef, [ mini => $$scope->{'mini'} ] ], $scope,
-                    undef, $pos->(51.55)
+                    undef, $pos->(82.55)
                   ),
                 $file_scope,
-                $pos->(51.1)
+                $pos->(82.1)
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 ${ $$scope->{'channel'} }->{'privmsg'}->(
                     [ ${ $$scope->{'res'} }->{'error'} ],
-                    $scope, undef, $pos->(53.3)
+                    $scope, undef, $pos->(84.3)
                 );
                 return $ret_func->();
             }
             ${ $$scope->{'channel'} }->{'privmsg'}->(
                 [ ${ $$scope->{'res'} }->{'perl'} ],
-                $scope, undef, $pos->(56.3)
+                $scope, undef, $pos->(87.3)
             );
             return $ret;
         }
     );
 
     # Function event 'getParameter' definition
-    my $func_1 = FF::function_event_def(
+    my $func_2 = FF::function_event_def(
         $f, $context,
         'getParameter',
         undef,
@@ -467,7 +655,7 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 60.2 ) or return;
+            FF::need( $scope, $args, 'msg', 91.2 ) or return;
             FF::lex_assign(
                 $scope,
                 string => any_true(
@@ -476,28 +664,28 @@ my $result = do {
                         ${
                             ${ $$scope->{'msg'} }->{'params'}
                               ->get_index_value( [ num( $f, "1" ) ],
-                                $scope, $pos->(61.25) )
+                                $scope, $pos->(92.25) )
                           }->{'fromWord'}->( [ num( $f, "1" ) ], $scope, undef,
-                            $pos->(61.45) );
+                            $pos->(92.45) );
                     },
                     sub { str( $f, "" ) }
                 ),
                 $file_scope,
-                $pos->(61.1)
+                $pos->(92.1)
             );
             return $ret_func->(
                 ${
                     ${ $$scope->{'string'} }->{'split'}
-                      ->( [ str( $f, "_NL_" ) ], $scope, undef, $pos->(62.2) )
+                      ->( [ str( $f, "_NL_" ) ], $scope, undef, $pos->(93.2) )
                   }->{'join'}
-                  ->( [ str( $f, "\n" ) ], $scope, undef, $pos->(62.4) )
+                  ->( [ str( $f, "\n" ) ], $scope, undef, $pos->(93.4) )
             );
             return $ret;
         }
     );
 
     # Anonymous function definition
-    my $func_2 = FF::function_def(
+    my $func_3 = FF::function_def(
         $f, undef, undef,
         [
             {
@@ -518,73 +706,6 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_3 = FF::function_def(
-        $f, undef, undef,
-        [
-            { name => 'msg', type => undef, optional => undef, more => undef },
-            {
-                name     => 'channel',
-                type     => undef,
-                optional => undef,
-                more     => undef
-            }
-        ],
-        sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
-            my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     9.2 ) or return;
-            FF::need( $scope, $args, 'channel', 9.4 ) or return;
-            FF::lex_assign(
-                $scope,
-                res => ${
-                    $$scope->{'COMPILER'}->(
-                        [
-                            $$scope->{'getParameter'}->(
-                                [ $$scope->{'msg'} ], $scope,
-                                undef,                $pos->(10.3)
-                            )
-                        ],
-                        $scope, undef,
-                        $pos->(10.2)
-                    )
-                  }->{'eval'}->( [ undef, [] ], $scope, undef, $pos->(10.55) ),
-                $file_scope,
-                $pos->(10.1)
-            );
-            if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
-                my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                ${ $$scope->{'channel'} }->{'privmsg'}->(
-                    [ ${ $$scope->{'res'} }->{'error'} ],
-                    $scope, undef, $pos->(12.3)
-                );
-                return $ret_func->();
-            }
-            FF::lex_assign(
-                $scope,
-                string => ${
-                    $$scope->{'inspect'}->(
-                        [
-                            undef,
-                            [
-                                value => ${ $$scope->{'res'} }->{'result'},
-                                quiet => $true
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(15.2)
-                    )
-                  }->{'string'},
-                $file_scope,
-                $pos->(15.1)
-            );
-            ${ $$scope->{'channel'} }->{'privmsg'}
-              ->( [ $$scope->{'string'} ], $scope, undef, $pos->(16.3) );
-            return $ret;
-        }
-    );
-
-    # Anonymous function definition
     my $func_4 = FF::function_def(
         $f, undef, undef,
         [
@@ -599,40 +720,77 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     20.2 ) or return;
-            FF::need( $scope, $args, 'channel', 20.4 ) or return;
+            FF::need( $scope, $args, 'msg',     13.2 ) or return;
+            FF::need( $scope, $args, 'channel', 13.4 ) or return;
             FF::lex_assign(
                 $scope,
-                res => ${
-                    $$scope->{'COMPILER'}->(
-                        [
-                            $$scope->{'getParameter'}->(
-                                [ $$scope->{'msg'} ], $scope,
-                                undef,                $pos->(21.3)
-                            )
-                        ],
-                        $scope, undef,
-                        $pos->(21.2)
-                    )
-                  }->{'tokenize'}->(
-                    [ undef, [ pretty => $true ] ], $scope,
-                    undef, $pos->(21.55)
-                  ),
-                $file_scope,
-                $pos->(21.1)
+                message => ${ $$scope->{'msg'} }->{'params'}
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(14.5) ),
+                $file_scope, $pos->(14.2)
             );
-            if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
+            FF::lex_assign(
+                $scope,
+                parts => ${ $$scope->{'message'} }->{'split'}->(
+                    [ rgx( $f, undef, "\\s+", undef ) ], $scope,
+                    undef, $pos->(17.5)
+                ),
+                $file_scope,
+                $pos->(17.2)
+            );
+            if (
+                bool(
+                    less(
+                        $scope,
+                        ${ $$scope->{'parts'} }->{'length'},
+                        num( $f, "3" )
+                    )
+                )
+              )
+            {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                ${ $$scope->{'channel'} }->{'privmsg'}->(
-                    [ ${ $$scope->{'res'} }->{'error'} ],
-                    $scope, undef, $pos->(23.3)
+                return $ret->fail(
+                    $$scope->{'Error'}->(
+                        [
+                            FF::get_symbol( $f, 'ParameterError' ),
+                            str( $f, "Not enough parameters" )
+                        ],
+                        $scope, undef,
+                        $pos->(19.3)
+                    )
                 );
-                return $ret_func->();
             }
+            FF::lex_assign(
+                $scope,
+                command => $$scope->{'parts'}
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(23.4) ),
+                $file_scope, $pos->(23.2)
+            );
+            FF::lex_assign(
+                $scope,
+                response => ${ $$scope->{'message'} }->{'fromWord'}
+                  ->( [ num( $f, "2" ) ], $scope, undef, $pos->(24.5) ),
+                $file_scope, $pos->(24.2)
+            );
+            $$this->{'factoids'}->set_index_value( [ $$scope->{'command'} ],
+                $$scope->{'response'}, $scope, $pos->(25.5) );
+            ${ $$scope->{'bot'} }->{'commands'}->set_property_eval(
+                $$scope->{'command'} => $$scope->{'respondFactoid'},
+                $pos->(26.35)
+            );
             ${ $$scope->{'channel'} }->{'privmsg'}->(
-                [ ${ $$scope->{'res'} }->{'pretty'} ],
-                $scope, undef, $pos->(26.3)
+                [
+                    add(
+                        $scope,
+                        str( $f, "OK, I will respond to ." ),
+                        $$scope->{'command'},
+                        str( $f, " with '" ),
+                        $$scope->{'response'},
+                        str( $f, "'" )
+                    )
+                ],
+                $scope, undef,
+                $pos->(28.15)
             );
             return $ret;
         }
@@ -653,8 +811,8 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     30.2 ) or return;
-            FF::need( $scope, $args, 'channel', 30.4 ) or return;
+            FF::need( $scope, $args, 'msg',     40.2 ) or return;
+            FF::need( $scope, $args, 'channel', 40.4 ) or return;
             FF::lex_assign(
                 $scope,
                 res => ${
@@ -662,32 +820,45 @@ my $result = do {
                         [
                             $$scope->{'getParameter'}->(
                                 [ $$scope->{'msg'} ], $scope,
-                                undef,                $pos->(31.3)
+                                undef,                $pos->(41.3)
                             )
                         ],
                         $scope, undef,
-                        $pos->(31.2)
+                        $pos->(41.2)
                     )
-                  }->{'construct'}->(
-                    [ undef, [ pretty => $true ] ], $scope,
-                    undef, $pos->(31.55)
-                  ),
+                  }->{'eval'}->( [ undef, [] ], $scope, undef, $pos->(41.55) ),
                 $file_scope,
-                $pos->(31.1)
+                $pos->(41.1)
             );
             if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 ${ $$scope->{'channel'} }->{'privmsg'}->(
                     [ ${ $$scope->{'res'} }->{'error'} ],
-                    $scope, undef, $pos->(33.3)
+                    $scope, undef, $pos->(43.3)
                 );
                 return $ret_func->();
             }
-            ${ $$scope->{'channel'} }->{'privmsg'}->(
-                [ ${ $$scope->{'res'} }->{'pretty'} ],
-                $scope, undef, $pos->(36.3)
+            FF::lex_assign(
+                $scope,
+                string => ${
+                    $$scope->{'inspect'}->(
+                        [
+                            undef,
+                            [
+                                value => ${ $$scope->{'res'} }->{'result'},
+                                quiet => $true
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(46.2)
+                    )
+                  }->{'string'},
+                $file_scope,
+                $pos->(46.1)
             );
+            ${ $$scope->{'channel'} }->{'privmsg'}
+              ->( [ $$scope->{'string'} ], $scope, undef, $pos->(47.3) );
             return $ret;
         }
     );
@@ -707,11 +878,40 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     40.2 ) or return;
-            FF::need( $scope, $args, 'channel', 40.4 ) or return;
-            $$scope->{'handlePerl'}->(
-                [ $$scope->{'msg'}, $$scope->{'channel'}, $true ],
-                $scope, undef, $pos->(41.1)
+            FF::need( $scope, $args, 'msg',     51.2 ) or return;
+            FF::need( $scope, $args, 'channel', 51.4 ) or return;
+            FF::lex_assign(
+                $scope,
+                res => ${
+                    $$scope->{'COMPILER'}->(
+                        [
+                            $$scope->{'getParameter'}->(
+                                [ $$scope->{'msg'} ], $scope,
+                                undef,                $pos->(52.3)
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(52.2)
+                    )
+                  }->{'tokenize'}->(
+                    [ undef, [ pretty => $true ] ], $scope,
+                    undef, $pos->(52.55)
+                  ),
+                $file_scope,
+                $pos->(52.1)
+            );
+            if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                ${ $$scope->{'channel'} }->{'privmsg'}->(
+                    [ ${ $$scope->{'res'} }->{'error'} ],
+                    $scope, undef, $pos->(54.3)
+                );
+                return $ret_func->();
+            }
+            ${ $$scope->{'channel'} }->{'privmsg'}->(
+                [ ${ $$scope->{'res'} }->{'pretty'} ],
+                $scope, undef, $pos->(57.3)
             );
             return $ret;
         }
@@ -732,25 +932,108 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     45.2 ) or return;
-            FF::need( $scope, $args, 'channel', 45.4 ) or return;
+            FF::need( $scope, $args, 'msg',     61.2 ) or return;
+            FF::need( $scope, $args, 'channel', 61.4 ) or return;
+            FF::lex_assign(
+                $scope,
+                res => ${
+                    $$scope->{'COMPILER'}->(
+                        [
+                            $$scope->{'getParameter'}->(
+                                [ $$scope->{'msg'} ], $scope,
+                                undef,                $pos->(62.3)
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(62.2)
+                    )
+                  }->{'construct'}->(
+                    [ undef, [ pretty => $true ] ], $scope,
+                    undef, $pos->(62.55)
+                  ),
+                $file_scope,
+                $pos->(62.1)
+            );
+            if ( bool( ${ $$scope->{'res'} }->{'error'} ) ) {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                ${ $$scope->{'channel'} }->{'privmsg'}->(
+                    [ ${ $$scope->{'res'} }->{'error'} ],
+                    $scope, undef, $pos->(64.3)
+                );
+                return $ret_func->();
+            }
+            ${ $$scope->{'channel'} }->{'privmsg'}->(
+                [ ${ $$scope->{'res'} }->{'pretty'} ],
+                $scope, undef, $pos->(67.3)
+            );
+            return $ret;
+        }
+    );
+
+    # Anonymous function definition
+    my $func_8 = FF::function_def(
+        $f, undef, undef,
+        [
+            { name => 'msg', type => undef, optional => undef, more => undef },
+            {
+                name     => 'channel',
+                type     => undef,
+                optional => undef,
+                more     => undef
+            }
+        ],
+        sub {
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my $self = $_self || $self;
+            FF::need( $scope, $args, 'msg',     71.2 ) or return;
+            FF::need( $scope, $args, 'channel', 71.4 ) or return;
+            $$scope->{'handlePerl'}->(
+                [ $$scope->{'msg'}, $$scope->{'channel'}, $true ],
+                $scope, undef, $pos->(72.1)
+            );
+            return $ret;
+        }
+    );
+
+    # Anonymous function definition
+    my $func_9 = FF::function_def(
+        $f, undef, undef,
+        [
+            { name => 'msg', type => undef, optional => undef, more => undef },
+            {
+                name     => 'channel',
+                type     => undef,
+                optional => undef,
+                more     => undef
+            }
+        ],
+        sub {
+            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my $self = $_self || $self;
+            FF::need( $scope, $args, 'msg',     76.2 ) or return;
+            FF::need( $scope, $args, 'channel', 76.4 ) or return;
             $$scope->{'handlePerl'}->(
                 [ $$scope->{'msg'}, $$scope->{'channel'}, $false ],
-                $scope, undef, $pos->(46.1)
+                $scope, undef, $pos->(77.1)
             );
             return $ret;
         }
     );
     $func_0->inside_scope(
-        handlePerl => $scope,
+        respondFactoid => $scope,
         $context, undef, undef, undef
     );
     $func_1->inside_scope(
+        handlePerl => $scope,
+        $context, undef, undef, undef
+    );
+    $func_2->inside_scope(
         getParameter => $scope,
         $context, undef, undef, undef
     );
     FF::load_namespaces( $context,
-        qw(COMPILER IRC IRC::Bot IRC::Connection IRC::Massage) );
+        qw(COMPILER Error IRC IRC::Bot IRC::Connection IRC::Massage) );
     FF::lex_assign(
         $context,
         bot =>
@@ -762,20 +1045,14 @@ my $result = do {
         'info',
         $self,
         $scope,
-        $func_2->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
-        {}
-    );
-    FF::on(
-        ${ $$scope->{'bot'} }->{'commands'},
-        'e',
-        $self,
-        $scope,
         $func_3->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
+    $$scope->{'bot'}
+      ->set_property( factoids => FF::create_hash( $f, [] ), $pos->(10.3) );
     FF::on(
         ${ $$scope->{'bot'} }->{'commands'},
-        't',
+        'add',
         $self,
         $scope,
         $func_4->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
@@ -783,7 +1060,7 @@ my $result = do {
     );
     FF::on(
         ${ $$scope->{'bot'} }->{'commands'},
-        'c',
+        'e',
         $self,
         $scope,
         $func_5->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
@@ -791,7 +1068,7 @@ my $result = do {
     );
     FF::on(
         ${ $$scope->{'bot'} }->{'commands'},
-        'p',
+        't',
         $self,
         $scope,
         $func_6->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
@@ -799,10 +1076,26 @@ my $result = do {
     );
     FF::on(
         ${ $$scope->{'bot'} }->{'commands'},
-        'pp',
+        'c',
         $self,
         $scope,
         $func_7->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        {}
+    );
+    FF::on(
+        ${ $$scope->{'bot'} }->{'commands'},
+        'p',
+        $self,
+        $scope,
+        $func_8->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        {}
+    );
+    FF::on(
+        ${ $$scope->{'bot'} }->{'commands'},
+        'pp',
+        $self,
+        $scope,
+        $func_9->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
     FF::lex_assign(
@@ -817,19 +1110,19 @@ my $result = do {
                 ]
             ],
             $scope, undef,
-            $pos->(65.35)
+            $pos->(96.35)
         ),
         undef,
-        $pos->(65.15)
+        $pos->(96.15)
     );
     $$scope->{'conn'}->set_property(
         autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ),
-        $pos->(66.3)
+        $pos->(97.3)
     );
     ${ $$scope->{'bot'} }->{'addConnection'}
-      ->( [ $$scope->{'conn'} ], $scope, undef, $pos->(67.3) );
+      ->( [ $$scope->{'conn'} ], $scope, undef, $pos->(98.3) );
     ${ $$scope->{'bot'} }->{'connect'}
-      ->( [ undef, [] ], $scope, undef, $pos->(68.3) );
+      ->( [ undef, [] ], $scope, undef, $pos->(99.3) );
 };
 
 FF::after_content();

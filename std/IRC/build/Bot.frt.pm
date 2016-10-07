@@ -101,14 +101,31 @@
 #                                                  Item 0
 #                                                      Property 'lowercase'
 #                                                          Lexical variable '$command'
-#                                      Named argument list [2 items]
+#                                      Named argument list [3 items]
 #                                          Item 0
+#                                              Pair '_this'
+#                                                  Maybe
+#                                                      Lexical variable '$bot'
+#                                          Item 1
 #                                              Pair 'msg'
 #                                                  Lexical variable '$msg'
-#                                          Item 1
+#                                          Item 2
 #                                              Pair 'channel'
 #                                                  Property 'target'
 #                                                      Lexical variable '$msg'
+#                                  Catch
+#                                      Expression ('catch' parameter)
+#                                          Lexical variable '$e'
+#                                      Body ('catch' scope)
+#                                          Instruction
+#                                              Call
+#                                                  Property 'privmsg'
+#                                                      Property 'target'
+#                                                          Lexical variable '$msg'
+#                                                  Argument list [1 items]
+#                                                      Item 0
+#                                                          Property 'msg'
+#                                                              Lexical variable '$e'
 #          Method 'connect'
 #              Body ('method' scope)
 #                  For (values)
@@ -202,22 +219,44 @@ my $result = do {
                 my $maybe_0 = $$scope->{'bot'};
                 my $maybe_1 = ${$maybe_0}->{'commands'}
                   ->property_eval_u( ${ $$scope->{'command'} }->{'lowercase'} );
+                my $maybe_2 = $$scope->{'bot'};
                 if (
                     bool(
-                        all_true( $scope, sub { $maybe_0 }, sub { $maybe_1 } )
+                        all_true(
+                            $scope,
+                            sub { $maybe_0 },
+                            sub { $maybe_1 },
+                            sub { $maybe_2 }
+                        )
                     )
                   )
                 {
-                    $maybe_1->(
-                        [
-                            undef,
-                            [
-                                msg     => $$scope->{'msg'},
-                                channel => ${ $$scope->{'msg'} }->{'target'}
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(31.5)
+                    FF::try_catch(
+                        $f, $scope,
+                        sub {
+                            $maybe_1->(
+                                [
+                                    undef,
+                                    [
+                                        _this => $maybe_2,
+                                        msg   => $$scope->{'msg'},
+                                        channel =>
+                                          ${ $$scope->{'msg'} }->{'target'}
+                                    ]
+                                ],
+                                $scope, undef,
+                                $pos->(31.5)
+                            );
+                        },
+                        sub {
+                            my ($scope) = @_;
+                            ${ ${ $$scope->{'msg'} }->{'target'} }->{'privmsg'}
+                              ->(
+                                [ ${ $$scope->{'e'} }->{'msg'} ],
+                                $scope, undef, $pos->(35.4)
+                              );
+                        },
+                        'e'
                     );
                 }
             }
@@ -307,9 +346,9 @@ my $result = do {
                         sub {
                             my ( $scope, $ret_func ) = @_;
                             ${ $$scope->{'c'} }->{'connect'}
-                              ->( [ undef, [] ], $scope, undef, $pos->(40.3) );
+                              ->( [ undef, [] ], $scope, undef, $pos->(41.3) );
                         },
-                        $pos->(39.1)
+                        $pos->(40.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }

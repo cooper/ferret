@@ -5,6 +5,37 @@ on $bot.commands.info {
     $channel.privmsg("Ferret IRC bot")
 }
 
+#=== FACTOIDS ===
+
+$bot.factoids = [:]
+
+on $bot.commands.add {
+    need $msg, $channel
+    $message = $msg.params[1]
+
+    # check params
+    $parts = $message.split(/\s+/)
+    if $parts.length < 3 {
+        fail Error(:ParameterError, "Not enough parameters")
+    }
+
+    # store
+    $command  = $parts[1]
+    $response = $message.fromWord(2)
+    %factoids[$command] = $response
+    $bot.commands.[$command] = respondFactoid
+
+    $channel.privmsg("OK, I will respond to .$command with '$response'")
+}
+
+func respondFactoid {
+    need $msg, $channel
+    $command = $msg.params[1].word(0).trimPrefix(".")
+    $channel.privmsg(%factoids[$command])
+}
+
+#=== COMPILER INTERFACE ===
+
 on $bot.commands.e {
     need $msg, $channel
     $res = COMPILER(getParameter($msg)).eval()

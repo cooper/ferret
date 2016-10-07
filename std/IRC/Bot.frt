@@ -29,9 +29,10 @@ method addConnection {
 
         # call the command
         $bot?.commands.[$command.lowercase]?(
+            _this:      $bot?,
             msg:        $msg,
             channel:    $msg.target
-        )
+        ) catch $e: $msg.target.privmsg($e.msg)
     }
 }
 
