@@ -1,1 +1,1 @@
-<<left>>->delete_property_ow('<<name>>', $pos->(<<pos>>))
+<<left>>->delete_property_ow<<eval>>(<<name>>, $pos->(<<pos>>))

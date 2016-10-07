@@ -151,6 +151,20 @@ sub delete_property_ow {
     return $owner->delete_property($prop_name, $pos);
 }
 
+sub delete_property_eval {
+    my ($obj, $prop_name_exp, $pos) = @_;
+    my $prop_name = $prop_name_exp->hash_string;
+    $obj->_check_prop_alteration($prop_name, [caller], $pos);
+    return $obj->delete_property($prop_name, @_[2..$#_]);
+}
+
+sub delete_property_ow_eval {
+    my ($obj, $prop_name_exp, $pos) = @_;
+    my $prop_name = $prop_name_exp->hash_string;
+    $obj->_check_prop_alteration($prop_name, [caller], $pos);
+    return $obj->delete_property_ow($prop_name, @_[2..$#_]);
+}
+
 # fetches a property.
 # $obj->property('someProperty')
 #
@@ -306,6 +320,13 @@ sub weaken_property {
     return if !defined $obj->{properties}{$prop_name};
     weaken($obj->{properties}{$prop_name});
     return 1;
+}
+
+sub weaken_property_eval {
+    my ($obj, $prop_name_exp, $pos) = @_;
+    my $prop_name = $prop_name_exp->hash_string;
+    $obj->_check_prop_alteration($prop_name, [caller], $pos);
+    return $obj->weaken_property($prop_name, @_[2..$#_]);
 }
 
 # convenience method:
