@@ -48,6 +48,7 @@ sub throw {
 
     # we may have been passed an already-prepared error object.
     if (blessed $fmt) {
+        $fmt->set_property(fatal => Ferret::true);
         die Ferret::Core::Conversion::ferror($fmt);
     }
 
@@ -58,7 +59,7 @@ sub throw {
     my $err = sprintf($errors{$fmt}{message}, @args);
     $err =~ s/(\.|\n)$//g;
 
-    die Ferret::Core::Conversion::ferror($err, $fmt, @$hints);
+    throw(Ferret::Core::Conversion::ferror($err, $fmt, @$hints));
 }
 
 1

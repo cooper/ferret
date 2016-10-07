@@ -88,6 +88,7 @@ sub fail {
     my ($ret, $err, $pos) = @_;
     $err = ferror($err) if !blessed $err;
     $err->{pos} = $pos;
+    ferror($err); # update position
     $ret->{failed}++;
     $ret->set_property(error => $err);
     $ret->stop;

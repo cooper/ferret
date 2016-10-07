@@ -26,6 +26,11 @@
 #                          Argument type
 #                              Bareword 'Error'
 #                  Instruction
+#                      Want
+#                          Instance variable '@fatal'
+#                          Argument value
+#                              Boolean false
+#                  Instruction
 #                      Call
 #                          Property 'bless'
 #                              Bareword 'NATIVE'
@@ -192,11 +197,11 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'list', 28.2 ) or return;
+            FF::need( $scope, $args, 'list', 29.2 ) or return;
             FF::lex_assign(
                 $scope,
                 str => str( $f, "\n" ),
-                $file_scope, $pos->(29.2)
+                $file_scope, $pos->(30.2)
             );
             {
                 my $loop_ret = FF::iterate_pair(
@@ -208,7 +213,7 @@ my $result = do {
                         if (
                             bool(
                                 $$scope->{'i'}
-                                  ->property_u( 'even', $pos->(31.3) )
+                                  ->property_u( 'even', $pos->(32.3) )
                             )
                           )
                         {
@@ -226,7 +231,7 @@ my $result = do {
                                     )
                                 ),
                                 $file_scope,
-                                $pos->(32.2)
+                                $pos->(33.2)
                             );
                         }
                         else {
@@ -241,11 +246,11 @@ my $result = do {
                                     )
                                 ),
                                 $file_scope,
-                                $pos->(34.2)
+                                $pos->(35.2)
                             );
                         }
                     },
-                    $pos->(30.05)
+                    $pos->(31.05)
                 );
                 return $ret_func->($loop_ret) if $loop_ret;
             }
@@ -287,6 +292,12 @@ my $result = do {
                     type     => 'Error',
                     optional => 1,
                     more     => undef
+                },
+                {
+                    name     => 'fatal',
+                    type     => undef,
+                    optional => 1,
+                    more     => undef
                 }
             ],
             sub {
@@ -296,13 +307,14 @@ my $result = do {
                 FF::want( $self, $args, 'hints', 7.2,
                     FF::create_list( $f, [] ) );
                 FF::want( $self, $args, 'subError', 8.2 );
-                $$scope->{'NATIVE'}->property_u( 'bless', $pos->(10.2) )->(
+                FF::want( $self, $args, 'fatal', 9.2, $false );
+                $$scope->{'NATIVE'}->property_u( 'bless', $pos->(11.2) )->(
                     [
                         ${ $scope->{special} }->{'self'},
                         str( $f, "Ferret::Error" )
                     ],
                     $scope, undef,
-                    $pos->(10.3)
+                    $pos->(11.3)
                 );
                 return $ret;
             }
@@ -328,15 +340,15 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'file', 14.1 ) or return;
-                FF::need( $scope, $args, 'line', 14.3 ) or return;
-                $$self->{'hints'}->property_u( 'push', $pos->(15.1) )->(
+                FF::need( $scope, $args, 'file', 15.1 ) or return;
+                FF::need( $scope, $args, 'line', 15.3 ) or return;
+                $$self->{'hints'}->property_u( 'push', $pos->(16.1) )->(
                     [
                         str( $f, "File" ), $$scope->{'file'},
                         str( $f, "Line" ), $$scope->{'line'}
                     ],
                     $scope, undef,
-                    $pos->(15.15)
+                    $pos->(16.15)
                 );
                 return $ret;
             }
@@ -354,18 +366,18 @@ my $result = do {
                     desc => add(
                         $scope,
                         str( $f, "[" ),
-                        $$self->{'type'}->property_u( 'name', $pos->(19.3) ),
+                        $$self->{'type'}->property_u( 'name', $pos->(20.3) ),
                         str( $f, "] " ),
                         $$self->{'msg'}
                     ),
                     $file_scope,
-                    $pos->(19.1)
+                    $pos->(20.1)
                 );
                 if (
                     bool(
                         _not(
                             $$self->{'hints'}
-                              ->property_u( 'empty', $pos->(20.4) )
+                              ->property_u( 'empty', $pos->(21.4) )
                         )
                     )
                   )
@@ -379,11 +391,11 @@ my $result = do {
                             $$scope->{'desc'},
                             $$scope->{'_prettyHints'}->(
                                 [ $$self->{'hints'} ], $scope,
-                                undef,                 $pos->(21.4)
+                                undef,                 $pos->(22.4)
                             )
                         ),
                         $file_scope,
-                        $pos->(21.2)
+                        $pos->(22.2)
                     );
                 }
                 if ( bool( $$self->{'subError'} ) ) {
@@ -398,11 +410,11 @@ my $result = do {
                                 $scope,
                                 str( $f, " ->" ),
                                 $$self->{'subError'}
-                                  ->property_u( '*description', $pos->(23.6) )
+                                  ->property_u( '*description', $pos->(24.6) )
                             )
                         ),
                         $file_scope,
-                        $pos->(23.2)
+                        $pos->(24.2)
                     );
                 }
                 return $ret_func->( $$scope->{'desc'} );

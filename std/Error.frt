@@ -6,6 +6,7 @@ init {
 
     want @hints: List = []
     want @subError: Error
+    want @fatal = false
 
     NATIVE.bless(*self, "Ferret::Error")
 }
