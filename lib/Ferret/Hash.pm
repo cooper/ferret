@@ -8,7 +8,7 @@ use 5.010;
 
 use parent 'Ferret::Object';
 use Ferret::Core::Conversion qw(
-    fnumber fstring flist fhash
+    fnumber fstring flist fhash_fromref fhash
     pdescription psym pstring
 );
 
@@ -24,11 +24,11 @@ my @methods = (
         prop => 1
     },
     setValue => {
-        need => '$value $index:Hashable',
+        need => '$value:V $index:K',
         code => \&_set_value
     },
     getValue => {
-        need => '$index:Hashable',
+        need => '$index:K',
         code => \&_get_value
     },
     copy => {
@@ -41,7 +41,8 @@ Ferret::bind_class(
     name      => 'Hash',
     methods   => \@methods,
     init      => \&init,
-    desc      => \&description
+    desc      => \&description,
+    generics  => [\'K', \'V']
 );
 
 *new = *Ferret::bind_constructor;
@@ -65,6 +66,7 @@ sub set_value {
 sub _set_value {
     my ($hash, $args) = @_;
     my $key = $args->psym('index');
+    print "VALUE: $$args{value}\n";
     $hash->set_value($key, $args->{value});
     return $hash;
 }
@@ -84,7 +86,7 @@ sub _copy {
     my ($hash, $args) = @_;
     # TODO: deep (recursive)
     my $deep = $args->pbool('deep');
-    return fhash($hash->{hash_values});
+    return fhash_fromref($hash->{hash_values});
 }
 
 sub length : method {

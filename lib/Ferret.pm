@@ -25,7 +25,9 @@ my (
 # create a new ferret.
 sub new {
     my ($class, %opts) = @_;
-    my $f = bless {}, $class;
+
+    # create a Ferret. set $ferret such that ffunction(), etc. will work.
+    $ferret ||= my $f = bless {}, $class;
 
     # create the global special object.
     $f->{special} = Ferret::Object->new($f, is_special => 1);

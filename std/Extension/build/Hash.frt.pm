@@ -1,6 +1,6 @@
 # === Document Model ===
 #  Document './std/Extension/Hash.frt'
-#      Class 'Hash'
+#      Class 'Hash' <K, V>
 #          Computed property 'empty'
 #              Body ('method' scope)
 #                  Instruction
@@ -9,6 +9,7 @@
 #                              Instance variable '@length'
 #                              Equality operator (==)
 #                              Number '0'
+#      Include (K, V)
 use warnings;
 use strict;
 use 5.010;
@@ -38,7 +39,8 @@ my $result = do {
     # Class 'Hash'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Hash', undef, undef );
+          FF::get_class( $f, $context, $file_scope, 'Hash', undef,
+            [ \'K', \'V' ] );
 
         # Method event 'empty' definition
         my $method_0 = FF::method_event_def(
@@ -53,6 +55,7 @@ my $result = do {
         );
         $method_0->inside_scope( empty => $scope, $proto, $class, 1, undef );
     }
+    FF::load_namespaces( $context, qw(K V) );
 };
 
 FF::after_content();

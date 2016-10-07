@@ -238,7 +238,7 @@ sub plistref {
 ### HASHES ###
 ##############
 
-sub fhash {
+sub fhash_fromref {
     my @keys_vals = @_;
     my %input;
 
@@ -251,6 +251,12 @@ sub fhash {
          %input = @keys_vals;
     }
 
+    my %output = map { $_ => ferretize($input{$_}, $po) } keys %input;
+    return Ferret::Hash->new($Ferret::ferret, pairs => \%output);
+}
+
+sub fhash {
+    my %input = @_;
     my %output = map { $_ => ferretize($input{$_}, $po) } keys %input;
     return Ferret::Hash->new($Ferret::ferret, pairs => \%output);
 }
@@ -483,7 +489,7 @@ sub _ferretize {
     return flist_fromref($val) if ref $val eq 'ARRAY';
 
     # it's a hash.
-    return fhash(%$val) if ref $val eq 'HASH';
+    return fhash_fromref($val) if ref $val eq 'HASH';
 
     # it's a CODE. convert to a function which handles Perl arguments.
     return ffunction_smart($val) if ref $val eq 'CODE';

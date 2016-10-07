@@ -7,8 +7,11 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(plist ferror FUNC_RET FUNC_SELF);
 use Scalar::Util qw(weaken);
+use Ferret::Core::Conversion qw(
+    plist ferror fmethod
+    FUNC_ARGS FUNC_RET FUNC_SELF
+);
 
 Ferret::bind_class(
     name => 'Class',
@@ -110,9 +113,8 @@ sub init {
         unless $obj->has_parent($class->prototype);
 
     # before the initializer is called, the generics are still available.
-    if (!$class->{force_generics}) {
-        $class->set_generics([]);
-    }
+    # if no generics are currently available, set them to Any.
+    $class->set_generics([]) if !$class->{force_generics};
     $obj->{generics} = delete $class->{force_generics};
 
     # fetch or create return object.
@@ -225,7 +227,7 @@ sub set_generics {
 # unset generics.
 sub reset_generics {
     my $class = shift;
-    $class->set_generics([]);
+    delete $class->{force_generics};
 }
 
 # add generic leters.
@@ -284,31 +286,51 @@ sub _global_class_prototype {
     return $f->{class_proto} ||= do {
         my $proto = Ferret::Prototype->new($f);
         $proto->set_property(init => _global_init($f));
+        $proto->set_property(signature => sub {
+            my ($class) = @_;
+            Ferret::String->new($f, str_value => $class->signature_string);
+        });
         $proto;
     };
 }
 
+# SomeClass.init($obj)(initializer arguments)
 sub _global_init {
     my $f = shift;
-    return $f->{_global_class_init} ||= do {
-        my $func = Ferret::Function->new($f,
-            name        => 'init',
-            is_method   => 1,
-            code        => sub {
-                my ($class, $args) = @_;
-                my $obj = delete $args->{obj};
-                return Ferret::Function->new($f,
-                    mimic => $class->property('initializer__') || undef,
-                    code  => sub {
-                        my (undef, $args) = @_;
-                        return $class->init($obj, $args);
-                    }
-                );
-            }
+    return $f->{_global_class_init} ||= fmethod(sub {
+        print "F($f) @_\n";
+        my ($weak_class, $args) = @_[FUNC_SELF, FUNC_ARGS];
+        my $obj = delete $args->{obj};
+        weaken($weak_class);
+        return Ferret::Function->new($f,
+            mimic => $weak_class->property('initializer__') || undef,
+            code  => sub { $weak_class->init($obj, $_[FUNC_ARGS]) }
         );
-        $func->add_argument(name => 'obj');
-        $func;
-    };
+    }, 'init', '$obj');
+}
+
+sub generics_string {
+    my $class = shift;
+    return join ', ', map {
+        ref() ? "$$_?" : $_
+    } @{ $class->{generic_letters} || [] };
+}
+
+sub signature_string {
+    my $class = shift;
+    my $init = $class->property('initializer__');
+    return $init ? $init->signature_string : '';
+}
+
+sub description {
+    my $class = shift;
+    my $gen   = $class->generics_string;
+    my $sig   = $class->signature_string;
+    my $desc  = "Class '$$class{name}'";
+    $desc    .= " $$class{version}" if $class->{version};
+    $desc    .= " <$gen>"           if length $gen;
+    $desc    .= " { $sig }"         if length $sig;
+    return $desc;
 }
 
 1
