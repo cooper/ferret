@@ -528,10 +528,15 @@ my $result = do {
                   ->( [ undef, [] ], $scope, undef, $pos->(14.2) );
                 FF::want( $self, $args, 'handlers', 17.2,
                     FF::create_object( $f, [] ) );
-                ${ $$self->{'handlers'} }->{'*addParent'}->(
-                    [ ${ $$scope->{'Handlers'} }->{'handlers'} ],
-                    $scope, undef, $pos->(18.3)
-                );
+                $$self->{'handlers'}->property_u( '*addParent', $pos->(18.2) )
+                  ->(
+                    [
+                        $$scope->{'Handlers'}
+                          ->property_u( 'handlers', $pos->(18.5) )
+                    ],
+                    $scope, undef,
+                    $pos->(18.3)
+                  );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
                         [
@@ -588,7 +593,7 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                ${ $$self->{'sock'} }->{'connect'}
+                $$self->{'sock'}->property_u( 'connect', $pos->(45.2) )
                   ->( [ undef, [] ], $scope, undef, $pos->(45.3) );
                 return $ret;
             }
@@ -612,7 +617,7 @@ my $result = do {
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(51.2)
                 );
-                ${ $$self->{'sock'} }->{'println'}
+                $$self->{'sock'}->property_u( 'println', $pos->(52.2) )
                   ->( [ $$scope->{'line'} ], $scope, undef, $pos->(52.3) );
                 return $ret;
             }
@@ -649,8 +654,10 @@ my $result = do {
                     $pos->(61.1)
                 );
                 {
-                    my $maybe_0 = $$self->{'handlers'}
-                      ->property_eval_u( ${ $$scope->{'msg'} }->{'command'} );
+                    my $maybe_0 = $$self->{'handlers'}->property_eval_u(
+                        $$scope->{'msg'}->property_u( 'command', $pos->(64.5) ),
+                        $pos->(64.2)
+                    );
                     if ( bool($maybe_0) ) {
                         $maybe_0->(
                             [
@@ -687,7 +694,8 @@ my $result = do {
                 FF::need( $scope, $args, 'target', 78.2 ) or return;
                 if (
                     bool(
-                        ${ $$scope->{'target'} }->{'hasPrefix'}
+                        $$scope->{'target'}
+                          ->property_u( 'hasPrefix', $pos->(80.3) )
                           ->( [ str( $f, "#" ) ], $scope, undef, $pos->(80.4) )
                     )
                   )
@@ -733,8 +741,13 @@ my $result = do {
                         FF::lex_assign(
                             $scope,
                             channel => $$self->{'channels'}->get_index_value(
-                                [ ${ $$scope->{'name'} }->{'lowercase'} ],
-                                $scope, $pos->(89.25)
+                                [
+                                    $$scope->{'name'}->property_u(
+                                        'lowercase', $pos->(89.35)
+                                    )
+                                ],
+                                $scope,
+                                $pos->(89.25)
                             ),
                             $file_scope,
                             $pos->(89.15)
@@ -783,8 +796,13 @@ my $result = do {
                         FF::lex_assign(
                             $scope,
                             user => $$self->{'users'}->get_index_value(
-                                [ ${ $$scope->{'nick'} }->{'lowercase'} ],
-                                $scope, $pos->(97.25)
+                                [
+                                    $$scope->{'nick'}->property_u(
+                                        'lowercase', $pos->(97.35)
+                                    )
+                                ],
+                                $scope,
+                                $pos->(97.25)
                             ),
                             $file_scope,
                             $pos->(97.15)
@@ -833,8 +851,13 @@ my $result = do {
                         FF::lex_assign(
                             $scope,
                             server => $$self->{'servers'}->get_index_value(
-                                [ ${ $$scope->{'name'} }->{'lowercase'} ],
-                                $scope, $pos->(105.25)
+                                [
+                                    $$scope->{'name'}->property_u(
+                                        'lowercase', $pos->(105.35)
+                                    )
+                                ],
+                                $scope,
+                                $pos->(105.25)
                             ),
                             $file_scope,
                             $pos->(105.15)

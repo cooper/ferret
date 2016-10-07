@@ -107,7 +107,8 @@ my $result = do {
                         str( $f, "found '" ),
                         ${ $scope->{special} }->{'this'},
                         str( $f, "' length to be " ),
-                        ${ ${ $scope->{special} }->{'return'} }->{'result'}
+                        ${ $scope->{special} }->{'return'}
+                          ->property_u( 'result', $pos->(11.5) )
                     )
                 ],
                 $scope, undef,
@@ -131,7 +132,8 @@ my $result = do {
                         str( $f, "found '" ),
                         ${ $scope->{special} }->{'this'},
                         str( $f, "' length to be " ),
-                        ${ ${ $scope->{special} }->{'return'} }->{'result'}
+                        ${ $scope->{special} }->{'return'}
+                          ->property_u( 'result', $pos->(22.5) )
                     )
                 ],
                 $scope, undef,
@@ -151,19 +153,19 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'str'} }->{'length'}
+    $$scope->{'str'}->property_u( 'length', $pos->(14.2) )
       ->( [ undef, [] ], $scope, undef, $pos->(14.3) );
-    ${ str( $f, "hello" ) }->{'length'}
+    str( $f, "hello" )->property_u( 'length', $pos->(16.2) )
       ->( [ undef, [] ], $scope, undef, $pos->(16.3) );
     FF::on(
-        ${ $$scope->{'String'} }->{'proto'},
+        $$scope->{'String'}->property_u( 'proto', $pos->(21.3) ),
         'length',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ str( $f, "hello" ) }->{'length'}
+    str( $f, "hello" )->property_u( 'length', $pos->(25.2) )
       ->( [ undef, [] ], $scope, undef, $pos->(25.3) );
 };
 

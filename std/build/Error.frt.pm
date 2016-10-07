@@ -181,7 +181,13 @@ my $result = do {
                     'i', 'el',
                     sub {
                         my ( $scope, $ret_func ) = @_;
-                        if ( bool( ${ $$scope->{'i'} }->{'even'} ) ) {
+                        if (
+                            bool(
+                                $$scope->{'i'}
+                                  ->property_u( 'even', $pos->(26.3) )
+                            )
+                          )
+                        {
                             my $scope =
                               Ferret::Scope->new( $f, parent => $scope );
 
@@ -265,7 +271,7 @@ my $result = do {
                 FF::need( $self, $args, 'msg' )  or return;
                 FF::want( $self, $args, 'hints',    7.2 );
                 FF::want( $self, $args, 'subError', 8.2 );
-                ${ $$scope->{'NATIVE'} }->{'bless'}->(
+                $$scope->{'NATIVE'}->property_u( 'bless', $pos->(10.2) )->(
                     [
                         ${ $scope->{special} }->{'self'},
                         str( $f, "Ferret::Error" )
@@ -289,7 +295,7 @@ my $result = do {
                     desc => add(
                         $scope,
                         str( $f, "[" ),
-                        ${ $$self->{'type'} }->{'name'},
+                        $$self->{'type'}->property_u( 'name', $pos->(14.3) ),
                         str( $f, "] " ),
                         $$self->{'msg'}
                     ),
@@ -301,7 +307,10 @@ my $result = do {
                         all_true(
                             $scope,
                             sub { $$self->{'hints'} },
-                            sub { _not( ${ $$self->{'hints'} }->{'empty'} ) }
+                            sub {
+                                _not( $$self->{'hints'}
+                                      ->property_u( 'empty', $pos->(15.6) ) );
+                            }
                         )
                     )
                   )
@@ -333,7 +342,8 @@ my $result = do {
                             add(
                                 $scope,
                                 str( $f, " ->" ),
-                                ${ $$self->{'subError'} }->{'*description'}
+                                $$self->{'subError'}
+                                  ->property_u( '*description', $pos->(18.6) )
                             )
                         ),
                         $file_scope,

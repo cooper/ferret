@@ -106,7 +106,7 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'item', 8.2 ) or return;
-                ${ $$self->{'items'} }->{'push'}
+                $$self->{'items'}->property_u( 'push', $pos->(9.2) )
                   ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.3) );
                 return $ret;
             }
@@ -118,7 +118,8 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                return $ret_func->( ${ $$self->{'items'} }->{'pop'}
+                return $ret_func->(
+                    $$self->{'items'}->property_u( 'pop', $pos->(13.3) )
                       ->( [ undef, [] ], $scope, undef, $pos->(13.4) ) );
                 return $ret;
             }
@@ -133,15 +134,17 @@ my $result = do {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::lex_assign(
                     $scope,
-                    name => ${ $$scope->{'T'} }->{'name'},
+                    name => $$scope->{'T'}->property_u( 'name', $pos->(17.4) ),
                     $file_scope, $pos->(17.2)
                 );
                 return $ret_func->(
                     add(
-                        $scope, str( $f, "Stack<" ),
+                        $scope,
+                        str( $f, "Stack<" ),
                         $$scope->{'name'},
                         str( $f, "> " ),
-                        ${ $$self->{'items'} }->{'*description'}
+                        $$self->{'items'}
+                          ->property_u( '*description', $pos->(18.45) )
                     )
                 );
                 return $ret;

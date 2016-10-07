@@ -122,10 +122,11 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                ${ $$scope->{'NATIVE::HTTPClient'} }->{'connect'}->(
+                $$scope->{'NATIVE::HTTPClient'}
+                  ->property_u( 'connect', $pos->(26.2) )->(
                     [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
                     $scope, undef, $pos->(26.25)
-                );
+                  );
                 return $ret;
             }
         );

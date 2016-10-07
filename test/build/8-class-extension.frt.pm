@@ -81,7 +81,8 @@ my $result = do {
             add(
                 $scope,
                 str( $f, "Length times two: " ),
-                ${ str( $f, "hi there" ) }->{'doubledLength'}
+                str( $f, "hi there" )
+                  ->property_u( 'doubledLength', $pos->(9.3) )
                   ->( [ undef, [] ], $scope, undef, $pos->(9.35) )
             )
         ],

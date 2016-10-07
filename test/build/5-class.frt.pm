@@ -315,8 +315,10 @@ my $result = do {
                                     $scope,
                                     add(
                                         $scope,
-                                        ${ $$scope->{'pt1'} }->{'x'},
-                                        ${ $$scope->{'pt2'} }->{'x'}
+                                        $$scope->{'pt1'}
+                                          ->property_u( 'x', $pos->(25.2) ),
+                                        $$scope->{'pt2'}
+                                          ->property_u( 'x', $pos->(25.35) )
                                     ),
                                     num( $f, "2" )
                                 ),
@@ -324,8 +326,10 @@ my $result = do {
                                     $scope,
                                     add(
                                         $scope,
-                                        ${ $$scope->{'pt1'} }->{'y'},
-                                        ${ $$scope->{'pt2'} }->{'y'}
+                                        $$scope->{'pt1'}
+                                          ->property_u( 'y', $pos->(26.2) ),
+                                        $$scope->{'pt2'}
+                                          ->property_u( 'y', $pos->(26.35) )
                                     ),
                                     num( $f, "2" )
                                 )
@@ -372,7 +376,7 @@ my $result = do {
     );
     FF::lex_assign(
         $scope,
-        rpt => ${ $$scope->{'pt'} }->{'oneToRight'}
+        rpt => $$scope->{'pt'}->property_u( 'oneToRight', $pos->(35.4) )
           ->( [ undef, [] ], $scope, undef, $pos->(35.5) ),
         undef, $pos->(35.2)
     );
@@ -382,7 +386,7 @@ my $result = do {
     );
     FF::lex_assign(
         $scope,
-        mdpt => ${ $$scope->{'Point'} }->{'midpoint'}->(
+        mdpt => $$scope->{'Point'}->property_u( 'midpoint', $pos->(38.2) )->(
             [ $$scope->{'pt'}, $$scope->{'rpt'} ], $scope,
             undef, $pos->(38.25)
         ),

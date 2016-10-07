@@ -27,12 +27,14 @@ sub perl_fmt {
 
     return property_idx => {
         index => $prop->index_fmt,
-        left  => $prop->left
+        left  => $prop->left,
+        pos   => $prop->{create_pos}
     } if $prop->{is_index};
 
     return property => {
         name => $prop->prop_name,
-        left => $prop->left
+        left => $prop->left,
+        pos   => $prop->{create_pos}
     };
 }
 

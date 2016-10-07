@@ -498,10 +498,11 @@ my $result = do {
                 FF::need( $scope, $args, 'data', 20.2 ) or return;
                 FF::lex_assign(
                     $scope,
-                    words => ${ $$scope->{'data'} }->{'split'}->(
+                    words =>
+                      $$scope->{'data'}->property_u( 'split', $pos->(21.4) )->(
                         [ rgx( $f, undef, "\\s+", undef ) ], $scope,
                         undef, $pos->(21.5)
-                    ),
+                      ),
                     $file_scope,
                     $pos->(21.2)
                 );
@@ -555,11 +556,12 @@ my $result = do {
                                                 num( $f, "0" ) );
                                         },
                                         sub {
-                                            ${ $$scope->{'word'} }
-                                              ->{'hasPrefix'}->(
+                                            $$scope->{'word'}
+                                              ->property_u( 'hasPrefix',
+                                                $pos->(40.65) )->(
                                                 [ str( $f, "\@" ) ],
                                                 $scope, undef, $pos->(40.7)
-                                              );
+                                                );
                                         }
                                     )
                                 )
@@ -570,8 +572,9 @@ my $result = do {
 
                                 FF::lex_assign(
                                     $scope,
-                                    word =>
-                                      ${ $$scope->{'word'} }->{'trimPrefix'}->(
+                                    word => $$scope->{'word'}->property_u(
+                                        'trimPrefix', $pos->(41.4)
+                                      )->(
                                         [ str( $f, "\@" ) ], $scope,
                                         undef, $pos->(41.5)
                                       ),
@@ -586,18 +589,20 @@ my $result = do {
                                 {
                                     my $loop_ret = FF::iterate(
                                         $f, $scope,
-                                        ${ $$scope->{'word'} }->{'split'}->(
+                                        $$scope->{'word'}->property_u(
+                                            'split', $pos->(45.25)
+                                          )->(
                                             [ str( $f, ";" ) ], $scope,
                                             undef, $pos->(45.3)
-                                        ),
+                                          ),
                                         'tag',
                                         sub {
                                             my ( $scope, $ret_func ) = @_;
                                             FF::lex_assign(
                                                 $scope,
-                                                tagParts =>
-                                                  ${ $$scope->{'tag'} }
-                                                  ->{'split'}->(
+                                                tagParts => $$scope->{'tag'}
+                                                  ->property_u( 'split',
+                                                    $pos->(49.2) )->(
                                                     [
                                                         str( $f, "=" ),
                                                         [
@@ -607,7 +612,7 @@ my $result = do {
                                                     ],
                                                     $scope, undef,
                                                     $pos->(49.25)
-                                                  ),
+                                                    ),
                                                 $file_scope,
                                                 $pos->(49.1)
                                             );
@@ -615,10 +620,11 @@ my $result = do {
                                                 bool(
                                                     gr8r(
                                                         $scope,
-                                                        ${
-                                                            $$scope->{
-                                                                'tagParts'}
-                                                          }->{'length'},
+                                                        $$scope->{'tagParts'}
+                                                          ->property_u(
+                                                            'length',
+                                                            $pos->(50.3)
+                                                          ),
                                                         num( $f, "1" )
                                                     )
                                                 )
@@ -679,11 +685,12 @@ my $result = do {
                                         sub { _not( $$scope->{'gotCommand'} ) },
                                         sub { _not( $$scope->{'gotSource'} ) },
                                         sub {
-                                            ${ $$scope->{'word'} }
-                                              ->{'hasPrefix'}->(
+                                            $$scope->{'word'}
+                                              ->property_u( 'hasPrefix',
+                                                $pos->(69.45) )->(
                                                 [ str( $f, ":" ) ],
                                                 $scope, undef, $pos->(69.5)
-                                              );
+                                                );
                                         }
                                     )
                                 )
@@ -694,8 +701,9 @@ my $result = do {
 
                                 FF::lex_assign(
                                     $scope,
-                                    word =>
-                                      ${ $$scope->{'word'} }->{'trimPrefix'}->(
+                                    word => $$scope->{'word'}->property_u(
+                                        'trimPrefix', $pos->(70.4)
+                                      )->(
                                         [ str( $f, ":" ) ], $scope,
                                         undef, $pos->(70.5)
                                       ),
@@ -727,8 +735,8 @@ my $result = do {
                                     $file_scope, $pos->(80.2)
                                 );
                                 $self->set_property(
-                                    command =>
-                                      ${ $$scope->{'word'} }->{'uppercase'},
+                                    command => $$scope->{'word'}
+                                      ->property_u( 'uppercase', $pos->(81.4) ),
                                     $pos->(81.2)
                                 );
                                 $$scope->{'updateWord'}->(
@@ -739,10 +747,12 @@ my $result = do {
                             }
                             if (
                                 bool(
-                                    ${ $$scope->{'word'} }->{'hasPrefix'}->(
+                                    $$scope->{'word'}
+                                      ->property_u( 'hasPrefix', $pos->(88.3) )
+                                      ->(
                                         [ str( $f, ":" ) ], $scope,
                                         undef, $pos->(88.4)
-                                    )
+                                      )
                                 )
                               )
                             {
@@ -751,41 +761,45 @@ my $result = do {
 
                                 FF::lex_assign(
                                     $scope,
-                                    rest => ${
-                                        ${ $$scope->{'data'} }->{'split'}->(
+                                    rest => $$scope->{'data'}
+                                      ->property_u( 'split', $pos->(89.13333) )
+                                      ->(
+                                        [
+                                            rgx( $f, undef, "\\s+", undef ),
                                             [
-                                                rgx( $f, undef, "\\s+", undef ),
-                                                [
-                                                    limit => add(
-                                                        $scope,
-                                                        $$scope->{'wordI'},
-                                                        num( $f, "1" )
-                                                    )
-                                                ]
-                                            ],
-                                            $scope, undef,
-                                            $pos->(89.16667)
-                                          )->get_index_value(
-                                            [ $$scope->{'wordI'} ], $scope,
-                                            $pos->(89.43333)
-                                          )
-                                      }->{'trimPrefix'}->(
+                                                limit => add(
+                                                    $scope,
+                                                    $$scope->{'wordI'},
+                                                    num( $f, "1" )
+                                                )
+                                            ]
+                                        ],
+                                        $scope, undef,
+                                        $pos->(89.16667)
+                                      )->get_index_value(
+                                        [ $$scope->{'wordI'} ], $scope,
+                                        $pos->(89.43333)
+                                      )
+                                      ->property_u( 'trimPrefix',
+                                        $pos->(89.53333) )->(
                                         [ str( $f, ":" ) ], $scope,
                                         undef, $pos->(89.56667)
-                                      ),
+                                        ),
                                     $file_scope,
                                     $pos->(89.06667)
                                 );
-                                ${ $$scope->{'params'} }->{'push'}->(
+                                $$scope->{'params'}
+                                  ->property_u( 'push', $pos->(90.2) )->(
                                     [ $$scope->{'rest'} ],
                                     $scope, undef, $pos->(90.3)
-                                );
+                                  );
                                 return 'last';
                             }
-                            ${ $$scope->{'params'} }->{'push'}->(
+                            $$scope->{'params'}
+                              ->property_u( 'push', $pos->(95.2) )->(
                                 [ $$scope->{'word'} ],
                                 $scope, undef, $pos->(95.3)
-                            );
+                              );
                             $$scope->{'updateWord'}
                               ->( [$true], $scope, undef, $pos->(97.2) );
                         },
@@ -811,7 +825,8 @@ my $result = do {
                     my $maybe_0 = $$self->{'connection'};
                     if ( bool($maybe_0) ) {
                         return $ret_func->(
-                            ${$maybe_0}->{'getTarget'}->(
+                            $maybe_0->property_u( 'getTarget', $pos->(105.2) )
+                              ->(
                                 [
                                     $$self->{'params'}->get_index_value(
                                         [ num( $f, "0" ) ], $scope,
@@ -820,7 +835,7 @@ my $result = do {
                                 ],
                                 $scope, undef,
                                 $pos->(105.25)
-                            )
+                              )
                         );
                     }
                 }
@@ -868,7 +883,8 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                return $ret_func->( ${ $$self->{'_parsedSource'} }->{'nick'} );
+                return $ret_func->( $$self->{'_parsedSource'}
+                      ->property_u( 'nick', $pos->(118.5) ) );
                 return $ret;
             }
         );
@@ -879,7 +895,8 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                return $ret_func->( ${ $$self->{'_parsedSource'} }->{'ident'} );
+                return $ret_func->( $$self->{'_parsedSource'}
+                      ->property_u( 'ident', $pos->(119.5) ) );
                 return $ret;
             }
         );
@@ -890,7 +907,8 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                return $ret_func->( ${ $$self->{'_parsedSource'} }->{'host'} );
+                return $ret_func->( $$self->{'_parsedSource'}
+                      ->property_u( 'host', $pos->(120.5) ) );
                 return $ret;
             }
         );

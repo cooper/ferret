@@ -137,7 +137,7 @@ my $result = do {
         list => FF::create_list( $f, [ str( $f, "hi" ) ] ),
         undef, $pos->(1.2)
     );
-    ${ $$scope->{'list'} }->{'push'}
+    $$scope->{'list'}->property_u( 'push', $pos->(2.2) )
       ->( [ str( $f, "there" ) ], $scope, undef, $pos->(2.3) );
     $$scope->{'list'}->set_index_value(
         [ num( $f, "4" ) ],
@@ -149,7 +149,7 @@ my $result = do {
             add(
                 $scope,
                 str( $f, "Length: " ),
-                ${ $$scope->{'list'} }->{'length'}
+                $$scope->{'list'}->property_u( 'length', $pos->(5.6) )
             )
         ],
         $scope, undef,

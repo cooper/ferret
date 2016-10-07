@@ -134,23 +134,19 @@ my $result = do {
     $func_0->inside_scope( makePoint => $scope, $context, undef, undef, undef );
     FF::lex_assign(
         $scope,
-        pt => ${
-            $$scope->{'makePoint'}->(
-                [ num( $f, "5" ), num( $f, "3" ) ], $scope,
-                undef, $pos->(11.2)
-            )
-          }->{'point'},
-        undef,
-        $pos->(11.1)
+        pt => $$scope->{'makePoint'}
+          ->( [ num( $f, "5" ), num( $f, "3" ) ], $scope, undef, $pos->(11.2) )
+          ->property_u( 'point', $pos->(11.45) ),
+        undef, $pos->(11.1)
     );
     $$scope->{'say'}->(
         [
             add(
                 $scope,
                 str( $f, "Point(" ),
-                ${ $$scope->{'pt'} }->{'x'},
+                $$scope->{'pt'}->property_u( 'x', $pos->(12.3) ),
                 str( $f, ", " ),
-                ${ $$scope->{'pt'} }->{'y'},
+                $$scope->{'pt'}->property_u( 'y', $pos->(12.55) ),
                 str( $f, ")" )
             )
         ],

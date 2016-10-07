@@ -203,32 +203,32 @@ my $result = do {
                 );
                 FF::lex_assign(
                     $scope,
-                    pox => ${ $$self->{'pt1'} }->{'x'},
+                    pox => $$self->{'pt1'}->property_u( 'x', $pos->(14.2) ),
                     $file_scope, $pos->(14.1)
                 );
                 FF::lex_assign(
                     $scope,
-                    poy => ${ $$self->{'pt1'} }->{'y'},
+                    poy => $$self->{'pt1'}->property_u( 'y', $pos->(14.45) ),
                     $file_scope, $pos->(14.35)
                 );
                 FF::lex_assign(
                     $scope,
-                    ptx => ${ $$self->{'pt2'} }->{'x'},
+                    ptx => $$self->{'pt2'}->property_u( 'x', $pos->(15.2) ),
                     $file_scope, $pos->(15.1)
                 );
                 FF::lex_assign(
                     $scope,
-                    pty => ${ $$self->{'pt2'} }->{'y'},
+                    pty => $$self->{'pt2'}->property_u( 'y', $pos->(15.45) ),
                     $file_scope, $pos->(15.35)
                 );
                 FF::lex_assign(
                     $scope,
-                    mx => ${ $$scope->{'mp'} }->{'x'},
+                    mx => $$scope->{'mp'}->property_u( 'x', $pos->(16.2) ),
                     $file_scope, $pos->(16.1)
                 );
                 FF::lex_assign(
                     $scope,
-                    my => ${ $$scope->{'mp'} }->{'y'},
+                    my => $$scope->{'mp'}->property_u( 'y', $pos->(16.45) ),
                     $file_scope, $pos->(16.35)
                 );
                 return $ret_func->(
@@ -267,12 +267,9 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
-                    ${
-                        FF::create_set( $scope, $$self->{'pt1'},
-                            $$self->{'pt2'} )
-                      }->{'midpoint'}
-                      ->( [ undef, [] ], $scope, undef, $pos->(25.4) )
-                );
+                    FF::create_set( $scope, $$self->{'pt1'}, $$self->{'pt2'} )
+                      ->property_u( 'midpoint', $pos->(25.35) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(25.4) ) );
                 return $ret;
             }
         );
@@ -283,7 +280,8 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                return $ret_func->( ${ $$self->{'pt1'} }->{'distanceTo'}
+                return $ret_func->(
+                    $$self->{'pt1'}->property_u( 'distanceTo', $pos->(29.3) )
                       ->( [ $$self->{'pt2'} ], $scope, undef, $pos->(29.4) ) );
                 return $ret;
             }

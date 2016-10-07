@@ -52,7 +52,7 @@ my $result = do {
 
     FF::lex_assign(
         $scope,
-        words => ${ str( $f, "how are you?" ) }->{'split'}
+        words => str( $f, "how are you?" )->property_u( 'split', $pos->(1.4) )
           ->( [ str( $f, " " ) ], $scope, undef, $pos->(1.5) ),
         undef, $pos->(1.2)
     );

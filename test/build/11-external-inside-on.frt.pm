@@ -229,7 +229,7 @@ my $result = do {
         undef,
         $pos->(23.1)
     );
-    if ( bool( ${ $$scope->{'r'} }->{'didTwice'} ) ) {
+    if ( bool( $$scope->{'r'}->property_u( 'didTwice', $pos->(25.3) ) ) ) {
         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
         $$scope->{'say'}->(

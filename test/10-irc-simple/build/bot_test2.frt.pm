@@ -73,9 +73,11 @@ my $result = do {
         undef,
         $pos->(1.1)
     );
-    $$scope->{'say'}
-      ->( [ ${ $$scope->{'bot'} }->{'address'} ], $scope, undef, $pos->(2.2) );
-    ${ $$scope->{'bot'} }->{'connect'}
+    $$scope->{'say'}->(
+        [ $$scope->{'bot'}->property_u( 'address', $pos->(2.4) ) ],
+        $scope, undef, $pos->(2.2)
+    );
+    $$scope->{'bot'}->property_u( 'connect', $pos->(3.2) )
       ->( [ undef, [] ], $scope, undef, $pos->(3.3) );
 };
 

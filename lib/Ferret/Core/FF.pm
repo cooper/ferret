@@ -13,6 +13,7 @@ use Ferret::Core::Conversion qw(
     FUNC_SCOPE FUNC_SELF FUNC_THIS FUNC_RET FUNC_ARGS
 );
 
+our $pos;
 my $ret_func = sub { wantarray ? (@_) : shift };
 
 # fetch the global Ferret.
@@ -53,9 +54,9 @@ sub before_content {
     $Ferret::tried_files{"$base.pm"}++;
 
     # create a function to make dualvar positions.
-    my $pos = sub { dualvar shift, $file };
+    my $posfunc = sub { $pos = dualvar shift, $file };
 
-    return $pos;
+    return $posfunc;
 }
 
 # things to do after evaluating runtime content.

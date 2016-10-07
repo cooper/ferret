@@ -163,7 +163,8 @@ my $result = do {
                     add(
                         $scope,
                         str( $f, "Got content! Length " ),
-                        ${ $$scope->{'content'} }->{'length'}
+                        $$scope->{'content'}
+                          ->property_u( 'length', $pos->(15.6) )
                     )
                 ],
                 $scope, undef,
@@ -191,7 +192,7 @@ my $result = do {
     {
         my $inside_return = FF::inside(
             $f, $scope,
-            ${ $$scope->{'HTTP'} }->{'get'}->(
+            $$scope->{'HTTP'}->property_u( 'get', $pos->(1.3) )->(
                 [ str( $f, "http://google.com" ) ], $scope,
                 undef, $pos->(1.4)
             ),

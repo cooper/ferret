@@ -134,18 +134,16 @@ my $result = do {
       ->( [ str( $f, "waiting..." ) ], $scope, undef, $pos->(7.2) );
     $$scope->{'say'}->(
         [
-            ${
-                $$scope->{'something'}->(
-                    [
-                        $func_2->inside_scope(
-                            (undef) => $scope,
-                            undef, undef, undef, undef
-                        )
-                    ],
-                    $scope, undef,
-                    $pos->(12.4)
-                )
-            }->{'message'}
+            $$scope->{'something'}->(
+                [
+                    $func_2->inside_scope(
+                        (undef) => $scope,
+                        undef, undef, undef, undef
+                    )
+                ],
+                $scope, undef,
+                $pos->(12.4)
+            )->property_u( 'message', $pos->(14.2) )
         ],
         $scope, undef,
         $pos->(12.2)

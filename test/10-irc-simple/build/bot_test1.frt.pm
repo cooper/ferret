@@ -66,7 +66,7 @@ my $result = do {
         undef,
         $pos->(1.1)
     );
-    ${ $$scope->{'bot'} }->{'connect'}
+    $$scope->{'bot'}->property_u( 'connect', $pos->(2.2) )
       ->( [ undef, [] ], $scope, undef, $pos->(2.3) );
 };
 

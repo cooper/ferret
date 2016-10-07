@@ -213,10 +213,11 @@ my $result = do {
                 FF::need( $self, $args, 'line' ) or return;
                 FF::lex_assign(
                     $scope,
-                    lineSplit => ${ $$self->{'line'} }->{'split'}->(
+                    lineSplit =>
+                      $$self->{'line'}->property_u( 'split', $pos->(6.2) )->(
                         [ str( $f, " " ), [ limit => num( $f, "4" ) ] ],
                         $scope, undef, $pos->(6.25)
-                    ),
+                      ),
                     $file_scope,
                     $pos->(6.1)
                 );
@@ -228,11 +229,10 @@ my $result = do {
                     $pos->(7.2)
                 );
                 $self->set_property(
-                    nickname => ${
-                        $$scope->{'lineSplit'}
-                          ->get_index_value( [ num( $f, "0" ) ],
-                            $scope, $pos->(10.2) )
-                      }->{'split'}->(
+                    nickname => $$scope->{'lineSplit'}
+                      ->get_index_value( [ num( $f, "0" ) ],
+                        $scope, $pos->(10.2) )
+                      ->property_u( 'split', $pos->(10.35) )->(
                         [ str( $f, "!" ), [ limit => num( $f, "2" ) ] ],
                         $scope, undef, $pos->(10.4)
                       )->get_index_value(
@@ -242,7 +242,8 @@ my $result = do {
                     $pos->(10.1)
                 );
                 $self->set_property(
-                    nickname => ${ $$self->{'nickname'} }->{'trimPrefix'}
+                    nickname => $$self->{'nickname'}
+                      ->property_u( 'trimPrefix', $pos->(11.4) )
                       ->( [ str( $f, ":" ) ], $scope, undef, $pos->(11.5) ),
                     $pos->(11.2)
                 );
@@ -254,12 +255,14 @@ my $result = do {
                     $pos->(14.2)
                 );
                 $self->set_property(
-                    message => ${ $$self->{'message'} }->{'trimPrefix'}
+                    message => $$self->{'message'}
+                      ->property_u( 'trimPrefix', $pos->(15.4) )
                       ->( [ str( $f, ":" ) ], $scope, undef, $pos->(15.5) ),
                     $pos->(15.2)
                 );
                 $self->set_property(
-                    parts => ${ $$self->{'message'} }->{'split'}
+                    parts =>
+                      $$self->{'message'}->property_u( 'split', $pos->(18.4) )
                       ->( [ str( $f, " " ) ], $scope, undef, $pos->(18.5) ),
                     $pos->(18.2)
                 );
@@ -281,17 +284,16 @@ my $result = do {
                             sub {
                                 nequal(
                                     $scope,
-                                    ${ $$self->{'parts'} }->{'length'},
+                                    $$self->{'parts'}
+                                      ->property_u( 'length', $pos->(26.15) ),
                                     num( $f, "0" )
                                 );
                             },
                             sub {
-                                ${
-                                    $$self->{'parts'}->get_index_value(
-                                        [ num( $f, "0" ) ], $scope,
-                                        $pos->(26.4)
-                                    )
-                                  }->{'hasPrefix'}->(
+                                $$self->{'parts'}
+                                  ->get_index_value( [ num( $f, "0" ) ],
+                                    $scope, $pos->(26.4) )
+                                  ->property_u( 'hasPrefix', $pos->(26.55) )->(
                                     [ str( $f, "." ) ],
                                     $scope, undef, $pos->(26.6)
                                   );
@@ -304,16 +306,21 @@ my $result = do {
 
                     FF::lex_assign(
                         $scope,
-                        cmd => ${
-                            $$self->{'parts'}
-                              ->get_index_value( [ num( $f, "0" ) ],
-                                $scope, $pos->(27.2) )
-                          }->{'trimPrefix'}
+                        cmd => $$self->{'parts'}
+                          ->get_index_value( [ num( $f, "0" ) ],
+                            $scope, $pos->(27.2) )
+                          ->property_u( 'trimPrefix', $pos->(27.35) )
                           ->( [ str( $f, "." ) ], $scope, undef, $pos->(27.4) ),
                         $file_scope,
                         $pos->(27.1)
                     );
-                    if ( bool( ${ $$scope->{'cmd'} }->{'length'} ) ) {
+                    if (
+                        bool(
+                            $$scope->{'cmd'}
+                              ->property_u( 'length', $pos->(28.3) )
+                        )
+                      )
+                    {
                         my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                         return $ret_func->( $$scope->{'cmd'} );
@@ -334,7 +341,7 @@ my $result = do {
                 return $ret_func->(
                     gr8r(
                         $scope,
-                        ${ $$self->{'parts'} }->{'length'},
+                        $$self->{'parts'}->property_u( 'length', $pos->(36.3) ),
                         num( $f, "1" )
                     )
                 );
@@ -358,7 +365,8 @@ my $result = do {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $ret_func->(
-                    ${ $$self->{'message'} }->{'split'}->(
+                    $$self->{'message'}->property_u( 'split', $pos->(42.15) )
+                      ->(
                         [
                             str( $f, " " ),
                             [

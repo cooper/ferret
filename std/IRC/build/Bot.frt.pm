@@ -178,8 +178,8 @@ my $result = do {
             if (
                 bool(
                     _not(
-                        ${ ${ $$scope->{'msg'} }->{'target'} }->{'*instanceOf'}
-                          ->(
+                        $$scope->{'msg'}->property_u( 'target', $pos->(21.2) )
+                          ->property_u( '*instanceOf', $pos->(21.25) )->(
                             [ $$scope->{'Channel'} ], $scope,
                             undef,                    $pos->(21.3)
                           )
@@ -193,32 +193,41 @@ my $result = do {
             }
             FF::lex_assign(
                 $scope,
-                trim => ${
-                    ${
-                        ${ $$scope->{'msg'} }->{'params'}
-                          ->get_index_value( [ num( $f, "1" ) ],
-                            $scope, $pos->(25.3) )
-                      }->{'word'}
-                      ->( [ num( $f, "0" ) ], $scope, undef, $pos->(25.5) )
-                  }->{'trimPrefix'}
+                trim => $$scope->{'msg'}->property_u( 'params', $pos->(25.25) )
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(25.3) )
+                  ->property_u( 'word', $pos->(25.45) )
+                  ->( [ num( $f, "0" ) ], $scope, undef, $pos->(25.5) )
+                  ->property_u( 'trimPrefix', $pos->(25.65) )
                   ->( [ str( $f, "." ) ], $scope, undef, $pos->(25.7), 1 ),
-                $file_scope,
-                $pos->(25.1)
+                $file_scope, $pos->(25.1)
             );
-            if ( bool( _not( ${ $$scope->{'trim'} }->{'trimmed'} ) ) ) {
+            if (
+                bool(
+                    _not(
+                        $$scope->{'trim'}->property_u( 'trimmed', $pos->(26.4) )
+                    )
+                )
+              )
+            {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 return $ret_func->();
             }
             FF::lex_assign(
                 $scope,
-                command => ${ $$scope->{'trim'} }->{'result'},
+                command =>
+                  $$scope->{'trim'}->property_u( 'result', $pos->(28.4) ),
                 $file_scope, $pos->(28.2)
             );
             {
                 my $maybe_0 = $$scope->{'bot'};
-                my $maybe_1 = ${$maybe_0}->{'commands'}
-                  ->property_eval_u( ${ $$scope->{'command'} }->{'lowercase'} );
+                my $maybe_1 =
+                  $maybe_0->property_u( 'commands', $pos->(31.15) )
+                  ->property_eval_u(
+                    $$scope->{'command'}
+                      ->property_u( 'lowercase', $pos->(31.35) ),
+                    $pos->(31.2)
+                  );
                 my $maybe_2 = $$scope->{'bot'};
                 if (
                     bool(
@@ -238,10 +247,11 @@ my $result = do {
                                 [
                                     undef,
                                     [
-                                        _this => $maybe_2,
-                                        msg   => $$scope->{'msg'},
-                                        channel =>
-                                          ${ $$scope->{'msg'} }->{'target'}
+                                        _this   => $maybe_2,
+                                        msg     => $$scope->{'msg'},
+                                        channel => $$scope->{'msg'}->property_u(
+                                            'target', $pos->(34.3)
+                                        )
                                     ]
                                 ],
                                 $scope, undef,
@@ -250,10 +260,15 @@ my $result = do {
                         },
                         sub {
                             my ($scope) = @_;
-                            ${ ${ $$scope->{'msg'} }->{'target'} }->{'privmsg'}
-                              ->(
-                                [ ${ $$scope->{'e'} }->{'msg'} ],
-                                $scope, undef, $pos->(35.4)
+                            $$scope->{'msg'}
+                              ->property_u( 'target',  $pos->(35.3) )
+                              ->property_u( 'privmsg', $pos->(35.35) )->(
+                                [
+                                    $$scope->{'e'}
+                                      ->property_u( 'msg', $pos->(35.5) )
+                                ],
+                                $scope, undef,
+                                $pos->(35.4)
                               );
                         },
                         'e'
@@ -308,7 +323,7 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'connection', 10.2 ) or return;
-                ${ $$self->{'conns'} }->{'push'}
+                $$self->{'conns'}->property_u( 'push', $pos->(11.2) )
                   ->( [ $$scope->{'connection'} ], $scope, undef,
                     $pos->(11.3) );
                 FF::lex_assign(
@@ -318,7 +333,8 @@ my $result = do {
                 );
                 $scope->weaken_property( 'bot', $pos->(14.1) );
                 FF::on(
-                    ${ $$scope->{'connection'} }->{'handlers'},
+                    $$scope->{'connection'}
+                      ->property_u( 'handlers', $pos->(17.3) ),
                     'PRIVMSG',
                     $self, $scope,
                     $func_0->inside_scope(
@@ -345,7 +361,8 @@ my $result = do {
                         'c',
                         sub {
                             my ( $scope, $ret_func ) = @_;
-                            ${ $$scope->{'c'} }->{'connect'}
+                            $$scope->{'c'}
+                              ->property_u( 'connect', $pos->(41.2) )
                               ->( [ undef, [] ], $scope, undef, $pos->(41.3) );
                         },
                         $pos->(40.1)

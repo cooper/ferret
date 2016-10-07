@@ -1,1 +1,1 @@
-${<<left>>}->{'<<name>>'}
+<<left>>->property_u('<<name>>', $pos->(<<pos>>))

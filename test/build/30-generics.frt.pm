@@ -155,7 +155,8 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'item', 8.2 ) or return;
-                return $ret_func->( ${ $$self->{'items'} }->{'push'}
+                return $ret_func->(
+                    $$self->{'items'}->property_u( 'push', $pos->(9.3) )
                       ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.4) ) );
                 return $ret;
             }
@@ -167,7 +168,8 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                return $ret_func->( ${ $$self->{'items'} }->{'pop'}
+                return $ret_func->(
+                    $$self->{'items'}->property_u( 'pop', $pos->(13.3) )
                       ->( [ undef, [] ], $scope, undef, $pos->(13.4) ) );
                 return $ret;
             }
@@ -184,7 +186,8 @@ my $result = do {
                     add(
                         $scope,
                         str( $f, "Stack " ),
-                        ${ $$self->{'items'} }->{'*description'}
+                        $$self->{'items'}
+                          ->property_u( '*description', $pos->(17.5) )
                     )
                 );
                 return $ret;
@@ -229,12 +232,12 @@ my $result = do {
         undef,
         $pos->(27.1)
     );
-    ${ $$scope->{'numstack'} }->{'push'}
+    $$scope->{'numstack'}->property_u( 'push', $pos->(29.2) )
       ->( [ num( $f, "1" ) ], $scope, undef, $pos->(29.3) );
-    ${ $$scope->{'numstack'} }->{'push'}
+    $$scope->{'numstack'}->property_u( 'push', $pos->(30.2) )
       ->( [ str( $f, "this should be ignored" ) ], $scope, undef,
         $pos->(30.3) );
-    ${ $$scope->{'numstack'} }->{'push'}
+    $$scope->{'numstack'}->property_u( 'push', $pos->(31.2) )
       ->( [ num( $f, "2" ) ], $scope, undef, $pos->(31.3) );
     $$scope->{'inspect'}
       ->( [ $$scope->{'numstack'} ], $scope, undef, $pos->(33.2) );

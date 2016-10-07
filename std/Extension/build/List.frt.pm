@@ -611,7 +611,7 @@ my $result = do {
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
-                        ${ $$ins->{'length'} }->{'even'}
+                        $$ins->{'length'}->property_u( 'even', $pos->(7.3) )
                     ],
                     equal_to => undef
                 ) ? $ins : undef;

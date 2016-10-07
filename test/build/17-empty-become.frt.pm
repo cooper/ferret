@@ -76,11 +76,11 @@ my $result = do {
         obj => FF::create_object( $f, [] ),
         undef, $pos->(2.2)
     );
-    ${ $$scope->{'Timer'} }->{'init'}
+    $$scope->{'Timer'}->property_u( 'init', $pos->(5.1) )
       ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(5.15) )
       ->( [ num( $f, "5" ) ], $scope, undef, $pos->(5.3) );
     FF::on(
-        ${ $$scope->{'obj'} }->{'once'}
+        $$scope->{'obj'}->property_u( 'once', $pos->(7.3) )
           ->( [ undef, [] ], $scope, undef, $pos->(7.4) ),
         'expire',
         $self,

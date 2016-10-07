@@ -172,7 +172,7 @@ my $result = do {
                       ->get_index_value( [ $$scope->{'type'} ],
                         $scope, $pos->(32.1) );
                     if ( bool($maybe_0) ) {
-                        ${$maybe_0}->{'trap'}
+                        $maybe_0->property_u( 'trap', $pos->(32.3) )
                           ->( [ undef, [] ], $scope, undef, $pos->(32.35) );
                     }
                 }

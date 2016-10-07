@@ -182,13 +182,20 @@ my $result = do {
                 {
                     my $loop_ret = FF::iterate(
                         $f, $scope,
-                        ${ $$scope->{'message'} }->{'split'}->(
+                        $$scope->{'message'}
+                          ->property_u( 'split', $pos->(14.25) )->(
                             [ str( $f, "\n" ) ], $scope, undef, $pos->(14.3)
-                        ),
+                          ),
                         'line',
                         sub {
                             my ( $scope, $ret_func ) = @_;
-                            if ( bool( ${ $$scope->{'line'} }->{'empty'} ) ) {
+                            if (
+                                bool(
+                                    $$scope->{'line'}
+                                      ->property_u( 'empty', $pos->(15.3) )
+                                )
+                              )
+                            {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 

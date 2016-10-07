@@ -479,10 +479,11 @@ my $result = do {
                 FF::try_catch(
                     $f, $scope,
                     sub {
-                        ${ $$scope->{'_PO'} }->{'require'}->(
+                        $$scope->{'_PO'}->property_u( 'require', $pos->(65.2) )
+                          ->(
                             [ str( $f, "JSON::XS" ) ],
                             $scope, undef, $pos->(65.3)
-                        );
+                          );
                     },
                     sub {
                         my ($scope) = @_;
@@ -531,48 +532,49 @@ my $result = do {
                     },
                     'err'
                 );
-                $$self->{'xs'}->property_eval_u( $$self->{'charset'} )
+                $$self->{'xs'}
+                  ->property_eval_u( $$self->{'charset'}, $pos->(79.2) )
                   ->( [ undef, [] ], $scope, undef, $pos->(79.6) );
                 if ( bool( $$self->{'pretty'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    ${ $$self->{'xs'} }->{'pretty'}
+                    $$self->{'xs'}->property_u( 'pretty', $pos->(80.5) )
                       ->( [ undef, [] ], $scope, undef, $pos->(80.6) );
                 }
                 if ( bool( $$self->{'spaceBefore'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    ${ $$self->{'xs'} }->{'spaceBefore'}
+                    $$self->{'xs'}->property_u( 'spaceBefore', $pos->(81.5) )
                       ->( [ undef, [] ], $scope, undef, $pos->(81.6) );
                 }
                 if ( bool( $$self->{'spaceAfter'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    ${ $$self->{'xs'} }->{'spaceAfter'}
+                    $$self->{'xs'}->property_u( 'spaceAfter', $pos->(82.5) )
                       ->( [ undef, [] ], $scope, undef, $pos->(82.6) );
                 }
                 if ( bool( $$self->{'indent'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    ${ $$self->{'xs'} }->{'indent'}
+                    $$self->{'xs'}->property_u( 'indent', $pos->(83.5) )
                       ->( [ undef, [] ], $scope, undef, $pos->(83.6) );
                 }
                 if ( bool( _not( $$self->{'strict'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    ${ $$self->{'xs'} }->{'relaxed'}
+                    $$self->{'xs'}->property_u( 'relaxed', $pos->(84.6) )
                       ->( [ undef, [] ], $scope, undef, $pos->(84.7) );
                 }
                 if ( bool( $$self->{'consistent'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    ${ $$self->{'xs'} }->{'canonical'}
+                    $$self->{'xs'}->property_u( 'canonical', $pos->(85.5) )
                       ->( [ undef, [] ], $scope, undef, $pos->(85.6) );
                 }
                 if ( bool( _not( $$self->{'strictRoot'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    ${ $$self->{'xs'} }->{'allow_nonref'}
+                    $$self->{'xs'}->property_u( 'allow_nonref', $pos->(86.6) )
                       ->( [ undef, [] ], $scope, undef, $pos->(86.7) );
                 }
                 return $ret;
@@ -597,10 +599,11 @@ my $result = do {
                     $f, $scope,
                     sub {
                         $ret->set_property(
-                            json => ${ $$self->{'xs'} }->{'encode'}->(
+                            json => $$self->{'xs'}
+                              ->property_u( 'encode', $pos->(97.2) )->(
                                 [ $$scope->{'data'} ], $scope,
                                 undef,                 $pos->(97.25)
-                            ),
+                              ),
                             $pos->(97.1)
                         );
                     },
@@ -642,10 +645,11 @@ my $result = do {
                     $f, $scope,
                     sub {
                         $ret->set_property(
-                            data => ${ $$self->{'xs'} }->{'decode'}->(
+                            data => $$self->{'xs'}
+                              ->property_u( 'decode', $pos->(106.2) )->(
                                 [ $$scope->{'json'} ], $scope,
                                 undef,                 $pos->(106.25)
-                            ),
+                              ),
                             $pos->(106.1)
                         );
                     },
@@ -687,7 +691,8 @@ my $result = do {
                 FF::try_catch(
                     $f, $scope,
                     sub {
-                        ${ $$self->{'xs'} }->{'perlCall'}->(
+                        $$self->{'xs'}->property_u( 'perlCall', $pos->(142.1) )
+                          ->(
                             [
                                 str( $f, "incr_parse" ),
                                 $$scope->{'fragment'},
@@ -695,7 +700,7 @@ my $result = do {
                             ],
                             $scope, undef,
                             $pos->(142.15)
-                        );
+                          );
                     },
                     sub {
                         my ($scope) = @_;
@@ -730,14 +735,15 @@ my $result = do {
                     sub {
                         FF::lex_assign(
                             $scope,
-                            objects => ${ $$self->{'xs'} }->{'perlCall'}->(
+                            objects => $$self->{'xs'}
+                              ->property_u( 'perlCall', $pos->(155.2) )->(
                                 [
                                     str( $f, "incr_parse" ),
                                     [ CONTEXT => str( $f, "list" ) ]
                                 ],
                                 $scope, undef,
                                 $pos->(155.25)
-                            ),
+                              ),
                             $file_scope,
                             $pos->(155.1)
                         );
@@ -760,17 +766,19 @@ my $result = do {
                 );
                 if (
                     bool(
-                        ${ $$scope->{'objects'} }->{'*instanceOf'}->(
+                        $$scope->{'objects'}
+                          ->property_u( '*instanceOf', $pos->(158.3) )->(
                             [ $$scope->{'List'} ], $scope,
                             undef,                 $pos->(158.4)
-                        )
+                          )
                     )
                   )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $ret->set_property(
-                        found => ${ $$scope->{'objects'} }->{'length'},
+                        found => $$scope->{'objects'}
+                          ->property_u( 'length', $pos->(159.4) ),
                         $pos->(159.2)
                     );
                 }
@@ -789,7 +797,7 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                ${ $$self->{'xs'} }->{'incr_reset'}
+                $$self->{'xs'}->property_u( 'incr_reset', $pos->(167.2) )
                   ->( [ undef, [] ], $scope, undef, $pos->(167.3) );
                 return $ret;
             }
@@ -809,7 +817,8 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'data', 180.2 ) or return;
-                return $ret_func->( ${ $$scope->{'default'} }->{'encode'}
+                return $ret_func->(
+                    $$scope->{'default'}->property_u( 'encode', $pos->(181.3) )
                       ->( [ $$scope->{'data'} ], $scope, undef, $pos->(181.4) )
                 );
                 return $ret;
@@ -830,7 +839,8 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'json', 187.2 ) or return;
-                return $ret_func->( ${ $$scope->{'default'} }->{'decode'}
+                return $ret_func->(
+                    $$scope->{'default'}->property_u( 'decode', $pos->(188.3) )
                       ->( [ $$scope->{'json'} ], $scope, undef, $pos->(188.4) )
                 );
                 return $ret;

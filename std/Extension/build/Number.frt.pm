@@ -151,7 +151,7 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 return $ret_func->(
-                    ${ $$scope->{'Math'} }->{'sqrt'}->(
+                    $$scope->{'Math'}->property_u( 'sqrt', $pos->(21.3) )->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
                         undef,                                $pos->(21.4)
                     )
@@ -246,7 +246,7 @@ my $result = do {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'root', 41.2 ) or return;
                 return $ret_func->(
-                    ${ $$scope->{'Math'} }->{'root'}->(
+                    $$scope->{'Math'}->property_u( 'root', $pos->(42.15) )->(
                         [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
                         $scope,
                         undef,

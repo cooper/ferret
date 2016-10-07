@@ -321,13 +321,23 @@ my $result = do {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'cat1', 39.1 ) or return;
                 FF::need( $scope, $args, 'cat2', 39.3 ) or return;
-                if ( bool( ${ $$scope->{'cat1'} }->{'mean'} ) ) {
+                if (
+                    bool(
+                        $$scope->{'cat1'}->property_u( 'mean', $pos->(40.3) )
+                    )
+                  )
+                {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret_func->(
                         str( $f, "Cat 1 started a catfight!" ) );
                 }
-                if ( bool( ${ $$scope->{'cat2'} }->{'mean'} ) ) {
+                if (
+                    bool(
+                        $$scope->{'cat2'}->property_u( 'mean', $pos->(42.3) )
+                    )
+                  )
+                {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret_func->(
@@ -354,12 +364,12 @@ my $result = do {
           $$scope->{'Cow'}->( [ undef, [] ], $scope, undef, $pos->(50.4) ),
         undef, $pos->(50.2)
     );
-    ${ $$scope->{'Dog'} }->{'init'}
+    $$scope->{'Dog'}->property_u( 'init', $pos->(53.2) )
       ->( [ $$scope->{'animal'} ], $scope, undef, $pos->(53.3) )
       ->( [ undef, [] ], $scope, undef, $pos->(53.6) );
     $$scope->{'say'}->(
         [
-            ${ $$scope->{'animal'} }->{'moo'}
+            $$scope->{'animal'}->property_u( 'moo', $pos->(56.4) )
               ->( [ undef, [] ], $scope, undef, $pos->(56.5) )
         ],
         $scope, undef,
@@ -367,13 +377,13 @@ my $result = do {
     );
     $$scope->{'say'}->(
         [
-            ${ $$scope->{'animal'} }->{'bark'}
+            $$scope->{'animal'}->property_u( 'bark', $pos->(57.4) )
               ->( [ undef, [] ], $scope, undef, $pos->(57.5) )
         ],
         $scope, undef,
         $pos->(57.2)
     );
-    ${ $$scope->{'Cat'} }->{'init'}
+    $$scope->{'Cat'}->property_u( 'init', $pos->(60.1) )
       ->( [ $$scope->{'animal'} ], $scope, undef, $pos->(60.15) )
       ->( [ undef, [ mean => $true ] ], $scope, undef, $pos->(60.3) );
     $$scope->{'inspect'}
@@ -386,8 +396,9 @@ my $result = do {
     FF::lex_assign(
         $scope,
         aftermath =>
-          ${ FF::create_set( $scope, $$scope->{'animal'}, $$scope->{'cat'} ) }
-          ->{'fight'}->( [ undef, [] ], $scope, undef, $pos->(71.45) ),
+          FF::create_set( $scope, $$scope->{'animal'}, $$scope->{'cat'} )
+          ->property_u( 'fight', $pos->(71.4) )
+          ->( [ undef, [] ], $scope, undef, $pos->(71.45) ),
         undef, $pos->(71.1)
     );
     $$scope->{'say'}

@@ -74,7 +74,8 @@ my $result = do {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
             FF::need( $scope, $args, 'num', 4.2 ) or return;
-            return $ret_func->( ${ $$scope->{'NATIVE::Math'} }->{'sqrt'}
+            return $ret_func->(
+                $$scope->{'NATIVE::Math'}->property_u( 'sqrt', $pos->(5.25) )
                   ->( [ $$scope->{'num'} ], $scope, undef, $pos->(5.3) ) );
             return $ret;
         }

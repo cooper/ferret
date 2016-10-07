@@ -81,7 +81,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'url', 14.2 ) or return;
             return $ret_func->(
-                ${ $$scope->{'client'} }->{'get'}->(
+                $$scope->{'client'}->property_u( 'get', $pos->(15.3) )->(
                     [ undef, [ url => $$scope->{'url'} ] ], $scope,
                     undef, $pos->(15.4)
                 )
@@ -99,7 +99,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'url', 20.2 ) or return;
             return $ret_func->(
-                ${ $$scope->{'client'} }->{'post'}->(
+                $$scope->{'client'}->property_u( 'post', $pos->(21.3) )->(
                     [ undef, [ url => $$scope->{'url'} ] ], $scope,
                     undef, $pos->(21.4)
                 )

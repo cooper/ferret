@@ -199,10 +199,11 @@ my $result = do {
                     $$scope->{'defaultLength'} );
                 FF::want( $self, $args, 'writeLength', 26.2,
                     $$scope->{'defaultLength'} );
-                ${ $$scope->{'NATIVE::HTTPClient'} }->{'initialize'}->(
+                $$scope->{'NATIVE::HTTPClient'}
+                  ->property_u( 'initialize', $pos->(28.4) )->(
                     [ ${ $scope->{special} }->{'self'} ],
                     $scope, undef, $pos->(28.5)
-                );
+                  );
                 return $ret;
             }
         );
@@ -323,7 +324,8 @@ my $result = do {
             defaultUA => add(
                 $scope,
                 str( $f, "ferret-http/" ),
-                ${ ${ $scope->{special} }->{'class'} }->{'version'}
+                ${ $scope->{special} }->{'class'}
+                  ->property_u( 'version', $pos->(5.6) )
             ),
             undef,
             $pos->(5.2)

@@ -122,13 +122,11 @@ my $result = do {
             FF::need( $scope, $args, 'gender', 7.3 ) or return;
             FF::lex_assign(
                 $scope,
-                what => ${
-                    $$scope->{'Str'}
-                      ->( [ $$scope->{'gender'} ], $scope, undef, $pos->(8.2) )
-                  }->{'trimPrefix'}
+                what => $$scope->{'Str'}
+                  ->( [ $$scope->{'gender'} ], $scope, undef, $pos->(8.2) )
+                  ->property_u( 'trimPrefix', $pos->(8.35) )
                   ->( [ str( $f, ":" ) ], $scope, undef, $pos->(8.4) ),
-                $file_scope,
-                $pos->(8.1)
+                $file_scope, $pos->(8.1)
             );
             $$scope->{'say'}->(
                 [

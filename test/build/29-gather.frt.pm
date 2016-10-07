@@ -201,7 +201,8 @@ my $result = do {
                                 bool(
                                     nequal(
                                         $scope,
-                                        ${ $$scope->{'pt'} }->{'x'},
+                                        $$scope->{'pt'}
+                                          ->property_u( 'x', $pos->(6.3) ),
                                         num( $f, "0" )
                                     )
                                 )
@@ -210,13 +211,15 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                $take->( ${ $$scope->{'pt'} }->{'x'} );
+                                $take->( $$scope->{'pt'}
+                                      ->property_u( 'x', $pos->(7.3) ) );
                             }
                             if (
                                 bool(
                                     nequal(
                                         $scope,
-                                        ${ $$scope->{'pt'} }->{'y'},
+                                        $$scope->{'pt'}
+                                          ->property_u( 'y', $pos->(8.3) ),
                                         num( $f, "0" )
                                     )
                                 )
@@ -225,7 +228,8 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                $take->( ${ $$scope->{'pt'} }->{'y'} );
+                                $take->( $$scope->{'pt'}
+                                      ->property_u( 'y', $pos->(9.3) ) );
                             }
                         }
                     );
@@ -263,7 +267,9 @@ my $result = do {
                                         my ( $scope, $ret_func ) = @_;
                                         if (
                                             bool(
-                                                ${ $$scope->{'n'} }->{'even'}
+                                                $$scope->{'n'}->property_u(
+                                                    'even', $pos->(29.3)
+                                                )
                                             )
                                           )
                                         {
@@ -364,8 +370,8 @@ my $result = do {
         [
             $$scope->{'evenNumbers'}->(
                 [
-                    ${ range( $scope, num( $f, "0" ), num( $f, "9" ) ) }
-                      ->{'toList'}
+                    range( $scope, num( $f, "0" ), num( $f, "9" ) )
+                      ->property_u( 'toList', $pos->(35.5) )
                       ->( [ undef, [] ], $scope, undef, $pos->(35.55) )
                 ],
                 $scope, undef,

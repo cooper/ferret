@@ -54,12 +54,12 @@ my $result = do {
 
     FF::load_namespaces( $context, qw(Math Math::Point) );
     FF::lex_assign( $scope, obj => str( $f, "hi" ), undef, $pos->(2.2) );
-    ${ $$scope->{'Math::Point'} }->{'init'}
+    $$scope->{'Math::Point'}->property_u( 'init', $pos->(9.2) )
       ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(9.25) )
       ->( [ num( $f, "1" ), num( $f, "1" ) ], $scope, undef, $pos->(9.4) );
     $$scope->{'say'}->(
         [
-            ${ $$scope->{'obj'} }->{'pretty'}
+            $$scope->{'obj'}->property_u( 'pretty', $pos->(11.4) )
               ->( [ undef, [] ], $scope, undef, $pos->(11.5) )
         ],
         $scope, undef,

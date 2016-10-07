@@ -131,7 +131,7 @@ my $result = do {
     );
     FF::load_namespaces( $context, qw(Signal Timer) );
     FF::on(
-        ${ $$scope->{'Signal'} }->{'TERM'},
+        $$scope->{'Signal'}->property_u( 'TERM', $pos->(2.3) ),
         'trap',
         $self,
         $scope,
@@ -140,15 +140,16 @@ my $result = do {
     );
     FF::lex_assign( $scope, asked => $false, undef, $pos->(8.2) );
     FF::on(
-        ${ $$scope->{'Signal'} }->{'INT'},
+        $$scope->{'Signal'}->property_u( 'INT', $pos->(9.3) ),
         'trap',
         $self,
         $scope,
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
-    ${ $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(23.2) ) }
-      ->{'start'}->( [ undef, [] ], $scope, undef, $pos->(23.6) );
+    $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(23.2) )
+      ->property_u( 'start', $pos->(23.5) )
+      ->( [ undef, [] ], $scope, undef, $pos->(23.6) );
 };
 
 FF::after_content();

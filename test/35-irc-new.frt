@@ -15,12 +15,15 @@ on $bot.commands.add {
 
     # check params
     $parts = $message.split(/\s+/)
-    if $parts.length < 3 {
+    if $parts.length < 3:
         fail Error(:ParameterError, "Not enough parameters")
-    }
+
+    # check for existing command
+    $command = $parts[1].lowercase
+    if $bot.commands.[$command]:
+        fail Error(:ParameterError, "Command .$command exists")
 
     # store
-    $command = $parts[1].lowercase
     $response = $message.fromWord(2)
     %factoids[$command] = $response
     $bot.commands.[$command] = respondFactoid

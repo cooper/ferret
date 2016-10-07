@@ -66,10 +66,9 @@ my $result = do {
     );
     FF::lex_assign(
         $scope,
-        roots => ${
-            FF::create_list( $f,
-                [ num( $f, "4" ), num( $f, "16" ), num( $f, "25" ) ] )
-          }->{'map'}->(
+        roots => FF::create_list( $f,
+            [ num( $f, "4" ), num( $f, "16" ), num( $f, "25" ) ] )
+          ->property_u( 'map', $pos->(1.5) )->(
             [
                 $func_0->inside_scope(
                     (undef) => $scope,

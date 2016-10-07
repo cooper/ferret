@@ -115,7 +115,7 @@ my $result = do {
     FF::load_namespaces( $context, qw(Timer) );
     FF::lex_assign(
         $scope,
-        parts => ${ str( $f, "s p a m" ) }->{'split'}
+        parts => str( $f, "s p a m" )->property_u( 'split', $pos->(1.4) )
           ->( [ str( $f, " " ) ], $scope, undef, $pos->(1.5) ),
         undef, $pos->(1.2)
     );
@@ -127,10 +127,9 @@ my $result = do {
             sub {
                 my ( $scope, $ret_func ) = @_;
                 FF::on(
-                    ${
-                        $$scope->{'Timer'}
-                          ->( [ $$scope->{'i'} ], $scope, undef, $pos->(4.15) )
-                      }->{'once'}
+                    $$scope->{'Timer'}
+                      ->( [ $$scope->{'i'} ], $scope, undef, $pos->(4.15) )
+                      ->property_u( 'once', $pos->(4.3) )
                       ->( [ undef, [] ], $scope, undef, $pos->(4.35) ),
                     'expire', $self, $scope,
                     $func_0->inside_scope(

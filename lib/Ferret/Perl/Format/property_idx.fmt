@@ -1,1 +1,1 @@
-<<left>>->property_eval_u(<<index>>)
+<<left>>->property_eval_u(<<index>>, $pos->(<<pos>>))

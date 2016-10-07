@@ -288,7 +288,7 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                ${ $$self->{'sock'} }->{'connect'}
+                $$self->{'sock'}->property_u( 'connect', $pos->(25.2) )
                   ->( [ undef, [] ], $scope, undef, $pos->(25.3) );
                 return $ret;
             }
@@ -312,7 +312,7 @@ my $result = do {
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(30.2)
                 );
-                ${ $$self->{'sock'} }->{'println'}
+                $$self->{'sock'}->property_u( 'println', $pos->(31.2) )
                   ->( [ $$scope->{'line'} ], $scope, undef, $pos->(31.3) );
                 return $ret;
             }

@@ -107,10 +107,11 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'message', 12.2 ) or return;
-                ${ $$self->{'connection'} }->{'sendPrivmsg'}->(
+                $$self->{'connection'}
+                  ->property_u( 'sendPrivmsg', $pos->(13.2) )->(
                     [ $$self->{'name'}, $$scope->{'message'} ],
                     $scope, undef, $pos->(13.3)
-                );
+                  );
                 return $ret;
             }
         );

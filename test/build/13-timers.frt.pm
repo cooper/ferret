@@ -107,11 +107,12 @@ my $result = do {
     FF::load_namespaces( $context, qw(Timer) );
     $$scope->{'say'}->( [ str( $f, "hello" ) ], $scope, undef, $pos->(1.2) );
     FF::on(
-        ${
-            $$scope->{'Timer'}
-              ->( [ num( $f, "5" ) ], $scope, undef, $pos->(3.15) )
-          }->{'once'}->( [ undef, [] ], $scope, undef, $pos->(3.35) ),
-        'expire', $self, $scope,
+        $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(3.15) )
+          ->property_u( 'once', $pos->(3.3) )
+          ->( [ undef, [] ], $scope, undef, $pos->(3.35) ),
+        'expire',
+        $self,
+        $scope,
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
@@ -122,7 +123,7 @@ my $result = do {
         undef, $pos->(7.2)
     );
     FF::on(
-        ${ $$scope->{'t2'} }->{'once'}
+        $$scope->{'t2'}->property_u( 'once', $pos->(8.3) )
           ->( [ undef, [] ], $scope, undef, $pos->(8.4) ),
         'expire',
         $self,
@@ -130,7 +131,7 @@ my $result = do {
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'t2'} }->{'cancel'}
+    $$scope->{'t2'}->property_u( 'cancel', $pos->(12.2) )
       ->( [ undef, [] ], $scope, undef, $pos->(12.3) );
 };
 

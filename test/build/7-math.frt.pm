@@ -136,7 +136,7 @@ my $result = do {
     );
     FF::lex_assign(
         $scope,
-        center => ${ $$scope->{'rect'} }->{'center'},
+        center => $$scope->{'rect'}->property_u( 'center', $pos->(3.4) ),
         undef, $pos->(3.2)
     );
     $$scope->{'say'}->(
@@ -148,7 +148,8 @@ my $result = do {
             add(
                 $scope,
                 str( $f, "Center distance from origin: " ),
-                ${ $$scope->{'center'} }->{'distanceFromOrigin'}
+                $$scope->{'center'}
+                  ->property_u( 'distanceFromOrigin', $pos->(5.6) )
             )
         ],
         $scope, undef,
@@ -162,14 +163,13 @@ my $result = do {
     );
     FF::lex_assign(
         $scope,
-        midpoint => ${
-            ${
-                FF::create_set( $scope, $$scope->{'center'},
-                    $$scope->{'otherPt'} )
-            }->{'midpoint'}->( [ undef, [] ], $scope, undef, $pos->(8.45) )
-          }->{'pretty'}->( [ undef, [] ], $scope, undef, $pos->(8.6) ),
-        undef,
-        $pos->(8.1)
+        midpoint =>
+          FF::create_set( $scope, $$scope->{'center'}, $$scope->{'otherPt'} )
+          ->property_u( 'midpoint', $pos->(8.4) )
+          ->( [ undef, [] ], $scope, undef, $pos->(8.45) )
+          ->property_u( 'pretty', $pos->(8.55) )
+          ->( [ undef, [] ], $scope, undef, $pos->(8.6) ),
+        undef, $pos->(8.1)
     );
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Midpoint: " ), $$scope->{'midpoint'} ) ],
@@ -180,7 +180,7 @@ my $result = do {
             add(
                 $scope,
                 str( $f, "Square root of four: " ),
-                ${ $$scope->{'Math'} }->{'sqrt'}
+                $$scope->{'Math'}->property_u( 'sqrt', $pos->(11.3) )
                   ->( [ num( $f, "4" ) ], $scope, undef, $pos->(11.35) )
             )
         ],

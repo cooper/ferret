@@ -231,10 +231,11 @@ my $result = do {
                     add(
                         $scope,
                         str( $f, "PONG :" ),
-                        ${ $$scope->{'msg'} }->{'params'}->get_index_value(
+                        $$scope->{'msg'}->property_u( 'params', $pos->(15.3) )
+                          ->get_index_value(
                             [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
                             $scope, $pos->(15.35)
-                        )
+                          )
                     )
                 ],
                 $scope, undef,
@@ -256,7 +257,7 @@ my $result = do {
             FF::need( $scope, $args, 'msg', 19.2 ) or return;
             $this->set_property( registered => $true, $pos->(20.2) );
             $$this->{'me'}->set_property(
-                nick => ${ $$scope->{'msg'} }->{'params'}
+                nick => $$scope->{'msg'}->property_u( 'params', $pos->(21.25) )
                   ->get_index_value( [ num( $f, "0" ) ], $scope, $pos->(21.3) ),
                 $pos->(21.15)
             );
@@ -264,10 +265,11 @@ my $result = do {
                 bool(
                     sim(
                         $scope,
-                        ${ $$scope->{'msg'} }->{'params'}->get_index_value(
+                        $$scope->{'msg'}->property_u( 'params', $pos->(26.15) )
+                          ->get_index_value(
                             [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
                             $scope, $pos->(26.2)
-                        ),
+                          ),
                         rgx( $f, undef, "^(.+)!(.+)\\\@(.+)\$", undef )
                     )
                 )
@@ -297,12 +299,13 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 35.2 ) or return;
             $$this->{'server'}->set_property(
-                name => ${ $$scope->{'msg'} }->{'params'}
+                name => $$scope->{'msg'}->property_u( 'params', $pos->(36.25) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(36.3) ),
                 $pos->(36.15)
             );
             $$this->{'server'}->set_property(
-                version => ${ $$scope->{'msg'} }->{'params'}
+                version =>
+                  $$scope->{'msg'}->property_u( 'params', $pos->(37.25) )
                   ->get_index_value( [ num( $f, "2" ) ], $scope, $pos->(37.3) ),
                 $pos->(37.15)
             );
@@ -353,7 +356,7 @@ my $result = do {
             my $self = $_self || $self;
             FF::need( $scope, $args, 'msg', 49.2 ) or return;
             $$this->{'me'}->set_property(
-                host => ${ $$scope->{'msg'} }->{'params'}
+                host => $$scope->{'msg'}->property_u( 'params', $pos->(50.25) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(50.3) ),
                 $pos->(50.15)
             );
@@ -376,12 +379,15 @@ my $result = do {
                 return $ret_func->();
             }
             $$this->{'me'}->set_property(
-                nick =>
-                  add( $scope, ${ $$this->{'me'} }->{'nick'}, str( $f, "_" ) ),
+                nick => add(
+                    $scope,
+                    $$this->{'me'}->property_u( 'nick', $pos->(57.2) ),
+                    str( $f, "_" )
+                ),
                 $pos->(57.3)
             );
             $$this->{'sendNick'}->(
-                [ ${ $$this->{'me'} }->{'nick'} ],
+                [ $$this->{'me'}->property_u( 'nick', $pos->(58.4) ) ],
                 $scope, undef, $pos->(58.2)
             );
             return $ret;

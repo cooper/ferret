@@ -176,9 +176,9 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            ${ $$scope->{'sock'} }->{'println'}
+            $$scope->{'sock'}->property_u( 'println', $pos->(15.2) )
               ->( [ str( $f, "NICK k" ) ], $scope, undef, $pos->(15.3) );
-            ${ $$scope->{'sock'} }->{'println'}->(
+            $$scope->{'sock'}->property_u( 'println', $pos->(16.1) )->(
                 [
                     add(
                         $scope,
@@ -203,7 +203,7 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
             my $self = $_self || $self;
-            ${ $$scope->{'sock'} }->{'println'}
+            $$scope->{'sock'}->property_u( 'println', $pos->(22.2) )
               ->( [ str( $f, "JOIN #k" ) ], $scope, undef, $pos->(22.3) );
             return $ret;
         }
@@ -251,14 +251,15 @@ my $result = do {
         $func_2->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    ${ $$scope->{'sock'} }->{'connect'}
+    $$scope->{'sock'}->property_u( 'connect', $pos->(19.2) )
       ->( [ undef, [] ], $scope, undef, $pos->(19.3) );
     FF::on(
-        ${
-            $$scope->{'Timer'}
-              ->( [ num( $f, "5" ) ], $scope, undef, $pos->(21.15) )
-          }->{'once'}->( [ undef, [] ], $scope, undef, $pos->(21.35) ),
-        'expire', $self, $scope,
+        $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(21.15) )
+          ->property_u( 'once', $pos->(21.3) )
+          ->( [ undef, [] ], $scope, undef, $pos->(21.35) ),
+        'expire',
+        $self,
+        $scope,
         $func_3->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );

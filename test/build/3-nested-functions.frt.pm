@@ -140,8 +140,10 @@ my $result = do {
             $$scope->{'say'}->(
                 [
                     add(
-                        $scope, $$scope->{'hello'},
-                        str( $f, " " ), ${ $$scope->{'hello'} }->{'name'}
+                        $scope,
+                        $$scope->{'hello'},
+                        str( $f, " " ),
+                        $$scope->{'hello'}->property_u( 'name', $pos->(19.4) )
                     )
                 ],
                 $scope, undef,

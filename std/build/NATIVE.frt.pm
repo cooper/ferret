@@ -105,10 +105,11 @@ my $result = do {
         $context,
         ferret => [
             sub {
-                ${ $$scope->{'PerlObject'} }->{'wrapPackageVariable'}->(
+                $$scope->{'PerlObject'}
+                  ->property_u( 'wrapPackageVariable', $pos->(3.25) )->(
                     [ str( $f, "Ferret" ), str( $f, "\$ferret" ) ],
                     $scope, undef, $pos->(3.3)
-                );
+                  );
             }
         ],
         undef,
@@ -118,7 +119,7 @@ my $result = do {
         $context,
         coreContext => [
             sub {
-                ${ $$scope->{'ferret'} }->{'core_context'}
+                $$scope->{'ferret'}->property_u( 'core_context', $pos->(4.5) )
                   ->( [ undef, [] ], $scope, undef, $pos->(4.6) );
             }
         ],
@@ -129,7 +130,7 @@ my $result = do {
         $context,
         mainContext => [
             sub {
-                ${ $$scope->{'ferret'} }->{'main_context'}
+                $$scope->{'ferret'}->property_u( 'main_context', $pos->(5.5) )
                   ->( [ undef, [] ], $scope, undef, $pos->(5.6) );
             }
         ],

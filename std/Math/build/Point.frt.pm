@@ -232,7 +232,8 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     dx => _sub(
-                        $scope, $$self->{'x'}, ${ $$scope->{'pt2'} }->{'x'}
+                        $scope, $$self->{'x'},
+                        $$scope->{'pt2'}->property_u( 'x', $pos->(10.6) )
                     ),
                     $file_scope,
                     $pos->(10.2)
@@ -240,7 +241,8 @@ my $result = do {
                 FF::lex_assign(
                     $scope,
                     dy => _sub(
-                        $scope, $$self->{'y'}, ${ $$scope->{'pt2'} }->{'y'}
+                        $scope, $$self->{'y'},
+                        $$scope->{'pt2'}->property_u( 'y', $pos->(11.6) )
                     ),
                     $file_scope,
                     $pos->(11.2)
@@ -358,8 +360,10 @@ my $result = do {
                                     $scope,
                                     add(
                                         $scope,
-                                        ${ $$scope->{'pt1'} }->{'x'},
-                                        ${ $$scope->{'pt2'} }->{'x'}
+                                        $$scope->{'pt1'}
+                                          ->property_u( 'x', $pos->(34.2) ),
+                                        $$scope->{'pt2'}
+                                          ->property_u( 'x', $pos->(34.35) )
                                     ),
                                     num( $f, "2" )
                                 ),
@@ -367,8 +371,10 @@ my $result = do {
                                     $scope,
                                     add(
                                         $scope,
-                                        ${ $$scope->{'pt1'} }->{'y'},
-                                        ${ $$scope->{'pt2'} }->{'y'}
+                                        $$scope->{'pt1'}
+                                          ->property_u( 'y', $pos->(35.2) ),
+                                        $$scope->{'pt2'}
+                                          ->property_u( 'y', $pos->(35.35) )
                                     ),
                                     num( $f, "2" )
                                 )
@@ -404,7 +410,8 @@ my $result = do {
                 my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
                 FF::need( $scope, $args, 'pt1', 40.1 ) or return;
                 FF::need( $scope, $args, 'pt2', 40.3 ) or return;
-                return $ret_func->( ${ $$scope->{'pt1'} }->{'distanceTo'}
+                return $ret_func->(
+                    $$scope->{'pt1'}->property_u( 'distanceTo', $pos->(41.3) )
                       ->( [ $$scope->{'pt2'} ], $scope, undef, $pos->(41.4) ) );
                 return $ret;
             }
