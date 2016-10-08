@@ -28,7 +28,7 @@ my $keyword_reg = '\\b(?:'.join('|', qw{
     type        alias       delete      weaken
     can         satisfies   transform   isa
     detail      throw       fail        catch
-    __END__
+    hook        __END__
 }).')\\b';
 
 # these tokens do not have values.
@@ -467,12 +467,21 @@ sub tok_KEYWORD {
         }
     }
 
-    # change gather for to gatherfor
+    # change gather for to gathfor
     if ($value eq 'for') {
         my $last = $tokens->[-1];
         if ($last && $last->[0] eq 'KEYWORD_GATHER') {
             delete $tokens->[-1];
             return [ KEYWORD_GATHFOR => 1 ];
+        }
+    }
+
+    # mark a method as a hook
+    if ($value eq 'hook') {
+        my $last = $tokens->[-1];
+        if ($last && $last->[0] eq 'KEYWORD_METHOD') {
+            $last->[1] = 1; # note that it's a hook
+            return [];
         }
     }
 
@@ -529,7 +538,7 @@ sub tok_BAREWORD {
     # method.
     if ($last->[0] eq 'KEYWORD_METHOD') {
         delete $tokens->[-1];
-        return [ METHOD => { name => $value } ]
+        return [ METHOD => { name => $value, hook => $last->[1] } ]
     }
 
     # type definition.

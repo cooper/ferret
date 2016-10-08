@@ -11,11 +11,16 @@ init {
     want @real: Str = "Ferret IRC"      #< real name
     want @autojoin: List                #< channels to join on connect
 
-    @_resetState()
-
     # IRC command handlers. inherit from core handlers.
-    want @handlers = (:)
+    @handlers = (:)
     @handlers.*addParent(Handlers.handlers)
+
+    # default server, user, object pools
+    @server   = Server(connection: *self, name: @addr)
+    @me       = User(connection: *self, nick: @nick, user: @user)
+    @users    = [:]
+    @channels = [:]
+    @servers  = [:]
 
     # create a line-stream socket
     @sock = Socket::TCP(address: @addr, port: @port, readMode: :line)
@@ -24,6 +29,7 @@ init {
     on @sock.connected, :sendRegistration {
         @send("USER @user * * :@real")
         @send("NICK @nick")
+        @connected()
     }
 
     # on read data
@@ -109,16 +115,31 @@ method getServer {
 
 #=== Hooks ===#
 
-method privmsg
+#> Called when a connection to the socket is established.
+method connected
+
+#> Called on disconnect, whether it be user-initiated or due to error.
+method hook disconnected {
+    # dispose of all the objects
+    @users = [:]
+    @servers = [:]
+    @channels = [:]
+}
 
 #=== Miscellaneous ===
 
-method _resetState {
-    delete @registered
-    delete @_didAutojoin
-    @server   = Server(connection: *self, name: @addr)
-    @me       = User(connection: *self, nick: @nick, user: @user)
-    @users    = [:]
-    @channels = [:]
-    @servers  = [:]
+#> Creates a new IRC::Connection with the same options.
+method copy {
+    return *class(
+        addr:       @addr,
+        port:       @port,
+        nick:       @nick,
+        user:       @user,
+        real:       @real,
+        autojoin:   @autojoin.copy()
+    )
+}
+
+method description {
+    return "IRC::Connection(@addr/@port)"
 }

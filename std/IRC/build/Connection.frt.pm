@@ -44,14 +44,9 @@
 #                          Argument type
 #                              Bareword 'List'
 #                  Instruction
-#                      Call
-#                          Instance variable '@_resetState'
-#                          Argument list [0 items]
-#                  Instruction
-#                      Want
+#                      Assignment
 #                          Instance variable '@handlers'
-#                          Argument value
-#                              Object [0 items]
+#                          Object [0 items]
 #                  Instruction
 #                      Call
 #                          Special property '*addParent'
@@ -60,6 +55,45 @@
 #                              Item 0
 #                                  Property 'handlers'
 #                                      Bareword 'Handlers'
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@server'
+#                          Call
+#                              Bareword 'Server'
+#                              Named argument list [2 items]
+#                                  Item 0
+#                                      Pair 'connection'
+#                                          Special variable '*self'
+#                                  Item 1
+#                                      Pair 'name'
+#                                          Instance variable '@addr'
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@me'
+#                          Call
+#                              Bareword 'User'
+#                              Named argument list [3 items]
+#                                  Item 0
+#                                      Pair 'connection'
+#                                          Special variable '*self'
+#                                  Item 1
+#                                      Pair 'nick'
+#                                          Instance variable '@nick'
+#                                  Item 2
+#                                      Pair 'user'
+#                                          Instance variable '@user'
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@users'
+#                          Hash [0 items]
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@channels'
+#                          Hash [0 items]
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@servers'
+#                          Hash [0 items]
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@sock'
@@ -111,6 +145,10 @@
 #                                                  String 'NICK '
 #                                                  Addition operator (+)
 #                                                  Instance variable '@nick'
+#                              Instruction
+#                                  Call
+#                                      Instance variable '@connected'
+#                                      Argument list [0 items]
 #                  On ('handleLine' callback)
 #                      Expression ('on' parameter)
 #                          Property 'gotLine'
@@ -339,55 +377,64 @@
 #                                  Item 1
 #                                      Pair 'name'
 #                                          Lexical variable '$name'
-#          Method 'privmsg'
+#          Method 'connected'
 #              Body ('method' scope)
-#          Method '_resetState'
+#          Method 'disconnected'
 #              Body ('method' scope)
-#                  Instruction
-#                      Delete modifier
-#                          Instance variable '@registered'
-#                  Instruction
-#                      Delete modifier
-#                          Instance variable '@_didAutojoin'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@server'
-#                          Call
-#                              Bareword 'Server'
-#                              Named argument list [2 items]
-#                                  Item 0
-#                                      Pair 'connection'
-#                                          Special variable '*self'
-#                                  Item 1
-#                                      Pair 'name'
-#                                          Instance variable '@addr'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@me'
-#                          Call
-#                              Bareword 'User'
-#                              Named argument list [3 items]
-#                                  Item 0
-#                                      Pair 'connection'
-#                                          Special variable '*self'
-#                                  Item 1
-#                                      Pair 'nick'
-#                                          Instance variable '@nick'
-#                                  Item 2
-#                                      Pair 'user'
-#                                          Instance variable '@user'
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@users'
 #                          Hash [0 items]
 #                  Instruction
 #                      Assignment
-#                          Instance variable '@channels'
+#                          Instance variable '@servers'
 #                          Hash [0 items]
 #                  Instruction
 #                      Assignment
-#                          Instance variable '@servers'
+#                          Instance variable '@channels'
 #                          Hash [0 items]
+#          Method 'copy'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Call
+#                              Special variable '*class'
+#                              Named argument list [6 items]
+#                                  Item 0
+#                                      Pair 'addr'
+#                                          Instance variable '@addr'
+#                                  Item 1
+#                                      Pair 'port'
+#                                          Instance variable '@port'
+#                                  Item 2
+#                                      Pair 'nick'
+#                                          Instance variable '@nick'
+#                                  Item 3
+#                                      Pair 'user'
+#                                          Instance variable '@user'
+#                                  Item 4
+#                                      Pair 'real'
+#                                          Instance variable '@real'
+#                                  Item 5
+#                                      Pair 'autojoin'
+#                                          Call
+#                                              Property 'copy'
+#                                                  Instance variable '@autojoin'
+#                                              Argument list [0 items]
+#          Method 'description'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Operation
+#                              String 'IRC::Conne...'
+#                              Addition operator (+)
+#                              Instance variable '@addr'
+#                              Addition operator (+)
+#                              String '/'
+#                              Addition operator (+)
+#                              Instance variable '@port'
+#                              Addition operator (+)
+#                              String ')'
 #      Include (Channel, Handlers, IRC, IRC::Massage, List, Num, Outgoing, Server, Socket, Socket::TCP, Str, User)
 package FF;
 
@@ -440,12 +487,14 @@ my $result = do {
                     )
                 ],
                 $scope, undef,
-                $pos->(25.06667)
+                $pos->(30.06667)
             );
             $$self->{'send'}->(
                 [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, $pos->(26.2)
+                $scope, undef, $pos->(31.2)
             );
+            $$self->{'connected'}
+              ->( [ undef, [] ], $scope, undef, $pos->(32.2) );
             return $ret;
         }
     );
@@ -458,9 +507,9 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            need( $scope, $args, 'data', 31.2 ) or return;
+            need( $scope, $args, 'data', 37.2 ) or return;
             $$self->{'_handleLine'}
-              ->( [ $$scope->{'data'} ], $scope, undef, $pos->(32.2) );
+              ->( [ $$scope->{'data'} ], $scope, undef, $pos->(38.2) );
             return $ret;
         }
     );
@@ -474,7 +523,7 @@ my $result = do {
             my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$self->{'_resetState'}
-              ->( [ undef, [] ], $scope, undef, $pos->(37.2) );
+              ->( [ undef, [] ], $scope, undef, $pos->(43.2) );
             return $ret;
         }
     );
@@ -509,12 +558,6 @@ my $result = do {
                     type     => 'List',
                     optional => 1,
                     more     => undef
-                },
-                {
-                    name     => 'handlers',
-                    type     => undef,
-                    optional => 1,
-                    more     => undef
                 }
             ],
             sub {
@@ -525,18 +568,60 @@ my $result = do {
                 want( $self, $args, 'user', 10.2, str( $f, "ferret" ) );
                 want( $self, $args, 'real', 11.2, str( $f, "Ferret IRC" ) );
                 want( $self, $args, 'autojoin', 12.2 );
-                $$self->{'_resetState'}
-                  ->( [ undef, [] ], $scope, undef, $pos->(14.2) );
-                want( $self, $args, 'handlers', 17.2, create_object( $f, [] ) );
-                $$self->{'handlers'}->property_u( '*addParent', $pos->(18.2) )
+                $self->set_property(
+                    handlers => create_object( $f, [] ),
+                    $pos->(15.2)
+                );
+                $$self->{'handlers'}->property_u( '*addParent', $pos->(16.2) )
                   ->(
                     [
                         $$scope->{'Handlers'}
-                          ->property_u( 'handlers', $pos->(18.5) )
+                          ->property_u( 'handlers', $pos->(16.5) )
                     ],
                     $scope, undef,
-                    $pos->(18.3)
+                    $pos->(16.3)
                   );
+                $self->set_property(
+                    server => $$scope->{'Server'}->(
+                        [
+                            undef,
+                            [
+                                connection => ${ $scope->{special} }->{'self'},
+                                name       => $$self->{'addr'}
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(19.2)
+                    ),
+                    $pos->(19.1)
+                );
+                $self->set_property(
+                    me => $$scope->{'User'}->(
+                        [
+                            undef,
+                            [
+                                connection => ${ $scope->{special} }->{'self'},
+                                nick       => $$self->{'nick'},
+                                user       => $$self->{'user'}
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(20.2)
+                    ),
+                    $pos->(20.1)
+                );
+                $self->set_property(
+                    users => create_hash( $f, [] ),
+                    $pos->(21.2)
+                );
+                $self->set_property(
+                    channels => create_hash( $f, [] ),
+                    $pos->(22.2)
+                );
+                $self->set_property(
+                    servers => create_hash( $f, [] ),
+                    $pos->(23.2)
+                );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
                         [
@@ -548,9 +633,9 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(21.3)
+                        $pos->(26.3)
                     ),
-                    $pos->(21.1)
+                    $pos->(26.1)
                 );
                 on(
                     $$self->{'sock'},
@@ -593,8 +678,8 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                $$self->{'sock'}->property_u( 'connect', $pos->(45.2) )
-                  ->( [ undef, [] ], $scope, undef, $pos->(45.3) );
+                $$self->{'sock'}->property_u( 'connect', $pos->(51.2) )
+                  ->( [ undef, [] ], $scope, undef, $pos->(51.3) );
                 return $ret;
             }
         );
@@ -612,13 +697,13 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 50.2 ) or return;
+                need( $scope, $args, 'line', 56.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, $pos->(51.2)
+                    $scope, undef, $pos->(57.2)
                 );
-                $$self->{'sock'}->property_u( 'println', $pos->(52.2) )
-                  ->( [ $$scope->{'line'} ], $scope, undef, $pos->(52.3) );
+                $$self->{'sock'}->property_u( 'println', $pos->(58.2) )
+                  ->( [ $$scope->{'line'} ], $scope, undef, $pos->(58.3) );
                 return $ret;
             }
         );
@@ -637,10 +722,10 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 57.2 ) or return;
+                need( $scope, $args, 'line', 63.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
-                    $scope, undef, $pos->(58.2)
+                    $scope, undef, $pos->(64.2)
                 );
                 var(
                     $scope,
@@ -648,15 +733,15 @@ my $result = do {
                         [ $$scope->{'line'}, ${ $scope->{special} }->{'self'} ],
                         $scope,
                         undef,
-                        $pos->(61.3)
+                        $pos->(67.3)
                     ),
                     $file_scope,
-                    $pos->(61.1)
+                    $pos->(67.1)
                 );
                 {
                     my $maybe_0 = $$self->{'handlers'}->property_eval_u(
-                        $$scope->{'msg'}->property_u( 'command', $pos->(64.5) ),
-                        $pos->(64.2)
+                        $$scope->{'msg'}->property_u( 'command', $pos->(70.5) ),
+                        $pos->(70.2)
                     );
                     if ( bool($maybe_0) ) {
                         $maybe_0->(
@@ -669,7 +754,7 @@ my $result = do {
                                 ]
                             ],
                             $scope, undef,
-                            $pos->(64.8)
+                            $pos->(70.8)
                         );
                     }
                 }
@@ -691,12 +776,12 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'target', 78.2 ) or return;
+                need( $scope, $args, 'target', 84.2 ) or return;
                 if (
                     bool(
                         $$scope->{'target'}
-                          ->property_u( 'hasPrefix', $pos->(80.3) )
-                          ->( [ str( $f, "#" ) ], $scope, undef, $pos->(80.4) )
+                          ->property_u( 'hasPrefix', $pos->(86.3) )
+                          ->( [ str( $f, "#" ) ], $scope, undef, $pos->(86.4) )
                     )
                   )
                 {
@@ -705,7 +790,7 @@ my $result = do {
                     return $ret_func->(
                         $$self->{'getChannel'}->(
                             [ $$scope->{'target'} ], $scope,
-                            undef,                   $pos->(81.3)
+                            undef,                   $pos->(87.3)
                         )
                     );
                 }
@@ -713,7 +798,7 @@ my $result = do {
                     return $ret_func->(
                         $$self->{'getUser'}->(
                             [ $$scope->{'target'} ], $scope,
-                            undef,                   $pos->(83.3)
+                            undef,                   $pos->(89.3)
                         )
                     );
                 }
@@ -735,7 +820,7 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'name', 88.2 ) or return;
+                need( $scope, $args, 'name', 94.2 ) or return;
                 if (
                     bool(
                         var(
@@ -743,14 +828,14 @@ my $result = do {
                             channel => $$self->{'channels'}->get_index_value(
                                 [
                                     $$scope->{'name'}->property_u(
-                                        'lowercase', $pos->(89.35)
+                                        'lowercase', $pos->(95.35)
                                     )
                                 ],
                                 $scope,
-                                $pos->(89.25)
+                                $pos->(95.25)
                             ),
                             $file_scope,
-                            $pos->(89.15)
+                            $pos->(95.15)
                         )
                     )
                   )
@@ -769,7 +854,7 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(91.15)
+                        $pos->(97.15)
                     )
                 );
                 return $ret;
@@ -790,7 +875,7 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'nick', 96.2 ) or return;
+                need( $scope, $args, 'nick', 102.2 ) or return;
                 if (
                     bool(
                         var(
@@ -798,14 +883,14 @@ my $result = do {
                             user => $$self->{'users'}->get_index_value(
                                 [
                                     $$scope->{'nick'}->property_u(
-                                        'lowercase', $pos->(97.35)
+                                        'lowercase', $pos->(103.35)
                                     )
                                 ],
                                 $scope,
-                                $pos->(97.25)
+                                $pos->(103.25)
                             ),
                             $file_scope,
-                            $pos->(97.15)
+                            $pos->(103.15)
                         )
                     )
                   )
@@ -824,7 +909,7 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(99.15)
+                        $pos->(105.15)
                     )
                 );
                 return $ret;
@@ -845,7 +930,7 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'name', 104.2 ) or return;
+                need( $scope, $args, 'name', 110.2 ) or return;
                 if (
                     bool(
                         var(
@@ -853,14 +938,14 @@ my $result = do {
                             server => $$self->{'servers'}->get_index_value(
                                 [
                                     $$scope->{'name'}->property_u(
-                                        'lowercase', $pos->(105.35)
+                                        'lowercase', $pos->(111.35)
                                     )
                                 ],
                                 $scope,
-                                $pos->(105.25)
+                                $pos->(111.25)
                             ),
                             $file_scope,
-                            $pos->(105.15)
+                            $pos->(111.15)
                         )
                     )
                   )
@@ -879,17 +964,17 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(107.15)
+                        $pos->(113.15)
                     )
                 );
                 return $ret;
             }
         );
 
-        # Method event 'privmsg' definition
+        # Method event 'connected' definition
         my $method_8 = method_event_def(
             $f, $scope,
-            'privmsg',
+            'connected',
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
@@ -898,55 +983,73 @@ my $result = do {
             }
         );
 
-        # Method event '_resetState' definition
+        # Method event 'disconnected' definition
         my $method_9 = method_event_def(
             $f, $scope,
-            '_resetState',
+            'disconnected',
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                $self->delete_property_ow( 'registered',   $pos->(117.1) );
-                $self->delete_property_ow( '_didAutojoin', $pos->(118.1) );
-                $self->set_property(
-                    server => $$scope->{'Server'}->(
-                        [
-                            undef,
-                            [
-                                connection => ${ $scope->{special} }->{'self'},
-                                name       => $$self->{'addr'}
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(119.2)
-                    ),
-                    $pos->(119.1)
-                );
-                $self->set_property(
-                    me => $$scope->{'User'}->(
-                        [
-                            undef,
-                            [
-                                connection => ${ $scope->{special} }->{'self'},
-                                nick       => $$self->{'nick'},
-                                user       => $$self->{'user'}
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(120.2)
-                    ),
-                    $pos->(120.1)
-                );
                 $self->set_property(
                     users => create_hash( $f, [] ),
-                    $pos->(121.2)
-                );
-                $self->set_property(
-                    channels => create_hash( $f, [] ),
-                    $pos->(122.2)
+                    $pos->(124.2)
                 );
                 $self->set_property(
                     servers => create_hash( $f, [] ),
-                    $pos->(123.2)
+                    $pos->(125.2)
+                );
+                $self->set_property(
+                    channels => create_hash( $f, [] ),
+                    $pos->(126.2)
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'copy' definition
+        my $method_10 = method_event_def(
+            $f, $scope, 'copy',
+            [],
+            sub {
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    ${ $scope->{special} }->{'class'}->(
+                        [
+                            undef,
+                            [
+                                addr     => $$self->{'addr'},
+                                port     => $$self->{'port'},
+                                nick     => $$self->{'nick'},
+                                user     => $$self->{'user'},
+                                real     => $$self->{'real'},
+                                autojoin => $$self->{'autojoin'}
+                                  ->property_u( 'copy', $pos->(139.3) )->(
+                                    [ undef, [] ], $scope,
+                                    undef, $pos->(139.4)
+                                  )
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(133.3)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'description' definition
+        my $method_11 = method_event_def(
+            $f, $scope,
+            'description',
+            [],
+            sub {
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    add(
+                        $scope,           str( $f, "IRC::Connection(" ),
+                        $$self->{'addr'}, str( $f, "/" ),
+                        $$self->{'port'}, str( $f, ")" )
+                    )
                 );
                 return $ret;
             }
@@ -981,11 +1084,19 @@ my $result = do {
             $proto, $class, undef, undef
         );
         $method_8->inside_scope(
-            privmsg => $scope,
+            connected => $scope,
             $proto, $class, undef, undef
         );
         $method_9->inside_scope(
-            _resetState => $scope,
+            disconnected => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_10->inside_scope(
+            copy => $scope,
+            $proto, $class, undef, undef
+        );
+        $method_11->inside_scope(
+            description => $scope,
             $proto, $class, undef, undef
         );
     }

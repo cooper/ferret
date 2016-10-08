@@ -28,8 +28,6 @@ Creates a new Connection class instance.
 
 * *optional* __autojoin__: List - Channels to join on connect.
 
-* *optional* __handlers__: Any  
-
 ## Methods
 
 ### connect
@@ -119,13 +117,47 @@ Fetches a server object from a server name.
 
 
 
-### privmsg
+### connected
 
 ```
-$connection.privmsg()
+$connection.connected()
 ```
 
-Hook. 
+Hook. Called when a connection to the socket is established.
+
+
+
+
+
+### disconnected
+
+```
+$connection.disconnected()
+```
+
+Hook. Called on disconnect, whether it be user-initiated or due to error.
+
+
+
+
+
+### copy
+
+```
+$connection.copy()
+```
+
+Creates a new IRC::Connection with the same options.
+
+
+
+
+
+### description
+
+```
+$connection.description()
+```
 
 
 

@@ -159,7 +159,7 @@ sub markdown_fmt {
     my $fmt = $method->{is_prop} ? 'computed' : 'method';
     return $fmt => {
         name        => $method->{name},
-        hook        => $no_body ? 'Hook. ' : '',
+        hook        => $no_body || $method->{hook} ? 'Hook. ' : '',
         description => dot_trim($comment),
         heading     => $head,
         example     => $example,
