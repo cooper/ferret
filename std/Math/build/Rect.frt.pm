@@ -435,7 +435,7 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                lex_assign(
+                var(
                     $scope,
                     x => add(
                         $scope,
@@ -445,7 +445,7 @@ my $result = do {
                     $file_scope,
                     $pos->(43.1)
                 );
-                lex_assign(
+                var(
                     $scope,
                     y => add(
                         $scope,
@@ -472,12 +472,12 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                lex_assign(
+                var(
                     $scope,
                     o => $$self->{'origin'},
                     $file_scope, $pos->(49.2)
                 );
-                lex_assign(
+                var(
                     $scope,
                     c => $$self->{'center'},
                     $file_scope, $pos->(50.2)

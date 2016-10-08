@@ -737,7 +737,7 @@ my $result = do {
                 try_catch(
                     $f, $scope,
                     sub {
-                        lex_assign(
+                        var(
                             $scope,
                             objects => $$self->{'xs'}
                               ->property_u( 'perlCall', $pos->(155.2) )->(
@@ -887,7 +887,7 @@ my $result = do {
             _PO => $$scope->{'NATIVE::PerlObject'},
             $pos->(9.3)
         );
-        lex_assign(
+        var(
             $scope,
             default => [
                 sub {

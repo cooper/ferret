@@ -602,7 +602,7 @@ my $result = do {
 
                 return $ret_func->();
             }
-            lex_assign(
+            var(
                 $scope,
                 c => $$scope->{'COMPILER'}->(
                     [
@@ -624,7 +624,7 @@ my $result = do {
                 $file_scope,
                 $pos->(70.1)
             );
-            lex_assign(
+            var(
                 $scope,
                 res => $$scope->{'c'}->property_u( 'compile', $pos->(71.2) )->(
                     [
@@ -766,7 +766,7 @@ my $result = do {
 
                 return $ret_func->();
             }
-            lex_assign(
+            var(
                 $scope,
                 c => $$scope->{'COMPILER'}->(
                     [
@@ -788,7 +788,7 @@ my $result = do {
                 $file_scope,
                 $pos->(15.1)
             );
-            lex_assign(
+            var(
                 $scope,
                 res => $$scope->{'c'}->property_u( 'tokenize', $pos->(16.2) )->(
                     [ undef, [ pretty => $true ] ], $scope,
@@ -852,7 +852,7 @@ my $result = do {
 
                 return $ret_func->();
             }
-            lex_assign(
+            var(
                 $scope,
                 c => $$scope->{'COMPILER'}->(
                     [
@@ -874,7 +874,7 @@ my $result = do {
                 $file_scope,
                 $pos->(28.1)
             );
-            lex_assign(
+            var(
                 $scope,
                 res =>
                   $$scope->{'c'}->property_u( 'construct', $pos->(29.2) )->(
@@ -939,7 +939,7 @@ my $result = do {
 
                 return $ret_func->();
             }
-            lex_assign(
+            var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
@@ -984,7 +984,7 @@ my $result = do {
                 );
                 return $ret_func->();
             }
-            lex_assign(
+            var(
                 $scope,
                 string => $$scope->{'inspect'}->(
                     [
@@ -1034,7 +1034,7 @@ my $result = do {
 
                 return $ret_func->();
             }
-            lex_assign(
+            var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
@@ -1079,7 +1079,7 @@ my $result = do {
                 );
                 return $ret_func->();
             }
-            lex_assign(
+            var(
                 $scope,
                 string => $$scope->{'inspect'}->(
                     [
@@ -1118,7 +1118,7 @@ my $result = do {
     $func_2->inside_scope( ircsay => $scope, $context, undef, undef, undef );
     load_namespaces( $context,
         qw(COMPILER IRC IRC::Connection IRCBot IRCBot::Bot Str) );
-    lex_assign(
+    var(
         $context,
         bot => $$scope->{'IRCBot::Bot'}->(
             [
@@ -1135,7 +1135,7 @@ my $result = do {
         undef,
         $pos->(1.15)
     );
-    lex_assign(
+    var(
         $context,
         i => $$scope->{'IRC::Connection'}->(
             [

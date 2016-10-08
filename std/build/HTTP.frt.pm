@@ -127,7 +127,7 @@ my $result = do {
         },
         undef
     );
-    lex_assign(
+    var(
         $scope,
         client => [
             sub {

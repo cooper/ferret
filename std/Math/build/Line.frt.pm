@@ -197,37 +197,37 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                lex_assign(
+                var(
                     $scope,
                     mp => $$self->{'midpoint'},
                     $file_scope, $pos->(13.2)
                 );
-                lex_assign(
+                var(
                     $scope,
                     pox => $$self->{'pt1'}->property_u( 'x', $pos->(14.2) ),
                     $file_scope, $pos->(14.1)
                 );
-                lex_assign(
+                var(
                     $scope,
                     poy => $$self->{'pt1'}->property_u( 'y', $pos->(14.45) ),
                     $file_scope, $pos->(14.35)
                 );
-                lex_assign(
+                var(
                     $scope,
                     ptx => $$self->{'pt2'}->property_u( 'x', $pos->(15.2) ),
                     $file_scope, $pos->(15.1)
                 );
-                lex_assign(
+                var(
                     $scope,
                     pty => $$self->{'pt2'}->property_u( 'y', $pos->(15.45) ),
                     $file_scope, $pos->(15.35)
                 );
-                lex_assign(
+                var(
                     $scope,
                     mx => $$scope->{'mp'}->property_u( 'x', $pos->(16.2) ),
                     $file_scope, $pos->(16.1)
                 );
-                lex_assign(
+                var(
                     $scope,
                     my => $$scope->{'mp'}->property_u( 'y', $pos->(16.45) ),
                     $file_scope, $pos->(16.35)

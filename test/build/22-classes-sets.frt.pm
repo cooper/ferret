@@ -359,7 +359,7 @@ my $result = do {
         );
     }
     load_namespaces( $context, qw(Cat Cow Dog) );
-    lex_assign(
+    var(
         $scope,
         animal =>
           $$scope->{'Cow'}->( [ undef, [] ], $scope, undef, $pos->(50.4) ),
@@ -389,12 +389,12 @@ my $result = do {
       ->( [ undef, [ mean => $true ] ], $scope, undef, $pos->(60.3) );
     $$scope->{'inspect'}
       ->( [ $$scope->{'animal'} ], $scope, undef, $pos->(62.2) );
-    lex_assign(
+    var(
         $scope,
         cat => $$scope->{'Cat'}->( [ undef, [] ], $scope, undef, $pos->(65.4) ),
         undef, $pos->(65.2)
     );
-    lex_assign(
+    var(
         $scope,
         aftermath => create_set( $scope, $$scope->{'animal'}, $$scope->{'cat'} )
           ->property_u( 'fight', $pos->(71.4) )

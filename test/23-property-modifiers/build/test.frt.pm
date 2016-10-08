@@ -39,7 +39,7 @@ my $result = do {
     load_core('main');
 
     load_namespaces( $context, qw(Second) );
-    lex_assign( $scope, x => create_object( $f, [] ), undef, $pos->(1.2) );
+    var( $scope, x => create_object( $f, [] ), undef, $pos->(1.2) );
     $scope->delete_property_ow( 'x', $pos->(2.1) );
     $$scope->{'Second'};
 };

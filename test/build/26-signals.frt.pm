@@ -116,7 +116,7 @@ my $result = do {
                     [ str( $f, "Are you sure?" ) ],
                     $scope, undef, $pos->(13.2)
                 );
-                lex_assign( $scope, asked => $true, $file_scope, $pos->(14.2) );
+                var( $scope, asked => $true, $file_scope, $pos->(14.2) );
                 $ret->stop;
                 return $ret_func->();
             }
@@ -136,7 +136,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
-    lex_assign( $scope, asked => $false, undef, $pos->(8.2) );
+    var( $scope, asked => $false, undef, $pos->(8.2) );
     on(
         $$scope->{'Signal'}->property_u( 'INT', $pos->(9.3) ),
         'trap',

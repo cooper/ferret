@@ -191,7 +191,7 @@ my $result = do {
             $class, $class, undef, undef
         );
 
-        lex_assign(
+        var(
             $class,
             INT => [
                 sub {
@@ -204,7 +204,7 @@ my $result = do {
             undef,
             $pos->(7.3)
         );
-        lex_assign(
+        var(
             $class,
             HUP => [
                 sub {
@@ -217,7 +217,7 @@ my $result = do {
             undef,
             $pos->(8.3)
         );
-        lex_assign(
+        var(
             $class,
             TERM => [
                 sub {
@@ -230,7 +230,7 @@ my $result = do {
             undef,
             $pos->(9.3)
         );
-        lex_assign(
+        var(
             $class,
             ALRM => [
                 sub {
@@ -243,7 +243,7 @@ my $result = do {
             undef,
             $pos->(10.3)
         );
-        lex_assign(
+        var(
             $scope,
             signals => [
                 sub {

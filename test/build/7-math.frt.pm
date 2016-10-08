@@ -118,7 +118,7 @@ my $result = do {
     load_core('main');
 
     load_namespaces( $context, qw(Math Math::Point Math::Rect) );
-    lex_assign(
+    var(
         $scope,
         rect => $$scope->{'Math::Rect'}->(
             [
@@ -136,7 +136,7 @@ my $result = do {
         undef,
         $pos->(1.06667)
     );
-    lex_assign(
+    var(
         $scope,
         center => $$scope->{'rect'}->property_u( 'center', $pos->(3.4) ),
         undef, $pos->(3.2)
@@ -157,13 +157,13 @@ my $result = do {
         $scope, undef,
         $pos->(5.2)
     );
-    lex_assign(
+    var(
         $scope,
         otherPt => $$scope->{'Math::Point'}
           ->( [ num( $f, "9" ), num( $f, "2" ) ], $scope, undef, $pos->(7.3) ),
         undef, $pos->(7.1)
     );
-    lex_assign(
+    var(
         $scope,
         midpoint =>
           create_set( $scope, $$scope->{'center'}, $$scope->{'otherPt'} )

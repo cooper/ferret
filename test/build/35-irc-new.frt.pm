@@ -685,7 +685,7 @@ my $result = do {
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     58.2 ) or return;
             need( $scope, $args, 'channel', 58.4 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 command =>
                   $$scope->{'msg'}->property_u( 'params', $pos->(59.2) )
@@ -733,7 +733,7 @@ my $result = do {
             need( $scope, $args, 'msg',     107.2 ) or return;
             need( $scope, $args, 'channel', 107.4 ) or return;
             need( $scope, $args, 'mini',    107.6 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
@@ -787,7 +787,7 @@ my $result = do {
             my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 117.2 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 string => any_true(
                     $scope,
@@ -852,14 +852,14 @@ my $result = do {
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     13.2 ) or return;
             need( $scope, $args, 'channel', 13.4 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 message =>
                   $$scope->{'msg'}->property_u( 'params', $pos->(14.4) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(14.5) ),
                 $file_scope, $pos->(14.2)
             );
-            lex_assign(
+            var(
                 $scope,
                 parts =>
                   $$scope->{'message'}->property_u( 'split', $pos->(17.4) )->(
@@ -894,7 +894,7 @@ my $result = do {
                     $pos->(19.1)
                 );
             }
-            lex_assign(
+            var(
                 $scope,
                 command => $$scope->{'parts'}
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(22.4) )
@@ -925,7 +925,7 @@ my $result = do {
                     $pos->(24.05)
                 );
             }
-            lex_assign(
+            var(
                 $scope,
                 response =>
                   $$scope->{'message'}->property_u( 'fromWord', $pos->(27.4) )
@@ -974,14 +974,14 @@ my $result = do {
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     35.2 ) or return;
             need( $scope, $args, 'channel', 35.4 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 message =>
                   $$scope->{'msg'}->property_u( 'params', $pos->(36.4) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(36.5) ),
                 $file_scope, $pos->(36.2)
             );
-            lex_assign(
+            var(
                 $scope,
                 parts =>
                   $$scope->{'message'}->property_u( 'split', $pos->(39.4) )->(
@@ -1016,14 +1016,14 @@ my $result = do {
                     $pos->(41.1)
                 );
             }
-            lex_assign(
+            var(
                 $scope,
                 command => $$scope->{'parts'}
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(45.4) )
                   ->property_u( 'lowercase', $pos->(45.7) ),
                 $file_scope, $pos->(45.2)
             );
-            lex_assign(
+            var(
                 $scope,
                 existed => $$this->{'factoids'}->get_index_value(
                     [ $$scope->{'command'} ],
@@ -1088,7 +1088,7 @@ my $result = do {
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     66.2 ) or return;
             need( $scope, $args, 'channel', 66.4 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
@@ -1114,7 +1114,7 @@ my $result = do {
                 );
                 return $ret_func->();
             }
-            lex_assign(
+            var(
                 $scope,
                 string => $$scope->{'inspect'}->(
                     [
@@ -1154,7 +1154,7 @@ my $result = do {
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     77.2 ) or return;
             need( $scope, $args, 'channel', 77.4 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
@@ -1207,7 +1207,7 @@ my $result = do {
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     87.2 ) or return;
             need( $scope, $args, 'channel', 87.4 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
@@ -1306,7 +1306,7 @@ my $result = do {
     );
     load_namespaces( $context,
         qw(COMPILER Error IRC IRC::Bot IRC::Connection IRC::Massage) );
-    lex_assign(
+    var(
         $context,
         bot =>
           $$scope->{'IRC::Bot'}->( [ undef, [] ], $scope, undef, $pos->(1.35) ),
@@ -1378,7 +1378,7 @@ my $result = do {
         $func_10->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    lex_assign(
+    var(
         $context,
         conn => $$scope->{'IRC::Connection'}->(
             [

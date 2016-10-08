@@ -213,7 +213,7 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 need( $self, $args, 'line' ) or return;
-                lex_assign(
+                var(
                     $scope,
                     lineSplit =>
                       $$self->{'line'}->property_u( 'split', $pos->(6.2) )->(
@@ -306,7 +306,7 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    lex_assign(
+                    var(
                         $scope,
                         cmd => $$self->{'parts'}
                           ->get_index_value( [ num( $f, "0" ) ],

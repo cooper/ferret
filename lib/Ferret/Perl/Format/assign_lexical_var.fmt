@@ -1,1 +1,1 @@
-lex_assign(<<owner>>, <<name>> => <<assign_value>>, <<owrite>>, $pos->(<<pos>>))
+var(<<owner>>, <<name>> => <<assign_value>>, <<owrite>>, $pos->(<<pos>>))

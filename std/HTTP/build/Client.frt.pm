@@ -320,7 +320,7 @@ my $result = do {
             request => $scope,
             $proto, $class, undef, undef
         );
-        lex_assign(
+        var(
             $scope,
             defaultUA => add(
                 $scope,
@@ -331,7 +331,7 @@ my $result = do {
             undef,
             $pos->(5.2)
         );
-        lex_assign(
+        var(
             $scope,
             defaultLength => mul( $scope, num( $f, "64" ), num( $f, "1024" ) ),
             undef, $pos->(6.2)

@@ -606,7 +606,7 @@ my $result = do {
                                                   Ferret::Scope->new( $f,
                                                     parent => $scope );
 
-                                                lex_assign(
+                                                var(
                                                     $scope,
                                                     found => $true,
                                                     $file_scope, $pos->(45.2)
@@ -699,7 +699,7 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'what', 68.2 ) or return;
-                lex_assign(
+                var(
                     $scope,
                     found => do {
                         my ( $gather_status, $gather_ret ) = gather(
@@ -904,7 +904,7 @@ my $result = do {
 
                     return $ret_func->($undefined);
                 }
-                lex_assign(
+                var(
                     $scope,
                     c => ${ $scope->{special} }->{'self'}->get_index_value(
                         [ num( $f, "0" ) ],
@@ -920,7 +920,7 @@ my $result = do {
                         'i',
                         sub {
                             my ( $scope, $ret_func ) = @_;
-                            lex_assign(
+                            var(
                                 $scope,
                                 c => add(
                                     $scope,
@@ -950,11 +950,7 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                lex_assign(
-                    $scope,
-                    c => num( $f, "0" ),
-                    $file_scope, $pos->(121.2)
-                );
+                var( $scope, c => num( $f, "0" ), $file_scope, $pos->(121.2) );
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -962,7 +958,7 @@ my $result = do {
                         'el',
                         sub {
                             my ( $scope, $ret_func ) = @_;
-                            lex_assign(
+                            var(
                                 $scope,
                                 c => add(
                                     $scope, $$scope->{'c'}, $$scope->{'el'}

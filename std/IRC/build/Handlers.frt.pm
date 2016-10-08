@@ -405,7 +405,7 @@ my $result = do {
     );
     $func_5->inside_scope( nickInUse => $scope, $context, undef, undef, undef );
 
-    lex_assign(
+    var(
         $context,
         handlers => create_object(
             $f,

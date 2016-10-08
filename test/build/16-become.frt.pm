@@ -55,7 +55,7 @@ my $result = do {
     load_core('main');
 
     load_namespaces( $context, qw(Math Math::Point) );
-    lex_assign( $scope, obj => str( $f, "hi" ), undef, $pos->(2.2) );
+    var( $scope, obj => str( $f, "hi" ), undef, $pos->(2.2) );
     $$scope->{'Math::Point'}->property_u( 'init', $pos->(9.2) )
       ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(9.25) )
       ->( [ num( $f, "1" ), num( $f, "1" ) ], $scope, undef, $pos->(9.4) );

@@ -122,7 +122,7 @@ my $result = do {
             my $self = $_self || $self;
             need( $scope, $args, 'name',   7.1 ) or return;
             need( $scope, $args, 'gender', 7.3 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 what => $$scope->{'Str'}
                   ->( [ $$scope->{'gender'} ], $scope, undef, $pos->(8.2) )

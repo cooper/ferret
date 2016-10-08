@@ -121,7 +121,7 @@ my $result = do {
             need( $scope, $args, 'x', 2.2 ) or return;
             need( $scope, $args, 'y', 2.4 ) or return;
             want( $scope, $args, 'z', 3.2 );
-            lex_assign(
+            var(
                 $scope,
                 point => create_object(
                     $f, [ x => $$scope->{'x'}, y => $$scope->{'y'} ]
@@ -134,7 +134,7 @@ my $result = do {
         }
     );
     $func_0->inside_scope( makePoint => $scope, $context, undef, undef, undef );
-    lex_assign(
+    var(
         $scope,
         pt => $$scope->{'makePoint'}
           ->( [ num( $f, "5" ), num( $f, "3" ) ], $scope, undef, $pos->(11.2) )
@@ -155,7 +155,7 @@ my $result = do {
         $scope, undef,
         $pos->(12.1)
     );
-    lex_assign(
+    var(
         $scope,
         numbers => create_list(
             $f,
@@ -170,16 +170,8 @@ my $result = do {
         undef,
         $pos->(14.1)
     );
-    lex_assign(
-        $scope,
-        emptyArray => create_list( $f, [] ),
-        undef, $pos->(16.2)
-    );
-    lex_assign(
-        $scope,
-        emptyHash => create_hash( $f, [] ),
-        undef, $pos->(17.2)
-    );
+    var( $scope, emptyArray => create_list( $f, [] ), undef, $pos->(16.2) );
+    var( $scope, emptyHash  => create_hash( $f, [] ), undef, $pos->(17.2) );
 };
 
 after_content();

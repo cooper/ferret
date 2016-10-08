@@ -36,7 +36,7 @@ my $result = do {
     my $scope = $file_scope;
     load_core('main');
 
-    lex_assign( $scope, x => create_object( $f, [] ), undef, $pos->(1.2) );
+    var( $scope, x => create_object( $f, [] ), undef, $pos->(1.2) );
     $scope->weaken_property( 'x', $pos->(2.1) );
 };
 

@@ -419,7 +419,7 @@ my $result = do {
             my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             want( $scope, $args, 'incN', 30.2 );
-            lex_assign(
+            var(
                 $scope,
                 wordI => add( $scope, $$scope->{'wordI'}, num( $f, "1" ) ),
                 $file_scope, $pos->(31.2)
@@ -427,13 +427,13 @@ my $result = do {
             if ( bool( $$scope->{'incN'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                lex_assign(
+                var(
                     $scope,
                     wordN => add( $scope, $$scope->{'wordN'}, num( $f, "1" ) ),
                     $file_scope, $pos->(33.2)
                 );
             }
-            lex_assign(
+            var(
                 $scope,
                 lastWord => $$scope->{'word'},
                 $file_scope, $pos->(34.2)
@@ -498,7 +498,7 @@ my $result = do {
                     $scope, $class, undef, undef
                 );
                 need( $scope, $args, 'data', 20.2 ) or return;
-                lex_assign(
+                var(
                     $scope,
                     words =>
                       $$scope->{'data'}->property_u( 'split', $pos->(21.4) )->(
@@ -525,17 +525,17 @@ my $result = do {
                     lastWord => Ferret::undefined,
                     $pos->(24.5)
                 );
-                lex_assign(
+                var(
                     $scope,
                     params => create_list( $f, [] ),
                     $file_scope, $pos->(25.2)
                 );
-                lex_assign(
+                var(
                     $scope,
                     wordI => num( $f, "0" ),
                     $file_scope, $pos->(26.2)
                 );
-                lex_assign(
+                var(
                     $scope,
                     wordN => num( $f, "0" ),
                     $file_scope, $pos->(27.2)
@@ -572,7 +572,7 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                lex_assign(
+                                var(
                                     $scope,
                                     word => $$scope->{'word'}->property_u(
                                         'trimPrefix', $pos->(41.4)
@@ -583,7 +583,7 @@ my $result = do {
                                     $file_scope,
                                     $pos->(41.2)
                                 );
-                                lex_assign(
+                                var(
                                     $scope,
                                     tags => create_hash( $f, [] ),
                                     $file_scope, $pos->(42.2)
@@ -600,7 +600,7 @@ my $result = do {
                                         'tag',
                                         sub {
                                             my ( $scope, $ret_func ) = @_;
-                                            lex_assign(
+                                            var(
                                                 $scope,
                                                 tagParts => $$scope->{'tag'}
                                                   ->property_u( 'split',
@@ -665,7 +665,7 @@ my $result = do {
                                     );
                                     return $ret_func->($loop_ret) if $loop_ret;
                                 }
-                                lex_assign(
+                                var(
                                     $scope,
                                     gotTags => $true,
                                     $file_scope, $pos->(61.2)
@@ -701,7 +701,7 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                lex_assign(
+                                var(
                                     $scope,
                                     word => $$scope->{'word'}->property_u(
                                         'trimPrefix', $pos->(70.4)
@@ -712,7 +712,7 @@ my $result = do {
                                     $file_scope,
                                     $pos->(70.2)
                                 );
-                                lex_assign(
+                                var(
                                     $scope,
                                     gotSource => $true,
                                     $file_scope, $pos->(71.2)
@@ -731,7 +731,7 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                lex_assign(
+                                var(
                                     $scope,
                                     gotCommand => $true,
                                     $file_scope, $pos->(80.2)
@@ -761,7 +761,7 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                lex_assign(
+                                var(
                                     $scope,
                                     rest => $$scope->{'data'}
                                       ->property_u( 'split', $pos->(89.13333) )

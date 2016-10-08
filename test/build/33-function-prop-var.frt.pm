@@ -66,7 +66,7 @@ my $result = do {
             return $ret;
         }
     );
-    lex_assign(
+    var(
         $scope,
         roots => create_list( $f,
             [ num( $f, "4" ), num( $f, "16" ), num( $f, "25" ) ] )

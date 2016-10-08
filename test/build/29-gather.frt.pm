@@ -306,19 +306,19 @@ my $result = do {
         $context, undef, undef, undef
     );
     load_namespaces( $context, qw(Math Math::Point Num) );
-    lex_assign(
+    var(
         $scope,
         pt1 => $$scope->{'Math::Point'}
           ->( [ num( $f, "0" ), num( $f, "0" ) ], $scope, undef, $pos->(13.3) ),
         undef, $pos->(13.1)
     );
-    lex_assign(
+    var(
         $scope,
         pt2 => $$scope->{'Math::Point'}
           ->( [ num( $f, "1" ), num( $f, "1" ) ], $scope, undef, $pos->(14.3) ),
         undef, $pos->(14.1)
     );
-    lex_assign(
+    var(
         $scope,
         pt3 => $$scope->{'Math::Point'}
           ->( [ num( $f, "1" ), num( $f, "0" ) ], $scope, undef, $pos->(15.3) ),

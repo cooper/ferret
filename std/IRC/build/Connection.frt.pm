@@ -642,7 +642,7 @@ my $result = do {
                     [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(58.2)
                 );
-                lex_assign(
+                var(
                     $scope,
                     msg => $$scope->{'IRC::Massage'}->(
                         [ $$scope->{'line'}, ${ $scope->{special} }->{'self'} ],
@@ -738,7 +738,7 @@ my $result = do {
                 need( $scope, $args, 'name', 88.2 ) or return;
                 if (
                     bool(
-                        lex_assign(
+                        var(
                             $scope,
                             channel => $$self->{'channels'}->get_index_value(
                                 [
@@ -793,7 +793,7 @@ my $result = do {
                 need( $scope, $args, 'nick', 96.2 ) or return;
                 if (
                     bool(
-                        lex_assign(
+                        var(
                             $scope,
                             user => $$self->{'users'}->get_index_value(
                                 [
@@ -848,7 +848,7 @@ my $result = do {
                 need( $scope, $args, 'name', 104.2 ) or return;
                 if (
                     bool(
-                        lex_assign(
+                        var(
                             $scope,
                             server => $$self->{'servers'}->get_index_value(
                                 [

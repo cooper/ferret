@@ -231,7 +231,7 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'pt2', 9.2 ) or return;
-                lex_assign(
+                var(
                     $scope,
                     dx => _sub(
                         $scope, $$self->{'x'},
@@ -240,7 +240,7 @@ my $result = do {
                     $file_scope,
                     $pos->(10.2)
                 );
-                lex_assign(
+                var(
                     $scope,
                     dy => _sub(
                         $scope, $$self->{'y'},

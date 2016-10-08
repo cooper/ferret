@@ -115,7 +115,7 @@ my $result = do {
         }
     );
     load_namespaces( $context, qw(Timer) );
-    lex_assign(
+    var(
         $scope,
         parts => str( $f, "s p a m" )->property_u( 'split', $pos->(1.4) )
           ->( [ str( $f, " " ) ], $scope, undef, $pos->(1.5) ),

@@ -703,7 +703,7 @@ my $result = do {
             my $self = $_self || $self;
             need( $scope, $args, 'line', 114.2 ) or return;
             need( $scope, $args, 's',    114.4 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 msg => $$scope->{'Message'}
                   ->( [ $$scope->{'line'} ], $scope, undef, $pos->(117.4) ),
@@ -759,7 +759,7 @@ my $result = do {
             my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 131.2 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 nickname =>
                   $$scope->{'msg'}->property_u( 'nickname', $pos->(132.4) ),
@@ -792,7 +792,7 @@ my $result = do {
             need( $scope, $args, 'msg', 137.2 ) or return;
             $$scope->{'inspect'}
               ->( [ $$scope->{'msg'} ], $scope, undef, $pos->(138.2) );
-            lex_assign(
+            var(
                 $scope,
                 trigger =>
                   $$scope->{'msg'}->property_u( 'parts', $pos->(141.4) )
@@ -802,7 +802,7 @@ my $result = do {
                 $file_scope,
                 $pos->(141.2)
             );
-            lex_assign(
+            var(
                 $scope,
                 response =>
                   $$scope->{'msg'}->property_u( 'fromWord', $pos->(142.4) )
@@ -845,7 +845,7 @@ my $result = do {
             my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 152.2 ) or return;
-            lex_assign(
+            var(
                 $scope,
                 response => $$this->{'factoids'}->get_index_value(
                     [
@@ -1060,13 +1060,13 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 61.2 ) or return;
-                lex_assign(
+                var(
                     $scope,
                     s => $$scope->{'line'}->property_u( 'split', $pos->(64.4) )
                       ->( [ str( $f, " " ) ], $scope, undef, $pos->(64.5) ),
                     $file_scope, $pos->(64.2)
                 );
-                lex_assign(
+                var(
                     $scope,
                     command => $$scope->{'s'}->get_index_value(
                         [ num( $f, "1" ) ],
@@ -1090,7 +1090,7 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    lex_assign(
+                    var(
                         $scope,
                         command => $$scope->{'s'}->get_index_value(
                             [ num( $f, "0" ) ],
@@ -1244,7 +1244,7 @@ my $result = do {
             _commandFactoid => $scope,
             $scope, $class, undef, undef
         );
-        lex_assign(
+        var(
             $class,
             handlers => create_hash(
                 $f,
@@ -1257,7 +1257,7 @@ my $result = do {
             undef,
             $pos->(4.3)
         );
-        lex_assign(
+        var(
             $class,
             initialCommands => create_hash(
                 $f,

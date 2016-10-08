@@ -132,7 +132,7 @@ my $result = do {
         sub {
             my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            lex_assign(
+            var(
                 $scope,
                 hello => str( $f, "Hello" ),
                 $file_scope, $pos->(17.2)
@@ -226,7 +226,7 @@ my $result = do {
         [ str( $f, "Benjamin" ), str( $f, "George" ) ],
         $scope, undef, $pos->(8.2)
     );
-    lex_assign(
+    var(
         $scope,
         pi =>
           add( $scope, num( $f, "3" ), num( $f, "0.1" ), num( $f, "0.04" ) ),

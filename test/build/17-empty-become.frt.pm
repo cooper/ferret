@@ -72,7 +72,7 @@ my $result = do {
         }
     );
     load_namespaces( $context, qw(Timer) );
-    lex_assign( $scope, obj => create_object( $f, [] ), undef, $pos->(2.2) );
+    var( $scope, obj => create_object( $f, [] ), undef, $pos->(2.2) );
     $$scope->{'Timer'}->property_u( 'init', $pos->(5.1) )
       ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(5.15) )
       ->( [ num( $f, "5" ) ], $scope, undef, $pos->(5.3) );

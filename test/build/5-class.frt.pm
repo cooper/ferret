@@ -238,7 +238,7 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                lex_assign(
+                var(
                     $scope,
                     pt => ${ $scope->{special} }->{'class'}->(
                         [
@@ -366,7 +366,7 @@ my $result = do {
         );
     }
     load_namespaces( $context, qw(Point) );
-    lex_assign(
+    var(
         $scope,
         pt => $$scope->{'Point'}
           ->( [ num( $f, "5" ), num( $f, "3" ) ], $scope, undef, $pos->(32.2) ),
@@ -376,7 +376,7 @@ my $result = do {
         [ add( $scope, str( $f, "Point" ), $$scope->{'pt'} ) ],
         $scope, undef, $pos->(33.2)
     );
-    lex_assign(
+    var(
         $scope,
         rpt => $$scope->{'pt'}->property_u( 'oneToRight', $pos->(35.4) )
           ->( [ undef, [] ], $scope, undef, $pos->(35.5) ),
@@ -386,7 +386,7 @@ my $result = do {
         [ add( $scope, str( $f, "Right" ), $$scope->{'rpt'} ) ],
         $scope, undef, $pos->(36.2)
     );
-    lex_assign(
+    var(
         $scope,
         mdpt => $$scope->{'Point'}->property_u( 'midpoint', $pos->(38.2) )->(
             [ $$scope->{'pt'}, $$scope->{'rpt'} ], $scope,
@@ -399,7 +399,7 @@ my $result = do {
         [ add( $scope, str( $f, "Midpoint" ), $$scope->{'mdpt'} ) ],
         $scope, undef, $pos->(39.2)
     );
-    lex_assign(
+    var(
         $scope,
         nineteen => add(
             $scope,

@@ -174,7 +174,7 @@ my $result = do {
         }
     );
     load_namespaces( $context, qw(Math Math::Point) );
-    lex_assign(
+    var(
         $scope,
         point => $$scope->{'Math::Point'}
           ->( [ num( $f, "0" ), num( $f, "0" ) ], $scope, undef, $pos->(1.3) ),
@@ -196,16 +196,8 @@ my $result = do {
             $$scope->{'point'},
             sub {
                 my ( $scope, $ins, $ret_func ) = @_;
-                lex_assign(
-                    $scope,
-                    x => num( $f, "5" ),
-                    $file_scope, $pos->(9.2)
-                );
-                lex_assign(
-                    $scope,
-                    y => num( $f, "10" ),
-                    $file_scope, $pos->(10.2)
-                );
+                var( $scope, x => num( $f, "5" ),  $file_scope, $pos->(9.2) );
+                var( $scope, y => num( $f, "10" ), $file_scope, $pos->(10.2) );
             }
         );
         return $ret_func->($inside_return) if $inside_return;
@@ -222,7 +214,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    lex_assign(
+    var(
         $scope,
         r => $$scope->{'say'}->(
             [ str( $f, "It was said" ), [ twice => $true ] ], $scope,

@@ -146,7 +146,7 @@ my $result = do {
     );
     load_namespaces( $context, qw(String) );
     $$scope->{'say'}->( [ str( $f, "test" ) ], $scope, undef, $pos->(1.2) );
-    lex_assign( $scope, str => str( $f, "hi" ), undef, $pos->(3.2) );
+    var( $scope, str => str( $f, "hi" ), undef, $pos->(3.2) );
     on(
         $$scope->{'str'},
         'length',

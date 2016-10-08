@@ -134,7 +134,7 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                lex_assign(
+                var(
                     $scope,
                     name => $$scope->{'T'}->property_u( 'name', $pos->(17.4) ),
                     $file_scope, $pos->(17.2)

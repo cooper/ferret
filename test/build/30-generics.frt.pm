@@ -209,7 +209,7 @@ my $result = do {
     try_catch(
         $f, $scope,
         sub {
-            lex_assign(
+            var(
                 $scope,
                 stack => $$scope->{'Stack'}
                   ->( [ undef, [] ], $scope, undef, $pos->(23.4) ),
@@ -225,7 +225,7 @@ my $result = do {
         },
         'e'
     );
-    lex_assign(
+    var(
         $scope,
         numstack => type_with_generics( $f, $scope, $$scope->{'Stack'},
             [ $$scope->{'Num'} ] )

@@ -58,7 +58,7 @@ my $result = do {
     load_core('main');
 
     load_namespaces( $context, qw(Bot2) );
-    lex_assign(
+    var(
         $scope,
         bot => $$scope->{'Bot2'}->(
             [

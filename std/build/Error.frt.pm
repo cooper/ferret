@@ -200,11 +200,7 @@ my $result = do {
             my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'list', 29.2 ) or return;
-            lex_assign(
-                $scope,
-                str => str( $f, "\n" ),
-                $file_scope, $pos->(30.2)
-            );
+            var( $scope, str => str( $f, "\n" ), $file_scope, $pos->(30.2) );
             {
                 my $loop_ret = iterate_pair(
                     $f, $scope,
@@ -222,7 +218,7 @@ my $result = do {
                             my $scope =
                               Ferret::Scope->new( $f, parent => $scope );
 
-                            lex_assign(
+                            var(
                                 $scope,
                                 str => add(
                                     $scope,
@@ -237,7 +233,7 @@ my $result = do {
                             );
                         }
                         else {
-                            lex_assign(
+                            var(
                                 $scope,
                                 str => add(
                                     $scope,
@@ -362,7 +358,7 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
-                lex_assign(
+                var(
                     $scope,
                     desc => add(
                         $scope,
@@ -385,7 +381,7 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    lex_assign(
+                    var(
                         $scope,
                         desc => add(
                             $scope,
@@ -402,7 +398,7 @@ my $result = do {
                 if ( bool( $$self->{'subError'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    lex_assign(
+                    var(
                         $scope,
                         desc => add(
                             $scope,

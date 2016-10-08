@@ -118,7 +118,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    lex_assign(
+    var(
         $scope,
         t2 => $$scope->{'Timer'}
           ->( [ num( $f, "2" ) ], $scope, undef, $pos->(7.4) ),

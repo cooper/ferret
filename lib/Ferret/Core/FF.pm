@@ -439,13 +439,6 @@ sub method_event_def {
     return $func;
 }
 
-# shared variable declaration without a value.
-sub share {
-    my ($scope, $prop_name, $pos) = @_;
-    return if $scope->property($prop_name);
-    $scope->set_property($prop_name => Ferret::undefined);
-}
-
 # type definitions.
 sub typedef {
     my ($scope, $scope_or_class, $type_name, $code, $lazy) = @_;
@@ -516,7 +509,15 @@ sub typedef_check {
     return;
 }
 
-sub lex_assign {
+# shared variable declaration without a value.
+sub share {
+    my ($scope, $prop_name, $pos) = @_;
+    return if $scope->property($prop_name);
+    $scope->set_property($prop_name => Ferret::undefined);
+}
+
+# used for both lexical assignment and share when there's a value.
+sub var {
     my ($owner, $name, $value, $scope_limit_if_ow, $pos) = @_;
     $owner->set_property_ow($scope_limit_if_ow, $name => $value, $pos);
     return $value;

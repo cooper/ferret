@@ -193,7 +193,7 @@ my $result = do {
 
                 return $ret_func->();
             }
-            lex_assign(
+            var(
                 $scope,
                 trim => $$scope->{'msg'}->property_u( 'params', $pos->(25.25) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(25.3) )
@@ -215,7 +215,7 @@ my $result = do {
 
                 return $ret_func->();
             }
-            lex_assign(
+            var(
                 $scope,
                 command =>
                   $$scope->{'trim'}->property_u( 'result', $pos->(28.4) ),
@@ -327,7 +327,7 @@ my $result = do {
                 $$self->{'conns'}->property_u( 'push', $pos->(11.2) )
                   ->( [ $$scope->{'connection'} ], $scope, undef,
                     $pos->(11.3) );
-                lex_assign(
+                var(
                     $scope,
                     bot => ${ $scope->{special} }->{'self'},
                     $file_scope, $pos->(13.2)

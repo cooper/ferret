@@ -133,7 +133,7 @@ my $result = do {
     my $scope = $file_scope;
     load_core('main');
 
-    lex_assign(
+    var(
         $scope,
         list => create_list( $f, [ str( $f, "hi" ) ] ),
         undef, $pos->(1.2)
@@ -172,7 +172,7 @@ my $result = do {
         );
         return $ret_func->($loop_ret) if $loop_ret;
     }
-    lex_assign(
+    var(
         $scope,
         hash => create_hash( $f, [ hi => str( $f, "there" ) ] ),
         undef, $pos->(11.2)

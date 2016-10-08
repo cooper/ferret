@@ -103,7 +103,7 @@ my $result = do {
     $func_0->inside_scope( bless => $scope, $context, undef, undef, undef );
     load_namespaces( $context, qw(PerlObject Str) );
 
-    lex_assign(
+    var(
         $context,
         ferret => [
             sub {
@@ -117,7 +117,7 @@ my $result = do {
         undef,
         $pos->(3.15)
     );
-    lex_assign(
+    var(
         $context,
         coreContext => [
             sub {
@@ -128,7 +128,7 @@ my $result = do {
         undef,
         $pos->(4.3)
     );
-    lex_assign(
+    var(
         $context,
         mainContext => [
             sub {

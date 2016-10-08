@@ -311,13 +311,13 @@ my $result = do {
             undef
         );
         $class->set_property( Int => $$scope->{'Integer'}, $pos->(18.3) );
-        lex_assign(
+        var(
             $class,
             inf => $$scope->{'Num'}
               ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(45.5) ),
             undef, $pos->(45.3)
         );
-        lex_assign(
+        var(
             $class,
             nan => $$scope->{'Num'}
               ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(46.5) ),

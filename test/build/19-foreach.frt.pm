@@ -52,7 +52,7 @@ my $result = do {
     my $scope = $file_scope;
     load_core('main');
 
-    lex_assign(
+    var(
         $scope,
         words => str( $f, "how are you?" )->property_u( 'split', $pos->(1.4) )
           ->( [ str( $f, " " ) ], $scope, undef, $pos->(1.5) ),
