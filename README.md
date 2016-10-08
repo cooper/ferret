@@ -25,7 +25,7 @@ say("Hello World!")
 ```
 
 ```perl
-$scope->property_u('say')->call_u( [ str( $f, "Hello World!" ) ], $scope );
+$$scope->{'say'}->( [ str( $f, "Hello World!" ) ])
 ```
 
 ### Interpretable
