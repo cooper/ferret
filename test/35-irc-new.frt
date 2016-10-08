@@ -2,7 +2,7 @@ share $bot = IRC::Bot()
 
 on $bot.commands.info {
     need $channel
-    $channel.privmsg("Ferret IRC bot")
+    $channel.privmsg("Ferret IRC bot https://github.com/cooper/ferret")
 }
 
 #=== FACTOIDS ===
@@ -56,8 +56,17 @@ on $bot.commands.del {
 
 func respondFactoid {
     need $msg, $channel
-    $command = $msg.params[1].word(0).trimPrefix(".")
-    $channel.privmsg(%factoids[$command])
+    $command  = $msg.params[1].word(0).trimPrefix(".")
+    inspect($msg)
+    inspect(%factoids[$command])
+    $response = %factoids[$command].fill(
+        nick: $msg.nick,
+        user: $msg.user,
+        host: $msg.host,
+        chan: $channel.name
+    )
+    inspect($response)
+    $channel.privmsg($response)
 }
 
 #=== COMPILER INTERFACE ===

@@ -109,12 +109,12 @@ prop? _parsedSource {
     if !@source:
         return
     if @source =~ /^(.+)!(.+)\@(.+)$/ {
-        nick  -> $1
-        ident -> $2
-        host  -> $3
+        nick -> $1
+        user -> $2
+        host -> $3
     }
 }
 
-prop nick   { return @_parsedSource.nick    }   #< source's nickname
-prop ident  { return @_parsedSource.ident   }   #< source's username (ident)
-prop host   { return @_parsedSource.host    }   #< source's host
+prop nick { return @_parsedSource.nick }   #< source's nickname
+prop user { return @_parsedSource.user }   #< source's username (ident)
+prop host { return @_parsedSource.host }   #< source's host

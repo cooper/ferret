@@ -58,10 +58,10 @@ Computed property. Source's nickname.
 
 
 
-### ident
+### user
 
 ```
-$massage.ident
+$massage.user
 ```
 
 Computed property. Source's username (ident).

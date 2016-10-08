@@ -356,7 +356,7 @@
 #                              Return pair 'nick'
 #                                  Lexical variable '$1'
 #                          Instruction
-#                              Return pair 'ident'
+#                              Return pair 'user'
 #                                  Lexical variable '$2'
 #                          Instruction
 #                              Return pair 'host'
@@ -367,11 +367,11 @@
 #                      Return
 #                          Property 'nick'
 #                              Instance variable '@_parsedSource'
-#          Computed property 'ident'
+#          Computed property 'user'
 #              Body ('method' scope)
 #                  Instruction
 #                      Return
-#                          Property 'ident'
+#                          Property 'user'
 #                              Instance variable '@_parsedSource'
 #          Computed property 'host'
 #              Body ('method' scope)
@@ -869,10 +869,7 @@ my $result = do {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $ret->set_property( nick => $$scope->{'1'}, $pos->(112.2) );
-                    $ret->set_property(
-                        ident => $$scope->{'2'},
-                        $pos->(113.2)
-                    );
+                    $ret->set_property( user => $$scope->{'2'}, $pos->(113.2) );
                     $ret->set_property( host => $$scope->{'3'}, $pos->(114.2) );
                 }
                 return $ret;
@@ -891,14 +888,14 @@ my $result = do {
             }
         );
 
-        # Method event 'ident' definition
+        # Method event 'user' definition
         my $method_5 = method_event_def(
-            $f, $scope, 'ident',
+            $f, $scope, 'user',
             [],
             sub {
                 my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
-                      ->property_u( 'ident', $pos->(119.5) ) );
+                      ->property_u( 'user', $pos->(119.5) ) );
                 return $ret;
             }
         );
@@ -927,9 +924,9 @@ my $result = do {
             _parsedSource => $scope,
             $proto, $class, 1, 1
         );
-        $method_4->inside_scope( nick  => $scope, $proto, $class, 1, undef );
-        $method_5->inside_scope( ident => $scope, $proto, $class, 1, undef );
-        $method_6->inside_scope( host  => $scope, $proto, $class, 1, undef );
+        $method_4->inside_scope( nick => $scope, $proto, $class, 1, undef );
+        $method_5->inside_scope( user => $scope, $proto, $class, 1, undef );
+        $method_6->inside_scope( host => $scope, $proto, $class, 1, undef );
     }
     load_namespaces( $context, qw(Bool Connection Str Str::NE) );
 };
