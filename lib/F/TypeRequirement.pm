@@ -40,7 +40,7 @@ sub perl_fmt_do {
     # for can, pass it on to the InterfaceMethod.
     if ($type eq 'can') {
         my $name = $ch->{var_name} if $ch->type eq 'PropertyVariable';
-        return "\$create_can->('$name', \$ins)->()" if length $name;
+        return "\$create_can->('$name', undef, \$ins)->()" if length $name;
         return $fmt_do;
     }
 

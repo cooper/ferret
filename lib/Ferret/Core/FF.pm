@@ -447,14 +447,31 @@ sub typedef {
         # this sub returns a function which returns Ferret true if
         # a method requirement is satisfied.
         my $create_can = sub {
-            my ($method_name, $obj) = @_;
+            my ($method_name, $args, $obj) = @_;
+
+            # $args is [ argName => 'Type' ]
+            # if $args is undef, it's can .property
+            # if $args is empty list, it's can .method()
+
             my $can_func = ffunction(sub {
-                my (undef, $args) = @_;
+                my $NO = Ferret::false;
+                return $NO if !$obj->has_property($method_name);
 
-                # TODO: how am I going to tell if arguments are unnamed?
-                # there is no way to tell from $args what was passed.
+                # obj, code, array. the one means don't compute.
+                my ($obj_or_ref) = $obj->_property($method_name, undef, undef, 1);
 
-                return Ferret::false if !$obj->has_property($method_name);
+                # if there are args, check that they can be satisfied.
+                if ($args) {
+
+                    # first of all, any requirement with an arg list means that
+                    # the property has to be a Code. it can't computed.
+                    return $NO if !blessed $obj_or_ref || !$obj_or_ref->is_code;
+
+                    # OK now check each argument
+                    # TODO: check each argument by splice 0, 2
+                    # don't check just names, check actual type objs
+                }
+
                 return Ferret::true;
             });
 

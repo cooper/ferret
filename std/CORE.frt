@@ -30,7 +30,7 @@ type Char {
 
 #> Matches objects which can be converted to a hashable form.
 type Hashable {
-    can .hashValue()
+    can .hashValue
     transform .hashValue
 }
 

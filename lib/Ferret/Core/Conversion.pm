@@ -46,6 +46,7 @@ sub fstring {
     }
 
     if ($val->isa('Ferret::Object')) {
+        return fstring('(undefined)') if Ferret::undefined($val);
 
         # it's an object with a string converter.
         if (my $to_str = $val->property('toString')) {

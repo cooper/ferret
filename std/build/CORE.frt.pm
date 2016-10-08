@@ -57,9 +57,7 @@
 #          Body ('type' scope)
 #              Instruction
 #                  Can
-#                      Method requirement
-#                          Property variable '.hashValue'
-#                          Argument list [0 items]
+#                      Property variable '.hashValue'
 #              Instruction
 #                  Transform
 #                      Property variable '.hashValue'
@@ -166,8 +164,7 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins,
                 conditions => [
-                    $create_can->( 'hashValue', $ins )
-                      ->( [ undef, [] ], $scope, undef, $pos->(33.3) ),
+                    $create_can->( 'hashValue', undef, $ins )->(),
                     do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                 ],
                 equal_to => undef
@@ -183,21 +180,12 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins,
                 conditions => [
-                    $create_can->( 'getValue', $ins )->(
-                        [ undef, [ index => $$scope->{'Hashable'} ] ],
-                        $scope, undef, $pos->(40.3)
-                    ),
-                    $create_can->( 'setValue', $ins )->(
-                        [
-                            undef,
-                            [
-                                value => $$scope->{'Obj'},
-                                index => $$scope->{'Hashable'}
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(41.15)
-                    )
+                    $create_can->( 'getValue', [ index => 'Hashable' ], $ins )
+                      ->(),
+                    $create_can->(
+                        'setValue', [ value => 'Obj', index => 'Hashable' ],
+                        $ins
+                    )->()
                 ],
                 equal_to => undef
             ) ? $ins : undef;

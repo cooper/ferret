@@ -198,9 +198,9 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins,
                 conditions => [
-                    $create_can->( 'more',        $ins )->(),
-                    $create_can->( 'nextElement', $ins )->(),
-                    $create_can->( 'iterator',    $ins )->()
+                    $create_can->( 'more',        undef, $ins )->(),
+                    $create_can->( 'nextElement', undef, $ins )->(),
+                    $create_can->( 'iterator',    undef, $ins )->()
                 ],
                 equal_to => undef
             ) ? $ins : undef;
@@ -214,7 +214,7 @@ my $result = do {
             my ( $ins, $create_can, $transform ) = @_;
             typedef_check(
                 $scope, $scope, $ins,
-                conditions => [ $create_can->( 'iterator', $ins )->() ],
+                conditions => [ $create_can->( 'iterator', undef, $ins )->() ],
                 equal_to   => undef
             ) ? $ins : undef;
         },

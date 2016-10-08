@@ -609,7 +609,7 @@ our %element_rules = (
     PropertyVariable => {
 
         must_be_somewhere_inside => [                                           # PropertyVariable[0]
-            'InsideBody Type FunctionMethodBody',
+            'InsideBody TypeBody FunctionMethodBody',
             "Property variable (standalone .property) can only exist within ".
             "'inside', 'type', or 'function' block",
             0
@@ -812,6 +812,59 @@ our %element_rules = (
         #   NOT    someMethod()
         #   Checked on ->close of the TypeRequirement.
 
+    },
+
+    InterfaceMethod => {
+        after_rules => {
+
+            # first child better be a .property
+            child_0_must_be => [
+                'PropertyVariable',
+                "'can' method requirement must look like: can .methodName(...)",
+                0
+            ],
+
+            # second child better be an argument list
+            child_1_must_be => [
+                'List',
+                "'can' method requirement must look like: can .methodName(...)",
+                1
+            ],
+
+            # the list can only contain pairs of argName:BarewordType
+            children_must_satisfy => [
+                sub {
+                    my $list = shift;
+
+                    # it has to be a "hash list"
+                    # meaning named args only. not array. not mixture.
+                    return 1 if $list->type ne 'List';
+                    return if !$list->{hash} && $list->children;
+
+                    # each item has to be a NamedPair.
+                    for my $item ($list->children) {
+                        my $el = $item->first_child;
+                        return if $el->type ne 'NamedPair';
+
+                        # the value of the pair has to be a bareword type.
+                        return if $el->first_child->type ne 'Bareword';
+                    }
+
+                    return 1;
+                },
+                "'can' method requirement arguments must be named with ".
+                "bareword types, like: can .methodName(argName: Type, ...)",
+                2
+            ],
+
+        },
+
+        # disallows call operator to omit the argument list
+        num_children => [
+            2,
+            "'can' method requirement must look like: can .methodName(...)",
+            2
+        ]
     },
 
     Function => {
