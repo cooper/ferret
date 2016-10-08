@@ -805,7 +805,11 @@ sub c_operator {
 
     # we're only interested in the previous element at the same level.
     my $last_el = $c->last_el;
-    undef $last_el if $last_el == $c->node;
+    undef $last_el if $last_el && $last_el == $c->node;
+
+    # do not capture the left side of an assignment.
+    undef $last_el if $last_el && $c->node->type eq 'Assignment'
+        && $last_el == $c->node->assign_to;
 
     # if it's addition or subtraction, it might be a sign.
     my %signs = (OP_ADD => 1, OP_SUB => 1);
