@@ -18,8 +18,9 @@ sub req_error {
 
     # if this is a can,
     # the function being 'called' must be a VAR_PROP.
-    if ($req->{req_type} eq 'can') {
-        my $var = $req->first_child->function;
+    my $child = $req->first_child;
+    if ($req->{req_type} eq 'can' && $child->can('function')) {
+        my $var = $child->function;
         return $var->unexpected([
             "in interface method requirement ('can')",
             "Only method requirements are permitted, using the syntax: ".
@@ -33,10 +34,15 @@ sub req_error {
 sub perl_fmt_do {
     my $req    = shift;
     my $type   = $req->{req_type};
-    my $fmt_do = $req->first_child->perl_fmt_do;
+    my $ch     = $req->first_child;
+    my $fmt_do = $ch->perl_fmt_do;
 
     # for can, pass it on to the InterfaceMethod.
-    return $fmt_do if $type eq 'can';
+    if ($type eq 'can') {
+        my $name = $ch->{var_name} if $ch->type eq 'PropertyVariable';
+        return "\$create_can->('$name', \$ins)->()" if length $name;
+        return $fmt_do;
+    }
 
     # for satisfies, the condition is simply the expression.
     return $fmt_do if $type eq 'satisfies';
