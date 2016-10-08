@@ -9,6 +9,9 @@
 #              Bareword 'Signal'
 #      Instruction
 #          Load
+#              Bareword 'Iterator'
+#      Instruction
+#          Load
 #              Bareword 'Extension::Number'
 #      Instruction
 #          Load
@@ -81,7 +84,7 @@
 #                              Item 1
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
-#      Include (Any, Error, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Obj, Object, Signal, Str)
+#      Include (Any, Error, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Iterator, Obj, Object, Signal, Str)
 use warnings;
 use strict;
 use 5.010;
@@ -109,7 +112,7 @@ my $result = do {
     FF::load_core('CORE');
 
     FF::load_namespaces( $context,
-        qw(Any Error Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Obj Object Signal Str)
+        qw(Any Error Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Iterator Obj Object Signal Str)
     );
 
     FF::typedef(
@@ -124,8 +127,8 @@ my $result = do {
         },
         undef
     );
-    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(14.3) );
-    $context->set_property( Object => $$scope->{'Any'}, $pos->(15.3) );
+    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(15.3) );
+    $context->set_property( Object => $$scope->{'Any'}, $pos->(16.3) );
     FF::typedef(
         $scope, $context, 'Code',
         sub {
@@ -162,7 +165,7 @@ my $result = do {
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
-                      ->( [ undef, [] ], $scope, undef, $pos->(32.3) ),
+                      ->( [ undef, [] ], $scope, undef, $pos->(33.3) ),
                     do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                 ],
                 equal_to => undef
@@ -180,7 +183,7 @@ my $result = do {
                 conditions => [
                     $create_can->( 'getValue', $ins )->(
                         [ undef, [ index => $$scope->{'Hashable'} ] ],
-                        $scope, undef, $pos->(39.3)
+                        $scope, undef, $pos->(40.3)
                     ),
                     $create_can->( 'setValue', $ins )->(
                         [
@@ -191,7 +194,7 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(40.15)
+                        $pos->(41.15)
                     )
                 ],
                 equal_to => undef
