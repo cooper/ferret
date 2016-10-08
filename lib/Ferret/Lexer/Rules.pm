@@ -616,25 +616,26 @@ our %element_rules = (
         ],
 
         # make sure we're in the BODY of the Inside, not the param_exp.
-        parent_must_satisfy => [                                                # PropertyVariable[1]
-            sub {
-                my $el = shift;
+        after_rules => {
+            parent_must_satisfy => [                                            # PropertyVariable[1]
+                sub {
+                    my $el = shift;
 
-                # if it's somewhere in one of these, we're ok
-                return 1 if $el->first_self_or_parent('InsideBody');
-                return 1 if $el->first_self_or_parent('Type');
+                    # if it's somewhere in one of these, we're ok
+                    return 1 if $el->first_self_or_parent('InsideBody');
+                    return 1 if $el->first_self_or_parent('Type');
 
-                # otherwise, it's a function
-                my $func = $el->first_self_or_parent('Function') or return;
-                return $func->anonymous && !$func->arguments;
+                    # otherwise, it's a function
+                    my $func = $el->first_self_or_parent('Function') or return;
+                    return $func->anonymous && !$func->arguments;
 
-            },
-            'Property variable (standalone .property) is only valid within '.
-            'a function if it is anonymous and has no additional argument '.
-            'requirements',
-            1
-        ]
-
+                },
+                'Property variable (standalone .property) is only valid within '.
+                'a function if it is anonymous and has no additional argument '.
+                'requirements',
+                1
+            ]
+        }
     },
 
     TypeBody => {
