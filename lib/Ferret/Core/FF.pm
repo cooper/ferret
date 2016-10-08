@@ -579,11 +579,10 @@ sub gather {
     # a status here, either 'list' or 'return'
 
     # if the gather returned, return the outer.
-    return ($status, $ret) if $status eq 'return';
+    return ($status, $ret) if $status && $status eq 'return';
 
     # otherwise, return 'list' status.
     return ('list', $list);
-
 }
 
 sub throw {

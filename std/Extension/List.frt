@@ -12,7 +12,8 @@ prop empty {
     return @length == 0
 }
 
-#> Maps each element to another value based on a transformation code.
+#> Returns a copy of the list by mapping each element to another value based on
+#| a transformation code.
 method map {
     need $code: Code
     return gather for $el in *self {
@@ -20,12 +21,59 @@ method map {
     }
 }
 
-#> Picks out elements that satisfy a code.
+#> Returns a copy of the list containing only the elements that satisfy a code.
 method grep {
     need $code: Code
     return gather for $el in *self {
         if $code($el): take $el
     }
+}
+
+#> Copies the list, ignoring all possible occurrences of a specified value.
+method withoutAll {
+    need $what
+    return @grep! { -> $what != $_ }
+    #return @grep(func { -> $what != $_ })
+}
+
+#> Copies the list, ignoring the first occurrence of a specified value.
+method without {
+    need $what
+    var $found
+    return gather for ($i, $el) in *self {
+        if !$found && $what == $el {
+            $found = true
+            next
+        }
+        take $el
+    }
+}
+
+#> Removes the first element equal to a specified value.
+method remove {
+    need $what
+    removed -> false
+    for ($i, $el) in *self {
+        if $what != $el:
+            next
+        # FIXME: delete *self[$i]
+        found   -> $el
+        removed -> true
+        last
+    }
+}
+
+#> Removes all elements equal to a specified value.
+method removeAll {
+    need $what
+    $found = gather for ($i, $el) in *self {
+        if $what != $el:
+            next
+        # FIXME: delete *self[$i]
+        take $el
+    }
+    found   -> $found           #< list of removed elements
+    removed -> $found.length    #< number of removed elements
 }
 
 #> Finds the first element to satisfy a code.
