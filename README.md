@@ -2,7 +2,7 @@
 
 Ferret is an evented, objective hobby programming language.
 
-![Editor](http://i.imgur.com/ULCvNDM.png)
+![Editor](http://i.imgur.com/MmTMLyz.png)
 
 ```
 say("Hello World!")
