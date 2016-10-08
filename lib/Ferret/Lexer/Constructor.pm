@@ -360,6 +360,9 @@ sub c_CLOSURE_E {
 
          $c->simulate('OP_SEMI')
             if $is_close && $close_pos == $last_on_line->[2];
+
+        $c->close_node if $closure->type eq 'ForBody'
+            && $p->{is_gatherfor};
     }
 
     # gather for: this is a special case --
@@ -371,8 +374,12 @@ sub c_CLOSURE_E {
     # if those conditions are met, close another two nodes,
     # which is the gather and its body.
     #
-    $c->close_node(2) if $closure->type eq 'ForBody'
-        && $p->{is_gatherfor};
+    # finally, simulate a semicolon. this is because it would
+    # not have been done above since it was a ForBody not a GatherBody.
+    # this will close assignments, return statements, etc.
+    #
+    $c->close_node(2) and $c->simulate('OP_SEMI')
+        if $closure->type eq 'ForBody' && $p->{is_gatherfor};
 
     # continue: this is a special case --
     #
@@ -1669,11 +1676,11 @@ sub c_KEYWORD_INSIDE {
 
 # gathering. consolidates items into a list.
 sub c_KEYWORD_GATHER {
-    my ($c, $value) = @_;
+    my ($c, $value, $dont_capture) = @_;
 
     # create a closure to be opened soon.
     my $gather = F::new('Gather');
-    $c->capture_closure_with($gather->body);
+    $c->capture_closure_with($gather->body) unless $dont_capture;
     $c->node->adopt($gather);
 
     return $gather;
@@ -1684,7 +1691,8 @@ sub c_KEYWORD_GATHFOR {
     my $c = shift;
 
     # create a gather.
-    my $gather = $c->simulate('KEYWORD_GATHER');
+    # tell it not to capture a closure because the 'for' will.
+    my $gather = $c->simulate('KEYWORD_GATHER', undef, 1);
     $gather->{is_gatherfor} = 1;
 
     # create a for.
