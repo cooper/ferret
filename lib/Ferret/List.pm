@@ -11,7 +11,7 @@ use Scalar::Util qw(blessed);
 use Ferret::Core::Conversion qw(
     fnumber pnumber
     fstring pstring
-    pdescription
+    pdescription flist_fromref
     FUNC_SELF FUNC_ARGS FUNC_RET FUNC_FUNC
 );
 
@@ -53,6 +53,10 @@ my @methods = (
     push => {
         need => '$items:T...',
         code => \&_push
+    },
+    copy => {
+        want => '$deep:Bool',
+        code => \&_copy
     }
 );
 
@@ -190,6 +194,12 @@ sub _get_value {
     my ($list, $args) = @_;
     my $index = $args->pnumber('index');
     return $list->get_value($index);
+}
+
+sub _copy {
+    my ($list) = @_;
+    # TODO: $deep
+    return flist_fromref($list->{list_items});
 }
 
 sub description {

@@ -14,10 +14,12 @@ use Ferret::Core::Conversion qw(
 
 my @methods = (
     keys => {
-        code => \&_keys
+        code => \&_keys,
+        prop => 1
     },
     values => {
-        code => \&_values
+        code => \&_values,
+        prop => 1
     },
     length => {
         code => \&_length,

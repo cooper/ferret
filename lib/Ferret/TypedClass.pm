@@ -45,9 +45,9 @@ sub call {
 sub _property {
     my $tc = shift;
     $tc->{main_class}->set_generics($tc->{other_types});
-    my $ret = $tc->SUPER::_property(@_);
+    my @ret = $tc->{main_class}->_property(@_);
     $tc->{main_class}->reset_generics;
-    return $ret;
+    return @ret;
 }
 
 sub description {
