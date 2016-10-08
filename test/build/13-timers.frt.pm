@@ -51,6 +51,8 @@
 #              Property 'cancel'
 #                  Lexical variable '$t2'
 #      Include (Timer)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -66,23 +68,23 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '13-timers.frt', './test/13-timers.frt' );
+my $pos = before_content( '13-timers.frt', './test/13-timers.frt' );
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->( [ str( $f, "five seconds up" ) ], $scope, undef,
                 $pos->(4.2) );
@@ -91,11 +93,11 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_1 = FF::function_def(
+    my $func_1 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ str( $f, "this shouldn't be said" ) ],
@@ -104,9 +106,9 @@ my $result = do {
             return $ret;
         }
     );
-    FF::load_namespaces( $context, qw(Timer) );
+    load_namespaces( $context, qw(Timer) );
     $$scope->{'say'}->( [ str( $f, "hello" ) ], $scope, undef, $pos->(1.2) );
-    FF::on(
+    on(
         $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(3.15) )
           ->property_u( 'once', $pos->(3.3) )
           ->( [ undef, [] ], $scope, undef, $pos->(3.35) ),
@@ -116,13 +118,13 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         t2 => $$scope->{'Timer'}
           ->( [ num( $f, "2" ) ], $scope, undef, $pos->(7.4) ),
         undef, $pos->(7.2)
     );
-    FF::on(
+    on(
         $$scope->{'t2'}->property_u( 'once', $pos->(8.3) )
           ->( [ undef, [] ], $scope, undef, $pos->(8.4) ),
         'expire',
@@ -135,4 +137,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(12.3) );
 };
 
-FF::after_content();
+after_content();

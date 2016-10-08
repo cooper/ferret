@@ -111,6 +111,8 @@
 #                              Item 0
 #                                  String 'JOIN #k'
 #      Include (Socket, Socket::TCP, Timer)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -126,25 +128,25 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '12-socket.frt', './test/12-socket.frt' );
+my $pos = before_content( '12-socket.frt', './test/12-socket.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'data', 5.2 ) or return;
+            need( $scope, $args, 'data', 5.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
                 $scope, undef, $pos->(6.2)
@@ -154,13 +156,13 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_1 = FF::function_def(
+    my $func_1 = function_def(
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'data', 10.2 ) or return;
+            need( $scope, $args, 'data', 10.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
                 $scope, undef, $pos->(11.2)
@@ -170,11 +172,11 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_2 = FF::function_def(
+    my $func_2 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'sock'}->property_u( 'println', $pos->(15.2) )
               ->( [ str( $f, "NICK k" ) ], $scope, undef, $pos->(15.3) );
@@ -197,27 +199,27 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_3 = FF::function_def(
+    my $func_3 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'sock'}->property_u( 'println', $pos->(22.2) )
               ->( [ str( $f, "JOIN #k" ) ], $scope, undef, $pos->(22.3) );
             return $ret;
         }
     );
-    FF::load_namespaces( $context, qw(Socket Socket::TCP Timer) );
-    FF::lex_assign(
+    load_namespaces( $context, qw(Socket Socket::TCP Timer) );
+    lex_assign(
         $scope,
         sock => $$scope->{'Socket::TCP'}->(
             [
                 undef,
                 [
-                    address  => str( $f,            "k.notroll.net" ),
-                    port     => num( $f,            "6667" ),
-                    readMode => FF::get_symbol( $f, 'line' )
+                    address  => str( $f,        "k.notroll.net" ),
+                    port     => num( $f,        "6667" ),
+                    readMode => get_symbol( $f, 'line' )
                 ]
             ],
             $scope, undef,
@@ -227,7 +229,7 @@ my $result = do {
         $pos->(1.1)
     );
     $$scope->{'inspect'}->( [ $$scope->{'sock'} ], $scope, undef, $pos->(2.2) );
-    FF::on(
+    on(
         $$scope->{'sock'},
         'gotLine',
         $self,
@@ -235,7 +237,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::on(
+    on(
         $$scope->{'sock'},
         'println',
         $self,
@@ -243,7 +245,7 @@ my $result = do {
         $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::on(
+    on(
         $$scope->{'sock'},
         'connected',
         $self,
@@ -253,7 +255,7 @@ my $result = do {
     );
     $$scope->{'sock'}->property_u( 'connect', $pos->(19.2) )
       ->( [ undef, [] ], $scope, undef, $pos->(19.3) );
-    FF::on(
+    on(
         $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(21.15) )
           ->property_u( 'once', $pos->(21.3) )
           ->( [ undef, [] ], $scope, undef, $pos->(21.35) ),
@@ -265,4 +267,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

@@ -3,6 +3,8 @@
 #      Class 'A' <T>
 #      Class 'A' <T, U>
 #      Include (T, U)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -18,32 +20,32 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '31-generic-extensions.frt',
+my $pos = before_content( '31-generic-extensions.frt',
     './test/31-generic-extensions.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'A'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'A', undef, ['T'] );
+          get_class( $f, $context, $file_scope, 'A', undef, ['T'] );
 
     }
 
     # Class 'A'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'A', undef, [ 'T', \'U' ] );
+          get_class( $f, $context, $file_scope, 'A', undef, [ 'T', \'U' ] );
 
     }
-    FF::load_namespaces( $context, qw(T U) );
+    load_namespaces( $context, qw(T U) );
 };
 
-FF::after_content();
+after_content();

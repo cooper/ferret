@@ -122,6 +122,8 @@
 #                                      Pair 'url'
 #                                          Lexical variable '$url'
 #      Include (HTTP, HTTP::Request, HTTPMethod, NATIVE, NATIVE::HTTPClient, Num, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -137,24 +139,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Client.frt', './std/HTTP/Client.frt' );
+my $pos = before_content( 'Client.frt', './std/HTTP/Client.frt' );
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'HTTP' );
+    my ( $file_scope, $context ) = get_context( $f, 'HTTP' );
     my $scope = $file_scope;
-    FF::load_core('HTTP');
+    load_core('HTTP');
 
     # Class 'Client'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Client', 1.0, undef );
+          get_class( $f, $context, $file_scope, 'Client', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -190,14 +192,13 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::want( $self, $args, 'userAgent', 11.2,
-                    $$scope->{'defaultUA'} );
-                FF::want( $self, $args, 'timeout', 14.2, num( $f, "10" ) );
-                FF::want( $self, $args, 'maxContentLength', 20.2 );
-                FF::want( $self, $args, 'readLength', 23.2,
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                want( $self, $args, 'userAgent', 11.2, $$scope->{'defaultUA'} );
+                want( $self, $args, 'timeout', 14.2, num( $f, "10" ) );
+                want( $self, $args, 'maxContentLength', 20.2 );
+                want( $self, $args, 'readLength', 23.2,
                     $$scope->{'defaultLength'} );
-                FF::want( $self, $args, 'writeLength', 26.2,
+                want( $self, $args, 'writeLength', 26.2,
                     $$scope->{'defaultLength'} );
                 $$scope->{'NATIVE::HTTPClient'}
                   ->property_u( 'initialize', $pos->(28.4) )->(
@@ -209,7 +210,7 @@ my $result = do {
         );
 
         # Method event 'get' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'get',
             [
                 {
@@ -220,14 +221,14 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'url', 34.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'url', 34.2 ) or return;
                 return $ret_func->(
                     $$self->{'request'}->(
                         [
                             undef,
                             [
-                                httpMethod => FF::get_symbol( $f, 'GET' ),
+                                httpMethod => get_symbol( $f, 'GET' ),
                                 url        => $$scope->{'url'}
                             ]
                         ],
@@ -240,7 +241,7 @@ my $result = do {
         );
 
         # Method event 'post' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'post',
             [
                 {
@@ -251,14 +252,14 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'url', 44.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'url', 44.2 ) or return;
                 return $ret_func->(
                     $$self->{'request'}->(
                         [
                             undef,
                             [
-                                httpMethod => FF::get_symbol( $f, 'POST' ),
+                                httpMethod => get_symbol( $f, 'POST' ),
                                 url        => $$scope->{'url'}
                             ]
                         ],
@@ -271,7 +272,7 @@ my $result = do {
         );
 
         # Method event 'request' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'request',
             [
@@ -289,9 +290,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'httpMethod', 56.2 ) or return;
-                FF::need( $scope, $args, 'url',        59.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'httpMethod', 56.2 ) or return;
+                need( $scope, $args, 'url',        59.2 ) or return;
                 return $ret_func->(
                     $$scope->{'HTTP::Request'}->(
                         [
@@ -319,7 +320,7 @@ my $result = do {
             request => $scope,
             $proto, $class, undef, undef
         );
-        FF::lex_assign(
+        lex_assign(
             $scope,
             defaultUA => add(
                 $scope,
@@ -330,14 +331,14 @@ my $result = do {
             undef,
             $pos->(5.2)
         );
-        FF::lex_assign(
+        lex_assign(
             $scope,
             defaultLength => mul( $scope, num( $f, "64" ), num( $f, "1024" ) ),
             undef, $pos->(6.2)
         );
     }
-    FF::load_namespaces( $context,
+    load_namespaces( $context,
         qw(HTTP HTTP::Request HTTPMethod NATIVE NATIVE::HTTPClient Num Str) );
 };
 
-FF::after_content();
+after_content();

@@ -26,6 +26,8 @@
 #                          Property 'pretty'
 #                              Lexical variable '$obj'
 #      Include (Math, Math::Point)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -41,19 +43,19 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '16-become.frt', './test/16-become.frt' );
+my $pos = before_content( '16-become.frt', './test/16-become.frt' );
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
-    FF::load_namespaces( $context, qw(Math Math::Point) );
-    FF::lex_assign( $scope, obj => str( $f, "hi" ), undef, $pos->(2.2) );
+    load_namespaces( $context, qw(Math Math::Point) );
+    lex_assign( $scope, obj => str( $f, "hi" ), undef, $pos->(2.2) );
     $$scope->{'Math::Point'}->property_u( 'init', $pos->(9.2) )
       ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(9.25) )
       ->( [ num( $f, "1" ), num( $f, "1" ) ], $scope, undef, $pos->(9.4) );
@@ -67,4 +69,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

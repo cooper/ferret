@@ -1,1 +1,1 @@
-<<my>>$lv_<<name>> = FF::lex_assign(<<owner>>, <<name>> => <<assign_value>>, <<owrite>>, $pos->(<<pos>>))
+<<my>>$lv_<<name>> = lex_assign(<<owner>>, <<name>> => <<assign_value>>, <<owrite>>, $pos->(<<pos>>))

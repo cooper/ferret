@@ -32,6 +32,8 @@
 #                              Addition operator (+)
 #                              Instance variable '@name'
 #      Include (Num, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -47,24 +49,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Module.frt', './std/Module.frt' );
+my $pos = before_content( 'Module.frt', './std/Module.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'Module'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Module', 1.0, undef );
+          get_class( $f, $context, $file_scope, 'Module', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -88,10 +90,10 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $self, $args, 'name' ) or return;
-                FF::want( $self, $args, 'prefix', 9.2, str( $f, "CORE" ) );
-                FF::want( $self, $args, 'version', 12.2, num( $f, "1.0" ) );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $self, $args, 'name' ) or return;
+                want( $self, $args, 'prefix', 9.2, str( $f, "CORE" ) );
+                want( $self, $args, 'version', 12.2, num( $f, "1.0" ) );
                 $self->set_property(
                     fullName => add(
                         $scope, $$self->{'prefix'},
@@ -107,7 +109,7 @@ my $result = do {
             $class, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Num Str) );
+    load_namespaces( $context, qw(Num Str) );
 };
 
-FF::after_content();
+after_content();

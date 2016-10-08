@@ -1,1 +1,1 @@
-FF::need($scope, $args, '<<var_name>>', <<var_pos>>) or return
+need($scope, $args, '<<var_name>>', <<var_pos>>) or return

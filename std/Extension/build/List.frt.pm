@@ -349,6 +349,8 @@
 #                      Return
 #                          Lexical variable '$c'
 #      Include (Code, T)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -364,23 +366,23 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'List.frt', './std/Extension/List.frt' );
+my $pos = before_content( 'List.frt', './std/Extension/List.frt' );
 
 use Ferret::Core::Operations qw(_not add all_true bool equal nequal num range);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [ { name => '_' } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             my $ins = $args->{_};
             return $ret_func->( nequal( $scope, $$scope->{'what'}, $ins ) );
@@ -391,14 +393,14 @@ my $result = do {
     # Class 'List'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'List', undef, [ \'T' ] );
+          get_class( $f, $context, $file_scope, 'List', undef, [ \'T' ] );
 
         # Method event 'empty' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope, 'empty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
                 return $ret;
@@ -406,7 +408,7 @@ my $result = do {
         );
 
         # Method event 'map' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'map',
             [
                 {
@@ -417,16 +419,16 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'code', 18.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 18.2 ) or return;
                 return $ret_func->(
                     do {
-                        my ( $gather_status, $gather_ret ) = FF::gather(
+                        my ( $gather_status, $gather_ret ) = gather(
                             $f, $scope,
                             sub {
                                 my ( $scope, $take, $ret_func ) = @_;
                                 {
-                                    my $loop_ret = FF::iterate(
+                                    my $loop_ret = iterate(
                                         $f, $scope,
                                         ${ $scope->{special} }->{'self'},
                                         'el',
@@ -457,7 +459,7 @@ my $result = do {
         );
 
         # Method event 'grep' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'grep',
             [
                 {
@@ -468,16 +470,16 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'code', 26.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 26.2 ) or return;
                 return $ret_func->(
                     do {
-                        my ( $gather_status, $gather_ret ) = FF::gather(
+                        my ( $gather_status, $gather_ret ) = gather(
                             $f, $scope,
                             sub {
                                 my ( $scope, $take, $ret_func ) = @_;
                                 {
-                                    my $loop_ret = FF::iterate(
+                                    my $loop_ret = iterate(
                                         $f, $scope,
                                         ${ $scope->{special} }->{'self'},
                                         'el',
@@ -517,7 +519,7 @@ my $result = do {
         );
 
         # Method event 'withoutAll' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'withoutAll',
             [
@@ -529,8 +531,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'what', 34.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'what', 34.2 ) or return;
                 return $ret_func->(
                     $$self->{'grep'}->(
                         [
@@ -548,7 +550,7 @@ my $result = do {
         );
 
         # Method event 'without' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'without',
             [
@@ -560,20 +562,20 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'what', 41.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'what', 41.2 ) or return;
                 $scope->set_property(
                     found => Ferret::undefined,
                     $pos->(42.2)
                 );
                 return $ret_func->(
                     do {
-                        my ( $gather_status, $gather_ret ) = FF::gather(
+                        my ( $gather_status, $gather_ret ) = gather(
                             $f, $scope,
                             sub {
                                 my ( $scope, $take, $ret_func ) = @_;
                                 {
-                                    my $loop_ret = FF::iterate_pair(
+                                    my $loop_ret = iterate_pair(
                                         $f, $scope,
                                         ${ $scope->{special} }->{'self'},
                                         'i', 'el',
@@ -604,7 +606,7 @@ my $result = do {
                                                   Ferret::Scope->new( $f,
                                                     parent => $scope );
 
-                                                FF::lex_assign(
+                                                lex_assign(
                                                     $scope,
                                                     found => $true,
                                                     $file_scope, $pos->(45.2)
@@ -629,7 +631,7 @@ my $result = do {
         );
 
         # Method event 'remove' definition
-        my $method_5 = FF::method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope, 'remove',
             [
                 {
@@ -640,11 +642,11 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'what', 54.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'what', 54.2 ) or return;
                 $ret->set_property( removed => $false, $pos->(55.2) );
                 {
-                    my $loop_ret = FF::iterate_pair(
+                    my $loop_ret = iterate_pair(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'i', 'el',
@@ -683,7 +685,7 @@ my $result = do {
         );
 
         # Method event 'removeAll' definition
-        my $method_6 = FF::method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope,
             'removeAll',
             [
@@ -695,17 +697,17 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'what', 68.2 ) or return;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'what', 68.2 ) or return;
+                lex_assign(
                     $scope,
                     found => do {
-                        my ( $gather_status, $gather_ret ) = FF::gather(
+                        my ( $gather_status, $gather_ret ) = gather(
                             $f, $scope,
                             sub {
                                 my ( $scope, $take, $ret_func ) = @_;
                                 {
-                                    my $loop_ret = FF::iterate_pair(
+                                    my $loop_ret = iterate_pair(
                                         $f, $scope,
                                         ${ $scope->{special} }->{'self'},
                                         'i', 'el',
@@ -753,7 +755,7 @@ my $result = do {
         );
 
         # Method event 'first' definition
-        my $method_7 = FF::method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope, 'first',
             [
                 {
@@ -764,10 +766,10 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'code', 81.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 81.2 ) or return;
                 {
-                    my $loop_ret = FF::iterate(
+                    my $loop_ret = iterate(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'el',
@@ -798,7 +800,7 @@ my $result = do {
         );
 
         # Method event 'any' definition
-        my $method_8 = FF::method_event_def(
+        my $method_8 = method_event_def(
             $f, $scope, 'any',
             [
                 {
@@ -809,10 +811,10 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'code', 90.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 90.2 ) or return;
                 {
-                    my $loop_ret = FF::iterate(
+                    my $loop_ret = iterate(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'el',
@@ -843,7 +845,7 @@ my $result = do {
         );
 
         # Method event 'all' definition
-        my $method_9 = FF::method_event_def(
+        my $method_9 = method_event_def(
             $f, $scope, 'all',
             [
                 {
@@ -854,10 +856,10 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'code', 99.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 99.2 ) or return;
                 {
-                    my $loop_ret = FF::iterate(
+                    my $loop_ret = iterate(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'el',
@@ -892,17 +894,17 @@ my $result = do {
         );
 
         # Method event 'sum' definition
-        my $method_10 = FF::method_event_def(
+        my $method_10 = method_event_def(
             $f, $scope, 'sum',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'empty'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret_func->($undefined);
                 }
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     c => ${ $scope->{special} }->{'self'}->get_index_value(
                         [ num( $f, "0" ) ],
@@ -912,13 +914,13 @@ my $result = do {
                     $pos->(111.2)
                 );
                 {
-                    my $loop_ret = FF::iterate(
+                    my $loop_ret = iterate(
                         $f, $scope,
                         range( $scope, num( $f, "1" ), $$self->{'lastIndex'} ),
                         'i',
                         sub {
                             my ( $scope, $ret_func ) = @_;
-                            FF::lex_assign(
+                            lex_assign(
                                 $scope,
                                 c => add(
                                     $scope,
@@ -943,24 +945,24 @@ my $result = do {
         );
 
         # Method event 'sum0' definition
-        my $method_11 = FF::method_event_def(
+        my $method_11 = method_event_def(
             $f, $scope, 'sum0',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                lex_assign(
                     $scope,
                     c => num( $f, "0" ),
                     $file_scope, $pos->(121.2)
                 );
                 {
-                    my $loop_ret = FF::iterate(
+                    my $loop_ret = iterate(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'el',
                         sub {
                             my ( $scope, $ret_func ) = @_;
-                            FF::lex_assign(
+                            lex_assign(
                                 $scope,
                                 c => add(
                                     $scope, $$scope->{'c'}, $$scope->{'el'}
@@ -1004,11 +1006,11 @@ my $result = do {
         $method_9->inside_scope( all => $scope, $proto, $class, undef, undef );
         $method_10->inside_scope( sum  => $scope, $proto, $class, 1, undef );
         $method_11->inside_scope( sum0 => $scope, $proto, $class, 1, undef );
-        FF::typedef(
+        typedef(
             $scope, $class, 'Pairs',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
-                FF::typedef_check(
+                typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
@@ -1020,7 +1022,7 @@ my $result = do {
             undef
         );
     }
-    FF::load_namespaces( $context, qw(Code T) );
+    load_namespaces( $context, qw(Code T) );
 };
 
-FF::after_content();
+after_content();

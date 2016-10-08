@@ -199,6 +199,8 @@
 #                              Addition operator (+)
 #                              String ' )'
 #      Include (Line, Num, Point)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -214,24 +216,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Rect.frt', './std/Math/Rect.frt' );
+my $pos = before_content( 'Rect.frt', './std/Math/Rect.frt' );
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'Math' );
+    my ( $file_scope, $context ) = get_context( $f, 'Math' );
     my $scope = $file_scope;
-    FF::load_core('Math');
+    load_core('Math');
 
     # Class 'Rect'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Rect', undef, undef );
+          get_class( $f, $context, $file_scope, 'Rect', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -261,11 +263,11 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'x', 5.1 ) or return;
-                FF::need( $scope, $args, 'y', 5.3 ) or return;
-                FF::need( $self, $args, 'width' )  or return;
-                FF::need( $self, $args, 'height' ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'x', 5.1 ) or return;
+                need( $scope, $args, 'y', 5.3 ) or return;
+                need( $self, $args, 'width' )  or return;
+                need( $self, $args, 'height' ) or return;
                 $self->set_property(
                     origin => $$scope->{'Point'}->(
                         [ $$scope->{'x'}, $$scope->{'y'} ], $scope,
@@ -278,14 +280,14 @@ my $result = do {
         );
 
         # Method event 'vertices' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'vertices',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    FF::create_list(
+                    create_list(
                         $f,
                         [
                             $$self->{'topLeft'},    $$self->{'topRight'},
@@ -298,24 +300,24 @@ my $result = do {
         );
 
         # Method event 'bottomLeft' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'bottomLeft',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'origin'} );
                 return $ret;
             }
         );
 
         # Method event 'bottomRight' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'bottomRight',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Point'}->(
                         [
@@ -336,12 +338,12 @@ my $result = do {
         );
 
         # Method event 'topLeft' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'topLeft',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Point'}->(
                         [
@@ -363,12 +365,12 @@ my $result = do {
         );
 
         # Method event 'topRight' definition
-        my $method_5 = FF::method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope,
             'topRight',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Point'}->(
                         [
@@ -394,12 +396,12 @@ my $result = do {
         );
 
         # Method event 'bottomLine' definition
-        my $method_6 = FF::method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope,
             'bottomLine',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Line'}->(
                         [ $$self->{'bottomLeft'}, $$self->{'bottomRight'} ],
@@ -411,12 +413,12 @@ my $result = do {
         );
 
         # Method event 'topLine' definition
-        my $method_7 = FF::method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope,
             'topLine',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Line'}->(
                         [ $$self->{'topLeft'}, $$self->{'topRight'} ],
@@ -428,12 +430,12 @@ my $result = do {
         );
 
         # Method event 'center' definition
-        my $method_8 = FF::method_event_def(
+        my $method_8 = method_event_def(
             $f, $scope, 'center',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                lex_assign(
                     $scope,
                     x => add(
                         $scope,
@@ -443,7 +445,7 @@ my $result = do {
                     $file_scope,
                     $pos->(43.1)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     y => add(
                         $scope,
@@ -464,18 +466,18 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $method_9 = FF::method_event_def(
+        my $method_9 = method_event_def(
             $f, $scope,
             'description',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                lex_assign(
                     $scope,
                     o => $$self->{'origin'},
                     $file_scope, $pos->(49.2)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     c => $$self->{'center'},
                     $file_scope, $pos->(50.2)
@@ -527,7 +529,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Line Num Point) );
+    load_namespaces( $context, qw(Line Num Point) );
 };
 
-FF::after_content();
+after_content();

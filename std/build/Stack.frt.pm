@@ -49,6 +49,8 @@
 #                              Special property '*description'
 #                                  Instance variable '@items'
 #      Include (T)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -64,36 +66,36 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Stack.frt', './std/Stack.frt' );
+my $pos = before_content( 'Stack.frt', './std/Stack.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'Stack'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Stack', undef, [ \'T' ] );
+          get_class( $f, $context, $file_scope, 'Stack', undef, [ \'T' ] );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [ { name => 'items', type => 'T', optional => 1, more => 1 } ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::want( $self, $args, 'items', 4.2 );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                want( $self, $args, 'items', 4.2 );
                 return $ret;
             }
         );
 
         # Method event 'push' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'push',
             [
                 {
@@ -104,8 +106,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'item', 8.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'item', 8.2 ) or return;
                 $$self->{'items'}->property_u( 'push', $pos->(9.2) )
                   ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.3) );
                 return $ret;
@@ -113,11 +115,11 @@ my $result = do {
         );
 
         # Method event 'pop' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'pop',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$self->{'items'}->property_u( 'pop', $pos->(13.3) )
                       ->( [ undef, [] ], $scope, undef, $pos->(13.4) ) );
@@ -126,13 +128,13 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'description',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                lex_assign(
                     $scope,
                     name => $$scope->{'T'}->property_u( 'name', $pos->(17.4) ),
                     $file_scope, $pos->(17.2)
@@ -161,7 +163,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(T) );
+    load_namespaces( $context, qw(T) );
 };
 
-FF::after_content();
+after_content();

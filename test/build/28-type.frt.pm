@@ -75,6 +75,8 @@
 #                  Item 1
 #                      Symbol :other
 #      Include (Gender, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -90,19 +92,19 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '28-type.frt', './test/28-type.frt' );
+my $pos = before_content( '28-type.frt', './test/28-type.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Function event 'announce' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $context,
         'announce',
         undef,
@@ -116,11 +118,11 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'name',   7.1 ) or return;
-            FF::need( $scope, $args, 'gender', 7.3 ) or return;
-            FF::lex_assign(
+            need( $scope, $args, 'name',   7.1 ) or return;
+            need( $scope, $args, 'gender', 7.3 ) or return;
+            lex_assign(
                 $scope,
                 what => $$scope->{'Str'}
                   ->( [ $$scope->{'gender'} ], $scope, undef, $pos->(8.2) )
@@ -142,38 +144,36 @@ my $result = do {
         }
     );
     $func_0->inside_scope( announce => $scope, $context, undef, undef, undef );
-    FF::load_namespaces( $context, qw(Gender Str) );
-    FF::typedef(
+    load_namespaces( $context, qw(Gender Str) );
+    typedef(
         $scope, $context, 'Gender',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
+            typedef_check(
                 $scope, $scope, $ins,
                 conditions => undef,
-                equal_to   => [
-                    FF::get_symbol( $f, 'male' ),
-                    FF::get_symbol( $f, 'female' )
-                ]
+                equal_to =>
+                  [ get_symbol( $f, 'male' ), get_symbol( $f, 'female' ) ]
             ) ? $ins : undef;
         },
         undef
     );
     $$scope->{'announce'}->(
-        [ str( $f, "Robert" ), FF::get_symbol( $f, 'male' ) ],
+        [ str( $f, "Robert" ), get_symbol( $f, 'male' ) ],
         $scope, undef, $pos->(12.2)
     );
     $$scope->{'announce'}->(
-        [ str( $f, "Kris" ), FF::get_symbol( $f, 'female' ) ],
+        [ str( $f, "Kris" ), get_symbol( $f, 'female' ) ],
         $scope, undef, $pos->(13.2)
     );
     $$scope->{'announce'}->(
-        [ str( $f, "Kylie" ), FF::get_symbol( $f, 'female' ) ],
+        [ str( $f, "Kylie" ), get_symbol( $f, 'female' ) ],
         $scope, undef, $pos->(14.2)
     );
     $$scope->{'announce'}->(
-        [ str( $f, "Caitlyn" ), FF::get_symbol( $f, 'other' ) ],
+        [ str( $f, "Caitlyn" ), get_symbol( $f, 'other' ) ],
         $scope, undef, $pos->(15.2)
     );
 };
 
-FF::after_content();
+after_content();

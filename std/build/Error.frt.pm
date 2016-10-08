@@ -155,6 +155,8 @@
 #                      Return
 #                          Lexical variable '$str'
 #      Include (Error, List, NATIVE, Num, Str, Sym)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -170,19 +172,19 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Error.frt', './std/Error.frt' );
+my $pos = before_content( 'Error.frt', './std/Error.frt' );
 
 use Ferret::Core::Operations qw(_not add bool str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Function event '_prettyHints' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $scope,
         '_prettyHints',
         undef,
@@ -195,16 +197,16 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'list', 29.2 ) or return;
-            FF::lex_assign(
+            need( $scope, $args, 'list', 29.2 ) or return;
+            lex_assign(
                 $scope,
                 str => str( $f, "\n" ),
                 $file_scope, $pos->(30.2)
             );
             {
-                my $loop_ret = FF::iterate_pair(
+                my $loop_ret = iterate_pair(
                     $f, $scope,
                     $$scope->{'list'},
                     'i', 'el',
@@ -220,7 +222,7 @@ my $result = do {
                             my $scope =
                               Ferret::Scope->new( $f, parent => $scope );
 
-                            FF::lex_assign(
+                            lex_assign(
                                 $scope,
                                 str => add(
                                     $scope,
@@ -235,7 +237,7 @@ my $result = do {
                             );
                         }
                         else {
-                            FF::lex_assign(
+                            lex_assign(
                                 $scope,
                                 str => add(
                                     $scope,
@@ -262,10 +264,10 @@ my $result = do {
     # Class 'Error'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Error', 1.0, undef );
+          get_class( $f, $context, $file_scope, 'Error', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -301,13 +303,12 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $self, $args, 'type' ) or return;
-                FF::need( $self, $args, 'msg' )  or return;
-                FF::want( $self, $args, 'hints', 7.2,
-                    FF::create_list( $f, [] ) );
-                FF::want( $self, $args, 'subError', 8.2 );
-                FF::want( $self, $args, 'fatal', 9.2, $false );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $self, $args, 'type' ) or return;
+                need( $self, $args, 'msg' )  or return;
+                want( $self, $args, 'hints', 7.2, create_list( $f, [] ) );
+                want( $self, $args, 'subError', 8.2 );
+                want( $self, $args, 'fatal', 9.2, $false );
                 $$scope->{'NATIVE'}->property_u( 'bless', $pos->(11.2) )->(
                     [
                         ${ $scope->{special} }->{'self'},
@@ -321,7 +322,7 @@ my $result = do {
         );
 
         # Method event 'setPosition' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'setPosition',
             [
@@ -339,9 +340,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'file', 15.1 ) or return;
-                FF::need( $scope, $args, 'line', 15.3 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'file', 15.1 ) or return;
+                need( $scope, $args, 'line', 15.3 ) or return;
                 $$self->{'hints'}->property_u( 'push', $pos->(16.1) )->(
                     [
                         str( $f, "File" ), $$scope->{'file'},
@@ -355,13 +356,13 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'description',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                lex_assign(
                     $scope,
                     desc => add(
                         $scope,
@@ -384,7 +385,7 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    FF::lex_assign(
+                    lex_assign(
                         $scope,
                         desc => add(
                             $scope,
@@ -401,7 +402,7 @@ my $result = do {
                 if ( bool( $$self->{'subError'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    FF::lex_assign(
+                    lex_assign(
                         $scope,
                         desc => add(
                             $scope,
@@ -438,7 +439,7 @@ my $result = do {
             $scope, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Error List NATIVE Num Str Sym) );
+    load_namespaces( $context, qw(Error List NATIVE Num Str Sym) );
 };
 
-FF::after_content();
+after_content();

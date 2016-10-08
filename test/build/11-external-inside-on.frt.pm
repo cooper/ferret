@@ -105,6 +105,8 @@
 #                  Item 1
 #                      Boolean true
 #      Include (Math, Math::Point)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -120,20 +122,20 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '11-external-inside-on.frt',
+my $pos = before_content( '11-external-inside-on.frt',
     './test/11-external-inside-on.frt' );
 
 use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [
             {
@@ -150,10 +152,10 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'twice',   16.2 ) or return;
-            FF::need( $scope, $args, 'message', 16.4 ) or return;
+            need( $scope, $args, 'twice',   16.2 ) or return;
+            need( $scope, $args, 'message', 16.4 ) or return;
             if ( bool( $$scope->{'twice'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -171,8 +173,8 @@ my $result = do {
             return $ret;
         }
     );
-    FF::load_namespaces( $context, qw(Math Math::Point) );
-    FF::lex_assign(
+    load_namespaces( $context, qw(Math Math::Point) );
+    lex_assign(
         $scope,
         point => $$scope->{'Math::Point'}
           ->( [ num( $f, "0" ), num( $f, "0" ) ], $scope, undef, $pos->(1.3) ),
@@ -189,17 +191,17 @@ my $result = do {
 
     # Inside
     {
-        my $inside_return = FF::inside(
+        my $inside_return = inside(
             $f, $scope,
             $$scope->{'point'},
             sub {
                 my ( $scope, $ins, $ret_func ) = @_;
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     x => num( $f, "5" ),
                     $file_scope, $pos->(9.2)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     y => num( $f, "10" ),
                     $file_scope, $pos->(10.2)
@@ -212,7 +214,7 @@ my $result = do {
         [ add( $scope, str( $f, "Point: " ), $$scope->{'point'} ) ],
         $scope, undef, $pos->(13.2)
     );
-    FF::on(
+    on(
         $scope,
         'say',
         $self,
@@ -220,7 +222,7 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         r => $$scope->{'say'}->(
             [ str( $f, "It was said" ), [ twice => $true ] ], $scope,
@@ -243,4 +245,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

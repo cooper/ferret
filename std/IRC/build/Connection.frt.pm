@@ -389,6 +389,8 @@
 #                          Instance variable '@servers'
 #                          Hash [0 items]
 #      Include (Channel, Handlers, IRC, IRC::Massage, List, Num, Outgoing, Server, Socket, Socket::TCP, Str, User)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -404,24 +406,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Connection.frt', './std/IRC/Connection.frt' );
+my $pos = before_content( 'Connection.frt', './std/IRC/Connection.frt' );
 
 use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
     my $scope = $file_scope;
-    FF::load_core('IRC');
+    load_core('IRC');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef,
         'sendRegistration',
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$self->{'send'}->(
                 [
@@ -449,14 +451,14 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_1 = FF::function_def(
+    my $func_1 = function_def(
         $f, undef,
         'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'data', 31.2 ) or return;
+            need( $scope, $args, 'data', 31.2 ) or return;
             $$self->{'_handleLine'}
               ->( [ $$scope->{'data'} ], $scope, undef, $pos->(32.2) );
             return $ret;
@@ -464,12 +466,12 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_2 = FF::function_def(
+    my $func_2 = function_def(
         $f, undef,
         'resetState',
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$self->{'_resetState'}
               ->( [ undef, [] ], $scope, undef, $pos->(37.2) );
@@ -480,11 +482,10 @@ my $result = do {
     # Class 'Connection'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Connection', undef,
-            undef );
+          get_class( $f, $context, $file_scope, 'Connection', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -517,17 +518,16 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $self, $args, 'addr' ) or return;
-                FF::want( $self, $args, 'port', 8.2, num( $f, "6667" ) );
-                FF::need( $self, $args, 'nick' ) or return;
-                FF::want( $self, $args, 'user', 10.2, str( $f, "ferret" ) );
-                FF::want( $self, $args, 'real', 11.2, str( $f, "Ferret IRC" ) );
-                FF::want( $self, $args, 'autojoin', 12.2 );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $self, $args, 'addr' ) or return;
+                want( $self, $args, 'port', 8.2, num( $f, "6667" ) );
+                need( $self, $args, 'nick' ) or return;
+                want( $self, $args, 'user', 10.2, str( $f, "ferret" ) );
+                want( $self, $args, 'real', 11.2, str( $f, "Ferret IRC" ) );
+                want( $self, $args, 'autojoin', 12.2 );
                 $$self->{'_resetState'}
                   ->( [ undef, [] ], $scope, undef, $pos->(14.2) );
-                FF::want( $self, $args, 'handlers', 17.2,
-                    FF::create_object( $f, [] ) );
+                want( $self, $args, 'handlers', 17.2, create_object( $f, [] ) );
                 $$self->{'handlers'}->property_u( '*addParent', $pos->(18.2) )
                   ->(
                     [
@@ -544,7 +544,7 @@ my $result = do {
                             [
                                 address  => $$self->{'addr'},
                                 port     => $$self->{'port'},
-                                readMode => FF::get_symbol( $f, 'line' )
+                                readMode => get_symbol( $f, 'line' )
                             ]
                         ],
                         $scope, undef,
@@ -552,7 +552,7 @@ my $result = do {
                     ),
                     $pos->(21.1)
                 );
-                FF::on(
+                on(
                     $$self->{'sock'},
                     'connected',
                     $self, $scope,
@@ -562,7 +562,7 @@ my $result = do {
                     ),
                     {}
                 );
-                FF::on(
+                on(
                     $$self->{'sock'},
                     'gotLine',
                     $self, $scope,
@@ -572,7 +572,7 @@ my $result = do {
                     ),
                     {}
                 );
-                FF::on(
+                on(
                     $$self->{'sock'},
                     'disconnected',
                     $self, $scope,
@@ -587,12 +587,12 @@ my $result = do {
         );
 
         # Method event 'connect' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'connect',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 $$self->{'sock'}->property_u( 'connect', $pos->(45.2) )
                   ->( [ undef, [] ], $scope, undef, $pos->(45.3) );
                 return $ret;
@@ -600,7 +600,7 @@ my $result = do {
         );
 
         # Method event 'send' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'send',
             [
                 {
@@ -611,8 +611,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'line', 50.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'line', 50.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(51.2)
@@ -624,7 +624,7 @@ my $result = do {
         );
 
         # Method event '_handleLine' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             '_handleLine',
             [
@@ -636,13 +636,13 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'line', 57.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'line', 57.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(58.2)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     msg => $$scope->{'IRC::Massage'}->(
                         [ $$scope->{'line'}, ${ $scope->{special} }->{'self'} ],
@@ -678,7 +678,7 @@ my $result = do {
         );
 
         # Method event 'getTarget' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'getTarget',
             [
@@ -690,8 +690,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'target', 78.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'target', 78.2 ) or return;
                 if (
                     bool(
                         $$scope->{'target'}
@@ -722,7 +722,7 @@ my $result = do {
         );
 
         # Method event 'getChannel' definition
-        my $method_5 = FF::method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope,
             'getChannel',
             [
@@ -734,11 +734,11 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'name', 88.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'name', 88.2 ) or return;
                 if (
                     bool(
-                        FF::lex_assign(
+                        lex_assign(
                             $scope,
                             channel => $$self->{'channels'}->get_index_value(
                                 [
@@ -777,7 +777,7 @@ my $result = do {
         );
 
         # Method event 'getUser' definition
-        my $method_6 = FF::method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope,
             'getUser',
             [
@@ -789,11 +789,11 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'nick', 96.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'nick', 96.2 ) or return;
                 if (
                     bool(
-                        FF::lex_assign(
+                        lex_assign(
                             $scope,
                             user => $$self->{'users'}->get_index_value(
                                 [
@@ -832,7 +832,7 @@ my $result = do {
         );
 
         # Method event 'getServer' definition
-        my $method_7 = FF::method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope,
             'getServer',
             [
@@ -844,11 +844,11 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'name', 104.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'name', 104.2 ) or return;
                 if (
                     bool(
-                        FF::lex_assign(
+                        lex_assign(
                             $scope,
                             server => $$self->{'servers'}->get_index_value(
                                 [
@@ -887,24 +887,24 @@ my $result = do {
         );
 
         # Method event 'privmsg' definition
-        my $method_8 = FF::method_event_def(
+        my $method_8 = method_event_def(
             $f, $scope,
             'privmsg',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
 
                 return $ret;
             }
         );
 
         # Method event '_resetState' definition
-        my $method_9 = FF::method_event_def(
+        my $method_9 = method_event_def(
             $f, $scope,
             '_resetState',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 $self->delete_property_ow( 'registered',   $pos->(117.1) );
                 $self->delete_property_ow( '_didAutojoin', $pos->(118.1) );
                 $self->set_property(
@@ -937,15 +937,15 @@ my $result = do {
                     $pos->(120.1)
                 );
                 $self->set_property(
-                    users => FF::create_hash( $f, [] ),
+                    users => create_hash( $f, [] ),
                     $pos->(121.2)
                 );
                 $self->set_property(
-                    channels => FF::create_hash( $f, [] ),
+                    channels => create_hash( $f, [] ),
                     $pos->(122.2)
                 );
                 $self->set_property(
-                    servers => FF::create_hash( $f, [] ),
+                    servers => create_hash( $f, [] ),
                     $pos->(123.2)
                 );
                 return $ret;
@@ -989,9 +989,9 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context,
+    load_namespaces( $context,
         qw(Channel Handlers IRC IRC::Massage List Num Outgoing Server Socket Socket::TCP Str User)
     );
 };
 
-FF::after_content();
+after_content();

@@ -113,6 +113,8 @@
 #                              Item 0
 #                                  String 'nan'
 #      Include (Int, Integer, Math, Num)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -128,28 +130,28 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Number.frt', './std/Extension/Number.frt' );
+my $pos = before_content( 'Number.frt', './std/Extension/Number.frt' );
 
 use Ferret::Core::Operations qw(equal mod nequal num pow str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'Number'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Number', undef, undef );
+          get_class( $f, $context, $file_scope, 'Number', undef, undef );
 
         # Method event 'sqrt' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope, 'sqrt',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Math'}->property_u( 'sqrt', $pos->(21.3) )->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
@@ -161,11 +163,11 @@ my $result = do {
         );
 
         # Method event 'cbrt' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'cbrt',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'root'}
                       ->( [ num( $f, "3" ) ], $scope, undef, $pos->(25.3) ) );
                 return $ret;
@@ -173,11 +175,11 @@ my $result = do {
         );
 
         # Method event 'square' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'square',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     pow(
                         $scope,
@@ -190,11 +192,11 @@ my $result = do {
         );
 
         # Method event 'even' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope, 'even',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     equal(
                         $scope,
@@ -211,11 +213,11 @@ my $result = do {
         );
 
         # Method event 'odd' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope, 'odd',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     nequal(
                         $scope,
@@ -232,7 +234,7 @@ my $result = do {
         );
 
         # Method event 'root' definition
-        my $method_5 = FF::method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope, 'root',
             [
                 {
@@ -243,8 +245,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'root', 41.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'root', 41.2 ) or return;
                 return $ret_func->(
                     $$scope->{'Math'}->property_u( 'root', $pos->(42.15) )->(
                         [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
@@ -262,11 +264,11 @@ my $result = do {
         $method_3->inside_scope( even   => $scope, $proto, $class, 1, 1 );
         $method_4->inside_scope( odd    => $scope, $proto, $class, 1, 1 );
         $method_5->inside_scope( root => $scope, $proto, $class, undef, undef );
-        FF::typedef(
+        typedef(
             $scope, $class, 'Even',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
-                FF::typedef_check(
+                typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
@@ -277,11 +279,11 @@ my $result = do {
             },
             undef
         );
-        FF::typedef(
+        typedef(
             $scope, $class, 'Odd',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
-                FF::typedef_check(
+                typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
@@ -292,12 +294,12 @@ my $result = do {
             },
             undef
         );
-        FF::typedef(
+        typedef(
             $scope, $class,
             'Integer',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
-                FF::typedef_check(
+                typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
@@ -309,20 +311,20 @@ my $result = do {
             undef
         );
         $class->set_property( Int => $$scope->{'Integer'}, $pos->(18.3) );
-        FF::lex_assign(
+        lex_assign(
             $class,
             inf => $$scope->{'Num'}
               ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(45.5) ),
             undef, $pos->(45.3)
         );
-        FF::lex_assign(
+        lex_assign(
             $class,
             nan => $$scope->{'Num'}
               ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(46.5) ),
             undef, $pos->(46.3)
         );
     }
-    FF::load_namespaces( $context, qw(Int Integer Math Num) );
+    load_namespaces( $context, qw(Int Integer Math Num) );
 };
 
-FF::after_content();
+after_content();

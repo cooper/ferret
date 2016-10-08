@@ -33,6 +33,8 @@
 #                  Item 0
 #                      String 'World'
 #      Include (Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -48,27 +50,27 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '9-maybes.frt', './test/9-maybes.frt' );
+my $pos = before_content( '9-maybes.frt', './test/9-maybes.frt' );
 
 use Ferret::Core::Operations qw(add bool str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Function event 'sayHello' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $context,
         'sayHello',
         undef,
         [ { name => 'who', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'who', 2.2 ) or return;
+            need( $scope, $args, 'who', 2.2 ) or return;
             $$scope->{'say'}->(
                 [
                     add(
@@ -83,7 +85,7 @@ my $result = do {
         }
     );
     $func_0->inside_scope( sayHello => $scope, $context, undef, undef, undef );
-    FF::load_namespaces( $context, qw(Str) );
+    load_namespaces( $context, qw(Str) );
     {
         my $maybe_0 = $$scope->{'sayHello'};
         if ( bool($maybe_0) ) {
@@ -98,4 +100,4 @@ my $result = do {
     }
 };
 
-FF::after_content();
+after_content();

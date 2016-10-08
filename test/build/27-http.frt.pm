@@ -75,6 +75,8 @@
 #                      Property variable '.connect'
 #                      Argument list [0 items]
 #      Include (HTTP, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -90,23 +92,23 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '27-http.frt', './test/27-http.frt' );
+my $pos = before_content( '27-http.frt', './test/27-http.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "Connected!" ) ], $scope, undef, $pos->(4.2) );
@@ -115,7 +117,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_1 = FF::function_def(
+    my $func_1 = function_def(
         $f, undef, undef,
         [
             {
@@ -126,9 +128,9 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'location', 8.2 ) or return;
+            need( $scope, $args, 'location', 8.2 ) or return;
             $$scope->{'say'}->(
                 [
                     add(
@@ -144,7 +146,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_2 = FF::function_def(
+    my $func_2 = function_def(
         $f, undef, undef,
         [
             {
@@ -155,9 +157,9 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'content', 14.2 ) or return;
+            need( $scope, $args, 'content', 14.2 ) or return;
             $$scope->{'say'}->(
                 [
                     add(
@@ -175,22 +177,22 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_3 = FF::function_def(
+    my $func_3 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "Got error!" ) ], $scope, undef, $pos->(21.2) );
             return $ret;
         }
     );
-    FF::load_namespaces( $context, qw(HTTP Str) );
+    load_namespaces( $context, qw(HTTP Str) );
 
     # Inside
     {
-        my $inside_return = FF::inside(
+        my $inside_return = inside(
             $f, $scope,
             $$scope->{'HTTP'}->property_u( 'get', $pos->(1.3) )->(
                 [ str( $f, "http://google.com" ) ], $scope,
@@ -198,7 +200,7 @@ my $result = do {
             ),
             sub {
                 my ( $scope, $ins, $ret_func ) = @_;
-                FF::on(
+                on(
                     $ins,
                     'connected',
                     $self, $scope,
@@ -208,7 +210,7 @@ my $result = do {
                     ),
                     {}
                 );
-                FF::on(
+                on(
                     $ins,
                     'redirect',
                     $self, $scope,
@@ -218,7 +220,7 @@ my $result = do {
                     ),
                     {}
                 );
-                FF::on(
+                on(
                     $ins,
                     'response',
                     $self, $scope,
@@ -228,7 +230,7 @@ my $result = do {
                     ),
                     {}
                 );
-                FF::on(
+                on(
                     $ins, 'error', $self, $scope,
                     $func_3->inside_scope(
                         (undef) => $scope,
@@ -244,4 +246,4 @@ my $result = do {
     }
 };
 
-FF::after_content();
+after_content();

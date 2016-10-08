@@ -48,6 +48,8 @@
 #                          Item 1
 #                              Lexical variable '$class'
 #      Include (PerlObject, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -63,19 +65,19 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'NATIVE.frt', './std/NATIVE.frt' );
+my $pos = before_content( 'NATIVE.frt', './std/NATIVE.frt' );
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'NATIVE' );
+    my ( $file_scope, $context ) = get_context( $f, 'NATIVE' );
     my $scope = $file_scope;
-    FF::load_core('NATIVE');
+    load_core('NATIVE');
 
     # Function event 'bless' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $context, 'bless', undef,
         [
             { name => 'obj', type => undef, optional => undef, more => undef },
@@ -87,10 +89,10 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'obj',   8.2 ) or return;
-            FF::need( $scope, $args, 'class', 8.4 ) or return;
+            need( $scope, $args, 'obj',   8.2 ) or return;
+            need( $scope, $args, 'class', 8.4 ) or return;
             $$scope->{'_bless'}->(
                 [ $$scope->{'obj'}, $$scope->{'class'} ],
                 $scope, undef, $pos->(9.2)
@@ -99,9 +101,9 @@ my $result = do {
         }
     );
     $func_0->inside_scope( bless => $scope, $context, undef, undef, undef );
-    FF::load_namespaces( $context, qw(PerlObject Str) );
+    load_namespaces( $context, qw(PerlObject Str) );
 
-    FF::lex_assign(
+    lex_assign(
         $context,
         ferret => [
             sub {
@@ -115,7 +117,7 @@ my $result = do {
         undef,
         $pos->(3.15)
     );
-    FF::lex_assign(
+    lex_assign(
         $context,
         coreContext => [
             sub {
@@ -126,7 +128,7 @@ my $result = do {
         undef,
         $pos->(4.3)
     );
-    FF::lex_assign(
+    lex_assign(
         $context,
         mainContext => [
             sub {
@@ -139,4 +141,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

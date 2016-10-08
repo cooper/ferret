@@ -638,6 +638,8 @@
 #                  Lexical variable '$bot'
 #              Argument list [0 items]
 #      Include (COMPILER, Error, IRC, IRC::Bot, IRC::Connection, IRC::Massage)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -653,19 +655,19 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '35-irc-new.frt', './test/35-irc-new.frt' );
+my $pos = before_content( '35-irc-new.frt', './test/35-irc-new.frt' );
 
 use Ferret::Core::Operations qw(_not add any_true bool less num rgx str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Function event 'respondFactoid' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $context,
         'respondFactoid',
         undef,
@@ -679,11 +681,11 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     58.2 ) or return;
-            FF::need( $scope, $args, 'channel', 58.4 ) or return;
-            FF::lex_assign(
+            need( $scope, $args, 'msg',     58.2 ) or return;
+            need( $scope, $args, 'channel', 58.4 ) or return;
+            lex_assign(
                 $scope,
                 command =>
                   $$scope->{'msg'}->property_u( 'params', $pos->(59.2) )
@@ -711,7 +713,7 @@ my $result = do {
     );
 
     # Function event 'handlePerl' definition
-    my $func_1 = FF::function_event_def(
+    my $func_1 = function_event_def(
         $f, $context,
         'handlePerl',
         undef,
@@ -726,12 +728,12 @@ my $result = do {
             { name => 'mini', type => undef, optional => undef, more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     107.2 ) or return;
-            FF::need( $scope, $args, 'channel', 107.4 ) or return;
-            FF::need( $scope, $args, 'mini',    107.6 ) or return;
-            FF::lex_assign(
+            need( $scope, $args, 'msg',     107.2 ) or return;
+            need( $scope, $args, 'channel', 107.4 ) or return;
+            need( $scope, $args, 'mini',    107.6 ) or return;
+            lex_assign(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
@@ -769,7 +771,7 @@ my $result = do {
     );
 
     # Function event 'getParameter' definition
-    my $func_2 = FF::function_event_def(
+    my $func_2 = function_event_def(
         $f, $context,
         'getParameter',
         undef,
@@ -782,10 +784,10 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 117.2 ) or return;
-            FF::lex_assign(
+            need( $scope, $args, 'msg', 117.2 ) or return;
+            lex_assign(
                 $scope,
                 string => any_true(
                     $scope,
@@ -813,7 +815,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_3 = FF::function_def(
+    my $func_3 = function_def(
         $f, undef, undef,
         [
             {
@@ -824,9 +826,9 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'channel', 4.2 ) or return;
+            need( $scope, $args, 'channel', 4.2 ) or return;
             $$scope->{'channel'}->property_u( 'privmsg', $pos->(5.2) )
               ->( [ str( $f, "Ferret IRC bot" ) ], $scope, undef, $pos->(5.3) );
             return $ret;
@@ -834,7 +836,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_4 = FF::function_def(
+    my $func_4 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -846,18 +848,18 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     13.2 ) or return;
-            FF::need( $scope, $args, 'channel', 13.4 ) or return;
-            FF::lex_assign(
+            need( $scope, $args, 'msg',     13.2 ) or return;
+            need( $scope, $args, 'channel', 13.4 ) or return;
+            lex_assign(
                 $scope,
                 message =>
                   $$scope->{'msg'}->property_u( 'params', $pos->(14.4) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(14.5) ),
                 $file_scope, $pos->(14.2)
             );
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 parts =>
                   $$scope->{'message'}->property_u( 'split', $pos->(17.4) )->(
@@ -883,7 +885,7 @@ my $result = do {
                 return $ret->fail(
                     $$scope->{'Error'}->(
                         [
-                            FF::get_symbol( $f, 'ParameterError' ),
+                            get_symbol( $f, 'ParameterError' ),
                             str( $f, "Not enough parameters" )
                         ],
                         $scope, undef,
@@ -892,7 +894,7 @@ my $result = do {
                     $pos->(19.1)
                 );
             }
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 command => $$scope->{'parts'}
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(22.4) )
@@ -911,7 +913,7 @@ my $result = do {
                 return $ret->fail(
                     $$scope->{'Error'}->(
                         [
-                            FF::get_symbol( $f, 'ParameterError' ),
+                            get_symbol( $f, 'ParameterError' ),
                             add(
                                 $scope,               str( $f, "Command ." ),
                                 $$scope->{'command'}, str( $f, " exists" )
@@ -923,7 +925,7 @@ my $result = do {
                     $pos->(24.05)
                 );
             }
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 response =>
                   $$scope->{'message'}->property_u( 'fromWord', $pos->(27.4) )
@@ -956,7 +958,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_5 = FF::function_def(
+    my $func_5 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -968,18 +970,18 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     35.2 ) or return;
-            FF::need( $scope, $args, 'channel', 35.4 ) or return;
-            FF::lex_assign(
+            need( $scope, $args, 'msg',     35.2 ) or return;
+            need( $scope, $args, 'channel', 35.4 ) or return;
+            lex_assign(
                 $scope,
                 message =>
                   $$scope->{'msg'}->property_u( 'params', $pos->(36.4) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(36.5) ),
                 $file_scope, $pos->(36.2)
             );
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 parts =>
                   $$scope->{'message'}->property_u( 'split', $pos->(39.4) )->(
@@ -1005,7 +1007,7 @@ my $result = do {
                 return $ret->fail(
                     $$scope->{'Error'}->(
                         [
-                            FF::get_symbol( $f, 'ParameterError' ),
+                            get_symbol( $f, 'ParameterError' ),
                             str( $f, "Not enough parameters" )
                         ],
                         $scope, undef,
@@ -1014,14 +1016,14 @@ my $result = do {
                     $pos->(41.1)
                 );
             }
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 command => $$scope->{'parts'}
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(45.4) )
                   ->property_u( 'lowercase', $pos->(45.7) ),
                 $file_scope, $pos->(45.2)
             );
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 existed => $$this->{'factoids'}->get_index_value(
                     [ $$scope->{'command'} ],
@@ -1036,7 +1038,7 @@ my $result = do {
                 return $ret->fail(
                     $$scope->{'Error'}->(
                         [
-                            FF::get_symbol( $f, 'ParameterError' ),
+                            get_symbol( $f, 'ParameterError' ),
                             add(
                                 $scope,
                                 str( $f, "No such factoid ." ),
@@ -1070,7 +1072,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_6 = FF::function_def(
+    my $func_6 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1082,11 +1084,11 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     66.2 ) or return;
-            FF::need( $scope, $args, 'channel', 66.4 ) or return;
-            FF::lex_assign(
+            need( $scope, $args, 'msg',     66.2 ) or return;
+            need( $scope, $args, 'channel', 66.4 ) or return;
+            lex_assign(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
@@ -1112,7 +1114,7 @@ my $result = do {
                 );
                 return $ret_func->();
             }
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 string => $$scope->{'inspect'}->(
                     [
@@ -1136,7 +1138,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_7 = FF::function_def(
+    my $func_7 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1148,11 +1150,11 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     77.2 ) or return;
-            FF::need( $scope, $args, 'channel', 77.4 ) or return;
-            FF::lex_assign(
+            need( $scope, $args, 'msg',     77.2 ) or return;
+            need( $scope, $args, 'channel', 77.4 ) or return;
+            lex_assign(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
@@ -1189,7 +1191,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_8 = FF::function_def(
+    my $func_8 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1201,11 +1203,11 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     87.2 ) or return;
-            FF::need( $scope, $args, 'channel', 87.4 ) or return;
-            FF::lex_assign(
+            need( $scope, $args, 'msg',     87.2 ) or return;
+            need( $scope, $args, 'channel', 87.4 ) or return;
+            lex_assign(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
@@ -1242,7 +1244,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_9 = FF::function_def(
+    my $func_9 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1254,10 +1256,10 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     97.2 ) or return;
-            FF::need( $scope, $args, 'channel', 97.4 ) or return;
+            need( $scope, $args, 'msg',     97.2 ) or return;
+            need( $scope, $args, 'channel', 97.4 ) or return;
             $$scope->{'handlePerl'}->(
                 [ $$scope->{'msg'}, $$scope->{'channel'}, $true ],
                 $scope, undef, $pos->(98.1)
@@ -1267,7 +1269,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_10 = FF::function_def(
+    my $func_10 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1279,10 +1281,10 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg',     102.2 ) or return;
-            FF::need( $scope, $args, 'channel', 102.4 ) or return;
+            need( $scope, $args, 'msg',     102.2 ) or return;
+            need( $scope, $args, 'channel', 102.4 ) or return;
             $$scope->{'handlePerl'}->(
                 [ $$scope->{'msg'}, $$scope->{'channel'}, $false ],
                 $scope, undef, $pos->(103.1)
@@ -1302,15 +1304,15 @@ my $result = do {
         getParameter => $scope,
         $context, undef, undef, undef
     );
-    FF::load_namespaces( $context,
+    load_namespaces( $context,
         qw(COMPILER Error IRC IRC::Bot IRC::Connection IRC::Massage) );
-    FF::lex_assign(
+    lex_assign(
         $context,
         bot =>
           $$scope->{'IRC::Bot'}->( [ undef, [] ], $scope, undef, $pos->(1.35) ),
         undef, $pos->(1.15)
     );
-    FF::on(
+    on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(3.3) ),
         'info',
         $self,
@@ -1319,8 +1321,8 @@ my $result = do {
         {}
     );
     $$scope->{'bot'}
-      ->set_property( factoids => FF::create_hash( $f, [] ), $pos->(10.3) );
-    FF::on(
+      ->set_property( factoids => create_hash( $f, [] ), $pos->(10.3) );
+    on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(12.3) ),
         'add',
         $self,
@@ -1328,7 +1330,7 @@ my $result = do {
         $func_4->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::on(
+    on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(34.3) ),
         'del',
         $self,
@@ -1336,7 +1338,7 @@ my $result = do {
         $func_5->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::on(
+    on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(65.3) ),
         'e',
         $self,
@@ -1344,7 +1346,7 @@ my $result = do {
         $func_6->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::on(
+    on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(76.3) ),
         't',
         $self,
@@ -1352,7 +1354,7 @@ my $result = do {
         $func_7->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::on(
+    on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(86.3) ),
         'c',
         $self,
@@ -1360,7 +1362,7 @@ my $result = do {
         $func_8->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::on(
+    on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(96.3) ),
         'p',
         $self,
@@ -1368,7 +1370,7 @@ my $result = do {
         $func_9->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::on(
+    on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(101.3) ),
         'pp',
         $self,
@@ -1376,7 +1378,7 @@ my $result = do {
         $func_10->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         {}
     );
-    FF::lex_assign(
+    lex_assign(
         $context,
         conn => $$scope->{'IRC::Connection'}->(
             [
@@ -1394,7 +1396,7 @@ my $result = do {
         $pos->(122.15)
     );
     $$scope->{'conn'}->set_property(
-        autojoin => FF::create_list( $f, [ str( $f, "#k" ) ] ),
+        autojoin => create_list( $f, [ str( $f, "#k" ) ] ),
         $pos->(123.3)
     );
     $$scope->{'bot'}->property_u( 'addConnection', $pos->(124.2) )
@@ -1403,4 +1405,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(125.3) );
 };
 
-FF::after_content();
+after_content();

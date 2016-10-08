@@ -1,6 +1,6 @@
 {
     my $loop_ret =
-    FF::indefinitely($f, $scope, sub {
+    indefinitely($f, $scope, sub {
         my ($scope, $ret_func) = @_;
         <<body>>
     }, $pos->(<<pos>>));

@@ -1,1 +1,1 @@
-FF::create_set($scope, <<first_item>>, <<other_items>>)
+create_set($scope, <<first_item>>, <<other_items>>)

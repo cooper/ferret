@@ -164,6 +164,8 @@
 #                                  Item 0
 #                                      Lexical variable '$wordN'
 #      Include (Num, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -179,25 +181,25 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Message.frt',
-    './test/20-irc-complex/IRCBot/Message.frt' );
+my $pos =
+  before_content( 'Message.frt', './test/20-irc-complex/IRCBot/Message.frt' );
 
 use Ferret::Core::Operations qw(add all_true bool gr8r nequal num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'IRCBot' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRCBot' );
     my $scope = $file_scope;
-    FF::load_core('IRCBot');
+    load_core('IRCBot');
 
     # Class 'Message'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Message', undef, undef );
+          get_class( $f, $context, $file_scope, 'Message', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -209,9 +211,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $self, $args, 'line' ) or return;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $self, $args, 'line' ) or return;
+                lex_assign(
                     $scope,
                     lineSplit =>
                       $$self->{'line'}->property_u( 'split', $pos->(6.2) )->(
@@ -271,12 +273,12 @@ my $result = do {
         );
 
         # Method event 'command' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'command',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 if (
                     bool(
                         all_true(
@@ -304,7 +306,7 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    FF::lex_assign(
+                    lex_assign(
                         $scope,
                         cmd => $$self->{'parts'}
                           ->get_index_value( [ num( $f, "0" ) ],
@@ -332,12 +334,12 @@ my $result = do {
         );
 
         # Method event 'commandHasParameters' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'commandHasParameters',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     gr8r(
                         $scope,
@@ -350,7 +352,7 @@ my $result = do {
         );
 
         # Method event 'fromWord' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'fromWord',
             [
@@ -362,8 +364,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'wordN', 41.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $ret_func->(
                     $$self->{'message'}->property_u( 'split', $pos->(42.15) )
                       ->(
@@ -400,7 +402,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Num Str) );
+    load_namespaces( $context, qw(Num Str) );
 };
 
-FF::after_content();
+after_content();

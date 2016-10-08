@@ -31,6 +31,8 @@
 #                              Item 0
 #                                  String 'it works!'
 #      Include (Timer)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -46,40 +48,35 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos =
-  FF::before_content( '17-empty-become.frt', './test/17-empty-become.frt' );
+my $pos = before_content( '17-empty-become.frt', './test/17-empty-become.frt' );
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "it works!" ) ], $scope, undef, $pos->(8.2) );
             return $ret;
         }
     );
-    FF::load_namespaces( $context, qw(Timer) );
-    FF::lex_assign(
-        $scope,
-        obj => FF::create_object( $f, [] ),
-        undef, $pos->(2.2)
-    );
+    load_namespaces( $context, qw(Timer) );
+    lex_assign( $scope, obj => create_object( $f, [] ), undef, $pos->(2.2) );
     $$scope->{'Timer'}->property_u( 'init', $pos->(5.1) )
       ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(5.15) )
       ->( [ num( $f, "5" ) ], $scope, undef, $pos->(5.3) );
-    FF::on(
+    on(
         $$scope->{'obj'}->property_u( 'once', $pos->(7.3) )
           ->( [ undef, [] ], $scope, undef, $pos->(7.4) ),
         'expire',
@@ -90,4 +87,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

@@ -148,6 +148,8 @@
 #                                                      Range operator (..)
 #                                                      Number '9'
 #      Include (Math, Math::Point, Num)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -163,19 +165,19 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '29-gather.frt', './test/29-gather.frt' );
+my $pos = before_content( '29-gather.frt', './test/29-gather.frt' );
 
 use Ferret::Core::Operations qw(bool nequal num range);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Function event 'nonZeroCoodinates' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $context,
         'nonZeroCoodinates',
         undef,
@@ -188,12 +190,12 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'pt', 4.2 ) or return;
+            need( $scope, $args, 'pt', 4.2 ) or return;
             return $ret_func->(
                 do {
-                    my ( $gather_status, $gather_ret ) = FF::gather(
+                    my ( $gather_status, $gather_ret ) = gather(
                         $f, $scope,
                         sub {
                             my ( $scope, $take, $ret_func ) = @_;
@@ -243,23 +245,23 @@ my $result = do {
     );
 
     # Function event 'evenNumbers' definition
-    my $func_1 = FF::function_event_def(
+    my $func_1 = function_event_def(
         $f, $context,
         'evenNumbers',
         undef,
         [ { name => 'nums', type => 'Num', optional => undef, more => 1 } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'nums', 27.2 ) or return;
+            need( $scope, $args, 'nums', 27.2 ) or return;
             $ret->set_property(
                 even => do {
-                    my ( $gather_status, $gather_ret ) = FF::gather(
+                    my ( $gather_status, $gather_ret ) = gather(
                         $f, $scope,
                         sub {
                             my ( $scope, $take, $ret_func ) = @_;
                             {
-                                my $loop_ret = FF::iterate(
+                                my $loop_ret = iterate(
                                     $f, $scope,
                                     $$scope->{'nums'},
                                     'n',
@@ -303,29 +305,29 @@ my $result = do {
         evenNumbers => $scope,
         $context, undef, undef, undef
     );
-    FF::load_namespaces( $context, qw(Math Math::Point Num) );
-    FF::lex_assign(
+    load_namespaces( $context, qw(Math Math::Point Num) );
+    lex_assign(
         $scope,
         pt1 => $$scope->{'Math::Point'}
           ->( [ num( $f, "0" ), num( $f, "0" ) ], $scope, undef, $pos->(13.3) ),
         undef, $pos->(13.1)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         pt2 => $$scope->{'Math::Point'}
           ->( [ num( $f, "1" ), num( $f, "1" ) ], $scope, undef, $pos->(14.3) ),
         undef, $pos->(14.1)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         pt3 => $$scope->{'Math::Point'}
           ->( [ num( $f, "1" ), num( $f, "0" ) ], $scope, undef, $pos->(15.3) ),
         undef, $pos->(15.1)
     );
     {
-        my $loop_ret = FF::iterate(
+        my $loop_ret = iterate(
             $f, $scope,
-            FF::create_list(
+            create_list(
                 $f, [ $$scope->{'pt1'}, $$scope->{'pt2'}, $$scope->{'pt3'} ]
             ),
             'pt',
@@ -349,7 +351,7 @@ my $result = do {
         [
             $$scope->{'evenNumbers'}->(
                 [
-                    FF::create_list(
+                    create_list(
                         $f,
                         [
                             num( $f, "1" ),
@@ -383,4 +385,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

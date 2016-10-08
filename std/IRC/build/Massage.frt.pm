@@ -380,6 +380,8 @@
 #                          Property 'host'
 #                              Instance variable '@_parsedSource'
 #      Include (Bool, Connection, Str, Str::NE)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -395,29 +397,29 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Massage.frt', './std/IRC/Massage.frt' );
+my $pos = before_content( 'Massage.frt', './std/IRC/Massage.frt' );
 
 use Ferret::Core::Operations
   qw(_not add all_true bool equal gr8r num rgx sim str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
     my $scope = $file_scope;
-    FF::load_core('IRC');
+    load_core('IRC');
 
     # Function event 'updateWord' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $scope,
         'updateWord',
         undef,
         [ { name => 'incN', type => 'Bool', optional => 1, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::want( $scope, $args, 'incN', 30.2 );
-            FF::lex_assign(
+            want( $scope, $args, 'incN', 30.2 );
+            lex_assign(
                 $scope,
                 wordI => add( $scope, $$scope->{'wordI'}, num( $f, "1" ) ),
                 $file_scope, $pos->(31.2)
@@ -425,13 +427,13 @@ my $result = do {
             if ( bool( $$scope->{'incN'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     wordN => add( $scope, $$scope->{'wordN'}, num( $f, "1" ) ),
                     $file_scope, $pos->(33.2)
                 );
             }
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 lastWord => $$scope->{'word'},
                 $file_scope, $pos->(34.2)
@@ -443,10 +445,10 @@ my $result = do {
     # Class 'Massage'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Massage', undef, undef );
+          get_class( $f, $context, $file_scope, 'Massage', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -464,22 +466,22 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::want( $scope, $args, 'data', 7.2 );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                want( $scope, $args, 'data', 7.2 );
                 if ( bool( $$scope->{'data'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $$self->{'parse'}
                       ->( [ $$scope->{'data'} ], $scope, undef, $pos->(10.2) );
                 }
-                FF::want( $self, $args, 'connection', 14.2 );
+                want( $self, $args, 'connection', 14.2 );
                 $self->weaken_property( 'connection', $pos->(15.1) );
                 return $ret;
             }
         );
 
         # Method event 'parse' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'parse',
             [
                 {
@@ -490,13 +492,13 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 $func_0->inside_scope(
                     updateWord => $scope,
                     $scope, $class, undef, undef
                 );
-                FF::need( $scope, $args, 'data', 20.2 ) or return;
-                FF::lex_assign(
+                need( $scope, $args, 'data', 20.2 ) or return;
+                lex_assign(
                     $scope,
                     words =>
                       $$scope->{'data'}->property_u( 'split', $pos->(21.4) )->(
@@ -523,23 +525,23 @@ my $result = do {
                     lastWord => Ferret::undefined,
                     $pos->(24.5)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
-                    params => FF::create_list( $f, [] ),
+                    params => create_list( $f, [] ),
                     $file_scope, $pos->(25.2)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     wordI => num( $f, "0" ),
                     $file_scope, $pos->(26.2)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     wordN => num( $f, "0" ),
                     $file_scope, $pos->(27.2)
                 );
                 {
-                    my $loop_ret = FF::iterate(
+                    my $loop_ret = iterate(
                         $f, $scope,
                         $$scope->{'words'},
                         'word',
@@ -570,7 +572,7 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                FF::lex_assign(
+                                lex_assign(
                                     $scope,
                                     word => $$scope->{'word'}->property_u(
                                         'trimPrefix', $pos->(41.4)
@@ -581,13 +583,13 @@ my $result = do {
                                     $file_scope,
                                     $pos->(41.2)
                                 );
-                                FF::lex_assign(
+                                lex_assign(
                                     $scope,
-                                    tags => FF::create_hash( $f, [] ),
+                                    tags => create_hash( $f, [] ),
                                     $file_scope, $pos->(42.2)
                                 );
                                 {
-                                    my $loop_ret = FF::iterate(
+                                    my $loop_ret = iterate(
                                         $f, $scope,
                                         $$scope->{'word'}->property_u(
                                             'split', $pos->(45.25)
@@ -598,7 +600,7 @@ my $result = do {
                                         'tag',
                                         sub {
                                             my ( $scope, $ret_func ) = @_;
-                                            FF::lex_assign(
+                                            lex_assign(
                                                 $scope,
                                                 tagParts => $$scope->{'tag'}
                                                   ->property_u( 'split',
@@ -663,7 +665,7 @@ my $result = do {
                                     );
                                     return $ret_func->($loop_ret) if $loop_ret;
                                 }
-                                FF::lex_assign(
+                                lex_assign(
                                     $scope,
                                     gotTags => $true,
                                     $file_scope, $pos->(61.2)
@@ -699,7 +701,7 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                FF::lex_assign(
+                                lex_assign(
                                     $scope,
                                     word => $$scope->{'word'}->property_u(
                                         'trimPrefix', $pos->(70.4)
@@ -710,7 +712,7 @@ my $result = do {
                                     $file_scope,
                                     $pos->(70.2)
                                 );
-                                FF::lex_assign(
+                                lex_assign(
                                     $scope,
                                     gotSource => $true,
                                     $file_scope, $pos->(71.2)
@@ -729,7 +731,7 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                FF::lex_assign(
+                                lex_assign(
                                     $scope,
                                     gotCommand => $true,
                                     $file_scope, $pos->(80.2)
@@ -759,7 +761,7 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                FF::lex_assign(
+                                lex_assign(
                                     $scope,
                                     rest => $$scope->{'data'}
                                       ->property_u( 'split', $pos->(89.13333) )
@@ -816,11 +818,11 @@ my $result = do {
         );
 
         # Method event 'target' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'target',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 {
                     my $maybe_0 = $$self->{'connection'};
                     if ( bool($maybe_0) ) {
@@ -844,12 +846,12 @@ my $result = do {
         );
 
         # Method event '_parsedSource' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             '_parsedSource',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 if ( bool( _not( $$self->{'source'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -878,11 +880,11 @@ my $result = do {
         );
 
         # Method event 'nick' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope, 'nick',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
                       ->property_u( 'nick', $pos->(118.5) ) );
                 return $ret;
@@ -890,11 +892,11 @@ my $result = do {
         );
 
         # Method event 'ident' definition
-        my $method_5 = FF::method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope, 'ident',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
                       ->property_u( 'ident', $pos->(119.5) ) );
                 return $ret;
@@ -902,11 +904,11 @@ my $result = do {
         );
 
         # Method event 'host' definition
-        my $method_6 = FF::method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope, 'host',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
                       ->property_u( 'host', $pos->(120.5) ) );
                 return $ret;
@@ -929,7 +931,7 @@ my $result = do {
         $method_5->inside_scope( ident => $scope, $proto, $class, 1, undef );
         $method_6->inside_scope( host  => $scope, $proto, $class, 1, undef );
     }
-    FF::load_namespaces( $context, qw(Bool Connection Str Str::NE) );
+    load_namespaces( $context, qw(Bool Connection Str Str::NE) );
 };
 
-FF::after_content();
+after_content();

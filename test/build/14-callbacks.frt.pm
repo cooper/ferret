@@ -67,6 +67,8 @@
 #                  String 'hello'
 #              Argument list [0 items]
 #      Include (String)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -82,23 +84,23 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '14-callbacks.frt', './test/14-callbacks.frt' );
+my $pos = before_content( '14-callbacks.frt', './test/14-callbacks.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [
@@ -119,11 +121,11 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_1 = FF::function_def(
+    my $func_1 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [
@@ -142,10 +144,10 @@ my $result = do {
             return $ret;
         }
     );
-    FF::load_namespaces( $context, qw(String) );
+    load_namespaces( $context, qw(String) );
     $$scope->{'say'}->( [ str( $f, "test" ) ], $scope, undef, $pos->(1.2) );
-    FF::lex_assign( $scope, str => str( $f, "hi" ), undef, $pos->(3.2) );
-    FF::on(
+    lex_assign( $scope, str => str( $f, "hi" ), undef, $pos->(3.2) );
+    on(
         $$scope->{'str'},
         'length',
         $self,
@@ -157,7 +159,7 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(14.3) );
     str( $f, "hello" )->property_u( 'length', $pos->(16.2) )
       ->( [ undef, [] ], $scope, undef, $pos->(16.3) );
-    FF::on(
+    on(
         $$scope->{'String'}->property_u( 'proto', $pos->(21.3) ),
         'length',
         $self,
@@ -169,4 +171,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(25.3) );
 };
 
-FF::after_content();
+after_content();

@@ -1,3 +1,5 @@
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -13,11 +15,11 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ($true, $false, $undefined, $ret_func) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ($true, $false, $undefined, $ret_func) = get_constant_objects($f);
 
-my $pos = FF::before_content('<<base_name>>', '<<file_name>>');
+my $pos = before_content('<<base_name>>', '<<file_name>>');
 
 <<content>>
 
-FF::after_content();
+after_content();

@@ -119,6 +119,8 @@
 #                                  Item 0
 #                                      Instance variable '@pt2'
 #      Include (Point)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -134,24 +136,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Line.frt', './std/Math/Line.frt' );
+my $pos = before_content( 'Line.frt', './std/Math/Line.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'Math' );
+    my ( $file_scope, $context ) = get_context( $f, 'Math' );
     my $scope = $file_scope;
-    FF::load_core('Math');
+    load_core('Math');
 
     # Class 'Line'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Line', undef, undef );
+          get_class( $f, $context, $file_scope, 'Line', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -169,64 +171,63 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $self, $args, 'pt1' ) or return;
-                FF::need( $self, $args, 'pt2' ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $self, $args, 'pt1' ) or return;
+                need( $self, $args, 'pt2' ) or return;
                 return $ret;
             }
         );
 
         # Method event 'endpoints' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'endpoints',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    FF::create_list( $f, [ $$self->{'pt1'}, $$self->{'pt2'} ] )
-                );
+                    create_list( $f, [ $$self->{'pt1'}, $$self->{'pt2'} ] ) );
                 return $ret;
             }
         );
 
         # Method event 'pretty' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'pretty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                lex_assign(
                     $scope,
                     mp => $$self->{'midpoint'},
                     $file_scope, $pos->(13.2)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     pox => $$self->{'pt1'}->property_u( 'x', $pos->(14.2) ),
                     $file_scope, $pos->(14.1)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     poy => $$self->{'pt1'}->property_u( 'y', $pos->(14.45) ),
                     $file_scope, $pos->(14.35)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     ptx => $$self->{'pt2'}->property_u( 'x', $pos->(15.2) ),
                     $file_scope, $pos->(15.1)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     pty => $$self->{'pt2'}->property_u( 'y', $pos->(15.45) ),
                     $file_scope, $pos->(15.35)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     mx => $$scope->{'mp'}->property_u( 'x', $pos->(16.2) ),
                     $file_scope, $pos->(16.1)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     my => $$scope->{'mp'}->property_u( 'y', $pos->(16.45) ),
                     $file_scope, $pos->(16.35)
@@ -248,26 +249,26 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'description',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'pretty'} );
                 return $ret;
             }
         );
 
         # Method event 'midpoint' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'midpoint',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    FF::create_set( $scope, $$self->{'pt1'}, $$self->{'pt2'} )
+                    create_set( $scope, $$self->{'pt1'}, $$self->{'pt2'} )
                       ->property_u( 'midpoint', $pos->(25.35) )
                       ->( [ undef, [] ], $scope, undef, $pos->(25.4) ) );
                 return $ret;
@@ -275,11 +276,11 @@ my $result = do {
         );
 
         # Method event 'length' definition
-        my $method_5 = FF::method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope, 'length',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$self->{'pt1'}->property_u( 'distanceTo', $pos->(29.3) )
                       ->( [ $$self->{'pt2'} ], $scope, undef, $pos->(29.4) ) );
@@ -302,7 +303,7 @@ my $result = do {
         $method_4->inside_scope( midpoint => $scope, $proto, $class, 1, undef );
         $method_5->inside_scope( length   => $scope, $proto, $class, 1, undef );
     }
-    FF::load_namespaces( $context, qw(Point) );
+    load_namespaces( $context, qw(Point) );
 };
 
-FF::after_content();
+after_content();

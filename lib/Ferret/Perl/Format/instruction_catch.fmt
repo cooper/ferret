@@ -1,4 +1,4 @@
-FF::try_catch($f, $scope, sub {
+try_catch($f, $scope, sub {
     <<instruction>>;
 }, sub {
     my ($scope) = @_;

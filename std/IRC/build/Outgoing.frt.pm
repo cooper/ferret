@@ -84,6 +84,8 @@
 #                                      Addition operator (+)
 #                                      Lexical variable '$nick'
 #      Include (Str, Str::Any)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -99,25 +101,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Outgoing.frt', './std/IRC/Outgoing.frt' );
+my $pos = before_content( 'Outgoing.frt', './std/IRC/Outgoing.frt' );
 
 use Ferret::Core::Operations qw(add bool str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
     my $scope = $file_scope;
-    FF::load_core('IRC');
+    load_core('IRC');
 
     # Class 'Connection'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Connection', undef,
-            undef );
+          get_class( $f, $context, $file_scope, 'Connection', undef, undef );
 
         # Method event 'sendJoin' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'sendJoin',
             [
@@ -129,10 +130,10 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'channelNames', 6.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'channelNames', 6.2 ) or return;
                 {
-                    my $loop_ret = FF::iterate(
+                    my $loop_ret = iterate(
                         $f, $scope,
                         $$scope->{'channelNames'},
                         'name',
@@ -158,7 +159,7 @@ my $result = do {
         );
 
         # Method event 'sendPrivmsg' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'sendPrivmsg',
             [
@@ -176,11 +177,11 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'target',  13.1 ) or return;
-                FF::need( $scope, $args, 'message', 13.3 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'target',  13.1 ) or return;
+                need( $scope, $args, 'message', 13.3 ) or return;
                 {
-                    my $loop_ret = FF::iterate(
+                    my $loop_ret = iterate(
                         $f, $scope,
                         $$scope->{'message'}
                           ->property_u( 'split', $pos->(14.25) )->(
@@ -224,7 +225,7 @@ my $result = do {
         );
 
         # Method event 'sendNick' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'sendNick',
             [
@@ -236,8 +237,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'nick', 23.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'nick', 23.2 ) or return;
                 $$self->{'send'}->(
                     [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],
                     $scope, undef, $pos->(24.2)
@@ -258,7 +259,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Str Str::Any) );
+    load_namespaces( $context, qw(Str Str::Any) );
 };
 
-FF::after_content();
+after_content();

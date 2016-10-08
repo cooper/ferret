@@ -46,6 +46,8 @@
 #                      Call
 #                          Lexical variable '$code'
 #                          Argument list [0 items]
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -61,28 +63,28 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '24-calls-with-func.frt',
-    './test/24-calls-with-func.frt' );
+my $pos =
+  before_content( '24-calls-with-func.frt', './test/24-calls-with-func.frt' );
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Function event 'something' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $context,
         'something',
         undef,
         [ { name => 'code', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'code', 17.2 ) or return;
+            need( $scope, $args, 'code', 17.2 ) or return;
             $ret->set_property(
                 message => $$scope->{'code'}
                   ->( [ undef, [] ], $scope, undef, $pos->(18.4) ),
@@ -93,11 +95,11 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_1 = FF::function_def(
+    my $func_1 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ str( $f, "been five seconds" ) ],
@@ -108,11 +110,11 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_2 = FF::function_def(
+    my $func_2 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             return $ret_func->( str( $f, "any second now" ) );
             return $ret;
@@ -150,4 +152,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

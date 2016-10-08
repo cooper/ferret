@@ -1,1 +1,1 @@
-FF::type_with_generics($f, $scope, <<bareword_exp>>, [ <<generics>> ])
+type_with_generics($f, $scope, <<bareword_exp>>, [ <<generics>> ])

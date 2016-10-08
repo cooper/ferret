@@ -1,6 +1,6 @@
 {
     my $loop_ret =
-    FF::while_true($f, $scope, sub { <<condition>> }, sub {
+    while_true($f, $scope, sub { <<condition>> }, sub {
         my ($scope, $ret_func) = @_;
         <<body>>
     }, $pos->(<<pos>>));

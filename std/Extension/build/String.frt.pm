@@ -109,6 +109,8 @@
 #                              Equality operator (==)
 #                              Number '0'
 #      Include (LC, Lowercase, NE, NonEmpty, Num, Str, UC, Uppercase)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -124,24 +126,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'String.frt', './std/Extension/String.frt' );
+my $pos = before_content( 'String.frt', './std/Extension/String.frt' );
 
 use Ferret::Core::Operations qw(add equal nequal num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'String'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'String', undef, undef );
+          get_class( $f, $context, $file_scope, 'String', undef, undef );
 
         # Method event 'word' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope, 'word',
             [
                 {
@@ -152,8 +154,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'wordI', 29.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'wordI', 29.2 ) or return;
                 return $ret_func->(
                     $$self->{'split'}->(
                         [
@@ -177,7 +179,7 @@ my $result = do {
         );
 
         # Method event 'fromWord' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'fromWord',
             [
@@ -189,8 +191,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'wordN', 34.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'wordN', 34.2 ) or return;
                 return $ret_func->(
                     $$self->{'split'}->(
                         [
@@ -214,11 +216,11 @@ my $result = do {
         );
 
         # Method event 'empty' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'empty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
                 return $ret;
@@ -230,12 +232,12 @@ my $result = do {
             $proto, $class, undef, undef
         );
         $method_2->inside_scope( empty => $scope, $proto, $class, 1, 1 );
-        FF::typedef(
+        typedef(
             $scope, $class,
             'NonEmpty',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
-                FF::typedef_check(
+                typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
@@ -247,12 +249,12 @@ my $result = do {
             undef
         );
         $class->set_property( NE => $$scope->{'NonEmpty'}, $pos->(8.3) );
-        FF::typedef(
+        typedef(
             $scope, $class,
             'Uppercase',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
-                FF::typedef_check(
+                typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
@@ -264,12 +266,12 @@ my $result = do {
             undef
         );
         $class->set_property( UC => $$scope->{'Uppercase'}, $pos->(15.3) );
-        FF::typedef(
+        typedef(
             $scope, $class,
             'Lowercase',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
-                FF::typedef_check(
+                typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
@@ -281,11 +283,11 @@ my $result = do {
             undef
         );
         $class->set_property( LC => $$scope->{'Lowercase'}, $pos->(22.3) );
-        FF::typedef(
+        typedef(
             $scope, $class, 'Any',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
-                FF::typedef_check(
+                typedef_check(
                     $scope, $scope, $ins,
                     conditions => [
                         do {
@@ -302,8 +304,8 @@ my $result = do {
             undef
         );
     }
-    FF::load_namespaces( $context,
+    load_namespaces( $context,
         qw(LC Lowercase NE NonEmpty Num Str UC Uppercase) );
 };
 
-FF::after_content();
+after_content();

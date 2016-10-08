@@ -231,6 +231,8 @@
 #                      Return pair 'message'
 #                          Lexical variable '$message'
 #      Include (Bool, Error)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -246,25 +248,25 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Test.frt', './std/Test.frt' );
+my $pos = before_content( 'Test.frt', './std/Test.frt' );
 
 use Ferret::Core::Operations
   qw(_sub add bool equal nequal num refs_equal refs_nequal str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'Test'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Test', 1.0, undef );
+          get_class( $f, $context, $file_scope, 'Test', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -277,9 +279,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::want( $self, $args, 'name', 7.2, str( $f, "Test" ) );
-                FF::want( $self, $args, 'fatal', 11.2, $true );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                want( $self, $args, 'name', 7.2, str( $f, "Test" ) );
+                want( $self, $args, 'fatal', 11.2, $true );
                 $self->set_property( tested => num( $f, "0" ), $pos->(13.2) );
                 $self->set_property( passed => num( $f, "0" ), $pos->(14.2) );
                 return $ret;
@@ -287,7 +289,7 @@ my $result = do {
         );
 
         # Method event 'trueValue' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'trueValue',
             [
@@ -299,8 +301,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'a', 19.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'a', 19.2 ) or return;
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -319,7 +321,7 @@ my $result = do {
         );
 
         # Method event 'veryTrue' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'veryTrue',
             [
@@ -331,8 +333,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'a', 25.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'a', 25.2 ) or return;
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -348,7 +350,7 @@ my $result = do {
         );
 
         # Method event 'equal' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope, 'equal',
             [
                 {
@@ -365,9 +367,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'a', 31.2 ) or return;
-                FF::need( $scope, $args, 'b', 32.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'a', 31.2 ) or return;
+                need( $scope, $args, 'b', 32.2 ) or return;
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -383,7 +385,7 @@ my $result = do {
         );
 
         # Method event 'objectsEqual' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'objectsEqual',
             [
@@ -401,9 +403,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'a', 38.2 ) or return;
-                FF::need( $scope, $args, 'b', 39.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'a', 38.2 ) or return;
+                need( $scope, $args, 'b', 39.2 ) or return;
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -421,7 +423,7 @@ my $result = do {
         );
 
         # Method event 'notEqual' definition
-        my $method_5 = FF::method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope,
             'notEqual',
             [
@@ -439,9 +441,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'a', 45.2 ) or return;
-                FF::need( $scope, $args, 'b', 46.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'a', 45.2 ) or return;
+                need( $scope, $args, 'b', 46.2 ) or return;
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -457,7 +459,7 @@ my $result = do {
         );
 
         # Method event 'objectsNotEqual' definition
-        my $method_6 = FF::method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope,
             'objectsNotEqual',
             [
@@ -475,9 +477,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'a', 52.2 ) or return;
-                FF::need( $scope, $args, 'b', 53.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'a', 52.2 ) or return;
+                need( $scope, $args, 'b', 53.2 ) or return;
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -495,12 +497,12 @@ my $result = do {
         );
 
         # Method event 'review' definition
-        my $method_7 = FF::method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope, 'review',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                lex_assign(
                     $scope,
                     failed =>
                       _sub( $scope, $$self->{'tested'}, $$self->{'passed'} ),
@@ -538,7 +540,7 @@ my $result = do {
         );
 
         # Method event '_test' definition
-        my $method_8 = FF::method_event_def(
+        my $method_8 = method_event_def(
             $f, $scope, '_test',
             [
                 {
@@ -555,9 +557,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'yes',     69.2 ) or return;
-                FF::need( $scope, $args, 'message', 69.4 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'yes',     69.2 ) or return;
+                need( $scope, $args, 'message', 69.4 ) or return;
                 $self->set_property(
                     tested => add( $scope, $$self->{'tested'}, num( $f, "1" ) ),
                     $pos->(71.2)
@@ -579,7 +581,7 @@ my $result = do {
                     return $ret->throw(
                         $$scope->{'Error'}->(
                             [
-                                FF::get_symbol( $f, 'TestFailure' ),
+                                get_symbol( $f, 'TestFailure' ),
                                 $$scope->{'message'}
                             ],
                             $scope, undef,
@@ -632,7 +634,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Bool Error) );
+    load_namespaces( $context, qw(Bool Error) );
 };
 
-FF::after_content();
+after_content();

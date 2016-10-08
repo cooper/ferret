@@ -130,6 +130,8 @@
 #                              Item 0
 #                                  Lexical variable '$line'
 #      Include (Num, Socket, Socket::TCP, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -145,23 +147,23 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Bot1.frt', './test/10-irc-simple/Bot1.frt' );
+my $pos = before_content( 'Bot1.frt', './test/10-irc-simple/Bot1.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$self->{'send'}->(
                 [
@@ -189,13 +191,13 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_1 = FF::function_def(
+    my $func_1 = function_def(
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'data', 18.2 ) or return;
+            need( $scope, $args, 'data', 18.2 ) or return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
                 $scope, undef, $pos->(19.2)
@@ -207,10 +209,10 @@ my $result = do {
     # Class 'Bot1'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Bot1', undef, undef );
+          get_class( $f, $context, $file_scope, 'Bot1', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -236,12 +238,12 @@ my $result = do {
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $self, $args, 'addr' ) or return;
-                FF::need( $self, $args, 'nick' ) or return;
-                FF::need( $self, $args, 'user' ) or return;
-                FF::want( $self, $args, 'port', 5.1, num( $f, "6667" ) );
-                FF::want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $self, $args, 'addr' ) or return;
+                need( $self, $args, 'nick' ) or return;
+                need( $self, $args, 'user' ) or return;
+                want( $self, $args, 'port', 5.1, num( $f, "6667" ) );
+                want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
                 $self->set_property(
                     sock => $$scope->{'Socket::TCP'}->(
                         [
@@ -249,7 +251,7 @@ my $result = do {
                             [
                                 address  => $$self->{'addr'},
                                 port     => $$self->{'port'},
-                                readMode => FF::get_symbol( $f, 'line' )
+                                readMode => get_symbol( $f, 'line' )
                             ]
                         ],
                         $scope, undef,
@@ -257,7 +259,7 @@ my $result = do {
                     ),
                     $pos->(8.1)
                 );
-                FF::on(
+                on(
                     $$self->{'sock'},
                     'connected',
                     $self, $scope,
@@ -267,7 +269,7 @@ my $result = do {
                     ),
                     {}
                 );
-                FF::on(
+                on(
                     $$self->{'sock'},
                     'gotLine',
                     $self, $scope,
@@ -282,12 +284,12 @@ my $result = do {
         );
 
         # Method event 'connect' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'connect',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 $$self->{'sock'}->property_u( 'connect', $pos->(25.2) )
                   ->( [ undef, [] ], $scope, undef, $pos->(25.3) );
                 return $ret;
@@ -295,7 +297,7 @@ my $result = do {
         );
 
         # Method event 'send' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'send',
             [
                 {
@@ -306,8 +308,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'line', 29.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'line', 29.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(30.2)
@@ -327,7 +329,7 @@ my $result = do {
         );
         $method_2->inside_scope( send => $scope, $proto, $class, undef, undef );
     }
-    FF::load_namespaces( $context, qw(Num Socket Socket::TCP Str) );
+    load_namespaces( $context, qw(Num Socket Socket::TCP Str) );
 };
 
-FF::after_content();
+after_content();

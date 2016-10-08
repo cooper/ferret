@@ -1,6 +1,6 @@
 do {
     my ($gather_status, $gather_ret) =
-    FF::gather($f, $scope, sub {
+    gather($f, $scope, sub {
         my ($scope, $take, $ret_func) = @_;
         <<statements>>
     });

@@ -89,6 +89,8 @@
 #                                  Item 0
 #                                      Number '4'
 #      Include (Math, Math::Point, Math::Rect)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -104,19 +106,19 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '7-math.frt', './test/7-math.frt' );
+my $pos = before_content( '7-math.frt', './test/7-math.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
-    FF::load_namespaces( $context, qw(Math Math::Point Math::Rect) );
-    FF::lex_assign(
+    load_namespaces( $context, qw(Math Math::Point Math::Rect) );
+    lex_assign(
         $scope,
         rect => $$scope->{'Math::Rect'}->(
             [
@@ -134,7 +136,7 @@ my $result = do {
         undef,
         $pos->(1.06667)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         center => $$scope->{'rect'}->property_u( 'center', $pos->(3.4) ),
         undef, $pos->(3.2)
@@ -155,16 +157,16 @@ my $result = do {
         $scope, undef,
         $pos->(5.2)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         otherPt => $$scope->{'Math::Point'}
           ->( [ num( $f, "9" ), num( $f, "2" ) ], $scope, undef, $pos->(7.3) ),
         undef, $pos->(7.1)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         midpoint =>
-          FF::create_set( $scope, $$scope->{'center'}, $$scope->{'otherPt'} )
+          create_set( $scope, $$scope->{'center'}, $$scope->{'otherPt'} )
           ->property_u( 'midpoint', $pos->(8.4) )
           ->( [ undef, [] ], $scope, undef, $pos->(8.45) )
           ->property_u( 'pretty', $pos->(8.55) )
@@ -189,4 +191,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

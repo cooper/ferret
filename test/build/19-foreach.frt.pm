@@ -24,6 +24,8 @@
 #                                  String 'part: '
 #                                  Addition operator (+)
 #                                  Lexical variable '$word'
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -39,25 +41,25 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '19-foreach.frt', './test/19-foreach.frt' );
+my $pos = before_content( '19-foreach.frt', './test/19-foreach.frt' );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
-    FF::lex_assign(
+    lex_assign(
         $scope,
         words => str( $f, "how are you?" )->property_u( 'split', $pos->(1.4) )
           ->( [ str( $f, " " ) ], $scope, undef, $pos->(1.5) ),
         undef, $pos->(1.2)
     );
     {
-        my $loop_ret = FF::iterate(
+        my $loop_ret = iterate(
             $f, $scope,
             $$scope->{'words'},
             'word',
@@ -74,4 +76,4 @@ my $result = do {
     }
 };
 
-FF::after_content();
+after_content();

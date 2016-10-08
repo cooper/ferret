@@ -1,7 +1,7 @@
 # Inside
 {
     my $inside_return =
-    FF::inside($f, $scope, <<expression>>, sub {
+    inside($f, $scope, <<expression>>, sub {
         my ($scope, $ins, $ret_func) = @_;
         <<content>>
     });

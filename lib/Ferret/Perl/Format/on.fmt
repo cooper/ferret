@@ -1,1 +1,1 @@
-FF::on(<<object>>, <<event_exp>>, $self, $scope, <<function>>, { <<opts>> });
+on(<<object>>, <<event_exp>>, $self, $scope, <<function>>, { <<opts>> });

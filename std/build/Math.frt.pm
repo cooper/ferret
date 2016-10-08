@@ -40,6 +40,8 @@
 #                                      Division operator (/)
 #                                      Lexical variable '$root'
 #      Include (NATIVE, NATIVE::Math, Num)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -55,25 +57,25 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Math.frt', './std/Math.frt' );
+my $pos = before_content( 'Math.frt', './std/Math.frt' );
 
 use Ferret::Core::Operations qw(div num pow);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'Math' );
+    my ( $file_scope, $context ) = get_context( $f, 'Math' );
     my $scope = $file_scope;
-    FF::load_core('Math');
+    load_core('Math');
 
     # Function event 'sqrt' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $context, 'sqrt', undef,
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'num', 4.2 ) or return;
+            need( $scope, $args, 'num', 4.2 ) or return;
             return $ret_func->(
                 $$scope->{'NATIVE::Math'}->property_u( 'sqrt', $pos->(5.25) )
                   ->( [ $$scope->{'num'} ], $scope, undef, $pos->(5.3) ) );
@@ -82,17 +84,17 @@ my $result = do {
     );
 
     # Function event 'root' definition
-    my $func_1 = FF::function_event_def(
+    my $func_1 = function_event_def(
         $f, $context, 'root', undef,
         [
             { name => 'root', type => 'Num', optional => undef, more => undef },
             { name => 'num',  type => 'Num', optional => undef, more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'root', 9.1 ) or return;
-            FF::need( $scope, $args, 'num',  9.3 ) or return;
+            need( $scope, $args, 'root', 9.1 ) or return;
+            need( $scope, $args, 'num',  9.3 ) or return;
             return $ret_func->(
                 pow(
                     $scope, $$scope->{'num'},
@@ -104,7 +106,7 @@ my $result = do {
     );
     $func_0->inside_scope( sqrt => $scope, $context, undef, undef, undef );
     $func_1->inside_scope( root => $scope, $context, undef, undef, undef );
-    FF::load_namespaces( $context, qw(NATIVE NATIVE::Math Num) );
+    load_namespaces( $context, qw(NATIVE NATIVE::Math Num) );
 };
 
-FF::after_content();
+after_content();

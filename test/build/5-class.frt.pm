@@ -170,6 +170,8 @@
 #                          Addition operator (+)
 #                          Lexical variable '$nineteen'
 #      Include (Point)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -185,24 +187,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '5-class.frt', './test/5-class.frt' );
+my $pos = before_content( '5-class.frt', './test/5-class.frt' );
 
 use Ferret::Core::Operations qw(add div num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'Point'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Point', 1.0, undef );
+          get_class( $f, $context, $file_scope, 'Point', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -220,9 +222,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'x', 4.2 ) or return;
-                FF::need( $scope, $args, 'y', 4.4 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'x', 4.2 ) or return;
+                need( $scope, $args, 'y', 4.4 ) or return;
                 $self->set_property( x => $$scope->{'x'}, $pos->(5.2) );
                 $self->set_property( y => $$scope->{'y'}, $pos->(6.2) );
                 return $ret;
@@ -230,13 +232,13 @@ my $result = do {
         );
 
         # Method event 'oneToRight' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'oneToRight',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                lex_assign(
                     $scope,
                     pt => ${ $scope->{special} }->{'class'}->(
                         [
@@ -255,11 +257,11 @@ my $result = do {
         );
 
         # Method event 'pretty' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'pretty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add(
                         $scope,        str( $f, "(" ),
@@ -272,12 +274,12 @@ my $result = do {
         );
 
         # Method event 'toString' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'toString',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'pretty'}
                       ->( [ undef, [] ], $scope, undef, $pos->(19.3) ) );
                 return $ret;
@@ -285,7 +287,7 @@ my $result = do {
         );
 
         # Method event 'midpoint' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'midpoint',
             [
@@ -303,9 +305,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'pt1', 23.2 ) or return;
-                FF::need( $scope, $args, 'pt2', 23.4 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'pt1', 23.2 ) or return;
+                need( $scope, $args, 'pt2', 23.4 ) or return;
                 return $ret_func->(
                     $$scope->{'Point'}->(
                         [
@@ -363,8 +365,8 @@ my $result = do {
             $class, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Point) );
-    FF::lex_assign(
+    load_namespaces( $context, qw(Point) );
+    lex_assign(
         $scope,
         pt => $$scope->{'Point'}
           ->( [ num( $f, "5" ), num( $f, "3" ) ], $scope, undef, $pos->(32.2) ),
@@ -374,7 +376,7 @@ my $result = do {
         [ add( $scope, str( $f, "Point" ), $$scope->{'pt'} ) ],
         $scope, undef, $pos->(33.2)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         rpt => $$scope->{'pt'}->property_u( 'oneToRight', $pos->(35.4) )
           ->( [ undef, [] ], $scope, undef, $pos->(35.5) ),
@@ -384,7 +386,7 @@ my $result = do {
         [ add( $scope, str( $f, "Right" ), $$scope->{'rpt'} ) ],
         $scope, undef, $pos->(36.2)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         mdpt => $$scope->{'Point'}->property_u( 'midpoint', $pos->(38.2) )->(
             [ $$scope->{'pt'}, $$scope->{'rpt'} ], $scope,
@@ -397,7 +399,7 @@ my $result = do {
         [ add( $scope, str( $f, "Midpoint" ), $$scope->{'mdpt'} ) ],
         $scope, undef, $pos->(39.2)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         nineteen => add(
             $scope,
@@ -413,4 +415,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

@@ -59,6 +59,8 @@
 #                              Number '5'
 #              Argument list [0 items]
 #      Include (Signal, Timer)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -74,23 +76,23 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '26-signals.frt', './test/26-signals.frt' );
+my $pos = before_content( '26-signals.frt', './test/26-signals.frt' );
 
 use Ferret::Core::Operations qw(_not bool num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ str( $f, "Got TERM. Terminating!" ) ],
@@ -101,11 +103,11 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_1 = FF::function_def(
+    my $func_1 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             if ( bool( _not( $$scope->{'asked'} ) ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -114,11 +116,7 @@ my $result = do {
                     [ str( $f, "Are you sure?" ) ],
                     $scope, undef, $pos->(13.2)
                 );
-                FF::lex_assign(
-                    $scope,
-                    asked => $true,
-                    $file_scope, $pos->(14.2)
-                );
+                lex_assign( $scope, asked => $true, $file_scope, $pos->(14.2) );
                 $ret->stop;
                 return $ret_func->();
             }
@@ -129,8 +127,8 @@ my $result = do {
             return $ret;
         }
     );
-    FF::load_namespaces( $context, qw(Signal Timer) );
-    FF::on(
+    load_namespaces( $context, qw(Signal Timer) );
+    on(
         $$scope->{'Signal'}->property_u( 'TERM', $pos->(2.3) ),
         'trap',
         $self,
@@ -138,8 +136,8 @@ my $result = do {
         $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
         { before => ['default'] }
     );
-    FF::lex_assign( $scope, asked => $false, undef, $pos->(8.2) );
-    FF::on(
+    lex_assign( $scope, asked => $false, undef, $pos->(8.2) );
+    on(
         $$scope->{'Signal'}->property_u( 'INT', $pos->(9.3) ),
         'trap',
         $self,
@@ -152,4 +150,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(23.6) );
 };
 
-FF::after_content();
+after_content();

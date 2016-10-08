@@ -74,6 +74,8 @@
 #                              Item 0
 #                                  Lexical variable '$key'
 #      Include (Hash, K, V)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -89,29 +91,28 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Hash.frt', './std/Extension/Hash.frt' );
+my $pos = before_content( 'Hash.frt', './std/Extension/Hash.frt' );
 
 use Ferret::Core::Operations qw(bool equal num);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'Hash'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Hash', undef,
-            [ \'K', \'V' ] );
+          get_class( $f, $context, $file_scope, 'Hash', undef, [ \'K', \'V' ] );
 
         # Method event 'empty' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope, 'empty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
                 return $ret;
@@ -123,21 +124,21 @@ my $result = do {
     # Class 'OrderedHash'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'OrderedHash', undef,
+          get_class( $f, $context, $file_scope, 'OrderedHash', undef,
             [ \'K', \'V' ] );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 $self->set_property(
-                    orderedKeys => FF::create_list( $f, [] ),
+                    orderedKeys => create_list( $f, [] ),
                     $pos->(10.2)
                 );
-                FF::type_with_generics( $f, $scope, $$scope->{'Hash'},
+                type_with_generics( $f, $scope, $$scope->{'Hash'},
                     [ $$scope->{'K'}, $$scope->{'V'} ] )
                   ->property_u( 'init', $pos->(13.35) )->(
                     [ ${ $scope->{special} }->{'self'} ],
@@ -148,18 +149,18 @@ my $result = do {
         );
 
         # Method event 'keys' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'keys',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'orderedKeys'} );
                 return $ret;
             }
         );
 
         # Method event 'pushPair' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'pushPair',
             [
@@ -177,9 +178,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'key',   21.1 ) or return;
-                FF::need( $scope, $args, 'value', 21.3 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'key',   21.1 ) or return;
+                need( $scope, $args, 'value', 21.3 ) or return;
                 if (
                     bool(
                         $$self->{'orderedKeys'}
@@ -212,7 +213,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Hash K V) );
+    load_namespaces( $context, qw(Hash K V) );
 };
 
-FF::after_content();
+after_content();

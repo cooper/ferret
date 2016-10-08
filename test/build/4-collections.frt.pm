@@ -77,6 +77,8 @@
 #          Assignment
 #              Lexical variable '$emptyHash'
 #              Hash [0 items]
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -92,19 +94,19 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '4-collections.frt', './test/4-collections.frt' );
+my $pos = before_content( '4-collections.frt', './test/4-collections.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Function event 'makePoint' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $context,
         'makePoint',
         undef,
@@ -114,14 +116,14 @@ my $result = do {
             { name => 'z', type => undef, optional => 1,     more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'x', 2.2 ) or return;
-            FF::need( $scope, $args, 'y', 2.4 ) or return;
-            FF::want( $scope, $args, 'z', 3.2 );
-            FF::lex_assign(
+            need( $scope, $args, 'x', 2.2 ) or return;
+            need( $scope, $args, 'y', 2.4 ) or return;
+            want( $scope, $args, 'z', 3.2 );
+            lex_assign(
                 $scope,
-                point => FF::create_object(
+                point => create_object(
                     $f, [ x => $$scope->{'x'}, y => $$scope->{'y'} ]
                 ),
                 $file_scope,
@@ -132,7 +134,7 @@ my $result = do {
         }
     );
     $func_0->inside_scope( makePoint => $scope, $context, undef, undef, undef );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         pt => $$scope->{'makePoint'}
           ->( [ num( $f, "5" ), num( $f, "3" ) ], $scope, undef, $pos->(11.2) )
@@ -153,9 +155,9 @@ my $result = do {
         $scope, undef,
         $pos->(12.1)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
-        numbers => FF::create_list(
+        numbers => create_list(
             $f,
             [
                 num( $f, "1" ),
@@ -168,16 +170,16 @@ my $result = do {
         undef,
         $pos->(14.1)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
-        emptyArray => FF::create_list( $f, [] ),
+        emptyArray => create_list( $f, [] ),
         undef, $pos->(16.2)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
-        emptyHash => FF::create_hash( $f, [] ),
+        emptyHash => create_hash( $f, [] ),
         undef, $pos->(17.2)
     );
 };
 
-FF::after_content();
+after_content();

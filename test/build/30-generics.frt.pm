@@ -94,6 +94,8 @@
 #                  Item 0
 #                      Lexical variable '$numstack'
 #      Include (Element, Num, Stack)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -109,32 +111,31 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '30-generics.frt', './test/30-generics.frt' );
+my $pos = before_content( '30-generics.frt', './test/30-generics.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'Stack'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Stack', undef,
-            ['Element'] );
+          get_class( $f, $context, $file_scope, 'Stack', undef, ['Element'] );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 $self->set_property(
-                    items => FF::create_list( $f, [] ),
+                    items => create_list( $f, [] ),
                     $pos->(4.2)
                 );
                 return $ret;
@@ -142,7 +143,7 @@ my $result = do {
         );
 
         # Method event 'push' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'push',
             [
                 {
@@ -153,8 +154,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'item', 8.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'item', 8.2 ) or return;
                 return $ret_func->(
                     $$self->{'items'}->property_u( 'push', $pos->(9.3) )
                       ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.4) ) );
@@ -163,11 +164,11 @@ my $result = do {
         );
 
         # Method event 'pop' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'pop',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$self->{'items'}->property_u( 'pop', $pos->(13.3) )
                       ->( [ undef, [] ], $scope, undef, $pos->(13.4) ) );
@@ -176,12 +177,12 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'description',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add(
                         $scope,
@@ -204,11 +205,11 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Element Num Stack) );
-    FF::try_catch(
+    load_namespaces( $context, qw(Element Num Stack) );
+    try_catch(
         $f, $scope,
         sub {
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 stack => $$scope->{'Stack'}
                   ->( [ undef, [] ], $scope, undef, $pos->(23.4) ),
@@ -224,9 +225,9 @@ my $result = do {
         },
         'e'
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
-        numstack => FF::type_with_generics( $f, $scope, $$scope->{'Stack'},
+        numstack => type_with_generics( $f, $scope, $$scope->{'Stack'},
             [ $$scope->{'Num'} ] )
           ->( [ undef, [] ], $scope, undef, $pos->(27.35) ),
         undef,
@@ -243,4 +244,4 @@ my $result = do {
       ->( [ $$scope->{'numstack'} ], $scope, undef, $pos->(33.2) );
 };
 
-FF::after_content();
+after_content();

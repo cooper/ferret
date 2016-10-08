@@ -157,6 +157,8 @@
 #                                  Item 0
 #                                      Lexical variable '$pt2'
 #      Include (Num, Point)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -172,24 +174,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Point.frt', './std/Math/Point.frt' );
+my $pos = before_content( 'Point.frt', './std/Math/Point.frt' );
 
 use Ferret::Core::Operations qw(_sub add div num pow str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'Math' );
+    my ( $file_scope, $context ) = get_context( $f, 'Math' );
     my $scope = $file_scope;
-    FF::load_core('Math');
+    load_core('Math');
 
     # Class 'Point'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Point', undef, undef );
+          get_class( $f, $context, $file_scope, 'Point', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -207,15 +209,15 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $self, $args, 'x' ) or return;
-                FF::need( $self, $args, 'y' ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $self, $args, 'x' ) or return;
+                need( $self, $args, 'y' ) or return;
                 return $ret;
             }
         );
 
         # Method event 'distanceTo' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'distanceTo',
             [
@@ -227,9 +229,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'pt2', 9.2 ) or return;
-                FF::lex_assign(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'pt2', 9.2 ) or return;
+                lex_assign(
                     $scope,
                     dx => _sub(
                         $scope, $$self->{'x'},
@@ -238,7 +240,7 @@ my $result = do {
                     $file_scope,
                     $pos->(10.2)
                 );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     dy => _sub(
                         $scope, $$self->{'y'},
@@ -265,12 +267,12 @@ my $result = do {
         );
 
         # Method event 'distanceFromOrigin' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'distanceFromOrigin',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$self->{'distanceTo'}->(
                         [
@@ -288,11 +290,11 @@ my $result = do {
         );
 
         # Method event 'pretty' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope, 'pretty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add(
                         $scope,        str( $f, "(" ),
@@ -305,24 +307,24 @@ my $result = do {
         );
 
         # Method event 'toString' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'toString',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'pretty'} );
                 return $ret;
             }
         );
 
         # Method event 'description' definition
-        my $method_5 = FF::method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope,
             'description',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add( $scope, str( $f, "Point" ), $$self->{'pretty'} ) );
                 return $ret;
@@ -330,7 +332,7 @@ my $result = do {
         );
 
         # Method event 'midpoint' definition
-        my $method_6 = FF::method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope,
             'midpoint',
             [
@@ -348,9 +350,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'pt1', 32.1 ) or return;
-                FF::need( $scope, $args, 'pt2', 32.3 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'pt1', 32.1 ) or return;
+                need( $scope, $args, 'pt2', 32.3 ) or return;
                 return $ret_func->(
                     ${ $scope->{special} }->{'class'}->(
                         [
@@ -389,7 +391,7 @@ my $result = do {
         );
 
         # Method event 'distanceBetween' definition
-        my $method_7 = FF::method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope,
             'distanceBetween',
             [
@@ -407,9 +409,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'pt1', 40.1 ) or return;
-                FF::need( $scope, $args, 'pt2', 40.3 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'pt1', 40.1 ) or return;
+                need( $scope, $args, 'pt2', 40.3 ) or return;
                 return $ret_func->(
                     $$scope->{'pt1'}->property_u( 'distanceTo', $pos->(41.3) )
                       ->( [ $$scope->{'pt2'} ], $scope, undef, $pos->(41.4) ) );
@@ -446,7 +448,7 @@ my $result = do {
             $class, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Num Point) );
+    load_namespaces( $context, qw(Num Point) );
 };
 
-FF::after_content();
+after_content();

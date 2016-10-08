@@ -46,6 +46,8 @@
 #                                  Pair 'url'
 #                                      Lexical variable '$url'
 #      Include (HTTP, HTTP::Client, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -61,25 +63,25 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'HTTP.frt', './std/HTTP.frt' );
+my $pos = before_content( 'HTTP.frt', './std/HTTP.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'HTTP' );
+    my ( $file_scope, $context ) = get_context( $f, 'HTTP' );
     my $scope = $file_scope;
-    FF::load_core('HTTP');
+    load_core('HTTP');
 
     # Function event 'get' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $context, 'get', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'url', 14.2 ) or return;
+            need( $scope, $args, 'url', 14.2 ) or return;
             return $ret_func->(
                 $$scope->{'client'}->property_u( 'get', $pos->(15.3) )->(
                     [ undef, [ url => $$scope->{'url'} ] ], $scope,
@@ -91,13 +93,13 @@ my $result = do {
     );
 
     # Function event 'post' definition
-    my $func_1 = FF::function_event_def(
+    my $func_1 = function_event_def(
         $f, $context, 'post', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'url', 20.2 ) or return;
+            need( $scope, $args, 'url', 20.2 ) or return;
             return $ret_func->(
                 $$scope->{'client'}->property_u( 'post', $pos->(21.3) )->(
                     [ undef, [ url => $$scope->{'url'} ] ], $scope,
@@ -109,23 +111,23 @@ my $result = do {
     );
     $func_0->inside_scope( get  => $scope, $context, undef, undef, undef );
     $func_1->inside_scope( post => $scope, $context, undef, undef, undef );
-    FF::load_namespaces( $context, qw(HTTP HTTP::Client Str) );
+    load_namespaces( $context, qw(HTTP HTTP::Client Str) );
 
-    FF::typedef(
+    typedef(
         $scope, $context,
         'HTTPMethod',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
+            typedef_check(
                 $scope, $scope, $ins,
                 conditions => undef,
                 equal_to =>
-                  [ FF::get_symbol( $f, 'GET' ), FF::get_symbol( $f, 'POST' ) ]
+                  [ get_symbol( $f, 'GET' ), get_symbol( $f, 'POST' ) ]
             ) ? $ins : undef;
         },
         undef
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         client => [
             sub {
@@ -138,4 +140,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

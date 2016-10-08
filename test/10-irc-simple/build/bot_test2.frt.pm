@@ -28,6 +28,8 @@
 #                  Lexical variable '$bot'
 #              Argument list [0 items]
 #      Include (Bot2)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -43,20 +45,20 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos =
-  FF::before_content( 'bot_test2.frt', './test/10-irc-simple/bot_test2.frt' );
+  before_content( 'bot_test2.frt', './test/10-irc-simple/bot_test2.frt' );
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
-    FF::load_namespaces( $context, qw(Bot2) );
-    FF::lex_assign(
+    load_namespaces( $context, qw(Bot2) );
+    lex_assign(
         $scope,
         bot => $$scope->{'Bot2'}->(
             [
@@ -81,4 +83,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(3.3) );
 };
 
-FF::after_content();
+after_content();

@@ -25,6 +25,8 @@
 #              Argument list [1 items]
 #                  Item 0
 #                      Lexical variable '$roots'
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -40,33 +42,33 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '33-function-prop-var.frt',
+my $pos = before_content( '33-function-prop-var.frt',
     './test/33-function-prop-var.frt' );
 
 use Ferret::Core::Operations qw(num);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [ { name => '_' } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             my $ins = $args->{_};
             return $ret_func->( $$ins->{'sqrt'} );
             return $ret;
         }
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
-        roots => FF::create_list( $f,
+        roots => create_list( $f,
             [ num( $f, "4" ), num( $f, "16" ), num( $f, "25" ) ] )
           ->property_u( 'map', $pos->(1.5) )->(
             [
@@ -85,4 +87,4 @@ my $result = do {
       ->( [ $$scope->{'roots'} ], $scope, undef, $pos->(2.2) );
 };
 
-FF::after_content();
+after_content();

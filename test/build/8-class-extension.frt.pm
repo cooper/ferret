@@ -21,6 +21,8 @@
 #                          Call
 #                              Property 'doubledLength'
 #                                  String 'hi there'
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -36,30 +38,30 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos =
-  FF::before_content( '8-class-extension.frt', './test/8-class-extension.frt' );
+  before_content( '8-class-extension.frt', './test/8-class-extension.frt' );
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'String'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'String', undef, undef );
+          get_class( $f, $context, $file_scope, 'String', undef, undef );
 
         # Method event 'doubledLength' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'doubledLength',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     mul(
                         $scope,
@@ -91,4 +93,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

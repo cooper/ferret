@@ -1,1 +1,1 @@
-FF::create_object($f, [ <<pairs>> ])
+create_object($f, [ <<pairs>> ])

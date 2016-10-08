@@ -1,6 +1,6 @@
 # Method event '<<name>>' definition
-my $method_<<id>> = FF::method_event_def($f, $scope, '<<name>>', [ <<arguments>> ], sub {
-    my ($scope, $self, $this, $args, $ret) = &FF::args_v1;
+my $method_<<id>> = method_event_def($f, $scope, '<<name>>', [ <<arguments>> ], sub {
+    my ($scope, $self, $this, $args, $ret) = &args_v1;
     <<statements>>
     return $ret;
 });

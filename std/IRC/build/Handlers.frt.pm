@@ -192,6 +192,8 @@
 #                          Item 0
 #                              Property 'nick'
 #                                  This variable '%me'
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -207,25 +209,25 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Handlers.frt', './std/IRC/Handlers.frt' );
+my $pos = before_content( 'Handlers.frt', './std/IRC/Handlers.frt' );
 
 use Ferret::Core::Operations qw(_not _sub add any_true bool num rgx sim str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'IRC::Handlers' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC::Handlers' );
     my $scope = $file_scope;
-    FF::load_core('IRC::Handlers');
+    load_core('IRC::Handlers');
 
     # Function event 'ping' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $context, 'ping', undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 14.2 ) or return;
+            need( $scope, $args, 'msg', 14.2 ) or return;
             $$this->{'send'}->(
                 [
                     add(
@@ -246,15 +248,15 @@ my $result = do {
     );
 
     # Function event 'welcome' definition
-    my $func_1 = FF::function_event_def(
+    my $func_1 = function_event_def(
         $f, $context,
         'welcome',
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 19.2 ) or return;
+            need( $scope, $args, 'msg', 19.2 ) or return;
             $this->set_property( registered => $true, $pos->(20.2) );
             $$this->{'me'}->set_property(
                 nick => $$scope->{'msg'}->property_u( 'params', $pos->(21.25) )
@@ -291,13 +293,13 @@ my $result = do {
     );
 
     # Function event 'myInfo' definition
-    my $func_2 = FF::function_event_def(
+    my $func_2 = function_event_def(
         $f, $context, 'myInfo', undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 35.2 ) or return;
+            need( $scope, $args, 'msg', 35.2 ) or return;
             $$this->{'server'}->set_property(
                 name => $$scope->{'msg'}->property_u( 'params', $pos->(36.25) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(36.3) ),
@@ -314,13 +316,13 @@ my $result = do {
     );
 
     # Function event 'endOfMOTD' definition
-    my $func_3 = FF::function_event_def(
+    my $func_3 = function_event_def(
         $f, $context,
         'endOfMOTD',
         undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             if (
                 bool(
@@ -346,15 +348,15 @@ my $result = do {
     );
 
     # Function event 'hiddenHost' definition
-    my $func_4 = FF::function_event_def(
+    my $func_4 = function_event_def(
         $f, $context,
         'hiddenHost',
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 49.2 ) or return;
+            need( $scope, $args, 'msg', 49.2 ) or return;
             $$this->{'me'}->set_property(
                 host => $$scope->{'msg'}->property_u( 'params', $pos->(50.25) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(50.3) ),
@@ -365,13 +367,13 @@ my $result = do {
     );
 
     # Function event 'nickInUse' definition
-    my $func_5 = FF::function_event_def(
+    my $func_5 = function_event_def(
         $f, $context,
         'nickInUse',
         undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             if ( bool( $$this->{'registered'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -403,9 +405,9 @@ my $result = do {
     );
     $func_5->inside_scope( nickInUse => $scope, $context, undef, undef, undef );
 
-    FF::lex_assign(
+    lex_assign(
         $context,
-        handlers => FF::create_object(
+        handlers => create_object(
             $f,
             [
                 PING => $$scope->{'ping'},
@@ -422,4 +424,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

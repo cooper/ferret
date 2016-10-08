@@ -96,6 +96,8 @@
 #                          String 'Pi = '
 #                          Addition operator (+)
 #                          Lexical variable '$pi'
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -111,26 +113,26 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '3-nested-functions.frt',
-    './test/3-nested-functions.frt' );
+my $pos =
+  before_content( '3-nested-functions.frt', './test/3-nested-functions.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Function event 'hello1' definition
-    my $func_0 = FF::function_event_def(
+    my $func_0 = function_event_def(
         $f, $scope, 'hello1', undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 hello => str( $f, "Hello" ),
                 $file_scope, $pos->(17.2)
@@ -154,11 +156,11 @@ my $result = do {
     );
 
     # Function event 'hello2' definition
-    my $func_1 = FF::function_event_def(
+    my $func_1 = function_event_def(
         $f, $scope, 'hello2', undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "Hello " ), $$scope->{'name2'} ) ],
@@ -169,7 +171,7 @@ my $result = do {
     );
 
     # Function event 'helloWorld' definition
-    my $func_2 = FF::function_event_def(
+    my $func_2 = function_event_def(
         $f, $context,
         'helloWorld',
         undef,
@@ -188,7 +190,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $func_0->inside_scope(
                 hello1 => $scope,
@@ -198,8 +200,8 @@ my $result = do {
                 hello2 => $scope,
                 $scope, undef, undef, undef
             );
-            FF::need( $scope, $args, 'name1', 11.2 ) or return;
-            FF::need( $scope, $args, 'name2', 11.4 ) or return;
+            need( $scope, $args, 'name1', 11.2 ) or return;
+            need( $scope, $args, 'name2', 11.4 ) or return;
             $$scope->{'hello1'}->( [ undef, [] ], $scope, undef, $pos->(13.2) );
             $$scope->{'hello2'}->( [ undef, [] ], $scope, undef, $pos->(14.2) );
             return $ret;
@@ -224,7 +226,7 @@ my $result = do {
         [ str( $f, "Benjamin" ), str( $f, "George" ) ],
         $scope, undef, $pos->(8.2)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         pi =>
           add( $scope, num( $f, "3" ), num( $f, "0.1" ), num( $f, "0.04" ) ),
@@ -236,4 +238,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

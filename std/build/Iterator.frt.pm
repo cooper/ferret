@@ -66,6 +66,8 @@
 #                      Return
 #                          Special variable '*self'
 #      Include (List)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -81,25 +83,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Iterator.frt', './std/Iterator.frt' );
+my $pos = before_content( 'Iterator.frt', './std/Iterator.frt' );
 
 use Ferret::Core::Operations qw(_sub add nequal num);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'ListIterator'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'ListIterator', undef,
-            undef );
+          get_class( $f, $context, $file_scope, 'ListIterator', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -111,8 +112,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'list', 17.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'list', 17.2 ) or return;
                 $self->set_property(
                     list =>
                       $$scope->{'list'}->property_u( 'copy', $pos->(18.4) )
@@ -128,11 +129,11 @@ my $result = do {
         );
 
         # Method event 'more' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'more',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     nequal(
                         $scope,
@@ -146,12 +147,12 @@ my $result = do {
         );
 
         # Method event 'nextElement' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'nextElement',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 $self->set_property(
                     i => add( $scope, $$self->{'i'}, num( $f, "1" ) ),
                     $pos->(27.2)
@@ -167,12 +168,12 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'iterator',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( ${ $scope->{special} }->{'self'} );
                 return $ret;
             }
@@ -188,13 +189,13 @@ my $result = do {
         );
         $method_3->inside_scope( iterator => $scope, $proto, $class, 1, undef );
     }
-    FF::load_namespaces( $context, qw(List) );
-    FF::typedef(
+    load_namespaces( $context, qw(List) );
+    typedef(
         $scope, $context,
         'Iterator',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
+            typedef_check(
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'more',        $ins )->(),
@@ -206,12 +207,12 @@ my $result = do {
         },
         undef
     );
-    FF::typedef(
+    typedef(
         $scope, $context,
         'Iterable',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
+            typedef_check(
                 $scope, $scope, $ins,
                 conditions => [ $create_can->( 'iterator', $ins )->() ],
                 equal_to   => undef
@@ -221,4 +222,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

@@ -10,6 +10,8 @@
 #      Instruction
 #          Bareword 'Second'
 #      Include (Second)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -25,26 +27,21 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos =
-  FF::before_content( 'test.frt', './test/23-property-modifiers/test.frt' );
+my $pos = before_content( 'test.frt', './test/23-property-modifiers/test.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
-    FF::load_namespaces( $context, qw(Second) );
-    FF::lex_assign(
-        $scope,
-        x => FF::create_object( $f, [] ),
-        undef, $pos->(1.2)
-    );
+    load_namespaces( $context, qw(Second) );
+    lex_assign( $scope, x => create_object( $f, [] ), undef, $pos->(1.2) );
     $scope->delete_property_ow( 'x', $pos->(2.1) );
     $$scope->{'Second'};
 };
 
-FF::after_content();
+after_content();

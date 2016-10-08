@@ -18,6 +18,8 @@
 #                      Weaken modifier
 #                          Instance variable '@connection'
 #      Include (Connection, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -33,24 +35,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Server.frt', './std/IRC/Server.frt' );
+my $pos = before_content( 'Server.frt', './std/IRC/Server.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
     my $scope = $file_scope;
-    FF::load_core('IRC');
+    load_core('IRC');
 
     # Class 'Server'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Server', undef, undef );
+          get_class( $f, $context, $file_scope, 'Server', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -68,9 +70,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $self, $args, 'connection' ) or return;
-                FF::need( $self, $args, 'name' )       or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $self, $args, 'connection' ) or return;
+                need( $self, $args, 'name' )       or return;
                 $self->weaken_property( 'connection', $pos->(7.1) );
                 return $ret;
             }
@@ -80,7 +82,7 @@ my $result = do {
             $class, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Connection Str) );
+    load_namespaces( $context, qw(Connection Str) );
 };
 
-FF::after_content();
+after_content();

@@ -89,6 +89,8 @@
 #                                              Lexical variable '$type'
 #                          Argument list [0 items]
 #      Include (NATIVE, NATIVE::Signal, Sym)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -104,24 +106,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Signal.frt', './std/Signal.frt' );
+my $pos = before_content( 'Signal.frt', './std/Signal.frt' );
 
 use Ferret::Core::Operations qw(bool num);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'Signal'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Signal', undef, undef );
+          get_class( $f, $context, $file_scope, 'Signal', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -133,18 +135,18 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $self, $args, 'type' ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $self, $args, 'type' ) or return;
                 return $ret;
             }
         );
 
         # Method event 'trap' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'trap',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 $$scope->{'_exit'}
                   ->( [ num( $f, "0" ) ], $scope, undef, $pos->(25.2) );
                 return $ret;
@@ -152,7 +154,7 @@ my $result = do {
         );
 
         # Method event 'fireSignal' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'fireSignal',
             [
@@ -164,8 +166,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'type', 31.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'type', 31.2 ) or return;
                 {
                     my $maybe_0 =
                       $$scope->{'signals'}
@@ -189,12 +191,12 @@ my $result = do {
             $class, $class, undef, undef
         );
 
-        FF::lex_assign(
+        lex_assign(
             $class,
             INT => [
                 sub {
                     ${ $scope->{special} }->{'class'}->(
-                        [ FF::get_symbol( $f, 'INT' ) ],
+                        [ get_symbol( $f, 'INT' ) ],
                         $scope, undef, $pos->(7.5)
                     );
                 }
@@ -202,12 +204,12 @@ my $result = do {
             undef,
             $pos->(7.3)
         );
-        FF::lex_assign(
+        lex_assign(
             $class,
             HUP => [
                 sub {
                     ${ $scope->{special} }->{'class'}->(
-                        [ FF::get_symbol( $f, 'HUP' ) ],
+                        [ get_symbol( $f, 'HUP' ) ],
                         $scope, undef, $pos->(8.5)
                     );
                 }
@@ -215,12 +217,12 @@ my $result = do {
             undef,
             $pos->(8.3)
         );
-        FF::lex_assign(
+        lex_assign(
             $class,
             TERM => [
                 sub {
                     ${ $scope->{special} }->{'class'}->(
-                        [ FF::get_symbol( $f, 'TERM' ) ],
+                        [ get_symbol( $f, 'TERM' ) ],
                         $scope, undef, $pos->(9.5)
                     );
                 }
@@ -228,12 +230,12 @@ my $result = do {
             undef,
             $pos->(9.3)
         );
-        FF::lex_assign(
+        lex_assign(
             $class,
             ALRM => [
                 sub {
                     ${ $scope->{special} }->{'class'}->(
-                        [ FF::get_symbol( $f, 'ALRM' ) ],
+                        [ get_symbol( $f, 'ALRM' ) ],
                         $scope, undef, $pos->(10.5)
                     );
                 }
@@ -241,11 +243,11 @@ my $result = do {
             undef,
             $pos->(10.3)
         );
-        FF::lex_assign(
+        lex_assign(
             $scope,
             signals => [
                 sub {
-                    FF::create_hash(
+                    create_hash(
                         $f,
                         [
                             INT  => $$scope->{'INT'},
@@ -260,7 +262,7 @@ my $result = do {
             $pos->(12.2)
         );
     }
-    FF::load_namespaces( $context, qw(NATIVE NATIVE::Signal Sym) );
+    load_namespaces( $context, qw(NATIVE NATIVE::Signal Sym) );
 };
 
-FF::after_content();
+after_content();

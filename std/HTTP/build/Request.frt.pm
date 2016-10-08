@@ -46,6 +46,8 @@
 #          Method 'response'
 #              Body ('method' scope)
 #      Include (Client, HTTPMethod, NATIVE, NATIVE::HTTPClient, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -61,24 +63,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Request.frt', './std/HTTP/Request.frt' );
+my $pos = before_content( 'Request.frt', './std/HTTP/Request.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'HTTP' );
+    my ( $file_scope, $context ) = get_context( $f, 'HTTP' );
     my $scope = $file_scope;
-    FF::load_core('HTTP');
+    load_core('HTTP');
 
     # Class 'Request'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Request', undef, undef );
+          get_class( $f, $context, $file_scope, 'Request', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -102,26 +104,26 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'client', 9.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'client', 9.2 ) or return;
                 $self->set_property(
                     client => $$scope->{'client'},
                     $pos->(10.2)
                 );
                 $self->weaken_property( 'client', $pos->(11.1) );
-                FF::need( $self, $args, 'url' )        or return;
-                FF::need( $self, $args, 'httpMethod' ) or return;
+                need( $self, $args, 'url' )        or return;
+                need( $self, $args, 'httpMethod' ) or return;
                 return $ret;
             }
         );
 
         # Method event 'connect' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'connect',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 $$scope->{'NATIVE::HTTPClient'}
                   ->property_u( 'connect', $pos->(26.2) )->(
                     [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
@@ -132,47 +134,47 @@ my $result = do {
         );
 
         # Method event 'connected' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'connected',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
 
                 return $ret;
             }
         );
 
         # Method event 'redirect' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'redirect',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
 
                 return $ret;
             }
         );
 
         # Method event 'error' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope, 'error',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
 
                 return $ret;
             }
         );
 
         # Method event 'response' definition
-        my $method_5 = FF::method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope,
             'response',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
 
                 return $ret;
             }
@@ -202,8 +204,8 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context,
+    load_namespaces( $context,
         qw(Client HTTPMethod NATIVE NATIVE::HTTPClient Str) );
 };
 
-FF::after_content();
+after_content();

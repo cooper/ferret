@@ -85,6 +85,8 @@
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
 #      Include (Any, Error, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Iterator, Obj, Object, Signal, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -100,26 +102,26 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'CORE.frt', './std/CORE.frt' );
+my $pos = before_content( 'CORE.frt', './std/CORE.frt' );
 
 use Ferret::Core::Operations qw(equal num);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'CORE' );
+    my ( $file_scope, $context ) = get_context( $f, 'CORE' );
     my $scope = $file_scope;
-    FF::load_core('CORE');
+    load_core('CORE');
 
-    FF::load_namespaces( $context,
+    load_namespaces( $context,
         qw(Any Error Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Iterator Obj Object Signal Str)
     );
 
-    FF::typedef(
+    typedef(
         $scope, $context, 'Any',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
+            typedef_check(
                 $scope, $scope, $ins,
                 conditions => undef,
                 equal_to   => undef
@@ -129,11 +131,11 @@ my $result = do {
     );
     $context->set_property( Obj    => $$scope->{'Any'}, $pos->(15.3) );
     $context->set_property( Object => $$scope->{'Any'}, $pos->(16.3) );
-    FF::typedef(
+    typedef(
         $scope, $context, 'Code',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
+            typedef_check(
                 $scope, $scope, $ins,
                 conditions => [ $$ins->{'name'}, $$ins->{'signature'} ],
                 equal_to   => undef
@@ -141,11 +143,11 @@ my $result = do {
         },
         undef
     );
-    FF::typedef(
+    typedef(
         $scope, $context, 'Char',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
+            typedef_check(
                 $scope, $scope, $ins,
                 conditions => [
                     $ins->fits_type_u( $$scope->{'Str'} ),
@@ -156,12 +158,12 @@ my $result = do {
         },
         undef
     );
-    FF::typedef(
+    typedef(
         $scope, $context,
         'Hashable',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
+            typedef_check(
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'hashValue', $ins )
@@ -173,12 +175,12 @@ my $result = do {
         },
         undef
     );
-    FF::typedef(
+    typedef(
         $scope, $context,
         'Indexed',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
-            FF::typedef_check(
+            typedef_check(
                 $scope, $scope, $ins,
                 conditions => [
                     $create_can->( 'getValue', $ins )->(
@@ -204,4 +206,4 @@ my $result = do {
     );
 };
 
-FF::after_content();
+after_content();

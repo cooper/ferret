@@ -140,6 +140,8 @@
 #                                      Lexical variable '$c'
 #                                  Argument list [0 items]
 #      Include (Channel, Connection)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -155,26 +157,26 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Bot.frt', './std/IRC/Bot.frt' );
+my $pos = before_content( 'Bot.frt', './std/IRC/Bot.frt' );
 
 use Ferret::Core::Operations qw(_not all_true bool num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
     my $scope = $file_scope;
-    FF::load_core('IRC');
+    load_core('IRC');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef,
         'handleCommand',
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
-            FF::need( $scope, $args, 'msg', 18.2 ) or return;
+            need( $scope, $args, 'msg', 18.2 ) or return;
             if (
                 bool(
                     _not(
@@ -191,7 +193,7 @@ my $result = do {
 
                 return $ret_func->();
             }
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 trim => $$scope->{'msg'}->property_u( 'params', $pos->(25.25) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(25.3) )
@@ -213,7 +215,7 @@ my $result = do {
 
                 return $ret_func->();
             }
-            FF::lex_assign(
+            lex_assign(
                 $scope,
                 command =>
                   $$scope->{'trim'}->property_u( 'result', $pos->(28.4) ),
@@ -240,7 +242,7 @@ my $result = do {
                     )
                   )
                 {
-                    FF::try_catch(
+                    try_catch(
                         $f, $scope,
                         sub {
                             $maybe_1->(
@@ -282,10 +284,10 @@ my $result = do {
     # Class 'Bot'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Bot', undef, undef );
+          get_class( $f, $context, $file_scope, 'Bot', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -297,11 +299,10 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::want( $self, $args, 'commands', 5.2,
-                    FF::create_object( $f, [] ) );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                want( $self, $args, 'commands', 5.2, create_object( $f, [] ) );
                 $self->set_property(
-                    conns => FF::create_list( $f, [] ),
+                    conns => create_list( $f, [] ),
                     $pos->(6.2)
                 );
                 return $ret;
@@ -309,7 +310,7 @@ my $result = do {
         );
 
         # Method event 'addConnection' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'addConnection',
             [
@@ -321,18 +322,18 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'connection', 10.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'connection', 10.2 ) or return;
                 $$self->{'conns'}->property_u( 'push', $pos->(11.2) )
                   ->( [ $$scope->{'connection'} ], $scope, undef,
                     $pos->(11.3) );
-                FF::lex_assign(
+                lex_assign(
                     $scope,
                     bot => ${ $scope->{special} }->{'self'},
                     $file_scope, $pos->(13.2)
                 );
                 $scope->weaken_property( 'bot', $pos->(14.1) );
-                FF::on(
+                on(
                     $$scope->{'connection'}
                       ->property_u( 'handlers', $pos->(17.3) ),
                     'PRIVMSG',
@@ -348,14 +349,14 @@ my $result = do {
         );
 
         # Method event 'connect' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'connect',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 {
-                    my $loop_ret = FF::iterate(
+                    my $loop_ret = iterate(
                         $f, $scope,
                         $$self->{'conns'},
                         'c',
@@ -385,7 +386,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Channel Connection) );
+    load_namespaces( $context, qw(Channel Connection) );
 };
 
-FF::after_content();
+after_content();

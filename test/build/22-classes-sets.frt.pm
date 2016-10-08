@@ -159,6 +159,8 @@
 #                  Item 0
 #                      Lexical variable '$aftermath'
 #      Include (Cat, Cow, Dog)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -174,41 +176,40 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos =
-  FF::before_content( '22-classes-sets.frt', './test/22-classes-sets.frt' );
+my $pos = before_content( '22-classes-sets.frt', './test/22-classes-sets.frt' );
 
 use Ferret::Core::Operations qw(bool str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'Cow'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Cow', undef, undef );
+          get_class( $f, $context, $file_scope, 'Cow', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [ { name => 'moos', type => undef, optional => 1, more => undef } ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::want( $self, $args, 'moos', 6.2, $true );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                want( $self, $args, 'moos', 6.2, $true );
                 return $ret;
             }
         );
 
         # Method event 'moo' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'moo',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'moos'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -228,10 +229,10 @@ my $result = do {
     # Class 'Dog'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Dog', undef, undef );
+          get_class( $f, $context, $file_scope, 'Dog', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -243,18 +244,18 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::want( $self, $args, 'barks', 18.2, $false );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                want( $self, $args, 'barks', 18.2, $false );
                 return $ret;
             }
         );
 
         # Method event 'bark' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'bark',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'barks'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -275,33 +276,33 @@ my $result = do {
     # Class 'Cat'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Cat', undef, undef );
+          get_class( $f, $context, $file_scope, 'Cat', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::want( $self, $args, 'mean', 30.2, $false );
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                want( $self, $args, 'mean', 30.2, $false );
                 return $ret;
             }
         );
 
         # Method event 'meow' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'meow',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 return $ret_func->( str( $f, "meow" ) );
                 return $ret;
             }
         );
 
         # Method event 'fight' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'fight',
             [
                 {
@@ -318,9 +319,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'cat1', 39.1 ) or return;
-                FF::need( $scope, $args, 'cat2', 39.3 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'cat1', 39.1 ) or return;
+                need( $scope, $args, 'cat2', 39.3 ) or return;
                 if (
                     bool(
                         $$scope->{'cat1'}->property_u( 'mean', $pos->(40.3) )
@@ -357,8 +358,8 @@ my $result = do {
             $class, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Cat Cow Dog) );
-    FF::lex_assign(
+    load_namespaces( $context, qw(Cat Cow Dog) );
+    lex_assign(
         $scope,
         animal =>
           $$scope->{'Cow'}->( [ undef, [] ], $scope, undef, $pos->(50.4) ),
@@ -388,15 +389,14 @@ my $result = do {
       ->( [ undef, [ mean => $true ] ], $scope, undef, $pos->(60.3) );
     $$scope->{'inspect'}
       ->( [ $$scope->{'animal'} ], $scope, undef, $pos->(62.2) );
-    FF::lex_assign(
+    lex_assign(
         $scope,
         cat => $$scope->{'Cat'}->( [ undef, [] ], $scope, undef, $pos->(65.4) ),
         undef, $pos->(65.2)
     );
-    FF::lex_assign(
+    lex_assign(
         $scope,
-        aftermath =>
-          FF::create_set( $scope, $$scope->{'animal'}, $$scope->{'cat'} )
+        aftermath => create_set( $scope, $$scope->{'animal'}, $$scope->{'cat'} )
           ->property_u( 'fight', $pos->(71.4) )
           ->( [ undef, [] ], $scope, undef, $pos->(71.45) ),
         undef, $pos->(71.1)
@@ -405,4 +405,4 @@ my $result = do {
       ->( [ $$scope->{'aftermath'} ], $scope, undef, $pos->(72.2) );
 };
 
-FF::after_content();
+after_content();

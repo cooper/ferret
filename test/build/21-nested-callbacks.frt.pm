@@ -64,6 +64,8 @@
 #                          Item 0
 #                              Lexical variable '$part'
 #      Include (Timer)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -79,24 +81,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( '21-nested-callbacks.frt',
-    './test/21-nested-callbacks.frt' );
+my $pos =
+  before_content( '21-nested-callbacks.frt', './test/21-nested-callbacks.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Anonymous function definition
-    my $func_0 = FF::function_def(
+    my $func_0 = function_def(
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &FF::args_v1;
+            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [
@@ -112,21 +114,21 @@ my $result = do {
             return $ret;
         }
     );
-    FF::load_namespaces( $context, qw(Timer) );
-    FF::lex_assign(
+    load_namespaces( $context, qw(Timer) );
+    lex_assign(
         $scope,
         parts => str( $f, "s p a m" )->property_u( 'split', $pos->(1.4) )
           ->( [ str( $f, " " ) ], $scope, undef, $pos->(1.5) ),
         undef, $pos->(1.2)
     );
     {
-        my $loop_ret = FF::iterate_pair(
+        my $loop_ret = iterate_pair(
             $f, $scope,
             $$scope->{'parts'},
             'i', 'part',
             sub {
                 my ( $scope, $ret_func ) = @_;
-                FF::on(
+                on(
                     $$scope->{'Timer'}
                       ->( [ $$scope->{'i'} ], $scope, undef, $pos->(4.15) )
                       ->property_u( 'once', $pos->(4.3) )
@@ -144,9 +146,9 @@ my $result = do {
         return $ret_func->($loop_ret) if $loop_ret;
     }
     {
-        my $loop_ret = FF::iterate(
+        my $loop_ret = iterate(
             $f, $scope,
-            FF::create_list(
+            create_list(
                 $f, [ num( $f, "1" ), num( $f, "2" ), num( $f, "3" ) ]
             ),
             'part',
@@ -161,4 +163,4 @@ my $result = do {
     }
 };
 
-FF::after_content();
+after_content();

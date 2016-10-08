@@ -10,6 +10,8 @@
 #                      Argument list [1 items]
 #                          Item 0
 #                              String 'Hello World!'
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -25,20 +27,20 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos =
-  FF::before_content( '2-call-expression.frt', './test/2-call-expression.frt' );
+  before_content( '2-call-expression.frt', './test/2-call-expression.frt' );
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     $$scope->{'say'}
       ->( [ str( $f, "Hello World!" ) ], $scope, undef, $pos->(1.25) );
 };
 
-FF::after_content();
+after_content();

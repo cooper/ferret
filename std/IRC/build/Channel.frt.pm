@@ -34,6 +34,8 @@
 #                              Item 1
 #                                  Lexical variable '$message'
 #      Include (Connection, Str, Str::Any)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -49,24 +51,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'Channel.frt', './std/IRC/Channel.frt' );
+my $pos = before_content( 'Channel.frt', './std/IRC/Channel.frt' );
 
 use Ferret::Core::Operations qw();
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
     my $scope = $file_scope;
-    FF::load_core('IRC');
+    load_core('IRC');
 
     # Class 'Channel'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'Channel', undef, undef );
+          get_class( $f, $context, $file_scope, 'Channel', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -84,16 +86,16 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $self, $args, 'connection' ) or return;
-                FF::need( $self, $args, 'name' )       or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $self, $args, 'connection' ) or return;
+                need( $self, $args, 'name' )       or return;
                 $self->weaken_property( 'connection', $pos->(7.1) );
                 return $ret;
             }
         );
 
         # Method event 'privmsg' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope,
             'privmsg',
             [
@@ -105,8 +107,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'message', 12.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'message', 12.2 ) or return;
                 $$self->{'connection'}
                   ->property_u( 'sendPrivmsg', $pos->(13.2) )->(
                     [ $$self->{'name'}, $$scope->{'message'} ],
@@ -124,7 +126,7 @@ my $result = do {
             $proto, $class, undef, undef
         );
     }
-    FF::load_namespaces( $context, qw(Connection Str Str::Any) );
+    load_namespaces( $context, qw(Connection Str Str::Any) );
 };
 
-FF::after_content();
+after_content();

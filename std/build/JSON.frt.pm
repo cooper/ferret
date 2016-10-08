@@ -380,6 +380,8 @@
 #                      Bareword 'parse'
 #                      Bareword 'decode'
 #      Include (Bool, Charset, Error, List, NATIVE, NATIVE::PerlObject, Str)
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -395,24 +397,24 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = FF::before_content( 'JSON.frt', './std/JSON.frt' );
+my $pos = before_content( 'JSON.frt', './std/JSON.frt' );
 
 use Ferret::Core::Operations qw(_not bool str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
     # Class 'JSON'
     {
         my ( $class, $self, $proto, $scope ) =
-          FF::get_class( $f, $context, $file_scope, 'JSON', 1.0, undef );
+          get_class( $f, $context, $file_scope, 'JSON', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = FF::method_event_def(
+        my $method_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -466,17 +468,16 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::want( $self, $args, 'strict',     24.2, $true );
-                FF::want( $self, $args, 'consistent', 30.2, $false );
-                FF::want( $self, $args, 'charset', 37.2,
-                    FF::get_symbol( $f, 'utf8' ) );
-                FF::want( $self, $args, 'strictRoot',  41.2, $false );
-                FF::want( $self, $args, 'pretty',      46.2, $false );
-                FF::want( $self, $args, 'spaceBefore', 51.2, $false );
-                FF::want( $self, $args, 'spaceAfter',  55.2, $false );
-                FF::want( $self, $args, 'indent',      59.2, $false );
-                FF::try_catch(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                want( $self, $args, 'strict',     24.2, $true );
+                want( $self, $args, 'consistent', 30.2, $false );
+                want( $self, $args, 'charset', 37.2, get_symbol( $f, 'utf8' ) );
+                want( $self, $args, 'strictRoot',  41.2, $false );
+                want( $self, $args, 'pretty',      46.2, $false );
+                want( $self, $args, 'spaceBefore', 51.2, $false );
+                want( $self, $args, 'spaceAfter',  55.2, $false );
+                want( $self, $args, 'indent',      59.2, $false );
+                try_catch(
                     $f, $scope,
                     sub {
                         $$scope->{'_PO'}->property_u( 'require', $pos->(65.2) )
@@ -490,7 +491,7 @@ my $result = do {
                         return $ret->fail(
                             $$scope->{'Error'}->(
                                 [
-                                    FF::get_symbol( $f, 'PerlRequireFailed' ),
+                                    get_symbol( $f, 'PerlRequireFailed' ),
                                     str( $f, "Unable to load JSON::XS" ),
                                     [ subError => $$scope->{'err'} ]
                                 ],
@@ -502,7 +503,7 @@ my $result = do {
                     },
                     'err'
                 );
-                FF::try_catch(
+                try_catch(
                     $f, $scope,
                     sub {
                         $self->set_property(
@@ -518,9 +519,7 @@ my $result = do {
                         return $ret->fail(
                             $$scope->{'Error'}->(
                                 [
-                                    FF::get_symbol(
-                                        $f, 'PerlConstructorFailed'
-                                    ),
+                                    get_symbol( $f, 'PerlConstructorFailed' ),
                                     str(
                                         $f, "Could not create JSON::XS object"
                                     ),
@@ -584,7 +583,7 @@ my $result = do {
         );
 
         # Method event 'encode' definition
-        my $method_1 = FF::method_event_def(
+        my $method_1 = method_event_def(
             $f, $scope, 'encode',
             [
                 {
@@ -595,9 +594,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'data', 96.2 ) or return;
-                FF::try_catch(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'data', 96.2 ) or return;
+                try_catch(
                     $f, $scope,
                     sub {
                         $ret->set_property(
@@ -614,7 +613,7 @@ my $result = do {
                         return $ret->fail(
                             $$scope->{'Error'}->(
                                 [
-                                    FF::get_symbol( $f, 'JSONError' ),
+                                    get_symbol( $f, 'JSONError' ),
                                     str( $f, "JSON encode error" ),
                                     [ subError => $$scope->{'err'} ]
                                 ],
@@ -631,7 +630,7 @@ my $result = do {
         );
 
         # Method event 'decode' definition
-        my $method_2 = FF::method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'decode',
             [
                 {
@@ -642,9 +641,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'json', 105.2 ) or return;
-                FF::try_catch(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'json', 105.2 ) or return;
+                try_catch(
                     $f, $scope,
                     sub {
                         $ret->set_property(
@@ -661,7 +660,7 @@ my $result = do {
                         return $ret->fail(
                             $$scope->{'Error'}->(
                                 [
-                                    FF::get_symbol( $f, 'JSONError' ),
+                                    get_symbol( $f, 'JSONError' ),
                                     str( $f, "JSON decode error" ),
                                     [ subError => $$scope->{'err'} ]
                                 ],
@@ -678,7 +677,7 @@ my $result = do {
         );
 
         # Method event 'decoderAdd' definition
-        my $method_3 = FF::method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'decoderAdd',
             [
@@ -690,9 +689,9 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'fragment', 138.2 ) or return;
-                FF::try_catch(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'fragment', 138.2 ) or return;
+                try_catch(
                     $f, $scope,
                     sub {
                         $$self->{'xs'}->property_u( 'perlCall', $pos->(142.1) )
@@ -711,7 +710,7 @@ my $result = do {
                         return $ret->fail(
                             $$scope->{'Error'}->(
                                 [
-                                    FF::get_symbol( $f, 'JSONError' ),
+                                    get_symbol( $f, 'JSONError' ),
                                     str( $f, "JSON incr_parse() error" ),
                                     [ subError => $$scope->{'err'} ]
                                 ],
@@ -729,16 +728,16 @@ my $result = do {
         );
 
         # Method event 'decoderDone' definition
-        my $method_4 = FF::method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'decoderDone',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::try_catch(
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                try_catch(
                     $f, $scope,
                     sub {
-                        FF::lex_assign(
+                        lex_assign(
                             $scope,
                             objects => $$self->{'xs'}
                               ->property_u( 'perlCall', $pos->(155.2) )->(
@@ -758,7 +757,7 @@ my $result = do {
                         return $ret->fail(
                             $$scope->{'Error'}->(
                                 [
-                                    FF::get_symbol( $f, 'JSONError' ),
+                                    get_symbol( $f, 'JSONError' ),
                                     str( $f, "JSON incr_parse() error" ),
                                     [ subError => $$scope->{'err'} ]
                                 ],
@@ -797,12 +796,12 @@ my $result = do {
         );
 
         # Method event 'decoderReset' definition
-        my $method_5 = FF::method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope,
             'decoderReset',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
                 $$self->{'xs'}->property_u( 'incr_reset', $pos->(167.2) )
                   ->( [ undef, [] ], $scope, undef, $pos->(167.3) );
                 return $ret;
@@ -810,7 +809,7 @@ my $result = do {
         );
 
         # Method event 'encode' definition
-        my $method_6 = FF::method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope, 'encode',
             [
                 {
@@ -821,8 +820,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'data', 180.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'data', 180.2 ) or return;
                 return $ret_func->(
                     $$scope->{'default'}->property_u( 'encode', $pos->(181.3) )
                       ->( [ $$scope->{'data'} ], $scope, undef, $pos->(181.4) )
@@ -832,7 +831,7 @@ my $result = do {
         );
 
         # Method event 'decode' definition
-        my $method_7 = FF::method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope, 'decode',
             [
                 {
@@ -843,8 +842,8 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &FF::args_v1;
-                FF::need( $scope, $args, 'json', 187.2 ) or return;
+                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'json', 187.2 ) or return;
                 return $ret_func->(
                     $$scope->{'default'}->property_u( 'decode', $pos->(188.3) )
                       ->( [ $$scope->{'json'} ], $scope, undef, $pos->(188.4) )
@@ -888,7 +887,7 @@ my $result = do {
             _PO => $$scope->{'NATIVE::PerlObject'},
             $pos->(9.3)
         );
-        FF::lex_assign(
+        lex_assign(
             $scope,
             default => [
                 sub {
@@ -899,18 +898,18 @@ my $result = do {
             undef,
             $pos->(12.2)
         );
-        FF::typedef(
+        typedef(
             $scope, $class,
             'Charset',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
-                FF::typedef_check(
+                typedef_check(
                     $scope, $scope, $ins,
                     conditions => undef,
                     equal_to   => [
-                        FF::get_symbol( $f, 'ascii' ),
-                        FF::get_symbol( $f, 'latin1' ),
-                        FF::get_symbol( $f, 'utf8' )
+                        get_symbol( $f, 'ascii' ),
+                        get_symbol( $f, 'latin1' ),
+                        get_symbol( $f, 'utf8' )
                     ]
                 ) ? $ins : undef;
             },
@@ -919,8 +918,8 @@ my $result = do {
         $class->set_property( stringify => $$scope->{'encode'}, $pos->(191.3) );
         $class->set_property( parse     => $$scope->{'decode'}, $pos->(192.3) );
     }
-    FF::load_namespaces( $context,
+    load_namespaces( $context,
         qw(Bool Charset Error List NATIVE NATIVE::PerlObject Str) );
 };
 
-FF::after_content();
+after_content();

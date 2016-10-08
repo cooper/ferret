@@ -105,6 +105,8 @@
 #                                  String ' value='
 #                                  Addition operator (+)
 #                                  Lexical variable '$val'
+package FF;
+
 use warnings;
 use strict;
 use 5.010;
@@ -120,21 +122,20 @@ BEGIN {
 use Ferret;
 
 my $self;
-my $f = FF::get_ferret();
-my ( $true, $false, $undefined, $ret_func ) = FF::get_constant_objects($f);
+my $f = get_ferret();
+my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos =
-  FF::before_content( '18-lists-hashes.frt', './test/18-lists-hashes.frt' );
+my $pos = before_content( '18-lists-hashes.frt', './test/18-lists-hashes.frt' );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
-    my ( $file_scope, $context ) = FF::get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
-    FF::load_core('main');
+    load_core('main');
 
-    FF::lex_assign(
+    lex_assign(
         $scope,
-        list => FF::create_list( $f, [ str( $f, "hi" ) ] ),
+        list => create_list( $f, [ str( $f, "hi" ) ] ),
         undef, $pos->(1.2)
     );
     $$scope->{'list'}->property_u( 'push', $pos->(2.2) )
@@ -156,7 +157,7 @@ my $result = do {
         $pos->(5.2)
     );
     {
-        my $loop_ret = FF::iterate(
+        my $loop_ret = iterate(
             $f, $scope,
             $$scope->{'list'},
             'item',
@@ -171,9 +172,9 @@ my $result = do {
         );
         return $ret_func->($loop_ret) if $loop_ret;
     }
-    FF::lex_assign(
+    lex_assign(
         $scope,
-        hash => FF::create_hash( $f, [ hi => str( $f, "there" ) ] ),
+        hash => create_hash( $f, [ hi => str( $f, "there" ) ] ),
         undef, $pos->(11.2)
     );
     $$scope->{'hash'}->set_index_value(
@@ -201,7 +202,7 @@ my $result = do {
         $pos->(15.1)
     );
     {
-        my $loop_ret = FF::iterate_pair(
+        my $loop_ret = iterate_pair(
             $f, $scope,
             $$scope->{'hash'},
             'key', 'val',
@@ -225,4 +226,4 @@ my $result = do {
     }
 };
 
-FF::after_content();
+after_content();
