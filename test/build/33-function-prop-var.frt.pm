@@ -59,8 +59,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => '_' } ],
         sub {
-            my ( $scope, $_self, $this, undef, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
             return $ret_func->( $$ins->{'sqrt'} );
             return $ret;

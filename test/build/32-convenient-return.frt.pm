@@ -47,8 +47,7 @@ my $result = do {
         $f, $context, 'A', undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             return $ret_func->( str( $f, "return value" ) );
             return $ret;
         }

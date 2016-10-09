@@ -92,8 +92,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}->(
                 [ str( $f, "Got TERM. Terminating!" ) ],
                 $scope, undef, $pos->(3.2)
@@ -107,8 +106,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if ( bool( _not( $$scope->{'asked'} ) ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 

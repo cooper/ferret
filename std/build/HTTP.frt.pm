@@ -79,8 +79,7 @@ my $result = do {
         $f, $context, 'get', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'url', 14.2 ) or return;
             return $ret_func->(
                 $$scope->{'client'}->property_u( 'get', $pos->(15.3) )->(
@@ -97,8 +96,7 @@ my $result = do {
         $f, $context, 'post', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'url', 20.2 ) or return;
             return $ret_func->(
                 $$scope->{'client'}->property_u( 'post', $pos->(21.3) )->(

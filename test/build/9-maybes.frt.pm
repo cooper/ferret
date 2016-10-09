@@ -68,8 +68,7 @@ my $result = do {
         undef,
         [ { name => 'who', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'who', 2.2 ) or return;
             $$scope->{'say'}->(
                 [

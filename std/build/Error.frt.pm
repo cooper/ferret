@@ -197,8 +197,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'list', 29.2 ) or return;
             var( $scope, str => str( $f, "\n" ), $file_scope, $pos->(30.2) );
             {

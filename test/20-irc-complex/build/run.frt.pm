@@ -586,8 +586,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 67.2 ) or return;
             if (
                 bool(
@@ -689,8 +688,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'string', 80.2 ) or return;
             return $ret_func->(
                 $$scope->{'string'}->property_u( 'split', $pos->(81.15) )
@@ -706,8 +704,7 @@ my $result = do {
         $f, $context, 'ircsay', undef,
         [ { name => 'str', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'str', 85.2 ) or return;
             $$scope->{'bot'}->property_u( 'privmsg', $pos->(86.1) )->(
                 [
@@ -730,8 +727,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 7.2 ) or return;
             $$scope->{'bot'}->property_u( 'privmsg', $pos->(8.1) )->(
                 [
@@ -750,8 +746,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 12.2 ) or return;
             if (
                 bool(
@@ -836,8 +831,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 25.2 ) or return;
             if (
                 bool(
@@ -923,8 +917,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 38.2 ) or return;
             if (
                 bool(
@@ -1018,8 +1011,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 51.2 ) or return;
             if (
                 bool(

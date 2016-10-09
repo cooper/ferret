@@ -64,8 +64,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}
               ->( [ str( $f, "it works!" ) ], $scope, undef, $pos->(8.2) );
             return $ret;

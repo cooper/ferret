@@ -1,7 +1,6 @@
 # Anonymous function definition
 my $func_<<id>> = function_def($f, <<owner>>, <<name>>, [ { name => '_' } ], sub {
-    my ($scope, $_self, $this, undef, $args, $ret) = &args_v1;
-    my $self = $_self || $self;
+    my ($scope, $self, $this, undef, $args, $ret) = &args_v1;
     my $ins = $args->{_};
     <<statements>>
     return $ret;

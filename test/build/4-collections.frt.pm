@@ -116,8 +116,7 @@ my $result = do {
             { name => 'z', type => undef, optional => 1,     more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'x', 2.2 ) or return;
             need( $scope, $args, 'y', 2.4 ) or return;
             want( $scope, $args, 'z', 3.2 );

@@ -108,8 +108,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}
               ->( [ str( $f, "Connected!" ) ], $scope, undef, $pos->(4.2) );
             return $ret;
@@ -128,8 +127,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'location', 8.2 ) or return;
             $$scope->{'say'}->(
                 [
@@ -157,8 +155,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'content', 14.2 ) or return;
             $$scope->{'say'}->(
                 [
@@ -181,8 +178,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}
               ->( [ str( $f, "Got error!" ) ], $scope, undef, $pos->(21.2) );
             return $ret;

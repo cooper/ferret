@@ -416,8 +416,7 @@ my $result = do {
         undef,
         [ { name => 'incN', type => 'Bool', optional => 1, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             want( $scope, $args, 'incN', 30.2 );
             var(
                 $scope,

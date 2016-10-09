@@ -576,8 +576,7 @@ my $result = do {
         'sendRegistration',
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$self->{'send'}->(
                 [
                     add(
@@ -609,8 +608,7 @@ my $result = do {
         'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 36.2 ) or return;
             $$self->{'handleLine'}
               ->( [ $$scope->{'data'} ], $scope, undef, $pos->(37.2) );
@@ -625,8 +623,7 @@ my $result = do {
         undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if ( bool( $$this->{'_joinedChannels'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -668,8 +665,7 @@ my $result = do {
         $f, $scope, '_pong', undef,
         [ { name => 's', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 's', 109.2 ) or return;
             $$this->{'send'}->(
                 [
@@ -699,8 +695,7 @@ my $result = do {
             { name => 's',    type => undef, optional => undef, more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'line', 114.2 ) or return;
             need( $scope, $args, 's',    114.4 ) or return;
             var(
@@ -756,8 +751,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 131.2 ) or return;
             var(
                 $scope,
@@ -787,8 +781,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 137.2 ) or return;
             $$scope->{'inspect'}
               ->( [ $$scope->{'msg'} ], $scope, undef, $pos->(138.2) );
@@ -842,8 +835,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 152.2 ) or return;
             var(
                 $scope,

@@ -225,8 +225,7 @@ my $result = do {
         $f, $context, 'ping', undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 14.2 ) or return;
             $$this->{'send'}->(
                 [
@@ -254,8 +253,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 19.2 ) or return;
             $this->set_property( registered => $true, $pos->(20.2) );
             $$this->{'me'}->set_property(
@@ -297,8 +295,7 @@ my $result = do {
         $f, $context, 'myInfo', undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 35.2 ) or return;
             $$this->{'server'}->set_property(
                 name => $$scope->{'msg'}->property_u( 'params', $pos->(36.25) )
@@ -322,8 +319,7 @@ my $result = do {
         undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if (
                 bool(
                     any_true(
@@ -354,8 +350,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 49.2 ) or return;
             $$this->{'me'}->set_property(
                 host => $$scope->{'msg'}->property_u( 'params', $pos->(50.25) )
@@ -373,8 +368,7 @@ my $result = do {
         undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if ( bool( $$this->{'registered'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 

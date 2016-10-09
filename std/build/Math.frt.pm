@@ -73,8 +73,7 @@ my $result = do {
         $f, $context, 'sqrt', undef,
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'num', 4.2 ) or return;
             return $ret_func->(
                 $$scope->{'NATIVE::Math'}->property_u( 'sqrt', $pos->(5.25) )
@@ -91,8 +90,7 @@ my $result = do {
             { name => 'num',  type => 'Num', optional => undef, more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'root', 9.1 ) or return;
             need( $scope, $args, 'num',  9.3 ) or return;
             return $ret_func->(

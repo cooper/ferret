@@ -118,8 +118,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'name',   7.1 ) or return;
             need( $scope, $args, 'gender', 7.3 ) or return;
             var(

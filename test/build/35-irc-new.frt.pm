@@ -726,8 +726,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     58.2 ) or return;
             need( $scope, $args, 'channel', 58.4 ) or return;
             var(
@@ -804,8 +803,7 @@ my $result = do {
             { name => 'mini', type => undef, optional => undef, more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     116.2 ) or return;
             need( $scope, $args, 'channel', 116.4 ) or return;
             need( $scope, $args, 'mini',    116.6 ) or return;
@@ -860,8 +858,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 126.2 ) or return;
             var(
                 $scope,
@@ -902,8 +899,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'channel', 4.2 ) or return;
             $$scope->{'channel'}->property_u( 'privmsg', $pos->(5.2) )->(
                 [
@@ -931,8 +927,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     13.2 ) or return;
             need( $scope, $args, 'channel', 13.4 ) or return;
             var(
@@ -1053,8 +1048,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     35.2 ) or return;
             need( $scope, $args, 'channel', 35.4 ) or return;
             var(
@@ -1167,8 +1161,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     75.2 ) or return;
             need( $scope, $args, 'channel', 75.4 ) or return;
             var(
@@ -1233,8 +1226,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     86.2 ) or return;
             need( $scope, $args, 'channel', 86.4 ) or return;
             var(
@@ -1286,8 +1278,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     96.2 ) or return;
             need( $scope, $args, 'channel', 96.4 ) or return;
             var(
@@ -1339,8 +1330,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     106.2 ) or return;
             need( $scope, $args, 'channel', 106.4 ) or return;
             $$scope->{'handlePerl'}->(
@@ -1364,8 +1354,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     111.2 ) or return;
             need( $scope, $args, 'channel', 111.4 ) or return;
             $$scope->{'handlePerl'}->(

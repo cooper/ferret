@@ -130,8 +130,7 @@ my $result = do {
         $f, $scope, 'hello1', undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             var(
                 $scope,
                 hello => str( $f, "Hello" ),
@@ -160,8 +159,7 @@ my $result = do {
         $f, $scope, 'hello2', undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "Hello " ), $$scope->{'name2'} ) ],
                 $scope, undef, $pos->(23.2)
@@ -190,8 +188,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $func_0->inside_scope(
                 hello1 => $scope,
                 $scope, undef, $ins, undef, undef

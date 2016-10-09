@@ -190,8 +190,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'pt', 4.2 ) or return;
             return $ret_func->(
                 do {
@@ -251,8 +250,7 @@ my $result = do {
         undef,
         [ { name => 'nums', type => 'Num', optional => undef, more => 1 } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'nums', 27.2 ) or return;
             $ret->set_property(
                 even => do {

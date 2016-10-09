@@ -470,8 +470,7 @@ my $result = do {
         'sendRegistration',
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$self->{'send'}->(
                 [
                     add(
@@ -505,8 +504,7 @@ my $result = do {
         'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 37.2 ) or return;
             $$self->{'_handleLine'}
               ->( [ $$scope->{'data'} ], $scope, undef, $pos->(38.2) );
@@ -520,8 +518,7 @@ my $result = do {
         'resetState',
         [],
         sub {
-            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
-            my $self = $_self || $self;
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$self->{'_resetState'}
               ->( [ undef, [] ], $scope, undef, $pos->(43.2) );
             return $ret;
