@@ -135,7 +135,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -171,7 +171,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'pt1' ) or return;
                 need( $self, $args, 'pt2' ) or return;
                 return $ret;
@@ -184,7 +184,7 @@ my $result = do {
             'endpoints',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     create_list( $f, [ $$self->{'pt1'}, $$self->{'pt2'} ] ) );
                 return $ret;
@@ -196,7 +196,7 @@ my $result = do {
             $f, $scope, 'pretty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
                     $scope,
                     mp => $$self->{'midpoint'},
@@ -254,7 +254,7 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'pretty'} );
                 return $ret;
             }
@@ -266,7 +266,7 @@ my $result = do {
             'midpoint',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     create_set( $scope, $$self->{'pt1'}, $$self->{'pt2'} )
                       ->property_u( 'midpoint', $pos->(25.35) )
@@ -280,7 +280,7 @@ my $result = do {
             $f, $scope, 'length',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$self->{'pt1'}->property_u( 'distanceTo', $pos->(29.3) )
                       ->( [ $$self->{'pt2'} ], $scope, undef, $pos->(29.4) ) );
@@ -289,19 +289,28 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             endpoints => $scope,
-            $proto, $class, 1, undef
+            $proto, $class, $ins, 1, undef
         );
-        $method_2->inside_scope( pretty => $scope, $proto, $class, 1, undef );
+        $method_2->inside_scope(
+            pretty => $scope,
+            $proto, $class, $ins, 1, undef
+        );
         $method_3->inside_scope(
             description => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
-        $method_4->inside_scope( midpoint => $scope, $proto, $class, 1, undef );
-        $method_5->inside_scope( length   => $scope, $proto, $class, 1, undef );
+        $method_4->inside_scope(
+            midpoint => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_5->inside_scope(
+            length => $scope,
+            $proto, $class, $ins, 1, undef
+        );
     }
     load_namespaces( $context, qw(Point) );
 };

@@ -197,7 +197,8 @@ sub call {
         $scope,                 # FUNC_SCOPE
         $return,                # FUNC_RET
         $func,                  # FUNC_FUNC
-        $this                   # FUNC_THIS
+        $this,                  # FUNC_THIS
+        $func->{ins}            # FUNC_INS
     );
 
     $return->detail if $detail;
@@ -408,18 +409,24 @@ sub inside_scope {
     #               it is available for all functions and methods within a class
     #               construct, even if they are private, etc.
     #
+    # $ins      =   the $ins in the scope where the function is defined
+    #
     # $is_prop  =   the function is a computed property.
     #               only makes sense if this is a method.
     #
     # $p_set    =   the computed property should be set after evaluating
     #               only makes sense with $is_prop.
     #
-    my ($func, $name, $scope, $owner, $class, $is_prop, $p_set) = (shift, @_);
+    my ($func, $name, $scope, $owner, $class, $ins, $is_prop, $p_set) = (shift, @_);
 
-    $func->{class} = $class;
-    $func->{outer_scope} = $scope;
+    $func->{class}         = $class;
+    $func->{outer_scope}   = $scope;
     $func->{is_class_func} = 1 if $owner && $owner->isa('Ferret::Class');
     $func->{is_method}     = 1 if $owner && $owner->{is_proto};
+    $func->{ins}           = $ins;
+
+    weaken($func->{class}) if $func->{class};
+    weaken($func->{ins})   if $func->{ins};
 
     my $event;
 

@@ -62,7 +62,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -79,7 +79,7 @@ my $result = do {
         $f, $context, 'get', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'url', 14.2 ) or return;
             return $ret_func->(
@@ -97,7 +97,7 @@ my $result = do {
         $f, $context, 'post', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'url', 20.2 ) or return;
             return $ret_func->(
@@ -109,8 +109,11 @@ my $result = do {
             return $ret;
         }
     );
-    $func_0->inside_scope( get  => $scope, $context, undef, undef, undef );
-    $func_1->inside_scope( post => $scope, $context, undef, undef, undef );
+    $func_0->inside_scope( get => $scope, $context, undef, $ins, undef, undef );
+    $func_1->inside_scope(
+        post => $scope,
+        $context, undef, $ins, undef, undef
+    );
     load_namespaces( $context, qw(HTTP HTTP::Client Str) );
 
     typedef(

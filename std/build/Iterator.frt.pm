@@ -82,7 +82,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -112,7 +112,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'list', 17.2 ) or return;
                 $self->set_property(
                     list =>
@@ -133,7 +133,7 @@ my $result = do {
             $f, $scope, 'more',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     nequal(
                         $scope,
@@ -152,7 +152,7 @@ my $result = do {
             'nextElement',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
                     i => add( $scope, $$self->{'i'}, num( $f, "1" ) ),
                     $pos->(27.2)
@@ -173,21 +173,27 @@ my $result = do {
             'iterator',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( ${ $scope->{special} }->{'self'} );
                 return $ret;
             }
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope( more => $scope, $proto, $class, 1, undef );
+        $method_1->inside_scope(
+            more => $scope,
+            $proto, $class, $ins, 1, undef
+        );
         $method_2->inside_scope(
             nextElement => $scope,
-            $proto, $class, 1, undef
+            $proto, $class, $ins, 1, undef
         );
-        $method_3->inside_scope( iterator => $scope, $proto, $class, 1, undef );
+        $method_3->inside_scope(
+            iterator => $scope,
+            $proto, $class, $ins, 1, undef
+        );
     }
     load_namespaces( $context, qw(List) );
     typedef(

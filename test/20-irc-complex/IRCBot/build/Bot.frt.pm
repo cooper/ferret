@@ -558,7 +558,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -576,7 +576,7 @@ my $result = do {
         'sendRegistration',
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$self->{'send'}->(
                 [
@@ -609,7 +609,7 @@ my $result = do {
         'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'data', 36.2 ) or return;
             $$self->{'handleLine'}
@@ -625,7 +625,7 @@ my $result = do {
         undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             if ( bool( $$this->{'_joinedChannels'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -668,7 +668,7 @@ my $result = do {
         $f, $scope, '_pong', undef,
         [ { name => 's', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 's', 109.2 ) or return;
             $$this->{'send'}->(
@@ -699,7 +699,7 @@ my $result = do {
             { name => 's',    type => undef, optional => undef, more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'line', 114.2 ) or return;
             need( $scope, $args, 's',    114.4 ) or return;
@@ -756,7 +756,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 131.2 ) or return;
             var(
@@ -787,7 +787,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 137.2 ) or return;
             $$scope->{'inspect'}
@@ -842,7 +842,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 152.2 ) or return;
             var(
@@ -911,7 +911,7 @@ my $result = do {
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'addr' ) or return;
                 need( $self, $args, 'nick' ) or return;
                 want( $self, $args, 'port', 18.2, num( $f, "6667" ) );
@@ -948,7 +948,7 @@ my $result = do {
                     $self, $scope,
                     $func_0->inside_scope(
                         (undef) => $scope,
-                        undef, $class, undef, undef
+                        undef, $class, $ins, undef, undef
                     ),
                     {}
                 );
@@ -958,7 +958,7 @@ my $result = do {
                     $self, $scope,
                     $func_1->inside_scope(
                         (undef) => $scope,
-                        undef, $class, undef, undef
+                        undef, $class, $ins, undef, undef
                     ),
                     {}
                 );
@@ -985,7 +985,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'command',  43.1 ) or return;
                 need( $scope, $args, 'callback', 43.4 ) or return;
                 if (
@@ -1014,7 +1014,7 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$self->{'sock'}->property_u( 'connect', $pos->(51.2) )
                   ->( [ undef, [] ], $scope, undef, $pos->(51.3) );
                 return $ret;
@@ -1033,7 +1033,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 55.2 ) or return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
@@ -1058,7 +1058,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 61.2 ) or return;
                 var(
                     $scope,
@@ -1155,7 +1155,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'channel', 84.1 ) or return;
                 need( $scope, $args, 'message', 84.3 ) or return;
                 {
@@ -1204,45 +1204,51 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             addCommand => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_2->inside_scope(
             connect => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
-        $method_3->inside_scope( send => $scope, $proto, $class, undef, undef );
+        $method_3->inside_scope(
+            send => $scope,
+            $proto, $class, $ins, undef, undef
+        );
         $method_4->inside_scope(
             handleLine => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_5->inside_scope(
             privmsg => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $func_2->inside_scope(
             _joinChannels => $scope,
-            $scope, $class, undef, undef
+            $scope, $class, $ins, undef, undef
         );
-        $func_3->inside_scope( _pong => $scope, $scope, $class, undef, undef );
+        $func_3->inside_scope(
+            _pong => $scope,
+            $scope, $class, $ins, undef, undef
+        );
         $func_4->inside_scope(
             _handleMessage => $scope,
-            $scope, $class, undef, undef
+            $scope, $class, $ins, undef, undef
         );
         $func_5->inside_scope(
             _commandHello => $scope,
-            $scope, $class, undef, undef
+            $scope, $class, $ins, undef, undef
         );
         $func_6->inside_scope(
             _commandAdd => $scope,
-            $scope, $class, undef, undef
+            $scope, $class, $ins, undef, undef
         );
         $func_7->inside_scope(
             _commandFactoid => $scope,
-            $scope, $class, undef, undef
+            $scope, $class, $ins, undef, undef
         );
         var(
             $class,

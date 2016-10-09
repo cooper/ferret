@@ -38,7 +38,7 @@ sub add_global_functions {
             pending_add => 1
         );
 
-        $func->inside_scope($name, $context, $context, undef);
+        $func->inside_scope($name, $context, $context);
     }
 }
 

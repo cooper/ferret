@@ -365,7 +365,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -382,7 +382,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => '_' } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, undef, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             my $ins = $args->{_};
             return $ret_func->( nequal( $scope, $$scope->{'what'}, $ins ) );
@@ -400,7 +400,7 @@ my $result = do {
             $f, $scope, 'empty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
                 return $ret;
@@ -419,7 +419,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 18.2 ) or return;
                 return $ret_func->(
                     do {
@@ -470,7 +470,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 26.2 ) or return;
                 return $ret_func->(
                     do {
@@ -531,14 +531,14 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'what', 34.2 ) or return;
                 return $ret_func->(
                     $$self->{'grep'}->(
                         [
                             $func_0->inside_scope(
                                 (undef) => $scope,
-                                undef, $class, undef, undef
+                                undef, $class, $ins, undef, undef
                             )
                         ],
                         $scope, undef,
@@ -562,7 +562,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'what', 41.2 ) or return;
                 $scope->set_property(
                     found => Ferret::undefined,
@@ -642,7 +642,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'what', 54.2 ) or return;
                 $ret->set_property( removed => $false, $pos->(55.2) );
                 {
@@ -697,7 +697,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'what', 68.2 ) or return;
                 var(
                     $scope,
@@ -766,7 +766,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 81.2 ) or return;
                 {
                     my $loop_ret = iterate(
@@ -811,7 +811,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 90.2 ) or return;
                 {
                     my $loop_ret = iterate(
@@ -856,7 +856,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 99.2 ) or return;
                 {
                     my $loop_ret = iterate(
@@ -898,7 +898,7 @@ my $result = do {
             $f, $scope, 'sum',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'empty'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -949,7 +949,7 @@ my $result = do {
             $f, $scope, 'sum0',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var( $scope, c => num( $f, "0" ), $file_scope, $pos->(121.2) );
                 {
                     my $loop_ret = iterate(
@@ -975,33 +975,54 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope( empty => $scope, $proto, $class, 1, undef );
-        $method_1->inside_scope( map  => $scope, $proto, $class, undef, undef );
-        $method_2->inside_scope( grep => $scope, $proto, $class, undef, undef );
+        $method_0->inside_scope(
+            empty => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_1->inside_scope(
+            map => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $method_2->inside_scope(
+            grep => $scope,
+            $proto, $class, $ins, undef, undef
+        );
         $method_3->inside_scope(
             withoutAll => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_4->inside_scope(
             without => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_5->inside_scope(
             remove => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_6->inside_scope(
             removeAll => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_7->inside_scope(
             first => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
-        $method_8->inside_scope( any => $scope, $proto, $class, undef, undef );
-        $method_9->inside_scope( all => $scope, $proto, $class, undef, undef );
-        $method_10->inside_scope( sum  => $scope, $proto, $class, 1, undef );
-        $method_11->inside_scope( sum0 => $scope, $proto, $class, 1, undef );
+        $method_8->inside_scope(
+            any => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $method_9->inside_scope(
+            all => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $method_10->inside_scope(
+            sum => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_11->inside_scope(
+            sum0 => $scope,
+            $proto, $class, $ins, 1, undef
+        );
         typedef(
             $scope, $class, 'Pairs',
             sub {

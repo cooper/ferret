@@ -175,7 +175,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -198,7 +198,7 @@ my $result = do {
             'initializer__',
             [ { name => 'moos', type => undef, optional => 1, more => undef } ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'moos', 6.2, $true );
                 return $ret;
             }
@@ -209,7 +209,7 @@ my $result = do {
             $f, $scope, 'moo',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'moos'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -221,9 +221,12 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope( moo => $scope, $proto, $class, undef, undef );
+        $method_1->inside_scope(
+            moo => $scope,
+            $proto, $class, $ins, undef, undef
+        );
     }
 
     # Class 'Dog'
@@ -244,7 +247,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'barks', 18.2, $false );
                 return $ret;
             }
@@ -255,7 +258,7 @@ my $result = do {
             $f, $scope, 'bark',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'barks'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -268,9 +271,12 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope( bark => $scope, $proto, $class, undef, undef );
+        $method_1->inside_scope(
+            bark => $scope,
+            $proto, $class, $ins, undef, undef
+        );
     }
 
     # Class 'Cat'
@@ -284,7 +290,7 @@ my $result = do {
             'initializer__',
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'mean', 30.2, $false );
                 return $ret;
             }
@@ -295,7 +301,7 @@ my $result = do {
             $f, $scope, 'meow',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( str( $f, "meow" ) );
                 return $ret;
             }
@@ -319,7 +325,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'cat1', 39.1 ) or return;
                 need( $scope, $args, 'cat2', 39.3 ) or return;
                 if (
@@ -350,12 +356,15 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope( meow => $scope, $proto, $class, undef, undef );
+        $method_1->inside_scope(
+            meow => $scope,
+            $proto, $class, $ins, undef, undef
+        );
         $method_2->inside_scope(
             fight => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Cat Cow Dog) );

@@ -247,7 +247,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -279,7 +279,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'name', 7.2, str( $f, "Test" ) );
                 want( $self, $args, 'fatal', 11.2, $true );
                 $self->set_property( tested => num( $f, "0" ), $pos->(13.2) );
@@ -301,7 +301,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 19.2 ) or return;
                 return $ret_func->(
                     $$self->{'_test'}->(
@@ -333,7 +333,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 25.2 ) or return;
                 return $ret_func->(
                     $$self->{'_test'}->(
@@ -367,7 +367,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 31.2 ) or return;
                 need( $scope, $args, 'b', 32.2 ) or return;
                 return $ret_func->(
@@ -403,7 +403,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 38.2 ) or return;
                 need( $scope, $args, 'b', 39.2 ) or return;
                 return $ret_func->(
@@ -441,7 +441,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 45.2 ) or return;
                 need( $scope, $args, 'b', 46.2 ) or return;
                 return $ret_func->(
@@ -477,7 +477,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 52.2 ) or return;
                 need( $scope, $args, 'b', 53.2 ) or return;
                 return $ret_func->(
@@ -501,7 +501,7 @@ my $result = do {
             $f, $scope, 'review',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
                     $scope,
                     failed =>
@@ -557,7 +557,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'yes',     69.2 ) or return;
                 need( $scope, $args, 'message', 69.4 ) or return;
                 $self->set_property(
@@ -599,39 +599,39 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             trueValue => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_2->inside_scope(
             veryTrue => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_3->inside_scope(
             equal => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_4->inside_scope(
             objectsEqual => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_5->inside_scope(
             notEqual => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_6->inside_scope(
             objectsNotEqual => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_7->inside_scope(
             review => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_8->inside_scope(
             _test => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Bool Error) );

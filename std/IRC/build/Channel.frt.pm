@@ -50,7 +50,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -86,7 +86,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'connection' ) or return;
                 need( $self, $args, 'name' )       or return;
                 $self->weaken_property( 'connection', $pos->(7.1) );
@@ -107,7 +107,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'message', 12.2 ) or return;
                 $$self->{'connection'}
                   ->property_u( 'sendPrivmsg', $pos->(13.2) )->(
@@ -119,11 +119,11 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             privmsg => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Connection Str Str::Any) );

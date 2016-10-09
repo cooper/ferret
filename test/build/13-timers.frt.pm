@@ -67,7 +67,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -84,7 +84,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->( [ str( $f, "five seconds up" ) ], $scope, undef,
                 $pos->(4.2) );
@@ -97,7 +97,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ str( $f, "this shouldn't be said" ) ],
@@ -112,10 +112,11 @@ my $result = do {
         $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(3.15) )
           ->property_u( 'once', $pos->(3.3) )
           ->( [ undef, [] ], $scope, undef, $pos->(3.35) ),
-        'expire',
-        $self,
-        $scope,
-        $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'expire', $self, $scope,
+        $func_0->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     var(
@@ -127,10 +128,11 @@ my $result = do {
     on(
         $$scope->{'t2'}->property_u( 'once', $pos->(8.3) )
           ->( [ undef, [] ], $scope, undef, $pos->(8.4) ),
-        'expire',
-        $self,
-        $scope,
-        $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'expire', $self, $scope,
+        $func_1->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     $$scope->{'t2'}->property_u( 'cancel', $pos->(12.2) )

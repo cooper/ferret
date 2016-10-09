@@ -341,6 +341,7 @@ sub FUNC_SCOPE  () { 3 }
 sub FUNC_RET    () { 4 }
 sub FUNC_FUNC   () { 5 }
 sub FUNC_THIS   () { 6 }
+sub FUNC_INS    () { 7 }
 
 # returns a Ferret function with the provided wants and needs, if any.
 sub ffunction {

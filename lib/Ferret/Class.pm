@@ -191,6 +191,7 @@ sub _bind_function {
         undef,          # outer scope
         $where,         # owner
         $class,         # class
+        undef,          # ins
         $opts{prop},    # is computer property?
         $opts{pset}     # set property after evaluating?
     );

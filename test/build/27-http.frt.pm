@@ -91,7 +91,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -108,7 +108,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "Connected!" ) ], $scope, undef, $pos->(4.2) );
@@ -128,7 +128,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'location', 8.2 ) or return;
             $$scope->{'say'}->(
@@ -157,7 +157,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'content', 14.2 ) or return;
             $$scope->{'say'}->(
@@ -181,7 +181,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "Got error!" ) ], $scope, undef, $pos->(21.2) );
@@ -206,7 +206,7 @@ my $result = do {
                     $self, $scope,
                     $func_0->inside_scope(
                         (undef) => $scope,
-                        undef, undef, undef, undef
+                        undef, undef, $ins, undef, undef
                     ),
                     {}
                 );
@@ -216,7 +216,7 @@ my $result = do {
                     $self, $scope,
                     $func_1->inside_scope(
                         (undef) => $scope,
-                        undef, undef, undef, undef
+                        undef, undef, $ins, undef, undef
                     ),
                     {}
                 );
@@ -226,7 +226,7 @@ my $result = do {
                     $self, $scope,
                     $func_2->inside_scope(
                         (undef) => $scope,
-                        undef, undef, undef, undef
+                        undef, undef, $ins, undef, undef
                     ),
                     {}
                 );
@@ -234,7 +234,7 @@ my $result = do {
                     $ins, 'error', $self, $scope,
                     $func_3->inside_scope(
                         (undef) => $scope,
-                        undef, undef, undef, undef
+                        undef, undef, $ins, undef, undef
                     ),
                     {}
                 );

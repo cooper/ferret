@@ -137,7 +137,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -154,7 +154,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$self->{'send'}->(
                 [
@@ -186,7 +186,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'data', 20.2 ) or return;
             $$scope->{'say'}->(
@@ -202,7 +202,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'data', 25.2 ) or return;
             $$scope->{'say'}->(
@@ -245,7 +245,7 @@ my $result = do {
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'address' ) or return;
                 need( $self, $args, 'nick' )    or return;
                 need( $self, $args, 'user' )    or return;
@@ -275,7 +275,7 @@ my $result = do {
                     $self, $scope,
                     $func_0->inside_scope(
                         (undef) => $scope,
-                        undef, $class, undef, undef
+                        undef, $class, $ins, undef, undef
                     ),
                     {}
                 );
@@ -285,7 +285,7 @@ my $result = do {
                     $self, $scope,
                     $func_1->inside_scope(
                         (undef) => $scope,
-                        undef, $class, undef, undef
+                        undef, $class, $ins, undef, undef
                     ),
                     {}
                 );
@@ -295,7 +295,7 @@ my $result = do {
                     $self, $scope,
                     $func_2->inside_scope(
                         (undef) => $scope,
-                        undef, $class, undef, undef
+                        undef, $class, $ins, undef, undef
                     ),
                     {}
                 );
@@ -304,7 +304,7 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Num Socket Socket::TCP Str) );

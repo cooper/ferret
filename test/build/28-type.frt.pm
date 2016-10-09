@@ -91,7 +91,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -118,7 +118,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'name',   7.1 ) or return;
             need( $scope, $args, 'gender', 7.3 ) or return;
@@ -143,7 +143,10 @@ my $result = do {
             return $ret;
         }
     );
-    $func_0->inside_scope( announce => $scope, $context, undef, undef, undef );
+    $func_0->inside_scope(
+        announce => $scope,
+        $context, undef, $ins, undef, undef
+    );
     load_namespaces( $context, qw(Gender Str) );
     typedef(
         $scope, $context, 'Gender',

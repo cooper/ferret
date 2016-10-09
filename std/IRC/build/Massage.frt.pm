@@ -396,7 +396,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -416,7 +416,7 @@ my $result = do {
         undef,
         [ { name => 'incN', type => 'Bool', optional => 1, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             want( $scope, $args, 'incN', 30.2 );
             var(
@@ -466,7 +466,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $scope, $args, 'data', 7.2 );
                 if ( bool( $$scope->{'data'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -492,10 +492,10 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $func_0->inside_scope(
                     updateWord => $scope,
-                    $scope, $class, undef, undef
+                    $scope, $class, $ins, undef, undef
                 );
                 need( $scope, $args, 'data', 20.2 ) or return;
                 var(
@@ -822,7 +822,7 @@ my $result = do {
             $f, $scope, 'target',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 {
                     my $maybe_0 = $$self->{'connection'};
                     if ( bool($maybe_0) ) {
@@ -851,7 +851,7 @@ my $result = do {
             '_parsedSource',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( _not( $$self->{'source'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -881,7 +881,7 @@ my $result = do {
             $f, $scope, 'nick',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
                       ->property_u( 'nick', $pos->(118.5) ) );
                 return $ret;
@@ -893,7 +893,7 @@ my $result = do {
             $f, $scope, 'user',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
                       ->property_u( 'user', $pos->(119.5) ) );
                 return $ret;
@@ -905,7 +905,7 @@ my $result = do {
             $f, $scope, 'host',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
                       ->property_u( 'host', $pos->(120.5) ) );
                 return $ret;
@@ -913,20 +913,32 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             parse => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope( target => $scope, $proto, $class, 1, undef );
+        $method_2->inside_scope(
+            target => $scope,
+            $proto, $class, $ins, 1, undef
+        );
         $method_3->inside_scope(
             _parsedSource => $scope,
-            $proto, $class, 1, 1
+            $proto, $class, $ins, 1, 1
         );
-        $method_4->inside_scope( nick => $scope, $proto, $class, 1, undef );
-        $method_5->inside_scope( user => $scope, $proto, $class, 1, undef );
-        $method_6->inside_scope( host => $scope, $proto, $class, 1, undef );
+        $method_4->inside_scope(
+            nick => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_5->inside_scope(
+            user => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_6->inside_scope(
+            host => $scope,
+            $proto, $class, $ins, 1, undef
+        );
     }
     load_namespaces( $context, qw(Bool Connection Str Str::NE) );
 };

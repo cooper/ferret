@@ -29,7 +29,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -47,13 +47,13 @@ my $result = do {
         $f, $context, 'A', undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             return $ret_func->( str( $f, "return value" ) );
             return $ret;
         }
     );
-    $func_0->inside_scope( A => $scope, $context, undef, undef, undef );
+    $func_0->inside_scope( A => $scope, $context, undef, $ins, undef, undef );
     load_namespaces( $context, qw(A) );
     $$scope->{'say'}->(
         [ $$scope->{'A'}->( [ undef, [] ], $scope, undef, $pos->(5.4) ) ],

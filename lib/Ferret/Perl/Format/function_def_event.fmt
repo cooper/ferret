@@ -1,6 +1,6 @@
 # Function event <<name>> definition
 my $func_<<id>> = function_event_def($f, <<owner>>, <<name>>, <<cb_name>>, [ <<arguments>> ], sub {
-    my ($scope, $_self, $this, $args, $ret) = &args_v1;
+    my ($scope, $_self, $this, $ins, $args, $ret) = &args_v1;
     my $self = $_self || $self;
     <<statements>>
     return $ret;

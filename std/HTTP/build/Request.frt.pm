@@ -62,7 +62,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -104,7 +104,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'client', 9.2 ) or return;
                 $self->set_property(
                     client => $$scope->{'client'},
@@ -123,7 +123,7 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$scope->{'NATIVE::HTTPClient'}
                   ->property_u( 'connect', $pos->(26.2) )->(
                     [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
@@ -139,7 +139,7 @@ my $result = do {
             'connected',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
 
                 return $ret;
             }
@@ -151,7 +151,7 @@ my $result = do {
             'redirect',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
 
                 return $ret;
             }
@@ -162,7 +162,7 @@ my $result = do {
             $f, $scope, 'error',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
 
                 return $ret;
             }
@@ -174,34 +174,34 @@ my $result = do {
             'response',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
 
                 return $ret;
             }
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             connect => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_2->inside_scope(
             connected => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_3->inside_scope(
             redirect => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_4->inside_scope(
             error => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_5->inside_scope(
             response => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context,

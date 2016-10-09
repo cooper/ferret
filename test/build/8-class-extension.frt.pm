@@ -37,7 +37,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -61,7 +61,7 @@ my $result = do {
             'doubledLength',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     mul(
                         $scope,
@@ -75,7 +75,7 @@ my $result = do {
         );
         $method_0->inside_scope(
             doubledLength => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
     }
     $$scope->{'say'}->(

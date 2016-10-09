@@ -65,7 +65,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -88,7 +88,7 @@ my $result = do {
             'initializer__',
             [ { name => 'items', type => 'T', optional => 1, more => 1 } ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'items', 4.2 );
                 return $ret;
             }
@@ -106,7 +106,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'item', 8.2 ) or return;
                 $$self->{'items'}->property_u( 'push', $pos->(9.2) )
                   ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.3) );
@@ -119,7 +119,7 @@ my $result = do {
             $f, $scope, 'pop',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$self->{'items'}->property_u( 'pop', $pos->(13.3) )
                       ->( [ undef, [] ], $scope, undef, $pos->(13.4) ) );
@@ -133,7 +133,7 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
                     $scope,
                     name => $$scope->{'T'}->property_u( 'name', $pos->(17.4) ),
@@ -154,13 +154,19 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope( push => $scope, $proto, $class, undef, undef );
-        $method_2->inside_scope( pop  => $scope, $proto, $class, undef, undef );
+        $method_1->inside_scope(
+            push => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $method_2->inside_scope(
+            pop => $scope,
+            $proto, $class, $ins, undef, undef
+        );
         $method_3->inside_scope(
             description => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(T) );

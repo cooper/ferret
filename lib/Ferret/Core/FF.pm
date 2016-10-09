@@ -10,7 +10,7 @@ use Scalar::Util qw(blessed weaken dualvar);
 use List::Util qw(any all none);
 use Ferret::Core::Conversion qw(
     fstring ffunction ferror pbool pstring
-    FUNC_SCOPE FUNC_SELF FUNC_THIS FUNC_RET FUNC_ARGS
+    FUNC_SCOPE FUNC_SELF FUNC_THIS FUNC_INS FUNC_RET FUNC_ARGS
 );
 
 our $pos;
@@ -636,7 +636,7 @@ sub type_with_generics {
 # never change this, just add new versions
 sub args_v1 {
     # my ($scope, $self, $this, $args, $ret) = &FF::args_v1;
-    state $v1 = [FUNC_SCOPE, FUNC_SELF, FUNC_THIS, FUNC_ARGS, FUNC_RET];
+    state $v1 = [FUNC_SCOPE, FUNC_SELF, FUNC_THIS, FUNC_INS, FUNC_ARGS, FUNC_RET];
     return @_[@$v1];
 }
 

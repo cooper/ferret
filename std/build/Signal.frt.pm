@@ -105,7 +105,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -135,7 +135,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'type' ) or return;
                 return $ret;
             }
@@ -146,7 +146,7 @@ my $result = do {
             $f, $scope, 'trap',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$scope->{'_exit'}
                   ->( [ num( $f, "0" ) ], $scope, undef, $pos->(25.2) );
                 return $ret;
@@ -166,7 +166,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'type', 31.2 ) or return;
                 {
                     my $maybe_0 =
@@ -183,12 +183,15 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope( trap => $scope, $proto, $class, undef, undef );
+        $method_1->inside_scope(
+            trap => $scope,
+            $proto, $class, $ins, undef, undef
+        );
         $method_2->inside_scope(
             fireSignal => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
 
         var(

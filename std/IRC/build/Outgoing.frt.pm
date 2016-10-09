@@ -100,7 +100,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -130,7 +130,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'channelNames', 6.2 ) or return;
                 {
                     my $loop_ret = iterate(
@@ -177,7 +177,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'target',  13.1 ) or return;
                 need( $scope, $args, 'message', 13.3 ) or return;
                 {
@@ -237,7 +237,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'nick', 23.2 ) or return;
                 $$self->{'send'}->(
                     [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],
@@ -248,15 +248,15 @@ my $result = do {
         );
         $method_0->inside_scope(
             sendJoin => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             sendPrivmsg => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_2->inside_scope(
             sendNick => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Str Str::Any) );

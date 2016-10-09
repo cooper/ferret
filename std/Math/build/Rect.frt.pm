@@ -215,7 +215,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -263,7 +263,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'x', 5.1 ) or return;
                 need( $scope, $args, 'y', 5.3 ) or return;
                 need( $self, $args, 'width' )  or return;
@@ -285,7 +285,7 @@ my $result = do {
             'vertices',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     create_list(
                         $f,
@@ -305,7 +305,7 @@ my $result = do {
             'bottomLeft',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'origin'} );
                 return $ret;
             }
@@ -317,7 +317,7 @@ my $result = do {
             'bottomRight',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Point'}->(
                         [
@@ -343,7 +343,7 @@ my $result = do {
             'topLeft',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Point'}->(
                         [
@@ -370,7 +370,7 @@ my $result = do {
             'topRight',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Point'}->(
                         [
@@ -401,7 +401,7 @@ my $result = do {
             'bottomLine',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Line'}->(
                         [ $$self->{'bottomLeft'}, $$self->{'bottomRight'} ],
@@ -418,7 +418,7 @@ my $result = do {
             'topLine',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Line'}->(
                         [ $$self->{'topLeft'}, $$self->{'topRight'} ],
@@ -434,7 +434,7 @@ my $result = do {
             $f, $scope, 'center',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
                     $scope,
                     x => add(
@@ -471,7 +471,7 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
                     $scope,
                     o => $$self->{'origin'},
@@ -505,28 +505,43 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope( vertices => $scope, $proto, $class, 1, undef );
+        $method_1->inside_scope(
+            vertices => $scope,
+            $proto, $class, $ins, 1, undef
+        );
         $method_2->inside_scope(
             bottomLeft => $scope,
-            $proto, $class, 1, undef
+            $proto, $class, $ins, 1, undef
         );
         $method_3->inside_scope(
             bottomRight => $scope,
-            $proto, $class, 1, undef
+            $proto, $class, $ins, 1, undef
         );
-        $method_4->inside_scope( topLeft  => $scope, $proto, $class, 1, undef );
-        $method_5->inside_scope( topRight => $scope, $proto, $class, 1, undef );
+        $method_4->inside_scope(
+            topLeft => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_5->inside_scope(
+            topRight => $scope,
+            $proto, $class, $ins, 1, undef
+        );
         $method_6->inside_scope(
             bottomLine => $scope,
-            $proto, $class, 1, undef
+            $proto, $class, $ins, 1, undef
         );
-        $method_7->inside_scope( topLine => $scope, $proto, $class, 1, undef );
-        $method_8->inside_scope( center  => $scope, $proto, $class, 1, undef );
+        $method_7->inside_scope(
+            topLine => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_8->inside_scope(
+            center => $scope,
+            $proto, $class, $ins, 1, undef
+        );
         $method_9->inside_scope(
             description => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Line Num Point) );

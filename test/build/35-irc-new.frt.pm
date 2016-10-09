@@ -699,7 +699,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -726,7 +726,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     58.2 ) or return;
             need( $scope, $args, 'channel', 58.4 ) or return;
@@ -804,7 +804,7 @@ my $result = do {
             { name => 'mini', type => undef, optional => undef, more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     116.2 ) or return;
             need( $scope, $args, 'channel', 116.4 ) or return;
@@ -860,7 +860,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 126.2 ) or return;
             var(
@@ -902,7 +902,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'channel', 4.2 ) or return;
             $$scope->{'channel'}->property_u( 'privmsg', $pos->(5.2) )->(
@@ -931,7 +931,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     13.2 ) or return;
             need( $scope, $args, 'channel', 13.4 ) or return;
@@ -1053,7 +1053,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     35.2 ) or return;
             need( $scope, $args, 'channel', 35.4 ) or return;
@@ -1167,7 +1167,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     75.2 ) or return;
             need( $scope, $args, 'channel', 75.4 ) or return;
@@ -1233,7 +1233,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     86.2 ) or return;
             need( $scope, $args, 'channel', 86.4 ) or return;
@@ -1286,7 +1286,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     96.2 ) or return;
             need( $scope, $args, 'channel', 96.4 ) or return;
@@ -1339,7 +1339,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     106.2 ) or return;
             need( $scope, $args, 'channel', 106.4 ) or return;
@@ -1364,7 +1364,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg',     111.2 ) or return;
             need( $scope, $args, 'channel', 111.4 ) or return;
@@ -1377,15 +1377,15 @@ my $result = do {
     );
     $func_0->inside_scope(
         respondFactoid => $scope,
-        $context, undef, undef, undef
+        $context, undef, $ins, undef, undef
     );
     $func_1->inside_scope(
         handlePerl => $scope,
-        $context, undef, undef, undef
+        $context, undef, $ins, undef, undef
     );
     $func_2->inside_scope(
         getParameter => $scope,
-        $context, undef, undef, undef
+        $context, undef, $ins, undef, undef
     );
     load_namespaces( $context,
         qw(COMPILER Error IRC IRC::Bot IRC::Connection IRC::Massage) );
@@ -1397,68 +1397,76 @@ my $result = do {
     );
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(3.3) ),
-        'info',
-        $self,
-        $scope,
-        $func_3->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'info', $self, $scope,
+        $func_3->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     $$scope->{'bot'}
       ->set_property( factoids => create_hash( $f, [] ), $pos->(10.3) );
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(12.3) ),
-        'add',
-        $self,
-        $scope,
-        $func_4->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'add', $self, $scope,
+        $func_4->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(34.3) ),
-        'del',
-        $self,
-        $scope,
-        $func_5->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'del', $self, $scope,
+        $func_5->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(74.3) ),
-        'e',
-        $self,
-        $scope,
-        $func_6->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'e', $self, $scope,
+        $func_6->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(85.3) ),
-        't',
-        $self,
-        $scope,
-        $func_7->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        't', $self, $scope,
+        $func_7->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(95.3) ),
-        'c',
-        $self,
-        $scope,
-        $func_8->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'c', $self, $scope,
+        $func_8->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(105.3) ),
-        'p',
-        $self,
-        $scope,
-        $func_9->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'p', $self, $scope,
+        $func_9->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(110.3) ),
-        'pp',
-        $self,
-        $scope,
-        $func_10->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'pp', $self, $scope,
+        $func_10->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     var(

@@ -156,7 +156,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -174,7 +174,7 @@ my $result = do {
         'handleCommand',
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 18.2 ) or return;
             if (
@@ -299,7 +299,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'commands', 5.2, create_object( $f, [] ) );
                 $self->set_property(
                     conns => create_list( $f, [] ),
@@ -322,7 +322,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'connection', 10.2 ) or return;
                 $$self->{'conns'}->property_u( 'push', $pos->(11.2) )
                   ->( [ $$scope->{'connection'} ], $scope, undef,
@@ -340,7 +340,7 @@ my $result = do {
                     $self, $scope,
                     $func_0->inside_scope(
                         (undef) => $scope,
-                        undef, $class, undef, undef
+                        undef, $class, $ins, undef, undef
                     ),
                     {}
                 );
@@ -354,7 +354,7 @@ my $result = do {
             'connect',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -375,15 +375,15 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             addConnection => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_2->inside_scope(
             connect => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Channel Connection) );

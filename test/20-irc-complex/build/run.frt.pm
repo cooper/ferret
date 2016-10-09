@@ -567,7 +567,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -586,7 +586,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 67.2 ) or return;
             if (
@@ -689,7 +689,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'string', 80.2 ) or return;
             return $ret_func->(
@@ -706,7 +706,7 @@ my $result = do {
         $f, $context, 'ircsay', undef,
         [ { name => 'str', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'str', 85.2 ) or return;
             $$scope->{'bot'}->property_u( 'privmsg', $pos->(86.1) )->(
@@ -730,7 +730,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 7.2 ) or return;
             $$scope->{'bot'}->property_u( 'privmsg', $pos->(8.1) )->(
@@ -750,7 +750,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 12.2 ) or return;
             if (
@@ -836,7 +836,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 25.2 ) or return;
             if (
@@ -923,7 +923,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 38.2 ) or return;
             if (
@@ -1018,7 +1018,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 51.2 ) or return;
             if (
@@ -1109,13 +1109,16 @@ my $result = do {
     );
     $func_0->inside_scope(
         handlePerl => $scope,
-        $context, undef, undef, undef
+        $context, undef, $ins, undef, undef
     );
     $func_1->inside_scope(
         convertNewlines => $scope,
-        $context, undef, undef, undef
+        $context, undef, $ins, undef, undef
     );
-    $func_2->inside_scope( ircsay => $scope, $context, undef, undef, undef );
+    $func_2->inside_scope(
+        ircsay => $scope,
+        $context, undef, $ins, undef, undef
+    );
     load_namespaces( $context,
         qw(COMPILER IRC IRC::Connection IRCBot IRCBot::Bot Str) );
     var(
@@ -1165,7 +1168,7 @@ my $result = do {
             str( $f, "info" ),
             $func_3->inside_scope(
                 (undef) => $scope,
-                undef, undef, undef, undef
+                undef, undef, $ins, undef, undef
             )
         ],
         $scope, undef,
@@ -1176,7 +1179,7 @@ my $result = do {
             str( $f, "t" ),
             $func_4->inside_scope(
                 (undef) => $scope,
-                undef, undef, undef, undef
+                undef, undef, $ins, undef, undef
             )
         ],
         $scope, undef,
@@ -1187,7 +1190,7 @@ my $result = do {
             str( $f, "c" ),
             $func_5->inside_scope(
                 (undef) => $scope,
-                undef, undef, undef, undef
+                undef, undef, $ins, undef, undef
             )
         ],
         $scope, undef,
@@ -1198,7 +1201,7 @@ my $result = do {
             str( $f, "e" ),
             $func_6->inside_scope(
                 (undef) => $scope,
-                undef, undef, undef, undef
+                undef, undef, $ins, undef, undef
             )
         ],
         $scope, undef,
@@ -1209,7 +1212,7 @@ my $result = do {
             str( $f, "pe" ),
             $func_7->inside_scope(
                 (undef) => $scope,
-                undef, undef, undef, undef
+                undef, undef, $ins, undef, undef
             )
         ],
         $scope, undef,

@@ -186,7 +186,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -222,7 +222,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'x', 4.2 ) or return;
                 need( $scope, $args, 'y', 4.4 ) or return;
                 $self->set_property( x => $$scope->{'x'}, $pos->(5.2) );
@@ -237,7 +237,7 @@ my $result = do {
             'oneToRight',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
                     $scope,
                     pt => ${ $scope->{special} }->{'class'}->(
@@ -261,7 +261,7 @@ my $result = do {
             $f, $scope, 'pretty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add(
                         $scope,        str( $f, "(" ),
@@ -279,7 +279,7 @@ my $result = do {
             'toString',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'pretty'}
                       ->( [ undef, [] ], $scope, undef, $pos->(19.3) ) );
                 return $ret;
@@ -305,7 +305,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'pt1', 23.2 ) or return;
                 need( $scope, $args, 'pt2', 23.4 ) or return;
                 return $ret_func->(
@@ -346,23 +346,23 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             oneToRight => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_2->inside_scope(
             pretty => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_3->inside_scope(
             toString => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_4->inside_scope(
             midpoint => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Point) );

@@ -125,7 +125,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -154,7 +154,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'wordI', 29.2 ) or return;
                 return $ret_func->(
                     $$self->{'split'}->(
@@ -191,7 +191,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'wordN', 34.2 ) or return;
                 return $ret_func->(
                     $$self->{'split'}->(
@@ -220,18 +220,21 @@ my $result = do {
             $f, $scope, 'empty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
                 return $ret;
             }
         );
-        $method_0->inside_scope( word => $scope, $proto, $class, undef, undef );
+        $method_0->inside_scope(
+            word => $scope,
+            $proto, $class, $ins, undef, undef
+        );
         $method_1->inside_scope(
             fromWord => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope( empty => $scope, $proto, $class, 1, 1 );
+        $method_2->inside_scope( empty => $scope, $proto, $class, $ins, 1, 1 );
         typedef(
             $scope, $class,
             'NonEmpty',

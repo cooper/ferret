@@ -180,7 +180,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -211,7 +211,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'line' ) or return;
                 var(
                     $scope,
@@ -278,7 +278,7 @@ my $result = do {
             'command',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if (
                     bool(
                         all_true(
@@ -339,7 +339,7 @@ my $result = do {
             'commandHasParameters',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     gr8r(
                         $scope,
@@ -364,7 +364,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'wordN', 41.2 ) or return;
                 return $ret_func->(
                     $$self->{'message'}->property_u( 'split', $pos->(42.15) )
@@ -390,16 +390,19 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope( command => $scope, $proto, $class, 1, 1 );
+        $method_1->inside_scope(
+            command => $scope,
+            $proto, $class, $ins, 1, 1
+        );
         $method_2->inside_scope(
             commandHasParameters => $scope,
-            $proto, $class, 1, 1
+            $proto, $class, $ins, 1, 1
         );
         $method_3->inside_scope(
             fromWord => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Num Str) );

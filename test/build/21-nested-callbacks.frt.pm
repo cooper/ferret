@@ -80,7 +80,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -98,7 +98,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [
@@ -136,7 +136,7 @@ my $result = do {
                     'expire', $self, $scope,
                     $func_0->inside_scope(
                         (undef) => $scope,
-                        undef, undef, undef, undef
+                        undef, undef, $ins, undef, undef
                     ),
                     {}
                 );

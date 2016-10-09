@@ -56,7 +56,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -73,7 +73,7 @@ my $result = do {
         $f, $context, 'sqrt', undef,
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'num', 4.2 ) or return;
             return $ret_func->(
@@ -91,7 +91,7 @@ my $result = do {
             { name => 'num',  type => 'Num', optional => undef, more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'root', 9.1 ) or return;
             need( $scope, $args, 'num',  9.3 ) or return;
@@ -104,8 +104,14 @@ my $result = do {
             return $ret;
         }
     );
-    $func_0->inside_scope( sqrt => $scope, $context, undef, undef, undef );
-    $func_1->inside_scope( root => $scope, $context, undef, undef, undef );
+    $func_0->inside_scope(
+        sqrt => $scope,
+        $context, undef, $ins, undef, undef
+    );
+    $func_1->inside_scope(
+        root => $scope,
+        $context, undef, $ins, undef, undef
+    );
     load_namespaces( $context, qw(NATIVE NATIVE::Math Num) );
 };
 

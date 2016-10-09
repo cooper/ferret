@@ -62,7 +62,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -82,7 +82,7 @@ my $result = do {
         undef,
         [ { name => 'code', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'code', 17.2 ) or return;
             $ret->set_property(
@@ -99,7 +99,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ str( $f, "been five seconds" ) ],
@@ -114,19 +114,22 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             return $ret_func->( str( $f, "any second now" ) );
             return $ret;
         }
     );
-    $func_0->inside_scope( something => $scope, $context, undef, undef, undef );
+    $func_0->inside_scope(
+        something => $scope,
+        $context, undef, $ins, undef, undef
+    );
     $$scope->{'delay'}->(
         [
             num( $f, "5" ),
             $func_1->inside_scope(
                 (undef) => $scope,
-                undef, undef, undef, undef
+                undef, undef, $ins, undef, undef
             )
         ],
         $scope, undef,
@@ -140,7 +143,7 @@ my $result = do {
                 [
                     $func_2->inside_scope(
                         (undef) => $scope,
-                        undef, undef, undef, undef
+                        undef, undef, $ins, undef, undef
                     )
                 ],
                 $scope, undef,

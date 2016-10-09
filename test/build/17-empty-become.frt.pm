@@ -47,7 +47,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -64,7 +64,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}
               ->( [ str( $f, "it works!" ) ], $scope, undef, $pos->(8.2) );
@@ -79,10 +79,11 @@ my $result = do {
     on(
         $$scope->{'obj'}->property_u( 'once', $pos->(7.3) )
           ->( [ undef, [] ], $scope, undef, $pos->(7.4) ),
-        'expire',
-        $self,
-        $scope,
-        $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'expire', $self, $scope,
+        $func_0->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
 };

@@ -93,7 +93,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -116,7 +116,7 @@ my $result = do {
             { name => 'z', type => undef, optional => 1,     more => undef }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'x', 2.2 ) or return;
             need( $scope, $args, 'y', 2.4 ) or return;
@@ -133,7 +133,10 @@ my $result = do {
             return $ret;
         }
     );
-    $func_0->inside_scope( makePoint => $scope, $context, undef, undef, undef );
+    $func_0->inside_scope(
+        makePoint => $scope,
+        $context, undef, $ins, undef, undef
+    );
     var(
         $scope,
         pt => $$scope->{'makePoint'}

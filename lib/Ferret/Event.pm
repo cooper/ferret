@@ -263,16 +263,22 @@ sub inside_scope {
     #               it is available for all functions and methods within a class
     #               construct, even if they are private, etc.
     #
+    # $ins      =   the $ins in the scope where the function is defined
+    #
     # $is_prop  =   the function is a computed property.
     #               only makes sense if this is a method.
     #
     # $p_set    =   the computed property should be set after evaluating
     #               only makes sense with $is_prop.
     #
-    my ($event, $name, $scope, $owner, $class, $is_prop, $p_set) = @_;
+    my ($event, $name, $scope, $owner, $class, $ins, $is_prop, $p_set) = @_;
 
-    $event->{class} = $class;
+    $event->{class}       = $class;
     $event->{outer_scope} = $scope;
+    $event->{ins}         = $ins;
+
+    weaken($event->{class}) if $event->{class};
+    weaken($event->{ins})   if $event->{ins};
 
     $owner->set_property($name => $is_prop ? sub {
         Ferret::Function::_handle_property($event, $p_set ? $name : undef, @_);

@@ -396,7 +396,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -468,7 +468,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'strict',     24.2, $true );
                 want( $self, $args, 'consistent', 30.2, $false );
                 want( $self, $args, 'charset', 37.2, get_symbol( $f, 'utf8' ) );
@@ -594,7 +594,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'data', 96.2 ) or return;
                 try_catch(
                     $f, $scope,
@@ -641,7 +641,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'json', 105.2 ) or return;
                 try_catch(
                     $f, $scope,
@@ -689,7 +689,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'fragment', 138.2 ) or return;
                 try_catch(
                     $f, $scope,
@@ -733,7 +733,7 @@ my $result = do {
             'decoderDone',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 try_catch(
                     $f, $scope,
                     sub {
@@ -801,7 +801,7 @@ my $result = do {
             'decoderReset',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$self->{'xs'}->property_u( 'incr_reset', $pos->(167.2) )
                   ->( [ undef, [] ], $scope, undef, $pos->(167.3) );
                 return $ret;
@@ -820,7 +820,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'data', 180.2 ) or return;
                 return $ret_func->(
                     $$scope->{'default'}->property_u( 'encode', $pos->(181.3) )
@@ -842,7 +842,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'json', 187.2 ) or return;
                 return $ret_func->(
                     $$scope->{'default'}->property_u( 'decode', $pos->(188.3) )
@@ -853,35 +853,35 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             encode => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_2->inside_scope(
             decode => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_3->inside_scope(
             decoderAdd => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_4->inside_scope(
             decoderDone => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_5->inside_scope(
             decoderReset => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_6->inside_scope(
             encode => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_7->inside_scope(
             decode => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $scope->set_property(
             _PO => $$scope->{'NATIVE::PerlObject'},

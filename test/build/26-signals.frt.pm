@@ -75,7 +75,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -92,7 +92,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ str( $f, "Got TERM. Terminating!" ) ],
@@ -107,7 +107,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             if ( bool( _not( $$scope->{'asked'} ) ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -130,19 +130,21 @@ my $result = do {
     load_namespaces( $context, qw(Signal Timer) );
     on(
         $$scope->{'Signal'}->property_u( 'TERM', $pos->(2.3) ),
-        'trap',
-        $self,
-        $scope,
-        $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'trap', $self, $scope,
+        $func_0->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         { before => ['default'] }
     );
     var( $scope, asked => $false, undef, $pos->(8.2) );
     on(
         $$scope->{'Signal'}->property_u( 'INT', $pos->(9.3) ),
-        'trap',
-        $self,
-        $scope,
-        $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'trap', $self, $scope,
+        $func_1->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         { before => ['default'] }
     );
     $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(23.2) )

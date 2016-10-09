@@ -129,7 +129,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -151,7 +151,7 @@ my $result = do {
             $f, $scope, 'sqrt',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     $$scope->{'Math'}->property_u( 'sqrt', $pos->(21.3) )->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
@@ -167,7 +167,7 @@ my $result = do {
             $f, $scope, 'cbrt',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'root'}
                       ->( [ num( $f, "3" ) ], $scope, undef, $pos->(25.3) ) );
                 return $ret;
@@ -179,7 +179,7 @@ my $result = do {
             $f, $scope, 'square',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     pow(
                         $scope,
@@ -196,7 +196,7 @@ my $result = do {
             $f, $scope, 'even',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     equal(
                         $scope,
@@ -217,7 +217,7 @@ my $result = do {
             $f, $scope, 'odd',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     nequal(
                         $scope,
@@ -245,7 +245,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'root', 41.2 ) or return;
                 return $ret_func->(
                     $$scope->{'Math'}->property_u( 'root', $pos->(42.15) )->(
@@ -258,12 +258,24 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope( sqrt   => $scope, $proto, $class, 1, undef );
-        $method_1->inside_scope( cbrt   => $scope, $proto, $class, 1, undef );
-        $method_2->inside_scope( square => $scope, $proto, $class, 1, undef );
-        $method_3->inside_scope( even   => $scope, $proto, $class, 1, 1 );
-        $method_4->inside_scope( odd    => $scope, $proto, $class, 1, 1 );
-        $method_5->inside_scope( root => $scope, $proto, $class, undef, undef );
+        $method_0->inside_scope(
+            sqrt => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_1->inside_scope(
+            cbrt => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_2->inside_scope(
+            square => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_3->inside_scope( even => $scope, $proto, $class, $ins, 1, 1 );
+        $method_4->inside_scope( odd  => $scope, $proto, $class, $ins, 1, 1 );
+        $method_5->inside_scope(
+            root => $scope,
+            $proto, $class, $ins, undef, undef
+        );
         typedef(
             $scope, $class, 'Even',
             sub {

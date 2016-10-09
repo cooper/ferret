@@ -112,7 +112,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -130,7 +130,7 @@ my $result = do {
         $f, $scope, 'hello1', undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             var(
                 $scope,
@@ -160,7 +160,7 @@ my $result = do {
         $f, $scope, 'hello2', undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "Hello " ), $$scope->{'name2'} ) ],
@@ -190,15 +190,15 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $func_0->inside_scope(
                 hello1 => $scope,
-                $scope, undef, undef, undef
+                $scope, undef, $ins, undef, undef
             );
             $func_1->inside_scope(
                 hello2 => $scope,
-                $scope, undef, undef, undef
+                $scope, undef, $ins, undef, undef
             );
             need( $scope, $args, 'name1', 11.2 ) or return;
             need( $scope, $args, 'name2', 11.4 ) or return;
@@ -209,7 +209,7 @@ my $result = do {
     );
     $func_2->inside_scope(
         helloWorld => $scope,
-        $context, undef, undef, undef
+        $context, undef, $ins, undef, undef
     );
     $$scope->{'helloWorld'}->(
         [ undef, [ name2 => str( $f, "USA" ), name1 => str( $f, "World" ) ] ],

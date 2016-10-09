@@ -83,7 +83,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -100,7 +100,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [
@@ -125,7 +125,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'say'}->(
                 [
@@ -149,10 +149,11 @@ my $result = do {
     var( $scope, str => str( $f, "hi" ), undef, $pos->(3.2) );
     on(
         $$scope->{'str'},
-        'length',
-        $self,
-        $scope,
-        $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'length', $self, $scope,
+        $func_0->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     $$scope->{'str'}->property_u( 'length', $pos->(14.2) )
@@ -161,10 +162,11 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(16.3) );
     on(
         $$scope->{'String'}->property_u( 'proto', $pos->(21.3) ),
-        'length',
-        $self,
-        $scope,
-        $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'length', $self, $scope,
+        $func_1->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     str( $f, "hello" )->property_u( 'length', $pos->(25.2) )

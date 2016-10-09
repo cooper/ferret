@@ -127,7 +127,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -144,7 +144,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'data', 5.2 ) or return;
             $$scope->{'say'}->(
@@ -160,7 +160,7 @@ my $result = do {
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'data', 10.2 ) or return;
             $$scope->{'say'}->(
@@ -176,7 +176,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'sock'}->property_u( 'println', $pos->(15.2) )
               ->( [ str( $f, "NICK k" ) ], $scope, undef, $pos->(15.3) );
@@ -203,7 +203,7 @@ my $result = do {
         $f, undef, undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             $$scope->{'sock'}->property_u( 'println', $pos->(22.2) )
               ->( [ str( $f, "JOIN #k" ) ], $scope, undef, $pos->(22.3) );
@@ -232,25 +232,31 @@ my $result = do {
     on(
         $$scope->{'sock'},
         'gotLine',
-        $self,
-        $scope,
-        $func_0->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        $self, $scope,
+        $func_0->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     on(
         $$scope->{'sock'},
         'println',
-        $self,
-        $scope,
-        $func_1->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        $self, $scope,
+        $func_1->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     on(
         $$scope->{'sock'},
         'connected',
-        $self,
-        $scope,
-        $func_2->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        $self, $scope,
+        $func_2->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
     $$scope->{'sock'}->property_u( 'connect', $pos->(19.2) )
@@ -259,10 +265,11 @@ my $result = do {
         $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(21.15) )
           ->property_u( 'once', $pos->(21.3) )
           ->( [ undef, [] ], $scope, undef, $pos->(21.35) ),
-        'expire',
-        $self,
-        $scope,
-        $func_3->inside_scope( (undef) => $scope, undef, undef, undef, undef ),
+        'expire', $self, $scope,
+        $func_3->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
         {}
     );
 };

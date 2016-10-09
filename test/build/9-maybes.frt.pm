@@ -49,7 +49,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -68,7 +68,7 @@ my $result = do {
         undef,
         [ { name => 'who', type => 'Str', optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'who', 2.2 ) or return;
             $$scope->{'say'}->(
@@ -84,7 +84,10 @@ my $result = do {
             return $ret;
         }
     );
-    $func_0->inside_scope( sayHello => $scope, $context, undef, undef, undef );
+    $func_0->inside_scope(
+        sayHello => $scope,
+        $context, undef, $ins, undef, undef
+    );
     load_namespaces( $context, qw(Str) );
     {
         my $maybe_0 = $$scope->{'sayHello'};

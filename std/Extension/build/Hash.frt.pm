@@ -90,7 +90,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -112,13 +112,16 @@ my $result = do {
             $f, $scope, 'empty',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
                 return $ret;
             }
         );
-        $method_0->inside_scope( empty => $scope, $proto, $class, 1, undef );
+        $method_0->inside_scope(
+            empty => $scope,
+            $proto, $class, $ins, 1, undef
+        );
     }
 
     # Class 'OrderedHash'
@@ -133,7 +136,7 @@ my $result = do {
             'initializer__',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
                     orderedKeys => create_list( $f, [] ),
                     $pos->(10.2)
@@ -153,7 +156,7 @@ my $result = do {
             $f, $scope, 'keys',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'orderedKeys'} );
                 return $ret;
             }
@@ -178,7 +181,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'key',   21.1 ) or return;
                 need( $scope, $args, 'value', 21.3 ) or return;
                 if (
@@ -205,12 +208,15 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope( keys => $scope, $proto, $class, 1, undef );
+        $method_1->inside_scope(
+            keys => $scope,
+            $proto, $class, $ins, 1, undef
+        );
         $method_2->inside_scope(
             pushPair => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Hash K V) );

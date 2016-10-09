@@ -171,7 +171,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -197,7 +197,7 @@ my $result = do {
             }
         ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'list', 29.2 ) or return;
             var( $scope, str => str( $f, "\n" ), $file_scope, $pos->(30.2) );
@@ -299,7 +299,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'type' ) or return;
                 need( $self, $args, 'msg' )  or return;
                 want( $self, $args, 'hints', 7.2, create_list( $f, [] ) );
@@ -336,7 +336,7 @@ my $result = do {
                 }
             ],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'file', 15.1 ) or return;
                 need( $scope, $args, 'line', 15.3 ) or return;
                 $$self->{'hints'}->property_u( 'push', $pos->(16.1) )->(
@@ -357,7 +357,7 @@ my $result = do {
             'description',
             [],
             sub {
-                my ( $scope, $self, $this, $args, $ret ) = &args_v1;
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
                     $scope,
                     desc => add(
@@ -420,19 +420,19 @@ my $result = do {
         );
         $method_0->inside_scope(
             initializer__ => $scope,
-            $class, $class, undef, undef
+            $class, $class, $ins, undef, undef
         );
         $method_1->inside_scope(
             setPosition => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $method_2->inside_scope(
             description => $scope,
-            $proto, $class, undef, undef
+            $proto, $class, $ins, undef, undef
         );
         $func_0->inside_scope(
             _prettyHints => $scope,
-            $scope, $class, undef, undef
+            $scope, $class, $ins, undef, undef
         );
     }
     load_namespaces( $context, qw(Error List NATIVE Num Str Sym) );

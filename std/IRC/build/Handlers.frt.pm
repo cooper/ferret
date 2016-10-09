@@ -208,7 +208,7 @@ BEGIN {
 
 use Ferret;
 
-my $self;
+my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
@@ -225,7 +225,7 @@ my $result = do {
         $f, $context, 'ping', undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 14.2 ) or return;
             $$this->{'send'}->(
@@ -254,7 +254,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 19.2 ) or return;
             $this->set_property( registered => $true, $pos->(20.2) );
@@ -297,7 +297,7 @@ my $result = do {
         $f, $context, 'myInfo', undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 35.2 ) or return;
             $$this->{'server'}->set_property(
@@ -322,7 +322,7 @@ my $result = do {
         undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             if (
                 bool(
@@ -354,7 +354,7 @@ my $result = do {
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             need( $scope, $args, 'msg', 49.2 ) or return;
             $$this->{'me'}->set_property(
@@ -373,7 +373,7 @@ my $result = do {
         undef,
         [],
         sub {
-            my ( $scope, $_self, $this, $args, $ret ) = &args_v1;
+            my ( $scope, $_self, $this, $ins, $args, $ret ) = &args_v1;
             my $self = $_self || $self;
             if ( bool( $$this->{'registered'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -395,15 +395,30 @@ my $result = do {
             return $ret;
         }
     );
-    $func_0->inside_scope( ping      => $scope, $context, undef, undef, undef );
-    $func_1->inside_scope( welcome   => $scope, $context, undef, undef, undef );
-    $func_2->inside_scope( myInfo    => $scope, $context, undef, undef, undef );
-    $func_3->inside_scope( endOfMOTD => $scope, $context, undef, undef, undef );
+    $func_0->inside_scope(
+        ping => $scope,
+        $context, undef, $ins, undef, undef
+    );
+    $func_1->inside_scope(
+        welcome => $scope,
+        $context, undef, $ins, undef, undef
+    );
+    $func_2->inside_scope(
+        myInfo => $scope,
+        $context, undef, $ins, undef, undef
+    );
+    $func_3->inside_scope(
+        endOfMOTD => $scope,
+        $context, undef, $ins, undef, undef
+    );
     $func_4->inside_scope(
         hiddenHost => $scope,
-        $context, undef, undef, undef
+        $context, undef, $ins, undef, undef
     );
-    $func_5->inside_scope( nickInUse => $scope, $context, undef, undef, undef );
+    $func_5->inside_scope(
+        nickInUse => $scope,
+        $context, undef, $ins, undef, undef
+    );
 
     var(
         $context,
