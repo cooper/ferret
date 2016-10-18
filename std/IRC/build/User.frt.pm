@@ -94,7 +94,7 @@ my $result = do {
                 want( $self, $args, 'user', 6.1 );
                 want( $self, $args, 'host', 6.3 );
                 want( $self, $args, 'real', 6.5 );
-                $self->weaken_property( 'connection', $pos->(7.1) );
+                $self->weaken_property_ow( 'connection', $pos->(7.1) );
                 return $ret;
             }
         );

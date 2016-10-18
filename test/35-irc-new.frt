@@ -1,4 +1,5 @@
 share $bot = IRC::Bot()
+share $conn = IRC::Connection(addr: "k.notroll.net", nick: "booby",  user: "ferret");
 
 on $bot.commands.info {
     need $channel
@@ -128,13 +129,12 @@ func getParameter {
     return $string.split("_NL_").join("\n")
 }
 
-share $conn = IRC::Connection(addr: "k.notroll.net", nick: "booby",  user: "ferret");
-$conn.autojoin = ["\#k"]
-$bot.addConnection($conn)
-$bot.connect()
-
 func ircsay {
     need $msg: Str::Any
     $chan = $conn.getChannel($conn.autojoin[0])
     $chan.privmsg($msg)
 }
+
+$conn.autojoin = ["\#k"]
+$bot.addConnection($conn)
+$bot.connect()

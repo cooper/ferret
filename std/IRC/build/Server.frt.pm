@@ -73,7 +73,7 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'connection' ) or return;
                 need( $self, $args, 'name' )       or return;
-                $self->weaken_property( 'connection', $pos->(7.1) );
+                $self->weaken_property_ow( 'connection', $pos->(7.1) );
                 return $ret;
             }
         );
