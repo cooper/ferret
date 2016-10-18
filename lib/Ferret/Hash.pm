@@ -33,6 +33,14 @@ my @methods = (
         need => '$index:K',
         code => \&_get_value
     },
+    deleteValue => {
+        need => '$index:K',
+        code => \&_delete_value
+    },
+    weakenValue => {
+        need => '$index:K',
+        code => \&_weaken_value
+    },
     copy => {
         want => '$deep:Bool',
         code => \&_copy
@@ -82,6 +90,33 @@ sub _get_value {
     my ($hash, $args) = @_;
     my $key = $args->psym('index');
     return $hash->get_value($key);
+}
+
+sub delete_value {
+    my ($hash, $key) = @_;
+    delete $hash->{hash_values}{$key};
+}
+
+sub _delete_value {
+    my ($hash, $args) = @_;
+    my $key = $args->psym('index');
+    return $hash->delete_value($key);
+}
+
+sub weaken_value {
+    my ($hash, $key) = @_;
+
+    # if undefined or not a ref, don't.
+    return if !defined $hash->{hash_values}{$key} ||
+        !ref $hash->{hash_values}{$key};
+
+    weaken($hash->{hash_values}{$key});
+}
+
+sub _weaken_value {
+    my ($hash, $args) = @_;
+    my $key = $args->psym('index');
+    return $hash->weaken_value($key);
 }
 
 sub _copy {
