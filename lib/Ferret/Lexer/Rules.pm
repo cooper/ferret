@@ -289,25 +289,29 @@ our %element_rules = (
         # must be a direct child an instruction.
         parent_must_be => [ 'Instruction', undef, 0 ],                          # PropertyModifier[0]
 
-        # it can be variables or properties.
-        # however, it cannot be a special variable.
-        children_must_be => [                                                   # PropertyModifier[1]
-            'LexicalVariable InstanceVariable ThisVariable Property',
-            'Property modifier can only capture non-special variables '.
-            'or properties',
-            1
-        ],
+        after_rules => {
 
-        # if it's a property, it cannot be a special one.
-        children_must_satisfy => [                                              # PropertyModifier[2]
-            sub {
-                my $el = shift;
-                return 1 if $el->type ne 'Property';
-                return !$el->is_special;
-            },
-            'Property modifier cannot capture special properties',
-            2
-        ],
+            # it can be variables or properties.
+            # however, it cannot be a special variable.
+            children_must_be => [                                                   # PropertyModifier[1]
+                'LexicalVariable InstanceVariable ThisVariable Property Index',
+                'Property modifier can only capture non-special variables '.
+                'or properties',
+                1
+            ],
+
+            # if it's a property, it cannot be a special one.
+            children_must_satisfy => [                                              # PropertyModifier[2]
+                sub {
+                    my $el = shift;
+                    return 1 if $el->type ne 'Property';
+                    return !$el->is_special;
+                },
+                'Property modifier cannot capture special properties',
+                2
+            ]
+
+        },
 
         # there can only be one child.
         num_children => [ 1, undef, 3 ]                                         # PropertyModifier[3]

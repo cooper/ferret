@@ -39,4 +39,6 @@ type Hashable {
 type Indexed {
     can .getValue(index: Hashable)
     can .setValue(value: Obj, index: Hashable)
+    can .deleteValue(index: Hashable)
+    # optionally can .weakenValue(index: Hashable)
 }

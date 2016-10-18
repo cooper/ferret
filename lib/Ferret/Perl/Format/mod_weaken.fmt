@@ -1,1 +1,1 @@
-<<left>>->weaken_property<<eval>>(<<name>>, $pos->(<<pos>>))
+<<left>>->weaken_<<func>><<eval>>(<<name>>, $pos->(<<pos>>))<<for>>
