@@ -48,7 +48,7 @@ on $bot.commands.del {
         fail Error(:ParameterError, "No such factoid .$command")
 
     # delete it
-    # TODO: delete %factoids[$command]
+    delete %factoids[$command]
     delete $bot.commands.[$command]
 
     $channel.privmsg("OK, I will no longer respond to .$command with '$existed'")

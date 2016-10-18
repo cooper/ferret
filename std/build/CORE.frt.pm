@@ -82,6 +82,14 @@
 #                              Item 1
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
+#              Instruction
+#                  Can
+#                      Method requirement
+#                          Property variable '.deleteValue'
+#                          Named argument list [1 items]
+#                              Item 0
+#                                  Pair 'index'
+#                                      Bareword 'Hashable'
 #      Include (Any, Error, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Iterator, Obj, Object, Signal, Str)
 package FF;
 
@@ -185,6 +193,9 @@ my $result = do {
                     $create_can->(
                         'setValue', [ value => 'Obj', index => 'Hashable' ],
                         $ins
+                      )->(),
+                    $create_can->(
+                        'deleteValue', [ index => 'Hashable' ], $ins
                     )->()
                 ],
                 equal_to => undef

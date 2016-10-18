@@ -235,6 +235,13 @@
 #                                                  Lexical variable '$command'
 #                  Instruction
 #                      Delete modifier
+#                          Index
+#                              This variable '%factoids'
+#                              Index list [1 items]
+#                                  Item 0
+#                                      Lexical variable '$command'
+#                  Instruction
+#                      Delete modifier
 #                          Property (name evaluated at runtime)
 #                              Property 'commands'
 #                                  Lexical variable '$bot'
@@ -1128,6 +1135,8 @@ my $result = do {
                     $pos->(48.05)
                 );
             }
+            $$this->{'factoids'}
+              ->delete_index( $$scope->{'command'}, $pos->(51.1) );
             $$scope->{'bot'}->property_u( 'commands', $pos->(52.3) )
               ->delete_property_ow_eval( $$scope->{'command'}, $pos->(52.1) );
             $$scope->{'channel'}->property_u( 'privmsg', $pos->(54.1) )->(
