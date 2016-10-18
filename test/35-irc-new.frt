@@ -132,3 +132,9 @@ share $conn = IRC::Connection(addr: "k.notroll.net", nick: "booby",  user: "ferr
 $conn.autojoin = ["\#k"]
 $bot.addConnection($conn)
 $bot.connect()
+
+func ircsay {
+    need $msg: Str::Any
+    $chan = $conn.getChannel($conn.autojoin[0])
+    $chan.privmsg($msg)
+}

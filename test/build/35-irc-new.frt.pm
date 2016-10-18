@@ -689,7 +689,35 @@
 #              Property 'connect'
 #                  Lexical variable '$bot'
 #              Argument list [0 items]
-#      Include (COMPILER, Error, IRC, IRC::Bot, IRC::Connection, IRC::Massage)
+#      Function 'ircsay'
+#          Body ('function' scope)
+#              Instruction
+#                  Need
+#                      Lexical variable '$msg'
+#                      Argument type
+#                          Bareword 'Str::Any'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$chan'
+#                      Call
+#                          Property 'getChannel'
+#                              Lexical variable '$conn'
+#                          Argument list [1 items]
+#                              Item 0
+#                                  Index
+#                                      Property 'autojoin'
+#                                          Lexical variable '$conn'
+#                                      Index list [1 items]
+#                                          Item 0
+#                                              Number '0'
+#              Instruction
+#                  Call
+#                      Property 'privmsg'
+#                          Lexical variable '$chan'
+#                      Argument list [1 items]
+#                          Item 0
+#                              Lexical variable '$msg'
+#      Include (COMPILER, Error, IRC, IRC::Bot, IRC::Connection, IRC::Massage, Str, Str::Any)
 package FF;
 
 use warnings;
@@ -894,8 +922,47 @@ my $result = do {
         }
     );
 
+    # Function event 'ircsay' definition
+    my $func_3 = function_event_def(
+        $f, $context, 'ircsay', undef,
+        [
+            {
+                name     => 'msg',
+                type     => 'Str::Any',
+                optional => undef,
+                more     => undef
+            }
+        ],
+        sub {
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+            need( $scope, $args, 'msg', 137.2 ) or return;
+            var(
+                $scope,
+                chan =>
+                  $$scope->{'conn'}->property_u( 'getChannel', $pos->(138.2) )
+                  ->(
+                    [
+                        $$scope->{'conn'}
+                          ->property_u( 'autojoin', $pos->(138.35) )
+                          ->get_index_value(
+                            [ num( $f, "0" ) ],
+                            $scope, $pos->(138.4)
+                          )
+                    ],
+                    $scope, undef,
+                    $pos->(138.25)
+                  ),
+                $file_scope,
+                $pos->(138.1)
+            );
+            $$scope->{'chan'}->property_u( 'privmsg', $pos->(139.2) )
+              ->( [ $$scope->{'msg'} ], $scope, undef, $pos->(139.3) );
+            return $ret;
+        }
+    );
+
     # Anonymous function definition
-    my $func_3 = function_def(
+    my $func_4 = function_def(
         $f, undef, undef,
         [
             {
@@ -922,7 +989,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_4 = function_def(
+    my $func_5 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1043,7 +1110,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_5 = function_def(
+    my $func_6 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1158,7 +1225,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_6 = function_def(
+    my $func_7 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1223,7 +1290,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_7 = function_def(
+    my $func_8 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1275,7 +1342,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_8 = function_def(
+    my $func_9 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1327,7 +1394,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_9 = function_def(
+    my $func_10 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1351,7 +1418,7 @@ my $result = do {
     );
 
     # Anonymous function definition
-    my $func_10 = function_def(
+    my $func_11 = function_def(
         $f, undef, undef,
         [
             { name => 'msg', type => undef, optional => undef, more => undef },
@@ -1385,8 +1452,13 @@ my $result = do {
         getParameter => $scope,
         $context, undef, $ins, undef, undef
     );
+    $func_3->inside_scope(
+        ircsay => $scope,
+        $context, undef, $ins, undef, undef
+    );
     load_namespaces( $context,
-        qw(COMPILER Error IRC IRC::Bot IRC::Connection IRC::Massage) );
+        qw(COMPILER Error IRC IRC::Bot IRC::Connection IRC::Massage Str Str::Any)
+    );
     var(
         $context,
         bot =>
@@ -1396,7 +1468,7 @@ my $result = do {
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(3.3) ),
         'info', $self, $scope,
-        $func_3->inside_scope(
+        $func_4->inside_scope(
             (undef) => $scope,
             undef, undef, $ins, undef, undef
         ),
@@ -1407,7 +1479,7 @@ my $result = do {
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(12.3) ),
         'add', $self, $scope,
-        $func_4->inside_scope(
+        $func_5->inside_scope(
             (undef) => $scope,
             undef, undef, $ins, undef, undef
         ),
@@ -1416,7 +1488,7 @@ my $result = do {
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(34.3) ),
         'del', $self, $scope,
-        $func_5->inside_scope(
+        $func_6->inside_scope(
             (undef) => $scope,
             undef, undef, $ins, undef, undef
         ),
@@ -1425,7 +1497,7 @@ my $result = do {
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(74.3) ),
         'e', $self, $scope,
-        $func_6->inside_scope(
+        $func_7->inside_scope(
             (undef) => $scope,
             undef, undef, $ins, undef, undef
         ),
@@ -1434,7 +1506,7 @@ my $result = do {
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(85.3) ),
         't', $self, $scope,
-        $func_7->inside_scope(
+        $func_8->inside_scope(
             (undef) => $scope,
             undef, undef, $ins, undef, undef
         ),
@@ -1443,7 +1515,7 @@ my $result = do {
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(95.3) ),
         'c', $self, $scope,
-        $func_8->inside_scope(
+        $func_9->inside_scope(
             (undef) => $scope,
             undef, undef, $ins, undef, undef
         ),
@@ -1452,7 +1524,7 @@ my $result = do {
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(105.3) ),
         'p', $self, $scope,
-        $func_9->inside_scope(
+        $func_10->inside_scope(
             (undef) => $scope,
             undef, undef, $ins, undef, undef
         ),
@@ -1461,7 +1533,7 @@ my $result = do {
     on(
         $$scope->{'bot'}->property_u( 'commands', $pos->(110.3) ),
         'pp', $self, $scope,
-        $func_10->inside_scope(
+        $func_11->inside_scope(
             (undef) => $scope,
             undef, undef, $ins, undef, undef
         ),
