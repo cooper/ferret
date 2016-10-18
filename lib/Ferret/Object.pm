@@ -333,6 +333,10 @@ sub weaken_property_eval {
     return $obj->weaken_property($prop_name, @_[2..$#_]);
 }
 
+# FIXME!!!!!! these aren't implemented
+*weaken_property_ow = *weaken_property;
+*weaken_property_ow_eval = *weaken_property_eval;
+
 # convenience method:
 # sets a property, then weakens it.
 #
@@ -772,6 +776,44 @@ sub set_index_value {
     ]) if !$evt;
 
     return $evt->call_u($args, $call_scope);
+}
+
+# call deleteValue.
+sub delete_index {
+    my ($obj, $idx_exp, $_pos) = @_;
+
+    my $evt = $obj->property_u('deleteValue');
+    undef $evt if !$evt->isa('Ferret::Event');
+
+    # no event setValue
+    my $caller = [caller];
+    throw(ModifyIndexOnNonCollection => $caller, [
+        Value    => $obj->description_ol,
+        Name     => $obj->{last_name} // 'unknown',
+        File     => "$FF::pos",
+        Line     => int $FF::pos
+    ]) if !$evt;
+
+    return $evt->call_u([ $idx_exp ]); #, $call_scope);
+}
+
+# call weakenValue.
+sub weaken_index {
+    my ($obj, $idx_exp, $_pos) = @_;
+
+    my $evt = $obj->property_u('weakenValue');
+    undef $evt if !$evt->isa('Ferret::Event');
+
+    # no event setValue
+    my $caller = [caller];
+    throw(ModifyIndexOnNonCollection => $caller, [
+        Value    => $obj->description_ol,
+        Name     => $obj->{last_name} // 'unknown',
+        File     => "$FF::pos",
+        Line     => int $FF::pos
+    ]) if !$evt;
+
+    return $evt->call_u([ $idx_exp ]); #, $call_scope);
 }
 
 ###############################

@@ -29,6 +29,9 @@ our %errors = (
     SetIndexOnNonCollection => {
         message => "Cannot assign to index on non-indexable value"
     },
+    ModifyIndexOnNonCollection => {
+        message => "Cannot modify index on non-indexable value"
+    },
     AssignmentToSpecialProperty => {
         message => "Cannot assign to special property '%s'"
     },
