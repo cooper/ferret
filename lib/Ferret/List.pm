@@ -40,6 +40,14 @@ my @methods = (
         need => '$index:Num',
         code => \&_get_value
     },
+    deleteValue => {
+        need => '$index:Num',
+        code => \&_delete_value
+    },
+    weakenValue => {
+        need => '$index:Num',
+        code => \&_weaken_value
+    },
     shift => {
         code => \&_item_method
     },
@@ -194,6 +202,33 @@ sub _get_value {
     my ($list, $args) = @_;
     my $index = $args->pnumber('index');
     return $list->get_value($index);
+}
+
+sub delete_value {
+    my ($list, $index) = @_;
+    return $list->set_value($index, Ferret::undefined);
+}
+
+sub _delete_value {
+    my ($list, $args) = @_;
+    my $index = $args->pnumber('index');
+    return $list->delete_value($index);
+}
+
+sub weaken_value {
+    my ($list, $index) = @_;
+
+    # if it's nonexistent or non-ref, do nothing
+    return if !defined $list->{list_items}[$index] ||
+        !ref $list->{list_items}[$index];
+
+    weaken($list->{list_items}[$index]);
+}
+
+sub _weaken_value {
+    my ($list, $args) = @_;
+    my $index = $args->pnumber('index');
+    return $list->weaken_value($index);
 }
 
 sub _copy {
