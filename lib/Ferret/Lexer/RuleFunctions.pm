@@ -20,13 +20,14 @@ our %error_reasons = (
     expected_before         => 'without previous element at same level',
     expected_after          => 'without following element at same level',
     must_be_inside          => 'outside of a containing %s',
+    must_be_after           => 'without %s immediately preceding it',
     must_be_set             => "without a current '%s'",
     must_not_be_set         => "with already a current '%s'",
     must_be_equal           => "with mismatching current '%s' and '%s'",
     expected_next_token     => "without %s immediately following it"
 );
 
-sub err { sprintf $error_reasons{+shift}, @_ }
+sub err { @_ ? sprintf $error_reasons{+shift}, @_ : '' }
 
 sub _hashify {
     my $a = shift;
@@ -65,13 +66,16 @@ sub tok_rule_set {
 }
 
 my %token_checkers = (
-    upper_nodes_must_have   => \&t_upper_nodes_must_have,
-    current_must_have       => \&t_current_must_have,
-    current_must_not_have   => \&t_current_must_not_have,
-    current_node_must_be    => \&t_current_node_must_be,
-    current_must_be_equal   => \&t_current_must_be_equal,
-    current_must_satisfy    => \&t_current_must_satisfy,
-    next_token_must_be      => \&t_next_token_must_be
+    upper_nodes_must_have       => \&t_upper_nodes_must_have,
+    current_must_have           => \&t_current_must_have,
+    current_must_not_have       => \&t_current_must_not_have,
+    current_node_must_be        => \&t_current_node_must_be,
+    current_node_must_satisfy   => \&t_current_node_must_satisfy,
+    last_element_must_be        => \&t_last_element_must_be,
+    last_element_must_satisfy   => \&t_last_element_must_satisfy,
+    current_must_be_equal       => \&t_current_must_be_equal,
+    current_must_satisfy        => \&t_current_must_satisfy,
+    next_token_must_be          => \&t_next_token_must_be
 );
 
 # token check.
@@ -83,7 +87,7 @@ sub token_check {
     # check each rule in order.
     foreach my $key ($set->keys_in_order) {
         my $code = $token_checkers{$key};
-        die 'bad code' if !$code || ref $code ne 'CODE';
+        die "bad code for $key" if !$code || ref $code ne 'CODE';
         $e ||= $code->($label, $c, $value, $set);
         last if $e;
     }
@@ -156,6 +160,35 @@ sub t_current_node_must_be {
     return $set->err(must_be_inside => lc $err_type);
 }
 
+sub t_current_node_must_satisfy {
+    my ($label, $c, $value, $set) = @_;
+    my $code = $set->rule_code('current_node_must_satisfy');
+    return $set->err if !$code->($c->node);
+}
+
+sub t_last_element_must_be {
+    my ($label, $c, $value, $set) = @_;
+    my $last_el = $c->last_el;
+
+    # last element must be one of the types in the list.
+    my ($good, $err_type);
+    foreach my $type ($set->list_items('last_element_must_be')) {
+        $good = $last_el && $last_el->t eq $type;
+        last if $good;
+        $err_type ||= $type;
+    }
+
+    return $ok if $good;
+    return $set->err(must_be_after => lc $err_type);
+}
+
+sub t_last_element_must_satisfy {
+    my ($label, $c, $value, $set) = @_;
+    my $code = $set->rule_code('last_element_must_satisfy');
+    my $last_el = $c->last_el;
+    return $set->err if !$last_el || !$code->($last_el);
+}
+
 sub t_current_must_be_equal {
     my ($label, $c, $value, $set) = @_;
     my @items = $set->list_items('current_must_be_equal');
@@ -172,7 +205,7 @@ sub t_current_must_be_equal {
 sub t_current_must_satisfy {
     my ($label, $c, $value, $set) = @_;
     my $code = $set->rule_code('current_must_satisfy');
-    return $set->err() if !$code->($c); # FIXME
+    return $set->err if !$code->($c);
 }
 
 sub t_next_token_must_be {

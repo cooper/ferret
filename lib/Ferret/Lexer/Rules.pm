@@ -91,6 +91,16 @@ our %token_rules = (
 
     ],
 
+    ANGLE_E => [
+
+        current_node_must_be => [                                               # ANGLE_E[0]
+            'TypedClass',
+            'Attempted to terminate a <Type>, but one is not open',
+            0
+        ]
+
+    ],
+
     OP_SEMI => [
 
         # $c->{instruction} (the current instruction) must be set in order
@@ -130,8 +140,31 @@ our %token_rules = (
             'instruction',
             'Attempted to catch an error on a failable instruction, but no '.
             "instruction is open. Make sure the 'catch' keyword comes before ".
-            "instruction terminator (semicolon or newline)."
+            "instruction terminator (semicolon or newline)",
+            0
         ]
+    ],
+
+    KEYWORD_IN => [
+
+        current_node_must_satisfy => [                                          # KEYWORD_IN[0]
+            sub {
+                my $node = shift;
+                $node->{parameter_for} && $node->{parameter_for} eq 'for';
+            },
+            "Could not find the corresponding 'for' keyword",
+            0
+        ]
+    ],
+
+    KEYWORD_CONTINUE => [
+
+        last_element_must_be => [                                               # KEYWORD_CONTINUE[0]
+            'For',
+            "Could not find the corresponding 'for' block",
+            0
+        ]
+
     ]
 
 );
@@ -154,7 +187,7 @@ our %element_rules = (
         min_children => [ 1, undef, 0 ],                                        # Instruction[0]
 
         # we could have up to two children. the second could be a catch.
-        max_children => [ 2, undef, 0 ],                                        # Instruction[1]
+        max_children => [ 2, 'Seems likely that you forgot a semicolon', 1 ],   # Instruction[1]
 
 
         after_rules => {

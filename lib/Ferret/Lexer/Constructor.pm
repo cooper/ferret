@@ -597,7 +597,8 @@ sub c_ANGLE_E {
     # it is guaranteed by the tokenizer that this closing angle has
     # an opening angle to correspond with.
 
-    return $c->unexpected if $c->node->type ne 'TypedClass';
+    # Rule ANGLE_E[0]:
+
     $c->close_node;
 
     return;
@@ -1909,9 +1910,8 @@ sub c_KEYWORD_FOR {
 sub c_KEYWORD_IN {
     my ($c, $value) = @_;
 
-    # 'in' must terminate a generated expression for 'for'.
-    return $c->unexpected("(where is 'for'?)") unless
-        $c->node->{parameter_for} && $c->node->{parameter_for} eq 'for';
+    # Rule KEYWORD_IN[0]:
+    #   The current node must have paramter_for eq 'for'.
 
     # set the node to the 'in' parameter.
     my $for = $c->close_node;
@@ -1942,14 +1942,13 @@ sub handle_loop_statement {
 sub c_KEYWORD_CONTINUE {
     my ($c, $value) = @_;
 
-    # find the for
-    my $for = $c->last_el;
-    return $c->unexpected("(where is 'for'?)")
-        unless $for->type eq 'For';
+    # Rule KEYWORD_CONTINUE[0]:
+    #   The last element must be of type For.
 
     # create a closure to be opened soon.
     my $cont = F::new('Continue');
 
+    my $for = $c->last_el;
     $for->adopt($cont);
     $c->capture_closure_with($cont->body);
 
