@@ -921,6 +921,33 @@ our %element_rules = (
 
     },
 
+
+    Call => {
+
+        # first child better be an expression
+        child_0_must_be => [                                                    # Call[0]
+            '@Expression',
+            "Cannot call non-expression",
+            0
+        ],
+
+        # second child better be an argument list
+        child_1_must_be => [                                                    # Call[1]
+            'List',
+            "Second child of call, if any, must be its argument list",
+            1
+        ],
+
+        # disallows call operator to omit the argument list
+        min_children => [                                                       # Call[2]
+            1,
+            undef,
+            2
+        ]
+
+    },
+
+
     InterfaceMethod => {
 
         # first child better be a .property
@@ -967,7 +994,7 @@ our %element_rules = (
         num_children => [                                                       # InterfaceMethod[3]
             2,
             "'can' method requirement must look like: can .methodName(...)",
-            4
+            3
         ]
 
     },

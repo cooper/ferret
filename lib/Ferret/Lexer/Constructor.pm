@@ -613,6 +613,15 @@ sub c_ANGLE_E {
 sub handle_call {
     my ($c, $value, $has_list, $is_index) = @_;
 
+    # Rule Call[0]:
+    #   First child must be of type Expression.
+
+    # Rule Call[1]:
+    #   Second child must be of type List.
+
+    # Rule Call[2]:
+    #   Number of children must be exactly one (1).
+
     # Rules for InterfaceMethod:
     #   See c_KEYWORD_CAN().
 
