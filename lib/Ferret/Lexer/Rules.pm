@@ -703,9 +703,19 @@ our %element_rules = (
         # the first child is the left side of the assignment.
         # it has be assignable.
         child_0_must_be => [                                                    # Assignment[2]
-            '@Assignable',
+            '@Assignable Bareword',
             'Left side of assignment must be an assignable expression',
             2
+        ],
+
+        # if the left side is a bareword, this has to be an alias
+        child_0_must_satisfy => [                                               # Assignment[7]
+            sub {
+                my ($left, $as) = @_;
+                return 1 if $left->type ne 'Bareword';
+                return $as->parent->type eq 'Alias';
+            },
+            7
         ],
 
         # the right side of the assignment has to be an expression.
@@ -728,9 +738,10 @@ our %element_rules = (
                     4
                 ],
 
-                # void the above rules [2] and [3].
-                child_0_must_be => undef,                                       # Assignment[5]
-                child_1_must_be => undef                                        # Assignment[6]
+                # Update: we can't void them anymore so I added Assignment[7]
+                # # void the above rules [2] and [3].
+                # child_0_must_be => undef,                                       # Assignment[5]
+                # child_1_must_be => undef                                        # Assignment[6]
 
             }
 

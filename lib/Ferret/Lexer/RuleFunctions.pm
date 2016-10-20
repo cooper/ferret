@@ -90,7 +90,7 @@ sub token_check {
 
     # create an unknown element because token_check() can occur
     # later than $c through simulation.
-    return F::new('Unknown', 
+    return F::new('Unknown',
         token_label => $label,
         token_value => $value
     )->unexpected($e) if $e;
@@ -256,23 +256,17 @@ sub final_check {
 #   optional $parent_t = element or type to get rules for inside. (child_rules)
 #   $parent_t will fall back to the element's parent if it has one already.
 #
-sub F::Element::rule_set {
+sub F::Element::rule_sets {
     my ($el, $parent, $after) = @_;
     $parent ||= $el->parent;
 
-    # after_rules
-    my @after;
-    if ($after) {
-        push @after, rule_hash($el->type, 'after_rules');
-    }
+    my @rule_sets;
+    my $push_set = sub { push @rule_sets, Ferret::Lexer::RuleSet->new(@_) };
 
-    # Set 1: local rules.
-    my $set1 = Ferret::Lexer::RuleSet->new(
-        @after,
-        rule_hash($el->type)
-    );
+    # Set 1: Local rules.
 
-    my ($set2, $set3, $set4);
+    $push_set->(rule_hash($el->type, 'after_rules')) if $after;
+    $push_set->(rule_hash($el->type));
 
     # rules from ancestors
     if ($parent) {
@@ -281,47 +275,44 @@ sub F::Element::rule_set {
         # Set 2: Rules from ancestors above
 
         # rules from parent or any node above parent.
-        my @rules = map {
-            rule_hash($_, 'lower_rules', $el->type);
-        } reverse $parent->types_upward;
+        $push_set->(map {
+            rule_hash($_, 'lower_rules', $el->type)
+        } reverse $parent->types_upward);
 
         # rules directly from parent.
-        push @rules, rule_hash($parent->t, 'child_rules', $el->type);
-        push @rules, rule_hash($parent->t, "child_${my_place}_rules");
-
-        $set2 = Ferret::Lexer::RuleSet->new(@rules);
+        $push_set->(rule_hash($parent->t, 'child_rules', $el->type));
+        $push_set->(rule_hash($parent->t, "child_${my_place}_rules"));
 
         # Set 3: Rules from self, when certain ancestors are above
 
         # rules from self while inside a certain type of node at any level.
-        @rules = map {
+        $push_set->(map {
             rule_hash($el->type, 'anywhere_inside_rules', $_)
-        } reverse $parent->types_upward;
+        } reverse $parent->types_upward);
 
         # rules from self while the parent instruction is a direct descendant of
         # a type. This is like directly_inside_rules, except it overlooks the
         # above instruction.
         if ($parent->type eq 'Instruction') {
             my $p = $parent->parent;
-            push @rules, rule_hash($el->type, 'instruction_inside_rules', $p->type) if $p;
+            $push_set->(
+                rule_hash($el->type, 'instruction_inside_rules', $p->type)
+            ) if $p;
         }
 
         # rules from self while directly inside a certain type of node.
-        push @rules, rule_hash($el->type, 'directly_inside_rules', $parent->type);
+        $push_set->(
+            rule_hash($el->type, 'directly_inside_rules', $parent->type)
+        );
 
-        $set3 = Ferret::Lexer::RuleSet->new(@rules);
     }
 
     # Set 4: Rules from children
-    my @rules;
     if ($after && $el->is_node) {
-        foreach my $child ($el->children) {
-            push @rules, rule_hash($child->type, 'parent_rules');
-        }
+        $push_set->(rule_hash($_->type, 'parent_rules')) for $el->children;
     }
-    $set4 = Ferret::Lexer::RuleSet->new(@rules);
 
-    return $set1->merge_in($set2)->merge_in($set3)->merge_in($set4);
+    return @rule_sets;
 }
 
 # checks if an element should be adopted.
@@ -384,47 +375,48 @@ sub F::Node::can_close {
 # checks if a child can be in a parent.
 sub F::Element::allows_child {
     my ($parent_maybe, $child_maybe, $after_check) = @_;
-    my $set = $parent_maybe->rule_set(undef, $after_check);
+    foreach my $set ($parent_maybe->rule_sets(undef, $after_check)) {
 
-    # determine index of the child.
-    my $my_place = $after_check ?
-        $child_maybe->index : scalar $parent_maybe->children;
+        # determine index of the child.
+        my $my_place = $after_check ?
+            $child_maybe->index : scalar $parent_maybe->children;
 
-    my $must_be = sub {
-        my $rule_name = shift;
-        my @allowed = $set->list_items($rule_name);
-        foreach my $type (@allowed) {
-            my $supertypes = $type =~ s/^\@//;
-            return 1 if $child_maybe->t eq $type;
-            return 1 if $child_maybe->is_type($type) && $supertypes;
+        my $must_be = sub {
+            my $rule_name = shift;
+            my @allowed = $set->list_items($rule_name);
+            foreach my $type (@allowed) {
+                my $supertypes = $type =~ s/^\@//;
+                return 1 if $child_maybe->t eq $type;
+                return 1 if $child_maybe->is_type($type) && $supertypes;
+            }
+            return;
+        };
+
+        # this specific child must be of a certain type.
+        my $idx_name = "child_${my_place}_must_be";
+        if ($set->{$idx_name}) {
+            return $set->err(child_not_allowed => $parent_maybe->detail)
+                if !$must_be->($idx_name);
         }
-        return;
-    };
 
-    # this specific child must be of a certain type.
-    my $idx_name = "child_${my_place}_must_be";
-    if ($set->{$idx_name}) {
-        return $set->err(child_not_allowed => $parent_maybe->detail)
-            if !$must_be->($idx_name);
-    }
+        # children must be of a certain type.
+        if ($set->{children_must_be}) {
+            return $set->err(child_not_allowed => $parent_maybe->detail)
+                if !$must_be->('children_must_be');
+        }
 
-    # children must be of a certain type.
-    if ($set->{children_must_be}) {
-        return $set->err(child_not_allowed => $parent_maybe->detail)
-            if !$must_be->('children_must_be');
-    }
+        # this specific child must match a subroutine.
+        $idx_name = "child_${my_place}_must_satisfy";
+        if (my $code = $set->rule_code($idx_name)) {
+            return $set->err(child_not_allowed => $parent_maybe->detail)
+                if !$code->($child_maybe, $parent_maybe);
+        }
 
-    # this specific child must match a subroutine.
-    $idx_name = "child_${my_place}_must_satisfy";
-    if (my $code = $set->rule_code($idx_name)) {
-        return $set->err(child_not_allowed => $parent_maybe->detail)
-            if !$code->($child_maybe, $parent_maybe);
-    }
-
-    # children must match a subroutine.
-    if (my $code = $set->rule_code('children_must_satisfy')) {
-        return $set->err(child_not_allowed => $parent_maybe->detail)
-            if !$code->($child_maybe, $parent_maybe);
+        # children must match a subroutine.
+        if (my $code = $set->rule_code('children_must_satisfy')) {
+            return $set->err(child_not_allowed => $parent_maybe->detail)
+                if !$code->($child_maybe, $parent_maybe);
+        }
     }
 
     return $ok;
@@ -433,24 +425,28 @@ sub F::Element::allows_child {
 # checks if a parent can provide for a child.
 sub F::Element::allows_parent {
     my ($child_maybe, $parent_maybe, $after_check) = @_;
-    my $set = $child_maybe->rule_set($parent_maybe, $after_check);
+    foreach my $set ($child_maybe->rule_sets($parent_maybe, $after_check)) {
 
-    # parent must be of a certain type.
-    if ($set->{parent_must_be}) {
-        my $good;
-        my @allowed = $set->list_items('parent_must_be');
-        foreach my $type (@allowed) {
-            my $supertypes = $type =~ s/^\@//;
-            $good++ and last if $parent_maybe->t eq $type;
-            $good++ and last if $parent_maybe->is_type($type) && $supertypes;
+        # parent must be of a certain type.
+        if ($set->{parent_must_be}) {
+            my $good;
+            my @allowed = $set->list_items('parent_must_be');
+            foreach my $type (@allowed) {
+                my $supertypes = $type =~ s/^\@//;
+                $good++ and last
+                    if $parent_maybe->t eq $type;
+                $good++ and last
+                    if $parent_maybe->is_type($type) && $supertypes;
+            }
+            return $set->err(child_not_allowed => $parent_maybe->detail)
+                if !$good;
         }
-        return $set->err(child_not_allowed => $parent_maybe->detail) if !$good;
-    }
 
-    # parent must match a subroutine.
-    if (my $code = $set->rule_code('parent_must_satisfy')) {
-        return $set->err(child_not_allowed => $parent_maybe->detail)
-            if !$code->($parent_maybe, $child_maybe);
+        # parent must match a subroutine.
+        if (my $code = $set->rule_code('parent_must_satisfy')) {
+            return $set->err(child_not_allowed => $parent_maybe->detail)
+                if !$code->($parent_maybe, $child_maybe);
+        }
     }
 
     return $ok;
@@ -459,54 +455,59 @@ sub F::Element::allows_parent {
 # check if somewhere in an upper level is a certain node type.
 sub F::Element::allows_upper_nodes {
     my ($child_maybe, $parent_maybe, $after_check) = @_;
-    my $set = $child_maybe->rule_set($parent_maybe, $after_check);
+    SET: foreach my $set ($child_maybe->rule_sets($parent_maybe, $after_check)) {
 
-    # there's no rule, so it allows everything.
-    return $ok if
-        !$set->{must_be_somewhere_inside} &&
-        !$set->{must_be_somewhere_inside_all};
+        # there's no rule, so it allows everything.
+        next SET if
+            !$set->{must_be_somewhere_inside} &&
+            !$set->{must_be_somewhere_inside_all};
 
-    # any of these can work.
-    # first_self_or_parent() respects @.
-    my $bad;
-    foreach my $type ($set->list_items('must_be_somewhere_inside')) {
-        return $ok if $parent_maybe->first_self_or_parent($type);
-        $bad ||= $type;
+        # any of these can work.
+        # first_self_or_parent() respects @.
+        my $bad;
+        foreach my $type ($set->list_items('must_be_somewhere_inside')) {
+            next SET if $parent_maybe->first_self_or_parent($type);
+            $bad ||= $type;
+        }
+
+        # all of these must work.
+        # first_self_or_parent() respects @.
+        EL: foreach my $type ($set->list_items('must_be_somewhere_inside_all')) {
+            next EL if $parent_maybe->first_self_or_parent($type);
+            $bad = $type;
+            last SET;
+        }
+
+        next if !$bad;
+        return $set->err(must_be_inside => lc $bad);
     }
 
-    # all of these must work.
-    # first_self_or_parent() respects @.
-    foreach my $type ($set->list_items('must_be_somewhere_inside_all')) {
-        next if $parent_maybe->first_self_or_parent($type);
-        $bad = $type;
-        last;
-    }
-
-    return $ok if !$bad;
-    return $set->err(must_be_inside => lc $bad);
+    return $ok;
 }
 
 # checks if the previous element at the same level is allowed.
 sub F::Element::allows_previous {
     my ($child_maybe, $parent_maybe, $previous_maybe, $after_check) = @_;
-    my $set = $child_maybe->rule_set($parent_maybe, $after_check);
+    foreach my $set ($child_maybe->rule_sets($parent_maybe, $after_check)) {
 
-    # there's no rule, so it allows everything.
-    return $ok if !$set->{must_come_after}; # allow everything.
+        # there's no rule, so it allows everything.
+        next if !$set->{must_come_after}; # allow everything.
 
-    # allows none, and there's none.
-    return $ok if !$previous_maybe &&
-        $set->list_contains(must_come_after => 'NONE');
+        # allows none, and there's none.
+        next if !$previous_maybe &&
+            $set->list_contains(must_come_after => 'NONE');
 
-    # require something, but there's nothing.
-    return $set->err(expected_before => $child_maybe->detail) if !$previous_maybe;
+        # require something, but there's nothing.
+        return $set->err(expected_before => $child_maybe->detail) if !$previous_maybe;
 
-    # this type is in the list.
-    return $ok if $set->list_contains(must_come_after => $previous_maybe->t);
+        # this type is in the list.
+        next if $set->list_contains(must_come_after => $previous_maybe->t);
 
-    # this type doesn't work.
-    return $set->err(previous_not_allowed => $previous_maybe->detail);
+        # this type doesn't work.
+        return $set->err(previous_not_allowed => $previous_maybe->detail);
+    }
 
+    return $ok;
 }
 
 # checks if the previous element allows the new element to follow it.
@@ -520,70 +521,75 @@ sub F::Element::previous_allows {
 
     # no previous element, no rules.
     return $ok if !$previous_maybe;
-    my $set = $previous_maybe->rule_set(undef, $after_check); # in actual parent.
+    foreach my $set ($previous_maybe->rule_sets(undef, $after_check)) {
 
-    # there's no rule, so it allows everything.
-    return $ok if !$set->{must_come_before}; # allow everything.
+        # there's no rule, so it allows everything.
+        next if !$set->{must_come_before}; # allow everything.
 
-    # there's no next element. see if this is allowed.
-    if (!$child_maybe) {
-        return $ok if $set->list_contains(must_come_before => 'NONE');
-        return $set->err('expected_after');
+        # there's no next element. see if this is allowed.
+        if (!$child_maybe) {
+            next if $set->list_contains(must_come_before => 'NONE');
+            return $set->err('expected_after');
+        }
+
+        # this type is in the list.
+        next if $set->list_contains(must_come_before => $child_maybe->t);
+
+        # this type doesn't work.
+        return $set->err(previous_not_allowed => $previous_maybe->detail);
+
     }
 
-    # this type is in the list.
-    return $ok if $set->list_contains(must_come_before => $child_maybe->t);
-
-    # this type doesn't work.
-    return $set->err(previous_not_allowed => $previous_maybe->detail);
-
+    return $ok;
 }
 
 # check that a node has not reached its limit
 sub F::Node::has_room {
     my ($parent_maybe, $after_check) = @_;
-    my $set = $parent_maybe->rule_set(undef, $after_check);
+    foreach my $set ($parent_maybe->rule_sets(undef, $after_check)) {
 
-    # no limit.
-    my $max = $set->rule_value('max_children') //
-              $set->rule_value('num_children');
-    return $ok if !defined $max;
+        # no limit.
+        my $max = $set->rule_value('max_children') //
+                  $set->rule_value('num_children');
+        next if !defined $max;
 
-    # surpassing the limit.
-    my $current = scalar $parent_maybe->children;
-    my $bad = $after_check ? $current > $max : $current >= $max;
-    return $set->err(parent_maxed_out =>
-        $parent_maybe->detail,
-        $max,
-        $max == 1 ? '' : 's'
-    ) if $bad;
+        # surpassing the limit.
+        my $current = scalar $parent_maybe->children;
+        my $bad = $after_check ? $current > $max : $current >= $max;
+        return $set->err(parent_maxed_out =>
+            $parent_maybe->detail,
+            $max,
+            $max == 1 ? '' : 's'
+        ) if $bad;
+    }
 
     return $ok;
 }
 
 sub F::Node::has_minimal {
     my ($node, $after_check) = @_;
-    my $set = $node->rule_set(undef, $after_check);
-    my $current = scalar $node->children;
+    foreach my $set ($node->rule_sets(undef, $after_check)) {
+        my $current = scalar $node->children;
 
-    # first, check if it has an exact amount.
-    my $exact = $set->rule_value('num_children');
-    if (defined $exact) {
-        return $set->err(wrong_number_children =>
-            $exact,
-            $exact == 1 ? '' : 's'
-        ) if $current != $exact;
+        # first, check if it has an exact amount.
+        my $exact = $set->rule_value('num_children');
+        if (defined $exact) {
+            return $set->err(wrong_number_children =>
+                $exact,
+                $exact == 1 ? '' : 's'
+            ) if $current != $exact;
+        }
+
+        # now check minimum.
+        my $min = $set->rule_value('min_children');
+        next if !defined $min;
+
+        # less than the minimum.
+        return $set->err(not_enough_children =>
+            $min,
+            $min == 1 ? '' : 's'
+        ) if $current < $min;
     }
-
-    # now check minimum.
-    my $min = $set->rule_value('min_children');
-    return $ok if !defined $min;
-
-    # less than the minimum.
-    return $set->err(not_enough_children =>
-        $min,
-        $min == 1 ? '' : 's'
-    ) if $current < $min;
 
     return $ok;
 }
