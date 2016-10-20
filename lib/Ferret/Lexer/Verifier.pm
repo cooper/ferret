@@ -34,7 +34,7 @@ our %errors = (
     },
     InvalidRegularExpression => {
         message => "Failed to compile constant regular expression /%s/%s",
-        hint_0  => "Engine: %s"
+        hint_0  => "%s"
     }
 );
 

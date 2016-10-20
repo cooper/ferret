@@ -35,6 +35,7 @@ sub construct {
         main_node   => $main_node,
         file        => $main_node->{name} || 'unknown',
         node        => $main_node,
+        last_el     => $main_node,
         token_lines => \@lines,
         token_pos   => \%positions,
         upcoming    => \@tokens,
