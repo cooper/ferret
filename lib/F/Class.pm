@@ -24,6 +24,8 @@ sub add_generic {
     # find the optionals.
     foreach my $maybe_bw (map $_->first_child,
       grep $_->type eq 'Maybe', $tc->children) {
+        die 'idk what to do bc this isnt a bareword'
+            if $maybe_bw->type ne 'Bareword';
         $class->{generic_maybes}{ $maybe_bw->{bareword_value} }++;
     }
 
