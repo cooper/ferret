@@ -57,7 +57,7 @@
 #                      Return
 #                          Index
 #                              Instance variable '@list'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Instance variable '@i'
 #          Computed property 'iterator'

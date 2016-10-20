@@ -24,7 +24,7 @@
 #                      Call
 #                          Property 'push'
 #                              Instance variable '@conns'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$connection'
 #                  Instruction
@@ -51,7 +51,7 @@
 #                                              Special property '*instanceOf'
 #                                                  Property 'target'
 #                                                      Lexical variable '$msg'
-#                                              Argument list [1 items]
+#                                              Argument list [1 item]
 #                                                  Item 0
 #                                                      Bareword 'Channel'
 #                                  Body ('if' scope)
@@ -68,13 +68,13 @@
 #                                                          Index
 #                                                              Property 'params'
 #                                                                  Lexical variable '$msg'
-#                                                              Index list [1 items]
+#                                                              Index list [1 item]
 #                                                                  Item 0
 #                                                                      Number '1'
-#                                                      Argument list [1 items]
+#                                                      Argument list [1 item]
 #                                                          Item 0
 #                                                              Number '0'
-#                                              Argument list [1 items]
+#                                              Argument list [1 item]
 #                                                  Item 0
 #                                                      String '.'
 #                              If
@@ -97,7 +97,7 @@
 #                                              Property 'commands'
 #                                                  Maybe
 #                                                      Lexical variable '$bot'
-#                                              Property index [1 items]
+#                                              Property index [1 item]
 #                                                  Item 0
 #                                                      Property 'lowercase'
 #                                                          Lexical variable '$command'
@@ -122,7 +122,7 @@
 #                                                  Property 'privmsg'
 #                                                      Property 'target'
 #                                                          Lexical variable '$msg'
-#                                                  Argument list [1 items]
+#                                                  Argument list [1 item]
 #                                                      Item 0
 #                                                          Property 'msg'
 #                                                              Lexical variable '$e'

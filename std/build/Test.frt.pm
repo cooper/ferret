@@ -34,7 +34,7 @@
 #                                  Item 0
 #                                      Call
 #                                          Bareword 'Bool'
-#                                          Argument list [1 items]
+#                                          Argument list [1 item]
 #                                              Item 0
 #                                                  Lexical variable '$a'
 #                                  Item 1
@@ -148,7 +148,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String '['

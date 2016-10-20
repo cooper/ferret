@@ -82,7 +82,7 @@
 #                      Call
 #                          Property 'require'
 #                              Bareword '_PO'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  String 'JSON::XS'
 #                      Catch
@@ -106,7 +106,7 @@
 #                          Instance variable '@xs'
 #                          Call
 #                              Bareword '_PO'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      String 'JSON::XS'
 #                      Catch
@@ -129,7 +129,7 @@
 #                      Call
 #                          Property (name evaluated at runtime)
 #                              Instance variable '@xs'
-#                              Property index [1 items]
+#                              Property index [1 item]
 #                                  Item 0
 #                                      Instance variable '@charset'
 #                  If
@@ -200,7 +200,7 @@
 #                          Call
 #                              Property 'encode'
 #                                  Instance variable '@xs'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$data'
 #                      Catch
@@ -231,7 +231,7 @@
 #                          Call
 #                              Property 'decode'
 #                                  Instance variable '@xs'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$json'
 #                      Catch
@@ -323,7 +323,7 @@
 #                          Call
 #                              Special property '*instanceOf'
 #                                  Lexical variable '$objects'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Bareword 'List'
 #                      Body ('if' scope)
@@ -351,7 +351,7 @@
 #                          Call
 #                              Property 'encode'
 #                                  Lexical variable '$default'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$data'
 #          Class method 'decode'
@@ -366,7 +366,7 @@
 #                          Call
 #                              Property 'decode'
 #                                  Lexical variable '$default'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$json'
 #          Instruction

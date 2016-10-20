@@ -80,11 +80,11 @@
 #              Instruction
 #                  Call
 #                      Bareword 'inspect'
-#                      Argument list [1 items]
+#                      Argument list [1 item]
 #                          Item 0
 #                              Call
 #                                  Bareword 'nonZeroCoodinates'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          Lexical variable '$pt'
 #      Function 'evenNumbers'
@@ -115,11 +115,11 @@
 #      Instruction
 #          Call
 #              Bareword 'inspect'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Call
 #                          Bareword 'evenNumbers'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Value list [4 items]
 #                                      Item 0
@@ -133,15 +133,15 @@
 #      Instruction
 #          Call
 #              Bareword 'inspect'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Call
 #                          Bareword 'evenNumbers'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Call
 #                                      Property 'toList'
-#                                          Single value [1 items]
+#                                          Single value [1 item]
 #                                              Item 0
 #                                                  Operation
 #                                                      Number '0'

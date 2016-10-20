@@ -49,7 +49,7 @@
 #                      Transform
 #                          Call
 #                              Bareword 'Str'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Topic variable '$_'
 #          Method 'word'
@@ -73,7 +73,7 @@
 #                                                  Lexical variable '$wordI'
 #                                                  Addition operator (+)
 #                                                  Number '2'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$wordI'
 #          Method 'fromWord'
@@ -97,7 +97,7 @@
 #                                                  Lexical variable '$wordN'
 #                                                  Addition operator (+)
 #                                                  Number '1'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$wordN'
 #          Computed property 'empty' (lazy)

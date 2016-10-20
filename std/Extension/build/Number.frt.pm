@@ -37,7 +37,7 @@
 #                          Call
 #                              Property 'sqrt'
 #                                  Bareword 'Math'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Special variable '*self'
 #          Computed property 'cbrt'
@@ -46,7 +46,7 @@
 #                      Return
 #                          Call
 #                              Instance variable '@root'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Number '3'
 #          Computed property 'square'
@@ -100,7 +100,7 @@
 #                      Lexical variable '$inf'
 #                      Call
 #                          Bareword 'Num'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  String 'inf'
 #          Instruction
@@ -109,7 +109,7 @@
 #                      Lexical variable '$nan'
 #                      Call
 #                          Bareword 'Num'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  String 'nan'
 #      Include (Int, Integer, Math, Num)

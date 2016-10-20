@@ -67,7 +67,7 @@
 #                  Can
 #                      Method requirement
 #                          Property variable '.getValue'
-#                          Named argument list [1 items]
+#                          Named argument list [1 item]
 #                              Item 0
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
@@ -86,7 +86,7 @@
 #                  Can
 #                      Method requirement
 #                          Property variable '.deleteValue'
-#                          Named argument list [1 items]
+#                          Named argument list [1 item]
 #                              Item 0
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'

@@ -3,7 +3,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      String 'test'
 #      Instruction
@@ -19,7 +19,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String 'found ''
@@ -50,7 +50,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String 'found ''

@@ -16,7 +16,7 @@
 #                          Instruction
 #                              Call
 #                                  Instance variable '@parse'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          Lexical variable '$data'
 #                  Instruction
@@ -40,7 +40,7 @@
 #                          Call
 #                              Property 'split'
 #                                  Lexical variable '$data'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Regex /\s+/
 #                  Instruction
@@ -115,7 +115,7 @@
 #                                      Call
 #                                          Property 'hasPrefix'
 #                                              Lexical variable '$word'
-#                                          Argument list [1 items]
+#                                          Argument list [1 item]
 #                                              Item 0
 #                                                  String '@'
 #                              Body ('if' scope)
@@ -125,7 +125,7 @@
 #                                          Call
 #                                              Property 'trimPrefix'
 #                                                  Lexical variable '$word'
-#                                              Argument list [1 items]
+#                                              Argument list [1 item]
 #                                                  Item 0
 #                                                      String '@'
 #                                  Instruction
@@ -139,7 +139,7 @@
 #                                          Call
 #                                              Property 'split'
 #                                                  Lexical variable '$word'
-#                                              Argument list [1 items]
+#                                              Argument list [1 item]
 #                                                  Item 0
 #                                                      String ';'
 #                                      Body ('for' scope)
@@ -167,16 +167,16 @@
 #                                                      Assignment
 #                                                          Index
 #                                                              Lexical variable '$tags'
-#                                                              Index list [1 items]
+#                                                              Index list [1 item]
 #                                                                  Item 0
 #                                                                      Index
 #                                                                          Lexical variable '$tagParts'
-#                                                                          Index list [1 items]
+#                                                                          Index list [1 item]
 #                                                                              Item 0
 #                                                                                  Number '0'
 #                                                          Index
 #                                                              Lexical variable '$tagParts'
-#                                                              Index list [1 items]
+#                                                              Index list [1 item]
 #                                                                  Item 0
 #                                                                      Number '1'
 #                                                  Instruction
@@ -185,7 +185,7 @@
 #                                              Assignment
 #                                                  Index
 #                                                      Lexical variable '$tags'
-#                                                      Index list [1 items]
+#                                                      Index list [1 item]
 #                                                          Item 0
 #                                                              Lexical variable '$tag'
 #                                                  Boolean true
@@ -215,7 +215,7 @@
 #                                      Call
 #                                          Property 'hasPrefix'
 #                                              Lexical variable '$word'
-#                                          Argument list [1 items]
+#                                          Argument list [1 item]
 #                                              Item 0
 #                                                  String ':'
 #                              Body ('if' scope)
@@ -225,7 +225,7 @@
 #                                          Call
 #                                              Property 'trimPrefix'
 #                                                  Lexical variable '$word'
-#                                              Argument list [1 items]
+#                                              Argument list [1 item]
 #                                                  Item 0
 #                                                      String ':'
 #                                  Instruction
@@ -267,7 +267,7 @@
 #                                  Call
 #                                      Property 'hasPrefix'
 #                                          Lexical variable '$word'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              String ':'
 #                              Body ('if' scope)
@@ -289,17 +289,17 @@
 #                                                                          Lexical variable '$wordI'
 #                                                                          Addition operator (+)
 #                                                                          Number '1'
-#                                                      Index list [1 items]
+#                                                      Index list [1 item]
 #                                                          Item 0
 #                                                              Lexical variable '$wordI'
-#                                              Argument list [1 items]
+#                                              Argument list [1 item]
 #                                                  Item 0
 #                                                      String ':'
 #                                  Instruction
 #                                      Call
 #                                          Property 'push'
 #                                              Lexical variable '$params'
-#                                          Argument list [1 items]
+#                                          Argument list [1 item]
 #                                              Item 0
 #                                                  Lexical variable '$rest'
 #                                  Instruction
@@ -308,13 +308,13 @@
 #                              Call
 #                                  Property 'push'
 #                                      Lexical variable '$params'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          Lexical variable '$word'
 #                          Instruction
 #                              Call
 #                                  Bareword 'updateWord'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          Boolean true
 #                  Instruction
@@ -329,11 +329,11 @@
 #                              Property 'getTarget'
 #                                  Maybe
 #                                      Instance variable '@connection'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Index
 #                                          Instance variable '@params'
-#                                          Index list [1 items]
+#                                          Index list [1 item]
 #                                              Item 0
 #                                                  Number '0'
 #          Computed property '_parsedSource' (lazy)

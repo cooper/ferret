@@ -3,28 +3,28 @@
 #      Instruction
 #          Assignment
 #              Lexical variable '$list'
-#              Value list [1 items]
+#              Value list [1 item]
 #                  Item 0
 #                      String 'hi'
 #      Instruction
 #          Call
 #              Property 'push'
 #                  Lexical variable '$list'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      String 'there'
 #      Instruction
 #          Assignment
 #              Index
 #                  Lexical variable '$list'
-#                  Index list [1 items]
+#                  Index list [1 item]
 #                      Item 0
 #                          Number '4'
 #              String 'yeah'
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Length: '
@@ -40,7 +40,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Argument list [1 items]
+#                      Argument list [1 item]
 #                          Item 0
 #                              Operation
 #                                  String 'item: '
@@ -49,7 +49,7 @@
 #      Instruction
 #          Assignment
 #              Lexical variable '$hash'
-#              Hash [1 items]
+#              Hash [1 item]
 #                  Item 0
 #                      Pair 'hi'
 #                          String 'there'
@@ -57,7 +57,7 @@
 #          Assignment
 #              Index
 #                  Lexical variable '$hash'
-#                  Index list [1 items]
+#                  Index list [1 item]
 #                      Item 0
 #                          String 'whats'
 #              String 'up'
@@ -65,21 +65,21 @@
 #          Assignment
 #              Index
 #                  Lexical variable '$hash'
-#                  Index list [1 items]
+#                  Index list [1 item]
 #                      Item 0
 #                          String 'thank'
 #              String 'you'
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'whats '
 #                          Addition operator (+)
 #                          Index
 #                              Lexical variable '$hash'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      String 'whats'
 #      For (pairs)
@@ -95,7 +95,7 @@
 #              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Argument list [1 items]
+#                      Argument list [1 item]
 #                          Item 0
 #                              Operation
 #                                  String 'pair: key='

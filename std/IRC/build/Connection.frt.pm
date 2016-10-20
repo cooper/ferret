@@ -51,7 +51,7 @@
 #                      Call
 #                          Special property '*addParent'
 #                              Instance variable '@handlers'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Property 'handlers'
 #                                      Bareword 'Handlers'
@@ -118,7 +118,7 @@
 #                              Instruction
 #                                  Call
 #                                      Instance variable '@send'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              Operation
 #                                                  String 'USER '
@@ -139,7 +139,7 @@
 #                              Instruction
 #                                  Call
 #                                      Instance variable '@send'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              Operation
 #                                                  String 'NICK '
@@ -161,7 +161,7 @@
 #                              Instruction
 #                                  Call
 #                                      Instance variable '@_handleLine'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              Lexical variable '$data'
 #                  On ('resetState' callback)
@@ -191,7 +191,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String 'send: '
@@ -201,7 +201,7 @@
 #                      Call
 #                          Property 'println'
 #                              Instance variable '@sock'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$line'
 #          Method '_handleLine'
@@ -214,7 +214,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String 'recv: '
@@ -235,7 +235,7 @@
 #                          Maybe
 #                              Property (name evaluated at runtime)
 #                                  Instance variable '@handlers'
-#                                  Property index [1 items]
+#                                  Property index [1 item]
 #                                      Item 0
 #                                          Property 'command'
 #                                              Lexical variable '$msg'
@@ -261,7 +261,7 @@
 #                          Call
 #                              Property 'hasPrefix'
 #                                  Lexical variable '$target'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      String '#'
 #                      Body ('if' scope)
@@ -269,7 +269,7 @@
 #                              Return
 #                                  Call
 #                                      Instance variable '@getChannel'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              Lexical variable '$target'
 #                  Else
@@ -278,7 +278,7 @@
 #                              Return
 #                                  Call
 #                                      Instance variable '@getUser'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              Lexical variable '$target'
 #          Method 'getChannel'
@@ -294,7 +294,7 @@
 #                              Lexical variable '$channel'
 #                              Index
 #                                  Instance variable '@channels'
-#                                  Index list [1 items]
+#                                  Index list [1 item]
 #                                      Item 0
 #                                          Property 'lowercase'
 #                                              Lexical variable '$name'
@@ -326,7 +326,7 @@
 #                              Lexical variable '$user'
 #                              Index
 #                                  Instance variable '@users'
-#                                  Index list [1 items]
+#                                  Index list [1 item]
 #                                      Item 0
 #                                          Property 'lowercase'
 #                                              Lexical variable '$nick'
@@ -358,7 +358,7 @@
 #                              Lexical variable '$server'
 #                              Index
 #                                  Instance variable '@servers'
-#                                  Index list [1 items]
+#                                  Index list [1 item]
 #                                      Item 0
 #                                          Property 'lowercase'
 #                                              Lexical variable '$name'

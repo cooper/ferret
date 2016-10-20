@@ -98,7 +98,7 @@
 #                              Instruction
 #                                  Call
 #                                      Instance variable '@send'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              Operation
 #                                                  String 'USER '
@@ -119,7 +119,7 @@
 #                              Instruction
 #                                  Call
 #                                      Instance variable '@send'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              Operation
 #                                                  String 'NICK '
@@ -137,7 +137,7 @@
 #                              Instruction
 #                                  Call
 #                                      Instance variable '@handleLine'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              Lexical variable '$data'
 #          Method 'addCommand'
@@ -154,7 +154,7 @@
 #                      Expression ('if' parameter)
 #                          Index
 #                              Instance variable '@commands'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$command'
 #                      Body ('if' scope)
@@ -165,7 +165,7 @@
 #                      Assignment
 #                          Index
 #                              Instance variable '@commands'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$command'
 #                          Lexical variable '$callback'
@@ -187,7 +187,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String 'send: '
@@ -197,7 +197,7 @@
 #                      Call
 #                          Property 'println'
 #                              Instance variable '@sock'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$line'
 #          Method 'handleLine'
@@ -211,7 +211,7 @@
 #                          Call
 #                              Property 'split'
 #                                  Lexical variable '$line'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      String ' '
 #                  Instruction
@@ -219,7 +219,7 @@
 #                          Lexical variable '$command'
 #                          Index
 #                              Lexical variable '$s'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Number '1'
 #                  If
@@ -227,7 +227,7 @@
 #                          Operation
 #                              Index
 #                                  Lexical variable '$s'
-#                                  Index list [1 items]
+#                                  Index list [1 item]
 #                                      Item 0
 #                                          Number '0'
 #                              Equality operator (==)
@@ -238,13 +238,13 @@
 #                                  Lexical variable '$command'
 #                                  Index
 #                                      Lexical variable '$s'
-#                                      Index list [1 items]
+#                                      Index list [1 item]
 #                                          Item 0
 #                                              Number '0'
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String 'recv['
@@ -259,7 +259,7 @@
 #                          Maybe
 #                              Index
 #                                  Lexical variable '$handlers'
-#                                  Index list [1 items]
+#                                  Index list [1 item]
 #                                      Item 0
 #                                          Lexical variable '$command'
 #                          Named argument list [4 items]
@@ -294,7 +294,7 @@
 #                          Call
 #                              Property 'split'
 #                                  Lexical variable '$message'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      String '␤'
 #                      Body ('for' scope)
@@ -307,7 +307,7 @@
 #                                  Instruction
 #                                      Call
 #                                          Instance variable '@send'
-#                                          Argument list [1 items]
+#                                          Argument list [1 item]
 #                                              Item 0
 #                                                  Operation
 #                                                      String 'PRIVMSG '
@@ -338,7 +338,7 @@
 #                                  Instruction
 #                                      Call
 #                                          This variable '%send'
-#                                          Argument list [1 items]
+#                                          Argument list [1 item]
 #                                              Item 0
 #                                                  Operation
 #                                                      String 'JOIN '
@@ -356,14 +356,14 @@
 #                  Instruction
 #                      Call
 #                          This variable '%send'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String 'PONG '
 #                                      Addition operator (+)
 #                                      Index
 #                                          Lexical variable '$s'
-#                                          Index list [1 items]
+#                                          Index list [1 item]
 #                                              Item 0
 #                                                  Number '1'
 #          Function '_handleMessage'
@@ -379,7 +379,7 @@
 #                          Lexical variable '$msg'
 #                          Call
 #                              Bareword 'Message'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$line'
 #                  Instruction
@@ -395,7 +395,7 @@
 #                                  Maybe
 #                                      Index
 #                                          This variable '%commands'
-#                                          Index list [1 items]
+#                                          Index list [1 item]
 #                                              Item 0
 #                                                  Property 'lowercase'
 #                                                      Property 'command'
@@ -445,7 +445,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'inspect'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$msg'
 #                  Instruction
@@ -454,7 +454,7 @@
 #                          Index
 #                              Property 'parts'
 #                                  Lexical variable '$msg'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Number '1'
 #                  Instruction
@@ -463,14 +463,14 @@
 #                          Call
 #                              Property 'fromWord'
 #                                  Lexical variable '$msg'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Number '2'
 #                  Instruction
 #                      Assignment
 #                          Index
 #                              This variable '%factoids'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$trigger'
 #                          Lexical variable '$response'
@@ -478,7 +478,7 @@
 #                      Assignment
 #                          Index
 #                              This variable '%commands'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$trigger'
 #                          Bareword '_commandFactoid'
@@ -512,7 +512,7 @@
 #                              Property 'fill'
 #                                  Index
 #                                      This variable '%factoids'
-#                                      Index list [1 items]
+#                                      Index list [1 item]
 #                                          Item 0
 #                                              Property 'command'
 #                                                  Lexical variable '$msg'

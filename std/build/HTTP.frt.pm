@@ -25,7 +25,7 @@
 #                      Call
 #                          Property 'get'
 #                              Lexical variable '$client'
-#                          Named argument list [1 items]
+#                          Named argument list [1 item]
 #                              Item 0
 #                                  Pair 'url'
 #                                      Lexical variable '$url'
@@ -41,7 +41,7 @@
 #                      Call
 #                          Property 'post'
 #                              Lexical variable '$client'
-#                          Named argument list [1 items]
+#                          Named argument list [1 item]
 #                              Item 0
 #                                  Pair 'url'
 #                                      Lexical variable '$url'

@@ -26,7 +26,7 @@
 #                          Instance variable '@channel'
 #                          Index
 #                              Lexical variable '$lineSplit'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Number '2'
 #                  Instruction
@@ -37,7 +37,7 @@
 #                                  Property 'split'
 #                                      Index
 #                                          Lexical variable '$lineSplit'
-#                                          Index list [1 items]
+#                                          Index list [1 item]
 #                                              Item 0
 #                                                  Number '0'
 #                                  Mixed argument list [2 items]
@@ -46,7 +46,7 @@
 #                                      Item 1
 #                                          Pair 'limit'
 #                                              Number '2'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Number '0'
 #                  Instruction
@@ -55,7 +55,7 @@
 #                          Call
 #                              Property 'trimPrefix'
 #                                  Instance variable '@nickname'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      String ':'
 #                  Instruction
@@ -63,7 +63,7 @@
 #                          Instance variable '@message'
 #                          Index
 #                              Lexical variable '$lineSplit'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Number '3'
 #                  Instruction
@@ -72,7 +72,7 @@
 #                          Call
 #                              Property 'trimPrefix'
 #                                  Instance variable '@message'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      String ':'
 #                  Instruction
@@ -81,7 +81,7 @@
 #                          Call
 #                              Property 'split'
 #                                  Instance variable '@message'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      String ' '
 #          Computed property 'command' (lazy)
@@ -98,10 +98,10 @@
 #                                  Property 'hasPrefix'
 #                                      Index
 #                                          Instance variable '@parts'
-#                                          Index list [1 items]
+#                                          Index list [1 item]
 #                                              Item 0
 #                                                  Number '0'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          String '.'
 #                      Body ('if' scope)
@@ -112,10 +112,10 @@
 #                                      Property 'trimPrefix'
 #                                          Index
 #                                              Instance variable '@parts'
-#                                              Index list [1 items]
+#                                              Index list [1 item]
 #                                                  Item 0
 #                                                      Number '0'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              String '.'
 #                          If
@@ -160,7 +160,7 @@
 #                                                  Lexical variable '$wordN'
 #                                                  Addition operator (+)
 #                                                  Number '1'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$wordN'
 #      Include (Num, Str)

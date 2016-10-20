@@ -1184,14 +1184,14 @@ our %element_rules = (
 
     Maybe => {
 
-        directly_inside_rules => {
+        # there must only be one uncertainty
+        num_children => [                                                       # Maybe[0]
+            1,
+            'Inline if operator (?) can only capture a single element',
+            0
+        ],
 
-            # there must only be one uncertainty
-            num_children => [                                                   # Maybe[0]
-                1,
-                'Inline if operator (?) can only capture a single element',
-                0
-            ],
+        directly_inside_rules => {
 
             # inside a TypedClass, we can only allow a single bareword
             TypedClass => {
@@ -1249,6 +1249,28 @@ our %element_rules = (
             1,
             'Continue can only contain one child, its body',
             3
+        ]
+
+    },
+
+    Return => {
+
+        must_be_somewhere_inside => [                                           # Return[0]
+            'Function Method',
+            'Return must be somewhere inside a function, method, or callback',
+            0
+        ],
+
+        max_children => [                                                       # Return[1]
+            1,
+            'Return can only contain one expression',
+            1
+        ],
+
+        children_must_be => [                                                   # Return[2]
+            '@Expression',
+            'Cannot return non-expression',
+            2
         ]
 
     },

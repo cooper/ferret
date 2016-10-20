@@ -41,7 +41,7 @@
 #              Instruction
 #                  Call
 #                      This variable '%send'
-#                      Argument list [1 items]
+#                      Argument list [1 item]
 #                          Item 0
 #                              Operation
 #                                  String 'PONG :'
@@ -49,7 +49,7 @@
 #                                  Index
 #                                      Property 'params'
 #                                          Lexical variable '$msg'
-#                                      Index list [1 items]
+#                                      Index list [1 item]
 #                                          Item 0
 #                                              Operation
 #                                                  Constant zero
@@ -71,7 +71,7 @@
 #                      Index
 #                          Property 'params'
 #                              Lexical variable '$msg'
-#                          Index list [1 items]
+#                          Index list [1 item]
 #                              Item 0
 #                                  Number '0'
 #              If
@@ -80,7 +80,7 @@
 #                          Index
 #                              Property 'params'
 #                                  Lexical variable '$msg'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Operation
 #                                          Constant zero
@@ -121,7 +121,7 @@
 #                      Index
 #                          Property 'params'
 #                              Lexical variable '$msg'
-#                          Index list [1 items]
+#                          Index list [1 item]
 #                              Item 0
 #                                  Number '1'
 #              Instruction
@@ -131,7 +131,7 @@
 #                      Index
 #                          Property 'params'
 #                              Lexical variable '$msg'
-#                          Index list [1 items]
+#                          Index list [1 item]
 #                              Item 0
 #                                  Number '2'
 #      Function 'endOfMOTD'
@@ -149,7 +149,7 @@
 #              Instruction
 #                  Call
 #                      This variable '%sendJoin'
-#                      Named argument list [1 items]
+#                      Named argument list [1 item]
 #                          Item 0
 #                              Pair 'channelNames'
 #                                  This variable '%autojoin'
@@ -169,7 +169,7 @@
 #                      Index
 #                          Property 'params'
 #                              Lexical variable '$msg'
-#                          Index list [1 items]
+#                          Index list [1 item]
 #                              Item 0
 #                                  Number '1'
 #      Function 'nickInUse'
@@ -188,7 +188,7 @@
 #              Instruction
 #                  Call
 #                      This variable '%sendNick'
-#                      Argument list [1 items]
+#                      Argument list [1 item]
 #                          Item 0
 #                              Property 'nick'
 #                                  This variable '%me'

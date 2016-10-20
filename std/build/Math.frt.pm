@@ -13,7 +13,7 @@
 #                      Call
 #                          Property 'sqrt'
 #                              Bareword 'NATIVE::Math'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$num'
 #      Function 'root'
@@ -33,7 +33,7 @@
 #                      Operation
 #                          Lexical variable '$num'
 #                          Exponent operator (^)
-#                          Single value [1 items]
+#                          Single value [1 item]
 #                              Item 0
 #                                  Operation
 #                                      Number '1'

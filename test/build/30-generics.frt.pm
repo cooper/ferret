@@ -19,7 +19,7 @@
 #                          Call
 #                              Property 'push'
 #                                  Instance variable '@items'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$item'
 #          Method 'pop'
@@ -52,7 +52,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String 'Error! '
@@ -70,27 +70,27 @@
 #          Call
 #              Property 'push'
 #                  Lexical variable '$numstack'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Number '1'
 #      Instruction
 #          Call
 #              Property 'push'
 #                  Lexical variable '$numstack'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      String 'this shoul...'
 #      Instruction
 #          Call
 #              Property 'push'
 #                  Lexical variable '$numstack'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Number '2'
 #      Instruction
 #          Call
 #              Bareword 'inspect'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Lexical variable '$numstack'
 #      Include (Element, Num, Stack)

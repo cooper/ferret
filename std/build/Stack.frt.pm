@@ -19,7 +19,7 @@
 #                      Call
 #                          Property 'push'
 #                              Instance variable '@items'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$item'
 #          Method 'pop'

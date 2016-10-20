@@ -41,7 +41,7 @@
 #                      Return
 #                          Call
 #                              Bareword 'sqrt'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Operation
 #                                          Lexical variable '$dx'
@@ -57,7 +57,7 @@
 #                      Return
 #                          Call
 #                              Instance variable '@distanceTo'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Call
 #                                          Special variable '*class'
@@ -113,7 +113,7 @@
 #                                  Item 0
 #                                      Pair 'x'
 #                                          Operation
-#                                              Single value [1 items]
+#                                              Single value [1 item]
 #                                                  Item 0
 #                                                      Operation
 #                                                          Property 'x'
@@ -126,7 +126,7 @@
 #                                  Item 1
 #                                      Pair 'y'
 #                                          Operation
-#                                              Single value [1 items]
+#                                              Single value [1 item]
 #                                                  Item 0
 #                                                      Operation
 #                                                          Property 'y'
@@ -153,7 +153,7 @@
 #                          Call
 #                              Property 'distanceTo'
 #                                  Lexical variable '$pt1'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$pt2'
 #      Include (Num, Point)

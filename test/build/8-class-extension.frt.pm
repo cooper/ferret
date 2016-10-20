@@ -13,7 +13,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Length tim...'

@@ -12,24 +12,24 @@
 #                              Instruction
 #                                  Call
 #                                      Bareword 'say'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              String 'been five ...'
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      String 'waiting...'
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Property 'message'
 #                          Call
 #                              Bareword 'something'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 1
 #                                      Anonymous function
 #                                          Body ('function' scope)

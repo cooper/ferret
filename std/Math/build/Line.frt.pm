@@ -115,7 +115,7 @@
 #                          Call
 #                              Property 'distanceTo'
 #                                  Instance variable '@pt1'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Instance variable '@pt2'
 #      Include (Point)

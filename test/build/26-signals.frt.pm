@@ -10,7 +10,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  String 'Got TERM. ...'
 #      Instruction
@@ -32,7 +32,7 @@
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          String 'Are you sure?'
 #                          Instruction
@@ -46,7 +46,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  String 'Got second...'
 #      Instruction
@@ -54,7 +54,7 @@
 #              Property 'start'
 #                  Call
 #                      Bareword 'Timer'
-#                      Argument list [1 items]
+#                      Argument list [1 item]
 #                          Item 0
 #                              Number '5'
 #              Argument list [0 items]

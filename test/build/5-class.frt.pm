@@ -39,7 +39,7 @@
 #              Body ('method' scope)
 #                  Instruction
 #                      Return
-#                          Single value [1 items]
+#                          Single value [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String '('
@@ -74,7 +74,7 @@
 #                                  Item 0
 #                                      Pair 'x'
 #                                          Operation
-#                                              Single value [1 items]
+#                                              Single value [1 item]
 #                                                  Item 0
 #                                                      Operation
 #                                                          Property 'x'
@@ -87,7 +87,7 @@
 #                                  Item 1
 #                                      Pair 'y'
 #                                          Operation
-#                                              Single value [1 items]
+#                                              Single value [1 item]
 #                                                  Item 0
 #                                                      Operation
 #                                                          Property 'y'
@@ -110,7 +110,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Point'
@@ -125,7 +125,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Right'
@@ -145,7 +145,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Midpoint'
@@ -163,7 +163,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Nineteen: '

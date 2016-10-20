@@ -5,7 +5,7 @@
 #              Call
 #                  Property 'get'
 #                      Bareword 'HTTP'
-#                  Argument list [1 items]
+#                  Argument list [1 item]
 #                      Item 0
 #                          String 'http://goo...'
 #          Body ('inside' scope)
@@ -17,7 +17,7 @@
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          String 'Connected!'
 #              On
@@ -33,7 +33,7 @@
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          Operation
 #                                              String 'Redirected...'
@@ -52,7 +52,7 @@
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          Operation
 #                                              String 'Got conten...'
@@ -67,7 +67,7 @@
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          String 'Got error!'
 #              Instruction

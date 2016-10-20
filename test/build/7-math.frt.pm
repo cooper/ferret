@@ -26,7 +26,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Center of ...'
@@ -35,7 +35,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Center dis...'
@@ -68,7 +68,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Midpoint: '
@@ -77,7 +77,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Square roo...'
@@ -85,7 +85,7 @@
 #                          Call
 #                              Property 'sqrt'
 #                                  Bareword 'Math'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Number '4'
 #      Include (Math, Math::Point, Math::Rect)

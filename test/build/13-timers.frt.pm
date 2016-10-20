@@ -3,7 +3,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      String 'hello'
 #      On
@@ -13,7 +13,7 @@
 #                      Property 'once'
 #                          Call
 #                              Bareword 'Timer'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Number '5'
 #          Anonymous function
@@ -21,7 +21,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  String 'five secon...'
 #      Instruction
@@ -29,7 +29,7 @@
 #              Lexical variable '$t2'
 #              Call
 #                  Bareword 'Timer'
-#                  Argument list [1 items]
+#                  Argument list [1 item]
 #                      Item 0
 #                          Number '2'
 #      On
@@ -43,7 +43,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  String 'this shoul...'
 #      Instruction

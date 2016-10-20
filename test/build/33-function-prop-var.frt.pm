@@ -12,7 +12,7 @@
 #                              Number '16'
 #                          Item 2
 #                              Number '25'
-#                  Argument list [1 items]
+#                  Argument list [1 item]
 #                      Item 0
 #                          Anonymous function
 #                              Body ('function' scope)
@@ -22,7 +22,7 @@
 #      Instruction
 #          Call
 #              Bareword 'inspect'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Lexical variable '$roots'
 package FF;

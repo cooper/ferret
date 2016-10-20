@@ -36,14 +36,14 @@
 #          Assignment
 #              Property 'autojoin'
 #                  Lexical variable '$bot'
-#              Value list [1 items]
+#              Value list [1 item]
 #                  Item 0
 #                      String '#k'
 #      Instruction
 #          Assignment
 #              Property 'autojoin'
 #                  Lexical variable '$i'
-#              Value list [1 items]
+#              Value list [1 item]
 #                  Item 0
 #                      String '#k'
 #      Instruction
@@ -95,16 +95,16 @@
 #                                      Lexical variable '$c'
 #                                      Call
 #                                          Bareword 'COMPILER'
-#                                          Argument list [1 items]
+#                                          Argument list [1 item]
 #                                              Item 0
 #                                                  Call
 #                                                      Bareword 'convertNewlines'
-#                                                      Argument list [1 items]
+#                                                      Argument list [1 item]
 #                                                          Item 0
 #                                                              Call
 #                                                                  Property 'fromWord'
 #                                                                      Lexical variable '$msg'
-#                                                                  Argument list [1 items]
+#                                                                  Argument list [1 item]
 #                                                                      Item 0
 #                                                                          Number '1'
 #                              Instruction
@@ -113,7 +113,7 @@
 #                                      Call
 #                                          Property 'tokenize'
 #                                              Lexical variable '$c'
-#                                          Named argument list [1 items]
+#                                          Named argument list [1 item]
 #                                              Item 0
 #                                                  Pair 'pretty'
 #                                                      Boolean true
@@ -133,7 +133,7 @@
 #                                                  Item 1
 #                                                      Call
 #                                                          Bareword 'Str'
-#                                                          Argument list [1 items]
+#                                                          Argument list [1 item]
 #                                                              Item 0
 #                                                                  Property 'error'
 #                                                                      Lexical variable '$res'
@@ -176,16 +176,16 @@
 #                                      Lexical variable '$c'
 #                                      Call
 #                                          Bareword 'COMPILER'
-#                                          Argument list [1 items]
+#                                          Argument list [1 item]
 #                                              Item 0
 #                                                  Call
 #                                                      Bareword 'convertNewlines'
-#                                                      Argument list [1 items]
+#                                                      Argument list [1 item]
 #                                                          Item 0
 #                                                              Call
 #                                                                  Property 'fromWord'
 #                                                                      Lexical variable '$msg'
-#                                                                  Argument list [1 items]
+#                                                                  Argument list [1 item]
 #                                                                      Item 0
 #                                                                          Number '1'
 #                              Instruction
@@ -194,7 +194,7 @@
 #                                      Call
 #                                          Property 'construct'
 #                                              Lexical variable '$c'
-#                                          Named argument list [1 items]
+#                                          Named argument list [1 item]
 #                                              Item 0
 #                                                  Pair 'pretty'
 #                                                      Boolean true
@@ -214,7 +214,7 @@
 #                                                  Item 1
 #                                                      Call
 #                                                          Bareword 'Str'
-#                                                          Argument list [1 items]
+#                                                          Argument list [1 item]
 #                                                              Item 0
 #                                                                  Property 'error'
 #                                                                      Lexical variable '$res'
@@ -259,16 +259,16 @@
 #                                          Property 'eval'
 #                                              Call
 #                                                  Bareword 'COMPILER'
-#                                                  Argument list [1 items]
+#                                                  Argument list [1 item]
 #                                                      Item 0
 #                                                          Call
 #                                                              Bareword 'convertNewlines'
-#                                                              Argument list [1 items]
+#                                                              Argument list [1 item]
 #                                                                  Item 0
 #                                                                      Call
 #                                                                          Property 'fromWord'
 #                                                                              Lexical variable '$msg'
-#                                                                          Argument list [1 items]
+#                                                                          Argument list [1 item]
 #                                                                              Item 0
 #                                                                                  Number '1'
 #                                          Argument list [0 items]
@@ -288,7 +288,7 @@
 #                                                  Item 1
 #                                                      Call
 #                                                          Bareword 'Str'
-#                                                          Argument list [1 items]
+#                                                          Argument list [1 item]
 #                                                              Item 0
 #                                                                  Property 'error'
 #                                                                      Lexical variable '$res'
@@ -346,16 +346,16 @@
 #                                          Property 'perlEval'
 #                                              Call
 #                                                  Bareword 'COMPILER'
-#                                                  Argument list [1 items]
+#                                                  Argument list [1 item]
 #                                                      Item 0
 #                                                          Call
 #                                                              Bareword 'convertNewlines'
-#                                                              Argument list [1 items]
+#                                                              Argument list [1 item]
 #                                                                  Item 0
 #                                                                      Call
 #                                                                          Property 'fromWord'
 #                                                                              Lexical variable '$msg'
-#                                                                          Argument list [1 items]
+#                                                                          Argument list [1 item]
 #                                                                              Item 0
 #                                                                                  Number '1'
 #                                          Argument list [0 items]
@@ -375,7 +375,7 @@
 #                                                  Item 1
 #                                                      Call
 #                                                          Bareword 'Str'
-#                                                          Argument list [1 items]
+#                                                          Argument list [1 item]
 #                                                              Item 0
 #                                                                  Property 'error'
 #                                                                      Lexical variable '$res'
@@ -441,16 +441,16 @@
 #                      Lexical variable '$c'
 #                      Call
 #                          Bareword 'COMPILER'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Call
 #                                      Bareword 'convertNewlines'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              Call
 #                                                  Property 'fromWord'
 #                                                      Lexical variable '$msg'
-#                                                  Argument list [1 items]
+#                                                  Argument list [1 item]
 #                                                      Item 0
 #                                                          Number '1'
 #              Instruction
@@ -459,7 +459,7 @@
 #                      Call
 #                          Property 'compile'
 #                              Lexical variable '$c'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      Property 'command'
@@ -482,7 +482,7 @@
 #                                  Item 1
 #                                      Call
 #                                          Bareword 'Str'
-#                                          Argument list [1 items]
+#                                          Argument list [1 item]
 #                                              Item 0
 #                                                  Property 'error'
 #                                                      Lexical variable '$res'
@@ -513,10 +513,10 @@
 #                              Call
 #                                  Property 'split'
 #                                      Lexical variable '$string'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          String '_NL_'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  String '␤'
 #      Function 'ircsay'
@@ -535,7 +535,7 @@
 #                              Index
 #                                  Property 'autojoin'
 #                                      Lexical variable '$bot'
-#                                  Index list [1 items]
+#                                  Index list [1 item]
 #                                      Item 0
 #                                          Number '0'
 #                          Item 1

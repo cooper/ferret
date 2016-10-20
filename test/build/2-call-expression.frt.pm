@@ -1,13 +1,13 @@
 # === Document Model ===
 #  Document './test/2-call-expression.frt'
 #      Instruction
-#          Single value [1 items]
+#          Single value [1 item]
 #              Item 0
 #                  Call
-#                      Single value [1 items]
+#                      Single value [1 item]
 #                          Item 0
 #                              Bareword 'say'
-#                      Argument list [1 items]
+#                      Argument list [1 item]
 #                          Item 0
 #                              String 'Hello World!'
 package FF;

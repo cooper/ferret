@@ -58,7 +58,7 @@
 #                      Instruction
 #                          Call
 #                              Bareword 'say'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Operation
 #                                          Lexical variable '$hello'
@@ -72,7 +72,7 @@
 #                      Instruction
 #                          Call
 #                              Bareword 'say'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Operation
 #                                          String 'Hello '
@@ -90,7 +90,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Operation
 #                          String 'Pi = '

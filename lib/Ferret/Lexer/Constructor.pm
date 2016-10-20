@@ -565,6 +565,8 @@ sub c_ANGLE_S {
     # Rule TypedClass[1]:
     #   Number of children must be no less than two (2).
 
+
+
     # it's a class declaration.
     if ($last_el->type eq 'Class') {
 
@@ -1127,6 +1129,12 @@ sub c_OP_NOT {
 sub c_OP_MAYBE {
     my ($c, $value) = @_;
 
+    # Rule Maybe[0]:
+    #   Number of children must be exactly one (1).
+
+    # Rule Maybe[1]:
+    #   When inside a TypedClass, children must be of type Bareword.
+
     # must come after expression.
     my $last_el = $c->last_el;
     return $c->unexpected if !$last_el || !$last_el->is_type('Expression');
@@ -1591,6 +1599,16 @@ sub c_KEYWORD_DEFER {
 # function/method return statement.
 sub c_KEYWORD_RETURN {
     my ($c, $value) = @_;
+
+    # Rule Return[0]:
+    #   Must be somewhere inside a Function or Method.
+
+    # Rule Return[1]:
+    #   Number of children must be no more than one (1).
+
+    # Rule Return[2]:
+    #   Children must be of type Expression.
+
     my $ret = F::new('Return');
     return $c->adopt_and_set_node($ret);
 }

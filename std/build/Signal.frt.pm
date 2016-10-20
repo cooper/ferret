@@ -10,7 +10,7 @@
 #                      Lexical variable '$INT'
 #                      Call
 #                          Special variable '*class'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Symbol :INT
 #          Instruction
@@ -19,7 +19,7 @@
 #                      Lexical variable '$HUP'
 #                      Call
 #                          Special variable '*class'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Symbol :HUP
 #          Instruction
@@ -28,7 +28,7 @@
 #                      Lexical variable '$TERM'
 #                      Call
 #                          Special variable '*class'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Symbol :TERM
 #          Instruction
@@ -37,7 +37,7 @@
 #                      Lexical variable '$ALRM'
 #                      Call
 #                          Special variable '*class'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Symbol :ALRM
 #          Instruction
@@ -68,7 +68,7 @@
 #                  Instruction
 #                      Call
 #                          Bareword '_exit'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Number '0'
 #          Class method 'fireSignal'
@@ -84,7 +84,7 @@
 #                              Maybe
 #                                  Index
 #                                      Lexical variable '$signals'
-#                                      Index list [1 items]
+#                                      Index list [1 item]
 #                                          Item 0
 #                                              Lexical variable '$type'
 #                          Argument list [0 items]

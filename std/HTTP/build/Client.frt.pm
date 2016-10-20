@@ -56,7 +56,7 @@
 #                      Call
 #                          Property 'initialize'
 #                              Bareword 'NATIVE::HTTPClient'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Special variable '*self'
 #          Method 'get'

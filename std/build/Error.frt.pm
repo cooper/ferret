@@ -89,7 +89,7 @@
 #                                  Lexical variable '$desc'
 #                                  Call
 #                                      Bareword '_prettyHints'
-#                                      Argument list [1 items]
+#                                      Argument list [1 item]
 #                                          Item 0
 #                                              Instance variable '@hints'
 #                  If

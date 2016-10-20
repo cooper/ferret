@@ -18,7 +18,7 @@
 #      Instruction
 #          Call
 #              Bareword 'say'
-#              Argument list [1 items]
+#              Argument list [1 item]
 #                  Item 0
 #                      Property 'address'
 #                          Lexical variable '$bot'

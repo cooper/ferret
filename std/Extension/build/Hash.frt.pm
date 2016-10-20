@@ -24,7 +24,7 @@
 #                                      Bareword 'Hash'
 #                                      Bareword 'K'
 #                                      Bareword 'V'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      Special variable '*self'
 #                          Argument list [0 items]
@@ -51,7 +51,7 @@
 #                              Call
 #                                  Property 'remove'
 #                                      Instance variable '@orderedKeys'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          Lexical variable '$key'
 #                      Body ('if' scope)
@@ -62,7 +62,7 @@
 #                      Assignment
 #                          Index
 #                              Special variable '*self'
-#                              Index list [1 items]
+#                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$key'
 #                          Lexical variable '$value'
@@ -70,7 +70,7 @@
 #                      Call
 #                          Property 'push'
 #                              Instance variable '@orderedKeys'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$key'
 #      Include (Hash, K, V)

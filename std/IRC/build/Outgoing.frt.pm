@@ -18,7 +18,7 @@
 #                          Instruction
 #                              Call
 #                                  Instance variable '@send'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          Operation
 #                                              String 'JOIN '
@@ -43,7 +43,7 @@
 #                          Call
 #                              Property 'split'
 #                                  Lexical variable '$message'
-#                              Argument list [1 items]
+#                              Argument list [1 item]
 #                                  Item 0
 #                                      String '␤'
 #                      Body ('for' scope)
@@ -57,7 +57,7 @@
 #                          Instruction
 #                              Call
 #                                  Instance variable '@send'
-#                                  Argument list [1 items]
+#                                  Argument list [1 item]
 #                                      Item 0
 #                                          Operation
 #                                              String 'PRIVMSG '
@@ -77,7 +77,7 @@
 #                  Instruction
 #                      Call
 #                          Instance variable '@send'
-#                          Argument list [1 items]
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Operation
 #                                      String 'NICK '
