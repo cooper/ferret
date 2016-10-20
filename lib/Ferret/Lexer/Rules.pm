@@ -184,22 +184,21 @@ our %element_rules = (
 
     Instruction => {
 
-        min_children => [ 1, undef, 0 ],                                        # Instruction[0]
+        min_children => [                                                       # Instruction[0]
+            1,
+            undef,
+            0
+        ],
 
         # we could have up to two children. the second could be a catch.
         max_children => [ 2, 'Seems likely that you forgot a semicolon', 1 ],   # Instruction[1]
 
-
-        after_rules => {
-
-            child_1_must_be => [                                                # Instruction[2]
-                'Catch',
-                "Instructions can only contain at most one element and a ".
-                "possible 'catch' following it",
-                2
-            ]
-
-        }
+        child_1_must_be => [                                                    # Instruction[2]
+            'Catch',
+            "Instructions can only contain at most one element and a ".
+            "possible 'catch' following it",
+            2
+        ]
 
     },
 
@@ -221,31 +220,27 @@ our %element_rules = (
         ],
 
         # if it's an instruction, it must satisfy these rules.
-        after_rules => [
+        children_must_satisfy => [                                              # Class[2]
+            sub {
+                my $el = shift;
+                return 1 if $el->type ne 'Instruction';
+                my $child = $el->first_child;
 
-            children_must_satisfy => [                                          # Class[2]
-                sub {
-                    my $el = shift;
-                    return 1 if $el->type ne 'Instruction';
-                    my $child = $el->first_child;
+                # these are a-ok.
+                return 1 if $child->type eq 'Load';
+                return 1 if $child->type eq 'Alias';
+                return 1 if $child->type eq 'SharedDeclaration';
 
-                    # these are a-ok.
-                    return 1 if $child->type eq 'Load';
-                    return 1 if $child->type eq 'Alias';
-                    return 1 if $child->type eq 'SharedDeclaration';
+                # if it's an assignment, it must be a lexical variable.
+                if ($child->type eq 'Assignment') {
+                    return $child->assign_to->type eq 'LexicalVariable';
+                }
 
-                    # if it's an assignment, it must be a lexical variable.
-                    if ($child->type eq 'Assignment') {
-                        return $child->assign_to->type eq 'LexicalVariable';
-                    }
-
-                    return;
-                },
-                'Class-level instructions can only include lexical variable '.
-                'assignments and load statements',
-                2
-            ]
-
+                return;
+            },
+            'Class-level instructions can only include lexical variable '.
+            'assignments and load statements',
+            2
         ]
 
     },
@@ -253,7 +248,11 @@ our %element_rules = (
     WantNeed => {
 
         # WantNeed must always be a direct child of an instruction.
-        parent_must_be => [ 'Instruction', undef, 0 ],                          # WantNeed[0]
+        parent_must_be => [                                                     # WantNeed[0]
+            'Instruction',
+            undef,
+            0
+        ],
 
         # WantNeed must always be inside one of these.
         must_be_somewhere_inside => [                                           # WantNeed[1]
@@ -270,15 +269,27 @@ our %element_rules = (
             2
         ],
 
-        min_children => [ 1, undef, 3 ],                                        # WantNeed[3]
+        min_children => [                                                       # WantNeed[3]
+            1,
+            undef,
+            3
+        ],
 
-        max_children => [ 3, undef, 4 ]                                         # WantNeed[4]
+        max_children => [                                                       # WantNeed[4]
+            3,
+            undef,
+            4
+        ]
 
     },
 
     WantNeedType => {
 
-        parent_must_be => [ 'WantNeed', undef, 0 ],                             # WantNeedType[0]
+        parent_must_be => [                                                     # WantNeedType[0]
+            'WantNeed',
+            undef,
+            0
+        ],
 
         children_must_be => [                                                   # WantNeedType[1]
             'Bareword',
@@ -292,13 +303,21 @@ our %element_rules = (
             2
         ],
 
-        min_children => [ 1, undef, 3 ]                                         # WantNeedType[3]
+        min_children => [                                                       # WantNeedType[3]
+            1,
+            undef,
+            3
+        ]
 
     },
 
     WantNeedValue => {
 
-        parent_must_be => [ 'WantNeed', undef, 0 ],                             # WantNeedValue[0]
+        parent_must_be => [                                                     # WantNeedValue[0]
+            'WantNeed',
+            undef,
+            0
+        ],
 
         children_must_be => [                                                   # WantNeedValue[1]
             '@Expression',
@@ -313,41 +332,49 @@ our %element_rules = (
             2
         ],
 
-        num_children => [ 1, undef, 3 ]                                         # WantNeedValue[3]
+        num_children => [                                                       # WantNeedValue[3]
+            1,
+            undef,
+            3
+        ]
 
     },
 
     PropertyModifier => {
 
         # must be a direct child an instruction.
-        parent_must_be => [ 'Instruction', undef, 0 ],                          # PropertyModifier[0]
+        parent_must_be => [                                                     # PropertyModifier[0]
+            'Instruction',
+            undef,
+            0
+        ],
 
-        after_rules => {
+        # it can be variables or properties.
+        # however, it cannot be a special variable.
+        children_must_be => [                                                   # PropertyModifier[1]
+            'LexicalVariable InstanceVariable ThisVariable Property Index',
+            'Property modifier can only capture non-special variables '.
+            'or properties',
+            1
+        ],
 
-            # it can be variables or properties.
-            # however, it cannot be a special variable.
-            children_must_be => [                                                   # PropertyModifier[1]
-                'LexicalVariable InstanceVariable ThisVariable Property Index',
-                'Property modifier can only capture non-special variables '.
-                'or properties',
-                1
-            ],
-
-            # if it's a property, it cannot be a special one.
-            children_must_satisfy => [                                              # PropertyModifier[2]
-                sub {
-                    my $el = shift;
-                    return 1 if $el->type ne 'Property';
-                    return !$el->is_special;
-                },
-                'Property modifier cannot capture special properties',
-                2
-            ]
-
-        },
+        # if it's a property, it cannot be a special one.
+        children_must_satisfy => [                                              # PropertyModifier[2]
+            sub {
+                my $el = shift;
+                return 1 if $el->type ne 'Property';
+                return !$el->is_special;
+            },
+            'Property modifier cannot capture special properties',
+            2
+        ],
 
         # there can only be one child.
-        num_children => [ 1, undef, 3 ]                                         # PropertyModifier[3]
+        num_children => [                                                       # PropertyModifier[3]
+            1,
+            undef,
+            3
+        ]
 
     },
 
@@ -376,22 +403,30 @@ our %element_rules = (
     NamedPair => {
 
         # pairs can only be inside of lists (specifically, hashes or objects).
-        must_be_somewhere_inside => [                                           # Pair[0]
+        must_be_somewhere_inside => [                                           # Pair[0] FIXME
             'List',
             'Pair must be inside a list',
             0
         ],
 
         # each pair must be a direct child of a list item.
-        parent_must_be => [                                                     # Pair[1]
+        parent_must_be => [                                                     # Pair[1] FIXME
             'ListItem',
             'Pair must be a direct child of a list item',
             1
         ],
 
-        num_children => [ 1, undef, 2 ],
+        num_children => [                                                       # TODO
+            1,
+            undef,
+            2
+        ],
 
-        children_must_be => [ '@Expression', undef, 3 ]
+        children_must_be => [                                                   # TODO
+            '@Expression',
+            undef,
+            3
+        ]
 
     },
 
@@ -411,9 +446,17 @@ our %element_rules = (
             1
         ],
 
-        num_children => [ 2, undef, 2 ],
+        num_children => [                                                       # TODO
+            2,
+            undef,
+            2
+        ],
 
-        children_must_be => [ '@Expression', undef, 3 ]
+        children_must_be => [                                                   # TODO
+            '@Expression',
+            undef,
+            3
+        ]
 
     },
 
@@ -448,7 +491,11 @@ our %element_rules = (
             2
         ],
 
-        max_children => [ 1, undef, 3 ]                                         # ListItem[3]
+        max_children => [                                                       # ListItem[3]
+            1,
+            undef,
+            3
+        ]
 
         # Rule implemented in F/List.pm:
         #   Pairs and non-pairs cannot be mixed in a list unless it is the
@@ -469,38 +516,42 @@ our %element_rules = (
 
     OnParameter => {
 
-        after_rules => {
+        # children can only be non-special variables or properties.
+        children_must_be => [                                                   # OnParameter[0]
+            'Property LexicalVariable InstanceVariable ThisVariable '.
+            'PropertyVariable Bareword',
+            "'On' parameter can only be a non-special variable or property",
+            0
+        ],
 
-            # children can only be non-special variables or properties.
-            children_must_be => [                                               # OnParameter[0]
-                'Property LexicalVariable InstanceVariable ThisVariable '.
-                'PropertyVariable Bareword',
-                "'On' parameter can only be a non-special variable or property",
-                0
-            ],
+        # if it's a property, it cannot be a special one.
+        children_must_satisfy => [                                              # OnParameter[1]
+            sub {
+                my $el = shift;
+                return 1 if $el->type ne 'Property';
+                return !$el->is_special;
+            },
+            "'On' parameter cannot be a special property",
+            1
+        ],
 
-            # if it's a property, it cannot be a special one.
-            children_must_satisfy => [                                          # OnParameter[1]
-                sub {
-                    my $el = shift;
-                    return 1 if $el->type ne 'Property';
-                    return !$el->is_special;
-                },
-                "'On' parameter cannot be a special property",
-                1
-            ],
-
-            # it can only contain one property or variable.
-            num_children => [ 1, undef, 2 ]                                     # OnParameter[2]
-
-        }
+        # it can only contain one property or variable.
+        num_children => [                                                       # OnParameter[2]
+            1,
+            undef,
+            2
+        ]
 
     },
 
     SharedDeclaration => {
 
         # must be a direct child an instruction.
-        parent_must_be => [ 'Instruction', undef, 0 ],                          # SharedDeclaration[0]
+        parent_must_be => [                                                     # SharedDeclaration[0]
+            'Instruction',
+            undef,
+            0
+        ],
 
         # rules for the parent instruction
         parent_rules => {
@@ -523,31 +574,35 @@ our %element_rules = (
             1
         ],
 
-        after_rules => {
-
-            # if it's an assignment, it must be of a lexical variable.
-            children_must_satisfy => [                                          # SharedDeclaration[2]
-                sub {
-                    my $el = shift;
-                    return 1 if $el->type ne 'Assignment';
-                    return $el->assign_to->type eq 'LexicalVariable';
-                },
-                'Shared variable declaration can capture an assignment only '.
-                'of a lexical variable',
-                2
-            ]
-
-        },
+        # if it's an assignment, it must be of a lexical variable.
+        children_must_satisfy => [                                              # SharedDeclaration[2]
+            sub {
+                my $el = shift;
+                return 1 if $el->type ne 'Assignment';
+                return $el->assign_to->type eq 'LexicalVariable';
+            },
+            'Shared variable declaration can capture an assignment only '.
+            'of a lexical variable',
+            2
+        ],
 
         # there can only be one child.
-        num_children => [ 1, undef, 3 ]                                         # SharedDeclaration[3]
+        num_children => [                                                       # SharedDeclaration[3]
+            1,
+            undef,
+            3
+        ]
 
     },
 
     LocalDeclaration => {
 
         # must be a direct child an instruction.
-        parent_must_be => [ 'Instruction', undef, 0 ],                          # LocalDeclaration[0]
+        parent_must_be => [                                                     # LocalDeclaration[0]
+            'Instruction',
+            undef,
+            0
+        ],
 
         # it can be lexical variables or an assignment of a lexical variable.
         children_must_be => [                                                   # LocalDeclaration[1]
@@ -558,22 +613,24 @@ our %element_rules = (
         ],
 
         # if it's an assignment, it must be of a lexical variable.
-        after_rules => {
-            children_must_satisfy => [                                          # LocalDeclaration[2]
-                sub {
-                    my $el = shift;
-                    my $parent = shift;
-                    return 1 if $el->type ne 'Assignment';
-                    return $el->assign_to->type eq 'LexicalVariable';
-                },
-                'Local variable declaration can capture an assignment only '.
-                'of a lexical variable',
-                2
-            ]
-        },
+        children_must_satisfy => [                                              # LocalDeclaration[2]
+            sub {
+                my $el = shift;
+                my $parent = shift;
+                return 1 if $el->type ne 'Assignment';
+                return $el->assign_to->type eq 'LexicalVariable';
+            },
+            'Local variable declaration can capture an assignment only '.
+            'of a lexical variable',
+            2
+        ],
 
         # there can only be one child.
-        num_children => [ 1, undef, 0 ]                                         # LocalDeclaration[3]
+        num_children => [                                                       # LocalDeclaration[3]
+            1,
+            undef,
+            0
+        ]
 
     },
 
@@ -604,8 +661,12 @@ our %element_rules = (
             2
         ],
 
-        # there can only be one child.                                          # Load[3]
-        num_children => [ 1, undef, 3 ]
+        # there can only be one child.
+        num_children => [                                                       # Load[3]
+            1,
+            undef,
+            3
+        ]
 
     },
 
@@ -653,26 +714,25 @@ our %element_rules = (
         ],
 
         # make sure we're in the BODY of the Inside, not the param_exp.
-        after_rules => {
-            parent_must_satisfy => [                                            # PropertyVariable[1]
-                sub {
-                    my $el = shift;
+        parent_must_satisfy => [                                                # PropertyVariable[1]
+            sub {
+                my $el = shift;
 
-                    # if it's somewhere in one of these, we're ok
-                    return 1 if $el->first_self_or_parent('InsideBody');
-                    return 1 if $el->first_self_or_parent('Type');
+                # if it's somewhere in one of these, we're ok
+                return 1 if $el->first_self_or_parent('InsideBody');
+                return 1 if $el->first_self_or_parent('Type');
 
-                    # otherwise, it's a function
-                    my $func = $el->first_self_or_parent('Function') or return;
-                    return $func->anonymous && !$func->arguments;
+                # otherwise, it's a function
+                my $func = $el->first_self_or_parent('Function') or return;
+                return $func->anonymous && !$func->arguments;
 
-                },
-                'Property variable (standalone .property) is only valid within '.
-                'a function if it is anonymous and has no additional argument '.
-                'requirements',
-                1
-            ]
-        }
+            },
+            'Property variable (standalone .property) is only valid within '.
+            'a function if it is anonymous and has no additional argument '.
+            'requirements',
+            1
+        ]
+
     },
 
     TypeBody => {
@@ -683,31 +743,27 @@ our %element_rules = (
             0
         ],
 
-        after_rules => {
+        children_must_satisfy => [                                              # TypeBody[1]
+            sub {
+                my $el = shift;
 
-            children_must_satisfy => [                                          # TypeBody[1]
-                sub {
-                    my $el = shift;
+                # not instruction, pass on top children_must_be.
+                return 1 if $el->type ne 'Instruction';
+                my $child = $el->first_child;
 
-                    # not instruction, pass on top children_must_be.
-                    return 1 if $el->type ne 'Instruction';
-                    my $child = $el->first_child;
+                # first of all, it has to be an expression,
+                # unless it's a type requirement.
+                return if
+                    !$child or
+                    !$child->is_type('Expression')
+                    && $child->type ne 'TypeRequirement';
 
-                    # first of all, it has to be an expression,
-                    # unless it's a type requirement.
-                    return if
-                        !$child or
-                        !$child->is_type('Expression')
-                        && $child->type ne 'TypeRequirement';
-
-                    return 1;
-                },
-                'Type definitions can only contain test values or method '.
-                'requirements',
-                1
-            ]
-
-        }
+                return 1;
+            },
+            'Type definitions can only contain test values or method '.
+            'requirements',
+            1
+        ]
 
     },
 
@@ -769,12 +825,7 @@ our %element_rules = (
                     'Both sides of assignment must be a bareword function or '.
                     'type name inside "alias" declaration',
                     4
-                ],
-
-                # Update: we can't void them anymore so I added Assignment[7]
-                # # void the above rules [2] and [3].
-                # child_0_must_be => undef,                                       # Assignment[5]
-                # child_1_must_be => undef                                        # Assignment[6]
+                ]
 
             }
 
@@ -790,18 +841,18 @@ our %element_rules = (
             0
         ],
 
-        after_rules => {
+        children_must_be => [                                                   # Alias[1]
+            'Assignment',
+            'Alias can only contain an assignment for a bareword function '.
+            'or type name',
+            1
+        ],
 
-            children_must_be => [                                               # Alias[1]
-                'Assignment',
-                'Alias can only contain an assignment for a bareword function '.
-                'or type name',
-                1
-            ]
-
-        },
-
-        num_children => [ 1, undef, 2 ]                                         # Alias[2]
+        num_children => [                                                       # Alias[2]
+            1,
+            undef,
+            2
+        ]
 
         # note the rules within assignment for while inside Alias.
 
@@ -823,7 +874,11 @@ our %element_rules = (
             0
         ],
 
-        num_children => [ 1, undef, 1 ]                                         # IfParameter[1]
+        num_children => [                                                       # IfParameter[1]
+            1,
+            undef,
+            1
+        ]
 
     },
 
@@ -850,7 +905,11 @@ our %element_rules = (
             2
         ],
 
-        num_children => [ 1, undef, 3 ]                                         # TypeRequirement[3]
+        num_children => [                                                       # TypeRequirement[3]
+            1,
+            undef,
+            3
+        ]
 
         # Rule implemented in F/TypeRequirement.pm:
         #   If the type requirement is a 'can' statement,
@@ -863,56 +922,54 @@ our %element_rules = (
     },
 
     InterfaceMethod => {
-        after_rules => {
 
-            # first child better be a .property
-            child_0_must_be => [
-                'PropertyVariable',
-                "'can' method requirement must look like: can .methodName(...)",
-                0
-            ],
+        # first child better be a .property
+        child_0_must_be => [                                                    # TODO
+            'PropertyVariable',
+            "'can' method requirement must look like: can .methodName(...)",
+            0
+        ],
 
-            # second child better be an argument list
-            child_1_must_be => [
-                'List',
-                "'can' method requirement must look like: can .methodName(...)",
-                1
-            ],
+        # second child better be an argument list
+        child_1_must_be => [                                                    # TODO
+            'List',
+            "'can' method requirement must look like: can .methodName(...)",
+            1
+        ],
 
-            # the list can only contain pairs of argName:BarewordType
-            children_must_satisfy => [
-                sub {
-                    my $list = shift;
+        # the list can only contain pairs of argName:BarewordType
+        children_must_satisfy => [                                              # TODO
+            sub {
+                my $list = shift;
 
-                    # it has to be a "hash list"
-                    # meaning named args only. not array. not mixture.
-                    return 1 if $list->type ne 'List';
-                    return if !$list->{hash} && $list->children;
+                # it has to be a "hash list"
+                # meaning named args only. not array. not mixture.
+                return 1 if $list->type ne 'List';
+                return if !$list->{hash} && $list->children;
 
-                    # each item has to be a NamedPair.
-                    for my $item ($list->children) {
-                        my $el = $item->first_child;
-                        return if $el->type ne 'NamedPair';
+                # each item has to be a NamedPair.
+                for my $item ($list->children) {
+                    my $el = $item->first_child;
+                    return if $el->type ne 'NamedPair';
 
-                        # the value of the pair has to be a bareword type.
-                        return if $el->first_child->type ne 'Bareword';
-                    }
+                    # the value of the pair has to be a bareword type.
+                    return if $el->first_child->type ne 'Bareword';
+                }
 
-                    return 1;
-                },
-                "'can' method requirement arguments must be named with ".
-                "bareword types, like: can .methodName(argName: Type, ...)",
-                2
-            ],
-
-        },
+                return 1;
+            },
+            "'can' method requirement arguments must be named with ".
+            "bareword types, like: can .methodName(argName: Type, ...)",
+            2
+        ],
 
         # disallows call operator to omit the argument list
-        num_children => [
+        num_children => [                                                       # TODO
             2,
             "'can' method requirement must look like: can .methodName(...)",
             2
         ]
+
     },
 
     Function => {
@@ -939,21 +996,21 @@ our %element_rules = (
         ],
 
         # it has to be a list.
-        child_1_must_be => [
+        child_1_must_be => [                                                    #Property[1]
             'List',
-            'Properties with evaluated (non-bareword) names must only contain '.#Property[1]
+            'Properties with evaluated (non-bareword) names must only contain '.
             'a bracket-delimited expression: $obj.[someExpression]',
             1
         ],
 
         # it has to be "[" .. "]" list.
-        child_1_must_satisfy => [
+        child_1_must_satisfy => [                                               #Property[2]
             sub {
                 my $list = shift;
                 return 1 if $list->type ne 'List';
                 return $list->{list_terminator} eq 'BRACKET_E';
             },
-            'Properties with evaluated (non-bareword) names must only contain '.#Property[2]
+            'Properties with evaluated (non-bareword) names must only contain '.
             'a bracket-delimited expression: $obj.[someExpression]',
             2
         ],
@@ -962,15 +1019,27 @@ our %element_rules = (
         child_1_rules => {
 
             # it has to have exactly one list item.
-            num_children => [ 1, undef, 3 ]                                     # Property[3]
+            num_children => [                                                   # Property[3]
+                1,
+                undef,
+                3
+            ]
 
         },
 
         # no less than 1 child (the left side)
-        min_children => [ 1, undef, 4 ],                                        # Property[4]
+        min_children => [                                                       # Property[4]
+            1,
+            undef,
+            4
+        ],
 
         # no more than 2 children (the left side and the index list)
-        max_children => [ 2, undef, 5 ]                                         # Property[5]
+        max_children => [                                                       # Property[5]
+            2,
+            undef,
+            5
+        ]
 
     },
 
@@ -983,13 +1052,21 @@ our %element_rules = (
             0
         ],
 
-        max_children => [ 1, undef, 1 ]                                         # CatchParameter[1]
+        max_children => [                                                       # CatchParameter[1]
+            1,
+            undef,
+            1
+        ]
 
     },
 
     FailThrow => {
 
-        parent_must_be => [ 'Instruction', undef, 0 ],                          # FailThrow[0]
+        parent_must_be => [                                                     # FailThrow[0]
+            'Instruction',
+            undef,
+            0
+        ],
 
         children_must_be => [                                                   # FailThrow[1]
             '@Expression',
@@ -997,7 +1074,11 @@ our %element_rules = (
             1
         ],
 
-        num_children => [ 1, undef, 2 ],                                        # FailThrow[2]
+        num_children => [                                                       # FailThrow[2]
+            1,
+            undef,
+            2
+        ],
 
         parent_must_satisfy => [                                                # FailThrow[3]
             sub {
@@ -1020,7 +1101,11 @@ our %element_rules = (
 
     Take => {
 
-        parent_must_be => [ 'Instruction', undef, 0 ],                          # Take[0]
+        parent_must_be => [                                                     # Take[0]
+            'Instruction',
+            undef,
+            0
+        ],
 
         children_must_be => [                                                   # Take[1]
             '@Expression',
@@ -1028,7 +1113,11 @@ our %element_rules = (
             1
         ],
 
-        num_children => [ 1, undef, 2 ],                                        # Take[2]
+        num_children => [                                                       # Take[2]
+            1,
+            undef,
+            2
+        ],
 
         must_be_somewhere_inside => [                                           # Take[3]
             'Gather',
@@ -1038,13 +1127,13 @@ our %element_rules = (
 
     },
 
-    TypedClass => {                                                             # TypedClass[0]
+    TypedClass => {
 
         # note that Maybes can contain more than barewords, which is undesired;
         # but we don't have to worry about it because the expression will be
         # checked to be a bareword before reaching the ? operator.
         # FIXME: we don't want Maybes unless it's part of the class declaration.
-        children_must_be => [
+        children_must_be => [                                                   # TypedClass[0]
             'Bareword Maybe',
             'Type generics can only consist of bareword types',
             0
@@ -1054,29 +1143,56 @@ our %element_rules = (
         # this rule is not satisfied. it doesn't matter because this
         # rule isn't checked until the tree is fully constructed, and
         # by that time, the TypedClass is gone from the document tree.
-        min_children => [ 2, undef, 1 ]                                         # TypedClass[1]
+        min_children => [                                                       # TypedClass[1]
+            2,
+            undef,
+            1
+        ]
 
     },
 
     Detail => {
-        after_rules => {
 
-            children_must_be => [                                               # Detail[0]
-                'Call',
-                'Detail can only capture the return object of a call',
-                0
-            ],
+        children_must_be => [                                                   # Detail[0]
+            'Call',
+            'Detail can only capture the return object of a call',
+            0
+        ],
 
-            num_children => [ 1, undef, 1 ]                                     # Detail[1]
+        num_children => [                                                       # Detail[1]
+            1,
+            'Detail can only capture the return object of a call',
+            1
+        ]
 
-        }
     },
 
     Continue => {
-        parent_must_be => [ 'For', undef, 0 ],
-        must_come_after => [ 'ForBody', undef, 1 ],
-        children_must_be => [ 'ContinueBody', undef, 2 ],
-        num_children => [ 1, undef, 3 ]
+
+        parent_must_be => [                                                     # TODO
+            'For',
+            'Continue must immediately follow a for block',
+            0
+        ],
+
+        must_come_after => [                                                    # TODO
+            'ForBody',
+            'Continue must immediately follow a for block',
+            1
+        ],
+
+        children_must_be => [                                                   # TODO
+            'ContinueBody',
+            'Continue can only contain one child, its body',
+            2
+        ],
+
+        num_children => [                                                       # TODO
+            1,
+            'Continue can only contain one child, its body',
+            3
+        ]
+
     },
 
     Unknown => {

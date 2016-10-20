@@ -598,6 +598,7 @@ sub c_ANGLE_E {
     # an opening angle to correspond with.
 
     # Rule ANGLE_E[0]:
+    #   The current node must be of type TypedClass.
 
     $c->close_node;
 

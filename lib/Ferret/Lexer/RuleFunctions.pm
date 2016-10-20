@@ -284,24 +284,23 @@ sub final_check {
     $check->($main_el);
 }
 
-# returns a rule set object for an element.
-#
-#   optional $parent_t = element or type to get rules for inside. (child_rules)
-#   $parent_t will fall back to the element's parent if it has one already.
-#
+# returns a list of rule set objects for an element.
 sub F::Element::rule_sets {
     my ($el, $parent, $after) = @_;
-    $parent ||= $el->parent;
 
-    my @rule_sets;
+    # as of 20 Oct 2016, element rules are applied only after construction
+    return if !$after;
+
+    my @rule_sets; return if !$after;
     my $push_set = sub { push @rule_sets, Ferret::Lexer::RuleSet->new(@_) };
 
     # Set 1: Local rules.
 
-    $push_set->(rule_hash($el->type, 'after_rules')) if $after;
+    #$push_set->(rule_hash($el->type, 'after_rules')) if $after;
     $push_set->(rule_hash($el->type));
 
     # rules from ancestors
+    $parent ||= $el->parent;
     if ($parent) {
         my $my_place = $after ? $el->index : scalar $parent->children;
 
