@@ -5,11 +5,10 @@ use warnings;
 use strict;
 use parent qw(F::NodeExpression);
 
-
-
 sub desc {
     my $list = shift;
-    return sprintf '%s [%d items]', $list->list_type, scalar $list->children;
+    my $n = scalar $list->children;
+    return sprintf "%s [%d item%s]", $list->list_type, $n, $n == 1 ? '' : 's';
 }
 
 sub list_type {

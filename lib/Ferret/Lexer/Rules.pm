@@ -184,6 +184,8 @@ our %element_rules = (
 
     Instruction => {
 
+        # there has to be at least one child, the statement.
+        # I don't think this can ever actually happen.
         min_children => [                                                       # Instruction[0]
             1,
             undef,
@@ -191,12 +193,16 @@ our %element_rules = (
         ],
 
         # we could have up to two children. the second could be a catch.
-        max_children => [ 2, 'Seems likely that you forgot a semicolon', 1 ],   # Instruction[1]
+        max_children => [                                                       # Instruction[1]
+            2,
+            'Seems likely that you forgot a semicolon',
+            1
+        ],
 
+        # if a second child does exist, it MUST be a catch.
         child_1_must_be => [                                                    # Instruction[2]
             'Catch',
-            "Instructions can only contain at most one element and a ".
-            "possible 'catch' following it",
+            'Seems likely that you forgot a semicolon',
             2
         ]
 
@@ -226,7 +232,7 @@ our %element_rules = (
                 return 1 if $el->type ne 'Instruction';
                 my $child = $el->first_child;
 
-                # these are a-ok.
+                # these are ayy-ok.
                 return 1 if $child->type eq 'Load';
                 return 1 if $child->type eq 'Alias';
                 return 1 if $child->type eq 'SharedDeclaration';
@@ -1156,10 +1162,8 @@ our %element_rules = (
 
     TypedClass => {
 
-        # note that Maybes can contain more than barewords, which is undesired;
-        # but we don't have to worry about it because the expression will be
-        # checked to be a bareword before reaching the ? operator.
-        # FIXME: we don't want Maybes unless it's part of the class declaration.
+        # note that Maybes can contain more than barewords, which is undesired
+        # and enforced by Maybe[1].
         children_must_be => [                                                   # TypedClass[0]
             'Bareword Maybe',
             'Type generics can only consist of bareword types',
@@ -1175,6 +1179,33 @@ our %element_rules = (
             undef,
             1
         ]
+
+    },
+
+    Maybe => {
+
+        directly_inside_rules => {
+
+            # there must only be one uncertainty
+            num_children => [                                                   # Maybe[0]
+                1,
+                'Inline if operator (?) can only capture a single element',
+                0
+            ],
+
+            # inside a TypedClass, we can only allow a single bareword
+            TypedClass => {
+
+                # must be a bareword
+                children_must_be => [                                           # Maybe[1]
+                    'Bareword',
+                    'Type generics can only consist of bareword types',
+                    1
+                ]
+
+            }
+
+        }
 
     },
 

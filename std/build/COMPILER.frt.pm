@@ -63,7 +63,7 @@ sub tokenize {
     # tokenize
     my $code = $compiler->_code;
     my ($err, @tokens) =
-        eval { Ferret::Lexer::Tokenizer::tokenize("$code\n", '(stdin)') };
+        eval { Ferret::Lexer::Tokenizer::tokenize("$code\n", '(input)') };
 
     # either it returned an error or an exception occurred
     if (my $bad = $err ? $$err : $@) {
@@ -103,7 +103,7 @@ sub construct {
     my @tokens = @$tokens;
 
     # construct
-    my $doc = F::new('Document', name => '(stdin)');
+    my $doc = F::new('Document', name => '(input)');
     $err = eval { Ferret::Lexer::Constructor::construct($doc, @tokens) };
 
     # either it returned an error or an exception occurred
