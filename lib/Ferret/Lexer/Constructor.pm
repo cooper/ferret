@@ -613,6 +613,9 @@ sub c_ANGLE_E {
 sub handle_call {
     my ($c, $value, $has_list, $is_index) = @_;
 
+    # Rules for InterfaceMethod:
+    #   See c_KEYWORD_CAN().
+
     # if it's a 'can', this is an interface method requirement.
     my $is_req = ($c->node->{req_type} || '') eq 'can';
 
@@ -1022,6 +1025,18 @@ sub c_OP_VALUE {
             'at left of key/value separator (:)'
         ) if !$last || !$last->is_type('Expression');
 
+        # Rule Pair[0]:
+        #   Must be somewhere inside a List.
+
+        # Rule Pair[1]:
+        #   Must be a direct child of a List item.
+
+        # Rule Pair[2]:
+        #   Number of children must be exactly two (2).
+
+        # Rule Pair[3]:
+        #   Children must be of type Expression.
+
         my $pair = F::new('Pair');
         $pair->adopt($last);
         $c->adopt_and_set_node($pair);
@@ -1379,11 +1394,17 @@ sub c_PROPERTY {
 sub c_PROP_VALUE {
     my ($c, $value) = @_;
 
-    # Rule Pair[0]:
+    # Rule NamedPair[0]:
     #   Must be somewhere inside a List.
 
-    # Rule Pair[1]:
+    # Rule NamedPair[1]:
     #   Must be a direct child of a List item.
+
+    # Rule NamedPair[2]:
+    #   Number of children must be exactly one (1).
+
+    # Rule NamedPair[3]:
+    #   Children must be of type Expression.
 
     # create a new node which is a pair.
     my $pair = F::new('NamedPair', key => $value);
@@ -1785,6 +1806,17 @@ sub start_type_requirement {
     # Rule TypeRequirement[3]:
     #   Number of direct children must be exactly one (1).
 
+    # Rule InterfaceMethod[0]:
+    #   The first child must be of type PropertyVariable.
+
+    # Rule InterfaceMethod[1]:
+    #   The second child must be of type List.
+
+    # Rule InterfaceMethod[2]:
+    #   The argument list must contain only named arguments.
+
+    # Rule InterfaceMethod[3]:
+    #   Number of children must be exactly two (2).
 
     # create a type requirement.
     my $req = F::new('TypeRequirement', req_type => $type);
@@ -1945,6 +1977,18 @@ sub c_KEYWORD_CONTINUE {
 
     # Rule KEYWORD_CONTINUE[0]:
     #   The last element must be of type For.
+
+    # Rule Continue[0]:
+    #   Parent must be of type For.
+
+    # Rule Continue[1]:
+    #   Must immediately follow a ForBody.
+
+    # Rule Continue[2]:
+    #   Children must be of type ContinueBody.
+
+    # Rule Continue[3]:
+    #   Number of children must be exactly one (1).
 
     # create a closure to be opened soon.
     my $cont = F::new('Continue');

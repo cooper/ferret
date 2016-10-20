@@ -403,26 +403,26 @@ our %element_rules = (
     NamedPair => {
 
         # pairs can only be inside of lists (specifically, hashes or objects).
-        must_be_somewhere_inside => [                                           # Pair[0] FIXME
+        must_be_somewhere_inside => [                                           # NamedPair[0]
             'List',
             'Pair must be inside a list',
             0
         ],
 
         # each pair must be a direct child of a list item.
-        parent_must_be => [                                                     # Pair[1] FIXME
+        parent_must_be => [                                                     # NamedPair[1]
             'ListItem',
             'Pair must be a direct child of a list item',
             1
         ],
 
-        num_children => [                                                       # TODO
+        num_children => [                                                       # NamedPair[2]
             1,
             undef,
             2
         ],
 
-        children_must_be => [                                                   # TODO
+        children_must_be => [                                                   # NamedPair[3]
             '@Expression',
             undef,
             3
@@ -446,13 +446,13 @@ our %element_rules = (
             1
         ],
 
-        num_children => [                                                       # TODO
+        num_children => [                                                       # Pair[2]
             2,
             undef,
             2
         ],
 
-        children_must_be => [                                                   # TODO
+        children_must_be => [                                                   # Pair[3]
             '@Expression',
             undef,
             3
@@ -924,21 +924,21 @@ our %element_rules = (
     InterfaceMethod => {
 
         # first child better be a .property
-        child_0_must_be => [                                                    # TODO
+        child_0_must_be => [                                                    # InterfaceMethod[0]
             'PropertyVariable',
             "'can' method requirement must look like: can .methodName(...)",
             0
         ],
 
         # second child better be an argument list
-        child_1_must_be => [                                                    # TODO
+        child_1_must_be => [                                                    # InterfaceMethod[1]
             'List',
             "'can' method requirement must look like: can .methodName(...)",
             1
         ],
 
         # the list can only contain pairs of argName:BarewordType
-        children_must_satisfy => [                                              # TODO
+        children_must_satisfy => [                                              # InterfaceMethod[2]
             sub {
                 my $list = shift;
 
@@ -964,10 +964,10 @@ our %element_rules = (
         ],
 
         # disallows call operator to omit the argument list
-        num_children => [                                                       # TODO
+        num_children => [                                                       # InterfaceMethod[3]
             2,
             "'can' method requirement must look like: can .methodName(...)",
-            2
+            4
         ]
 
     },
@@ -1169,25 +1169,25 @@ our %element_rules = (
 
     Continue => {
 
-        parent_must_be => [                                                     # TODO
+        parent_must_be => [                                                     # Continue[0]
             'For',
             'Continue must immediately follow a for block',
             0
         ],
 
-        must_come_after => [                                                    # TODO
+        must_come_after => [                                                    # Continue[1]
             'ForBody',
             'Continue must immediately follow a for block',
             1
         ],
 
-        children_must_be => [                                                   # TODO
+        children_must_be => [                                                   # Continue[2]
             'ContinueBody',
             'Continue can only contain one child, its body',
             2
         ],
 
-        num_children => [                                                       # TODO
+        num_children => [                                                       # Continue[3]
             1,
             'Continue can only contain one child, its body',
             3
