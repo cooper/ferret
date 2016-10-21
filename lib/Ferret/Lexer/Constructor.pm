@@ -1276,6 +1276,16 @@ sub c_BAREWORD {
     my $l_label = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
     if ($l_label eq 'OP_PACK' && $l_word->type eq 'Bareword') {
 
+        # if it starts with anything other than an uppercase letter,
+        # this is not allowed because it is not a namespace.
+        if ($value =~ m/^[^A-Z]/) {
+            return $c->unexpected([
+                'following namespace operator (::)',
+                ':: is used for namespaces; use the .property syntax '.
+                'for accessing normal properties'
+            ]);
+        }
+
         # if it's a typed class, allow another adopt
         if ($c->node->type eq 'TypedClass') {
             $c->node->{ready_for_another}++;
