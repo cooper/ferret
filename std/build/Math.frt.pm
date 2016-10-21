@@ -1,6 +1,13 @@
 # === Document Model ===
 #  Document './std/Math.frt'
 #      Package 'Math'
+#      Instruction
+#          Shared variable declaration
+#              Lazy assignment
+#                  Lexical variable '$pi'
+#                  Call
+#                      Property 'pi'
+#                          Bareword 'NATIVE::Math'
 #      Function 'sqrt'
 #          Body ('function' scope)
 #              Instruction
@@ -74,10 +81,10 @@ my $result = do {
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 4.2 ) or return;
+            need( $scope, $args, 'num', 6.2 ) or return;
             return $ret_func->(
-                $$scope->{'NATIVE::Math'}->property_u( 'sqrt', $pos->(5.25) )
-                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(5.3) ) );
+                $$scope->{'NATIVE::Math'}->property_u( 'sqrt', $pos->(7.25) )
+                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(7.3) ) );
             return $ret;
         }
     );
@@ -91,8 +98,8 @@ my $result = do {
         ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'root', 9.1 ) or return;
-            need( $scope, $args, 'num',  9.3 ) or return;
+            need( $scope, $args, 'root', 11.1 ) or return;
+            need( $scope, $args, 'num',  11.3 ) or return;
             return $ret_func->(
                 pow(
                     $scope, $$scope->{'num'},
@@ -111,6 +118,18 @@ my $result = do {
         $context, undef, $ins, undef, undef
     );
     load_namespaces( $context, qw(NATIVE NATIVE::Math Num) );
+
+    var(
+        $context,
+        pi => [
+            sub {
+                $$scope->{'NATIVE::Math'}->property_u( 'pi', $pos->(3.35) )
+                  ->( [ undef, [] ], $scope, undef, $pos->(3.4) );
+            }
+        ],
+        undef,
+        $pos->(3.15)
+    );
 };
 
 after_content();

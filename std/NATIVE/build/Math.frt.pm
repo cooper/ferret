@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Mitchell Cooper
+# Copyright (c) 2016, Mitchell Cooper
 package Ferret::Native::Math;
 
 use warnings;
@@ -7,7 +7,15 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-my @functions;
+use Ferret::Core::Conversion qw(fnumber);
+
+my @functions = (
+    pi => {
+        code => \&_get_pi,
+        prop => 1,
+        pset => 1
+    }
+);
 
 # one argument
 bind_math_func($_, 1) foreach qw(
@@ -47,6 +55,11 @@ sub bind_math_func {
         code => $code,
         need => join(' ', map { "\$num$_:Num" } 1..$n_args)
     };
+}
+
+sub _get_pi {
+    require Math::Trig;
+    return fnumber(Math::Trig::pi());
 }
 
 1

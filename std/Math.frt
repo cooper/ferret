@@ -1,5 +1,7 @@
 package Math
 
+share $pi ?= NATIVE::Math.pi!
+
 func sqrt {
     need $num: Num
     return NATIVE::Math.sqrt($num)
