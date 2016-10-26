@@ -52,7 +52,7 @@ init {
     #<  If true, [`.encode()`](#encode) will add an extra optional space before
     #|  the colon separating keys from values in JSON objects.
 
-    want @spaceAfter:  Bool = false
+    want @spaceAfter: Bool = false
     #<  If true, [`.encode()`](#encode) will add an extra optional space after
     #|  the colon separating keys from values in JSON objects.
 

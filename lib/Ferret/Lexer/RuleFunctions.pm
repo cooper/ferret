@@ -46,6 +46,7 @@ sub _hashify {
 
 sub tok_rule_hash {
     my @levels = @_;
+    my $first  = $_[0];
     my $h = \%Ferret::Lexer::Rules::token_rules;
     my $k = [];
     for my $level (@levels) {
@@ -53,7 +54,7 @@ sub tok_rule_hash {
         $h = $h->{$level};
         ($k, $h) = _hashify($h);
     }
-    return ($k, $h);
+    return ($k, { add_rule_name($first, %$h) });
 }
 
 sub tok_rule_set {

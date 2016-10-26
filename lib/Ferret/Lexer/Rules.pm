@@ -22,6 +22,8 @@ our %token_rules = (
 
     KEYWORD_END => [
 
+        # FIXME: package is not a node so this currently only works for classes
+
         # the current node must be somewhere inside a Package or Class.
         upper_nodes_must_have => [                                              # KEYWORD_END[0]
             'Package Class',
