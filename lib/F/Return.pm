@@ -8,6 +8,11 @@ use parent qw(F::Node);
 
 sub value { shift->first_child }
 
+sub type_string {
+    my $bw = (shift->children)[1] or return;
+    return $bw->{bareword_value};
+}
+
 sub perl_fmt {
     my $ret = shift;
     my $value = $ret->value ? $ret->value->perl_fmt_do : '';

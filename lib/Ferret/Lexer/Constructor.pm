@@ -1081,8 +1081,9 @@ sub c_OP_VALUE {
     # if the current instruction is that of a return statement,
     # this might be a type for the return.
     my $instr = $c->instruction;
-    if ($instr && $instr->first_child->type eq 'Return') {
-        $c->close_nodes(qw(Negation Operation));
+    my $ret = $instr->first_child if $instr;
+    if ($instr and $ret->type eq 'Return' || $ret->type eq 'ReturnPair') {
+        $c->close_nodes(qw(Negation Operation Detail));
         $instr->first_child->{has_type}++;
         return;
     }

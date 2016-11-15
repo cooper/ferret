@@ -14,6 +14,11 @@ sub desc {
 sub key   { shift->{key} }          # a Perl string
 sub value { shift->first_child }  # an element
 
+sub type_string {
+    my $bw = (shift->children)[1] or return;
+    return $bw->{bareword_value};
+}
+
 sub perl_fmt {
     my $pair = shift;
     return return_pair => {
