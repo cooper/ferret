@@ -97,6 +97,7 @@
 #                  Instruction
 #                      Return
 #                          Special variable '*self'
+#                          Bareword 'Iterator'
 #      Class 'HashIterator'
 #          Class method 'initializer__'
 #              Body ('method' scope)
@@ -165,6 +166,7 @@
 #                  Instruction
 #                      Return
 #                          Special variable '*self'
+#                          Bareword 'Iterator'
 #      Include (Hash, Iterator, List)
 package FF;
 

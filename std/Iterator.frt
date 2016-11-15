@@ -38,7 +38,7 @@ prop nextElements {
 }
 
 prop iterator {
-    return *self
+    return *self: Iterator
 }
 
 #> An iterator implementation for hashes.
@@ -65,5 +65,5 @@ prop nextElements {
 }
 
 prop iterator {
-    return *self
+    return *self: Iterator
 }

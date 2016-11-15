@@ -1264,8 +1264,9 @@ our %element_rules = (
         ],
 
         max_children => [                                                       # Return[1]
-            1,
-            'Return can only contain one expression',
+            2,
+            'Return can only contain one expression and possibly a type, '.
+            'separated by a colon (:)',
             1
         ],
 
@@ -1273,6 +1274,39 @@ our %element_rules = (
             '@Expression',
             'Cannot return non-expression',
             2
+        ],
+
+        child_1_must_be => [                                                    # Return[3] TODO
+            'Bareword',
+            'Return statement type must be a bareword',
+            3
+        ],
+
+        # check if the colon was reached
+        child_1_must_satisfy => [                                               # Return[4] TODO
+            sub {
+                my (undef, $ret) = @_;
+                $ret->{has_type};
+            },
+            'Return can only contain one expression and possibly a type, '.
+            'separated by a colon (:)',
+            4
+        ]
+
+    },
+
+    Negation => {
+
+        max_children => [                                                       # Negation[0] TODO
+            1,
+            'Negation (!) can only capture a single element',
+            0
+        ],
+
+        children_must_be => [                                                   # Negation[1] TODO
+            '@Expression',
+            'Negation (!) can only capture an expression',
+            1
         ]
 
     },

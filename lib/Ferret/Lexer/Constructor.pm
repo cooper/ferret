@@ -1078,6 +1078,15 @@ sub c_OP_VALUE {
         return;
     }
 
+    # if the current instruction is that of a return statement,
+    # this might be a type for the return.
+    my $instr = $c->instruction;
+    if ($instr && $instr->first_child->type eq 'Return') {
+        $c->close_nodes(qw(Negation Operation));
+        $instr->first_child->{has_type}++;
+        return;
+    }
+
     # otherwise just throw the token back in.
     $c->node->adopt($c->unknown_el);
 

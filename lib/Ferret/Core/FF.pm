@@ -466,7 +466,8 @@ sub typedef {
                 return $NO if !$obj->has_property($method_name);
 
                 # obj, code, array. the one means don't compute.
-                my ($obj_or_ref) = $obj->_property($method_name, undef, undef, 1);
+                my ($obj_or_ref) =
+                    $obj->_property($method_name, undef, undef, 1);
 
                 # if there are args, check that they can be satisfied.
                 if ($args) {
@@ -644,7 +645,10 @@ sub type_with_generics {
 # never change this, just add new versions
 sub args_v1 {
     # my ($scope, $self, $this, $args, $ret) = &FF::args_v1;
-    state $v1 = [FUNC_SCOPE, FUNC_SELF, FUNC_THIS, FUNC_INS, FUNC_ARGS, FUNC_RET];
+    state $v1 = [
+        FUNC_SCOPE, FUNC_SELF,  FUNC_THIS,
+        FUNC_INS,   FUNC_ARGS,  FUNC_RET
+    ];
     return @_[@$v1];
 }
 
