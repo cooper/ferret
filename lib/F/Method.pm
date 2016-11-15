@@ -35,6 +35,21 @@ sub arguments {
     return @wn;
 }
 
+sub returns {
+    my $func = shift;
+
+    # find all the Return descendants.
+    my @r = $func->filter_descendants(type => 'Return ReturnPair');
+
+    # filter out the ones which belong to me.
+    @r = grep {
+        my $f = $_->first_self_or_parent('Function', 'Method');
+        $func == $f;
+    } @r;
+
+    return @r;
+}
+
 sub signature {
     my @args = map {
         my $a = {
