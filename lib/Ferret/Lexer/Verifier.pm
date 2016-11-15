@@ -35,6 +35,11 @@ our %errors = (
     InvalidRegularExpression => {
         message => "Failed to compile constant regular expression /%s/%s",
         hint_0  => "%s"
+    },
+    ReturnTypeMismatch => {
+        message => "Mismatching return types%s within the same function",
+        hint_0  => "Return type '%s' on line %d",
+        hint_1  => "Return type '%s' on line %d"
     }
 );
 
@@ -87,6 +92,9 @@ sub verify {
 
     # raise error for multiple bareword declarations by same name in same scope
     identify_duplicate_barewords($v, $main_node) and return;
+
+    # raise error for mismatching return types in the same function
+    identify_return_mismatches($v, $main_node) and return;
 
 }
 
@@ -440,6 +448,33 @@ sub verify_regular_expressions {
             $regex->{mods}  // ''
         );
 
+    }
+}
+
+sub identify_return_mismatches {
+    my ($v, $main_node) = @_;
+    my @funcs = $main_node->filter_descendants(type => 'Function Method');
+    foreach my $func (@funcs) {
+        foreach my $ret ($func->returns) {
+
+            # store info about this return type.
+            my $type = $ret->type_string // '(none)';
+            my $pair_name = $ret->can('key') ? $ret->key : 'result';
+            $func->{returns}{$pair_name}{type} //= $type;
+            $func->{returns}{$pair_name}{loc}  //= int $ret->{create_pos};
+
+            # check if it matches previous ones.
+            next if $func->{returns}{$pair_name}{type} eq $type;
+
+            # nope, throw an error.
+            my @hints;
+            $hints[0] = [ @{ $func->{returns}{$pair_name} }{'type', 'loc'} ];
+            $hints[1] = [ $type, int $ret->{create_pos} ];
+
+            $ret->throw(\@hints, ReturnTypeMismatch =>
+                $pair_name eq 'result' ? '' : " (pair '$pair_name')"
+            );
+        }
     }
 }
 
