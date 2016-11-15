@@ -9,7 +9,7 @@ use 5.010;
 use Scalar::Util qw(blessed weaken dualvar);
 use List::Util qw(any all none);
 use Ferret::Core::Conversion qw(
-    fstring ffunction ferror pbool pstring
+    fstring ffunction ferror pbool pstring plist
     FUNC_SCOPE FUNC_SELF FUNC_THIS FUNC_INS FUNC_RET FUNC_ARGS
 );
 

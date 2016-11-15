@@ -82,6 +82,27 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$key'
+#          Computed property 'iterator'
+#              Body ('method' scope)
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$it'
+#                          Call
+#                              Bareword 'HashIterator'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Special variable '*self'
+#                  Instruction
+#                      Assignment
+#                          Property 'keysLeft'
+#                              Lexical variable '$it'
+#                          Call
+#                              Property 'copy'
+#                                  Instance variable '@orderedKeys'
+#                              Argument list [0 items]
+#                  Instruction
+#                      Return
+#                          Lexical variable '$it'
 #      Include (Hash, HashIterator, K, V)
 package FF;
 
@@ -236,6 +257,33 @@ my $result = do {
                 return $ret;
             }
         );
+
+        # Method event 'iterator' definition
+        my $method_3 = method_event_def(
+            $f, $scope,
+            'iterator',
+            [],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    it => $$scope->{'HashIterator'}->(
+                        [ ${ $scope->{special} }->{'self'} ], $scope,
+                        undef,                                $pos->(36.4)
+                    ),
+                    $file_scope,
+                    $pos->(36.2)
+                );
+                $$scope->{'it'}->set_property(
+                    keysLeft => $$self->{'orderedKeys'}
+                      ->property_u( 'copy', $pos->(37.5) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(37.6) ),
+                    $pos->(37.3)
+                );
+                return $ret_func->( $$scope->{'it'} );
+                return $ret;
+            }
+        );
         $method_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
@@ -247,6 +295,10 @@ my $result = do {
         $method_2->inside_scope(
             pushPair => $scope,
             $proto, $class, $ins, undef, undef
+        );
+        $method_3->inside_scope(
+            iterator => $scope,
+            $proto, $class, $ins, 1, undef
         );
     }
     load_namespaces( $context, qw(Hash HashIterator K V) );

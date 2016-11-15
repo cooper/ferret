@@ -31,3 +31,9 @@ method pushPair {
     *self[$key] = $value
     @orderedKeys.push($key)
 }
+
+prop iterator {
+    $it = HashIterator(*self)
+    $it.keysLeft = @orderedKeys.copy()
+    return $it
+}

@@ -24,7 +24,7 @@ init {
 }
 
 prop more {
-    return @i != @list.lastIndex
+    return @i != (@list.lastIndex || -1)
 }
 
 prop nextElement {
@@ -34,7 +34,7 @@ prop nextElement {
 
 prop nextElements {
     @i += 1
-    return [ @list[@i] ]
+    return [ @i, @list[@i] ]
 }
 
 prop iterator {

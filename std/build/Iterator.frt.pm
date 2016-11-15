@@ -53,8 +53,15 @@
 #                          Operation
 #                              Instance variable '@i'
 #                              Negated equality operator (!=)
-#                              Property 'lastIndex'
-#                                  Instance variable '@list'
+#                              Single value [1 item]
+#                                  Item 0
+#                                      Operation
+#                                          Property 'lastIndex'
+#                                              Instance variable '@list'
+#                                          Logical or operator (||)
+#                                          Constant zero
+#                                          Negation operator (-)
+#                                          Number '1'
 #          Computed property 'nextElement'
 #              Body ('method' scope)
 #                  Instruction
@@ -76,8 +83,10 @@
 #                          Number '1'
 #                  Instruction
 #                      Return
-#                          Value list [1 item]
+#                          Value list [2 items]
 #                              Item 0
+#                                  Instance variable '@i'
+#                              Item 1
 #                                  Index
 #                                      Instance variable '@list'
 #                                      Index list [1 item]
@@ -179,7 +188,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos = before_content( 'Iterator.frt', './std/Iterator.frt' );
 
-use Ferret::Core::Operations qw(_not _sub add nequal num);
+use Ferret::Core::Operations qw(_not _sub add any_true nequal num);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -229,8 +238,14 @@ my $result = do {
                     nequal(
                         $scope,
                         $$self->{'i'},
-                        $$self->{'list'}
-                          ->property_u( 'lastIndex', $pos->(27.5) )
+                        any_true(
+                            $scope,
+                            sub {
+                                $$self->{'list'}
+                                  ->property_u( 'lastIndex', $pos->(27.3) );
+                            },
+                            sub { _sub( $scope, $f->zero, num( $f, "1" ) ) }
+                        )
                     )
                 );
                 return $ret;
@@ -273,9 +288,10 @@ my $result = do {
                     create_list(
                         $f,
                         [
+                            $$self->{'i'},
                             $$self->{'list'}->get_index_value(
                                 [ $$self->{'i'} ],
-                                $scope, $pos->(37.4)
+                                $scope, $pos->(37.3)
                             )
                         ]
                     )

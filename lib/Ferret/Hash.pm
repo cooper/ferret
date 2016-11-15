@@ -171,11 +171,5 @@ sub description {
 
     return "[\n    ".join("\n    ", @values)."\n]";
 }
- 
-# sub iterate_pair {
-#     my $hash = shift;
-#     my %hash = %{ $hash->{hash_values} };
-#     return map [ fstring($_), $hash{$_} ], keys %hash;
-# }
 
 1
