@@ -249,15 +249,15 @@ sub description {
     return "[\n    ".join("\n    ", @values)."\n]";
 }
 
-sub iterate {
-    my $list = shift;
-    return @{ $list->{list_items} };
-}
-
-sub iterate_pair {
-    my $list = shift;
-    my $i = 0;
-    return map [ fnumber($i++), $_ ], @{ $list->{list_items} };
-}
+# sub iterate {
+#     my $list = shift;
+#     return @{ $list->{list_items} };
+# }
+#
+# sub iterate_pair {
+#     my $list = shift;
+#     my $i = 0;
+#     return map [ fnumber($i++), $_ ], @{ $list->{list_items} };
+# }
 
 1

@@ -204,7 +204,8 @@ sub property_eval_u {
 # only rely on whichever custom implemention of ->_property exists.
 #
 sub _property {
-    my ($obj, $prop_name, $borrow_obj, $simple_only, $no_compute, $no_recursion) = @_;
+    my ($obj, $prop_name, $borrow_obj,
+        $simple_only, $no_compute, $no_recursion) = @_;
 
     # if the prop name starts with asterisk, it's a special property.
     my $first = \substr($prop_name, 0, 1);
@@ -280,9 +281,9 @@ sub _property {
 # has a property, either its own or inherited.
 # returns the owner of the property or Perl undef.
 sub has_property {
-    my ($obj, $prop_name) = @_;
-    my ($value, $owner) = $obj->_property($prop_name);
-    return $owner if defined $value;
+    my ($obj, $prop_name) = @_;         # the one means don't compute
+    my ($obj_or_ref, $owner) = $obj->_property($prop_name, undef, undef, 1);
+    return $owner if defined $obj_or_ref;
 }
 
 # fetches a property, either its own or inherited,
@@ -519,7 +520,14 @@ sub instance_of_u { &instance_of ? Ferret::true : Ferret::undefined }
 # more specifically, returns the object or a transformed version of it
 sub fits_type {
     my ($obj, $class_or_func) = @_;
-    return if !blessed $class_or_func;
+
+    # not blessed. this is a string name.
+    if (!blessed $class_or_func) {
+        $class_or_func = $obj->f->main_context->property($class_or_func);
+    }
+
+    # at this point, it has to be an object.
+    return if !$class_or_func || !Ferret::valid_value($class_or_func);
 
     # undefined fits undefined
     return Ferret::undefined
@@ -588,7 +596,7 @@ sub description {
         $prop_name = "($prop_name)" if $owner != $obj;
 
         # indent lines
-        $value = $value == $ignore ? '(recursion)' :
+        $value = $ignore && $value == $ignore ? '(recursion)' :
             blessed $value ? join "\n    ", split /\n/,
             _pdescription($value, $own_only, $compute, $obj) : '(computed)';
         $prop_str .= '    '.$prop_name." = $value\n";
@@ -642,25 +650,28 @@ sub call_u {
 }
 
 # iterating over a non-function.
-sub iterate {
-    my ($obj, $_pos) = @_;
+sub iterator {
+    my $obj = shift;
 
-    # TODO: here is where we can check if it implements iterations
-    # with an interface
+    # find the iterator and ensure it fits the Iterator.
+    # if not, throw an error for an invalid iteration.
+    my $iterator = $obj->property('iterator');
+    if (!$iterator || !$iterator->fits_type('Iterator')) {
 
-    # throw an error.
-    my ($i, $caller) = 1;
-    $caller = [caller 1];
+        # throw an error.
+        my ($i, $caller) = 1;
+        $caller = [caller 1];
 
-    throw(InvalidIteration => $caller, [
-        Name  => $obj->{last_name},
-        Value => $obj->description_ol,
-        File  => "$FF::pos",
-        Line  => int $FF::pos
-    ]);
+        throw(InvalidIteration => $caller, [
+            Name  => $obj->{last_name},
+            Value => $obj->description_ol,
+            File  => "$FF::pos",
+            Line  => int $FF::pos
+        ]);
+    }
+
+    return $iterator;
 }
-
-sub iterate_pair { &iterate }
 
 sub full_name {
     my ($obj, $prop_name) = @_;

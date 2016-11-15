@@ -1,8 +1,12 @@
 type Iterator {
     can .more           # returns true if there are more elements
     can .nextElement    # returns the next element
-  # can .nextElements   # optional, return a list for the same iteration
     can .iterator       # returns itself such that it fits Iterable
+}
+
+type MultiIterator {
+    isa Iterator
+    can .nextElements   # returns a list of the next elements
 }
 
 #> Matches objects which can be iterated over.
@@ -26,6 +30,38 @@ prop more {
 prop nextElement {
     @i += 1
     return @list[@i]
+}
+
+prop nextElements {
+    @i += 1
+    return [ @list[@i] ]
+}
+
+prop iterator {
+    return *self
+}
+
+#> An iterator implementation for hashes.
+class HashIterator
+
+init {
+    need $hash: Hash
+    @hash = $hash.copy()
+    @keysLeft = $hash.keys
+}
+
+prop more {
+    return !@keysLeft.empty
+}
+
+prop nextElement {
+    $key = @keysLeft.pop()
+    return @hash[$key]
+}
+
+prop nextElements {
+    $key = @keysLeft.pop()
+    return [ $key, @hash[$key] ]
 }
 
 prop iterator {

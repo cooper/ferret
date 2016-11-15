@@ -11,6 +11,14 @@
 #              Instruction
 #                  Can
 #                      Property variable '.iterator'
+#      Type definition ('MultiIterator')
+#          Body ('type' scope)
+#              Instruction
+#                  Isa
+#                      Bareword 'Iterator'
+#              Instruction
+#                  Can
+#                      Property variable '.nextElements'
 #      Type definition ('Iterable')
 #          Body ('type' scope)
 #              Instruction
@@ -60,12 +68,95 @@
 #                              Index list [1 item]
 #                                  Item 0
 #                                      Instance variable '@i'
+#          Computed property 'nextElements'
+#              Body ('method' scope)
+#                  Instruction
+#                      Addition assignment
+#                          Instance variable '@i'
+#                          Number '1'
+#                  Instruction
+#                      Return
+#                          Value list [1 item]
+#                              Item 0
+#                                  Index
+#                                      Instance variable '@list'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Instance variable '@i'
 #          Computed property 'iterator'
 #              Body ('method' scope)
 #                  Instruction
 #                      Return
 #                          Special variable '*self'
-#      Include (List)
+#      Class 'HashIterator'
+#          Class method 'initializer__'
+#              Body ('method' scope)
+#                  Instruction
+#                      Need
+#                          Lexical variable '$hash'
+#                          Argument type
+#                              Bareword 'Hash'
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@hash'
+#                          Call
+#                              Property 'copy'
+#                                  Lexical variable '$hash'
+#                              Argument list [0 items]
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@keysLeft'
+#                          Property 'keys'
+#                              Lexical variable '$hash'
+#          Computed property 'more'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Negation
+#                              Property 'empty'
+#                                  Instance variable '@keysLeft'
+#          Computed property 'nextElement'
+#              Body ('method' scope)
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$key'
+#                          Call
+#                              Property 'pop'
+#                                  Instance variable '@keysLeft'
+#                              Argument list [0 items]
+#                  Instruction
+#                      Return
+#                          Index
+#                              Instance variable '@hash'
+#                              Index list [1 item]
+#                                  Item 0
+#                                      Lexical variable '$key'
+#          Computed property 'nextElements'
+#              Body ('method' scope)
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$key'
+#                          Call
+#                              Property 'pop'
+#                                  Instance variable '@keysLeft'
+#                              Argument list [0 items]
+#                  Instruction
+#                      Return
+#                          Value list [2 items]
+#                              Item 0
+#                                  Lexical variable '$key'
+#                              Item 1
+#                                  Index
+#                                      Instance variable '@hash'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Lexical variable '$key'
+#          Computed property 'iterator'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Special variable '*self'
+#      Include (Hash, Iterator, List)
 package FF;
 
 use warnings;
@@ -88,7 +179,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos = before_content( 'Iterator.frt', './std/Iterator.frt' );
 
-use Ferret::Core::Operations qw(_sub add nequal num);
+use Ferret::Core::Operations qw(_not _sub add nequal num);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -113,16 +204,16 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'list', 17.2 ) or return;
+                need( $scope, $args, 'list', 21.2 ) or return;
                 $self->set_property(
                     list =>
-                      $$scope->{'list'}->property_u( 'copy', $pos->(18.4) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(18.5) ),
-                    $pos->(18.2)
+                      $$scope->{'list'}->property_u( 'copy', $pos->(22.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(22.5) ),
+                    $pos->(22.2)
                 );
                 $self->set_property(
                     i => _sub( $scope, $f->zero, num( $f, "1" ) ),
-                    $pos->(19.2)
+                    $pos->(23.2)
                 );
                 return $ret;
             }
@@ -139,7 +230,7 @@ my $result = do {
                         $scope,
                         $$self->{'i'},
                         $$self->{'list'}
-                          ->property_u( 'lastIndex', $pos->(23.5) )
+                          ->property_u( 'lastIndex', $pos->(27.5) )
                     )
                 );
                 return $ret;
@@ -155,12 +246,38 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
                     i => add( $scope, $$self->{'i'}, num( $f, "1" ) ),
-                    $pos->(27.2)
+                    $pos->(31.2)
                 );
                 return $ret_func->(
                     $$self->{'list'}->get_index_value(
                         [ $$self->{'i'} ],
-                        $scope, $pos->(28.3)
+                        $scope, $pos->(32.3)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'nextElements' definition
+        my $method_3 = method_event_def(
+            $f, $scope,
+            'nextElements',
+            [],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                $self->set_property(
+                    i => add( $scope, $$self->{'i'}, num( $f, "1" ) ),
+                    $pos->(36.2)
+                );
+                return $ret_func->(
+                    create_list(
+                        $f,
+                        [
+                            $$self->{'list'}->get_index_value(
+                                [ $$self->{'i'} ],
+                                $scope, $pos->(37.4)
+                            )
+                        ]
                     )
                 );
                 return $ret;
@@ -168,7 +285,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $method_3 = method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'iterator',
             [],
@@ -191,11 +308,153 @@ my $result = do {
             $proto, $class, $ins, 1, undef
         );
         $method_3->inside_scope(
+            nextElements => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_4->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );
     }
-    load_namespaces( $context, qw(List) );
+
+    # Class 'HashIterator'
+    {
+        my ( $class, $self, $proto, $scope ) =
+          get_class( $f, $context, $file_scope, 'HashIterator', undef, undef );
+
+        # Method event 'initializer__' definition
+        my $method_0 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [
+                {
+                    name     => 'hash',
+                    type     => 'Hash',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'hash', 48.2 ) or return;
+                $self->set_property(
+                    hash =>
+                      $$scope->{'hash'}->property_u( 'copy', $pos->(49.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(49.5) ),
+                    $pos->(49.2)
+                );
+                $self->set_property(
+                    keysLeft =>
+                      $$scope->{'hash'}->property_u( 'keys', $pos->(50.4) ),
+                    $pos->(50.2)
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'more' definition
+        my $method_1 = method_event_def(
+            $f, $scope, 'more',
+            [],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    _not(
+                        $$self->{'keysLeft'}
+                          ->property_u( 'empty', $pos->(54.4) )
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'nextElement' definition
+        my $method_2 = method_event_def(
+            $f, $scope,
+            'nextElement',
+            [],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    key =>
+                      $$self->{'keysLeft'}->property_u( 'pop', $pos->(58.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(58.5) ),
+                    $file_scope, $pos->(58.2)
+                );
+                return $ret_func->(
+                    $$self->{'hash'}->get_index_value(
+                        [ $$scope->{'key'} ],
+                        $scope, $pos->(59.3)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'nextElements' definition
+        my $method_3 = method_event_def(
+            $f, $scope,
+            'nextElements',
+            [],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    key =>
+                      $$self->{'keysLeft'}->property_u( 'pop', $pos->(63.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(63.5) ),
+                    $file_scope, $pos->(63.2)
+                );
+                return $ret_func->(
+                    create_list(
+                        $f,
+                        [
+                            $$scope->{'key'},
+                            $$self->{'hash'}->get_index_value(
+                                [ $$scope->{'key'} ],
+                                $scope, $pos->(64.3)
+                            )
+                        ]
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'iterator' definition
+        my $method_4 = method_event_def(
+            $f, $scope,
+            'iterator',
+            [],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->( ${ $scope->{special} }->{'self'} );
+                return $ret;
+            }
+        );
+        $method_0->inside_scope(
+            initializer__ => $scope,
+            $class, $class, $ins, undef, undef
+        );
+        $method_1->inside_scope(
+            more => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_2->inside_scope(
+            nextElement => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_3->inside_scope(
+            nextElements => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_4->inside_scope(
+            iterator => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+    }
+    load_namespaces( $context, qw(Hash Iterator List) );
     typedef(
         $scope, $context,
         'Iterator',
@@ -207,6 +466,22 @@ my $result = do {
                     $create_can->( 'more',        undef, $ins )->(),
                     $create_can->( 'nextElement', undef, $ins )->(),
                     $create_can->( 'iterator',    undef, $ins )->()
+                ],
+                equal_to => undef
+            ) ? $ins : undef;
+        },
+        undef
+    );
+    typedef(
+        $scope, $context,
+        'MultiIterator',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            typedef_check(
+                $scope, $scope, $ins,
+                conditions => [
+                    $ins->fits_type_u( $$scope->{'Iterator'} ),
+                    $create_can->( 'nextElements', undef, $ins )->()
                 ],
                 equal_to => undef
             ) ? $ins : undef;

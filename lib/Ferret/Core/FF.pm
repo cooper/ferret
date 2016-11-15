@@ -194,10 +194,11 @@ my $once_ret_func = $loop_ret_func;
 # iterate over a list.
 sub iterate {
     my ($f, $outer_scope, $collection, $var_name, $code, $pos) = @_;
-    foreach ($collection->iterate($pos)) {
-
+    my $iterator = $collection->iterator;
+    while (Ferret::truth($iterator->property('more'))) {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
-        $scope->set_property($var_name => $_);
+        my $value = $iterator->property('nextElement');
+        $scope->set_property($var_name => $value);
 
         # call the code.
         my ($status, $ret) = $code->($scope, $loop_ret_func);
@@ -213,25 +214,34 @@ sub iterate {
             return $ret if $status eq 'return';
 
         }
-
     }
 
     # if we never reached 'return' status, the loop returns nothing.
     return;
-
 }
 
 # iterate over a hash.
 sub iterate_pair {
     my ($f, $outer_scope, $collection,
         $var1_name, $var2_name, $code, $pos) = @_;
-    foreach ($collection->iterate_pair($pos)) {
+    my $iterator = $collection->iterator;
 
+    while (Ferret::truth($iterator->property('more'))) {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
 
-        # ->iterate_pair returns arrayref [key, value].
-        $scope->set_property($var1_name => $_->[0]);
-        $scope->set_property($var2_name => $_->[1]);
+        # nextElements for a pair
+        my $values = $iterator->property('nextElements');
+        if ($values) {
+            my ($key, $value) = plist($values);
+            $scope->set_property($var1_name => $key);
+            $scope->set_property($var2_name => $value);
+        }
+
+        # otherwise just use nextElement
+        else {
+            my $value = $iterator->property('nextElement');
+            $scope->set_property($var1_name => $value);
+        }
 
         # call the code.
         my ($status, $ret) = $code->($scope, $loop_ret_func);
@@ -247,12 +257,10 @@ sub iterate_pair {
             return $ret if $status eq 'return';
 
         }
-
     }
 
     # if we never reached 'return' status, the loop returns nothing.
     return;
-
 }
 
 sub indefinitely {

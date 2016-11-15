@@ -124,3 +124,7 @@ prop sum0 {
     }
     return $c
 }
+
+prop iterator {
+    return ListIterator(*self)
+}

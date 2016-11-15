@@ -4,6 +4,10 @@ prop empty {
     return @length == 0
 }
 
+prop iterator {
+    return HashIterator(*self)
+}
+
 class OrderedHash <K?, V?>
 
 init {

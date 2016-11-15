@@ -348,7 +348,16 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$c'
-#      Include (Code, T)
+#          Computed property 'iterator'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'ListIterator'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Special variable '*self'
+#      Include (Code, ListIterator, T)
 package FF;
 
 use warnings;
@@ -974,6 +983,23 @@ my $result = do {
                 return $ret;
             }
         );
+
+        # Method event 'iterator' definition
+        my $method_12 = method_event_def(
+            $f, $scope,
+            'iterator',
+            [],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    $$scope->{'ListIterator'}->(
+                        [ ${ $scope->{special} }->{'self'} ], $scope,
+                        undef,                                $pos->(129.3)
+                    )
+                );
+                return $ret;
+            }
+        );
         $method_0->inside_scope(
             empty => $scope,
             $proto, $class, $ins, 1, undef
@@ -1022,6 +1048,10 @@ my $result = do {
             sum0 => $scope,
             $proto, $class, $ins, 1, undef
         );
+        $method_12->inside_scope(
+            iterator => $scope,
+            $proto, $class, $ins, 1, undef
+        );
         typedef(
             $scope, $class, 'Pairs',
             sub {
@@ -1038,7 +1068,7 @@ my $result = do {
             undef
         );
     }
-    load_namespaces( $context, qw(Code T) );
+    load_namespaces( $context, qw(Code ListIterator T) );
 };
 
 after_content();

@@ -9,6 +9,15 @@
 #                              Instance variable '@length'
 #                              Equality operator (==)
 #                              Number '0'
+#          Computed property 'iterator'
+#              Body ('method' scope)
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'HashIterator'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Special variable '*self'
 #      Class 'OrderedHash' <K, V>
 #          Class method 'initializer__'
 #              Body ('method' scope)
@@ -73,7 +82,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$key'
-#      Include (Hash, K, V)
+#      Include (Hash, HashIterator, K, V)
 package FF;
 
 use warnings;
@@ -118,8 +127,29 @@ my $result = do {
                 return $ret;
             }
         );
+
+        # Method event 'iterator' definition
+        my $method_1 = method_event_def(
+            $f, $scope,
+            'iterator',
+            [],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    $$scope->{'HashIterator'}->(
+                        [ ${ $scope->{special} }->{'self'} ], $scope,
+                        undef,                                $pos->(8.3)
+                    )
+                );
+                return $ret;
+            }
+        );
         $method_0->inside_scope(
             empty => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_1->inside_scope(
+            iterator => $scope,
             $proto, $class, $ins, 1, undef
         );
     }
@@ -139,14 +169,14 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
                     orderedKeys => create_list( $f, [] ),
-                    $pos->(10.2)
+                    $pos->(14.2)
                 );
                 type_with_generics( $f, $scope, $$scope->{'Hash'},
                     [ $$scope->{'K'}, $$scope->{'V'} ] )
-                  ->property_u( 'init', $pos->(13.35) )->(
+                  ->property_u( 'init', $pos->(17.35) )->(
                     [ ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, $pos->(13.4)
-                  )->( [ undef, [] ], $scope, undef, $pos->(13.55) );
+                    $scope, undef, $pos->(17.4)
+                  )->( [ undef, [] ], $scope, undef, $pos->(17.55) );
                 return $ret;
             }
         );
@@ -182,27 +212,27 @@ my $result = do {
             ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'key',   21.1 ) or return;
-                need( $scope, $args, 'value', 21.3 ) or return;
+                need( $scope, $args, 'key',   25.1 ) or return;
+                need( $scope, $args, 'value', 25.3 ) or return;
                 if (
                     bool(
                         $$self->{'orderedKeys'}
-                          ->property_u( 'remove', $pos->(24.3) )->(
+                          ->property_u( 'remove', $pos->(28.3) )->(
                             [ $$scope->{'key'} ], $scope,
-                            undef,                $pos->(24.4)
-                          )->property_u( 'removed', $pos->(24.7) )
+                            undef,                $pos->(28.4)
+                          )->property_u( 'removed', $pos->(28.7) )
                     )
                   )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $ret->set_property( overwritten => $true, $pos->(25.2) );
+                    $ret->set_property( overwritten => $true, $pos->(29.2) );
                 }
                 ${ $scope->{special} }->{'self'}
                   ->set_index_value( [ $$scope->{'key'} ],
-                    $$scope->{'value'}, $scope, $pos->(27.5) );
-                $$self->{'orderedKeys'}->property_u( 'push', $pos->(28.2) )
-                  ->( [ $$scope->{'key'} ], $scope, undef, $pos->(28.3) );
+                    $$scope->{'value'}, $scope, $pos->(31.5) );
+                $$self->{'orderedKeys'}->property_u( 'push', $pos->(32.2) )
+                  ->( [ $$scope->{'key'} ], $scope, undef, $pos->(32.3) );
                 return $ret;
             }
         );
@@ -219,7 +249,7 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Hash K V) );
+    load_namespaces( $context, qw(Hash HashIterator K V) );
 };
 
 after_content();
