@@ -1295,6 +1295,46 @@ our %element_rules = (
 
     },
 
+    ReturnPair => {
+
+        must_be_somewhere_inside => [                                           # ReturnPair[0] TODO
+            'Function Method',
+            'Return must be somewhere inside a function, method, or callback',
+            0
+        ],
+
+        max_children => [                                                       # ReturnPair[1] TODO
+            2,
+            'Return can only contain one expression and possibly a type, '.
+            'separated by a colon (:)',
+            1
+        ],
+
+        children_must_be => [                                                   # ReturnPair[2] TODO
+            '@Expression',
+            'Cannot return non-expression',
+            2
+        ],
+
+        child_1_must_be => [                                                    # ReturnPair[3] TODO
+            'Bareword',
+            'Return statement type must be a bareword',
+            3
+        ],
+
+        # check if the colon was reached
+        child_1_must_satisfy => [                                               # ReturnPair[4] TODO
+            sub {
+                my (undef, $ret) = @_;
+                $ret->{has_type};
+            },
+            'Return can only contain one expression and possibly a type, '.
+            'separated by a colon (:)',
+            4
+        ]
+
+    },
+
     Negation => {
 
         max_children => [                                                       # Negation[0] TODO
