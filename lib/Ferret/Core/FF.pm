@@ -522,7 +522,14 @@ sub typedef {
 }
 
 sub typedef_check {
-    my ($scope, $scope_or_class, $obj, %opts) = @_;
+    my ($scope, $scope_or_class, $obj, $typedef_id, %opts) = @_;
+
+    # if ISA hasn't changed since the last check,
+    # the obj probably still conforms to the interface.
+    my $new_changes = $obj->{isa_changes} || 0;
+    my $old_changes = $obj->{type_conformity}{$typedef_id};
+    return 1 if defined $old_changes && $old_changes == $new_changes;
+    $obj->{type_conformity}{$typedef_id} = $obj->{isa_changes} || 0;
 
     # all conditions must return Ferret true.
     my $conditions = delete $opts{conditions} || [];
