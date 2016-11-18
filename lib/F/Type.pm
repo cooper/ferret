@@ -71,7 +71,7 @@ sub perl_fmt {
         # it's some sort of requirement or transform.
         if (defined $item->{req_type}) {
             my $format = $item->perl_fmt_do;
-            push @conditions, $format;
+            push @conditions, "sub { $format }";
             next;
         }
 

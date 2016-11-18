@@ -290,8 +290,11 @@ my $result = do {
                 typedef_check(
                     $scope, $scope, $ins, $anchor,
                     conditions => [
-                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
-                        $$ins->{'even'}
+                        sub {
+                            $ins->fits_type_u(
+                                ${ $scope->{special} }->{'class'} );
+                        },
+                        sub { $$ins->{'even'} }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
@@ -306,8 +309,11 @@ my $result = do {
                 typedef_check(
                     $scope, $scope, $ins, $anchor,
                     conditions => [
-                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
-                        $$ins->{'odd'}
+                        sub {
+                            $ins->fits_type_u(
+                                ${ $scope->{special} }->{'class'} );
+                        },
+                        sub { $$ins->{'odd'} }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
@@ -323,8 +329,13 @@ my $result = do {
                 typedef_check(
                     $scope, $scope, $ins, $anchor,
                     conditions => [
-                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
-                        do { $ins = $transform->( $$ins->{'floor'}, $ins ) }
+                        sub {
+                            $ins->fits_type_u(
+                                ${ $scope->{special} }->{'class'} );
+                        },
+                        sub {
+                            do { $ins = $transform->( $$ins->{'floor'}, $ins ) }
+                        }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;

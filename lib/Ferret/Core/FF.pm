@@ -533,7 +533,7 @@ sub typedef_check {
 
     # all conditions must return Ferret true.
     my $conditions = delete $opts{conditions} || [];
-    return unless all { pbool($_) } @$conditions;
+    return unless all { pbool($_->()) } @$conditions;
 
     # there are no equality requirements.
     my $equal_to = delete $opts{equal_to};

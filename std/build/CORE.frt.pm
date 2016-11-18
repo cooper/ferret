@@ -145,8 +145,9 @@ my $result = do {
             state $anchor = \0 + 0;
             typedef_check(
                 $scope, $scope, $ins, $anchor,
-                conditions => [ $$ins->{'name'}, $$ins->{'signature'} ],
-                equal_to   => undef
+                conditions =>
+                  [ sub { $$ins->{'name'} }, sub { $$ins->{'signature'} } ],
+                equal_to => undef
             ) ? $ins : undef;
         },
         undef
@@ -159,8 +160,8 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins, $anchor,
                 conditions => [
-                    $ins->fits_type_u( $$scope->{'Str'} ),
-                    equal( $scope, $$ins->{'length'}, num( $f, "1" ) )
+                    sub { $ins->fits_type_u( $$scope->{'Str'} ) },
+                    sub { equal( $scope, $$ins->{'length'}, num( $f, "1" ) ) }
                 ],
                 equal_to => undef
             ) ? $ins : undef;
@@ -176,8 +177,10 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins, $anchor,
                 conditions => [
-                    $create_can->( 'hashValue', undef, $ins )->(),
-                    do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
+                    sub { $create_can->( 'hashValue', undef, $ins )->() },
+                    sub {
+                        do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
+                    }
                 ],
                 equal_to => undef
             ) ? $ins : undef;
@@ -193,15 +196,22 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins, $anchor,
                 conditions => [
-                    $create_can->( 'getValue', [ index => 'Hashable' ], $ins )
-                      ->(),
-                    $create_can->(
-                        'setValue', [ value => 'Obj', index => 'Hashable' ],
-                        $ins
-                      )->(),
-                    $create_can->(
-                        'deleteValue', [ index => 'Hashable' ], $ins
-                    )->()
+                    sub {
+                        $create_can->(
+                            'getValue', [ index => 'Hashable' ], $ins
+                        )->();
+                    },
+                    sub {
+                        $create_can->(
+                            'setValue',
+                            [ value => 'Obj', index => 'Hashable' ], $ins
+                        )->();
+                    },
+                    sub {
+                        $create_can->(
+                            'deleteValue', [ index => 'Hashable' ], $ins
+                        )->();
+                    }
                 ],
                 equal_to => undef
             ) ? $ins : undef;

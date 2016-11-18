@@ -247,8 +247,13 @@ my $result = do {
                 typedef_check(
                     $scope, $scope, $ins, $anchor,
                     conditions => [
-                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
-                        nequal( $scope, $$ins->{'length'}, num( $f, "0" ) )
+                        sub {
+                            $ins->fits_type_u(
+                                ${ $scope->{special} }->{'class'} );
+                        },
+                        sub {
+                            nequal( $scope, $$ins->{'length'}, num( $f, "0" ) );
+                        }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
@@ -265,8 +270,16 @@ my $result = do {
                 typedef_check(
                     $scope, $scope, $ins, $anchor,
                     conditions => [
-                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
-                        do { $ins = $transform->( $$ins->{'uppercase'}, $ins ) }
+                        sub {
+                            $ins->fits_type_u(
+                                ${ $scope->{special} }->{'class'} );
+                        },
+                        sub {
+                            do {
+                                $ins =
+                                  $transform->( $$ins->{'uppercase'}, $ins );
+                              }
+                        }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
@@ -283,8 +296,16 @@ my $result = do {
                 typedef_check(
                     $scope, $scope, $ins, $anchor,
                     conditions => [
-                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
-                        do { $ins = $transform->( $$ins->{'lowercase'}, $ins ) }
+                        sub {
+                            $ins->fits_type_u(
+                                ${ $scope->{special} }->{'class'} );
+                        },
+                        sub {
+                            do {
+                                $ins =
+                                  $transform->( $$ins->{'lowercase'}, $ins );
+                              }
+                        }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
@@ -300,13 +321,15 @@ my $result = do {
                 typedef_check(
                     $scope, $scope, $ins, $anchor,
                     conditions => [
-                        do {
-                            $ins = $transform->(
-                                $$scope->{'Str'}
-                                  ->( [$ins], $scope, undef, $pos->(25.3) ),
-                                $ins
-                            );
-                          }
+                        sub {
+                            do {
+                                $ins = $transform->(
+                                    $$scope->{'Str'}
+                                      ->( [$ins], $scope, undef, $pos->(25.3) ),
+                                    $ins
+                                );
+                              }
+                        }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;

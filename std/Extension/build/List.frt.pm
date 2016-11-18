@@ -1074,8 +1074,14 @@ my $result = do {
                 typedef_check(
                     $scope, $scope, $ins, $anchor,
                     conditions => [
-                        $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
-                        $$ins->{'length'}->property_u( 'even', $pos->(7.3) )
+                        sub {
+                            $ins->fits_type_u(
+                                ${ $scope->{special} }->{'class'} );
+                        },
+                        sub {
+                            $$ins->{'length'}
+                              ->property_u( 'even', $pos->(7.3) );
+                        }
                     ],
                     equal_to => undef
                 ) ? $ins : undef;
