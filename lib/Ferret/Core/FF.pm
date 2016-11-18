@@ -458,7 +458,7 @@ sub typedef {
         # this sub returns a function which returns Ferret true if
         # a method requirement is satisfied.
         my $create_can = sub {
-            my ($method_name, $args, $obj) = @_;
+            my ($method_name, $args, $rets, $obj) = @_;
 
             # $args is [ argName => 'Type' ]
             # if $args is undef, it's can .property

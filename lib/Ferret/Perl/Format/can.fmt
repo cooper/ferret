@@ -1,1 +1,1 @@
-$create_can->('<<name>>', [ <<arguments>> ], $ins)->()
+$create_can->('<<name>>', <<arguments>>, <<returns>>, $ins)->()

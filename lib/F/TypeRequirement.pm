@@ -31,6 +31,28 @@ sub req_error {
     return;
 }
 
+sub returns_fmt_do {
+    my $req = shift;
+    my $ret = ($req->children)[1];
+    return 'undef' if !$ret || !$req->{has_return};
+
+    # list or return keys and types
+    if ($ret->type eq 'List') {
+        my $arg_string = '';
+        foreach my $child (map $_->first_child, $ret->children) {
+            my ($key, $value) =
+                ($child->key_name, $child->value->{bareword_value});
+            $key = "'$key'" if $key =~ m/^\d/;
+            $arg_string .= ', ' if length $arg_string;
+            $arg_string .= "$key => '$value'";
+        }
+        return "[ $arg_string ]";
+    }
+
+    # bareword return type
+    return "[ result => '$$ret{bareword_value}' ]";
+}
+
 sub perl_fmt_do {
     my $req    = shift;
     my $type   = $req->{req_type};
@@ -39,8 +61,15 @@ sub perl_fmt_do {
 
     # for can, pass it on to the InterfaceMethod.
     if ($type eq 'can') {
+
+        # if it's a property, use undef for arg list.
         my $name = $ch->{var_name} if $ch->type eq 'PropertyVariable';
-        return "\$create_can->('$name', undef, \$ins)->()" if length $name;
+        return F::get_perl_fmt(can => {
+            name        => $name,
+            arguments   => 'undef',
+            returns     => $req->returns_fmt_do,
+        }) if length $name;
+
         return $fmt_do;
     }
 
@@ -62,6 +91,8 @@ sub markdown_fmt {
     my $req  = shift;
     my $type = $req->{req_type};
     my $condition;
+
+    # TODO: return types
 
     # for barewords in isa, we can say the type maybe.
     my $child = $req->first_child;

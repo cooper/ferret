@@ -11,7 +11,7 @@ sub perl_fmt {
     my $im = shift;
 
     # add variable => type
-    my $arg_string;
+    my $arg_string = '';
     my $list = ($im->children)[1];
     foreach my $child (map $_->first_child, $list->children) {
         my ($key, $value) =
@@ -23,8 +23,8 @@ sub perl_fmt {
 
     return can => {
         name      => $im->method_name,
-        arguments => $arg_string,
-      # pos       => $call->{create_pos}
+        arguments => "[ $arg_string ]",
+        returns   => $im->parent->returns_fmt_do
     };
 }
 

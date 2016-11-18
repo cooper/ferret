@@ -492,9 +492,11 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins, $anchor,
                 conditions => [
-                    sub { $create_can->( 'more',        undef, $ins )->() },
-                    sub { $create_can->( 'nextElement', undef, $ins )->() },
-                    sub { $create_can->( 'iterator',    undef, $ins )->() }
+                    sub { $create_can->( 'more', undef, undef, $ins )->() },
+                    sub {
+                        $create_can->( 'nextElement', undef, undef, $ins )->();
+                    },
+                    sub { $create_can->( 'iterator', undef, undef, $ins )->() }
                 ],
                 equal_to => undef
             ) ? $ins : undef;
@@ -511,7 +513,9 @@ my $result = do {
                 $scope, $scope, $ins, $anchor,
                 conditions => [
                     sub { $ins->fits_type_u( $$scope->{'Iterator'} ) },
-                    sub { $create_can->( 'nextElements', undef, $ins )->() }
+                    sub {
+                        $create_can->( 'nextElements', undef, undef, $ins )->();
+                    }
                 ],
                 equal_to => undef
             ) ? $ins : undef;
@@ -526,8 +530,9 @@ my $result = do {
             state $anchor = \0 + 0;
             typedef_check(
                 $scope, $scope, $ins, $anchor,
-                conditions =>
-                  [ sub { $create_can->( 'iterator', undef, $ins )->() } ],
+                conditions => [
+                    sub { $create_can->( 'iterator', undef, undef, $ins )->() }
+                ],
                 equal_to => undef
             ) ? $ins : undef;
         },

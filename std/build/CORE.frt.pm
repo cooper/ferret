@@ -177,7 +177,8 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins, $anchor,
                 conditions => [
-                    sub { $create_can->( 'hashValue', undef, $ins )->() },
+                    sub { $create_can->( 'hashValue', undef, undef, $ins )->() }
+                    ,
                     sub {
                         do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
                     }
@@ -198,18 +199,20 @@ my $result = do {
                 conditions => [
                     sub {
                         $create_can->(
-                            'getValue', [ index => 'Hashable' ], $ins
+                            'getValue', [ index => 'Hashable' ],
+                            undef, $ins
                         )->();
                     },
                     sub {
                         $create_can->(
-                            'setValue',
-                            [ value => 'Obj', index => 'Hashable' ], $ins
+                            'setValue', [ value => 'Obj', index => 'Hashable' ],
+                            undef, $ins
                         )->();
                     },
                     sub {
                         $create_can->(
-                            'deleteValue', [ index => 'Hashable' ], $ins
+                            'deleteValue', [ index => 'Hashable' ],
+                            undef, $ins
                         )->();
                     }
                 ],
