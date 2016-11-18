@@ -173,6 +173,7 @@ my $result = do {
         $f, undef,
         'handleCommand',
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
+        [ { name => 'result', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 18.2 ) or return;
@@ -297,6 +298,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'commands', 5.2, create_object( $f, [] ) );
@@ -320,6 +322,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'connection', 10.2 ) or return;
@@ -351,6 +354,7 @@ my $result = do {
         my $method_2 = method_event_def(
             $f, $scope,
             'connect',
+            [],
             [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;

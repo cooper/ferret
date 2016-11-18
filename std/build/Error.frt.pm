@@ -196,6 +196,7 @@ my $result = do {
                 more     => undef
             }
         ],
+        [ { name => 'result', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'list', 29.2 ) or return;
@@ -297,6 +298,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'type' ) or return;
@@ -334,6 +336,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'file', 15.1 ) or return;
@@ -355,6 +358,7 @@ my $result = do {
             $f, $scope,
             'description',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(

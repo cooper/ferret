@@ -575,6 +575,7 @@ my $result = do {
         $f, undef,
         'sendRegistration',
         [],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$self->{'send'}->(
@@ -607,6 +608,7 @@ my $result = do {
         $f, undef,
         'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 36.2 ) or return;
@@ -622,6 +624,7 @@ my $result = do {
         '_joinChannels',
         undef,
         [],
+        [ { name => 'result', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if ( bool( $$this->{'_joinedChannels'} ) ) {
@@ -664,6 +667,7 @@ my $result = do {
     my $func_3 = function_event_def(
         $f, $scope, '_pong', undef,
         [ { name => 's', type => undef, optional => undef, more => undef } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 's', 109.2 ) or return;
@@ -694,6 +698,7 @@ my $result = do {
             { name => 'line', type => undef, optional => undef, more => undef },
             { name => 's',    type => undef, optional => undef, more => undef }
         ],
+        [ { name => 'msg', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'line', 114.2 ) or return;
@@ -750,6 +755,7 @@ my $result = do {
         '_commandHello',
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 131.2 ) or return;
@@ -780,6 +786,7 @@ my $result = do {
         '_commandAdd',
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 137.2 ) or return;
@@ -834,6 +841,7 @@ my $result = do {
         '_commandFactoid',
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 152.2 ) or return;
@@ -902,6 +910,7 @@ my $result = do {
                 { name => 'user', type => 'Str', optional => 1, more => undef },
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'addr' ) or return;
@@ -976,6 +985,10 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [
+                { name => 'overwrote', type => '(none)' },
+                { name => 'added',     type => '(none)' }
+            ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'command',  43.1 ) or return;
@@ -1005,6 +1018,7 @@ my $result = do {
             $f, $scope,
             'connect',
             [],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$self->{'sock'}->property_u( 'connect', $pos->(51.2) )
@@ -1024,6 +1038,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 55.2 ) or return;
@@ -1049,6 +1064,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 61.2 ) or return;
@@ -1146,6 +1162,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'channel', 84.1 ) or return;

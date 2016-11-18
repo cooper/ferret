@@ -143,6 +143,7 @@ my $result = do {
     my $func_0 = function_def(
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 5.2 ) or return;
@@ -158,6 +159,7 @@ my $result = do {
     my $func_1 = function_def(
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 10.2 ) or return;
@@ -172,6 +174,7 @@ my $result = do {
     # Anonymous function definition
     my $func_2 = function_def(
         $f, undef, undef,
+        [],
         [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -198,6 +201,7 @@ my $result = do {
     # Anonymous function definition
     my $func_3 = function_def(
         $f, undef, undef,
+        [],
         [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;

@@ -189,6 +189,7 @@ my $result = do {
                 more     => undef
             }
         ],
+        [ { name => 'result', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'pt', 4.2 ) or return;
@@ -249,6 +250,7 @@ my $result = do {
         'evenNumbers',
         undef,
         [ { name => 'nums', type => 'Num', optional => undef, more => 1 } ],
+        [ { name => 'even', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'nums', 27.2 ) or return;

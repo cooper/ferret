@@ -213,6 +213,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'list', 21.2 ) or return;
@@ -234,6 +235,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'more',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -259,6 +261,7 @@ my $result = do {
             $f, $scope,
             'nextElement',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
@@ -280,6 +283,7 @@ my $result = do {
             $f, $scope,
             'nextElements',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
@@ -307,6 +311,7 @@ my $result = do {
             $f, $scope,
             'iterator',
             [],
+            [ { name => 'result', type => 'Iterator' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( ${ $scope->{special} }->{'self'} );
@@ -352,6 +357,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'hash', 48.2 ) or return;
@@ -374,6 +380,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'more',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -391,6 +398,7 @@ my $result = do {
             $f, $scope,
             'nextElement',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -415,6 +423,7 @@ my $result = do {
             $f, $scope,
             'nextElements',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -445,6 +454,7 @@ my $result = do {
             $f, $scope,
             'iterator',
             [],
+            [ { name => 'result', type => 'Iterator' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( ${ $scope->{special} }->{'self'} );

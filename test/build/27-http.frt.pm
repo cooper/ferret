@@ -107,6 +107,7 @@ my $result = do {
     my $func_0 = function_def(
         $f, undef, undef,
         [],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}
@@ -126,6 +127,7 @@ my $result = do {
                 more     => undef
             }
         ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'location', 8.2 ) or return;
@@ -154,6 +156,7 @@ my $result = do {
                 more     => undef
             }
         ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'content', 14.2 ) or return;
@@ -176,6 +179,7 @@ my $result = do {
     # Anonymous function definition
     my $func_3 = function_def(
         $f, undef, undef,
+        [],
         [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;

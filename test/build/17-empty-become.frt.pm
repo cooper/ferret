@@ -63,6 +63,7 @@ my $result = do {
     my $func_0 = function_def(
         $f, undef, undef,
         [],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}

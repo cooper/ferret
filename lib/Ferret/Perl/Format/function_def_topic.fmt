@@ -1,5 +1,5 @@
-# Anonymous function definition
-my $func_<<id>> = function_def($f, <<owner>>, <<name>>, [ { name => '_' } ], sub {
+# Anonymous function definition with topicalizer
+my $func_<<id>> = function_def($f, <<owner>>, <<name>>, [ { name => '_' } ], [ <<returns>> ], sub {
     my ($scope, $self, $this, undef, $args, $ret) = &args_v1;
     my $ins = $args->{_};
     <<statements>>

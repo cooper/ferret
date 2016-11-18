@@ -262,6 +262,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'x', 5.1 ) or return;
@@ -284,6 +285,7 @@ my $result = do {
             $f, $scope,
             'vertices',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -304,6 +306,7 @@ my $result = do {
             $f, $scope,
             'bottomLeft',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'origin'} );
@@ -316,6 +319,7 @@ my $result = do {
             $f, $scope,
             'bottomRight',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -342,6 +346,7 @@ my $result = do {
             $f, $scope,
             'topLeft',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -369,6 +374,7 @@ my $result = do {
             $f, $scope,
             'topRight',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -400,6 +406,7 @@ my $result = do {
             $f, $scope,
             'bottomLine',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -417,6 +424,7 @@ my $result = do {
             $f, $scope,
             'topLine',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -433,6 +441,7 @@ my $result = do {
         my $method_8 = method_event_def(
             $f, $scope, 'center',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -470,6 +479,7 @@ my $result = do {
             $f, $scope,
             'description',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(

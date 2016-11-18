@@ -208,6 +208,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'x' ) or return;
@@ -228,6 +229,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'pt2', 9.2 ) or return;
@@ -271,6 +273,7 @@ my $result = do {
             $f, $scope,
             'distanceFromOrigin',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -293,6 +296,7 @@ my $result = do {
         my $method_3 = method_event_def(
             $f, $scope, 'pretty',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -311,6 +315,7 @@ my $result = do {
             $f, $scope,
             'toString',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'pretty'} );
@@ -323,6 +328,7 @@ my $result = do {
             $f, $scope,
             'description',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -349,6 +355,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'pt1', 32.1 ) or return;
@@ -408,6 +415,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'pt1', 40.1 ) or return;

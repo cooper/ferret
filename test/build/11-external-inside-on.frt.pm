@@ -151,6 +151,7 @@ my $result = do {
                 more     => undef
             }
         ],
+        [ { name => 'didTwice', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'twice',   16.2 ) or return;

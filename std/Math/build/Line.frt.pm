@@ -170,6 +170,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'pt1' ) or return;
@@ -183,6 +184,7 @@ my $result = do {
             $f, $scope,
             'endpoints',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -195,6 +197,7 @@ my $result = do {
         my $method_2 = method_event_def(
             $f, $scope, 'pretty',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -253,6 +256,7 @@ my $result = do {
             $f, $scope,
             'description',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'pretty'} );
@@ -265,6 +269,7 @@ my $result = do {
             $f, $scope,
             'midpoint',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -279,6 +284,7 @@ my $result = do {
         my $method_5 = method_event_def(
             $f, $scope, 'length',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(

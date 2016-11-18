@@ -197,6 +197,7 @@ my $result = do {
             $f, $scope,
             'initializer__',
             [ { name => 'moos', type => undef, optional => 1, more => undef } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'moos', 6.2, $true );
@@ -208,6 +209,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'moo',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'moos'} ) ) {
@@ -246,6 +248,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'barks', 18.2, $false );
@@ -257,6 +260,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'bark',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'barks'} ) ) {
@@ -289,6 +293,7 @@ my $result = do {
             $f, $scope,
             'initializer__',
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'mean', 30.2, $false );
@@ -300,6 +305,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'meow',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( str( $f, "meow" ) );
@@ -324,6 +330,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'cat1', 39.1 ) or return;

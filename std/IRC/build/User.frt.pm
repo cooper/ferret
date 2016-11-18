@@ -87,6 +87,7 @@ my $result = do {
                 { name => 'host', type => 'Str', optional => 1, more => undef },
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'connection' ) or return;

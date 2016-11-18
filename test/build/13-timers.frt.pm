@@ -83,6 +83,7 @@ my $result = do {
     my $func_0 = function_def(
         $f, undef, undef,
         [],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}->( [ str( $f, "five seconds up" ) ], $scope, undef,
@@ -94,6 +95,7 @@ my $result = do {
     # Anonymous function definition
     my $func_1 = function_def(
         $f, undef, undef,
+        [],
         [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;

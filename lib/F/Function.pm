@@ -118,6 +118,11 @@ sub perl_fmt {
     my $vp = scalar $func->body->filter_descendants(type => 'PropertyVariable');
     my $need_topic = $vp && $func->anonymous && !$func->arguments;
 
+
+    # return types.
+    my @returns = map "{ name => '$_', type => '$$func{returns}{$_}{type}' }",
+        keys %{ $func->{returns} || {} };
+
     my $info = {
         need_topic => $need_topic,
         anonymous  => $func->{anonymous},
@@ -131,7 +136,8 @@ sub perl_fmt {
         is_prop    => $func->{is_prop}   ? '1'       : 'undef',
         p_set      => $func->{p_set}     ? '1'       : 'undef',
         statements => $content,
-        arguments  => join(', ', @arguments)
+        arguments  => join(', ', @arguments),
+        returns    => join(', ', @returns)
     };
 
     # add the function definition.

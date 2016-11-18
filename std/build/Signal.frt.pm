@@ -134,6 +134,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'type' ) or return;
@@ -144,6 +145,7 @@ my $result = do {
         # Method event 'trap' definition
         my $method_1 = method_event_def(
             $f, $scope, 'trap',
+            [],
             [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -165,6 +167,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'type', 31.2 ) or return;

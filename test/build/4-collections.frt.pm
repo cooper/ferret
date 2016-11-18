@@ -115,6 +115,7 @@ my $result = do {
             { name => 'y', type => undef, optional => undef, more => undef },
             { name => 'z', type => undef, optional => 1,     more => undef }
         ],
+        [ { name => 'point', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'x', 2.2 ) or return;

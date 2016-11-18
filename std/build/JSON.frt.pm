@@ -467,6 +467,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'strict',     24.2, $true );
@@ -593,6 +594,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'json', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'data', 96.2 ) or return;
@@ -640,6 +642,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'data', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'json', 105.2 ) or return;
@@ -688,6 +691,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'added', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'fragment', 138.2 ) or return;
@@ -732,6 +736,10 @@ my $result = do {
             $f, $scope,
             'decoderDone',
             [],
+            [
+                { name => 'data',  type => '(none)' },
+                { name => 'found', type => '(none)' }
+            ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 try_catch(
@@ -800,6 +808,7 @@ my $result = do {
             $f, $scope,
             'decoderReset',
             [],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$self->{'xs'}->property_u( 'incr_reset', $pos->(167.2) )
@@ -819,6 +828,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'data', 180.2 ) or return;
@@ -841,6 +851,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'json', 187.2 ) or return;

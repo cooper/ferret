@@ -103,6 +103,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'client', 9.2 ) or return;
@@ -122,6 +123,7 @@ my $result = do {
             $f, $scope,
             'connect',
             [],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$scope->{'NATIVE::HTTPClient'}
@@ -138,6 +140,7 @@ my $result = do {
             $f, $scope,
             'connected',
             [],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
 
@@ -150,6 +153,7 @@ my $result = do {
             $f, $scope,
             'redirect',
             [],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
 
@@ -160,6 +164,7 @@ my $result = do {
         # Method event 'error' definition
         my $method_4 = method_event_def(
             $f, $scope, 'error',
+            [],
             [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -172,6 +177,7 @@ my $result = do {
         my $method_5 = method_event_def(
             $f, $scope,
             'response',
+            [],
             [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;

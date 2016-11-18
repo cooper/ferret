@@ -129,6 +129,7 @@ my $result = do {
     my $func_0 = function_event_def(
         $f, $scope, 'hello1', undef,
         [],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             var(
@@ -157,6 +158,7 @@ my $result = do {
     # Function event 'hello2' definition
     my $func_1 = function_event_def(
         $f, $scope, 'hello2', undef,
+        [],
         [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -187,6 +189,7 @@ my $result = do {
                 more     => undef
             }
         ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $func_0->inside_scope(

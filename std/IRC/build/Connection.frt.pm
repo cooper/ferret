@@ -469,6 +469,7 @@ my $result = do {
         $f, undef,
         'sendRegistration',
         [],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$self->{'send'}->(
@@ -503,6 +504,7 @@ my $result = do {
         $f, undef,
         'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 37.2 ) or return;
@@ -516,6 +518,7 @@ my $result = do {
     my $func_2 = function_def(
         $f, undef,
         'resetState',
+        [],
         [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -557,6 +560,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'addr' ) or return;
@@ -673,6 +677,7 @@ my $result = do {
             $f, $scope,
             'connect',
             [],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$self->{'sock'}->property_u( 'connect', $pos->(51.2) )
@@ -692,6 +697,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 56.2 ) or return;
@@ -717,6 +723,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 63.2 ) or return;
@@ -771,6 +778,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'target', 84.2 ) or return;
@@ -815,6 +823,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'name', 94.2 ) or return;
@@ -870,6 +879,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'nick', 102.2 ) or return;
@@ -925,6 +935,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'name', 110.2 ) or return;
@@ -973,6 +984,7 @@ my $result = do {
             $f, $scope,
             'connected',
             [],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
 
@@ -984,6 +996,7 @@ my $result = do {
         my $method_9 = method_event_def(
             $f, $scope,
             'disconnected',
+            [],
             [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -1007,6 +1020,7 @@ my $result = do {
         my $method_10 = method_event_def(
             $f, $scope, 'copy',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -1039,6 +1053,7 @@ my $result = do {
             $f, $scope,
             'description',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(

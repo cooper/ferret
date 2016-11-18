@@ -117,6 +117,7 @@ my $result = do {
                 more     => undef
             }
         ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'name',   7.1 ) or return;

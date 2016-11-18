@@ -278,6 +278,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'name', 7.2, str( $f, "Test" ) );
@@ -300,6 +301,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 19.2 ) or return;
@@ -332,6 +334,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 25.2 ) or return;
@@ -366,6 +369,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 31.2 ) or return;
@@ -402,6 +406,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 38.2 ) or return;
@@ -440,6 +445,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 45.2 ) or return;
@@ -476,6 +482,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'a', 52.2 ) or return;
@@ -500,6 +507,12 @@ my $result = do {
         my $method_7 = method_event_def(
             $f, $scope, 'review',
             [],
+            [
+                { name => 'fails',  type => '(none)' },
+                { name => 'passes', type => '(none)' },
+                { name => 'allOK',  type => '(none)' },
+                { name => 'tests',  type => '(none)' }
+            ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -555,6 +568,11 @@ my $result = do {
                     optional => undef,
                     more     => undef
                 }
+            ],
+            [
+                { name => 'pass',    type => '(none)' },
+                { name => 'message', type => '(none)' },
+                { name => 'result',  type => '(none)' }
             ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;

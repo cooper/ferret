@@ -81,6 +81,7 @@ my $result = do {
         'something',
         undef,
         [ { name => 'code', type => undef, optional => undef, more => undef } ],
+        [ { name => 'message', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'code', 17.2 ) or return;
@@ -97,6 +98,7 @@ my $result = do {
     my $func_1 = function_def(
         $f, undef, undef,
         [],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}->(
@@ -111,6 +113,7 @@ my $result = do {
     my $func_2 = function_def(
         $f, undef, undef,
         [],
+        [ { name => 'result', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             return $ret_func->( str( $f, "any second now" ) );

@@ -415,6 +415,7 @@ my $result = do {
         'updateWord',
         undef,
         [ { name => 'incN', type => 'Bool', optional => 1, more => undef } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             want( $scope, $args, 'incN', 30.2 );
@@ -464,6 +465,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $scope, $args, 'data', 7.2 );
@@ -490,6 +492,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $func_0->inside_scope(
@@ -820,6 +823,7 @@ my $result = do {
         my $method_2 = method_event_def(
             $f, $scope, 'target',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 {
@@ -849,6 +853,12 @@ my $result = do {
             $f, $scope,
             '_parsedSource',
             [],
+            [
+                { name => 'user',   type => '(none)' },
+                { name => 'host',   type => '(none)' },
+                { name => 'nick',   type => '(none)' },
+                { name => 'result', type => '(none)' }
+            ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( _not( $$self->{'source'} ) ) ) {
@@ -879,6 +889,7 @@ my $result = do {
         my $method_4 = method_event_def(
             $f, $scope, 'nick',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
@@ -891,6 +902,7 @@ my $result = do {
         my $method_5 = method_event_def(
             $f, $scope, 'user',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
@@ -903,6 +915,7 @@ my $result = do {
         my $method_6 = method_event_def(
             $f, $scope, 'host',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}

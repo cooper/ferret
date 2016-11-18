@@ -102,6 +102,10 @@ sub perl_fmt {
     my $method = shift;
     my ($content, @arguments) = $method->body->body_fmt_do;
 
+    # return types.
+    my @returns = map "{ name => '$_', type => '$$method{returns}{$_}{type}' }",
+        keys %{ $method->{returns} || {} };
+
     my $class = $method->class;
     my $info = {
         event_cb   => $method->{event_cb},
@@ -111,7 +115,8 @@ sub perl_fmt {
         arguments  => join(', ', @arguments),
         is_prop    => $method->{is_prop} ? '1' : 'undef',
         p_set      => $method->{p_set}   ? '1' : 'undef',
-        owner      => $method->owner_str
+        owner      => $method->owner_str,
+        returns    => join(', ', @returns)
     };
 
     # add the method definition.

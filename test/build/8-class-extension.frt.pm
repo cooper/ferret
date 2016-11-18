@@ -60,6 +60,7 @@ my $result = do {
             $f, $scope,
             'doubledLength',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(

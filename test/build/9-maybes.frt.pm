@@ -67,6 +67,7 @@ my $result = do {
         'sayHello',
         undef,
         [ { name => 'who', type => 'Str', optional => undef, more => undef } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'who', 2.2 ) or return;

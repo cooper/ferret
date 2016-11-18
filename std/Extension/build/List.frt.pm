@@ -386,10 +386,11 @@ my $result = do {
     my $scope = $file_scope;
     load_core('main');
 
-    # Anonymous function definition
+    # Anonymous function definition with topicalizer
     my $func_0 = function_def(
         $f, undef, undef,
         [ { name => '_' } ],
+        [ { name => 'result', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
@@ -407,6 +408,7 @@ my $result = do {
         my $method_0 = method_event_def(
             $f, $scope, 'empty',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -426,6 +428,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 18.2 ) or return;
@@ -477,6 +480,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 26.2 ) or return;
@@ -538,6 +542,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'what', 34.2 ) or return;
@@ -569,6 +574,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'what', 41.2 ) or return;
@@ -649,6 +655,10 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [
+                { name => 'found',   type => '(none)' },
+                { name => 'removed', type => '(none)' }
+            ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'what', 54.2 ) or return;
@@ -703,6 +713,10 @@ my $result = do {
                     optional => undef,
                     more     => undef
                 }
+            ],
+            [
+                { name => 'removed', type => '(none)' },
+                { name => 'found',   type => '(none)' }
             ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -773,6 +787,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 81.2 ) or return;
@@ -818,6 +833,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 90.2 ) or return;
@@ -863,6 +879,7 @@ my $result = do {
                     more     => undef
                 }
             ],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 99.2 ) or return;
@@ -905,6 +922,7 @@ my $result = do {
         my $method_10 = method_event_def(
             $f, $scope, 'sum',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'empty'} ) ) {
@@ -956,6 +974,7 @@ my $result = do {
         my $method_11 = method_event_def(
             $f, $scope, 'sum0',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var( $scope, c => num( $f, "0" ), $file_scope, $pos->(121.2) );
@@ -989,6 +1008,7 @@ my $result = do {
             $f, $scope,
             'iterator',
             [],
+            [ { name => 'result', type => '(none)' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(

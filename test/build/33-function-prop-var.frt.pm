@@ -54,10 +54,11 @@ my $result = do {
     my $scope = $file_scope;
     load_core('main');
 
-    # Anonymous function definition
+    # Anonymous function definition with topicalizer
     my $func_0 = function_def(
         $f, undef, undef,
         [ { name => '_' } ],
+        [ { name => 'result', type => '(none)' } ],
         sub {
             my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
