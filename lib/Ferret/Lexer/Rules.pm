@@ -906,18 +906,50 @@ our %element_rules = (
             1
         ],
 
-        children_must_be => [                                                   # TypeRequirement[2]
+        child_0_must_be => [                                                   # TypeRequirement[2] TODO
             '@Expression',
             'Type requirement (can/isa/satisfies/transform) must contain '.
             'an expression of some sort',
             2
         ],
 
-        num_children => [                                                       # TypeRequirement[3]
+        child_1_must_be => [                                                    # TypeRequirement[3] TODO
+            'Bareword List',
+            'Return type in method requirement must be a bareword or a '.
+            'list in the form (name: Type, other: OtherType)',
+            3
+        ],
+
+        child_1_must_satisfy => [                                               # TypeRequirement[4]
+            sub {
+                my ($child, $type) = @_;
+
+                # first of all, if this child even exists, it has to have been
+                # marked as having a return type (which means -> was found).
+                return if !$type->{has_return};
+
+                # next, the list can only contain bareword return pair names
+                # and their bareword types.
+                return interface_method_list(@_) if $child->type eq 'List';
+
+                return 1;
+            },
+            'Type requirement can only capture one element unless it is a '.
+            'method requirement with a return type or list of return types',
+            4
+        ],
+
+        min_children => [                                                       # TypeRequirement[5] TODO
             1,
             undef,
-            3
-        ]
+            5
+        ],
+
+        max_children => [                                                       # TypeRequirement[6] TODO
+            2,
+            undef,
+            6
+        ],
 
         # Rule implemented in F/TypeRequirement.pm:
         #   If the type requirement is a 'can' statement,
@@ -974,25 +1006,7 @@ our %element_rules = (
 
         # the list can only contain pairs of argName:BarewordType
         children_must_satisfy => [                                              # InterfaceMethod[2]
-            sub {
-                my $list = shift;
-
-                # it has to be a "hash list"
-                # meaning named args only. not array. not mixture.
-                return 1 if $list->type ne 'List';
-                return if !$list->{hash} && $list->children;
-
-                # each item has to be a NamedPair.
-                for my $item ($list->children) {
-                    my $el = $item->first_child;
-                    return if $el->type ne 'NamedPair';
-
-                    # the value of the pair has to be a bareword type.
-                    return if $el->first_child->type ne 'Bareword';
-                }
-
-                return 1;
-            },
+            \&interface_method_list,
             "'can' method requirement arguments must be named with ".
             "bareword types, like: can .methodName(argName: Type, ...)",
             2
@@ -1363,5 +1377,25 @@ our %element_rules = (
     }
 
 );
+
+sub interface_method_list {
+    my $list = shift;
+
+    # it has to be a "hash list"
+    # meaning named args only. not array. not mixture.
+    return 1 if $list->type ne 'List';
+    return if !$list->{hash} && $list->children;
+
+    # each item has to be a NamedPair.
+    for my $item ($list->children) {
+        my $el = $item->first_child;
+        return if $el->type ne 'NamedPair';
+
+        # the value of the pair has to be a bareword type.
+        return if $el->first_child->type ne 'Bareword';
+    }
+
+    return 1;
+}
 
 1

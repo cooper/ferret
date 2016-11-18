@@ -19,6 +19,7 @@ sub list_type {
     }
     return 'property index'         if $list->is_property;
     return 'named argument list'    if $list->is_call && $list->is_hash;
+    return 'named return list'      if $list->is_rettype && $list->is_hash;
     return 'mixed argument list'    if $list->is_call && $list->is_mixed;
     return 'argument list'          if $list->is_call;
     return 'index list'             if $list->is_index;
@@ -44,6 +45,11 @@ sub is_property   { shift->{property}   }
 sub is_callidx { shift->{is_callidx} }
 sub is_call    { $_[0]->is_callidx && !$_[0]->{is_index} }
 sub is_index   { $_[0]->is_callidx &&  $_[0]->{is_index} }
+sub is_rettype {
+    my $list = shift;
+    my $p = $list->parent or return;
+    return $p->type eq 'TypeRequirement' && $p->{has_return};
+}
 
 sub new_item {
     my $list = shift;

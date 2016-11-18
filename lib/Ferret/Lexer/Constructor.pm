@@ -1646,6 +1646,27 @@ sub c_KEYWORD_RETURN {
 sub c_OP_RETURN {
     my ($c, $value) = @_;
 
+    # it's possible that this is a return type in an interface requirement.
+    # can .odd -> Bool
+    # can .complex(arg1: Str, arg2: Num) -> (ret1: Bool, ret2: List)
+    my $can = $c->node;
+    if ($can->type eq 'TypeRequirement' && $can->{req_type} eq 'can') {
+
+        # if there are no children, it's like: can ->
+        if (!$can->children || $can->{has_return}) {
+            return $c->expected(
+                'a method or property name',
+                'at left of return operator (->) within type requirement (can)'
+            );
+        }
+
+        # OK, looks good. mark the can as expecting a type.
+        $can->{has_return}++;
+        return;
+    }
+
+    # OK, at this point it has to be an actual return or return pair.
+
     # check the last element.
     my $word = $c->last_el;
     if ($word->type ne 'Bareword') {
