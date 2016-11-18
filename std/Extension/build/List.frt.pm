@@ -1070,8 +1070,9 @@ my $result = do {
             $scope, $class, 'Pairs',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
+                state $anchor = \0 + 0;
                 typedef_check(
-                    $scope, $scope, $ins,
+                    $scope, $scope, $ins, $anchor,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         $$ins->{'length'}->property_u( 'even', $pos->(7.3) )

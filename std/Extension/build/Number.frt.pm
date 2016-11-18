@@ -286,8 +286,9 @@ my $result = do {
             $scope, $class, 'Even',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
+                state $anchor = \0 + 0;
                 typedef_check(
-                    $scope, $scope, $ins,
+                    $scope, $scope, $ins, $anchor,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         $$ins->{'even'}
@@ -301,8 +302,9 @@ my $result = do {
             $scope, $class, 'Odd',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
+                state $anchor = \0 + 0;
                 typedef_check(
-                    $scope, $scope, $ins,
+                    $scope, $scope, $ins, $anchor,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         $$ins->{'odd'}
@@ -317,8 +319,9 @@ my $result = do {
             'Integer',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
+                state $anchor = \0 + 0;
                 typedef_check(
-                    $scope, $scope, $ins,
+                    $scope, $scope, $ins, $anchor,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         do { $ins = $transform->( $$ins->{'floor'}, $ins ) }

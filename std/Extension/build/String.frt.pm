@@ -243,8 +243,9 @@ my $result = do {
             'NonEmpty',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
+                state $anchor = \0 + 0;
                 typedef_check(
-                    $scope, $scope, $ins,
+                    $scope, $scope, $ins, $anchor,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         nequal( $scope, $$ins->{'length'}, num( $f, "0" ) )
@@ -260,8 +261,9 @@ my $result = do {
             'Uppercase',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
+                state $anchor = \0 + 0;
                 typedef_check(
-                    $scope, $scope, $ins,
+                    $scope, $scope, $ins, $anchor,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         do { $ins = $transform->( $$ins->{'uppercase'}, $ins ) }
@@ -277,8 +279,9 @@ my $result = do {
             'Lowercase',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
+                state $anchor = \0 + 0;
                 typedef_check(
-                    $scope, $scope, $ins,
+                    $scope, $scope, $ins, $anchor,
                     conditions => [
                         $ins->fits_type_u( ${ $scope->{special} }->{'class'} ),
                         do { $ins = $transform->( $$ins->{'lowercase'}, $ins ) }
@@ -293,8 +296,9 @@ my $result = do {
             $scope, $class, 'Any',
             sub {
                 my ( $ins, $create_can, $transform ) = @_;
+                state $anchor = \0 + 0;
                 typedef_check(
-                    $scope, $scope, $ins,
+                    $scope, $scope, $ins, $anchor,
                     conditions => [
                         do {
                             $ins = $transform->(

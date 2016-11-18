@@ -152,8 +152,9 @@ my $result = do {
         $scope, $context, 'Gender',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
             typedef_check(
-                $scope, $scope, $ins,
+                $scope, $scope, $ins, $anchor,
                 conditions => undef,
                 equal_to =>
                   [ get_symbol( $f, 'male' ), get_symbol( $f, 'female' ) ]

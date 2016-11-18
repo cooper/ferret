@@ -488,8 +488,9 @@ my $result = do {
         'Iterator',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
             typedef_check(
-                $scope, $scope, $ins,
+                $scope, $scope, $ins, $anchor,
                 conditions => [
                     $create_can->( 'more',        undef, $ins )->(),
                     $create_can->( 'nextElement', undef, $ins )->(),
@@ -505,8 +506,9 @@ my $result = do {
         'MultiIterator',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
             typedef_check(
-                $scope, $scope, $ins,
+                $scope, $scope, $ins, $anchor,
                 conditions => [
                     $ins->fits_type_u( $$scope->{'Iterator'} ),
                     $create_can->( 'nextElements', undef, $ins )->()
@@ -521,8 +523,9 @@ my $result = do {
         'Iterable',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
             typedef_check(
-                $scope, $scope, $ins,
+                $scope, $scope, $ins, $anchor,
                 conditions => [ $create_can->( 'iterator', undef, $ins )->() ],
                 equal_to   => undef
             ) ? $ins : undef;

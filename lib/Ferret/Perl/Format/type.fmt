@@ -1,6 +1,7 @@
 typedef($scope, <<owner>>, '<<name>>', sub {
     my ($ins, $create_can, $transform) = @_;
-    typedef_check($scope, $scope, $ins,
+    state $anchor = \0 + 0;
+    typedef_check($scope, $scope, $ins, $anchor,
         conditions => <<conditions>>,
         equal_to => <<equal_to>>
     ) ? $ins : undef;

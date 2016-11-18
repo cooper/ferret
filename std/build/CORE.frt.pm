@@ -127,8 +127,9 @@ my $result = do {
         $scope, $context, 'Any',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
             typedef_check(
-                $scope, $scope, $ins,
+                $scope, $scope, $ins, $anchor,
                 conditions => undef,
                 equal_to   => undef
             ) ? $ins : undef;
@@ -141,8 +142,9 @@ my $result = do {
         $scope, $context, 'Code',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
             typedef_check(
-                $scope, $scope, $ins,
+                $scope, $scope, $ins, $anchor,
                 conditions => [ $$ins->{'name'}, $$ins->{'signature'} ],
                 equal_to   => undef
             ) ? $ins : undef;
@@ -153,8 +155,9 @@ my $result = do {
         $scope, $context, 'Char',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
             typedef_check(
-                $scope, $scope, $ins,
+                $scope, $scope, $ins, $anchor,
                 conditions => [
                     $ins->fits_type_u( $$scope->{'Str'} ),
                     equal( $scope, $$ins->{'length'}, num( $f, "1" ) )
@@ -169,8 +172,9 @@ my $result = do {
         'Hashable',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
             typedef_check(
-                $scope, $scope, $ins,
+                $scope, $scope, $ins, $anchor,
                 conditions => [
                     $create_can->( 'hashValue', undef, $ins )->(),
                     do { $ins = $transform->( $$ins->{'hashValue'}, $ins ) }
@@ -185,8 +189,9 @@ my $result = do {
         'Indexed',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
             typedef_check(
-                $scope, $scope, $ins,
+                $scope, $scope, $ins, $anchor,
                 conditions => [
                     $create_can->( 'getValue', [ index => 'Hashable' ], $ins )
                       ->(),
