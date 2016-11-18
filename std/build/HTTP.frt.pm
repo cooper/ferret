@@ -125,8 +125,10 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins, $anchor,
                 conditions => undef,
-                equal_to =>
-                  [ get_symbol( $f, 'GET' ), get_symbol( $f, 'POST' ) ]
+                equal_to   => [
+                    sub { get_symbol( $f, 'GET' ) },
+                    sub { get_symbol( $f, 'POST' ) }
+                ]
             ) ? $ins : undef;
         },
         undef

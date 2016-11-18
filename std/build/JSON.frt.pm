@@ -916,9 +916,9 @@ my $result = do {
                     $scope, $scope, $ins, $anchor,
                     conditions => undef,
                     equal_to   => [
-                        get_symbol( $f, 'ascii' ),
-                        get_symbol( $f, 'latin1' ),
-                        get_symbol( $f, 'utf8' )
+                        sub { get_symbol( $f, 'ascii' ) },
+                        sub { get_symbol( $f, 'latin1' ) },
+                        sub { get_symbol( $f, 'utf8' ) }
                     ]
                 ) ? $ins : undef;
             },

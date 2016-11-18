@@ -156,8 +156,10 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins, $anchor,
                 conditions => undef,
-                equal_to =>
-                  [ get_symbol( $f, 'male' ), get_symbol( $f, 'female' ) ]
+                equal_to   => [
+                    sub { get_symbol( $f, 'male' ) },
+                    sub { get_symbol( $f, 'female' ) }
+                ]
             ) ? $ins : undef;
         },
         undef

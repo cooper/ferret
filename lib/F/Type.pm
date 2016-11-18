@@ -76,7 +76,7 @@ sub perl_fmt {
         }
 
         # it's just an expression.
-        push @equal_possibly, $item->perl_fmt_do;
+        push @equal_possibly, 'sub { '.$item->perl_fmt_do.' }';
 
     }
 

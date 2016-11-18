@@ -540,7 +540,7 @@ sub typedef_check {
     return 1 if !$equal_to;
 
     # something is equal.
-    return 1 if any { pbool($obj->equal_to($_)) } @$equal_to;
+    return 1 if any { pbool($obj->equal_to($_->())) } @$equal_to;
 
     return;
 }
