@@ -46,7 +46,7 @@ my $result = do {
     my $func_0 = function_event_def(
         $f, $context, 'A', undef,
         [],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             return $ret_func->( str( $f, "return value" ) );

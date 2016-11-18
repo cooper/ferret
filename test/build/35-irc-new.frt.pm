@@ -838,7 +838,7 @@ my $result = do {
             },
             { name => 'mini', type => undef, optional => undef, more => undef }
         ],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     117.2 ) or return;
@@ -894,7 +894,7 @@ my $result = do {
                 more     => undef
             }
         ],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 127.2 ) or return;
@@ -1243,7 +1243,7 @@ my $result = do {
                 more     => undef
             }
         ],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     76.2 ) or return;
@@ -1309,7 +1309,7 @@ my $result = do {
                 more     => undef
             }
         ],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     87.2 ) or return;
@@ -1362,7 +1362,7 @@ my $result = do {
                 more     => undef
             }
         ],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg',     97.2 ) or return;

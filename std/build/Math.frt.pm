@@ -79,7 +79,7 @@ my $result = do {
     my $func_0 = function_event_def(
         $f, $context, 'sqrt', undef,
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'num', 6.2 ) or return;
@@ -97,7 +97,7 @@ my $result = do {
             { name => 'root', type => 'Num', optional => undef, more => undef },
             { name => 'num',  type => 'Num', optional => undef, more => undef }
         ],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'root', 11.1 ) or return;

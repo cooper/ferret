@@ -118,9 +118,9 @@ sub perl_fmt {
     my $vp = scalar $func->body->filter_descendants(type => 'PropertyVariable');
     my $need_topic = $vp && $func->anonymous && !$func->arguments;
 
-
     # return types.
     my @returns = map "{ name => '$_', type => '$$func{returns}{$_}{type}' }",
+        grep $func->{returns}{$_}{type} ne '(none)',
         keys %{ $func->{returns} || {} };
 
     my $info = {

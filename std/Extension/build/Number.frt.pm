@@ -150,7 +150,7 @@ my $result = do {
         my $method_0 = method_event_def(
             $f, $scope, 'sqrt',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -167,7 +167,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'cbrt',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'root'}
@@ -180,7 +180,7 @@ my $result = do {
         my $method_2 = method_event_def(
             $f, $scope, 'square',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -198,7 +198,7 @@ my $result = do {
         my $method_3 = method_event_def(
             $f, $scope, 'even',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -220,7 +220,7 @@ my $result = do {
         my $method_4 = method_event_def(
             $f, $scope, 'odd',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -249,7 +249,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'root', 41.2 ) or return;

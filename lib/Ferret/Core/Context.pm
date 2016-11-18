@@ -35,6 +35,7 @@ sub add_global_functions {
             code => $opts{code},
             need => $opts{need},
             want => $opts{want},
+            rtrn => $opts{rtrn},
             pending_add => 1
         );
 

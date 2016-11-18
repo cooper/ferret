@@ -778,7 +778,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'target', 84.2 ) or return;
@@ -823,7 +823,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'name', 94.2 ) or return;
@@ -879,7 +879,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'nick', 102.2 ) or return;
@@ -935,7 +935,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'name', 110.2 ) or return;
@@ -1020,7 +1020,7 @@ my $result = do {
         my $method_10 = method_event_def(
             $f, $scope, 'copy',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -1053,7 +1053,7 @@ my $result = do {
             $f, $scope,
             'description',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(

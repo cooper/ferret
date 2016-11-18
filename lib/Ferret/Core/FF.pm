@@ -405,6 +405,7 @@ sub function_def {
 
     # add arguments.
     $func->add_argument(%$_) foreach @$arg_ref;
+    $func->add_return(%$_)   foreach @$ret_ref;
 
     return $func;
 }
@@ -425,6 +426,7 @@ sub function_event_def {
 
     # add arguments.
     $func->add_argument(%$_) foreach @$arg_ref;
+    $func->add_return(%$_)   foreach @$ret_ref;
 
     return $func;
 }
@@ -443,6 +445,7 @@ sub method_event_def {
 
     # add arguments.
     $func->add_argument(%$_) foreach @$arg_ref;
+    $func->add_return(%$_)   foreach @$ret_ref;
 
     return $func;
 }

@@ -106,7 +106,7 @@ my $result = do {
     my $func_1 = function_def(
         $f, undef, undef,
         [],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if ( bool( _not( $$scope->{'asked'} ) ) ) {

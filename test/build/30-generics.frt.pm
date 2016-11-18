@@ -154,7 +154,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'item', 8.2 ) or return;
@@ -169,7 +169,7 @@ my $result = do {
         my $method_2 = method_event_def(
             $f, $scope, 'pop',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -184,7 +184,7 @@ my $result = do {
             $f, $scope,
             'description',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(

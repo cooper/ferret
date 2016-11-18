@@ -594,7 +594,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'json', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'data', 96.2 ) or return;
@@ -642,7 +642,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'data', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'json', 105.2 ) or return;
@@ -691,7 +691,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'added', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'fragment', 138.2 ) or return;
@@ -736,10 +736,7 @@ my $result = do {
             $f, $scope,
             'decoderDone',
             [],
-            [
-                { name => 'data',  type => '(none)' },
-                { name => 'found', type => '(none)' }
-            ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 try_catch(
@@ -828,7 +825,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'data', 180.2 ) or return;
@@ -851,7 +848,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'json', 187.2 ) or return;

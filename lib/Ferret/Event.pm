@@ -298,15 +298,26 @@ sub signature_string {
     return $default->signature_string;
 }
 
+# returns the default function's detailed signature.
+sub detailed_signature_string {
+    my $event = shift;
+    my $default = $event->default_func or return '';
+    return $default->detailed_signature_string;
+}
+
 # fetch the global ferret prototype from which all events inherit.
 sub _global_event_prototype {
     my $f = shift;
     return $f->{event_proto} ||= do {
         my $proto = Ferret::Prototype->new($f);
-        $proto->set_property(signature => [ sub {
+        $proto->set_property(signature => sub {
             my ($event) = @_;
             Ferret::String->new($f, str_value => $event->signature_string)
-        } ]);
+        });
+        $proto->set_property(detailedSignature => sub {
+            my ($event) = @_;
+            Ferret::String->new($f, str_value => $event->detailed_signature_string)
+        });
         $proto;
     };
 }
@@ -318,7 +329,7 @@ sub description {
     my $event = shift;
     my $type = 'Event';
     $type  .= " '$$event{name}'" if length $event->{name};
-    my $sig = $event->signature_string;
+    my $sig = $event->detailed_signature_string;
     $type  .= " { $sig }" if length $sig;
     return $type;
 }

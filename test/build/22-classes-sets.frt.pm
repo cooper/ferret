@@ -209,7 +209,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'moo',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'moos'} ) ) {
@@ -260,7 +260,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'bark',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'barks'} ) ) {
@@ -305,7 +305,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'meow',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( str( $f, "meow" ) );
@@ -330,7 +330,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'cat1', 39.1 ) or return;

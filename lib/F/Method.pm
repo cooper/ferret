@@ -104,6 +104,7 @@ sub perl_fmt {
 
     # return types.
     my @returns = map "{ name => '$_', type => '$$method{returns}{$_}{type}' }",
+        grep $method->{returns}{$_}{type} ne '(none)',
         keys %{ $method->{returns} || {} };
 
     my $class = $method->class;

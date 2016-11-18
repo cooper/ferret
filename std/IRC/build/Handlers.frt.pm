@@ -321,7 +321,7 @@ my $result = do {
         'endOfMOTD',
         undef,
         [],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if (
@@ -372,7 +372,7 @@ my $result = do {
         'nickInUse',
         undef,
         [],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if ( bool( $$this->{'registered'} ) ) {

@@ -196,7 +196,7 @@ my $result = do {
                 more     => undef
             }
         ],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'list', 29.2 ) or return;
@@ -358,7 +358,7 @@ my $result = do {
             $f, $scope,
             'description',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(

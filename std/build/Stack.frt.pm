@@ -120,7 +120,7 @@ my $result = do {
         my $method_2 = method_event_def(
             $f, $scope, 'pop',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -135,7 +135,7 @@ my $result = do {
             $f, $scope,
             'description',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(

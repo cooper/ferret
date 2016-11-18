@@ -47,6 +47,7 @@ sub new {
     my $func = $class->SUPER::new($f,
         priority   => 0,
         signatures => [],
+        returns    => [],
         %opts
     );
     $func->{id} = 'F'.($func + 0);
@@ -76,6 +77,13 @@ sub new {
             %$_,
             optional => 1
         ) foreach _parse_method_args($want);
+    }
+
+    # add returns from string.
+    if (my $rtrn = delete $func->{rtrn}) {
+        $func->add_argument(
+            %$_
+        ) foreach _parse_method_args($rtrn);
     }
 
     $func->set_property(name => [ sub {
@@ -230,6 +238,23 @@ sub add_argument {
 
     $func->{signature}{ $opts{name} } = \%opts;
     push @{ $func->{signatures} }, \%opts;
+}
+
+# add an argument to the return signature.
+sub add_return {
+    my ($func, %opts) = @_;
+
+    # possible options:
+    #
+    #   name        the name of the argument (required)
+    #   type        the type, which should be a Perl string
+    #
+    foreach (qw(name type)) {
+        delete $opts{$_} if !length $opts{$_};
+    }
+
+    $func->{return}{ $opts{name} } = \%opts;
+    push @{ $func->{returns} }, \%opts;
 }
 
 # convert a list of arguments into a hash using the signature.
@@ -488,7 +513,19 @@ sub _handle_property {
 
 sub signature_string {
     my $func = shift;
-    return Ferret::Shared::Utils::signature_to_string($func->{signatures});
+    return $func->{sig_str} //=
+    Ferret::Shared::Utils::signature_to_string($func->{signatures});
+}
+
+sub detailed_signature_string {
+    my $func = shift;
+    return $func->{detailed_sig_str} if defined $func->{detailed_sig_str};
+    my $sig = $func->signature_string || '';
+    my $ret_sig = Ferret::Shared::Utils::signature_to_string($func->{returns});
+    $ret_sig =~ s/^\$result:(\w+)$/$1/;
+    $sig .= ' ' if length $sig && length $ret_sig;
+    $sig .= '-> '.$ret_sig if length $ret_sig;
+    return $func->{detailed_sig_str} = $sig;
 }
 
 # fetch the global ferret prototype from which all functions inherit.
@@ -496,17 +533,21 @@ sub _global_function_prototype {
     my $f = shift;
     return $f->{function_proto} ||= do {
         my $proto = Ferret::Prototype->new($f);
-        $proto->set_property(signature => [ sub {
+        $proto->set_property(signature => sub {
             my ($func) = @_;
             Ferret::String->new($f, str_value => $func->signature_string)
-        } ]);
+        });
+        $proto->set_property(detailedSignature => sub {
+            my ($func) = @_;
+            Ferret::String->new($f, str_value => $func->detailed_signature_string)
+        });
         $proto;
     };
 }
 
 sub description {
     my $func = shift;
-    my $sig  = $func->signature_string;
+    my $sig  = $func->detailed_signature_string;
     my $type = $func->{is_typedef} ? 'Interface' : 'Function';
     $type   .= " '$$func{name}'" if length $func->{name};
     $type   .= " { $sig }"       if length $sig;

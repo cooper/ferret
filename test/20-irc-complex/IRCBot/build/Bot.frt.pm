@@ -624,7 +624,7 @@ my $result = do {
         '_joinChannels',
         undef,
         [],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if ( bool( $$this->{'_joinedChannels'} ) ) {
@@ -698,7 +698,7 @@ my $result = do {
             { name => 'line', type => undef, optional => undef, more => undef },
             { name => 's',    type => undef, optional => undef, more => undef }
         ],
-        [ { name => 'msg', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'line', 114.2 ) or return;
@@ -985,10 +985,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [
-                { name => 'overwrote', type => '(none)' },
-                { name => 'added',     type => '(none)' }
-            ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'command',  43.1 ) or return;

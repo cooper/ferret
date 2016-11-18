@@ -141,7 +141,7 @@ my $result = do {
         my $method_0 = method_event_def(
             $f, $scope, 'empty',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -155,7 +155,7 @@ my $result = do {
             $f, $scope,
             'iterator',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -209,7 +209,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'keys',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'orderedKeys'} );
@@ -235,7 +235,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'overwritten', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'key',   25.1 ) or return;
@@ -268,7 +268,7 @@ my $result = do {
             $f, $scope,
             'iterator',
             [],
-            [ { name => 'result', type => '(none)' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(

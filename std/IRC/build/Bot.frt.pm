@@ -173,7 +173,7 @@ my $result = do {
         $f, undef,
         'handleCommand',
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [ { name => 'result', type => '(none)' } ],
+        [],
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 18.2 ) or return;

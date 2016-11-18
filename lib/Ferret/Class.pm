@@ -180,6 +180,7 @@ sub _bind_function {
         code        => $opts{code}    || $dummy_cb_func,
         need        => $opts{need},
         want        => $opts{want},
+        rtrn        => $opts{rtrn},
         mimic       => $opts{mimic},
         is_method   => $is_method,
         pending_add => 1
@@ -322,6 +323,8 @@ sub signature_string {
     my $init = $class->property('initializer__');
     return $init ? $init->signature_string : '';
 }
+
+sub detailed_signature_string { &signature_string }
 
 sub description {
     my $class = shift;
