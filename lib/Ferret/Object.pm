@@ -25,6 +25,7 @@ use overload
 # create a new object.
 sub new {
     my ($class, $f, %opts) = @_;
+    $f ||= $Ferret::ferret;
     my $obj = bless {
         isa => [],
         %opts,
@@ -386,6 +387,7 @@ sub _check_prop_alteration {
 sub add_parent {
     my ($obj, $new_parent) = @_;
     return unless $new_parent;
+    $obj->{isa_changes}++;
     # TODO: if $new_parent is a Ferret array, convert to Perl array ref.
     unshift @{ $obj->{isa} }, $new_parent;
 }
@@ -393,6 +395,7 @@ sub add_parent {
 # revoke an object of parenthood.
 sub remove_parent {
     my ($obj, $old_parent) = @_;
+    $obj->{isa_changes}++;
     @{ $obj->{isa} } = grep { $_ != $old_parent } @{ $obj->{isa} };
 }
 
