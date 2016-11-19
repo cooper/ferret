@@ -1,11 +1,11 @@
 class Hash <K?, V?>
 
 prop empty {
-    return @length == 0 : Bool
+    return @length == 0
 }
 
 prop iterator {
-    return HashIterator(*self) : Iterator
+    return HashIterator(*self): Iterator
 }
 
 class OrderedHash <K?, V?>
@@ -18,7 +18,7 @@ init {
 }
 
 prop keys {
-    return @orderedKeys : List
+    return @orderedKeys
 }
 
 method pushPair {
@@ -26,7 +26,7 @@ method pushPair {
 
     # remove the existing location
     if @orderedKeys.remove($key).removed:
-        overwritten -> true : Bool
+        overwritten -> true
 
     *self[$key] = $value
     @orderedKeys.push($key)
@@ -35,5 +35,5 @@ method pushPair {
 prop iterator {
     $it = HashIterator(*self)
     $it.keysLeft = @orderedKeys.copy()
-    return $it : Iterator
+    return $it: Iterator
 }

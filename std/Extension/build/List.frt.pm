@@ -18,7 +18,6 @@
 #                              Instance variable '@length'
 #                              Equality operator (==)
 #                              Number '0'
-#                          Bareword 'Bool'
 #          Method 'map'
 #              Body ('method' scope)
 #                  Instruction
@@ -139,7 +138,6 @@
 #                  Instruction
 #                      Return pair 'removed'
 #                          Boolean false
-#                          Bareword 'Bool'
 #                  For (pairs)
 #                      Expression ('for' parameter)
 #                          Set [2 items]
@@ -165,7 +163,6 @@
 #                          Instruction
 #                              Return pair 'removed'
 #                                  Boolean true
-#                                  Bareword 'Bool'
 #                          Instruction
 #                              Last
 #          Method 'removeAll'
@@ -203,12 +200,10 @@
 #                  Instruction
 #                      Return pair 'found'
 #                          Lexical variable '$found'
-#                          Bareword 'List'
 #                  Instruction
 #                      Return pair 'removed'
 #                          Property 'length'
 #                              Lexical variable '$found'
-#                          Bareword 'Num'
 #          Method 'first'
 #              Body ('method' scope)
 #                  Instruction
@@ -260,11 +255,9 @@
 #                                  Instruction
 #                                      Return
 #                                          Boolean true
-#                                          Bareword 'Bool'
 #                  Instruction
 #                      Return
 #                          Boolean false
-#                          Bareword 'Bool'
 #          Method 'all'
 #              Body ('method' scope)
 #                  Instruction
@@ -290,11 +283,9 @@
 #                                  Instruction
 #                                      Return
 #                                          Boolean false
-#                                          Bareword 'Bool'
 #                  Instruction
 #                      Return
 #                          Boolean true
-#                          Bareword 'Bool'
 #          Computed property 'sum'
 #              Body ('method' scope)
 #                  If
@@ -367,7 +358,7 @@
 #                                  Item 0
 #                                      Special variable '*self'
 #                          Bareword 'Iterator'
-#      Include (Bool, Code, Iterator, List, ListIterator, Num, T)
+#      Include (Code, Iterator, ListIterator, T)
 package FF;
 
 use warnings;
@@ -418,7 +409,7 @@ my $result = do {
         my $method_0 = method_event_def(
             $f, $scope, 'empty',
             [],
-            [ { name => 'result', type => 'Bool' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -665,7 +656,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'removed', type => 'Bool' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'what', 54.2 ) or return;
@@ -721,10 +712,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [
-                { name => 'removed', type => 'Num' },
-                { name => 'found',   type => 'List' }
-            ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'what', 68.2 ) or return;
@@ -840,7 +828,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => 'Bool' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 90.2 ) or return;
@@ -886,7 +874,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => 'Bool' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'code', 99.2 ) or return;
@@ -1102,7 +1090,7 @@ my $result = do {
             undef
         );
     }
-    load_namespaces( $context, qw(Bool Code Iterator List ListIterator Num T) );
+    load_namespaces( $context, qw(Code Iterator ListIterator T) );
 };
 
 after_content();

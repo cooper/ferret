@@ -76,7 +76,6 @@
 #                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$wordI'
-#                          Bareword 'Str'
 #          Method 'fromWord'
 #              Body ('method' scope)
 #                  Instruction
@@ -101,7 +100,6 @@
 #                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$wordN'
-#                          Bareword 'Str'
 #          Computed property 'empty' (lazy)
 #              Body ('method' scope)
 #                  Instruction
@@ -110,8 +108,7 @@
 #                              Instance variable '@length'
 #                              Equality operator (==)
 #                              Number '0'
-#                          Bareword 'Bool'
-#      Include (Bool, LC, Lowercase, NE, NonEmpty, Num, Str, UC, Uppercase)
+#      Include (LC, Lowercase, NE, NonEmpty, Num, Str, UC, Uppercase)
 package FF;
 
 use warnings;
@@ -156,7 +153,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => 'Str' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'wordI', 29.2 ) or return;
@@ -194,7 +191,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => 'Str' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'wordN', 34.2 ) or return;
@@ -224,7 +221,7 @@ my $result = do {
         my $method_2 = method_event_def(
             $f, $scope, 'empty',
             [],
-            [ { name => 'result', type => 'Bool' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -341,7 +338,7 @@ my $result = do {
         );
     }
     load_namespaces( $context,
-        qw(Bool LC Lowercase NE NonEmpty Num Str UC Uppercase) );
+        qw(LC Lowercase NE NonEmpty Num Str UC Uppercase) );
 };
 
 after_content();

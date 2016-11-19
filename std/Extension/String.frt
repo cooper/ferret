@@ -27,14 +27,14 @@ type Any {
 
 method word {
     need $wordI: Num
-    return @split(" ", limit: $wordI + 2)[$wordI]: Str
+    return @split(" ", limit: $wordI + 2)[$wordI]
 }
 
 method fromWord {
     need $wordN: Num
-    return @split(" ", limit: $wordN + 1)[$wordN]: Str
+    return @split(" ", limit: $wordN + 1)[$wordN]
 }
 
 prop? empty {
-    return @length == 0: Bool
+    return @length == 0
 }

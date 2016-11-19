@@ -40,7 +40,6 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Special variable '*self'
-#                          Bareword 'Num'
 #          Computed property 'cbrt'
 #              Body ('method' scope)
 #                  Instruction
@@ -50,7 +49,6 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Number '3'
-#                          Bareword 'Num'
 #          Computed property 'square'
 #              Body ('method' scope)
 #                  Instruction
@@ -59,7 +57,6 @@
 #                              Special variable '*self'
 #                              Exponent operator (^)
 #                              Number '2'
-#                          Bareword 'Num'
 #          Computed property 'even'
 #              Body ('method' scope)
 #                  Instruction
@@ -70,7 +67,6 @@
 #                              Number '2'
 #                              Equality operator (==)
 #                              Number '0'
-#                          Bareword 'Bool'
 #          Computed property 'odd'
 #              Body ('method' scope)
 #                  Instruction
@@ -81,7 +77,6 @@
 #                              Number '2'
 #                              Negated equality operator (!=)
 #                              Number '0'
-#                          Bareword 'Bool'
 #          Method 'root'
 #              Body ('method' scope)
 #                  Instruction
@@ -99,7 +94,6 @@
 #                                      Lexical variable '$root'
 #                                  Item 1
 #                                      Special variable '*self'
-#                          Bareword 'Num'
 #          Instruction
 #              Shared variable declaration
 #                  Assignment
@@ -118,7 +112,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  String 'nan'
-#      Include (Bool, Int, Integer, Math, Num)
+#      Include (Int, Integer, Math, Num)
 package FF;
 
 use warnings;
@@ -156,13 +150,13 @@ my $result = do {
         my $method_0 = method_event_def(
             $f, $scope, 'sqrt',
             [],
-            [ { name => 'result', type => 'Num' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'sqrt', $pos->(21.15) )->(
+                    $$scope->{'Math'}->property_u( 'sqrt', $pos->(21.3) )->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                $pos->(21.2)
+                        undef,                                $pos->(21.4)
                     )
                 );
                 return $ret;
@@ -173,7 +167,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'cbrt',
             [],
-            [ { name => 'result', type => 'Num' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'root'}
@@ -186,7 +180,7 @@ my $result = do {
         my $method_2 = method_event_def(
             $f, $scope, 'square',
             [],
-            [ { name => 'result', type => 'Num' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -204,7 +198,7 @@ my $result = do {
         my $method_3 = method_event_def(
             $f, $scope, 'even',
             [],
-            [ { name => 'result', type => 'Bool' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -226,7 +220,7 @@ my $result = do {
         my $method_4 = method_event_def(
             $f, $scope, 'odd',
             [],
-            [ { name => 'result', type => 'Bool' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -255,7 +249,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'result', type => 'Num' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'root', 41.2 ) or return;
@@ -368,7 +362,7 @@ my $result = do {
             undef, $pos->(46.3)
         );
     }
-    load_namespaces( $context, qw(Bool Int Integer Math Num) );
+    load_namespaces( $context, qw(Int Integer Math Num) );
 };
 
 after_content();

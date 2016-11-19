@@ -9,7 +9,6 @@
 #                              Instance variable '@length'
 #                              Equality operator (==)
 #                              Number '0'
-#                          Bareword 'Bool'
 #          Computed property 'iterator'
 #              Body ('method' scope)
 #                  Instruction
@@ -44,7 +43,6 @@
 #                  Instruction
 #                      Return
 #                          Instance variable '@orderedKeys'
-#                          Bareword 'List'
 #          Method 'pushPair'
 #              Body ('method' scope)
 #                  Instruction
@@ -70,7 +68,6 @@
 #                          Instruction
 #                              Return pair 'overwritten'
 #                                  Boolean true
-#                                  Bareword 'Bool'
 #                  Instruction
 #                      Assignment
 #                          Index
@@ -108,7 +105,7 @@
 #                      Return
 #                          Lexical variable '$it'
 #                          Bareword 'Iterator'
-#      Include (Bool, Hash, HashIterator, Iterator, K, List, V)
+#      Include (Hash, HashIterator, Iterator, K, V)
 package FF;
 
 use warnings;
@@ -146,7 +143,7 @@ my $result = do {
         my $method_0 = method_event_def(
             $f, $scope, 'empty',
             [],
-            [ { name => 'result', type => 'Bool' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -214,7 +211,7 @@ my $result = do {
         my $method_1 = method_event_def(
             $f, $scope, 'keys',
             [],
-            [ { name => 'result', type => 'List' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'orderedKeys'} );
@@ -240,7 +237,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [ { name => 'overwritten', type => 'Bool' } ],
+            [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'key',   25.1 ) or return;
@@ -312,7 +309,7 @@ my $result = do {
             $proto, $class, $ins, 1, undef
         );
     }
-    load_namespaces( $context, qw(Bool Hash HashIterator Iterator K List V) );
+    load_namespaces( $context, qw(Hash HashIterator Iterator K V) );
 };
 
 after_content();
