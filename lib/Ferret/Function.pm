@@ -420,6 +420,7 @@ sub _obj_type_works {
 sub _type_type_works {
     my ($func, $type_obj, $types, $generics_maybe) = @_;
     foreach my $type ($func->_get_types($types, $generics_maybe)) {
+        return 1 if $type_obj->{name} eq 'Any'; # HACK
         return 1 if $type_obj == $type;
     }
     return;
@@ -518,6 +519,8 @@ sub inside_scope {
     $owner->set_property($name => $is_prop ? sub {
         _handle_property($func, $p_set ? $name : undef, @_);
     } : $func) if defined $name;
+    $owner->set_underlying_property_code($name => $func)
+        if defined $name && $is_prop;
 
     return $func;
 }

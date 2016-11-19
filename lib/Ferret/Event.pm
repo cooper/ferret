@@ -283,6 +283,8 @@ sub inside_scope {
     $owner->set_property($name => $is_prop ? sub {
         Ferret::Function::_handle_property($event, $p_set ? $name : undef, @_);
     } : $event) if defined $name;
+    $owner->set_underlying_property_code($name => $event)
+        if defined $name && $is_prop;
 
     return $event;
 }
