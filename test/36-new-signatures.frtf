@@ -1,0 +1,40 @@
+class List <T?>
+
+#> Represents a list with an event number of elements, treated as pairs.
+#| This is similar to a hash with ordered keys.
+
+#> True if the list is empty.
+prop .empty -> Bool {
+    return @length == 0
+}
+
+#> Returns a copy of the list by mapping each element to another value based on
+#| a transformation code.
+func .map($code: Code) -> List {
+    return gather for $el in *self {
+        take $code($el)
+    }
+}
+
+#> Removes all elements equal to a specified value.
+func .removeAll($what) -> ($found: List, $removed: Num) {
+    $found -> gather for ($i, $el) in *self {
+        if $what != $el:
+            next
+        # FIXME: delete *self[$i]
+        take $el
+    }
+    $removed -> $found.length #< number of removed elements
+}
+
+#> Returns true if at least one element satisfies a code.
+func .any($code: Code) -> Bool {
+    for $el in *self {
+        if $code($el): return true
+    }
+    return false
+}
+
+prop .iterator -> Iterator {
+    return ListIterator(*self)
+}

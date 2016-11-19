@@ -29,11 +29,11 @@ prop square {
     return *self ^ 2: Num
 }
 
-prop? even {
+prop even {
     return *self % 2 == 0: Bool
 }
 
-prop? odd {
+prop odd {
     return *self % 2 != 0: Bool
 }
 

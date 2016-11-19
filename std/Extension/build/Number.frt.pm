@@ -60,7 +60,7 @@
 #                              Exponent operator (^)
 #                              Number '2'
 #                          Bareword 'Num'
-#          Computed property 'even' (lazy)
+#          Computed property 'even'
 #              Body ('method' scope)
 #                  Instruction
 #                      Return
@@ -71,7 +71,7 @@
 #                              Equality operator (==)
 #                              Number '0'
 #                          Bareword 'Bool'
-#          Computed property 'odd' (lazy)
+#          Computed property 'odd'
 #              Body ('method' scope)
 #                  Instruction
 #                      Return
@@ -282,8 +282,14 @@ my $result = do {
             square => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_3->inside_scope( even => $scope, $proto, $class, $ins, 1, 1 );
-        $method_4->inside_scope( odd  => $scope, $proto, $class, $ins, 1, 1 );
+        $method_3->inside_scope(
+            even => $scope,
+            $proto, $class, $ins, 1, undef
+        );
+        $method_4->inside_scope(
+            odd => $scope,
+            $proto, $class, $ins, 1, undef
+        );
         $method_5->inside_scope(
             root => $scope,
             $proto, $class, $ins, undef, undef
