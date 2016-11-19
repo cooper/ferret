@@ -484,6 +484,23 @@ sub typedef {
                     # don't check just names, check actual type objs
                 }
 
+                # if there is NOT an arg list, make sure that this is NOT
+                # an object but is in fact an unblessed reference
+                # (indicating a computed property)
+                else {
+                    return $NO if blessed $obj_or_ref;
+                }
+
+                # if there are return types, check that they can be satisfied.
+                if ($rets) {
+
+                    # FIXME: consider what to do when this is a computed
+                    # property.
+
+                    # TODO: check each return type by splice 0, 2
+                    # don't check just names, check actual type objs
+
+                }
                 return Ferret::true;
             });
 

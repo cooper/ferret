@@ -77,7 +77,8 @@ my @methods = (
         pset => 1
     },
     hashValue => {
-        code => \&_hash_value
+        code => \&_hash_value,
+        prop => 1
     }
 );
 

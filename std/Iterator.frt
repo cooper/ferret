@@ -11,7 +11,7 @@ type MultiIterator {
 
 #> Matches objects which can be iterated over.
 type Iterable {
-    can .iterator # -> Iterator
+    can .iterator -> Iterator
 }
 
 #> An iterator implementation for lists.

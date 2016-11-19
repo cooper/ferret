@@ -12,7 +12,8 @@ use Ferret::Core::Conversion qw(pstring fstring fnumber);
 
 my @methods = (
     hashValue => {
-        code => \&_hash_value
+        code => \&_hash_value,
+        prop => 1
     },
     name => {
         code => \&_name,

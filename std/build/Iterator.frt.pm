@@ -24,6 +24,7 @@
 #              Instruction
 #                  Can
 #                      Property variable '.iterator'
+#                      Bareword 'Iterator'
 #      Class 'ListIterator'
 #          Class method 'initializer__'
 #              Body ('method' scope)
@@ -531,7 +532,11 @@ my $result = do {
             typedef_check(
                 $scope, $scope, $ins, $anchor,
                 conditions => [
-                    sub { $create_can->( 'iterator', undef, undef, $ins )->() }
+                    sub {
+                        $create_can->(
+                            'iterator', undef, [ result => 'Iterator' ], $ins
+                        )->();
+                    }
                 ],
                 equal_to => undef
             ) ? $ins : undef;

@@ -73,7 +73,8 @@ my @methods = (
         code => \&_match
     },
     hashValue => {
-        code => \&_hash_value
+        code => \&_hash_value,
+        prop => 1
     },
     getValue => {
         need => '$index:Num',
