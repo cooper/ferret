@@ -90,6 +90,8 @@ sub set_property {
         return;
     }
 
+    $obj->reset_property($prop_name);
+
     # store the value.
     $obj->{properties}{$prop_name} = $value;
     delete $obj->{properties}{$prop_name} if !defined $value;
@@ -140,6 +142,7 @@ sub set_property_eval {
 sub delete_property {
     my ($obj, $prop_name, $_pos) = @_;
     $obj->_check_prop_alteration($prop_name, [caller]);
+    $obj->reset_property($prop_name);
     return defined delete $obj->{properties}{$prop_name};
 }
 
@@ -164,6 +167,13 @@ sub delete_property_ow_eval {
     my $prop_name = $prop_name_exp->hash_string;
     $obj->_check_prop_alteration($prop_name, [caller]);
     return $obj->delete_property_ow($prop_name, @_[2..$#_]);
+}
+
+sub reset_property {
+    my ($obj, $prop_name) = @_;
+    delete $obj->{actual_props}{$prop_name};
+    delete $obj->{actual_inherited}{$prop_name};
+    delete $obj->{underlying_property_code}{$prop_name};
 }
 
 # fetches a property.
@@ -297,6 +307,35 @@ sub simple_property {
 sub simple_property_u {
     my ($obj, $prop_name) = (shift, shift);
     return _U($obj->simple_property($prop_name, @_), $prop_name);
+}
+
+# set underlying property code. used for computed properties.
+# deleted on overwrite and deletion.
+sub set_underlying_property_code {
+    my ($obj, $prop_name, $func_or_event) = @_;
+    weaken($obj->{underlying_property_code}{$prop_name} = $func_or_event);
+}
+
+# fetch underlying property code.
+sub underlying_property_code {
+    my ($obj, $prop_name) = @_;
+    my $owner = $obj->has_property($prop_name);
+    return $owner->{underlying_property_code}{$prop_name};
+}
+
+sub property_uncomputed {
+    my ($obj, $prop_name) = @_;
+    my ($obj_or_ref) = $obj->_property($prop_name, undef, undef, 1);
+    return $obj_or_ref if $obj_or_ref && blessed $obj_or_ref;
+    return $obj->underlying_property_code($prop_name);
+}
+
+sub own_property_uncomputed {
+    my ($obj, $prop_name) = @_;
+    my ($obj_or_ref, $owner) = $obj->_property($prop_name, undef, 1, 1);
+    return undef if !$obj_or_ref || $owner != $obj;
+    return $obj_or_ref if blessed $obj_or_ref;
+    return $obj->underlying_property_code($prop_name);
 }
 
 # fetches a property.
