@@ -472,6 +472,15 @@ sub typedef {
                 my ($obj_or_ref) =
                     $obj->_property($method_name, undef, undef, 1);
 
+                # attempt to find a function from the Code. even if
+                # $obj_or_ref is a reference (computed property), this might
+                # still be a function representing it.
+                my $func_maybe = blessed $obj_or_ref ? $obj_or_ref :
+                    $obj->underlying_property_code($method_name);
+                $func_maybe = $func_maybe->can('default_func') ?
+                    $func_maybe->default_func                  :
+                    $func_maybe                                if $func_maybe;
+
                 # if there are args, check that they can be satisfied.
                 if ($args) {
 
@@ -480,13 +489,10 @@ sub typedef {
                     return $NO if !blessed $obj_or_ref || !$obj_or_ref->is_code;
 
                     # OK now check each argument
-                    # TODO: check each argument by splice 0, 2
-                    # don't check just names, check actual type objs
-                    my $func = $obj_or_ref->can('default_func') ?
-                        $obj_or_ref->default_func : $obj_or_ref;
-
-                    return $NO unless
-                        $func->_types_satisfy_requirements($args, 'signatures');
+                    return $NO if !$func_maybe;
+                    return $NO unless $func_maybe->_types_satisfy_requirements(
+                        $args, 'signatures'
+                    );
                 }
 
                 # if there is NOT an arg list, make sure that this is NOT
@@ -498,15 +504,10 @@ sub typedef {
 
                 # if there are return types, check that they can be satisfied.
                 if ($rets) {
-
-                    # FIXME: consider what to do when this is a computed
-                    # property.
-
-                    # TODO: check each return type by splice 0, 2
-                    # don't check just names, check actual type objs
-                    #return $NO unless
-                    #    $func->_types_satisfy_requirements($rets, 'returns');
-
+                    return $NO if !$func_maybe;
+                    return $NO unless $func_maybe->_types_satisfy_requirements(
+                        $rets, 'returns'
+                    );
                 }
                 return Ferret::true;
             });

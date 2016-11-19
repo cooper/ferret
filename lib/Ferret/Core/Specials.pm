@@ -103,17 +103,13 @@ sub _fitsType {
 sub _get {
     my ($obj, $args) = @_;
     my $prop_name = $args->pstring('property');
-    delete $obj->{actual_inherited}{$prop_name};
-    my $val = $obj->simple_property_u($prop_name);
-    return $obj->{actual_inherited}{$prop_name} || $val;
+    return $obj->property_uncomputed($prop_name);
 }
 
 sub _getOwn {
     my ($obj, $args) = @_;
     my $prop_name = $args->pstring('property');
-    delete $obj->{actual_props}{$prop_name};
-    my $val = $obj->own_property_u($prop_name);
-    return $obj->{actual_props}{$prop_name} || $val;
+    return $obj->own_property_uncomputed($prop_name);
 }
 
 sub _set {
