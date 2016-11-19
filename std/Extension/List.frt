@@ -126,5 +126,5 @@ prop sum0 {
 }
 
 prop iterator {
-    return ListIterator(*self)
+    return ListIterator(*self): Iterator
 }

@@ -357,7 +357,8 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Special variable '*self'
-#      Include (Code, ListIterator, T)
+#                          Bareword 'Iterator'
+#      Include (Code, Iterator, ListIterator, T)
 package FF;
 
 use warnings;
@@ -1002,7 +1003,7 @@ my $result = do {
             $f, $scope,
             'iterator',
             [],
-            [],
+            [ { name => 'result', type => 'Iterator' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -1089,7 +1090,7 @@ my $result = do {
             undef
         );
     }
-    load_namespaces( $context, qw(Code ListIterator T) );
+    load_namespaces( $context, qw(Code Iterator ListIterator T) );
 };
 
 after_content();

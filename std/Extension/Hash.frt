@@ -5,7 +5,7 @@ prop empty {
 }
 
 prop iterator {
-    return HashIterator(*self)
+    return HashIterator(*self): Iterator
 }
 
 class OrderedHash <K?, V?>
@@ -35,5 +35,5 @@ method pushPair {
 prop iterator {
     $it = HashIterator(*self)
     $it.keysLeft = @orderedKeys.copy()
-    return $it
+    return $it: Iterator
 }

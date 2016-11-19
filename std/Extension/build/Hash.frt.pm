@@ -18,6 +18,7 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Special variable '*self'
+#                          Bareword 'Iterator'
 #      Class 'OrderedHash' <K, V>
 #          Class method 'initializer__'
 #              Body ('method' scope)
@@ -103,7 +104,8 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$it'
-#      Include (Hash, HashIterator, K, V)
+#                          Bareword 'Iterator'
+#      Include (Hash, HashIterator, Iterator, K, V)
 package FF;
 
 use warnings;
@@ -155,7 +157,7 @@ my $result = do {
             $f, $scope,
             'iterator',
             [],
-            [],
+            [ { name => 'result', type => 'Iterator' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -268,7 +270,7 @@ my $result = do {
             $f, $scope,
             'iterator',
             [],
-            [],
+            [ { name => 'result', type => 'Iterator' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -307,7 +309,7 @@ my $result = do {
             $proto, $class, $ins, 1, undef
         );
     }
-    load_namespaces( $context, qw(Hash HashIterator K V) );
+    load_namespaces( $context, qw(Hash HashIterator Iterator K V) );
 };
 
 after_content();
