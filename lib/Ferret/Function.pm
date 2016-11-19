@@ -340,6 +340,37 @@ sub _arguments_satisfy_signature {
     return 1;
 }
 
+sub _types_satisfy_requirements {
+    my ($func, $arguments, $key) = @_;
+    $arguments = { @$arguments } if ref $arguments eq 'ARRAY';
+
+    # check each item in the signature.
+    foreach my $sig (@{ $func->{$key} }) {
+        my ($name, $types) = @$sig{ qw(name type) };
+
+        # remove the type from the provided list from the interface.
+        my $type_name = delete $arguments->{$name};
+
+        # find the type object associated with the type in the interface.
+        my ($type_obj) = $func->_get_types($type_name);
+        return if !$type_obj;
+
+        # no type requirement in the function.
+        next if !length $types;
+
+        # check if the types are compatible.
+        next if $func->_type_type_works($type_obj, $types);
+
+        return;
+    }
+
+    # there can't be anything left. that means the signature does not
+    # include one of the arguments in the interface.
+    return if keys %$arguments;
+
+    return 1;
+}
+
 sub _get_types {
     my ($func, $t, $generics_maybe) = @_;
 
@@ -382,6 +413,14 @@ sub _obj_type_works {
     foreach my $type ($func->_get_types($types, $generics_maybe)) {
         my $worked = $obj->fits_type($type);
         return $worked if $worked;
+    }
+    return;
+}
+
+sub _type_type_works {
+    my ($func, $type_obj, $types, $generics_maybe) = @_;
+    foreach my $type ($func->_get_types($types, $generics_maybe)) {
+        return 1 if $type_obj == $type;
     }
     return;
 }

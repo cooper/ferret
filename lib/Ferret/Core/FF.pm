@@ -482,6 +482,11 @@ sub typedef {
                     # OK now check each argument
                     # TODO: check each argument by splice 0, 2
                     # don't check just names, check actual type objs
+                    my $func = $obj_or_ref->can('default_func') ?
+                        $obj_or_ref->default_func : $obj_or_ref;
+
+                    return $NO unless
+                        $func->_types_satisfy_requirements($args, 'signatures');
                 }
 
                 # if there is NOT an arg list, make sure that this is NOT
@@ -499,6 +504,8 @@ sub typedef {
 
                     # TODO: check each return type by splice 0, 2
                     # don't check just names, check actual type objs
+                    #return $NO unless
+                    #    $func->_types_satisfy_requirements($rets, 'returns');
 
                 }
                 return Ferret::true;
