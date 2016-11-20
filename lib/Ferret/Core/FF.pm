@@ -560,12 +560,18 @@ sub typedef {
 sub typedef_check {
     my ($scope, $scope_or_class, $obj, $typedef_id, %opts) = @_;
 
-    # if ISA hasn't changed since the last check,
-    # the obj probably still conforms to the interface.
-    my $new_changes = $obj->{isa_changes} || 0;
-    my $old_changes = $obj->{type_conformity}{$typedef_id};
-    return 1 if defined $old_changes && $old_changes == $new_changes;
-    $obj->{type_conformity}{$typedef_id} = $obj->{isa_changes} || 0;
+    # Disabled: this logic was formerly used to cache object conformity to a
+    # type interface. Now types are evaluated each time unless they are marked
+    # as lazy (created with the type? keyword). In this case, the type has a
+    # prototype object associated with it, and conformance is cached by storing
+    # the prototype as a parent of the object.
+    #
+    # # if ISA hasn't changed since the last check,
+    # # the obj probably still conforms to the interface.
+    # my $new_changes = $obj->{isa_changes} || 0;
+    # my $old_changes = $obj->{type_conformity}{$typedef_id};
+    # return 1 if defined $old_changes && $old_changes == $new_changes;
+    # $obj->{type_conformity}{$typedef_id} = $obj->{isa_changes} || 0;
 
     # all conditions must return Ferret true.
     my $conditions = delete $opts{conditions} || [];
