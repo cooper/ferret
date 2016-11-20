@@ -41,7 +41,7 @@ init {
 
 method addCommand {
     need $command: Str::LC, $callback
-    if @commands[$command]:
+    if @commands[$command]
         overwrote -> true
     @commands[$command] = $callback
     added -> true
@@ -65,7 +65,7 @@ method handleLine {
     $command = $s[1]
 
     # ping is special
-    if $s[0] == "PING":
+    if $s[0] == "PING"
         $command = $s[0]
 
     say("recv[$command]: $line")
@@ -83,7 +83,7 @@ method handleLine {
 method privmsg {
     need $channel: Str, $message: Str
     for $line in $message.split("\n") {
-        if !$line.empty:
+        if !$line.empty
             @send("PRIVMSG $channel :$line")
     }
 }
@@ -91,7 +91,7 @@ method privmsg {
 func _joinChannels {
 
     # check if already joined.
-    if %_joinedChannels:
+    if %_joinedChannels
         return
 
     if %autojoin {

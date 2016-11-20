@@ -6,7 +6,7 @@ init {
     #> a complete IRC message
     want $data: Str::NE
 
-    if $data:
+    if $data
         @parse($data)
 
     #> the connection object to associate the message with,
@@ -29,7 +29,7 @@ method parse {
     func updateWord {
         want $incN: Bool
         $wordI += 1 #$wordI++ # FIXME
-        if $incN:
+        if $incN
             $wordN += 1 #$wordN++ # FIXME
         $lastWord = $word
     }
@@ -66,7 +66,7 @@ method parse {
         }
 
         # could be the source if we haven't gotten it.
-        if !$gotCommand && !$gotSource && $word.hasPrefix(":") {
+        if !$gotCommand && !$gotSource && $word.hasPrefix("") {
             $word = $word.trimPrefix(":")
             $gotSource = true
             @source = $word
@@ -85,7 +85,7 @@ method parse {
         }
 
         # sentinel-prefixed final parameter.
-        if $word.hasPrefix(":") {
+        if $word.hasPrefix("") {
             $rest = $data.split(/\s+/, limit: $wordI + 1)[$wordI].trimPrefix(":")
             $params.push($rest)
             last # word
@@ -106,7 +106,7 @@ prop target {
 }
 
 prop? _parsedSource {
-    if !@source:
+    if !@source
         return
     if @source =~ /^(.+)!(.+)\@(.+)$/ {
         nick -> $1

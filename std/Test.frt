@@ -76,7 +76,7 @@ method _test {
         return
     }
 
-    if @fatal:
+    if @fatal
         throw Error(:TestFailure, $message)
 
     message -> $message

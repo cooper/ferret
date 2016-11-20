@@ -20,7 +20,7 @@ method description {
 end
 
 # this should fail because the class requires a type
-$stack = Stack() catch $e:
+$stack = Stack() catch $e
     say("Error! $e")
 
 # this should work.

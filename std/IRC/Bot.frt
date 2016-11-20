@@ -18,12 +18,12 @@ method addConnection {
         need $msg
 
         # commands only work in channels right now
-        if !$msg.target.*instanceOf(Channel):
+        if !$msg.target.*instanceOf(Channel)
             return
 
         # find the command
         $trim = detail $msg.params[1].word(0).trimPrefix(".")
-        if !$trim.trimmed:
+        if !$trim.trimmed
             return
         $command = $trim.result
 
@@ -37,6 +37,6 @@ method addConnection {
 }
 
 method connect {
-    for $c in @conns:
+    for $c in @conns
         $c.connect()
 }

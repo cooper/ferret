@@ -12,7 +12,7 @@ method sendJoin {
 method sendPrivmsg {
     need $target: Str, $message: Str::Any
     for $line in $message.split("\n") {
-        if $line.empty: next
+        if $line.empty; next
         @send("PRIVMSG $target :$line")
     }
 }

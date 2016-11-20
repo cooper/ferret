@@ -113,7 +113,7 @@ list of those values, such as `[ [1,2], [3,4] ]`. If the decoder found a
 single value, only that value is returned.
 
 Because [`.decoderDone()`](#decoderdone) returns a single value as-is,
-different inputs can have the same output. Consider the following:
+different inputs can have the same output. Consider the following
 
 * A JSON list: `.decoderAdd('[1,2]')`
 * Two back-to-back values: `.decoderAdd('1 2')`

@@ -10,7 +10,7 @@ $bot.addCommand("info") {
 
 $bot.addCommand("t") {
     need $msg
-    if !$msg.commandHasParameters:
+    if !$msg.commandHasParameters
         return
     $c = COMPILER(convertNewlines($msg.fromWord(1)))
     $res = $c.tokenize(pretty: true)
@@ -23,7 +23,7 @@ $bot.addCommand("t") {
 
 $bot.addCommand("c") {
     need $msg
-    if !$msg.commandHasParameters:
+    if !$msg.commandHasParameters
         return
     $c = COMPILER(convertNewlines($msg.fromWord(1)))
     $res = $c.construct(pretty: true)
@@ -36,7 +36,7 @@ $bot.addCommand("c") {
 
 $bot.addCommand("e") {
     need $msg
-    if !$msg.commandHasParameters:
+    if !$msg.commandHasParameters
         return
     $res = COMPILER(convertNewlines($msg.fromWord(1))).eval()
     if $res.error {
@@ -49,7 +49,7 @@ $bot.addCommand("e") {
 
 $bot.addCommand("pe") {
     need $msg
-    if !$msg.commandHasParameters:
+    if !$msg.commandHasParameters
         return
     $res = COMPILER(convertNewlines($msg.fromWord(1))).perlEval()
     if $res.error {
@@ -65,7 +65,7 @@ $bot.addCommand("pp", handlePerl)
 
 func handlePerl {
     need $msg
-    if !$msg.commandHasParameters:
+    if !$msg.commandHasParameters
         return
     $c = COMPILER(convertNewlines($msg.fromWord(1)))
     $res = $c.compile($msg.command == "p")

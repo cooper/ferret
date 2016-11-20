@@ -3,9 +3,9 @@
 func nonZeroCoodinates {
     need $pt: Math::Point
     return gather {
-        if $pt.x != 0:
+        if $pt.x != 0
             take $pt.x
-        if $pt.y != 0:
+        if $pt.y != 0
             take $pt.y
     }
 }
@@ -26,7 +26,7 @@ for $pt in [ $pt1, $pt2, $pt3 ] {
 func evenNumbers {
     need $nums: Num...
     even -> gather for $n in $nums {
-        if $n.even:
+        if $n.even
             take $n
     }
 }

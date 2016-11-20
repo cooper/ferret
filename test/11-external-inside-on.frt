@@ -14,7 +14,7 @@ say("Point: $point")
 
 on say {
     need $twice, $message
-    if $twice:
+    if $twice
         say("$message again")
     didTwice -> $twice
 }
@@ -22,7 +22,7 @@ on say {
 # note how the signature still determines the first argument
 $r = say("It was said", twice: true)
 
-if $r.didTwice:
+if $r.didTwice
     say("Did the first one twice!")
 
 say("this should ignore the second parameter", true)

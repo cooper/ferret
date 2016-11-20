@@ -7,7 +7,7 @@ init {
 }
 
 method moo {
-    if @moos:
+    if @moos
         return "moo"
     return "I am a nonverbal cow"
 }
@@ -19,7 +19,7 @@ init {
 }
 
 method bark {
-    if @barks:
+    if @barks
         return "bark"
     return "I had my bark box bred out of me"
 }
@@ -37,9 +37,9 @@ method meow {
 # usage: (cat, othercat).fight()
 func fight {
     need $cat1: Cat, $cat2: Cat
-    if $cat1.mean:
+    if $cat1.mean
         return "Cat 1 started a catfight!"
-    if $cat2.mean:
+    if $cat2.mean
         return "Cat 2 started a catfight!"
     return "nice cats don't fight"
 }

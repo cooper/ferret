@@ -54,7 +54,7 @@ method remove {
     need $what
     removed -> false
     for ($i, $el) in *self {
-        if $what != $el:
+        if $what != $el
             next
         # FIXME: delete *self[$i]
         found   -> $el
@@ -67,7 +67,7 @@ method remove {
 method removeAll {
     need $what
     $found = gather for ($i, $el) in *self {
-        if $what != $el:
+        if $what != $el
             next
         # FIXME: delete *self[$i]
         take $el
@@ -106,7 +106,7 @@ method all {
 #> Returns the sum of all elements in the list or `undefined` if the list is
 #| empty.
 prop sum {
-    if @empty:
+    if @empty
         return undefined
     $c = *self[0]
     for $i in 1 .. @lastIndex {

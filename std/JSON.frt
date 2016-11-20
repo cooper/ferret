@@ -62,14 +62,14 @@ init {
     #|  line, identifying them properly.
 
     # require JSON::XS.
-    _PO.require("JSON::XS") catch $err:
+    _PO.require("JSON::XS") catch $err
         fail Error(:PerlRequireFailed,
             "Unable to load JSON::XS",
             subError: $err
         )
 
     # create the underlying JSON::XS object.
-    @xs = _PO("JSON::XS") catch $err:
+    @xs = _PO("JSON::XS") catch $err
         fail Error(:PerlConstructorFailed,
             "Could not create JSON::XS object",
             subError: $err
@@ -94,7 +94,7 @@ init {
 #| initialization.
 method encode {
     need $data  #< an object to convert to JSON text
-    json -> @xs.encode($data) catch $err:
+    json -> @xs.encode($data) catch $err
         fail Error(:JSONError, "JSON encode error", subError: $err)
 }
 
@@ -103,7 +103,7 @@ method encode {
 #| provided at initialization.
 method decode {
     need $json: Str #< a JSON text to parse and convert to a Ferret object
-    data -> @xs.decode($json) catch $err:
+    data -> @xs.decode($json) catch $err
         fail Error(:JSONError, "JSON decode error", subError: $err)
 }
 
@@ -126,7 +126,7 @@ method decode {
 #|  single value, only that value is returned.
 #|
 #|  Because [`.decoderDone()`](#decoderdone) returns a single value as-is,
-#|  different inputs can have the same output. Consider the following:
+#|  different inputs can have the same output. Consider the following
 #|
 #|  * A JSON list: `.decoderAdd('[1,2]')`
 #|  * Two back-to-back values: `.decoderAdd('1 2')`
@@ -139,7 +139,7 @@ method decoderAdd {
 
     # call ->incr_parse in void context.
     # this is to just add text to the buffer.
-    @xs.perlCall("incr_parse", $fragment, CONTEXT: "void") catch $err:
+    @xs.perlCall("incr_parse", $fragment, CONTEXT: "void") catch $err
         fail Error(:JSONError, "JSON incr_parse() error", subError: $err)
 
     added -> true
@@ -152,10 +152,10 @@ method decoderDone {
 
     # call ->incr_parse in list context.
     # this will extract as many objects as possible.
-    $objects = @xs.perlCall("incr_parse", CONTEXT: "list") catch $err:
+    $objects = @xs.perlCall("incr_parse", CONTEXT: "list") catch $err
         fail Error(:JSONError, "JSON incr_parse() error", subError: $err)
 
-    if $objects.*instanceOf(List):
+    if $objects.*instanceOf(List)
         found -> $objects.length
 
     data -> $objects

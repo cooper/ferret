@@ -39,7 +39,7 @@ init {
     }
 
     # on disconnect, clear object pool
-    on @sock.disconnected, :resetState:
+    on @sock.disconnected, :resetState
         @_resetState()
 
 }
@@ -83,16 +83,16 @@ method _handleLine {
 method getTarget {
     need $target: Str #< channel name or nickname
     # TODO: once we look at RPL_ISUPPORT, check that for channel prefixes
-    if $target.hasPrefix("\#"):
+    if $target.hasPrefix("\#")
         return @getChannel($target)
-    else:
+    else
         return @getUser($target)
 }
 
 #> Fetches a channel object from a channel name
 method getChannel {
     need $name: Str #< channel name
-    if $channel = @channels[$name.lowercase]:
+    if $channel = @channels[$name.lowercase]
         return $channel
     return Channel(connection: *self, name: $name)
 }
@@ -100,7 +100,7 @@ method getChannel {
 #> Fetches a user object from a nickname
 method getUser {
     need $nick: Str #< nickname associated with the user
-    if $user = @users[$nick.lowercase]:
+    if $user = @users[$nick.lowercase]
         return $user
     return User(connection: *self, nick: $nick)
 }
@@ -108,7 +108,7 @@ method getUser {
 #> Fetches a server object from a server name
 method getServer {
     need $name: Str #< server name
-    if $server = @servers[$name.lowercase]:
+    if $server = @servers[$name.lowercase]
         return $server
     return Server(connection: *self, name: $name)
 }

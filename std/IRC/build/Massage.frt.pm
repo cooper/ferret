@@ -217,7 +217,7 @@
 #                                              Lexical variable '$word'
 #                                          Argument list [1 item]
 #                                              Item 0
-#                                                  String ':'
+#                                                  String ''
 #                              Body ('if' scope)
 #                                  Instruction
 #                                      Assignment
@@ -269,7 +269,7 @@
 #                                          Lexical variable '$word'
 #                                      Argument list [1 item]
 #                                          Item 0
-#                                              String ':'
+#                                              String ''
 #                              Body ('if' scope)
 #                                  Instruction
 #                                      Assignment
@@ -692,7 +692,7 @@ my $result = do {
                                             $$scope->{'word'}
                                               ->property_u( 'hasPrefix',
                                                 $pos->(69.45) )->(
-                                                [ str( $f, ":" ) ],
+                                                [ str( $f, "" ) ],
                                                 $scope, undef, $pos->(69.5)
                                                 );
                                         }
@@ -754,7 +754,7 @@ my $result = do {
                                     $$scope->{'word'}
                                       ->property_u( 'hasPrefix', $pos->(88.3) )
                                       ->(
-                                        [ str( $f, ":" ) ], $scope,
+                                        [ str( $f, "" ) ], $scope,
                                         undef, $pos->(88.4)
                                       )
                                 )

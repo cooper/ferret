@@ -18,9 +18,9 @@ method setPosition {
 
 method description {
     $desc = "[@type.name] " + @msg
-    if !@hints.empty:
+    if !@hints.empty
         $desc += _prettyHints(@hints)
-    if @subError:
+    if @subError
         $desc += " ->" + @subError.*description
     return $desc
 }
@@ -29,9 +29,9 @@ func _prettyHints {
     need $list: List
     $str = "\n"
     for ($i, $el) in $list {
-        if $i.even:
+        if $i.even
             $str += "    " + $el + ": "
-        else:
+        else
             $str += $el + "\n"
     }
     return $str

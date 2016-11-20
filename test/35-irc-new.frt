@@ -16,12 +16,12 @@ on $bot.commands.add {
 
     # check params
     $parts = $message.split(/\s+/)
-    if $parts.length < 3:
+    if $parts.length < 3
         fail Error(:ParameterError, "Not enough parameters")
 
     # check for existing command
     $command = $parts[1].lowercase
-    if $bot.commands.[$command]:
+    if $bot.commands.[$command]
         fail Error(:ParameterError, "Command .$command exists")
 
     # store
@@ -45,7 +45,7 @@ on $bot.commands.del {
     # check that something existed
     $command = $parts[1].lowercase
     $existed = %factoids[$command]
-    if !$existed:
+    if !$existed
         fail Error(:ParameterError, "No such factoid .$command")
 
     # delete it
