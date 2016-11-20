@@ -4,7 +4,7 @@ package F::Assignment;
 use warnings;
 use strict;
 use 5.010;
-use parent qw(F::Node F::PropertyOwner);
+use parent qw(F::Node);
 
 sub desc {
     my $a = shift;
@@ -93,9 +93,10 @@ sub perl_fmt {
     return "assign_$fmt_name" => $fmt_args;
 }
 
-sub property_name       { shift->assign_to->property_name       }
-sub property_name_code  { shift->assign_to->property_name_code  }
-sub property_owner_code { shift->assign_to->property_owner_code }
+sub is_PropertyOwner    { shift->assign_to->is_type('PropertyOwner')    }
+sub property_name       { shift->assign_to->property_name               }
+sub property_name_code  { shift->assign_to->property_name_code          }
+sub property_owner_code { shift->assign_to->property_owner_code         }
 
 sub public       { shift->public        }
 sub assign_to    { shift->first_child   }

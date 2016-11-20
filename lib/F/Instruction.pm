@@ -5,7 +5,6 @@ use warnings;
 use strict;
 use parent qw(F::Node F::MaybeOwner);
 
-
 sub detail {
     my $instr = shift;
     my $child = $instr->first_child;

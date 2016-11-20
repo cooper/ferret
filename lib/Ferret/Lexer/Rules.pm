@@ -824,6 +824,7 @@ our %element_rules = (
                 return 1 if $left->type ne 'Bareword';
                 return $as->parent->type eq 'Alias';
             },
+            'Cannot assign to bareword. Try: alias newName = oldName',
             7
         ],
 
