@@ -569,7 +569,7 @@ if 1.even {
 One-line example
 
 ```
-if "hi".length == 2:
+if "hi".length == 2
     doOneThingOnly()
 ```
 
@@ -595,9 +595,9 @@ else {
 One-line example
 
 ```
-if false:
+if false
     say("Nothing here will happen")
-else:
+else
     say("This will be said")
 ```
 
@@ -748,7 +748,7 @@ languages.
 $dontSayIt = true
 
 for {
-    if $dontSayIt:
+    if $dontSayIt
         last
     say("Hey!")
     last
@@ -1208,7 +1208,7 @@ assignments, function calls, and almost anywhere else.
 ```
 $evenSingleDigits = gather {
     for $n in 0..9 {
-        if $n.even:
+        if $n.even
             take $n
     }
 }
@@ -1235,7 +1235,7 @@ scenario of [`gather`](#gather) and [`for`](#for) together:
 
 ```
 $evenSingleDigits = gather for $n in 0..9 {
-    if $n.even:
+    if $n.even
         take $n
 }
 

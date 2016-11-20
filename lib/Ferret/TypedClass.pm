@@ -51,8 +51,15 @@ sub _property {
 }
 
 sub description {
-    my $tc = shift;
-    return $tc->{main_class}->description;
+    my $tc    = shift;
+    my $class = $tc->{main_class};
+    my $gen   = join ', ', map $_->{name}, @{ $tc->{other_types} };
+    my $sig   = $class->signature_string;
+    my $desc  = "TypedClass '$$class{name}'";
+    $desc    .= " $$class{version}" if $class->{version};
+    $desc    .= " <$gen>"           if length $gen;
+    $desc    .= " { $sig }"         if length $sig;
+    return $desc;
 }
 
 1
