@@ -219,7 +219,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Bot2', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -303,7 +303,7 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_3->inside_scope(
+        $func_3->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );

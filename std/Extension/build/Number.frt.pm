@@ -147,7 +147,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Number', undef, undef );
 
         # Method event 'sqrt' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope, 'sqrt',
             [],
             [],
@@ -164,7 +164,7 @@ my $result = do {
         );
 
         # Method event 'cbrt' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope, 'cbrt',
             [],
             [],
@@ -177,7 +177,7 @@ my $result = do {
         );
 
         # Method event 'square' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope, 'square',
             [],
             [],
@@ -195,7 +195,7 @@ my $result = do {
         );
 
         # Method event 'even' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope, 'even',
             [],
             [],
@@ -217,7 +217,7 @@ my $result = do {
         );
 
         # Method event 'odd' definition
-        my $method_4 = method_event_def(
+        my $func_4 = method_event_def(
             $f, $scope, 'odd',
             [],
             [],
@@ -239,7 +239,7 @@ my $result = do {
         );
 
         # Method event 'root' definition
-        my $method_5 = method_event_def(
+        my $func_5 = method_event_def(
             $f, $scope, 'root',
             [
                 {
@@ -264,27 +264,15 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
-            sqrt => $scope,
-            $proto, $class, $ins, 1, undef
-        );
-        $method_1->inside_scope(
-            cbrt => $scope,
-            $proto, $class, $ins, 1, undef
-        );
-        $method_2->inside_scope(
+        $func_0->inside_scope( sqrt => $scope, $proto, $class, $ins, 1, undef );
+        $func_1->inside_scope( cbrt => $scope, $proto, $class, $ins, 1, undef );
+        $func_2->inside_scope(
             square => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_3->inside_scope(
-            even => $scope,
-            $proto, $class, $ins, 1, undef
-        );
-        $method_4->inside_scope(
-            odd => $scope,
-            $proto, $class, $ins, 1, undef
-        );
-        $method_5->inside_scope(
+        $func_3->inside_scope( even => $scope, $proto, $class, $ins, 1, undef );
+        $func_4->inside_scope( odd  => $scope, $proto, $class, $ins, 1, undef );
+        $func_5->inside_scope(
             root => $scope,
             $proto, $class, $ins, undef, undef
         );

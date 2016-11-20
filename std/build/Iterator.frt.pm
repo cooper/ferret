@@ -203,7 +203,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'ListIterator', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -233,7 +233,7 @@ my $result = do {
         );
 
         # Method event 'more' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope, 'more',
             [],
             [],
@@ -258,7 +258,7 @@ my $result = do {
         );
 
         # Method event 'nextElement' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope,
             'nextElement',
             [],
@@ -280,7 +280,7 @@ my $result = do {
         );
 
         # Method event 'nextElements' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope,
             'nextElements',
             [],
@@ -308,7 +308,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $method_4 = method_event_def(
+        my $func_4 = method_event_def(
             $f, $scope,
             'iterator',
             [],
@@ -319,23 +319,20 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
-            more => $scope,
-            $proto, $class, $ins, 1, undef
-        );
-        $method_2->inside_scope(
+        $func_1->inside_scope( more => $scope, $proto, $class, $ins, 1, undef );
+        $func_2->inside_scope(
             nextElement => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_3->inside_scope(
+        $func_3->inside_scope(
             nextElements => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_4->inside_scope(
+        $func_4->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );
@@ -347,7 +344,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'HashIterator', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_5 = method_event_def(
+        my $func_5 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -378,7 +375,7 @@ my $result = do {
         );
 
         # Method event 'more' definition
-        my $method_6 = method_event_def(
+        my $func_6 = method_event_def(
             $f, $scope, 'more',
             [],
             [],
@@ -395,7 +392,7 @@ my $result = do {
         );
 
         # Method event 'nextElement' definition
-        my $method_7 = method_event_def(
+        my $func_7 = method_event_def(
             $f, $scope,
             'nextElement',
             [],
@@ -420,7 +417,7 @@ my $result = do {
         );
 
         # Method event 'nextElements' definition
-        my $method_8 = method_event_def(
+        my $func_8 = method_event_def(
             $f, $scope,
             'nextElements',
             [],
@@ -451,7 +448,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $method_9 = method_event_def(
+        my $func_9 = method_event_def(
             $f, $scope,
             'iterator',
             [],
@@ -462,23 +459,20 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_5->inside_scope(
+        $func_5->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_6->inside_scope(
-            more => $scope,
-            $proto, $class, $ins, 1, undef
-        );
-        $method_7->inside_scope(
+        $func_6->inside_scope( more => $scope, $proto, $class, $ins, 1, undef );
+        $func_7->inside_scope(
             nextElement => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_8->inside_scope(
+        $func_8->inside_scope(
             nextElements => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_9->inside_scope(
+        $func_9->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );

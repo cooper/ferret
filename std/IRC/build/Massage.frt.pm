@@ -448,7 +448,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Massage', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -482,7 +482,7 @@ my $result = do {
         );
 
         # Method event 'parse' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope, 'parse',
             [
                 {
@@ -820,7 +820,7 @@ my $result = do {
         );
 
         # Method event 'target' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope, 'target',
             [],
             [],
@@ -849,7 +849,7 @@ my $result = do {
         );
 
         # Method event '_parsedSource' definition
-        my $method_4 = method_event_def(
+        my $func_4 = method_event_def(
             $f, $scope,
             '_parsedSource',
             [],
@@ -881,7 +881,7 @@ my $result = do {
         );
 
         # Method event 'nick' definition
-        my $method_5 = method_event_def(
+        my $func_5 = method_event_def(
             $f, $scope, 'nick',
             [],
             [],
@@ -894,7 +894,7 @@ my $result = do {
         );
 
         # Method event 'user' definition
-        my $method_6 = method_event_def(
+        my $func_6 = method_event_def(
             $f, $scope, 'user',
             [],
             [],
@@ -907,7 +907,7 @@ my $result = do {
         );
 
         # Method event 'host' definition
-        my $method_7 = method_event_def(
+        my $func_7 = method_event_def(
             $f, $scope, 'host',
             [],
             [],
@@ -918,34 +918,25 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $func_2->inside_scope(
             parse => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
+        $func_3->inside_scope(
             target => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_4->inside_scope(
+        $func_4->inside_scope(
             _parsedSource => $scope,
             $proto, $class, $ins, 1, 1
         );
-        $method_5->inside_scope(
-            nick => $scope,
-            $proto, $class, $ins, 1, undef
-        );
-        $method_6->inside_scope(
-            user => $scope,
-            $proto, $class, $ins, 1, undef
-        );
-        $method_7->inside_scope(
-            host => $scope,
-            $proto, $class, $ins, 1, undef
-        );
+        $func_5->inside_scope( nick => $scope, $proto, $class, $ins, 1, undef );
+        $func_6->inside_scope( user => $scope, $proto, $class, $ins, 1, undef );
+        $func_7->inside_scope( host => $scope, $proto, $class, $ins, 1, undef );
     }
     load_namespaces( $context, qw(Bool Connection Str Str::NE) );
 };

@@ -123,7 +123,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Signal', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -143,7 +143,7 @@ my $result = do {
         );
 
         # Method event 'trap' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope, 'trap',
             [],
             [],
@@ -156,7 +156,7 @@ my $result = do {
         );
 
         # Method event 'fireSignal' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope,
             'fireSignal',
             [
@@ -184,15 +184,15 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $func_1->inside_scope(
             trap => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $func_2->inside_scope(
             fireSignal => $scope,
             $class, $class, $ins, undef, undef
         );

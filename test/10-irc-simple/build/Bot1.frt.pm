@@ -212,7 +212,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Bot1', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -285,7 +285,7 @@ my $result = do {
         );
 
         # Method event 'connect' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope,
             'connect',
             [],
@@ -299,7 +299,7 @@ my $result = do {
         );
 
         # Method event 'send' definition
-        my $method_4 = method_event_def(
+        my $func_4 = method_event_def(
             $f, $scope, 'send',
             [
                 {
@@ -322,15 +322,15 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_2->inside_scope(
+        $func_2->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
+        $func_3->inside_scope(
             connect => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_4->inside_scope(
+        $func_4->inside_scope(
             send => $scope,
             $proto, $class, $ins, undef, undef
         );

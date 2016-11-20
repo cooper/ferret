@@ -204,7 +204,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Point', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -233,7 +233,7 @@ my $result = do {
         );
 
         # Method event 'oneToRight' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope,
             'oneToRight',
             [],
@@ -259,7 +259,7 @@ my $result = do {
         );
 
         # Method event 'pretty' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope, 'pretty',
             [],
             [],
@@ -277,7 +277,7 @@ my $result = do {
         );
 
         # Method event 'toString' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope,
             'toString',
             [],
@@ -291,7 +291,7 @@ my $result = do {
         );
 
         # Method event 'midpoint' definition
-        my $method_4 = method_event_def(
+        my $func_4 = method_event_def(
             $f, $scope,
             'midpoint',
             [
@@ -349,23 +349,23 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $func_1->inside_scope(
             oneToRight => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $func_2->inside_scope(
             pretty => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
+        $func_3->inside_scope(
             toString => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_4->inside_scope(
+        $func_4->inside_scope(
             midpoint => $scope,
             $class, $class, $ins, undef, undef
         );

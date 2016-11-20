@@ -890,7 +890,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Bot', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -968,7 +968,7 @@ my $result = do {
         );
 
         # Method event 'addCommand' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope,
             'addCommand',
             [
@@ -1011,7 +1011,7 @@ my $result = do {
         );
 
         # Method event 'connect' definition
-        my $method_4 = method_event_def(
+        my $func_4 = method_event_def(
             $f, $scope,
             'connect',
             [],
@@ -1025,7 +1025,7 @@ my $result = do {
         );
 
         # Method event 'send' definition
-        my $method_5 = method_event_def(
+        my $func_5 = method_event_def(
             $f, $scope, 'send',
             [
                 {
@@ -1050,7 +1050,7 @@ my $result = do {
         );
 
         # Method event 'handleLine' definition
-        my $method_6 = method_event_def(
+        my $func_6 = method_event_def(
             $f, $scope,
             'handleLine',
             [
@@ -1142,7 +1142,7 @@ my $result = do {
         );
 
         # Method event 'privmsg' definition
-        my $method_7 = method_event_def(
+        my $func_7 = method_event_def(
             $f, $scope,
             'privmsg',
             [
@@ -1208,27 +1208,27 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_2->inside_scope(
+        $func_2->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
+        $func_3->inside_scope(
             addCommand => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_4->inside_scope(
+        $func_4->inside_scope(
             connect => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_5->inside_scope(
+        $func_5->inside_scope(
             send => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_6->inside_scope(
+        $func_6->inside_scope(
             handleLine => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_7->inside_scope(
+        $func_7->inside_scope(
             privmsg => $scope,
             $proto, $class, $ins, undef, undef
         );

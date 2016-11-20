@@ -140,7 +140,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Hash', undef, [ \'K', \'V' ] );
 
         # Method event 'empty' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope, 'empty',
             [],
             [],
@@ -153,7 +153,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope,
             'iterator',
             [],
@@ -169,11 +169,11 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             empty => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_1->inside_scope(
+        $func_1->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );
@@ -186,7 +186,7 @@ my $result = do {
             [ \'K', \'V' ] );
 
         # Method event 'initializer__' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope,
             'initializer__',
             [],
@@ -208,7 +208,7 @@ my $result = do {
         );
 
         # Method event 'keys' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope, 'keys',
             [],
             [],
@@ -220,7 +220,7 @@ my $result = do {
         );
 
         # Method event 'pushPair' definition
-        my $method_4 = method_event_def(
+        my $func_4 = method_event_def(
             $f, $scope,
             'pushPair',
             [
@@ -266,7 +266,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $method_5 = method_event_def(
+        my $func_5 = method_event_def(
             $f, $scope,
             'iterator',
             [],
@@ -292,19 +292,16 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_2->inside_scope(
+        $func_2->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
-            keys => $scope,
-            $proto, $class, $ins, 1, undef
-        );
-        $method_4->inside_scope(
+        $func_3->inside_scope( keys => $scope, $proto, $class, $ins, 1, undef );
+        $func_4->inside_scope(
             pushPair => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_5->inside_scope(
+        $func_5->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );

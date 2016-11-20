@@ -52,7 +52,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Server', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -78,7 +78,7 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );

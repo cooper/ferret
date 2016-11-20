@@ -199,7 +199,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Message', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -274,7 +274,7 @@ my $result = do {
         );
 
         # Method event 'command' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope,
             'command',
             [],
@@ -336,7 +336,7 @@ my $result = do {
         );
 
         # Method event 'commandHasParameters' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope,
             'commandHasParameters',
             [],
@@ -355,7 +355,7 @@ my $result = do {
         );
 
         # Method event 'fromWord' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope,
             'fromWord',
             [
@@ -392,19 +392,16 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
-            command => $scope,
-            $proto, $class, $ins, 1, 1
-        );
-        $method_2->inside_scope(
+        $func_1->inside_scope( command => $scope, $proto, $class, $ins, 1, 1 );
+        $func_2->inside_scope(
             commandHasParameters => $scope,
             $proto, $class, $ins, 1, 1
         );
-        $method_3->inside_scope(
+        $func_3->inside_scope(
             fromWord => $scope,
             $proto, $class, $ins, undef, undef
         );

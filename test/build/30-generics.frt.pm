@@ -128,7 +128,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Stack', undef, ['Element'] );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [],
@@ -144,7 +144,7 @@ my $result = do {
         );
 
         # Method event 'push' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope, 'push',
             [
                 {
@@ -166,7 +166,7 @@ my $result = do {
         );
 
         # Method event 'pop' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope, 'pop',
             [],
             [],
@@ -180,7 +180,7 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope,
             'description',
             [],
@@ -198,19 +198,19 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $func_1->inside_scope(
             push => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $func_2->inside_scope(
             pop => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
+        $func_3->inside_scope(
             description => $scope,
             $proto, $class, $ins, undef, undef
         );

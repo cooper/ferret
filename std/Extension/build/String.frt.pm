@@ -143,7 +143,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'String', undef, undef );
 
         # Method event 'word' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope, 'word',
             [
                 {
@@ -180,7 +180,7 @@ my $result = do {
         );
 
         # Method event 'fromWord' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope,
             'fromWord',
             [
@@ -218,7 +218,7 @@ my $result = do {
         );
 
         # Method event 'empty' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope, 'empty',
             [],
             [],
@@ -229,15 +229,15 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             word => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $func_1->inside_scope(
             fromWord => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope( empty => $scope, $proto, $class, $ins, 1, 1 );
+        $func_2->inside_scope( empty => $scope, $proto, $class, $ins, 1, 1 );
         typedef(
             $scope, $class,
             'NonEmpty',

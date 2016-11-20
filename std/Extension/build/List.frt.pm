@@ -406,7 +406,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'List', undef, [ \'T' ] );
 
         # Method event 'empty' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope, 'empty',
             [],
             [],
@@ -419,7 +419,7 @@ my $result = do {
         );
 
         # Method event 'map' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope, 'map',
             [
                 {
@@ -471,7 +471,7 @@ my $result = do {
         );
 
         # Method event 'grep' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope, 'grep',
             [
                 {
@@ -532,7 +532,7 @@ my $result = do {
         );
 
         # Method event 'withoutAll' definition
-        my $method_4 = method_event_def(
+        my $func_4 = method_event_def(
             $f, $scope,
             'withoutAll',
             [
@@ -564,7 +564,7 @@ my $result = do {
         );
 
         # Method event 'without' definition
-        my $method_5 = method_event_def(
+        my $func_5 = method_event_def(
             $f, $scope,
             'without',
             [
@@ -646,7 +646,7 @@ my $result = do {
         );
 
         # Method event 'remove' definition
-        my $method_6 = method_event_def(
+        my $func_6 = method_event_def(
             $f, $scope, 'remove',
             [
                 {
@@ -701,7 +701,7 @@ my $result = do {
         );
 
         # Method event 'removeAll' definition
-        my $method_7 = method_event_def(
+        my $func_7 = method_event_def(
             $f, $scope,
             'removeAll',
             [
@@ -772,7 +772,7 @@ my $result = do {
         );
 
         # Method event 'first' definition
-        my $method_8 = method_event_def(
+        my $func_8 = method_event_def(
             $f, $scope, 'first',
             [
                 {
@@ -818,7 +818,7 @@ my $result = do {
         );
 
         # Method event 'any' definition
-        my $method_9 = method_event_def(
+        my $func_9 = method_event_def(
             $f, $scope, 'any',
             [
                 {
@@ -864,7 +864,7 @@ my $result = do {
         );
 
         # Method event 'all' definition
-        my $method_10 = method_event_def(
+        my $func_10 = method_event_def(
             $f, $scope, 'all',
             [
                 {
@@ -914,7 +914,7 @@ my $result = do {
         );
 
         # Method event 'sum' definition
-        my $method_11 = method_event_def(
+        my $func_11 = method_event_def(
             $f, $scope, 'sum',
             [],
             [],
@@ -966,7 +966,7 @@ my $result = do {
         );
 
         # Method event 'sum0' definition
-        my $method_12 = method_event_def(
+        my $func_12 = method_event_def(
             $f, $scope, 'sum0',
             [],
             [],
@@ -999,7 +999,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $method_13 = method_event_def(
+        my $func_13 = method_event_def(
             $f, $scope,
             'iterator',
             [],
@@ -1015,55 +1015,52 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             empty => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_1->inside_scope(
+        $func_1->inside_scope(
             map => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $func_2->inside_scope(
             grep => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_4->inside_scope(
+        $func_4->inside_scope(
             withoutAll => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_5->inside_scope(
+        $func_5->inside_scope(
             without => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_6->inside_scope(
+        $func_6->inside_scope(
             remove => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_7->inside_scope(
+        $func_7->inside_scope(
             removeAll => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_8->inside_scope(
+        $func_8->inside_scope(
             first => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_9->inside_scope(
+        $func_9->inside_scope(
             any => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_10->inside_scope(
+        $func_10->inside_scope(
             all => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_11->inside_scope(
-            sum => $scope,
-            $proto, $class, $ins, 1, undef
-        );
-        $method_12->inside_scope(
+        $func_11->inside_scope( sum => $scope, $proto, $class, $ins, 1, undef );
+        $func_12->inside_scope(
             sum0 => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_13->inside_scope(
+        $func_13->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );

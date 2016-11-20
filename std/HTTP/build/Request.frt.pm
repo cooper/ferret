@@ -80,7 +80,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Request', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -119,7 +119,7 @@ my $result = do {
         );
 
         # Method event 'connect' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope,
             'connect',
             [],
@@ -136,7 +136,7 @@ my $result = do {
         );
 
         # Method event 'connected' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope,
             'connected',
             [],
@@ -149,7 +149,7 @@ my $result = do {
         );
 
         # Method event 'redirect' definition
-        my $method_3 = method_event_def(
+        my $func_3 = method_event_def(
             $f, $scope,
             'redirect',
             [],
@@ -162,7 +162,7 @@ my $result = do {
         );
 
         # Method event 'error' definition
-        my $method_4 = method_event_def(
+        my $func_4 = method_event_def(
             $f, $scope, 'error',
             [],
             [],
@@ -174,7 +174,7 @@ my $result = do {
         );
 
         # Method event 'response' definition
-        my $method_5 = method_event_def(
+        my $func_5 = method_event_def(
             $f, $scope,
             'response',
             [],
@@ -185,27 +185,27 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $func_1->inside_scope(
             connect => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $func_2->inside_scope(
             connected => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
+        $func_3->inside_scope(
             redirect => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_4->inside_scope(
+        $func_4->inside_scope(
             error => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_5->inside_scope(
+        $func_5->inside_scope(
             response => $scope,
             $proto, $class, $ins, undef, undef
         );

@@ -118,7 +118,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Connection', undef, undef );
 
         # Method event 'sendJoin' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope,
             'sendJoin',
             [
@@ -160,7 +160,7 @@ my $result = do {
         );
 
         # Method event 'sendPrivmsg' definition
-        my $method_1 = method_event_def(
+        my $func_1 = method_event_def(
             $f, $scope,
             'sendPrivmsg',
             [
@@ -227,7 +227,7 @@ my $result = do {
         );
 
         # Method event 'sendNick' definition
-        my $method_2 = method_event_def(
+        my $func_2 = method_event_def(
             $f, $scope,
             'sendNick',
             [
@@ -249,15 +249,15 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             sendJoin => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $func_1->inside_scope(
             sendPrivmsg => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $func_2->inside_scope(
             sendNick => $scope,
             $proto, $class, $ins, undef, undef
         );

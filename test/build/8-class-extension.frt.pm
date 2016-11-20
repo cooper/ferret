@@ -56,7 +56,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'String', undef, undef );
 
         # Method event 'doubledLength' definition
-        my $method_0 = method_event_def(
+        my $func_0 = method_event_def(
             $f, $scope,
             'doubledLength',
             [],
@@ -74,7 +74,7 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $func_0->inside_scope(
             doubledLength => $scope,
             $proto, $class, $ins, undef, undef
         );
