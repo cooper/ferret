@@ -104,17 +104,17 @@ our %token_rules = (
 
     ],
 
-    OP_SEMI => [
-
-        # $c->{instruction} (the current instruction) must be set in order
-        # for a semicolon to terminate it.
-        current_must_have => [                                                  # OP_SEMI[0]
-            'instruction',
-            'Attempted to terminate an instruction, but no instruction is open',
-            0
-        ]
-
-    ],
+    # OP_SEMI => [
+    #
+    #     # $c->{instruction} (the current instruction) must be set in order
+    #     # for a semicolon to terminate it.
+    #     current_must_have => [                                                  # OP_SEMI[0]
+    #         'instruction',
+    #         'Attempted to terminate an instruction, but no instruction is open',
+    #         0
+    #     ]
+    #
+    # ],
 
     OP_ELLIP => [
 

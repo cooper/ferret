@@ -957,8 +957,27 @@ sub c_OP_COMMA {
 sub c_OP_SEMI {
     my ($c, $automatic) = @_;
 
-    # Rule OP_SEMI[0]:
-    #   The current 'instruction' must exist.
+    # if something is waiting to capture a closure,
+    # maybe that's what this is, a single-statement closure.
+    if (could_be_one_liner($c)) {
+
+        # simulate a {
+        $c->simulate('CLOSURE_S', 1);
+
+        # remember that the coming intruction will terminate closure.
+        $c->instruction_opens_closure;
+
+        return;
+    }
+
+    # otherwise, there has to be an instruction.
+    if (!$c->instruction) {
+        return $c->unexpected([
+            undef,
+            'Attempted to terminate an instruction, but no instruction is '.
+            'open'
+        ]);
+    }
 
     # close these things.
     $c->close_nodes(qw(

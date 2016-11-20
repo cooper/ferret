@@ -380,7 +380,6 @@ sub identify_duplicate_barewords {
         my ($name, $second, $first) = (shift, shift, $taken{+shift});
         state $what = {
             Function   => 'function',
-            #Method     => 'method',
             Assignment => 'bareword alias',
             Type       => 'type interface'
         };
