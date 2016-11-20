@@ -1138,7 +1138,7 @@ sub c_OP_ELLIP {
     # need $var: Type = exp...
     $c->close_nodes(qw(WantNeedType WantNeedValue));
     if ($c->node->type eq 'WantNeed') {
-        $c->node->{ellipsis} = 1;
+        return $c->unexpected if $c->node->{ellipsis}++;
         return;
     }
 

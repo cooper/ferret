@@ -222,7 +222,7 @@ our %element_rules = (
 
         # classes can currently contain only methods and variable declarations.
         children_must_be => [                                                   # Class[1]
-            'Function Method Instruction Type',
+            'Function Instruction Type',
             'Class must only contain class functions, instance methods, '.
             'and variable/type declarations',
             1
@@ -265,7 +265,7 @@ our %element_rules = (
 
         # WantNeed must always be inside one of these.
         must_be_somewhere_inside => [                                           # WantNeed[1]
-            'Function Method',
+            'Function',
             'Argument declaration must be within a function or method',
             1
         ],
@@ -411,7 +411,7 @@ our %element_rules = (
 
         # instance variables only make sense inside of classes.
         must_be_somewhere_inside => [                                           # ThisVariable[0]
-            'Function Method',
+            'Function',
             'Instance variables must be inside a class function or method',
             0
         ]
@@ -521,16 +521,16 @@ our %element_rules = (
 
     },
 
-    Method => {
-
-        # direct parent must be a class.
-        parent_must_be => [                                                     # Method[0]
-            'Class',
-            'Methods and computed properties must be directly inside a class',
-            0
-        ]
-
-    },
+    # Method => {
+    #
+    #     # direct parent must be a class.
+    #     parent_must_be => [                                                     # Method[0] FIXME
+    #         'Class',
+    #         'Methods and computed properties must be directly inside a class',
+    #         0
+    #     ]
+    #
+    # },
 
     OnParameter => {
 
@@ -697,7 +697,7 @@ our %element_rules = (
         ],
 
         must_be_somewhere_inside => [                                           # Stop[1]
-            'Function Method',
+            'Function',
             'Stop statement must be inside a function, method, or callback',
             1
         ]
@@ -788,7 +788,7 @@ our %element_rules = (
     Defer => {
 
         must_be_somewhere_inside => [                                           # Defer[0]
-            'Function Method',
+            'Function',
             "'Defer' can only exist within a function or method",
             0
         ]
@@ -1283,7 +1283,7 @@ our %element_rules = (
     Return => {
 
         must_be_somewhere_inside => [                                           # Return[0]
-            'Function Method',
+            'Function',
             'Return must be somewhere inside a function, method, or callback',
             0
         ],
@@ -1323,7 +1323,7 @@ our %element_rules = (
     ReturnPair => {
 
         must_be_somewhere_inside => [                                           # ReturnPair[0] TODO
-            'Function Method',
+            'Function',
             'Return must be somewhere inside a function, method, or callback',
             0
         ],

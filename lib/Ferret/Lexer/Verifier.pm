@@ -40,6 +40,11 @@ our %errors = (
         message => "Mismatching return types%s within the same function",
         hint_0  => "Return type '%s' on line %d",
         hint_1  => "Return type '%s' on line %d"
+    },
+    HungryArgumentMisplacement => {
+        message => "Ellipsis (...) can only occur on the last argument",
+        hint_0  => "Found argument with ellipsis (%s) on line %d",
+        hint_1  => "Found a later argument (%s) on line %d"
     }
 );
 
@@ -93,9 +98,10 @@ sub verify {
     # raise error for multiple bareword declarations by same name in same scope
     identify_duplicate_barewords($v, $main_node) and return;
 
-    # raise error for mismatching return types in the same function
-    identify_return_mismatches($v, $main_node) and return;
+    # various checks on functions
+    function_checks($v, $main_node) and return;
 
+    return;
 }
 
 sub identify_lexical_variable_declarations {
@@ -390,7 +396,7 @@ sub identify_duplicate_barewords {
     };
 
     # functions and methods
-    foreach my $fm ($main_node->filter_descendants(type => 'Function Method')) {
+    foreach my $fm ($main_node->filter_descendants(type => 'Function')) {
 
         my ($owner) = $fm->owner;
         next if !$owner;
@@ -450,9 +456,41 @@ sub verify_regular_expressions {
     }
 }
 
-sub identify_return_mismatches {
+sub function_checks {
     my ($v, $main_node) = @_;
-    my @funcs = $main_node->filter_descendants(type => 'Function Method');
+    my @funcs = $main_node->filter_descendants(type => 'Function');
+
+    # raise error for ellipsis on argument other than last
+    identify_hungry_arguments($v, $main_node, @funcs) and return;
+
+    # raise error for mismatching return types in the same function
+    identify_return_mismatches($v, $main_node, @funcs) and return;
+
+    return;
+}
+
+sub identify_hungry_arguments {
+    my ($v, $main_node, @funcs) = @_;
+    foreach my $func (@funcs) {
+        my $found;
+        foreach my $wn ($func->arguments) {
+            $found = $wn, next if $wn->{ellipsis};
+            next unless $found;
+            my @hints;
+            $hints[0] = [
+                $found->variable->desc,
+                int $found->variable->{create_pos}
+            ];
+            $hints[1] = [ $wn->variable->desc, int $wn->{create_pos} ];
+            return $found->throw(\@hints, HungryArgumentMisplacement =>);
+        }
+    }
+    return;
+}
+
+sub identify_return_mismatches {
+    my ($v, $main_node, @funcs) = @_;
+
     foreach my $func (@funcs) {
         foreach my $ret ($func->returns) {
 
