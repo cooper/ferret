@@ -70,6 +70,50 @@
 #                                                  Instruction
 #                                                      Take
 #                                                          Lexical variable '$el'
+#          Method 'flatten'
+#              Body ('function' scope)
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$new'
+#                          Value list [0 items]
+#                  For (values)
+#                      Expression ('for' parameter)
+#                          Lexical variable '$el'
+#                      Expression ('in' parameter)
+#                          Special variable '*self'
+#                      Body ('for' scope)
+#                          If
+#                              Expression ('if' parameter)
+#                                  Call
+#                                      Special property '*instanceOf'
+#                                          Lexical variable '$el'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Bareword 'List'
+#                              Body ('if' scope)
+#                                  Instruction
+#                                      Call
+#                                          Property 'push'
+#                                              Lexical variable '$new'
+#                                          Named argument list [1 item]
+#                                              Item 0
+#                                                  Pair 'items'
+#                                                      Call
+#                                                          Property 'flatten'
+#                                                              Lexical variable '$el'
+#                                                          Argument list [0 items]
+#                          Else
+#                              Body ('else' scope)
+#                                  Instruction
+#                                      Call
+#                                          Property 'push'
+#                                              Lexical variable '$new'
+#                                          Argument list [1 item]
+#                                              Item 0
+#                                                  Lexical variable '$el'
+#                  Instruction
+#                      Return
+#                          Lexical variable '$new'
 #          Method 'withoutAll'
 #              Body ('function' scope)
 #                  Instruction
@@ -358,7 +402,7 @@
 #                                  Item 0
 #                                      Special variable '*self'
 #                          Bareword 'Iterator'
-#      Include (Code, Iterator, ListIterator, T)
+#      Include (Code, Iterator, List, ListIterator, T)
 package FF;
 
 use warnings;
@@ -388,7 +432,7 @@ my $result = do {
     load_core('main');
 
     # Anonymous function definition with topicalizer
-    my $func_3 = function_def(
+    my $func_4 = function_def(
         $f, undef, undef,
         [ { name => '_' } ],
         undef,
@@ -529,8 +573,74 @@ my $result = do {
             }
         );
 
+        # Method event 'flatten' definition
+        my $func_3 = method_event_def(
+            $f, $scope,
+            'flatten',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    new => create_list( $f, [] ),
+                    $file_scope, $pos->(34.2)
+                );
+                {
+                    my $loop_ret = iterate(
+                        $f, $scope,
+                        ${ $scope->{special} }->{'self'},
+                        'el',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    $$scope->{'el'}->property_u( '*instanceOf',
+                                        $pos->(36.3) )->(
+                                        [ $$scope->{'List'} ], $scope,
+                                        undef,                 $pos->(36.4)
+                                        )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                $$scope->{'new'}
+                                  ->property_u( 'push', $pos->(37.1) )->(
+                                    [
+                                        undef,
+                                        [
+                                            items => $$scope->{'el'}
+                                              ->property_u( 'flatten',
+                                                $pos->(37.3) )->(
+                                                [ undef, [] ], $scope,
+                                                undef, $pos->(37.35)
+                                                )
+                                        ]
+                                    ],
+                                    $scope, undef,
+                                    $pos->(37.15)
+                                  );
+                            }
+                            else {
+                                $$scope->{'new'}
+                                  ->property_u( 'push', $pos->(39.2) )->(
+                                    [ $$scope->{'el'} ],
+                                    $scope, undef, $pos->(39.3)
+                                  );
+                            }
+                        },
+                        $pos->(35.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_ret;
+                }
+                return $ret_func->( $$scope->{'new'} );
+                return $ret;
+            }
+        );
+
         # Method event 'withoutAll' definition
-        my $func_4 = method_event_def(
+        my $func_5 = method_event_def(
             $f, $scope,
             'withoutAll',
             [
@@ -544,17 +654,17 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 34.2 ) or return;
+                need( $scope, $args, 'what', 46.2 ) or return;
                 return $ret_func->(
                     $$self->{'grep'}->(
                         [
-                            $func_3->inside_scope(
+                            $func_4->inside_scope(
                                 (undef) => $scope,
                                 undef, $class, $ins, undef, undef
                             )
                         ],
                         $scope, undef,
-                        $pos->(35.15)
+                        $pos->(47.15)
                     )
                 );
                 return $ret;
@@ -562,7 +672,7 @@ my $result = do {
         );
 
         # Method event 'without' definition
-        my $func_5 = method_event_def(
+        my $func_6 = method_event_def(
             $f, $scope,
             'without',
             [
@@ -576,10 +686,10 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 41.2 ) or return;
+                need( $scope, $args, 'what', 53.2 ) or return;
                 $scope->set_property(
                     found => Ferret::undefined,
-                    $pos->(42.2)
+                    $pos->(54.2)
                 );
                 return $ret_func->(
                     do {
@@ -622,13 +732,13 @@ my $result = do {
                                                 var(
                                                     $scope,
                                                     found => $true,
-                                                    $file_scope, $pos->(45.2)
+                                                    $file_scope, $pos->(57.2)
                                                 );
                                                 return 'next';
                                             }
                                             $take->( $$scope->{'el'} );
                                         },
-                                        $pos->(43.1)
+                                        $pos->(55.1)
                                     );
                                     return $ret_func->($loop_ret) if $loop_ret;
                                 }
@@ -644,7 +754,7 @@ my $result = do {
         );
 
         # Method event 'remove' definition
-        my $func_6 = method_event_def(
+        my $func_7 = method_event_def(
             $f, $scope, 'remove',
             [
                 {
@@ -657,8 +767,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 54.2 ) or return;
-                $ret->set_property( removed => $false, $pos->(55.2) );
+                need( $scope, $args, 'what', 66.2 ) or return;
+                $ret->set_property( removed => $false, $pos->(67.2) );
                 {
                     my $loop_ret = iterate_pair(
                         $f, $scope,
@@ -682,15 +792,15 @@ my $result = do {
                             }
                             $ret->set_property(
                                 found => $$scope->{'el'},
-                                $pos->(60.2)
+                                $pos->(72.2)
                             );
                             $ret->set_property(
                                 removed => $true,
-                                $pos->(61.2)
+                                $pos->(73.2)
                             );
                             return 'last';
                         },
-                        $pos->(56.05)
+                        $pos->(68.05)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -699,7 +809,7 @@ my $result = do {
         );
 
         # Method event 'removeAll' definition
-        my $func_7 = method_event_def(
+        my $func_8 = method_event_def(
             $f, $scope,
             'removeAll',
             [
@@ -713,7 +823,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 68.2 ) or return;
+                need( $scope, $args, 'what', 80.2 ) or return;
                 var(
                     $scope,
                     found => do {
@@ -746,7 +856,7 @@ my $result = do {
                                             }
                                             $take->( $$scope->{'el'} );
                                         },
-                                        $pos->(69.15)
+                                        $pos->(81.15)
                                     );
                                     return $ret_func->($loop_ret) if $loop_ret;
                                 }
@@ -757,20 +867,20 @@ my $result = do {
                         $gather_ret;
                     },
                     $file_scope,
-                    $pos->(69.1)
+                    $pos->(81.1)
                 );
-                $ret->set_property( found => $$scope->{'found'}, $pos->(75.2) );
+                $ret->set_property( found => $$scope->{'found'}, $pos->(87.2) );
                 $ret->set_property(
                     removed =>
-                      $$scope->{'found'}->property_u( 'length', $pos->(76.4) ),
-                    $pos->(76.2)
+                      $$scope->{'found'}->property_u( 'length', $pos->(88.4) ),
+                    $pos->(88.2)
                 );
                 return $ret;
             }
         );
 
         # Method event 'first' definition
-        my $func_8 = method_event_def(
+        my $func_9 = method_event_def(
             $f, $scope, 'first',
             [
                 {
@@ -783,7 +893,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 81.2 ) or return;
+                need( $scope, $args, 'code', 93.2 ) or return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -795,7 +905,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               $pos->(83.15)
+                                        undef,               $pos->(95.15)
                                     )
                                 )
                               )
@@ -806,7 +916,7 @@ my $result = do {
                                 return $ret_func->( $$scope->{'el'} );
                             }
                         },
-                        $pos->(82.1)
+                        $pos->(94.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -816,7 +926,7 @@ my $result = do {
         );
 
         # Method event 'any' definition
-        my $func_9 = method_event_def(
+        my $func_10 = method_event_def(
             $f, $scope, 'any',
             [
                 {
@@ -829,7 +939,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 90.2 ) or return;
+                need( $scope, $args, 'code', 102.2 ) or return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -841,7 +951,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               $pos->(92.15)
+                                        undef,               $pos->(104.15)
                                     )
                                 )
                               )
@@ -852,7 +962,7 @@ my $result = do {
                                 return $ret_func->($true);
                             }
                         },
-                        $pos->(91.1)
+                        $pos->(103.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -862,7 +972,7 @@ my $result = do {
         );
 
         # Method event 'all' definition
-        my $func_10 = method_event_def(
+        my $func_11 = method_event_def(
             $f, $scope, 'all',
             [
                 {
@@ -875,7 +985,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 99.2 ) or return;
+                need( $scope, $args, 'code', 111.2 ) or return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -890,7 +1000,7 @@ my $result = do {
                                             [ $$scope->{'el'} ],
                                             $scope,
                                             undef,
-                                            $pos->(101.2)
+                                            $pos->(113.2)
                                         )
                                     )
                                 )
@@ -902,7 +1012,7 @@ my $result = do {
                                 return $ret_func->($false);
                             }
                         },
-                        $pos->(100.1)
+                        $pos->(112.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -912,7 +1022,7 @@ my $result = do {
         );
 
         # Method event 'sum' definition
-        my $func_11 = method_event_def(
+        my $func_12 = method_event_def(
             $f, $scope, 'sum', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -925,10 +1035,10 @@ my $result = do {
                     $scope,
                     c => ${ $scope->{special} }->{'self'}->get_index_value(
                         [ num( $f, "0" ) ],
-                        $scope, $pos->(111.4)
+                        $scope, $pos->(123.4)
                     ),
                     $file_scope,
-                    $pos->(111.2)
+                    $pos->(123.2)
                 );
                 {
                     my $loop_ret = iterate(
@@ -945,14 +1055,14 @@ my $result = do {
                                     ${ $scope->{special} }->{'self'}
                                       ->get_index_value(
                                         [ $$scope->{'i'} ], $scope,
-                                        $pos->(113.3)
+                                        $pos->(125.3)
                                       )
                                 ),
                                 $file_scope,
-                                $pos->(113.1)
+                                $pos->(125.1)
                             );
                         },
-                        $pos->(112.1)
+                        $pos->(124.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -962,11 +1072,11 @@ my $result = do {
         );
 
         # Method event 'sum0' definition
-        my $func_12 = method_event_def(
+        my $func_13 = method_event_def(
             $f, $scope, 'sum0', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, c => num( $f, "0" ), $file_scope, $pos->(121.2) );
+                var( $scope, c => num( $f, "0" ), $file_scope, $pos->(133.2) );
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -980,10 +1090,10 @@ my $result = do {
                                     $scope, $$scope->{'c'}, $$scope->{'el'}
                                 ),
                                 $file_scope,
-                                $pos->(123.2)
+                                $pos->(135.2)
                             );
                         },
-                        $pos->(122.1)
+                        $pos->(134.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -993,7 +1103,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $func_13 = method_event_def(
+        my $func_14 = method_event_def(
             $f, $scope,
             'iterator',
             undef,
@@ -1003,7 +1113,7 @@ my $result = do {
                 return $ret_func->(
                     $$scope->{'ListIterator'}->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                $pos->(129.3)
+                        undef,                                $pos->(141.3)
                     )
                 );
                 return $ret;
@@ -1021,40 +1131,44 @@ my $result = do {
             grep => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_4->inside_scope(
-            withoutAll => $scope,
+        $func_3->inside_scope(
+            flatten => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_5->inside_scope(
-            without => $scope,
+            withoutAll => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_6->inside_scope(
-            remove => $scope,
+            without => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_7->inside_scope(
-            removeAll => $scope,
+            remove => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_8->inside_scope(
-            first => $scope,
+            removeAll => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_9->inside_scope(
-            any => $scope,
+            first => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_10->inside_scope(
+            any => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_11->inside_scope(
             all => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_11->inside_scope( sum => $scope, $proto, $class, $ins, 1, undef );
-        $func_12->inside_scope(
+        $func_12->inside_scope( sum => $scope, $proto, $class, $ins, 1, undef );
+        $func_13->inside_scope(
             sum0 => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $func_13->inside_scope(
+        $func_14->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );
@@ -1081,7 +1195,7 @@ my $result = do {
             undef
         );
     }
-    load_namespaces( $context, qw(Code Iterator ListIterator T) );
+    load_namespaces( $context, qw(Code Iterator List ListIterator T) );
 };
 
 after_content();

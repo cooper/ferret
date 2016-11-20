@@ -301,7 +301,7 @@ our %element_rules = (
         ],
 
         children_must_be => [                                                   # WantNeedType[1]
-            'Bareword',
+            'Bareword', # TODO: TypedClass
             'Argument declaration type following colon (:) must be a bareword',
             1
         ],

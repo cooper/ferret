@@ -482,7 +482,8 @@ sub inside_scope {
     # $p_set    =   the computed property should be set after evaluating
     #               only makes sense with $is_prop.
     #
-    my ($func, $name, $scope, $owner, $class, $ins, $is_prop, $p_set) = (shift, @_);
+    my ($func, $name, $scope, $owner, $class, $ins, $is_prop, $p_set) =
+        (shift, @_);
 
     $func->{class}         = $class;
     $func->{outer_scope}   = $scope;
@@ -581,7 +582,9 @@ sub _global_function_prototype {
         });
         $proto->set_property(detailedSignature => sub {
             my ($func) = @_;
-            Ferret::String->new($f, str_value => $func->detailed_signature_string)
+            Ferret::String->new($f, str_value =>
+                $func->detailed_signature_string
+            )
         });
         $proto;
     };
