@@ -476,7 +476,7 @@ sub c_PAREN_E {
         if $t ne 'PAREN_E';
 
     # closes these things.
-    $c->close_nodes(qw(Negation Operation Pair NamedPair Detail));
+    $c->close_nodes(qw(Negation Operation Pair NamedPair Detail Assignment));
 
     # close the list itself.
     #
@@ -879,18 +879,6 @@ sub c_operator {
 sub c_OP_COMMA {
     my ($c, $value) = @_;
 
-    # we're in a list.
-    if ($c->list) {
-
-        # Rules for ListItem:
-        #   See c_PAREN_S().
-
-        # set the current node to a new list item.
-        $c->set_node($c->list->new_item);
-
-        return $c->node;
-    }
-
     # we're in a typed class.
     if ($c->node->type eq 'TypedClass') {
         my $tc = $c->node;
@@ -934,6 +922,23 @@ sub c_OP_COMMA {
         $c->adopt_and_set_node($instr);
 
         return $c->adopt_and_set_node($local);
+    }
+
+    # we're in a list.
+    if ($c->list) {
+
+        # Rules for ListItem:
+        #   See c_PAREN_S().
+
+        # close these things and then make sure the current node is the
+        # list item.
+        $c->close_nodes(qw(Negation Operation Pair NamedPair Detail Assignment));
+        return $c->unexpected if $c->node->parent != $c->list;
+
+        # set the current node to a new list item.
+        $c->set_node($c->list->new_item);
+
+        return $c->node;
     }
 
     # we're inside an OnParameter, so this comma could separate from a
