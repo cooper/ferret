@@ -1,5 +1,5 @@
 # Copyright (c) 2015, Mitchell Cooper
-package F::FunctionMethodBody;
+package F::FunctionBody;
 
 use warnings;
 use strict;

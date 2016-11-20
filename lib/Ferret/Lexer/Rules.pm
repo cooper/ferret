@@ -725,7 +725,7 @@ our %element_rules = (
     PropertyVariable => {
 
         must_be_somewhere_inside => [                                           # PropertyVariable[0]
-            'InsideBody TypeBody FunctionMethodBody',
+            'InsideBody TypeBody FunctionBody',
             "Property variable (standalone .property) can only exist within ".
             "'inside', 'type', or 'function' block",
             0

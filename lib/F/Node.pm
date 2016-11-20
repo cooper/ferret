@@ -60,22 +60,22 @@ sub ordered_children {
 
 sub filter_children {
     my ($node, %rules) = @_;
-    return _filter_children($node, [ $node->children ], %rules);
+    return _filter_elements($node, [ $node->children ], %rules);
 }
 
 sub filter_descendants {
     my ($node, %rules) = @_;
-    return _filter_children($node, [ $node->descendants ], %rules);
+    return _filter_elements($node, [ $node->descendants ], %rules);
 }
 
 sub filter_ancestors {
     my ($node, %rules) = @_;
-    return _filter_children($node, [ $node->all_ancestors ], %rules);
+    return _filter_elements($node, [ $node->all_ancestors ], %rules);
 }
 
-sub _filter_children {
-    my ($node, $children, %rules) = @_;
-    my @children = @$children;
+sub _filter_elements {
+    my ($node, $elements, %rules) = @_;
+    my @elements = @$elements;
     my %ignore   = map { $_ => 1 } split /\s+/, $rules{ignore} || '';
     my %types    = map { $_ => 1 } split /\s+/, $rules{type}   || '';
     my @order    =                 split /\s+/, $rules{order}  || '';
@@ -83,10 +83,10 @@ sub _filter_children {
 
     # separate by types for ordering.
     my (%ordered, @ordered);
-    foreach my $child (@children) {
-        my $type    = $child->type;
-        my $fc_type = $child->is_node && $child->first_child ?
-            $type.'.'.$child->first_child->type : '';
+    foreach my $el (@elements) {
+        my $type    = $el->type;
+        my $fc_type = $el->is_node && $el->first_child ?
+            $type.'.'.$el->first_child->type : '';
 
         # ignored.
         next if $ignore{$type} || $ignore{$fc_type};
@@ -95,8 +95,8 @@ sub _filter_children {
         next if keys %types && !$types{$type} && !$types{$fc_type};
 
         # add to accepted.
-        if ($order{$type}) { push @{ $ordered{$type} ||= [] }, $child }
-        else               { push @ordered, $child                    }
+        if ($order{$type}) { push @{ $ordered{$type} ||= [] }, $el  }
+        else               { push @ordered, $el                     }
 
     }
 

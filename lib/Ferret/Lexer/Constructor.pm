@@ -346,7 +346,7 @@ sub c_CLOSURE_E {
     my $p = $closure->parent;
     my $is_gather = $closure->type eq 'GatherBody';
     my $is_anon_func =
-        $closure->type eq 'FunctionMethodBody' &&
+        $closure->type eq 'FunctionBody'       &&
         $p->type eq 'Function'                 &&
         $p->anonymous;
     undef $is_anon_func if $p->parent->type eq 'On';
@@ -1387,7 +1387,7 @@ sub c_VAR_PROP {
     my ($c, $value) = @_;
 
     # Rule PropertyVariable[0]:
-    #   Must be somewhere inside an InsideBody, FunctionMethodBody, or Type.
+    #   Must be somewhere inside an InsideBody, FunctionBody, or Type.
 
     # Rule PropertyVariable[1]:
     #   If not somewhere inside an InsideBody or Type, the nearest Function

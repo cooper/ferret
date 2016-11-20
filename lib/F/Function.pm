@@ -79,7 +79,7 @@ sub desc {
 sub new {
     my ($class, %opts) = @_;
     my $func = $class->SUPER::new(
-        body => F::new('FunctionMethodBody'),
+        body => F::new('FunctionBody'),
         %opts
     );
     $func->adopt($func->body);
