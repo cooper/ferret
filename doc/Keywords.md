@@ -840,16 +840,16 @@ type[?] <name> { [(<conditions>|<transforms>|<expresions>)...] }
 Defines a type interface for dynamic type checking. This is especially useful
 for functions or methods utilizing [`want`](#want) or [`need`](#need).
 
-Types are generally declared at document or class level, but they are valid
+Interfaces are generally declared at document or class level, but they are valid
 within almost any scope.
 
-In order for an object to conform to a type, it must meet **all** of the
-provided conditions. A few keywords can be used in a type declaration:
+In order for an object to conform to an interface, it must meet **all** of the
+provided conditions. These keywords can be used in a type declaration:
 
 * [`isa`](#isa) - specifies another type to which the object must conform.
-* [`satisfies`](#satisfies) - specifies a condition which the object must
-  meet.
-* [`can`](#can) - specifies a method which the object must implement.
+* [`satisfies`](#satisfies) - specifies a condition which the object must meet.
+* [`can`](#can) - specifies a method or computed property which the object must
+  implement.
 * [`transform`](#transform) - specifies an object transformation.
 
 Conditions are checked in the order that they are specified. Transforms are also
@@ -863,10 +863,24 @@ object will conform to the type only if it is equal
 to at least **one** of them. Although this feature is most
 often used with [symbols](Variables.md#symbols), any expressions are valid.
 
+```
+type Gender {
+    :male
+    :female
+}
+```
+
 Anywhere within the `type` construct, the test object is the object of
 interest for [property variables](Variables.md#property-variables). Therefore,
 the test object's properties can be easily accessed using the `.property`
-syntax.
+syntax. If you need to access the object itself, use the topic variable `$_`.
+
+```
+type Even {
+    isa Num
+    satisfies .even
+}
+```
 
 Behind the scenes, `type` creates a function which tests an object's
 conformance. If an object matches, `TypeName($obj)` will output that object
@@ -878,9 +892,9 @@ The finished type function will be available only within the
 
 If the keyword is spelled `type?` with a question mark
 ([`OP_MAYBE`](Operators.md#inline-if-operator)) suffixing it, the interface
-function will not be created until the first time it is referenced.
-This works similarly to lazy assignment with the `?=` operator
-([`OP_LASSIGN`](Operators.md#lazy-assignment-operator)).
+is marked as lazy. Lazy interfaces are evaluated only once per object. If an
+object conforms to the interface once, it will be assumed to conform
+permanently, and all further checks will be skipped.
 
 Below is an example with only expressions provided. For examples with various
 conditions or transforms, see the respective keywords.
