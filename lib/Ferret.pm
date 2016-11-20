@@ -362,6 +362,24 @@ sub inspect {
     $f->main_context->property('inspect')->call([ $_ ]) for @_;
 }
 
+sub dump {
+    my $obj = shift;
+    my $type;
+    if (blessed $obj) {
+        my @parents = map $_->{proto_class}{name}, $obj->parents;
+        my $type    = join(',', @parents);
+    }
+
+    require Data::Dumper;
+    Data::Dumper->import('Dumper');
+    $Data::Dumper::Maxdepth = 1;
+    $Data::Dumper::Terse = 1;
+
+    print Dumper($obj);
+    print " = [ $type ] $obj\n" if length $type;
+    print "\n";
+}
+
 ################
 ### INCLUDES ###
 ################

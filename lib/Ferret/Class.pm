@@ -301,7 +301,6 @@ sub _global_class_prototype {
 sub _global_init {
     my $f = shift;
     return $f->{_global_class_init} ||= fmethod(sub {
-        print "F($f) @_\n";
         my ($weak_class, $args) = @_[FUNC_SELF, FUNC_ARGS];
         my $obj = delete $args->{obj};
         weaken($weak_class);

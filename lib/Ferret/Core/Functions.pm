@@ -63,16 +63,8 @@ sub _say {
 
 sub _dump {
     my ($self, $args, $call_scope, $scope, $ret) = @_;
-    my $obj     = $args->{value};
-    my @parents = map $_->{proto_class}{name}, $obj->parents;
-    my $type    = join(',', @parents);
-
-    require Data::Dumper;
-    Data::Dumper->import('Dumper');
-    $Data::Dumper::Maxdepth = 1;
-    $Data::Dumper::Terse = 1;
-
-    print Dumper($obj), " = [ $type ] $obj\n";
+    my $obj = $args->{value};
+    Ferret::dump($obj);
     return $ret;
 }
 

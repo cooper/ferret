@@ -35,10 +35,34 @@ sub init {
 }
 
 sub call {
-    my $tc = shift;
-    $tc->{main_class}->set_generics($tc->{other_types});
-    my $ret = $tc->{main_class}->call(@_);
-    $tc->{main_class}->reset_generics;
+    my ($tc, $args) = (shift, @_);
+    my $class = $tc->{main_class};
+
+    # if passed an instance, return the instance.
+    if (ref $args eq 'ARRAY' && @$args == 1 &&
+    $args->[0]->instance_of($class)) {
+        my $obj  = $args->[0];
+        my $gens = $obj->{generics}{$class} or return Ferret::undefined;
+        my $i    =  -1;
+
+        # make sure the generics are compatible. see issue #23.
+        foreach my $type (@{ $tc->{other_types} }) { $i++;
+
+            # find the name of the generic.
+            my $name = $class->{generic_letters}[$i];
+            $name = $$name if ref $name;
+
+            # ensure the object exists and is equal.
+            next if $gens->{$name} && $gens->{$name} == $type;
+            return Ferret::undefined;
+        }
+
+        return $obj;
+    }
+
+    $class->set_generics($tc->{other_types});
+    my $ret = $class->call(@_);
+    $class->reset_generics;
     return $ret;
 }
 
