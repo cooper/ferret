@@ -115,7 +115,7 @@ sub init {
     # before the initializer is called, the generics are still available.
     # if no generics are currently available, set them to Any.
     $class->set_generics([]) if !$class->{force_generics};
-    $obj->{generics} = delete $class->{force_generics};
+    $obj->{generics}{$class} = delete $class->{force_generics};
 
     # fetch or create return object.
     my $fire;
@@ -123,7 +123,8 @@ sub init {
 
     # make sure the right number of generics are available.
     my $need = $class->generics_required;
-    my $have = $obj->{generics} ? scalar keys %{ $obj->{generics} } : 0;
+    my $have = $obj->{generics}{$class} ?
+        scalar keys %{ $obj->{generics}{$class} } : 0;
     if ($have < $need) {
         return $ret->fail(ferror(
             "Not enough generic types. $need generics are required."

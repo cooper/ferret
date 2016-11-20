@@ -132,7 +132,7 @@ sub call {
     # we have to do this before dynamic type checking.
     my $generics = $class && $class->{force_generics} ?
         delete $class->{force_generics}               :
-        $self->{generics};
+        $class ? $self->{generics}{$class} : undef;
 
     # create the return object.
     if ($return && blessed $return && !$return->isa('Ferret::Return')) {
