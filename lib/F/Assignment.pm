@@ -4,7 +4,7 @@ package F::Assignment;
 use warnings;
 use strict;
 use 5.010;
-use parent qw(F::NodeExpression F::PropertyOwner);
+use parent qw(F::Node F::PropertyOwner);
 
 sub desc {
     my $a = shift;
@@ -16,6 +16,10 @@ sub desc {
     return 'division assignment'        if $a->{operation} eq 'div';
     return 'altering assignment';
 }
+
+# assignments can only act as expressions when they will return Ferret objects.
+# lazy assignments return code or array references.
+sub is_Expression { !shift->{lazy} }
 
 sub owner {
     my ($a, $owner_str, $owner, $owrite) = shift;

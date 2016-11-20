@@ -38,7 +38,11 @@ sub _all_types {
 
 sub is_type {
     my ($el, $type) = @_;
-    return any { $_ eq $type } $el->all_types;
+    return 1 if any { $_ eq $type } $el->all_types;
+    if (my $code = $el->can("is_$type")) {
+        return $code->($el);
+    }
+    return;
 }
 
 sub parent      { shift->{parent}           }       # parent element
