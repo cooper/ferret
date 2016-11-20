@@ -57,18 +57,13 @@
 #                                  Body ('if' scope)
 #                                      Instruction
 #                                          Return
-#                              If
-#                                  Expression ('if' parameter)
-#                                      Negation
-#                                          Index
+#                              Instruction
+#                                  Call
+#                                      Bareword 'inspect'
+#                                      Argument list [1 item]
+#                                          Item 0
 #                                              Property 'params'
 #                                                  Lexical variable '$msg'
-#                                              Index list [1 item]
-#                                                  Item 0
-#                                                      Number '1'
-#                                  Body ('if' scope)
-#                                      Instruction
-#                                          Return
 #                              Instruction
 #                                  Assignment
 #                                      Lexical variable '$trim'
@@ -205,36 +200,24 @@ my $result = do {
 
                 return $ret_func->();
             }
-            if (
-                bool(
-                    _not(
-                        $$scope->{'msg'}->property_u( 'params', $pos->(24.4) )
-                          ->get_index_value(
-                            [ num( $f, "1" ) ],
-                            $scope, $pos->(24.5)
-                          )
-                    )
-                )
-              )
-            {
-                my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                return $ret_func->();
-            }
+            $$scope->{'inspect'}->(
+                [ $$scope->{'msg'}->property_u( 'params', $pos->(23.4) ) ],
+                $scope, undef, $pos->(23.2)
+            );
             var(
                 $scope,
-                trim => $$scope->{'msg'}->property_u( 'params', $pos->(28.25) )
-                  ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(28.3) )
-                  ->property_u( 'word', $pos->(28.45) )
-                  ->( [ num( $f, "0" ) ], $scope, undef, $pos->(28.5) )
-                  ->property_u( 'trimPrefix', $pos->(28.65) )
-                  ->( [ str( $f, "." ) ], $scope, undef, $pos->(28.7), 1 ),
-                $file_scope, $pos->(28.1)
+                trim => $$scope->{'msg'}->property_u( 'params', $pos->(25.25) )
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(25.3) )
+                  ->property_u( 'word', $pos->(25.45) )
+                  ->( [ num( $f, "0" ) ], $scope, undef, $pos->(25.5) )
+                  ->property_u( 'trimPrefix', $pos->(25.65) )
+                  ->( [ str( $f, "." ) ], $scope, undef, $pos->(25.7), 1 ),
+                $file_scope, $pos->(25.1)
             );
             if (
                 bool(
                     _not(
-                        $$scope->{'trim'}->property_u( 'trimmed', $pos->(29.4) )
+                        $$scope->{'trim'}->property_u( 'trimmed', $pos->(26.4) )
                     )
                 )
               )
@@ -246,17 +229,17 @@ my $result = do {
             var(
                 $scope,
                 command =>
-                  $$scope->{'trim'}->property_u( 'result', $pos->(31.4) ),
-                $file_scope, $pos->(31.2)
+                  $$scope->{'trim'}->property_u( 'result', $pos->(28.4) ),
+                $file_scope, $pos->(28.2)
             );
             {
                 my $maybe_0 = $$scope->{'bot'};
                 my $maybe_1 =
-                  $maybe_0->property_u( 'commands', $pos->(34.15) )
+                  $maybe_0->property_u( 'commands', $pos->(31.15) )
                   ->property_eval_u(
                     $$scope->{'command'}
-                      ->property_u( 'lowercase', $pos->(34.35) ),
-                    $pos->(34.2)
+                      ->property_u( 'lowercase', $pos->(31.35) ),
+                    $pos->(31.2)
                   );
                 my $maybe_2 = $$scope->{'bot'};
                 if (
@@ -280,25 +263,25 @@ my $result = do {
                                         _this   => $maybe_2,
                                         msg     => $$scope->{'msg'},
                                         channel => $$scope->{'msg'}->property_u(
-                                            'target', $pos->(37.3)
+                                            'target', $pos->(34.3)
                                         )
                                     ]
                                 ],
                                 $scope, undef,
-                                $pos->(34.5)
+                                $pos->(31.5)
                             );
                         },
                         sub {
                             my ($scope) = @_;
                             $$scope->{'msg'}
-                              ->property_u( 'target',  $pos->(38.3) )
-                              ->property_u( 'privmsg', $pos->(38.35) )->(
+                              ->property_u( 'target',  $pos->(35.3) )
+                              ->property_u( 'privmsg', $pos->(35.35) )->(
                                 [
                                     $$scope->{'e'}
-                                      ->property_u( 'msg', $pos->(38.5) )
+                                      ->property_u( 'msg', $pos->(35.5) )
                                 ],
                                 $scope, undef,
-                                $pos->(38.4)
+                                $pos->(35.4)
                               );
                         },
                         'e'
@@ -393,10 +376,10 @@ my $result = do {
                         sub {
                             my ( $scope, $ret_func ) = @_;
                             $$scope->{'c'}
-                              ->property_u( 'connect', $pos->(44.2) )
-                              ->( [ undef, [] ], $scope, undef, $pos->(44.3) );
+                              ->property_u( 'connect', $pos->(41.2) )
+                              ->( [ undef, [] ], $scope, undef, $pos->(41.3) );
                         },
-                        $pos->(43.1)
+                        $pos->(40.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }

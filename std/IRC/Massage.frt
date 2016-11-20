@@ -66,7 +66,7 @@ method parse {
         }
 
         # could be the source if we haven't gotten it.
-        if !$gotCommand && !$gotSource && $word.hasPrefix("") {
+        if !$gotCommand && !$gotSource && $word.hasPrefix(":") {
             $word = $word.trimPrefix(":")
             $gotSource = true
             @source = $word
@@ -85,7 +85,7 @@ method parse {
         }
 
         # sentinel-prefixed final parameter.
-        if $word.hasPrefix("") {
+        if $word.hasPrefix(":") {
             $rest = $data.split(/\s+/, limit: $wordI + 1)[$wordI].trimPrefix(":")
             $params.push($rest)
             last # word

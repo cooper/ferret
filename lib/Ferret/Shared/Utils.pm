@@ -19,6 +19,15 @@ sub import {
     *{ "${package}::$_" } = *{ "${this_package}::$_" } foreach @_;
 }
 
+# convert array or hash ref to list or empty list if not ref.
+sub ref_to_list ($) {
+    my $ref = shift;
+    return defined $ref ? ($ref) : () if !ref $ref;
+    if (ref $ref eq 'ARRAY') { return @$ref }
+    if (ref $ref eq 'HASH')  { return %$ref }
+    return ();
+}
+
 #############################
 ### FILE NAME CONVERSIONS ###
 #############################

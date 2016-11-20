@@ -11,6 +11,7 @@ use List::Util qw(any all none);
 use Ferret::Core::Conversion qw(
     fstring ffunction ferror pbool pstring plist
     FUNC_SCOPE FUNC_SELF FUNC_THIS FUNC_INS FUNC_RET FUNC_ARGS
+    ref_to_list
 );
 
 our $pos;
@@ -403,9 +404,9 @@ sub function_def {
         anonymous => 1
     );
 
-    # add arguments.
-    $func->add_argument(%$_) foreach @$arg_ref;
-    $func->add_return(%$_)   foreach @$ret_ref;
+    # add arguments and returns.
+    $func->add_argument(%$_) foreach ref_to_list $arg_ref;
+    $func->add_return(%$_)   foreach ref_to_list $ret_ref;
 
     return $func;
 }
@@ -424,9 +425,9 @@ sub function_event_def {
         pending_add => 1
     );
 
-    # add arguments.
-    $func->add_argument(%$_) foreach @$arg_ref;
-    $func->add_return(%$_)   foreach @$ret_ref;
+    # add arguments and returns.
+    $func->add_argument(%$_) foreach ref_to_list $arg_ref;
+    $func->add_return(%$_)   foreach ref_to_list $ret_ref;
 
     return $func;
 }
@@ -444,8 +445,8 @@ sub method_event_def {
     );
 
     # add arguments.
-    $func->add_argument(%$_) foreach @$arg_ref;
-    $func->add_return(%$_)   foreach @$ret_ref;
+    $func->add_argument(%$_) foreach ref_to_list $arg_ref;
+    $func->add_return(%$_)   foreach ref_to_list $ret_ref;
 
     return $func;
 }

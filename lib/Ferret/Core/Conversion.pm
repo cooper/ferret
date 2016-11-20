@@ -7,6 +7,7 @@ use utf8;
 use 5.010;
 
 use Ferret::Core::Errors qw(throw);
+use Ferret::Shared::Utils qw(ref_to_list);
 use Types::Serialiser;
 use Scalar::Util qw(blessed weaken looks_like_number);
 use List::Util qw(any);
