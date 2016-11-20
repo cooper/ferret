@@ -5,13 +5,14 @@ use warnings;
 use strict;
 use 5.010;
 
-use parent qw(F::NodeExpression);
+use parent qw(F::Node);
 use Scalar::Util qw(weaken);
 use Ferret::Shared::Utils qw(dot_trim);
 
-sub anonymous  { shift->{anonymous} }
-sub body       { shift->{body}      }
-sub is_method  { shift->{is_method} }
+sub anonymous       { shift->{anonymous}    }
+sub body            { shift->{body}         }
+sub is_method       { shift->{is_method}    }
+sub is_Expression   { shift->anonymous      }
 
 sub new {
     my ($class, %opts) = @_;
