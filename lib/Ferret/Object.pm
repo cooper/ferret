@@ -489,7 +489,7 @@ sub _uniq {
 sub parent_classes {
     my ($obj, @classes) = shift;
     foreach my $parent ($obj->parents) {
-        next unless $parent->{is_proto};
+        next unless $parent->{is_proto} && $parent->{proto_class};
         push @classes, $parent->{proto_class};
     }
     return @classes;

@@ -454,7 +454,8 @@ sub method_event_def {
 # type definitions.
 sub typedef {
     my ($scope, $scope_or_class, $type_name, $code, $lazy) = @_;
-    my $typedef = sub {
+    my $f = $scope->f;
+    my $create_typedef = sub {
 
         # this sub returns a function which returns Ferret true if
         # a method requirement is satisfied.
@@ -530,21 +531,30 @@ sub typedef {
 
         };
 
+        # create a prototype.
+        my $proto = Ferret::Prototype->new($f) if $lazy;
+
         # create a function.
         my $func = ffunction(sub {
             my (undef, $args) = @_;
             my $obj = $args->{obj};
+
+            # already an instance of this type.
+            return $obj if $proto && $obj->has_parent($proto);
+
+            # compute the result and make it an instance of this type.
             my $res = $code->($obj, $create_can, $transform);
+            $res->add_parent($proto) if $proto;
+
             return $res || Ferret::undefined;
         }, $type_name, '$obj');
 
+        $func->set_property(proto => $proto) if $proto;
         $func->{is_typedef} = 1;
         return $func;
     };
 
-    $scope_or_class->set_property($type_name =>
-        $lazy ? [ $typedef ] : $typedef->()
-    ); # TODO: pos
+    $scope_or_class->set_property($type_name => $create_typedef->());
 }
 
 sub typedef_check {

@@ -30,7 +30,7 @@ sub desc {
     my $first = length $rgx->{value} > 13  ?
         substr($rgx->{value}, 0, 10).'...' :
         $rgx->{value};
-    return "Regex /$first/";
+    return "regex /$first/";
 }
 
 sub perl_fmt {

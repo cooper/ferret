@@ -38,6 +38,7 @@ sub desc {
     return "function '$$func{name}'";
 }
 
+# all WantNeeds which belong to this function
 sub arguments {
     my $func = shift;
 
@@ -53,6 +54,7 @@ sub arguments {
     return @wn;
 }
 
+# all Returns and ReturnPairs which belong to this function
 sub returns {
     my $func = shift;
 
