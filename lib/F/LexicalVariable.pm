@@ -3,9 +3,10 @@ package F::LexicalVariable;
 
 use warnings;
 use strict;
-use parent qw(F::Expression F::Assignable);
+use parent qw(F::Expression F::Assignable F::PropertyOwner);
 
-
+sub property_name { shift->{var_name}   }
+sub property_code { '$scope'            }
 
 sub desc {
     my $var = shift;

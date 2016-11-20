@@ -525,7 +525,7 @@ sub c_BRACKET_E {
         if $t ne 'BRACKET_E';
 
     # closes these things.
-    $c->close_nodes(qw(Negation Operation Pair NamedPair));
+    $c->close_nodes(qw(Negation Operation Pair NamedPair Assignment));
 
     # close the list itself.
     #

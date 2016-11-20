@@ -85,8 +85,7 @@ sub close_nodes {
     my $count = 0;
     foreach (sort_precedence(@nodes)) {
         next unless $_ eq $c->node->type;
-        $c->close_node;
-        $count++;
+        $c->close_node, $count++ while $_ eq $c->node->type;
     }
     return $count;
 }

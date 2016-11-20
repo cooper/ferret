@@ -169,7 +169,7 @@ sub _property {
 sub set_property {
     my ($pobj, $prop_name, $value) = (shift, @_);
     my $real_obj = $pobj->{real_obj};
-    $value = perlize($value);
+    $value = perlize(my $ferret_value = $value);
 
     # if we have a method set_$prop_name, use that.
     # also try set$prop_name. If it's camel case, it would be like setSomething.
@@ -177,20 +177,20 @@ sub set_property {
         $real_obj->can("set$prop_name");
     if ($code) {
         $code->($real_obj, $value);
-        return 1;
+        return $ferret_value;
     }
 
     # if we have a method $prop_name, it might be a Moose-style setter.
     $code = $real_obj->can($prop_name);
     if ($code) {
         $code->($real_obj, $value);
-        return 1;
+        return $ferret_value;
     }
 
     # otherwise, just assign to a hash value.
     if (reftype $real_obj eq 'HASH') {
         $pobj->_get_hash_value($prop_name) = $value;
-        return 1;
+        return $ferret_value;
     }
 
     # at this point, the object isn't a hash ref.

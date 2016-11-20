@@ -3,8 +3,7 @@ package F::Property;
 
 use warnings;
 use strict;
-use parent qw(F::NodeExpression F::Assignable);
-
+use parent qw(F::NodeExpression F::Assignable F::PropertyOwner);
 
 sub desc {
     my $prop = shift;
@@ -21,6 +20,9 @@ sub is_special {
 sub prop_name { shift->{prop_name} }
 sub left      { shift->first_child->perl_fmt_do }
 sub index_fmt { (shift->children)[1]->first_child->perl_fmt_do }
+
+sub property_name { shift->{prop_name}  }
+sub property_code { shift->left         }
 
 sub perl_fmt {
     my $prop = shift;

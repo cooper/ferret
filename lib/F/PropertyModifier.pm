@@ -23,30 +23,7 @@ sub perl_fmt {
             $name_code = $c->index_fmt;
             $eval = '_eval';
         }
-        else {
-            $name = $c->prop_name;
-        }
     }
-
-    # delete @x
-    elsif ($c->type eq 'InstanceVariable') {
-        $left = '$self';
-        $name = $c->{var_name};
-    }
-
-    # delete %x
-    elsif ($c->type eq 'ThisVariable') {
-        $left = '$this';
-        $name = $c->{var_name};
-    }
-
-    # delete $x
-    elsif ($c->type eq 'LexicalVariable') {
-        $left = '$scope';
-        $name = $c->{var_name};
-    }
-
-    # TODO: PropertyVariable?
 
     # delete $x[0]
     elsif ($c->type eq 'Index') {
@@ -66,6 +43,9 @@ sub perl_fmt {
         }
 
     }
+
+    $left = $c->property_code if !length $left;
+    $name = $c->property_name if !length $name && !length $name_code;
 
     return "mod_$$mod{mod_type}" => {
         eval => $eval,

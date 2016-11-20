@@ -58,13 +58,6 @@
 #                                      Instruction
 #                                          Return
 #                              Instruction
-#                                  Call
-#                                      Bareword 'inspect'
-#                                      Argument list [1 item]
-#                                          Item 0
-#                                              Property 'params'
-#                                                  Lexical variable '$msg'
-#                              Instruction
 #                                  Assignment
 #                                      Lexical variable '$trim'
 #                                      Detail
@@ -200,10 +193,6 @@ my $result = do {
 
                 return $ret_func->();
             }
-            $$scope->{'inspect'}->(
-                [ $$scope->{'msg'}->property_u( 'params', $pos->(23.4) ) ],
-                $scope, undef, $pos->(23.2)
-            );
             var(
                 $scope,
                 trim => $$scope->{'msg'}->property_u( 'params', $pos->(25.25) )

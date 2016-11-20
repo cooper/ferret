@@ -20,7 +20,7 @@ method addConnection {
         # commands only work in channels right now
         if !$msg.target.*instanceOf(Channel)
             return
-inspect($msg.params)
+
         # find the command
         $trim = detail $msg.params[1].word(0).trimPrefix(".")
         if !$trim.trimmed

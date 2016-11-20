@@ -361,7 +361,7 @@ our %element_rules = (
         # it can be variables or properties.
         # however, it cannot be a special variable.
         children_must_be => [                                                   # PropertyModifier[1]
-            'LexicalVariable InstanceVariable ThisVariable Property Index',
+            '@PropertyOwner Index',
             'Property modifier can only capture non-special variables '.
             'or properties',
             1
@@ -797,12 +797,14 @@ our %element_rules = (
 
     Assignment => {
 
-        parent_must_be => [                                                     # Assignment[0]
-            'Instruction IfParameter Alias SharedDeclaration LocalDeclaration',
-            "Assignment must be direct child of an instruction, 'if' ".
-            "parameter, alias, or variable declaration",
-            0
-        ],
+        # consider: since assignments are expressions now, this can probably be removed?
+        # parent_must_be => [                                                     # Assignment[0]
+        #     'Instruction IfParameter Alias SharedDeclaration LocalDeclaration '.
+        #         'Assignment',
+        #     "Assignment must be direct child of an instruction, 'if' ".
+        #     "parameter, alias, or variable declaration",
+        #     0
+        # ],
 
         # left side and right side
         num_children => 2,                                                      # Assignment[1]

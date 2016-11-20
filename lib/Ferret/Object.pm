@@ -97,9 +97,7 @@ sub set_property {
     delete $obj->{properties}{$prop_name} if !defined $value;
 
     # good.
-    return $value if blessed $value && $value->isa('Ferret::Object');
-    return 1;
-
+    return $value; # object or ref
 }
 
 # set a property or overwrite an inherited property.

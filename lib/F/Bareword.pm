@@ -6,7 +6,6 @@ use strict;
 use 5.010;
 use parent 'F::Expression';
 
-
 sub desc {
     my $el = shift;
     my $desc = "bareword '$$el{bareword_value}'";

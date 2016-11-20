@@ -574,15 +574,15 @@ sub typedef_check {
 # shared variable declaration without a value.
 sub share {
     my ($scope, $prop_name, $pos) = @_;
-    return if $scope->property($prop_name);
-    $scope->set_property($prop_name => Ferret::undefined);
+    my $existing = $scope->property($prop_name);
+    return $existing if $existing;
+    return $scope->set_property($prop_name => Ferret::undefined);
 }
 
 # used for both lexical assignment and share when there's a value.
 sub var {
     my ($owner, $name, $value, $scope_limit_if_ow, $pos) = @_;
-    $owner->set_property_ow($scope_limit_if_ow, $name => $value, $pos);
-    return $value;
+    return $owner->set_property_ow($scope_limit_if_ow, $name => $value, $pos);
 }
 
 sub try_catch {
