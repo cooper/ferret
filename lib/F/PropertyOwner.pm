@@ -5,6 +5,9 @@ use warnings;
 use strict;
 use parent 'F::Element';
 
-# PropertyOwners must implement methods ->property_name and ->property_code
+
+sub property_name { }
+sub property_name_code {}
+sub property_owner_code { }
 
 1

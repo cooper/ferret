@@ -476,6 +476,7 @@ my $result = do {
                       ->( [ $$scope->{'data'} ], $scope, undef, $pos->(10.2) );
                 }
                 want( $self, $args, 'connection', 14.2 );
+
                 $self->weaken_property_ow( 'connection', $pos->(15.1) );
                 return $ret;
             }

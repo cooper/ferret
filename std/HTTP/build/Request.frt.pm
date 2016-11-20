@@ -111,6 +111,7 @@ my $result = do {
                     client => $$scope->{'client'},
                     $pos->(10.2)
                 );
+
                 $self->weaken_property_ow( 'client', $pos->(11.1) );
                 need( $self, $args, 'url' )        or return;
                 need( $self, $args, 'httpMethod' ) or return;

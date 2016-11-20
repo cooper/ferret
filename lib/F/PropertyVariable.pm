@@ -6,7 +6,7 @@ use strict;
 use parent qw(F::Expression F::Assignable F::PropertyOwner);
 
 sub property_name { shift->{var_name}   }
-sub property_code { '$ins'              }
+sub property_owner_code { '$ins'              }
 
 sub desc {
     my $var = shift;

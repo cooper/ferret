@@ -334,6 +334,7 @@ my $result = do {
                     bot => ${ $scope->{special} }->{'self'},
                     $file_scope, $pos->(13.2)
                 );
+
                 $scope->weaken_property_ow( 'bot', $pos->(14.1) );
                 on(
                     $$scope->{'connection'}

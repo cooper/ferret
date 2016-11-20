@@ -21,8 +21,13 @@ sub prop_name { shift->{prop_name} }
 sub left      { shift->first_child->perl_fmt_do }
 sub index_fmt { (shift->children)[1]->first_child->perl_fmt_do }
 
-sub property_name { shift->{prop_name}  }
-sub property_code { shift->left         }
+sub property_owner_code { shift->left }
+sub property_name       { shift->{prop_name}  }
+sub property_name_code  {
+    my $prop = shift;
+    $prop->{is_index} or return;
+    return $prop->index_fmt;
+}
 
 sub perl_fmt {
     my $prop = shift;

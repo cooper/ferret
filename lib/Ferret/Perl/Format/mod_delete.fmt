@@ -1,1 +1,2 @@
+<<assign_code>>
 <<left>>->delete_<<func>><<eval>>(<<name>>, $pos->(<<pos>>))<<for>>

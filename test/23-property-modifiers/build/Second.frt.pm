@@ -37,6 +37,7 @@ my $result = do {
     load_core('main');
 
     var( $scope, x => create_object( $f, [] ), undef, $pos->(1.2) );
+
     $scope->weaken_property_ow( 'x', $pos->(2.1) );
 };
 

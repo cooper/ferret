@@ -1209,8 +1209,10 @@ my $result = do {
                     $pos->(49.05)
                 );
             }
+
             $$this->{'factoids'}
               ->delete_index( $$scope->{'command'}, $pos->(52.1) );
+
             $$scope->{'bot'}->property_u( 'commands', $pos->(53.3) )
               ->delete_property_ow_eval( $$scope->{'command'}, $pos->(53.1) );
             $$scope->{'channel'}->property_u( 'privmsg', $pos->(55.1) )->(

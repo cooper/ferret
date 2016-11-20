@@ -16,16 +16,15 @@ sub perl_fmt {
     my $c = $mod->first_child;
     my ($func, $for, $left, $name, $name_code, $eval) = 'property_ow';
 
-    # delete $x.property
-    if ($c->type eq 'Property') {
-        $left = $c->first_child->perl_fmt_do;
-        if ($c->{is_index}) {
-            $name_code = $c->index_fmt;
-            $eval = '_eval';
-        }
+    # property owners provide the required info
+    if ($c->is_type('PropertyOwner')) {
+        $left      = $c->property_owner_code;
+        $name_code = $c->property_name_code;
+        $name      = $c->property_name;
+        $eval      = '_eval' if length $name_code;
     }
 
-    # delete $x[0]
+    # indices are handled manually
     elsif ($c->type eq 'Index') {
         $left = $c->collection->perl_fmt_do;
         $func = 'index';
@@ -44,10 +43,10 @@ sub perl_fmt {
 
     }
 
-    $left = $c->property_code if !length $left;
-    $name = $c->property_name if !length $name && !length $name_code;
+    my $assign_code = $c->perl_fmt_do if $c->type eq 'Assignment';
 
     return "mod_$$mod{mod_type}" => {
+        assign_code => length $assign_code ? "$assign_code;" : '',
         eval => $eval,
         pos  => $mod->{create_pos},
         left => $left,

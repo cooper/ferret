@@ -1,1 +1,2 @@
+<<assign_code>>
 <<left>>->weaken_<<func>><<eval>>(<<name>>, $pos->(<<pos>>))<<for>>
