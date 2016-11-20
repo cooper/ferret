@@ -197,7 +197,7 @@ my $result = do {
             $f, $scope,
             'initializer__',
             [ { name => 'moos', type => undef, optional => 1, more => undef } ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'moos', 6.2, $true );
@@ -207,9 +207,7 @@ my $result = do {
 
         # Method event 'moo' definition
         my $func_1 = method_event_def(
-            $f, $scope, 'moo',
-            [],
-            [],
+            $f, $scope, 'moo', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'moos'} ) ) {
@@ -248,7 +246,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'barks', 18.2, $false );
@@ -258,9 +256,7 @@ my $result = do {
 
         # Method event 'bark' definition
         my $func_3 = method_event_def(
-            $f, $scope, 'bark',
-            [],
-            [],
+            $f, $scope, 'bark', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( $$self->{'barks'} ) ) {
@@ -293,7 +289,7 @@ my $result = do {
             $f, $scope,
             'initializer__',
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'mean', 30.2, $false );
@@ -303,9 +299,7 @@ my $result = do {
 
         # Method event 'meow' definition
         my $func_5 = method_event_def(
-            $f, $scope, 'meow',
-            [],
-            [],
+            $f, $scope, 'meow', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( str( $f, "meow" ) );
@@ -330,7 +324,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'cat1', 39.1 ) or return;

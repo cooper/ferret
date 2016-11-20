@@ -160,9 +160,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_0 = function_def(
-        $f, undef, undef,
-        [],
-        [],
+        $f, undef, undef, undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$self->{'send'}->(
@@ -194,7 +192,7 @@ my $result = do {
     my $func_1 = function_def(
         $f, undef, undef,
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 18.2 ) or return;
@@ -237,7 +235,7 @@ my $result = do {
                 { name => 'port', type => 'Num', optional => 1, more => undef },
                 { name => 'real', type => 'Str', optional => 1, more => undef }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'addr' ) or return;
@@ -288,8 +286,7 @@ my $result = do {
         my $func_3 = method_event_def(
             $f, $scope,
             'connect',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$self->{'sock'}->property_u( 'connect', $pos->(25.2) )
@@ -309,7 +306,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 29.2 ) or return;

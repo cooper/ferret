@@ -224,7 +224,7 @@ my $result = do {
     my $func_0 = function_event_def(
         $f, $context, 'ping', undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 14.2 ) or return;
@@ -253,7 +253,7 @@ my $result = do {
         'welcome',
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 19.2 ) or return;
@@ -296,7 +296,7 @@ my $result = do {
     my $func_2 = function_event_def(
         $f, $context, 'myInfo', undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 35.2 ) or return;
@@ -319,9 +319,7 @@ my $result = do {
     my $func_3 = function_event_def(
         $f, $context,
         'endOfMOTD',
-        undef,
-        [],
-        [],
+        undef, undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if (
@@ -353,7 +351,7 @@ my $result = do {
         'hiddenHost',
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 49.2 ) or return;
@@ -370,9 +368,7 @@ my $result = do {
     my $func_5 = function_event_def(
         $f, $context,
         'nickInUse',
-        undef,
-        [],
-        [],
+        undef, undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if ( bool( $$this->{'registered'} ) ) {

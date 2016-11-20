@@ -262,7 +262,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'x', 5.1 ) or return;
@@ -284,8 +284,7 @@ my $result = do {
         my $func_1 = method_event_def(
             $f, $scope,
             'vertices',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -305,8 +304,7 @@ my $result = do {
         my $func_2 = method_event_def(
             $f, $scope,
             'bottomLeft',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'origin'} );
@@ -318,8 +316,7 @@ my $result = do {
         my $func_3 = method_event_def(
             $f, $scope,
             'bottomRight',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -345,8 +342,7 @@ my $result = do {
         my $func_4 = method_event_def(
             $f, $scope,
             'topLeft',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -373,8 +369,7 @@ my $result = do {
         my $func_5 = method_event_def(
             $f, $scope,
             'topRight',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -405,8 +400,7 @@ my $result = do {
         my $func_6 = method_event_def(
             $f, $scope,
             'bottomLine',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -423,8 +417,7 @@ my $result = do {
         my $func_7 = method_event_def(
             $f, $scope,
             'topLine',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -439,9 +432,7 @@ my $result = do {
 
         # Method event 'center' definition
         my $func_8 = method_event_def(
-            $f, $scope, 'center',
-            [],
-            [],
+            $f, $scope, 'center', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -478,8 +469,7 @@ my $result = do {
         my $func_9 = method_event_def(
             $f, $scope,
             'description',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(

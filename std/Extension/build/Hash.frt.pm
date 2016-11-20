@@ -141,9 +141,7 @@ my $result = do {
 
         # Method event 'empty' definition
         my $func_0 = method_event_def(
-            $f, $scope, 'empty',
-            [],
-            [],
+            $f, $scope, 'empty', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -156,7 +154,7 @@ my $result = do {
         my $func_1 = method_event_def(
             $f, $scope,
             'iterator',
-            [],
+            undef,
             [ { name => 'result', type => 'Iterator' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -189,8 +187,7 @@ my $result = do {
         my $func_2 = method_event_def(
             $f, $scope,
             'initializer__',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
@@ -209,9 +206,7 @@ my $result = do {
 
         # Method event 'keys' definition
         my $func_3 = method_event_def(
-            $f, $scope, 'keys',
-            [],
-            [],
+            $f, $scope, 'keys', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'orderedKeys'} );
@@ -237,7 +232,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'key',   25.1 ) or return;
@@ -269,7 +264,7 @@ my $result = do {
         my $func_5 = method_event_def(
             $f, $scope,
             'iterator',
-            [],
+            undef,
             [ { name => 'result', type => 'Iterator' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;

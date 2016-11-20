@@ -208,7 +208,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'x' ) or return;
@@ -229,7 +229,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'pt2', 9.2 ) or return;
@@ -272,8 +272,7 @@ my $result = do {
         my $func_2 = method_event_def(
             $f, $scope,
             'distanceFromOrigin',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -294,9 +293,7 @@ my $result = do {
 
         # Method event 'pretty' definition
         my $func_3 = method_event_def(
-            $f, $scope, 'pretty',
-            [],
-            [],
+            $f, $scope, 'pretty', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -314,8 +311,7 @@ my $result = do {
         my $func_4 = method_event_def(
             $f, $scope,
             'toString',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'pretty'} );
@@ -327,8 +323,7 @@ my $result = do {
         my $func_5 = method_event_def(
             $f, $scope,
             'description',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -355,7 +350,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'pt1', 32.1 ) or return;
@@ -415,7 +410,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'pt1', 40.1 ) or return;

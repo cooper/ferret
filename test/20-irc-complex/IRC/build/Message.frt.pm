@@ -210,7 +210,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'line' ) or return;
@@ -277,8 +277,7 @@ my $result = do {
         my $func_1 = method_event_def(
             $f, $scope,
             'command',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if (
@@ -339,8 +338,7 @@ my $result = do {
         my $func_2 = method_event_def(
             $f, $scope,
             'commandHasParameters',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -366,7 +364,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'wordN', 41.2 ) or return;

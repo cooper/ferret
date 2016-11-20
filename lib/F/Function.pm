@@ -166,6 +166,9 @@ sub perl_fmt {
         grep $func->{returns}{$_}{type} ne '(none)',
         keys %{ $func->{returns} || {} };
 
+    my $arg_str = join(', ', @arguments);
+    my $ret_str = join(', ', @returns);
+
     my $info = {
         need_topic => $need_topic,
         anonymous  => $func->{anonymous},
@@ -179,8 +182,8 @@ sub perl_fmt {
         is_prop    => $func->{is_prop}   ? '1'       : 'undef',
         p_set      => $func->{p_set}     ? '1'       : 'undef',
         statements => $content,
-        arguments  => join(', ', @arguments),
-        returns    => join(', ', @returns)
+        arguments  => length $arg_str ? "[ $arg_str ]" : 'undef',
+        returns    => length $ret_str ? "[ $ret_str ]" : 'undef'
     };
 
     # these things depend on whether it's a function or method.

@@ -415,7 +415,7 @@ my $result = do {
         'updateWord',
         undef,
         [ { name => 'incN', type => 'Bool', optional => 1, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             want( $scope, $args, 'incN', 30.2 );
@@ -465,7 +465,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $scope, $args, 'data', 7.2 );
@@ -492,7 +492,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $func_1->inside_scope(
@@ -821,9 +821,7 @@ my $result = do {
 
         # Method event 'target' definition
         my $func_3 = method_event_def(
-            $f, $scope, 'target',
-            [],
-            [],
+            $f, $scope, 'target', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 {
@@ -852,8 +850,7 @@ my $result = do {
         my $func_4 = method_event_def(
             $f, $scope,
             '_parsedSource',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 if ( bool( _not( $$self->{'source'} ) ) ) {
@@ -882,9 +879,7 @@ my $result = do {
 
         # Method event 'nick' definition
         my $func_5 = method_event_def(
-            $f, $scope, 'nick',
-            [],
-            [],
+            $f, $scope, 'nick', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
@@ -895,9 +890,7 @@ my $result = do {
 
         # Method event 'user' definition
         my $func_6 = method_event_def(
-            $f, $scope, 'user',
-            [],
-            [],
+            $f, $scope, 'user', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}
@@ -908,9 +901,7 @@ my $result = do {
 
         # Method event 'host' definition
         my $func_7 = method_event_def(
-            $f, $scope, 'host',
-            [],
-            [],
+            $f, $scope, 'host', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'_parsedSource'}

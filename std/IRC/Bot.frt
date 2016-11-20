@@ -21,6 +21,9 @@ method addConnection {
         if !$msg.target.*instanceOf(Channel)
             return
 
+        if !$msg.params[1]
+            return
+
         # find the command
         $trim = detail $msg.params[1].word(0).trimPrefix(".")
         if !$trim.trimmed

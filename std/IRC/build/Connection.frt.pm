@@ -468,8 +468,7 @@ my $result = do {
     my $func_0 = function_def(
         $f, undef,
         'sendRegistration',
-        [],
-        [],
+        undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$self->{'send'}->(
@@ -504,7 +503,7 @@ my $result = do {
         $f, undef,
         'handleLine',
         [ { name => 'data', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 37.2 ) or return;
@@ -518,8 +517,7 @@ my $result = do {
     my $func_2 = function_def(
         $f, undef,
         'resetState',
-        [],
-        [],
+        undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$self->{'_resetState'}
@@ -560,7 +558,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'addr' ) or return;
@@ -676,8 +674,7 @@ my $result = do {
         my $func_4 = method_event_def(
             $f, $scope,
             'connect',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$self->{'sock'}->property_u( 'connect', $pos->(51.2) )
@@ -697,7 +694,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 56.2 ) or return;
@@ -723,7 +720,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 63.2 ) or return;
@@ -778,7 +775,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'target', 84.2 ) or return;
@@ -823,7 +820,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'name', 94.2 ) or return;
@@ -879,7 +876,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'nick', 102.2 ) or return;
@@ -935,7 +932,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'name', 110.2 ) or return;
@@ -983,8 +980,7 @@ my $result = do {
         my $func_11 = method_event_def(
             $f, $scope,
             'connected',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
 
@@ -996,8 +992,7 @@ my $result = do {
         my $func_12 = method_event_def(
             $f, $scope,
             'disconnected',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
@@ -1018,9 +1013,7 @@ my $result = do {
 
         # Method event 'copy' definition
         my $func_13 = method_event_def(
-            $f, $scope, 'copy',
-            [],
-            [],
+            $f, $scope, 'copy', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -1052,8 +1045,7 @@ my $result = do {
         my $func_14 = method_event_def(
             $f, $scope,
             'description',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(

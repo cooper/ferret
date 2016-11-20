@@ -89,9 +89,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_0 = function_def(
-        $f, undef, undef,
-        [],
-        [],
+        $f, undef, undef, undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}->(
@@ -104,9 +102,7 @@ my $result = do {
 
     # Anonymous function definition
     my $func_1 = function_def(
-        $f, undef, undef,
-        [],
-        [],
+        $f, undef, undef, undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             if ( bool( _not( $$scope->{'asked'} ) ) ) {

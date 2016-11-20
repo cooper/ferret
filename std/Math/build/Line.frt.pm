@@ -170,7 +170,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'pt1' ) or return;
@@ -183,8 +183,7 @@ my $result = do {
         my $func_1 = method_event_def(
             $f, $scope,
             'endpoints',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -195,9 +194,7 @@ my $result = do {
 
         # Method event 'pretty' definition
         my $func_2 = method_event_def(
-            $f, $scope, 'pretty',
-            [],
-            [],
+            $f, $scope, 'pretty', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -255,8 +252,7 @@ my $result = do {
         my $func_3 = method_event_def(
             $f, $scope,
             'description',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'pretty'} );
@@ -268,8 +264,7 @@ my $result = do {
         my $func_4 = method_event_def(
             $f, $scope,
             'midpoint',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -282,9 +277,7 @@ my $result = do {
 
         # Method event 'length' definition
         my $func_5 = method_event_def(
-            $f, $scope, 'length',
-            [],
-            [],
+            $f, $scope, 'length', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(

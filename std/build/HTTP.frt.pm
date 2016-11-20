@@ -78,7 +78,7 @@ my $result = do {
     my $func_0 = function_event_def(
         $f, $context, 'get', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'url', 14.2 ) or return;
@@ -96,7 +96,7 @@ my $result = do {
     my $func_1 = function_event_def(
         $f, $context, 'post', undef,
         [ { name => 'url', type => 'Str', optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'url', 20.2 ) or return;

@@ -87,7 +87,7 @@ my $result = do {
             $f, $scope,
             'initializer__',
             [ { name => 'items', type => 'T', optional => 1, more => 1 } ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 want( $self, $args, 'items', 4.2 );
@@ -106,7 +106,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'item', 8.2 ) or return;
@@ -118,9 +118,7 @@ my $result = do {
 
         # Method event 'pop' definition
         my $func_2 = method_event_def(
-            $f, $scope, 'pop',
-            [],
-            [],
+            $f, $scope, 'pop', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -134,8 +132,7 @@ my $result = do {
         my $func_3 = method_event_def(
             $f, $scope,
             'description',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(

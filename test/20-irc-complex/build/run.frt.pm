@@ -585,7 +585,7 @@ my $result = do {
         'handlePerl',
         undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 67.2 ) or return;
@@ -688,7 +688,7 @@ my $result = do {
                 more     => undef
             }
         ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'string', 80.2 ) or return;
@@ -705,7 +705,7 @@ my $result = do {
     my $func_2 = function_event_def(
         $f, $context, 'ircsay', undef,
         [ { name => 'str', type => 'Str', optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'str', 85.2 ) or return;
@@ -729,7 +729,7 @@ my $result = do {
     my $func_3 = function_def(
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 7.2 ) or return;
@@ -749,7 +749,7 @@ my $result = do {
     my $func_4 = function_def(
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 12.2 ) or return;
@@ -835,7 +835,7 @@ my $result = do {
     my $func_5 = function_def(
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 25.2 ) or return;
@@ -922,7 +922,7 @@ my $result = do {
     my $func_6 = function_def(
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 38.2 ) or return;
@@ -1017,7 +1017,7 @@ my $result = do {
     my $func_7 = function_def(
         $f, undef, undef,
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'msg', 51.2 ) or return;

@@ -151,7 +151,7 @@ my $result = do {
                 more     => undef
             }
         ],
-        [],
+        undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'twice',   16.2 ) or return;

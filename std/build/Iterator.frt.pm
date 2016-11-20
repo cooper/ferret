@@ -214,7 +214,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'list', 21.2 ) or return;
@@ -234,9 +234,7 @@ my $result = do {
 
         # Method event 'more' definition
         my $func_1 = method_event_def(
-            $f, $scope, 'more',
-            [],
-            [],
+            $f, $scope, 'more', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -261,8 +259,7 @@ my $result = do {
         my $func_2 = method_event_def(
             $f, $scope,
             'nextElement',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
@@ -283,8 +280,7 @@ my $result = do {
         my $func_3 = method_event_def(
             $f, $scope,
             'nextElements',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
@@ -311,7 +307,7 @@ my $result = do {
         my $func_4 = method_event_def(
             $f, $scope,
             'iterator',
-            [],
+            undef,
             [ { name => 'result', type => 'Iterator' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -355,7 +351,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'hash', 48.2 ) or return;
@@ -376,9 +372,7 @@ my $result = do {
 
         # Method event 'more' definition
         my $func_6 = method_event_def(
-            $f, $scope, 'more',
-            [],
-            [],
+            $f, $scope, 'more', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -395,8 +389,7 @@ my $result = do {
         my $func_7 = method_event_def(
             $f, $scope,
             'nextElement',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -420,8 +413,7 @@ my $result = do {
         my $func_8 = method_event_def(
             $f, $scope,
             'nextElements',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -451,7 +443,7 @@ my $result = do {
         my $func_9 = method_event_def(
             $f, $scope,
             'iterator',
-            [],
+            undef,
             [ { name => 'result', type => 'Iterator' } ],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;

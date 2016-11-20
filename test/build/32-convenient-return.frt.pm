@@ -44,9 +44,7 @@ my $result = do {
 
     # Function event 'A' definition
     my $func_0 = function_event_def(
-        $f, $context, 'A', undef,
-        [],
-        [],
+        $f, $context, 'A', undef, undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             return $ret_func->( str( $f, "return value" ) );

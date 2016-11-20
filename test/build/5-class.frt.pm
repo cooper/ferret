@@ -221,7 +221,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'x', 4.2 ) or return;
@@ -236,8 +236,7 @@ my $result = do {
         my $func_1 = method_event_def(
             $f, $scope,
             'oneToRight',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
@@ -260,9 +259,7 @@ my $result = do {
 
         # Method event 'pretty' definition
         my $func_2 = method_event_def(
-            $f, $scope, 'pretty',
-            [],
-            [],
+            $f, $scope, 'pretty', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -280,8 +277,7 @@ my $result = do {
         my $func_3 = method_event_def(
             $f, $scope,
             'toString',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'pretty'}
@@ -308,7 +304,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'pt1', 23.2 ) or return;

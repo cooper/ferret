@@ -59,8 +59,7 @@ my $result = do {
         my $func_0 = method_event_def(
             $f, $scope,
             'doubledLength',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(

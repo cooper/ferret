@@ -148,9 +148,7 @@ my $result = do {
 
         # Method event 'sqrt' definition
         my $func_0 = method_event_def(
-            $f, $scope, 'sqrt',
-            [],
-            [],
+            $f, $scope, 'sqrt', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -165,9 +163,7 @@ my $result = do {
 
         # Method event 'cbrt' definition
         my $func_1 = method_event_def(
-            $f, $scope, 'cbrt',
-            [],
-            [],
+            $f, $scope, 'cbrt', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'root'}
@@ -178,9 +174,7 @@ my $result = do {
 
         # Method event 'square' definition
         my $func_2 = method_event_def(
-            $f, $scope, 'square',
-            [],
-            [],
+            $f, $scope, 'square', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -196,9 +190,7 @@ my $result = do {
 
         # Method event 'even' definition
         my $func_3 = method_event_def(
-            $f, $scope, 'even',
-            [],
-            [],
+            $f, $scope, 'even', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -218,9 +210,7 @@ my $result = do {
 
         # Method event 'odd' definition
         my $func_4 = method_event_def(
-            $f, $scope, 'odd',
-            [],
-            [],
+            $f, $scope, 'odd', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -249,7 +239,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'root', 41.2 ) or return;

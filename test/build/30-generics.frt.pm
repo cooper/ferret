@@ -131,8 +131,7 @@ my $result = do {
         my $func_0 = method_event_def(
             $f, $scope,
             'initializer__',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
@@ -154,7 +153,7 @@ my $result = do {
                     more     => undef
                 }
             ],
-            [],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'item', 8.2 ) or return;
@@ -167,9 +166,7 @@ my $result = do {
 
         # Method event 'pop' definition
         my $func_2 = method_event_def(
-            $f, $scope, 'pop',
-            [],
-            [],
+            $f, $scope, 'pop', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
@@ -183,8 +180,7 @@ my $result = do {
         my $func_3 = method_event_def(
             $f, $scope,
             'description',
-            [],
-            [],
+            undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
