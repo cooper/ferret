@@ -13,11 +13,28 @@ sub anonymous  { shift->{anonymous} }
 sub body       { shift->{body}      }
 sub is_method  { shift->{is_method} }
 
-sub public {
-    my $f = shift;
-    return if $f->anonymous;
-    $f->owner;
-    return $f->{public};
+sub new {
+    my ($class, %opts) = @_;
+    my $func = $class->SUPER::new(
+        body => F::new('FunctionBody'),
+        %opts
+    );
+    $func->adopt($func->body);
+    weaken($func->{body});
+    return $func;
+}
+
+sub desc {
+    my $func = shift;
+    if ($func->is_method) {
+        my $method = $func;
+        my $main = $method->{main}    ? 'class '            : '';
+        my $type = $method->{is_prop} ? 'computed property' : 'method';
+        my $lazy = $method->{p_set}   ? ' (lazy)'           : '';
+        return "$main$type '$$method{name}'$lazy";
+    }
+    return 'anonymous function' if $func->anonymous;
+    return "function '$$func{name}'";
 }
 
 sub arguments {
@@ -63,30 +80,64 @@ sub signature {
     return \@args;
 }
 
-sub desc {
+# find the owner of the function or method.
+sub owner {
     my $func = shift;
     if ($func->is_method) {
-        my $method = $func;
-        my $main = $method->{main}    ? 'class '            : '';
-        my $type = $method->{is_prop} ? 'computed property' : 'method';
-        my $lazy = $method->{p_set}   ? ' (lazy)'           : '';
-        return "$main$type '$$method{name}'$lazy";
+        my ($method, $owner_str, $owner) = $func;
+        my $class = $method->class;
+
+        # the method is public if its name does not start with _
+        $method->{public} =
+        my $public = $method->{name} && substr($method->{name}, 0, 1) ne '_';
+
+        # if this is a main method, the owner is the usually the class.
+        # if it's private though, the owner is the private class scope.
+        if ($method->{main}) {
+            $owner_str = $public ? '$class' : '$scope';
+            $owner     = $class;
+        }
+
+        # if it's a normal method, the owner is the prototype.
+        else {
+            $owner_str = '$proto';
+            $owner     = "$class._PROTO_"; # no element
+        }
+
+        return ($owner, $owner_str);
     }
-    return 'anonymous function' if $func->anonymous;
-    return "function '$$func{name}'";
+
+    # anonymous functions are owned by no one.
+    return (undef, 'undef') if $func->anonymous;
+
+    # document-level functions are public unless they start with _.
+    my $public_ctx = $func->parent->type eq 'Document';
+    undef $public_ctx if $func->{name} && substr($func->{name}, 0, 1) eq '_';
+    $func->{public} = $public_ctx;
+
+    # the owner is the context if it's public.
+    return ($func->parent, '$context') if $public_ctx;
+
+    # otherwise it's the private file scope.
+    return ($func->first_upper_scope, '$scope');
 }
 
-sub new {
-    my ($class, %opts) = @_;
-    my $func = $class->SUPER::new(
-        body => F::new('FunctionBody'),
-        %opts
-    );
-    $func->adopt($func->body);
-    weaken($func->{body});
-    return $func;
+# ->owner determines whether the function is public.
+sub public {
+    my $f = shift;
+    return if $f->anonymous;
+    $f->owner;
+    return $f->{public};
 }
 
+# true if the method is the class initializer.
+sub is_init {
+    my $method = shift;
+    return if !$method->is_method;
+    return $method->{main} && $method->{name} eq 'initializer__';
+}
+
+# on close, we might also terminate an On.
 sub close : method {
     my $func = shift;
 
@@ -96,45 +147,6 @@ sub close : method {
     }
 
     return $func->SUPER::close(@_);
-}
-
-sub owner {
-    my $func = shift;
-
-    if ($func->is_method) {
-        my ($method, $owner_str, $owner) = $func;
-        my $class = $method->class;
-        $method->{public} =
-        my $public = $method->{name} && substr($method->{name}, 0, 1) ne '_';
-        if ($method->{main}) {
-            $owner_str = $public ? '$class' : '$scope';
-            $owner     = $class;
-        }
-        else {
-            $owner_str = '$proto';
-            $owner     = "$class._PROTO_"; # no element
-        }
-        return ($owner, $owner_str);
-    }
-
-    # anonymous functions are owned by no one.
-    return (undef, 'undef') if $func->anonymous;
-
-    # document-level function.
-    my $public_ctx = $func->parent->type eq 'Document';
-    undef $public_ctx if $func->{name} && substr($func->{name}, 0, 1) eq '_';
-    $func->{public} = $public_ctx;
-
-    if ($public_ctx) {
-        return ($func->parent, '$context');
-    }
-    return ($func->first_upper_scope, '$scope');
-}
-
-sub is_init {
-    my $method = shift;
-    return if !$method->is_method;
-    return $method->{main} && $method->{name} eq 'initializer__';
 }
 
 sub perl_fmt {
@@ -171,6 +183,7 @@ sub perl_fmt {
         returns    => join(', ', @returns)
     };
 
+    # these things depend on whether it's a function or method.
     my ($def, $fmt, $con);
     if ($func->is_method) {
         $con = $class;
@@ -237,7 +250,6 @@ sub markdown_fmt {
     if (!length $comment && $method->is_init) {
         $comment = "Creates a new $class_name class instance.";
     }
-
 
     my $fmt = $method->{is_prop} ? 'computed' : 'method';
     return $fmt => {
