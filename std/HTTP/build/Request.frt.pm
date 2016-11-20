@@ -10,12 +10,10 @@
 #                          Argument type
 #                              Bareword 'Client'
 #                  Instruction
-#                      Assignment
-#                          Instance variable '@client'
-#                          Lexical variable '$client'
-#                  Instruction
 #                      Weaken modifier
-#                          Instance variable '@client'
+#                          Assignment
+#                              Instance variable '@client'
+#                              Lexical variable '$client'
 #                  Instruction
 #                      Need
 #                          Instance variable '@url'
@@ -109,10 +107,9 @@ my $result = do {
                 need( $scope, $args, 'client', 9.2 ) or return;
                 $self->set_property(
                     client => $$scope->{'client'},
-                    $pos->(10.2)
+                    $pos->(10.3)
                 );
-
-                $self->weaken_property_ow( 'client', $pos->(11.1) );
+                $self->weaken_property_ow( 'client', $pos->(10.1) );
                 need( $self, $args, 'url' )        or return;
                 need( $self, $args, 'httpMethod' ) or return;
                 return $ret;
@@ -127,9 +124,9 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $$scope->{'NATIVE::HTTPClient'}
-                  ->property_u( 'connect', $pos->(26.2) )->(
+                  ->property_u( 'connect', $pos->(25.2) )->(
                     [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, $pos->(26.25)
+                    $scope, undef, $pos->(25.25)
                   );
                 return $ret;
             }

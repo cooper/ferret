@@ -7,8 +7,7 @@ init {
 
     #> an HTTP::Client, representing the user agent
     need $client: Client
-    @client = $client
-    weaken @client
+    weaken @client = $client
 
     #> HTTP URL to request
     need @url: Str

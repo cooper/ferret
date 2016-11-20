@@ -10,8 +10,7 @@ method addConnection {
     need $connection: Connection
     @conns.push($connection)
 
-    $bot = *self
-    weaken $bot
+    weaken $bot = *self
 
     # TODO: need better way to do this
     on $connection.handlers.PRIVMSG, :handleCommand {

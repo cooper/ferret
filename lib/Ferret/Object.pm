@@ -71,6 +71,7 @@ sub new {
 #
 sub set_property {
     my ($obj, $prop_name, $value, $_pos) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     my $caller = [caller];
     $obj->_check_prop_alteration($prop_name, $caller);
 
@@ -103,6 +104,7 @@ sub set_property {
 # set a property or overwrite an inherited property.
 sub set_property_ow {
     my ($obj, $scope_limit, $prop_name, $value, $_pos) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     $obj->_check_prop_alteration($prop_name, [caller]);
     my $owner = $obj->has_property($prop_name);
 
@@ -121,13 +123,6 @@ sub set_property_ow {
     return $obj->set_property($prop_name => $value);
 }
 
-sub set_property_eval {
-    my ($obj, $prop_name_exp, $value, $_pos) = @_;
-    my $prop_name = $prop_name_exp->hash_string;
-    $obj->_check_prop_alteration($prop_name, [caller]); # pos
-    return $obj->set_property($prop_name, @_[2..$#_]);
-}
-
 # deletes a property.
 # $obj->delete_property('someProperty')
 #
@@ -139,6 +134,7 @@ sub set_property_eval {
 #
 sub delete_property {
     my ($obj, $prop_name, $_pos) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     $obj->_check_prop_alteration($prop_name, [caller]);
     $obj->reset_property($prop_name);
     return defined delete $obj->{properties}{$prop_name};
@@ -147,24 +143,11 @@ sub delete_property {
 # deletes a property, even if inherited.
 sub delete_property_ow {
     my ($obj, $prop_name, $_pos) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     $obj->_check_prop_alteration($prop_name, [caller]);
     my $owner = $obj->has_property($prop_name);
     return if !$owner;
     return $owner->delete_property($prop_name);
-}
-
-sub delete_property_eval {
-    my ($obj, $prop_name_exp, $_pos) = @_;
-    my $prop_name = $prop_name_exp->hash_string;
-    $obj->_check_prop_alteration($prop_name, [caller]);
-    return $obj->delete_property($prop_name, @_[2..$#_]);
-}
-
-sub delete_property_ow_eval {
-    my ($obj, $prop_name_exp, $_pos) = @_;
-    my $prop_name = $prop_name_exp->hash_string;
-    $obj->_check_prop_alteration($prop_name, [caller]);
-    return $obj->delete_property_ow($prop_name, @_[2..$#_]);
 }
 
 sub reset_property {
@@ -182,26 +165,13 @@ sub reset_property {
 #
 sub property {
     my ($obj, $prop_name, $_pos) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     return ($obj->_property($prop_name))[0];
 }
 
 # wraps ->property, returning Ferret::undefined rather than Perl undef.
 sub property_u {
     my ($obj, $prop_name, $_pos) = @_;
-    return _U(scalar $obj->property($prop_name), $prop_name);
-}
-
-# wraps ->property, evaluating the $prop_name_exp object to a string.
-sub property_eval {
-    my ($obj, $prop_name_exp, $_pos) = @_;
-    my $prop_name = $prop_name_exp->hash_string;
-    return $obj->property($prop_name);
-}
-
-# wraps ->property_eval, returning Ferret::undefined rather than Perl undef.
-sub property_eval_u {
-    my ($obj, $prop_name_exp, $_pos) = @_;
-    my $prop_name = $prop_name_exp->hash_string;
     return _U(scalar $obj->property($prop_name), $prop_name);
 }
 
@@ -290,7 +260,9 @@ sub _property {
 # has a property, either its own or inherited.
 # returns the owner of the property or Perl undef.
 sub has_property {
-    my ($obj, $prop_name) = @_;         # the one means don't compute
+    my ($obj, $prop_name) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
+    # the one means don't compute
     my ($obj_or_ref, $owner) = $obj->_property($prop_name, undef, undef, 1);
     return $owner if defined $obj_or_ref;
 }
@@ -311,18 +283,21 @@ sub simple_property_u {
 # deleted on overwrite and deletion.
 sub set_underlying_property_code {
     my ($obj, $prop_name, $func_or_event) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     weaken($obj->{underlying_property_code}{$prop_name} = $func_or_event);
 }
 
 # fetch underlying property code.
 sub underlying_property_code {
     my ($obj, $prop_name) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     my $owner = $obj->has_property($prop_name);
     return $owner->{underlying_property_code}{$prop_name};
 }
 
 sub property_uncomputed {
     my ($obj, $prop_name) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     my ($obj_or_ref) = $obj->_property($prop_name, undef, undef, 1);
     return $obj_or_ref if $obj_or_ref && blessed $obj_or_ref;
     return $obj->underlying_property_code($prop_name);
@@ -330,6 +305,7 @@ sub property_uncomputed {
 
 sub own_property_uncomputed {
     my ($obj, $prop_name) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     my ($obj_or_ref, $owner) = $obj->_property($prop_name, undef, 1, 1);
     return undef if !$obj_or_ref || $owner != $obj;
     return $obj_or_ref if blessed $obj_or_ref;
@@ -343,8 +319,9 @@ sub own_property_uncomputed {
 # if the property does not exist, returns Perl undef.
 #
 sub own_property {
-    my $obj = shift;
-    my ($value, $owner) = $obj->_property(@_);
+    my ($obj, $prop_name) = (shift, shift);
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
+    my ($value, $owner) = $obj->_property($prop_name, @_);
     return undef if !$value || $owner != $obj;
     return $value;
 }
@@ -359,28 +336,22 @@ sub own_property_u {
 #
 sub weaken_property {
     my ($obj, $prop_name, $_pos) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     $obj->_check_prop_alteration($prop_name, [caller]);
     return if !defined $obj->{properties}{$prop_name};
     weaken($obj->{properties}{$prop_name});
     return 1;
 }
 
-sub weaken_property_eval {
-    my ($obj, $prop_name_exp, $_pos) = @_;
-    my $prop_name = $prop_name_exp->hash_string;
-    $obj->_check_prop_alteration($prop_name, [caller]);
-    return $obj->weaken_property($prop_name, @_[2..$#_]);
-}
-
 # FIXME!!!!!! these aren't implemented
 *weaken_property_ow = *weaken_property;
-*weaken_property_ow_eval = *weaken_property_eval;
 
 # convenience method:
 # sets a property, then weakens it.
 #
 sub set_property_weak {
     my ($obj, $prop_name, $value, $_pos) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     $obj->_check_prop_alteration($prop_name, [caller]);
     my $res = $obj->set_property($prop_name => $value);
     $obj->weaken_property($prop_name);
@@ -758,6 +729,7 @@ sub __code {
 
 sub _U {
     my ($val, $prop_name) = @_;
+    $prop_name = $prop_name->hash_string if blessed $prop_name;
     return $val || do {
 
         # remember the name for runtime error.

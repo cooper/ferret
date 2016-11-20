@@ -1,1 +1,1 @@
-<<left>>->set_property_eval(<<index>> => <<assign_value>>, $pos->(<<pos>>))
+<<left>>->set_property(<<index>> => <<assign_value>>, $pos->(<<pos>>))

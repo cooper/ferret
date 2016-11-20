@@ -534,8 +534,7 @@ my $result = do {
                     },
                     'err'
                 );
-                $$self->{'xs'}
-                  ->property_eval_u( $$self->{'charset'}, $pos->(79.2) )
+                $$self->{'xs'}->property_u( $$self->{'charset'}, $pos->(79.2) )
                   ->( [ undef, [] ], $scope, undef, $pos->(79.6) );
                 if ( bool( $$self->{'pretty'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );

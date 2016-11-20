@@ -14,14 +14,13 @@ sub desc {
 sub perl_fmt {
     my $mod = shift;
     my $c = $mod->first_child;
-    my ($func, $for, $left, $name, $name_code, $eval) = 'property_ow';
+    my ($func, $for, $left, $name, $name_code) = 'property_ow';
 
     # property owners provide the required info
     if ($c->is_type('PropertyOwner')) {
         $left      = $c->property_owner_code;
-        $name_code = $c->property_name_code;
         $name      = $c->property_name;
-        $eval      = '_eval' if length $name_code;
+        $name_code = $c->property_name_code;
     }
 
     # indices are handled manually
@@ -47,7 +46,6 @@ sub perl_fmt {
 
     return "mod_$$mod{mod_type}" => {
         assign_code => length $assign_code ? "$assign_code;" : '',
-        eval => $eval,
         pos  => $mod->{create_pos},
         left => $left,
         name => $name_code || "'$name'",

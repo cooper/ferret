@@ -28,12 +28,10 @@
 #                              Item 0
 #                                  Lexical variable '$connection'
 #                  Instruction
-#                      Assignment
-#                          Lexical variable '$bot'
-#                          Special variable '*self'
-#                  Instruction
 #                      Weaken modifier
-#                          Lexical variable '$bot'
+#                          Assignment
+#                              Lexical variable '$bot'
+#                              Special variable '*self'
 #                  On ('handleCommand' callback)
 #                      Expression ('on' parameter)
 #                          Property 'PRIVMSG'
@@ -176,14 +174,14 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 18.2 ) or return;
+            need( $scope, $args, 'msg', 17.2 ) or return;
             if (
                 bool(
                     _not(
-                        $$scope->{'msg'}->property_u( 'target', $pos->(21.2) )
-                          ->property_u( '*instanceOf', $pos->(21.25) )->(
+                        $$scope->{'msg'}->property_u( 'target', $pos->(20.2) )
+                          ->property_u( '*instanceOf', $pos->(20.25) )->(
                             [ $$scope->{'Channel'} ], $scope,
-                            undef,                    $pos->(21.3)
+                            undef,                    $pos->(20.3)
                           )
                     )
                 )
@@ -195,18 +193,18 @@ my $result = do {
             }
             var(
                 $scope,
-                trim => $$scope->{'msg'}->property_u( 'params', $pos->(25.25) )
-                  ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(25.3) )
-                  ->property_u( 'word', $pos->(25.45) )
-                  ->( [ num( $f, "0" ) ], $scope, undef, $pos->(25.5) )
-                  ->property_u( 'trimPrefix', $pos->(25.65) )
-                  ->( [ str( $f, "." ) ], $scope, undef, $pos->(25.7), 1 ),
-                $file_scope, $pos->(25.1)
+                trim => $$scope->{'msg'}->property_u( 'params', $pos->(24.25) )
+                  ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(24.3) )
+                  ->property_u( 'word', $pos->(24.45) )
+                  ->( [ num( $f, "0" ) ], $scope, undef, $pos->(24.5) )
+                  ->property_u( 'trimPrefix', $pos->(24.65) )
+                  ->( [ str( $f, "." ) ], $scope, undef, $pos->(24.7), 1 ),
+                $file_scope, $pos->(24.1)
             );
             if (
                 bool(
                     _not(
-                        $$scope->{'trim'}->property_u( 'trimmed', $pos->(26.4) )
+                        $$scope->{'trim'}->property_u( 'trimmed', $pos->(25.4) )
                     )
                 )
               )
@@ -218,17 +216,17 @@ my $result = do {
             var(
                 $scope,
                 command =>
-                  $$scope->{'trim'}->property_u( 'result', $pos->(28.4) ),
-                $file_scope, $pos->(28.2)
+                  $$scope->{'trim'}->property_u( 'result', $pos->(27.4) ),
+                $file_scope, $pos->(27.2)
             );
             {
                 my $maybe_0 = $$scope->{'bot'};
                 my $maybe_1 =
-                  $maybe_0->property_u( 'commands', $pos->(31.15) )
-                  ->property_eval_u(
+                  $maybe_0->property_u( 'commands', $pos->(30.15) )
+                  ->property_u(
                     $$scope->{'command'}
-                      ->property_u( 'lowercase', $pos->(31.35) ),
-                    $pos->(31.2)
+                      ->property_u( 'lowercase', $pos->(30.35) ),
+                    $pos->(30.2)
                   );
                 my $maybe_2 = $$scope->{'bot'};
                 if (
@@ -252,25 +250,25 @@ my $result = do {
                                         _this   => $maybe_2,
                                         msg     => $$scope->{'msg'},
                                         channel => $$scope->{'msg'}->property_u(
-                                            'target', $pos->(34.3)
+                                            'target', $pos->(33.3)
                                         )
                                     ]
                                 ],
                                 $scope, undef,
-                                $pos->(31.5)
+                                $pos->(30.5)
                             );
                         },
                         sub {
                             my ($scope) = @_;
                             $$scope->{'msg'}
-                              ->property_u( 'target',  $pos->(35.3) )
-                              ->property_u( 'privmsg', $pos->(35.35) )->(
+                              ->property_u( 'target',  $pos->(34.3) )
+                              ->property_u( 'privmsg', $pos->(34.35) )->(
                                 [
                                     $$scope->{'e'}
-                                      ->property_u( 'msg', $pos->(35.5) )
+                                      ->property_u( 'msg', $pos->(34.5) )
                                 ],
                                 $scope, undef,
-                                $pos->(35.4)
+                                $pos->(34.4)
                               );
                         },
                         'e'
@@ -332,13 +330,12 @@ my $result = do {
                 var(
                     $scope,
                     bot => ${ $scope->{special} }->{'self'},
-                    $file_scope, $pos->(13.2)
+                    $file_scope, $pos->(13.3)
                 );
-
-                $scope->weaken_property_ow( 'bot', $pos->(14.1) );
+                $scope->weaken_property_ow( 'bot', $pos->(13.1) );
                 on(
                     $$scope->{'connection'}
-                      ->property_u( 'handlers', $pos->(17.3) ),
+                      ->property_u( 'handlers', $pos->(16.3) ),
                     'PRIVMSG',
                     $self, $scope,
                     $func_1->inside_scope(
@@ -366,10 +363,10 @@ my $result = do {
                         sub {
                             my ( $scope, $ret_func ) = @_;
                             $$scope->{'c'}
-                              ->property_u( 'connect', $pos->(41.2) )
-                              ->( [ undef, [] ], $scope, undef, $pos->(41.3) );
+                              ->property_u( 'connect', $pos->(40.2) )
+                              ->( [ undef, [] ], $scope, undef, $pos->(40.3) );
                         },
-                        $pos->(40.1)
+                        $pos->(39.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }

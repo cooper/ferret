@@ -1062,7 +1062,7 @@ my $result = do {
             if (
                 bool(
                     $$scope->{'bot'}->property_u( 'commands', $pos->(24.3) )
-                      ->property_eval_u( $$scope->{'command'}, $pos->(24.4) )
+                      ->property_u( $$scope->{'command'}, $pos->(24.4) )
                 )
               )
             {
@@ -1093,7 +1093,7 @@ my $result = do {
             $$this->{'factoids'}->set_index_value( [ $$scope->{'command'} ],
                 $$scope->{'response'}, $scope, $pos->(29.5) );
             $$scope->{'bot'}->property_u( 'commands', $pos->(30.1) )
-              ->set_property_eval(
+              ->set_property(
                 $$scope->{'command'} => $$scope->{'respondFactoid'},
                 $pos->(30.35)
               );
@@ -1214,7 +1214,7 @@ my $result = do {
               ->delete_index( $$scope->{'command'}, $pos->(52.1) );
 
             $$scope->{'bot'}->property_u( 'commands', $pos->(53.3) )
-              ->delete_property_ow_eval( $$scope->{'command'}, $pos->(53.1) );
+              ->delete_property_ow( $$scope->{'command'}, $pos->(53.1) );
             $$scope->{'channel'}->property_u( 'privmsg', $pos->(55.1) )->(
                 [
                     add(

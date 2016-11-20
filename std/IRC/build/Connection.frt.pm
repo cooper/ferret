@@ -740,7 +740,7 @@ my $result = do {
                     $pos->(67.1)
                 );
                 {
-                    my $maybe_0 = $$self->{'handlers'}->property_eval_u(
+                    my $maybe_0 = $$self->{'handlers'}->property_u(
                         $$scope->{'msg'}->property_u( 'command', $pos->(70.5) ),
                         $pos->(70.2)
                     );
