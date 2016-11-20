@@ -1052,6 +1052,11 @@ sub c_OP_VALUE {
     # if we're in a list, this can separate the key from the value.
     if (my $list = $c->list) {
 
+        # close these things and then make sure the current node is the
+        # list item.
+        $c->close_nodes(qw(Negation Operation Pair NamedPair Detail Assignment));
+        return $c->unexpected if $c->node->parent != $c->list;
+
         # if the colon immediately follows the list delimiter, that
         # is the (:) or [:] syntax indiciating an empty object/hash.
         my $last_tok = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
