@@ -2,7 +2,7 @@
 #  Document './test/8-class-extension.frt'
 #      Class 'String'
 #          Method 'doubledLength'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation

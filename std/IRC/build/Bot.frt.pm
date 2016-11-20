@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'Bot'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Want
 #                          Instance variable '@commands'
@@ -14,7 +14,7 @@
 #                          Instance variable '@conns'
 #                          Value list [0 items]
 #          Method 'addConnection'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$connection'
@@ -127,7 +127,7 @@
 #                                                          Property 'msg'
 #                                                              Lexical variable '$e'
 #          Method 'connect'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  For (values)
 #                      Expression ('for' parameter)
 #                          Lexical variable '$c'
@@ -169,7 +169,7 @@ my $result = do {
     load_core('IRC');
 
     # Anonymous function definition
-    my $func_0 = function_def(
+    my $func_1 = function_def(
         $f, undef,
         'handleCommand',
         [ { name => 'msg', type => undef, optional => undef, more => undef } ],
@@ -311,7 +311,7 @@ my $result = do {
         );
 
         # Method event 'addConnection' definition
-        my $method_1 = method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'addConnection',
             [
@@ -340,7 +340,7 @@ my $result = do {
                       ->property_u( 'handlers', $pos->(17.3) ),
                     'PRIVMSG',
                     $self, $scope,
-                    $func_0->inside_scope(
+                    $func_1->inside_scope(
                         (undef) => $scope,
                         undef, $class, $ins, undef, undef
                     ),
@@ -351,7 +351,7 @@ my $result = do {
         );
 
         # Method event 'connect' definition
-        my $method_2 = method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'connect',
             [],
@@ -380,11 +380,11 @@ my $result = do {
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $method_2->inside_scope(
             addConnection => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $method_3->inside_scope(
             connect => $scope,
             $proto, $class, $ins, undef, undef
         );

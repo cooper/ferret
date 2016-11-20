@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'Massage'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Want
 #                          Lexical variable '$data'
@@ -28,7 +28,7 @@
 #                      Weaken modifier
 #                          Instance variable '@connection'
 #          Method 'parse'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$data'
@@ -322,7 +322,7 @@
 #                          Instance variable '@params'
 #                          Lexical variable '$params'
 #          Computed property 'target'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -337,7 +337,7 @@
 #                                              Item 0
 #                                                  Number '0'
 #          Computed property '_parsedSource' (lazy)
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  If
 #                      Expression ('if' parameter)
 #                          Negation
@@ -362,19 +362,19 @@
 #                              Return pair 'host'
 #                                  Lexical variable '$3'
 #          Computed property 'nick'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Property 'nick'
 #                              Instance variable '@_parsedSource'
 #          Computed property 'user'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Property 'user'
 #                              Instance variable '@_parsedSource'
 #          Computed property 'host'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Property 'host'
@@ -410,7 +410,7 @@ my $result = do {
     load_core('IRC');
 
     # Function event 'updateWord' definition
-    my $func_0 = function_event_def(
+    my $func_1 = function_event_def(
         $f, $scope,
         'updateWord',
         undef,
@@ -482,7 +482,7 @@ my $result = do {
         );
 
         # Method event 'parse' definition
-        my $method_1 = method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope, 'parse',
             [
                 {
@@ -495,7 +495,7 @@ my $result = do {
             [],
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                $func_0->inside_scope(
+                $func_1->inside_scope(
                     updateWord => $scope,
                     $scope, $class, $ins, undef, undef
                 );
@@ -820,7 +820,7 @@ my $result = do {
         );
 
         # Method event 'target' definition
-        my $method_2 = method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope, 'target',
             [],
             [],
@@ -849,7 +849,7 @@ my $result = do {
         );
 
         # Method event '_parsedSource' definition
-        my $method_3 = method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             '_parsedSource',
             [],
@@ -881,7 +881,7 @@ my $result = do {
         );
 
         # Method event 'nick' definition
-        my $method_4 = method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope, 'nick',
             [],
             [],
@@ -894,7 +894,7 @@ my $result = do {
         );
 
         # Method event 'user' definition
-        my $method_5 = method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope, 'user',
             [],
             [],
@@ -907,7 +907,7 @@ my $result = do {
         );
 
         # Method event 'host' definition
-        my $method_6 = method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope, 'host',
             [],
             [],
@@ -922,27 +922,27 @@ my $result = do {
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $method_2->inside_scope(
             parse => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $method_3->inside_scope(
             target => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_3->inside_scope(
+        $method_4->inside_scope(
             _parsedSource => $scope,
             $proto, $class, $ins, 1, 1
         );
-        $method_4->inside_scope(
+        $method_5->inside_scope(
             nick => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_5->inside_scope(
+        $method_6->inside_scope(
             user => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_6->inside_scope(
+        $method_7->inside_scope(
             host => $scope,
             $proto, $class, $ins, 1, undef
         );

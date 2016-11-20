@@ -2,7 +2,7 @@
 #  Document './std/Module.frt'
 #      Class 'Module' version 1.0
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@name'

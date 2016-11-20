@@ -49,7 +49,7 @@ sub ordered_children {
     my $node = shift;
     my (@functions, @others);
     foreach my $child ($node->children) {
-        if ($child->type eq 'Function' || $child->type eq 'Method') {
+        if ($child->type eq 'Function') {
             push @functions, $child;
             next;
         }
@@ -66,6 +66,11 @@ sub filter_children {
 sub filter_descendants {
     my ($node, %rules) = @_;
     return _filter_children($node, [ $node->descendants ], %rules);
+}
+
+sub filter_ancestors {
+    my ($node, %rules) = @_;
+    return _filter_children($node, [ $node->all_ancestors ], %rules);
 }
 
 sub _filter_children {

@@ -3,7 +3,7 @@
 #      Package 'Math'
 #      Class 'Point'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@x'
@@ -15,7 +15,7 @@
 #                          Argument type
 #                              Bareword 'Num'
 #          Method 'distanceTo'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt2'
@@ -52,7 +52,7 @@
 #                                          Exponent operator (^)
 #                                          Number '2'
 #          Computed property 'distanceFromOrigin'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -67,7 +67,7 @@
 #                                              Item 1
 #                                                  Number '0'
 #          Computed property 'pretty'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -81,12 +81,12 @@
 #                              Addition operator (+)
 #                              String ')'
 #          Method 'toString'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Instance variable '@pretty'
 #          Method 'description'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -94,7 +94,7 @@
 #                              Addition operator (+)
 #                              Instance variable '@pretty'
 #          Class method 'midpoint'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt1'
@@ -137,7 +137,7 @@
 #                                              Division operator (/)
 #                                              Number '2'
 #          Class method 'distanceBetween'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt1'

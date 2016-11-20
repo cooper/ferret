@@ -2,14 +2,14 @@
 #  Document './test/22-classes-sets.frt'
 #      Class 'Cow'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Want
 #                          Instance variable '@moos'
 #                          Argument value
 #                              Boolean true
 #          Method 'moo'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@moos'
@@ -22,14 +22,14 @@
 #                          String 'I am a non...'
 #      Class 'Dog'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Want
 #                          Instance variable '@barks'
 #                          Argument value
 #                              Boolean false
 #          Method 'bark'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@barks'
@@ -42,19 +42,19 @@
 #                          String 'I had my b...'
 #      Class 'Cat'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Want
 #                          Instance variable '@mean'
 #                          Argument value
 #                              Boolean false
 #          Method 'meow'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          String 'meow'
 #          Class method 'fight'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$cat1'
@@ -237,7 +237,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Dog', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -257,7 +257,7 @@ my $result = do {
         );
 
         # Method event 'bark' definition
-        my $method_1 = method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope, 'bark',
             [],
             [],
@@ -273,11 +273,11 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $method_2->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $method_3->inside_scope(
             bark => $scope,
             $proto, $class, $ins, undef, undef
         );
@@ -289,7 +289,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Cat', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'initializer__',
             [ { name => 'mean', type => undef, optional => 1, more => undef } ],
@@ -302,7 +302,7 @@ my $result = do {
         );
 
         # Method event 'meow' definition
-        my $method_1 = method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope, 'meow',
             [],
             [],
@@ -314,7 +314,7 @@ my $result = do {
         );
 
         # Method event 'fight' definition
-        my $method_2 = method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope, 'fight',
             [
                 {
@@ -361,15 +361,15 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $method_4->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $method_5->inside_scope(
             meow => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $method_6->inside_scope(
             fight => $scope,
             $class, $class, $ins, undef, undef
         );

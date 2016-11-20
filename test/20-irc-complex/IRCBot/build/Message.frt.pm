@@ -3,7 +3,7 @@
 #      Package 'IRCBot'
 #      Class 'Message'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@line'
@@ -85,7 +85,7 @@
 #                                  Item 0
 #                                      String ' '
 #          Computed property 'command' (lazy)
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  If
 #                      Expression ('if' parameter)
 #                          Operation
@@ -130,7 +130,7 @@
 #                      Return
 #                          Boolean false
 #          Computed property 'commandHasParameters' (lazy)
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -139,7 +139,7 @@
 #                              Greater than operator (>)
 #                              Number '1'
 #          Method 'fromWord'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$wordN'

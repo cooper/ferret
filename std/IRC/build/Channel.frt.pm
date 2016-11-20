@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'Channel'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@connection'
@@ -18,7 +18,7 @@
 #                      Weaken modifier
 #                          Instance variable '@connection'
 #          Method 'privmsg'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$message'

@@ -21,7 +21,7 @@
 #                  Instruction
 #                      Symbol :utf8
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Want
 #                          Instance variable '@strict'
@@ -191,7 +191,7 @@
 #                                  Property 'allow_nonref'
 #                                      Instance variable '@xs'
 #          Method 'encode'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$data'
@@ -220,7 +220,7 @@
 #                                                  Pair 'subError'
 #                                                      Lexical variable '$err'
 #          Method 'decode'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$json'
@@ -251,7 +251,7 @@
 #                                                  Pair 'subError'
 #                                                      Lexical variable '$err'
 #          Method 'decoderAdd'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$fragment'
@@ -289,7 +289,7 @@
 #                      Return pair 'added'
 #                          Boolean true
 #          Method 'decoderDone'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$objects'
@@ -335,14 +335,14 @@
 #                      Return pair 'data'
 #                          Lexical variable '$objects'
 #          Method 'decoderReset'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Call
 #                          Property 'incr_reset'
 #                              Instance variable '@xs'
 #                          Argument list [0 items]
 #          Class method 'encode'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$data'
@@ -355,7 +355,7 @@
 #                                  Item 0
 #                                      Lexical variable '$data'
 #          Class method 'decode'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$json'

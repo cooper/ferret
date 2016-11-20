@@ -27,7 +27,7 @@
 #                      Bareword 'Iterator'
 #      Class 'ListIterator'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$list'
@@ -48,7 +48,7 @@
 #                              Negation operator (-)
 #                              Number '1'
 #          Computed property 'more'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -64,7 +64,7 @@
 #                                          Negation operator (-)
 #                                          Number '1'
 #          Computed property 'nextElement'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Addition assignment
 #                          Instance variable '@i'
@@ -77,7 +77,7 @@
 #                                  Item 0
 #                                      Instance variable '@i'
 #          Computed property 'nextElements'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Addition assignment
 #                          Instance variable '@i'
@@ -94,14 +94,14 @@
 #                                          Item 0
 #                                              Instance variable '@i'
 #          Computed property 'iterator'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Special variable '*self'
 #                          Bareword 'Iterator'
 #      Class 'HashIterator'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$hash'
@@ -120,14 +120,14 @@
 #                          Property 'keys'
 #                              Lexical variable '$hash'
 #          Computed property 'more'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Negation
 #                              Property 'empty'
 #                                  Instance variable '@keysLeft'
 #          Computed property 'nextElement'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$key'
@@ -143,7 +143,7 @@
 #                                  Item 0
 #                                      Lexical variable '$key'
 #          Computed property 'nextElements'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$key'
@@ -163,7 +163,7 @@
 #                                          Item 0
 #                                              Lexical variable '$key'
 #          Computed property 'iterator'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Special variable '*self'
@@ -347,7 +347,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'HashIterator', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -378,7 +378,7 @@ my $result = do {
         );
 
         # Method event 'more' definition
-        my $method_1 = method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope, 'more',
             [],
             [],
@@ -395,7 +395,7 @@ my $result = do {
         );
 
         # Method event 'nextElement' definition
-        my $method_2 = method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope,
             'nextElement',
             [],
@@ -420,7 +420,7 @@ my $result = do {
         );
 
         # Method event 'nextElements' definition
-        my $method_3 = method_event_def(
+        my $method_8 = method_event_def(
             $f, $scope,
             'nextElements',
             [],
@@ -451,7 +451,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $method_4 = method_event_def(
+        my $method_9 = method_event_def(
             $f, $scope,
             'iterator',
             [],
@@ -462,23 +462,23 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $method_5->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $method_6->inside_scope(
             more => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_2->inside_scope(
+        $method_7->inside_scope(
             nextElement => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_3->inside_scope(
+        $method_8->inside_scope(
             nextElements => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_4->inside_scope(
+        $method_9->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );

@@ -16,7 +16,7 @@ sub perl_fmt {
     my $type = $fail->{fail_type};
 
     # if we're in a function or method, use _func.
-    if ($fail->first_parent('Function') || $fail->first_parent('Method')) {
+    if ($fail->first_parent('Function')) {
         $type .= '_func';
     }
 

@@ -11,7 +11,7 @@
 #                          Property 'even'
 #                              Property variable '.length'
 #          Computed property 'empty'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -19,7 +19,7 @@
 #                              Equality operator (==)
 #                              Number '0'
 #          Method 'map'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
@@ -43,7 +43,7 @@
 #                                                          Item 0
 #                                                              Lexical variable '$el'
 #          Method 'grep'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
@@ -71,7 +71,7 @@
 #                                                      Take
 #                                                          Lexical variable '$el'
 #          Method 'withoutAll'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$what'
@@ -90,7 +90,7 @@
 #                                                          Negated equality operator (!=)
 #                                                          Topic variable '$_'
 #          Method 'without'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$what'
@@ -131,7 +131,7 @@
 #                                              Take
 #                                                  Lexical variable '$el'
 #          Method 'remove'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$what'
@@ -166,7 +166,7 @@
 #                          Instruction
 #                              Last
 #          Method 'removeAll'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$what'
@@ -205,7 +205,7 @@
 #                          Property 'length'
 #                              Lexical variable '$found'
 #          Method 'first'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
@@ -232,7 +232,7 @@
 #                      Return
 #                          Undefined
 #          Method 'any'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
@@ -259,7 +259,7 @@
 #                      Return
 #                          Boolean false
 #          Method 'all'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$code'
@@ -287,7 +287,7 @@
 #                      Return
 #                          Boolean true
 #          Computed property 'sum'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@empty'
@@ -327,7 +327,7 @@
 #                      Return
 #                          Lexical variable '$c'
 #          Computed property 'sum0'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$c'
@@ -349,7 +349,7 @@
 #                      Return
 #                          Lexical variable '$c'
 #          Computed property 'iterator'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -388,7 +388,7 @@ my $result = do {
     load_core('main');
 
     # Anonymous function definition with topicalizer
-    my $func_0 = function_def(
+    my $func_3 = function_def(
         $f, undef, undef,
         [ { name => '_' } ],
         [],
@@ -532,7 +532,7 @@ my $result = do {
         );
 
         # Method event 'withoutAll' definition
-        my $method_3 = method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'withoutAll',
             [
@@ -550,7 +550,7 @@ my $result = do {
                 return $ret_func->(
                     $$self->{'grep'}->(
                         [
-                            $func_0->inside_scope(
+                            $func_3->inside_scope(
                                 (undef) => $scope,
                                 undef, $class, $ins, undef, undef
                             )
@@ -564,7 +564,7 @@ my $result = do {
         );
 
         # Method event 'without' definition
-        my $method_4 = method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope,
             'without',
             [
@@ -646,7 +646,7 @@ my $result = do {
         );
 
         # Method event 'remove' definition
-        my $method_5 = method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope, 'remove',
             [
                 {
@@ -701,7 +701,7 @@ my $result = do {
         );
 
         # Method event 'removeAll' definition
-        my $method_6 = method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope,
             'removeAll',
             [
@@ -772,7 +772,7 @@ my $result = do {
         );
 
         # Method event 'first' definition
-        my $method_7 = method_event_def(
+        my $method_8 = method_event_def(
             $f, $scope, 'first',
             [
                 {
@@ -818,7 +818,7 @@ my $result = do {
         );
 
         # Method event 'any' definition
-        my $method_8 = method_event_def(
+        my $method_9 = method_event_def(
             $f, $scope, 'any',
             [
                 {
@@ -864,7 +864,7 @@ my $result = do {
         );
 
         # Method event 'all' definition
-        my $method_9 = method_event_def(
+        my $method_10 = method_event_def(
             $f, $scope, 'all',
             [
                 {
@@ -914,7 +914,7 @@ my $result = do {
         );
 
         # Method event 'sum' definition
-        my $method_10 = method_event_def(
+        my $method_11 = method_event_def(
             $f, $scope, 'sum',
             [],
             [],
@@ -966,7 +966,7 @@ my $result = do {
         );
 
         # Method event 'sum0' definition
-        my $method_11 = method_event_def(
+        my $method_12 = method_event_def(
             $f, $scope, 'sum0',
             [],
             [],
@@ -999,7 +999,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $method_12 = method_event_def(
+        my $method_13 = method_event_def(
             $f, $scope,
             'iterator',
             [],
@@ -1027,43 +1027,43 @@ my $result = do {
             grep => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
+        $method_4->inside_scope(
             withoutAll => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_4->inside_scope(
+        $method_5->inside_scope(
             without => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_5->inside_scope(
+        $method_6->inside_scope(
             remove => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_6->inside_scope(
+        $method_7->inside_scope(
             removeAll => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_7->inside_scope(
+        $method_8->inside_scope(
             first => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_8->inside_scope(
+        $method_9->inside_scope(
             any => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_9->inside_scope(
+        $method_10->inside_scope(
             all => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_10->inside_scope(
+        $method_11->inside_scope(
             sum => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_11->inside_scope(
+        $method_12->inside_scope(
             sum0 => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_12->inside_scope(
+        $method_13->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );

@@ -18,7 +18,7 @@
 #                      Multiplication operator (*)
 #                      Number '1024'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Want
 #                          Instance variable '@userAgent'
@@ -60,7 +60,7 @@
 #                              Item 0
 #                                  Special variable '*self'
 #          Method 'get'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$url'
@@ -78,7 +78,7 @@
 #                                      Pair 'url'
 #                                          Lexical variable '$url'
 #          Method 'post'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$url'
@@ -96,7 +96,7 @@
 #                                      Pair 'url'
 #                                          Lexical variable '$url'
 #          Method 'request'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$httpMethod'

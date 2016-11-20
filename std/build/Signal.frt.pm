@@ -57,14 +57,14 @@
 #                          Pair 'ALRM'
 #                              Lexical variable '$ALRM'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@type'
 #                          Argument type
 #                              Bareword 'Sym'
 #          Method 'trap'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Call
 #                          Bareword '_exit'
@@ -72,7 +72,7 @@
 #                              Item 0
 #                                  Number '0'
 #          Class method 'fireSignal'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$type'

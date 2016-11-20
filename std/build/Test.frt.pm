@@ -2,7 +2,7 @@
 #  Document './std/Test.frt'
 #      Class 'Test' version 1.0
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Want
 #                          Instance variable '@name'
@@ -22,7 +22,7 @@
 #                          Instance variable '@passed'
 #                          Number '0'
 #          Method 'trueValue'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -40,7 +40,7 @@
 #                                  Item 1
 #                                      String 'Value must...'
 #          Method 'veryTrue'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -57,7 +57,7 @@
 #                                  Item 1
 #                                      String 'Value must...'
 #          Method 'equal'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -77,7 +77,7 @@
 #                                  Item 1
 #                                      String 'Values mus...'
 #          Method 'objectsEqual'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -97,7 +97,7 @@
 #                                  Item 1
 #                                      String 'Objects mu...'
 #          Method 'notEqual'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -117,7 +117,7 @@
 #                                  Item 1
 #                                      String 'Values mus...'
 #          Method 'objectsNotEqual'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -137,7 +137,7 @@
 #                                  Item 1
 #                                      String 'Objects mu...'
 #          Method 'review'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$failed'
@@ -184,7 +184,7 @@
 #                              Equality operator (==)
 #                              Instance variable '@tested'
 #          Method '_test'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$yes'

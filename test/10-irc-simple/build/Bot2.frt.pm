@@ -2,7 +2,7 @@
 #  Document './test/10-irc-simple/Bot2.frt'
 #      Class 'Bot2'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@address'
@@ -219,7 +219,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Bot2', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -303,7 +303,7 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $method_3->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );

@@ -6,7 +6,7 @@
 #              Load
 #                  Bareword 'Outgoing'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@addr'
@@ -175,14 +175,14 @@
 #                                      Instance variable '@_resetState'
 #                                      Argument list [0 items]
 #          Method 'connect'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Call
 #                          Property 'connect'
 #                              Instance variable '@sock'
 #                          Argument list [0 items]
 #          Method 'send'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -205,7 +205,7 @@
 #                              Item 0
 #                                  Lexical variable '$line'
 #          Method '_handleLine'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -250,7 +250,7 @@
 #                                  Pair 'msg'
 #                                      Lexical variable '$msg'
 #          Method 'getTarget'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$target'
@@ -282,7 +282,7 @@
 #                                          Item 0
 #                                              Lexical variable '$target'
 #          Method 'getChannel'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$name'
@@ -314,7 +314,7 @@
 #                                      Pair 'name'
 #                                          Lexical variable '$name'
 #          Method 'getUser'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$nick'
@@ -346,7 +346,7 @@
 #                                      Pair 'nick'
 #                                          Lexical variable '$nick'
 #          Method 'getServer'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$name'
@@ -378,9 +378,9 @@
 #                                      Pair 'name'
 #                                          Lexical variable '$name'
 #          Method 'connected'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #          Method 'disconnected'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@users'
@@ -394,7 +394,7 @@
 #                          Instance variable '@channels'
 #                          Hash [0 items]
 #          Method 'copy'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -422,7 +422,7 @@
 #                                                  Instance variable '@autojoin'
 #                                              Argument list [0 items]
 #          Method 'description'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -534,7 +534,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Connection', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -673,7 +673,7 @@ my $result = do {
         );
 
         # Method event 'connect' definition
-        my $method_1 = method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'connect',
             [],
@@ -687,7 +687,7 @@ my $result = do {
         );
 
         # Method event 'send' definition
-        my $method_2 = method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope, 'send',
             [
                 {
@@ -712,7 +712,7 @@ my $result = do {
         );
 
         # Method event '_handleLine' definition
-        my $method_3 = method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope,
             '_handleLine',
             [
@@ -767,7 +767,7 @@ my $result = do {
         );
 
         # Method event 'getTarget' definition
-        my $method_4 = method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope,
             'getTarget',
             [
@@ -812,7 +812,7 @@ my $result = do {
         );
 
         # Method event 'getChannel' definition
-        my $method_5 = method_event_def(
+        my $method_8 = method_event_def(
             $f, $scope,
             'getChannel',
             [
@@ -868,7 +868,7 @@ my $result = do {
         );
 
         # Method event 'getUser' definition
-        my $method_6 = method_event_def(
+        my $method_9 = method_event_def(
             $f, $scope,
             'getUser',
             [
@@ -924,7 +924,7 @@ my $result = do {
         );
 
         # Method event 'getServer' definition
-        my $method_7 = method_event_def(
+        my $method_10 = method_event_def(
             $f, $scope,
             'getServer',
             [
@@ -980,7 +980,7 @@ my $result = do {
         );
 
         # Method event 'connected' definition
-        my $method_8 = method_event_def(
+        my $method_11 = method_event_def(
             $f, $scope,
             'connected',
             [],
@@ -993,7 +993,7 @@ my $result = do {
         );
 
         # Method event 'disconnected' definition
-        my $method_9 = method_event_def(
+        my $method_12 = method_event_def(
             $f, $scope,
             'disconnected',
             [],
@@ -1017,7 +1017,7 @@ my $result = do {
         );
 
         # Method event 'copy' definition
-        my $method_10 = method_event_def(
+        my $method_13 = method_event_def(
             $f, $scope, 'copy',
             [],
             [],
@@ -1049,7 +1049,7 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $method_11 = method_event_def(
+        my $method_14 = method_event_def(
             $f, $scope,
             'description',
             [],
@@ -1066,51 +1066,51 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $method_3->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $method_4->inside_scope(
             connect => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $method_5->inside_scope(
             send => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
+        $method_6->inside_scope(
             _handleLine => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_4->inside_scope(
+        $method_7->inside_scope(
             getTarget => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_5->inside_scope(
+        $method_8->inside_scope(
             getChannel => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_6->inside_scope(
+        $method_9->inside_scope(
             getUser => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_7->inside_scope(
+        $method_10->inside_scope(
             getServer => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_8->inside_scope(
+        $method_11->inside_scope(
             connected => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_9->inside_scope(
+        $method_12->inside_scope(
             disconnected => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_10->inside_scope(
+        $method_13->inside_scope(
             copy => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_11->inside_scope(
+        $method_14->inside_scope(
             description => $scope,
             $proto, $class, $ins, undef, undef
         );

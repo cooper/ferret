@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'Connection'
 #          Method 'sendJoin'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need (...)
 #                          Lexical variable '$channelNames'
@@ -25,7 +25,7 @@
 #                                              Addition operator (+)
 #                                              Lexical variable '$name'
 #          Method 'sendPrivmsg'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$target'
@@ -68,7 +68,7 @@
 #                                              Addition operator (+)
 #                                              Lexical variable '$line'
 #          Method 'sendNick'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$nick'

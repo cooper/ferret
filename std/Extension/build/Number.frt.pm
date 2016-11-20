@@ -31,7 +31,7 @@
 #                      Bareword 'Int'
 #                      Bareword 'Integer'
 #          Computed property 'sqrt'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -41,7 +41,7 @@
 #                                  Item 0
 #                                      Special variable '*self'
 #          Computed property 'cbrt'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -50,7 +50,7 @@
 #                                  Item 0
 #                                      Number '3'
 #          Computed property 'square'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -58,7 +58,7 @@
 #                              Exponent operator (^)
 #                              Number '2'
 #          Computed property 'even'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -68,7 +68,7 @@
 #                              Equality operator (==)
 #                              Number '0'
 #          Computed property 'odd'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -78,7 +78,7 @@
 #                              Negated equality operator (!=)
 #                              Number '0'
 #          Method 'root'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$root'

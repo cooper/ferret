@@ -2,7 +2,7 @@
 #  Document './test/5-class.frt'
 #      Class 'Point' version 1.0
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$x'
@@ -18,7 +18,7 @@
 #                          Instance variable '@y'
 #                          Lexical variable '$y'
 #          Method 'oneToRight'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$pt'
@@ -36,7 +36,7 @@
 #                      Return
 #                          Lexical variable '$pt'
 #          Method 'pretty'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Single value [1 item]
@@ -52,14 +52,14 @@
 #                                      Addition operator (+)
 #                                      String ')'
 #          Method 'toString'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Call
 #                              Instance variable '@pretty'
 #                              Argument list [0 items]
 #          Class method 'midpoint'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt1'

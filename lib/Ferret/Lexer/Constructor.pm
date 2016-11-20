@@ -1502,7 +1502,7 @@ sub c_METHOD {
     # Rule Method[0]:
     #   Must be a direct child of a Class.
 
-    my $method = F::new('Method', %$value, event_cb => 1);
+    my $method = F::new('Function', %$value, event_cb => 1, is_method => 1);
 
     $c->node->adopt($method);
     $c->capture_closure_with($method->body);

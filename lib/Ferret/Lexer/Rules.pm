@@ -6,6 +6,7 @@ use 5.010;
 
 use Ferret::Lexer::RuleFunctions;
 use Ferret::Lexer::RuleSet;
+use List::Util qw(any);
 
 our %token_rules = (
 
@@ -390,9 +391,18 @@ our %element_rules = (
 
         # instance variables only make sense inside of classes.
         must_be_somewhere_inside => [                                           # InstanceVariable[0]
-            'Method',
+            'Function',
             'Instance variables must be inside a class instance method',
             0
+        ],
+
+        parent_must_satisfy => [                                                # InstanceVariable[1] TODO
+            sub {
+                my @upper_funcs = shift->filter_ancestors(type => 'Function');
+                return any { $_->is_method } @upper_funcs;
+            },
+            'Instance variables must be inside a class instance method',
+            1
         ]
 
     },
@@ -1137,9 +1147,7 @@ our %element_rules = (
                 return 1 if $fail->{fail_type} eq 'throw';
 
                 # fails can only be in functions.
-                return
-                    $p->first_self_or_parent('Function') ||
-                    $p->first_self_or_parent('Method');
+                return $p->first_self_or_parent('Function');
 
             },
             'Fail statement must be inside a function, method, or callback',

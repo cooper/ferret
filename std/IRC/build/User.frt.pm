@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'User'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@connection'

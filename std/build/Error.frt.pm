@@ -2,7 +2,7 @@
 #  Document './std/Error.frt'
 #      Class 'Error' version 1.0
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@type'
@@ -40,7 +40,7 @@
 #                              Item 1
 #                                  String 'Ferret::Error'
 #          Method 'setPosition'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$file'
@@ -65,7 +65,7 @@
 #                              Item 3
 #                                  Lexical variable '$line'
 #          Method 'description'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$desc'
@@ -184,7 +184,7 @@ my $result = do {
     load_core('main');
 
     # Function event '_prettyHints' definition
-    my $func_0 = function_event_def(
+    my $func_3 = function_event_def(
         $f, $scope,
         '_prettyHints',
         undef,
@@ -433,7 +433,7 @@ my $result = do {
             description => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_0->inside_scope(
+        $func_3->inside_scope(
             _prettyHints => $scope,
             $scope, $class, $ins, undef, undef
         );

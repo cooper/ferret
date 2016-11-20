@@ -3,7 +3,7 @@
 #      Package 'HTTP'
 #      Class 'Request'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$client'
@@ -27,7 +27,7 @@
 #                          Argument type
 #                              Bareword 'HTTPMethod'
 #          Method 'connect'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Call
 #                          Property 'connect'
@@ -38,13 +38,13 @@
 #                              Item 1
 #                                  Special variable '*self'
 #          Method 'connected'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #          Method 'redirect'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #          Method 'error'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #          Method 'response'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #      Include (Client, HTTPMethod, NATIVE, NATIVE::HTTPClient, Str)
 package FF;
 

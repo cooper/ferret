@@ -2,7 +2,7 @@
 #  Document './std/Extension/Hash.frt'
 #      Class 'Hash' <K, V>
 #          Computed property 'empty'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
@@ -10,7 +10,7 @@
 #                              Equality operator (==)
 #                              Number '0'
 #          Computed property 'iterator'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -21,7 +21,7 @@
 #                          Bareword 'Iterator'
 #      Class 'OrderedHash' <K, V>
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@orderedKeys'
@@ -39,12 +39,12 @@
 #                                      Special variable '*self'
 #                          Argument list [0 items]
 #          Computed property 'keys'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Instance variable '@orderedKeys'
 #          Method 'pushPair'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$key'
@@ -84,7 +84,7 @@
 #                              Item 0
 #                                  Lexical variable '$key'
 #          Computed property 'iterator'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$it'
@@ -186,7 +186,7 @@ my $result = do {
             [ \'K', \'V' ] );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'initializer__',
             [],
@@ -208,7 +208,7 @@ my $result = do {
         );
 
         # Method event 'keys' definition
-        my $method_1 = method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope, 'keys',
             [],
             [],
@@ -220,7 +220,7 @@ my $result = do {
         );
 
         # Method event 'pushPair' definition
-        my $method_2 = method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'pushPair',
             [
@@ -266,7 +266,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $method_3 = method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope,
             'iterator',
             [],
@@ -292,19 +292,19 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $method_2->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $method_3->inside_scope(
             keys => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $method_2->inside_scope(
+        $method_4->inside_scope(
             pushPair => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
+        $method_5->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );

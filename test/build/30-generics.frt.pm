@@ -2,13 +2,13 @@
 #  Document './test/30-generics.frt'
 #      Class 'Stack' <Element>
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@items'
 #                          Value list [0 items]
 #          Method 'push'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$item'
@@ -23,7 +23,7 @@
 #                                  Item 0
 #                                      Lexical variable '$item'
 #          Method 'pop'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Call
@@ -31,7 +31,7 @@
 #                                  Instance variable '@items'
 #                              Argument list [0 items]
 #          Method 'description'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation

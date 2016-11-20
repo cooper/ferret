@@ -31,7 +31,7 @@
 #                              Pair 'add'
 #                                  Bareword '_commandAdd'
 #          Class method 'initializer__'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Instance variable '@addr'
@@ -141,7 +141,7 @@
 #                                          Item 0
 #                                              Lexical variable '$data'
 #          Method 'addCommand'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$command'
@@ -173,14 +173,14 @@
 #                      Return pair 'added'
 #                          Boolean true
 #          Method 'connect'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Call
 #                          Property 'connect'
 #                              Instance variable '@sock'
 #                          Argument list [0 items]
 #          Method 'send'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -201,7 +201,7 @@
 #                              Item 0
 #                                  Lexical variable '$line'
 #          Method 'handleLine'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -276,7 +276,7 @@
 #                                  Pair 's'
 #                                      Lexical variable '$s'
 #          Method 'privmsg'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$channel'
@@ -619,7 +619,7 @@ my $result = do {
     );
 
     # Function event '_joinChannels' definition
-    my $func_2 = function_event_def(
+    my $func_8 = function_event_def(
         $f, $scope,
         '_joinChannels',
         undef,
@@ -664,7 +664,7 @@ my $result = do {
     );
 
     # Function event '_pong' definition
-    my $func_3 = function_event_def(
+    my $func_9 = function_event_def(
         $f, $scope, '_pong', undef,
         [ { name => 's', type => undef, optional => undef, more => undef } ],
         [],
@@ -690,7 +690,7 @@ my $result = do {
     );
 
     # Function event '_handleMessage' definition
-    my $func_4 = function_event_def(
+    my $func_10 = function_event_def(
         $f, $scope,
         '_handleMessage',
         undef,
@@ -750,7 +750,7 @@ my $result = do {
     );
 
     # Function event '_commandHello' definition
-    my $func_5 = function_event_def(
+    my $func_11 = function_event_def(
         $f, $scope,
         '_commandHello',
         undef,
@@ -781,7 +781,7 @@ my $result = do {
     );
 
     # Function event '_commandAdd' definition
-    my $func_6 = function_event_def(
+    my $func_12 = function_event_def(
         $f, $scope,
         '_commandAdd',
         undef,
@@ -836,7 +836,7 @@ my $result = do {
     );
 
     # Function event '_commandFactoid' definition
-    my $func_7 = function_event_def(
+    my $func_13 = function_event_def(
         $f, $scope,
         '_commandFactoid',
         undef,
@@ -890,7 +890,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Bot', undef, undef );
 
         # Method event 'initializer__' definition
-        my $method_0 = method_event_def(
+        my $method_2 = method_event_def(
             $f, $scope,
             'initializer__',
             [
@@ -968,7 +968,7 @@ my $result = do {
         );
 
         # Method event 'addCommand' definition
-        my $method_1 = method_event_def(
+        my $method_3 = method_event_def(
             $f, $scope,
             'addCommand',
             [
@@ -1011,7 +1011,7 @@ my $result = do {
         );
 
         # Method event 'connect' definition
-        my $method_2 = method_event_def(
+        my $method_4 = method_event_def(
             $f, $scope,
             'connect',
             [],
@@ -1025,7 +1025,7 @@ my $result = do {
         );
 
         # Method event 'send' definition
-        my $method_3 = method_event_def(
+        my $method_5 = method_event_def(
             $f, $scope, 'send',
             [
                 {
@@ -1050,7 +1050,7 @@ my $result = do {
         );
 
         # Method event 'handleLine' definition
-        my $method_4 = method_event_def(
+        my $method_6 = method_event_def(
             $f, $scope,
             'handleLine',
             [
@@ -1142,7 +1142,7 @@ my $result = do {
         );
 
         # Method event 'privmsg' definition
-        my $method_5 = method_event_def(
+        my $method_7 = method_event_def(
             $f, $scope,
             'privmsg',
             [
@@ -1208,51 +1208,51 @@ my $result = do {
                 return $ret;
             }
         );
-        $method_0->inside_scope(
+        $method_2->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
-        $method_1->inside_scope(
+        $method_3->inside_scope(
             addCommand => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_2->inside_scope(
+        $method_4->inside_scope(
             connect => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_3->inside_scope(
+        $method_5->inside_scope(
             send => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_4->inside_scope(
+        $method_6->inside_scope(
             handleLine => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $method_5->inside_scope(
+        $method_7->inside_scope(
             privmsg => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_2->inside_scope(
+        $func_8->inside_scope(
             _joinChannels => $scope,
             $scope, $class, $ins, undef, undef
         );
-        $func_3->inside_scope(
+        $func_9->inside_scope(
             _pong => $scope,
             $scope, $class, $ins, undef, undef
         );
-        $func_4->inside_scope(
+        $func_10->inside_scope(
             _handleMessage => $scope,
             $scope, $class, $ins, undef, undef
         );
-        $func_5->inside_scope(
+        $func_11->inside_scope(
             _commandHello => $scope,
             $scope, $class, $ins, undef, undef
         );
-        $func_6->inside_scope(
+        $func_12->inside_scope(
             _commandAdd => $scope,
             $scope, $class, $ins, undef, undef
         );
-        $func_7->inside_scope(
+        $func_13->inside_scope(
             _commandFactoid => $scope,
             $scope, $class, $ins, undef, undef
         );

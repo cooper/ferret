@@ -53,7 +53,7 @@
 #                                  Item 0
 #                                      Topic variable '$_'
 #          Method 'word'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$wordI'
@@ -77,7 +77,7 @@
 #                                  Item 0
 #                                      Lexical variable '$wordI'
 #          Method 'fromWord'
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Need
 #                          Lexical variable '$wordN'
@@ -101,7 +101,7 @@
 #                                  Item 0
 #                                      Lexical variable '$wordN'
 #          Computed property 'empty' (lazy)
-#              Body ('method' scope)
+#              Body ('function' scope)
 #                  Instruction
 #                      Return
 #                          Operation
