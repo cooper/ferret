@@ -1173,16 +1173,18 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret->fail(
-                    $$scope->{'Error'}->(
-                        [
-                            get_symbol( $f, 'ParameterError' ),
-                            str( $f, "Not enough parameters" )
-                        ],
-                        $scope, undef,
-                        $pos->(20.3)
-                    ),
-                    $pos->(20.1)
+                return $ret_func->(
+                    $ret->fail(
+                        $$scope->{'Error'}->(
+                            [
+                                get_symbol( $f, 'ParameterError' ),
+                                str( $f, "Not enough parameters" )
+                            ],
+                            $scope, undef,
+                            $pos->(20.3)
+                        ),
+                        $pos->(20.1)
+                    )
                 );
             }
             var(
@@ -1201,19 +1203,23 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret->fail(
-                    $$scope->{'Error'}->(
-                        [
-                            get_symbol( $f, 'ParameterError' ),
-                            add(
-                                $scope,               str( $f, "Command ." ),
-                                $$scope->{'command'}, str( $f, " exists" )
-                            )
-                        ],
-                        $scope, undef,
-                        $pos->(25.15)
-                    ),
-                    $pos->(25.05)
+                return $ret_func->(
+                    $ret->fail(
+                        $$scope->{'Error'}->(
+                            [
+                                get_symbol( $f, 'ParameterError' ),
+                                add(
+                                    $scope,
+                                    str( $f, "Command ." ),
+                                    $$scope->{'command'},
+                                    str( $f, " exists" )
+                                )
+                            ],
+                            $scope, undef,
+                            $pos->(25.15)
+                        ),
+                        $pos->(25.05)
+                    )
                 );
             }
             var(
@@ -1295,16 +1301,18 @@ my $result = do {
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret->fail(
-                    $$scope->{'Error'}->(
-                        [
-                            get_symbol( $f, 'ParameterError' ),
-                            str( $f, "Not enough parameters" )
-                        ],
-                        $scope, undef,
-                        $pos->(42.3)
-                    ),
-                    $pos->(42.1)
+                return $ret_func->(
+                    $ret->fail(
+                        $$scope->{'Error'}->(
+                            [
+                                get_symbol( $f, 'ParameterError' ),
+                                str( $f, "Not enough parameters" )
+                            ],
+                            $scope, undef,
+                            $pos->(42.3)
+                        ),
+                        $pos->(42.1)
+                    )
                 );
             }
             var(
@@ -1326,20 +1334,22 @@ my $result = do {
             if ( bool( _not( $$scope->{'existed'} ) ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                return $ret->fail(
-                    $$scope->{'Error'}->(
-                        [
-                            get_symbol( $f, 'ParameterError' ),
-                            add(
-                                $scope,
-                                str( $f, "No such factoid ." ),
-                                $$scope->{'command'}
-                            )
-                        ],
-                        $scope, undef,
-                        $pos->(49.15)
-                    ),
-                    $pos->(49.05)
+                return $ret_func->(
+                    $ret->fail(
+                        $$scope->{'Error'}->(
+                            [
+                                get_symbol( $f, 'ParameterError' ),
+                                add(
+                                    $scope,
+                                    str( $f, "No such factoid ." ),
+                                    $$scope->{'command'}
+                                )
+                            ],
+                            $scope, undef,
+                            $pos->(49.15)
+                        ),
+                        $pos->(49.05)
+                    )
                 );
             }
 

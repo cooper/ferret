@@ -489,17 +489,19 @@ my $result = do {
                     },
                     sub {
                         my ($scope) = @_;
-                        return $ret->fail(
-                            $$scope->{'Error'}->(
-                                [
-                                    get_symbol( $f, 'PerlRequireFailed' ),
-                                    str( $f, "Unable to load JSON::XS" ),
-                                    [ subError => $$scope->{'err'} ]
-                                ],
-                                $scope, undef,
-                                $pos->(66.3)
-                            ),
-                            $pos->(66.1)
+                        return $ret_func->(
+                            $ret->fail(
+                                $$scope->{'Error'}->(
+                                    [
+                                        get_symbol( $f, 'PerlRequireFailed' ),
+                                        str( $f, "Unable to load JSON::XS" ),
+                                        [ subError => $$scope->{'err'} ]
+                                    ],
+                                    $scope, undef,
+                                    $pos->(66.3)
+                                ),
+                                $pos->(66.1)
+                            )
                         );
                     },
                     'err'
@@ -517,19 +519,24 @@ my $result = do {
                     },
                     sub {
                         my ($scope) = @_;
-                        return $ret->fail(
-                            $$scope->{'Error'}->(
-                                [
-                                    get_symbol( $f, 'PerlConstructorFailed' ),
-                                    str(
-                                        $f, "Could not create JSON::XS object"
-                                    ),
-                                    [ subError => $$scope->{'err'} ]
-                                ],
-                                $scope, undef,
-                                $pos->(73.3)
-                            ),
-                            $pos->(73.1)
+                        return $ret_func->(
+                            $ret->fail(
+                                $$scope->{'Error'}->(
+                                    [
+                                        get_symbol(
+                                            $f, 'PerlConstructorFailed'
+                                        ),
+                                        str(
+                                            $f,
+                                            "Could not create JSON::XS object"
+                                        ),
+                                        [ subError => $$scope->{'err'} ]
+                                    ],
+                                    $scope, undef,
+                                    $pos->(73.3)
+                                ),
+                                $pos->(73.1)
+                            )
                         );
                     },
                     'err'
@@ -611,17 +618,19 @@ my $result = do {
                     },
                     sub {
                         my ($scope) = @_;
-                        return $ret->fail(
-                            $$scope->{'Error'}->(
-                                [
-                                    get_symbol( $f, 'JSONError' ),
-                                    str( $f, "JSON encode error" ),
-                                    [ subError => $$scope->{'err'} ]
-                                ],
-                                $scope, undef,
-                                $pos->(98.15)
-                            ),
-                            $pos->(98.05)
+                        return $ret_func->(
+                            $ret->fail(
+                                $$scope->{'Error'}->(
+                                    [
+                                        get_symbol( $f, 'JSONError' ),
+                                        str( $f, "JSON encode error" ),
+                                        [ subError => $$scope->{'err'} ]
+                                    ],
+                                    $scope, undef,
+                                    $pos->(98.15)
+                                ),
+                                $pos->(98.05)
+                            )
                         );
                     },
                     'err'
@@ -659,17 +668,19 @@ my $result = do {
                     },
                     sub {
                         my ($scope) = @_;
-                        return $ret->fail(
-                            $$scope->{'Error'}->(
-                                [
-                                    get_symbol( $f, 'JSONError' ),
-                                    str( $f, "JSON decode error" ),
-                                    [ subError => $$scope->{'err'} ]
-                                ],
-                                $scope, undef,
-                                $pos->(107.15)
-                            ),
-                            $pos->(107.05)
+                        return $ret_func->(
+                            $ret->fail(
+                                $$scope->{'Error'}->(
+                                    [
+                                        get_symbol( $f, 'JSONError' ),
+                                        str( $f, "JSON decode error" ),
+                                        [ subError => $$scope->{'err'} ]
+                                    ],
+                                    $scope, undef,
+                                    $pos->(107.15)
+                                ),
+                                $pos->(107.05)
+                            )
                         );
                     },
                     'err'
@@ -711,17 +722,19 @@ my $result = do {
                     },
                     sub {
                         my ($scope) = @_;
-                        return $ret->fail(
-                            $$scope->{'Error'}->(
-                                [
-                                    get_symbol( $f, 'JSONError' ),
-                                    str( $f, "JSON incr_parse() error" ),
-                                    [ subError => $$scope->{'err'} ]
-                                ],
-                                $scope, undef,
-                                $pos->(143.15)
-                            ),
-                            $pos->(143.05)
+                        return $ret_func->(
+                            $ret->fail(
+                                $$scope->{'Error'}->(
+                                    [
+                                        get_symbol( $f, 'JSONError' ),
+                                        str( $f, "JSON incr_parse() error" ),
+                                        [ subError => $$scope->{'err'} ]
+                                    ],
+                                    $scope, undef,
+                                    $pos->(143.15)
+                                ),
+                                $pos->(143.05)
+                            )
                         );
                     },
                     'err'
@@ -758,17 +771,19 @@ my $result = do {
                     },
                     sub {
                         my ($scope) = @_;
-                        return $ret->fail(
-                            $$scope->{'Error'}->(
-                                [
-                                    get_symbol( $f, 'JSONError' ),
-                                    str( $f, "JSON incr_parse() error" ),
-                                    [ subError => $$scope->{'err'} ]
-                                ],
-                                $scope, undef,
-                                $pos->(156.15)
-                            ),
-                            $pos->(156.05)
+                        return $ret_func->(
+                            $ret->fail(
+                                $$scope->{'Error'}->(
+                                    [
+                                        get_symbol( $f, 'JSONError' ),
+                                        str( $f, "JSON incr_parse() error" ),
+                                        [ subError => $$scope->{'err'} ]
+                                    ],
+                                    $scope, undef,
+                                    $pos->(156.15)
+                                ),
+                                $pos->(156.05)
+                            )
                         );
                     },
                     'err'

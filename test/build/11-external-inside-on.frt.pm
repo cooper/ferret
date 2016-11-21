@@ -191,7 +191,7 @@ my $result = do {
 
     # Inside
     {
-        my $inside_return = inside(
+        my ( $inside_status, $inside_return ) = inside(
             $f, $scope,
             $$scope->{'point'},
             sub {
@@ -200,7 +200,7 @@ my $result = do {
                 var( $scope, y => num( $f, "10" ), $file_scope, $pos->(10.2) );
             }
         );
-        return $ret_func->($inside_return) if $inside_return;
+        return $ret_func->($inside_return) if $inside_status eq 'return';
     }
     $$scope->{'say'}->(
         [ add( $scope, str( $f, "Point: " ), $$scope->{'point'} ) ],

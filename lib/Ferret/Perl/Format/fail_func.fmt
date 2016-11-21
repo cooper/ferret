@@ -1,1 +1,1 @@
-return $ret->fail(<<expression>>, $pos->(<<pos>>))
+return $ret_func->($ret->fail(<<expression>>, $pos->(<<pos>>)))

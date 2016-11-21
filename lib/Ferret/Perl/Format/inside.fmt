@@ -1,9 +1,9 @@
 # Inside
 {
-    my $inside_return =
+    my ($inside_status, $inside_return) =
     inside($f, $scope, <<expression>>, sub {
         my ($scope, $ins, $ret_func) = @_;
         <<content>>
     });
-    return $ret_func->($inside_return) if $inside_return;
+    return $ret_func->($inside_return) if $inside_status eq 'return';
 }

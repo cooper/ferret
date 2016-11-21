@@ -349,8 +349,8 @@ sub inside {
     my ($f, $outer_scope, $obj, $code) = @_;
     my $scope = Ferret::Scope->new($f, parent => $outer_scope);
     my ($status, $ret) = $code->($scope, $obj, $once_ret_func);
-    return $ret if $status eq 'return';
-    return;
+    return ('return', $ret) if $status eq 'return';
+    return 'void';
 }
 
 # class definition or extension.

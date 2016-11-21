@@ -585,16 +585,18 @@ my $result = do {
                 if ( bool( $$self->{'fatal'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return $ret->throw(
-                        $$scope->{'Error'}->(
-                            [
-                                get_symbol( $f, 'TestFailure' ),
-                                $$scope->{'message'}
-                            ],
-                            $scope, undef,
-                            $pos->(80.3)
-                        ),
-                        $pos->(80.1)
+                    return $ret_func->(
+                        $ret->throw(
+                            $$scope->{'Error'}->(
+                                [
+                                    get_symbol( $f, 'TestFailure' ),
+                                    $$scope->{'message'}
+                                ],
+                                $scope, undef,
+                                $pos->(80.3)
+                            ),
+                            $pos->(80.1)
+                        )
                     );
                 }
                 $ret->set_property(

@@ -188,7 +188,7 @@ my $result = do {
 
     # Inside
     {
-        my $inside_return = inside(
+        my ( $inside_status, $inside_return ) = inside(
             $f, $scope,
             $$scope->{'HTTP'}->property_u( 'get', $pos->(1.3) )->(
                 [ str( $f, "http://google.com" ) ], $scope,
@@ -238,7 +238,7 @@ my $result = do {
                   ->( [ undef, [] ], $scope, undef, $pos->(24.3) );
             }
         );
-        return $ret_func->($inside_return) if $inside_return;
+        return $ret_func->($inside_return) if $inside_status eq 'return';
     }
 };
 

@@ -1,1 +1,1 @@
-return $ret->throw(<<expression>>, $pos->(<<pos>>))
+return $ret_func->($ret->throw(<<expression>>, $pos->(<<pos>>)))
