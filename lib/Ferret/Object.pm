@@ -458,7 +458,7 @@ sub parent_names {
     my @parents;
 
     # only say Prototype for prototypes.
-    return 'Prototype' if $obj->{is_proto};
+    return "Prototype '$$obj{proto_name}'" if $obj->{is_proto};
 
     foreach my $parent ($obj->parents) {
 

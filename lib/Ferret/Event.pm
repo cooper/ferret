@@ -311,7 +311,7 @@ sub detailed_signature_string {
 sub _global_event_prototype {
     my $f = shift;
     return $f->{event_proto} ||= do {
-        my $proto = Ferret::Prototype->new($f);
+        my $proto = Ferret::Prototype->new($f, proto_name => 'Event');
         $proto->set_property(signature => sub {
             my ($event) = @_;
             Ferret::String->new($f, str_value => $event->signature_string)

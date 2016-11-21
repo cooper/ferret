@@ -575,7 +575,7 @@ sub detailed_signature_string {
 sub _global_function_prototype {
     my $f = shift;
     return $f->{function_proto} ||= do {
-        my $proto = Ferret::Prototype->new($f);
+        my $proto = Ferret::Prototype->new($f, proto_name => 'Function');
         $proto->set_property(signature => sub {
             my ($func) = @_;
             Ferret::String->new($f, str_value => $func->signature_string)

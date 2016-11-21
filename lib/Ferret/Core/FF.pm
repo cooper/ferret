@@ -529,7 +529,8 @@ sub typedef {
         };
 
         # create a prototype.
-        my $proto = Ferret::Prototype->new($f) if $lazy;
+        my $proto = Ferret::Prototype->new($f, proto_name => $type_name)
+            if $lazy;
 
         # create a function.
         my $func = ffunction(sub {

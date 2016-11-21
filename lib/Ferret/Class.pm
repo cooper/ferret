@@ -43,7 +43,7 @@ sub new {
     my ($class_name, $f, %opts) = @_;
 
     # create a prototype if necessary
-    $opts{prototype} ||= Ferret::Prototype->new($f);
+    $opts{prototype} ||= Ferret::Prototype->new($f, proto_name => $opts{name});
 
     # add class parents' prototypes
     if (my $classes = delete $opts{parent_class} || delete $opts{parent_classes}) {
@@ -287,7 +287,7 @@ sub prototype { shift->{prototype} }
 sub _global_class_prototype {
     my $f = shift;
     return $f->{class_proto} ||= do {
-        my $proto = Ferret::Prototype->new($f);
+        my $proto = Ferret::Prototype->new($f, proto_name => 'Class');
         $proto->set_property(init => _global_init($f));
         $proto->set_property(signature => sub {
             my ($class) = @_;
