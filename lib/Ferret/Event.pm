@@ -157,9 +157,8 @@ sub call_with_self {
     return $event->call(@_);
 }
 
-# fire the event.
-sub call {
-    my ($event, $arguments, $call_scope, $return, $pos, $detail) = @_;
+sub prepare {
+    my ($event, $arguments, $call_scope, $return, $pos, $detail) = (shift, @_);
 
     # if the arguments are provided as an arrayref, use the signature of the
     # default function to translate them.
@@ -186,10 +185,20 @@ sub call {
         $return
     );
 
-    # fire the event.
+    # prepare the events.
     my @events  = [ $event, call         => @args ];
     push @events, [ $obj,   $event->{id} => @args ] if $obj;
-    my $fire = Evented::Object::fire_events_together(@events);
+
+    return ($arguments, $call_scope, $return, $detail, \@events);
+}
+
+# fire the event.
+sub call {
+    my $event = shift;
+    my ($arguments, $call_scope, $return, $detail, $events) =
+        $event->prepare(@_);
+
+    my $fire = Evented::Object::fire_events_together(@$events);
     $event->{most_recent_fire} = $fire;
 
     $return->detail if $detail;
