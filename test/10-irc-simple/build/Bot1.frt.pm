@@ -195,7 +195,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'data', 18.2 ) || return;
+            need( $scope, $args, 'data', 18.2 ) || return $ret_func->();
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
                 $scope, undef, $pos->(19.2)
@@ -238,9 +238,9 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'addr' ) || return;
-                need( $self, $args, 'nick' ) || return;
-                need( $self, $args, 'user' ) || return;
+                need( $self, $args, 'addr' ) || return $ret_func->();
+                need( $self, $args, 'nick' ) || return $ret_func->();
+                need( $self, $args, 'user' ) || return $ret_func->();
                 want( $self, $args, 'port', 5.1, num( $f, "6667" ) );
                 want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
                 $self->set_property(
@@ -309,7 +309,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 29.2 ) || return;
+                need( $scope, $args, 'line', 29.2 ) || return $ret_func->();
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(30.2)

@@ -212,13 +212,13 @@ sub iterate {
             redo if $status eq 'redo';
 
             # return the outside function.
-            return $ret if $status eq 'return';
+            return ('return', $ret) if $status eq 'return';
 
         }
     }
 
     # if we never reached 'return' status, the loop returns nothing.
-    return;
+    return 'void';
 }
 
 # iterate over a hash.
@@ -255,13 +255,13 @@ sub iterate_pair {
             redo if $status eq 'redo';
 
             # return the outside function.
-            return $ret if $status eq 'return';
+            return ('return', $ret) if $status eq 'return';
 
         }
     }
 
     # if we never reached 'return' status, the loop returns nothing.
-    return;
+    return 'void';
 }
 
 sub indefinitely {
@@ -280,15 +280,14 @@ sub indefinitely {
             redo if $status eq 'redo';
 
             # return the outside function.
-            return $ret if $status eq 'return';
+            return ('return', $ret) if $status eq 'return';
 
         }
 
     }
 
     # if we never reached 'return' status, the loop returns nothing.
-    return;
-
+    return 'void';
 }
 
 sub while_true {
@@ -307,15 +306,14 @@ sub while_true {
             redo if $status eq 'redo';
 
             # return the outside function.
-            return $ret if $status eq 'return';
+            return ('return', $ret) if $status eq 'return';
 
         }
 
     }
 
     # if we never reached 'return' status, the loop returns nothing.
-    return;
-
+    return 'void';
 }
 
 # set a required function argument.

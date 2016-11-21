@@ -154,8 +154,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'twice',   16.2 ) || return;
-            need( $scope, $args, 'message', 16.4 ) || return;
+            need( $scope, $args, 'twice',   16.2 ) || return $ret_func->();
+            need( $scope, $args, 'message', 16.4 ) || return $ret_func->();
             if ( bool( $$scope->{'twice'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 

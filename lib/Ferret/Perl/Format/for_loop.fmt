@@ -1,8 +1,8 @@
 {
-    my $loop_ret =
+    my ($loop_status, $loop_ret) =
     indefinitely($f, $scope, sub {
         my ($scope, $ret_func) = @_;
         <<body>>
     }, $pos->(<<pos>>));
-    return $ret_func->($loop_ret) if $loop_ret;
+    return $ret_func->($loop_ret) if $loop_status eq 'return';
 }

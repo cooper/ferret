@@ -199,10 +199,10 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'list', 29.2 ) || return;
+            need( $scope, $args, 'list', 29.2 ) || return $ret_func->();
             var( $scope, str => str( $f, "\n" ), $file_scope, $pos->(30.2) );
             {
-                my $loop_ret = iterate_pair(
+                my ( $loop_status, $loop_ret ) = iterate_pair(
                     $f, $scope,
                     $$scope->{'list'},
                     'i', 'el',
@@ -250,7 +250,7 @@ my $result = do {
                     },
                     $pos->(31.05)
                 );
-                return $ret_func->($loop_ret) if $loop_ret;
+                return $ret_func->($loop_ret) if $loop_status eq 'return';
             }
             return $ret_func->( $$scope->{'str'} );
             return $ret;
@@ -301,8 +301,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'type' ) || return;
-                need( $self, $args, 'msg' )  || return;
+                need( $self, $args, 'type' ) || return $ret_func->();
+                need( $self, $args, 'msg' )  || return $ret_func->();
                 want( $self, $args, 'hints', 7.2, create_list( $f, [] ) );
                 want( $self, $args, 'subError', 8.2 );
                 want( $self, $args, 'fatal', 9.2, $false );
@@ -339,8 +339,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'file', 15.1 ) || return;
-                need( $scope, $args, 'line', 15.3 ) || return;
+                need( $scope, $args, 'file', 15.1 ) || return $ret_func->();
+                need( $scope, $args, 'line', 15.3 ) || return $ret_func->();
                 $$self->{'hints'}->property_u( 'push', $pos->(16.1) )->(
                     [
                         str( $f, "File" ), $$scope->{'file'},

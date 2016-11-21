@@ -235,8 +235,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'key',   25.1 ) || return;
-                need( $scope, $args, 'value', 25.3 ) || return;
+                need( $scope, $args, 'key',   25.1 ) || return $ret_func->();
+                need( $scope, $args, 'value', 25.3 ) || return $ret_func->();
                 if (
                     bool(
                         $$self->{'orderedKeys'}

@@ -82,7 +82,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 6.2 ) || return;
+            need( $scope, $args, 'num', 6.2 ) || return $ret_func->();
             return $ret_func->(
                 $$scope->{'NATIVE::Math'}->property_u( 'sqrt', $pos->(7.25) )
                   ->( [ $$scope->{'num'} ], $scope, undef, $pos->(7.3) ) );
@@ -100,8 +100,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'root', 11.1 ) || return;
-            need( $scope, $args, 'num',  11.3 ) || return;
+            need( $scope, $args, 'root', 11.1 ) || return $ret_func->();
+            need( $scope, $args, 'num',  11.3 ) || return $ret_func->();
             return $ret_func->(
                 pow(
                     $scope, $$scope->{'num'},

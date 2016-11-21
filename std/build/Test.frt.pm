@@ -304,7 +304,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 19.2 ) || return;
+                need( $scope, $args, 'a', 19.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -337,7 +337,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 25.2 ) || return;
+                need( $scope, $args, 'a', 25.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -372,8 +372,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 31.2 ) || return;
-                need( $scope, $args, 'b', 32.2 ) || return;
+                need( $scope, $args, 'a', 31.2 ) || return $ret_func->();
+                need( $scope, $args, 'b', 32.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -409,8 +409,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 38.2 ) || return;
-                need( $scope, $args, 'b', 39.2 ) || return;
+                need( $scope, $args, 'a', 38.2 ) || return $ret_func->();
+                need( $scope, $args, 'b', 39.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -448,8 +448,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 45.2 ) || return;
-                need( $scope, $args, 'b', 46.2 ) || return;
+                need( $scope, $args, 'a', 45.2 ) || return $ret_func->();
+                need( $scope, $args, 'b', 46.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -485,8 +485,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 52.2 ) || return;
-                need( $scope, $args, 'b', 53.2 ) || return;
+                need( $scope, $args, 'a', 52.2 ) || return $ret_func->();
+                need( $scope, $args, 'b', 53.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
@@ -565,8 +565,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'yes',     69.2 ) || return;
-                need( $scope, $args, 'message', 69.4 ) || return;
+                need( $scope, $args, 'yes',     69.2 ) || return $ret_func->();
+                need( $scope, $args, 'message', 69.4 ) || return $ret_func->();
                 $self->set_property(
                     tested => add( $scope, $$self->{'tested'}, num( $f, "1" ) ),
                     $pos->(71.2)

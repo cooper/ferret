@@ -109,7 +109,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'item', 8.2 ) || return;
+                need( $scope, $args, 'item', 8.2 ) || return $ret_func->();
                 $$self->{'items'}->property_u( 'push', $pos->(9.2) )
                   ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.3) );
                 return $ret;

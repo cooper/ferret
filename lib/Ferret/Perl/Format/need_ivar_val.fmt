@@ -1,1 +1,1 @@
-need($self, $args, '<<var_name>>', <<var_pos>>, <<value>>) || return
+need($self, $args, '<<var_name>>', <<var_pos>>, <<value>>) || return $ret_func->()

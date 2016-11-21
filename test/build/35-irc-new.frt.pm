@@ -817,8 +817,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     59.2 ) || return;
-            need( $scope, $args, 'channel', 59.4 ) || return;
+            need( $scope, $args, 'msg',     59.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 59.4 ) || return $ret_func->();
             var(
                 $scope,
                 command =>
@@ -900,9 +900,9 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',      86.2 ) || return;
-            need( $scope, $args, 'channel',  86.4 ) || return;
-            need( $scope, $args, 'detailed', 86.6 ) || return;
+            need( $scope, $args, 'msg',      86.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel',  86.4 ) || return $ret_func->();
+            need( $scope, $args, 'detailed', 86.6 ) || return $ret_func->();
             var(
                 $scope,
                 code => add(
@@ -974,9 +974,9 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     129.2 ) || return;
-            need( $scope, $args, 'channel', 129.4 ) || return;
-            need( $scope, $args, 'mini',    129.6 ) || return;
+            need( $scope, $args, 'msg',     129.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 129.4 ) || return $ret_func->();
+            need( $scope, $args, 'mini',    129.6 ) || return $ret_func->();
             var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
@@ -1030,7 +1030,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 139.2 ) || return;
+            need( $scope, $args, 'msg', 139.2 ) || return $ret_func->();
             var(
                 $scope,
                 string => any_true(
@@ -1072,7 +1072,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 145.2 ) || return;
+            need( $scope, $args, 'msg', 145.2 ) || return $ret_func->();
             var(
                 $scope,
                 chan =>
@@ -1112,7 +1112,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'channel', 5.2 ) || return;
+            need( $scope, $args, 'channel', 5.2 ) || return $ret_func->();
             $$scope->{'channel'}->property_u( 'privmsg', $pos->(6.2) )->(
                 [
                     str(
@@ -1141,8 +1141,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     14.2 ) || return;
-            need( $scope, $args, 'channel', 14.4 ) || return;
+            need( $scope, $args, 'msg',     14.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 14.4 ) || return $ret_func->();
             var(
                 $scope,
                 message =>
@@ -1263,8 +1263,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     36.2 ) || return;
-            need( $scope, $args, 'channel', 36.4 ) || return;
+            need( $scope, $args, 'msg',     36.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 36.4 ) || return $ret_func->();
             var(
                 $scope,
                 message =>
@@ -1381,8 +1381,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     76.2 ) || return;
-            need( $scope, $args, 'channel', 76.4 ) || return;
+            need( $scope, $args, 'msg',     76.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 76.4 ) || return $ret_func->();
             $$scope->{'handleEval'}->(
                 [ $$scope->{'msg'}, $$scope->{'channel'}, $false ],
                 $scope, undef, $pos->(77.1)
@@ -1406,8 +1406,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     81.2 ) || return;
-            need( $scope, $args, 'channel', 81.4 ) || return;
+            need( $scope, $args, 'msg',     81.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 81.4 ) || return $ret_func->();
             $$scope->{'handleEval'}->(
                 [ $$scope->{'msg'}, $$scope->{'channel'}, $true ],
                 $scope, undef, $pos->(82.1)
@@ -1431,8 +1431,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     99.2 ) || return;
-            need( $scope, $args, 'channel', 99.4 ) || return;
+            need( $scope, $args, 'msg',     99.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 99.4 ) || return $ret_func->();
             var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
@@ -1485,8 +1485,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     109.2 ) || return;
-            need( $scope, $args, 'channel', 109.4 ) || return;
+            need( $scope, $args, 'msg',     109.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 109.4 ) || return $ret_func->();
             var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
@@ -1539,8 +1539,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     119.2 ) || return;
-            need( $scope, $args, 'channel', 119.4 ) || return;
+            need( $scope, $args, 'msg',     119.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 119.4 ) || return $ret_func->();
             $$scope->{'handlePerl'}->(
                 [ $$scope->{'msg'}, $$scope->{'channel'}, $true ],
                 $scope, undef, $pos->(120.1)
@@ -1564,8 +1564,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     124.2 ) || return;
-            need( $scope, $args, 'channel', 124.4 ) || return;
+            need( $scope, $args, 'msg',     124.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 124.4 ) || return $ret_func->();
             $$scope->{'handlePerl'}->(
                 [ $$scope->{'msg'}, $$scope->{'channel'}, $false ],
                 $scope, undef, $pos->(125.1)

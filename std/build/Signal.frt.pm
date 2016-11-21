@@ -137,7 +137,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'type' ) || return;
+                need( $self, $args, 'type' ) || return $ret_func->();
                 return $ret;
             }
         );
@@ -168,7 +168,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'type', 31.2 ) || return;
+                need( $scope, $args, 'type', 31.2 ) || return $ret_func->();
                 {
                     my $maybe_0 =
                       $$scope->{'signals'}

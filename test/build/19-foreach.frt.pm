@@ -59,7 +59,7 @@ my $result = do {
         undef, $pos->(1.2)
     );
     {
-        my $loop_ret = iterate(
+        my ( $loop_status, $loop_ret ) = iterate(
             $f, $scope,
             $$scope->{'words'},
             'word',
@@ -72,7 +72,7 @@ my $result = do {
             },
             $pos->(3.1)
         );
-        return $ret_func->($loop_ret) if $loop_ret;
+        return $ret_func->($loop_ret) if $loop_status eq 'return';
     }
 };
 

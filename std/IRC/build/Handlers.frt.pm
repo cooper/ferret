@@ -227,7 +227,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 14.2 ) || return;
+            need( $scope, $args, 'msg', 14.2 ) || return $ret_func->();
             $$this->{'send'}->(
                 [
                     add(
@@ -256,7 +256,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 19.2 ) || return;
+            need( $scope, $args, 'msg', 19.2 ) || return $ret_func->();
             $this->set_property( registered => $true, $pos->(20.2) );
             $$this->{'me'}->set_property(
                 nick => $$scope->{'msg'}->property_u( 'params', $pos->(21.25) )
@@ -299,7 +299,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 35.2 ) || return;
+            need( $scope, $args, 'msg', 35.2 ) || return $ret_func->();
             $$this->{'server'}->set_property(
                 name => $$scope->{'msg'}->property_u( 'params', $pos->(36.25) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(36.3) ),
@@ -354,7 +354,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 49.2 ) || return;
+            need( $scope, $args, 'msg', 49.2 ) || return $ret_func->();
             $$this->{'me'}->set_property(
                 host => $$scope->{'msg'}->property_u( 'params', $pos->(50.25) )
                   ->get_index_value( [ num( $f, "1" ) ], $scope, $pos->(50.3) ),

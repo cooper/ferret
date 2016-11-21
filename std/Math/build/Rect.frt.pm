@@ -265,10 +265,10 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'x', 5.1 ) || return;
-                need( $scope, $args, 'y', 5.3 ) || return;
-                need( $self, $args, 'width' )  || return;
-                need( $self, $args, 'height' ) || return;
+                need( $scope, $args, 'x', 5.1 ) || return $ret_func->();
+                need( $scope, $args, 'y', 5.3 ) || return $ret_func->();
+                need( $self, $args, 'width' )  || return $ret_func->();
+                need( $self, $args, 'height' ) || return $ret_func->();
                 $self->set_property(
                     origin => $$scope->{'Point'}->(
                         [ $$scope->{'x'}, $$scope->{'y'} ], $scope,

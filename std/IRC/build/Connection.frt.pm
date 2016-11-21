@@ -506,7 +506,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'data', 37.2 ) || return;
+            need( $scope, $args, 'data', 37.2 ) || return $ret_func->();
             $$self->{'_handleLine'}
               ->( [ $$scope->{'data'} ], $scope, undef, $pos->(38.2) );
             return $ret;
@@ -561,9 +561,9 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'addr' ) || return;
+                need( $self, $args, 'addr' ) || return $ret_func->();
                 want( $self, $args, 'port', 8.2, num( $f, "6667" ) );
-                need( $self, $args, 'nick' ) || return;
+                need( $self, $args, 'nick' ) || return $ret_func->();
                 want( $self, $args, 'user', 10.2, str( $f, "ferret" ) );
                 want( $self, $args, 'real', 11.2, str( $f, "Ferret IRC" ) );
                 want( $self, $args, 'autojoin', 12.2 );
@@ -697,7 +697,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 56.2 ) || return;
+                need( $scope, $args, 'line', 56.2 ) || return $ret_func->();
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(57.2)
@@ -723,7 +723,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 63.2 ) || return;
+                need( $scope, $args, 'line', 63.2 ) || return $ret_func->();
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(64.2)
@@ -778,7 +778,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'target', 84.2 ) || return;
+                need( $scope, $args, 'target', 84.2 ) || return $ret_func->();
                 if (
                     bool(
                         $$scope->{'target'}
@@ -823,7 +823,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'name', 94.2 ) || return;
+                need( $scope, $args, 'name', 94.2 ) || return $ret_func->();
                 if (
                     bool(
                         var(
@@ -879,7 +879,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'nick', 102.2 ) || return;
+                need( $scope, $args, 'nick', 102.2 ) || return $ret_func->();
                 if (
                     bool(
                         var(
@@ -935,7 +935,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'name', 110.2 ) || return;
+                need( $scope, $args, 'name', 110.2 ) || return $ret_func->();
                 if (
                     bool(
                         var(

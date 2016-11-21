@@ -88,8 +88,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'connection' ) || return;
-                need( $self, $args, 'name' )       || return;
+                need( $self, $args, 'connection' ) || return $ret_func->();
+                need( $self, $args, 'name' )       || return $ret_func->();
 
                 $self->weaken_property_ow( 'connection', $pos->(7.1) );
                 return $ret;
@@ -111,7 +111,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'message', 12.2 ) || return;
+                need( $scope, $args, 'message', 12.2 ) || return $ret_func->();
                 $$self->{'connection'}
                   ->property_u( 'sendPrivmsg', $pos->(13.2) )->(
                     [ $$self->{'name'}, $$scope->{'message'} ],

@@ -118,8 +118,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'x', 2.2 ) || return;
-            need( $scope, $args, 'y', 2.4 ) || return;
+            need( $scope, $args, 'x', 2.2 ) || return $ret_func->();
+            need( $scope, $args, 'y', 2.4 ) || return $ret_func->();
             want( $scope, $args, 'z', 3.2 );
             var(
                 $scope,

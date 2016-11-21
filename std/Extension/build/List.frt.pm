@@ -488,7 +488,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 18.2 ) || return;
+                need( $scope, $args, 'code', 18.2 ) || return $ret_func->();
                 return $ret_func->(
                     do {
                         my ( $gather_status, $gather_ret ) = gather(
@@ -496,7 +496,7 @@ my $result = do {
                             sub {
                                 my ( $scope, $take, $ret_func ) = @_;
                                 {
-                                    my $loop_ret = iterate(
+                                    my ( $loop_status, $loop_ret ) = iterate(
                                         $f, $scope,
                                         ${ $scope->{special} }->{'self'},
                                         'el',
@@ -513,7 +513,8 @@ my $result = do {
                                         },
                                         $pos->(19.2)
                                     );
-                                    return $ret_func->($loop_ret) if $loop_ret;
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
                                 }
                             }
                         );
@@ -540,7 +541,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 26.2 ) || return;
+                need( $scope, $args, 'code', 26.2 ) || return $ret_func->();
                 return $ret_func->(
                     do {
                         my ( $gather_status, $gather_ret ) = gather(
@@ -548,7 +549,7 @@ my $result = do {
                             sub {
                                 my ( $scope, $take, $ret_func ) = @_;
                                 {
-                                    my $loop_ret = iterate(
+                                    my ( $loop_status, $loop_ret ) = iterate(
                                         $f, $scope,
                                         ${ $scope->{special} }->{'self'},
                                         'el',
@@ -574,7 +575,8 @@ my $result = do {
                                         },
                                         $pos->(27.2)
                                     );
-                                    return $ret_func->($loop_ret) if $loop_ret;
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
                                 }
                             }
                         );
@@ -600,7 +602,7 @@ my $result = do {
                     $file_scope, $pos->(34.2)
                 );
                 {
-                    my $loop_ret = iterate(
+                    my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'el',
@@ -646,7 +648,7 @@ my $result = do {
                         },
                         $pos->(35.1)
                     );
-                    return $ret_func->($loop_ret) if $loop_ret;
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
                 return $ret_func->( $$scope->{'new'} );
                 return $ret;
@@ -668,7 +670,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 46.2 ) || return;
+                need( $scope, $args, 'what', 46.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'grep'}->(
                         [
@@ -700,7 +702,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 53.2 ) || return;
+                need( $scope, $args, 'what', 53.2 ) || return $ret_func->();
                 $scope->set_property(
                     found => Ferret::undefined,
                     $pos->(54.2)
@@ -712,7 +714,8 @@ my $result = do {
                             sub {
                                 my ( $scope, $take, $ret_func ) = @_;
                                 {
-                                    my $loop_ret = iterate_pair(
+                                    my ( $loop_status, $loop_ret ) =
+                                      iterate_pair(
                                         $f, $scope,
                                         ${ $scope->{special} }->{'self'},
                                         'i', 'el',
@@ -753,8 +756,9 @@ my $result = do {
                                             $take->( $$scope->{'el'} );
                                         },
                                         $pos->(55.1)
-                                    );
-                                    return $ret_func->($loop_ret) if $loop_ret;
+                                      );
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
                                 }
                             }
                         );
@@ -781,10 +785,10 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 68.2 ) || return;
+                need( $scope, $args, 'what', 68.2 ) || return $ret_func->();
                 $ret->set_property( removed => $false, $pos->(69.2) );
                 {
-                    my $loop_ret = iterate_pair(
+                    my ( $loop_status, $loop_ret ) = iterate_pair(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'i', 'el',
@@ -819,7 +823,7 @@ my $result = do {
                         },
                         $pos->(70.05)
                     );
-                    return $ret_func->($loop_ret) if $loop_ret;
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
                 return $ret;
             }
@@ -840,7 +844,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 82.2 ) || return;
+                need( $scope, $args, 'what', 82.2 ) || return $ret_func->();
                 var(
                     $scope,
                     found => do {
@@ -849,7 +853,8 @@ my $result = do {
                             sub {
                                 my ( $scope, $take, $ret_func ) = @_;
                                 {
-                                    my $loop_ret = iterate_pair(
+                                    my ( $loop_status, $loop_ret ) =
+                                      iterate_pair(
                                         $f, $scope,
                                         ${ $scope->{special} }->{'self'},
                                         'i', 'el',
@@ -878,8 +883,9 @@ my $result = do {
                                             $take->( $$scope->{'el'} );
                                         },
                                         $pos->(83.15)
-                                    );
-                                    return $ret_func->($loop_ret) if $loop_ret;
+                                      );
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
                                 }
                             }
                         );
@@ -914,9 +920,9 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 95.2 ) || return;
+                need( $scope, $args, 'code', 95.2 ) || return $ret_func->();
                 {
-                    my $loop_ret = iterate(
+                    my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'el',
@@ -939,7 +945,7 @@ my $result = do {
                         },
                         $pos->(96.1)
                     );
-                    return $ret_func->($loop_ret) if $loop_ret;
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
                 return $ret_func->($undefined);
                 return $ret;
@@ -960,9 +966,9 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 104.2 ) || return;
+                need( $scope, $args, 'code', 104.2 ) || return $ret_func->();
                 {
-                    my $loop_ret = iterate(
+                    my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'el',
@@ -985,7 +991,7 @@ my $result = do {
                         },
                         $pos->(105.1)
                     );
-                    return $ret_func->($loop_ret) if $loop_ret;
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
                 return $ret_func->($false);
                 return $ret;
@@ -1006,9 +1012,9 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 113.2 ) || return;
+                need( $scope, $args, 'code', 113.2 ) || return $ret_func->();
                 {
-                    my $loop_ret = iterate(
+                    my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'el',
@@ -1035,7 +1041,7 @@ my $result = do {
                         },
                         $pos->(114.1)
                     );
-                    return $ret_func->($loop_ret) if $loop_ret;
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
                 return $ret_func->($true);
                 return $ret;
@@ -1062,7 +1068,7 @@ my $result = do {
                     $pos->(125.2)
                 );
                 {
-                    my $loop_ret = iterate(
+                    my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         range( $scope, num( $f, "1" ), $$self->{'lastIndex'} ),
                         'i',
@@ -1085,7 +1091,7 @@ my $result = do {
                         },
                         $pos->(126.1)
                     );
-                    return $ret_func->($loop_ret) if $loop_ret;
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
                 return $ret_func->( $$scope->{'c'} );
                 return $ret;
@@ -1099,7 +1105,7 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var( $scope, c => num( $f, "0" ), $file_scope, $pos->(135.2) );
                 {
-                    my $loop_ret = iterate(
+                    my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         ${ $scope->{special} }->{'self'},
                         'el',
@@ -1116,7 +1122,7 @@ my $result = do {
                         },
                         $pos->(136.1)
                     );
-                    return $ret_func->($loop_ret) if $loop_ret;
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
                 return $ret_func->( $$scope->{'c'} );
                 return $ret;

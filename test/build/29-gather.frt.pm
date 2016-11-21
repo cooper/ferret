@@ -192,7 +192,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'pt', 4.2 ) || return;
+            need( $scope, $args, 'pt', 4.2 ) || return $ret_func->();
             return $ret_func->(
                 do {
                     my ( $gather_status, $gather_ret ) = gather(
@@ -253,7 +253,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'nums', 27.2 ) || return;
+            need( $scope, $args, 'nums', 27.2 ) || return $ret_func->();
             $ret->set_property(
                 even => do {
                     my ( $gather_status, $gather_ret ) = gather(
@@ -261,7 +261,7 @@ my $result = do {
                         sub {
                             my ( $scope, $take, $ret_func ) = @_;
                             {
-                                my $loop_ret = iterate(
+                                my ( $loop_status, $loop_ret ) = iterate(
                                     $f, $scope,
                                     $$scope->{'nums'},
                                     'n',
@@ -284,7 +284,8 @@ my $result = do {
                                     },
                                     $pos->(28.3)
                                 );
-                                return $ret_func->($loop_ret) if $loop_ret;
+                                return $ret_func->($loop_ret)
+                                  if $loop_status eq 'return';
                             }
                         }
                     );
@@ -325,7 +326,7 @@ my $result = do {
         undef, $pos->(15.1)
     );
     {
-        my $loop_ret = iterate(
+        my ( $loop_status, $loop_ret ) = iterate(
             $f, $scope,
             create_list(
                 $f, [ $$scope->{'pt1'}, $$scope->{'pt2'}, $$scope->{'pt3'} ]
@@ -345,7 +346,7 @@ my $result = do {
             },
             $pos->(17.05)
         );
-        return $ret_func->($loop_ret) if $loop_ret;
+        return $ret_func->($loop_ret) if $loop_status eq 'return';
     }
     $$scope->{'inspect'}->(
         [

@@ -196,8 +196,8 @@ my $result = do {
                 hello2 => $scope,
                 $scope, undef, $ins, undef, undef
             );
-            need( $scope, $args, 'name1', 11.2 ) || return;
-            need( $scope, $args, 'name2', 11.4 ) || return;
+            need( $scope, $args, 'name1', 11.2 ) || return $ret_func->();
+            need( $scope, $args, 'name2', 11.4 ) || return $ret_func->();
             $$scope->{'hello1'}->( [ undef, [] ], $scope, undef, $pos->(13.2) );
             $$scope->{'hello2'}->( [ undef, [] ], $scope, undef, $pos->(14.2) );
             return $ret;

@@ -213,7 +213,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'line' ) || return;
+                need( $self, $args, 'line' ) || return $ret_func->();
                 var(
                     $scope,
                     lineSplit =>
@@ -367,7 +367,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'wordN', 41.2 ) || return;
+                need( $scope, $args, 'wordN', 41.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'message'}->property_u( 'split', $pos->(42.15) )
                       ->(

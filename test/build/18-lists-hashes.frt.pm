@@ -157,7 +157,7 @@ my $result = do {
         $pos->(5.2)
     );
     {
-        my $loop_ret = iterate(
+        my ( $loop_status, $loop_ret ) = iterate(
             $f, $scope,
             $$scope->{'list'},
             'item',
@@ -170,7 +170,7 @@ my $result = do {
             },
             $pos->(7.1)
         );
-        return $ret_func->($loop_ret) if $loop_ret;
+        return $ret_func->($loop_ret) if $loop_status eq 'return';
     }
     var(
         $scope,
@@ -202,7 +202,7 @@ my $result = do {
         $pos->(15.1)
     );
     {
-        my $loop_ret = iterate_pair(
+        my ( $loop_status, $loop_ret ) = iterate_pair(
             $f, $scope,
             $$scope->{'hash'},
             'key', 'val',
@@ -222,7 +222,7 @@ my $result = do {
             },
             $pos->(17.05)
         );
-        return $ret_func->($loop_ret) if $loop_ret;
+        return $ret_func->($loop_ret) if $loop_status eq 'return';
     }
 };
 

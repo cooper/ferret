@@ -120,7 +120,7 @@ my $result = do {
         undef, $pos->(1.2)
     );
     {
-        my $loop_ret = iterate_pair(
+        my ( $loop_status, $loop_ret ) = iterate_pair(
             $f, $scope,
             $$scope->{'parts'},
             'i', 'part',
@@ -141,10 +141,10 @@ my $result = do {
             },
             $pos->(3.05)
         );
-        return $ret_func->($loop_ret) if $loop_ret;
+        return $ret_func->($loop_ret) if $loop_status eq 'return';
     }
     {
-        my $loop_ret = iterate(
+        my ( $loop_status, $loop_ret ) = iterate(
             $f, $scope,
             create_list(
                 $f, [ num( $f, "1" ), num( $f, "2" ), num( $f, "3" ) ]
@@ -157,7 +157,7 @@ my $result = do {
             },
             $pos->(9.05)
         );
-        return $ret_func->($loop_ret) if $loop_ret;
+        return $ret_func->($loop_ret) if $loop_status eq 'return';
     }
 };
 

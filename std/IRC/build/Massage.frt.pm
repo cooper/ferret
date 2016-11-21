@@ -500,7 +500,7 @@ my $result = do {
                     updateWord => $scope,
                     $scope, $class, $ins, undef, undef
                 );
-                need( $scope, $args, 'data', 20.2 ) || return;
+                need( $scope, $args, 'data', 20.2 ) || return $ret_func->();
                 var(
                     $scope,
                     words =>
@@ -544,7 +544,7 @@ my $result = do {
                     $file_scope, $pos->(27.2)
                 );
                 {
-                    my $loop_ret = iterate(
+                    my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         $$scope->{'words'},
                         'word',
@@ -592,7 +592,7 @@ my $result = do {
                                     $file_scope, $pos->(42.2)
                                 );
                                 {
-                                    my $loop_ret = iterate(
+                                    my ( $loop_status, $loop_ret ) = iterate(
                                         $f, $scope,
                                         $$scope->{'word'}->property_u(
                                             'split', $pos->(45.25)
@@ -666,7 +666,8 @@ my $result = do {
                                         },
                                         $pos->(45.05)
                                     );
-                                    return $ret_func->($loop_ret) if $loop_ret;
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
                                 }
                                 var(
                                     $scope,
@@ -810,7 +811,7 @@ my $result = do {
                         },
                         $pos->(37.1)
                     );
-                    return $ret_func->($loop_ret) if $loop_ret;
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
                 $self->set_property(
                     params => $$scope->{'params'},

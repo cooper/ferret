@@ -588,7 +588,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 67.2 ) || return;
+            need( $scope, $args, 'msg', 67.2 ) || return $ret_func->();
             if (
                 bool(
                     _not(
@@ -691,7 +691,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'string', 80.2 ) || return;
+            need( $scope, $args, 'string', 80.2 ) || return $ret_func->();
             return $ret_func->(
                 $$scope->{'string'}->property_u( 'split', $pos->(81.15) )
                   ->( [ str( $f, "_NL_" ) ], $scope, undef, $pos->(81.2) )
@@ -708,7 +708,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'str', 85.2 ) || return;
+            need( $scope, $args, 'str', 85.2 ) || return $ret_func->();
             $$scope->{'bot'}->property_u( 'privmsg', $pos->(86.1) )->(
                 [
                     $$scope->{'bot'}->property_u( 'autojoin', $pos->(86.25) )
@@ -732,7 +732,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 7.2 ) || return;
+            need( $scope, $args, 'msg', 7.2 ) || return $ret_func->();
             $$scope->{'bot'}->property_u( 'privmsg', $pos->(8.1) )->(
                 [
                     $$scope->{'msg'}->property_u( 'channel', $pos->(8.25) ),
@@ -752,7 +752,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 12.2 ) || return;
+            need( $scope, $args, 'msg', 12.2 ) || return $ret_func->();
             if (
                 bool(
                     _not(
@@ -838,7 +838,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 25.2 ) || return;
+            need( $scope, $args, 'msg', 25.2 ) || return $ret_func->();
             if (
                 bool(
                     _not(
@@ -925,7 +925,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 38.2 ) || return;
+            need( $scope, $args, 'msg', 38.2 ) || return $ret_func->();
             if (
                 bool(
                     _not(
@@ -1020,7 +1020,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 51.2 ) || return;
+            need( $scope, $args, 'msg', 51.2 ) || return $ret_func->();
             if (
                 bool(
                     _not(

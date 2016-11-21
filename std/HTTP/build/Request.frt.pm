@@ -104,14 +104,14 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'client', 9.2 ) || return;
+                need( $scope, $args, 'client', 9.2 ) || return $ret_func->();
                 $self->set_property(
                     client => $$scope->{'client'},
                     $pos->(10.3)
                 );
                 $self->weaken_property_ow( 'client', $pos->(10.1) );
-                need( $self, $args, 'url' )        || return;
-                need( $self, $args, 'httpMethod' ) || return;
+                need( $self, $args, 'url' )        || return $ret_func->();
+                need( $self, $args, 'httpMethod' ) || return $ret_func->();
                 return $ret;
             }
         );

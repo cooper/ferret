@@ -132,9 +132,10 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'channelNames', 6.2 ) || return;
+                need( $scope, $args, 'channelNames', 6.2 )
+                  || return $ret_func->();
                 {
-                    my $loop_ret = iterate(
+                    my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         $$scope->{'channelNames'},
                         'name',
@@ -153,7 +154,7 @@ my $result = do {
                         },
                         $pos->(7.1)
                     );
-                    return $ret_func->($loop_ret) if $loop_ret;
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
                 return $ret;
             }
@@ -180,10 +181,10 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'target',  13.1 ) || return;
-                need( $scope, $args, 'message', 13.3 ) || return;
+                need( $scope, $args, 'target',  13.1 ) || return $ret_func->();
+                need( $scope, $args, 'message', 13.3 ) || return $ret_func->();
                 {
-                    my $loop_ret = iterate(
+                    my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         $$scope->{'message'}
                           ->property_u( 'split', $pos->(14.25) )->(
@@ -220,7 +221,7 @@ my $result = do {
                         },
                         $pos->(14.05)
                     );
-                    return $ret_func->($loop_ret) if $loop_ret;
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
                 return $ret;
             }
@@ -241,7 +242,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'nick', 23.2 ) || return;
+                need( $scope, $args, 'nick', 23.2 ) || return $ret_func->();
                 $$self->{'send'}->(
                     [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],
                     $scope, undef, $pos->(24.2)

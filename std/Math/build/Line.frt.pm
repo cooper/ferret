@@ -173,8 +173,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'pt1' ) || return;
-                need( $self, $args, 'pt2' ) || return;
+                need( $self, $args, 'pt1' ) || return $ret_func->();
+                need( $self, $args, 'pt2' ) || return $ret_func->();
                 return $ret;
             }
         );
