@@ -3,7 +3,7 @@ package F::LocalDeclaration;
 
 use warnings;
 use strict;
-use parent qw(F::Node);
+use parent qw(F::NodeExpression);
 
 
 sub desc { 'local variable declaration' }

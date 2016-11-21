@@ -42,7 +42,6 @@ method connect {
 
 method description {
     $s = ""
-    if @conns.length != 1
-        $s = "s"
+    if @conns.length != 1: $s = "s"
     return "IRC::Bot(@conns.length connection$s)"
 }

@@ -615,12 +615,12 @@ our %element_rules = (
 
     LocalDeclaration => {
 
-        # must be a direct child an instruction.
-        parent_must_be => [                                                     # LocalDeclaration[0]
-            'Instruction',
-            undef,
-            0
-        ],
+        # # must be a direct child an instruction.
+        # parent_must_be => [                                                     # LocalDeclaration[0]
+        #     'Instruction',
+        #     undef,
+        #     0
+        # ],
 
         # it can be lexical variables or an assignment of a lexical variable.
         children_must_be => [                                                   # LocalDeclaration[1]

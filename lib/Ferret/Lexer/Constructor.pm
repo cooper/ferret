@@ -287,7 +287,7 @@ sub c_CLOSURE_S {
     }
 
     # a closure can terminate these.
-    $c->close_nodes(qw(Negation Operation Assignment));
+    $c->close_nodes(qw(Negation Operation Assignment LocalDeclaration));
 
     # a closure can terminate a generated expression.
     # for instance, inside $something {}. the expression $something ends there.
@@ -476,7 +476,10 @@ sub c_PAREN_E {
         if $t ne 'PAREN_E';
 
     # closes these things.
-    $c->close_nodes(qw(Negation Operation Pair NamedPair Detail Assignment));
+    $c->close_nodes(qw(
+        Negation Operation Pair NamedPair Detail
+        Assignment LocalDeclaration)
+    );
 
     # close the list itself.
     #
@@ -525,7 +528,10 @@ sub c_BRACKET_E {
         if $t ne 'BRACKET_E';
 
     # closes these things.
-    $c->close_nodes(qw(Negation Operation Pair NamedPair Assignment));
+    $c->close_nodes(
+        qw(Negation Operation Pair NamedPair Assignment
+        LocalDeclaration
+    ));
 
     # close the list itself.
     #
@@ -932,7 +938,10 @@ sub c_OP_COMMA {
 
         # close these things and then make sure the current node is the
         # list item.
-        $c->close_nodes(qw(Negation Operation Pair NamedPair Detail Assignment));
+        $c->close_nodes(qw(
+            Negation Operation Pair NamedPair Detail
+            Assignment LocalDeclaration
+        ));
         return $c->unexpected if $c->node->parent != $c->list;
 
         # set the current node to a new list item.
@@ -1054,7 +1063,10 @@ sub c_OP_VALUE {
 
         # close these things and then make sure the current node is the
         # list item.
-        $c->close_nodes(qw(Negation Operation Pair NamedPair Detail Assignment));
+        $c->close_nodes(qw(
+            Negation Operation Pair NamedPair Detail
+            Assignment LocalDeclaration
+        ));
         return $c->unexpected if $c->node->parent != $c->list;
 
         # if the colon immediately follows the list delimiter, that

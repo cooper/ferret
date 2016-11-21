@@ -418,7 +418,7 @@ my $result = do {
                         nequal(
                             $scope,
                             $$self->{'conns'}
-                              ->property_u( 'length', $pos->(45.3) ),
+                              ->property_u( 'length', $pos->(45.15) ),
                             num( $f, "1" )
                         )
                     )
@@ -429,7 +429,7 @@ my $result = do {
                     var(
                         $scope,
                         s => str( $f, "s" ),
-                        $file_scope, $pos->(46.2)
+                        $file_scope, $pos->(45.4)
                     );
                 }
                 return $ret_func->(
@@ -437,7 +437,7 @@ my $result = do {
                         $scope,
                         str( $f, "IRC::Bot(" ),
                         $$self->{'conns'}
-                          ->property_u( 'length', $pos->(47.25) ),
+                          ->property_u( 'length', $pos->(46.25) ),
                         str( $f, " connection" ),
                         $$scope->{'s'},
                         str( $f, ")" )
