@@ -83,10 +83,8 @@ sub close_node_until {
 sub close_nodes {
     my ($c, @nodes) = @_;
     my $count = 0;
-    foreach (sort_precedence(@nodes)) {
-        next unless $_ eq $c->node->type;
-        $c->close_node, $count++ while $_ eq $c->node->type;
-    }
+    my %closing = map { $_ => 1 } @nodes;
+    $c->close_node, $count++ while $closing{ $c->node->type };
     return $count;
 }
 
@@ -233,79 +231,6 @@ sub maybe_owner {
     my %allowed = map { $_ => 1 }
         qw(Instruction IfParameter OnParameter TypedClass);
     return first { $allowed{ $_->type } } $c->node, $c->node->all_ancestors;
-}
-
-##################
-### PRECEDENCE ###
-##################
-
-# Nodes terminated by instructions
-# ================================
-#
-#   WantNeed
-#
-#       need $x;
-#
-#       WantNeeds cannot contain anything special to terminate.
-#
-#   PropertyModifier
-#
-#       delete $x.prop;
-#
-#       PropertyModifiers cannot contain special to terminate.
-#
-#   List with Pair
-#
-#       (hi: 10 == 5 + !5)
-#
-#       Close in order
-#       1. Negation     (!)
-#       2. Operation    (+)
-#       3. Equality     (==)
-#       4. Pair         (:)
-#       5. List item
-#       6. List
-#
-#
-#   Return
-#
-#       return 10 == 5 + !5;
-#
-#       Close in order
-#       1. Negation     (!)
-#       2. Operation    (+)
-#       3. Equality     (==)
-#       4. Return
-#
-#   ReturnPair
-#
-#       x -> 10 == 5 + !5;
-#
-#       Same as Return above.
-#
-my (@closes, %precedence);
-{
-    @closes = (
-        qw( Negation Operation Pair NamedPair ListItem List Call ),
-        qw( Detail Assignment Return ReturnPair Load Stop LoopStatement ),
-        qw( PropertyModifier Alias FailThrow Take ),
-        qw( WantNeedValue WantNeedType WantNeed ),
-        qw( SharedDeclaration LocalDeclaration TypeRequirement ),
-        qw( Instruction )
-    );
-    my $i = 0;
-    %precedence = map { $_ => $i++ } @closes;
-}
-
-sub sort_precedence {
-    my @types = @_;
-
-    # find the others and sort.
-    my @orders = sort { $a <=> $b } map $precedence{$_}, @types;
-
-    # return the names.
-    return map $closes[$_], @orders;
-
 }
 
 ##############
