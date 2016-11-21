@@ -9,7 +9,17 @@ use 5.010;
 use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken);
-use Ferret::Core::Conversion qw(fmethod fhash pdescription ferror FUNC_RET);
+use Ferret::Core::Conversion qw(
+    fmethod ffunction fhash pdescription ferror
+    FUNC_RET
+);
+
+my @functions = (
+    callTogether => {
+        code => \&_call_together,
+        need => '$events:Event...'
+    }
+);
 
 Ferret::bind_class(
     name => 'Event',
@@ -34,7 +44,9 @@ Ferret::bind_class(
         my $proto = _global_event_prototype($class->f);
         $class->set_property_weak(proto => $proto);
         weaken($proto->{proto_class} = $class);
-    }
+    },
+
+    functions => \@functions
 );
 
 # creates a new event.
@@ -189,20 +201,24 @@ sub prepare {
     my @events  = [ $event, call         => @args ];
     push @events, [ $obj,   $event->{id} => @args ] if $obj;
 
-    return ($arguments, $call_scope, $return, $detail, \@events);
+    return ($return, $detail, \@events);
 }
 
 # fire the event.
 sub call {
     my $event = shift;
-    my ($arguments, $call_scope, $return, $detail, $events) =
+    my ($return, $detail, $events) =
         $event->prepare(@_);
-
-    my $fire = Evented::Object::fire_events_together(@$events);
+    my ($fire, $ret) = _do_call($return, $detail, $events);
     $event->{most_recent_fire} = $fire;
+    return $ret;
+}
 
+sub _do_call {
+    my ($return, $detail, $events) = @_;
+    my $fire = Evented::Object::fire_events_together(@$events);
     $return->detail if $detail;
-    return $return->final_return;
+    return ($fire, $return->final_return);
 }
 
 # this CODE is used for all Evented::Object callbacks.
@@ -331,6 +347,30 @@ sub _global_event_prototype {
         });
         $proto;
     };
+}
+
+sub _call_together {
+    my ($event_class, $arguments, $call_scope) = @_;
+    my @event_objs = $arguments->plist('events') or return;
+    my $e_return = Ferret::Return->new($event_class->f);
+
+    return fmethod(sub {
+        my (undef, $e_arguments) = @_;
+
+        # prepare each event.
+        my @raw_events;
+        foreach my $event (@event_objs) {
+            # ($arguments, $call_scope, $return, $pos, $detail)
+            my $events = $event->prepare($e_arguments, $call_scope, $e_return);
+            push @raw_events, @$events;
+        }
+
+        # ($return, $detail $events)
+        my ($fire, $ret) = _do_call($e_return, undef, \@raw_events);
+        $_->{most_recent_fire} = $fire for @event_objs;
+
+        return $ret;
+    }, 'callTogether');
 }
 
 sub default_func { shift->{default_func} }
