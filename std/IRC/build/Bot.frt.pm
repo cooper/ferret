@@ -137,6 +137,37 @@
 #                                  Property 'connect'
 #                                      Lexical variable '$c'
 #                                  Argument list [0 items]
+#          Method 'description'
+#              Body ('function' scope)
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$s'
+#                          String ''
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Property 'length'
+#                                  Instance variable '@conns'
+#                              Negated equality operator (!=)
+#                              Number '1'
+#                      Body ('if' scope)
+#                          Instruction
+#                              Assignment
+#                                  Lexical variable '$s'
+#                                  String 's'
+#                  Instruction
+#                      Return
+#                          Operation
+#                              String 'IRC::Bot('
+#                              Addition operator (+)
+#                              Property 'length'
+#                                  Instance variable '@conns'
+#                              Addition operator (+)
+#                              String ' connection'
+#                              Addition operator (+)
+#                              Lexical variable '$s'
+#                              Addition operator (+)
+#                              String ')'
 #      Include (Channel, Connection)
 package FF;
 
@@ -160,7 +191,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos = before_content( 'Bot.frt', './std/IRC/Bot.frt' );
 
-use Ferret::Core::Operations qw(_not all_true bool num str);
+use Ferret::Core::Operations qw(_not add all_true bool nequal num str);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'IRC' );
     my $scope = $file_scope;
@@ -373,6 +404,48 @@ my $result = do {
                 return $ret;
             }
         );
+
+        # Method event 'description' definition
+        my $func_4 = method_event_def(
+            $f, $scope,
+            'description',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var( $scope, s => str( $f, "" ), $file_scope, $pos->(44.2) );
+                if (
+                    bool(
+                        nequal(
+                            $scope,
+                            $$self->{'conns'}
+                              ->property_u( 'length', $pos->(45.3) ),
+                            num( $f, "1" )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    var(
+                        $scope,
+                        s => str( $f, "s" ),
+                        $file_scope, $pos->(46.2)
+                    );
+                }
+                return $ret_func->(
+                    add(
+                        $scope,
+                        str( $f, "IRC::Bot(" ),
+                        $$self->{'conns'}
+                          ->property_u( 'length', $pos->(47.25) ),
+                        str( $f, " connection" ),
+                        $$scope->{'s'},
+                        str( $f, ")" )
+                    )
+                );
+                return $ret;
+            }
+        );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
@@ -383,6 +456,10 @@ my $result = do {
         );
         $func_3->inside_scope(
             connect => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_4->inside_scope(
+            description => $scope,
             $proto, $class, $ins, undef, undef
         );
     }

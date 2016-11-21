@@ -202,6 +202,13 @@
 #                                  Instruction
 #                                      Next
 #                          Instruction
+#                              Delete modifier
+#                                  Index
+#                                      Special variable '*self'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Lexical variable '$i'
+#                          Instruction
 #                              Return pair 'found'
 #                                  Lexical variable '$el'
 #                          Instruction
@@ -238,6 +245,13 @@
 #                                              Body ('if' scope)
 #                                                  Instruction
 #                                                      Next
+#                                          Instruction
+#                                              Delete modifier
+#                                                  Index
+#                                                      Special variable '*self'
+#                                                      Index list [1 item]
+#                                                          Item 0
+#                                                              Lexical variable '$i'
 #                                          Instruction
 #                                              Take
 #                                                  Lexical variable '$el'
@@ -767,8 +781,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 66.2 ) or return;
-                $ret->set_property( removed => $false, $pos->(67.2) );
+                need( $scope, $args, 'what', 68.2 ) or return;
+                $ret->set_property( removed => $false, $pos->(69.2) );
                 {
                     my $loop_ret = iterate_pair(
                         $f, $scope,
@@ -790,17 +804,20 @@ my $result = do {
 
                                 return 'next';
                             }
+
+                            ${ $scope->{special} }->{'self'}
+                              ->delete_index( $$scope->{'i'}, $pos->(73.1) );
                             $ret->set_property(
                                 found => $$scope->{'el'},
-                                $pos->(72.2)
+                                $pos->(74.2)
                             );
                             $ret->set_property(
                                 removed => $true,
-                                $pos->(73.2)
+                                $pos->(75.2)
                             );
                             return 'last';
                         },
-                        $pos->(68.05)
+                        $pos->(70.05)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -823,7 +840,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 80.2 ) or return;
+                need( $scope, $args, 'what', 82.2 ) or return;
                 var(
                     $scope,
                     found => do {
@@ -854,9 +871,13 @@ my $result = do {
 
                                                 return 'next';
                                             }
+
+                                            ${ $scope->{special} }->{'self'}
+                                              ->delete_index( $$scope->{'i'},
+                                                $pos->(86.1) );
                                             $take->( $$scope->{'el'} );
                                         },
-                                        $pos->(81.15)
+                                        $pos->(83.15)
                                     );
                                     return $ret_func->($loop_ret) if $loop_ret;
                                 }
@@ -867,13 +888,13 @@ my $result = do {
                         $gather_ret;
                     },
                     $file_scope,
-                    $pos->(81.1)
+                    $pos->(83.1)
                 );
-                $ret->set_property( found => $$scope->{'found'}, $pos->(87.2) );
+                $ret->set_property( found => $$scope->{'found'}, $pos->(89.2) );
                 $ret->set_property(
                     removed =>
-                      $$scope->{'found'}->property_u( 'length', $pos->(88.4) ),
-                    $pos->(88.2)
+                      $$scope->{'found'}->property_u( 'length', $pos->(90.4) ),
+                    $pos->(90.2)
                 );
                 return $ret;
             }
@@ -893,7 +914,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 93.2 ) or return;
+                need( $scope, $args, 'code', 95.2 ) or return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -905,7 +926,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               $pos->(95.15)
+                                        undef,               $pos->(97.15)
                                     )
                                 )
                               )
@@ -916,7 +937,7 @@ my $result = do {
                                 return $ret_func->( $$scope->{'el'} );
                             }
                         },
-                        $pos->(94.1)
+                        $pos->(96.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -939,7 +960,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 102.2 ) or return;
+                need( $scope, $args, 'code', 104.2 ) or return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -951,7 +972,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               $pos->(104.15)
+                                        undef,               $pos->(106.15)
                                     )
                                 )
                               )
@@ -962,7 +983,7 @@ my $result = do {
                                 return $ret_func->($true);
                             }
                         },
-                        $pos->(103.1)
+                        $pos->(105.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -985,7 +1006,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 111.2 ) or return;
+                need( $scope, $args, 'code', 113.2 ) or return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -1000,7 +1021,7 @@ my $result = do {
                                             [ $$scope->{'el'} ],
                                             $scope,
                                             undef,
-                                            $pos->(113.2)
+                                            $pos->(115.2)
                                         )
                                     )
                                 )
@@ -1012,7 +1033,7 @@ my $result = do {
                                 return $ret_func->($false);
                             }
                         },
-                        $pos->(112.1)
+                        $pos->(114.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -1035,10 +1056,10 @@ my $result = do {
                     $scope,
                     c => ${ $scope->{special} }->{'self'}->get_index_value(
                         [ num( $f, "0" ) ],
-                        $scope, $pos->(123.4)
+                        $scope, $pos->(125.4)
                     ),
                     $file_scope,
-                    $pos->(123.2)
+                    $pos->(125.2)
                 );
                 {
                     my $loop_ret = iterate(
@@ -1055,14 +1076,14 @@ my $result = do {
                                     ${ $scope->{special} }->{'self'}
                                       ->get_index_value(
                                         [ $$scope->{'i'} ], $scope,
-                                        $pos->(125.3)
+                                        $pos->(127.3)
                                       )
                                 ),
                                 $file_scope,
-                                $pos->(125.1)
+                                $pos->(127.1)
                             );
                         },
-                        $pos->(124.1)
+                        $pos->(126.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -1076,7 +1097,7 @@ my $result = do {
             $f, $scope, 'sum0', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, c => num( $f, "0" ), $file_scope, $pos->(133.2) );
+                var( $scope, c => num( $f, "0" ), $file_scope, $pos->(135.2) );
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -1090,10 +1111,10 @@ my $result = do {
                                     $scope, $$scope->{'c'}, $$scope->{'el'}
                                 ),
                                 $file_scope,
-                                $pos->(135.2)
+                                $pos->(137.2)
                             );
                         },
-                        $pos->(134.1)
+                        $pos->(136.1)
                     );
                     return $ret_func->($loop_ret) if $loop_ret;
                 }
@@ -1113,7 +1134,7 @@ my $result = do {
                 return $ret_func->(
                     $$scope->{'ListIterator'}->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                $pos->(141.3)
+                        undef,                                $pos->(143.3)
                     )
                 );
                 return $ret;

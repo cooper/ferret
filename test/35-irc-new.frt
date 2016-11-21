@@ -74,12 +74,24 @@ func respondFactoid {
 
 on $bot.commands.e {
     need $msg, $channel
-    $res = COMPILER(getParameter($msg)).eval()
+    handleEval($msg, $channel, false)
+}
+
+on $bot.commands.i {
+    need $msg, $channel
+    handleEval($msg, $channel, true)
+}
+
+func handleEval {
+    need $msg, $channel, $detailed
+    $code = "share \$bot; " + getParameter($msg);
+    $res = COMPILER($code).eval()
     if $res.error {
         $channel.privmsg($res.error)
         return
     }
-    $string = inspect(value: $res.result, quiet: true).string
+    $string = inspect(
+        value: $res.result, quiet: true, detailed: $detailed).string
     $channel.privmsg($string)
 }
 

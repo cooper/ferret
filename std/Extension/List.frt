@@ -61,6 +61,8 @@ method without {
     }
 }
 
+# FIXME: .remove() and .removeAll() leave undefined elements behind
+
 #> Removes the first element equal to a specified value.
 method remove {
     need $what
@@ -68,7 +70,7 @@ method remove {
     for ($i, $el) in *self {
         if $what != $el
             next
-        # FIXME: delete *self[$i]
+        delete *self[$i]
         found   -> $el
         removed -> true
         last
@@ -81,7 +83,7 @@ method removeAll {
     $found = gather for ($i, $el) in *self {
         if $what != $el
             next
-        # FIXME: delete *self[$i]
+        delete *self[$i]
         take $el
     }
     found   -> $found           #< list of removed elements
