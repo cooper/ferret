@@ -1,1 +1,1 @@
-need($self, $args, '<<var_name>>') or return
+need($self, $args, '<<var_name>>') || return

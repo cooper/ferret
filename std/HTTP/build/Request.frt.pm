@@ -110,8 +110,8 @@ my $result = do {
                     $pos->(10.3)
                 );
                 $self->weaken_property_ow( 'client', $pos->(10.1) );
-                need( $self, $args, 'url' )        or return;
-                need( $self, $args, 'httpMethod' ) or return;
+                need( $self, $args, 'url' )        || return;
+                need( $self, $args, 'httpMethod' ) || return;
                 return $ret;
             }
         );

@@ -301,8 +301,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'type' ) or return;
-                need( $self, $args, 'msg' )  or return;
+                need( $self, $args, 'type' ) || return;
+                need( $self, $args, 'msg' )  || return;
                 want( $self, $args, 'hints', 7.2, create_list( $f, [] ) );
                 want( $self, $args, 'subError', 8.2 );
                 want( $self, $args, 'fatal', 9.2, $false );

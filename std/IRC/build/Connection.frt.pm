@@ -561,9 +561,9 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'addr' ) or return;
+                need( $self, $args, 'addr' ) || return;
                 want( $self, $args, 'port', 8.2, num( $f, "6667" ) );
-                need( $self, $args, 'nick' ) or return;
+                need( $self, $args, 'nick' ) || return;
                 want( $self, $args, 'user', 10.2, str( $f, "ferret" ) );
                 want( $self, $args, 'real', 11.2, str( $f, "Ferret IRC" ) );
                 want( $self, $args, 'autojoin', 12.2 );

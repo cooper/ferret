@@ -137,7 +137,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'type' ) or return;
+                need( $self, $args, 'type' ) || return;
                 return $ret;
             }
         );

@@ -84,7 +84,7 @@ on $bot.commands.i {
 
 func handleEval {
     need $msg, $channel, $detailed
-    $code = "share \$bot; " + getParameter($msg);
+    $code = "share \$bot; undefined; " + getParameter($msg);
     $res = COMPILER($code).eval()
     if $res.error {
         $channel.privmsg($res.error)

@@ -92,7 +92,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'name' ) or return;
+                need( $self, $args, 'name' ) || return;
                 want( $self, $args, 'prefix', 9.2, str( $f, "CORE" ) );
                 want( $self, $args, 'version', 12.2, num( $f, "1.0" ) );
                 $self->set_property(

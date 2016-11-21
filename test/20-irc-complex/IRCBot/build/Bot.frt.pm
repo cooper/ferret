@@ -910,8 +910,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'addr' ) or return;
-                need( $self, $args, 'nick' ) or return;
+                need( $self, $args, 'addr' ) || return;
+                need( $self, $args, 'nick' ) || return;
                 want( $self, $args, 'port', 18.2, num( $f, "6667" ) );
                 want( $self, $args, 'user', 19.2, str( $f, "ferret" ) );
                 want( $self, $args, 'real', 20.2, str( $f, "Ferret IRC" ) );

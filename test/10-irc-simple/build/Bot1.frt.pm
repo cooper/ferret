@@ -238,9 +238,9 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'addr' ) or return;
-                need( $self, $args, 'nick' ) or return;
-                need( $self, $args, 'user' ) or return;
+                need( $self, $args, 'addr' ) || return;
+                need( $self, $args, 'nick' ) || return;
+                need( $self, $args, 'user' ) || return;
                 want( $self, $args, 'port', 5.1, num( $f, "6667" ) );
                 want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
                 $self->set_property(

@@ -424,7 +424,7 @@
 #                  Assignment
 #                      Lexical variable '$code'
 #                      Operation
-#                          String 'share $bot; '
+#                          String 'share $bot...'
 #                          Addition operator (+)
 #                          Call
 #                              Bareword 'getParameter'
@@ -907,7 +907,7 @@ my $result = do {
                 $scope,
                 code => add(
                     $scope,
-                    str( $f, "share \$bot; " ),
+                    str( $f, "share \$bot; undefined; " ),
                     $$scope->{'getParameter'}
                       ->( [ $$scope->{'msg'} ], $scope, undef, $pos->(87.3) )
                 ),

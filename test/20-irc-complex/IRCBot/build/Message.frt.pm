@@ -213,7 +213,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'line' ) or return;
+                need( $self, $args, 'line' ) || return;
                 var(
                     $scope,
                     lineSplit =>

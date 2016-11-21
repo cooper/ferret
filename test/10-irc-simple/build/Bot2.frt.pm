@@ -245,9 +245,9 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'address' ) or return;
-                need( $self, $args, 'nick' )    or return;
-                need( $self, $args, 'user' )    or return;
+                need( $self, $args, 'address' ) || return;
+                need( $self, $args, 'nick' )    || return;
+                need( $self, $args, 'user' )    || return;
                 want( $self, $args, 'port', 5.1, num( $f, "6667" ) );
                 want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
                 $$scope->{'Socket::TCP'}->property_u( 'init', $pos->(8.2) )->(

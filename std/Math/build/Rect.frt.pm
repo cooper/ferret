@@ -267,8 +267,8 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'x', 5.1 ) || return;
                 need( $scope, $args, 'y', 5.3 ) || return;
-                need( $self, $args, 'width' )  or return;
-                need( $self, $args, 'height' ) or return;
+                need( $self, $args, 'width' )  || return;
+                need( $self, $args, 'height' ) || return;
                 $self->set_property(
                     origin => $$scope->{'Point'}->(
                         [ $$scope->{'x'}, $$scope->{'y'} ], $scope,

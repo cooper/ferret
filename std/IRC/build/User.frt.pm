@@ -90,8 +90,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'connection' ) or return;
-                need( $self, $args, 'nick' )       or return;
+                need( $self, $args, 'connection' ) || return;
+                need( $self, $args, 'nick' )       || return;
                 want( $self, $args, 'user', 6.1 );
                 want( $self, $args, 'host', 6.3 );
                 want( $self, $args, 'real', 6.5 );

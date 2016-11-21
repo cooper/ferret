@@ -88,8 +88,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'connection' ) or return;
-                need( $self, $args, 'name' )       or return;
+                need( $self, $args, 'connection' ) || return;
+                need( $self, $args, 'name' )       || return;
 
                 $self->weaken_property_ow( 'connection', $pos->(7.1) );
                 return $ret;
