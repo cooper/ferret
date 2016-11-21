@@ -120,8 +120,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'name',   7.1 ) or return;
-            need( $scope, $args, 'gender', 7.3 ) or return;
+            need( $scope, $args, 'name',   7.1 ) || return;
+            need( $scope, $args, 'gender', 7.3 ) || return;
             var(
                 $scope,
                 what => $$scope->{'Str'}

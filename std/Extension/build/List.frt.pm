@@ -488,7 +488,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 18.2 ) or return;
+                need( $scope, $args, 'code', 18.2 ) || return;
                 return $ret_func->(
                     do {
                         my ( $gather_status, $gather_ret ) = gather(
@@ -540,7 +540,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 26.2 ) or return;
+                need( $scope, $args, 'code', 26.2 ) || return;
                 return $ret_func->(
                     do {
                         my ( $gather_status, $gather_ret ) = gather(
@@ -668,7 +668,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 46.2 ) or return;
+                need( $scope, $args, 'what', 46.2 ) || return;
                 return $ret_func->(
                     $$self->{'grep'}->(
                         [
@@ -700,7 +700,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 53.2 ) or return;
+                need( $scope, $args, 'what', 53.2 ) || return;
                 $scope->set_property(
                     found => Ferret::undefined,
                     $pos->(54.2)
@@ -781,7 +781,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 68.2 ) or return;
+                need( $scope, $args, 'what', 68.2 ) || return;
                 $ret->set_property( removed => $false, $pos->(69.2) );
                 {
                     my $loop_ret = iterate_pair(
@@ -840,7 +840,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 82.2 ) or return;
+                need( $scope, $args, 'what', 82.2 ) || return;
                 var(
                     $scope,
                     found => do {
@@ -914,7 +914,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 95.2 ) or return;
+                need( $scope, $args, 'code', 95.2 ) || return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -960,7 +960,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 104.2 ) or return;
+                need( $scope, $args, 'code', 104.2 ) || return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -1006,7 +1006,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 113.2 ) or return;
+                need( $scope, $args, 'code', 113.2 ) || return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,

@@ -500,7 +500,7 @@ my $result = do {
                     updateWord => $scope,
                     $scope, $class, $ins, undef, undef
                 );
-                need( $scope, $args, 'data', 20.2 ) or return;
+                need( $scope, $args, 'data', 20.2 ) || return;
                 var(
                     $scope,
                     words =>

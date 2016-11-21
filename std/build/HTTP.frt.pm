@@ -81,7 +81,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'url', 14.2 ) or return;
+            need( $scope, $args, 'url', 14.2 ) || return;
             return $ret_func->(
                 $$scope->{'client'}->property_u( 'get', $pos->(15.3) )->(
                     [ undef, [ url => $$scope->{'url'} ] ], $scope,
@@ -99,7 +99,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'url', 20.2 ) or return;
+            need( $scope, $args, 'url', 20.2 ) || return;
             return $ret_func->(
                 $$scope->{'client'}->property_u( 'post', $pos->(21.3) )->(
                     [ undef, [ url => $$scope->{'url'} ] ], $scope,

@@ -84,7 +84,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'code', 17.2 ) or return;
+            need( $scope, $args, 'code', 17.2 ) || return;
             $ret->set_property(
                 message => $$scope->{'code'}
                   ->( [ undef, [] ], $scope, undef, $pos->(18.4) ),

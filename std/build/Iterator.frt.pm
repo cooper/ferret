@@ -217,7 +217,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'list', 21.2 ) or return;
+                need( $scope, $args, 'list', 21.2 ) || return;
                 $self->set_property(
                     list =>
                       $$scope->{'list'}->property_u( 'copy', $pos->(22.4) )
@@ -354,7 +354,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'hash', 48.2 ) or return;
+                need( $scope, $args, 'hash', 48.2 ) || return;
                 $self->set_property(
                     hash =>
                       $$scope->{'hash'}->property_u( 'copy', $pos->(49.4) )

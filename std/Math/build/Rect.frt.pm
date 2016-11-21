@@ -265,8 +265,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'x', 5.1 ) or return;
-                need( $scope, $args, 'y', 5.3 ) or return;
+                need( $scope, $args, 'x', 5.1 ) || return;
+                need( $scope, $args, 'y', 5.3 ) || return;
                 need( $self, $args, 'width' )  or return;
                 need( $self, $args, 'height' ) or return;
                 $self->set_property(

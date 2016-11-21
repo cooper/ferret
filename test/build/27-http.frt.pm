@@ -128,7 +128,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'location', 8.2 ) or return;
+            need( $scope, $args, 'location', 8.2 ) || return;
             $$scope->{'say'}->(
                 [
                     add(
@@ -157,7 +157,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'content', 14.2 ) or return;
+            need( $scope, $args, 'content', 14.2 ) || return;
             $$scope->{'say'}->(
                 [
                     add(

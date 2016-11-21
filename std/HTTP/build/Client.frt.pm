@@ -224,7 +224,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'url', 34.2 ) or return;
+                need( $scope, $args, 'url', 34.2 ) || return;
                 return $ret_func->(
                     $$self->{'request'}->(
                         [
@@ -256,7 +256,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'url', 44.2 ) or return;
+                need( $scope, $args, 'url', 44.2 ) || return;
                 return $ret_func->(
                     $$self->{'request'}->(
                         [
@@ -295,8 +295,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'httpMethod', 56.2 ) or return;
-                need( $scope, $args, 'url',        59.2 ) or return;
+                need( $scope, $args, 'httpMethod', 56.2 ) || return;
+                need( $scope, $args, 'url',        59.2 ) || return;
                 return $ret_func->(
                     $$scope->{'HTTP::Request'}->(
                         [

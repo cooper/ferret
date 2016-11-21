@@ -331,10 +331,7 @@ sub need {
         return unless pbool($value->equal_to($value_maybe));
     }
 
-    # set the variable.
-    $scope_or_self->set_property($var_name => $value, $var_pos);
-
-    return $value;
+    return $scope_or_self->set_property($var_name => $value, $var_pos);
 }
 
 sub want {
@@ -346,7 +343,7 @@ sub want {
         $value = $value_maybe;
     }
 
-    $scope_or_self->set_property($var_name => $value, $var_pos);
+    return $scope_or_self->set_property($var_name => $value, $var_pos);
 }
 
 # set any object as scope.

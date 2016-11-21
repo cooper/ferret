@@ -327,8 +327,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'cat1', 39.1 ) or return;
-                need( $scope, $args, 'cat2', 39.3 ) or return;
+                need( $scope, $args, 'cat1', 39.1 ) || return;
+                need( $scope, $args, 'cat2', 39.3 ) || return;
                 if (
                     bool(
                         $$scope->{'cat1'}->property_u( 'mean', $pos->(40.3) )

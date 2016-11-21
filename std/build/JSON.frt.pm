@@ -596,7 +596,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'data', 96.2 ) or return;
+                need( $scope, $args, 'data', 96.2 ) || return;
                 try_catch(
                     $f, $scope,
                     sub {
@@ -644,7 +644,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'json', 105.2 ) or return;
+                need( $scope, $args, 'json', 105.2 ) || return;
                 try_catch(
                     $f, $scope,
                     sub {
@@ -693,7 +693,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'fragment', 138.2 ) or return;
+                need( $scope, $args, 'fragment', 138.2 ) || return;
                 try_catch(
                     $f, $scope,
                     sub {
@@ -825,7 +825,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'data', 180.2 ) or return;
+                need( $scope, $args, 'data', 180.2 ) || return;
                 return $ret_func->(
                     $$scope->{'default'}->property_u( 'encode', $pos->(181.3) )
                       ->( [ $$scope->{'data'} ], $scope, undef, $pos->(181.4) )
@@ -848,7 +848,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'json', 187.2 ) or return;
+                need( $scope, $args, 'json', 187.2 ) || return;
                 return $ret_func->(
                     $$scope->{'default'}->property_u( 'decode', $pos->(188.3) )
                       ->( [ $$scope->{'json'} ], $scope, undef, $pos->(188.4) )

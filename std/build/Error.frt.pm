@@ -199,7 +199,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'list', 29.2 ) or return;
+            need( $scope, $args, 'list', 29.2 ) || return;
             var( $scope, str => str( $f, "\n" ), $file_scope, $pos->(30.2) );
             {
                 my $loop_ret = iterate_pair(
@@ -339,8 +339,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'file', 15.1 ) or return;
-                need( $scope, $args, 'line', 15.3 ) or return;
+                need( $scope, $args, 'file', 15.1 ) || return;
+                need( $scope, $args, 'line', 15.3 ) || return;
                 $$self->{'hints'}->property_u( 'push', $pos->(16.1) )->(
                     [
                         str( $f, "File" ), $$scope->{'file'},

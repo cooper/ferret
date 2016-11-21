@@ -287,7 +287,10 @@ sub c_CLOSURE_S {
     }
 
     # a closure can terminate these.
-    $c->close_nodes(qw(Negation Operation Assignment LocalDeclaration));
+    $c->close_nodes(qw(
+        Negation Operation Assignment LocalDeclaration
+        WantNeed WantNeedType WantNeedValue
+    ));
 
     # a closure can terminate a generated expression.
     # for instance, inside $something {}. the expression $something ends there.
@@ -478,8 +481,8 @@ sub c_PAREN_E {
     # closes these things.
     $c->close_nodes(qw(
         Negation Operation Pair NamedPair Detail
-        Assignment LocalDeclaration)
-    );
+        Assignment LocalDeclaration WantNeed WantNeedType WantNeedValue
+    ));
 
     # close the list itself.
     #
@@ -530,7 +533,7 @@ sub c_BRACKET_E {
     # closes these things.
     $c->close_nodes(
         qw(Negation Operation Pair NamedPair Assignment
-        LocalDeclaration
+        LocalDeclaration WantNeed WantNeedType WantNeedValue
     ));
 
     # close the list itself.
@@ -940,7 +943,7 @@ sub c_OP_COMMA {
         # list item.
         $c->close_nodes(qw(
             Negation Operation Pair NamedPair Detail
-            Assignment LocalDeclaration
+            Assignment LocalDeclaration WantNeed WantNeedType WantNeedValue
         ));
         return $c->unexpected if $c->node->parent != $c->list;
 
@@ -1065,7 +1068,7 @@ sub c_OP_VALUE {
         # list item.
         $c->close_nodes(qw(
             Negation Operation Pair NamedPair Detail
-            Assignment LocalDeclaration
+            Assignment LocalDeclaration WantNeed WantNeedType WantNeedValue
         ));
         return $c->unexpected if $c->node->parent != $c->list;
 

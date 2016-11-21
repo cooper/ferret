@@ -156,7 +156,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'wordI', 29.2 ) or return;
+                need( $scope, $args, 'wordI', 29.2 ) || return;
                 return $ret_func->(
                     $$self->{'split'}->(
                         [
@@ -194,7 +194,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'wordN', 34.2 ) or return;
+                need( $scope, $args, 'wordN', 34.2 ) || return;
                 return $ret_func->(
                     $$self->{'split'}->(
                         [

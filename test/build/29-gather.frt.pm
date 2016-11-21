@@ -192,7 +192,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'pt', 4.2 ) or return;
+            need( $scope, $args, 'pt', 4.2 ) || return;
             return $ret_func->(
                 do {
                     my ( $gather_status, $gather_ret ) = gather(
@@ -253,7 +253,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'nums', 27.2 ) or return;
+            need( $scope, $args, 'nums', 27.2 ) || return;
             $ret->set_property(
                 even => do {
                     my ( $gather_status, $gather_ret ) = gather(

@@ -242,7 +242,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'root', 41.2 ) or return;
+                need( $scope, $args, 'root', 41.2 ) || return;
                 return $ret_func->(
                     $$scope->{'Math'}->property_u( 'root', $pos->(42.15) )->(
                         [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],

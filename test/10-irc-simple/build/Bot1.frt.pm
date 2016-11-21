@@ -195,7 +195,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'data', 18.2 ) or return;
+            need( $scope, $args, 'data', 18.2 ) || return;
             $$scope->{'say'}->(
                 [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
                 $scope, undef, $pos->(19.2)
@@ -309,7 +309,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 29.2 ) or return;
+                need( $scope, $args, 'line', 29.2 ) || return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(30.2)

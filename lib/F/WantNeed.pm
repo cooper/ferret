@@ -3,7 +3,7 @@ package F::WantNeed;
 
 use warnings;
 use strict;
-use parent 'F::Node';
+use parent 'F::NodeExpression';
 
 use Scalar::Util qw(weaken);
 use Ferret::Shared::Utils qw(dot_trim type_link);

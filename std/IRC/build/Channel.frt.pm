@@ -111,7 +111,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'message', 12.2 ) or return;
+                need( $scope, $args, 'message', 12.2 ) || return;
                 $$self->{'connection'}
                   ->property_u( 'sendPrivmsg', $pos->(13.2) )->(
                     [ $$self->{'name'}, $$scope->{'message'} ],

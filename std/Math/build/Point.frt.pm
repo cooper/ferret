@@ -232,7 +232,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'pt2', 9.2 ) or return;
+                need( $scope, $args, 'pt2', 9.2 ) || return;
                 var(
                     $scope,
                     dx => _sub(
@@ -353,8 +353,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'pt1', 32.1 ) or return;
-                need( $scope, $args, 'pt2', 32.3 ) or return;
+                need( $scope, $args, 'pt1', 32.1 ) || return;
+                need( $scope, $args, 'pt2', 32.3 ) || return;
                 return $ret_func->(
                     ${ $scope->{special} }->{'class'}->(
                         [
@@ -413,8 +413,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'pt1', 40.1 ) or return;
-                need( $scope, $args, 'pt2', 40.3 ) or return;
+                need( $scope, $args, 'pt1', 40.1 ) || return;
+                need( $scope, $args, 'pt2', 40.3 ) || return;
                 return $ret_func->(
                     $$scope->{'pt1'}->property_u( 'distanceTo', $pos->(41.3) )
                       ->( [ $$scope->{'pt2'} ], $scope, undef, $pos->(41.4) ) );

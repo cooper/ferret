@@ -224,8 +224,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'x', 4.2 ) or return;
-                need( $scope, $args, 'y', 4.4 ) or return;
+                need( $scope, $args, 'x', 4.2 ) || return;
+                need( $scope, $args, 'y', 4.4 ) || return;
                 $self->set_property( x => $$scope->{'x'}, $pos->(5.2) );
                 $self->set_property( y => $$scope->{'y'}, $pos->(6.2) );
                 return $ret;
@@ -307,8 +307,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'pt1', 23.2 ) or return;
-                need( $scope, $args, 'pt2', 23.4 ) or return;
+                need( $scope, $args, 'pt1', 23.2 ) || return;
+                need( $scope, $args, 'pt2', 23.4 ) || return;
                 return $ret_func->(
                     $$scope->{'Point'}->(
                         [

@@ -132,7 +132,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'channelNames', 6.2 ) or return;
+                need( $scope, $args, 'channelNames', 6.2 ) || return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -180,8 +180,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'target',  13.1 ) or return;
-                need( $scope, $args, 'message', 13.3 ) or return;
+                need( $scope, $args, 'target',  13.1 ) || return;
+                need( $scope, $args, 'message', 13.3 ) || return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,
@@ -241,7 +241,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'nick', 23.2 ) or return;
+                need( $scope, $args, 'nick', 23.2 ) || return;
                 $$self->{'send'}->(
                     [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],
                     $scope, undef, $pos->(24.2)

@@ -256,12 +256,12 @@ our %element_rules = (
 
     WantNeed => {
 
-        # WantNeed must always be a direct child of an instruction.
-        parent_must_be => [                                                     # WantNeed[0]
-            'Instruction',
-            undef,
-            0
-        ],
+        # # WantNeed must always be a direct child of an instruction.
+        # parent_must_be => [                                                     # WantNeed[0]
+        #     'Instruction',
+        #     undef,
+        #     0
+        # ],
 
         # WantNeed must always be inside one of these.
         must_be_somewhere_inside => [                                           # WantNeed[1]

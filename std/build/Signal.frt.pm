@@ -168,7 +168,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'type', 31.2 ) or return;
+                need( $scope, $args, 'type', 31.2 ) || return;
                 {
                     my $maybe_0 =
                       $$scope->{'signals'}

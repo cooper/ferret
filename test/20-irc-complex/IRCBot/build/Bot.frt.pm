@@ -610,7 +610,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'data', 36.2 ) or return;
+            need( $scope, $args, 'data', 36.2 ) || return;
             $$self->{'handleLine'}
               ->( [ $$scope->{'data'} ], $scope, undef, $pos->(37.2) );
             return $ret;
@@ -667,7 +667,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 's', 109.2 ) or return;
+            need( $scope, $args, 's', 109.2 ) || return;
             $$this->{'send'}->(
                 [
                     add(
@@ -698,8 +698,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'line', 114.2 ) or return;
-            need( $scope, $args, 's',    114.4 ) or return;
+            need( $scope, $args, 'line', 114.2 ) || return;
+            need( $scope, $args, 's',    114.4 ) || return;
             var(
                 $scope,
                 msg => $$scope->{'Message'}
@@ -755,7 +755,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 131.2 ) or return;
+            need( $scope, $args, 'msg', 131.2 ) || return;
             var(
                 $scope,
                 nickname =>
@@ -786,7 +786,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 137.2 ) or return;
+            need( $scope, $args, 'msg', 137.2 ) || return;
             $$scope->{'inspect'}
               ->( [ $$scope->{'msg'} ], $scope, undef, $pos->(138.2) );
             var(
@@ -841,7 +841,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 152.2 ) or return;
+            need( $scope, $args, 'msg', 152.2 ) || return;
             var(
                 $scope,
                 response => $$this->{'factoids'}->get_index_value(
@@ -985,8 +985,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'command',  43.1 ) or return;
-                need( $scope, $args, 'callback', 43.4 ) or return;
+                need( $scope, $args, 'command',  43.1 ) || return;
+                need( $scope, $args, 'callback', 43.4 ) || return;
                 if (
                     bool(
                         $$self->{'commands'}->get_index_value(
@@ -1034,7 +1034,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 55.2 ) or return;
+                need( $scope, $args, 'line', 55.2 ) || return;
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
                     $scope, undef, $pos->(56.2)
@@ -1060,7 +1060,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 61.2 ) or return;
+                need( $scope, $args, 'line', 61.2 ) || return;
                 var(
                     $scope,
                     s => $$scope->{'line'}->property_u( 'split', $pos->(64.4) )
@@ -1158,8 +1158,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'channel', 84.1 ) or return;
-                need( $scope, $args, 'message', 84.3 ) or return;
+                need( $scope, $args, 'channel', 84.1 ) || return;
+                need( $scope, $args, 'message', 84.3 ) || return;
                 {
                     my $loop_ret = iterate(
                         $f, $scope,

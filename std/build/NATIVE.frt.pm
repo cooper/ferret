@@ -91,8 +91,8 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'obj',   8.2 ) or return;
-            need( $scope, $args, 'class', 8.4 ) or return;
+            need( $scope, $args, 'obj',   8.2 ) || return;
+            need( $scope, $args, 'class', 8.4 ) || return;
             $$scope->{'_bless'}->(
                 [ $$scope->{'obj'}, $$scope->{'class'} ],
                 $scope, undef, $pos->(9.2)

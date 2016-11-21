@@ -205,7 +205,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 17.2 ) or return;
+            need( $scope, $args, 'msg', 17.2 ) || return;
             if (
                 bool(
                     _not(
@@ -354,7 +354,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'connection', 10.2 ) or return;
+                need( $scope, $args, 'connection', 10.2 ) || return;
                 $$self->{'conns'}->property_u( 'push', $pos->(11.2) )
                   ->( [ $$scope->{'connection'} ], $scope, undef,
                     $pos->(11.3) );
