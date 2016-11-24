@@ -199,16 +199,197 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Message', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_0 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [
+                {
+                    name     => 'line',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $self, $args, 'line' ) || return $ret_func->();
+                var(
+                    $scope,
+                    lineSplit =>
+                      $$self->{'line'}->property_u( 'split', $pos->(6.2) )->(
+                        [ str( $f, " " ), [ limit => num( $f, "4" ) ] ],
+                        $scope, undef, $pos->(6.25)
+                      ),
+                    $file_scope,
+                    $pos->(6.1)
+                );
+                $self->set_property(
+                    channel => $$scope->{'lineSplit'}->get_index_value(
+                        [ num( $f, "2" ) ],
+                        $scope, $pos->(7.4)
+                    ),
+                    $pos->(7.2)
+                );
+                $self->set_property(
+                    nickname => $$scope->{'lineSplit'}
+                      ->get_index_value( [ num( $f, "0" ) ],
+                        $scope, $pos->(10.2) )
+                      ->property_u( 'split', $pos->(10.35) )->(
+                        [ str( $f, "!" ), [ limit => num( $f, "2" ) ] ],
+                        $scope, undef, $pos->(10.4)
+                      )->get_index_value(
+                        [ num( $f, "0" ) ],
+                        $scope, $pos->(10.7)
+                      ),
+                    $pos->(10.1)
+                );
+                $self->set_property(
+                    nickname => $$self->{'nickname'}
+                      ->property_u( 'trimPrefix', $pos->(11.4) )
+                      ->( [ str( $f, ":" ) ], $scope, undef, $pos->(11.5) ),
+                    $pos->(11.2)
+                );
+                $self->set_property(
+                    message => $$scope->{'lineSplit'}->get_index_value(
+                        [ num( $f, "3" ) ],
+                        $scope, $pos->(14.4)
+                    ),
+                    $pos->(14.2)
+                );
+                $self->set_property(
+                    message => $$self->{'message'}
+                      ->property_u( 'trimPrefix', $pos->(15.4) )
+                      ->( [ str( $f, ":" ) ], $scope, undef, $pos->(15.5) ),
+                    $pos->(15.2)
+                );
+                $self->set_property(
+                    parts =>
+                      $$self->{'message'}->property_u( 'split', $pos->(18.4) )
+                      ->( [ str( $f, " " ) ], $scope, undef, $pos->(18.5) ),
+                    $pos->(18.2)
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'command' definition
-        my $func_1 = method_event_def( $f, $scope, 'command' );
+        my $func_1 = method_event_def(
+            $f, $scope,
+            'command',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                if (
+                    bool(
+                        all_true(
+                            $scope,
+                            sub {
+                                nequal(
+                                    $scope,
+                                    $$self->{'parts'}
+                                      ->property_u( 'length', $pos->(26.15) ),
+                                    num( $f, "0" )
+                                );
+                            },
+                            sub {
+                                $$self->{'parts'}
+                                  ->get_index_value( [ num( $f, "0" ) ],
+                                    $scope, $pos->(26.4) )
+                                  ->property_u( 'hasPrefix', $pos->(26.55) )->(
+                                    [ str( $f, "." ) ],
+                                    $scope, undef, $pos->(26.6)
+                                  );
+                            }
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    var(
+                        $scope,
+                        cmd => $$self->{'parts'}
+                          ->get_index_value( [ num( $f, "0" ) ],
+                            $scope, $pos->(27.2) )
+                          ->property_u( 'trimPrefix', $pos->(27.35) )
+                          ->( [ str( $f, "." ) ], $scope, undef, $pos->(27.4) ),
+                        $file_scope,
+                        $pos->(27.1)
+                    );
+                    if (
+                        bool(
+                            $$scope->{'cmd'}
+                              ->property_u( 'length', $pos->(28.3) )
+                        )
+                      )
+                    {
+                        my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                        return $ret_func->( $$scope->{'cmd'} );
+                    }
+                }
+                return $ret_func->($false);
+                return $ret;
+            }
+        );
 
         # Method event 'commandHasParameters' definition
-        my $func_2 = method_event_def( $f, $scope, 'commandHasParameters' );
+        my $func_2 = method_event_def(
+            $f, $scope,
+            'commandHasParameters',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    gr8r(
+                        $scope,
+                        $$self->{'parts'}->property_u( 'length', $pos->(36.3) ),
+                        num( $f, "1" )
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'fromWord' definition
-        my $func_3 = method_event_def( $f, $scope, 'fromWord' );
+        my $func_3 = method_event_def(
+            $f, $scope,
+            'fromWord',
+            [
+                {
+                    name     => 'wordN',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'wordN', 41.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$self->{'message'}->property_u( 'split', $pos->(42.15) )
+                      ->(
+                        [
+                            str( $f, " " ),
+                            [
+                                limit => add(
+                                    $scope, $$scope->{'wordN'},
+                                    num( $f, "1" )
+                                )
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(42.2)
+                      )->get_index_value(
+                        [ $$scope->{'wordN'} ],
+                        $scope, $pos->(42.6)
+                      )
+                );
+                return $ret;
+            }
+        );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

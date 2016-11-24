@@ -464,46 +464,688 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'List', undef, [ \'T' ] );
 
         # Method event 'empty' definition
-        my $func_0 = method_event_def( $f, $scope, 'empty' );
+        my $func_0 = method_event_def(
+            $f, $scope, 'empty', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
+                return $ret;
+            }
+        );
 
         # Method event 'map' definition
-        my $func_1 = method_event_def( $f, $scope, 'map' );
+        my $func_1 = method_event_def(
+            $f, $scope, 'map',
+            [
+                {
+                    name     => 'code',
+                    type     => 'Code',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 18.2 ) || return $ret_func->();
+                return $ret_func->(
+                    do {
+                        my ( $gather_status, $gather_ret ) = gather(
+                            $f, $scope,
+                            sub {
+                                my ( $scope, $take, $ret_func ) = @_;
+                                {
+                                    my ( $loop_status, $loop_ret ) = iterate(
+                                        $f, $scope,
+                                        ${ $scope->{special} }->{'self'},
+                                        'el',
+                                        sub {
+                                            my ( $scope, $ret_func ) = @_;
+                                            $take->(
+                                                $$scope->{'code'}->(
+                                                    [ $$scope->{'el'} ],
+                                                    $scope,
+                                                    undef,
+                                                    $pos->(20.3)
+                                                )
+                                            );
+                                        },
+                                        $pos->(19.2)
+                                    );
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
+                                }
+                            }
+                        );
+                        return $ret_func->($gather_ret)
+                          if $gather_status eq 'return';
+                        $gather_ret;
+                      }
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'grep' definition
-        my $func_2 = method_event_def( $f, $scope, 'grep' );
+        my $func_2 = method_event_def(
+            $f, $scope, 'grep',
+            [
+                {
+                    name     => 'code',
+                    type     => 'Code',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 26.2 ) || return $ret_func->();
+                return $ret_func->(
+                    do {
+                        my ( $gather_status, $gather_ret ) = gather(
+                            $f, $scope,
+                            sub {
+                                my ( $scope, $take, $ret_func ) = @_;
+                                {
+                                    my ( $loop_status, $loop_ret ) = iterate(
+                                        $f, $scope,
+                                        ${ $scope->{special} }->{'self'},
+                                        'el',
+                                        sub {
+                                            my ( $scope, $ret_func ) = @_;
+                                            if (
+                                                bool(
+                                                    $$scope->{'code'}->(
+                                                        [ $$scope->{'el'} ],
+                                                        $scope,
+                                                        undef,
+                                                        $pos->(28.15)
+                                                    )
+                                                )
+                                              )
+                                            {
+                                                my $scope =
+                                                  Ferret::Scope->new( $f,
+                                                    parent => $scope );
+
+                                                $take->( $$scope->{'el'} );
+                                            }
+                                        },
+                                        $pos->(27.2)
+                                    );
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
+                                }
+                            }
+                        );
+                        return $ret_func->($gather_ret)
+                          if $gather_status eq 'return';
+                        $gather_ret;
+                      }
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'flatten' definition
-        my $func_3 = method_event_def( $f, $scope, 'flatten' );
+        my $func_3 = method_event_def(
+            $f, $scope,
+            'flatten',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    new => create_list( $f, [] ),
+                    $file_scope, $pos->(34.2)
+                );
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        ${ $scope->{special} }->{'self'},
+                        'el',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    $$scope->{'el'}->property_u( '*instanceOf',
+                                        $pos->(36.3) )->(
+                                        [ $$scope->{'List'} ], $scope,
+                                        undef,                 $pos->(36.4)
+                                        )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                $$scope->{'new'}
+                                  ->property_u( 'push', $pos->(37.1) )->(
+                                    [
+                                        undef,
+                                        [
+                                            items => $$scope->{'el'}
+                                              ->property_u( 'flatten',
+                                                $pos->(37.3) )->(
+                                                [ undef, [] ], $scope,
+                                                undef, $pos->(37.35)
+                                                )
+                                        ]
+                                    ],
+                                    $scope, undef,
+                                    $pos->(37.15)
+                                  );
+                            }
+                            else {
+                                $$scope->{'new'}
+                                  ->property_u( 'push', $pos->(39.2) )->(
+                                    [ $$scope->{'el'} ],
+                                    $scope, undef, $pos->(39.3)
+                                  );
+                            }
+                        },
+                        $pos->(35.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret_func->( $$scope->{'new'} );
+                return $ret;
+            }
+        );
 
         # Method event 'withoutAll' definition
-        my $func_5 = method_event_def( $f, $scope, 'withoutAll' );
+        my $func_5 = method_event_def(
+            $f, $scope,
+            'withoutAll',
+            [
+                {
+                    name     => 'what',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'what', 46.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$self->{'grep'}->(
+                        [
+                            $func_4->inside_scope(
+                                (undef) => $scope,
+                                undef, $class, $ins, undef, undef
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(47.15)
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'without' definition
-        my $func_6 = method_event_def( $f, $scope, 'without' );
+        my $func_6 = method_event_def(
+            $f, $scope,
+            'without',
+            [
+                {
+                    name     => 'what',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'what', 53.2 ) || return $ret_func->();
+                $scope->set_property(
+                    found => Ferret::undefined,
+                    $pos->(54.2)
+                );
+                return $ret_func->(
+                    do {
+                        my ( $gather_status, $gather_ret ) = gather(
+                            $f, $scope,
+                            sub {
+                                my ( $scope, $take, $ret_func ) = @_;
+                                {
+                                    my ( $loop_status, $loop_ret ) =
+                                      iterate_pair(
+                                        $f, $scope,
+                                        ${ $scope->{special} }->{'self'},
+                                        'i', 'el',
+                                        sub {
+                                            my ( $scope, $ret_func ) = @_;
+                                            if (
+                                                bool(
+                                                    all_true(
+                                                        $scope,
+                                                        sub {
+                                                            _not(
+                                                                $$scope->{
+                                                                    'found'} );
+                                                        },
+                                                        sub {
+                                                            equal(
+                                                                $scope,
+                                                                $$scope->{
+                                                                    'what'},
+                                                                $$scope->{'el'}
+                                                            );
+                                                        }
+                                                    )
+                                                )
+                                              )
+                                            {
+                                                my $scope =
+                                                  Ferret::Scope->new( $f,
+                                                    parent => $scope );
+
+                                                var(
+                                                    $scope,
+                                                    found => $true,
+                                                    $file_scope, $pos->(57.2)
+                                                );
+                                                return 'next';
+                                            }
+                                            $take->( $$scope->{'el'} );
+                                        },
+                                        $pos->(55.1)
+                                      );
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
+                                }
+                            }
+                        );
+                        return $ret_func->($gather_ret)
+                          if $gather_status eq 'return';
+                        $gather_ret;
+                      }
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'remove' definition
-        my $func_7 = method_event_def( $f, $scope, 'remove' );
+        my $func_7 = method_event_def(
+            $f, $scope, 'remove',
+            [
+                {
+                    name     => 'what',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'what', 68.2 ) || return $ret_func->();
+                $ret->set_property( removed => $false, $pos->(69.2) );
+                {
+                    my ( $loop_status, $loop_ret ) = iterate_pair(
+                        $f, $scope,
+                        ${ $scope->{special} }->{'self'},
+                        'i', 'el',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    nequal(
+                                        $scope, $$scope->{'what'},
+                                        $$scope->{'el'}
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                return 'next';
+                            }
+
+                            ${ $scope->{special} }->{'self'}
+                              ->delete_index( $$scope->{'i'}, $pos->(73.1) );
+                            $ret->set_property(
+                                found => $$scope->{'el'},
+                                $pos->(74.2)
+                            );
+                            $ret->set_property(
+                                removed => $true,
+                                $pos->(75.2)
+                            );
+                            return 'last';
+                        },
+                        $pos->(70.05)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret;
+            }
+        );
 
         # Method event 'removeAll' definition
-        my $func_8 = method_event_def( $f, $scope, 'removeAll' );
+        my $func_8 = method_event_def(
+            $f, $scope,
+            'removeAll',
+            [
+                {
+                    name     => 'what',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'what', 82.2 ) || return $ret_func->();
+                var(
+                    $scope,
+                    found => do {
+                        my ( $gather_status, $gather_ret ) = gather(
+                            $f, $scope,
+                            sub {
+                                my ( $scope, $take, $ret_func ) = @_;
+                                {
+                                    my ( $loop_status, $loop_ret ) =
+                                      iterate_pair(
+                                        $f, $scope,
+                                        ${ $scope->{special} }->{'self'},
+                                        'i', 'el',
+                                        sub {
+                                            my ( $scope, $ret_func ) = @_;
+                                            if (
+                                                bool(
+                                                    nequal(
+                                                        $scope,
+                                                        $$scope->{'what'},
+                                                        $$scope->{'el'}
+                                                    )
+                                                )
+                                              )
+                                            {
+                                                my $scope =
+                                                  Ferret::Scope->new( $f,
+                                                    parent => $scope );
+
+                                                return 'next';
+                                            }
+
+                                            ${ $scope->{special} }->{'self'}
+                                              ->delete_index( $$scope->{'i'},
+                                                $pos->(86.1) );
+                                            $take->( $$scope->{'el'} );
+                                        },
+                                        $pos->(83.15)
+                                      );
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
+                                }
+                            }
+                        );
+                        return $ret_func->($gather_ret)
+                          if $gather_status eq 'return';
+                        $gather_ret;
+                    },
+                    $file_scope,
+                    $pos->(83.1)
+                );
+                $ret->set_property( found => $$scope->{'found'}, $pos->(89.2) );
+                $ret->set_property(
+                    removed =>
+                      $$scope->{'found'}->property_u( 'length', $pos->(90.4) ),
+                    $pos->(90.2)
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'first' definition
-        my $func_9 = method_event_def( $f, $scope, 'first' );
+        my $func_9 = method_event_def(
+            $f, $scope, 'first',
+            [
+                {
+                    name     => 'code',
+                    type     => 'Code',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 95.2 ) || return $ret_func->();
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        ${ $scope->{special} }->{'self'},
+                        'el',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    $$scope->{'code'}->(
+                                        [ $$scope->{'el'} ], $scope,
+                                        undef,               $pos->(97.15)
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                return $ret_func->( $$scope->{'el'} );
+                            }
+                        },
+                        $pos->(96.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret_func->($undefined);
+                return $ret;
+            }
+        );
 
         # Method event 'any' definition
-        my $func_10 = method_event_def( $f, $scope, 'any' );
+        my $func_10 = method_event_def(
+            $f, $scope, 'any',
+            [
+                {
+                    name     => 'code',
+                    type     => 'Code',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 104.2 ) || return $ret_func->();
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        ${ $scope->{special} }->{'self'},
+                        'el',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    $$scope->{'code'}->(
+                                        [ $$scope->{'el'} ], $scope,
+                                        undef,               $pos->(106.15)
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                return $ret_func->($true);
+                            }
+                        },
+                        $pos->(105.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret_func->($false);
+                return $ret;
+            }
+        );
 
         # Method event 'all' definition
-        my $func_11 = method_event_def( $f, $scope, 'all' );
+        my $func_11 = method_event_def(
+            $f, $scope, 'all',
+            [
+                {
+                    name     => 'code',
+                    type     => 'Code',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 113.2 ) || return $ret_func->();
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        ${ $scope->{special} }->{'self'},
+                        'el',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    _not(
+                                        $$scope->{'code'}->(
+                                            [ $$scope->{'el'} ],
+                                            $scope,
+                                            undef,
+                                            $pos->(115.2)
+                                        )
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                return $ret_func->($false);
+                            }
+                        },
+                        $pos->(114.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret_func->($true);
+                return $ret;
+            }
+        );
 
         # Method event 'sum' definition
-        my $func_12 = method_event_def( $f, $scope, 'sum' );
+        my $func_12 = method_event_def(
+            $f, $scope, 'sum', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                if ( bool( $$self->{'empty'} ) ) {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->($undefined);
+                }
+                var(
+                    $scope,
+                    c => ${ $scope->{special} }->{'self'}->get_index_value(
+                        [ num( $f, "0" ) ],
+                        $scope, $pos->(125.4)
+                    ),
+                    $file_scope,
+                    $pos->(125.2)
+                );
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        range( $scope, num( $f, "1" ), $$self->{'lastIndex'} ),
+                        'i',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            var(
+                                $scope,
+                                c => add(
+                                    $scope,
+                                    $$scope->{'c'},
+                                    ${ $scope->{special} }->{'self'}
+                                      ->get_index_value(
+                                        [ $$scope->{'i'} ], $scope,
+                                        $pos->(127.3)
+                                      )
+                                ),
+                                $file_scope,
+                                $pos->(127.1)
+                            );
+                        },
+                        $pos->(126.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret_func->( $$scope->{'c'} );
+                return $ret;
+            }
+        );
 
         # Method event 'sum0' definition
-        my $func_13 = method_event_def( $f, $scope, 'sum0' );
+        my $func_13 = method_event_def(
+            $f, $scope, 'sum0', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var( $scope, c => num( $f, "0" ), $file_scope, $pos->(135.2) );
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        ${ $scope->{special} }->{'self'},
+                        'el',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            var(
+                                $scope,
+                                c => add(
+                                    $scope, $$scope->{'c'}, $$scope->{'el'}
+                                ),
+                                $file_scope,
+                                $pos->(137.2)
+                            );
+                        },
+                        $pos->(136.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret_func->( $$scope->{'c'} );
+                return $ret;
+            }
+        );
 
         # Method event 'iterator' definition
-        my $func_14 = method_event_def( $f, $scope, 'iterator' );
+        my $func_14 = method_event_def(
+            $f, $scope,
+            'iterator',
+            undef,
+            [ { name => 'result', type => 'Iterator' } ],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    $$scope->{'ListIterator'}->(
+                        [ ${ $scope->{special} }->{'self'} ], $scope,
+                        undef,                                $pos->(143.3)
+                    )
+                );
+                return $ret;
+            }
+        );
         $func_0->inside_scope(
             empty => $scope,
             $proto, $class, $ins, 1, undef

@@ -204,19 +204,147 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Point', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_0 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [
+                {
+                    name     => 'x',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'y',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'x', 4.2 ) || return $ret_func->();
+                need( $scope, $args, 'y', 4.4 ) || return $ret_func->();
+                $self->set_property( x => $$scope->{'x'}, $pos->(5.2) );
+                $self->set_property( y => $$scope->{'y'}, $pos->(6.2) );
+                return $ret;
+            }
+        );
 
         # Method event 'oneToRight' definition
-        my $func_1 = method_event_def( $f, $scope, 'oneToRight' );
+        my $func_1 = method_event_def(
+            $f, $scope,
+            'oneToRight',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    pt => ${ $scope->{special} }->{'class'}->(
+                        [
+                            add( $scope, $$self->{'x'}, num( $f, "1" ) ),
+                            $$self->{'y'}
+                        ],
+                        $scope, undef,
+                        $pos->(10.2)
+                    ),
+                    $file_scope,
+                    $pos->(10.1)
+                );
+                return $ret_func->( $$scope->{'pt'} );
+                return $ret;
+            }
+        );
 
         # Method event 'pretty' definition
-        my $func_2 = method_event_def( $f, $scope, 'pretty' );
+        my $func_2 = method_event_def(
+            $f, $scope, 'pretty', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    add(
+                        $scope,        str( $f, "(" ),
+                        $$self->{'x'}, str( $f, ", " ),
+                        $$self->{'y'}, str( $f, ")" )
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'toString' definition
-        my $func_3 = method_event_def( $f, $scope, 'toString' );
+        my $func_3 = method_event_def(
+            $f, $scope,
+            'toString',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->( $$self->{'pretty'}
+                      ->( [ undef, [] ], $scope, undef, $pos->(19.3) ) );
+                return $ret;
+            }
+        );
 
         # Method event 'midpoint' definition
-        my $func_4 = method_event_def( $f, $scope, 'midpoint' );
+        my $func_4 = method_event_def(
+            $f, $scope,
+            'midpoint',
+            [
+                {
+                    name     => 'pt1',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'pt2',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'pt1', 23.2 ) || return $ret_func->();
+                need( $scope, $args, 'pt2', 23.4 ) || return $ret_func->();
+                return $ret_func->(
+                    $$scope->{'Point'}->(
+                        [
+                            undef,
+                            [
+                                x => div(
+                                    $scope,
+                                    add(
+                                        $scope,
+                                        $$scope->{'pt1'}
+                                          ->property_u( 'x', $pos->(25.2) ),
+                                        $$scope->{'pt2'}
+                                          ->property_u( 'x', $pos->(25.35) )
+                                    ),
+                                    num( $f, "2" )
+                                ),
+                                y => div(
+                                    $scope,
+                                    add(
+                                        $scope,
+                                        $$scope->{'pt1'}
+                                          ->property_u( 'y', $pos->(26.2) ),
+                                        $$scope->{'pt2'}
+                                          ->property_u( 'y', $pos->(26.35) )
+                                    ),
+                                    num( $f, "2" )
+                                )
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(24.3)
+                    )
+                );
+                return $ret;
+            }
+        );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

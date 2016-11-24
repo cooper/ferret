@@ -263,13 +263,163 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Error', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_0 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [
+                {
+                    name     => 'type',
+                    type     => 'Sym',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'msg',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'hints',
+                    type     => 'List',
+                    optional => 1,
+                    more     => undef
+                },
+                {
+                    name     => 'subError',
+                    type     => 'Error',
+                    optional => 1,
+                    more     => undef
+                },
+                {
+                    name     => 'fatal',
+                    type     => undef,
+                    optional => 1,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $self, $args, 'type' ) || return $ret_func->();
+                need( $self, $args, 'msg' )  || return $ret_func->();
+                want( $self, $args, 'hints', 7.2, create_list( $f, [] ) );
+                want( $self, $args, 'subError', 8.2 );
+                want( $self, $args, 'fatal', 9.2, $false );
+                $$scope->{'NATIVE'}->property_u( 'bless', $pos->(11.2) )->(
+                    [
+                        ${ $scope->{special} }->{'self'},
+                        str( $f, "Ferret::Error" )
+                    ],
+                    $scope, undef,
+                    $pos->(11.3)
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'setPosition' definition
-        my $func_1 = method_event_def( $f, $scope, 'setPosition' );
+        my $func_1 = method_event_def(
+            $f, $scope,
+            'setPosition',
+            [
+                {
+                    name     => 'file',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'line',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'file', 15.1 ) || return $ret_func->();
+                need( $scope, $args, 'line', 15.3 ) || return $ret_func->();
+                $$self->{'hints'}->property_u( 'push', $pos->(16.1) )->(
+                    [
+                        str( $f, "File" ), $$scope->{'file'},
+                        str( $f, "Line" ), $$scope->{'line'}
+                    ],
+                    $scope, undef,
+                    $pos->(16.15)
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'description' definition
-        my $func_2 = method_event_def( $f, $scope, 'description' );
+        my $func_2 = method_event_def(
+            $f, $scope,
+            'description',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    desc => add(
+                        $scope,
+                        str( $f, "[" ),
+                        $$self->{'type'}->property_u( 'name', $pos->(20.3) ),
+                        str( $f, "] " ),
+                        $$self->{'msg'}
+                    ),
+                    $file_scope,
+                    $pos->(20.1)
+                );
+                if (
+                    bool(
+                        _not(
+                            $$self->{'hints'}
+                              ->property_u( 'empty', $pos->(21.4) )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    var(
+                        $scope,
+                        desc => add(
+                            $scope,
+                            $$scope->{'desc'},
+                            $$scope->{'_prettyHints'}->(
+                                [ $$self->{'hints'} ], $scope,
+                                undef,                 $pos->(22.4)
+                            )
+                        ),
+                        $file_scope,
+                        $pos->(22.2)
+                    );
+                }
+                if ( bool( $$self->{'subError'} ) ) {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    var(
+                        $scope,
+                        desc => add(
+                            $scope,
+                            $$scope->{'desc'},
+                            add(
+                                $scope,
+                                str( $f, " ->" ),
+                                $$self->{'subError'}
+                                  ->property_u( '*description', $pos->(24.6) )
+                            )
+                        ),
+                        $file_scope,
+                        $pos->(24.2)
+                    );
+                }
+                return $ret_func->( $$scope->{'desc'} );
+                return $ret;
+            }
+        );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

@@ -147,22 +147,113 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Number', undef, undef );
 
         # Method event 'sqrt' definition
-        my $func_0 = method_event_def( $f, $scope, 'sqrt' );
+        my $func_0 = method_event_def(
+            $f, $scope, 'sqrt', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    $$scope->{'Math'}->property_u( 'sqrt', $pos->(21.3) )->(
+                        [ ${ $scope->{special} }->{'self'} ], $scope,
+                        undef,                                $pos->(21.4)
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'cbrt' definition
-        my $func_1 = method_event_def( $f, $scope, 'cbrt' );
+        my $func_1 = method_event_def(
+            $f, $scope, 'cbrt', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->( $$self->{'root'}
+                      ->( [ num( $f, "3" ) ], $scope, undef, $pos->(25.3) ) );
+                return $ret;
+            }
+        );
 
         # Method event 'square' definition
-        my $func_2 = method_event_def( $f, $scope, 'square' );
+        my $func_2 = method_event_def(
+            $f, $scope, 'square', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    pow(
+                        $scope,
+                        ${ $scope->{special} }->{'self'},
+                        num( $f, "2" )
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'even' definition
-        my $func_3 = method_event_def( $f, $scope, 'even' );
+        my $func_3 = method_event_def(
+            $f, $scope, 'even', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    equal(
+                        $scope,
+                        mod(
+                            $scope,
+                            ${ $scope->{special} }->{'self'},
+                            num( $f, "2" )
+                        ),
+                        num( $f, "0" )
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'odd' definition
-        my $func_4 = method_event_def( $f, $scope, 'odd' );
+        my $func_4 = method_event_def(
+            $f, $scope, 'odd', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    nequal(
+                        $scope,
+                        mod(
+                            $scope,
+                            ${ $scope->{special} }->{'self'},
+                            num( $f, "2" )
+                        ),
+                        num( $f, "0" )
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'root' definition
-        my $func_5 = method_event_def( $f, $scope, 'root' );
+        my $func_5 = method_event_def(
+            $f, $scope, 'root',
+            [
+                {
+                    name     => 'root',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'root', 41.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$scope->{'Math'}->property_u( 'root', $pos->(42.15) )->(
+                        [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
+                        $scope,
+                        undef,
+                        $pos->(42.2)
+                    )
+                );
+                return $ret;
+            }
+        );
         $func_0->inside_scope( sqrt => $scope, $proto, $class, $ins, 1, undef );
         $func_1->inside_scope( cbrt => $scope, $proto, $class, $ins, 1, undef );
         $func_2->inside_scope(

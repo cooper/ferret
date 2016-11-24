@@ -74,10 +74,59 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Request', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_0 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [
+                {
+                    name     => 'client',
+                    type     => 'Client',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'url',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'httpMethod',
+                    type     => 'HTTPMethod',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'client', 9.2 ) || return $ret_func->();
+                $self->set_property(
+                    client => $$scope->{'client'},
+                    $pos->(10.3)
+                );
+                $self->weaken_property_ow( 'client', $pos->(10.1) );
+                need( $self, $args, 'url' )        || return $ret_func->();
+                need( $self, $args, 'httpMethod' ) || return $ret_func->();
+                return $ret;
+            }
+        );
 
         # Method event 'connect' definition
-        my $func_1 = method_event_def( $f, $scope, 'connect' );
+        my $func_1 = method_event_def(
+            $f, $scope,
+            'connect',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                $$scope->{'NATIVE::HTTPClient'}
+                  ->property_u( 'connect', $pos->(25.2) )->(
+                    [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
+                    $scope, undef, $pos->(25.25)
+                  );
+                return $ret;
+            }
+        );
 
         # Method event 'connected' definition
         my $func_2 = method_event_def( $f, $scope, 'connected' );

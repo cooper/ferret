@@ -203,19 +203,118 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'ListIterator', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_0 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [
+                {
+                    name     => 'list',
+                    type     => 'List',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'list', 21.2 ) || return $ret_func->();
+                $self->set_property(
+                    list =>
+                      $$scope->{'list'}->property_u( 'copy', $pos->(22.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(22.5) ),
+                    $pos->(22.2)
+                );
+                $self->set_property(
+                    i => _sub( $scope, $f->zero, num( $f, "1" ) ),
+                    $pos->(23.2)
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'more' definition
-        my $func_1 = method_event_def( $f, $scope, 'more' );
+        my $func_1 = method_event_def(
+            $f, $scope, 'more', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    nequal(
+                        $scope,
+                        $$self->{'i'},
+                        any_true(
+                            $scope,
+                            sub {
+                                $$self->{'list'}
+                                  ->property_u( 'lastIndex', $pos->(27.3) );
+                            },
+                            sub { _sub( $scope, $f->zero, num( $f, "1" ) ) }
+                        )
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'nextElement' definition
-        my $func_2 = method_event_def( $f, $scope, 'nextElement' );
+        my $func_2 = method_event_def(
+            $f, $scope,
+            'nextElement',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                $self->set_property(
+                    i => add( $scope, $$self->{'i'}, num( $f, "1" ) ),
+                    $pos->(31.2)
+                );
+                return $ret_func->(
+                    $$self->{'list'}->get_index_value(
+                        [ $$self->{'i'} ],
+                        $scope, $pos->(32.3)
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'nextElements' definition
-        my $func_3 = method_event_def( $f, $scope, 'nextElements' );
+        my $func_3 = method_event_def(
+            $f, $scope,
+            'nextElements',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                $self->set_property(
+                    i => add( $scope, $$self->{'i'}, num( $f, "1" ) ),
+                    $pos->(36.2)
+                );
+                return $ret_func->(
+                    create_list(
+                        $f,
+                        [
+                            $$self->{'i'},
+                            $$self->{'list'}->get_index_value(
+                                [ $$self->{'i'} ],
+                                $scope, $pos->(37.3)
+                            )
+                        ]
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'iterator' definition
-        my $func_4 = method_event_def( $f, $scope, 'iterator' );
+        my $func_4 = method_event_def(
+            $f, $scope,
+            'iterator',
+            undef,
+            [ { name => 'result', type => 'Iterator' } ],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->( ${ $scope->{special} }->{'self'} );
+                return $ret;
+            }
+        );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
@@ -241,19 +340,117 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'HashIterator', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_5 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_5 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [
+                {
+                    name     => 'hash',
+                    type     => 'Hash',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'hash', 48.2 ) || return $ret_func->();
+                $self->set_property(
+                    hash =>
+                      $$scope->{'hash'}->property_u( 'copy', $pos->(49.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(49.5) ),
+                    $pos->(49.2)
+                );
+                $self->set_property(
+                    keysLeft =>
+                      $$scope->{'hash'}->property_u( 'keys', $pos->(50.4) ),
+                    $pos->(50.2)
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'more' definition
-        my $func_6 = method_event_def( $f, $scope, 'more' );
+        my $func_6 = method_event_def(
+            $f, $scope, 'more', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    _not(
+                        $$self->{'keysLeft'}
+                          ->property_u( 'empty', $pos->(54.4) )
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'nextElement' definition
-        my $func_7 = method_event_def( $f, $scope, 'nextElement' );
+        my $func_7 = method_event_def(
+            $f, $scope,
+            'nextElement',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    key =>
+                      $$self->{'keysLeft'}->property_u( 'pop', $pos->(58.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(58.5) ),
+                    $file_scope, $pos->(58.2)
+                );
+                return $ret_func->(
+                    $$self->{'hash'}->get_index_value(
+                        [ $$scope->{'key'} ],
+                        $scope, $pos->(59.3)
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'nextElements' definition
-        my $func_8 = method_event_def( $f, $scope, 'nextElements' );
+        my $func_8 = method_event_def(
+            $f, $scope,
+            'nextElements',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    key =>
+                      $$self->{'keysLeft'}->property_u( 'pop', $pos->(63.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(63.5) ),
+                    $file_scope, $pos->(63.2)
+                );
+                return $ret_func->(
+                    create_list(
+                        $f,
+                        [
+                            $$scope->{'key'},
+                            $$self->{'hash'}->get_index_value(
+                                [ $$scope->{'key'} ],
+                                $scope, $pos->(64.3)
+                            )
+                        ]
+                    )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'iterator' definition
-        my $func_9 = method_event_def( $f, $scope, 'iterator' );
+        my $func_9 = method_event_def(
+            $f, $scope,
+            'iterator',
+            undef,
+            [ { name => 'result', type => 'Iterator' } ],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->( ${ $scope->{special} }->{'self'} );
+                return $ret;
+            }
+        );
         $func_5->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

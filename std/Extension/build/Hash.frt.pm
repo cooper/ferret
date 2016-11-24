@@ -140,10 +140,33 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Hash', undef, [ \'K', \'V' ] );
 
         # Method event 'empty' definition
-        my $func_0 = method_event_def( $f, $scope, 'empty' );
+        my $func_0 = method_event_def(
+            $f, $scope, 'empty', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
+                return $ret;
+            }
+        );
 
         # Method event 'iterator' definition
-        my $func_1 = method_event_def( $f, $scope, 'iterator' );
+        my $func_1 = method_event_def(
+            $f, $scope,
+            'iterator',
+            undef,
+            [ { name => 'result', type => 'Iterator' } ],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    $$scope->{'HashIterator'}->(
+                        [ ${ $scope->{special} }->{'self'} ], $scope,
+                        undef,                                $pos->(8.3)
+                    )
+                );
+                return $ret;
+            }
+        );
         $func_0->inside_scope(
             empty => $scope,
             $proto, $class, $ins, 1, undef
@@ -161,16 +184,109 @@ my $result = do {
             [ \'K', \'V' ] );
 
         # Method event 'initializer__' definition
-        my $func_2 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_2 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                $self->set_property(
+                    orderedKeys => create_list( $f, [] ),
+                    $pos->(14.2)
+                );
+                type_with_generics( $f, $scope, $$scope->{'Hash'},
+                    [ $$scope->{'K'}, $$scope->{'V'} ] )
+                  ->property_u( 'init', $pos->(17.35) )->(
+                    [ ${ $scope->{special} }->{'self'} ],
+                    $scope, undef, $pos->(17.4)
+                  )->( [ undef, [] ], $scope, undef, $pos->(17.55) );
+                return $ret;
+            }
+        );
 
         # Method event 'keys' definition
-        my $func_3 = method_event_def( $f, $scope, 'keys' );
+        my $func_3 = method_event_def(
+            $f, $scope, 'keys', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->( $$self->{'orderedKeys'} );
+                return $ret;
+            }
+        );
 
         # Method event 'pushPair' definition
-        my $func_4 = method_event_def( $f, $scope, 'pushPair' );
+        my $func_4 = method_event_def(
+            $f, $scope,
+            'pushPair',
+            [
+                {
+                    name     => 'key',
+                    type     => 'K',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'value',
+                    type     => 'V',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'key',   25.1 ) || return $ret_func->();
+                need( $scope, $args, 'value', 25.3 ) || return $ret_func->();
+                if (
+                    bool(
+                        $$self->{'orderedKeys'}
+                          ->property_u( 'remove', $pos->(28.3) )->(
+                            [ $$scope->{'key'} ], $scope,
+                            undef,                $pos->(28.4)
+                          )->property_u( 'removed', $pos->(28.7) )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    $ret->set_property( overwritten => $true, $pos->(29.2) );
+                }
+                ${ $scope->{special} }->{'self'}
+                  ->set_index_value( [ $$scope->{'key'} ],
+                    $$scope->{'value'}, $scope, $pos->(31.5) );
+                $$self->{'orderedKeys'}->property_u( 'push', $pos->(32.2) )
+                  ->( [ $$scope->{'key'} ], $scope, undef, $pos->(32.3) );
+                return $ret;
+            }
+        );
 
         # Method event 'iterator' definition
-        my $func_5 = method_event_def( $f, $scope, 'iterator' );
+        my $func_5 = method_event_def(
+            $f, $scope,
+            'iterator',
+            undef,
+            [ { name => 'result', type => 'Iterator' } ],
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    it => $$scope->{'HashIterator'}->(
+                        [ ${ $scope->{special} }->{'self'} ], $scope,
+                        undef,                                $pos->(36.4)
+                    ),
+                    $file_scope,
+                    $pos->(36.2)
+                );
+                $$scope->{'it'}->set_property(
+                    keysLeft => $$self->{'orderedKeys'}
+                      ->property_u( 'copy', $pos->(37.5) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(37.6) ),
+                    $pos->(37.3)
+                );
+                return $ret_func->( $$scope->{'it'} );
+                return $ret;
+            }
+        );
         $func_2->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

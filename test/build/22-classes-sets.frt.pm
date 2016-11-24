@@ -193,10 +193,32 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Cow', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_0 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [ { name => 'moos', type => undef, optional => 1, more => undef } ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                want( $self, $args, 'moos', 6.2, $true );
+                return $ret;
+            }
+        );
 
         # Method event 'moo' definition
-        my $func_1 = method_event_def( $f, $scope, 'moo' );
+        my $func_1 = method_event_def(
+            $f, $scope, 'moo', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                if ( bool( $$self->{'moos'} ) ) {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->( str( $f, "moo" ) );
+                }
+                return $ret_func->( str( $f, "I am a nonverbal cow" ) );
+                return $ret;
+            }
+        );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
@@ -213,10 +235,40 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Dog', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_2 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_2 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [
+                {
+                    name     => 'barks',
+                    type     => undef,
+                    optional => 1,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                want( $self, $args, 'barks', 18.2, $false );
+                return $ret;
+            }
+        );
 
         # Method event 'bark' definition
-        my $func_3 = method_event_def( $f, $scope, 'bark' );
+        my $func_3 = method_event_def(
+            $f, $scope, 'bark', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                if ( bool( $$self->{'barks'} ) ) {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->( str( $f, "bark" ) );
+                }
+                return $ret_func->(
+                    str( $f, "I had my bark box bred out of me" ) );
+                return $ret;
+            }
+        );
         $func_2->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
@@ -233,13 +285,76 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Cat', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_4 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_4 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [ { name => 'mean', type => undef, optional => 1, more => undef } ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                want( $self, $args, 'mean', 30.2, $false );
+                return $ret;
+            }
+        );
 
         # Method event 'meow' definition
-        my $func_5 = method_event_def( $f, $scope, 'meow' );
+        my $func_5 = method_event_def(
+            $f, $scope, 'meow', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->( str( $f, "meow" ) );
+                return $ret;
+            }
+        );
 
         # Method event 'fight' definition
-        my $func_6 = method_event_def( $f, $scope, 'fight' );
+        my $func_6 = method_event_def(
+            $f, $scope, 'fight',
+            [
+                {
+                    name     => 'cat1',
+                    type     => 'Cat',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'cat2',
+                    type     => 'Cat',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'cat1', 39.1 ) || return $ret_func->();
+                need( $scope, $args, 'cat2', 39.3 ) || return $ret_func->();
+                if (
+                    bool(
+                        $$scope->{'cat1'}->property_u( 'mean', $pos->(40.3) )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->(
+                        str( $f, "Cat 1 started a catfight!" ) );
+                }
+                if (
+                    bool(
+                        $$scope->{'cat2'}->property_u( 'mean', $pos->(42.3) )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->(
+                        str( $f, "Cat 2 started a catfight!" ) );
+                }
+                return $ret_func->( str( $f, "nice cats don't fight" ) );
+                return $ret;
+            }
+        );
         $func_4->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

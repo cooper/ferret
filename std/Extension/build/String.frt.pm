@@ -143,13 +143,90 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'String', undef, undef );
 
         # Method event 'word' definition
-        my $func_0 = method_event_def( $f, $scope, 'word' );
+        my $func_0 = method_event_def(
+            $f, $scope, 'word',
+            [
+                {
+                    name     => 'wordI',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'wordI', 29.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$self->{'split'}->(
+                        [
+                            str( $f, " " ),
+                            [
+                                limit => add(
+                                    $scope, $$scope->{'wordI'},
+                                    num( $f, "2" )
+                                )
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(30.15)
+                      )->get_index_value(
+                        [ $$scope->{'wordI'} ],
+                        $scope, $pos->(30.55)
+                      )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'fromWord' definition
-        my $func_1 = method_event_def( $f, $scope, 'fromWord' );
+        my $func_1 = method_event_def(
+            $f, $scope,
+            'fromWord',
+            [
+                {
+                    name     => 'wordN',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'wordN', 34.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$self->{'split'}->(
+                        [
+                            str( $f, " " ),
+                            [
+                                limit => add(
+                                    $scope, $$scope->{'wordN'},
+                                    num( $f, "1" )
+                                )
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(35.15)
+                      )->get_index_value(
+                        [ $$scope->{'wordN'} ],
+                        $scope, $pos->(35.55)
+                      )
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'empty' definition
-        my $func_2 = method_event_def( $f, $scope, 'empty' );
+        my $func_2 = method_event_def(
+            $f, $scope, 'empty', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
+                return $ret;
+            }
+        );
         $func_0->inside_scope(
             word => $scope,
             $proto, $class, $ins, undef, undef

@@ -217,7 +217,90 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Bot2', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_3 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_3 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [
+                {
+                    name     => 'address',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'nick',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'user',
+                    type     => 'Str',
+                    optional => undef,
+                    more     => undef
+                },
+                { name => 'port', type => 'Num', optional => 1, more => undef },
+                { name => 'real', type => 'Str', optional => 1, more => undef }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $self, $args, 'address' ) || return $ret_func->();
+                need( $self, $args, 'nick' )    || return $ret_func->();
+                need( $self, $args, 'user' )    || return $ret_func->();
+                want( $self, $args, 'port', 5.1, num( $f, "6667" ) );
+                want( $self, $args, 'real', 5.4, str( $f, "Ferret IRC" ) );
+                $$scope->{'Socket::TCP'}->property_u( 'init', $pos->(8.2) )->(
+                    [ ${ $scope->{special} }->{'self'} ],
+                    $scope, undef, $pos->(8.25)
+                  )->(
+                    [
+                        undef,
+                        [
+                            addr => $$self->{'address'},
+                            port => $$self->{'port'}
+                        ]
+                    ],
+                    $scope, undef,
+                    $pos->(8.4)
+                  );
+                $self->set_property(
+                    send => $$self->{'println'},
+                    $pos->(10.2)
+                );
+                on(
+                    $self,
+                    'connected',
+                    $self, $scope,
+                    $func_0->inside_scope(
+                        (undef) => $scope,
+                        undef, $class, $ins, undef, undef
+                    ),
+                    {}
+                );
+                on(
+                    $self,
+                    'gotLine',
+                    $self, $scope,
+                    $func_1->inside_scope(
+                        (undef) => $scope,
+                        undef, $class, $ins, undef, undef
+                    ),
+                    {}
+                );
+                on(
+                    $self,
+                    'println',
+                    $self, $scope,
+                    $func_2->inside_scope(
+                        (undef) => $scope,
+                        undef, $class, $ins, undef, undef
+                    ),
+                    {}
+                );
+                return $ret;
+            }
+        );
         $func_3->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

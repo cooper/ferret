@@ -48,7 +48,7 @@ sub perl_fmt {
     # add each method definition.
     foreach my $def (@{ $class->{method_defs} || [] }) {
         my $fmt = 'method_def_event';
-        $fmt .= '_e' if !$_->{has_body};
+        $fmt .= '_e' if !$def->{has_body};
         $fmt = F::get_perl_fmt($fmt => $def);
         $before_c .= "$fmt\n";
     }

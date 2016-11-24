@@ -316,16 +316,137 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Bot', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
+        my $func_0 = method_event_def(
+            $f, $scope,
+            'initializer__',
+            [
+                {
+                    name     => 'commands',
+                    type     => undef,
+                    optional => 1,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                want( $self, $args, 'commands', 5.2, create_object( $f, [] ) );
+                $self->set_property(
+                    conns => create_list( $f, [] ),
+                    $pos->(6.2)
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'addConnection' definition
-        my $func_2 = method_event_def( $f, $scope, 'addConnection' );
+        my $func_2 = method_event_def(
+            $f, $scope,
+            'addConnection',
+            [
+                {
+                    name     => 'connection',
+                    type     => 'Connection',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'connection', 10.2 )
+                  || return $ret_func->();
+                $$self->{'conns'}->property_u( 'push', $pos->(11.2) )
+                  ->( [ $$scope->{'connection'} ], $scope, undef,
+                    $pos->(11.3) );
+                var(
+                    $scope,
+                    bot => ${ $scope->{special} }->{'self'},
+                    $file_scope, $pos->(13.3)
+                );
+                $scope->weaken_property_ow( 'bot', $pos->(13.1) );
+                on(
+                    $$scope->{'connection'}
+                      ->property_u( 'handlers', $pos->(16.3) ),
+                    'PRIVMSG',
+                    $self, $scope,
+                    $func_1->inside_scope(
+                        (undef) => $scope,
+                        undef, $class, $ins, undef, undef
+                    ),
+                    {}
+                );
+                return $ret;
+            }
+        );
 
         # Method event 'connect' definition
-        my $func_3 = method_event_def( $f, $scope, 'connect' );
+        my $func_3 = method_event_def(
+            $f, $scope,
+            'connect',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        $$self->{'conns'},
+                        'c',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            $$scope->{'c'}
+                              ->property_u( 'connect', $pos->(40.2) )
+                              ->( [ undef, [] ], $scope, undef, $pos->(40.3) );
+                        },
+                        $pos->(39.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret;
+            }
+        );
 
         # Method event 'description' definition
-        my $func_4 = method_event_def( $f, $scope, 'description' );
+        my $func_4 = method_event_def(
+            $f, $scope,
+            'description',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var( $scope, s => str( $f, "" ), $file_scope, $pos->(44.2) );
+                if (
+                    bool(
+                        nequal(
+                            $scope,
+                            $$self->{'conns'}
+                              ->property_u( 'length', $pos->(45.15) ),
+                            num( $f, "1" )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    var(
+                        $scope,
+                        s => str( $f, "s" ),
+                        $file_scope, $pos->(45.4)
+                    );
+                }
+                return $ret_func->(
+                    add(
+                        $scope,
+                        str( $f, "IRC::Bot(" ),
+                        $$self->{'conns'}
+                          ->property_u( 'length', $pos->(46.25) ),
+                        str( $f, " connection" ),
+                        $$scope->{'s'},
+                        str( $f, ")" )
+                    )
+                );
+                return $ret;
+            }
+        );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
