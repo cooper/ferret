@@ -1546,10 +1546,15 @@ sub c_METHOD {
     # Rule Method[0]:
     #   Must be a direct child of a Class.
 
-    my $method = F::new('Function', %$value, event_cb => 1, is_method => 1);
+    my $method = F::new('Function',
+        %$value,
+        event_cb  => 1,
+        is_method => 1,
+        no_body   => ($c->next_tok || '') ne 'CLOSURE_S'
+    );
 
     $c->node->adopt($method);
-    $c->capture_closure_with($method->body);
+    $c->capture_closure_with($method->body) if $method->body;
 
     return $method;
 }
@@ -1572,12 +1577,13 @@ sub c_FUNCTION {
 
     my $function = F::new('Function',
         %$value,
-        event_cb => !$value->{anonymous}
+        event_cb => !$value->{anonymous},
+        no_body  => ($c->next_tok || '') ne 'CLOSURE_S'
         # anonymous functions are not implemented as events
     );
 
     $c->node->adopt($function);
-    $c->capture_closure_with($function->body);
+    $c->capture_closure_with($function->body) if $function->body;
 
     return $function;
 }

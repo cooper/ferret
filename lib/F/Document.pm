@@ -41,6 +41,7 @@ sub perl_fmt {
         my $info = $_;
         my $fmt  = $_->{event_cb}   ? 'function_def_event' :
                    $_->{need_topic} ? 'function_def_topic' : 'function_def';
+        $fmt .= '_e' if !$_->{has_body};
 
         $info->{name} =
             length $info->{name} && $info->{name} ne '(undef)' ?

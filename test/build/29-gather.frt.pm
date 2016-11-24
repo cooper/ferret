@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/29-gather.frt'
 #      Function 'nonZeroCoodinates'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$pt'
@@ -10,7 +10,7 @@
 #              Instruction
 #                  Return
 #                      Gather
-#                          Body ('gather' scope)
+#                          Gather body
 #                              If
 #                                  Expression ('if' parameter)
 #                                      Operation
@@ -18,7 +18,7 @@
 #                                              Lexical variable '$pt'
 #                                          Negated equality operator (!=)
 #                                          Number '0'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Take
 #                                              Property 'x'
@@ -30,7 +30,7 @@
 #                                              Lexical variable '$pt'
 #                                          Negated equality operator (!=)
 #                                          Number '0'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Take
 #                                              Property 'y'
@@ -76,7 +76,7 @@
 #                      Lexical variable '$pt2'
 #                  Item 2
 #                      Lexical variable '$pt3'
-#          Body ('for' scope)
+#          For body
 #              Instruction
 #                  Call
 #                      Bareword 'inspect'
@@ -88,7 +88,7 @@
 #                                      Item 0
 #                                          Lexical variable '$pt'
 #      Function 'evenNumbers'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need (...)
 #                      Lexical variable '$nums'
@@ -97,18 +97,18 @@
 #              Instruction
 #                  Return pair 'even'
 #                      Gather
-#                          Body ('gather' scope)
+#                          Gather body
 #                              For (values)
 #                                  Expression ('for' parameter)
 #                                      Lexical variable '$n'
 #                                  Expression ('in' parameter)
 #                                      Lexical variable '$nums'
-#                                  Body ('for' scope)
+#                                  For body
 #                                      If
 #                                          Expression ('if' parameter)
 #                                              Property 'even'
 #                                                  Lexical variable '$n'
-#                                          Body ('if' scope)
+#                                          If body
 #                                              Instruction
 #                                                  Take
 #                                                      Lexical variable '$n'

@@ -2,7 +2,7 @@
 #  Document './std/Test.frt'
 #      Class 'Test' version 1.0
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Want
 #                          Instance variable '@name'
@@ -22,7 +22,7 @@
 #                          Instance variable '@passed'
 #                          Number '0'
 #          Method 'trueValue'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -40,7 +40,7 @@
 #                                  Item 1
 #                                      String 'Value must...'
 #          Method 'veryTrue'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -57,7 +57,7 @@
 #                                  Item 1
 #                                      String 'Value must...'
 #          Method 'equal'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -77,7 +77,7 @@
 #                                  Item 1
 #                                      String 'Values mus...'
 #          Method 'objectsEqual'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -97,7 +97,7 @@
 #                                  Item 1
 #                                      String 'Objects mu...'
 #          Method 'notEqual'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -117,7 +117,7 @@
 #                                  Item 1
 #                                      String 'Values mus...'
 #          Method 'objectsNotEqual'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$a'
@@ -137,7 +137,7 @@
 #                                  Item 1
 #                                      String 'Objects mu...'
 #          Method 'review'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$failed'
@@ -184,7 +184,7 @@
 #                              Equality operator (==)
 #                              Instance variable '@tested'
 #          Method '_test'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$yes'
@@ -204,7 +204,7 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Lexical variable '$yes'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Assignment
 #                                  Instance variable '@passed'
@@ -217,7 +217,7 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@fatal'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Throw (fatal exception)
 #                                  Call
@@ -266,346 +266,31 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Test', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                { name => 'name', type => undef, optional => 1, more => undef },
-                {
-                    name     => 'fatal',
-                    type     => undef,
-                    optional => 1,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                want( $self, $args, 'name', 7.2, str( $f, "Test" ) );
-                want( $self, $args, 'fatal', 11.2, $true );
-                $self->set_property( tested => num( $f, "0" ), $pos->(13.2) );
-                $self->set_property( passed => num( $f, "0" ), $pos->(14.2) );
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'trueValue' definition
-        my $func_1 = method_event_def(
-            $f, $scope,
-            'trueValue',
-            [
-                {
-                    name     => 'a',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 19.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'_test'}->(
-                        [
-                            $$scope->{'Bool'}->(
-                                [ $$scope->{'a'} ], $scope,
-                                undef,              $pos->(20.25)
-                            ),
-                            str( $f, "Value must be true" )
-                        ],
-                        $scope, undef,
-                        $pos->(20.15)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'trueValue' );
 
         # Method event 'veryTrue' definition
-        my $func_2 = method_event_def(
-            $f, $scope,
-            'veryTrue',
-            [
-                {
-                    name     => 'a',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 25.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'_test'}->(
-                        [
-                            refs_equal( $scope, $$scope->{'a'}, $true ),
-                            str( $f, "Value must be exactly true" )
-                        ],
-                        $scope, undef,
-                        $pos->(26.15)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'veryTrue' );
 
         # Method event 'equal' definition
-        my $func_3 = method_event_def(
-            $f, $scope, 'equal',
-            [
-                {
-                    name     => 'a',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'b',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 31.2 ) || return $ret_func->();
-                need( $scope, $args, 'b', 32.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'_test'}->(
-                        [
-                            equal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
-                            str( $f, "Values must be equal" )
-                        ],
-                        $scope, undef,
-                        $pos->(33.15)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_3 = method_event_def( $f, $scope, 'equal' );
 
         # Method event 'objectsEqual' definition
-        my $func_4 = method_event_def(
-            $f, $scope,
-            'objectsEqual',
-            [
-                {
-                    name     => 'a',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'b',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 38.2 ) || return $ret_func->();
-                need( $scope, $args, 'b', 39.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'_test'}->(
-                        [
-                            refs_equal(
-                                $scope, $$scope->{'a'}, $$scope->{'b'}
-                            ),
-                            str( $f, "Objects must be exactly equal" )
-                        ],
-                        $scope, undef,
-                        $pos->(40.15)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_4 = method_event_def( $f, $scope, 'objectsEqual' );
 
         # Method event 'notEqual' definition
-        my $func_5 = method_event_def(
-            $f, $scope,
-            'notEqual',
-            [
-                {
-                    name     => 'a',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'b',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 45.2 ) || return $ret_func->();
-                need( $scope, $args, 'b', 46.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'_test'}->(
-                        [
-                            nequal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
-                            str( $f, "Values must not be equal" )
-                        ],
-                        $scope, undef,
-                        $pos->(47.15)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_5 = method_event_def( $f, $scope, 'notEqual' );
 
         # Method event 'objectsNotEqual' definition
-        my $func_6 = method_event_def(
-            $f, $scope,
-            'objectsNotEqual',
-            [
-                {
-                    name     => 'a',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'b',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'a', 52.2 ) || return $ret_func->();
-                need( $scope, $args, 'b', 53.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'_test'}->(
-                        [
-                            refs_nequal(
-                                $scope, $$scope->{'a'}, $$scope->{'b'}
-                            ),
-                            str( $f, "Objects must not be equal" )
-                        ],
-                        $scope, undef,
-                        $pos->(54.15)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_6 = method_event_def( $f, $scope, 'objectsNotEqual' );
 
         # Method event 'review' definition
-        my $func_7 = method_event_def(
-            $f, $scope, 'review', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var(
-                    $scope,
-                    failed =>
-                      _sub( $scope, $$self->{'tested'}, $$self->{'passed'} ),
-                    $file_scope, $pos->(59.2)
-                );
-                $$scope->{'say'}->(
-                    [
-                        add(
-                            $scope,              str( $f, "[" ),
-                            $$self->{'name'},    str( $f, "] " ),
-                            $$self->{'tested'},  str( $f, " tests " ),
-                            $$self->{'passed'},  str( $f, " passed " ),
-                            $$scope->{'failed'}, str( $f, " failed" )
-                        )
-                    ],
-                    $scope, undef,
-                    $pos->(60.06667)
-                );
-                $ret->set_property( tests => $$self->{'tested'}, $pos->(62.2) );
-                $ret->set_property(
-                    fails => $$scope->{'failed'},
-                    $pos->(63.2)
-                );
-                $ret->set_property(
-                    passes => $$self->{'passed'},
-                    $pos->(64.2)
-                );
-                $ret->set_property(
-                    allOK =>
-                      equal( $scope, $$self->{'passed'}, $$self->{'tested'} ),
-                    $pos->(65.2)
-                );
-                return $ret;
-            }
-        );
+        my $func_7 = method_event_def( $f, $scope, 'review' );
 
         # Method event '_test' definition
-        my $func_8 = method_event_def(
-            $f, $scope, '_test',
-            [
-                {
-                    name     => 'yes',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'message',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'yes',     69.2 ) || return $ret_func->();
-                need( $scope, $args, 'message', 69.4 ) || return $ret_func->();
-                $self->set_property(
-                    tested => add( $scope, $$self->{'tested'}, num( $f, "1" ) ),
-                    $pos->(71.2)
-                );
-                $ret->set_property( pass => $$scope->{'yes'}, $pos->(72.2) );
-                if ( bool( $$scope->{'yes'} ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $self->set_property(
-                        passed =>
-                          add( $scope, $$self->{'passed'}, num( $f, "1" ) ),
-                        $pos->(75.2)
-                    );
-                    return $ret_func->();
-                }
-                if ( bool( $$self->{'fatal'} ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    return $ret_func->(
-                        $ret->throw(
-                            $$scope->{'Error'}->(
-                                [
-                                    get_symbol( $f, 'TestFailure' ),
-                                    $$scope->{'message'}
-                                ],
-                                $scope, undef,
-                                $pos->(80.3)
-                            ),
-                            $pos->(80.1)
-                        )
-                    );
-                }
-                $ret->set_property(
-                    message => $$scope->{'message'},
-                    $pos->(82.2)
-                );
-                return $ret;
-            }
-        );
+        my $func_8 = method_event_def( $f, $scope, '_test' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

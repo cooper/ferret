@@ -36,7 +36,7 @@
 #              Lexical variable '$item'
 #          Expression ('in' parameter)
 #              Lexical variable '$list'
-#          Body ('for' scope)
+#          For body
 #              Instruction
 #                  Call
 #                      Bareword 'say'
@@ -91,7 +91,7 @@
 #                      Lexical variable '$val'
 #          Expression ('in' parameter)
 #              Lexical variable '$hash'
-#          Body ('for' scope)
+#          For body
 #              Instruction
 #                  Call
 #                      Bareword 'say'

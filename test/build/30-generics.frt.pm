@@ -2,13 +2,13 @@
 #  Document './test/30-generics.frt'
 #      Class 'Stack' <Element>
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Assignment
 #                          Instance variable '@items'
 #                          Value list [0 items]
 #          Method 'push'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$item'
@@ -23,7 +23,7 @@
 #                                  Item 0
 #                                      Lexical variable '$item'
 #          Method 'pop'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Call
@@ -31,7 +31,7 @@
 #                                  Instance variable '@items'
 #                              Argument list [0 items]
 #          Method 'description'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Operation
@@ -48,7 +48,7 @@
 #          Catch
 #              Expression ('catch' parameter)
 #                  Lexical variable '$e'
-#              Body ('catch' scope)
+#              Catch body
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
@@ -128,72 +128,16 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Stack', undef, ['Element'] );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                $self->set_property(
-                    items => create_list( $f, [] ),
-                    $pos->(4.2)
-                );
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'push' definition
-        my $func_1 = method_event_def(
-            $f, $scope, 'push',
-            [
-                {
-                    name     => 'item',
-                    type     => 'Element',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'item', 8.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'items'}->property_u( 'push', $pos->(9.3) )
-                      ->( [ $$scope->{'item'} ], $scope, undef, $pos->(9.4) ) );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'push' );
 
         # Method event 'pop' definition
-        my $func_2 = method_event_def(
-            $f, $scope, 'pop', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    $$self->{'items'}->property_u( 'pop', $pos->(13.3) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(13.4) ) );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'pop' );
 
         # Method event 'description' definition
-        my $func_3 = method_event_def(
-            $f, $scope,
-            'description',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    add(
-                        $scope,
-                        str( $f, "Stack " ),
-                        $$self->{'items'}
-                          ->property_u( '*description', $pos->(17.5) )
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_3 = method_event_def( $f, $scope, 'description' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

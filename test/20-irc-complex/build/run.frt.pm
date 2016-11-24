@@ -55,7 +55,7 @@
 #                      String 'info'
 #                  Item 1
 #                      Anonymous function
-#                          Body ('function' scope)
+#                          Function body
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$msg'
@@ -78,7 +78,7 @@
 #                      String 't'
 #                  Item 1
 #                      Anonymous function
-#                          Body ('function' scope)
+#                          Function body
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$msg'
@@ -87,7 +87,7 @@
 #                                      Negation
 #                                          Property 'commandHasParameters'
 #                                              Lexical variable '$msg'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Return
 #                              Instruction
@@ -121,7 +121,7 @@
 #                                  Expression ('if' parameter)
 #                                      Property 'error'
 #                                          Lexical variable '$res'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Call
 #                                              Property 'privmsg'
@@ -159,7 +159,7 @@
 #                      String 'c'
 #                  Item 1
 #                      Anonymous function
-#                          Body ('function' scope)
+#                          Function body
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$msg'
@@ -168,7 +168,7 @@
 #                                      Negation
 #                                          Property 'commandHasParameters'
 #                                              Lexical variable '$msg'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Return
 #                              Instruction
@@ -202,7 +202,7 @@
 #                                  Expression ('if' parameter)
 #                                      Property 'error'
 #                                          Lexical variable '$res'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Call
 #                                              Property 'privmsg'
@@ -240,7 +240,7 @@
 #                      String 'e'
 #                  Item 1
 #                      Anonymous function
-#                          Body ('function' scope)
+#                          Function body
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$msg'
@@ -249,7 +249,7 @@
 #                                      Negation
 #                                          Property 'commandHasParameters'
 #                                              Lexical variable '$msg'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Return
 #                              Instruction
@@ -276,7 +276,7 @@
 #                                  Expression ('if' parameter)
 #                                      Property 'error'
 #                                          Lexical variable '$res'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Call
 #                                              Property 'privmsg'
@@ -327,7 +327,7 @@
 #                      String 'pe'
 #                  Item 1
 #                      Anonymous function
-#                          Body ('function' scope)
+#                          Function body
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$msg'
@@ -336,7 +336,7 @@
 #                                      Negation
 #                                          Property 'commandHasParameters'
 #                                              Lexical variable '$msg'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Return
 #                              Instruction
@@ -363,7 +363,7 @@
 #                                  Expression ('if' parameter)
 #                                      Property 'error'
 #                                          Lexical variable '$res'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Call
 #                                              Property 'privmsg'
@@ -424,7 +424,7 @@
 #                  Item 1
 #                      Bareword 'handlePerl'
 #      Function 'handlePerl'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -433,7 +433,7 @@
 #                      Negation
 #                          Property 'commandHasParameters'
 #                              Lexical variable '$msg'
-#                  Body ('if' scope)
+#                  If body
 #                      Instruction
 #                          Return
 #              Instruction
@@ -470,7 +470,7 @@
 #                  Expression ('if' parameter)
 #                      Property 'error'
 #                          Lexical variable '$res'
-#                  Body ('if' scope)
+#                  If body
 #                      Instruction
 #                          Call
 #                              Property 'privmsg'
@@ -500,7 +500,7 @@
 #                              Property 'perl'
 #                                  Lexical variable '$res'
 #      Function 'convertNewlines'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$string'
@@ -520,7 +520,7 @@
 #                              Item 0
 #                                  String '␤'
 #      Function 'ircsay'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$str'

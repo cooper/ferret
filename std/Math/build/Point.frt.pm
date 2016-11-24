@@ -3,7 +3,7 @@
 #      Package 'Math'
 #      Class 'Point'
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Instance variable '@x'
@@ -15,7 +15,7 @@
 #                          Argument type
 #                              Bareword 'Num'
 #          Method 'distanceTo'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt2'
@@ -52,7 +52,7 @@
 #                                          Exponent operator (^)
 #                                          Number '2'
 #          Computed property 'distanceFromOrigin'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Call
@@ -67,7 +67,7 @@
 #                                              Item 1
 #                                                  Number '0'
 #          Computed property 'pretty'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Operation
@@ -81,12 +81,12 @@
 #                              Addition operator (+)
 #                              String ')'
 #          Method 'toString'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Instance variable '@pretty'
 #          Method 'description'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Operation
@@ -94,7 +94,7 @@
 #                              Addition operator (+)
 #                              Instance variable '@pretty'
 #          Class method 'midpoint'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt1'
@@ -137,7 +137,7 @@
 #                                              Division operator (/)
 #                                              Number '2'
 #          Class method 'distanceBetween'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$pt1'
@@ -191,236 +191,28 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Point', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                {
-                    name     => 'x',
-                    type     => 'Num',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'y',
-                    type     => 'Num',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'x' ) || return $ret_func->();
-                need( $self, $args, 'y' ) || return $ret_func->();
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'distanceTo' definition
-        my $func_1 = method_event_def(
-            $f, $scope,
-            'distanceTo',
-            [
-                {
-                    name     => 'pt2',
-                    type     => 'Point',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'pt2', 9.2 ) || return $ret_func->();
-                var(
-                    $scope,
-                    dx => _sub(
-                        $scope, $$self->{'x'},
-                        $$scope->{'pt2'}->property_u( 'x', $pos->(10.6) )
-                    ),
-                    $file_scope,
-                    $pos->(10.2)
-                );
-                var(
-                    $scope,
-                    dy => _sub(
-                        $scope, $$self->{'y'},
-                        $$scope->{'pt2'}->property_u( 'y', $pos->(11.6) )
-                    ),
-                    $file_scope,
-                    $pos->(11.2)
-                );
-                return $ret_func->(
-                    $$scope->{'sqrt'}->(
-                        [
-                            add(
-                                $scope,
-                                pow( $scope, $$scope->{'dx'}, num( $f, "2" ) ),
-                                pow( $scope, $$scope->{'dy'}, num( $f, "2" ) )
-                            )
-                        ],
-                        $scope, undef,
-                        $pos->(12.15)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'distanceTo' );
 
         # Method event 'distanceFromOrigin' definition
-        my $func_2 = method_event_def(
-            $f, $scope,
-            'distanceFromOrigin',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    $$self->{'distanceTo'}->(
-                        [
-                            ${ $scope->{special} }->{'class'}->(
-                                [ num( $f, "0" ), num( $f, "0" ) ],
-                                $scope, undef, $pos->(16.25)
-                            )
-                        ],
-                        $scope, undef,
-                        $pos->(16.15)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'distanceFromOrigin' );
 
         # Method event 'pretty' definition
-        my $func_3 = method_event_def(
-            $f, $scope, 'pretty', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    add(
-                        $scope,        str( $f, "(" ),
-                        $$self->{'x'}, str( $f, ", " ),
-                        $$self->{'y'}, str( $f, ")" )
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_3 = method_event_def( $f, $scope, 'pretty' );
 
         # Method event 'toString' definition
-        my $func_4 = method_event_def(
-            $f, $scope,
-            'toString',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->( $$self->{'pretty'} );
-                return $ret;
-            }
-        );
+        my $func_4 = method_event_def( $f, $scope, 'toString' );
 
         # Method event 'description' definition
-        my $func_5 = method_event_def(
-            $f, $scope,
-            'description',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    add( $scope, str( $f, "Point" ), $$self->{'pretty'} ) );
-                return $ret;
-            }
-        );
+        my $func_5 = method_event_def( $f, $scope, 'description' );
 
         # Method event 'midpoint' definition
-        my $func_6 = method_event_def(
-            $f, $scope,
-            'midpoint',
-            [
-                {
-                    name     => 'pt1',
-                    type     => 'Point',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'pt2',
-                    type     => 'Point',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'pt1', 32.1 ) || return $ret_func->();
-                need( $scope, $args, 'pt2', 32.3 ) || return $ret_func->();
-                return $ret_func->(
-                    ${ $scope->{special} }->{'class'}->(
-                        [
-                            undef,
-                            [
-                                x => div(
-                                    $scope,
-                                    add(
-                                        $scope,
-                                        $$scope->{'pt1'}
-                                          ->property_u( 'x', $pos->(34.2) ),
-                                        $$scope->{'pt2'}
-                                          ->property_u( 'x', $pos->(34.35) )
-                                    ),
-                                    num( $f, "2" )
-                                ),
-                                y => div(
-                                    $scope,
-                                    add(
-                                        $scope,
-                                        $$scope->{'pt1'}
-                                          ->property_u( 'y', $pos->(35.2) ),
-                                        $$scope->{'pt2'}
-                                          ->property_u( 'y', $pos->(35.35) )
-                                    ),
-                                    num( $f, "2" )
-                                )
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(33.3)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_6 = method_event_def( $f, $scope, 'midpoint' );
 
         # Method event 'distanceBetween' definition
-        my $func_7 = method_event_def(
-            $f, $scope,
-            'distanceBetween',
-            [
-                {
-                    name     => 'pt1',
-                    type     => 'Point',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'pt2',
-                    type     => 'Point',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'pt1', 40.1 ) || return $ret_func->();
-                need( $scope, $args, 'pt2', 40.3 ) || return $ret_func->();
-                return $ret_func->(
-                    $$scope->{'pt1'}->property_u( 'distanceTo', $pos->(41.3) )
-                      ->( [ $$scope->{'pt2'} ], $scope, undef, $pos->(41.4) ) );
-                return $ret;
-            }
-        );
+        my $func_7 = method_event_def( $f, $scope, 'distanceBetween' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

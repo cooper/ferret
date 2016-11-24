@@ -8,12 +8,12 @@
 #                  Argument list [1 item]
 #                      Item 0
 #                          String 'http://goo...'
-#          Body ('inside' scope)
+#          Inside body
 #              On
 #                  Expression ('on' parameter)
 #                      Property variable '.connected'
 #                  Anonymous function
-#                      Body ('function' scope)
+#                      Function body
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'
@@ -24,7 +24,7 @@
 #                  Expression ('on' parameter)
 #                      Property variable '.redirect'
 #                  Anonymous function
-#                      Body ('function' scope)
+#                      Function body
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$location'
@@ -43,7 +43,7 @@
 #                  Expression ('on' parameter)
 #                      Property variable '.response'
 #                  Anonymous function
-#                      Body ('function' scope)
+#                      Function body
 #                          Instruction
 #                              Need
 #                                  Lexical variable '$content'
@@ -63,7 +63,7 @@
 #                  Expression ('on' parameter)
 #                      Property variable '.error'
 #                  Anonymous function
-#                      Body ('function' scope)
+#                      Function body
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'

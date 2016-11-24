@@ -1,0 +1,2 @@
+# Function event <<name>> definition
+my $func_<<id>> = function_event_def($f, <<owner>>, <<name>>, <<cb_name>>);

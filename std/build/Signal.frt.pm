@@ -57,14 +57,14 @@
 #                          Pair 'ALRM'
 #                              Lexical variable '$ALRM'
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Instance variable '@type'
 #                          Argument type
 #                              Bareword 'Sym'
 #          Method 'trap'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Call
 #                          Bareword '_exit'
@@ -72,7 +72,7 @@
 #                              Item 0
 #                                  Number '0'
 #          Class method 'fireSignal'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$type'
@@ -123,65 +123,13 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Signal', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                {
-                    name     => 'type',
-                    type     => 'Sym',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'type' ) || return $ret_func->();
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'trap' definition
-        my $func_1 = method_event_def(
-            $f, $scope, 'trap', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                $$scope->{'_exit'}
-                  ->( [ num( $f, "0" ) ], $scope, undef, $pos->(25.2) );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'trap' );
 
         # Method event 'fireSignal' definition
-        my $func_2 = method_event_def(
-            $f, $scope,
-            'fireSignal',
-            [
-                {
-                    name     => 'type',
-                    type     => 'Sym',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'type', 31.2 ) || return $ret_func->();
-                {
-                    my $maybe_0 =
-                      $$scope->{'signals'}
-                      ->get_index_value( [ $$scope->{'type'} ],
-                        $scope, $pos->(32.1) );
-                    if ( bool($maybe_0) ) {
-                        $maybe_0->property_u( 'trap', $pos->(32.3) )
-                          ->( [ undef, [] ], $scope, undef, $pos->(32.35) );
-                    }
-                }
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'fireSignal' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

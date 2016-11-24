@@ -10,18 +10,14 @@ use Scalar::Util qw(weaken);
 use Ferret::Shared::Utils qw(dot_trim);
 
 sub anonymous       { shift->{anonymous}    }
-sub body            { shift->{body}         }
+sub body            { shift->first_child    }
 sub is_method       { shift->{is_method}    }
 sub is_Expression   { shift->anonymous      }
 
 sub new {
     my ($class, %opts) = @_;
-    my $func = $class->SUPER::new(
-        body => F::new('FunctionBody'),
-        %opts
-    );
-    $func->adopt($func->body);
-    weaken($func->{body});
+    my $func = $class->SUPER::new(%opts);
+    $func->adopt(F::new('FunctionBody')) unless $opts{no_body};
     return $func;
 }
 
@@ -154,15 +150,19 @@ sub close : method {
 
 sub perl_fmt {
     my $func = shift;
-    my ($content, @arguments) = $func->body->body_fmt_do;
+    my $body = $func->body;
+    my ($content, @arguments) = $body->body_fmt_do if $body;
 
     # find a class maybe. this will always be set for methods.
     # for functions, this is for private class-level functions.
     my $class = $func->class;
 
     # we might need to set $ins within the function.
-    my $vp = scalar $func->body->filter_descendants(type => 'PropertyVariable');
-    my $need_topic = $vp && $func->anonymous && !$func->arguments;
+    my $need_topic;
+    if ($body) {
+        my $vp = scalar $body->filter_descendants(type => 'PropertyVariable');
+        $need_topic = $vp && $func->anonymous && !$func->arguments;
+    }
 
     # return types.
     my @returns = map "{ name => '$_', type => '$$func{returns}{$_}{type}' }",
@@ -173,6 +173,7 @@ sub perl_fmt {
     my $ret_str = join(', ', @returns);
 
     my $info = {
+        has_body   => !!$body,
         need_topic => $need_topic,
         anonymous  => $func->{anonymous},
         event_cb   => $func->{event_cb},
@@ -214,7 +215,7 @@ sub perl_fmt {
 sub markdown_fmt {
     my $method = shift;
     return if !$method->is_method; # TODO
-    my $no_body = !defined $method->body->{open_pos};
+    my $no_body = !$method->body;
 
     # create heading.
     my $head = $method->get_markdown_heading(

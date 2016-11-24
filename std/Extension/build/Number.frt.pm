@@ -2,7 +2,7 @@
 #  Document './std/Extension/Number.frt'
 #      Class 'Number'
 #          Type definition ('Even')
-#              Body ('type' scope)
+#              Type body
 #                  Instruction
 #                      Isa
 #                          Special variable '*class'
@@ -10,7 +10,7 @@
 #                      Satisfies
 #                          Property variable '.even'
 #          Type definition ('Odd')
-#              Body ('type' scope)
+#              Type body
 #                  Instruction
 #                      Isa
 #                          Special variable '*class'
@@ -18,7 +18,7 @@
 #                      Satisfies
 #                          Property variable '.odd'
 #          Type definition ('Integer')
-#              Body ('type' scope)
+#              Type body
 #                  Instruction
 #                      Isa
 #                          Special variable '*class'
@@ -31,7 +31,7 @@
 #                      Bareword 'Int'
 #                      Bareword 'Integer'
 #          Computed property 'sqrt'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Call
@@ -41,7 +41,7 @@
 #                                  Item 0
 #                                      Special variable '*self'
 #          Computed property 'cbrt'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Call
@@ -50,7 +50,7 @@
 #                                  Item 0
 #                                      Number '3'
 #          Computed property 'square'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Operation
@@ -58,7 +58,7 @@
 #                              Exponent operator (^)
 #                              Number '2'
 #          Computed property 'even'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Operation
@@ -68,7 +68,7 @@
 #                              Equality operator (==)
 #                              Number '0'
 #          Computed property 'odd'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Operation
@@ -78,7 +78,7 @@
 #                              Negated equality operator (!=)
 #                              Number '0'
 #          Method 'root'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$root'
@@ -147,113 +147,22 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Number', undef, undef );
 
         # Method event 'sqrt' definition
-        my $func_0 = method_event_def(
-            $f, $scope, 'sqrt', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'sqrt', $pos->(21.3) )->(
-                        [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                $pos->(21.4)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'sqrt' );
 
         # Method event 'cbrt' definition
-        my $func_1 = method_event_def(
-            $f, $scope, 'cbrt', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->( $$self->{'root'}
-                      ->( [ num( $f, "3" ) ], $scope, undef, $pos->(25.3) ) );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'cbrt' );
 
         # Method event 'square' definition
-        my $func_2 = method_event_def(
-            $f, $scope, 'square', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    pow(
-                        $scope,
-                        ${ $scope->{special} }->{'self'},
-                        num( $f, "2" )
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'square' );
 
         # Method event 'even' definition
-        my $func_3 = method_event_def(
-            $f, $scope, 'even', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    equal(
-                        $scope,
-                        mod(
-                            $scope,
-                            ${ $scope->{special} }->{'self'},
-                            num( $f, "2" )
-                        ),
-                        num( $f, "0" )
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_3 = method_event_def( $f, $scope, 'even' );
 
         # Method event 'odd' definition
-        my $func_4 = method_event_def(
-            $f, $scope, 'odd', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    nequal(
-                        $scope,
-                        mod(
-                            $scope,
-                            ${ $scope->{special} }->{'self'},
-                            num( $f, "2" )
-                        ),
-                        num( $f, "0" )
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_4 = method_event_def( $f, $scope, 'odd' );
 
         # Method event 'root' definition
-        my $func_5 = method_event_def(
-            $f, $scope, 'root',
-            [
-                {
-                    name     => 'root',
-                    type     => 'Num',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'root', 41.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'root', $pos->(42.15) )->(
-                        [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
-                        $scope,
-                        undef,
-                        $pos->(42.2)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_5 = method_event_def( $f, $scope, 'root' );
         $func_0->inside_scope( sqrt => $scope, $proto, $class, $ins, 1, undef );
         $func_1->inside_scope( cbrt => $scope, $proto, $class, $ins, 1, undef );
         $func_2->inside_scope(

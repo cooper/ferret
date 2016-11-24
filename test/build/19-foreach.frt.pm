@@ -14,7 +14,7 @@
 #              Lexical variable '$word'
 #          Expression ('in' parameter)
 #              Lexical variable '$words'
-#          Body ('for' scope)
+#          For body
 #              Instruction
 #                  Call
 #                      Bareword 'say'

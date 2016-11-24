@@ -34,7 +34,7 @@
 #                              String '433'
 #                              Bareword 'nickInUse'
 #      Function 'ping'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -56,7 +56,7 @@
 #                                                  Negation operator (-)
 #                                                  Number '1'
 #      Function 'welcome'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -88,7 +88,7 @@
 #                                          Number '1'
 #                          Similarity operator (=~)
 #                          Regex /^(.+)!(.+).../
-#                  Body ('if' scope)
+#                  If body
 #                      Instruction
 #                          Assignment
 #                              Property 'nick'
@@ -110,7 +110,7 @@
 #                                  This variable '%me'
 #                              Lexical variable '$3'
 #      Function 'myInfo'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -135,7 +135,7 @@
 #                              Item 0
 #                                  Number '2'
 #      Function 'endOfMOTD'
-#          Body ('function' scope)
+#          Function body
 #              If
 #                  Expression ('if' parameter)
 #                      Operation
@@ -143,7 +143,7 @@
 #                              This variable '%autojoin'
 #                          Logical or operator (||)
 #                          This variable '%_didAutojoin'
-#                  Body ('if' scope)
+#                  If body
 #                      Instruction
 #                          Return
 #              Instruction
@@ -158,7 +158,7 @@
 #                      This variable '%_didAutojoin'
 #                      Boolean true
 #      Function 'hiddenHost'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -173,11 +173,11 @@
 #                              Item 0
 #                                  Number '1'
 #      Function 'nickInUse'
-#          Body ('function' scope)
+#          Function body
 #              If
 #                  Expression ('if' parameter)
 #                      This variable '%registered'
-#                  Body ('if' scope)
+#                  If body
 #                      Instruction
 #                          Return
 #              Instruction

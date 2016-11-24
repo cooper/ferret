@@ -3,7 +3,7 @@
 #      Package 'HTTP'
 #      Class 'Request'
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$client'
@@ -25,7 +25,7 @@
 #                          Argument type
 #                              Bareword 'HTTPMethod'
 #          Method 'connect'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Call
 #                          Property 'connect'
@@ -36,13 +36,9 @@
 #                              Item 1
 #                                  Special variable '*self'
 #          Method 'connected'
-#              Body ('function' scope)
 #          Method 'redirect'
-#              Body ('function' scope)
 #          Method 'error'
-#              Body ('function' scope)
 #          Method 'response'
-#              Body ('function' scope)
 #      Include (Client, HTTPMethod, NATIVE, NATIVE::HTTPClient, Str)
 package FF;
 
@@ -78,105 +74,22 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Request', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                {
-                    name     => 'client',
-                    type     => 'Client',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'url',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'httpMethod',
-                    type     => 'HTTPMethod',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'client', 9.2 ) || return $ret_func->();
-                $self->set_property(
-                    client => $$scope->{'client'},
-                    $pos->(10.3)
-                );
-                $self->weaken_property_ow( 'client', $pos->(10.1) );
-                need( $self, $args, 'url' )        || return $ret_func->();
-                need( $self, $args, 'httpMethod' ) || return $ret_func->();
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'connect' definition
-        my $func_1 = method_event_def(
-            $f, $scope,
-            'connect',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                $$scope->{'NATIVE::HTTPClient'}
-                  ->property_u( 'connect', $pos->(25.2) )->(
-                    [ $$self->{'client'}, ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, $pos->(25.25)
-                  );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'connect' );
 
         # Method event 'connected' definition
-        my $func_2 = method_event_def(
-            $f, $scope,
-            'connected',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'connected' );
 
         # Method event 'redirect' definition
-        my $func_3 = method_event_def(
-            $f, $scope,
-            'redirect',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-
-                return $ret;
-            }
-        );
+        my $func_3 = method_event_def( $f, $scope, 'redirect' );
 
         # Method event 'error' definition
-        my $func_4 = method_event_def(
-            $f, $scope, 'error', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-
-                return $ret;
-            }
-        );
+        my $func_4 = method_event_def( $f, $scope, 'error' );
 
         # Method event 'response' definition
-        my $func_5 = method_event_def(
-            $f, $scope,
-            'response',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-
-                return $ret;
-            }
-        );
+        my $func_5 = method_event_def( $f, $scope, 'response' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

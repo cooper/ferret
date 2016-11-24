@@ -30,7 +30,7 @@
 #                          Lexical variable '$ferret'
 #                      Argument list [0 items]
 #      Function 'bless'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$obj'

@@ -3,7 +3,7 @@
 #      Package 'Math'
 #      Class 'Line'
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Instance variable '@pt1'
@@ -15,7 +15,7 @@
 #                          Argument type
 #                              Bareword 'Point'
 #          Computed property 'endpoints'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Value list [2 items]
@@ -24,7 +24,7 @@
 #                              Item 1
 #                                  Instance variable '@pt2'
 #          Computed property 'pretty'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$mp'
@@ -92,12 +92,12 @@
 #                              Addition operator (+)
 #                              String ' )'
 #          Method 'description'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Instance variable '@pretty'
 #          Computed property 'midpoint'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Call
@@ -109,7 +109,7 @@
 #                                          Instance variable '@pt2'
 #                              Argument list [0 items]
 #          Computed property 'length'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Call
@@ -153,139 +153,22 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Line', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                {
-                    name     => 'pt1',
-                    type     => 'Point',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'pt2',
-                    type     => 'Point',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'pt1' ) || return $ret_func->();
-                need( $self, $args, 'pt2' ) || return $ret_func->();
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'endpoints' definition
-        my $func_1 = method_event_def(
-            $f, $scope,
-            'endpoints',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    create_list( $f, [ $$self->{'pt1'}, $$self->{'pt2'} ] ) );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'endpoints' );
 
         # Method event 'pretty' definition
-        my $func_2 = method_event_def(
-            $f, $scope, 'pretty', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var(
-                    $scope,
-                    mp => $$self->{'midpoint'},
-                    $file_scope, $pos->(13.2)
-                );
-                var(
-                    $scope,
-                    pox => $$self->{'pt1'}->property_u( 'x', $pos->(14.2) ),
-                    $file_scope, $pos->(14.1)
-                );
-                var(
-                    $scope,
-                    poy => $$self->{'pt1'}->property_u( 'y', $pos->(14.45) ),
-                    $file_scope, $pos->(14.35)
-                );
-                var(
-                    $scope,
-                    ptx => $$self->{'pt2'}->property_u( 'x', $pos->(15.2) ),
-                    $file_scope, $pos->(15.1)
-                );
-                var(
-                    $scope,
-                    pty => $$self->{'pt2'}->property_u( 'y', $pos->(15.45) ),
-                    $file_scope, $pos->(15.35)
-                );
-                var(
-                    $scope,
-                    mx => $$scope->{'mp'}->property_u( 'x', $pos->(16.2) ),
-                    $file_scope, $pos->(16.1)
-                );
-                var(
-                    $scope,
-                    my => $$scope->{'mp'}->property_u( 'y', $pos->(16.45) ),
-                    $file_scope, $pos->(16.35)
-                );
-                return $ret_func->(
-                    add(
-                        $scope,             str( $f, "Segment( |(" ),
-                        $$scope->{'pox'},   str( $f, ", " ),
-                        $$scope->{'poy'},   str( $f, ")---(" ),
-                        $$scope->{'mx'},    str( $f, ", " ),
-                        $$scope->{'my'},    str( $f, ")---(" ),
-                        $$scope->{'ptx'},   str( $f, ", " ),
-                        $$scope->{'pty'},   str( $f, ")| Length = " ),
-                        $$self->{'length'}, str( $f, " )" )
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'pretty' );
 
         # Method event 'description' definition
-        my $func_3 = method_event_def(
-            $f, $scope,
-            'description',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->( $$self->{'pretty'} );
-                return $ret;
-            }
-        );
+        my $func_3 = method_event_def( $f, $scope, 'description' );
 
         # Method event 'midpoint' definition
-        my $func_4 = method_event_def(
-            $f, $scope,
-            'midpoint',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    create_set( $scope, $$self->{'pt1'}, $$self->{'pt2'} )
-                      ->property_u( 'midpoint', $pos->(25.35) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(25.4) ) );
-                return $ret;
-            }
-        );
+        my $func_4 = method_event_def( $f, $scope, 'midpoint' );
 
         # Method event 'length' definition
-        my $func_5 = method_event_def(
-            $f, $scope, 'length', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    $$self->{'pt1'}->property_u( 'distanceTo', $pos->(29.3) )
-                      ->( [ $$self->{'pt2'} ], $scope, undef, $pos->(29.4) ) );
-                return $ret;
-            }
-        );
+        my $func_5 = method_event_def( $f, $scope, 'length' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

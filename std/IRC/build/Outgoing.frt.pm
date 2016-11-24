@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'Connection'
 #          Method 'sendJoin'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need (...)
 #                          Lexical variable '$channelNames'
@@ -14,7 +14,7 @@
 #                          Lexical variable '$name'
 #                      Expression ('in' parameter)
 #                          Lexical variable '$channelNames'
-#                      Body ('for' scope)
+#                      For body
 #                          Instruction
 #                              Call
 #                                  Instance variable '@send'
@@ -25,7 +25,7 @@
 #                                              Addition operator (+)
 #                                              Lexical variable '$name'
 #          Method 'sendPrivmsg'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$target'
@@ -46,12 +46,12 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      String '␤'
-#                      Body ('for' scope)
+#                      For body
 #                          If
 #                              Expression ('if' parameter)
 #                                  Property 'empty'
 #                                      Lexical variable '$line'
-#                              Body ('if' scope)
+#                              If body
 #                                  Instruction
 #                                      Next
 #                          Instruction
@@ -68,7 +68,7 @@
 #                                              Addition operator (+)
 #                                              Lexical variable '$line'
 #          Method 'sendNick'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$nick'
@@ -118,138 +118,13 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Connection', undef, undef );
 
         # Method event 'sendJoin' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'sendJoin',
-            [
-                {
-                    name     => 'channelNames',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => 1
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'channelNames', 6.2 )
-                  || return $ret_func->();
-                {
-                    my ( $loop_status, $loop_ret ) = iterate(
-                        $f, $scope,
-                        $$scope->{'channelNames'},
-                        'name',
-                        sub {
-                            my ( $scope, $ret_func ) = @_;
-                            $$self->{'send'}->(
-                                [
-                                    add(
-                                        $scope, str( $f, "JOIN " ),
-                                        $$scope->{'name'}
-                                    )
-                                ],
-                                $scope, undef,
-                                $pos->(8.2)
-                            );
-                        },
-                        $pos->(7.1)
-                    );
-                    return $ret_func->($loop_ret) if $loop_status eq 'return';
-                }
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'sendJoin' );
 
         # Method event 'sendPrivmsg' definition
-        my $func_1 = method_event_def(
-            $f, $scope,
-            'sendPrivmsg',
-            [
-                {
-                    name     => 'target',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'message',
-                    type     => 'Str::Any',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'target',  13.1 ) || return $ret_func->();
-                need( $scope, $args, 'message', 13.3 ) || return $ret_func->();
-                {
-                    my ( $loop_status, $loop_ret ) = iterate(
-                        $f, $scope,
-                        $$scope->{'message'}
-                          ->property_u( 'split', $pos->(14.25) )->(
-                            [ str( $f, "\n" ) ], $scope, undef, $pos->(14.3)
-                          ),
-                        'line',
-                        sub {
-                            my ( $scope, $ret_func ) = @_;
-                            if (
-                                bool(
-                                    $$scope->{'line'}
-                                      ->property_u( 'empty', $pos->(15.3) )
-                                )
-                              )
-                            {
-                                my $scope =
-                                  Ferret::Scope->new( $f, parent => $scope );
-
-                                return 'next';
-                            }
-                            $$self->{'send'}->(
-                                [
-                                    add(
-                                        $scope,
-                                        str( $f, "PRIVMSG " ),
-                                        $$scope->{'target'},
-                                        str( $f, " :" ),
-                                        $$scope->{'line'}
-                                    )
-                                ],
-                                $scope, undef,
-                                $pos->(16.1)
-                            );
-                        },
-                        $pos->(14.05)
-                    );
-                    return $ret_func->($loop_ret) if $loop_status eq 'return';
-                }
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'sendPrivmsg' );
 
         # Method event 'sendNick' definition
-        my $func_2 = method_event_def(
-            $f, $scope,
-            'sendNick',
-            [
-                {
-                    name     => 'nick',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'nick', 23.2 ) || return $ret_func->();
-                $$self->{'send'}->(
-                    [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],
-                    $scope, undef, $pos->(24.2)
-                );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'sendNick' );
         $func_0->inside_scope(
             sendJoin => $scope,
             $proto, $class, $ins, undef, undef

@@ -1,0 +1,2 @@
+# Method event '<<name>>' definition
+my $func_<<id>> = method_event_def($f, $scope, '<<name>>');

@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/32-convenient-return.frt'
 #      Function 'A'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Return
 #                      String 'return value'

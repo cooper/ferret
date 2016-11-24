@@ -2,7 +2,7 @@
 #  Document './std/HTTP.frt'
 #      Package 'HTTP'
 #      Type definition ('HTTPMethod')
-#          Body ('type' scope)
+#          Type body
 #              Instruction
 #                  Symbol :GET
 #              Instruction
@@ -14,7 +14,7 @@
 #                  Bareword 'HTTP::Client'
 #                  Argument list [0 items]
 #      Function 'get'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$url'
@@ -30,7 +30,7 @@
 #                                  Pair 'url'
 #                                      Lexical variable '$url'
 #      Function 'post'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$url'

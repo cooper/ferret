@@ -2,7 +2,7 @@
 #  Document './test/8-class-extension.frt'
 #      Class 'String'
 #          Method 'doubledLength'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Operation
@@ -56,23 +56,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'String', undef, undef );
 
         # Method event 'doubledLength' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'doubledLength',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    mul(
-                        $scope,
-                        $$self->{'length'}
-                          ->( [ undef, [] ], $scope, undef, $pos->(4.3) ),
-                        num( $f, "2" )
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'doubledLength' );
         $func_0->inside_scope(
             doubledLength => $scope,
             $proto, $class, $ins, undef, undef

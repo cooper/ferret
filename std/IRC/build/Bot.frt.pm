@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'Bot'
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Want
 #                          Instance variable '@commands'
@@ -14,7 +14,7 @@
 #                          Instance variable '@conns'
 #                          Value list [0 items]
 #          Method 'addConnection'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$connection'
@@ -38,7 +38,7 @@
 #                              Property 'handlers'
 #                                  Lexical variable '$connection'
 #                      Anonymous function
-#                          Body ('function' scope)
+#                          Function body
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$msg'
@@ -52,7 +52,7 @@
 #                                              Argument list [1 item]
 #                                                  Item 0
 #                                                      Bareword 'Channel'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Return
 #                              Instruction
@@ -80,7 +80,7 @@
 #                                      Negation
 #                                          Property 'trimmed'
 #                                              Lexical variable '$trim'
-#                                  Body ('if' scope)
+#                                  If body
 #                                      Instruction
 #                                          Return
 #                              Instruction
@@ -114,7 +114,7 @@
 #                                  Catch
 #                                      Expression ('catch' parameter)
 #                                          Lexical variable '$e'
-#                                      Body ('catch' scope)
+#                                      Catch body
 #                                          Instruction
 #                                              Call
 #                                                  Property 'privmsg'
@@ -125,20 +125,20 @@
 #                                                          Property 'msg'
 #                                                              Lexical variable '$e'
 #          Method 'connect'
-#              Body ('function' scope)
+#              Function body
 #                  For (values)
 #                      Expression ('for' parameter)
 #                          Lexical variable '$c'
 #                      Expression ('in' parameter)
 #                          Instance variable '@conns'
-#                      Body ('for' scope)
+#                      For body
 #                          Instruction
 #                              Call
 #                                  Property 'connect'
 #                                      Lexical variable '$c'
 #                                  Argument list [0 items]
 #          Method 'description'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$s'
@@ -150,7 +150,7 @@
 #                                  Instance variable '@conns'
 #                              Negated equality operator (!=)
 #                              Number '1'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Assignment
 #                                  Lexical variable '$s'
@@ -316,137 +316,16 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Bot', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                {
-                    name     => 'commands',
-                    type     => undef,
-                    optional => 1,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                want( $self, $args, 'commands', 5.2, create_object( $f, [] ) );
-                $self->set_property(
-                    conns => create_list( $f, [] ),
-                    $pos->(6.2)
-                );
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'addConnection' definition
-        my $func_2 = method_event_def(
-            $f, $scope,
-            'addConnection',
-            [
-                {
-                    name     => 'connection',
-                    type     => 'Connection',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'connection', 10.2 )
-                  || return $ret_func->();
-                $$self->{'conns'}->property_u( 'push', $pos->(11.2) )
-                  ->( [ $$scope->{'connection'} ], $scope, undef,
-                    $pos->(11.3) );
-                var(
-                    $scope,
-                    bot => ${ $scope->{special} }->{'self'},
-                    $file_scope, $pos->(13.3)
-                );
-                $scope->weaken_property_ow( 'bot', $pos->(13.1) );
-                on(
-                    $$scope->{'connection'}
-                      ->property_u( 'handlers', $pos->(16.3) ),
-                    'PRIVMSG',
-                    $self, $scope,
-                    $func_1->inside_scope(
-                        (undef) => $scope,
-                        undef, $class, $ins, undef, undef
-                    ),
-                    {}
-                );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'addConnection' );
 
         # Method event 'connect' definition
-        my $func_3 = method_event_def(
-            $f, $scope,
-            'connect',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                {
-                    my ( $loop_status, $loop_ret ) = iterate(
-                        $f, $scope,
-                        $$self->{'conns'},
-                        'c',
-                        sub {
-                            my ( $scope, $ret_func ) = @_;
-                            $$scope->{'c'}
-                              ->property_u( 'connect', $pos->(40.2) )
-                              ->( [ undef, [] ], $scope, undef, $pos->(40.3) );
-                        },
-                        $pos->(39.1)
-                    );
-                    return $ret_func->($loop_ret) if $loop_status eq 'return';
-                }
-                return $ret;
-            }
-        );
+        my $func_3 = method_event_def( $f, $scope, 'connect' );
 
         # Method event 'description' definition
-        my $func_4 = method_event_def(
-            $f, $scope,
-            'description',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, s => str( $f, "" ), $file_scope, $pos->(44.2) );
-                if (
-                    bool(
-                        nequal(
-                            $scope,
-                            $$self->{'conns'}
-                              ->property_u( 'length', $pos->(45.15) ),
-                            num( $f, "1" )
-                        )
-                    )
-                  )
-                {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    var(
-                        $scope,
-                        s => str( $f, "s" ),
-                        $file_scope, $pos->(45.4)
-                    );
-                }
-                return $ret_func->(
-                    add(
-                        $scope,
-                        str( $f, "IRC::Bot(" ),
-                        $$self->{'conns'}
-                          ->property_u( 'length', $pos->(46.25) ),
-                        str( $f, " connection" ),
-                        $$scope->{'s'},
-                        str( $f, ")" )
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_4 = method_event_def( $f, $scope, 'description' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'User'
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Instance variable '@connection'
@@ -67,39 +67,7 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'User', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                {
-                    name     => 'connection',
-                    type     => 'Connection',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'nick',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                },
-                { name => 'user', type => 'Str', optional => 1, more => undef },
-                { name => 'host', type => 'Str', optional => 1, more => undef },
-                { name => 'real', type => 'Str', optional => 1, more => undef }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'connection' ) || return $ret_func->();
-                need( $self, $args, 'nick' )       || return $ret_func->();
-                want( $self, $args, 'user', 6.1 );
-                want( $self, $args, 'host', 6.3 );
-                want( $self, $args, 'real', 6.5 );
-
-                $self->weaken_property_ow( 'connection', $pos->(7.1) );
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

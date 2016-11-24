@@ -18,7 +18,7 @@
 #                      Multiplication operator (*)
 #                      Number '1024'
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Want
 #                          Instance variable '@userAgent'
@@ -60,7 +60,7 @@
 #                              Item 0
 #                                  Special variable '*self'
 #          Method 'get'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$url'
@@ -78,7 +78,7 @@
 #                                      Pair 'url'
 #                                          Lexical variable '$url'
 #          Method 'post'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$url'
@@ -96,7 +96,7 @@
 #                                      Pair 'url'
 #                                          Lexical variable '$url'
 #          Method 'request'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$httpMethod'
@@ -156,165 +156,16 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Client', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                {
-                    name     => 'userAgent',
-                    type     => 'Str',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'timeout',
-                    type     => 'Num',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'maxContentLength',
-                    type     => 'Num',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'readLength',
-                    type     => 'Num',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'writeLength',
-                    type     => 'Num',
-                    optional => 1,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                want( $self, $args, 'userAgent', 11.2, $$scope->{'defaultUA'} );
-                want( $self, $args, 'timeout', 14.2, num( $f, "10" ) );
-                want( $self, $args, 'maxContentLength', 20.2 );
-                want( $self, $args, 'readLength', 23.2,
-                    $$scope->{'defaultLength'} );
-                want( $self, $args, 'writeLength', 26.2,
-                    $$scope->{'defaultLength'} );
-                $$scope->{'NATIVE::HTTPClient'}
-                  ->property_u( 'initialize', $pos->(28.4) )->(
-                    [ ${ $scope->{special} }->{'self'} ],
-                    $scope, undef, $pos->(28.5)
-                  );
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'get' definition
-        my $func_1 = method_event_def(
-            $f, $scope, 'get',
-            [
-                {
-                    name     => 'url',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'url', 34.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'request'}->(
-                        [
-                            undef,
-                            [
-                                httpMethod => get_symbol( $f, 'GET' ),
-                                url        => $$scope->{'url'}
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(35.3)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'get' );
 
         # Method event 'post' definition
-        my $func_2 = method_event_def(
-            $f, $scope, 'post',
-            [
-                {
-                    name     => 'url',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'url', 44.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'request'}->(
-                        [
-                            undef,
-                            [
-                                httpMethod => get_symbol( $f, 'POST' ),
-                                url        => $$scope->{'url'}
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(45.3)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'post' );
 
         # Method event 'request' definition
-        my $func_3 = method_event_def(
-            $f, $scope,
-            'request',
-            [
-                {
-                    name     => 'httpMethod',
-                    type     => 'HTTPMethod',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'url',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'httpMethod', 56.2 )
-                  || return $ret_func->();
-                need( $scope, $args, 'url', 59.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$scope->{'HTTP::Request'}->(
-                        [
-                            undef,
-                            [
-                                client     => ${ $scope->{special} }->{'self'},
-                                httpMethod => $$scope->{'httpMethod'},
-                                url        => $$scope->{'url'}
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(61.5)
-                    )
-                );
-                return $ret;
-            }
-        );
+        my $func_3 = method_event_def( $f, $scope, 'request' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

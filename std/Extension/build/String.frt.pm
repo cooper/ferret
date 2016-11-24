@@ -2,7 +2,7 @@
 #  Document './std/Extension/String.frt'
 #      Class 'String'
 #          Type definition ('NonEmpty')
-#              Body ('type' scope)
+#              Type body
 #                  Instruction
 #                      Isa
 #                          Special variable '*class'
@@ -18,7 +18,7 @@
 #                      Bareword 'NE'
 #                      Bareword 'NonEmpty'
 #          Type definition ('Uppercase')
-#              Body ('type' scope)
+#              Type body
 #                  Instruction
 #                      Isa
 #                          Special variable '*class'
@@ -31,7 +31,7 @@
 #                      Bareword 'UC'
 #                      Bareword 'Uppercase'
 #          Type definition ('Lowercase')
-#              Body ('type' scope)
+#              Type body
 #                  Instruction
 #                      Isa
 #                          Special variable '*class'
@@ -44,7 +44,7 @@
 #                      Bareword 'LC'
 #                      Bareword 'Lowercase'
 #          Type definition ('Any')
-#              Body ('type' scope)
+#              Type body
 #                  Instruction
 #                      Transform
 #                          Call
@@ -53,7 +53,7 @@
 #                                  Item 0
 #                                      Topic variable '$_'
 #          Method 'word'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$wordI'
@@ -77,7 +77,7 @@
 #                                  Item 0
 #                                      Lexical variable '$wordI'
 #          Method 'fromWord'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$wordN'
@@ -101,7 +101,7 @@
 #                                  Item 0
 #                                      Lexical variable '$wordN'
 #          Computed property 'empty' (lazy)
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Return
 #                          Operation
@@ -143,90 +143,13 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'String', undef, undef );
 
         # Method event 'word' definition
-        my $func_0 = method_event_def(
-            $f, $scope, 'word',
-            [
-                {
-                    name     => 'wordI',
-                    type     => 'Num',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'wordI', 29.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'split'}->(
-                        [
-                            str( $f, " " ),
-                            [
-                                limit => add(
-                                    $scope, $$scope->{'wordI'},
-                                    num( $f, "2" )
-                                )
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(30.15)
-                      )->get_index_value(
-                        [ $$scope->{'wordI'} ],
-                        $scope, $pos->(30.55)
-                      )
-                );
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'word' );
 
         # Method event 'fromWord' definition
-        my $func_1 = method_event_def(
-            $f, $scope,
-            'fromWord',
-            [
-                {
-                    name     => 'wordN',
-                    type     => 'Num',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'wordN', 34.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$self->{'split'}->(
-                        [
-                            str( $f, " " ),
-                            [
-                                limit => add(
-                                    $scope, $$scope->{'wordN'},
-                                    num( $f, "1" )
-                                )
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(35.15)
-                      )->get_index_value(
-                        [ $$scope->{'wordN'} ],
-                        $scope, $pos->(35.55)
-                      )
-                );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'fromWord' );
 
         # Method event 'empty' definition
-        my $func_2 = method_event_def(
-            $f, $scope, 'empty', undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                return $ret_func->(
-                    equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'empty' );
         $func_0->inside_scope(
             word => $scope,
             $proto, $class, $ins, undef, undef

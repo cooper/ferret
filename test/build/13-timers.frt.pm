@@ -17,7 +17,7 @@
 #                                  Item 0
 #                                      Number '5'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
@@ -39,7 +39,7 @@
 #                      Property 'once'
 #                          Lexical variable '$t2'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Call
 #                          Bareword 'say'

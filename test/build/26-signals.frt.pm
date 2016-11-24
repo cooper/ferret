@@ -6,7 +6,7 @@
 #                  Property 'TERM'
 #                      Bareword 'Signal'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Call
 #                          Bareword 'say'
@@ -23,12 +23,12 @@
 #                  Property 'INT'
 #                      Bareword 'Signal'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  If
 #                      Expression ('if' parameter)
 #                          Negation
 #                              Lexical variable '$asked'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'

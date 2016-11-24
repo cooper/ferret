@@ -31,7 +31,7 @@
 #                              Pair 'add'
 #                                  Bareword '_commandAdd'
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Instance variable '@addr'
@@ -94,7 +94,7 @@
 #                          Property 'connected'
 #                              Instance variable '@sock'
 #                      Anonymous function
-#                          Body ('function' scope)
+#                          Function body
 #                              Instruction
 #                                  Call
 #                                      Instance variable '@send'
@@ -130,7 +130,7 @@
 #                          Property 'gotLine'
 #                              Instance variable '@sock'
 #                      Anonymous function
-#                          Body ('function' scope)
+#                          Function body
 #                              Instruction
 #                                  Need
 #                                      Lexical variable '$data'
@@ -141,7 +141,7 @@
 #                                          Item 0
 #                                              Lexical variable '$data'
 #          Method 'addCommand'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$command'
@@ -157,7 +157,7 @@
 #                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$command'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Return pair 'overwrote'
 #                                  Boolean true
@@ -173,14 +173,14 @@
 #                      Return pair 'added'
 #                          Boolean true
 #          Method 'connect'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Call
 #                          Property 'connect'
 #                              Instance variable '@sock'
 #                          Argument list [0 items]
 #          Method 'send'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -201,7 +201,7 @@
 #                              Item 0
 #                                  Lexical variable '$line'
 #          Method 'handleLine'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -232,7 +232,7 @@
 #                                          Number '0'
 #                              Equality operator (==)
 #                              String 'PING'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Assignment
 #                                  Lexical variable '$command'
@@ -276,7 +276,7 @@
 #                                  Pair 's'
 #                                      Lexical variable '$s'
 #          Method 'privmsg'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$channel'
@@ -297,13 +297,13 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      String '␤'
-#                      Body ('for' scope)
+#                      For body
 #                          If
 #                              Expression ('if' parameter)
 #                                  Negation
 #                                      Property 'empty'
 #                                          Lexical variable '$line'
-#                              Body ('if' scope)
+#                              If body
 #                                  Instruction
 #                                      Call
 #                                          Instance variable '@send'
@@ -318,23 +318,23 @@
 #                                                      Addition operator (+)
 #                                                      Lexical variable '$line'
 #          Function '_joinChannels'
-#              Body ('function' scope)
+#              Function body
 #                  If
 #                      Expression ('if' parameter)
 #                          This variable '%_joinedChannels'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Return
 #                  If
 #                      Expression ('if' parameter)
 #                          This variable '%autojoin'
-#                      Body ('if' scope)
+#                      If body
 #                          For (values)
 #                              Expression ('for' parameter)
 #                                  Lexical variable '$chan'
 #                              Expression ('in' parameter)
 #                                  This variable '%autojoin'
-#                              Body ('for' scope)
+#                              For body
 #                                  Instruction
 #                                      Call
 #                                          This variable '%send'
@@ -349,7 +349,7 @@
 #                          This variable '%_joinedChannels'
 #                          Boolean true
 #          Function '_pong'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$s'
@@ -367,7 +367,7 @@
 #                                              Item 0
 #                                                  Number '1'
 #          Function '_handleMessage'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$line'
@@ -389,7 +389,7 @@
 #                      Expression ('if' parameter)
 #                          Property 'command'
 #                              Lexical variable '$msg'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Maybe
@@ -414,7 +414,7 @@
 #                                          Pair 'msg'
 #                                              Lexical variable '$msg'
 #          Function '_commandHello'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -438,7 +438,7 @@
 #                                      Addition operator (+)
 #                                      String '!'
 #          Function '_commandAdd'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -501,7 +501,7 @@
 #                                      Addition operator (+)
 #                                      String '''
 #          Function '_commandFactoid'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -887,323 +887,22 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Bot', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_2 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                {
-                    name     => 'addr',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'nick',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                },
-                { name => 'port', type => 'Num', optional => 1, more => undef },
-                { name => 'user', type => 'Str', optional => 1, more => undef },
-                { name => 'real', type => 'Str', optional => 1, more => undef }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'addr' ) || return $ret_func->();
-                need( $self, $args, 'nick' ) || return $ret_func->();
-                want( $self, $args, 'port', 18.2, num( $f, "6667" ) );
-                want( $self, $args, 'user', 19.2, str( $f, "ferret" ) );
-                want( $self, $args, 'real', 20.2, str( $f, "Ferret IRC" ) );
-                $self->set_property(
-                    commands => $$scope->{'initialCommands'}
-                      ->property_u( 'copy', $pos->(22.4) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(22.5) ),
-                    $pos->(22.2)
-                );
-                $self->set_property(
-                    factoids => create_hash( $f, [] ),
-                    $pos->(23.2)
-                );
-                $self->set_property(
-                    sock => $$scope->{'Socket::TCP'}->(
-                        [
-                            undef,
-                            [
-                                address  => $$self->{'addr'},
-                                port     => $$self->{'port'},
-                                readMode => get_symbol( $f, 'line' )
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(26.3)
-                    ),
-                    $pos->(26.1)
-                );
-                on(
-                    $$self->{'sock'},
-                    'connected',
-                    $self, $scope,
-                    $func_0->inside_scope(
-                        (undef) => $scope,
-                        undef, $class, $ins, undef, undef
-                    ),
-                    {}
-                );
-                on(
-                    $$self->{'sock'},
-                    'gotLine',
-                    $self, $scope,
-                    $func_1->inside_scope(
-                        (undef) => $scope,
-                        undef, $class, $ins, undef, undef
-                    ),
-                    {}
-                );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'addCommand' definition
-        my $func_3 = method_event_def(
-            $f, $scope,
-            'addCommand',
-            [
-                {
-                    name     => 'command',
-                    type     => 'Str::LC',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'callback',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'command',  43.1 ) || return $ret_func->();
-                need( $scope, $args, 'callback', 43.4 ) || return $ret_func->();
-                if (
-                    bool(
-                        $$self->{'commands'}->get_index_value(
-                            [ $$scope->{'command'} ],
-                            $scope, $pos->(44.3)
-                        )
-                    )
-                  )
-                {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $ret->set_property( overwrote => $true, $pos->(45.2) );
-                }
-                $$self->{'commands'}->set_index_value( [ $$scope->{'command'} ],
-                    $$scope->{'callback'}, $scope, $pos->(46.5) );
-                $ret->set_property( added => $true, $pos->(47.2) );
-                return $ret;
-            }
-        );
+        my $func_3 = method_event_def( $f, $scope, 'addCommand' );
 
         # Method event 'connect' definition
-        my $func_4 = method_event_def(
-            $f, $scope,
-            'connect',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                $$self->{'sock'}->property_u( 'connect', $pos->(51.2) )
-                  ->( [ undef, [] ], $scope, undef, $pos->(51.3) );
-                return $ret;
-            }
-        );
+        my $func_4 = method_event_def( $f, $scope, 'connect' );
 
         # Method event 'send' definition
-        my $func_5 = method_event_def(
-            $f, $scope, 'send',
-            [
-                {
-                    name     => 'line',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 55.2 ) || return $ret_func->();
-                $$scope->{'say'}->(
-                    [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, $pos->(56.2)
-                );
-                $$self->{'sock'}->property_u( 'println', $pos->(57.2) )
-                  ->( [ $$scope->{'line'} ], $scope, undef, $pos->(57.3) );
-                return $ret;
-            }
-        );
+        my $func_5 = method_event_def( $f, $scope, 'send' );
 
         # Method event 'handleLine' definition
-        my $func_6 = method_event_def(
-            $f, $scope,
-            'handleLine',
-            [
-                {
-                    name     => 'line',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 61.2 ) || return $ret_func->();
-                var(
-                    $scope,
-                    s => $$scope->{'line'}->property_u( 'split', $pos->(64.4) )
-                      ->( [ str( $f, " " ) ], $scope, undef, $pos->(64.5) ),
-                    $file_scope, $pos->(64.2)
-                );
-                var(
-                    $scope,
-                    command => $$scope->{'s'}->get_index_value(
-                        [ num( $f, "1" ) ],
-                        $scope, $pos->(65.4)
-                    ),
-                    $file_scope,
-                    $pos->(65.2)
-                );
-                if (
-                    bool(
-                        equal(
-                            $scope,
-                            $$scope->{'s'}->get_index_value(
-                                [ num( $f, "0" ) ],
-                                $scope, $pos->(68.3)
-                            ),
-                            str( $f, "PING" )
-                        )
-                    )
-                  )
-                {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    var(
-                        $scope,
-                        command => $$scope->{'s'}->get_index_value(
-                            [ num( $f, "0" ) ],
-                            $scope, $pos->(69.4)
-                        ),
-                        $file_scope,
-                        $pos->(69.2)
-                    );
-                }
-                $$scope->{'say'}->(
-                    [
-                        add(
-                            $scope,               str( $f, "recv[" ),
-                            $$scope->{'command'}, str( $f, "]: " ),
-                            $$scope->{'line'}
-                        )
-                    ],
-                    $scope, undef,
-                    $pos->(71.1)
-                );
-                {
-                    my $maybe_0 =
-                      $$scope->{'handlers'}
-                      ->get_index_value( [ $$scope->{'command'} ],
-                        $scope, $pos->(74.2) );
-                    if ( bool($maybe_0) ) {
-                        $maybe_0->(
-                            [
-                                undef,
-                                [
-                                    _this   => ${ $scope->{special} }->{'self'},
-                                    line    => $$scope->{'line'},
-                                    command => $$scope->{'command'},
-                                    s       => $$scope->{'s'}
-                                ]
-                            ],
-                            $scope, undef,
-                            $pos->(74.6)
-                        );
-                    }
-                }
-                return $ret;
-            }
-        );
+        my $func_6 = method_event_def( $f, $scope, 'handleLine' );
 
         # Method event 'privmsg' definition
-        my $func_7 = method_event_def(
-            $f, $scope,
-            'privmsg',
-            [
-                {
-                    name     => 'channel',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'message',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'channel', 84.1 ) || return $ret_func->();
-                need( $scope, $args, 'message', 84.3 ) || return $ret_func->();
-                {
-                    my ( $loop_status, $loop_ret ) = iterate(
-                        $f, $scope,
-                        $$scope->{'message'}
-                          ->property_u( 'split', $pos->(85.25) )->(
-                            [ str( $f, "\n" ) ], $scope, undef, $pos->(85.3)
-                          ),
-                        'line',
-                        sub {
-                            my ( $scope, $ret_func ) = @_;
-                            if (
-                                bool(
-                                    _not(
-                                        $$scope->{'line'}
-                                          ->property_u( 'empty', $pos->(86.4) )
-                                    )
-                                )
-                              )
-                            {
-                                my $scope =
-                                  Ferret::Scope->new( $f, parent => $scope );
-
-                                $$self->{'send'}->(
-                                    [
-                                        add(
-                                            $scope,
-                                            str( $f, "PRIVMSG " ),
-                                            $$scope->{'channel'},
-                                            str( $f, " :" ),
-                                            $$scope->{'line'}
-                                        )
-                                    ],
-                                    $scope, undef,
-                                    $pos->(87.1)
-                                );
-                            }
-                        },
-                        $pos->(85.05)
-                    );
-                    return $ret_func->($loop_ret) if $loop_status eq 'return';
-                }
-                return $ret;
-            }
-        );
+        my $func_7 = method_event_def( $f, $scope, 'privmsg' );
         $func_2->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

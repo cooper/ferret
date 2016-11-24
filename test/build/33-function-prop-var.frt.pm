@@ -15,7 +15,7 @@
 #                  Argument list [1 item]
 #                      Item 0
 #                          Anonymous function
-#                              Body ('function' scope)
+#                              Function body
 #                                  Instruction
 #                                      Return
 #                                          Property variable '.sqrt'

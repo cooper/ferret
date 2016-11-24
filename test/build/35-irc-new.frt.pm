@@ -29,7 +29,7 @@
 #                  Property 'commands'
 #                      Lexical variable '$bot'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$channel'
@@ -51,7 +51,7 @@
 #                  Property 'commands'
 #                      Lexical variable '$bot'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -83,7 +83,7 @@
 #                                  Lexical variable '$parts'
 #                              Less than operator (<)
 #                              Number '3'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Fail (nonfatal exception)
 #                                  Call
@@ -110,7 +110,7 @@
 #                              Property index [1 item]
 #                                  Item 0
 #                                      Lexical variable '$command'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Fail (nonfatal exception)
 #                                  Call
@@ -173,7 +173,7 @@
 #                  Property 'commands'
 #                      Lexical variable '$bot'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -205,7 +205,7 @@
 #                                  Lexical variable '$parts'
 #                              Less than operator (<)
 #                              Number '2'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Fail (nonfatal exception)
 #                                  Call
@@ -236,7 +236,7 @@
 #                      Expression ('if' parameter)
 #                          Negation
 #                              Lexical variable '$existed'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Fail (nonfatal exception)
 #                                  Call
@@ -281,7 +281,7 @@
 #                                      Addition operator (+)
 #                                      String '''
 #      Function 'respondFactoid'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -369,7 +369,7 @@
 #                  Property 'commands'
 #                      Lexical variable '$bot'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -392,7 +392,7 @@
 #                  Property 'commands'
 #                      Lexical variable '$bot'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -410,7 +410,7 @@
 #                              Item 2
 #                                  Boolean true
 #      Function 'handleEval'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -439,7 +439,7 @@
 #                  Expression ('if' parameter)
 #                      Property 'error'
 #                          Lexical variable '$res'
-#                  Body ('if' scope)
+#                  If body
 #                      Instruction
 #                          Call
 #                              Property 'privmsg'
@@ -480,7 +480,7 @@
 #                  Property 'commands'
 #                      Lexical variable '$bot'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -509,7 +509,7 @@
 #                      Expression ('if' parameter)
 #                          Property 'error'
 #                              Lexical variable '$res'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Property 'privmsg'
@@ -534,7 +534,7 @@
 #                  Property 'commands'
 #                      Lexical variable '$bot'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -563,7 +563,7 @@
 #                      Expression ('if' parameter)
 #                          Property 'error'
 #                              Lexical variable '$res'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Property 'privmsg'
@@ -588,7 +588,7 @@
 #                  Property 'commands'
 #                      Lexical variable '$bot'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -611,7 +611,7 @@
 #                  Property 'commands'
 #                      Lexical variable '$bot'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$msg'
@@ -629,7 +629,7 @@
 #                              Item 2
 #                                  Boolean false
 #      Function 'handlePerl'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -661,7 +661,7 @@
 #                  Expression ('if' parameter)
 #                      Property 'error'
 #                          Lexical variable '$res'
-#                  Body ('if' scope)
+#                  If body
 #                      Instruction
 #                          Call
 #                              Property 'privmsg'
@@ -681,7 +681,7 @@
 #                              Property 'perl'
 #                                  Lexical variable '$res'
 #      Function 'getParameter'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$msg'
@@ -718,7 +718,7 @@
 #                              Item 0
 #                                  String '␤'
 #      Function 'ircsay'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$message'

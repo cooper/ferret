@@ -8,7 +8,7 @@
 #                      Number '5'
 #                  Item 1
 #                      Anonymous function
-#                          Body ('function' scope)
+#                          Function body
 #                              Instruction
 #                                  Call
 #                                      Bareword 'say'
@@ -32,12 +32,12 @@
 #                              Argument list [1 item]
 #                                  Item 1
 #                                      Anonymous function
-#                                          Body ('function' scope)
+#                                          Function body
 #                                              Instruction
 #                                                  Return
 #                                                      String 'any second...'
 #      Function 'something'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$code'

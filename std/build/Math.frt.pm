@@ -9,7 +9,7 @@
 #                      Property 'pi'
 #                          Bareword 'NATIVE::Math'
 #      Function 'sqrt'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$num'
@@ -24,7 +24,7 @@
 #                              Item 0
 #                                  Lexical variable '$num'
 #      Function 'root'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$root'

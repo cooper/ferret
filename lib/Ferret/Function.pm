@@ -44,10 +44,12 @@ sub new {
     my ($class, $f, %opts) = @_;
 
     # create a new object.
+    state $dummy_code = sub { };
     my $func = $class->SUPER::new($f,
         priority   => 0,
         signatures => [],
         returns    => [],
+        code       => $dummy_code,
         %opts
     );
     $func->{id} = 'F'.($func + 0);

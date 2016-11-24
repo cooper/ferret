@@ -1,13 +1,13 @@
 # === Document Model ===
 #  Document './test/28-type.frt'
 #      Type definition ('Gender')
-#          Body ('type' scope)
+#          Type body
 #              Instruction
 #                  Symbol :male
 #              Instruction
 #                  Symbol :female
 #      Function 'announce'
-#          Body ('function' scope)
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$name'

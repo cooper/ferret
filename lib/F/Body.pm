@@ -9,7 +9,7 @@ use parent 'F::ScopeOwner';
 
 sub desc {
     my $t = lcfirst shift->parent->type;
-    return "body ('$t' scope)";
+    return "$t body";
 }
 
 sub hold_instr { 1 }

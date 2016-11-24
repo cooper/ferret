@@ -13,7 +13,7 @@
 #      If
 #          Expression ('if' parameter)
 #              Lexical variable '$point'
-#          Body ('if' scope)
+#          If body
 #              Instruction
 #                  Call
 #                      Bareword 'say'
@@ -29,7 +29,7 @@
 #      Inside
 #          Expression ('inside' parameter)
 #              Lexical variable '$point'
-#          Body ('inside' scope)
+#          Inside body
 #              Instruction
 #                  Assignment
 #                      Lexical variable '$x'
@@ -51,7 +51,7 @@
 #          Expression ('on' parameter)
 #              Bareword 'say'
 #          Anonymous function
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$twice'
@@ -61,7 +61,7 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Lexical variable '$twice'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Bareword 'say'
@@ -89,7 +89,7 @@
 #          Expression ('if' parameter)
 #              Property 'didTwice'
 #                  Lexical variable '$r'
-#          Body ('if' scope)
+#          If body
 #              Instruction
 #                  Call
 #                      Bareword 'say'

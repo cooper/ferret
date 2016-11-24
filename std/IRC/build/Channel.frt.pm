@@ -3,7 +3,7 @@
 #      Package 'IRC'
 #      Class 'Channel'
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Instance variable '@connection'
@@ -18,7 +18,7 @@
 #                      Weaken modifier
 #                          Instance variable '@connection'
 #          Method 'privmsg'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$message'
@@ -68,58 +68,10 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'Channel', undef, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                {
-                    name     => 'connection',
-                    type     => 'Connection',
-                    optional => undef,
-                    more     => undef
-                },
-                {
-                    name     => 'name',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $self, $args, 'connection' ) || return $ret_func->();
-                need( $self, $args, 'name' )       || return $ret_func->();
-
-                $self->weaken_property_ow( 'connection', $pos->(7.1) );
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'privmsg' definition
-        my $func_1 = method_event_def(
-            $f, $scope,
-            'privmsg',
-            [
-                {
-                    name     => 'message',
-                    type     => 'Str::Any',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'message', 12.2 ) || return $ret_func->();
-                $$self->{'connection'}
-                  ->property_u( 'sendPrivmsg', $pos->(13.2) )->(
-                    [ $$self->{'name'}, $$scope->{'message'} ],
-                    $scope, undef, $pos->(13.3)
-                  );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'privmsg' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

@@ -13,7 +13,7 @@
 #                      Special variable '*class'
 #                      Argument list [0 items]
 #          Type definition ('Charset')
-#              Body ('type' scope)
+#              Type body
 #                  Instruction
 #                      Symbol :ascii
 #                  Instruction
@@ -21,7 +21,7 @@
 #                  Instruction
 #                      Symbol :utf8
 #          Class method 'initializer__'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Want
 #                          Instance variable '@strict'
@@ -88,7 +88,7 @@
 #                      Catch
 #                          Expression ('catch' parameter)
 #                              Lexical variable '$err'
-#                          Body ('catch' scope)
+#                          Catch body
 #                              Instruction
 #                                  Fail (nonfatal exception)
 #                                      Call
@@ -112,7 +112,7 @@
 #                      Catch
 #                          Expression ('catch' parameter)
 #                              Lexical variable '$err'
-#                          Body ('catch' scope)
+#                          Catch body
 #                              Instruction
 #                                  Fail (nonfatal exception)
 #                                      Call
@@ -135,7 +135,7 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@pretty'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Property 'pretty'
@@ -143,7 +143,7 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@spaceBefore'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Property 'spaceBefore'
@@ -151,7 +151,7 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@spaceAfter'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Property 'spaceAfter'
@@ -159,7 +159,7 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@indent'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Property 'indent'
@@ -168,7 +168,7 @@
 #                      Expression ('if' parameter)
 #                          Negation
 #                              Instance variable '@strict'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Property 'relaxed'
@@ -176,7 +176,7 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@consistent'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Property 'canonical'
@@ -185,13 +185,13 @@
 #                      Expression ('if' parameter)
 #                          Negation
 #                              Instance variable '@strictRoot'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Call
 #                                  Property 'allow_nonref'
 #                                      Instance variable '@xs'
 #          Method 'encode'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$data'
@@ -206,7 +206,7 @@
 #                      Catch
 #                          Expression ('catch' parameter)
 #                              Lexical variable '$err'
-#                          Body ('catch' scope)
+#                          Catch body
 #                              Instruction
 #                                  Fail (nonfatal exception)
 #                                      Call
@@ -220,7 +220,7 @@
 #                                                  Pair 'subError'
 #                                                      Lexical variable '$err'
 #          Method 'decode'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$json'
@@ -237,7 +237,7 @@
 #                      Catch
 #                          Expression ('catch' parameter)
 #                              Lexical variable '$err'
-#                          Body ('catch' scope)
+#                          Catch body
 #                              Instruction
 #                                  Fail (nonfatal exception)
 #                                      Call
@@ -251,7 +251,7 @@
 #                                                  Pair 'subError'
 #                                                      Lexical variable '$err'
 #          Method 'decoderAdd'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$fragment'
@@ -272,7 +272,7 @@
 #                      Catch
 #                          Expression ('catch' parameter)
 #                              Lexical variable '$err'
-#                          Body ('catch' scope)
+#                          Catch body
 #                              Instruction
 #                                  Fail (nonfatal exception)
 #                                      Call
@@ -289,7 +289,7 @@
 #                      Return pair 'added'
 #                          Boolean true
 #          Method 'decoderDone'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$objects'
@@ -305,7 +305,7 @@
 #                      Catch
 #                          Expression ('catch' parameter)
 #                              Lexical variable '$err'
-#                          Body ('catch' scope)
+#                          Catch body
 #                              Instruction
 #                                  Fail (nonfatal exception)
 #                                      Call
@@ -326,7 +326,7 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Bareword 'List'
-#                      Body ('if' scope)
+#                      If body
 #                          Instruction
 #                              Return pair 'found'
 #                                  Property 'length'
@@ -335,14 +335,14 @@
 #                      Return pair 'data'
 #                          Lexical variable '$objects'
 #          Method 'decoderReset'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Call
 #                          Property 'incr_reset'
 #                              Instance variable '@xs'
 #                          Argument list [0 items]
 #          Class method 'encode'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$data'
@@ -355,7 +355,7 @@
 #                                  Item 0
 #                                      Lexical variable '$data'
 #          Class method 'decode'
-#              Body ('function' scope)
+#              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$json'
@@ -414,464 +414,28 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'JSON', 1.0, undef );
 
         # Method event 'initializer__' definition
-        my $func_0 = method_event_def(
-            $f, $scope,
-            'initializer__',
-            [
-                {
-                    name     => 'strict',
-                    type     => 'Bool',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'consistent',
-                    type     => 'Bool',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'charset',
-                    type     => 'Charset',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'strictRoot',
-                    type     => 'Bool',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'pretty',
-                    type     => 'Bool',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'spaceBefore',
-                    type     => 'Bool',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'spaceAfter',
-                    type     => 'Bool',
-                    optional => 1,
-                    more     => undef
-                },
-                {
-                    name     => 'indent',
-                    type     => 'Bool',
-                    optional => 1,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                want( $self, $args, 'strict',     24.2, $true );
-                want( $self, $args, 'consistent', 30.2, $false );
-                want( $self, $args, 'charset', 37.2, get_symbol( $f, 'utf8' ) );
-                want( $self, $args, 'strictRoot',  41.2, $false );
-                want( $self, $args, 'pretty',      46.2, $false );
-                want( $self, $args, 'spaceBefore', 51.2, $false );
-                want( $self, $args, 'spaceAfter',  55.2, $false );
-                want( $self, $args, 'indent',      59.2, $false );
-                try_catch(
-                    $f, $scope,
-                    sub {
-                        $$scope->{'_PO'}->property_u( 'require', $pos->(65.2) )
-                          ->(
-                            [ str( $f, "JSON::XS" ) ],
-                            $scope, undef, $pos->(65.3)
-                          );
-                    },
-                    sub {
-                        my ($scope) = @_;
-                        return $ret_func->(
-                            $ret->fail(
-                                $$scope->{'Error'}->(
-                                    [
-                                        get_symbol( $f, 'PerlRequireFailed' ),
-                                        str( $f, "Unable to load JSON::XS" ),
-                                        [ subError => $$scope->{'err'} ]
-                                    ],
-                                    $scope, undef,
-                                    $pos->(66.3)
-                                ),
-                                $pos->(66.1)
-                            )
-                        );
-                    },
-                    'err'
-                );
-                try_catch(
-                    $f, $scope,
-                    sub {
-                        $self->set_property(
-                            xs => $$scope->{'_PO'}->(
-                                [ str( $f, "JSON::XS" ) ], $scope,
-                                undef, $pos->(72.2)
-                            ),
-                            $pos->(72.1)
-                        );
-                    },
-                    sub {
-                        my ($scope) = @_;
-                        return $ret_func->(
-                            $ret->fail(
-                                $$scope->{'Error'}->(
-                                    [
-                                        get_symbol(
-                                            $f, 'PerlConstructorFailed'
-                                        ),
-                                        str(
-                                            $f,
-                                            "Could not create JSON::XS object"
-                                        ),
-                                        [ subError => $$scope->{'err'} ]
-                                    ],
-                                    $scope, undef,
-                                    $pos->(73.3)
-                                ),
-                                $pos->(73.1)
-                            )
-                        );
-                    },
-                    'err'
-                );
-                $$self->{'xs'}->property_u( $$self->{'charset'}, $pos->(79.2) )
-                  ->( [ undef, [] ], $scope, undef, $pos->(79.6) );
-                if ( bool( $$self->{'pretty'} ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $$self->{'xs'}->property_u( 'pretty', $pos->(80.5) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(80.6) );
-                }
-                if ( bool( $$self->{'spaceBefore'} ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $$self->{'xs'}->property_u( 'spaceBefore', $pos->(81.5) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(81.6) );
-                }
-                if ( bool( $$self->{'spaceAfter'} ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $$self->{'xs'}->property_u( 'spaceAfter', $pos->(82.5) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(82.6) );
-                }
-                if ( bool( $$self->{'indent'} ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $$self->{'xs'}->property_u( 'indent', $pos->(83.5) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(83.6) );
-                }
-                if ( bool( _not( $$self->{'strict'} ) ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $$self->{'xs'}->property_u( 'relaxed', $pos->(84.6) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(84.7) );
-                }
-                if ( bool( $$self->{'consistent'} ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $$self->{'xs'}->property_u( 'canonical', $pos->(85.5) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(85.6) );
-                }
-                if ( bool( _not( $$self->{'strictRoot'} ) ) ) {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $$self->{'xs'}->property_u( 'allow_nonref', $pos->(86.6) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(86.7) );
-                }
-                return $ret;
-            }
-        );
+        my $func_0 = method_event_def( $f, $scope, 'initializer__' );
 
         # Method event 'encode' definition
-        my $func_1 = method_event_def(
-            $f, $scope, 'encode',
-            [
-                {
-                    name     => 'data',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'data', 96.2 ) || return $ret_func->();
-                try_catch(
-                    $f, $scope,
-                    sub {
-                        $ret->set_property(
-                            json => $$self->{'xs'}
-                              ->property_u( 'encode', $pos->(97.2) )->(
-                                [ $$scope->{'data'} ], $scope,
-                                undef,                 $pos->(97.25)
-                              ),
-                            $pos->(97.1)
-                        );
-                    },
-                    sub {
-                        my ($scope) = @_;
-                        return $ret_func->(
-                            $ret->fail(
-                                $$scope->{'Error'}->(
-                                    [
-                                        get_symbol( $f, 'JSONError' ),
-                                        str( $f, "JSON encode error" ),
-                                        [ subError => $$scope->{'err'} ]
-                                    ],
-                                    $scope, undef,
-                                    $pos->(98.15)
-                                ),
-                                $pos->(98.05)
-                            )
-                        );
-                    },
-                    'err'
-                );
-                return $ret;
-            }
-        );
+        my $func_1 = method_event_def( $f, $scope, 'encode' );
 
         # Method event 'decode' definition
-        my $func_2 = method_event_def(
-            $f, $scope, 'decode',
-            [
-                {
-                    name     => 'json',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'json', 105.2 ) || return $ret_func->();
-                try_catch(
-                    $f, $scope,
-                    sub {
-                        $ret->set_property(
-                            data => $$self->{'xs'}
-                              ->property_u( 'decode', $pos->(106.2) )->(
-                                [ $$scope->{'json'} ], $scope,
-                                undef,                 $pos->(106.25)
-                              ),
-                            $pos->(106.1)
-                        );
-                    },
-                    sub {
-                        my ($scope) = @_;
-                        return $ret_func->(
-                            $ret->fail(
-                                $$scope->{'Error'}->(
-                                    [
-                                        get_symbol( $f, 'JSONError' ),
-                                        str( $f, "JSON decode error" ),
-                                        [ subError => $$scope->{'err'} ]
-                                    ],
-                                    $scope, undef,
-                                    $pos->(107.15)
-                                ),
-                                $pos->(107.05)
-                            )
-                        );
-                    },
-                    'err'
-                );
-                return $ret;
-            }
-        );
+        my $func_2 = method_event_def( $f, $scope, 'decode' );
 
         # Method event 'decoderAdd' definition
-        my $func_3 = method_event_def(
-            $f, $scope,
-            'decoderAdd',
-            [
-                {
-                    name     => 'fragment',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'fragment', 138.2 )
-                  || return $ret_func->();
-                try_catch(
-                    $f, $scope,
-                    sub {
-                        $$self->{'xs'}->property_u( 'perlCall', $pos->(142.1) )
-                          ->(
-                            [
-                                str( $f, "incr_parse" ),
-                                $$scope->{'fragment'},
-                                [ CONTEXT => str( $f, "void" ) ]
-                            ],
-                            $scope, undef,
-                            $pos->(142.15)
-                          );
-                    },
-                    sub {
-                        my ($scope) = @_;
-                        return $ret_func->(
-                            $ret->fail(
-                                $$scope->{'Error'}->(
-                                    [
-                                        get_symbol( $f, 'JSONError' ),
-                                        str( $f, "JSON incr_parse() error" ),
-                                        [ subError => $$scope->{'err'} ]
-                                    ],
-                                    $scope, undef,
-                                    $pos->(143.15)
-                                ),
-                                $pos->(143.05)
-                            )
-                        );
-                    },
-                    'err'
-                );
-                $ret->set_property( added => $true, $pos->(145.2) );
-                return $ret;
-            }
-        );
+        my $func_3 = method_event_def( $f, $scope, 'decoderAdd' );
 
         # Method event 'decoderDone' definition
-        my $func_4 = method_event_def(
-            $f, $scope,
-            'decoderDone',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                try_catch(
-                    $f, $scope,
-                    sub {
-                        var(
-                            $scope,
-                            objects => $$self->{'xs'}
-                              ->property_u( 'perlCall', $pos->(155.2) )->(
-                                [
-                                    str( $f, "incr_parse" ),
-                                    [ CONTEXT => str( $f, "list" ) ]
-                                ],
-                                $scope, undef,
-                                $pos->(155.25)
-                              ),
-                            $file_scope,
-                            $pos->(155.1)
-                        );
-                    },
-                    sub {
-                        my ($scope) = @_;
-                        return $ret_func->(
-                            $ret->fail(
-                                $$scope->{'Error'}->(
-                                    [
-                                        get_symbol( $f, 'JSONError' ),
-                                        str( $f, "JSON incr_parse() error" ),
-                                        [ subError => $$scope->{'err'} ]
-                                    ],
-                                    $scope, undef,
-                                    $pos->(156.15)
-                                ),
-                                $pos->(156.05)
-                            )
-                        );
-                    },
-                    'err'
-                );
-                if (
-                    bool(
-                        $$scope->{'objects'}
-                          ->property_u( '*instanceOf', $pos->(158.3) )->(
-                            [ $$scope->{'List'} ], $scope,
-                            undef,                 $pos->(158.4)
-                          )
-                    )
-                  )
-                {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    $ret->set_property(
-                        found => $$scope->{'objects'}
-                          ->property_u( 'length', $pos->(159.4) ),
-                        $pos->(159.2)
-                    );
-                }
-                $ret->set_property(
-                    data => $$scope->{'objects'},
-                    $pos->(161.2)
-                );
-                return $ret;
-            }
-        );
+        my $func_4 = method_event_def( $f, $scope, 'decoderDone' );
 
         # Method event 'decoderReset' definition
-        my $func_5 = method_event_def(
-            $f, $scope,
-            'decoderReset',
-            undef, undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                $$self->{'xs'}->property_u( 'incr_reset', $pos->(167.2) )
-                  ->( [ undef, [] ], $scope, undef, $pos->(167.3) );
-                return $ret;
-            }
-        );
+        my $func_5 = method_event_def( $f, $scope, 'decoderReset' );
 
         # Method event 'encode' definition
-        my $func_6 = method_event_def(
-            $f, $scope, 'encode',
-            [
-                {
-                    name     => 'data',
-                    type     => undef,
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'data', 180.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$scope->{'default'}->property_u( 'encode', $pos->(181.3) )
-                      ->( [ $$scope->{'data'} ], $scope, undef, $pos->(181.4) )
-                );
-                return $ret;
-            }
-        );
+        my $func_6 = method_event_def( $f, $scope, 'encode' );
 
         # Method event 'decode' definition
-        my $func_7 = method_event_def(
-            $f, $scope, 'decode',
-            [
-                {
-                    name     => 'json',
-                    type     => 'Str',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'json', 187.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$scope->{'default'}->property_u( 'decode', $pos->(188.3) )
-                      ->( [ $$scope->{'json'} ], $scope, undef, $pos->(188.4) )
-                );
-                return $ret;
-            }
-        );
+        my $func_7 = method_event_def( $f, $scope, 'decode' );
         $func_0->inside_scope(
             initializer__ => $scope,
             $class, $class, $ins, undef, undef

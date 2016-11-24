@@ -23,7 +23,7 @@
 #          Load
 #              Bareword 'Extension::Hash'
 #      Type definition ('Any')
-#          Body ('type' scope)
+#          Type body
 #      Instruction
 #          Alias
 #              Assignment
@@ -35,7 +35,7 @@
 #                  Bareword 'Object'
 #                  Bareword 'Any'
 #      Type definition ('Code')
-#          Body ('type' scope)
+#          Type body
 #              Instruction
 #                  Satisfies
 #                      Property variable '.name'
@@ -43,7 +43,7 @@
 #                  Satisfies
 #                      Property variable '.signature'
 #      Type definition ('Char')
-#          Body ('type' scope)
+#          Type body
 #              Instruction
 #                  Isa
 #                      Bareword 'Str'
@@ -54,7 +54,7 @@
 #                          Equality operator (==)
 #                          Number '1'
 #      Type definition ('Hashable')
-#          Body ('type' scope)
+#          Type body
 #              Instruction
 #                  Can
 #                      Property variable '.hashValue'
@@ -62,7 +62,7 @@
 #                  Transform
 #                      Property variable '.hashValue'
 #      Type definition ('Indexed')
-#          Body ('type' scope)
+#          Type body
 #              Instruction
 #                  Can
 #                      Method requirement
