@@ -721,7 +721,7 @@
 #          Body ('function' scope)
 #              Instruction
 #                  Need
-#                      Lexical variable '$msg'
+#                      Lexical variable '$message'
 #                      Argument type
 #                          Bareword 'Str::Any'
 #              Instruction
@@ -744,7 +744,7 @@
 #                          Lexical variable '$chan'
 #                      Argument list [1 item]
 #                          Item 0
-#                              Lexical variable '$msg'
+#                              Lexical variable '$message'
 #      Instruction
 #          Assignment
 #              Property 'autojoin'
@@ -1053,7 +1053,7 @@ my $result = do {
         $f, $context, 'ircsay', undef,
         [
             {
-                name     => 'msg',
+                name     => 'message',
                 type     => 'Str::Any',
                 optional => undef,
                 more     => undef
@@ -1062,7 +1062,7 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 144.2 ) || return $ret_func->();
+            need( $scope, $args, 'message', 144.2 ) || return $ret_func->();
             var(
                 $scope,
                 chan =>
@@ -1083,7 +1083,7 @@ my $result = do {
                 $pos->(145.1)
             );
             $$scope->{'chan'}->property_u( 'privmsg', $pos->(146.2) )
-              ->( [ $$scope->{'msg'} ], $scope, undef, $pos->(146.3) );
+              ->( [ $$scope->{'message'} ], $scope, undef, $pos->(146.3) );
             return $ret;
         }
     );

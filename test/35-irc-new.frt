@@ -141,9 +141,9 @@ func getParameter {
 }
 
 func ircsay {
-    need $msg: Str::Any
+    need $message: Str::Any
     $chan = $conn.getChannel($conn.autojoin[0])
-    $chan.privmsg($msg)
+    $chan.privmsg($message)
 }
 
 $conn.autojoin = ["\#k"]

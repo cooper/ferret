@@ -365,7 +365,7 @@ sub _call_together {
             push @raw_events, @$events;
         }
 
-        # ($return, $detail $events)
+        # _do_call($return, $detail $events) -> ($fire, $ret)
         my ($fire, $ret) = _do_call($e_return, undef, \@raw_events);
         $_->{most_recent_fire} = $fire for @event_objs;
 
