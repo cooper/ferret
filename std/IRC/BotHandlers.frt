@@ -1,4 +1,4 @@
-package IRC::Bot::Handlers
+package IRC::BotHandlers
 
 share $handlers = (
     PRIVMSG: privmsg

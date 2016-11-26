@@ -202,12 +202,12 @@ sub prepare {
     push @events, [ $obj,   $event->{id} => @args ] if $obj;
 
     # possibly find additional events from listeners.
-    my $event_name = $event->{name};
+    my $event_name = $event->{last_name} // $event->{name};
     my @listeners  = $obj->listeners_and_arguments;
     if ($obj && @listeners && length $event_name) {
         foreach (@listeners) {
             my ($listener, $l_arguments) = @$_;
-print "L args: $l_arguments\n";
+
             # find an event of the same name.
             my $their_event = $listener->property($event_name);
             blessed $their_event && $their_event->isa('Ferret::Event') or next;
@@ -221,6 +221,7 @@ print "L args: $l_arguments\n";
                 $their_event->prepare($their_arguments, $call_scope, $return);
             push @events, @$their_raw_events;
 
+            # consider: what about most_recent_fire for $their_event?
         }
     }
 
