@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Evented::Object';
 
-use Scalar::Util qw(blessed weaken);
+use Scalar::Util qw(blessed weaken reftype);
 use List::Util qw(first any);
 
 use Ferret::Core::Conversion qw(
@@ -28,6 +28,7 @@ sub new {
     $f ||= $Ferret::ferret;
     my $obj = bless {
         isa => [],
+        listeners => [],
         %opts,
         ferret => $f
     }, $class;
@@ -562,6 +563,36 @@ sub fits_type {
 
 # returns Ferret true or undefined
 sub fits_type_u { &fits_type ? Ferret::true : Ferret::undefined }
+
+# add an object as listener.
+sub add_listener {
+    my ($obj, $new_listener, $arguments) = @_;
+    return unless $new_listener;
+    undef $arguments
+        if !ref $arguments || reftype $arguments ne 'HASH' || !%$arguments;
+    unshift @{ $obj->{listeners} }, [ $new_listener, $arguments ];
+}
+
+# revoke an object of listener status.
+sub remove_listener {
+    my ($obj, $old) = @_;
+    @{ $obj->{listeners} } = grep { $_->[0] != $old } @{ $obj->{listeners} };
+}
+
+sub has_listener {
+    my ($obj, $maybe) = @_;
+    return 1 if first { $_ == $maybe } $obj->listeners;
+}
+
+sub listeners {
+    my $obj = shift;
+    return map $_->[0], @{ $obj->{listeners} };
+}
+
+sub listeners_and_arguments {
+    my $obj = shift;
+    return @{ $obj->{listeners} };
+}
 
 #####################
 ### MISCELLANEOUS ###

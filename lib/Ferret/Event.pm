@@ -8,7 +8,7 @@ use 5.010;
 
 use parent 'Ferret::Object';
 
-use Scalar::Util qw(weaken);
+use Scalar::Util qw(weaken blessed);
 use Ferret::Core::Conversion qw(
     fmethod ffunction fhash pdescription ferror
     FUNC_RET
@@ -182,7 +182,7 @@ sub prepare {
 
     bless $arguments, 'Ferret::Arguments';
 
-    # find the object. this will certainly be *this.
+    # find the object. this will be *this unless _this is provided.
     # it may also be *self, depending on the context.
     my $obj = $event->{last_parent};
 
@@ -197,9 +197,32 @@ sub prepare {
         $return
     );
 
-    # prepare the events.
+    # prepare the base events.
     my @events  = [ $event, call         => @args ];
     push @events, [ $obj,   $event->{id} => @args ] if $obj;
+
+    # possibly find additional events from listeners.
+    my $event_name = $event->{name};
+    my @listeners  = $obj->listeners_and_arguments;
+    if ($obj && @listeners && length $event_name) {
+        foreach (@listeners) {
+            my ($listener, $l_arguments) = @$_;
+print "L args: $l_arguments\n";
+            # find an event of the same name.
+            my $their_event = $listener->property($event_name);
+            blessed $their_event && $their_event->isa('Ferret::Event') or next;
+
+            # inject arguments that were provided in ->add_listener().
+            my $their_arguments = { (%$arguments, %{ $l_arguments || {} }) };
+            bless $their_arguments, 'Ferret::Arguments';
+
+            # push the raw events.
+            my (undef, undef, $their_raw_events) =
+                $their_event->prepare($their_arguments, $call_scope, $return);
+            push @events, @$their_raw_events;
+
+        }
+    }
 
     return ($return, $detail, \@events);
 }
@@ -365,7 +388,7 @@ sub _call_together {
             push @raw_events, @$events;
         }
 
-        # _do_call($return, $detail $events) -> ($fire, $ret)
+        # _do_call($return, $detail, $events) -> ($fire, $ret)
         my ($fire, $ret) = _do_call($e_return, undef, \@raw_events);
         $_->{most_recent_fire} = $fire for @event_objs;
 

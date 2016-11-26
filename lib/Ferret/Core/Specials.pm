@@ -27,6 +27,7 @@ my %specials = (
     description     => \&_description,
     addr            => \&_addr,
     addParent       => _function('addParent', '$object'),
+    addListener     => _function('addListener', '$object'),
     generics        => \&_generics
 );
 
@@ -150,6 +151,12 @@ sub _addParent {
     my ($obj, $args) = @_;
     $obj->add_parent($args->{object});
     return _isa($obj);
+}
+
+sub _addListener {
+    my ($obj, $args) = @_;
+    my $listener = delete $args->{object};
+    $obj->add_listener($listener, $args);
 }
 
 1
