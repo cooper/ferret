@@ -129,6 +129,7 @@ sub call {
         ( $func->is_method     ? $func->{last_parent} : undef ) ||
         ( $func->is_class_func ? $class               : undef ) ;
     my $this = $arguments->{_this} || delete $func->{this};
+    my $ins  = $arguments->{_}     || delete $func->{ins};
 
     # handle the generics.
     # we have to do this before dynamic type checking.
@@ -208,7 +209,7 @@ sub call {
         $return,                # FUNC_RET
         $func,                  # FUNC_FUNC
         $this,                  # FUNC_THIS
-        $func->{ins}            # FUNC_INS
+        $ins                    # FUNC_INS
     );
 
     $return->detail if $detail;

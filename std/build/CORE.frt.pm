@@ -9,9 +9,6 @@
 #              Bareword 'Signal'
 #      Instruction
 #          Load
-#              Bareword 'Iterator'
-#      Instruction
-#          Load
 #              Bareword 'Extension::Number'
 #      Instruction
 #          Load
@@ -22,6 +19,12 @@
 #      Instruction
 #          Load
 #              Bareword 'Extension::Hash'
+#      Instruction
+#          Load
+#              Bareword 'Iterator'
+#      Instruction
+#          Load
+#              Bareword 'EventSet'
 #      Type definition ('Any')
 #          Type body
 #      Instruction
@@ -90,7 +93,7 @@
 #                              Item 0
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
-#      Include (Any, Error, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Iterator, Obj, Object, Signal, Str)
+#      Include (Any, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Iterator, Obj, Object, Signal, Str)
 package FF;
 
 use warnings;
@@ -120,7 +123,7 @@ my $result = do {
     load_core('CORE');
 
     load_namespaces( $context,
-        qw(Any Error Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Iterator Obj Object Signal Str)
+        qw(Any Error EventSet Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Iterator Obj Object Signal Str)
     );
 
     typedef(
@@ -136,8 +139,8 @@ my $result = do {
         },
         undef
     );
-    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(15.3) );
-    $context->set_property( Object => $$scope->{'Any'}, $pos->(16.3) );
+    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(17.3) );
+    $context->set_property( Object => $$scope->{'Any'}, $pos->(18.3) );
     typedef(
         $scope, $context, 'Code',
         sub {

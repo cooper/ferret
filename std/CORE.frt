@@ -3,11 +3,13 @@ package CORE
 load Error
 load Signal
 
-load Iterator
 load Extension::Number
 load Extension::String
 load Extension::List
 load Extension::Hash
+
+load Iterator
+load EventSet
 
 #> Matches any object
 type Any { }
