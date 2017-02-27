@@ -103,19 +103,19 @@
 #                  If
 #                      Expression ('if' parameter)
 #                          Operation
-#                              Special variable '*this'
+#                              Special variable '*self'
 #                              Less than operator (<)
 #                              Number '2'
 #                      If body
 #                          Instruction
 #                              Return
-#                                  Special variable '*this'
+#                                  Special variable '*self'
 #                  For (values)
 #                      Expression ('for' parameter)
 #                          Lexical variable '$i'
 #                      Expression ('in' parameter)
 #                          Operation
-#                              Special variable '*this'
+#                              Special variable '*self'
 #                              Range operator (..)
 #                              Number '2'
 #                      For body
@@ -305,7 +305,7 @@ my $result = do {
                     bool(
                         less(
                             $scope,
-                            ${ $scope->{special} }->{'this'},
+                            ${ $scope->{special} }->{'self'},
                             num( $f, "2" )
                         )
                     )
@@ -313,14 +313,14 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return $ret_func->( ${ $scope->{special} }->{'this'} );
+                    return $ret_func->( ${ $scope->{special} }->{'self'} );
                 }
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         range(
                             $scope,
-                            ${ $scope->{special} }->{'this'},
+                            ${ $scope->{special} }->{'self'},
                             num( $f, "2" )
                         ),
                         'i',

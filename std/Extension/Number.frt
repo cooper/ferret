@@ -44,9 +44,9 @@ method root {
 
 method factorial {
     $new = 1
-    if *this < 2:
-        return *this
-    for $i in *this..2:
+    if *self < 2:
+        return *self
+    for $i in *self..2:
         $new *= $i
     return $new
 }
