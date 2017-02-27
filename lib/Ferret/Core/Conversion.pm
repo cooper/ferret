@@ -344,6 +344,19 @@ sub FUNC_FUNC   () { 5 }
 sub FUNC_THIS   () { 6 }
 sub FUNC_INS    () { 7 }
 
+sub FUNC_V1 () {
+    return @_[
+        FUNC_SELF,          # *self
+        FUNC_ARGS,          # Ferret::Arguments
+        FUNC_CSCOPE,        # call scope
+        FUNC_SCOPE,         # function body scope
+        FUNC_RET,           # return object
+        FUNC_FUNC,          # the function itself
+        FUNC_THIS,          # *this
+        FUNC_INS            # $_
+    ];
+}
+
 # returns a Ferret function with the provided wants and needs, if any.
 sub ffunction {
     my ($code, $name, $need, $want) = @_;

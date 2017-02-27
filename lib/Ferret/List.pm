@@ -12,7 +12,7 @@ use Ferret::Core::Conversion qw(
     fnumber pnumber
     fstring pstring
     pdescription flist_fromref
-    FUNC_SELF FUNC_ARGS FUNC_RET FUNC_FUNC
+    FUNC_V1 FUNC_FUNC
 );
 
 my @methods = (
@@ -79,7 +79,7 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my ($list, $args) = @_;
+    my ($list, $args) = &FUNC_V1;
     $list->{list_items} ||= [];
 
     # reference items.
@@ -96,70 +96,80 @@ sub init {
 # wrapper for generic method bindings.
 # all of them return the list.
 sub _item_method {
-    my ($list, $args, $func) = @_[FUNC_SELF, FUNC_ARGS, FUNC_FUNC];
+    my ($func, $list, $args) = ($_[FUNC_FUNC], &FUNC_V1);
     my $code = $list->can($func->{event_name}) or return;
     my $ret  = $code->($list, $args->{item});
     return blessed $ret ? $ret : $list;
 }
 
-sub _push {
-    my ($list, $args) = @_;
-    my @items = $args->plist('items');
-    $list->push($_) for @items;
-    return $list;
-}
-
+# how many elements
 sub length : method {
-    my $list = shift;
+    my ($list) = &FUNC_V1;
     return scalar @{ $list->{list_items} };
 }
 
 sub _length {
-    return fnumber(shift->length);
+    my ($list) = &FUNC_V1;
+    return fnumber($list->length);
 }
 
+# index of last element
 sub last_index {
-    my $list = shift;
+    my ($list) = &FUNC_V1;
     return $#{ $list->{list_items} };
 }
 
 sub _last_index {
-    my $idx = shift->last_index;
+    my ($list) = &FUNC_V1;
+    my $idx = $list->last_index;
     return $idx != -1 ? fnumber($idx) : Ferret::undefined;
 }
 
+# pull element out from front
 sub shift : method {
     my ($list) = @_;
     shift @{ $list->{list_items} };
 }
 
+# add element to front
 sub unshift : method {
     my ($list, $item) = @_;
     unshift @{ $list->{list_items} }, $item;
 }
 
+# add element to end
 sub push : method {
     my ($list, $item) = @_;
     push @{ $list->{list_items} }, $item;
 }
 
+sub _push {
+    my ($list, $args) = &FUNC_V1;
+    my @items = $args->plist('items');
+    $list->push($_) for @items;
+    return $list;
+}
+
+# pull element out from end
 sub pop : method {
     my ($list) = @_;
     pop @{ $list->{list_items} };
 }
 
+# inject element at index
 sub insert {
     my ($list, $index, $item) = @_;
     splice @{ $list->{list_items} }, $index, 0, $item;
 }
 
 sub _insert {
-    my ($list, $args) = @_;
+    my ($list, $args) = &FUNC_V1;
     my $index = $args->pnumber('index');
     $list->insert($index, $args->{item});
     return $list;
 }
 
+# join stringified elements by a separator
 sub join : method {
     my ($list, $separator) = @_;
     my @items = map pstring($_), @{ $list->{list_items} };
@@ -167,23 +177,25 @@ sub join : method {
 }
 
 sub _join {
-    my ($list, $args) = @_;
+    my ($list, $args) = &FUNC_V1;
     my $sep = $args->pstring('separator');
     return fstring($list->join($sep));
 }
 
+# set value at index
 sub set_value {
     my ($list, $index, $item) = @_;
     $list->{list_items}[$index] = $item;
 }
 
 sub _set_value {
-    my ($list, $args) = @_;
+    my ($list, $args) = &FUNC_V1;
     my $index = $args->pnumber('index');
     $list->set_value($index, $args->{item});
     return $list;
 }
 
+# fetch value at index
 sub get_value {
     my ($list, $index) = @_;
 
@@ -199,22 +211,24 @@ sub get_value {
 }
 
 sub _get_value {
-    my ($list, $args) = @_;
+    my ($list, $args) = &FUNC_V1;
     my $index = $args->pnumber('index');
     return $list->get_value($index);
 }
 
+# delete value at index
 sub delete_value {
     my ($list, $index) = @_;
     return $list->set_value($index, Ferret::undefined);
 }
 
 sub _delete_value {
-    my ($list, $args) = @_;
+    my ($list, $args) = &FUNC_V1;
     my $index = $args->pnumber('index');
     return $list->delete_value($index);
 }
 
+# weaken value at index
 sub weaken_value {
     my ($list, $index) = @_;
 
@@ -226,13 +240,14 @@ sub weaken_value {
 }
 
 sub _weaken_value {
-    my ($list, $args) = @_;
+    my ($list, $args) = &FUNC_V1;
     my $index = $args->pnumber('index');
     return $list->weaken_value($index);
 }
 
+# return a copy
 sub _copy {
-    my ($list) = @_;
+    my ($list) = &FUNC_V1;
     # TODO: $deep
     return flist_fromref($list->{list_items});
 }

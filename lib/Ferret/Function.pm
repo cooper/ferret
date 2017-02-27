@@ -201,6 +201,8 @@ sub call {
     }
 
     # call the function.
+    # if the order of the arguments is changed, update FUNC_V* in Conversion.pm
+    # and maybe also args_v* in FF.pm.
     my $ret = $func->{code}(
         $self,                  # FUNC_SELF
         $arguments,             # FUNC_ARGS
