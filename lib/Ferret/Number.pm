@@ -14,48 +14,48 @@ use POSIX qw(ceil floor);
 use Ferret::Core::Conversion qw(
     fnumber pnumber plist flist fbool
     fsym flist_fromref fstring
-    FUNC_SELF
+    FUNC_V1
 );
 
 my @methods = (
     opEqual => {
-        code => \&op_equal,
+        code => \&_op_equal,
         need => '$rhs:Num'
     },
     opLess => {
-        code => \&op_less,
+        code => \&_op_less,
         need => '$rhs:Num'
     },
     opGr8r => {
-        code => \&op_gr8r,
+        code => \&_op_gr8r,
         need => '$rhs:Num'
     },
     opAdd => {
-        code => \&op_add,
+        code => \&_op_add,
         need => '$rhs:Num|Str'
     },
     opSub => {
-        code => \&op_sub,
+        code => \&_op_sub,
         need => '$rhs:Num'
     },
     opDiv => {
-        code => \&op_div,
+        code => \&_op_div,
         need => '$rhs:Num'
     },
     opMul => {
-        code => \&op_mul,
+        code => \&_op_mul,
         need => '$rhs:Num'
     },
     opPow => {
-        code => \&op_pow,
+        code => \&_op_pow,
         need => '$rhs:Num'
     },
     opMod => {
-        code => \&op_mod,
+        code => \&_op_mod,
         need => '$rhs:Num'
     },
     opRange => {
-        code => \&op_range,
+        code => \&_op_range,
         need => '$rhs:Num|undefined'
     },
     toString => {
@@ -94,7 +94,7 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my ($num, $args) = @_;
+    my ($num, $args) = &FUNC_V1;
 
     # from other value.
     if (my $from = $args->{from}) {
@@ -108,8 +108,8 @@ sub init {
 }
 
 # number plus number
-sub op_add {
-    my ($num, $args) = @_;
+sub _op_add {
+    my ($num, $args) = &FUNC_V1;
     my $rhs = $args->{rhs};
 
     # if the RHS is a string, use string concatentation.
@@ -124,46 +124,46 @@ sub op_add {
 }
 
 # number minus number
-sub op_sub {
-    my ($num, $args) = @_;
+sub _op_sub {
+    my ($num, $args) = &FUNC_V1;
     my $rhs = $args->{rhs};
     my $new_value = pnumber($num) - pnumber($rhs);
     return fnumber($new_value);
 }
 
 # number divided by number
-sub op_div {
-    my ($num, $args) = @_;
+sub _op_div {
+    my ($num, $args) = &FUNC_V1;
     my $rhs = $args->{rhs};
     my $new_value = pnumber($num) / pnumber($rhs);
     return fnumber($new_value);
 }
 
 # number times number
-sub op_mul {
-    my ($num, $args) = @_;
+sub _op_mul {
+    my ($num, $args) = &FUNC_V1;
     my $rhs = $args->{rhs};
     my $new_value = pnumber($num) * pnumber($rhs);
     return fnumber($new_value);
 }
 
 # number to a number power
-sub op_pow {
-    my ($num, $args) = @_;
+sub _op_pow {
+    my ($num, $args) = &FUNC_V1;
     my $rhs = $args->{rhs};
     my $new_value = pnumber($num) ** pnumber($rhs);
     return fnumber($new_value);
 }
 
-sub op_mod {
-    my ($num, $args) = @_;
+sub _op_mod {
+    my ($num, $args) = &FUNC_V1;
     my $rhs = $args->{rhs};
     my $new_value = pnumber($num) % pnumber($rhs);
     return fnumber($new_value);
 }
 
-sub op_range {
-    my ($num, $args, $call_scope) = @_;
+sub _op_range {
+    my ($num, $args, $call_scope) = &FUNC_V1;
     my $rhs = $args->{rhs};
 
     # if the right operand is undefined, the result must be empty.
@@ -181,23 +181,23 @@ sub op_range {
 }
 
 sub _to_string {
-    my $num = shift;
+    my ($num) = &FUNC_V1;
     return Ferret::String->new($num->f, str_value => "$$num{num_value}");
 }
 
 sub _round {
-    my $num = shift;
+    my ($num) = &FUNC_V1;
     my $v = $num->{num_value};
     return fnumber(int( $v + $v / abs($v * 2) ));
 }
 
 sub _ceil {
-    my $num = shift;
+    my ($num) = &FUNC_V1;
     return fnumber(ceil($num->{num_value}));
 }
 
 sub _floor {
-    my $num = shift;
+    my ($num) = &FUNC_V1;
     return fnumber(floor($num->{num_value}));
 }
 
@@ -208,40 +208,40 @@ sub description {
 }
 
 sub _hash_value {
-    my $num = shift;
+    my ($num) = &FUNC_V1;
     return fsym($num->{num_value});
 }
 
 sub equal {
-    shift if !blessed $_[FUNC_SELF];
+    shift if !blessed $_[0];
     my ($num1, $num2) = @_;
     return $num1->{num_value} == $num2->{num_value};
 }
 
 sub gr8r {
-    shift if !blessed $_[FUNC_SELF];
+    shift if !blessed $_[0];
     my ($num1, $num2) = @_;
     return $num1->{num_value} > $num2->{num_value};
 }
 
 sub less {
-    shift if !blessed $_[FUNC_SELF];
+    shift if !blessed $_[0];
     my ($num1, $num2) = @_;
     return $num1->{num_value} < $num2->{num_value};
 }
 
-sub op_equal {
-    my ($num, $args) = @_;
+sub _op_equal {
+    my ($num, $args) = &FUNC_V1;
     return fbool($num->equal($args->{rhs}));
 }
 
-sub op_gr8r {
-    my ($num, $args) = @_;
+sub _op_gr8r {
+    my ($num, $args) = &FUNC_V1;
     return fbool($num->gr8r($args->{rhs}));
 }
 
-sub op_less {
-    my ($num, $args) = @_;
+sub _op_less {
+    my ($num, $args) = &FUNC_V1;
     return fbool($num->less($args->{rhs}));
 }
 
