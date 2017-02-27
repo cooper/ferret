@@ -9,7 +9,7 @@ use 5.010;
 use parent 'Ferret::Object';
 use Scalar::Util qw(blessed weaken);
 use Ferret::Core::Conversion qw(plist pstring flist fset ferror FUNC_RET);
-
+use Ferret::Shared::Utils qw(signature_to_string detailed_signature_to_string);
 use Ferret::Arguments;
 use Ferret::Return;
 
@@ -561,19 +561,15 @@ sub _handle_property {
 
 sub signature_string {
     my $func = shift;
-    return $func->{sig_str} //=
-    Ferret::Shared::Utils::signature_to_string($func->{signatures});
+    return $func->{sig_str} //= signature_to_string($func->{signatures});
 }
 
 sub detailed_signature_string {
     my $func = shift;
-    return $func->{detailed_sig_str} if defined $func->{detailed_sig_str};
-    my $sig = $func->signature_string || '';
-    my $ret_sig = Ferret::Shared::Utils::signature_to_string($func->{returns});
-    $ret_sig =~ s/^\$result:(\w+)$/$1/;
-    $sig .= ' ' if length $sig && length $ret_sig;
-    $sig .= '-> '.$ret_sig if length $ret_sig;
-    return $func->{detailed_sig_str} = $sig;
+    return $func->{detailed_sig_str} //= detailed_signature_to_string(
+        $func->{signatures},
+        $func->{returns}
+    );
 }
 
 # fetch the global ferret prototype from which all functions inherit.

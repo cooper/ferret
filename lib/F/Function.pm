@@ -7,7 +7,9 @@ use 5.010;
 
 use parent qw(F::Node);
 use Scalar::Util qw(weaken);
-use Ferret::Shared::Utils qw(dot_trim);
+use Ferret::Shared::Utils qw(
+    dot_trim signature_to_string detailed_signature_to_string
+);
 
 sub anonymous       { shift->{anonymous}    }
 sub body            { shift->first_child    }
@@ -22,6 +24,14 @@ sub new {
 }
 
 sub desc {
+    my $func = shift;
+    my $sig  = $func->detailed_signature_string;
+    my $desc = $func->desc_type;
+    $desc .= " { $sig }" if length $sig;
+    return $desc;
+}
+
+sub desc_type {
     my $func = shift;
     if ($func->is_method) {
         my $method = $func;
@@ -77,6 +87,23 @@ sub signature {
         $a
     } shift->arguments;
     return \@args;
+}
+
+sub return_signature {
+    my @args = map {
+        my $a = {
+            name => $_->key,
+            type => $_->type_string
+        };
+        $a
+    } shift->returns;
+    return \@args;
+}
+
+sub signature_string { signature_to_string(shift->signature) }
+sub detailed_signature_string {
+    my $func = shift;
+    detailed_signature_to_string($func->signature, $func->return_signature);
 }
 
 # find the owner of the function or method.

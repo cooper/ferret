@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use parent qw(F::Node);
 
-
+sub key   { 'result' }
 sub value { shift->first_child }
 
 sub type_string {

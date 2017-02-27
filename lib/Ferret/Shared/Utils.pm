@@ -257,4 +257,14 @@ sub signatures_compatible {
     return 1;
 }
 
+# ($arg_sig, $ret_sig)
+sub detailed_signature_to_string {
+    my $sig_str = signature_to_string(shift);
+    my $ret_str = signature_to_string(shift);
+    $ret_str =~ s/^\$result:(\w+)$/$1/;
+    $sig_str .= ' ' if length $sig_str && length $ret_str;
+    $sig_str .= '-> '.$ret_str if length $ret_str;
+    return $sig_str;
+}
+
 1
