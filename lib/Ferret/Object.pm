@@ -667,7 +667,7 @@ sub is_code {
 
 # calling a non-function.
 sub call {
-    my ($obj, undef, undef, undef, $_pos) = @_;
+    my $obj = shift;
 
     # try to convert to a function.
     if (my $to_func = $obj->property('toFunction')) {
