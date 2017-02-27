@@ -93,7 +93,6 @@ type NonEmpty {
 
     #> The string length is not zero (`.length != 0`)
     satisfies .length != 0
-
 }
 
 #> Performs an uppercase transformation.
@@ -104,7 +103,6 @@ type Uppercase {
 
     #> The string transforms to an uppercase version (`.uppercase`)
     transform .uppercase
-
 }
 
 #> Performs a lowercase transformation.
@@ -115,7 +113,6 @@ type Lowercase {
 
     #> The string transforms to an lowercase version (`.lowercase`)
     transform .lowercase
-
 }
 
 alias NE = NonEmpty

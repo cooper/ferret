@@ -43,6 +43,7 @@ $number.round
 ```
 
 Computed property. Nearest integer to the number.
+Examples: `3.5` -> `4`, `3.4` -> `3`.
 
 
 
@@ -53,6 +54,7 @@ $number.ceil
 ```
 
 Computed property. Smallest integer that is greater than or equal to the number.
+Example: `3.001.ceil` -> `4`.
 
 
 
@@ -63,6 +65,7 @@ $number.floor
 ```
 
 Computed property. Greatest integer less than or equal to the number.
+Example: `3.999` -> `3`.
 
 
 
@@ -73,6 +76,7 @@ $number.square
 ```
 
 Computed property. Square of the number (`n ^ 2`).
+Example: `2.square` -> `4`.
 
 
 
@@ -83,6 +87,7 @@ $number.sqrt
 ```
 
 Computed property. Square root of the number (`n ^ (1/2)`).
+Example: `4.sqrt` -> `2`.
 
 
 
@@ -93,6 +98,7 @@ $number.cbrt
 ```
 
 Computed property. Cube root of the number (`n ^ (1/3)`).
+Example: `8.cbrt` -> `2`.
 
 
 
@@ -103,6 +109,7 @@ $number.root($root: Num)
 ```
 
 Nth root of the number.
+Example: `8.root(3)` -> `2`.
 
 
 #### Arguments
@@ -131,7 +138,7 @@ The number's factorial (`n!`). This can also be written `n!` because
 Number.Inf
 ```
 
-Infinity.
+Infinity. Alias `Inf` exists in the global context.
 
 ### NaN
 
@@ -139,7 +146,7 @@ Infinity.
 Number.NaN
 ```
 
-Not a number.
+Not a number. Alias `NaN` exists in the global context.
 
 ## Type interfaces
 

@@ -15,25 +15,32 @@ prop even
 #> Boolean oddness of the number
 prop odd
 
-#> Nearest integer to the number
+#> Nearest integer to the number.
+#| Examples: `3.5` -> `4`, `3.4` -> `3`.
 prop round
 
-#> Smallest integer that is greater than or equal to the number
+#> Smallest integer that is greater than or equal to the number.
+#| Example: `3.001.ceil` -> `4`.
 prop ceil
 
-#> Greatest integer less than or equal to the number
+#> Greatest integer less than or equal to the number.
+#| Example: `3.999` -> `3`.
 prop floor
 
-#> Square of the number (`n ^ 2`)
+#> Square of the number (`n ^ 2`).
+#| Example: `2.square` -> `4`.
 prop square
 
-#> Square root of the number (`n ^ (1/2)`)
+#> Square root of the number (`n ^ (1/2)`).
+#| Example: `4.sqrt` -> `2`.
 prop sqrt
 
-#> Cube root of the number (`n ^ (1/3)`)
+#> Cube root of the number (`n ^ (1/3)`).
+#| Example: `8.cbrt` -> `2`.
 prop cbrt
 
-#> Nth root of the number
+#> Nth root of the number.
+#| Example: `8.root(3)` -> `2`.
 method root {
 
     #> The root. For example, `3` is the cube root.
@@ -73,8 +80,8 @@ type Integer {
 
 alias Int = Integer
 
-#> Infinity
+#> Infinity. Alias `Inf` exists in the global context.
 share $Inf = Num("inf")
 
-#> Not a number
+#> Not a number. Alias `NaN` exists in the global context.
 share $NaN = Num("nan")
