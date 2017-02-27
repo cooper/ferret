@@ -164,7 +164,7 @@
 #                                      Argument list [1 item]
 #                                          Item 0
 #                                              Lexical variable '$data'
-#                  On ('resetState' callback)
+#                  On ('callDisconnect' callback)
 #                      Expression ('on' parameter)
 #                          Property 'disconnected'
 #                              Instance variable '@sock'
@@ -172,7 +172,7 @@
 #                          Function body
 #                              Instruction
 #                                  Call
-#                                      Instance variable '@_resetState'
+#                                      Instance variable '@disconnected'
 #                                      Argument list [0 items]
 #          Method 'connect'
 #              Function body
@@ -392,6 +392,10 @@
 #                      Assignment
 #                          Instance variable '@channels'
 #                          Hash [0 items]
+#                  Instruction
+#                      Assignment
+#                          Instance variable '@_didAutojoin'
+#                          Boolean false
 #          Method 'copy'
 #              Function body
 #                  Instruction
@@ -515,11 +519,11 @@ my $result = do {
     # Anonymous function definition
     my $func_2 = function_def(
         $f, undef,
-        'resetState',
+        'callDisconnect',
         undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            $$self->{'_resetState'}
+            $$self->{'disconnected'}
               ->( [ undef, [] ], $scope, undef, $pos->(43.2) );
             return $ret;
         }
@@ -676,8 +680,8 @@ my $result = do {
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                $$self->{'sock'}->property_u( 'connect', $pos->(51.2) )
-                  ->( [ undef, [] ], $scope, undef, $pos->(51.3) );
+                $$self->{'sock'}->property_u( 'connect', $pos->(50.2) )
+                  ->( [ undef, [] ], $scope, undef, $pos->(50.3) );
                 return $ret;
             }
         );
@@ -696,13 +700,13 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 56.2 ) || return $ret_func->();
+                need( $scope, $args, 'line', 55.2 ) || return $ret_func->();
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, $pos->(57.2)
+                    $scope, undef, $pos->(56.2)
                 );
-                $$self->{'sock'}->property_u( 'println', $pos->(58.2) )
-                  ->( [ $$scope->{'line'} ], $scope, undef, $pos->(58.3) );
+                $$self->{'sock'}->property_u( 'println', $pos->(57.2) )
+                  ->( [ $$scope->{'line'} ], $scope, undef, $pos->(57.3) );
                 return $ret;
             }
         );
@@ -722,10 +726,10 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'line', 63.2 ) || return $ret_func->();
+                need( $scope, $args, 'line', 62.2 ) || return $ret_func->();
                 $$scope->{'say'}->(
                     [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
-                    $scope, undef, $pos->(64.2)
+                    $scope, undef, $pos->(63.2)
                 );
                 var(
                     $scope,
@@ -733,15 +737,15 @@ my $result = do {
                         [ $$scope->{'line'}, ${ $scope->{special} }->{'self'} ],
                         $scope,
                         undef,
-                        $pos->(67.3)
+                        $pos->(66.3)
                     ),
                     $file_scope,
-                    $pos->(67.1)
+                    $pos->(66.1)
                 );
                 {
                     my $maybe_0 = $$self->{'handlers'}->property_u(
-                        $$scope->{'msg'}->property_u( 'command', $pos->(70.5) ),
-                        $pos->(70.2)
+                        $$scope->{'msg'}->property_u( 'command', $pos->(69.5) ),
+                        $pos->(69.2)
                     );
                     if ( bool($maybe_0) ) {
                         $maybe_0->(
@@ -754,7 +758,7 @@ my $result = do {
                                 ]
                             ],
                             $scope, undef,
-                            $pos->(70.8)
+                            $pos->(69.8)
                         );
                     }
                 }
@@ -777,12 +781,12 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'target', 84.2 ) || return $ret_func->();
+                need( $scope, $args, 'target', 83.2 ) || return $ret_func->();
                 if (
                     bool(
                         $$scope->{'target'}
-                          ->property_u( 'hasPrefix', $pos->(86.3) )
-                          ->( [ str( $f, "#" ) ], $scope, undef, $pos->(86.4) )
+                          ->property_u( 'hasPrefix', $pos->(85.3) )
+                          ->( [ str( $f, "#" ) ], $scope, undef, $pos->(85.4) )
                     )
                   )
                 {
@@ -791,7 +795,7 @@ my $result = do {
                     return $ret_func->(
                         $$self->{'getChannel'}->(
                             [ $$scope->{'target'} ], $scope,
-                            undef,                   $pos->(87.3)
+                            undef,                   $pos->(86.3)
                         )
                     );
                 }
@@ -799,7 +803,7 @@ my $result = do {
                     return $ret_func->(
                         $$self->{'getUser'}->(
                             [ $$scope->{'target'} ], $scope,
-                            undef,                   $pos->(89.3)
+                            undef,                   $pos->(88.3)
                         )
                     );
                 }
@@ -822,7 +826,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'name', 94.2 ) || return $ret_func->();
+                need( $scope, $args, 'name', 93.2 ) || return $ret_func->();
                 if (
                     bool(
                         var(
@@ -830,14 +834,14 @@ my $result = do {
                             channel => $$self->{'channels'}->get_index_value(
                                 [
                                     $$scope->{'name'}->property_u(
-                                        'lowercase', $pos->(95.35)
+                                        'lowercase', $pos->(94.35)
                                     )
                                 ],
                                 $scope,
-                                $pos->(95.25)
+                                $pos->(94.25)
                             ),
                             $file_scope,
-                            $pos->(95.15)
+                            $pos->(94.15)
                         )
                     )
                   )
@@ -856,7 +860,7 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(97.15)
+                        $pos->(96.15)
                     )
                 );
                 return $ret;
@@ -878,7 +882,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'nick', 102.2 ) || return $ret_func->();
+                need( $scope, $args, 'nick', 101.2 ) || return $ret_func->();
                 if (
                     bool(
                         var(
@@ -886,14 +890,14 @@ my $result = do {
                             user => $$self->{'users'}->get_index_value(
                                 [
                                     $$scope->{'nick'}->property_u(
-                                        'lowercase', $pos->(103.35)
+                                        'lowercase', $pos->(102.35)
                                     )
                                 ],
                                 $scope,
-                                $pos->(103.25)
+                                $pos->(102.25)
                             ),
                             $file_scope,
-                            $pos->(103.15)
+                            $pos->(102.15)
                         )
                     )
                   )
@@ -912,7 +916,7 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(105.15)
+                        $pos->(104.15)
                     )
                 );
                 return $ret;
@@ -934,7 +938,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'name', 110.2 ) || return $ret_func->();
+                need( $scope, $args, 'name', 109.2 ) || return $ret_func->();
                 if (
                     bool(
                         var(
@@ -942,14 +946,14 @@ my $result = do {
                             server => $$self->{'servers'}->get_index_value(
                                 [
                                     $$scope->{'name'}->property_u(
-                                        'lowercase', $pos->(111.35)
+                                        'lowercase', $pos->(110.35)
                                     )
                                 ],
                                 $scope,
-                                $pos->(111.25)
+                                $pos->(110.25)
                             ),
                             $file_scope,
-                            $pos->(111.15)
+                            $pos->(110.15)
                         )
                     )
                   )
@@ -968,7 +972,7 @@ my $result = do {
                             ]
                         ],
                         $scope, undef,
-                        $pos->(113.15)
+                        $pos->(112.15)
                     )
                 );
                 return $ret;
@@ -987,16 +991,17 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
                     users => create_hash( $f, [] ),
-                    $pos->(124.2)
+                    $pos->(123.2)
                 );
                 $self->set_property(
                     servers => create_hash( $f, [] ),
-                    $pos->(125.2)
+                    $pos->(124.2)
                 );
                 $self->set_property(
                     channels => create_hash( $f, [] ),
-                    $pos->(126.2)
+                    $pos->(125.2)
                 );
+                $self->set_property( _didAutojoin => $false, $pos->(126.2) );
                 return $ret;
             }
         );

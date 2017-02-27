@@ -178,7 +178,8 @@ In order to comply, the test object must satisfy each of the following condition
 
 ### Integer
 
-Of floating-point numbers. Alias `Int` exists in the global context.
+This interface promises an integer value, returning the `.floor` property
+of floating-point numbers. Alias `Int` exists in the global context.
 
 
 #### Restraints and transforms

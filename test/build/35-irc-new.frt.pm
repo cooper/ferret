@@ -745,6 +745,32 @@
 #                      Argument list [1 item]
 #                          Item 0
 #                              Lexical variable '$message'
+#      On
+#          Expression ('on' parameter)
+#              Property 'disconnected'
+#                  Lexical variable '$conn'
+#          Anonymous function
+#              Function body
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  String 'Disconnect...'
+#                  Instruction
+#                      Call
+#                          Bareword 'delay'
+#                          Argument list [2 items]
+#                              Item 0
+#                                  Number '5'
+#                              Item 1
+#                                  Anonymous function
+#                                      Function body
+#                                          Instruction
+#                                              Call
+#                                                  Property 'connect'
+#                                                      Lexical variable '$bot'
+#                                                  Argument list [0 items]
 #      Instruction
 #          Assignment
 #              Property 'autojoin'
@@ -1573,6 +1599,41 @@ my $result = do {
             return $ret;
         }
     );
+
+    # Anonymous function definition
+    my $func_14 = function_def(
+        $f, undef, undef, undef, undef,
+        sub {
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+            $$scope->{'bot'}->property_u( 'connect', $pos->(152.2) )
+              ->( [ undef, [] ], $scope, undef, $pos->(152.3) );
+            return $ret;
+        }
+    );
+
+    # Anonymous function definition
+    my $func_15 = function_def(
+        $f, undef, undef, undef, undef,
+        sub {
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+            $$scope->{'say'}->(
+                [ str( $f, "Disconnected. Trying again." ) ],
+                $scope, undef, $pos->(150.2)
+            );
+            $$scope->{'delay'}->(
+                [
+                    num( $f, "5" ),
+                    $func_14->inside_scope(
+                        (undef) => $scope,
+                        undef, undef, $ins, undef, undef
+                    )
+                ],
+                $scope, undef,
+                $pos->(151.2)
+            );
+            return $ret;
+        }
+    );
     $func_0->inside_scope(
         respondFactoid => $scope,
         $context, undef, $ins, undef, undef
@@ -1702,14 +1763,24 @@ my $result = do {
         ),
         {}
     );
+    on(
+        $$scope->{'conn'},
+        'disconnected',
+        $self, $scope,
+        $func_15->inside_scope(
+            (undef) => $scope,
+            undef, undef, $ins, undef, undef
+        ),
+        {}
+    );
     $$scope->{'conn'}->set_property(
         autojoin => create_list( $f, [ str( $f, "#k" ) ] ),
-        $pos->(149.3)
+        $pos->(156.3)
     );
-    $$scope->{'bot'}->property_u( 'addConnection', $pos->(150.2) )
-      ->( [ $$scope->{'conn'} ], $scope, undef, $pos->(150.3) );
-    $$scope->{'bot'}->property_u( 'connect', $pos->(151.2) )
-      ->( [ undef, [] ], $scope, undef, $pos->(151.3) );
+    $$scope->{'bot'}->property_u( 'addConnection', $pos->(157.2) )
+      ->( [ $$scope->{'conn'} ], $scope, undef, $pos->(157.3) );
+    $$scope->{'bot'}->property_u( 'connect', $pos->(158.2) )
+      ->( [ undef, [] ], $scope, undef, $pos->(158.3) );
 };
 
 after_content();

@@ -70,7 +70,7 @@ type Odd {
 }
 
 #> This interface promises an integer value, returning the `.floor` property
-#> of floating-point numbers. Alias `Int` exists in the global context.
+#| of floating-point numbers. Alias `Int` exists in the global context.
 type Integer {
     isa *class
 

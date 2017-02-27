@@ -146,6 +146,13 @@ func ircsay {
     $chan.privmsg($message)
 }
 
+on $conn.disconnected {
+    say("Disconnected. Trying again.")
+    delay(5) {
+        $bot.connect()
+    }
+}
+
 $conn.autojoin = ["\#k"]
 $bot.addConnection($conn)
 $bot.connect()

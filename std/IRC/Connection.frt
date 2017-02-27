@@ -38,10 +38,9 @@ init {
         @_handleLine($data)
     }
 
-    # on disconnect, clear object pool
-    on @sock.disconnected, :resetState
-        @_resetState()
-
+    # on disconnect, call connection disconnect
+    on @sock.disconnected, :callDisconnect
+        @disconnected()
 }
 
 #=== Data ===
@@ -116,7 +115,7 @@ method getServer {
 #=== Hooks ===#
 
 #> Called when a connection to the socket is established.
-method connected
+method hook connected
 
 #> Called on disconnect, whether it be user-initiated or due to error.
 method hook disconnected {
@@ -124,6 +123,7 @@ method hook disconnected {
     @users = [:]
     @servers = [:]
     @channels = [:]
+    @_didAutojoin = false
 }
 
 #=== Miscellaneous ===
