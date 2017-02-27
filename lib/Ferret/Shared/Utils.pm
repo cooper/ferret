@@ -73,42 +73,68 @@ sub dot_trim {
 
 state $link_map = {
 
-    # numbers
+    ### NUMBERS
+
     'Num'               => '[Number](/std/doc/Number.md)',
     'Number'            => '[Number](/std/doc/Number.md)',
+
+    # even numbers
     'Num::Even'         => '[Even number](/std/doc/Number.md)',
     'Number::Even'      => '[Even number](/std/doc/Number.md)',
+
+    # odd numbers
     'Num::Odd'          => '[Odd number](/std/doc/Number.md)',
     'Number::Odd'       => '[Odd number](/std/doc/Number.md)',
+
+    # integers
+    'Int'               => '[Number (auto-integer)](/std/doc/Number.md)',
+    'Num::Int'          => '[Number (auto-integer)](/std/doc/Number.md)',
     'Num::Integer'      => '[Number (auto-integer)](/std/doc/Number.md)',
     'Number::Integer'   => '[Number (auto-integer)](/std/doc/Number.md)',
+    'Number::Int'       => '[Number (auto-integer)](/std/doc/Number.md)',
 
-    # strings
+    ### STRINGS
+
     'Str'               => '[String](/std/doc/String.md)',
     'String'            => '[String](/std/doc/String.md)',
+
+    # uppercase strings
     'Str::UC'           => '[String (auto-uppercase)](/std/doc/String.md)',
+    'Str::Uppercase'    => '[String (auto-uppercase)](/std/doc/String.md)',
     'String::UC'        => '[String (auto-uppercase)](/std/doc/String.md)',
+    'String::Uppercase' => '[String (auto-uppercase)](/std/doc/String.md)',
+
+    # lowercase strings
     'Str::LC'           => '[String (auto-lowercase)](/std/doc/String.md)',
+    'Str::Lowercase'    => '[String (auto-lowercase)](/std/doc/String.md)',
     'String::LC'        => '[String (auto-lowercase)](/std/doc/String.md)',
+    'String::Lowercase' => '[String (auto-lowercase)](/std/doc/String.md)',
+
+    # non-empty strings
+    'Str::NE'           => '[Nonempty string](/std/doc/String.md)',
     'Str::NonEmpty'     => '[Nonempty string](/std/doc/String.md)',
     'String::NonEmpty'  => '[Nonempty string](/std/doc/String.md)',
+    'String::NE'        => '[Nonempty string](/std/doc/String.md)',
 
-    # regular expressions
+    ### REGULAR EXPRESSIONS
+
     'Rgx'               => '[Regex](/std/doc/Regex.md)',
     'Regex'             => '[Regex](/std/doc/Regex.md)',
 
-    # symbols
+    ### SYMBOLS
+
     'Sym'               => '[Symbol](/std/doc/Symbol.md)',
     'Symbol'            => '[Symbol](/std/doc/Symbol.md)',
 
-    # other
+    ### BOOLEANS
+
     'Bool'              => '[Bool](/std/doc/Bool.md)',
 
-    # Math
+    ### MATH
+
     'Math::Point'       => '[Math::Point](/std/doc/Math/Point.md)',
     'Math::Line'        => '[Math::Point](/std/doc/Math/Line.md)',
     'Math::Rect'        => '[Math::Rect](/std/doc/Math/Rect.md)'
-
 };
 
 # link for a built-in type.

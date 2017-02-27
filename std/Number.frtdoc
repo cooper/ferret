@@ -6,72 +6,44 @@ class Number
 #| This class encompasses all sorts of
 #| [real numbers](https://en.wikipedia.org/wiki/Real_number), including integers
 #| and inexact floating-point values in the native architecture's
-#| double-precision representation; as well as the
-#| abstract concepts of [infinity](#inf) and [NaN](#nan).
+#| double-precision representation; as well as the more abstract concepts of
+#| [infinity](#inf) and [NaN](#nan).
 
 #> Boolean evenness of the number
-prop? even
+prop even
 
 #> Boolean oddness of the number
-prop? odd
+prop odd
 
-#> The nearest integer to the number
+#> Nearest integer to the number
 prop round
 
-#> The smallest integer that is greater than or equal to the number
+#> Smallest integer that is greater than or equal to the number
 prop ceil
 
-#> The greatest integer less than or equal to the number
+#> Greatest integer less than or equal to the number
 prop floor
 
-#> The square of the number (`n ^ 2`)
+#> Square of the number (`n ^ 2`)
 prop square
 
-#> The square root of the number (`n ^ (1/2)`)
+#> Square root of the number (`n ^ (1/2)`)
 prop sqrt
 
-#> The cube root of the number (`n ^ (1/3)`)
+#> Cube root of the number (`n ^ (1/3)`)
 prop cbrt
 
-#> Returns the Nth root of the number
+#> Nth root of the number
 method root {
 
     #> The root. For example, `3` is the cube root.
     need $root: Num
-
 }
 
-#> Returns the sum of the provided numbers
-func sum {
-
-    #> A group of numbers
-    need $nums: Num...
-
-}
-
-#> Returns the product of the provied numbers
-func product {
-
-    #> A group of numbers
-    need $nums: Num...
-
-}
-
-#> Returns the smallest of the provided numbers
-func min {
-
-    #> A group of numbers
-    need $nums: Num...
-
-}
-
-#> Returns the greatest of the provided numbers
-func max {
-
-    #> A group of numbers
-    need $nums: Num...
-
-}
+#> The number's factorial (`n!`). This can also be written `n!` because
+#| "calling" a number yields its factorial. Non-integers are transformed with
+#| `.floor`.
+method factorial { }
 
 #> An interface to which only even numbers conform
 type Even {
@@ -79,7 +51,6 @@ type Even {
 
     #> The number is even (`.even`)
     satisfies .even
-
 }
 
 #> An interface to which only odd numbers conform
@@ -91,19 +62,19 @@ type Odd {
 
 }
 
-#> An interface which truncates floating point numbers to integers
+#> This interface promises an integer value, returning the `.floor` property
+#> of floating-point numbers. Alias `Int` exists in the global context.
 type Integer {
     isa *class
 
     #> The number is truncated to its `.floor` value
     transform .floor
-
 }
 
 alias Int = Integer
 
-#> The constant infinity
-share $inf = Num("inf")
+#> Infinity
+share $Inf = Num("inf")
 
-#> The constant NaN value (not a number)
-share $nan = Num("nan")
+#> Not a number
+share $NaN = Num("nan")

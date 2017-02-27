@@ -134,7 +134,7 @@
 #          Instruction
 #              Shared variable declaration
 #                  Assignment
-#                      Lexical variable '$inf'
+#                      Lexical variable '$Inf'
 #                      Call
 #                          Bareword 'Num'
 #                          Argument list [1 item]
@@ -143,13 +143,28 @@
 #          Instruction
 #              Shared variable declaration
 #                  Assignment
-#                      Lexical variable '$nan'
+#                      Lexical variable '$NaN'
 #                      Call
 #                          Bareword 'Num'
 #                          Argument list [1 item]
 #                              Item 0
 #                                  String 'nan'
-#      Include (Int, Integer, Math, Num)
+#      Instruction
+#          Alias
+#              Assignment
+#                  Bareword 'Int'
+#                  Bareword 'Num::Int'
+#      Instruction
+#          Alias
+#              Assignment
+#                  Bareword 'Inf'
+#                  Bareword 'Num::Inf'
+#      Instruction
+#          Alias
+#              Assignment
+#                  Bareword 'NaN'
+#                  Bareword 'Num::NaN'
+#      Include (Inf, Int, Integer, Math, NaN, Num, Num::Inf, Num::Int, Num::NaN)
 package FF;
 
 use warnings;
@@ -190,9 +205,9 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'sqrt', $pos->(21.3) )->(
+                    $$scope->{'Math'}->property_u( 'sqrt', $pos->(26.3) )->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                $pos->(21.4)
+                        undef,                                $pos->(26.4)
                     )
                 );
                 return $ret;
@@ -205,7 +220,7 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'root'}
-                      ->( [ num( $f, "3" ) ], $scope, undef, $pos->(25.3) ) );
+                      ->( [ num( $f, "3" ) ], $scope, undef, $pos->(31.3) ) );
                 return $ret;
             }
         );
@@ -280,13 +295,13 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'root', 41.2 ) || return $ret_func->();
+                need( $scope, $args, 'root', 51.2 ) || return $ret_func->();
                 return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'root', $pos->(42.15) )->(
+                    $$scope->{'Math'}->property_u( 'root', $pos->(52.15) )->(
                         [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
                         $scope,
                         undef,
-                        $pos->(42.2)
+                        $pos->(52.2)
                     )
                 );
                 return $ret;
@@ -300,7 +315,7 @@ my $result = do {
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, new => num( $f, "1" ), $file_scope, $pos->(46.2) );
+                var( $scope, new => num( $f, "1" ), $file_scope, $pos->(57.2) );
                 if (
                     bool(
                         less(
@@ -333,10 +348,10 @@ my $result = do {
                                     $$scope->{'i'}
                                 ),
                                 $file_scope,
-                                $pos->(50.2)
+                                $pos->(61.2)
                             );
                         },
-                        $pos->(49.1)
+                        $pos->(60.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -436,21 +451,25 @@ my $result = do {
             },
             undef
         );
-        $class->set_property( Int => $$scope->{'Integer'}, $pos->(18.3) );
+        $class->set_property( Int => $$scope->{'Integer'}, $pos->(22.3) );
         var(
             $class,
-            inf => $$scope->{'Num'}
-              ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(58.5) ),
-            undef, $pos->(58.3)
+            Inf => $$scope->{'Num'}
+              ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(71.5) ),
+            undef, $pos->(71.3)
         );
         var(
             $class,
-            nan => $$scope->{'Num'}
-              ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(59.5) ),
-            undef, $pos->(59.3)
+            NaN => $$scope->{'Num'}
+              ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(74.5) ),
+            undef, $pos->(74.3)
         );
     }
-    load_namespaces( $context, qw(Int Integer Math Num) );
+    load_namespaces( $context,
+        qw(Inf Int Integer Math NaN Num Num::Inf Num::Int Num::NaN) );
+    $context->set_property( Int => $$scope->{'Num::Int'}, $pos->(80.3) );
+    $context->set_property( Inf => $$scope->{'Num::Inf'}, $pos->(81.3) );
+    $context->set_property( NaN => $$scope->{'Num::NaN'}, $pos->(82.3) );
 };
 
 after_content();

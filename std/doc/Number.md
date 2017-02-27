@@ -9,8 +9,8 @@ performing mathematical calculations.
 This class encompasses all sorts of
 [real numbers](https://en.wikipedia.org/wiki/Real_number), including integers
 and inexact floating-point values in the native architecture's
-double-precision representation; as well as the
-abstract concepts of [infinity](#inf) and [NaN](#nan).
+double-precision representation; as well as the more abstract concepts of
+[infinity](#inf) and [NaN](#nan).
 
 
 
@@ -22,7 +22,7 @@ abstract concepts of [infinity](#inf) and [NaN](#nan).
 $number.even
 ```
 
-Once-computed property. Boolean evenness of the number.
+Computed property. Boolean evenness of the number.
 
 
 
@@ -32,7 +32,7 @@ Once-computed property. Boolean evenness of the number.
 $number.odd
 ```
 
-Once-computed property. Boolean oddness of the number.
+Computed property. Boolean oddness of the number.
 
 
 
@@ -42,7 +42,7 @@ Once-computed property. Boolean oddness of the number.
 $number.round
 ```
 
-Computed property. The nearest integer to the number.
+Computed property. Nearest integer to the number.
 
 
 
@@ -52,7 +52,7 @@ Computed property. The nearest integer to the number.
 $number.ceil
 ```
 
-Computed property. The smallest integer that is greater than or equal to the number.
+Computed property. Smallest integer that is greater than or equal to the number.
 
 
 
@@ -62,7 +62,7 @@ Computed property. The smallest integer that is greater than or equal to the num
 $number.floor
 ```
 
-Computed property. The greatest integer less than or equal to the number.
+Computed property. Greatest integer less than or equal to the number.
 
 
 
@@ -72,7 +72,7 @@ Computed property. The greatest integer less than or equal to the number.
 $number.square
 ```
 
-Computed property. The square of the number (`n ^ 2`).
+Computed property. Square of the number (`n ^ 2`).
 
 
 
@@ -82,7 +82,7 @@ Computed property. The square of the number (`n ^ 2`).
 $number.sqrt
 ```
 
-Computed property. The square root of the number (`n ^ (1/2)`).
+Computed property. Square root of the number (`n ^ (1/2)`).
 
 
 
@@ -92,7 +92,7 @@ Computed property. The square root of the number (`n ^ (1/2)`).
 $number.cbrt
 ```
 
-Computed property. The cube root of the number (`n ^ (1/3)`).
+Computed property. Cube root of the number (`n ^ (1/3)`).
 
 
 
@@ -102,7 +102,7 @@ Computed property. The cube root of the number (`n ^ (1/3)`).
 $number.root($root: Num)
 ```
 
-Returns the Nth root of the number.
+Nth root of the number.
 
 
 #### Arguments
@@ -110,86 +110,36 @@ Returns the Nth root of the number.
 * __root__: [Number](/std/doc/Number.md) - The root. For example, `3` is the cube root.
 
 
-## Class functions
 
-### sum
-
-```
-Number.sum($nums: Num...)
-```
-
-Returns the sum of the provided numbers.
-
-
-#### Arguments
-
-* __nums__: [Number](/std/doc/Number.md)... - Variable number of arguments. A group of numbers.
-
-
-
-### product
+### factorial
 
 ```
-Number.product($nums: Num...)
+$number.factorial()
 ```
 
-Returns the product of the provied numbers.
-
-
-#### Arguments
-
-* __nums__: [Number](/std/doc/Number.md)... - Variable number of arguments. A group of numbers.
-
-
-
-### min
-
-```
-Number.min($nums: Num...)
-```
-
-Returns the smallest of the provided numbers.
-
-
-#### Arguments
-
-* __nums__: [Number](/std/doc/Number.md)... - Variable number of arguments. A group of numbers.
-
-
-
-### max
-
-```
-Number.max($nums: Num...)
-```
-
-Returns the greatest of the provided numbers.
-
-
-#### Arguments
-
-* __nums__: [Number](/std/doc/Number.md)... - Variable number of arguments. A group of numbers.
-
+The number's factorial (`n!`). This can also be written `n!` because
+"calling" a number yields its factorial. Non-integers are transformed with
+`.floor`.
 
 
 ## Class properties
 
 
-### inf
+### Inf
 
 ```
-Number.inf
+Number.Inf
 ```
 
-The constant infinity.
+Infinity.
 
-### nan
+### NaN
 
 ```
-Number.nan
+Number.NaN
 ```
 
-The constant NaN value (not a number).
+Not a number.
 
 ## Type interfaces
 
@@ -221,7 +171,7 @@ In order to comply, the test object must satisfy each of the following condition
 
 ### Integer
 
-An interface which truncates floating point numbers to integers.
+Of floating-point numbers. Alias `Int` exists in the global context.
 
 
 #### Restraints and transforms
