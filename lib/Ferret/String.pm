@@ -11,21 +11,21 @@ use Scalar::Util qw(blessed looks_like_number);
 use Ferret::Core::Conversion qw(
     pstring pnumber phashref plist flist_fromref
     fstring flist fbool fnumber fsym
-    FUNC_SELF FUNC_ARGS FUNC_RET
+    FUNC_V1 FUNC_SELF FUNC_ARGS FUNC_RET
 );
 
 my @methods = (
     opAdd => {
         need => '$rhs',
-        code => \&op_add
+        code => \&_op_add
     },
     opSim => {
         need => '$rhs:Rgx',
-        code => \&op_sim
+        code => \&_op_sim
     },
     opEqual => {
         need => '$rhs:Str',
-        code => \&op_equal
+        code => \&_op_equal
     },
     length => {
         code => \&_length,
@@ -97,7 +97,7 @@ Ferret::bind_class(
 *new = *Ferret::bind_constructor;
 
 sub init {
-    my ($str, $args) = @_;
+    my ($str, $args) = &FUNC_V1;
     if ($args->has('from')) {
         $str->{str_value} = $args->pstring('from');
     }
@@ -109,16 +109,16 @@ sub init {
 ##################
 
 # string plus string.
-sub op_add {
-    my ($str, $args) = @_;
+sub _op_add {
+    my ($str, $args) = &FUNC_V1;
     my $rhs = $args->{rhs};
     my $new_value = pstring($str).pstring($rhs);
     return fstring($new_value);
 }
 
 # string similar to regex.
-sub op_sim {
-    my ($str, $args, $call_scope) = @_;
+sub _op_sim {
+    my ($str, $args, $call_scope) = &FUNC_V1;
     my $rgx = $args->{rhs};
     my $crt = $str->call_prop(match => [ $rgx ]);
 
@@ -136,19 +136,19 @@ sub op_sim {
 
 # string length.
 sub _length {
-    my $str = shift;
+    my ($str) = &FUNC_V1;
     return Ferret::Number->new($str->f, num_value => length $str->{str_value});
 }
 
 # uppercase copy.
 sub _uppercase {
-    my $str = shift;
+    my ($str) = &FUNC_V1;
     return fstring(uc $str->{str_value});
 }
 
 # lowercase copy.
 sub _lowercase {
-    my $str = shift;
+    my ($str) = &FUNC_V1;
     return fstring(lc $str->{str_value});
 }
 
@@ -159,7 +159,7 @@ sub _lowercase {
 # split into substrings either by a string or regex separator.
 # returns a list of strings.
 sub _split {
-    my ($str, $args) = @_;
+    my ($str, $args) = &FUNC_V1;
     my $limit = $args->pnumber('limit', 0);
 
     # default separator (characters).
@@ -182,7 +182,7 @@ sub _split {
 
 # true if string starts with something.
 sub _hasPrefix {
-    my ($str, $args) = @_;
+    my ($str, $args) = &FUNC_V1;
     my $prefix = $args->pstring('prefix');
     my $pfx = \substr($str->{str_value}, 0, length $prefix);
     return fbool($$pfx eq $prefix);
@@ -210,7 +210,7 @@ sub _trimPrefix {
 
 # true if string ends with something.
 sub _hasSuffix {
-    my ($str, $args) = @_;
+    my ($str, $args) = &FUNC_V1;
     my $suffix = $args->pstring('suffix');
     my $sfx = \substr($str->{str_value}, -length $suffix);
     return fbool($$sfx eq $suffix);
@@ -238,7 +238,7 @@ sub _trimSuffix {
 
 # return a copy with <<placeholders>> replaced with values.
 sub _fill {
-    my ($str, $args) = @_;
+    my ($str, $args) = &FUNC_V1;
 
     # find the values.
     my %info;
@@ -291,7 +291,7 @@ sub _fill {
 # without fail. fail without an error? hmm...
 #
 sub _match {
-    my ($str, $args, undef, undef, $ret) = @_;
+    my ($str, $args, $ret) = @_[FUNC_SELF, FUNC_ARGS, FUNC_RET];
     my $rgx = $args->pregex('rgx');
     my (@parts) = $str->{str_value} =~ m/$rgx/;
     $ret->set_property(matched => fbool(scalar @parts));
@@ -301,13 +301,13 @@ sub _match {
 
 # strings are hashable in nature.
 sub _hash_value {
-    my $str = shift;
+    my ($str) = &FUNC_V1;
     return fsym($str->{str_value});
 }
 
 # convert to number. force Perl numeric context.
 sub _to_number {
-    my $str = shift;
+    my ($str) = &FUNC_V1;
     return fnumber($str->{str_value} + 0)
         if looks_like_number($str->{str_value});
     return fnumber(0);
@@ -315,7 +315,7 @@ sub _to_number {
 
 # get substring
 sub _get_value {
-    my ($str, $args) = @_;
+    my ($str, $args) = &FUNC_V1;
     my $index = $args->pnumber('index');
     return fstring(substr $str->{str_value}, $index, 1);
 }
@@ -323,7 +323,7 @@ sub _get_value {
 # return a copy of the string.
 # TODO: copy will eventually be an Object method.
 sub _copy {
-    my $str = shift;
+    my ($str) = &FUNC_V1;
     return fstring($str->{str_value});
 }
 
@@ -347,7 +347,7 @@ sub equal {
     return $str1->{str_value} eq $str2->{str_value};
 }
 
-sub op_equal {
+sub _op_equal {
     my ($str, $args) = @_;
     return fbool($str->equal($args->{rhs}));
 }
