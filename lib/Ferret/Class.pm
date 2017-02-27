@@ -10,7 +10,7 @@ use parent 'Ferret::Object';
 use Scalar::Util qw(weaken);
 use Ferret::Core::Conversion qw(
     plist ferror fmethod
-    FUNC_ARGS FUNC_RET FUNC_SELF
+    FUNC_V1 FUNC_RET FUNC_ARGS
 );
 
 Ferret::bind_class(
@@ -101,7 +101,6 @@ sub call {
 
     # otherwise, return the instance.
     return $ret->property(lc $class->{name});
-
 }
 
 # initialize an object.
@@ -197,7 +196,6 @@ sub _bind_function {
         $opts{prop},    # is computer property?
         $opts{pset}     # set property after evaluating?
     );
-
 }
 
 ################
@@ -301,7 +299,7 @@ sub _global_class_prototype {
 sub _global_init {
     my $f = shift;
     return $f->{_global_class_init} ||= fmethod(sub {
-        my ($weak_class, $args) = @_[FUNC_SELF, FUNC_ARGS];
+        my ($weak_class, $args) = &FUNC_V1;
         my $obj = delete $args->{obj};
         weaken($weak_class);
         return Ferret::Function->new($f,
