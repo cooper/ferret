@@ -53,7 +53,7 @@
 #                      Return
 #                          Operation
 #                              Instance variable '@i'
-#                              Negated equality operator (!=)
+#                              Less than operator (<)
 #                              Single value [1 item]
 #                                  Item 0
 #                                      Operation
@@ -191,7 +191,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos = before_content( 'Iterator.frt', './std/Iterator.frt' );
 
-use Ferret::Core::Operations qw(_not _sub add any_true nequal num);
+use Ferret::Core::Operations qw(_not _sub add any_true less num);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -217,16 +217,16 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'list', 21.2 ) || return $ret_func->();
+                need( $scope, $args, 'list', 28.2 ) || return $ret_func->();
                 $self->set_property(
                     list =>
-                      $$scope->{'list'}->property_u( 'copy', $pos->(22.4) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(22.5) ),
-                    $pos->(22.2)
+                      $$scope->{'list'}->property_u( 'copy', $pos->(29.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(29.5) ),
+                    $pos->(29.2)
                 );
                 $self->set_property(
                     i => _sub( $scope, $f->zero, num( $f, "1" ) ),
-                    $pos->(23.2)
+                    $pos->(30.2)
                 );
                 return $ret;
             }
@@ -238,14 +238,14 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    nequal(
+                    less(
                         $scope,
                         $$self->{'i'},
                         any_true(
                             $scope,
                             sub {
                                 $$self->{'list'}
-                                  ->property_u( 'lastIndex', $pos->(27.3) );
+                                  ->property_u( 'lastIndex', $pos->(34.3) );
                             },
                             sub { _sub( $scope, $f->zero, num( $f, "1" ) ) }
                         )
@@ -264,12 +264,12 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
                     i => add( $scope, $$self->{'i'}, num( $f, "1" ) ),
-                    $pos->(31.2)
+                    $pos->(38.2)
                 );
                 return $ret_func->(
                     $$self->{'list'}->get_index_value(
                         [ $$self->{'i'} ],
-                        $scope, $pos->(32.3)
+                        $scope, $pos->(39.3)
                     )
                 );
                 return $ret;
@@ -285,7 +285,7 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
                     i => add( $scope, $$self->{'i'}, num( $f, "1" ) ),
-                    $pos->(36.2)
+                    $pos->(43.2)
                 );
                 return $ret_func->(
                     create_list(
@@ -294,7 +294,7 @@ my $result = do {
                             $$self->{'i'},
                             $$self->{'list'}->get_index_value(
                                 [ $$self->{'i'} ],
-                                $scope, $pos->(37.3)
+                                $scope, $pos->(44.3)
                             )
                         ]
                     )
@@ -354,17 +354,17 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'hash', 48.2 ) || return $ret_func->();
+                need( $scope, $args, 'hash', 55.2 ) || return $ret_func->();
                 $self->set_property(
                     hash =>
-                      $$scope->{'hash'}->property_u( 'copy', $pos->(49.4) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(49.5) ),
-                    $pos->(49.2)
+                      $$scope->{'hash'}->property_u( 'copy', $pos->(56.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(56.5) ),
+                    $pos->(56.2)
                 );
                 $self->set_property(
                     keysLeft =>
-                      $$scope->{'hash'}->property_u( 'keys', $pos->(50.4) ),
-                    $pos->(50.2)
+                      $$scope->{'hash'}->property_u( 'keys', $pos->(57.4) ),
+                    $pos->(57.2)
                 );
                 return $ret;
             }
@@ -378,7 +378,7 @@ my $result = do {
                 return $ret_func->(
                     _not(
                         $$self->{'keysLeft'}
-                          ->property_u( 'empty', $pos->(54.4) )
+                          ->property_u( 'empty', $pos->(61.4) )
                     )
                 );
                 return $ret;
@@ -395,14 +395,14 @@ my $result = do {
                 var(
                     $scope,
                     key =>
-                      $$self->{'keysLeft'}->property_u( 'pop', $pos->(58.4) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(58.5) ),
-                    $file_scope, $pos->(58.2)
+                      $$self->{'keysLeft'}->property_u( 'pop', $pos->(65.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(65.5) ),
+                    $file_scope, $pos->(65.2)
                 );
                 return $ret_func->(
                     $$self->{'hash'}->get_index_value(
                         [ $$scope->{'key'} ],
-                        $scope, $pos->(59.3)
+                        $scope, $pos->(66.3)
                     )
                 );
                 return $ret;
@@ -419,9 +419,9 @@ my $result = do {
                 var(
                     $scope,
                     key =>
-                      $$self->{'keysLeft'}->property_u( 'pop', $pos->(63.4) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(63.5) ),
-                    $file_scope, $pos->(63.2)
+                      $$self->{'keysLeft'}->property_u( 'pop', $pos->(70.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(70.5) ),
+                    $file_scope, $pos->(70.2)
                 );
                 return $ret_func->(
                     create_list(
@@ -430,7 +430,7 @@ my $result = do {
                             $$scope->{'key'},
                             $$self->{'hash'}->get_index_value(
                                 [ $$scope->{'key'} ],
-                                $scope, $pos->(64.3)
+                                $scope, $pos->(71.3)
                             )
                         ]
                     )
