@@ -28,9 +28,9 @@ my @methods = (
     eval => {
         code => \&_eval
     },
-    perlEval => {
-        code => \&_perl_eval
-    }
+    # perlEval => {
+    #     code => \&_perl_eval
+    # }
 );
 
 my @functions = (

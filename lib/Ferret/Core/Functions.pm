@@ -12,7 +12,9 @@ use Ferret::Core::Conversion qw(
     pstring         fstring
     pbool           fbool
     pnumber         fnumber
-    pdescription
+    pdescription    ferror
+    FUNC_ARGS       FUNC_RET
+    FUNC_CSCOPE
 );
 
 our %functions = (
@@ -36,6 +38,10 @@ our %functions = (
     delay => {
         need => '$timeout:Num $callback',
         code => \&_delay
+    },
+    timeout => {
+        need => '$timeout:Num $callback',
+        code => \&_timeout
     },
     fetchObject => {
         need => '$address:Num',
@@ -112,6 +118,26 @@ sub _delay {
 
     $ret->set_property(timer => $timer);
     return $ret;
+}
+
+sub _timeout {
+    my ($args, $ret, $call_scope) = @_[FUNC_ARGS, FUNC_RET, FUNC_CSCOPE];
+    my $result;
+    eval {
+        # catch timeouts
+        local $SIG{ALRM} = sub { die "alarm\n" };
+
+        # call the function
+        alarm $args->pnumber('timeout');
+        $result = $args->{callback}->call(undef, $call_scope);
+        alarm 0;
+    };
+    if ($@) {
+        $ret->throw(ferror('Operation timed out', 'TimeoutError'))
+            if $@ eq "alarm\n";
+        die $@;
+    }
+    return $result;
 }
 
 sub _fetchObject {
