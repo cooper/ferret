@@ -238,7 +238,7 @@ Tokenized as `OP_NOT`.
 
 ## Math
 
-The absolute order of math operations is as follows:
+The absolute order of math operation precedence is as follows:
 
 * Positivity `+`
 * Negativity `-`
@@ -402,6 +402,19 @@ Tokenized as `OP_RANGE`.
 
     $set = 1..5 # $set is <Number>(1, 2, 3, 4, 5)
     $set = 5..1 # $set is <Number>(5, 4, 3, 2, 1)
+
+### Factorial operator
+
+    !
+
+Returns the factorial of the integer before it.
+
+Tokenized as `OP_CALL`. This is not truly a math operator but rather the
+zero-argument call operator. Calling a integer returns its factorial. Calling
+a non-integer Number returns the factorial of its `.floor`.
+
+    $f = 4!         # 24
+    $f = 4.9999!    # also 24
 
 ## Equality, inequality, and similarity
 
