@@ -94,6 +94,43 @@
 #                                      Lexical variable '$root'
 #                                  Item 1
 #                                      Special variable '*self'
+#          Method 'factorial'
+#              Function body
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$new'
+#                          Number '1'
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Special variable '*this'
+#                              Less than operator (<)
+#                              Number '2'
+#                      If body
+#                          Instruction
+#                              Return
+#                                  Special variable '*this'
+#                  For (values)
+#                      Expression ('for' parameter)
+#                          Lexical variable '$i'
+#                      Expression ('in' parameter)
+#                          Operation
+#                              Special variable '*this'
+#                              Range operator (..)
+#                              Number '2'
+#                      For body
+#                          Instruction
+#                              Multiplication assignment
+#                                  Lexical variable '$new'
+#                                  Lexical variable '$i'
+#                  Instruction
+#                      Return
+#                          Lexical variable '$new'
+#          Method 'toFunction'
+#              Function body
+#                  Instruction
+#                      Return
+#                          Instance variable '@factorial'
 #          Instruction
 #              Shared variable declaration
 #                  Assignment
@@ -135,7 +172,8 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos = before_content( 'Number.frt', './std/Extension/Number.frt' );
 
-use Ferret::Core::Operations qw(equal mod nequal num pow str);
+use Ferret::Core::Operations
+  qw(bool equal less mod mul nequal num pow range str);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -254,6 +292,70 @@ my $result = do {
                 return $ret;
             }
         );
+
+        # Method event 'factorial' definition
+        my $func_6 = method_event_def(
+            $f, $scope,
+            'factorial',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var( $scope, new => num( $f, "1" ), $file_scope, $pos->(46.2) );
+                if (
+                    bool(
+                        less(
+                            $scope,
+                            ${ $scope->{special} }->{'this'},
+                            num( $f, "2" )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->( ${ $scope->{special} }->{'this'} );
+                }
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        range(
+                            $scope,
+                            ${ $scope->{special} }->{'this'},
+                            num( $f, "2" )
+                        ),
+                        'i',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            var(
+                                $scope,
+                                new => mul(
+                                    $scope, $$scope->{'new'},
+                                    $$scope->{'i'}
+                                ),
+                                $file_scope,
+                                $pos->(50.2)
+                            );
+                        },
+                        $pos->(49.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret_func->( $$scope->{'new'} );
+                return $ret;
+            }
+        );
+
+        # Method event 'toFunction' definition
+        my $func_7 = method_event_def(
+            $f, $scope,
+            'toFunction',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->( $$self->{'factorial'} );
+                return $ret;
+            }
+        );
         $func_0->inside_scope( sqrt => $scope, $proto, $class, $ins, 1, undef );
         $func_1->inside_scope( cbrt => $scope, $proto, $class, $ins, 1, undef );
         $func_2->inside_scope(
@@ -264,6 +366,14 @@ my $result = do {
         $func_4->inside_scope( odd  => $scope, $proto, $class, $ins, 1, undef );
         $func_5->inside_scope(
             root => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_6->inside_scope(
+            factorial => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_7->inside_scope(
+            toFunction => $scope,
             $proto, $class, $ins, undef, undef
         );
         typedef(
@@ -330,14 +440,14 @@ my $result = do {
         var(
             $class,
             inf => $$scope->{'Num'}
-              ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(45.5) ),
-            undef, $pos->(45.3)
+              ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(58.5) ),
+            undef, $pos->(58.3)
         );
         var(
             $class,
             nan => $$scope->{'Num'}
-              ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(46.5) ),
-            undef, $pos->(46.3)
+              ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(59.5) ),
+            undef, $pos->(59.3)
         );
     }
     load_namespaces( $context, qw(Int Integer Math Num) );

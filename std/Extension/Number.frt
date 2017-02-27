@@ -42,5 +42,18 @@ method root {
     return Math.root($root, *self)
 }
 
+method factorial {
+    $new = 1
+    if *this < 2:
+        return *this
+    for $i in *this..2:
+        $new *= $i
+    return $new
+}
+
+method toFunction {
+    return @factorial
+}
+
 share $inf = Num("inf")
 share $nan = Num("nan")
