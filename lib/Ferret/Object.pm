@@ -669,10 +669,9 @@ sub is_code {
 sub call {
     my ($obj, undef, undef, undef, $_pos) = @_;
 
-
     # try to convert to a function.
     if (my $to_func = $obj->property('toFunction')) {
-        return $to_func->call_u->call(@_);
+        return $to_func->call_u(@_)->call(@_);
     }
 
     # throw an error.
