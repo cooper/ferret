@@ -150,21 +150,6 @@ have that suffix, a copy of the original string is returned.
 * __suffix__: [String](/std/doc/String.md) - The suffix to remove.
 
 
-## Class functions
-
-### join
-
-```
-String.join($strs: Str...)
-```
-
-Concatenates strings.
-See also the `List` method [`.join()`](List.md#join).
-
-
-#### Arguments
-
-* __strs__: [String](/std/doc/String.md)... - Variable number of arguments. A group of strings.
 
 
 

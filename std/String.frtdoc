@@ -85,15 +85,6 @@ method trimSuffix {
 
 }
 
-#> Concatenates strings.
-#| See also the `List` method [`.join()`](List.md#join)
-func join {
-
-    #> A group of strings
-    need $strs: Str...
-
-}
-
 #> An interface to which only non-empty strings comply.
 type NonEmpty {
 
