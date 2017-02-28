@@ -292,6 +292,25 @@
 #                      Return pair 'removed'
 #                          Property 'length'
 #                              Lexical variable '$indices'
+#          Method 'contains' { $what -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$what'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@any'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Anonymous function { -> $result }
+#                                          Function body
+#                                              Instruction
+#                                                  Return
+#                                                      Operation
+#                                                          Lexical variable '$what'
+#                                                          Equality operator (==)
+#                                                          Topic variable '$_'
 #          Method 'first' { $code:Code -> $result $result }
 #              Function body
 #                  Instruction
@@ -537,6 +556,19 @@ my $result = do {
             my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
             return $ret_func->( nequal( $scope, $$scope->{'what'}, $ins ) );
+            return $ret;
+        }
+    );
+
+    # Anonymous function definition with topicalizer
+    my $func_10 = function_def(
+        $f, undef, undef,
+        [ { name => '_' } ],
+        undef,
+        sub {
+            my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
+            my $ins = $args->{_};
+            return $ret_func->( equal( $scope, $$scope->{'what'}, $ins ) );
             return $ret;
         }
     );
@@ -1053,8 +1085,40 @@ my $result = do {
             }
         );
 
+        # Method event 'contains' definition
+        my $func_11 = method_event_def(
+            $f, $scope,
+            'contains',
+            [
+                {
+                    name     => 'what',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'what', 105.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$self->{'any'}->(
+                        [
+                            $func_10->inside_scope(
+                                (undef) => $scope,
+                                undef, $class, $ins, undef, undef
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(106.15)
+                    )
+                );
+                return $ret;
+            }
+        );
+
         # Method event 'first' definition
-        my $func_10 = method_event_def(
+        my $func_12 = method_event_def(
             $f, $scope, 'first',
             [
                 {
@@ -1067,7 +1131,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 104.2 ) || return $ret_func->();
+                need( $scope, $args, 'code', 111.2 ) || return $ret_func->();
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
@@ -1079,7 +1143,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               $pos->(106.15)
+                                        undef,               $pos->(113.15)
                                     )
                                 )
                               )
@@ -1090,7 +1154,7 @@ my $result = do {
                                 return $ret_func->( $$scope->{'el'} );
                             }
                         },
-                        $pos->(105.1)
+                        $pos->(112.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1100,7 +1164,7 @@ my $result = do {
         );
 
         # Method event 'any' definition
-        my $func_11 = method_event_def(
+        my $func_13 = method_event_def(
             $f, $scope, 'any',
             [
                 {
@@ -1113,7 +1177,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 113.2 ) || return $ret_func->();
+                need( $scope, $args, 'code', 120.2 ) || return $ret_func->();
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
@@ -1125,7 +1189,7 @@ my $result = do {
                                 bool(
                                     $$scope->{'code'}->(
                                         [ $$scope->{'el'} ], $scope,
-                                        undef,               $pos->(115.15)
+                                        undef,               $pos->(122.15)
                                     )
                                 )
                               )
@@ -1136,7 +1200,7 @@ my $result = do {
                                 return $ret_func->($true);
                             }
                         },
-                        $pos->(114.1)
+                        $pos->(121.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1146,7 +1210,7 @@ my $result = do {
         );
 
         # Method event 'all' definition
-        my $func_12 = method_event_def(
+        my $func_14 = method_event_def(
             $f, $scope, 'all',
             [
                 {
@@ -1159,7 +1223,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 122.2 ) || return $ret_func->();
+                need( $scope, $args, 'code', 129.2 ) || return $ret_func->();
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
@@ -1174,7 +1238,7 @@ my $result = do {
                                             [ $$scope->{'el'} ],
                                             $scope,
                                             undef,
-                                            $pos->(124.2)
+                                            $pos->(131.2)
                                         )
                                     )
                                 )
@@ -1186,7 +1250,7 @@ my $result = do {
                                 return $ret_func->($false);
                             }
                         },
-                        $pos->(123.1)
+                        $pos->(130.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1196,7 +1260,7 @@ my $result = do {
         );
 
         # Method event 'sum' definition
-        my $func_13 = method_event_def(
+        my $func_15 = method_event_def(
             $f, $scope, 'sum', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -1209,10 +1273,10 @@ my $result = do {
                     $scope,
                     c => ${ $scope->{special} }->{'self'}->get_index_value(
                         [ num( $f, "0" ) ],
-                        $scope, $pos->(134.4)
+                        $scope, $pos->(141.4)
                     ),
                     $file_scope,
-                    $pos->(134.2)
+                    $pos->(141.2)
                 );
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
@@ -1229,14 +1293,14 @@ my $result = do {
                                     ${ $scope->{special} }->{'self'}
                                       ->get_index_value(
                                         [ $$scope->{'i'} ], $scope,
-                                        $pos->(136.3)
+                                        $pos->(143.3)
                                       )
                                 ),
                                 $file_scope,
-                                $pos->(136.1)
+                                $pos->(143.1)
                             );
                         },
-                        $pos->(135.1)
+                        $pos->(142.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1246,11 +1310,11 @@ my $result = do {
         );
 
         # Method event 'sum0' definition
-        my $func_14 = method_event_def(
+        my $func_16 = method_event_def(
             $f, $scope, 'sum0', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, c => num( $f, "0" ), $file_scope, $pos->(144.2) );
+                var( $scope, c => num( $f, "0" ), $file_scope, $pos->(151.2) );
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
@@ -1264,10 +1328,10 @@ my $result = do {
                                     $scope, $$scope->{'c'}, $$scope->{'el'}
                                 ),
                                 $file_scope,
-                                $pos->(146.2)
+                                $pos->(153.2)
                             );
                         },
-                        $pos->(145.1)
+                        $pos->(152.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1277,7 +1341,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $func_15 = method_event_def(
+        my $func_17 = method_event_def(
             $f, $scope,
             'iterator',
             undef,
@@ -1287,7 +1351,7 @@ my $result = do {
                 return $ret_func->(
                     $$scope->{'ListIterator'}->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                $pos->(153.3)
+                        undef,                                $pos->(160.3)
                     )
                 );
                 return $ret;
@@ -1295,7 +1359,7 @@ my $result = do {
         );
 
         # Method event 'opAdd' definition
-        my $func_16 = method_event_def(
+        my $func_18 = method_event_def(
             $f, $scope, 'opAdd',
             [
                 {
@@ -1308,16 +1372,16 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 158.2 ) || return $ret_func->();
+                need( $scope, $args, 'rhs', 165.2 ) || return $ret_func->();
                 var(
                     $scope,
                     new => $$self->{'copy'}
-                      ->( [ undef, [] ], $scope, undef, $pos->(159.4) ),
-                    $file_scope, $pos->(159.2)
+                      ->( [ undef, [] ], $scope, undef, $pos->(166.4) ),
+                    $file_scope, $pos->(166.2)
                 );
-                $$scope->{'new'}->property_u( 'push', $pos->(160.2) )->(
+                $$scope->{'new'}->property_u( 'push', $pos->(167.2) )->(
                     [ undef, [ items => $$scope->{'rhs'} ] ],
-                    $scope, undef, $pos->(160.3)
+                    $scope, undef, $pos->(167.3)
                 );
                 return $ret_func->( $$scope->{'new'} );
                 return $ret;
@@ -1325,7 +1389,7 @@ my $result = do {
         );
 
         # Method event 'opSub' definition
-        my $func_17 = method_event_def(
+        my $func_19 = method_event_def(
             $f, $scope, 'opSub',
             [
                 {
@@ -1338,12 +1402,12 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 167.2 ) || return $ret_func->();
+                need( $scope, $args, 'rhs', 174.2 ) || return $ret_func->();
                 var(
                     $scope,
                     new => $$self->{'copy'}
-                      ->( [ undef, [] ], $scope, undef, $pos->(168.4) ),
-                    $file_scope, $pos->(168.2)
+                      ->( [ undef, [] ], $scope, undef, $pos->(175.4) ),
+                    $file_scope, $pos->(175.2)
                 );
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
@@ -1353,12 +1417,12 @@ my $result = do {
                         sub {
                             my ( $scope, $ret_func ) = @_;
                             $$scope->{'new'}
-                              ->property_u( 'removeAll', $pos->(170.2) )->(
+                              ->property_u( 'removeAll', $pos->(177.2) )->(
                                 [ $$scope->{'remove'} ],
-                                $scope, undef, $pos->(170.3)
+                                $scope, undef, $pos->(177.3)
                               );
                         },
-                        $pos->(169.1)
+                        $pos->(176.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1402,32 +1466,36 @@ my $result = do {
             removeAll => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_10->inside_scope(
-            first => $scope,
-            $proto, $class, $ins, undef, undef
-        );
         $func_11->inside_scope(
-            any => $scope,
+            contains => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_12->inside_scope(
+            first => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_13->inside_scope(
+            any => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_14->inside_scope(
             all => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_13->inside_scope( sum => $scope, $proto, $class, $ins, 1, undef );
-        $func_14->inside_scope(
+        $func_15->inside_scope( sum => $scope, $proto, $class, $ins, 1, undef );
+        $func_16->inside_scope(
             sum0 => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $func_15->inside_scope(
+        $func_17->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $func_16->inside_scope(
+        $func_18->inside_scope(
             opAdd => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_17->inside_scope(
+        $func_19->inside_scope(
             opSub => $scope,
             $proto, $class, $ins, undef, undef
         );

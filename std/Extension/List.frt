@@ -99,6 +99,13 @@ method removeAll {
     removed -> $indices.length    #< number of removed elements
 }
 
+#> Returns true if the list contains at least one occurrence of the provided
+#| value.
+method contains {
+    need $what
+    return @any! { -> $what == $_ }
+}
+
 #> Finds the first element to satisfy a code.
 method first {
     need $code: Code
