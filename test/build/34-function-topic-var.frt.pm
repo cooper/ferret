@@ -64,7 +64,7 @@ my $result = do {
         sub {
             my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
-            mul( $scope, $ins, num( $f, "2" ) );
+            mul( $scope, $pos->(1.7), $ins, num( $f, "2" ) );
             return $ret;
         }
     );

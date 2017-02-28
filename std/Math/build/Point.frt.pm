@@ -236,7 +236,7 @@ my $result = do {
                 var(
                     $scope,
                     dx => _sub(
-                        $scope, $$self->{'x'},
+                        $scope, $pos->(10.4), $$self->{'x'},
                         $$scope->{'pt2'}->property_u( 'x', $pos->(10.6) )
                     ),
                     $file_scope,
@@ -245,7 +245,7 @@ my $result = do {
                 var(
                     $scope,
                     dy => _sub(
-                        $scope, $$self->{'y'},
+                        $scope, $pos->(11.4), $$self->{'y'},
                         $$scope->{'pt2'}->property_u( 'y', $pos->(11.6) )
                     ),
                     $file_scope,
@@ -256,8 +256,15 @@ my $result = do {
                         [
                             add(
                                 $scope,
-                                pow( $scope, $$scope->{'dx'}, num( $f, "2" ) ),
-                                pow( $scope, $$scope->{'dy'}, num( $f, "2" ) )
+                                $pos->(12.25),
+                                pow(
+                                    $scope, $pos->(12.25),
+                                    $$scope->{'dx'}, num( $f, "2" )
+                                ),
+                                pow(
+                                    $scope, $pos->(12.25),
+                                    $$scope->{'dy'}, num( $f, "2" )
+                                )
                             )
                         ],
                         $scope, undef,
@@ -298,9 +305,10 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add(
-                        $scope,        str( $f, "(" ),
-                        $$self->{'x'}, str( $f, ", " ),
-                        $$self->{'y'}, str( $f, ")" )
+                        $scope, $pos->(20.15),
+                        str( $f, "(" ),  $$self->{'x'},
+                        str( $f, ", " ), $$self->{'y'},
+                        str( $f, ")" )
                     )
                 );
                 return $ret;
@@ -327,7 +335,11 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    add( $scope, str( $f, "Point" ), $$self->{'pretty'} ) );
+                    add(
+                        $scope, $pos->(28.3),
+                        str( $f, "Point" ), $$self->{'pretty'}
+                    )
+                );
                 return $ret;
             }
         );
@@ -362,8 +374,10 @@ my $result = do {
                             [
                                 x => div(
                                     $scope,
+                                    $pos->(34.45),
                                     add(
                                         $scope,
+                                        $pos->(34.25),
                                         $$scope->{'pt1'}
                                           ->property_u( 'x', $pos->(34.2) ),
                                         $$scope->{'pt2'}
@@ -373,8 +387,10 @@ my $result = do {
                                 ),
                                 y => div(
                                     $scope,
+                                    $pos->(35.45),
                                     add(
                                         $scope,
+                                        $pos->(35.25),
                                         $$scope->{'pt1'}
                                           ->property_u( 'y', $pos->(35.2) ),
                                         $$scope->{'pt2'}

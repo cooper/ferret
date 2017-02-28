@@ -144,8 +144,8 @@ my $result = do {
                             $$self->{'send'}->(
                                 [
                                     add(
-                                        $scope, str( $f, "JOIN " ),
-                                        $$scope->{'name'}
+                                        $scope, $pos->(8.4),
+                                        str( $f, "JOIN " ), $$scope->{'name'}
                                     )
                                 ],
                                 $scope, undef,
@@ -209,6 +209,7 @@ my $result = do {
                                 [
                                     add(
                                         $scope,
+                                        $pos->(16.2),
                                         str( $f, "PRIVMSG " ),
                                         $$scope->{'target'},
                                         str( $f, " :" ),
@@ -244,8 +245,14 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'nick', 23.2 ) || return $ret_func->();
                 $$self->{'send'}->(
-                    [ add( $scope, str( $f, "NICK " ), $$scope->{'nick'} ) ],
-                    $scope, undef, $pos->(24.2)
+                    [
+                        add(
+                            $scope, $pos->(24.4),
+                            str( $f, "NICK " ), $$scope->{'nick'}
+                        )
+                    ],
+                    $scope, undef,
+                    $pos->(24.2)
                 );
                 return $ret;
             }

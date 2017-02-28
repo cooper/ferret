@@ -395,15 +395,15 @@ sub identify_duplicate_barewords {
         $second->throw(\@hints, BarewordDeclarationConflict => $name);
     };
 
-    # functions and methods
+    # functions and methods. we have to do this first because we do not
+    # check %taken since funcs can have the same name.
     foreach my $fm ($main_node->filter_descendants(type => 'Function')) {
 
         my ($owner) = $fm->owner;
         next if !$owner;
         my $key = "$owner/$$fm{name}";
 
-        return $err->($fm->{name}, $fm, $key) if $taken{$key};
-        $taken{$key} = $fm;
+        $taken{$key} ||= $fm;
     }
 
     # aliases

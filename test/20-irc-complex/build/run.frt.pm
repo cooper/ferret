@@ -630,6 +630,7 @@ my $result = do {
                     [
                         equal(
                             $scope,
+                            $pos->(71.4),
                             $$scope->{'msg'}
                               ->property_u( 'command', $pos->(71.35) ),
                             str( $f, "p" )

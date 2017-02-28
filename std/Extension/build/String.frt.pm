@@ -163,8 +163,8 @@ my $result = do {
                             str( $f, " " ),
                             [
                                 limit => add(
-                                    $scope, $$scope->{'wordI'},
-                                    num( $f, "2" )
+                                    $scope, $pos->(30.4),
+                                    $$scope->{'wordI'}, num( $f, "2" )
                                 )
                             ]
                         ],
@@ -201,8 +201,8 @@ my $result = do {
                             str( $f, " " ),
                             [
                                 limit => add(
-                                    $scope, $$scope->{'wordN'},
-                                    num( $f, "1" )
+                                    $scope, $pos->(35.4),
+                                    $$scope->{'wordN'}, num( $f, "1" )
                                 )
                             ]
                         ],
@@ -223,7 +223,11 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
+                    equal(
+                        $scope, $pos->(39.3),
+                        $$self->{'length'}, num( $f, "0" )
+                    )
+                );
                 return $ret;
             }
         );
@@ -250,7 +254,8 @@ my $result = do {
                                 ${ $scope->{special} }->{'class'} );
                         },
                         sub {
-                            nequal( $scope, $$ins->{'length'}, num( $f, "0" ) );
+                            nequal( $scope, $pos->(5.3), $$ins->{'length'},
+                                num( $f, "0" ) );
                         }
                     ],
                     equal_to => undef

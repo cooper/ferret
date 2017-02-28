@@ -132,8 +132,8 @@ my $result = do {
             $$scope->{'say'}->(
                 [
                     add(
-                        $scope, str( $f, "Redirected to " ),
-                        $$scope->{'location'}
+                        $scope, $pos->(9.4),
+                        str( $f, "Redirected to " ), $$scope->{'location'}
                     )
                 ],
                 $scope, undef,
@@ -162,6 +162,7 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(15.4),
                         str( $f, "Got content! Length " ),
                         $$scope->{'content'}
                           ->property_u( 'length', $pos->(15.6) )

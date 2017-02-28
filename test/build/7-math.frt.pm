@@ -142,13 +142,20 @@ my $result = do {
         undef, $pos->(3.2)
     );
     $$scope->{'say'}->(
-        [ add( $scope, str( $f, "Center of rect: " ), $$scope->{'center'} ) ],
-        $scope, undef, $pos->(4.2)
+        [
+            add(
+                $scope, $pos->(4.4),
+                str( $f, "Center of rect: " ), $$scope->{'center'}
+            )
+        ],
+        $scope, undef,
+        $pos->(4.2)
     );
     $$scope->{'say'}->(
         [
             add(
                 $scope,
+                $pos->(5.4),
                 str( $f, "Center distance from origin: " ),
                 $$scope->{'center'}
                   ->property_u( 'distanceFromOrigin', $pos->(5.6) )
@@ -174,13 +181,20 @@ my $result = do {
         undef, $pos->(8.1)
     );
     $$scope->{'say'}->(
-        [ add( $scope, str( $f, "Midpoint: " ), $$scope->{'midpoint'} ) ],
-        $scope, undef, $pos->(9.2)
+        [
+            add(
+                $scope, $pos->(9.4),
+                str( $f, "Midpoint: " ), $$scope->{'midpoint'}
+            )
+        ],
+        $scope, undef,
+        $pos->(9.2)
     );
     $$scope->{'say'}->(
         [
             add(
                 $scope,
+                $pos->(11.2),
                 str( $f, "Square root of four: " ),
                 $$scope->{'Math'}->property_u( 'sqrt', $pos->(11.3) )
                   ->( [ num( $f, "4" ) ], $scope, undef, $pos->(11.35) )

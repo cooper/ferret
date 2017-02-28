@@ -478,6 +478,7 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(30.13333),
                         str( $f, "USER " ),
                         $$self->{'user'},
                         str( $f, " " ),
@@ -492,8 +493,14 @@ my $result = do {
                 $pos->(30.06667)
             );
             $$self->{'send'}->(
-                [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, $pos->(31.2)
+                [
+                    add(
+                        $scope, $pos->(31.4),
+                        str( $f, "NICK " ), $$self->{'nick'}
+                    )
+                ],
+                $scope, undef,
+                $pos->(31.2)
             );
             $$self->{'connected'}
               ->( [ undef, [] ], $scope, undef, $pos->(32.2) );
@@ -702,8 +709,14 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 55.2 ) || return $ret_func->();
                 $$scope->{'say'}->(
-                    [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, $pos->(56.2)
+                    [
+                        add(
+                            $scope, $pos->(56.4),
+                            str( $f, "send: " ), $$scope->{'line'}
+                        )
+                    ],
+                    $scope, undef,
+                    $pos->(56.2)
                 );
                 $$self->{'sock'}->property_u( 'println', $pos->(57.2) )
                   ->( [ $$scope->{'line'} ], $scope, undef, $pos->(57.3) );
@@ -728,8 +741,14 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 62.2 ) || return $ret_func->();
                 $$scope->{'say'}->(
-                    [ add( $scope, str( $f, "recv: " ), $$scope->{'line'} ) ],
-                    $scope, undef, $pos->(63.2)
+                    [
+                        add(
+                            $scope, $pos->(63.4),
+                            str( $f, "recv: " ), $$scope->{'line'}
+                        )
+                    ],
+                    $scope, undef,
+                    $pos->(63.2)
                 );
                 var(
                     $scope,
@@ -1045,9 +1064,10 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add(
-                        $scope,           str( $f, "IRC::Connection(" ),
-                        $$self->{'addr'}, str( $f, "/" ),
-                        $$self->{'port'}, str( $f, ")" )
+                        $scope, $pos->(144.15),
+                        str( $f, "IRC::Connection(" ), $$self->{'addr'},
+                        str( $f, "/" ),                $$self->{'port'},
+                        str( $f, ")" )
                     )
                 );
                 return $ret;

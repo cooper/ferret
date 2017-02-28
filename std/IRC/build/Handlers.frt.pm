@@ -232,11 +232,18 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(15.2),
                         str( $f, "PONG :" ),
                         $$scope->{'msg'}->property_u( 'params', $pos->(15.3) )
                           ->get_index_value(
-                            [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
-                            $scope, $pos->(15.35)
+                            [
+                                _sub(
+                                    $scope, $pos->(15.4),
+                                    $f->zero, num( $f, "1" )
+                                )
+                            ],
+                            $scope,
+                            $pos->(15.35)
                           )
                     )
                 ],
@@ -267,10 +274,17 @@ my $result = do {
                 bool(
                     sim(
                         $scope,
+                        $pos->(26.4),
                         $$scope->{'msg'}->property_u( 'params', $pos->(26.15) )
                           ->get_index_value(
-                            [ _sub( $scope, $f->zero, num( $f, "1" ) ) ],
-                            $scope, $pos->(26.2)
+                            [
+                                _sub(
+                                    $scope, $pos->(26.25),
+                                    $f->zero, num( $f, "1" )
+                                )
+                            ],
+                            $scope,
+                            $pos->(26.2)
                           ),
                         rgx( $f, undef, "^(.+)!(.+)\\\@(.+)\$", undef )
                     )
@@ -326,6 +340,7 @@ my $result = do {
                 bool(
                     any_true(
                         $scope,
+                        $pos->(41.4),
                         sub { _not( $$this->{'autojoin'} ) },
                         sub { $$this->{'_didAutojoin'} }
                     )
@@ -378,7 +393,7 @@ my $result = do {
             }
             $$this->{'me'}->set_property(
                 nick => add(
-                    $scope,
+                    $scope, $pos->(57.3),
                     $$this->{'me'}->property_u( 'nick', $pos->(57.2) ),
                     str( $f, "_" )
                 ),

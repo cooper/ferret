@@ -335,6 +335,7 @@ my $result = do {
             $scope,
             defaultUA => add(
                 $scope,
+                $pos->(5.4),
                 str( $f, "ferret-http/" ),
                 ${ $scope->{special} }->{'class'}
                   ->property_u( 'version', $pos->(5.6) )
@@ -344,7 +345,8 @@ my $result = do {
         );
         var(
             $scope,
-            defaultLength => mul( $scope, num( $f, "64" ), num( $f, "1024" ) ),
+            defaultLength =>
+              mul( $scope, $pos->(6.4), num( $f, "64" ), num( $f, "1024" ) ),
             undef, $pos->(6.2)
         );
     }

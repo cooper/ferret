@@ -148,8 +148,14 @@ my $result = do {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 5.2 ) || return $ret_func->();
             $$scope->{'say'}->(
-                [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
-                $scope, undef, $pos->(6.2)
+                [
+                    add(
+                        $scope, $pos->(6.4),
+                        str( $f, "recv: " ), $$scope->{'data'}
+                    )
+                ],
+                $scope, undef,
+                $pos->(6.2)
             );
             return $ret;
         }
@@ -164,8 +170,14 @@ my $result = do {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 10.2 ) || return $ret_func->();
             $$scope->{'say'}->(
-                [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
-                $scope, undef, $pos->(11.2)
+                [
+                    add(
+                        $scope, $pos->(11.4),
+                        str( $f, "send: " ), $$scope->{'data'}
+                    )
+                ],
+                $scope, undef,
+                $pos->(11.2)
             );
             return $ret;
         }
@@ -182,6 +194,7 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(16.25),
                         str( $f, "USER k " ),
                         str( $f, "*" ),
                         str( $f, " " ),

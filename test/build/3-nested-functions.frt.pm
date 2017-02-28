@@ -141,6 +141,7 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(19.2),
                         $$scope->{'hello'},
                         str( $f, " " ),
                         $$scope->{'hello'}->property_u( 'name', $pos->(19.4) )
@@ -159,8 +160,14 @@ my $result = do {
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}->(
-                [ add( $scope, str( $f, "Hello " ), $$scope->{'name2'} ) ],
-                $scope, undef, $pos->(23.2)
+                [
+                    add(
+                        $scope, $pos->(23.4),
+                        str( $f, "Hello " ), $$scope->{'name2'}
+                    )
+                ],
+                $scope, undef,
+                $pos->(23.2)
             );
             return $ret;
         }
@@ -224,12 +231,18 @@ my $result = do {
     );
     var(
         $scope,
-        pi =>
-          add( $scope, num( $f, "3" ), num( $f, "0.1" ), num( $f, "0.04" ) ),
-        undef, $pos->(28.2)
+        pi => add(
+            $scope,
+            $pos->(28.4),
+            num( $f, "3" ),
+            num( $f, "0.1" ),
+            num( $f, "0.04" )
+        ),
+        undef,
+        $pos->(28.2)
     );
     $$scope->{'say'}->(
-        [ add( $scope, str( $f, "Pi = " ), $$scope->{'pi'} ) ],
+        [ add( $scope, $pos->(29.4), str( $f, "Pi = " ), $$scope->{'pi'} ) ],
         $scope, undef, $pos->(29.2)
     );
 };

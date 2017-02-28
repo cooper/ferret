@@ -250,9 +250,8 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     pow(
-                        $scope,
-                        ${ $scope->{special} }->{'self'},
-                        num( $f, "2" )
+                        $scope, $pos->(36.3),
+                        ${ $scope->{special} }->{'self'}, num( $f, "2" )
                     )
                 );
                 return $ret;
@@ -267,9 +266,8 @@ my $result = do {
                 if (
                     bool(
                         less(
-                            $scope,
-                            ${ $scope->{special} }->{'self'},
-                            num( $f, "0" )
+                            $scope, $pos->(41.3),
+                            ${ $scope->{special} }->{'self'}, num( $f, "0" )
                         )
                     )
                   )
@@ -278,8 +276,8 @@ my $result = do {
 
                     return $ret_func->(
                         _sub(
-                            $scope, $f->zero,
-                            ${ $scope->{special} }->{'self'}
+                            $scope,   $pos->(42.2),
+                            $f->zero, ${ $scope->{special} }->{'self'}
                         )
                     );
                 }
@@ -296,10 +294,10 @@ my $result = do {
                 return $ret_func->(
                     equal(
                         $scope,
+                        $pos->(48.3),
                         mod(
-                            $scope,
-                            ${ $scope->{special} }->{'self'},
-                            num( $f, "2" )
+                            $scope, $pos->(48.3),
+                            ${ $scope->{special} }->{'self'}, num( $f, "2" )
                         ),
                         num( $f, "0" )
                     )
@@ -316,10 +314,10 @@ my $result = do {
                 return $ret_func->(
                     nequal(
                         $scope,
+                        $pos->(53.3),
                         mod(
-                            $scope,
-                            ${ $scope->{special} }->{'self'},
-                            num( $f, "2" )
+                            $scope, $pos->(53.3),
+                            ${ $scope->{special} }->{'self'}, num( $f, "2" )
                         ),
                         num( $f, "0" )
                     )
@@ -366,9 +364,8 @@ my $result = do {
                 if (
                     bool(
                         less(
-                            $scope,
-                            ${ $scope->{special} }->{'self'},
-                            num( $f, "2" )
+                            $scope, $pos->(65.3),
+                            ${ $scope->{special} }->{'self'}, num( $f, "2" )
                         )
                     )
                   )
@@ -381,9 +378,8 @@ my $result = do {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         range(
-                            $scope,
-                            ${ $scope->{special} }->{'self'},
-                            num( $f, "2" )
+                            $scope, $pos->(67.5),
+                            ${ $scope->{special} }->{'self'}, num( $f, "2" )
                         ),
                         'i',
                         sub {
@@ -391,8 +387,8 @@ my $result = do {
                             var(
                                 $scope,
                                 new => mul(
-                                    $scope, $$scope->{'new'},
-                                    $$scope->{'i'}
+                                    $scope,           $pos->(68.2),
+                                    $$scope->{'new'}, $$scope->{'i'}
                                 ),
                                 $file_scope,
                                 $pos->(68.2)

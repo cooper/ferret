@@ -222,10 +222,12 @@ my $result = do {
                                 $scope,
                                 str => add(
                                     $scope,
+                                    $pos->(33.2),
                                     $$scope->{'str'},
                                     add(
-                                        $scope,          str( $f, "    " ),
-                                        $$scope->{'el'}, str( $f, ": " )
+                                        $scope, $pos->(33.4),
+                                        str( $f, "    " ), $$scope->{'el'},
+                                        str( $f, ": " )
                                     )
                                 ),
                                 $file_scope,
@@ -237,10 +239,11 @@ my $result = do {
                                 $scope,
                                 str => add(
                                     $scope,
+                                    $pos->(35.2),
                                     $$scope->{'str'},
                                     add(
-                                        $scope, $$scope->{'el'},
-                                        str( $f, "\n" )
+                                        $scope, $pos->(35.4),
+                                        $$scope->{'el'}, str( $f, "\n" )
                                     )
                                 ),
                                 $file_scope,
@@ -364,6 +367,7 @@ my $result = do {
                     $scope,
                     desc => add(
                         $scope,
+                        $pos->(20.2),
                         str( $f, "[" ),
                         $$self->{'type'}->property_u( 'name', $pos->(20.3) ),
                         str( $f, "] " ),
@@ -387,6 +391,7 @@ my $result = do {
                         $scope,
                         desc => add(
                             $scope,
+                            $pos->(22.2),
                             $$scope->{'desc'},
                             $$scope->{'_prettyHints'}->(
                                 [ $$self->{'hints'} ], $scope,
@@ -404,9 +409,11 @@ my $result = do {
                         $scope,
                         desc => add(
                             $scope,
+                            $pos->(24.2),
                             $$scope->{'desc'},
                             add(
                                 $scope,
+                                $pos->(24.4),
                                 str( $f, " ->" ),
                                 $$self->{'subError'}
                                   ->property_u( '*description', $pos->(24.6) )

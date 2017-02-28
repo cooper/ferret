@@ -186,6 +186,7 @@ my $result = do {
                 return $ret_func->(
                     add(
                         $scope,
+                        $pos->(17.3),
                         str( $f, "Stack " ),
                         $$self->{'items'}
                           ->property_u( '*description', $pos->(17.5) )
@@ -225,8 +226,14 @@ my $result = do {
         sub {
             my ($scope) = @_;
             $$scope->{'say'}->(
-                [ add( $scope, str( $f, "Error! " ), $$scope->{'e'} ) ],
-                $scope, undef, $pos->(24.2)
+                [
+                    add(
+                        $scope, $pos->(24.4),
+                        str( $f, "Error! " ), $$scope->{'e'}
+                    )
+                ],
+                $scope, undef,
+                $pos->(24.2)
             );
         },
         'e'

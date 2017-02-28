@@ -324,6 +324,7 @@ my $result = do {
                         [
                             add(
                                 $scope,
+                                $pos->(23.3),
                                 $$self->{'origin'}
                                   ->property_u( 'x', $pos->(23.25) ),
                                 $$self->{'width'}
@@ -352,6 +353,7 @@ my $result = do {
                               ->property_u( 'x', $pos->(27.25) ),
                             add(
                                 $scope,
+                                $pos->(27.45),
                                 $$self->{'origin'}
                                   ->property_u( 'y', $pos->(27.4) ),
                                 $$self->{'height'}
@@ -377,12 +379,14 @@ my $result = do {
                         [
                             add(
                                 $scope,
+                                $pos->(31.3),
                                 $$self->{'origin'}
                                   ->property_u( 'x', $pos->(31.25) ),
                                 $$self->{'width'}
                             ),
                             add(
                                 $scope,
+                                $pos->(31.55),
                                 $$self->{'origin'}
                                   ->property_u( 'y', $pos->(31.5) ),
                                 $$self->{'height'}
@@ -439,8 +443,12 @@ my $result = do {
                     $scope,
                     x => add(
                         $scope,
+                        $pos->(43.25),
                         $$self->{'origin'}->property_u( 'x', $pos->(43.2) ),
-                        mul( $scope, $$self->{'width'}, num( $f, "0.5" ) )
+                        mul(
+                            $scope, $pos->(43.25),
+                            $$self->{'width'}, num( $f, "0.5" )
+                        )
                     ),
                     $file_scope,
                     $pos->(43.1)
@@ -449,8 +457,12 @@ my $result = do {
                     $scope,
                     y => add(
                         $scope,
+                        $pos->(44.25),
                         $$self->{'origin'}->property_u( 'y', $pos->(44.2) ),
-                        mul( $scope, $$self->{'height'}, num( $f, "0.5" ) )
+                        mul(
+                            $scope, $pos->(44.25),
+                            $$self->{'height'}, num( $f, "0.5" )
+                        )
                     ),
                     $file_scope,
                     $pos->(44.1)
@@ -485,6 +497,7 @@ my $result = do {
                 return $ret_func->(
                     add(
                         $scope,
+                        $pos->(51.075),
                         str( $f, "Rect( Origin(" ),
                         $$scope->{'o'}->property_u( 'x', $pos->(51.125) ),
                         str( $f, ", " ),

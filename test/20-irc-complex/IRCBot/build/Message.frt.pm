@@ -284,9 +284,11 @@ my $result = do {
                     bool(
                         all_true(
                             $scope,
+                            $pos->(26.2),
                             sub {
                                 nequal(
                                     $scope,
+                                    $pos->(26.2),
                                     $$self->{'parts'}
                                       ->property_u( 'length', $pos->(26.15) ),
                                     num( $f, "0" )
@@ -344,6 +346,7 @@ my $result = do {
                 return $ret_func->(
                     gr8r(
                         $scope,
+                        $pos->(36.4),
                         $$self->{'parts'}->property_u( 'length', $pos->(36.3) ),
                         num( $f, "1" )
                     )
@@ -375,8 +378,8 @@ my $result = do {
                             str( $f, " " ),
                             [
                                 limit => add(
-                                    $scope, $$scope->{'wordN'},
-                                    num( $f, "1" )
+                                    $scope, $pos->(42.45),
+                                    $$scope->{'wordN'}, num( $f, "1" )
                                 )
                             ]
                         ],

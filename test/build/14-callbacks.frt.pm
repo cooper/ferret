@@ -104,6 +104,7 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(11.2),
                         str( $f, "found '" ),
                         ${ $scope->{special} }->{'this'},
                         str( $f, "' length to be " ),
@@ -127,6 +128,7 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(22.2),
                         str( $f, "found '" ),
                         ${ $scope->{special} }->{'this'},
                         str( $f, "' length to be " ),

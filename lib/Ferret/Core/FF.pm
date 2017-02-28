@@ -195,7 +195,7 @@ my $once_ret_func = $loop_ret_func;
 # iterate over a list.
 sub iterate {
     my ($f, $outer_scope, $collection, $var_name, $code, $pos) = @_;
-    my $iterator = $collection->iterator;
+    my $iterator = $collection->iterator($pos);
     while (Ferret::truth($iterator->property('more'))) {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
         my $value = $iterator->property('nextElement');
@@ -225,7 +225,7 @@ sub iterate {
 sub iterate_pair {
     my ($f, $outer_scope, $collection,
         $var1_name, $var2_name, $code, $pos) = @_;
-    my $iterator = $collection->iterator;
+    my $iterator = $collection->iterator($pos);
 
     while (Ferret::truth($iterator->property('more'))) {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
@@ -663,7 +663,7 @@ sub gather {
 sub throw {
     my ($err, $pos) = @_;
     $err->{pos} = $pos;
-    Ferret::Core::Errors::throw($err, [caller]);
+    Ferret::Core::Errors::throw($err, [caller], $pos);
 }
 
 sub type_with_generics {

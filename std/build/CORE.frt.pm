@@ -164,7 +164,10 @@ my $result = do {
                 $scope, $scope, $ins, $anchor,
                 conditions => [
                     sub { $ins->fits_type_u( $$scope->{'Str'} ) },
-                    sub { equal( $scope, $$ins->{'length'}, num( $f, "1" ) ) }
+                    sub {
+                        equal( $scope, $pos->(30.3), $$ins->{'length'},
+                            num( $f, "1" ) );
+                    }
                 ],
                 equal_to => undef
             ) ? $ins : undef;

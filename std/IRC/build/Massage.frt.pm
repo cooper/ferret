@@ -421,16 +421,24 @@ my $result = do {
             want( $scope, $args, 'incN', 30.2 );
             var(
                 $scope,
-                wordI => add( $scope, $$scope->{'wordI'}, num( $f, "1" ) ),
-                $file_scope, $pos->(31.2)
+                wordI => add(
+                    $scope, $pos->(31.2),
+                    $$scope->{'wordI'}, num( $f, "1" )
+                ),
+                $file_scope,
+                $pos->(31.2)
             );
             if ( bool( $$scope->{'incN'} ) ) {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                 var(
                     $scope,
-                    wordN => add( $scope, $$scope->{'wordN'}, num( $f, "1" ) ),
-                    $file_scope, $pos->(33.2)
+                    wordN => add(
+                        $scope, $pos->(33.2),
+                        $$scope->{'wordN'}, num( $f, "1" )
+                    ),
+                    $file_scope,
+                    $pos->(33.2)
                 );
             }
             var(
@@ -554,10 +562,12 @@ my $result = do {
                                 bool(
                                     all_true(
                                         $scope,
+                                        $pos->(40.2),
                                         sub { _not( $$scope->{'gotSource'} ) },
                                         sub { _not( $$scope->{'gotTags'} ) },
                                         sub {
-                                            equal( $scope, $$scope->{'wordI'},
+                                            equal( $scope, $pos->(40.2),
+                                                $$scope->{'wordI'},
                                                 num( $f, "0" ) );
                                         },
                                         sub {
@@ -625,6 +635,7 @@ my $result = do {
                                                 bool(
                                                     gr8r(
                                                         $scope,
+                                                        $pos->(50.4),
                                                         $$scope->{'tagParts'}
                                                           ->property_u(
                                                             'length',
@@ -688,6 +699,7 @@ my $result = do {
                                 bool(
                                     all_true(
                                         $scope,
+                                        $pos->(69.2),
                                         sub { _not( $$scope->{'gotCommand'} ) },
                                         sub { _not( $$scope->{'gotSource'} ) },
                                         sub {
@@ -775,6 +787,7 @@ my $result = do {
                                             [
                                                 limit => add(
                                                     $scope,
+                                                    $pos->(89.33333),
                                                     $$scope->{'wordI'},
                                                     num( $f, "1" )
                                                 )
@@ -863,7 +876,7 @@ my $result = do {
                 if (
                     bool(
                         sim(
-                            $scope, $$self->{'source'},
+                            $scope, $pos->(111.3), $$self->{'source'},
                             rgx( $f, undef, "^(.+)!(.+)\\\@(.+)\$", undef )
                         )
                     )

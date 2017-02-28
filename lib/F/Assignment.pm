@@ -72,7 +72,8 @@ sub perl_fmt {
         my $old = $a->assign_to->perl_fmt_do;
         $val = F::get_perl_fmt(operation => {
             operation => $op,
-            items     => "$old, $val"
+            items     => "$old, $val",
+            pos       => $a->{create_pos}
         });
         $a->document->{required_operations}{$op}++;
     }

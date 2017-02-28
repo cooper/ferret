@@ -12,9 +12,19 @@ operator + {
     return Complex(@a + $rhs.a, @b + $rhs.b)
 }
 
+operator + {
+    need $ehs: Num
+    return Complex(@a + $ehs, @b)
+}
+
 operator - {
     need $rhs: Complex
     return Complex(@a - $rhs.a, @b - $rhs.b)
+}
+
+operator - {
+    need $ehs: Num
+    return Complex(@a - $ehs, @b)
 }
 
 operator * {

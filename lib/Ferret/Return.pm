@@ -101,7 +101,7 @@ sub throw {
     my ($ret, $err, $pos) = @_;
     $err->{pos} = $pos;
     $ret->fail($err);
-    Ferret::Core::Errors::throw($err, [caller]);
+    Ferret::Core::Errors::throw($err, [caller], $pos);
 }
 
 # called internally after each ->return().

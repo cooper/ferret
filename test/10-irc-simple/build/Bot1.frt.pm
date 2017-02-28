@@ -167,6 +167,7 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(12.13333),
                         str( $f, "USER " ),
                         $$self->{'user'},
                         str( $f, " " ),
@@ -181,8 +182,14 @@ my $result = do {
                 $pos->(12.06667)
             );
             $$self->{'send'}->(
-                [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, $pos->(13.2)
+                [
+                    add(
+                        $scope, $pos->(13.4),
+                        str( $f, "NICK " ), $$self->{'nick'}
+                    )
+                ],
+                $scope, undef,
+                $pos->(13.2)
             );
             return $ret;
         }
@@ -197,8 +204,14 @@ my $result = do {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 18.2 ) || return $ret_func->();
             $$scope->{'say'}->(
-                [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
-                $scope, undef, $pos->(19.2)
+                [
+                    add(
+                        $scope, $pos->(19.4),
+                        str( $f, "recv: " ), $$scope->{'data'}
+                    )
+                ],
+                $scope, undef,
+                $pos->(19.2)
             );
             return $ret;
         }
@@ -311,8 +324,14 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'line', 29.2 ) || return $ret_func->();
                 $$scope->{'say'}->(
-                    [ add( $scope, str( $f, "send: " ), $$scope->{'line'} ) ],
-                    $scope, undef, $pos->(30.2)
+                    [
+                        add(
+                            $scope, $pos->(30.4),
+                            str( $f, "send: " ), $$scope->{'line'}
+                        )
+                    ],
+                    $scope, undef,
+                    $pos->(30.2)
                 );
                 $$self->{'sock'}->property_u( 'println', $pos->(31.2) )
                   ->( [ $$scope->{'line'} ], $scope, undef, $pos->(31.3) );

@@ -66,8 +66,14 @@ my $result = do {
             sub {
                 my ( $scope, $ret_func ) = @_;
                 $$scope->{'say'}->(
-                    [ add( $scope, str( $f, "part: " ), $$scope->{'word'} ) ],
-                    $scope, undef, $pos->(4.2)
+                    [
+                        add(
+                            $scope, $pos->(4.4),
+                            str( $f, "part: " ), $$scope->{'word'}
+                        )
+                    ],
+                    $scope, undef,
+                    $pos->(4.2)
                 );
             },
             $pos->(3.1)

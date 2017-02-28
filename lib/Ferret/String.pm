@@ -16,14 +16,14 @@ use Ferret::Core::Conversion qw(
 
 my @methods = (
     opAdd => {
-        need    => '$lhs:Str::Any',
-        code    => \&_op_add_lhs,
-        cb_name => 'lhs'
+        need => '$lhs:Str::Any',
+        code => \&_op_add_lhs,
+        cbnm => 'lhs'
     },
     opAdd => {
-        need    => '$rhs:Str::Any',
-        code    => \&_op_add_rhs,
-        cb_name => 'rhs'
+        need => '$rhs:Str::Any',
+        code => \&_op_add_rhs,
+        cbnm => 'rhs'
     },
     opSim => {
         need => '$rhs:Rgx',

@@ -555,7 +555,8 @@ my $result = do {
         sub {
             my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
-            return $ret_func->( nequal( $scope, $$scope->{'what'}, $ins ) );
+            return $ret_func->(
+                nequal( $scope, $pos->(54.35), $$scope->{'what'}, $ins ) );
             return $ret;
         }
     );
@@ -568,7 +569,8 @@ my $result = do {
         sub {
             my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
-            return $ret_func->( equal( $scope, $$scope->{'what'}, $ins ) );
+            return $ret_func->(
+                equal( $scope, $pos->(106.35), $$scope->{'what'}, $ins ) );
             return $ret;
         }
     );
@@ -584,7 +586,11 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
+                    equal(
+                        $scope, $pos->(12.3),
+                        $$self->{'length'}, num( $f, "0" )
+                    )
+                );
                 return $ret;
             }
         );
@@ -793,6 +799,7 @@ my $result = do {
                                         $f, $scope,
                                         range(
                                             $scope,
+                                            $pos->(47.6),
                                             $$self->{'lastIndex'},
                                             num( $f, "0" )
                                         ),
@@ -894,6 +901,7 @@ my $result = do {
                                                 bool(
                                                     all_true(
                                                         $scope,
+                                                        $pos->(63.4),
                                                         sub {
                                                             _not(
                                                                 $$scope->{
@@ -902,6 +910,7 @@ my $result = do {
                                                         sub {
                                                             equal(
                                                                 $scope,
+                                                                $pos->(63.4),
                                                                 $$scope->{
                                                                     'what'},
                                                                 $$scope->{'el'}
@@ -966,8 +975,8 @@ my $result = do {
                             if (
                                 bool(
                                     nequal(
-                                        $scope, $$scope->{'what'},
-                                        $$scope->{'el'}
+                                        $scope,            $pos->(76.3),
+                                        $$scope->{'what'}, $$scope->{'el'}
                                     )
                                 )
                               )
@@ -1030,6 +1039,7 @@ my $result = do {
                                                 bool(
                                                     nequal(
                                                         $scope,
+                                                        $pos->(90.3),
                                                         $$scope->{'what'},
                                                         $$scope->{'el'}
                                                     )
@@ -1281,7 +1291,10 @@ my $result = do {
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
-                        range( $scope, num( $f, "1" ), $$self->{'lastIndex'} ),
+                        range(
+                            $scope, $pos->(142.5),
+                            num( $f, "1" ), $$self->{'lastIndex'}
+                        ),
                         'i',
                         sub {
                             my ( $scope, $ret_func ) = @_;
@@ -1289,6 +1302,7 @@ my $result = do {
                                 $scope,
                                 c => add(
                                     $scope,
+                                    $pos->(143.2),
                                     $$scope->{'c'},
                                     ${ $scope->{special} }->{'self'}
                                       ->get_index_value(
@@ -1325,7 +1339,8 @@ my $result = do {
                             var(
                                 $scope,
                                 c => add(
-                                    $scope, $$scope->{'c'}, $$scope->{'el'}
+                                    $scope,         $pos->(153.4),
+                                    $$scope->{'c'}, $$scope->{'el'}
                                 ),
                                 $file_scope,
                                 $pos->(153.2)

@@ -104,8 +104,13 @@ my $result = do {
             need( $scope, $args, 'num',  11.3 ) || return $ret_func->();
             return $ret_func->(
                 pow(
-                    $scope, $$scope->{'num'},
-                    div( $scope, num( $f, "1" ), $$scope->{'root'} )
+                    $scope,
+                    $pos->(12.15),
+                    $$scope->{'num'},
+                    div(
+                        $scope, $pos->(12.3),
+                        num( $f, "1" ), $$scope->{'root'}
+                    )
                 )
             );
             return $ret;

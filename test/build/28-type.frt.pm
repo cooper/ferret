@@ -133,8 +133,9 @@ my $result = do {
             $$scope->{'say'}->(
                 [
                     add(
-                        $scope, $$scope->{'name'},
-                        str( $f, " is " ), $$scope->{'what'}
+                        $scope, $pos->(9.2),
+                        $$scope->{'name'}, str( $f, " is " ),
+                        $$scope->{'what'}
                     )
                 ],
                 $scope, undef,

@@ -203,6 +203,7 @@ my $result = do {
                                 bool(
                                     nequal(
                                         $scope,
+                                        $pos->(6.4),
                                         $$scope->{'pt'}
                                           ->property_u( 'x', $pos->(6.3) ),
                                         num( $f, "0" )
@@ -220,6 +221,7 @@ my $result = do {
                                 bool(
                                     nequal(
                                         $scope,
+                                        $pos->(8.4),
                                         $$scope->{'pt'}
                                           ->property_u( 'y', $pos->(8.3) ),
                                         num( $f, "0" )
@@ -373,8 +375,10 @@ my $result = do {
         [
             $$scope->{'evenNumbers'}->(
                 [
-                    range( $scope, num( $f, "0" ), num( $f, "9" ) )
-                      ->property_u( 'toList', $pos->(35.5) )
+                    range(
+                        $scope, $pos->(35.35),
+                        num( $f, "0" ), num( $f, "9" )
+                      )->property_u( 'toList', $pos->(35.5) )
                       ->( [ undef, [] ], $scope, undef, $pos->(35.55) )
                 ],
                 $scope, undef,

@@ -176,7 +176,7 @@ sub _bind_function {
 
     # create function.
     my $func = Ferret::Function->new($f,
-        name        => $opts{cb_name} || 'default',
+        name        => $opts{cbnm} || $opts{cb_name} || 'default',
         code        => $opts{code}    || $dummy_cb_func,
         need        => $opts{need},
         want        => $opts{want},

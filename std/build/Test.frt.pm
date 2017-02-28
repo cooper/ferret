@@ -341,7 +341,10 @@ my $result = do {
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
-                            refs_equal( $scope, $$scope->{'a'}, $true ),
+                            refs_equal(
+                                $scope,         $pos->(26.25),
+                                $$scope->{'a'}, $true
+                            ),
                             str( $f, "Value must be exactly true" )
                         ],
                         $scope, undef,
@@ -377,7 +380,10 @@ my $result = do {
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
-                            equal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
+                            equal(
+                                $scope,         $pos->(33.25),
+                                $$scope->{'a'}, $$scope->{'b'}
+                            ),
                             str( $f, "Values must be equal" )
                         ],
                         $scope, undef,
@@ -415,7 +421,8 @@ my $result = do {
                     $$self->{'_test'}->(
                         [
                             refs_equal(
-                                $scope, $$scope->{'a'}, $$scope->{'b'}
+                                $scope,         $pos->(40.25),
+                                $$scope->{'a'}, $$scope->{'b'}
                             ),
                             str( $f, "Objects must be exactly equal" )
                         ],
@@ -453,7 +460,10 @@ my $result = do {
                 return $ret_func->(
                     $$self->{'_test'}->(
                         [
-                            nequal( $scope, $$scope->{'a'}, $$scope->{'b'} ),
+                            nequal(
+                                $scope,         $pos->(47.25),
+                                $$scope->{'a'}, $$scope->{'b'}
+                            ),
                             str( $f, "Values must not be equal" )
                         ],
                         $scope, undef,
@@ -491,7 +501,8 @@ my $result = do {
                     $$self->{'_test'}->(
                         [
                             refs_nequal(
-                                $scope, $$scope->{'a'}, $$scope->{'b'}
+                                $scope,         $pos->(54.25),
+                                $$scope->{'a'}, $$scope->{'b'}
                             ),
                             str( $f, "Objects must not be equal" )
                         ],
@@ -510,18 +521,22 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 var(
                     $scope,
-                    failed =>
-                      _sub( $scope, $$self->{'tested'}, $$self->{'passed'} ),
-                    $file_scope, $pos->(59.2)
+                    failed => _sub(
+                        $scope,             $pos->(59.4),
+                        $$self->{'tested'}, $$self->{'passed'}
+                    ),
+                    $file_scope,
+                    $pos->(59.2)
                 );
                 $$scope->{'say'}->(
                     [
                         add(
-                            $scope,              str( $f, "[" ),
-                            $$self->{'name'},    str( $f, "] " ),
-                            $$self->{'tested'},  str( $f, " tests " ),
-                            $$self->{'passed'},  str( $f, " passed " ),
-                            $$scope->{'failed'}, str( $f, " failed" )
+                            $scope, $pos->(60.13333),
+                            str( $f, "[" ),        $$self->{'name'},
+                            str( $f, "] " ),       $$self->{'tested'},
+                            str( $f, " tests " ),  $$self->{'passed'},
+                            str( $f, " passed " ), $$scope->{'failed'},
+                            str( $f, " failed" )
                         )
                     ],
                     $scope, undef,
@@ -537,8 +552,10 @@ my $result = do {
                     $pos->(64.2)
                 );
                 $ret->set_property(
-                    allOK =>
-                      equal( $scope, $$self->{'passed'}, $$self->{'tested'} ),
+                    allOK => equal(
+                        $scope,             $pos->(65.4),
+                        $$self->{'passed'}, $$self->{'tested'}
+                    ),
                     $pos->(65.2)
                 );
                 return $ret;
@@ -568,7 +585,10 @@ my $result = do {
                 need( $scope, $args, 'yes',     69.2 ) || return $ret_func->();
                 need( $scope, $args, 'message', 69.4 ) || return $ret_func->();
                 $self->set_property(
-                    tested => add( $scope, $$self->{'tested'}, num( $f, "1" ) ),
+                    tested => add(
+                        $scope, $pos->(71.4),
+                        $$self->{'tested'}, num( $f, "1" )
+                    ),
                     $pos->(71.2)
                 );
                 $ret->set_property( pass => $$scope->{'yes'}, $pos->(72.2) );
@@ -576,8 +596,10 @@ my $result = do {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $self->set_property(
-                        passed =>
-                          add( $scope, $$self->{'passed'}, num( $f, "1" ) ),
+                        passed => add(
+                            $scope, $pos->(75.4),
+                            $$self->{'passed'}, num( $f, "1" )
+                        ),
                         $pos->(75.2)
                     );
                     return $ret_func->();

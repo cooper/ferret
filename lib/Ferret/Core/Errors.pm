@@ -41,13 +41,17 @@ our %errors = (
     InvalidIteration => {
         message => "Cannot iterate over this object"
     },
+    InvalidOperation => {
+        message => "No operator implementation for those types"
+    },
     NativeCodeError => {
         message => "%s"
     }
 );
 
 sub throw {
-    my ($fmt, $caller, $hints, @args) = @_;
+    my ($fmt, $caller, $pos, $hints, @args) = @_;
+    $pos ||= $FF::pos;
 
     # we may have been passed an already-prepared error object.
     if (blessed $fmt) {
@@ -61,6 +65,12 @@ sub throw {
     # main error.
     my $err = sprintf($errors{$fmt}{message}, @args);
     $err =~ s/(\.|\n)$//g;
+
+    # inject posision info.
+    if ($pos) {
+        push @$hints, File => "$pos";
+        push @$hints, Line => int $pos;
+    }
 
     throw(Ferret::Core::Conversion::ferror($err, $fmt, @$hints));
 }

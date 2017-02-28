@@ -65,6 +65,7 @@ my $result = do {
                 return $ret_func->(
                     mul(
                         $scope,
+                        $pos->(4.4),
                         $$self->{'length'}
                           ->( [ undef, [] ], $scope, undef, $pos->(4.3) ),
                         num( $f, "2" )
@@ -82,6 +83,7 @@ my $result = do {
         [
             add(
                 $scope,
+                $pos->(9.2),
                 str( $f, "Length times two: " ),
                 str( $f, "hi there" )
                   ->property_u( 'doubledLength', $pos->(9.3) )

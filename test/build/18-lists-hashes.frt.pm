@@ -148,7 +148,7 @@ my $result = do {
     $$scope->{'say'}->(
         [
             add(
-                $scope,
+                $scope, $pos->(5.4),
                 str( $f, "Length: " ),
                 $$scope->{'list'}->property_u( 'length', $pos->(5.6) )
             )
@@ -164,8 +164,14 @@ my $result = do {
             sub {
                 my ( $scope, $ret_func ) = @_;
                 $$scope->{'say'}->(
-                    [ add( $scope, str( $f, "item: " ), $$scope->{'item'} ) ],
-                    $scope, undef, $pos->(8.2)
+                    [
+                        add(
+                            $scope, $pos->(8.4),
+                            str( $f, "item: " ), $$scope->{'item'}
+                        )
+                    ],
+                    $scope, undef,
+                    $pos->(8.2)
                 );
             },
             $pos->(7.1)
@@ -191,6 +197,7 @@ my $result = do {
         [
             add(
                 $scope,
+                $pos->(15.2),
                 str( $f, "whats " ),
                 $$scope->{'hash'}->get_index_value(
                     [ str( $f, "whats" ) ],
@@ -211,9 +218,9 @@ my $result = do {
                 $$scope->{'say'}->(
                     [
                         add(
-                            $scope,           str( $f, "pair: key=" ),
-                            $$scope->{'key'}, str( $f, " value=" ),
-                            $$scope->{'val'}
+                            $scope, $pos->(18.2),
+                            str( $f, "pair: key=" ), $$scope->{'key'},
+                            str( $f, " value=" ),    $$scope->{'val'}
                         )
                     ],
                     $scope, undef,

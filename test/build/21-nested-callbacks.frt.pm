@@ -101,9 +101,9 @@ my $result = do {
             $$scope->{'say'}->(
                 [
                     add(
-                        $scope,         str( $f, "(" ),
-                        $$scope->{'i'}, str( $f, ") " ),
-                        $$scope->{'part'}
+                        $scope, $pos->(5.2),
+                        str( $f, "(" ),  $$scope->{'i'},
+                        str( $f, ") " ), $$scope->{'part'}
                     )
                 ],
                 $scope, undef,

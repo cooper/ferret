@@ -145,7 +145,11 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    equal( $scope, $$self->{'length'}, num( $f, "0" ) ) );
+                    equal(
+                        $scope, $pos->(4.3),
+                        $$self->{'length'}, num( $f, "0" )
+                    )
+                );
                 return $ret;
             }
         );

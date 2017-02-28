@@ -158,6 +158,7 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(14.13333),
                         str( $f, "USER " ),
                         $$self->{'user'},
                         str( $f, " " ),
@@ -172,8 +173,14 @@ my $result = do {
                 $pos->(14.06667)
             );
             $$self->{'send'}->(
-                [ add( $scope, str( $f, "NICK " ), $$self->{'nick'} ) ],
-                $scope, undef, $pos->(15.2)
+                [
+                    add(
+                        $scope, $pos->(15.4),
+                        str( $f, "NICK " ), $$self->{'nick'}
+                    )
+                ],
+                $scope, undef,
+                $pos->(15.2)
             );
             return $ret;
         }
@@ -188,8 +195,14 @@ my $result = do {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 20.2 ) || return $ret_func->();
             $$scope->{'say'}->(
-                [ add( $scope, str( $f, "recv: " ), $$scope->{'data'} ) ],
-                $scope, undef, $pos->(21.2)
+                [
+                    add(
+                        $scope, $pos->(21.4),
+                        str( $f, "recv: " ), $$scope->{'data'}
+                    )
+                ],
+                $scope, undef,
+                $pos->(21.2)
             );
             return $ret;
         }
@@ -204,8 +217,14 @@ my $result = do {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'data', 25.2 ) || return $ret_func->();
             $$scope->{'say'}->(
-                [ add( $scope, str( $f, "send: " ), $$scope->{'data'} ) ],
-                $scope, undef, $pos->(26.2)
+                [
+                    add(
+                        $scope, $pos->(26.4),
+                        str( $f, "send: " ), $$scope->{'data'}
+                    )
+                ],
+                $scope, undef,
+                $pos->(26.2)
             );
             return $ret;
         }

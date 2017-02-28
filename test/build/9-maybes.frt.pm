@@ -74,8 +74,9 @@ my $result = do {
             $$scope->{'say'}->(
                 [
                     add(
-                        $scope,           str( $f, "Hello " ),
-                        $$scope->{'who'}, str( $f, "!" )
+                        $scope, $pos->(3.2),
+                        str( $f, "Hello " ), $$scope->{'who'},
+                        str( $f, "!" )
                     )
                 ],
                 $scope, undef,

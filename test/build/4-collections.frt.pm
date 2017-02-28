@@ -148,6 +148,7 @@ my $result = do {
         [
             add(
                 $scope,
+                $pos->(12.2),
                 str( $f, "Point(" ),
                 $$scope->{'pt'}->property_u( 'x', $pos->(12.3) ),
                 str( $f, ", " ),
@@ -167,7 +168,7 @@ my $result = do {
                 num( $f, "2" ),
                 num( $f, "3" ),
                 num( $f, "4" ),
-                add( $scope, num( $f, "4" ), num( $f, "1" ) )
+                add( $scope, $pos->(14.65), num( $f, "4" ), num( $f, "1" ) )
             ]
         ),
         undef,

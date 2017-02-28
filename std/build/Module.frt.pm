@@ -97,8 +97,9 @@ my $result = do {
                 want( $self, $args, 'version', 12.2, num( $f, "1.0" ) );
                 $self->set_property(
                     fullName => add(
-                        $scope, $$self->{'prefix'},
-                        str( $f, "::" ), $$self->{'name'}
+                        $scope, $pos->(15.4),
+                        $$self->{'prefix'}, str( $f, "::" ),
+                        $$self->{'name'}
                     ),
                     $pos->(15.2)
                 );

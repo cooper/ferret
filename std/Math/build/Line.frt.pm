@@ -234,14 +234,15 @@ my $result = do {
                 );
                 return $ret_func->(
                     add(
-                        $scope,             str( $f, "Segment( |(" ),
-                        $$scope->{'pox'},   str( $f, ", " ),
-                        $$scope->{'poy'},   str( $f, ")---(" ),
-                        $$scope->{'mx'},    str( $f, ", " ),
-                        $$scope->{'my'},    str( $f, ")---(" ),
-                        $$scope->{'ptx'},   str( $f, ", " ),
-                        $$scope->{'pty'},   str( $f, ")| Length = " ),
-                        $$self->{'length'}, str( $f, " )" )
+                        $scope, $pos->(17.075),
+                        str( $f, "Segment( |(" ),  $$scope->{'pox'},
+                        str( $f, ", " ),           $$scope->{'poy'},
+                        str( $f, ")---(" ),        $$scope->{'mx'},
+                        str( $f, ", " ),           $$scope->{'my'},
+                        str( $f, ")---(" ),        $$scope->{'ptx'},
+                        str( $f, ", " ),           $$scope->{'pty'},
+                        str( $f, ")| Length = " ), $$self->{'length'},
+                        str( $f, " )" )
                     )
                 );
                 return $ret;

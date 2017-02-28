@@ -225,7 +225,7 @@ my $result = do {
                     $pos->(29.2)
                 );
                 $self->set_property(
-                    i => _sub( $scope, $f->zero, num( $f, "1" ) ),
+                    i => _sub( $scope, $pos->(30.3), $f->zero, num( $f, "1" ) ),
                     $pos->(30.2)
                 );
                 return $ret;
@@ -240,14 +240,21 @@ my $result = do {
                 return $ret_func->(
                     less(
                         $scope,
+                        $pos->(34.15),
                         $$self->{'i'},
                         any_true(
                             $scope,
+                            $pos->(34.35),
                             sub {
                                 $$self->{'list'}
                                   ->property_u( 'lastIndex', $pos->(34.3) );
                             },
-                            sub { _sub( $scope, $f->zero, num( $f, "1" ) ) }
+                            sub {
+                                _sub(
+                                    $scope, $pos->(34.35),
+                                    $f->zero, num( $f, "1" )
+                                );
+                            }
                         )
                     )
                 );
@@ -263,7 +270,9 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
-                    i => add( $scope, $$self->{'i'}, num( $f, "1" ) ),
+                    i => add(
+                        $scope, $pos->(38.2), $$self->{'i'}, num( $f, "1" )
+                    ),
                     $pos->(38.2)
                 );
                 return $ret_func->(
@@ -284,7 +293,9 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 $self->set_property(
-                    i => add( $scope, $$self->{'i'}, num( $f, "1" ) ),
+                    i => add(
+                        $scope, $pos->(43.2), $$self->{'i'}, num( $f, "1" )
+                    ),
                     $pos->(43.2)
                 );
                 return $ret_func->(

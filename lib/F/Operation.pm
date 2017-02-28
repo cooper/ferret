@@ -139,6 +139,7 @@ sub op_fmt {
     # consider return when wrapped with sub{}?
     return operation => {
         operation => $op_name,
+        pos       => $op->{create_pos},
         items     => join ', ', map {
             my $fmt = ref $_ eq 'ARRAY'          ?
                 F::get_perl_fmt($op->op_fmt($_)) :

@@ -12,12 +12,12 @@ use List::Util qw(all first);
 BEGIN {
     no strict 'refs';
     foreach my $star (qw/range pow mod mul div add _sub sim/) {
-        *$star = sub { op_star($star, @_) };
+        *$star = sub { op_star($star, [caller], @_) };
     }
 }
 
 sub op_star {
-    my ($star, $scope, @items) = @_;
+    my ($star, $caller, $scope, $pos, @items) = @_;
     $star    = 'sub' if $star eq '_sub';
     my $op   = 'op'.ucfirst($star);
     my $left = shift @items or return;
@@ -44,7 +44,11 @@ sub op_star {
         }
 
         # both failed.
-        die "no idea what to do with that";
+        Ferret::Core::Errors::throw(InvalidOperation => $caller, $pos, [
+            Op  => $op,
+            LHS => $left->description_ol,
+            RHS => $right->description_ol
+        ]);
     }
 
     return $left;
@@ -90,7 +94,7 @@ sub _bad_return {
 ################
 
 sub equal {
-    shift;
+    splice @_, 0, 2;
     my $obj = shift;
     while (@_) {
         my $right = shift;
@@ -103,7 +107,7 @@ sub equal {
 sub nequal { _not(&equal) }
 
 sub refs_equal {
-    shift;
+    splice @_, 0, 2;
     my $obj = shift;
     while (@_) {
         my $right = shift;
@@ -120,7 +124,7 @@ sub refs_nequal { _not(&refs_equal) }
 ##################
 
 sub less {
-    shift;
+    splice @_, 0, 2;
     my $obj = shift;
     while (@_) {
         my $right = shift;
@@ -131,7 +135,7 @@ sub less {
 }
 
 sub less_e {
-    shift;
+    splice @_, 0, 2;
     my $obj = shift;
     while (@_) {
         my $right = shift;
@@ -142,7 +146,7 @@ sub less_e {
 }
 
 sub gr8r {
-    shift;
+    splice @_, 0, 2;
     my $obj = shift;
     while (@_) {
         my $right = shift;
@@ -153,7 +157,7 @@ sub gr8r {
 }
 
 sub gr8r_e {
-    shift;
+    splice @_, 0, 2;
     my $obj = shift;
     while (@_) {
         my $right = shift;
@@ -168,13 +172,13 @@ sub gr8r_e {
 ###############
 
 sub all_true {
-    shift;
+    splice @_, 0, 2;
     return Ferret::true if all { bool($_->()) } @_;
     return Ferret::false;
 }
 
 sub any_true {
-    shift;
+    splice @_, 0, 2;
     my $first;
     first { bool($first = $_->()) } @_;
     return $first || Ferret::undefined;

@@ -162,7 +162,8 @@ my $result = do {
                 $$scope->{'say'}->(
                     [
                         add(
-                            $scope, $$scope->{'message'}, str( $f, " again" )
+                            $scope, $pos->(18.4),
+                            $$scope->{'message'}, str( $f, " again" )
                         )
                     ],
                     $scope, undef,
@@ -203,8 +204,14 @@ my $result = do {
         return $ret_func->($inside_return) if $inside_status eq 'return';
     }
     $$scope->{'say'}->(
-        [ add( $scope, str( $f, "Point: " ), $$scope->{'point'} ) ],
-        $scope, undef, $pos->(13.2)
+        [
+            add(
+                $scope, $pos->(13.4),
+                str( $f, "Point: " ), $$scope->{'point'}
+            )
+        ],
+        $scope, undef,
+        $pos->(13.2)
     );
     on(
         $scope, 'say', $self, $scope,

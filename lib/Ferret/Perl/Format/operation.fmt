@@ -1,1 +1,1 @@
-<<operation>>($scope, <<items>>)
+<<operation>>($scope, $pos->(<<pos>>), <<items>>)

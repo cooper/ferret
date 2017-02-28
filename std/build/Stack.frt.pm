@@ -143,6 +143,7 @@ my $result = do {
                 return $ret_func->(
                     add(
                         $scope,
+                        $pos->(18.15),
                         str( $f, "Stack<" ),
                         $$scope->{'name'},
                         str( $f, "> " ),

@@ -243,7 +243,10 @@ my $result = do {
                     $scope,
                     pt => ${ $scope->{special} }->{'class'}->(
                         [
-                            add( $scope, $$self->{'x'}, num( $f, "1" ) ),
+                            add(
+                                $scope, $pos->(10.3),
+                                $$self->{'x'}, num( $f, "1" )
+                            ),
                             $$self->{'y'}
                         ],
                         $scope, undef,
@@ -264,9 +267,10 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add(
-                        $scope,        str( $f, "(" ),
-                        $$self->{'x'}, str( $f, ", " ),
-                        $$self->{'y'}, str( $f, ")" )
+                        $scope, $pos->(15.2),
+                        str( $f, "(" ),  $$self->{'x'},
+                        str( $f, ", " ), $$self->{'y'},
+                        str( $f, ")" )
                     )
                 );
                 return $ret;
@@ -316,8 +320,10 @@ my $result = do {
                             [
                                 x => div(
                                     $scope,
+                                    $pos->(25.45),
                                     add(
                                         $scope,
+                                        $pos->(25.25),
                                         $$scope->{'pt1'}
                                           ->property_u( 'x', $pos->(25.2) ),
                                         $$scope->{'pt2'}
@@ -327,8 +333,10 @@ my $result = do {
                                 ),
                                 y => div(
                                     $scope,
+                                    $pos->(26.45),
                                     add(
                                         $scope,
+                                        $pos->(26.25),
                                         $$scope->{'pt1'}
                                           ->property_u( 'y', $pos->(26.2) ),
                                         $$scope->{'pt2'}
@@ -374,7 +382,7 @@ my $result = do {
         undef, $pos->(32.1)
     );
     $$scope->{'say'}->(
-        [ add( $scope, str( $f, "Point" ), $$scope->{'pt'} ) ],
+        [ add( $scope, $pos->(33.4), str( $f, "Point" ), $$scope->{'pt'} ) ],
         $scope, undef, $pos->(33.2)
     );
     var(
@@ -384,7 +392,7 @@ my $result = do {
         undef, $pos->(35.2)
     );
     $$scope->{'say'}->(
-        [ add( $scope, str( $f, "Right" ), $$scope->{'rpt'} ) ],
+        [ add( $scope, $pos->(36.4), str( $f, "Right" ), $$scope->{'rpt'} ) ],
         $scope, undef, $pos->(36.2)
     );
     var(
@@ -397,22 +405,34 @@ my $result = do {
         $pos->(38.1)
     );
     $$scope->{'say'}->(
-        [ add( $scope, str( $f, "Midpoint" ), $$scope->{'mdpt'} ) ],
-        $scope, undef, $pos->(39.2)
+        [
+            add(
+                $scope, $pos->(39.4),
+                str( $f, "Midpoint" ), $$scope->{'mdpt'}
+            )
+        ],
+        $scope, undef,
+        $pos->(39.2)
     );
     var(
         $scope,
         nineteen => add(
-            $scope,
+            $scope, $pos->(41.4),
             num( $f, "4" ),
-            div( $scope, num( $f, "45" ), num( $f, "3" ) )
+            div( $scope, $pos->(41.4), num( $f, "45" ), num( $f, "3" ) )
         ),
         undef,
         $pos->(41.2)
     );
     $$scope->{'say'}->(
-        [ add( $scope, str( $f, "Nineteen: " ), $$scope->{'nineteen'} ) ],
-        $scope, undef, $pos->(42.2)
+        [
+            add(
+                $scope, $pos->(42.4),
+                str( $f, "Nineteen: " ), $$scope->{'nineteen'}
+            )
+        ],
+        $scope, undef,
+        $pos->(42.2)
     );
 };
 

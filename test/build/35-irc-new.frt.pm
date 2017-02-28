@@ -1091,6 +1091,7 @@ my $result = do {
                 $scope,
                 string => any_true(
                     $scope,
+                    $pos->(141.6),
                     sub {
                         $$scope->{'msg'}->property_u( 'params', $pos->(141.2) )
                           ->get_index_value( [ num( $f, "1" ) ],
@@ -1220,6 +1221,7 @@ my $result = do {
                 bool(
                     less(
                         $scope,
+                        $pos->(19.4),
                         $$scope->{'parts'}
                           ->property_u( 'length', $pos->(19.3) ),
                         num( $f, "3" )
@@ -1266,6 +1268,7 @@ my $result = do {
                                 get_symbol( $f, 'ParameterError' ),
                                 add(
                                     $scope,
+                                    $pos->(25.35),
                                     str( $f, "Command ." ),
                                     $$scope->{'command'},
                                     str( $f, " exists" )
@@ -1296,6 +1299,7 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(32.25),
                         str( $f, "OK, I will respond to ." ),
                         $$scope->{'command'},
                         str( $f, " with '" ),
@@ -1348,6 +1352,7 @@ my $result = do {
                 bool(
                     less(
                         $scope,
+                        $pos->(41.4),
                         $$scope->{'parts'}
                           ->property_u( 'length', $pos->(41.3) ),
                         num( $f, "2" )
@@ -1397,6 +1402,7 @@ my $result = do {
                                 get_symbol( $f, 'ParameterError' ),
                                 add(
                                     $scope,
+                                    $pos->(49.35),
                                     str( $f, "No such factoid ." ),
                                     $$scope->{'command'}
                                 )
@@ -1418,6 +1424,7 @@ my $result = do {
                 [
                     add(
                         $scope,
+                        $pos->(55.25),
                         str( $f, "OK, I will no longer respond to ." ),
                         $$scope->{'command'},
                         str( $f, " with '" ),

@@ -307,6 +307,7 @@ my $result = do {
                     bool(
                         nequal(
                             $scope,
+                            $pos->(32.2),
                             $$self->{'conns'}
                               ->property_u( 'length', $pos->(32.15) ),
                             num( $f, "1" )
@@ -325,6 +326,7 @@ my $result = do {
                 return $ret_func->(
                     add(
                         $scope,
+                        $pos->(33.15),
                         str( $f, "IRC::Bot(" ),
                         $$self->{'conns'}
                           ->property_u( 'length', $pos->(33.25) ),

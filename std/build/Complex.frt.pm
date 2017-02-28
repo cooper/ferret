@@ -45,6 +45,25 @@
 #                                          Addition operator (+)
 #                                          Property 'b'
 #                                              Lexical variable '$rhs'
+#          Method 'opAdd' { $ehs:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$ehs'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'Complex'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Operation
+#                                          Instance variable '@a'
+#                                          Addition operator (+)
+#                                          Lexical variable '$ehs'
+#                                  Item 1
+#                                      Instance variable '@b'
 #          Method 'opSub' { $rhs:Complex -> $result }
 #              Function body
 #                  Instruction
@@ -69,6 +88,25 @@
 #                                          Subtraction operator (-)
 #                                          Property 'b'
 #                                              Lexical variable '$rhs'
+#          Method 'opSub' { $ehs:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$ehs'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'Complex'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Operation
+#                                          Instance variable '@a'
+#                                          Subtraction operator (-)
+#                                          Lexical variable '$ehs'
+#                                  Item 1
+#                                      Instance variable '@b'
 #          Method 'opMul' { $rhs:Complex -> $result }
 #              Function body
 #                  Instruction
@@ -413,12 +451,14 @@ my $result = do {
                         [
                             add(
                                 $scope,
+                                $pos->(12.25),
                                 $$self->{'a'},
                                 $$scope->{'rhs'}
                                   ->property_u( 'a', $pos->(12.35) )
                             ),
                             add(
                                 $scope,
+                                $pos->(12.5),
                                 $$self->{'b'},
                                 $$scope->{'rhs'}
                                   ->property_u( 'b', $pos->(12.6) )
@@ -432,13 +472,13 @@ my $result = do {
             }
         );
 
-        # Method event 'opSub' definition
+        # Method event 'opAdd' definition
         my $func_2 = method_event_def(
-            $f, $scope, 'opSub',
+            $f, $scope, 'opAdd',
             [
                 {
-                    name     => 'rhs',
-                    type     => 'Complex',
+                    name     => 'ehs',
+                    type     => 'Num',
                     optional => undef,
                     more     => undef
                 }
@@ -446,22 +486,15 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 16.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 16.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$scope->{'Complex'}->(
                         [
-                            _sub(
-                                $scope,
-                                $$self->{'a'},
-                                $$scope->{'rhs'}
-                                  ->property_u( 'a', $pos->(17.35) )
+                            add(
+                                $scope,        $pos->(17.25),
+                                $$self->{'a'}, $$scope->{'ehs'}
                             ),
-                            _sub(
-                                $scope,
-                                $$self->{'b'},
-                                $$scope->{'rhs'}
-                                  ->property_u( 'b', $pos->(17.6) )
-                            )
+                            $$self->{'b'}
                         ],
                         $scope, undef,
                         $pos->(17.15)
@@ -471,9 +504,9 @@ my $result = do {
             }
         );
 
-        # Method event 'opMul' definition
+        # Method event 'opSub' definition
         my $func_3 = method_event_def(
-            $f, $scope, 'opMul',
+            $f, $scope, 'opSub',
             [
                 {
                     name     => 'rhs',
@@ -491,37 +524,116 @@ my $result = do {
                         [
                             _sub(
                                 $scope,
+                                $pos->(22.25),
+                                $$self->{'a'},
+                                $$scope->{'rhs'}
+                                  ->property_u( 'a', $pos->(22.35) )
+                            ),
+                            _sub(
+                                $scope,
+                                $pos->(22.5),
+                                $$self->{'b'},
+                                $$scope->{'rhs'}
+                                  ->property_u( 'b', $pos->(22.6) )
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(22.15)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opSub' definition
+        my $func_4 = method_event_def(
+            $f, $scope, 'opSub',
+            [
+                {
+                    name     => 'ehs',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'ehs', 26.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$scope->{'Complex'}->(
+                        [
+                            _sub(
+                                $scope,        $pos->(27.25),
+                                $$self->{'a'}, $$scope->{'ehs'}
+                            ),
+                            $$self->{'b'}
+                        ],
+                        $scope, undef,
+                        $pos->(27.15)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opMul' definition
+        my $func_5 = method_event_def(
+            $f, $scope, 'opMul',
+            [
+                {
+                    name     => 'rhs',
+                    type     => 'Complex',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'rhs', 31.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$scope->{'Complex'}->(
+                        [
+                            _sub(
+                                $scope,
+                                $pos->(33.1),
                                 mul(
                                     $scope,
+                                    $pos->(33.1),
                                     $$self->{'a'},
                                     $$scope->{'rhs'}
-                                      ->property_u( 'a', $pos->(23.2) )
+                                      ->property_u( 'a', $pos->(33.2) )
                                 ),
                                 mul(
                                     $scope,
+                                    $pos->(33.1),
                                     $$self->{'b'},
                                     $$scope->{'rhs'}
-                                      ->property_u( 'b', $pos->(23.45) )
+                                      ->property_u( 'b', $pos->(33.45) )
                                 )
                             ),
                             add(
                                 $scope,
+                                $pos->(34.1),
                                 mul(
                                     $scope,
+                                    $pos->(34.1),
                                     $$self->{'a'},
                                     $$scope->{'rhs'}
-                                      ->property_u( 'b', $pos->(24.2) )
+                                      ->property_u( 'b', $pos->(34.2) )
                                 ),
                                 mul(
                                     $scope,
+                                    $pos->(34.1),
                                     $$self->{'b'},
                                     $$scope->{'rhs'}
-                                      ->property_u( 'a', $pos->(24.45) )
+                                      ->property_u( 'a', $pos->(34.45) )
                                 )
                             )
                         ],
                         $scope, undef,
-                        $pos->(22.3)
+                        $pos->(32.3)
                     )
                 );
                 return $ret;
@@ -529,7 +641,7 @@ my $result = do {
         );
 
         # Method event 'opDiv' definition
-        my $func_4 = method_event_def(
+        my $func_6 = method_event_def(
             $f, $scope, 'opDiv',
             [
                 {
@@ -542,47 +654,53 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 29.2 ) || return $ret_func->();
+                need( $scope, $args, 'rhs', 39.2 ) || return $ret_func->();
                 var(
                     $scope,
                     conj =>
-                      $$scope->{'rhs'}->property_u( 'conj', $pos->(30.4) ),
-                    $file_scope, $pos->(30.2)
+                      $$scope->{'rhs'}->property_u( 'conj', $pos->(40.4) ),
+                    $file_scope, $pos->(40.2)
                 );
                 var(
                     $scope,
                     num => mul(
-                        $scope, ${ $scope->{special} }->{'self'},
-                        $$scope->{'conj'}
+                        $scope,                           $pos->(41.4),
+                        ${ $scope->{special} }->{'self'}, $$scope->{'conj'}
                     ),
                     $file_scope,
-                    $pos->(31.2)
+                    $pos->(41.2)
                 );
                 var(
                     $scope,
-                    den => mul( $scope, $$scope->{'rhs'}, $$scope->{'conj'} ),
-                    $file_scope, $pos->(32.2)
+                    den => mul(
+                        $scope,           $pos->(42.4),
+                        $$scope->{'rhs'}, $$scope->{'conj'}
+                    ),
+                    $file_scope,
+                    $pos->(42.2)
                 );
                 return $ret_func->(
                     $$scope->{'Complex'}->(
                         [
                             div(
                                 $scope,
+                                $pos->(44.3),
                                 $$scope->{'num'}
-                                  ->property_u( 'a', $pos->(34.2) ),
+                                  ->property_u( 'a', $pos->(44.2) ),
                                 $$scope->{'den'}
-                                  ->property_u( 'a', $pos->(34.5) )
+                                  ->property_u( 'a', $pos->(44.5) )
                             ),
                             div(
                                 $scope,
+                                $pos->(45.3),
                                 $$scope->{'num'}
-                                  ->property_u( 'b', $pos->(35.2) ),
+                                  ->property_u( 'b', $pos->(45.2) ),
                                 $$scope->{'den'}
-                                  ->property_u( 'a', $pos->(35.5) )
+                                  ->property_u( 'a', $pos->(45.5) )
                             )
                         ],
                         $scope, undef,
-                        $pos->(33.3)
+                        $pos->(43.3)
                     )
                 );
                 return $ret;
@@ -590,7 +708,7 @@ my $result = do {
         );
 
         # Method event 'opPow' definition
-        my $func_5 = method_event_def(
+        my $func_7 = method_event_def(
             $f, $scope, 'opPow',
             [
                 {
@@ -603,14 +721,28 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 41.2 ) || return $ret_func->();
-                if ( bool( equal( $scope, $$scope->{'rhs'}, num( $f, "0" ) ) ) )
+                need( $scope, $args, 'rhs', 51.2 ) || return $ret_func->();
+                if (
+                    bool(
+                        equal(
+                            $scope, $pos->(52.3),
+                            $$scope->{'rhs'}, num( $f, "0" )
+                        )
+                    )
+                  )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret_func->( num( $f, "1" ) );
                 }
-                if ( bool( equal( $scope, $$scope->{'rhs'}, num( $f, "1" ) ) ) )
+                if (
+                    bool(
+                        equal(
+                            $scope, $pos->(54.3),
+                            $$scope->{'rhs'}, num( $f, "1" )
+                        )
+                    )
+                  )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -619,26 +751,29 @@ my $result = do {
                 var(
                     $scope,
                     new => ${ $scope->{special} }->{'self'},
-                    $file_scope, $pos->(46.2)
+                    $file_scope, $pos->(56.2)
                 );
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
-                        range( $scope, num( $f, "2" ), $$scope->{'rhs'} ),
+                        range(
+                            $scope, $pos->(57.5),
+                            num( $f, "2" ), $$scope->{'rhs'}
+                        ),
                         'i',
                         sub {
                             my ( $scope, $ret_func ) = @_;
                             var(
                                 $scope,
                                 new => mul(
-                                    $scope, $$scope->{'new'},
+                                    $scope, $pos->(58.2), $$scope->{'new'},
                                     ${ $scope->{special} }->{'self'}
                                 ),
                                 $file_scope,
-                                $pos->(48.2)
+                                $pos->(58.2)
                             );
                         },
-                        $pos->(47.1)
+                        $pos->(57.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -648,23 +783,30 @@ my $result = do {
         );
 
         # Method event 'abs' definition
-        my $func_6 = method_event_def(
+        my $func_8 = method_event_def(
             $f, $scope, 'abs', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add(
                         $scope,
-                        pow( $scope, $$self->{'a'}, num( $f, "2" ) ),
-                        pow( $scope, $$self->{'b'}, num( $f, "2" ) )
-                    )->property_u( 'sqrt', $pos->(53.55) )
+                        $pos->(63.2),
+                        pow(
+                            $scope, $pos->(63.2),
+                            $$self->{'a'}, num( $f, "2" )
+                        ),
+                        pow(
+                            $scope, $pos->(63.2),
+                            $$self->{'b'}, num( $f, "2" )
+                        )
+                    )->property_u( 'sqrt', $pos->(63.55) )
                 );
                 return $ret;
             }
         );
 
         # Method event 'conj' definition
-        my $func_7 = method_event_def(
+        my $func_9 = method_event_def(
             $f, $scope, 'conj', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -672,10 +814,13 @@ my $result = do {
                     $$scope->{'Complex'}->(
                         [
                             $$self->{'a'},
-                            _sub( $scope, $f->zero, $$self->{'b'} )
+                            _sub(
+                                $scope,   $pos->(67.3),
+                                $f->zero, $$self->{'b'}
+                            )
                         ],
                         $scope, undef,
-                        $pos->(57.15)
+                        $pos->(67.15)
                     )
                 );
                 return $ret;
@@ -683,23 +828,30 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $func_8 = method_event_def(
+        my $func_10 = method_event_def(
             $f, $scope,
             'description',
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, r => $$self->{'a'}, $file_scope, $pos->(61.2) );
-                var( $scope, i => $$self->{'b'}, $file_scope, $pos->(62.2) );
+                var( $scope, r => $$self->{'a'}, $file_scope, $pos->(71.2) );
+                var( $scope, i => $$self->{'b'}, $file_scope, $pos->(72.2) );
                 if (
                     bool(
                         all_true(
                             $scope,
+                            $pos->(73.15),
                             sub {
-                                equal( $scope, $$scope->{'r'}, num( $f, "0" ) );
+                                equal(
+                                    $scope, $pos->(73.15),
+                                    $$scope->{'r'}, num( $f, "0" )
+                                );
                             },
                             sub {
-                                equal( $scope, $$scope->{'i'}, num( $f, "0" ) );
+                                equal(
+                                    $scope, $pos->(73.15),
+                                    $$scope->{'i'}, num( $f, "0" )
+                                );
                             }
                         )
                     )
@@ -709,29 +861,50 @@ my $result = do {
 
                     return $ret_func->( str( $f, "0" ) );
                 }
-                if ( bool( equal( $scope, $$scope->{'r'}, num( $f, "0" ) ) ) ) {
+                if (
+                    bool(
+                        equal(
+                            $scope, $pos->(75.3),
+                            $$scope->{'r'}, num( $f, "0" )
+                        )
+                    )
+                  )
+                {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     var(
                         $scope,
                         r => str( $f, "" ),
-                        $file_scope, $pos->(66.2)
+                        $file_scope, $pos->(76.2)
                     );
                 }
-                if ( bool( equal( $scope, $$scope->{'i'}, num( $f, "0" ) ) ) ) {
+                if (
+                    bool(
+                        equal(
+                            $scope, $pos->(77.3),
+                            $$scope->{'i'}, num( $f, "0" )
+                        )
+                    )
+                  )
+                {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     var(
                         $scope,
                         i => str( $f, "" ),
-                        $file_scope, $pos->(68.2)
+                        $file_scope, $pos->(78.2)
                     );
                 }
                 elsif (
                     bool(
                         equal(
-                            $scope, $$scope->{'i'},
-                            _sub( $scope, $f->zero, num( $f, "1" ) )
+                            $scope,
+                            $pos->(79.3),
+                            $$scope->{'i'},
+                            _sub(
+                                $scope, $pos->(79.3),
+                                $f->zero, num( $f, "1" )
+                            )
                         )
                     )
                   )
@@ -741,45 +914,63 @@ my $result = do {
                     var(
                         $scope,
                         i => str( $f, "-i" ),
-                        $file_scope, $pos->(70.2)
+                        $file_scope, $pos->(80.2)
                     );
                 }
-                elsif ( bool( less( $scope, $$scope->{'i'}, num( $f, "0" ) ) ) )
+                elsif (
+                    bool(
+                        less(
+                            $scope, $pos->(81.3),
+                            $$scope->{'i'}, num( $f, "0" )
+                        )
+                    )
+                  )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     var(
                         $scope,
-                        i => add( $scope, $$scope->{'i'}, str( $f, "i" ) ),
-                        $file_scope, $pos->(72.2)
+                        i => add(
+                            $scope, $pos->(82.2),
+                            $$scope->{'i'}, str( $f, "i" )
+                        ),
+                        $file_scope,
+                        $pos->(82.2)
                     );
                 }
                 elsif (
-                    bool( equal( $scope, $$scope->{'i'}, num( $f, "1" ) ) ) )
+                    bool(
+                        equal(
+                            $scope, $pos->(83.3),
+                            $$scope->{'i'}, num( $f, "1" )
+                        )
+                    )
+                  )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     var(
                         $scope,
                         i => str( $f, "+i" ),
-                        $file_scope, $pos->(74.2)
+                        $file_scope, $pos->(84.2)
                     );
                 }
                 else {
                     var(
                         $scope,
                         i => add(
-                            $scope,         str( $f, "+" ),
-                            $$scope->{'i'}, str( $f, "i" )
+                            $scope, $pos->(86.4),
+                            str( $f, "+" ), $$scope->{'i'},
+                            str( $f, "i" )
                         ),
                         $file_scope,
-                        $pos->(76.2)
+                        $pos->(86.2)
                     );
                 }
                 return $ret_func->(
-                    add( $scope, $$scope->{'r'}, $$scope->{'i'} )
-                      ->property_u( 'trimPrefix', $pos->(77.35) )
-                      ->( [ str( $f, "+" ) ], $scope, undef, $pos->(77.4) ) );
+                    add( $scope, $pos->(87.2), $$scope->{'r'}, $$scope->{'i'} )
+                      ->property_u( 'trimPrefix', $pos->(87.35) )
+                      ->( [ str( $f, "+" ) ], $scope, undef, $pos->(87.4) ) );
                 return $ret;
             }
         );
@@ -792,24 +983,32 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
         $func_2->inside_scope(
-            opSub => $scope,
+            opAdd => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_3->inside_scope(
-            opMul => $scope,
+            opSub => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_4->inside_scope(
-            opDiv => $scope,
+            opSub => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_5->inside_scope(
+            opMul => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_6->inside_scope(
+            opDiv => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_7->inside_scope(
             opPow => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_6->inside_scope( abs  => $scope, $proto, $class, $ins, 1, undef );
-        $func_7->inside_scope( conj => $scope, $proto, $class, $ins, 1, undef );
-        $func_8->inside_scope(
+        $func_8->inside_scope( abs  => $scope, $proto, $class, $ins, 1, undef );
+        $func_9->inside_scope( conj => $scope, $proto, $class, $ins, 1, undef );
+        $func_10->inside_scope(
             description => $scope,
             $proto, $class, $ins, undef, undef
         );
