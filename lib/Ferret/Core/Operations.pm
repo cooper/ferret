@@ -76,17 +76,12 @@ sub _do_operator {
         if Ferret::undefined($next);
 
     # if it's a return object, the operation likely isn't defined for this
-    # type of object. just move on to the next operand.
+    # type of object. just move on to the next operand. if not even one callback
+    # was satisfied by the arguments, it will have ->failed.
     # consider: produce a warning?
-    return if _bad_return($next);
+    return if $next->isa('Ferret::Return') && $next->failed;
 
     return $next;
-}
-
-sub _bad_return {
-    my $ret = shift;
-    return if !$ret->isa('Ferret::Return');
-    return $ret->failed || !$ret->num_called;
 }
 
 ################

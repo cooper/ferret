@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(ferror);
+use Ferret::Core::Conversion qw(ferror fnumber);
 use Scalar::Util qw(blessed);
 
 sub new {
@@ -62,17 +62,16 @@ sub detail {
 # called in Event.pm; yields the event fire's ultimate return value.
 sub final_return {
     my $ret = shift;
-    return $ret if $ret->{detail};
 
-    # if it didn't fail and the call count is zero,
-    # then fail for that reason.
+    # normally unsatisfied arguments for a function in an
+    # event do not ->fail, just ->error_continue. this
+    # calls ->fail if not even one callback was called.
     if (!$ret->{failed} && !$ret->{call_count}) {
-        return $ret->fail($ret->{function_arg_error} || ferror(
-            'Unsatisfied arguments',
-            'UnsatisfiedArguments'
-        ));
+        return $ret->fail($ret->{first_error}) if $ret->{first_error};
+        return $ret->fail('No functions called', 'UnsatisfiedArguments');
     }
 
+    return $ret if $ret->{detail};
     return delete $ret->{result} // $ret;
 }
 
@@ -86,14 +85,26 @@ sub stop {
 # fail with an error. stops propagation. this is nonfatal.
 sub fail {
     my ($ret, $err, $pos) = @_;
+    $err = $ret->error_continue($err, $pos);
+    $ret->stop;
+    delete $ret->{result};
+    $ret->{failed}++;
+    $ret->set_property(error => $err);
+    return $ret;
+}
+
+# same as fail except propagation continues.
+# does not set ->failed to true either.
+sub error_continue {
+    my ($ret, $err, $pos) = @_;
+
+    # fix the error
     $err = ferror($err) if !blessed $err;
     $err->{pos} = $pos;
     ferror($err); # update position
-    $ret->{failed}++;
-    $ret->set_property(error => $err);
-    $ret->stop;
-    delete $ret->{result};
-    return $ret;
+
+    $ret->{first_error} //= $err;
+    return $err;
 }
 
 # die with an error. this is fatal.
@@ -111,9 +122,6 @@ sub _run_defers {
     $_->() foreach @$defers;
     @$defers = ();
 }
-
-# number of functions called.
-sub num_called { shift->{num_called} || 0 }
 
 # true if failed (fail or throw)
 sub failed { shift->{failed} }

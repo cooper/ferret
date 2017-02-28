@@ -11,7 +11,7 @@ use parent 'Ferret::Object';
 use Scalar::Util qw(weaken blessed);
 use Ferret::Core::Conversion qw(
     fmethod ffunction fhash ferror flist
-    pdescription
+    pdescription fhash_fromref
     FUNC_RET
 );
 
@@ -165,7 +165,7 @@ sub add_function_with_opts {
         }
 
         # find and call the function(s) by this name.
-        $weak_event->_handle_call(
+        return $weak_event->_handle_call(
             $weak_func,
             $outer_self,
             $outer_scope_maybe,
@@ -303,16 +303,12 @@ sub _handle_call {
 
     # call the function.
     $func->{force_is_event} = 1;
-    my $ret = $func->call_with_self(
+    return $func->call_with_self(
         $self,
         $arguments,
         $call_scope,
         $return
     );
-
-    # override the return if it returns something besides $return.
-    # if $ret were undef, Function.pm would have returned Ferret::undefined.
-    return $return->return($ret);
 }
 
 ###################################
@@ -394,7 +390,7 @@ sub _global_event_prototype {
         });
         $proto->set_property(allFunctions => sub {
             my ($event) = @_;
-            return flist(values %{ $event->{all_funcs} || {} });
+            return fhash_fromref($event->{all_funcs});
         });
         $proto;
     };

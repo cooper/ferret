@@ -11,6 +11,7 @@ use Ferret::Shared::Utils qw(dot_trim);
 sub desc {
     my $num = shift;
     return 'constant zero' if $num->{zero};
+    return 'imaginary unit' if $num->{value} eq 'i';
     return "number '$$num{value}'";
 }
 

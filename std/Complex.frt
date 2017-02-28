@@ -31,8 +31,13 @@ operator - {
 
 #> subtractions of real numbers from complex numbers
 operator - {
-    need $ehs: Num
-    return Complex(@a - $ehs, @b)
+    need $rhs: Num
+    return Complex(@a - $rhs, @b)
+}
+
+operator - {
+    need $lhs: Num
+    return Complex($lhs - @a, @b)
 }
 
 #> multiplication of complex numbers

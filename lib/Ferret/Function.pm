@@ -145,25 +145,22 @@ sub call {
     $return ||= Ferret::Return->new($func->f);
 
     # hash ref of arguments. check if matches signature.
+    $arguments = { %$arguments }; # copy since this is shared with all callbacks
     if (!$func->_arguments_satisfy_signature($arguments, $generics)) {
-
         my $error = ferror(
             "Unsatisfied argument '$$func{last_unsatisfied}'",
             'UnsatisfiedArguments'
         );
 
-        # if this is not an event callback, the success of the function
-        # depends on whether its arguments were satisfied.
-        if (!$is_event) {
-            return $return->fail($error);
+        # call ->error_continue. in events, the propagation continues.
+        # however, if ALL functions are unsuccessful, it will ->fail later.
+        if ($is_event) {
+            $return->error_continue($error);
+            return $return->return;
         }
 
-        # if it is an event callback, remember this in the return object.
-        # it will be used if the entire event call fails.
-        $return->{function_arg_error} ||= $error;
-        $return->{function_arg_error}   = $error if $func->{name} eq 'default';
-
-        return;
+        # for non-events, just ->fail now.
+        return $return->fail($error);
     }
 
     bless $arguments, 'Ferret::Arguments';
@@ -214,11 +211,9 @@ sub call {
         $ins                    # FUNC_INS
     );
 
-    $return->{num_called}++;
     $return->detail if $detail;
     return $return->return($ret // Ferret::undefined);
 }
-
 
 #########################
 ### ARGUMENT HANDLING ###
