@@ -124,16 +124,24 @@ sub add_function_with_opts {
     my $outer_scope_maybe = delete $opts{outer_scope};
 
     # the function name translates to the Evented::Object callback name.
-    my $name = $func->{name} ||= $func->{id};
-
     # any function named default MAY be the default function.
-    # increase its priority no matter what, but only store it as the default
-    # function if there is not already one.
+    my $name = $func->{name} ||= $func->{id};
     if ($name eq 'default') {
-        weaken($event->{default_func} = $func)
-            if !$event->{default_func};
+
+        # somehow we encountered a function called default after a
+        # function of another name was chosen to be default.
+        # let's let the one called default take it from here.
+        my $existing = $event->default_func;
+        delete $event->{default_func}
+            if $existing && $existing->{name} ne 'default';
+
+        # all functions by the name of 'default' have an increased priority.
         $opts{priority} = 100;
     }
+
+    # if no default function exists, set it now, regardless of the name.
+    weaken($event->{default_func} = $func)
+        if !$event->default_func;
 
     # Evented::Object callback names must be unique to the object. if we
     # have multiple functions by the same name, increment as necessary
@@ -141,7 +149,6 @@ sub add_function_with_opts {
     while ($event->{all_funcs}{$name}) {
         $name = "${orig_name}_$i";
         $i++;
-
     }
     $opts{name} = $name;
 
