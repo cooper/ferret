@@ -11,7 +11,8 @@ use Scalar::Util qw(blessed);
 use Ferret::Core::Conversion qw(
     fnumber pnumber
     fstring pstring
-    pdescription flist_fromref
+    pdescription
+    flist_fromref flist
     FUNC_V1 FUNC_FUNC
 );
 
@@ -27,6 +28,10 @@ my @methods = (
     insert => {
         need => '$index:Num $item:T',
         code => \&_insert
+    },
+    splice => {
+        need => '$offset:Num $length:Num',
+        code => \&_splice
     },
     join => {
         need => '$separator:Str',
@@ -167,6 +172,19 @@ sub _insert {
     my $index = $args->pnumber('index');
     $list->insert($index, $args->{item});
     return $list;
+}
+
+# remove element(s) at index
+sub splice : method {
+    my ($list, $offset, $length) = @_;
+    return splice @{ $list->{list_items} }, $offset, $length;
+}
+
+sub _splice {
+    my ($list, $args) = &FUNC_V1;
+    my ($offset, $length) = map $args->pnumber($_), 'offset', 'length';
+    my @removed = $list->splice($offset, $length);
+    return flist(@removed);
 }
 
 # join stringified elements by a separator
