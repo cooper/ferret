@@ -552,6 +552,33 @@ prop midpoint {
 $line.midpoint  # returns a Point, created on the spot
 ```
 
+### operator
+
+```
+operator <op> { [<statements>...] }
+```
+
+Defines an operator overload method. This allows you to add custom operator
+implementations for the instances of the class.
+
+In Ferret, the left hand operand dictates which operator implementation will be
+used. The operator method is passed the right hand operand as its sole argument.
+
+```
+package Time
+class Duration
+
+operator + {
+    need $rhs: Duration
+    return @addDuration($rhs)
+}
+
+operator - {
+    need $rhs: Duration
+    return @subtractDuration($rhs)
+}
+```
+
 ## Control flow
 
 ### if
