@@ -5,6 +5,10 @@ init {
     need $imag: Num #< imaginary part
     @a = $real
     @b = $imag
+
+    # if we have no imaginary part, return a real number
+    if $imag == 0
+        return $imag
 }
 
 #> addition of complex numbers

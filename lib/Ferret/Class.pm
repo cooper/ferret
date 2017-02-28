@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Scalar::Util qw(weaken);
+use Scalar::Util qw(weaken blessed);
 use Ferret::Core::Conversion qw(
     plist ferror fmethod
     FUNC_V1 FUNC_RET FUNC_ARGS
@@ -95,12 +95,11 @@ sub call {
     # it will yield a boolean false value.
     if ($ret->{failed}) {
         $ret->delete_property('instance');
-        $ret->delete_property(lc $class->{name});
         return $ret;
     }
 
     # otherwise, return the instance.
-    return $ret->property(lc $class->{name});
+    return $ret->property('instance');
 }
 
 # initialize an object.
@@ -131,9 +130,10 @@ sub init {
     }
 
     # call the initializer.
+    my $init_ret;
     if ($class->has_property('initializer__')) {
         my $init = $class->property('initializer__');
-        $init->call_with_self(
+        $init_ret = $init->call_with_self(
             $obj,
             $args,
             $class->{outer_scope},
@@ -142,18 +142,25 @@ sub init {
         $fire = $init->{most_recent_fire};
     }
 
-    # strong override.
-    $obj = delete $obj->{override_init_obj} if $obj->{override_init_obj};
+    # strong override from a Perl implementation
+    $obj = delete $obj->{override_init_obj}
+        if $obj->{override_init_obj};
 
-    # inject instance properties.
+    # in Ferret code, another object was explicitly returned
+    $obj = $init_ret if
+        !Ferret::undefined($init_ret)       &&
+        blessed $init_ret                   &&
+        $init_ret->isa('Ferret::Object')    &&
+        !$init_ret->isa('Ferret::Return')   &&
+        $init_ret != $obj;
+
+    # inject instance property
     $ret->set_property(instance => $obj);
-    $ret->set_property(lc $class->{name} => $obj);
 
     # if init's default func failed (returned undef),
     # a need was not satisfied. in this case, we will return instance as
     # the empty object. therefore a class call will return undef.
     if ($fire && !defined $fire->return_of('default')) {
-        $ret->delete_property(lc $class->{name});
         $obj->remove_parent($class->prototype);
     }
 
