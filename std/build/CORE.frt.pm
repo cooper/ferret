@@ -9,6 +9,9 @@
 #              Bareword 'Signal'
 #      Instruction
 #          Load
+#              Bareword 'Complex'
+#      Instruction
+#          Load
 #              Bareword 'Extension::Number'
 #      Instruction
 #          Load
@@ -93,7 +96,7 @@
 #                              Item 0
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
-#      Include (Any, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Iterator, Obj, Object, Signal, Str)
+#      Include (Any, Complex, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Iterator, Obj, Object, Signal, Str)
 package FF;
 
 use warnings;
@@ -123,7 +126,7 @@ my $result = do {
     load_core('CORE');
 
     load_namespaces( $context,
-        qw(Any Error EventSet Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Iterator Obj Object Signal Str)
+        qw(Any Complex Error EventSet Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Iterator Obj Object Signal Str)
     );
 
     typedef(
@@ -139,8 +142,8 @@ my $result = do {
         },
         undef
     );
-    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(17.3) );
-    $context->set_property( Object => $$scope->{'Any'}, $pos->(18.3) );
+    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(18.3) );
+    $context->set_property( Object => $$scope->{'Any'}, $pos->(19.3) );
     typedef(
         $scope, $context, 'Code',
         sub {
@@ -165,7 +168,7 @@ my $result = do {
                 conditions => [
                     sub { $ins->fits_type_u( $$scope->{'Str'} ) },
                     sub {
-                        equal( $scope, $pos->(30.3), $$ins->{'length'},
+                        equal( $scope, $pos->(31.3), $$ins->{'length'},
                             num( $f, "1" ) );
                     }
                 ],

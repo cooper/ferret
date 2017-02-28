@@ -1370,6 +1370,19 @@ sub c_BAREWORD {
         return $l_word;
     }
 
+    # if the last element is a number, this could be an imaginary unit
+    if ($value eq 'i') {
+
+        # last element is a number, so it is the coefficient
+        if ($l_word->type eq 'Number') {
+            $l_word->{value} .= 'i';
+            return $l_word;
+        }
+
+        # standalone i
+        return $c->simulate('NUMBER', $value);
+    }
+
     # otherwise, create a new bareword.
     my $word = F::new('Bareword', bareword_value => $value);
     $c->node->adopt($word);

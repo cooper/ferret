@@ -200,7 +200,20 @@ sub nsim { _not(&sim) }
 ### OTHERS ###
 ##############
 
-sub num { Ferret::Number->new(shift, num_value => shift) }
+sub num {
+    my ($f, $num) = @_;
+    my $last = \substr($num, -1);
+    if ($$last eq 'i') {
+        $$last = '';
+        my $cmplx = $f->{complex} //=
+            $f->get_class($f->main_context, 'Complex');
+        $num = 1 if !length $num;
+        my @args = map Ferret::Core::Conversion::fnumber($_), 0, $num;
+        return $cmplx->call(\@args);
+    }
+    return Ferret::Number->new($f, num_value => $num);
+}
+
 sub str { Ferret::String->new(shift, str_value => shift) }
 sub rgx {
     my ($f, $id, $rgx, $mods) = @_;

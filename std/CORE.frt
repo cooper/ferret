@@ -2,6 +2,7 @@ package CORE
 
 load Error
 load Signal
+load Complex
 
 load Extension::Number
 load Extension::String

@@ -7,26 +7,31 @@ init {
     @b = $imag
 }
 
+#> addition of complex numbers
 operator + {
     need $rhs: Complex
     return Complex(@a + $rhs.a, @b + $rhs.b)
 }
 
+#> addition of complex and real numbers
 operator + {
     need $ehs: Num
     return Complex(@a + $ehs, @b)
 }
 
+#> subtraction of complex numbers
 operator - {
     need $rhs: Complex
     return Complex(@a - $rhs.a, @b - $rhs.b)
 }
 
+#> subtractions of real numbers from complex numbers
 operator - {
     need $ehs: Num
     return Complex(@a - $ehs, @b)
 }
 
+#> multiplication of complex numbers
 operator * {
     need $rhs: Complex
     return Complex(
@@ -35,6 +40,7 @@ operator * {
     )
 }
 
+#> division of complex numbers
 operator / {
     need $rhs: Complex
     $conj = $rhs.conj
@@ -47,6 +53,7 @@ operator / {
 }
 
 # hilarious
+#> complex numbers to an integer power
 operator ^ {
     need $rhs: Int
     if $rhs == 0
@@ -59,10 +66,12 @@ operator ^ {
     return $new
 }
 
+#> absolute value of complex number
 prop abs {
-    return (@a^2 + @b^2).sqrt
+    return (@a ^ 2 + @b ^ 2).sqrt
 }
 
+#> conjugate of complex number
 prop conj {
     return Complex(@a, -@b)
 }
