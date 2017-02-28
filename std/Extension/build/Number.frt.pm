@@ -57,6 +57,24 @@
 #                              Special variable '*self'
 #                              Exponent operator (^)
 #                              Number '2'
+#          Computed property 'abs' { -> $result $result }
+#              Function body
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Special variable '*self'
+#                              Less than operator (<)
+#                              Number '0'
+#                      If body
+#                          Instruction
+#                              Return
+#                                  Operation
+#                                      Constant zero
+#                                      Negation operator (-)
+#                                      Special variable '*self'
+#                  Instruction
+#                      Return
+#                          Special variable '*self'
 #          Computed property 'even' { -> $result }
 #              Function body
 #                  Instruction
@@ -188,7 +206,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my $pos = before_content( 'Number.frt', './std/Extension/Number.frt' );
 
 use Ferret::Core::Operations
-  qw(bool equal less mod mul nequal num pow range str);
+  qw(_sub bool equal less mod mul nequal num pow range str);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -241,8 +259,37 @@ my $result = do {
             }
         );
 
-        # Method event 'even' definition
+        # Method event 'abs' definition
         my $func_3 = method_event_def(
+            $f, $scope, 'abs', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                if (
+                    bool(
+                        less(
+                            $scope,
+                            ${ $scope->{special} }->{'self'},
+                            num( $f, "0" )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->(
+                        _sub(
+                            $scope, $f->zero,
+                            ${ $scope->{special} }->{'self'}
+                        )
+                    );
+                }
+                return $ret_func->( ${ $scope->{special} }->{'self'} );
+                return $ret;
+            }
+        );
+
+        # Method event 'even' definition
+        my $func_4 = method_event_def(
             $f, $scope, 'even', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -262,7 +309,7 @@ my $result = do {
         );
 
         # Method event 'odd' definition
-        my $func_4 = method_event_def(
+        my $func_5 = method_event_def(
             $f, $scope, 'odd', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -282,7 +329,7 @@ my $result = do {
         );
 
         # Method event 'root' definition
-        my $func_5 = method_event_def(
+        my $func_6 = method_event_def(
             $f, $scope, 'root',
             [
                 {
@@ -295,13 +342,13 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'root', 51.2 ) || return $ret_func->();
+                need( $scope, $args, 'root', 58.2 ) || return $ret_func->();
                 return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'root', $pos->(52.15) )->(
+                    $$scope->{'Math'}->property_u( 'root', $pos->(59.15) )->(
                         [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
                         $scope,
                         undef,
-                        $pos->(52.2)
+                        $pos->(59.2)
                     )
                 );
                 return $ret;
@@ -309,13 +356,13 @@ my $result = do {
         );
 
         # Method event 'factorial' definition
-        my $func_6 = method_event_def(
+        my $func_7 = method_event_def(
             $f, $scope,
             'factorial',
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, new => num( $f, "1" ), $file_scope, $pos->(57.2) );
+                var( $scope, new => num( $f, "1" ), $file_scope, $pos->(64.2) );
                 if (
                     bool(
                         less(
@@ -348,10 +395,10 @@ my $result = do {
                                     $$scope->{'i'}
                                 ),
                                 $file_scope,
-                                $pos->(61.2)
+                                $pos->(68.2)
                             );
                         },
-                        $pos->(60.1)
+                        $pos->(67.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -361,7 +408,7 @@ my $result = do {
         );
 
         # Method event 'toFunction' definition
-        my $func_7 = method_event_def(
+        my $func_8 = method_event_def(
             $f, $scope,
             'toFunction',
             undef, undef,
@@ -377,17 +424,18 @@ my $result = do {
             square => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $func_3->inside_scope( even => $scope, $proto, $class, $ins, 1, undef );
-        $func_4->inside_scope( odd  => $scope, $proto, $class, $ins, 1, undef );
-        $func_5->inside_scope(
+        $func_3->inside_scope( abs  => $scope, $proto, $class, $ins, 1, undef );
+        $func_4->inside_scope( even => $scope, $proto, $class, $ins, 1, undef );
+        $func_5->inside_scope( odd  => $scope, $proto, $class, $ins, 1, undef );
+        $func_6->inside_scope(
             root => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_6->inside_scope(
+        $func_7->inside_scope(
             factorial => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_7->inside_scope(
+        $func_8->inside_scope(
             toFunction => $scope,
             $proto, $class, $ins, undef, undef
         );
@@ -455,21 +503,21 @@ my $result = do {
         var(
             $class,
             Inf => $$scope->{'Num'}
-              ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(71.5) ),
-            undef, $pos->(71.3)
+              ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(78.5) ),
+            undef, $pos->(78.3)
         );
         var(
             $class,
             NaN => $$scope->{'Num'}
-              ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(74.5) ),
-            undef, $pos->(74.3)
+              ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(81.5) ),
+            undef, $pos->(81.3)
         );
     }
     load_namespaces( $context,
         qw(Inf Int Integer Math NaN Num Num::Inf Num::Int Num::NaN) );
-    $context->set_property( Int => $$scope->{'Num::Int'}, $pos->(80.3) );
-    $context->set_property( Inf => $$scope->{'Num::Inf'}, $pos->(81.3) );
-    $context->set_property( NaN => $$scope->{'Num::NaN'}, $pos->(82.3) );
+    $context->set_property( Int => $$scope->{'Num::Int'}, $pos->(87.3) );
+    $context->set_property( Inf => $$scope->{'Num::Inf'}, $pos->(88.3) );
+    $context->set_property( NaN => $$scope->{'Num::NaN'}, $pos->(89.3) );
 };
 
 after_content();

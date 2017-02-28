@@ -36,6 +36,13 @@ prop square {
     return *self ^ 2
 }
 
+#> absolute value of the number
+prop abs {
+    if *self < 0
+        return -*self
+    return *self
+}
+
 #> true if the number is even
 prop even {
     return *self % 2 == 0
