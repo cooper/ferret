@@ -492,6 +492,23 @@ method haveBirthday {
 }
 ```
 
+### hook
+
+```
+hook <name> [ { [<statements>...] } ]
+```
+
+Exactly the same as the `method` keyword, except that it is used by convention
+for event hooks. Usually the body is omitted, but you can still provide one if
+your class needs to respond to its own hook.
+
+```
+class MySocket 1.0
+
+hook connected
+hook disconnected
+```
+
 ### init
 
 ```

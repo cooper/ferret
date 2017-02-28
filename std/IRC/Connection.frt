@@ -115,10 +115,10 @@ method getServer {
 #=== Hooks ===#
 
 #> Called when a connection to the socket is established.
-method hook connected
+hook connected
 
 #> Called on disconnect, whether it be user-initiated or due to error.
-method hook disconnected {
+hook disconnected {
     # dispose of all the objects
     @users = [:]
     @servers = [:]

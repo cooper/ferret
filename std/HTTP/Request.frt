@@ -27,13 +27,13 @@ method connect {
 
 #> Called when the connection opens.
 #| May be called multiple times if the request is redirected or retried.
-method hook connected
+hook connected
 
 #> Called when the request was redirected by an HTTP location header.
-method hook redirect
+hook redirect
 
 #> Called when a connection error occurs.
-method hook error
+hook error
 
 #> Called when an HTTP response is constructed.
-method hook response
+hook response
