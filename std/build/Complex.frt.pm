@@ -130,18 +130,6 @@
 #                              Multiplication operator (*)
 #                              Lexical variable '$conj'
 #                  Instruction
-#                      Call
-#                          Bareword 'inspect'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Hash [2 items]
-#                                      Item 0
-#                                          Pair 'num'
-#                                              Lexical variable '$num'
-#                                      Item 1
-#                                          Pair 'den'
-#                                              Lexical variable '$den'
-#                  Instruction
 #                      Return
 #                          Call
 #                              Bareword 'Complex'
@@ -575,39 +563,26 @@ my $result = do {
                     den => mul( $scope, $$scope->{'rhs'}, $$scope->{'conj'} ),
                     $file_scope, $pos->(32.2)
                 );
-                $$scope->{'inspect'}->(
-                    [
-                        create_hash(
-                            $f,
-                            [
-                                num => $$scope->{'num'},
-                                den => $$scope->{'den'}
-                            ]
-                        )
-                    ],
-                    $scope, undef,
-                    $pos->(33.1)
-                );
                 return $ret_func->(
                     $$scope->{'Complex'}->(
                         [
                             div(
                                 $scope,
                                 $$scope->{'num'}
-                                  ->property_u( 'a', $pos->(35.2) ),
+                                  ->property_u( 'a', $pos->(34.2) ),
                                 $$scope->{'den'}
-                                  ->property_u( 'a', $pos->(35.5) )
+                                  ->property_u( 'a', $pos->(34.5) )
                             ),
                             div(
                                 $scope,
                                 $$scope->{'num'}
-                                  ->property_u( 'b', $pos->(36.2) ),
+                                  ->property_u( 'b', $pos->(35.2) ),
                                 $$scope->{'den'}
-                                  ->property_u( 'a', $pos->(36.5) )
+                                  ->property_u( 'a', $pos->(35.5) )
                             )
                         ],
                         $scope, undef,
-                        $pos->(34.3)
+                        $pos->(33.3)
                     )
                 );
                 return $ret;
@@ -628,7 +603,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 42.2 ) || return $ret_func->();
+                need( $scope, $args, 'rhs', 41.2 ) || return $ret_func->();
                 if ( bool( equal( $scope, $$scope->{'rhs'}, num( $f, "0" ) ) ) )
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
@@ -644,7 +619,7 @@ my $result = do {
                 var(
                     $scope,
                     new => ${ $scope->{special} }->{'self'},
-                    $file_scope, $pos->(47.2)
+                    $file_scope, $pos->(46.2)
                 );
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
@@ -660,10 +635,10 @@ my $result = do {
                                     ${ $scope->{special} }->{'self'}
                                 ),
                                 $file_scope,
-                                $pos->(49.2)
+                                $pos->(48.2)
                             );
                         },
-                        $pos->(48.1)
+                        $pos->(47.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -682,7 +657,7 @@ my $result = do {
                         $scope,
                         pow( $scope, $$self->{'a'}, num( $f, "2" ) ),
                         pow( $scope, $$self->{'b'}, num( $f, "2" ) )
-                    )->property_u( 'sqrt', $pos->(54.55) )
+                    )->property_u( 'sqrt', $pos->(53.55) )
                 );
                 return $ret;
             }
@@ -700,7 +675,7 @@ my $result = do {
                             _sub( $scope, $f->zero, $$self->{'b'} )
                         ],
                         $scope, undef,
-                        $pos->(58.15)
+                        $pos->(57.15)
                     )
                 );
                 return $ret;
@@ -714,8 +689,8 @@ my $result = do {
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, r => $$self->{'a'}, $file_scope, $pos->(62.2) );
-                var( $scope, i => $$self->{'b'}, $file_scope, $pos->(63.2) );
+                var( $scope, r => $$self->{'a'}, $file_scope, $pos->(61.2) );
+                var( $scope, i => $$self->{'b'}, $file_scope, $pos->(62.2) );
                 if (
                     bool(
                         all_true(
@@ -740,7 +715,7 @@ my $result = do {
                     var(
                         $scope,
                         r => str( $f, "" ),
-                        $file_scope, $pos->(67.2)
+                        $file_scope, $pos->(66.2)
                     );
                 }
                 if ( bool( equal( $scope, $$scope->{'i'}, num( $f, "0" ) ) ) ) {
@@ -749,7 +724,7 @@ my $result = do {
                     var(
                         $scope,
                         i => str( $f, "" ),
-                        $file_scope, $pos->(69.2)
+                        $file_scope, $pos->(68.2)
                     );
                 }
                 elsif (
@@ -766,7 +741,7 @@ my $result = do {
                     var(
                         $scope,
                         i => str( $f, "-i" ),
-                        $file_scope, $pos->(71.2)
+                        $file_scope, $pos->(70.2)
                     );
                 }
                 elsif ( bool( less( $scope, $$scope->{'i'}, num( $f, "0" ) ) ) )
@@ -776,7 +751,7 @@ my $result = do {
                     var(
                         $scope,
                         i => add( $scope, $$scope->{'i'}, str( $f, "i" ) ),
-                        $file_scope, $pos->(73.2)
+                        $file_scope, $pos->(72.2)
                     );
                 }
                 elsif (
@@ -787,7 +762,7 @@ my $result = do {
                     var(
                         $scope,
                         i => str( $f, "+i" ),
-                        $file_scope, $pos->(75.2)
+                        $file_scope, $pos->(74.2)
                     );
                 }
                 else {
@@ -798,13 +773,13 @@ my $result = do {
                             $$scope->{'i'}, str( $f, "i" )
                         ),
                         $file_scope,
-                        $pos->(77.2)
+                        $pos->(76.2)
                     );
                 }
                 return $ret_func->(
                     add( $scope, $$scope->{'r'}, $$scope->{'i'} )
-                      ->property_u( 'trimPrefix', $pos->(78.35) )
-                      ->( [ str( $f, "+" ) ], $scope, undef, $pos->(78.4) ) );
+                      ->property_u( 'trimPrefix', $pos->(77.35) )
+                      ->( [ str( $f, "+" ) ], $scope, undef, $pos->(77.4) ) );
                 return $ret;
             }
         );

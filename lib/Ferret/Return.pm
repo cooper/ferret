@@ -112,6 +112,12 @@ sub _run_defers {
     @$defers = ();
 }
 
+# number of functions called.
+sub num_called { shift->{num_called} || 0 }
+
+# true if failed (fail or throw)
+sub failed { shift->{failed} }
+
 sub description {
     my $obj = shift;
     return "[ No return ]" if !scalar $obj->properties(1);

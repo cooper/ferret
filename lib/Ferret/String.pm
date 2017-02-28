@@ -16,8 +16,14 @@ use Ferret::Core::Conversion qw(
 
 my @methods = (
     opAdd => {
-        need => '$rhs',
-        code => \&_op_add
+        need    => '$lhs:Str::Any',
+        code    => \&_op_add_lhs,
+        cb_name => 'lhs'
+    },
+    opAdd => {
+        need    => '$rhs:Str::Any',
+        code    => \&_op_add_rhs,
+        cb_name => 'rhs'
     },
     opSim => {
         need => '$rhs:Rgx',
@@ -109,10 +115,17 @@ sub init {
 ##################
 
 # string plus string.
-sub _op_add {
+sub _op_add_rhs {
     my ($str, $args) = &FUNC_V1;
     my $rhs = $args->{rhs};
     my $new_value = pstring($str).pstring($rhs);
+    return fstring($new_value);
+}
+
+sub _op_add_lhs {
+    my ($str, $args) = &FUNC_V1;
+    my $lhs = $args->{lhs};
+    my $new_value = pstring($lhs).pstring($str);
     return fstring($new_value);
 }
 

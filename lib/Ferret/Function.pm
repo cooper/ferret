@@ -214,6 +214,7 @@ sub call {
         $ins                    # FUNC_INS
     );
 
+    $return->{num_called}++;
     $return->detail if $detail;
     return $return->return($ret // Ferret::undefined);
 }
@@ -501,7 +502,7 @@ sub inside_scope {
 
     my $event;
 
-    # FIXME: not currently handling if $owner->own_property($name)
+    # FIXME: haven't considered what to do if $owner->own_property($name)
     # is something other than an Event
 
     # we've already added to an event.
@@ -552,7 +553,6 @@ sub _handle_property {
 
     # return both the call result and the function itself.
     return [ $res, $func_or_event ];
-
 }
 
 #####################

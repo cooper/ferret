@@ -30,7 +30,6 @@ operator / {
     $conj = $rhs.conj
     $num = *self * $conj
     $den = $rhs  * $conj
-    inspect([ num: $num, den: $den ])
     return Complex(
         $num.a / $den.a,
         $num.b / $den.a

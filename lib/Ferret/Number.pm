@@ -32,7 +32,7 @@ my @methods = (
     },
     opAdd => {
         code => \&_op_add,
-        need => '$rhs:Num|Str'
+        need => '$rhs:Num'
     },
     opSub => {
         code => \&_op_sub,
@@ -111,16 +111,8 @@ sub init {
 sub _op_add {
     my ($num, $args) = &FUNC_V1;
     my $rhs = $args->{rhs};
-
-    # if the RHS is a string, use string concatentation.
-    if (defined $rhs->{str_value}) {
-        return fstring($num->{num_value}.$rhs->{str_value});
-    }
-
-    # otherwise, it better be a number
     my $new_value = pnumber($num) + pnumber($rhs);
     return fnumber($new_value);
-
 }
 
 # number minus number

@@ -12,39 +12,77 @@ use List::Util qw(all first);
 BEGIN {
     no strict 'refs';
     foreach my $star (qw/range pow mod mul div add _sub sim/) {
-        *$star = sub { op_star(undef, $star, @_) };
+        *$star = sub { op_star($star, @_) };
     }
 }
 
 sub op_star {
-    my ($strict, $star, $scope, @items) = @_;
+    my ($star, $scope, @items) = @_;
     $star    = 'sub' if $star eq '_sub';
     my $op   = 'op'.ucfirst($star);
     my $left = shift @items or return;
 
     while (@items) {
-        return Ferret::undefined if Ferret::undefined($left);
-
         my $right = shift @items;
-        my $func  = $left->property($op) or next;
-        my $next  = $func->call({ rhs => $right }, $scope);
 
-        # if it's a bad return object, the operation isn't defined for this
-        # type of object. just move on to the next operand.
-        # consider: produce a warning?
-        if ($next->isa('Ferret::Return') && $next->{failed}) {
-            return if $strict;
+        # first try the LHS
+        my $lhs = _do_operator($op, $scope, $left, $right, 'rhs');
+        if ($lhs) {
+            return Ferret::undefined
+                if Ferret::undefined($lhs);
+            $left = $lhs;
             next;
         }
 
-        # if the return value is undefined, the operator implementation
-        # is explicitly requesting that we do not continue.
-        return Ferret::undefined if Ferret::undefined($next);
+        # try RHS if that failed
+        my $rhs = _do_operator($op, $scope, $right, $left, 'lhs');
+        if ($rhs) {
+            return Ferret::undefined
+                if Ferret::undefined($rhs);
+            $left = $rhs;
+            next;
+        }
 
-        $left = $next;
+        # both failed.
+        die "no idea what to do with that";
     }
 
     return $left;
+}
+
+sub _do_operator {
+    my ($op_func, $scope, $operand1, $operand2, $side) = @_;
+
+    # no operations against undefined are permitted
+    return Ferret::undefined
+        if Ferret::undefined($operand1);
+
+    # find an operator implementation from this side
+    my $func = $operand1->property($op_func);
+
+    # no implementation; try other side
+    return if !$func;
+
+    # call the operator on this side
+    my $next = $func->call({ $side => $operand2, ehs => $operand2 }, $scope);
+
+    # if the return value is undefined, the operator implementation
+    # is explicitly requesting that we do not continue.
+    return Ferret::undefined
+        if Ferret::undefined($next);
+
+    # if it's a return object, the operation likely isn't defined for this
+    # type of object. just move on to the next operand.
+    # consider: produce a warning?
+    return if _bad_return($next);
+
+    return $next;
+}
+
+sub _bad_return {
+    my $ret = shift;
+    return if !$ret->isa('Ferret::Return');
+    return $ret->failed || !$ret->num_called;
 }
 
 ################

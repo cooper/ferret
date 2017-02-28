@@ -10,7 +10,8 @@ use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken blessed);
 use Ferret::Core::Conversion qw(
-    fmethod ffunction fhash pdescription ferror
+    fmethod ffunction fhash ferror flist
+    pdescription
     FUNC_RET
 );
 
@@ -123,13 +124,29 @@ sub add_function_with_opts {
     my $outer_scope_maybe = delete $opts{outer_scope};
 
     # the function name translates to the Evented::Object callback name.
-    # the priority, if unspecified, is zero. for 'default', it is always 100.
-    $opts{name}     = $func->{name} ||= $func->{id};
-    $opts{priority} = 100 if $opts{name} eq 'default';
+    my $name = $func->{name} ||= $func->{id};
+
+    # any function named default MAY be the default function.
+    # increase its priority no matter what, but only store it as the default
+    # function if there is not already one.
+    if ($name eq 'default') {
+        weaken($event->{default_func} = $func)
+            if !$event->{default_func};
+        $opts{priority} = 100;
+    }
+
+    # Evented::Object callback names must be unique to the object. if we
+    # have multiple functions by the same name, increment as necessary
+    my ($orig_name, $i) = ($name, 0);
+    while ($event->{all_funcs}{$name}) {
+        $name = "${orig_name}_$i";
+        $i++;
+
+    }
+    $opts{name} = $name;
 
     # store the function.
-    weaken($event->{default_func} = $func) if !$event->{default_func};
-    push @{ $event->{all_funcs} ||= [] }, $func;
+    $event->{all_funcs}{$name} = $func;
 
     # create the code.
     weaken(my $weak_event = $event);
@@ -155,7 +172,6 @@ sub add_function_with_opts {
     # this event object.
       $obj->on($event->{id} => $code, %opts)  if  $obj;
     $event->on(call         => $code, %opts)  if !$obj;
-
 }
 
 ##################################
@@ -368,6 +384,10 @@ sub _global_event_prototype {
         $proto->set_property(detailedSignature => sub {
             my ($event) = @_;
             Ferret::String->new($f, str_value => $event->detailed_signature_string)
+        });
+        $proto->set_property(allFunctions => sub {
+            my ($event) = @_;
+            return flist(values %{ $event->{all_funcs} || {} });
         });
         $proto;
     };
