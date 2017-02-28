@@ -41,6 +41,13 @@ method flatten {
     return $new
 }
 
+#> Returns a reversed copy of the list.
+method reverse {
+    $new = []
+    return gather for $i in @lastIndex..0:
+        take *self[$i]
+}
+
 #> Copies the list, ignoring all possible occurrences of a specified value.
 method withoutAll {
     need $what
@@ -61,8 +68,6 @@ method without {
     }
 }
 
-# FIXME: .remove() and .removeAll() leave undefined elements behind
-
 #> Removes the first element equal to a specified value.
 method remove {
     need $what
@@ -70,8 +75,7 @@ method remove {
     for ($i, $el) in *self {
         if $what != $el
             next
-        delete *self[$i]
-        found   -> $el
+        @splice($i, 1)
         removed -> true
         last
     }
@@ -80,14 +84,19 @@ method remove {
 #> Removes all elements equal to a specified value.
 method removeAll {
     need $what
-    $found = gather for ($i, $el) in *self {
+
+    # find the indices at which the value occurs
+    $indices = gather for ($i, $el) in *self {
         if $what != $el
             next
-        delete *self[$i]
-        take $el
+        take $i
     }
-    found   -> $found           #< list of removed elements
-    removed -> $found.length    #< number of removed elements
+
+    # remove
+    for $i in $indices.reverse!
+        @splice($i, 1)
+
+    removed -> $indices.length    #< number of removed elements
 }
 
 #> Finds the first element to satisfy a code.
@@ -139,6 +148,25 @@ prop sum0 {
     return $c
 }
 
+#> Returns an iterator for the list. This allows lists to be used in a for loop.
 prop iterator {
     return ListIterator(*self) : Iterator
+}
+
+#> Adding lists together results in an ordered consolidation of the lists.
+operator + {
+    need $rhs: List
+    $new = @copy()
+    $new.push(items: $rhs)
+    return $new
+}
+
+#> Subtracting list B from list A results in a new list containing all elements
+#| found in A but not found in B. Example: `[1,2,3,4,5] - [3,5]` -> `[1,2,4]`.
+operator - {
+    need $rhs: List
+    $new = @copy()
+    for $remove in $rhs:
+        $new.removeAll($remove)
+    return $new
 }

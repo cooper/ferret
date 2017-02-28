@@ -114,6 +114,32 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$new'
+#          Method 'reverse' { -> $result }
+#              Function body
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$new'
+#                          Value list [0 items]
+#                  Instruction
+#                      Return
+#                          Gather
+#                              Gather body
+#                                  For (values)
+#                                      Expression ('for' parameter)
+#                                          Lexical variable '$i'
+#                                      Expression ('in' parameter)
+#                                          Operation
+#                                              Instance variable '@lastIndex'
+#                                              Range operator (..)
+#                                              Number '0'
+#                                      For body
+#                                          Instruction
+#                                              Take
+#                                                  Index
+#                                                      Special variable '*self'
+#                                                      Index list [1 item]
+#                                                          Item 0
+#                                                              Lexical variable '$i'
 #          Method 'withoutAll' { $what -> $result }
 #              Function body
 #                  Instruction
@@ -174,7 +200,7 @@
 #                                          Instruction
 #                                              Take
 #                                                  Lexical variable '$el'
-#          Method 'remove' { $what -> $removed $found $removed }
+#          Method 'remove' { $what -> $removed $removed }
 #              Function body
 #                  Instruction
 #                      Need
@@ -202,28 +228,26 @@
 #                                  Instruction
 #                                      Next
 #                          Instruction
-#                              Delete modifier
-#                                  Index
-#                                      Special variable '*self'
-#                                      Index list [1 item]
-#                                          Item 0
-#                                              Lexical variable '$i'
-#                          Instruction
-#                              Return pair 'found'
-#                                  Lexical variable '$el'
+#                              Call
+#                                  Instance variable '@splice'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Lexical variable '$i'
+#                                      Item 1
+#                                          Number '1'
 #                          Instruction
 #                              Return pair 'removed'
 #                                  Boolean true
 #                          Instruction
 #                              Last
-#          Method 'removeAll' { $what -> $found $removed }
+#          Method 'removeAll' { $what -> $removed }
 #              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$what'
 #                  Instruction
 #                      Assignment
-#                          Lexical variable '$found'
+#                          Lexical variable '$indices'
 #                          Gather
 #                              Gather body
 #                                  For (pairs)
@@ -246,22 +270,28 @@
 #                                                  Instruction
 #                                                      Next
 #                                          Instruction
-#                                              Delete modifier
-#                                                  Index
-#                                                      Special variable '*self'
-#                                                      Index list [1 item]
-#                                                          Item 0
-#                                                              Lexical variable '$i'
-#                                          Instruction
 #                                              Take
-#                                                  Lexical variable '$el'
-#                  Instruction
-#                      Return pair 'found'
-#                          Lexical variable '$found'
+#                                                  Lexical variable '$i'
+#                  For (values)
+#                      Expression ('for' parameter)
+#                          Lexical variable '$i'
+#                      Expression ('in' parameter)
+#                          Call
+#                              Property 'reverse'
+#                                  Lexical variable '$indices'
+#                      For body
+#                          Instruction
+#                              Call
+#                                  Instance variable '@splice'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Lexical variable '$i'
+#                                      Item 1
+#                                          Number '1'
 #                  Instruction
 #                      Return pair 'removed'
 #                          Property 'length'
-#                              Lexical variable '$found'
+#                              Lexical variable '$indices'
 #          Method 'first' { $code:Code -> $result $result }
 #              Function body
 #                  Instruction
@@ -416,6 +446,59 @@
 #                                  Item 0
 #                                      Special variable '*self'
 #                          Bareword 'Iterator'
+#          Method 'opAdd' { $rhs:List -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$rhs'
+#                          Argument type
+#                              Bareword 'List'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$new'
+#                          Call
+#                              Instance variable '@copy'
+#                              Argument list [0 items]
+#                  Instruction
+#                      Call
+#                          Property 'push'
+#                              Lexical variable '$new'
+#                          Named argument list [1 item]
+#                              Item 0
+#                                  Pair 'items'
+#                                      Lexical variable '$rhs'
+#                  Instruction
+#                      Return
+#                          Lexical variable '$new'
+#          Method 'opSub' { $rhs:List -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$rhs'
+#                          Argument type
+#                              Bareword 'List'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$new'
+#                          Call
+#                              Instance variable '@copy'
+#                              Argument list [0 items]
+#                  For (values)
+#                      Expression ('for' parameter)
+#                          Lexical variable '$remove'
+#                      Expression ('in' parameter)
+#                          Lexical variable '$rhs'
+#                      For body
+#                          Instruction
+#                              Call
+#                                  Property 'removeAll'
+#                                      Lexical variable '$new'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$remove'
+#                  Instruction
+#                      Return
+#                          Lexical variable '$new'
 #      Include (Code, Iterator, List, ListIterator, T)
 package FF;
 
@@ -446,7 +529,7 @@ my $result = do {
     load_core('main');
 
     # Anonymous function definition with topicalizer
-    my $func_4 = function_def(
+    my $func_5 = function_def(
         $f, undef, undef,
         [ { name => '_' } ],
         undef,
@@ -655,8 +738,62 @@ my $result = do {
             }
         );
 
+        # Method event 'reverse' definition
+        my $func_4 = method_event_def(
+            $f, $scope,
+            'reverse',
+            undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                var(
+                    $scope,
+                    new => create_list( $f, [] ),
+                    $file_scope, $pos->(46.2)
+                );
+                return $ret_func->(
+                    do {
+                        my ( $gather_status, $gather_ret ) = gather(
+                            $f, $scope,
+                            sub {
+                                my ( $scope, $take, $ret_func ) = @_;
+                                {
+                                    my ( $loop_status, $loop_ret ) = iterate(
+                                        $f, $scope,
+                                        range(
+                                            $scope,
+                                            $$self->{'lastIndex'},
+                                            num( $f, "0" )
+                                        ),
+                                        'i',
+                                        sub {
+                                            my ( $scope, $ret_func ) = @_;
+                                            $take->(
+                                                ${ $scope->{special} }
+                                                  ->{'self'}->get_index_value(
+                                                    [ $$scope->{'i'} ],
+                                                    $scope,
+                                                    $pos->(48.3)
+                                                  )
+                                            );
+                                        },
+                                        $pos->(47.2)
+                                    );
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
+                                }
+                            }
+                        );
+                        return $ret_func->($gather_ret)
+                          if $gather_status eq 'return';
+                        $gather_ret;
+                      }
+                );
+                return $ret;
+            }
+        );
+
         # Method event 'withoutAll' definition
-        my $func_5 = method_event_def(
+        my $func_6 = method_event_def(
             $f, $scope,
             'withoutAll',
             [
@@ -670,17 +807,17 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 46.2 ) || return $ret_func->();
+                need( $scope, $args, 'what', 53.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'grep'}->(
                         [
-                            $func_4->inside_scope(
+                            $func_5->inside_scope(
                                 (undef) => $scope,
                                 undef, $class, $ins, undef, undef
                             )
                         ],
                         $scope, undef,
-                        $pos->(47.15)
+                        $pos->(54.15)
                     )
                 );
                 return $ret;
@@ -688,7 +825,7 @@ my $result = do {
         );
 
         # Method event 'without' definition
-        my $func_6 = method_event_def(
+        my $func_7 = method_event_def(
             $f, $scope,
             'without',
             [
@@ -702,10 +839,10 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 53.2 ) || return $ret_func->();
+                need( $scope, $args, 'what', 60.2 ) || return $ret_func->();
                 $scope->set_property(
                     found => Ferret::undefined,
-                    $pos->(54.2)
+                    $pos->(61.2)
                 );
                 return $ret_func->(
                     do {
@@ -749,13 +886,13 @@ my $result = do {
                                                 var(
                                                     $scope,
                                                     found => $true,
-                                                    $file_scope, $pos->(57.2)
+                                                    $file_scope, $pos->(64.2)
                                                 );
                                                 return 'next';
                                             }
                                             $take->( $$scope->{'el'} );
                                         },
-                                        $pos->(55.1)
+                                        $pos->(62.1)
                                       );
                                     return $ret_func->($loop_ret)
                                       if $loop_status eq 'return';
@@ -772,7 +909,7 @@ my $result = do {
         );
 
         # Method event 'remove' definition
-        my $func_7 = method_event_def(
+        my $func_8 = method_event_def(
             $f, $scope, 'remove',
             [
                 {
@@ -785,8 +922,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 68.2 ) || return $ret_func->();
-                $ret->set_property( removed => $false, $pos->(69.2) );
+                need( $scope, $args, 'what', 73.2 ) || return $ret_func->();
+                $ret->set_property( removed => $false, $pos->(74.2) );
                 {
                     my ( $loop_status, $loop_ret ) = iterate_pair(
                         $f, $scope,
@@ -808,20 +945,17 @@ my $result = do {
 
                                 return 'next';
                             }
-
-                            ${ $scope->{special} }->{'self'}
-                              ->delete_index( $$scope->{'i'}, $pos->(73.1) );
-                            $ret->set_property(
-                                found => $$scope->{'el'},
-                                $pos->(74.2)
+                            $$self->{'splice'}->(
+                                [ $$scope->{'i'}, num( $f, "1" ) ],
+                                $scope, undef, $pos->(78.2)
                             );
                             $ret->set_property(
                                 removed => $true,
-                                $pos->(75.2)
+                                $pos->(79.2)
                             );
                             return 'last';
                         },
-                        $pos->(70.05)
+                        $pos->(75.05)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -830,7 +964,7 @@ my $result = do {
         );
 
         # Method event 'removeAll' definition
-        my $func_8 = method_event_def(
+        my $func_9 = method_event_def(
             $f, $scope,
             'removeAll',
             [
@@ -844,10 +978,10 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'what', 82.2 ) || return $ret_func->();
+                need( $scope, $args, 'what', 86.2 ) || return $ret_func->();
                 var(
                     $scope,
-                    found => do {
+                    indices => do {
                         my ( $gather_status, $gather_ret ) = gather(
                             $f, $scope,
                             sub {
@@ -876,13 +1010,9 @@ my $result = do {
 
                                                 return 'next';
                                             }
-
-                                            ${ $scope->{special} }->{'self'}
-                                              ->delete_index( $$scope->{'i'},
-                                                $pos->(86.1) );
-                                            $take->( $$scope->{'el'} );
+                                            $take->( $$scope->{'i'} );
                                         },
-                                        $pos->(83.15)
+                                        $pos->(89.15)
                                       );
                                     return $ret_func->($loop_ret)
                                       if $loop_status eq 'return';
@@ -894,67 +1024,38 @@ my $result = do {
                         $gather_ret;
                     },
                     $file_scope,
-                    $pos->(83.1)
+                    $pos->(89.1)
                 );
-                $ret->set_property( found => $$scope->{'found'}, $pos->(89.2) );
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        $$scope->{'indices'}
+                          ->property_u( 'reverse', $pos->(96.5) )
+                          ->( [ undef, [] ], $scope, undef, $pos->(96.6) ),
+                        'i',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            $$self->{'splice'}->(
+                                [ $$scope->{'i'}, num( $f, "1" ) ],
+                                $scope, undef, $pos->(97.2)
+                            );
+                        },
+                        $pos->(96.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
                 $ret->set_property(
-                    removed =>
-                      $$scope->{'found'}->property_u( 'length', $pos->(90.4) ),
-                    $pos->(90.2)
+                    removed => $$scope->{'indices'}
+                      ->property_u( 'length', $pos->(99.4) ),
+                    $pos->(99.2)
                 );
                 return $ret;
             }
         );
 
         # Method event 'first' definition
-        my $func_9 = method_event_def(
-            $f, $scope, 'first',
-            [
-                {
-                    name     => 'code',
-                    type     => 'Code',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 95.2 ) || return $ret_func->();
-                {
-                    my ( $loop_status, $loop_ret ) = iterate(
-                        $f, $scope,
-                        ${ $scope->{special} }->{'self'},
-                        'el',
-                        sub {
-                            my ( $scope, $ret_func ) = @_;
-                            if (
-                                bool(
-                                    $$scope->{'code'}->(
-                                        [ $$scope->{'el'} ], $scope,
-                                        undef,               $pos->(97.15)
-                                    )
-                                )
-                              )
-                            {
-                                my $scope =
-                                  Ferret::Scope->new( $f, parent => $scope );
-
-                                return $ret_func->( $$scope->{'el'} );
-                            }
-                        },
-                        $pos->(96.1)
-                    );
-                    return $ret_func->($loop_ret) if $loop_status eq 'return';
-                }
-                return $ret_func->($undefined);
-                return $ret;
-            }
-        );
-
-        # Method event 'any' definition
         my $func_10 = method_event_def(
-            $f, $scope, 'any',
+            $f, $scope, 'first',
             [
                 {
                     name     => 'code',
@@ -986,21 +1087,21 @@ my $result = do {
                                 my $scope =
                                   Ferret::Scope->new( $f, parent => $scope );
 
-                                return $ret_func->($true);
+                                return $ret_func->( $$scope->{'el'} );
                             }
                         },
                         $pos->(105.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
-                return $ret_func->($false);
+                return $ret_func->($undefined);
                 return $ret;
             }
         );
 
-        # Method event 'all' definition
+        # Method event 'any' definition
         my $func_11 = method_event_def(
-            $f, $scope, 'all',
+            $f, $scope, 'any',
             [
                 {
                     name     => 'code',
@@ -1022,12 +1123,58 @@ my $result = do {
                             my ( $scope, $ret_func ) = @_;
                             if (
                                 bool(
+                                    $$scope->{'code'}->(
+                                        [ $$scope->{'el'} ], $scope,
+                                        undef,               $pos->(115.15)
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                return $ret_func->($true);
+                            }
+                        },
+                        $pos->(114.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret_func->($false);
+                return $ret;
+            }
+        );
+
+        # Method event 'all' definition
+        my $func_12 = method_event_def(
+            $f, $scope, 'all',
+            [
+                {
+                    name     => 'code',
+                    type     => 'Code',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'code', 122.2 ) || return $ret_func->();
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        ${ $scope->{special} }->{'self'},
+                        'el',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
                                     _not(
                                         $$scope->{'code'}->(
                                             [ $$scope->{'el'} ],
                                             $scope,
                                             undef,
-                                            $pos->(115.2)
+                                            $pos->(124.2)
                                         )
                                     )
                                 )
@@ -1039,7 +1186,7 @@ my $result = do {
                                 return $ret_func->($false);
                             }
                         },
-                        $pos->(114.1)
+                        $pos->(123.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1049,7 +1196,7 @@ my $result = do {
         );
 
         # Method event 'sum' definition
-        my $func_12 = method_event_def(
+        my $func_13 = method_event_def(
             $f, $scope, 'sum', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -1062,10 +1209,10 @@ my $result = do {
                     $scope,
                     c => ${ $scope->{special} }->{'self'}->get_index_value(
                         [ num( $f, "0" ) ],
-                        $scope, $pos->(125.4)
+                        $scope, $pos->(134.4)
                     ),
                     $file_scope,
-                    $pos->(125.2)
+                    $pos->(134.2)
                 );
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
@@ -1082,14 +1229,14 @@ my $result = do {
                                     ${ $scope->{special} }->{'self'}
                                       ->get_index_value(
                                         [ $$scope->{'i'} ], $scope,
-                                        $pos->(127.3)
+                                        $pos->(136.3)
                                       )
                                 ),
                                 $file_scope,
-                                $pos->(127.1)
+                                $pos->(136.1)
                             );
                         },
-                        $pos->(126.1)
+                        $pos->(135.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1099,11 +1246,11 @@ my $result = do {
         );
 
         # Method event 'sum0' definition
-        my $func_13 = method_event_def(
+        my $func_14 = method_event_def(
             $f, $scope, 'sum0', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, c => num( $f, "0" ), $file_scope, $pos->(135.2) );
+                var( $scope, c => num( $f, "0" ), $file_scope, $pos->(144.2) );
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
@@ -1117,10 +1264,10 @@ my $result = do {
                                     $scope, $$scope->{'c'}, $$scope->{'el'}
                                 ),
                                 $file_scope,
-                                $pos->(137.2)
+                                $pos->(146.2)
                             );
                         },
-                        $pos->(136.1)
+                        $pos->(145.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1130,7 +1277,7 @@ my $result = do {
         );
 
         # Method event 'iterator' definition
-        my $func_14 = method_event_def(
+        my $func_15 = method_event_def(
             $f, $scope,
             'iterator',
             undef,
@@ -1140,9 +1287,82 @@ my $result = do {
                 return $ret_func->(
                     $$scope->{'ListIterator'}->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                $pos->(143.3)
+                        undef,                                $pos->(153.3)
                     )
                 );
+                return $ret;
+            }
+        );
+
+        # Method event 'opAdd' definition
+        my $func_16 = method_event_def(
+            $f, $scope, 'opAdd',
+            [
+                {
+                    name     => 'rhs',
+                    type     => 'List',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'rhs', 158.2 ) || return $ret_func->();
+                var(
+                    $scope,
+                    new => $$self->{'copy'}
+                      ->( [ undef, [] ], $scope, undef, $pos->(159.4) ),
+                    $file_scope, $pos->(159.2)
+                );
+                $$scope->{'new'}->property_u( 'push', $pos->(160.2) )->(
+                    [ undef, [ items => $$scope->{'rhs'} ] ],
+                    $scope, undef, $pos->(160.3)
+                );
+                return $ret_func->( $$scope->{'new'} );
+                return $ret;
+            }
+        );
+
+        # Method event 'opSub' definition
+        my $func_17 = method_event_def(
+            $f, $scope, 'opSub',
+            [
+                {
+                    name     => 'rhs',
+                    type     => 'List',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'rhs', 167.2 ) || return $ret_func->();
+                var(
+                    $scope,
+                    new => $$self->{'copy'}
+                      ->( [ undef, [] ], $scope, undef, $pos->(168.4) ),
+                    $file_scope, $pos->(168.2)
+                );
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        $$scope->{'rhs'},
+                        'remove',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            $$scope->{'new'}
+                              ->property_u( 'removeAll', $pos->(170.2) )->(
+                                [ $$scope->{'remove'} ],
+                                $scope, undef, $pos->(170.3)
+                              );
+                        },
+                        $pos->(169.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret_func->( $$scope->{'new'} );
                 return $ret;
             }
         );
@@ -1162,42 +1382,54 @@ my $result = do {
             flatten => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_5->inside_scope(
-            withoutAll => $scope,
+        $func_4->inside_scope(
+            reverse => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_6->inside_scope(
-            without => $scope,
+            withoutAll => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_7->inside_scope(
-            remove => $scope,
+            without => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_8->inside_scope(
-            removeAll => $scope,
+            remove => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_9->inside_scope(
-            first => $scope,
+            removeAll => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_10->inside_scope(
-            any => $scope,
+            first => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_11->inside_scope(
+            any => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_12->inside_scope(
             all => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_12->inside_scope( sum => $scope, $proto, $class, $ins, 1, undef );
-        $func_13->inside_scope(
+        $func_13->inside_scope( sum => $scope, $proto, $class, $ins, 1, undef );
+        $func_14->inside_scope(
             sum0 => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $func_14->inside_scope(
+        $func_15->inside_scope(
             iterator => $scope,
             $proto, $class, $ins, 1, undef
+        );
+        $func_16->inside_scope(
+            opAdd => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_17->inside_scope(
+            opSub => $scope,
+            $proto, $class, $ins, undef, undef
         );
         typedef(
             $scope, $class, 'Pairs',
