@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './std/EventSet.frt'
 #      Class 'EventSet'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { ?$code:Code }
 #              Function body
 #                  Instruction
 #                      Want

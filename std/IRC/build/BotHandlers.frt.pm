@@ -9,7 +9,7 @@
 #                      Item 0
 #                          Pair 'PRIVMSG'
 #                              Bareword 'privmsg'
-#      Function 'privmsg'
+#      Function 'privmsg' { $bot $msg -> $result $result }
 #          Function body
 #              Instruction
 #                  Need

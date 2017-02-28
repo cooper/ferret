@@ -28,7 +28,7 @@
 #              Property 'info'
 #                  Property 'commands'
 #                      Lexical variable '$bot'
-#          Anonymous function
+#          Anonymous function { $channel }
 #              Function body
 #                  Instruction
 #                      Need
@@ -50,7 +50,7 @@
 #              Property 'add'
 #                  Property 'commands'
 #                      Lexical variable '$bot'
-#          Anonymous function
+#          Anonymous function { $msg $channel }
 #              Function body
 #                  Instruction
 #                      Need
@@ -172,7 +172,7 @@
 #              Property 'del'
 #                  Property 'commands'
 #                      Lexical variable '$bot'
-#          Anonymous function
+#          Anonymous function { $msg $channel }
 #              Function body
 #                  Instruction
 #                      Need
@@ -280,7 +280,7 @@
 #                                      Lexical variable '$existed'
 #                                      Addition operator (+)
 #                                      String '''
-#      Function 'respondFactoid'
+#      Function 'respondFactoid' { $msg $channel }
 #          Function body
 #              Instruction
 #                  Need
@@ -368,7 +368,7 @@
 #              Property 'e'
 #                  Property 'commands'
 #                      Lexical variable '$bot'
-#          Anonymous function
+#          Anonymous function { $msg $channel }
 #              Function body
 #                  Instruction
 #                      Need
@@ -391,7 +391,7 @@
 #              Property 'i'
 #                  Property 'commands'
 #                      Lexical variable '$bot'
-#          Anonymous function
+#          Anonymous function { $msg $channel }
 #              Function body
 #                  Instruction
 #                      Need
@@ -409,7 +409,7 @@
 #                                  Lexical variable '$channel'
 #                              Item 2
 #                                  Boolean true
-#      Function 'handleEval'
+#      Function 'handleEval' { $msg $channel $detailed -> $result }
 #          Function body
 #              Instruction
 #                  Need
@@ -429,7 +429,7 @@
 #                              Item 0
 #                                  Number '5'
 #                              Item 1
-#                                  Anonymous function
+#                                  Anonymous function { -> $result }
 #                                      Function body
 #                                          Instruction
 #                                              Return
@@ -495,7 +495,7 @@
 #              Property 't'
 #                  Property 'commands'
 #                      Lexical variable '$bot'
-#          Anonymous function
+#          Anonymous function { $msg $channel -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -549,7 +549,7 @@
 #              Property 'c'
 #                  Property 'commands'
 #                      Lexical variable '$bot'
-#          Anonymous function
+#          Anonymous function { $msg $channel -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -603,7 +603,7 @@
 #              Property 'p'
 #                  Property 'commands'
 #                      Lexical variable '$bot'
-#          Anonymous function
+#          Anonymous function { $msg $channel }
 #              Function body
 #                  Instruction
 #                      Need
@@ -626,7 +626,7 @@
 #              Property 'pp'
 #                  Property 'commands'
 #                      Lexical variable '$bot'
-#          Anonymous function
+#          Anonymous function { $msg $channel }
 #              Function body
 #                  Instruction
 #                      Need
@@ -644,7 +644,7 @@
 #                                  Lexical variable '$channel'
 #                              Item 2
 #                                  Boolean false
-#      Function 'handlePerl'
+#      Function 'handlePerl' { $msg $channel $mini -> $result }
 #          Function body
 #              Instruction
 #                  Need
@@ -696,7 +696,7 @@
 #                          Item 0
 #                              Property 'perl'
 #                                  Lexical variable '$res'
-#      Function 'getParameter'
+#      Function 'getParameter' { $msg:IRC::Massage -> $result }
 #          Function body
 #              Instruction
 #                  Need
@@ -733,7 +733,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  String '␤'
-#      Function 'ircsay'
+#      Function 'ircsay' { $message:Str::Any }
 #          Function body
 #              Instruction
 #                  Need

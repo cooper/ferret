@@ -30,7 +30,7 @@
 #                          Item 2
 #                              Pair 'add'
 #                                  Bareword '_commandAdd'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $addr:Str $nick:Str ?$port:Num ?$user:Str ?$real:Str }
 #              Function body
 #                  Instruction
 #                      Need
@@ -129,7 +129,7 @@
 #                      Expression ('on' parameter)
 #                          Property 'gotLine'
 #                              Instance variable '@sock'
-#                      Anonymous function
+#                      Anonymous function { $data }
 #                          Function body
 #                              Instruction
 #                                  Need
@@ -140,7 +140,7 @@
 #                                      Argument list [1 item]
 #                                          Item 0
 #                                              Lexical variable '$data'
-#          Method 'addCommand'
+#          Method 'addCommand' { $command:Str::LC $callback -> $overwrote $added }
 #              Function body
 #                  Instruction
 #                      Need
@@ -179,7 +179,7 @@
 #                          Property 'connect'
 #                              Instance variable '@sock'
 #                          Argument list [0 items]
-#          Method 'send'
+#          Method 'send' { $line }
 #              Function body
 #                  Instruction
 #                      Need
@@ -200,7 +200,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$line'
-#          Method 'handleLine'
+#          Method 'handleLine' { $line }
 #              Function body
 #                  Instruction
 #                      Need
@@ -275,7 +275,7 @@
 #                              Item 3
 #                                  Pair 's'
 #                                      Lexical variable '$s'
-#          Method 'privmsg'
+#          Method 'privmsg' { $channel:Str $message:Str }
 #              Function body
 #                  Instruction
 #                      Need
@@ -317,7 +317,7 @@
 #                                                      String ' :'
 #                                                      Addition operator (+)
 #                                                      Lexical variable '$line'
-#          Function '_joinChannels'
+#          Function '_joinChannels' { -> $result }
 #              Function body
 #                  If
 #                      Expression ('if' parameter)
@@ -348,7 +348,7 @@
 #                      Assignment
 #                          This variable '%_joinedChannels'
 #                          Boolean true
-#          Function '_pong'
+#          Function '_pong' { $s }
 #              Function body
 #                  Instruction
 #                      Need
@@ -366,7 +366,7 @@
 #                                          Index list [1 item]
 #                                              Item 0
 #                                                  Number '1'
-#          Function '_handleMessage'
+#          Function '_handleMessage' { $line $s -> $msg }
 #              Function body
 #                  Instruction
 #                      Need
@@ -413,7 +413,7 @@
 #                                      Item 3
 #                                          Pair 'msg'
 #                                              Lexical variable '$msg'
-#          Function '_commandHello'
+#          Function '_commandHello' { $msg }
 #              Function body
 #                  Instruction
 #                      Need
@@ -437,7 +437,7 @@
 #                                      Lexical variable '$nickname'
 #                                      Addition operator (+)
 #                                      String '!'
-#          Function '_commandAdd'
+#          Function '_commandAdd' { $msg }
 #              Function body
 #                  Instruction
 #                      Need
@@ -500,7 +500,7 @@
 #                                      Lexical variable '$response'
 #                                      Addition operator (+)
 #                                      String '''
-#          Function '_commandFactoid'
+#          Function '_commandFactoid' { $msg }
 #              Function body
 #                  Instruction
 #                      Need

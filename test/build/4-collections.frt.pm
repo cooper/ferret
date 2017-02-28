@@ -1,6 +1,6 @@
 # === Document Model ===
 #  Document './test/4-collections.frt'
-#      Function 'makePoint'
+#      Function 'makePoint' { $x $y ?$z -> $point }
 #          Function body
 #              Instruction
 #                  Need

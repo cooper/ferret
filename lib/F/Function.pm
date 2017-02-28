@@ -242,7 +242,6 @@ sub perl_fmt {
 sub markdown_fmt {
     my $method = shift;
     return if !$method->is_method; # TODO
-    my $no_body = !$method->body;
 
     # create heading.
     my $head = $method->get_markdown_heading(
@@ -288,7 +287,7 @@ sub markdown_fmt {
     my $fmt = $method->{is_prop} ? 'computed' : 'method';
     return $fmt => {
         name        => $method->{name},
-        hook        => $no_body || $method->{hook} ? 'Hook. ' : '',
+        hook        => $method->{hook} ? 'Hook. ' : '',
         description => dot_trim($comment),
         heading     => $head,
         example     => $example,

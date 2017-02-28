@@ -50,7 +50,7 @@
 #      On
 #          Expression ('on' parameter)
 #              Bareword 'say'
-#          Anonymous function
+#          Anonymous function { $twice $message -> $didTwice }
 #              Function body
 #                  Instruction
 #                      Need

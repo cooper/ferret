@@ -56,7 +56,7 @@
 #                      Item 3
 #                          Pair 'ALRM'
 #                              Lexical variable '$ALRM'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $type:Sym }
 #              Function body
 #                  Instruction
 #                      Need
@@ -71,7 +71,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Number '0'
-#          Class method 'fireSignal'
+#          Class method 'fireSignal' { $type:Sym }
 #              Function body
 #                  Instruction
 #                      Need

@@ -28,7 +28,7 @@
 #                      String 'Benjamin'
 #                  Item 1
 #                      String 'George'
-#      Function 'helloWorld'
+#      Function 'helloWorld' { $name1 $name2 }
 #          Function body
 #              Instruction
 #                  Need

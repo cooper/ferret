@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './std/Module.frt'
 #      Class 'Module' version 1.0
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $name:Str ?$prefix:Str ?$version:Num }
 #              Function body
 #                  Instruction
 #                      Need

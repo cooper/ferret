@@ -2,7 +2,7 @@
 #  Document './std/IRC/User.frt'
 #      Package 'IRC'
 #      Class 'User'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $connection:Connection $nick:Str ?$user:Str ?$host:Str ?$real:Str }
 #              Function body
 #                  Instruction
 #                      Need

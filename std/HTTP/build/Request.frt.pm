@@ -2,7 +2,7 @@
 #  Document './std/HTTP/Request.frt'
 #      Package 'HTTP'
 #      Class 'Request'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $client:Client $url:Str $httpMethod:HTTPMethod }
 #              Function body
 #                  Instruction
 #                      Need

@@ -23,7 +23,7 @@
 #              On
 #                  Expression ('on' parameter)
 #                      Property variable '.redirect'
-#                  Anonymous function
+#                  Anonymous function { $location:Str }
 #                      Function body
 #                          Instruction
 #                              Need
@@ -42,7 +42,7 @@
 #              On
 #                  Expression ('on' parameter)
 #                      Property variable '.response'
-#                  Anonymous function
+#                  Anonymous function { $content:Str }
 #                      Function body
 #                          Instruction
 #                              Need

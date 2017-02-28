@@ -20,7 +20,7 @@
 #                      Symbol :latin1
 #                  Instruction
 #                      Symbol :utf8
-#          Class method 'initializer__'
+#          Class method 'initializer__' { ?$strict:Bool ?$consistent:Bool ?$charset:Charset ?$strictRoot:Bool ?$pretty:Bool ?$spaceBefore:Bool ?$spaceAfter:Bool ?$indent:Bool }
 #              Function body
 #                  Instruction
 #                      Want
@@ -190,7 +190,7 @@
 #                              Call
 #                                  Property 'allow_nonref'
 #                                      Instance variable '@xs'
-#          Method 'encode'
+#          Method 'encode' { $data -> $json }
 #              Function body
 #                  Instruction
 #                      Need
@@ -219,7 +219,7 @@
 #                                              Item 2
 #                                                  Pair 'subError'
 #                                                      Lexical variable '$err'
-#          Method 'decode'
+#          Method 'decode' { $json:Str -> $data }
 #              Function body
 #                  Instruction
 #                      Need
@@ -250,7 +250,7 @@
 #                                              Item 2
 #                                                  Pair 'subError'
 #                                                      Lexical variable '$err'
-#          Method 'decoderAdd'
+#          Method 'decoderAdd' { $fragment:Str -> $added }
 #              Function body
 #                  Instruction
 #                      Need
@@ -288,7 +288,7 @@
 #                  Instruction
 #                      Return pair 'added'
 #                          Boolean true
-#          Method 'decoderDone'
+#          Method 'decoderDone' { -> $found $data }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -341,7 +341,7 @@
 #                          Property 'incr_reset'
 #                              Instance variable '@xs'
 #                          Argument list [0 items]
-#          Class method 'encode'
+#          Class method 'encode' { $data -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -354,7 +354,7 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$data'
-#          Class method 'decode'
+#          Class method 'decode' { $json:Str -> $result }
 #              Function body
 #                  Instruction
 #                      Need

@@ -2,7 +2,7 @@
 #  Document './std/Math/Rect.frt'
 #      Package 'Math'
 #      Class 'Rect'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $x:Num $y:Num $width:Num $height:Num }
 #              Function body
 #                  Instruction
 #                      Need
@@ -34,7 +34,7 @@
 #                                      Lexical variable '$x'
 #                                  Item 1
 #                                      Lexical variable '$y'
-#          Computed property 'vertices'
+#          Computed property 'vertices' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -47,12 +47,12 @@
 #                                  Instance variable '@bottomLeft'
 #                              Item 3
 #                                  Instance variable '@bottomRight'
-#          Computed property 'bottomLeft'
+#          Computed property 'bottomLeft' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
 #                          Instance variable '@origin'
-#          Computed property 'bottomRight'
+#          Computed property 'bottomRight' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -68,7 +68,7 @@
 #                                  Item 1
 #                                      Property 'y'
 #                                          Instance variable '@origin'
-#          Computed property 'topLeft'
+#          Computed property 'topLeft' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -84,7 +84,7 @@
 #                                              Instance variable '@origin'
 #                                          Addition operator (+)
 #                                          Instance variable '@height'
-#          Computed property 'topRight'
+#          Computed property 'topRight' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -103,7 +103,7 @@
 #                                              Instance variable '@origin'
 #                                          Addition operator (+)
 #                                          Instance variable '@height'
-#          Computed property 'bottomLine'
+#          Computed property 'bottomLine' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -114,7 +114,7 @@
 #                                      Instance variable '@bottomLeft'
 #                                  Item 1
 #                                      Instance variable '@bottomRight'
-#          Computed property 'topLine'
+#          Computed property 'topLine' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -125,7 +125,7 @@
 #                                      Instance variable '@topLeft'
 #                                  Item 1
 #                                      Instance variable '@topRight'
-#          Computed property 'center'
+#          Computed property 'center' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -156,7 +156,7 @@
 #                                      Lexical variable '$x'
 #                                  Item 1
 #                                      Lexical variable '$y'
-#          Method 'description'
+#          Method 'description' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment

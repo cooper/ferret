@@ -1,6 +1,6 @@
 # === Document Model ===
 #  Document './test/29-gather.frt'
-#      Function 'nonZeroCoodinates'
+#      Function 'nonZeroCoodinates' { $pt:Math::Point -> $result }
 #          Function body
 #              Instruction
 #                  Need
@@ -87,7 +87,7 @@
 #                                  Argument list [1 item]
 #                                      Item 0
 #                                          Lexical variable '$pt'
-#      Function 'evenNumbers'
+#      Function 'evenNumbers' { $nums:Num... -> $even }
 #          Function body
 #              Instruction
 #                  Need (...)

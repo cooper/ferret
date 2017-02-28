@@ -9,7 +9,7 @@ sub key   { 'result' }
 sub value { shift->first_child }
 
 sub type_string {
-    my $bw = (shift->children)[1] or return;
+    my $bw = (shift->children)[1] or return undef;
     return $bw->{bareword_value};
 }
 

@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/10-irc-simple/Bot2.frt'
 #      Class 'Bot2'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $address:Str $nick:Str $user:Str ?$port:Num ?$real:Str }
 #              Function body
 #                  Instruction
 #                      Need
@@ -89,7 +89,7 @@
 #                  On
 #                      Expression ('on' parameter)
 #                          Instance variable '@gotLine'
-#                      Anonymous function
+#                      Anonymous function { $data }
 #                          Function body
 #                              Instruction
 #                                  Need
@@ -106,7 +106,7 @@
 #                  On
 #                      Expression ('on' parameter)
 #                          Instance variable '@println'
-#                      Anonymous function
+#                      Anonymous function { $data }
 #                          Function body
 #                              Instruction
 #                                  Need

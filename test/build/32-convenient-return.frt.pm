@@ -1,6 +1,6 @@
 # === Document Model ===
 #  Document './test/32-convenient-return.frt'
-#      Function 'A'
+#      Function 'A' { -> $result }
 #          Function body
 #              Instruction
 #                  Return

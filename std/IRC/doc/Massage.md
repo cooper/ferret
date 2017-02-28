@@ -16,7 +16,7 @@ Creates a new Massage class instance.
 
 ### Arguments
 
-* *optional* __data__: Str::NE - A complete IRC message.
+* *optional* __data__: [Nonempty string](/std/doc/String.md) - A complete IRC message.
 
 * *optional* __connection__: Connection - The connection object to associate the message with,
 used for source and target properties.
@@ -34,7 +34,7 @@ Parses IRC data.
 
 #### Arguments
 
-* __data__: Str::NE - A string of IRC-encoded data.
+* __data__: [Nonempty string](/std/doc/String.md) - A string of IRC-encoded data.
 
 
 

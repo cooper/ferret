@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './std/Test.frt'
 #      Class 'Test' version 1.0
-#          Class method 'initializer__'
+#          Class method 'initializer__' { ?$name ?$fatal }
 #              Function body
 #                  Instruction
 #                      Want
@@ -21,7 +21,7 @@
 #                      Assignment
 #                          Instance variable '@passed'
 #                          Number '0'
-#          Method 'trueValue'
+#          Method 'trueValue' { $a -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -39,7 +39,7 @@
 #                                                  Lexical variable '$a'
 #                                  Item 1
 #                                      String 'Value must...'
-#          Method 'veryTrue'
+#          Method 'veryTrue' { $a -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -56,7 +56,7 @@
 #                                          Boolean true
 #                                  Item 1
 #                                      String 'Value must...'
-#          Method 'equal'
+#          Method 'equal' { $a $b -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -76,7 +76,7 @@
 #                                          Lexical variable '$b'
 #                                  Item 1
 #                                      String 'Values mus...'
-#          Method 'objectsEqual'
+#          Method 'objectsEqual' { $a $b -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -96,7 +96,7 @@
 #                                          Lexical variable '$b'
 #                                  Item 1
 #                                      String 'Objects mu...'
-#          Method 'notEqual'
+#          Method 'notEqual' { $a $b -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -116,7 +116,7 @@
 #                                          Lexical variable '$b'
 #                                  Item 1
 #                                      String 'Values mus...'
-#          Method 'objectsNotEqual'
+#          Method 'objectsNotEqual' { $a $b -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -136,7 +136,7 @@
 #                                          Lexical variable '$b'
 #                                  Item 1
 #                                      String 'Objects mu...'
-#          Method 'review'
+#          Method 'review' { -> $tests $fails $passes $allOK }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -183,7 +183,7 @@
 #                              Instance variable '@passed'
 #                              Equality operator (==)
 #                              Instance variable '@tested'
-#          Method '_test'
+#          Method '_test' { $yes $message -> $pass $result $message }
 #              Function body
 #                  Instruction
 #                      Need

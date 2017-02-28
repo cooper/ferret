@@ -22,7 +22,7 @@
 #              Property 'trap'
 #                  Property 'INT'
 #                      Bareword 'Signal'
-#          Anonymous function
+#          Anonymous function { -> $result }
 #              Function body
 #                  If
 #                      Expression ('if' parameter)

@@ -15,7 +15,7 @@ sub key   { shift->{key} }          # a Perl string
 sub value { shift->first_child }  # an element
 
 sub type_string {
-    my $bw = (shift->children)[1] or return;
+    my $bw = (shift->children)[1] or return undef;
     return $bw->{bareword_value};
 }
 

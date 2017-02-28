@@ -2,7 +2,7 @@
 #  Document './std/IRC/Server.frt'
 #      Package 'IRC'
 #      Class 'Server'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $connection:Connection $name:Str }
 #              Function body
 #                  Instruction
 #                      Need

@@ -2,7 +2,7 @@
 #  Document './std/IRC/Bot.frt'
 #      Package 'IRC'
 #      Class 'Bot'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { ?$commands }
 #              Function body
 #                  Instruction
 #                      Want
@@ -25,7 +25,7 @@
 #                      Assignment
 #                          Instance variable '@conns'
 #                          Value list [0 items]
-#          Method 'addConnection'
+#          Method 'addConnection' { $connection:Connection }
 #              Function body
 #                  Instruction
 #                      Need
@@ -58,7 +58,7 @@
 #                              Item 1
 #                                  Pair 'bot'
 #                                      Special variable '*self'
-#          Method 'removeConnection'
+#          Method 'removeConnection' { $connection:Connection }
 #              Function body
 #                  Instruction
 #                      Need
@@ -101,7 +101,7 @@
 #                                  Property 'connect'
 #                                      Lexical variable '$c'
 #                                  Argument list [0 items]
-#          Method 'description'
+#          Method 'description' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment

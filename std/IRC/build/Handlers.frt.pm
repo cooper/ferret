@@ -33,7 +33,7 @@
 #                          Pair
 #                              String '433'
 #                              Bareword 'nickInUse'
-#      Function 'ping'
+#      Function 'ping' { $msg }
 #          Function body
 #              Instruction
 #                  Need
@@ -55,7 +55,7 @@
 #                                                  Constant zero
 #                                                  Negation operator (-)
 #                                                  Number '1'
-#      Function 'welcome'
+#      Function 'welcome' { $msg }
 #          Function body
 #              Instruction
 #                  Need
@@ -109,7 +109,7 @@
 #                              Property 'realHost'
 #                                  This variable '%me'
 #                              Lexical variable '$3'
-#      Function 'myInfo'
+#      Function 'myInfo' { $msg }
 #          Function body
 #              Instruction
 #                  Need
@@ -134,7 +134,7 @@
 #                          Index list [1 item]
 #                              Item 0
 #                                  Number '2'
-#      Function 'endOfMOTD'
+#      Function 'endOfMOTD' { -> $result }
 #          Function body
 #              If
 #                  Expression ('if' parameter)
@@ -157,7 +157,7 @@
 #                  Assignment
 #                      This variable '%_didAutojoin'
 #                      Boolean true
-#      Function 'hiddenHost'
+#      Function 'hiddenHost' { $msg }
 #          Function body
 #              Instruction
 #                  Need
@@ -172,7 +172,7 @@
 #                          Index list [1 item]
 #                              Item 0
 #                                  Number '1'
-#      Function 'nickInUse'
+#      Function 'nickInUse' { -> $result }
 #          Function body
 #              If
 #                  Expression ('if' parameter)

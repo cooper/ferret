@@ -2,7 +2,7 @@
 #  Document './std/IRC/Massage.frt'
 #      Package 'IRC'
 #      Class 'Massage'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { ?$data:Str::NE ?$connection:Connection }
 #              Function body
 #                  Instruction
 #                      Want
@@ -27,7 +27,7 @@
 #                  Instruction
 #                      Weaken modifier
 #                          Instance variable '@connection'
-#          Method 'parse'
+#          Method 'parse' { $data:Str::NE }
 #              Function body
 #                  Instruction
 #                      Need
@@ -70,7 +70,7 @@
 #                      Assignment
 #                          Lexical variable '$wordN'
 #                          Number '0'
-#                  Function 'updateWord'
+#                  Function 'updateWord' { ?$incN:Bool }
 #                      Function body
 #                          Instruction
 #                              Want
@@ -321,7 +321,7 @@
 #                      Assignment
 #                          Instance variable '@params'
 #                          Lexical variable '$params'
-#          Computed property 'target'
+#          Computed property 'target' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -336,7 +336,7 @@
 #                                          Index list [1 item]
 #                                              Item 0
 #                                                  Number '0'
-#          Computed property '_parsedSource' (lazy)
+#          Computed property '_parsedSource' (lazy) { -> $result $nick $user $host }
 #              Function body
 #                  If
 #                      Expression ('if' parameter)
@@ -361,19 +361,19 @@
 #                          Instruction
 #                              Return pair 'host'
 #                                  Lexical variable '$3'
-#          Computed property 'nick'
+#          Computed property 'nick' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
 #                          Property 'nick'
 #                              Instance variable '@_parsedSource'
-#          Computed property 'user'
+#          Computed property 'user' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
 #                          Property 'user'
 #                              Instance variable '@_parsedSource'
-#          Computed property 'host'
+#          Computed property 'host' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return

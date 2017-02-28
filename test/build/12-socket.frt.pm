@@ -25,7 +25,7 @@
 #          Expression ('on' parameter)
 #              Property 'gotLine'
 #                  Lexical variable '$sock'
-#          Anonymous function
+#          Anonymous function { $data }
 #              Function body
 #                  Instruction
 #                      Need
@@ -43,7 +43,7 @@
 #          Expression ('on' parameter)
 #              Property 'println'
 #                  Lexical variable '$sock'
-#          Anonymous function
+#          Anonymous function { $data }
 #              Function body
 #                  Instruction
 #                      Need

@@ -8,7 +8,7 @@
 #                  Call
 #                      Property 'pi'
 #                          Bareword 'NATIVE::Math'
-#      Function 'sqrt'
+#      Function 'sqrt' { $num:Num -> $result }
 #          Function body
 #              Instruction
 #                  Need
@@ -23,7 +23,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$num'
-#      Function 'root'
+#      Function 'root' { $root:Num $num:Num -> $result }
 #          Function body
 #              Instruction
 #                  Need

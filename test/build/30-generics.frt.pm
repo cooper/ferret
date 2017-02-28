@@ -7,7 +7,7 @@
 #                      Assignment
 #                          Instance variable '@items'
 #                          Value list [0 items]
-#          Method 'push'
+#          Method 'push' { $item:Element -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -22,7 +22,7 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$item'
-#          Method 'pop'
+#          Method 'pop' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -30,7 +30,7 @@
 #                              Property 'pop'
 #                                  Instance variable '@items'
 #                              Argument list [0 items]
-#          Method 'description'
+#          Method 'description' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return

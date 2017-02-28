@@ -1,14 +1,14 @@
 # === Document Model ===
 #  Document './std/Stack.frt'
 #      Class 'Stack' <T>
-#          Class method 'initializer__'
+#          Class method 'initializer__' { ?$items:T... }
 #              Function body
 #                  Instruction
 #                      Want (...)
 #                          Instance variable '@items'
 #                          Argument type
 #                              Bareword 'T'
-#          Method 'push'
+#          Method 'push' { $item:T }
 #              Function body
 #                  Instruction
 #                      Need
@@ -22,7 +22,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$item'
-#          Method 'pop'
+#          Method 'pop' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -30,7 +30,7 @@
 #                              Property 'pop'
 #                                  Instance variable '@items'
 #                              Argument list [0 items]
-#          Method 'description'
+#          Method 'description' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment

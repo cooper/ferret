@@ -14,7 +14,7 @@
 #                              Number '25'
 #                  Argument list [1 item]
 #                      Item 0
-#                          Anonymous function
+#                          Anonymous function { -> $result }
 #                              Function body
 #                                  Instruction
 #                                      Return

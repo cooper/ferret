@@ -2,7 +2,7 @@
 #  Document './std/IRC/Channel.frt'
 #      Package 'IRC'
 #      Class 'Channel'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $connection:Connection $name:Str }
 #              Function body
 #                  Instruction
 #                      Need
@@ -17,7 +17,7 @@
 #                  Instruction
 #                      Weaken modifier
 #                          Instance variable '@connection'
-#          Method 'privmsg'
+#          Method 'privmsg' { $message:Str::Any }
 #              Function body
 #                  Instruction
 #                      Need

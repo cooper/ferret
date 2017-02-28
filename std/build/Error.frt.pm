@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './std/Error.frt'
 #      Class 'Error' version 1.0
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $type:Sym $msg:Str ?$hints:List ?$subError:Error ?$fatal }
 #              Function body
 #                  Instruction
 #                      Need
@@ -39,7 +39,7 @@
 #                                  Special variable '*self'
 #                              Item 1
 #                                  String 'Ferret::Error'
-#          Method 'setPosition'
+#          Method 'setPosition' { $file:Str $line:Num }
 #              Function body
 #                  Instruction
 #                      Need
@@ -64,7 +64,7 @@
 #                                  String 'Line'
 #                              Item 3
 #                                  Lexical variable '$line'
-#          Method 'description'
+#          Method 'description' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -107,7 +107,7 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$desc'
-#          Function '_prettyHints'
+#          Function '_prettyHints' { $list:List -> $result }
 #              Function body
 #                  Instruction
 #                      Need

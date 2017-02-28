@@ -1,14 +1,14 @@
 # === Document Model ===
 #  Document './test/22-classes-sets.frt'
 #      Class 'Cow'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { ?$moos }
 #              Function body
 #                  Instruction
 #                      Want
 #                          Instance variable '@moos'
 #                          Argument value
 #                              Boolean true
-#          Method 'moo'
+#          Method 'moo' { -> $result $result }
 #              Function body
 #                  If
 #                      Expression ('if' parameter)
@@ -21,14 +21,14 @@
 #                      Return
 #                          String 'I am a non...'
 #      Class 'Dog'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { ?$barks }
 #              Function body
 #                  Instruction
 #                      Want
 #                          Instance variable '@barks'
 #                          Argument value
 #                              Boolean false
-#          Method 'bark'
+#          Method 'bark' { -> $result $result }
 #              Function body
 #                  If
 #                      Expression ('if' parameter)
@@ -41,19 +41,19 @@
 #                      Return
 #                          String 'I had my b...'
 #      Class 'Cat'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { ?$mean }
 #              Function body
 #                  Instruction
 #                      Want
 #                          Instance variable '@mean'
 #                          Argument value
 #                              Boolean false
-#          Method 'meow'
+#          Method 'meow' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
 #                          String 'meow'
-#          Class method 'fight'
+#          Class method 'fight' { $cat1:Cat $cat2:Cat -> $result $result $result }
 #              Function body
 #                  Instruction
 #                      Need

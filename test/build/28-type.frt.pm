@@ -6,7 +6,7 @@
 #                  Symbol :male
 #              Instruction
 #                  Symbol :female
-#      Function 'announce'
+#      Function 'announce' { $name:Str $gender:Gender }
 #          Function body
 #              Instruction
 #                  Need

@@ -29,7 +29,7 @@
 #                      Property 'main_context'
 #                          Lexical variable '$ferret'
 #                      Argument list [0 items]
-#      Function 'bless'
+#      Function 'bless' { $obj $class:Str }
 #          Function body
 #              Instruction
 #                  Need

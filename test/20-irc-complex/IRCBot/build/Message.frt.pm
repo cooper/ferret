@@ -2,7 +2,7 @@
 #  Document './test/20-irc-complex/IRCBot/Message.frt'
 #      Package 'IRCBot'
 #      Class 'Message'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $line:Str }
 #              Function body
 #                  Instruction
 #                      Need
@@ -84,7 +84,7 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      String ' '
-#          Computed property 'command' (lazy)
+#          Computed property 'command' (lazy) { -> $result $result }
 #              Function body
 #                  If
 #                      Expression ('if' parameter)
@@ -129,7 +129,7 @@
 #                  Instruction
 #                      Return
 #                          Boolean false
-#          Computed property 'commandHasParameters' (lazy)
+#          Computed property 'commandHasParameters' (lazy) { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -138,7 +138,7 @@
 #                                  Instance variable '@parts'
 #                              Greater than operator (>)
 #                              Number '1'
-#          Method 'fromWord'
+#          Method 'fromWord' { $wordN:Num -> $result }
 #              Function body
 #                  Instruction
 #                      Need

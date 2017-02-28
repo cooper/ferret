@@ -26,7 +26,7 @@
 #                      Property variable '.iterator'
 #                      Bareword 'Iterator'
 #      Class 'ListIterator'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $list:List }
 #              Function body
 #                  Instruction
 #                      Need
@@ -47,7 +47,7 @@
 #                              Constant zero
 #                              Negation operator (-)
 #                              Number '1'
-#          Computed property 'more'
+#          Computed property 'more' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -63,7 +63,7 @@
 #                                          Constant zero
 #                                          Negation operator (-)
 #                                          Number '1'
-#          Computed property 'nextElement'
+#          Computed property 'nextElement' { -> $result }
 #              Function body
 #                  Instruction
 #                      Addition assignment
@@ -76,7 +76,7 @@
 #                              Index list [1 item]
 #                                  Item 0
 #                                      Instance variable '@i'
-#          Computed property 'nextElements'
+#          Computed property 'nextElements' { -> $result }
 #              Function body
 #                  Instruction
 #                      Addition assignment
@@ -93,14 +93,14 @@
 #                                      Index list [1 item]
 #                                          Item 0
 #                                              Instance variable '@i'
-#          Computed property 'iterator'
+#          Computed property 'iterator' { -> Iterator }
 #              Function body
 #                  Instruction
 #                      Return
 #                          Special variable '*self'
 #                          Bareword 'Iterator'
 #      Class 'HashIterator'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $hash:Hash }
 #              Function body
 #                  Instruction
 #                      Need
@@ -119,14 +119,14 @@
 #                          Instance variable '@keysLeft'
 #                          Property 'keys'
 #                              Lexical variable '$hash'
-#          Computed property 'more'
+#          Computed property 'more' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
 #                          Negation
 #                              Property 'empty'
 #                                  Instance variable '@keysLeft'
-#          Computed property 'nextElement'
+#          Computed property 'nextElement' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -142,7 +142,7 @@
 #                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$key'
-#          Computed property 'nextElements'
+#          Computed property 'nextElements' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -162,7 +162,7 @@
 #                                      Index list [1 item]
 #                                          Item 0
 #                                              Lexical variable '$key'
-#          Computed property 'iterator'
+#          Computed property 'iterator' { -> Iterator }
 #              Function body
 #                  Instruction
 #                      Return

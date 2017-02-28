@@ -2,7 +2,7 @@
 #  Document './std/Math/Line.frt'
 #      Package 'Math'
 #      Class 'Line'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $pt1:Point $pt2:Point }
 #              Function body
 #                  Instruction
 #                      Need
@@ -14,7 +14,7 @@
 #                          Instance variable '@pt2'
 #                          Argument type
 #                              Bareword 'Point'
-#          Computed property 'endpoints'
+#          Computed property 'endpoints' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -23,7 +23,7 @@
 #                                  Instance variable '@pt1'
 #                              Item 1
 #                                  Instance variable '@pt2'
-#          Computed property 'pretty'
+#          Computed property 'pretty' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -91,12 +91,12 @@
 #                              Instance variable '@length'
 #                              Addition operator (+)
 #                              String ' )'
-#          Method 'description'
+#          Method 'description' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
 #                          Instance variable '@pretty'
-#          Computed property 'midpoint'
+#          Computed property 'midpoint' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -108,7 +108,7 @@
 #                                      Item 1
 #                                          Instance variable '@pt2'
 #                              Argument list [0 items]
-#          Computed property 'length'
+#          Computed property 'length' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return

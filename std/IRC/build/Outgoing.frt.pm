@@ -2,7 +2,7 @@
 #  Document './std/IRC/Outgoing.frt'
 #      Package 'IRC'
 #      Class 'Connection'
-#          Method 'sendJoin'
+#          Method 'sendJoin' { $channelNames:Str... }
 #              Function body
 #                  Instruction
 #                      Need (...)
@@ -24,7 +24,7 @@
 #                                              String 'JOIN '
 #                                              Addition operator (+)
 #                                              Lexical variable '$name'
-#          Method 'sendPrivmsg'
+#          Method 'sendPrivmsg' { $target:Str $message:Str::Any }
 #              Function body
 #                  Instruction
 #                      Need
@@ -67,7 +67,7 @@
 #                                              String ' :'
 #                                              Addition operator (+)
 #                                              Lexical variable '$line'
-#          Method 'sendNick'
+#          Method 'sendNick' { $nick:Str }
 #              Function body
 #                  Instruction
 #                      Need

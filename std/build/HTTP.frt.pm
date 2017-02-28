@@ -13,7 +13,7 @@
 #              Call
 #                  Bareword 'HTTP::Client'
 #                  Argument list [0 items]
-#      Function 'get'
+#      Function 'get' { $url:Str -> $result }
 #          Function body
 #              Instruction
 #                  Need
@@ -29,7 +29,7 @@
 #                              Item 0
 #                                  Pair 'url'
 #                                      Lexical variable '$url'
-#      Function 'post'
+#      Function 'post' { $url:Str -> $result }
 #          Function body
 #              Instruction
 #                  Need

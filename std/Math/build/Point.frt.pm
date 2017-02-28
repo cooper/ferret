@@ -2,7 +2,7 @@
 #  Document './std/Math/Point.frt'
 #      Package 'Math'
 #      Class 'Point'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $x:Num $y:Num }
 #              Function body
 #                  Instruction
 #                      Need
@@ -14,7 +14,7 @@
 #                          Instance variable '@y'
 #                          Argument type
 #                              Bareword 'Num'
-#          Method 'distanceTo'
+#          Method 'distanceTo' { $pt2:Point -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -51,7 +51,7 @@
 #                                          Lexical variable '$dy'
 #                                          Exponent operator (^)
 #                                          Number '2'
-#          Computed property 'distanceFromOrigin'
+#          Computed property 'distanceFromOrigin' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -66,7 +66,7 @@
 #                                                  Number '0'
 #                                              Item 1
 #                                                  Number '0'
-#          Computed property 'pretty'
+#          Computed property 'pretty' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -80,12 +80,12 @@
 #                              Instance variable '@y'
 #                              Addition operator (+)
 #                              String ')'
-#          Method 'toString'
+#          Method 'toString' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
 #                          Instance variable '@pretty'
-#          Method 'description'
+#          Method 'description' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -93,7 +93,7 @@
 #                              String 'Point'
 #                              Addition operator (+)
 #                              Instance variable '@pretty'
-#          Class method 'midpoint'
+#          Class method 'midpoint' { $pt1:Point $pt2:Point -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -136,7 +136,7 @@
 #                                                              Lexical variable '$pt2'
 #                                              Division operator (/)
 #                                              Number '2'
-#          Class method 'distanceBetween'
+#          Class method 'distanceBetween' { $pt1:Point $pt2:Point -> $result }
 #              Function body
 #                  Instruction
 #                      Need

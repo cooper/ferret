@@ -52,7 +52,7 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Topic variable '$_'
-#          Method 'word'
+#          Method 'word' { $wordI:Num -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -76,7 +76,7 @@
 #                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$wordI'
-#          Method 'fromWord'
+#          Method 'fromWord' { $wordN:Num -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -100,7 +100,7 @@
 #                              Index list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$wordN'
-#          Computed property 'empty' (lazy)
+#          Computed property 'empty' (lazy) { -> $result }
 #              Function body
 #                  Instruction
 #                      Return

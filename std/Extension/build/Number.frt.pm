@@ -30,7 +30,7 @@
 #                  Assignment
 #                      Bareword 'Int'
 #                      Bareword 'Integer'
-#          Computed property 'sqrt'
+#          Computed property 'sqrt' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -40,7 +40,7 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Special variable '*self'
-#          Computed property 'cbrt'
+#          Computed property 'cbrt' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -49,7 +49,7 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Number '3'
-#          Computed property 'square'
+#          Computed property 'square' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -57,7 +57,7 @@
 #                              Special variable '*self'
 #                              Exponent operator (^)
 #                              Number '2'
-#          Computed property 'even'
+#          Computed property 'even' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -67,7 +67,7 @@
 #                              Number '2'
 #                              Equality operator (==)
 #                              Number '0'
-#          Computed property 'odd'
+#          Computed property 'odd' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -77,7 +77,7 @@
 #                              Number '2'
 #                              Negated equality operator (!=)
 #                              Number '0'
-#          Method 'root'
+#          Method 'root' { $root:Num -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -94,7 +94,7 @@
 #                                      Lexical variable '$root'
 #                                  Item 1
 #                                      Special variable '*self'
-#          Method 'factorial'
+#          Method 'factorial' { -> $result $result }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -126,7 +126,7 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$new'
-#          Method 'toFunction'
+#          Method 'toFunction' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return

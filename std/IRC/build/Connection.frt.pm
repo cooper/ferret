@@ -5,7 +5,7 @@
 #          Instruction
 #              Load
 #                  Bareword 'Outgoing'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $addr:Str ?$port:Num $nick:Str ?$user:Str ?$real:Str ?$autojoin:List }
 #              Function body
 #                  Instruction
 #                      Need
@@ -153,7 +153,7 @@
 #                      Expression ('on' parameter)
 #                          Property 'gotLine'
 #                              Instance variable '@sock'
-#                      Anonymous function
+#                      Anonymous function { $data }
 #                          Function body
 #                              Instruction
 #                                  Need
@@ -181,7 +181,7 @@
 #                          Property 'connect'
 #                              Instance variable '@sock'
 #                          Argument list [0 items]
-#          Method 'send'
+#          Method 'send' { $line:Str }
 #              Function body
 #                  Instruction
 #                      Need
@@ -204,7 +204,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$line'
-#          Method '_handleLine'
+#          Method '_handleLine' { $line:Str }
 #              Function body
 #                  Instruction
 #                      Need
@@ -249,7 +249,7 @@
 #                              Item 2
 #                                  Pair 'msg'
 #                                      Lexical variable '$msg'
-#          Method 'getTarget'
+#          Method 'getTarget' { $target:Str -> $result $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -281,7 +281,7 @@
 #                                      Argument list [1 item]
 #                                          Item 0
 #                                              Lexical variable '$target'
-#          Method 'getChannel'
+#          Method 'getChannel' { $name:Str -> $result $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -313,7 +313,7 @@
 #                                  Item 1
 #                                      Pair 'name'
 #                                          Lexical variable '$name'
-#          Method 'getUser'
+#          Method 'getUser' { $nick:Str -> $result $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -345,7 +345,7 @@
 #                                  Item 1
 #                                      Pair 'nick'
 #                                          Lexical variable '$nick'
-#          Method 'getServer'
+#          Method 'getServer' { $name:Str -> $result $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -396,7 +396,7 @@
 #                      Assignment
 #                          Instance variable '@_didAutojoin'
 #                          Boolean false
-#          Method 'copy'
+#          Method 'copy' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -424,7 +424,7 @@
 #                                              Property 'copy'
 #                                                  Instance variable '@autojoin'
 #                                              Argument list [0 items]
-#          Method 'description'
+#          Method 'description' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return

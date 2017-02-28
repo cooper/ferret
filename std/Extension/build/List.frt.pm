@@ -10,7 +10,7 @@
 #                      Satisfies
 #                          Property 'even'
 #                              Property variable '.length'
-#          Computed property 'empty'
+#          Computed property 'empty' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -18,7 +18,7 @@
 #                              Instance variable '@length'
 #                              Equality operator (==)
 #                              Number '0'
-#          Method 'map'
+#          Method 'map' { $code:Code -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -42,7 +42,7 @@
 #                                                      Argument list [1 item]
 #                                                          Item 0
 #                                                              Lexical variable '$el'
-#          Method 'grep'
+#          Method 'grep' { $code:Code -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -70,7 +70,7 @@
 #                                                  Instruction
 #                                                      Take
 #                                                          Lexical variable '$el'
-#          Method 'flatten'
+#          Method 'flatten' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -114,7 +114,7 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$new'
-#          Method 'withoutAll'
+#          Method 'withoutAll' { $what -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -125,7 +125,7 @@
 #                              Instance variable '@grep'
 #                              Argument list [1 item]
 #                                  Item 0
-#                                      Anonymous function
+#                                      Anonymous function { -> $result }
 #                                          Function body
 #                                              Instruction
 #                                                  Return
@@ -133,7 +133,7 @@
 #                                                          Lexical variable '$what'
 #                                                          Negated equality operator (!=)
 #                                                          Topic variable '$_'
-#          Method 'without'
+#          Method 'without' { $what -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -174,7 +174,7 @@
 #                                          Instruction
 #                                              Take
 #                                                  Lexical variable '$el'
-#          Method 'remove'
+#          Method 'remove' { $what -> $removed $found $removed }
 #              Function body
 #                  Instruction
 #                      Need
@@ -216,7 +216,7 @@
 #                                  Boolean true
 #                          Instruction
 #                              Last
-#          Method 'removeAll'
+#          Method 'removeAll' { $what -> $found $removed }
 #              Function body
 #                  Instruction
 #                      Need
@@ -262,7 +262,7 @@
 #                      Return pair 'removed'
 #                          Property 'length'
 #                              Lexical variable '$found'
-#          Method 'first'
+#          Method 'first' { $code:Code -> $result $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -289,7 +289,7 @@
 #                  Instruction
 #                      Return
 #                          Undefined
-#          Method 'any'
+#          Method 'any' { $code:Code -> $result $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -316,7 +316,7 @@
 #                  Instruction
 #                      Return
 #                          Boolean false
-#          Method 'all'
+#          Method 'all' { $code:Code -> $result $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -344,7 +344,7 @@
 #                  Instruction
 #                      Return
 #                          Boolean true
-#          Computed property 'sum'
+#          Computed property 'sum' { -> $result $result }
 #              Function body
 #                  If
 #                      Expression ('if' parameter)
@@ -384,7 +384,7 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$c'
-#          Computed property 'sum0'
+#          Computed property 'sum0' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -406,7 +406,7 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$c'
-#          Computed property 'iterator'
+#          Computed property 'iterator' { -> Iterator }
 #              Function body
 #                  Instruction
 #                      Return

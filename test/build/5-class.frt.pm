@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/5-class.frt'
 #      Class 'Point' version 1.0
-#          Class method 'initializer__'
+#          Class method 'initializer__' { $x $y }
 #              Function body
 #                  Instruction
 #                      Need
@@ -17,7 +17,7 @@
 #                      Assignment
 #                          Instance variable '@y'
 #                          Lexical variable '$y'
-#          Method 'oneToRight'
+#          Method 'oneToRight' { -> $result }
 #              Function body
 #                  Instruction
 #                      Assignment
@@ -35,7 +35,7 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$pt'
-#          Method 'pretty'
+#          Method 'pretty' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -51,14 +51,14 @@
 #                                      Instance variable '@y'
 #                                      Addition operator (+)
 #                                      String ')'
-#          Method 'toString'
+#          Method 'toString' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
 #                          Call
 #                              Instance variable '@pretty'
 #                              Argument list [0 items]
-#          Class method 'midpoint'
+#          Class method 'midpoint' { $pt1 $pt2 -> $result }
 #              Function body
 #                  Instruction
 #                      Need

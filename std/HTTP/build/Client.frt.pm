@@ -17,7 +17,7 @@
 #                      Number '64'
 #                      Multiplication operator (*)
 #                      Number '1024'
-#          Class method 'initializer__'
+#          Class method 'initializer__' { ?$userAgent:Str ?$timeout:Num ?$maxContentLength:Num ?$readLength:Num ?$writeLength:Num }
 #              Function body
 #                  Instruction
 #                      Want
@@ -59,7 +59,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Special variable '*self'
-#          Method 'get'
+#          Method 'get' { $url:Str -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -77,7 +77,7 @@
 #                                  Item 1
 #                                      Pair 'url'
 #                                          Lexical variable '$url'
-#          Method 'post'
+#          Method 'post' { $url:Str -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -95,7 +95,7 @@
 #                                  Item 1
 #                                      Pair 'url'
 #                                          Lexical variable '$url'
-#          Method 'request'
+#          Method 'request' { $httpMethod:HTTPMethod $url:Str -> $result }
 #              Function body
 #                  Instruction
 #                      Need

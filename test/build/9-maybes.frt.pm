@@ -1,6 +1,6 @@
 # === Document Model ===
 #  Document './test/9-maybes.frt'
-#      Function 'sayHello'
+#      Function 'sayHello' { $who:Str }
 #          Function body
 #              Instruction
 #                  Need

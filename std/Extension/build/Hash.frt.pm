@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './std/Extension/Hash.frt'
 #      Class 'Hash' <K, V>
-#          Computed property 'empty'
+#          Computed property 'empty' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
@@ -9,7 +9,7 @@
 #                              Instance variable '@length'
 #                              Equality operator (==)
 #                              Number '0'
-#          Computed property 'iterator'
+#          Computed property 'iterator' { -> Iterator }
 #              Function body
 #                  Instruction
 #                      Return
@@ -38,12 +38,12 @@
 #                                  Item 0
 #                                      Special variable '*self'
 #                          Argument list [0 items]
-#          Computed property 'keys'
+#          Computed property 'keys' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return
 #                          Instance variable '@orderedKeys'
-#          Method 'pushPair'
+#          Method 'pushPair' { $key:K $value:V -> $overwritten }
 #              Function body
 #                  Instruction
 #                      Need
@@ -83,7 +83,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$key'
-#          Computed property 'iterator'
+#          Computed property 'iterator' { -> Iterator }
 #              Function body
 #                  Instruction
 #                      Assignment

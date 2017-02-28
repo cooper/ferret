@@ -1,7 +1,7 @@
 # === Document Model ===
 #  Document './test/8-class-extension.frt'
 #      Class 'String'
-#          Method 'doubledLength'
+#          Method 'doubledLength' { -> $result }
 #              Function body
 #                  Instruction
 #                      Return

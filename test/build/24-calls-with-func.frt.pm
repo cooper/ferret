@@ -31,12 +31,12 @@
 #                              Bareword 'something'
 #                              Argument list [1 item]
 #                                  Item 1
-#                                      Anonymous function
+#                                      Anonymous function { -> $result }
 #                                          Function body
 #                                              Instruction
 #                                                  Return
 #                                                      String 'any second...'
-#      Function 'something'
+#      Function 'something' { $code -> $message }
 #          Function body
 #              Instruction
 #                  Need

@@ -54,7 +54,7 @@
 #                  Item 0
 #                      String 'info'
 #                  Item 1
-#                      Anonymous function
+#                      Anonymous function { $msg }
 #                          Function body
 #                              Instruction
 #                                  Need
@@ -77,7 +77,7 @@
 #                  Item 0
 #                      String 't'
 #                  Item 1
-#                      Anonymous function
+#                      Anonymous function { $msg -> $result $result }
 #                          Function body
 #                              Instruction
 #                                  Need
@@ -158,7 +158,7 @@
 #                  Item 0
 #                      String 'c'
 #                  Item 1
-#                      Anonymous function
+#                      Anonymous function { $msg -> $result $result }
 #                          Function body
 #                              Instruction
 #                                  Need
@@ -239,7 +239,7 @@
 #                  Item 0
 #                      String 'e'
 #                  Item 1
-#                      Anonymous function
+#                      Anonymous function { $msg -> $result $result }
 #                          Function body
 #                              Instruction
 #                                  Need
@@ -326,7 +326,7 @@
 #                  Item 0
 #                      String 'pe'
 #                  Item 1
-#                      Anonymous function
+#                      Anonymous function { $msg -> $result $result }
 #                          Function body
 #                              Instruction
 #                                  Need
@@ -423,7 +423,7 @@
 #                      String 'pp'
 #                  Item 1
 #                      Bareword 'handlePerl'
-#      Function 'handlePerl'
+#      Function 'handlePerl' { $msg -> $result $result }
 #          Function body
 #              Instruction
 #                  Need
@@ -499,7 +499,7 @@
 #                          Item 1
 #                              Property 'perl'
 #                                  Lexical variable '$res'
-#      Function 'convertNewlines'
+#      Function 'convertNewlines' { $string:Str -> $result }
 #          Function body
 #              Instruction
 #                  Need
@@ -519,7 +519,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  String '␤'
-#      Function 'ircsay'
+#      Function 'ircsay' { $str:Str }
 #          Function body
 #              Instruction
 #                  Need
