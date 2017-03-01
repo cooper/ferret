@@ -114,7 +114,7 @@ sub set_property_ow {
 
     # if the owner is the scope limit or any scope inheriting from it,
     # it's OK to overwrite
-    if (any { $_ == $scope_limit } $owner, $owner->all_ancestors) {
+    if ($scope_limit && any { $_ == $scope_limit } $owner, $owner->all_ancestors) {
         return $owner->set_property($prop_name => $value);
     }
 

@@ -12,6 +12,9 @@
 #              Bareword 'Complex'
 #      Instruction
 #          Load
+#              Bareword 'Char'
+#      Instruction
+#          Load
 #              Bareword 'Extension::Number'
 #      Instruction
 #          Load
@@ -48,17 +51,6 @@
 #              Instruction
 #                  Satisfies
 #                      Property variable '.signature'
-#      Type definition ('Char')
-#          Type body
-#              Instruction
-#                  Isa
-#                      Bareword 'Str'
-#              Instruction
-#                  Satisfies
-#                      Operation
-#                          Property variable '.length'
-#                          Equality operator (==)
-#                          Number '1'
 #      Type definition ('Hashable')
 #          Type body
 #              Instruction
@@ -106,7 +98,7 @@
 #              Instruction
 #                  Isa
 #                      Bareword 'IndexedWrite'
-#      Include (Any, Complex, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, IndexedRead, IndexedWrite, Iterator, Obj, Object, Signal, Str)
+#      Include (Any, Char, Complex, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, IndexedRead, IndexedWrite, Iterator, Obj, Object, Signal)
 package FF;
 
 use warnings;
@@ -129,14 +121,14 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos = before_content( 'CORE.frt', './std/CORE.frt' );
 
-use Ferret::Core::Operations qw(equal num);
+use Ferret::Core::Operations qw();
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'CORE' );
     my $scope = $file_scope;
     load_core('CORE');
 
     load_namespaces( $context,
-        qw(Any Complex Error EventSet Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable IndexedRead IndexedWrite Iterator Obj Object Signal Str)
+        qw(Any Char Complex Error EventSet Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable IndexedRead IndexedWrite Iterator Obj Object Signal)
     );
 
     typedef(
@@ -152,8 +144,8 @@ my $result = do {
         },
         undef
     );
-    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(18.3) );
-    $context->set_property( Object => $$scope->{'Any'}, $pos->(19.3) );
+    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(19.3) );
+    $context->set_property( Object => $$scope->{'Any'}, $pos->(20.3) );
     typedef(
         $scope, $context, 'Code',
         sub {
@@ -163,25 +155,6 @@ my $result = do {
                 $scope, $scope, $ins, $anchor,
                 conditions =>
                   [ sub { $$ins->{'name'} }, sub { $$ins->{'signature'} } ],
-                equal_to => undef
-            ) ? $ins : undef;
-        },
-        undef
-    );
-    typedef(
-        $scope, $context, 'Char',
-        sub {
-            my ( $ins, $create_can, $transform ) = @_;
-            state $anchor = \0 + 0;
-            typedef_check(
-                $scope, $scope, $ins, $anchor,
-                conditions => [
-                    sub { $ins->fits_type_u( $$scope->{'Str'} ) },
-                    sub {
-                        equal( $scope, $pos->(31.3), $$ins->{'length'},
-                            num( $f, "1" ) );
-                    }
-                ],
                 equal_to => undef
             ) ? $ins : undef;
         },

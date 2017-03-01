@@ -3,6 +3,7 @@ package CORE
 load Error
 load Signal
 load Complex
+load Char
 
 load Extension::Number
 load Extension::String
@@ -23,12 +24,6 @@ alias Object = Any
 type Code {
     satisfies .name
     satisfies .signature
-}
-
-#> Matches strings of length one
-type Char {
-    isa Str
-    satisfies .length == 1
 }
 
 #> Matches objects which can be converted to a hashable form.
