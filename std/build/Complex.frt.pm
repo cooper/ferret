@@ -422,6 +422,42 @@
 #                                              Argument list [1 item]
 #                                                  Item 0
 #                                                      Lexical variable '$theta'
+#          Method 'opEqual' { $ehs:Complex -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$ehs'
+#                          Argument type
+#                              Bareword 'Complex'
+#                  Instruction
+#                      Return
+#                          Operation
+#                              Instance variable '@a'
+#                              Equality operator (==)
+#                              Property 'a'
+#                                  Lexical variable '$ehs'
+#                              Logical and operator (&&)
+#                              Instance variable '@b'
+#                              Equality operator (==)
+#                              Property 'b'
+#                                  Lexical variable '$ehs'
+#          Method 'opEqual' { $ehs:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$ehs'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Operation
+#                              Instance variable '@a'
+#                              Equality operator (==)
+#                              Lexical variable '$ehs'
+#                              Logical and operator (&&)
+#                              Instance variable '@b'
+#                              Equality operator (==)
+#                              Number '0'
 #          Method 'description' { -> $result $result }
 #              Function body
 #                  Instruction
@@ -1224,29 +1260,103 @@ my $result = do {
             }
         );
 
-        # Method event 'description' definition
+        # Method event 'opEqual' definition
         my $func_16 = method_event_def(
+            $f, $scope,
+            'opEqual',
+            [
+                {
+                    name     => 'ehs',
+                    type     => 'Complex',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'ehs', 152.2 ) || return $ret_func->();
+                return $ret_func->(
+                    all_true(
+                        $scope,
+                        $pos->(153.15),
+                        sub {
+                            equal( $scope, $pos->(153.15), $$self->{'a'},
+                                $$scope->{'ehs'}
+                                  ->property_u( 'a', $pos->(153.25) ) );
+                        },
+                        sub {
+                            equal( $scope, $pos->(153.15), $$self->{'b'},
+                                $$scope->{'ehs'}
+                                  ->property_u( 'b', $pos->(153.5) ) );
+                        }
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opEqual' definition
+        my $func_17 = method_event_def(
+            $f, $scope,
+            'opEqual',
+            [
+                {
+                    name     => 'ehs',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'ehs', 158.2 ) || return $ret_func->();
+                return $ret_func->(
+                    all_true(
+                        $scope,
+                        $pos->(159.15),
+                        sub {
+                            equal(
+                                $scope,        $pos->(159.15),
+                                $$self->{'a'}, $$scope->{'ehs'}
+                            );
+                        },
+                        sub {
+                            equal(
+                                $scope, $pos->(159.15),
+                                $$self->{'b'}, num( $f, "0" )
+                            );
+                        }
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'description' definition
+        my $func_18 = method_event_def(
             $f, $scope,
             'description',
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, r => $$self->{'a'}, $file_scope, $pos->(151.2) );
-                var( $scope, i => $$self->{'b'}, $file_scope, $pos->(152.2) );
+                var( $scope, r => $$self->{'a'}, $file_scope, $pos->(163.2) );
+                var( $scope, i => $$self->{'b'}, $file_scope, $pos->(164.2) );
                 if (
                     bool(
                         all_true(
                             $scope,
-                            $pos->(153.15),
+                            $pos->(165.15),
                             sub {
                                 equal(
-                                    $scope, $pos->(153.15),
+                                    $scope, $pos->(165.15),
                                     $$scope->{'r'}, num( $f, "0" )
                                 );
                             },
                             sub {
                                 equal(
-                                    $scope, $pos->(153.15),
+                                    $scope, $pos->(165.15),
                                     $$scope->{'i'}, num( $f, "0" )
                                 );
                             }
@@ -1261,7 +1371,7 @@ my $result = do {
                 if (
                     bool(
                         equal(
-                            $scope, $pos->(155.3),
+                            $scope, $pos->(167.3),
                             $$scope->{'r'}, num( $f, "0" )
                         )
                     )
@@ -1272,13 +1382,13 @@ my $result = do {
                     var(
                         $scope,
                         r => str( $f, "" ),
-                        $file_scope, $pos->(156.2)
+                        $file_scope, $pos->(168.2)
                     );
                 }
                 if (
                     bool(
                         equal(
-                            $scope, $pos->(157.3),
+                            $scope, $pos->(169.3),
                             $$scope->{'i'}, num( $f, "0" )
                         )
                     )
@@ -1289,17 +1399,17 @@ my $result = do {
                     var(
                         $scope,
                         i => str( $f, "" ),
-                        $file_scope, $pos->(158.2)
+                        $file_scope, $pos->(170.2)
                     );
                 }
                 elsif (
                     bool(
                         equal(
                             $scope,
-                            $pos->(159.3),
+                            $pos->(171.3),
                             $$scope->{'i'},
                             _sub(
-                                $scope, $pos->(159.3),
+                                $scope, $pos->(171.3),
                                 $f->zero, num( $f, "1" )
                             )
                         )
@@ -1311,13 +1421,13 @@ my $result = do {
                     var(
                         $scope,
                         i => str( $f, "-i" ),
-                        $file_scope, $pos->(160.2)
+                        $file_scope, $pos->(172.2)
                     );
                 }
                 elsif (
                     bool(
                         less(
-                            $scope, $pos->(161.3),
+                            $scope, $pos->(173.3),
                             $$scope->{'i'}, num( $f, "0" )
                         )
                     )
@@ -1328,17 +1438,17 @@ my $result = do {
                     var(
                         $scope,
                         i => add(
-                            $scope, $pos->(162.2),
+                            $scope, $pos->(174.2),
                             $$scope->{'i'}, str( $f, "i" )
                         ),
                         $file_scope,
-                        $pos->(162.2)
+                        $pos->(174.2)
                     );
                 }
                 elsif (
                     bool(
                         equal(
-                            $scope, $pos->(163.3),
+                            $scope, $pos->(175.3),
                             $$scope->{'i'}, num( $f, "1" )
                         )
                     )
@@ -1349,26 +1459,26 @@ my $result = do {
                     var(
                         $scope,
                         i => str( $f, "+i" ),
-                        $file_scope, $pos->(164.2)
+                        $file_scope, $pos->(176.2)
                     );
                 }
                 else {
                     var(
                         $scope,
                         i => add(
-                            $scope, $pos->(166.4),
+                            $scope, $pos->(178.4),
                             str( $f, "+" ), $$scope->{'i'},
                             str( $f, "i" )
                         ),
                         $file_scope,
-                        $pos->(166.2)
+                        $pos->(178.2)
                     );
                 }
                 return $ret_func->(
                     add(
-                        $scope, $pos->(167.2), $$scope->{'r'}, $$scope->{'i'}
-                      )->property_u( 'trimPrefix', $pos->(167.35) )
-                      ->( [ str( $f, "+" ) ], $scope, undef, $pos->(167.4) )
+                        $scope, $pos->(179.2), $$scope->{'r'}, $$scope->{'i'}
+                      )->property_u( 'trimPrefix', $pos->(179.35) )
+                      ->( [ str( $f, "+" ) ], $scope, undef, $pos->(179.4) )
                 );
                 return $ret;
             }
@@ -1429,6 +1539,14 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
         $func_16->inside_scope(
+            opEqual => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_17->inside_scope(
+            opEqual => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_18->inside_scope(
             description => $scope,
             $proto, $class, $ins, undef, undef
         );

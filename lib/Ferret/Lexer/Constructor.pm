@@ -842,7 +842,8 @@ my %operator_tok_to_method = (
     OP_MOD      => 'opMod',
     OP_POW      => 'opPow',
     OP_SIM      => 'opSim',
-    OP_RANGE    => 'opRange'
+    OP_RANGE    => 'opRange',
+    OP_EQUAL    => 'opEqual'
 );
 
 # used for all operators managed by the Operation node.

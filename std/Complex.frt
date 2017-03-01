@@ -147,6 +147,18 @@ method pow {
     )
 }
 
+#> equality of complex numbers
+operator == {
+    need $ehs: Complex
+    return @a == $ehs.a && @b == $ehs.b
+}
+
+#> equality of complex number and real number
+operator == {
+    need $ehs: Num
+    return @a == $ehs && @b == 0
+}
+
 method description {
     $r = @a
     $i = @b

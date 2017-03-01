@@ -238,6 +238,36 @@ uses trigonometric functions to find a quicker but less precise result.
 
 
 
+### Equality operator (==)
+
+```
+$complex == $ehs: Complex
+```
+
+Equality of complex numbers.
+
+
+#### Arguments
+
+* __ehs__: Complex  
+
+
+
+### Equality operator (==)
+
+```
+$complex == $ehs: Num
+```
+
+Equality of complex number and real number.
+
+
+#### Arguments
+
+* __ehs__: [Number](/std/doc/Number.md)  
+
+
+
 ### description
 
 ```
