@@ -2,7 +2,8 @@
 
 This is the Math::Vector class.
 
-
+Represents a [vector](https://en.wikipedia.org/wiki/Vector_space) of any
+dimension.
 
 
 ## Initializer
@@ -30,6 +31,16 @@ Computed property. Dimension of the vector.
 
 
 
+### dimensionHR
+
+```
+$vector.dimensionHR
+```
+
+Computed property. Human-readable dimension of the vector.
+
+
+
 ### magnitude
 
 ```
@@ -46,7 +57,62 @@ Computed property. Magnitude of the vector.
 $vector.unitVector
 ```
 
-Computed property. Returns the unit vector in the direction of this vector.
+Computed property. The unit vector in the direction of this vector.
+
+
+
+### axisUnitVector
+
+```
+$vector.axisUnitVector($axis: VectorAxis)
+```
+
+Returns the unit vector in the direction of the given axis.
+
+
+#### Arguments
+
+* __axis__: VectorAxis - Axis number, starting at 1 (e.g. x-axis).
+
+
+
+### x
+
+```
+$vector.x
+```
+
+Computed property. For a >=1D vector, the first comonent.
+
+
+
+### y
+
+```
+$vector.y
+```
+
+Computed property. For a >=2D vector, the second component.
+
+
+
+### z
+
+```
+$vector.z
+```
+
+Computed property. For a >=3D vector, the third component.
+
+
+
+### direction
+
+```
+$vector.direction
+```
+
+Computed property. For a 2D vector, its direction, measured in radians.
 
 
 
@@ -71,7 +137,7 @@ Addition of two vectors.
 $vector - $lhs: Num
 ```
 
-Allows you to take the opposite vector.
+Allows you to take the opposite vector `-$u`.
 
 
 #### Arguments
@@ -266,9 +332,52 @@ $vector.description()
 ```
 
 
+## Class functions
+
+### zeroVector
+
+```
+Vector.zeroVector($dimension: Num)
+```
+
+Returns the zero vector in the given dimension.
+
+
+#### Arguments
+
+* __dimension__: [Number](/std/doc/Number.md)  
 
 
 
+### axisUnitVector
+
+```
+Vector.axisUnitVector($dimension: Num, $axis: VectorAxis)
+```
+
+Returns the unit vector for the given dimension and axis.
+
+
+#### Arguments
+
+* __dimension__: [Number](/std/doc/Number.md)  
+
+* __axis__: VectorAxis - Axis number or letter, starting at 1 or "x".
+
+
+
+## Type interfaces
+
+### VectorAxis
+
+
+
+
+#### Restraints and transforms
+
+In order to comply, the test object must satisfy each of the following conditions and transforms.
+
+1. __transform__: Requirement determined at runtime.
 
 
 End of Math::Vector class.
