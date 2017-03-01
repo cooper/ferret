@@ -5,9 +5,16 @@
 #          Shared variable declaration
 #              Lazy assignment
 #                  Lexical variable '$pi'
-#                  Call
-#                      Property 'pi'
-#                          Bareword 'NATIVE::Math'
+#                  Operation
+#                      Number '4'
+#                      Multiplication operator (*)
+#                      Call
+#                          Bareword 'atan2'
+#                          Argument list [2 items]
+#                              Item 0
+#                                  Number '1'
+#                              Item 1
+#                                  Number '1'
 #      Function 'sin' { $num:Num -> $result }
 #          Function body
 #              Instruction
@@ -274,7 +281,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos = before_content( 'Math.frt', './std/Math.frt' );
 
-use Ferret::Core::Operations qw(_sub div num pow);
+use Ferret::Core::Operations qw(_sub div mul num pow);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'Math' );
     my $scope = $file_scope;
@@ -588,8 +595,15 @@ my $result = do {
         $context,
         pi => [
             sub {
-                $$scope->{'NATIVE::Math'}->property_u( 'pi', $pos->(4.35) )
-                  ->( [ undef, [] ], $scope, undef, $pos->(4.4) );
+                mul(
+                    $scope,
+                    $pos->(4.25),
+                    num( $f, "4" ),
+                    $$scope->{'atan2'}->(
+                        [ num( $f, "1" ), num( $f, "1" ) ], $scope,
+                        undef, $pos->(4.35)
+                    )
+                );
             }
         ],
         undef,

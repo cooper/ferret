@@ -1,7 +1,7 @@
 package Math
 
 #> the ratio of a circle's circumference to it's diameter (π)
-share $pi ?= NATIVE::Math.pi!
+share $pi ?= 4 * atan2(1, 1)
 
 #> sine, expressed in radians
 func sin {

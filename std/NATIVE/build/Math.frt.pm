@@ -9,13 +9,7 @@ use parent 'Ferret::Object';
 
 use Ferret::Core::Conversion qw(fnumber);
 
-my @functions = (
-    pi => {
-        code => \&_get_pi,
-        prop => 1,
-        pset => 1
-    }
-);
+my @functions;
 
 # one argument
 bind_math_func($_, 1) foreach qw(
@@ -55,11 +49,6 @@ sub bind_math_func {
         code => $code,
         need => join(' ', map { "\$num$_:Num" } 1..$n_args)
     };
-}
-
-sub _get_pi {
-    require Math::Trig;
-    return fnumber(Math::Trig::pi());
 }
 
 1
