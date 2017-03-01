@@ -29,6 +29,10 @@ my @methods = (
         need => '$rhs:Rgx',
         code => \&_op_sim
     },
+    opMul => {
+        need => '$ehs:Num',
+        code => \&_op_mul
+    },
     opEqual => {
         need => '$rhs:Str',
         code => \&_op_equal
@@ -141,6 +145,13 @@ sub _op_sim {
     $call_scope->set_property($_ + 1 => $captures[$_]) for 0..$#captures;
 
     return $crt->property('matched');
+}
+
+# string multiplied by number
+sub _op_mul {
+    my ($str, $args) = &FUNC_V1;
+    my $num = $args->pnumber('ehs');
+    return fstring(pstring($str) x $num);
 }
 
 ##################
