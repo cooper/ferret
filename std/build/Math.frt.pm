@@ -15,6 +15,15 @@
 #                                  Number '1'
 #                              Item 1
 #                                  Number '1'
+#      Instruction
+#          Shared variable declaration
+#              Lazy assignment
+#                  Lexical variable '$e'
+#                  Call
+#                      Bareword 'exp'
+#                      Argument list [1 item]
+#                          Item 0
+#                              Number '1'
 #      Function 'sin' { $num:Num -> $result }
 #          Function body
 #              Instruction
@@ -294,10 +303,10 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 8.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 9.2 ) || return $ret_func->();
             return $ret_func->(
-                $$scope->{'NATIVE::Math'}->property_u( 'sin', $pos->(9.25) )
-                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(9.3) ) );
+                $$scope->{'NATIVE::Math'}->property_u( 'sin', $pos->(10.25) )
+                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(10.3) ) );
             return $ret;
         }
     );
@@ -309,23 +318,23 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 14.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 15.2 ) || return $ret_func->();
             return $ret_func->(
                 $$scope->{'atan2'}->(
                     [
                         $$scope->{'num'},
                         _sub(
                             $scope,
-                            $pos->(15.4),
+                            $pos->(16.4),
                             num( $f, "1" ),
                             pow(
-                                $scope, $pos->(15.4),
+                                $scope, $pos->(16.4),
                                 $$scope->{'num'}, num( $f, "2" )
                             )
-                        )->property_u( 'sqrt', $pos->(15.65) )
+                        )->property_u( 'sqrt', $pos->(16.65) )
                     ],
                     $scope, undef,
-                    $pos->(15.15)
+                    $pos->(16.15)
                 )
             );
             return $ret;
@@ -339,10 +348,10 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 20.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 21.2 ) || return $ret_func->();
             return $ret_func->(
-                $$scope->{'NATIVE::Math'}->property_u( 'cos', $pos->(21.25) )
-                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(21.3) ) );
+                $$scope->{'NATIVE::Math'}->property_u( 'cos', $pos->(22.25) )
+                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(22.3) ) );
             return $ret;
         }
     );
@@ -354,23 +363,23 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 26.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 27.2 ) || return $ret_func->();
             return $ret_func->(
                 $$scope->{'atan2'}->(
                     [
                         _sub(
                             $scope,
-                            $pos->(27.3),
+                            $pos->(28.3),
                             num( $f, "1" ),
                             pow(
-                                $scope, $pos->(27.3),
+                                $scope, $pos->(28.3),
                                 $$scope->{'num'}, num( $f, "2" )
                             )
-                          )->property_u( 'sqrt', $pos->(27.55) ),
+                          )->property_u( 'sqrt', $pos->(28.55) ),
                         $$scope->{'num'}
                     ],
                     $scope, undef,
-                    $pos->(27.15)
+                    $pos->(28.15)
                 )
             );
             return $ret;
@@ -384,15 +393,15 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 32.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 33.2 ) || return $ret_func->();
             return $ret_func->(
                 div(
                     $scope,
-                    $pos->(33.3),
+                    $pos->(34.3),
                     $$scope->{'sin'}
-                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(33.15) ),
+                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(34.15) ),
                     $$scope->{'cos'}
-                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(33.4) )
+                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(34.4) )
                 )
             );
             return $ret;
@@ -409,13 +418,13 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'y', 39.1 ) || return $ret_func->();
-            need( $scope, $args, 'x', 39.3 ) || return $ret_func->();
+            need( $scope, $args, 'y', 40.1 ) || return $ret_func->();
+            need( $scope, $args, 'x', 40.3 ) || return $ret_func->();
             return $ret_func->(
-                $$scope->{'NATIVE::Math'}->property_u( 'atan2', $pos->(40.25) )
+                $$scope->{'NATIVE::Math'}->property_u( 'atan2', $pos->(41.25) )
                   ->(
                     [ $$scope->{'y'}, $$scope->{'x'} ], $scope,
-                    undef, $pos->(40.3)
+                    undef, $pos->(41.3)
                   )
             );
             return $ret;
@@ -429,11 +438,11 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 45.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 46.2 ) || return $ret_func->();
             return $ret_func->(
                 $$scope->{'atan2'}->(
                     [ $$scope->{'num'}, num( $f, "1" ) ], $scope,
-                    undef, $pos->(46.3)
+                    undef, $pos->(47.3)
                 )
             );
             return $ret;
@@ -447,14 +456,14 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 51.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 52.2 ) || return $ret_func->();
             return $ret_func->(
                 div(
                     $scope,
-                    $pos->(52.3),
+                    $pos->(53.3),
                     num( $f, "1" ),
                     $$scope->{'cos'}
-                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(52.5) )
+                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(53.5) )
                 )
             );
             return $ret;
@@ -468,14 +477,14 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 57.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 58.2 ) || return $ret_func->();
             return $ret_func->(
                 div(
                     $scope,
-                    $pos->(58.3),
+                    $pos->(59.3),
                     num( $f, "1" ),
                     $$scope->{'sin'}
-                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(58.5) )
+                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(59.5) )
                 )
             );
             return $ret;
@@ -489,10 +498,10 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 63.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 64.2 ) || return $ret_func->();
             return $ret_func->(
-                $$scope->{'NATIVE::Math'}->property_u( 'log', $pos->(64.25) )
-                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(64.3) ) );
+                $$scope->{'NATIVE::Math'}->property_u( 'log', $pos->(65.25) )
+                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(65.3) ) );
             return $ret;
         }
     );
@@ -504,11 +513,11 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 69.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 70.2 ) || return $ret_func->();
             return $ret_func->(
                 $$scope->{'logb'}->(
                     [ num( $f, "10" ), $$scope->{'num'} ], $scope,
-                    undef, $pos->(70.3)
+                    undef, $pos->(71.3)
                 )
             );
             return $ret;
@@ -525,16 +534,16 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'base', 75.1 ) || return $ret_func->();
-            need( $scope, $args, 'num',  75.3 ) || return $ret_func->();
+            need( $scope, $args, 'base', 76.1 ) || return $ret_func->();
+            need( $scope, $args, 'num',  76.3 ) || return $ret_func->();
             return $ret_func->(
                 div(
                     $scope,
-                    $pos->(76.3),
+                    $pos->(77.3),
                     $$scope->{'log'}
-                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(76.15) ),
+                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(77.15) ),
                     $$scope->{'log'}
-                      ->( [ $$scope->{'base'} ], $scope, undef, $pos->(76.4) )
+                      ->( [ $$scope->{'base'} ], $scope, undef, $pos->(77.4) )
                 )
             );
             return $ret;
@@ -548,10 +557,10 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'num', 81.2 ) || return $ret_func->();
+            need( $scope, $args, 'num', 82.2 ) || return $ret_func->();
             return $ret_func->(
-                $$scope->{'NATIVE::Math'}->property_u( 'exp', $pos->(82.25) )
-                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(82.3) ) );
+                $$scope->{'NATIVE::Math'}->property_u( 'exp', $pos->(83.25) )
+                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(83.3) ) );
             return $ret;
         }
     );
@@ -608,6 +617,17 @@ my $result = do {
         ],
         undef,
         $pos->(4.15)
+    );
+    var(
+        $context,
+        e => [
+            sub {
+                $$scope->{'exp'}
+                  ->( [ num( $f, "1" ) ], $scope, undef, $pos->(5.5) );
+            }
+        ],
+        undef,
+        $pos->(5.3)
     );
 };
 

@@ -2,6 +2,7 @@ package Math
 
 #> the ratio of a circle's circumference to it's diameter (π)
 share $pi ?= 4 * atan2(1, 1)
+share $e  ?= exp(1)
 
 #> sine, expressed in radians
 func sin {
