@@ -34,6 +34,144 @@
 #                                                                  Topic variable '$_'
 #                                                                  Exponent operator (^)
 #                                                                  Number '2'
+#          Method 'opAdd' { $ehs:Vector -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$ehs'
+#                          Argument type
+#                              Bareword 'Vector'
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Property 'dimension'
+#                                  Lexical variable '$ehs'
+#                              Negated equality operator (!=)
+#                              Instance variable '@dimension'
+#                      If body
+#                          Instruction
+#                              Throw (fatal exception)
+#                                  Call
+#                                      Bareword 'Error'
+#                                      Argument list [2 items]
+#                                          Item 0
+#                                              Symbol :DimensionError
+#                                          Item 1
+#                                              Operation
+#                                                  String 'Dimension ...'
+#                                                  Addition operator (+)
+#                                                  Property 'dimension'
+#                                                      Lexical variable '$ehs'
+#                                                  Addition operator (+)
+#                                                  String ' != '
+#                                                  Addition operator (+)
+#                                                  Instance variable '@dimension'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$items'
+#                          Gather
+#                              Gather body
+#                                  For (values)
+#                                      Expression ('for' parameter)
+#                                          Lexical variable '$i'
+#                                      Expression ('in' parameter)
+#                                          Operation
+#                                              Number '0'
+#                                              Range operator (..)
+#                                              Property 'lastIndex'
+#                                                  Instance variable '@items'
+#                                      For body
+#                                          Instruction
+#                                              Take
+#                                                  Operation
+#                                                      Index
+#                                                          Special variable '*self'
+#                                                          Index list [1 item]
+#                                                              Item 0
+#                                                                  Lexical variable '$i'
+#                                                      Addition operator (+)
+#                                                      Index
+#                                                          Lexical variable '$ehs'
+#                                                          Index list [1 item]
+#                                                              Item 0
+#                                                                  Lexical variable '$i'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'Vector'
+#                              Named argument list [1 item]
+#                                  Item 0
+#                                      Pair 'items'
+#                                          Lexical variable '$items'
+#          Method 'opSub' { $rhs:Vector -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$rhs'
+#                          Argument type
+#                              Bareword 'Vector'
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Property 'dimension'
+#                                  Lexical variable '$rhs'
+#                              Negated equality operator (!=)
+#                              Instance variable '@dimension'
+#                      If body
+#                          Instruction
+#                              Throw (fatal exception)
+#                                  Call
+#                                      Bareword 'Error'
+#                                      Argument list [2 items]
+#                                          Item 0
+#                                              Symbol :DimensionError
+#                                          Item 1
+#                                              Operation
+#                                                  String 'Dimension ...'
+#                                                  Addition operator (+)
+#                                                  Property 'dimension'
+#                                                      Lexical variable '$rhs'
+#                                                  Addition operator (+)
+#                                                  String ' != '
+#                                                  Addition operator (+)
+#                                                  Instance variable '@dimension'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$items'
+#                          Gather
+#                              Gather body
+#                                  For (values)
+#                                      Expression ('for' parameter)
+#                                          Lexical variable '$i'
+#                                      Expression ('in' parameter)
+#                                          Operation
+#                                              Number '0'
+#                                              Range operator (..)
+#                                              Property 'lastIndex'
+#                                                  Instance variable '@items'
+#                                      For body
+#                                          Instruction
+#                                              Take
+#                                                  Operation
+#                                                      Index
+#                                                          Special variable '*self'
+#                                                          Index list [1 item]
+#                                                              Item 0
+#                                                                  Lexical variable '$i'
+#                                                      Subtraction operator (-)
+#                                                      Index
+#                                                          Lexical variable '$rhs'
+#                                                          Index list [1 item]
+#                                                              Item 0
+#                                                                  Lexical variable '$i'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'Vector'
+#                              Named argument list [1 item]
+#                                  Item 0
+#                                      Pair 'items'
+#                                          Lexical variable '$items'
 #          Method 'opMul' { $ehs:Num -> $result }
 #              Function body
 #                  Instruction
@@ -61,6 +199,24 @@
 #                                                                          Topic variable '$_'
 #                                                                          Multiplication operator (*)
 #                                                                          Lexical variable '$ehs'
+#          Method 'opDiv' { $rhs:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$rhs'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Operation
+#                              Special variable '*self'
+#                              Multiplication operator (*)
+#                              Single value [1 item]
+#                                  Item 0
+#                                      Operation
+#                                          Number '1'
+#                                          Division operator (/)
+#                                          Lexical variable '$rhs'
 #          Method 'opMul' { $ehs:Vector -> $result }
 #              Function body
 #                  Instruction
@@ -428,7 +584,7 @@ my $result = do {
     );
 
     # Anonymous function definition with topicalizer
-    my $func_4 = function_def(
+    my $func_6 = function_def(
         $f, undef, undef,
         [ { name => '_' } ],
         undef,
@@ -436,7 +592,7 @@ my $result = do {
             my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
             return $ret_func->(
-                mul( $scope, $pos->(22.55), $ins, $$scope->{'ehs'} ) );
+                mul( $scope, $pos->(44.55), $ins, $$scope->{'ehs'} ) );
             return $ret;
         }
     );
@@ -496,13 +652,13 @@ my $result = do {
             }
         );
 
-        # Method event 'opMul' definition
-        my $func_5 = method_event_def(
-            $f, $scope, 'opMul',
+        # Method event 'opAdd' definition
+        my $func_4 = method_event_def(
+            $f, $scope, 'opAdd',
             [
                 {
                     name     => 'ehs',
-                    type     => 'Num',
+                    type     => 'Vector',
                     optional => undef,
                     more     => undef
                 }
@@ -511,154 +667,13 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'ehs', 21.2 ) || return $ret_func->();
-                return $ret_func->(
-                    $$scope->{'Vector'}->(
-                        [
-                            undef,
-                            [
-                                items => $$self->{'items'}
-                                  ->property_u( 'map', $pos->(22.3) )->(
-                                    [
-                                        $func_4->inside_scope(
-                                            (undef) => $scope,
-                                            undef, $class, $ins, undef, undef
-                                        )
-                                    ],
-                                    $scope, undef,
-                                    $pos->(22.35)
-                                  )
-                            ]
-                        ],
-                        $scope, undef,
-                        $pos->(22.15)
-                    )
-                );
-                return $ret;
-            }
-        );
-
-        # Method event 'opMul' definition
-        my $func_6 = method_event_def(
-            $f, $scope, 'opMul',
-            [
-                {
-                    name     => 'ehs',
-                    type     => 'Vector',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 27.2 ) || return $ret_func->();
-                return $ret_func->( $$self->{'dot'}
-                      ->( [ $$scope->{'ehs'} ], $scope, undef, $pos->(28.3) ) );
-                return $ret;
-            }
-        );
-
-        # Method event 'opEqual' definition
-        my $func_7 = method_event_def(
-            $f, $scope,
-            'opEqual',
-            [
-                {
-                    name     => 'ehs',
-                    type     => 'Vector',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 33.2 ) || return $ret_func->();
                 if (
                     bool(
                         nequal(
                             $scope,
-                            $pos->(34.4),
+                            $pos->(22.4),
                             $$scope->{'ehs'}
-                              ->property_u( 'dimension', $pos->(34.3) ),
-                            $$self->{'dimension'}
-                        )
-                    )
-                  )
-                {
-                    my $scope = Ferret::Scope->new( $f, parent => $scope );
-
-                    return $ret_func->($false);
-                }
-                {
-                    my ( $loop_status, $loop_ret ) = iterate(
-                        $f, $scope,
-                        range(
-                            $scope,
-                            $pos->(36.5),
-                            num( $f, "0" ),
-                            $$self->{'items'}
-                              ->property_u( 'lastIndex', $pos->(36.7) )
-                        ),
-                        'i',
-                        sub {
-                            my ( $scope, $ret_func ) = @_;
-                            if (
-                                bool(
-                                    equal(
-                                        $scope,
-                                        $pos->(37.3),
-                                        ${ $scope->{special} }->{'self'}
-                                          ->get_index_value(
-                                            [ $$scope->{'i'} ], $scope,
-                                            $pos->(37.15)
-                                          ),
-                                        $$scope->{'ehs'}->get_index_value(
-                                            [ $$scope->{'i'} ], $scope,
-                                            $pos->(37.4)
-                                        )
-                                    )
-                                )
-                              )
-                            {
-                                my $scope =
-                                  Ferret::Scope->new( $f, parent => $scope );
-
-                                return 'next';
-                            }
-                            return $ret_func->($false);
-                        },
-                        $pos->(36.1)
-                    );
-                    return $ret_func->($loop_ret) if $loop_status eq 'return';
-                }
-                return $ret_func->($true);
-                return $ret;
-            }
-        );
-
-        # Method event 'dot' definition
-        my $func_8 = method_event_def(
-            $f, $scope, 'dot',
-            [
-                {
-                    name     => 'ehs',
-                    type     => 'Vector',
-                    optional => undef,
-                    more     => undef
-                }
-            ],
-            undef,
-            sub {
-                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 46.2 ) || return $ret_func->();
-                if (
-                    bool(
-                        nequal(
-                            $scope,
-                            $pos->(47.4),
-                            $$scope->{'ehs'}
-                              ->property_u( 'dimension', $pos->(47.3) ),
+                              ->property_u( 'dimension', $pos->(22.3) ),
                             $$self->{'dimension'}
                         )
                     )
@@ -673,32 +688,437 @@ my $result = do {
                                     get_symbol( $f, 'DimensionError' ),
                                     add(
                                         $scope,
-                                        $pos->(48.35),
+                                        $pos->(23.35),
                                         str( $f, "Dimension mismatch " ),
                                         $$scope->{'ehs'}->property_u(
-                                            'dimension', $pos->(48.45)
+                                            'dimension', $pos->(23.45)
                                         ),
                                         str( $f, " != " ),
                                         $$self->{'dimension'}
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(48.15)
+                                $pos->(23.15)
                             ),
-                            $pos->(48.05)
+                            $pos->(23.05)
                         )
                     );
                 }
-                var( $scope, dot => num( $f, "0" ), $file_scope, $pos->(49.2) );
+                var(
+                    $scope,
+                    items => do {
+                        my ( $gather_status, $gather_ret ) = gather(
+                            $f, $scope,
+                            sub {
+                                my ( $scope, $take, $ret_func ) = @_;
+                                {
+                                    my ( $loop_status, $loop_ret ) = iterate(
+                                        $f, $scope,
+                                        range(
+                                            $scope,
+                                            $pos->(24.35),
+                                            num( $f, "0" ),
+                                            $$self->{'items'}->property_u(
+                                                'lastIndex', $pos->(24.45)
+                                            )
+                                        ),
+                                        'i',
+                                        sub {
+                                            my ( $scope, $ret_func ) = @_;
+                                            $take->(
+                                                add(
+                                                    $scope,
+                                                    $pos->(25.3),
+                                                    ${ $scope->{special} }
+                                                      ->{'self'}
+                                                      ->get_index_value(
+                                                        [ $$scope->{'i'} ],
+                                                        $scope,
+                                                        $pos->(25.15)
+                                                      ),
+                                                    $$scope->{'ehs'}
+                                                      ->get_index_value(
+                                                        [ $$scope->{'i'} ],
+                                                        $scope,
+                                                        $pos->(25.4)
+                                                      )
+                                                )
+                                            );
+                                        },
+                                        $pos->(24.15)
+                                    );
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
+                                }
+                            }
+                        );
+                        return $ret_func->($gather_ret)
+                          if $gather_status eq 'return';
+                        $gather_ret;
+                    },
+                    $file_scope,
+                    $pos->(24.1)
+                );
+                return $ret_func->(
+                    $$scope->{'Vector'}->(
+                        [ undef, [ items => $$scope->{'items'} ] ],
+                        $scope, undef, $pos->(27.3)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opSub' definition
+        my $func_5 = method_event_def(
+            $f, $scope, 'opSub',
+            [
+                {
+                    name     => 'rhs',
+                    type     => 'Vector',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'rhs', 32.2 ) || return $ret_func->();
+                if (
+                    bool(
+                        nequal(
+                            $scope,
+                            $pos->(33.4),
+                            $$scope->{'rhs'}
+                              ->property_u( 'dimension', $pos->(33.3) ),
+                            $$self->{'dimension'}
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->(
+                        $ret->throw(
+                            $$scope->{'Error'}->(
+                                [
+                                    get_symbol( $f, 'DimensionError' ),
+                                    add(
+                                        $scope,
+                                        $pos->(34.35),
+                                        str( $f, "Dimension mismatch " ),
+                                        $$scope->{'rhs'}->property_u(
+                                            'dimension', $pos->(34.45)
+                                        ),
+                                        str( $f, " != " ),
+                                        $$self->{'dimension'}
+                                    )
+                                ],
+                                $scope, undef,
+                                $pos->(34.15)
+                            ),
+                            $pos->(34.05)
+                        )
+                    );
+                }
+                var(
+                    $scope,
+                    items => do {
+                        my ( $gather_status, $gather_ret ) = gather(
+                            $f, $scope,
+                            sub {
+                                my ( $scope, $take, $ret_func ) = @_;
+                                {
+                                    my ( $loop_status, $loop_ret ) = iterate(
+                                        $f, $scope,
+                                        range(
+                                            $scope,
+                                            $pos->(35.35),
+                                            num( $f, "0" ),
+                                            $$self->{'items'}->property_u(
+                                                'lastIndex', $pos->(35.45)
+                                            )
+                                        ),
+                                        'i',
+                                        sub {
+                                            my ( $scope, $ret_func ) = @_;
+                                            $take->(
+                                                _sub(
+                                                    $scope,
+                                                    $pos->(36.3),
+                                                    ${ $scope->{special} }
+                                                      ->{'self'}
+                                                      ->get_index_value(
+                                                        [ $$scope->{'i'} ],
+                                                        $scope,
+                                                        $pos->(36.15)
+                                                      ),
+                                                    $$scope->{'rhs'}
+                                                      ->get_index_value(
+                                                        [ $$scope->{'i'} ],
+                                                        $scope,
+                                                        $pos->(36.4)
+                                                      )
+                                                )
+                                            );
+                                        },
+                                        $pos->(35.15)
+                                    );
+                                    return $ret_func->($loop_ret)
+                                      if $loop_status eq 'return';
+                                }
+                            }
+                        );
+                        return $ret_func->($gather_ret)
+                          if $gather_status eq 'return';
+                        $gather_ret;
+                    },
+                    $file_scope,
+                    $pos->(35.1)
+                );
+                return $ret_func->(
+                    $$scope->{'Vector'}->(
+                        [ undef, [ items => $$scope->{'items'} ] ],
+                        $scope, undef, $pos->(38.3)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opMul' definition
+        my $func_7 = method_event_def(
+            $f, $scope, 'opMul',
+            [
+                {
+                    name     => 'ehs',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'ehs', 43.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$scope->{'Vector'}->(
+                        [
+                            undef,
+                            [
+                                items => $$self->{'items'}
+                                  ->property_u( 'map', $pos->(44.3) )->(
+                                    [
+                                        $func_6->inside_scope(
+                                            (undef) => $scope,
+                                            undef, $class, $ins, undef, undef
+                                        )
+                                    ],
+                                    $scope, undef,
+                                    $pos->(44.35)
+                                  )
+                            ]
+                        ],
+                        $scope, undef,
+                        $pos->(44.15)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opDiv' definition
+        my $func_8 = method_event_def(
+            $f, $scope, 'opDiv',
+            [
+                {
+                    name     => 'rhs',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'rhs', 49.2 ) || return $ret_func->();
+                return $ret_func->(
+                    mul(
+                        $scope,
+                        $pos->(50.15),
+                        ${ $scope->{special} }->{'self'},
+                        div(
+                            $scope, $pos->(50.3),
+                            num( $f, "1" ), $$scope->{'rhs'}
+                        )
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opMul' definition
+        my $func_9 = method_event_def(
+            $f, $scope, 'opMul',
+            [
+                {
+                    name     => 'ehs',
+                    type     => 'Vector',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'ehs', 55.2 ) || return $ret_func->();
+                return $ret_func->( $$self->{'dot'}
+                      ->( [ $$scope->{'ehs'} ], $scope, undef, $pos->(56.3) ) );
+                return $ret;
+            }
+        );
+
+        # Method event 'opEqual' definition
+        my $func_10 = method_event_def(
+            $f, $scope,
+            'opEqual',
+            [
+                {
+                    name     => 'ehs',
+                    type     => 'Vector',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'ehs', 61.2 ) || return $ret_func->();
+                if (
+                    bool(
+                        nequal(
+                            $scope,
+                            $pos->(62.4),
+                            $$scope->{'ehs'}
+                              ->property_u( 'dimension', $pos->(62.3) ),
+                            $$self->{'dimension'}
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->($false);
+                }
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         range(
                             $scope,
-                            $pos->(50.5),
+                            $pos->(64.5),
                             num( $f, "0" ),
                             $$self->{'items'}
-                              ->property_u( 'lastIndex', $pos->(50.7) )
+                              ->property_u( 'lastIndex', $pos->(64.7) )
+                        ),
+                        'i',
+                        sub {
+                            my ( $scope, $ret_func ) = @_;
+                            if (
+                                bool(
+                                    equal(
+                                        $scope,
+                                        $pos->(65.3),
+                                        ${ $scope->{special} }->{'self'}
+                                          ->get_index_value(
+                                            [ $$scope->{'i'} ], $scope,
+                                            $pos->(65.15)
+                                          ),
+                                        $$scope->{'ehs'}->get_index_value(
+                                            [ $$scope->{'i'} ], $scope,
+                                            $pos->(65.4)
+                                        )
+                                    )
+                                )
+                              )
+                            {
+                                my $scope =
+                                  Ferret::Scope->new( $f, parent => $scope );
+
+                                return 'next';
+                            }
+                            return $ret_func->($false);
+                        },
+                        $pos->(64.1)
+                    );
+                    return $ret_func->($loop_ret) if $loop_status eq 'return';
+                }
+                return $ret_func->($true);
+                return $ret;
+            }
+        );
+
+        # Method event 'dot' definition
+        my $func_11 = method_event_def(
+            $f, $scope, 'dot',
+            [
+                {
+                    name     => 'ehs',
+                    type     => 'Vector',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'ehs', 74.2 ) || return $ret_func->();
+                if (
+                    bool(
+                        nequal(
+                            $scope,
+                            $pos->(75.4),
+                            $$scope->{'ehs'}
+                              ->property_u( 'dimension', $pos->(75.3) ),
+                            $$self->{'dimension'}
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->(
+                        $ret->throw(
+                            $$scope->{'Error'}->(
+                                [
+                                    get_symbol( $f, 'DimensionError' ),
+                                    add(
+                                        $scope,
+                                        $pos->(76.35),
+                                        str( $f, "Dimension mismatch " ),
+                                        $$scope->{'ehs'}->property_u(
+                                            'dimension', $pos->(76.45)
+                                        ),
+                                        str( $f, " != " ),
+                                        $$self->{'dimension'}
+                                    )
+                                ],
+                                $scope, undef,
+                                $pos->(76.15)
+                            ),
+                            $pos->(76.05)
+                        )
+                    );
+                }
+                var( $scope, dot => num( $f, "0" ), $file_scope, $pos->(77.2) );
+                {
+                    my ( $loop_status, $loop_ret ) = iterate(
+                        $f, $scope,
+                        range(
+                            $scope,
+                            $pos->(78.5),
+                            num( $f, "0" ),
+                            $$self->{'items'}
+                              ->property_u( 'lastIndex', $pos->(78.7) )
                         ),
                         'i',
                         sub {
@@ -707,27 +1127,27 @@ my $result = do {
                                 $scope,
                                 dot => add(
                                     $scope,
-                                    $pos->(51.1),
+                                    $pos->(79.1),
                                     $$scope->{'dot'},
                                     mul(
                                         $scope,
-                                        $pos->(51.35),
+                                        $pos->(79.35),
                                         ${ $scope->{special} }->{'self'}
                                           ->get_index_value(
                                             [ $$scope->{'i'} ], $scope,
-                                            $pos->(51.2)
+                                            $pos->(79.2)
                                           ),
                                         $$scope->{'ehs'}->get_index_value(
                                             [ $$scope->{'i'} ], $scope,
-                                            $pos->(51.45)
+                                            $pos->(79.45)
                                         )
                                     )
                                 ),
                                 $file_scope,
-                                $pos->(51.1)
+                                $pos->(79.1)
                             );
                         },
-                        $pos->(50.1)
+                        $pos->(78.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -737,7 +1157,7 @@ my $result = do {
         );
 
         # Method event 'cross' definition
-        my $func_9 = method_event_def(
+        my $func_12 = method_event_def(
             $f, $scope, 'cross',
             [
                 {
@@ -750,24 +1170,24 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 58.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 86.2 ) || return $ret_func->();
                 if (
                     bool(
                         any_true(
                             $scope,
-                            $pos->(59.2),
+                            $pos->(87.2),
                             sub {
                                 nequal(
                                     $scope,
-                                    $pos->(59.2),
+                                    $pos->(87.2),
                                     $$scope->{'ehs'}->property_u(
-                                        'dimension', $pos->(59.15)
+                                        'dimension', $pos->(87.15)
                                     ),
                                     num( $f, "3" )
                                 );
                             },
                             sub {
-                                nequal( $scope, $pos->(59.2),
+                                nequal( $scope, $pos->(87.2),
                                     $$self->{'dimension'}, num( $f, "3" ) );
                             }
                         )
@@ -786,109 +1206,109 @@ my $result = do {
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(60.3)
+                                $pos->(88.3)
                             ),
-                            $pos->(60.1)
+                            $pos->(88.1)
                         )
                     );
                 }
                 $self->set_property(
                     a => _sub(
                         $scope,
-                        $pos->(61.23333),
+                        $pos->(89.23333),
                         mul(
                             $scope,
-                            $pos->(61.23333),
+                            $pos->(89.23333),
                             ${ $scope->{special} }->{'self'}->get_index_value(
                                 [ num( $f, "1" ) ], $scope,
-                                $pos->(61.13333)
+                                $pos->(89.13333)
                             ),
                             $$scope->{'ehs'}->get_index_value(
                                 [ num( $f, "2" ) ],
-                                $scope, $pos->(61.3)
+                                $scope, $pos->(89.3)
                             )
                         ),
                         mul(
                             $scope,
-                            $pos->(61.23333),
+                            $pos->(89.23333),
                             ${ $scope->{special} }->{'self'}->get_index_value(
                                 [ num( $f, "2" ) ], $scope,
-                                $pos->(61.46667)
+                                $pos->(89.46667)
                             ),
                             $$scope->{'ehs'}->get_index_value(
                                 [ num( $f, "1" ) ], $scope,
-                                $pos->(61.63333)
+                                $pos->(89.63333)
                             )
                         )
                     ),
-                    $pos->(61.06667)
+                    $pos->(89.06667)
                 );
                 $self->set_property(
                     b => _sub(
                         $scope,
-                        $pos->(62.23333),
+                        $pos->(90.23333),
                         mul(
                             $scope,
-                            $pos->(62.23333),
+                            $pos->(90.23333),
                             ${ $scope->{special} }->{'self'}->get_index_value(
                                 [ num( $f, "2" ) ], $scope,
-                                $pos->(62.13333)
+                                $pos->(90.13333)
                             ),
                             $$scope->{'ehs'}->get_index_value(
                                 [ num( $f, "0" ) ],
-                                $scope, $pos->(62.3)
+                                $scope, $pos->(90.3)
                             )
                         ),
                         mul(
                             $scope,
-                            $pos->(62.23333),
+                            $pos->(90.23333),
                             ${ $scope->{special} }->{'self'}->get_index_value(
                                 [ num( $f, "0" ) ], $scope,
-                                $pos->(62.46667)
+                                $pos->(90.46667)
                             ),
                             $$scope->{'ehs'}->get_index_value(
                                 [ num( $f, "2" ) ], $scope,
-                                $pos->(62.63333)
+                                $pos->(90.63333)
                             )
                         )
                     ),
-                    $pos->(62.06667)
+                    $pos->(90.06667)
                 );
                 $self->set_property(
                     c => _sub(
                         $scope,
-                        $pos->(63.23333),
+                        $pos->(91.23333),
                         mul(
                             $scope,
-                            $pos->(63.23333),
+                            $pos->(91.23333),
                             ${ $scope->{special} }->{'self'}->get_index_value(
                                 [ num( $f, "0" ) ], $scope,
-                                $pos->(63.13333)
+                                $pos->(91.13333)
                             ),
                             $$scope->{'ehs'}->get_index_value(
                                 [ num( $f, "1" ) ],
-                                $scope, $pos->(63.3)
+                                $scope, $pos->(91.3)
                             )
                         ),
                         mul(
                             $scope,
-                            $pos->(63.23333),
+                            $pos->(91.23333),
                             ${ $scope->{special} }->{'self'}->get_index_value(
                                 [ num( $f, "1" ) ], $scope,
-                                $pos->(63.46667)
+                                $pos->(91.46667)
                             ),
                             $$scope->{'ehs'}->get_index_value(
                                 [ num( $f, "0" ) ], $scope,
-                                $pos->(63.63333)
+                                $pos->(91.63333)
                             )
                         )
                     ),
-                    $pos->(63.06667)
+                    $pos->(91.06667)
                 );
                 return $ret_func->(
                     $$scope->{'Vector'}->(
                         [ $$self->{'a'}, $$self->{'b'}, $$self->{'c'} ],
-                        $scope, undef, $pos->(64.15)
+                        $scope, undef, $pos->(92.15)
                     )
                 );
                 return $ret;
@@ -896,7 +1316,7 @@ my $result = do {
         );
 
         # Method event 'angleBetween' definition
-        my $func_10 = method_event_def(
+        my $func_13 = method_event_def(
             $f, $scope,
             'angleBetween',
             [
@@ -910,31 +1330,31 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 69.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 98.2 ) || return $ret_func->();
                 var(
                     $scope,
                     cosTheta => div(
                         $scope,
-                        $pos->(71.35),
+                        $pos->(100.35),
                         $$self->{'dot'}->(
                             [ $$scope->{'ehs'} ], $scope,
-                            undef,                $pos->(71.2)
+                            undef,                $pos->(100.2)
                         ),
                         mul(
                             $scope,
-                            $pos->(71.5),
+                            $pos->(100.5),
                             $$self->{'magnitude'},
                             $$scope->{'ehs'}
-                              ->property_u( 'magnitude', $pos->(71.6) )
+                              ->property_u( 'magnitude', $pos->(100.6) )
                         )
                     ),
                     $file_scope,
-                    $pos->(71.1)
+                    $pos->(100.1)
                 );
                 return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'acos', $pos->(72.3) )->(
+                    $$scope->{'Math'}->property_u( 'acos', $pos->(101.3) )->(
                         [ $$scope->{'cosTheta'} ], $scope,
-                        undef,                     $pos->(72.4)
+                        undef,                     $pos->(101.4)
                     )
                 );
                 return $ret;
@@ -942,7 +1362,7 @@ my $result = do {
         );
 
         # Method event 'getValue' definition
-        my $func_11 = method_event_def(
+        my $func_14 = method_event_def(
             $f, $scope,
             'getValue',
             [
@@ -956,11 +1376,11 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'index', 78.2 ) || return $ret_func->();
+                need( $scope, $args, 'index', 107.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'items'}->get_index_value(
                         [ $$scope->{'index'} ],
-                        $scope, $pos->(79.3)
+                        $scope, $pos->(108.3)
                     )
                 );
                 return $ret;
@@ -968,7 +1388,7 @@ my $result = do {
         );
 
         # Method event 'copy' definition
-        my $func_12 = method_event_def(
+        my $func_15 = method_event_def(
             $f, $scope, 'copy', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -978,14 +1398,14 @@ my $result = do {
                             undef,
                             [
                                 items => $$self->{'items'}
-                                  ->property_u( 'copy', $pos->(84.3) )->(
+                                  ->property_u( 'copy', $pos->(113.3) )->(
                                     [ undef, [] ], $scope,
-                                    undef, $pos->(84.35)
+                                    undef, $pos->(113.35)
                                   )
                             ]
                         ],
                         $scope, undef,
-                        $pos->(84.15)
+                        $pos->(113.15)
                     )
                 );
                 return $ret;
@@ -993,7 +1413,7 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $func_13 = method_event_def(
+        my $func_16 = method_event_def(
             $f, $scope,
             'description',
             undef, undef,
@@ -1002,11 +1422,12 @@ my $result = do {
                 return $ret_func->(
                     add(
                         $scope,
-                        $pos->(88.15),
+                        $pos->(117.15),
                         str( $f, "<" ),
-                        $$self->{'items'}->property_u( 'join', $pos->(88.25) )
+                        $$self->{'items'}->property_u( 'join', $pos->(117.25) )
                           ->(
-                            [ str( $f, ", " ) ], $scope, undef, $pos->(88.3)
+                            [ str( $f, ", " ) ], $scope,
+                            undef, $pos->(117.3)
                           ),
                         str( $f, ">" )
                     )
@@ -1026,39 +1447,51 @@ my $result = do {
             magnitude => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $func_5->inside_scope(
-            opMul => $scope,
+        $func_4->inside_scope(
+            opAdd => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_6->inside_scope(
-            opMul => $scope,
+        $func_5->inside_scope(
+            opSub => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_7->inside_scope(
-            opEqual => $scope,
+            opMul => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_8->inside_scope(
-            dot => $scope,
+            opDiv => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_9->inside_scope(
-            cross => $scope,
+            opMul => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_10->inside_scope(
-            angleBetween => $scope,
+            opEqual => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_11->inside_scope(
-            getValue => $scope,
+            dot => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_12->inside_scope(
-            copy => $scope,
+            cross => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_13->inside_scope(
+            angleBetween => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_14->inside_scope(
+            getValue => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_15->inside_scope(
+            copy => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_16->inside_scope(
             description => $scope,
             $proto, $class, $ins, undef, undef
         );

@@ -16,10 +16,38 @@ prop magnitude {
     return @items.map! { -> $_ ^ 2 }.sum.sqrt
 }
 
+#> addition of two vectors
+operator + {
+    need $ehs: Vector
+    if $ehs.dimension != @dimension
+        throw Error(:DimensionError, "Dimension mismatch $ehs.dimension != @dimension")
+    $items = gather for $i in 0..@items.lastIndex {
+        take *self[$i] + $ehs[$i]
+    }
+    return Vector(items: $items)
+}
+
+#> subtraction of a vector from another
+operator - {
+    need $rhs: Vector
+    if $rhs.dimension != @dimension
+        throw Error(:DimensionError, "Dimension mismatch $rhs.dimension != @dimension")
+    $items = gather for $i in 0..@items.lastIndex {
+        take *self[$i] - $rhs[$i]
+    }
+    return Vector(items: $items)
+}
+
 #> scalar multiplication of the vector
 operator * {
     need $ehs: Num
     return Vector(items: @items.map! { -> $_ * $ehs })
+}
+
+#> scalar division of the vector
+operator / {
+    need $rhs: Num
+    return *self * (1 / $rhs)
 }
 
 #> dot product of two vectors
@@ -41,7 +69,7 @@ operator == {
     return true
 }
 
-#> dot product of two vectors
+#> dot product of this vector and another of the same dimension
 method dot {
     need $ehs: Vector
     if $ehs.dimension != @dimension
@@ -64,7 +92,8 @@ method cross {
     return Vector(@a, @b, @c)
 }
 
-#> angle between two vectors, measured in radians
+#> angle between this vector and another of the same dimension, measured in
+#| radians
 method angleBetween {
     need $ehs: Vector
     # a·b = |a||b|cos(theta)

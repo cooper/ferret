@@ -40,6 +40,36 @@ Computed property. Magnitude of the vector.
 
 
 
+### Addition operator (+)
+
+```
+$vector + $ehs: Vector
+```
+
+Addition of two vectors.
+
+
+#### Arguments
+
+* __ehs__: Vector  
+
+
+
+### Subtraction operator (-)
+
+```
+$vector - $rhs: Vector
+```
+
+Subtraction of a vector from another.
+
+
+#### Arguments
+
+* __rhs__: Vector  
+
+
+
 ### Multiplication operator (*)
 
 ```
@@ -52,6 +82,21 @@ Scalar multiplication of the vector.
 #### Arguments
 
 * __ehs__: [Number](/std/doc/Number.md)  
+
+
+
+### Division operator (/)
+
+```
+$vector / $rhs: Num
+```
+
+Scalar division of the vector.
+
+
+#### Arguments
+
+* __rhs__: [Number](/std/doc/Number.md)  
 
 
 
@@ -91,7 +136,7 @@ Vector equality.
 $vector.dot($ehs: Vector)
 ```
 
-Dot product of two vectors.
+Dot product of this vector and another of the same dimension.
 
 
 #### Arguments
@@ -121,7 +166,8 @@ Cross product of two 3D vectors.
 $vector.angleBetween($ehs: Vector)
 ```
 
-Angle between two vectors, measured in radians.
+Angle between this vector and another of the same dimension, measured in
+radians.
 
 
 #### Arguments
