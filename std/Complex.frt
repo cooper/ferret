@@ -29,12 +29,13 @@ operator - {
     return Complex(@a - $rhs.a, @b - $rhs.b)
 }
 
-#> subtractions of real numbers from complex numbers
+#> subtraction of real number from complex number
 operator - {
     need $rhs: Num
     return Complex(@a - $rhs, @b)
 }
 
+#> subtraction of complex number from real number
 # this is like (r)-(a+bi)
 # so it's r - a - bi
 operator - {
@@ -69,18 +70,10 @@ operator / {
     )
 }
 
-# hilarious
-#> complex numbers to an integer power
+#> complex number to real power
 operator ^ {
-    need $rhs: Int
-    if $rhs == 0
-        return 1
-    if $rhs == 1
-        return *self
-    $new = *self
-    for $i in 2..$rhs:
-        $new *= *self
-    return $new
+    need $rhs: Num
+
 }
 
 #> absolute value of complex number

@@ -23,7 +23,7 @@ alias Int = Integer
 
 #> square root of the number
 prop sqrt {
-    return Math.sqrt(*self)
+    return NATIVE::Math.sqrt(*self)
 }
 
 #> cube root of the number
@@ -56,7 +56,7 @@ prop odd {
 #> the Nth root of the number
 method root {
     need $root: Num
-    return Math.root($root, *self)
+    return *self ^ (1 / $root)
 }
 
 #> The number's factorial. This can also be written `N!`.

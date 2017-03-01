@@ -8,7 +8,7 @@
 #                  Call
 #                      Property 'pi'
 #                          Bareword 'NATIVE::Math'
-#      Function 'sqrt' { $num:Num -> $result }
+#      Function 'sin' { $num:Num -> $result }
 #          Function body
 #              Instruction
 #                  Need
@@ -18,18 +18,28 @@
 #              Instruction
 #                  Return
 #                      Call
-#                          Property 'sqrt'
+#                          Property 'sin'
 #                              Bareword 'NATIVE::Math'
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$num'
-#      Function 'root' { $root:Num $num:Num -> $result }
+#      Function 'cos' { $num:Num -> $result }
 #          Function body
 #              Instruction
 #                  Need
-#                      Lexical variable '$root'
+#                      Lexical variable '$num'
 #                      Argument type
 #                          Bareword 'Num'
+#              Instruction
+#                  Return
+#                      Call
+#                          Property 'cos'
+#                              Bareword 'NATIVE::Math'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  Lexical variable '$num'
+#      Function 'tan' { $num:Num -> $result }
+#          Function body
 #              Instruction
 #                  Need
 #                      Lexical variable '$num'
@@ -38,14 +48,39 @@
 #              Instruction
 #                  Return
 #                      Operation
-#                          Lexical variable '$num'
-#                          Exponent operator (^)
-#                          Single value [1 item]
+#                          Call
+#                              Bareword 'sin'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Lexical variable '$num'
+#                          Division operator (/)
+#                          Call
+#                              Bareword 'cos'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Lexical variable '$num'
+#      Function 'atan2' { $y:Num $x:Num -> $result }
+#          Function body
+#              Instruction
+#                  Need
+#                      Lexical variable '$y'
+#                      Argument type
+#                          Bareword 'Num'
+#              Instruction
+#                  Need
+#                      Lexical variable '$x'
+#                      Argument type
+#                          Bareword 'Num'
+#              Instruction
+#                  Return
+#                      Call
+#                          Property 'atan2'
+#                              Bareword 'NATIVE::Math'
+#                          Argument list [2 items]
 #                              Item 0
-#                                  Operation
-#                                      Number '1'
-#                                      Division operator (/)
-#                                      Lexical variable '$root'
+#                                  Lexical variable '$y'
+#                              Item 1
+#                                  Lexical variable '$x'
 #      Include (NATIVE, NATIVE::Math, Num)
 package FF;
 
@@ -69,59 +104,91 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos = before_content( 'Math.frt', './std/Math.frt' );
 
-use Ferret::Core::Operations qw(div num pow);
+use Ferret::Core::Operations qw(div);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'Math' );
     my $scope = $file_scope;
     load_core('Math');
 
-    # Function event 'sqrt' definition
+    # Function event 'sin' definition
     my $func_0 = function_event_def(
-        $f, $context, 'sqrt', undef,
+        $f, $context, 'sin', undef,
         [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             need( $scope, $args, 'num', 6.2 ) || return $ret_func->();
             return $ret_func->(
-                $$scope->{'NATIVE::Math'}->property_u( 'sqrt', $pos->(7.25) )
+                $$scope->{'NATIVE::Math'}->property_u( 'sin', $pos->(7.25) )
                   ->( [ $$scope->{'num'} ], $scope, undef, $pos->(7.3) ) );
             return $ret;
         }
     );
 
-    # Function event 'root' definition
+    # Function event 'cos' definition
     my $func_1 = function_event_def(
-        $f, $context, 'root', undef,
-        [
-            { name => 'root', type => 'Num', optional => undef, more => undef },
-            { name => 'num',  type => 'Num', optional => undef, more => undef }
-        ],
+        $f, $context, 'cos', undef,
+        [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'root', 11.1 ) || return $ret_func->();
-            need( $scope, $args, 'num',  11.3 ) || return $ret_func->();
+            need( $scope, $args, 'num', 11.2 ) || return $ret_func->();
             return $ret_func->(
-                pow(
+                $$scope->{'NATIVE::Math'}->property_u( 'cos', $pos->(12.25) )
+                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(12.3) ) );
+            return $ret;
+        }
+    );
+
+    # Function event 'tan' definition
+    my $func_2 = function_event_def(
+        $f, $context, 'tan', undef,
+        [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
+        undef,
+        sub {
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+            need( $scope, $args, 'num', 16.2 ) || return $ret_func->();
+            return $ret_func->(
+                div(
                     $scope,
-                    $pos->(12.15),
-                    $$scope->{'num'},
-                    div(
-                        $scope, $pos->(12.3),
-                        num( $f, "1" ), $$scope->{'root'}
-                    )
+                    $pos->(17.3),
+                    $$scope->{'sin'}
+                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(17.15) ),
+                    $$scope->{'cos'}
+                      ->( [ $$scope->{'num'} ], $scope, undef, $pos->(17.4) )
                 )
             );
             return $ret;
         }
     );
-    $func_0->inside_scope(
-        sqrt => $scope,
-        $context, undef, $ins, undef, undef
+
+    # Function event 'atan2' definition
+    my $func_3 = function_event_def(
+        $f, $context, 'atan2', undef,
+        [
+            { name => 'y', type => 'Num', optional => undef, more => undef },
+            { name => 'x', type => 'Num', optional => undef, more => undef }
+        ],
+        undef,
+        sub {
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+            need( $scope, $args, 'y', 21.1 ) || return $ret_func->();
+            need( $scope, $args, 'x', 21.3 ) || return $ret_func->();
+            return $ret_func->(
+                $$scope->{'NATIVE::Math'}->property_u( 'atan2', $pos->(22.25) )
+                  ->(
+                    [ $$scope->{'y'}, $$scope->{'x'} ], $scope,
+                    undef, $pos->(22.3)
+                  )
+            );
+            return $ret;
+        }
     );
-    $func_1->inside_scope(
-        root => $scope,
+    $func_0->inside_scope( sin => $scope, $context, undef, $ins, undef, undef );
+    $func_1->inside_scope( cos => $scope, $context, undef, $ins, undef, undef );
+    $func_2->inside_scope( tan => $scope, $context, undef, $ins, undef, undef );
+    $func_3->inside_scope(
+        atan2 => $scope,
         $context, undef, $ins, undef, undef
     );
     load_namespaces( $context, qw(NATIVE NATIVE::Math Num) );

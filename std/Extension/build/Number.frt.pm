@@ -36,7 +36,7 @@
 #                      Return
 #                          Call
 #                              Property 'sqrt'
-#                                  Bareword 'Math'
+#                                  Bareword 'NATIVE::Math'
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Special variable '*self'
@@ -104,14 +104,15 @@
 #                              Bareword 'Num'
 #                  Instruction
 #                      Return
-#                          Call
-#                              Property 'root'
-#                                  Bareword 'Math'
-#                              Argument list [2 items]
+#                          Operation
+#                              Special variable '*self'
+#                              Exponent operator (^)
+#                              Single value [1 item]
 #                                  Item 0
-#                                      Lexical variable '$root'
-#                                  Item 1
-#                                      Special variable '*self'
+#                                      Operation
+#                                          Number '1'
+#                                          Division operator (/)
+#                                          Lexical variable '$root'
 #          Method 'factorial' { -> $result $result }
 #              Function body
 #                  Instruction
@@ -182,7 +183,7 @@
 #              Assignment
 #                  Bareword 'NaN'
 #                  Bareword 'Num::NaN'
-#      Include (Inf, Int, Integer, Math, NaN, Num, Num::Inf, Num::Int, Num::NaN)
+#      Include (Inf, Int, Integer, NATIVE, NATIVE::Math, NaN, Num, Num::Inf, Num::Int, Num::NaN)
 package FF;
 
 use warnings;
@@ -206,7 +207,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my $pos = before_content( 'Number.frt', './std/Extension/Number.frt' );
 
 use Ferret::Core::Operations
-  qw(_sub bool equal less mod mul nequal num pow range str);
+  qw(_sub bool div equal less mod mul nequal num pow range str);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -223,10 +224,11 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'sqrt', $pos->(26.3) )->(
+                    $$scope->{'NATIVE::Math'}
+                      ->property_u( 'sqrt', $pos->(26.25) )->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                $pos->(26.4)
-                    )
+                        undef,                                $pos->(26.3)
+                      )
                 );
                 return $ret;
             }
@@ -342,11 +344,14 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'root', 58.2 ) || return $ret_func->();
                 return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'root', $pos->(59.15) )->(
-                        [ $$scope->{'root'}, ${ $scope->{special} }->{'self'} ],
+                    pow(
                         $scope,
-                        undef,
-                        $pos->(59.2)
+                        $pos->(59.15),
+                        ${ $scope->{special} }->{'self'},
+                        div(
+                            $scope, $pos->(59.3),
+                            num( $f, "1" ), $$scope->{'root'}
+                        )
                     )
                 );
                 return $ret;
@@ -510,7 +515,8 @@ my $result = do {
         );
     }
     load_namespaces( $context,
-        qw(Inf Int Integer Math NaN Num Num::Inf Num::Int Num::NaN) );
+        qw(Inf Int Integer NATIVE NATIVE::Math NaN Num Num::Inf Num::Int Num::NaN)
+    );
     $context->set_property( Int => $$scope->{'Num::Int'}, $pos->(87.3) );
     $context->set_property( Inf => $$scope->{'Num::Inf'}, $pos->(88.3) );
     $context->set_property( NaN => $$scope->{'Num::NaN'}, $pos->(89.3) );
