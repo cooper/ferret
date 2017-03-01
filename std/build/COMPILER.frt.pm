@@ -170,7 +170,7 @@ sub eval : method {
     # eval
     my $res = __eval($code);
     if (ref $res eq 'SCALAR') {
-        my $sig_err = $Ferret::Native::Signal::last_err;
+        my $sig_err = $Ferret::NATIVE::Signal::last_err;
         return $sig_err if $sig_err;
         return ferror($$res, 'EvalError');
     }
