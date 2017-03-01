@@ -1,5 +1,5 @@
 # Copyright (c) 2015, Mitchell Cooper
-package Ferret::Native::Signal;
+package Ferret::NATIVE::Signal;
 
 use warnings;
 use strict;

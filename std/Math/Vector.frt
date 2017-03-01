@@ -219,8 +219,8 @@ type VectorAxis {
 }
 
 func _axisToNumber {
-    need $axis: Num | Str
+    need $axis: Num | Char
     if $axis.*instanceOf(Num)
         return $axis
-    return 0
+    return 120 - $axis.ord
 }

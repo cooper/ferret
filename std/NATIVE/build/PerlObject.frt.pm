@@ -1,5 +1,5 @@
 # Copyright (c) 2015, Mitchell Cooper
-package Ferret::Native::PerlObject;
+package Ferret::NATIVE::PerlObject;
 
 use warnings;
 use strict;

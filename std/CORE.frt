@@ -5,6 +5,7 @@ load Signal
 load Complex
 load Char
 
+load Extension::NATIVE
 load Extension::Number
 load Extension::String
 load Extension::List

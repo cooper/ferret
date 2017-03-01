@@ -1,5 +1,5 @@
 # Copyright (c) 2015, Mitchell Cooper
-package Ferret::Native::HTTPClient;
+package Ferret::NATIVE::HTTPClient;
 
 use warnings;
 use strict;

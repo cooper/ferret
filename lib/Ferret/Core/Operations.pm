@@ -201,7 +201,7 @@ sub num {
     if ($$last eq 'i') {
         $$last = '';
         my $cmplx = $f->{complex} //=
-            $f->get_class($f->main_context, 'Complex');
+            $f->get_class('Complex');
         $num = 1 if !length $num;
         my @args = map Ferret::Core::Conversion::fnumber($_), 0, $num;
         return $cmplx->call(\@args);

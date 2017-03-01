@@ -15,6 +15,9 @@
 #              Bareword 'Char'
 #      Instruction
 #          Load
+#              Bareword 'Extension::NATIVE'
+#      Instruction
+#          Load
 #              Bareword 'Extension::Number'
 #      Instruction
 #          Load
@@ -98,7 +101,7 @@
 #              Instruction
 #                  Isa
 #                      Bareword 'IndexedWrite'
-#      Include (Any, Char, Complex, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, IndexedRead, IndexedWrite, Iterator, Obj, Object, Signal)
+#      Include (Any, Char, Complex, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::NATIVE, Extension::Number, Extension::String, Hashable, IndexedRead, IndexedWrite, Iterator, Obj, Object, Signal)
 package FF;
 
 use warnings;
@@ -128,7 +131,7 @@ my $result = do {
     load_core('CORE');
 
     load_namespaces( $context,
-        qw(Any Char Complex Error EventSet Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable IndexedRead IndexedWrite Iterator Obj Object Signal)
+        qw(Any Char Complex Error EventSet Extension Extension::Hash Extension::List Extension::NATIVE Extension::Number Extension::String Hashable IndexedRead IndexedWrite Iterator Obj Object Signal)
     );
 
     typedef(
@@ -144,8 +147,8 @@ my $result = do {
         },
         undef
     );
-    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(19.3) );
-    $context->set_property( Object => $$scope->{'Any'}, $pos->(20.3) );
+    $context->set_property( Obj    => $$scope->{'Any'}, $pos->(20.3) );
+    $context->set_property( Object => $$scope->{'Any'}, $pos->(21.3) );
     typedef(
         $scope, $context, 'Code',
         sub {

@@ -288,7 +288,7 @@ sub fset {
 
     # find global set class.
     my $f = $Ferret::ferret;
-    my $set_class = $f->get_class($f->main_context, 'Set');
+    my $set_class = $f->get_class('Set');
 
     # create set.
     my $class = shift @objs if $objs[0]->isa('Ferret::Class');
@@ -314,13 +314,12 @@ sub ferror {
     }
 
     # create a new error.
-    my $error_class = $f->get_class($f->main_context, 'Error');
+    my $error_class = $f->get_class('Error');
     return $error_class->call({
         type  => fsym($type || 'NativeCodeError'),
         msg   => fstring($err),
         hints => ferretize(\@hints)
     });
-
 }
 
 ###########################

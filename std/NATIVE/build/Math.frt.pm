@@ -1,5 +1,5 @@
 # Copyright (c) 2016, Mitchell Cooper
-package Ferret::Native::Math;
+package Ferret::NATIVE::Math;
 
 use warnings;
 use strict;

@@ -1,6 +1,16 @@
 # === Document Model ===
 #  Document './std/Char.frt'
-#      Class 'Char'
+#      Type definition ('Char')
+#          Type body
+#              Instruction
+#                  Transform
+#                      Call
+#                          Bareword 'Character'
+#                          Named argument list [1 item]
+#                              Item 0
+#                                  Pair 'from'
+#                                      Topic variable '$_'
+#      Class 'Character'
 #          Class method 'initializer__' { $from:Num|Str ?$isInit:Bool -> $result $result }
 #              Function body
 #                  Instruction
@@ -31,7 +41,7 @@
 #                                      Bareword 'Num'
 #                      If body
 #                          Instruction
-#                              Throw (fatal exception)
+#                              Fail (nonfatal exception)
 #                                  Call
 #                                      Bareword 'Error'
 #                                      Argument list [2 items]
@@ -48,7 +58,7 @@
 #                              Number '1'
 #                      If body
 #                          Instruction
-#                              Throw (fatal exception)
+#                              Fail (nonfatal exception)
 #                                  Call
 #                                      Bareword 'Error'
 #                                      Argument list [2 items]
@@ -74,7 +84,17 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$from'
-#      Include (Bool, Char, Error, Num, Str)
+#          Computed property 'ord' { -> $result }
+#              Function body
+#                  Instruction
+#                      Return
+#                          Call
+#                              Property 'ord'
+#                                  Bareword 'NATIVE'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Special variable '*self'
+#      Include (Bool, Char, Character, Error, NATIVE, Num, Str)
 package FF;
 
 use warnings;
@@ -103,10 +123,10 @@ my $result = do {
     my $scope = $file_scope;
     load_core('main');
 
-    # Class 'Char'
+    # Class 'Character'
     {
         my ( $class, $self, $proto, $scope ) =
-          get_class( $f, $context, $file_scope, 'Char', undef, undef );
+          get_class( $f, $context, $file_scope, 'Character', undef, undef );
 
         # Method event 'initializer__' definition
         my $func_0 = method_event_def(
@@ -129,8 +149,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'from', 4.2 ) || return $ret_func->();
-                want( $scope, $args, 'isInit', 5.2 );
+                need( $scope, $args, 'from', 8.2 ) || return $ret_func->();
+                want( $scope, $args, 'isInit', 9.2 );
                 if ( bool( $$scope->{'isInit'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
@@ -139,9 +159,9 @@ my $result = do {
                 if (
                     bool(
                         $$scope->{'from'}
-                          ->property_u( '*instanceOf', $pos->(10.3) )->(
+                          ->property_u( '*instanceOf', $pos->(14.3) )->(
                             [ $$scope->{'Num'} ], $scope,
-                            undef,                $pos->(10.4)
+                            undef,                $pos->(14.4)
                           )
                     )
                   )
@@ -149,16 +169,16 @@ my $result = do {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret_func->(
-                        $ret->throw(
+                        $ret->fail(
                             $$scope->{'Error'}->(
                                 [
                                     get_symbol( $f, 'Unimplemented' ),
                                     str( $f, "not yet implemented" )
                                 ],
                                 $scope, undef,
-                                $pos->(11.3)
+                                $pos->(15.3)
                             ),
-                            $pos->(11.1)
+                            $pos->(15.1)
                         )
                     );
                 }
@@ -166,9 +186,9 @@ my $result = do {
                     bool(
                         nequal(
                             $scope,
-                            $pos->(13.4),
+                            $pos->(17.4),
                             $$scope->{'from'}
-                              ->property_u( 'length', $pos->(13.3) ),
+                              ->property_u( 'length', $pos->(17.3) ),
                             num( $f, "1" )
                         )
                     )
@@ -177,7 +197,7 @@ my $result = do {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret_func->(
-                        $ret->throw(
+                        $ret->fail(
                             $$scope->{'Error'}->(
                                 [
                                     get_symbol( $f, 'InvalidConversion' ),
@@ -187,18 +207,33 @@ my $result = do {
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(14.3)
+                                $pos->(18.3)
                             ),
-                            $pos->(14.1)
+                            $pos->(18.1)
                         )
                     );
                 }
-                $$scope->{'Char'}->property_u( 'init', $pos->(16.1) )
-                  ->( [ $$scope->{'from'} ], $scope, undef, $pos->(16.15) )->(
+                $$scope->{'Char'}->property_u( 'init', $pos->(20.1) )
+                  ->( [ $$scope->{'from'} ], $scope, undef, $pos->(20.15) )->(
                     [ undef, [ from => $$scope->{'from'}, isInit => $true ] ],
-                    $scope, undef, $pos->(16.3)
+                    $scope, undef, $pos->(20.3)
                   );
                 return $ret_func->( $$scope->{'from'} );
+                return $ret;
+            }
+        );
+
+        # Method event 'ord' definition
+        my $func_1 = method_event_def(
+            $f, $scope, 'ord', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    $$scope->{'NATIVE'}->property_u( 'ord', $pos->(25.3) )->(
+                        [ ${ $scope->{special} }->{'self'} ], $scope,
+                        undef,                                $pos->(25.4)
+                    )
+                );
                 return $ret;
             }
         );
@@ -206,8 +241,34 @@ my $result = do {
             initializer__ => $scope,
             $class, $class, $ins, undef, undef
         );
+        $func_1->inside_scope( ord => $scope, $proto, $class, $ins, 1, undef );
     }
-    load_namespaces( $context, qw(Bool Char Error Num Str) );
+    load_namespaces( $context, qw(Bool Char Character Error NATIVE Num Str) );
+    typedef(
+        $scope, $context, 'Char',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
+            typedef_check(
+                $scope, $scope, $ins, $anchor,
+                conditions => [
+                    sub {
+                        do {
+                            $ins = $transform->(
+                                $$scope->{'Character'}->(
+                                    [ undef, [ from => $ins ] ], $scope,
+                                    undef, $pos->(2.3)
+                                ),
+                                $ins
+                            );
+                          }
+                    }
+                ],
+                equal_to => undef
+            ) ? $ins : undef;
+        },
+        undef
+    );
 };
 
 after_content();

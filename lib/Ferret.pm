@@ -126,7 +126,8 @@ sub get_context  {
         $c = $new;
     }
     continue {
-        die "trying to extend non-context $name" if !$c->isa('Ferret::Context');
+        die "trying to extend non-context $name"
+            if !$c->isa('Ferret::Context') && !$c->isa('Ferret::Class');
         # FIXME
     }
 
@@ -138,6 +139,13 @@ sub get_context_or_class { eval { &get_context } || &_bind_get_class }
 # determine whether to reuse or create a class.
 sub get_class {
     my ($f, $context, $class_name) = @_;
+
+    # default to main context
+    if (!defined $class_name) {
+        $class_name = $context;
+        $context = $f->main_context;
+    }
+
     my ($class, $owner) = $context->_property($class_name);
     return unless $class && $class->isa('Ferret::Class');
 
@@ -384,6 +392,7 @@ sub dump {
 
 use Ferret::Object;
 use Ferret::Undefined;
+use Ferret::NATIVE;
 use Ferret::String;
 use Ferret::Regex;
 use Ferret::Number;

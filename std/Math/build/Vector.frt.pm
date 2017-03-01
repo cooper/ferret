@@ -892,14 +892,14 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Topic variable '$_'
-#          Function '_axisToNumber' { $axis:Num|Str -> $result $result }
+#          Function '_axisToNumber' { $axis:Num|Char -> $result $result }
 #              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$axis'
 #                          Argument type
 #                              Bareword 'Num'
-#                              Bareword 'Str'
+#                              Bareword 'Char'
 #                  If
 #                      Expression ('if' parameter)
 #                          Call
@@ -914,8 +914,12 @@
 #                                  Lexical variable '$axis'
 #                  Instruction
 #                      Return
-#                          Number '0'
-#      Include (Error, Math, Num, Str, Vector, VectorAxis)
+#                          Operation
+#                              Number '120'
+#                              Subtraction operator (-)
+#                              Property 'ord'
+#                                  Lexical variable '$axis'
+#      Include (Char, Error, Math, Num, Vector, VectorAxis)
 package FF;
 
 use warnings;
@@ -981,7 +985,7 @@ my $result = do {
         [
             {
                 name     => 'axis',
-                type     => [ 'Num', 'Str' ],
+                type     => [ 'Num', 'Char' ],
                 optional => undef,
                 more     => undef
             }
@@ -1002,7 +1006,13 @@ my $result = do {
 
                 return $ret_func->( $$scope->{'axis'} );
             }
-            return $ret_func->( num( $f, "0" ) );
+            return $ret_func->(
+                _sub(
+                    $scope, $pos->(225.3),
+                    num( $f, "120" ),
+                    $$scope->{'axis'}->property_u( 'ord', $pos->(225.5) )
+                )
+            );
             return $ret;
         }
     );
@@ -2589,7 +2599,7 @@ my $result = do {
             undef
         );
     }
-    load_namespaces( $context, qw(Error Math Num Str Vector VectorAxis) );
+    load_namespaces( $context, qw(Char Error Math Num Vector VectorAxis) );
 };
 
 after_content();
