@@ -158,7 +158,7 @@
 #                                                  Lexical variable '$b'
 #                                  Item 1
 #                                      String 'Object mus...'
-#          Method 'review' { ?$quiet:Bool -> $tests $fails $passes $allOK }
+#          Method 'review' { ?$quiet:Bool -> $string $tests $fails $passes $allOK }
 #              Function body
 #                  Instruction
 #                      Want
@@ -172,6 +172,42 @@
 #                              Instance variable '@tested'
 #                              Subtraction operator (-)
 #                              Instance variable '@passed'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$allOK'
+#                          Operation
+#                              Instance variable '@passed'
+#                              Equality operator (==)
+#                              Instance variable '@tested'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$review'
+#                          Operation
+#                              String '['
+#                              Addition operator (+)
+#                              Instance variable '@name'
+#                              Addition operator (+)
+#                              String '] ran '
+#                              Addition operator (+)
+#                              Instance variable '@tested'
+#                              Addition operator (+)
+#                              String ' tests; '
+#                              Addition operator (+)
+#                              Instance variable '@passed'
+#                              Addition operator (+)
+#                              String ' passed; '
+#                              Addition operator (+)
+#                              Lexical variable '$failed'
+#                              Addition operator (+)
+#                              String ' failed'
+#                  If
+#                      Expression ('if' parameter)
+#                          Lexical variable '$allOK'
+#                      If body
+#                          Instruction
+#                              Addition assignment
+#                                  Lexical variable '$review'
+#                                  String '; all OK'
 #                  If
 #                      Expression ('if' parameter)
 #                          Negation
@@ -182,24 +218,10 @@
 #                                  Bareword 'say'
 #                                  Argument list [1 item]
 #                                      Item 0
-#                                          Operation
-#                                              String '['
-#                                              Addition operator (+)
-#                                              Instance variable '@name'
-#                                              Addition operator (+)
-#                                              String '] '
-#                                              Addition operator (+)
-#                                              Instance variable '@tested'
-#                                              Addition operator (+)
-#                                              String ' tests '
-#                                              Addition operator (+)
-#                                              Instance variable '@passed'
-#                                              Addition operator (+)
-#                                              String ' passed '
-#                                              Addition operator (+)
-#                                              Lexical variable '$failed'
-#                                              Addition operator (+)
-#                                              String ' failed'
+#                                          Lexical variable '$review'
+#                  Instruction
+#                      Return pair 'string'
+#                          Lexical variable '$review'
 #                  Instruction
 #                      Return pair 'tests'
 #                          Instance variable '@tested'
@@ -211,10 +233,7 @@
 #                          Instance variable '@passed'
 #                  Instruction
 #                      Return pair 'allOK'
-#                          Operation
-#                              Instance variable '@passed'
-#                              Equality operator (==)
-#                              Instance variable '@tested'
+#                          Lexical variable '$allOK'
 #          Method '_test' { $yes $message -> $pass $result }
 #              Function body
 #                  Instruction
@@ -231,13 +250,6 @@
 #                      Expression ('if' parameter)
 #                          Lexical variable '$yes'
 #                      If body
-#                          Instruction
-#                              Assignment
-#                                  Instance variable '@passed'
-#                                  Operation
-#                                      Instance variable '@passed'
-#                                      Addition operator (+)
-#                                      Number '1'
 #                          Instruction
 #                              Addition assignment
 #                                  Instance variable '@passed'
@@ -618,40 +630,61 @@ my $result = do {
                     $file_scope,
                     $pos->(67.2)
                 );
+                var(
+                    $scope,
+                    allOK => equal(
+                        $scope,             $pos->(68.4),
+                        $$self->{'passed'}, $$self->{'tested'}
+                    ),
+                    $file_scope,
+                    $pos->(68.2)
+                );
+                var(
+                    $scope,
+                    review => add(
+                        $scope, $pos->(71.13333),
+                        str( $f, "[" ),         $$self->{'name'},
+                        str( $f, "] ran " ),    $$self->{'tested'},
+                        str( $f, " tests; " ),  $$self->{'passed'},
+                        str( $f, " passed; " ), $$scope->{'failed'},
+                        str( $f, " failed" )
+                    ),
+                    $file_scope,
+                    $pos->(71.06667)
+                );
+                if ( bool( $$scope->{'allOK'} ) ) {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    var(
+                        $scope,
+                        review => add(
+                            $scope, $pos->(73.2),
+                            $$scope->{'review'}, str( $f, "; all OK" )
+                        ),
+                        $file_scope,
+                        $pos->(73.2)
+                    );
+                }
                 if ( bool( _not( $$scope->{'quiet'} ) ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    $$scope->{'say'}->(
-                        [
-                            add(
-                                $scope, $pos->(70.13333),
-                                str( $f, "[" ),        $$self->{'name'},
-                                str( $f, "] " ),       $$self->{'tested'},
-                                str( $f, " tests " ),  $$self->{'passed'},
-                                str( $f, " passed " ), $$scope->{'failed'},
-                                str( $f, " failed" )
-                            )
-                        ],
-                        $scope, undef,
-                        $pos->(70.06667)
-                    );
+                    $$scope->{'say'}->( [ $$scope->{'review'} ], $scope, undef,
+                        $pos->(75.2) );
                 }
-                $ret->set_property( tests => $$self->{'tested'}, $pos->(72.2) );
+                $ret->set_property(
+                    string => $$scope->{'review'},
+                    $pos->(77.2)
+                );
+                $ret->set_property( tests => $$self->{'tested'}, $pos->(78.2) );
                 $ret->set_property(
                     fails => $$scope->{'failed'},
-                    $pos->(73.2)
+                    $pos->(79.2)
                 );
                 $ret->set_property(
                     passes => $$self->{'passed'},
-                    $pos->(74.2)
+                    $pos->(80.2)
                 );
-                $ret->set_property(
-                    allOK => equal(
-                        $scope,             $pos->(75.4),
-                        $$self->{'passed'}, $$self->{'tested'}
-                    ),
-                    $pos->(75.2)
-                );
+                $ret->set_property( allOK => $$scope->{'allOK'}, $pos->(81.2) );
                 return $ret;
             }
         );
@@ -676,33 +709,26 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'yes',     79.2 ) || return $ret_func->();
-                need( $scope, $args, 'message', 79.4 ) || return $ret_func->();
+                need( $scope, $args, 'yes',     85.2 ) || return $ret_func->();
+                need( $scope, $args, 'message', 85.4 ) || return $ret_func->();
                 $self->set_property(
                     tested => add(
-                        $scope, $pos->(80.2),
+                        $scope, $pos->(86.2),
                         $$self->{'tested'}, num( $f, "1" )
                     ),
-                    $pos->(80.2)
+                    $pos->(86.2)
                 );
                 if ( bool( $$scope->{'yes'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $self->set_property(
                         passed => add(
-                            $scope, $pos->(84.4),
+                            $scope, $pos->(90.2),
                             $$self->{'passed'}, num( $f, "1" )
                         ),
-                        $pos->(84.2)
+                        $pos->(90.2)
                     );
-                    $self->set_property(
-                        passed => add(
-                            $scope, $pos->(85.2),
-                            $$self->{'passed'}, num( $f, "1" )
-                        ),
-                        $pos->(85.2)
-                    );
-                    $ret->set_property( pass => $true, $pos->(86.2) );
+                    $ret->set_property( pass => $true, $pos->(91.2) );
                     return $ret_func->();
                 }
                 var(
@@ -713,19 +739,19 @@ my $result = do {
                             $$scope->{'message'}
                         ],
                         $scope, undef,
-                        $pos->(91.2)
+                        $pos->(96.2)
                     ),
                     $file_scope,
-                    $pos->(91.1)
+                    $pos->(96.1)
                 );
                 if ( bool( $$self->{'fatal'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret_func->(
-                        $ret->throw( $$scope->{'e'}, $pos->(93.1) ) );
+                        $ret->throw( $$scope->{'e'}, $pos->(98.1) ) );
                 }
                 return $ret_func->(
-                    $ret->fail( $$scope->{'e'}, $pos->(96.1) ) );
+                    $ret->fail( $$scope->{'e'}, $pos->(101.1) ) );
                 return $ret;
             }
         );

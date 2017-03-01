@@ -4,7 +4,7 @@ class Test 1.0
 init {
 
     #> test name
-    want @name  = "Test"
+    want @name = "Test"
 
     #> If true, a failed test will throw a fatal error.
     #| This is the default behavior.
@@ -65,14 +65,20 @@ method instanceOf {
 method review {
     want $quiet: Bool
     $failed = @tested - @passed
+    $allOK  = @passed == @tested
 
+    # human-readable review
+    $review = "[@name] ran @tested tests; @passed passed; $failed failed"
+    if $allOK
+        $review += "; all OK"
     if !$quiet
-        say("[@name] @tested tests @passed passed $failed failed")
+        say($review)
 
-    tests   -> @tested              #< number of tests run
-    fails   -> $failed              #< number of tests that failed
-    passes  -> @passed              #< number of tests that passed
-    allOK   -> @passed == @tested   #< true if all tests passed
+    string  -> $review
+    tests   -> @tested      #< number of tests run
+    fails   -> $failed      #< number of tests that failed
+    passes  -> @passed      #< number of tests that passed
+    allOK   -> $allOK       #< true if all tests passed
 }
 
 method _test {
@@ -81,7 +87,6 @@ method _test {
 
     # it passed
     if $yes {
-        @passed = @passed + 1
         @passed += 1
         pass -> true
         return

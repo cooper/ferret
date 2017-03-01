@@ -20,7 +20,7 @@ init {
     need @type: Sym
 }
 
-method trap {
+hook trap {
     # here, do the default thing
     _exit(0)
 }
