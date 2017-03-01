@@ -35,9 +35,11 @@ operator - {
     return Complex(@a - $rhs, @b)
 }
 
+# this is like (r)-(a+bi)
+# so it's r - a - bi
 operator - {
     need $lhs: Num
-    return Complex($lhs - @a, @b)
+    return Complex($lhs - @a, -@b)
 }
 
 #> multiplication of complex numbers
@@ -47,6 +49,12 @@ operator * {
         @a * $rhs.a - @b * $rhs.b,
         @a * $rhs.b + @b * $rhs.a
     )
+}
+
+#> multiplication of real and complex numbers
+operator * {
+    need $ehs: Num
+    return Complex($ehs * @a, $ehs * @b)
 }
 
 #> division of complex numbers
