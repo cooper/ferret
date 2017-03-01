@@ -110,7 +110,7 @@ sub error_continue {
 sub throw {
     my ($ret, $err, $pos) = @_;
     $ret->fail($err, $pos);
-    Ferret::Core::Errors::throw($err, [caller], $pos);
+    Ferret::Core::Errors::throw($err, $pos);
 }
 
 # called internally after each ->return().

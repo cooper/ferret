@@ -12,12 +12,12 @@ use List::Util qw(all first);
 BEGIN {
     no strict 'refs';
     foreach my $star (qw/range pow mod mul div add _sub sim/) {
-        *$star = sub { op_star($star, [caller], @_) };
+        *$star = sub { op_star($star, @_) };
     }
 }
 
 sub op_star {
-    my ($star, $caller, $scope, $pos, @items) = @_;
+    my ($star, $scope, $pos, @items) = @_;
     $star    = 'sub' if $star eq '_sub';
     my $op   = 'op'.ucfirst($star);
     my $left = shift @items or return;
@@ -44,7 +44,7 @@ sub op_star {
         }
 
         # both failed.
-        Ferret::Core::Errors::throw(InvalidOperation => $caller, $pos, [
+        Ferret::Core::Errors::throw(InvalidOperation => $pos, [
             Op  => $op,
             LHS => $left->description_ol,
             RHS => $right->description_ol

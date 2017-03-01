@@ -664,7 +664,7 @@ sub throw {
     my ($err, $pos) = @_;
     # TODO: check that it's an error
     $err->update_position($pos);
-    Ferret::Core::Errors::throw($err, [caller], $pos);
+    Ferret::Core::Errors::throw($err, $pos);
 }
 
 sub type_with_generics {

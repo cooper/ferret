@@ -73,12 +73,11 @@ sub new {
 sub set_property {
     my ($obj, $prop_name, $value, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    my $caller = [caller];
-    $obj->_check_prop_alteration($prop_name, $caller);
+    $obj->_check_prop_alteration($prop_name);
 
     # special properties can never be assigned to from Ferret.
     if (substr($prop_name, 0, 1) eq '*') {
-        throw(AssignmentToSpecialProperty => $caller, $pos, [
+        throw(AssignmentToSpecialProperty => $pos, [
             Object   => $obj->description,
             Property => $prop_name
         ], $prop_name);
@@ -104,7 +103,7 @@ sub set_property {
 sub set_property_ow {
     my ($obj, $scope_limit, $prop_name, $value, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name, [caller]);
+    $obj->_check_prop_alteration($prop_name);
     my $owner = $obj->has_property($prop_name);
 
     # never overwrite inherited context properties.
@@ -134,7 +133,7 @@ sub set_property_ow {
 sub delete_property {
     my ($obj, $prop_name, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name, [caller]);
+    $obj->_check_prop_alteration($prop_name);
     $obj->reset_property($prop_name);
     return defined delete $obj->{properties}{$prop_name};
 }
@@ -143,7 +142,7 @@ sub delete_property {
 sub delete_property_ow {
     my ($obj, $prop_name, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name, [caller]);
+    $obj->_check_prop_alteration($prop_name);
     my $owner = $obj->has_property($prop_name);
     return if !$owner;
     return $owner->delete_property($prop_name);
@@ -336,7 +335,7 @@ sub own_property_u {
 sub weaken_property {
     my ($obj, $prop_name, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name, [caller]);
+    $obj->_check_prop_alteration($prop_name);
     return if !defined $obj->{properties}{$prop_name};
     weaken($obj->{properties}{$prop_name});
     return 1;
@@ -351,7 +350,7 @@ sub weaken_property {
 sub set_property_weak {
     my ($obj, $prop_name, $value, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name, [caller]);
+    $obj->_check_prop_alteration($prop_name);
     my $res = $obj->set_property($prop_name => $value);
     $obj->weaken_property($prop_name);
     return $res;
@@ -371,9 +370,9 @@ sub properties {
 }
 
 sub _check_prop_alteration {
-    my ($obj, $prop_name, $caller, $pos) = @_;
+    my ($obj, $prop_name, $pos) = @_;
     return 1 unless $obj->{ro_properties};
-    throw(AlterationOfReadOnlyProperty => $caller, $pos, [
+    throw(AlterationOfReadOnlyProperty => $pos, [
         Object   => $obj->description,
         Property => $prop_name
     ], $prop_name);
@@ -671,11 +670,7 @@ sub call {
         return $to_func->call_u(@_)->call(@_);
     }
 
-    # throw an error.
-    my $caller = [caller 0];
-    $caller = [caller 1] if $caller->[0] eq __PACKAGE__;
-
-    throw(CallOnNonFunction => $caller, $pos, [
+    throw(CallOnNonFunction => $pos, [
         Name  => $obj->{last_name},
         Value => $obj->description_ol
     ]);
@@ -693,12 +688,7 @@ sub iterator {
     # if not, throw an error for an invalid iteration.
     my $iterator = $obj->property('iterator');
     if (!$iterator || !$iterator->fits_type('Iterator')) {
-
-        # throw an error.
-        my ($i, $caller) = 1;
-        $caller = [caller 1];
-
-        throw(InvalidIteration => $caller, $pos, [
+        throw(InvalidIteration => $pos, [
             Name  => $obj->{last_name},
             Value => $obj->description_ol
         ]);
@@ -791,8 +781,7 @@ sub get_index_value {
     undef $evt if !$evt->isa('Ferret::Event');
 
     # no event getValue
-    my $caller = [caller];
-    throw(IndexOnNonCollection => $caller, $pos, [
+    throw(IndexOnNonCollection => $pos, [
         Value    => $obj->description_ol,
         Name     => $obj->{last_name} // 'unknown'
     ]) if !$evt;
@@ -811,8 +800,7 @@ sub set_index_value {
     undef $evt if !$evt->isa('Ferret::Event');
 
     # no event setValue
-    my $caller = [caller];
-    throw(SetIndexOnNonCollection => $caller, $pos, [
+    throw(SetIndexOnNonCollection => $pos, [
         Value    => $obj->description_ol,
         Name     => $obj->{last_name} // 'unknown'
     ]) if !$evt;
@@ -828,8 +816,7 @@ sub delete_index {
     undef $evt if !$evt->isa('Ferret::Event');
 
     # no event setValue
-    my $caller = [caller];
-    throw(ModifyIndexOnNonCollection => $caller, $pos, [
+    throw(ModifyIndexOnNonCollection => $pos, [
         Value    => $obj->description_ol,
         Name     => $obj->{last_name} // 'unknown'
     ]) if !$evt;
@@ -845,8 +832,7 @@ sub weaken_index {
     undef $evt if !$evt->isa('Ferret::Event');
 
     # no event setValue
-    my $caller = [caller];
-    throw(ModifyIndexOnNonCollection => $caller, $pos, [
+    throw(ModifyIndexOnNonCollection => $pos, [
         Value    => $obj->description_ol,
         Name     => $obj->{last_name} // 'unknown'
     ]) if !$evt;

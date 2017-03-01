@@ -19,7 +19,7 @@ sub new {
 
 sub _property {
     my ($obj, $prop_name) = @_;
-    throw(PropertyOnUndefined => [caller], undef, [
+    throw(PropertyOnUndefined => undef, [
         Name  => $obj->{last_name},
         Value => $obj->description_ol
     ], $prop_name);
@@ -27,7 +27,7 @@ sub _property {
 
 sub set_property {
     my ($obj, $prop_name) = @_;
-    throw(SetPropertyOnUndefined => [caller], undef, [
+    throw(SetPropertyOnUndefined => undef, [
         Name  => $obj->{last_name},
         Value => $obj->description_ol
     ], $prop_name);
@@ -35,7 +35,7 @@ sub set_property {
 
 sub call {
     my ($obj) = @_;
-    throw(CallOnUndefined => [caller], undef, [
+    throw(CallOnUndefined => undef, [
         Name  => $obj->{last_name},
         Value => $obj->description_ol
     ]);
