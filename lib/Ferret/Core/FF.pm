@@ -662,7 +662,8 @@ sub gather {
 
 sub throw {
     my ($err, $pos) = @_;
-    $err->{pos} = $pos;
+    # TODO: check that it's an error
+    $err->update_position($pos);
     Ferret::Core::Errors::throw($err, [caller], $pos);
 }
 

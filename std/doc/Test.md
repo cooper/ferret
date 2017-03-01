@@ -16,7 +16,7 @@ Creates a new Test class instance.
 
 ### Arguments
 
-* *optional* __name__: Any - The test name.
+* *optional* __name__: Any - Test name.
 
 * *optional* __fatal__: Any - If true, a failed test will throw a fatal error.
 This is the default behavior.
@@ -29,7 +29,7 @@ This is the default behavior.
 $test.trueValue($a)
 ```
 
-Test succeeds if `bool($a) === true`.
+Test succeeds if `Bool($a) === true`.
 
 
 #### Arguments
@@ -64,9 +64,9 @@ Test succeeds if `$a == $b`.
 
 #### Arguments
 
-* __a__: Any - Test object.
+* __a__: Any - Test object 1.
 
-* __b__: Any - Test object.
+* __b__: Any - Test object 2.
 
 
 
@@ -81,9 +81,9 @@ Test succeeds if `$a === $b`.
 
 #### Arguments
 
-* __a__: Any - Test object.
+* __a__: Any - Test object 1.
 
-* __b__: Any - Test object.
+* __b__: Any - Test object 2.
 
 
 
@@ -98,9 +98,9 @@ Test succeeds if `$a != $b`.
 
 #### Arguments
 
-* __a__: Any - Test object.
+* __a__: Any - Test object 1.
 
-* __b__: Any - Test object.
+* __b__: Any - Test object 2.
 
 
 
@@ -115,9 +115,26 @@ Test succeeds if `$a !== $b`.
 
 #### Arguments
 
+* __a__: Any - Test object 1.
+
+* __b__: Any - Test object 2.
+
+
+
+### instanceOf
+
+```
+$test.instanceOf($a, $b)
+```
+
+Test succeeds of `$a` is an instance of class `$b`.
+
+
+#### Arguments
+
 * __a__: Any - Test object.
 
-* __b__: Any - Test object.
+* __b__: Any - Test class.
 
 
 
@@ -128,6 +145,11 @@ $test.review()
 ```
 
 Prints the test review.
+
+
+#### Arguments
+
+* *optional* __quiet__: [Bool](/std/doc/Bool.md)  
 
 
 

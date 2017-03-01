@@ -99,9 +99,8 @@ sub error_continue {
     my ($ret, $err, $pos) = @_;
 
     # fix the error
-    $err = ferror($err) if !blessed $err;
-    $err->{pos} = $pos;
-    ferror($err); # update position
+    $err = ferror($err);            # make error if not already
+    $err->update_position($pos);    # update position
 
     $ret->{first_error} //= $err;
     return $err;
@@ -110,8 +109,7 @@ sub error_continue {
 # die with an error. this is fatal.
 sub throw {
     my ($ret, $err, $pos) = @_;
-    $err->{pos} = $pos;
-    $ret->fail($err);
+    $ret->fail($err, $pos);
     Ferret::Core::Errors::throw($err, [caller], $pos);
 }
 

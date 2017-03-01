@@ -3,7 +3,7 @@ class Test 1.0
 
 init {
 
-    #> the test name
+    #> test name
     want @name  = "Test"
 
     #> If true, a failed test will throw a fatal error.
@@ -14,7 +14,7 @@ init {
     @passed = 0
 }
 
-#> Test succeeds if `bool($a) === true`.
+#> Test succeeds if `Bool($a) === true`.
 method trueValue {
     need $a #< test object
     return @_test(Bool($a), "Value must be true")
@@ -28,56 +28,70 @@ method veryTrue {
 
 #> Test succeeds if `$a == $b`.
 method equal {
-    need $a #< test object
-    need $b #< test object
+    need $a #< test object 1
+    need $b #< test object 2
     return @_test($a == $b, "Values must be equal")
 }
 
 #> Test succeeds if `$a === $b`.
 method objectsEqual {
-    need $a #< test object
-    need $b #< test object
+    need $a #< test object 1
+    need $b #< test object 2
     return @_test($a === $b, "Objects must be exactly equal")
 }
 
 #> Test succeeds if `$a != $b`.
 method notEqual {
-    need $a #< test object
-    need $b #< test object
+    need $a #< test object 1
+    need $b #< test object 2
     return @_test($a != $b, "Values must not be equal")
 }
 
 #> Test succeeds if `$a !== $b`.
 method objectsNotEqual {
-    need $a #< test object
-    need $b #< test object
+    need $a #< test object 1
+    need $b #< test object 2
     return @_test($a !== $b, "Objects must not be equal")
+}
+
+#> Test succeeds of `$a` is an instance of class `$b`.
+method instanceOf {
+    need $a #< test object
+    need $b #< test class
+    return @_test($a.*instanceOf($b), "Object must be an instance of the class")
 }
 
 #> Prints the test review.
 method review {
+    want $quiet: Bool
     $failed = @tested - @passed
-    say("[@name] @tested tests @passed passed $failed failed")
 
-    tests   -> @tested
-    fails   -> $failed
-    passes  -> @passed
-    allOK   -> @passed == @tested
+    if !$quiet
+        say("[@name] @tested tests @passed passed $failed failed")
+
+    tests   -> @tested              #< number of tests run
+    fails   -> $failed              #< number of tests that failed
+    passes  -> @passed              #< number of tests that passed
+    allOK   -> @passed == @tested   #< true if all tests passed
 }
 
 method _test {
     need $yes, $message
+    @tested += 1
 
-    @tested = @tested + 1
-    pass -> $yes
-
+    # it passed
     if $yes {
         @passed = @passed + 1
+        @passed += 1
+        pass -> true
         return
     }
 
+    # it failed. stop now if this should be fatal
+    $e = Error(:TestFailure, $message)
     if @fatal
-        throw Error(:TestFailure, $message)
+        throw $e
 
-    message -> $message
+    # otherwise just fail
+    fail $e
 }

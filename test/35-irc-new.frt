@@ -85,8 +85,6 @@ on $bot.commands.i {
 func handleEval {
     need $msg, $channel, $detailed
     $res = timeout(5) { -> COMPILER(getParameter($msg)).eval() }
-    inspect($res)
-
     if $res.error {
         $channel.privmsg($res.error)
         return

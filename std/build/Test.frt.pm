@@ -136,8 +136,35 @@
 #                                          Lexical variable '$b'
 #                                  Item 1
 #                                      String 'Objects mu...'
-#          Method 'review' { -> $tests $fails $passes $allOK }
+#          Method 'instanceOf' { $a $b -> $result }
 #              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$a'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$b'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@_test'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Call
+#                                          Special property '*instanceOf'
+#                                              Lexical variable '$a'
+#                                          Argument list [1 item]
+#                                              Item 0
+#                                                  Lexical variable '$b'
+#                                  Item 1
+#                                      String 'Object mus...'
+#          Method 'review' { ?$quiet:Bool -> $tests $fails $passes $allOK }
+#              Function body
+#                  Instruction
+#                      Want
+#                          Lexical variable '$quiet'
+#                          Argument type
+#                              Bareword 'Bool'
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$failed'
@@ -145,29 +172,34 @@
 #                              Instance variable '@tested'
 #                              Subtraction operator (-)
 #                              Instance variable '@passed'
-#                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Operation
-#                                      String '['
-#                                      Addition operator (+)
-#                                      Instance variable '@name'
-#                                      Addition operator (+)
-#                                      String '] '
-#                                      Addition operator (+)
-#                                      Instance variable '@tested'
-#                                      Addition operator (+)
-#                                      String ' tests '
-#                                      Addition operator (+)
-#                                      Instance variable '@passed'
-#                                      Addition operator (+)
-#                                      String ' passed '
-#                                      Addition operator (+)
-#                                      Lexical variable '$failed'
-#                                      Addition operator (+)
-#                                      String ' failed'
+#                  If
+#                      Expression ('if' parameter)
+#                          Negation
+#                              Lexical variable '$quiet'
+#                      If body
+#                          Instruction
+#                              Call
+#                                  Bareword 'say'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              String '['
+#                                              Addition operator (+)
+#                                              Instance variable '@name'
+#                                              Addition operator (+)
+#                                              String '] '
+#                                              Addition operator (+)
+#                                              Instance variable '@tested'
+#                                              Addition operator (+)
+#                                              String ' tests '
+#                                              Addition operator (+)
+#                                              Instance variable '@passed'
+#                                              Addition operator (+)
+#                                              String ' passed '
+#                                              Addition operator (+)
+#                                              Lexical variable '$failed'
+#                                              Addition operator (+)
+#                                              String ' failed'
 #                  Instruction
 #                      Return pair 'tests'
 #                          Instance variable '@tested'
@@ -183,7 +215,7 @@
 #                              Instance variable '@passed'
 #                              Equality operator (==)
 #                              Instance variable '@tested'
-#          Method '_test' { $yes $message -> $pass $result $message }
+#          Method '_test' { $yes $message -> $pass $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -192,15 +224,9 @@
 #                      Need
 #                          Lexical variable '$message'
 #                  Instruction
-#                      Assignment
+#                      Addition assignment
 #                          Instance variable '@tested'
-#                          Operation
-#                              Instance variable '@tested'
-#                              Addition operator (+)
-#                              Number '1'
-#                  Instruction
-#                      Return pair 'pass'
-#                          Lexical variable '$yes'
+#                          Number '1'
 #                  If
 #                      Expression ('if' parameter)
 #                          Lexical variable '$yes'
@@ -213,23 +239,34 @@
 #                                      Addition operator (+)
 #                                      Number '1'
 #                          Instruction
+#                              Addition assignment
+#                                  Instance variable '@passed'
+#                                  Number '1'
+#                          Instruction
+#                              Return pair 'pass'
+#                                  Boolean true
+#                          Instruction
 #                              Return
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$e'
+#                          Call
+#                              Bareword 'Error'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Symbol :TestFailure
+#                                  Item 1
+#                                      Lexical variable '$message'
 #                  If
 #                      Expression ('if' parameter)
 #                          Instance variable '@fatal'
 #                      If body
 #                          Instruction
 #                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :TestFailure
-#                                          Item 1
-#                                              Lexical variable '$message'
+#                                  Lexical variable '$e'
 #                  Instruction
-#                      Return pair 'message'
-#                          Lexical variable '$message'
+#                      Fail (nonfatal exception)
+#                          Lexical variable '$e'
 #      Include (Bool, Error)
 package FF;
 
@@ -254,7 +291,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my $pos = before_content( 'Test.frt', './std/Test.frt' );
 
 use Ferret::Core::Operations
-  qw(_sub add bool equal nequal num refs_equal refs_nequal str);
+  qw(_not _sub add bool equal nequal num refs_equal refs_nequal str);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -514,56 +551,113 @@ my $result = do {
             }
         );
 
-        # Method event 'review' definition
+        # Method event 'instanceOf' definition
         my $func_7 = method_event_def(
-            $f, $scope, 'review', undef, undef,
+            $f, $scope,
+            'instanceOf',
+            [
+                {
+                    name     => 'a',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                },
+                {
+                    name     => 'b',
+                    type     => undef,
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'a', 59.2 ) || return $ret_func->();
+                need( $scope, $args, 'b', 60.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$self->{'_test'}->(
+                        [
+                            $$scope->{'a'}
+                              ->property_u( '*instanceOf', $pos->(61.25) )->(
+                                [ $$scope->{'b'} ], $scope,
+                                undef,              $pos->(61.3)
+                              ),
+                            str(
+                                $f, "Object must be an instance of the class"
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(61.15)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'review' definition
+        my $func_8 = method_event_def(
+            $f, $scope, 'review',
+            [
+                {
+                    name     => 'quiet',
+                    type     => 'Bool',
+                    optional => 1,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                want( $scope, $args, 'quiet', 66.2 );
                 var(
                     $scope,
                     failed => _sub(
-                        $scope,             $pos->(59.4),
+                        $scope,             $pos->(67.4),
                         $$self->{'tested'}, $$self->{'passed'}
                     ),
                     $file_scope,
-                    $pos->(59.2)
+                    $pos->(67.2)
                 );
-                $$scope->{'say'}->(
-                    [
-                        add(
-                            $scope, $pos->(60.13333),
-                            str( $f, "[" ),        $$self->{'name'},
-                            str( $f, "] " ),       $$self->{'tested'},
-                            str( $f, " tests " ),  $$self->{'passed'},
-                            str( $f, " passed " ), $$scope->{'failed'},
-                            str( $f, " failed" )
-                        )
-                    ],
-                    $scope, undef,
-                    $pos->(60.06667)
-                );
-                $ret->set_property( tests => $$self->{'tested'}, $pos->(62.2) );
+                if ( bool( _not( $$scope->{'quiet'} ) ) ) {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    $$scope->{'say'}->(
+                        [
+                            add(
+                                $scope, $pos->(70.13333),
+                                str( $f, "[" ),        $$self->{'name'},
+                                str( $f, "] " ),       $$self->{'tested'},
+                                str( $f, " tests " ),  $$self->{'passed'},
+                                str( $f, " passed " ), $$scope->{'failed'},
+                                str( $f, " failed" )
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(70.06667)
+                    );
+                }
+                $ret->set_property( tests => $$self->{'tested'}, $pos->(72.2) );
                 $ret->set_property(
                     fails => $$scope->{'failed'},
-                    $pos->(63.2)
+                    $pos->(73.2)
                 );
                 $ret->set_property(
                     passes => $$self->{'passed'},
-                    $pos->(64.2)
+                    $pos->(74.2)
                 );
                 $ret->set_property(
                     allOK => equal(
-                        $scope,             $pos->(65.4),
+                        $scope,             $pos->(75.4),
                         $$self->{'passed'}, $$self->{'tested'}
                     ),
-                    $pos->(65.2)
+                    $pos->(75.2)
                 );
                 return $ret;
             }
         );
 
         # Method event '_test' definition
-        my $func_8 = method_event_def(
+        my $func_9 = method_event_def(
             $f, $scope, '_test',
             [
                 {
@@ -582,49 +676,56 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'yes',     69.2 ) || return $ret_func->();
-                need( $scope, $args, 'message', 69.4 ) || return $ret_func->();
+                need( $scope, $args, 'yes',     79.2 ) || return $ret_func->();
+                need( $scope, $args, 'message', 79.4 ) || return $ret_func->();
                 $self->set_property(
                     tested => add(
-                        $scope, $pos->(71.4),
+                        $scope, $pos->(80.2),
                         $$self->{'tested'}, num( $f, "1" )
                     ),
-                    $pos->(71.2)
+                    $pos->(80.2)
                 );
-                $ret->set_property( pass => $$scope->{'yes'}, $pos->(72.2) );
                 if ( bool( $$scope->{'yes'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     $self->set_property(
                         passed => add(
-                            $scope, $pos->(75.4),
+                            $scope, $pos->(84.4),
                             $$self->{'passed'}, num( $f, "1" )
                         ),
-                        $pos->(75.2)
+                        $pos->(84.2)
                     );
+                    $self->set_property(
+                        passed => add(
+                            $scope, $pos->(85.2),
+                            $$self->{'passed'}, num( $f, "1" )
+                        ),
+                        $pos->(85.2)
+                    );
+                    $ret->set_property( pass => $true, $pos->(86.2) );
                     return $ret_func->();
                 }
+                var(
+                    $scope,
+                    e => $$scope->{'Error'}->(
+                        [
+                            get_symbol( $f, 'TestFailure' ),
+                            $$scope->{'message'}
+                        ],
+                        $scope, undef,
+                        $pos->(91.2)
+                    ),
+                    $file_scope,
+                    $pos->(91.1)
+                );
                 if ( bool( $$self->{'fatal'} ) ) {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
                     return $ret_func->(
-                        $ret->throw(
-                            $$scope->{'Error'}->(
-                                [
-                                    get_symbol( $f, 'TestFailure' ),
-                                    $$scope->{'message'}
-                                ],
-                                $scope, undef,
-                                $pos->(80.3)
-                            ),
-                            $pos->(80.1)
-                        )
-                    );
+                        $ret->throw( $$scope->{'e'}, $pos->(93.1) ) );
                 }
-                $ret->set_property(
-                    message => $$scope->{'message'},
-                    $pos->(82.2)
-                );
+                return $ret_func->(
+                    $ret->fail( $$scope->{'e'}, $pos->(96.1) ) );
                 return $ret;
             }
         );
@@ -657,10 +758,14 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
         $func_7->inside_scope(
-            review => $scope,
+            instanceOf => $scope,
             $proto, $class, $ins, undef, undef
         );
         $func_8->inside_scope(
+            review => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_9->inside_scope(
             _test => $scope,
             $proto, $class, $ins, undef, undef
         );

@@ -155,12 +155,12 @@ sub call {
         # call ->error_continue. in events, the propagation continues.
         # however, if ALL functions are unsuccessful, it will ->fail later.
         if ($is_event) {
-            $return->error_continue($error);
+            $return->error_continue($error, $pos);
             return $return->return;
         }
 
         # for non-events, just ->fail now.
-        return $return->fail($error);
+        return $return->fail($error, $pos);
     }
 
     bless $arguments, 'Ferret::Arguments';
