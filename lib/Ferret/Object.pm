@@ -73,7 +73,7 @@ sub new {
 sub set_property {
     my ($obj, $prop_name, $value, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name);
+    $obj->_check_prop_alteration($prop_name, $pos);
 
     # special properties can never be assigned to from Ferret.
     if (substr($prop_name, 0, 1) eq '*') {
@@ -103,7 +103,7 @@ sub set_property {
 sub set_property_ow {
     my ($obj, $scope_limit, $prop_name, $value, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name);
+    $obj->_check_prop_alteration($prop_name, $pos);
     my $owner = $obj->has_property($prop_name);
 
     # never overwrite inherited context properties.
@@ -133,7 +133,7 @@ sub set_property_ow {
 sub delete_property {
     my ($obj, $prop_name, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name);
+    $obj->_check_prop_alteration($prop_name, $pos);
     $obj->reset_property($prop_name);
     return defined delete $obj->{properties}{$prop_name};
 }
@@ -142,7 +142,7 @@ sub delete_property {
 sub delete_property_ow {
     my ($obj, $prop_name, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name);
+    $obj->_check_prop_alteration($prop_name, $pos);
     my $owner = $obj->has_property($prop_name);
     return if !$owner;
     return $owner->delete_property($prop_name);
@@ -335,7 +335,7 @@ sub own_property_u {
 sub weaken_property {
     my ($obj, $prop_name, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name);
+    $obj->_check_prop_alteration($prop_name, $pos);
     return if !defined $obj->{properties}{$prop_name};
     weaken($obj->{properties}{$prop_name});
     return 1;
@@ -350,7 +350,7 @@ sub weaken_property {
 sub set_property_weak {
     my ($obj, $prop_name, $value, $pos) = @_;
     $prop_name = $prop_name->hash_string if blessed $prop_name;
-    $obj->_check_prop_alteration($prop_name);
+    $obj->_check_prop_alteration($prop_name, $pos);
     my $res = $obj->set_property($prop_name => $value);
     $obj->weaken_property($prop_name);
     return $res;
