@@ -8,7 +8,7 @@ use 5.010;
 
 use parent 'Ferret::Object';
 use Scalar::Util qw(blessed weaken);
-use Ferret::Core::Conversion qw(plist pstring flist fset ferror FUNC_RET);
+use Ferret::Core::Conversion qw(plist pstring flist ferror FUNC_RET);
 use Ferret::Shared::Utils qw(signature_to_string detailed_signature_to_string);
 use Ferret::Arguments;
 use Ferret::Return;

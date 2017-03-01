@@ -279,25 +279,6 @@ sub phashref {
     return \%hash;
 }
 
-############
-### SETS ###
-############
-
-sub fset {
-    my (@objs) = @_;
-
-    # find global set class.
-    my $f = $Ferret::ferret;
-    my $set_class = $f->get_class('Set');
-
-    # create set.
-    my $class = shift @objs if $objs[0]->isa('Ferret::Class');
-    my $set = $set_class->call([ @objs ]);
-    $set->{set_class} = $class if $class;
-
-    return $set;
-}
-
 ##############
 ### ERRORS ###
 ##############
