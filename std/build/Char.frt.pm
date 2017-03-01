@@ -70,7 +70,7 @@
 #                      Call
 #                          Call
 #                              Property 'init'
-#                                  Bareword 'Char'
+#                                  Bareword 'Character'
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$from'
@@ -94,7 +94,7 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Special variable '*self'
-#      Include (Bool, Char, Character, Error, NATIVE, Num, Str)
+#      Include (Bool, Character, Error, NATIVE, Num, Str)
 package FF;
 
 use warnings;
@@ -213,7 +213,7 @@ my $result = do {
                         )
                     );
                 }
-                $$scope->{'Char'}->property_u( 'init', $pos->(20.1) )
+                $$scope->{'Character'}->property_u( 'init', $pos->(20.1) )
                   ->( [ $$scope->{'from'} ], $scope, undef, $pos->(20.15) )->(
                     [ undef, [ from => $$scope->{'from'}, isInit => $true ] ],
                     $scope, undef, $pos->(20.3)
@@ -243,7 +243,7 @@ my $result = do {
         );
         $func_1->inside_scope( ord => $scope, $proto, $class, $ins, 1, undef );
     }
-    load_namespaces( $context, qw(Bool Char Character Error NATIVE Num Str) );
+    load_namespaces( $context, qw(Bool Character Error NATIVE Num Str) );
     typedef(
         $scope, $context, 'Char',
         sub {

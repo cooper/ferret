@@ -294,7 +294,6 @@ sub bind_constructor {
     # initialize it; return the instance.
     my $ret = $class->init($obj, $arguments);
     return $ret->property('instance');
-
 }
 
 sub _bind_get_class {

@@ -51,7 +51,6 @@ sub init {
     # this isn't one of the "real" true or false objects,
     # so force init to return one of them.
     $sym->{override_init_obj} = $sym->get_sym;
-
 }
 
 # the name is just Str($sym) without the colon

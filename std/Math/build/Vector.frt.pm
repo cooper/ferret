@@ -112,6 +112,22 @@
 #                                      Number '2'
 #          Computed property 'direction' { -> $result }
 #              Function body
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Instance variable '@dimension'
+#                              Negated equality operator (!=)
+#                              Number '2'
+#                      If body
+#                          Instruction
+#                              Throw (fatal exception)
+#                                  Call
+#                                      Bareword 'Error'
+#                                      Argument list [2 items]
+#                                          Item 0
+#                                              Symbol :DimensionError
+#                                          Item 1
+#                                              String 'Direction ...'
 #                  Instruction
 #                      Return
 #                          Call
@@ -883,16 +899,7 @@
 #                                  Item 0
 #                                      Pair 'items'
 #                                          Lexical variable '$items'
-#          Type definition ('VectorAxis')
-#              Type body
-#                  Instruction
-#                      Transform
-#                          Call
-#                              Bareword '_axisToNumber'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Topic variable '$_'
-#          Function '_axisToNumber' { $axis:Num|Char -> $result $result }
+#          Function '_axisToNumber' { $axis:Num|Char -> $result $result $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -913,12 +920,38 @@
 #                              Return
 #                                  Lexical variable '$axis'
 #                  Instruction
+#                      Assignment
+#                          Lexical variable '$o'
+#                          Property 'ord'
+#                              Lexical variable '$axis'
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Lexical variable '$o'
+#                              Greater than operator (>)
+#                              Number '119'
+#                      If body
+#                          Instruction
+#                              Return
+#                                  Operation
+#                                      Lexical variable '$o'
+#                                      Subtraction operator (-)
+#                                      Number '119'
+#                  Instruction
 #                      Return
 #                          Operation
-#                              Number '120'
+#                              Lexical variable '$o'
 #                              Subtraction operator (-)
-#                              Property 'ord'
-#                                  Lexical variable '$axis'
+#                              Number '104'
+#          Type definition ('VectorAxis')
+#              Type body
+#                  Instruction
+#                      Transform
+#                          Call
+#                              Bareword '_axisToNumber'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Topic variable '$_'
 #      Include (Char, Error, Math, Num, Vector, VectorAxis)
 package FF;
 
@@ -943,7 +976,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my $pos = before_content( 'Vector.frt', './std/Math/Vector.frt' );
 
 use Ferret::Core::Operations
-  qw(_sub add any_true bool div equal less mul nequal num pow range str);
+  qw(_sub add any_true bool div equal gr8r less mul nequal num pow range str);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'Math' );
     my $scope = $file_scope;
@@ -972,7 +1005,7 @@ my $result = do {
             my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
             return $ret_func->(
-                mul( $scope, $pos->(94.55), $ins, $$scope->{'ehs'} ) );
+                mul( $scope, $pos->(96.55), $ins, $$scope->{'ehs'} ) );
             return $ret;
         }
     );
@@ -993,12 +1026,12 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'axis', 222.2 ) || return $ret_func->();
+            need( $scope, $args, 'axis', 220.2 ) || return $ret_func->();
             if (
                 bool(
                     $$scope->{'axis'}
-                      ->property_u( '*instanceOf', $pos->(223.3) )
-                      ->( [ $$scope->{'Num'} ], $scope, undef, $pos->(223.4) )
+                      ->property_u( '*instanceOf', $pos->(221.3) )
+                      ->( [ $$scope->{'Num'} ], $scope, undef, $pos->(221.4) )
                 )
               )
             {
@@ -1006,12 +1039,31 @@ my $result = do {
 
                 return $ret_func->( $$scope->{'axis'} );
             }
-            return $ret_func->(
-                _sub(
-                    $scope, $pos->(225.3),
-                    num( $f, "120" ),
-                    $$scope->{'axis'}->property_u( 'ord', $pos->(225.5) )
+            var(
+                $scope,
+                o => $$scope->{'axis'}->property_u( 'ord', $pos->(223.4) ),
+                $file_scope, $pos->(223.2)
+            );
+            if (
+                bool(
+                    gr8r(
+                        $scope, $pos->(224.3),
+                        $$scope->{'o'}, num( $f, "119" )
+                    )
                 )
+              )
+            {
+                my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                return $ret_func->(
+                    _sub(
+                        $scope, $pos->(225.3),
+                        $$scope->{'o'}, num( $f, "119" )
+                    )
+                );
+            }
+            return $ret_func->(
+                _sub( $scope, $pos->(226.3), $$scope->{'o'}, num( $f, "104" ) )
             );
             return $ret;
         }
@@ -1210,10 +1262,35 @@ my $result = do {
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                if (
+                    bool(
+                        nequal(
+                            $scope, $pos->(56.3),
+                            $$self->{'dimension'}, num( $f, "2" )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->(
+                        $ret->throw(
+                            $$scope->{'Error'}->(
+                                [
+                                    get_symbol( $f, 'DimensionError' ),
+                                    str( $f, "Direction only exists in 2D" )
+                                ],
+                                $scope, undef,
+                                $pos->(57.3)
+                            ),
+                            $pos->(57.1)
+                        )
+                    );
+                }
                 return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'atan2', $pos->(56.15) )->(
+                    $$scope->{'Math'}->property_u( 'atan2', $pos->(58.15) )->(
                         [ $$self->{'y'}, $$self->{'x'} ], $scope,
-                        undef, $pos->(56.2)
+                        undef, $pos->(58.2)
                     )
                 );
                 return $ret;
@@ -1234,14 +1311,14 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 61.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 63.2 ) || return $ret_func->();
                 if (
                     bool(
                         nequal(
                             $scope,
-                            $pos->(62.4),
+                            $pos->(64.4),
                             $$scope->{'ehs'}
-                              ->property_u( 'dimension', $pos->(62.3) ),
+                              ->property_u( 'dimension', $pos->(64.3) ),
                             $$self->{'dimension'}
                         )
                     )
@@ -1256,19 +1333,19 @@ my $result = do {
                                     get_symbol( $f, 'DimensionError' ),
                                     add(
                                         $scope,
-                                        $pos->(63.35),
+                                        $pos->(65.35),
                                         str( $f, "Dimension mismatch " ),
                                         $$scope->{'ehs'}->property_u(
-                                            'dimensionHR', $pos->(63.45)
+                                            'dimensionHR', $pos->(65.45)
                                         ),
                                         str( $f, " != " ),
                                         $$self->{'dimensionHR'}
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(63.15)
+                                $pos->(65.15)
                             ),
-                            $pos->(63.05)
+                            $pos->(65.05)
                         )
                     );
                 }
@@ -1284,10 +1361,10 @@ my $result = do {
                                         $f, $scope,
                                         range(
                                             $scope,
-                                            $pos->(64.35),
+                                            $pos->(66.35),
                                             num( $f, "0" ),
                                             $$self->{'items'}->property_u(
-                                                'lastIndex', $pos->(64.45)
+                                                'lastIndex', $pos->(66.45)
                                             )
                                         ),
                                         'i',
@@ -1296,24 +1373,24 @@ my $result = do {
                                             $take->(
                                                 add(
                                                     $scope,
-                                                    $pos->(65.3),
+                                                    $pos->(67.3),
                                                     ${ $scope->{special} }
                                                       ->{'self'}
                                                       ->get_index_value(
                                                         [ $$scope->{'i'} ],
                                                         $scope,
-                                                        $pos->(65.15)
+                                                        $pos->(67.15)
                                                       ),
                                                     $$scope->{'ehs'}
                                                       ->get_index_value(
                                                         [ $$scope->{'i'} ],
                                                         $scope,
-                                                        $pos->(65.4)
+                                                        $pos->(67.4)
                                                       )
                                                 )
                                             );
                                         },
-                                        $pos->(64.15)
+                                        $pos->(66.15)
                                     );
                                     return $ret_func->($loop_ret)
                                       if $loop_status eq 'return';
@@ -1325,12 +1402,12 @@ my $result = do {
                         $gather_ret;
                     },
                     $file_scope,
-                    $pos->(64.1)
+                    $pos->(66.1)
                 );
                 return $ret_func->(
                     $$scope->{'Vector'}->(
                         [ undef, [ items => $$scope->{'items'} ] ],
-                        $scope, undef, $pos->(67.3)
+                        $scope, undef, $pos->(69.3)
                     )
                 );
                 return $ret;
@@ -1351,11 +1428,11 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'lhs', 72.2 ) || return $ret_func->();
+                need( $scope, $args, 'lhs', 74.2 ) || return $ret_func->();
                 if (
                     bool(
                         nequal(
-                            $scope, $pos->(73.3),
+                            $scope, $pos->(75.3),
                             $$scope->{'lhs'}, num( $f, "0" )
                         )
                     )
@@ -1370,7 +1447,7 @@ my $result = do {
                                 get_symbol( $f, 'InvalidOperation' ),
                                 str( $f, "Unsupported operation" )
                             ),
-                            $pos->(74.1)
+                            $pos->(76.1)
                         )
                     );
                 }
@@ -1398,13 +1475,13 @@ my $result = do {
                                                         $take->(
                                                             _sub(
                                                                 $scope,
-                                                                $pos->(76.2),
+                                                                $pos->(78.2),
                                                                 $f->zero,
                                                                 $$scope->{'x'}
                                                             )
                                                         );
                                                     },
-                                                    $pos->(75.25)
+                                                    $pos->(77.25)
                                                   );
                                                 return $ret_func->($loop_ret)
                                                   if $loop_status eq 'return';
@@ -1419,7 +1496,7 @@ my $result = do {
                         ],
                         $scope,
                         undef,
-                        $pos->(75.15)
+                        $pos->(77.15)
                     )
                 );
                 return $ret;
@@ -1440,14 +1517,14 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 82.2 ) || return $ret_func->();
+                need( $scope, $args, 'rhs', 84.2 ) || return $ret_func->();
                 if (
                     bool(
                         nequal(
                             $scope,
-                            $pos->(83.4),
+                            $pos->(85.4),
                             $$scope->{'rhs'}
-                              ->property_u( 'dimension', $pos->(83.3) ),
+                              ->property_u( 'dimension', $pos->(85.3) ),
                             $$self->{'dimension'}
                         )
                     )
@@ -1462,19 +1539,19 @@ my $result = do {
                                     get_symbol( $f, 'DimensionError' ),
                                     add(
                                         $scope,
-                                        $pos->(84.35),
+                                        $pos->(86.35),
                                         str( $f, "Dimension mismatch " ),
                                         $$scope->{'rhs'}->property_u(
-                                            'dimensionHR', $pos->(84.45)
+                                            'dimensionHR', $pos->(86.45)
                                         ),
                                         str( $f, " != " ),
                                         $$self->{'dimensionHR'}
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(84.15)
+                                $pos->(86.15)
                             ),
-                            $pos->(84.05)
+                            $pos->(86.05)
                         )
                     );
                 }
@@ -1490,10 +1567,10 @@ my $result = do {
                                         $f, $scope,
                                         range(
                                             $scope,
-                                            $pos->(85.35),
+                                            $pos->(87.35),
                                             num( $f, "0" ),
                                             $$self->{'items'}->property_u(
-                                                'lastIndex', $pos->(85.45)
+                                                'lastIndex', $pos->(87.45)
                                             )
                                         ),
                                         'i',
@@ -1502,24 +1579,24 @@ my $result = do {
                                             $take->(
                                                 _sub(
                                                     $scope,
-                                                    $pos->(86.3),
+                                                    $pos->(88.3),
                                                     ${ $scope->{special} }
                                                       ->{'self'}
                                                       ->get_index_value(
                                                         [ $$scope->{'i'} ],
                                                         $scope,
-                                                        $pos->(86.15)
+                                                        $pos->(88.15)
                                                       ),
                                                     $$scope->{'rhs'}
                                                       ->get_index_value(
                                                         [ $$scope->{'i'} ],
                                                         $scope,
-                                                        $pos->(86.4)
+                                                        $pos->(88.4)
                                                       )
                                                 )
                                             );
                                         },
-                                        $pos->(85.15)
+                                        $pos->(87.15)
                                     );
                                     return $ret_func->($loop_ret)
                                       if $loop_status eq 'return';
@@ -1531,12 +1608,12 @@ my $result = do {
                         $gather_ret;
                     },
                     $file_scope,
-                    $pos->(85.1)
+                    $pos->(87.1)
                 );
                 return $ret_func->(
                     $$scope->{'Vector'}->(
                         [ undef, [ items => $$scope->{'items'} ] ],
-                        $scope, undef, $pos->(88.3)
+                        $scope, undef, $pos->(90.3)
                     )
                 );
                 return $ret;
@@ -1557,14 +1634,14 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 93.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 95.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$scope->{'Vector'}->(
                         [
                             undef,
                             [
                                 items => $$self->{'items'}
-                                  ->property_u( 'map', $pos->(94.3) )->(
+                                  ->property_u( 'map', $pos->(96.3) )->(
                                     [
                                         $func_14->inside_scope(
                                             (undef) => $scope,
@@ -1572,12 +1649,12 @@ my $result = do {
                                         )
                                     ],
                                     $scope, undef,
-                                    $pos->(94.35)
+                                    $pos->(96.35)
                                   )
                             ]
                         ],
                         $scope, undef,
-                        $pos->(94.15)
+                        $pos->(96.15)
                     )
                 );
                 return $ret;
@@ -1598,14 +1675,14 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 99.2 ) || return $ret_func->();
+                need( $scope, $args, 'rhs', 101.2 ) || return $ret_func->();
                 return $ret_func->(
                     mul(
                         $scope,
-                        $pos->(100.15),
+                        $pos->(102.15),
                         ${ $scope->{special} }->{'self'},
                         div(
-                            $scope, $pos->(100.3),
+                            $scope, $pos->(102.3),
                             num( $f, "1" ), $$scope->{'rhs'}
                         )
                     )
@@ -1628,9 +1705,9 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 105.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 107.2 ) || return $ret_func->();
                 return $ret_func->( $$self->{'dot'}
-                      ->( [ $$scope->{'ehs'} ], $scope, undef, $pos->(106.3) )
+                      ->( [ $$scope->{'ehs'} ], $scope, undef, $pos->(108.3) )
                 );
                 return $ret;
             }
@@ -1651,14 +1728,14 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 111.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 113.2 ) || return $ret_func->();
                 if (
                     bool(
                         nequal(
                             $scope,
-                            $pos->(112.4),
+                            $pos->(114.4),
                             $$scope->{'ehs'}
-                              ->property_u( 'dimension', $pos->(112.3) ),
+                              ->property_u( 'dimension', $pos->(114.3) ),
                             $$self->{'dimension'}
                         )
                     )
@@ -1673,10 +1750,10 @@ my $result = do {
                         $f, $scope,
                         range(
                             $scope,
-                            $pos->(114.5),
+                            $pos->(116.5),
                             num( $f, "0" ),
                             $$self->{'items'}
-                              ->property_u( 'lastIndex', $pos->(114.7) )
+                              ->property_u( 'lastIndex', $pos->(116.7) )
                         ),
                         'i',
                         sub {
@@ -1685,15 +1762,15 @@ my $result = do {
                                 bool(
                                     equal(
                                         $scope,
-                                        $pos->(115.3),
+                                        $pos->(117.3),
                                         ${ $scope->{special} }->{'self'}
                                           ->get_index_value(
                                             [ $$scope->{'i'} ], $scope,
-                                            $pos->(115.15)
+                                            $pos->(117.15)
                                           ),
                                         $$scope->{'ehs'}->get_index_value(
                                             [ $$scope->{'i'} ], $scope,
-                                            $pos->(115.4)
+                                            $pos->(117.4)
                                         )
                                     )
                                 )
@@ -1706,7 +1783,7 @@ my $result = do {
                             }
                             return $ret_func->($false);
                         },
-                        $pos->(114.1)
+                        $pos->(116.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1729,14 +1806,14 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 124.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 126.2 ) || return $ret_func->();
                 if (
                     bool(
                         nequal(
                             $scope,
-                            $pos->(125.4),
+                            $pos->(127.4),
                             $$scope->{'ehs'}
-                              ->property_u( 'dimension', $pos->(125.3) ),
+                              ->property_u( 'dimension', $pos->(127.3) ),
                             $$self->{'dimension'}
                         )
                     )
@@ -1751,36 +1828,36 @@ my $result = do {
                                     get_symbol( $f, 'DimensionError' ),
                                     add(
                                         $scope,
-                                        $pos->(126.35),
+                                        $pos->(128.35),
                                         str( $f, "Dimension mismatch " ),
                                         $$scope->{'ehs'}->property_u(
-                                            'dimensionHR', $pos->(126.45)
+                                            'dimensionHR', $pos->(128.45)
                                         ),
                                         str( $f, " != " ),
                                         $$self->{'dimensionHR'}
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(126.15)
+                                $pos->(128.15)
                             ),
-                            $pos->(126.05)
+                            $pos->(128.05)
                         )
                     );
                 }
                 var(
                     $scope,
                     dot => num( $f, "0" ),
-                    $file_scope, $pos->(127.2)
+                    $file_scope, $pos->(129.2)
                 );
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         range(
                             $scope,
-                            $pos->(128.5),
+                            $pos->(130.5),
                             num( $f, "0" ),
                             $$self->{'items'}
-                              ->property_u( 'lastIndex', $pos->(128.7) )
+                              ->property_u( 'lastIndex', $pos->(130.7) )
                         ),
                         'i',
                         sub {
@@ -1789,27 +1866,27 @@ my $result = do {
                                 $scope,
                                 dot => add(
                                     $scope,
-                                    $pos->(129.1),
+                                    $pos->(131.1),
                                     $$scope->{'dot'},
                                     mul(
                                         $scope,
-                                        $pos->(129.35),
+                                        $pos->(131.35),
                                         ${ $scope->{special} }->{'self'}
                                           ->get_index_value(
                                             [ $$scope->{'i'} ], $scope,
-                                            $pos->(129.2)
+                                            $pos->(131.2)
                                           ),
                                         $$scope->{'ehs'}->get_index_value(
                                             [ $$scope->{'i'} ], $scope,
-                                            $pos->(129.45)
+                                            $pos->(131.45)
                                         )
                                     )
                                 ),
                                 $file_scope,
-                                $pos->(129.1)
+                                $pos->(131.1)
                             );
                         },
-                        $pos->(128.1)
+                        $pos->(130.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -1832,24 +1909,24 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 136.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 138.2 ) || return $ret_func->();
                 if (
                     bool(
                         any_true(
                             $scope,
-                            $pos->(137.2),
+                            $pos->(139.2),
                             sub {
                                 nequal(
                                     $scope,
-                                    $pos->(137.2),
+                                    $pos->(139.2),
                                     $$scope->{'ehs'}->property_u(
-                                        'dimension', $pos->(137.15)
+                                        'dimension', $pos->(139.15)
                                     ),
                                     num( $f, "3" )
                                 );
                             },
                             sub {
-                                nequal( $scope, $pos->(137.2),
+                                nequal( $scope, $pos->(139.2),
                                     $$self->{'dimension'}, num( $f, "3" ) );
                             }
                         )
@@ -1868,87 +1945,25 @@ my $result = do {
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(138.3)
+                                $pos->(140.3)
                             ),
-                            $pos->(138.1)
+                            $pos->(140.1)
                         )
                     );
                 }
                 $self->set_property(
                     a => _sub(
                         $scope,
-                        $pos->(139.23333),
-                        mul(
-                            $scope,
-                            $pos->(139.23333),
-                            ${ $scope->{special} }->{'self'}->get_index_value(
-                                [ num( $f, "1" ) ], $scope,
-                                $pos->(139.13333)
-                            ),
-                            $$scope->{'ehs'}->get_index_value(
-                                [ num( $f, "2" ) ],
-                                $scope, $pos->(139.3)
-                            )
-                        ),
-                        mul(
-                            $scope,
-                            $pos->(139.23333),
-                            ${ $scope->{special} }->{'self'}->get_index_value(
-                                [ num( $f, "2" ) ], $scope,
-                                $pos->(139.46667)
-                            ),
-                            $$scope->{'ehs'}->get_index_value(
-                                [ num( $f, "1" ) ], $scope,
-                                $pos->(139.63333)
-                            )
-                        )
-                    ),
-                    $pos->(139.06667)
-                );
-                $self->set_property(
-                    b => _sub(
-                        $scope,
-                        $pos->(140.23333),
-                        mul(
-                            $scope,
-                            $pos->(140.23333),
-                            ${ $scope->{special} }->{'self'}->get_index_value(
-                                [ num( $f, "2" ) ], $scope,
-                                $pos->(140.13333)
-                            ),
-                            $$scope->{'ehs'}->get_index_value(
-                                [ num( $f, "0" ) ],
-                                $scope, $pos->(140.3)
-                            )
-                        ),
-                        mul(
-                            $scope,
-                            $pos->(140.23333),
-                            ${ $scope->{special} }->{'self'}->get_index_value(
-                                [ num( $f, "0" ) ], $scope,
-                                $pos->(140.46667)
-                            ),
-                            $$scope->{'ehs'}->get_index_value(
-                                [ num( $f, "2" ) ], $scope,
-                                $pos->(140.63333)
-                            )
-                        )
-                    ),
-                    $pos->(140.06667)
-                );
-                $self->set_property(
-                    c => _sub(
-                        $scope,
                         $pos->(141.23333),
                         mul(
                             $scope,
                             $pos->(141.23333),
                             ${ $scope->{special} }->{'self'}->get_index_value(
-                                [ num( $f, "0" ) ], $scope,
+                                [ num( $f, "1" ) ], $scope,
                                 $pos->(141.13333)
                             ),
                             $$scope->{'ehs'}->get_index_value(
-                                [ num( $f, "1" ) ],
+                                [ num( $f, "2" ) ],
                                 $scope, $pos->(141.3)
                             )
                         ),
@@ -1956,21 +1971,83 @@ my $result = do {
                             $scope,
                             $pos->(141.23333),
                             ${ $scope->{special} }->{'self'}->get_index_value(
-                                [ num( $f, "1" ) ], $scope,
+                                [ num( $f, "2" ) ], $scope,
                                 $pos->(141.46667)
                             ),
                             $$scope->{'ehs'}->get_index_value(
-                                [ num( $f, "0" ) ], $scope,
+                                [ num( $f, "1" ) ], $scope,
                                 $pos->(141.63333)
                             )
                         )
                     ),
                     $pos->(141.06667)
                 );
+                $self->set_property(
+                    b => _sub(
+                        $scope,
+                        $pos->(142.23333),
+                        mul(
+                            $scope,
+                            $pos->(142.23333),
+                            ${ $scope->{special} }->{'self'}->get_index_value(
+                                [ num( $f, "2" ) ], $scope,
+                                $pos->(142.13333)
+                            ),
+                            $$scope->{'ehs'}->get_index_value(
+                                [ num( $f, "0" ) ],
+                                $scope, $pos->(142.3)
+                            )
+                        ),
+                        mul(
+                            $scope,
+                            $pos->(142.23333),
+                            ${ $scope->{special} }->{'self'}->get_index_value(
+                                [ num( $f, "0" ) ], $scope,
+                                $pos->(142.46667)
+                            ),
+                            $$scope->{'ehs'}->get_index_value(
+                                [ num( $f, "2" ) ], $scope,
+                                $pos->(142.63333)
+                            )
+                        )
+                    ),
+                    $pos->(142.06667)
+                );
+                $self->set_property(
+                    c => _sub(
+                        $scope,
+                        $pos->(143.23333),
+                        mul(
+                            $scope,
+                            $pos->(143.23333),
+                            ${ $scope->{special} }->{'self'}->get_index_value(
+                                [ num( $f, "0" ) ], $scope,
+                                $pos->(143.13333)
+                            ),
+                            $$scope->{'ehs'}->get_index_value(
+                                [ num( $f, "1" ) ],
+                                $scope, $pos->(143.3)
+                            )
+                        ),
+                        mul(
+                            $scope,
+                            $pos->(143.23333),
+                            ${ $scope->{special} }->{'self'}->get_index_value(
+                                [ num( $f, "1" ) ], $scope,
+                                $pos->(143.46667)
+                            ),
+                            $$scope->{'ehs'}->get_index_value(
+                                [ num( $f, "0" ) ], $scope,
+                                $pos->(143.63333)
+                            )
+                        )
+                    ),
+                    $pos->(143.06667)
+                );
                 return $ret_func->(
                     $$scope->{'Vector'}->(
                         [ $$self->{'a'}, $$self->{'b'}, $$self->{'c'} ],
-                        $scope, undef, $pos->(142.15)
+                        $scope, undef, $pos->(144.15)
                     )
                 );
                 return $ret;
@@ -1992,30 +2069,30 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 148.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 150.2 ) || return $ret_func->();
                 var(
                     $scope,
                     cosθ => div(
                         $scope,
-                        $pos->(150.35),
+                        $pos->(152.35),
                         $$self->{'dot'}->(
                             [ $$scope->{'ehs'} ], $scope,
-                            undef,                $pos->(150.2)
+                            undef,                $pos->(152.2)
                         ),
                         mul(
                             $scope,
-                            $pos->(150.5),
+                            $pos->(152.5),
                             $$self->{'magnitude'},
                             $$scope->{'ehs'}
-                              ->property_u( 'magnitude', $pos->(150.6) )
+                              ->property_u( 'magnitude', $pos->(152.6) )
                         )
                     ),
                     $file_scope,
-                    $pos->(150.1)
+                    $pos->(152.1)
                 );
                 return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'acos', $pos->(151.3) )
-                      ->( [ $$scope->{'cosθ'} ], $scope, undef, $pos->(151.4) )
+                    $$scope->{'Math'}->property_u( 'acos', $pos->(153.3) )
+                      ->( [ $$scope->{'cosθ'} ], $scope, undef, $pos->(153.4) )
                 );
                 return $ret;
             }
@@ -2036,14 +2113,14 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 158.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 160.2 ) || return $ret_func->();
                 return $ret_func->(
                     equal(
                         $scope,
-                        $pos->(159.6),
+                        $pos->(161.6),
                         $$self->{'dot'}->(
                             [ $$scope->{'ehs'} ], $scope,
-                            undef,                $pos->(159.3)
+                            undef,                $pos->(161.3)
                         ),
                         num( $f, "0" )
                     )
@@ -2067,14 +2144,14 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 164.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 166.2 ) || return $ret_func->();
                 if (
                     bool(
                         nequal(
                             $scope,
-                            $pos->(165.4),
+                            $pos->(167.4),
                             $$scope->{'ehs'}
-                              ->property_u( 'dimension', $pos->(165.3) ),
+                              ->property_u( 'dimension', $pos->(167.3) ),
                             $$self->{'dimension'}
                         )
                     )
@@ -2089,50 +2166,50 @@ my $result = do {
                                     get_symbol( $f, 'DimensionError' ),
                                     add(
                                         $scope,
-                                        $pos->(166.35),
+                                        $pos->(168.35),
                                         str( $f, "Dimension mismatch " ),
                                         $$scope->{'ehs'}->property_u(
-                                            'dimensionHR', $pos->(166.45)
+                                            'dimensionHR', $pos->(168.45)
                                         ),
                                         str( $f, " != " ),
                                         $$self->{'dimensionHR'}
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(166.15)
+                                $pos->(168.15)
                             ),
-                            $pos->(166.05)
+                            $pos->(168.05)
                         )
                     );
                 }
                 var(
                     $scope,
                     u1 => $$self->{'unitVector'},
-                    $file_scope, $pos->(167.2)
+                    $file_scope, $pos->(169.2)
                 );
                 var(
                     $scope,
                     u2 => $$scope->{'ehs'}
-                      ->property_u( 'unitVector', $pos->(168.4) ),
-                    $file_scope, $pos->(168.2)
+                      ->property_u( 'unitVector', $pos->(170.4) ),
+                    $file_scope, $pos->(170.2)
                 );
                 if (
                     bool(
                         any_true(
                             $scope,
-                            $pos->(169.15),
+                            $pos->(171.15),
                             sub {
                                 equal(
-                                    $scope,          $pos->(169.15),
+                                    $scope,          $pos->(171.15),
                                     $$scope->{'u1'}, $$scope->{'u2'}
                                 );
                             },
                             sub {
                                 equal(
                                     $scope,
-                                    $pos->(169.15),
+                                    $pos->(171.15),
                                     _sub(
-                                        $scope,   $pos->(169.15),
+                                        $scope,   $pos->(171.15),
                                         $f->zero, $$scope->{'u1'}
                                     ),
                                     $$scope->{'u2'}
@@ -2166,20 +2243,20 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'index', 177.2 ) || return $ret_func->();
+                need( $scope, $args, 'index', 179.2 ) || return $ret_func->();
                 var(
                     $scope,
                     n => add(
-                        $scope, $pos->(178.4),
+                        $scope, $pos->(180.4),
                         $$scope->{'index'}, num( $f, "1" )
                     ),
                     $file_scope,
-                    $pos->(178.2)
+                    $pos->(180.2)
                 );
                 if (
                     bool(
                         less(
-                            $scope,                $pos->(179.3),
+                            $scope,                $pos->(181.3),
                             $$self->{'dimension'}, $$scope->{'n'}
                         )
                     )
@@ -2194,23 +2271,23 @@ my $result = do {
                                     get_symbol( $f, 'DimensionError' ),
                                     add(
                                         $scope,
-                                        $pos->(180.35),
+                                        $pos->(182.35),
                                         $$self->{'dimensionHR'},
                                         str( $f, " vector has no component " ),
                                         $$scope->{'n'}
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(180.15)
+                                $pos->(182.15)
                             ),
-                            $pos->(180.05)
+                            $pos->(182.05)
                         )
                     );
                 }
                 return $ret_func->(
                     $$self->{'items'}->get_index_value(
                         [ $$scope->{'index'} ],
-                        $scope, $pos->(181.3)
+                        $scope, $pos->(183.3)
                     )
                 );
                 return $ret;
@@ -2228,14 +2305,14 @@ my $result = do {
                             undef,
                             [
                                 items => $$self->{'items'}
-                                  ->property_u( 'copy', $pos->(186.3) )->(
+                                  ->property_u( 'copy', $pos->(188.3) )->(
                                     [ undef, [] ], $scope,
-                                    undef, $pos->(186.35)
+                                    undef, $pos->(188.35)
                                   )
                             ]
                         ],
                         $scope, undef,
-                        $pos->(186.15)
+                        $pos->(188.15)
                     )
                 );
                 return $ret;
@@ -2252,12 +2329,12 @@ my $result = do {
                 return $ret_func->(
                     add(
                         $scope,
-                        $pos->(190.15),
+                        $pos->(192.15),
                         str( $f, "<" ),
-                        $$self->{'items'}->property_u( 'join', $pos->(190.25) )
+                        $$self->{'items'}->property_u( 'join', $pos->(192.25) )
                           ->(
                             [ str( $f, ", " ) ], $scope,
-                            undef, $pos->(190.3)
+                            undef, $pos->(192.3)
                           ),
                         str( $f, ">" )
                     )
@@ -2281,12 +2358,12 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'dimension', 195.2 )
+                need( $scope, $args, 'dimension', 197.2 )
                   || return $ret_func->();
                 if (
                     bool(
                         less(
-                            $scope, $pos->(196.3),
+                            $scope, $pos->(198.3),
                             $$scope->{'dimension'}, num( $f, "1" )
                         )
                     )
@@ -2302,9 +2379,9 @@ my $result = do {
                                     str( $f, "Need dimension >= 1D" )
                                 ],
                                 $scope, undef,
-                                $pos->(197.3)
+                                $pos->(199.3)
                             ),
-                            $pos->(197.1)
+                            $pos->(199.1)
                         )
                     );
                 }
@@ -2326,7 +2403,7 @@ my $result = do {
                                                     $f, $scope,
                                                     range(
                                                         $scope,
-                                                        $pos->(198.45),
+                                                        $pos->(200.45),
                                                         num( $f, "1" ),
                                                         $$scope->{'dimension'}
                                                     ),
@@ -2337,7 +2414,7 @@ my $result = do {
                                                         $take->(
                                                             num( $f, "0" ) );
                                                     },
-                                                    $pos->(198.25)
+                                                    $pos->(200.25)
                                                   );
                                                 return $ret_func->($loop_ret)
                                                   if $loop_status eq 'return';
@@ -2352,7 +2429,7 @@ my $result = do {
                         ],
                         $scope,
                         undef,
-                        $pos->(198.15)
+                        $pos->(200.15)
                     )
                 );
                 return $ret;
@@ -2380,13 +2457,13 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'dimension', 203.2 )
+                need( $scope, $args, 'dimension', 205.2 )
                   || return $ret_func->();
-                need( $scope, $args, 'axis', 204.2 ) || return $ret_func->();
+                need( $scope, $args, 'axis', 206.2 ) || return $ret_func->();
                 if (
                     bool(
                         less(
-                            $scope, $pos->(205.3),
+                            $scope, $pos->(207.3),
                             $$scope->{'dimension'}, num( $f, "1" )
                         )
                     )
@@ -2402,9 +2479,9 @@ my $result = do {
                                     str( $f, "Need dimension >= 1D" )
                                 ],
                                 $scope, undef,
-                                $pos->(206.3)
+                                $pos->(208.3)
                             ),
-                            $pos->(206.1)
+                            $pos->(208.1)
                         )
                     );
                 }
@@ -2420,7 +2497,7 @@ my $result = do {
                                         $f, $scope,
                                         range(
                                             $scope,
-                                            $pos->(207.35),
+                                            $pos->(209.35),
                                             num( $f, "1" ),
                                             $$scope->{'dimension'}
                                         ),
@@ -2431,7 +2508,7 @@ my $result = do {
                                                 bool(
                                                     equal(
                                                         $scope,
-                                                        $pos->(208.3),
+                                                        $pos->(210.3),
                                                         $$scope->{'i'},
                                                         $$scope->{'axis'}
                                                     )
@@ -2447,7 +2524,7 @@ my $result = do {
                                             }
                                             $take->( num( $f, "0" ) );
                                         },
-                                        $pos->(207.15)
+                                        $pos->(209.15)
                                     );
                                     return $ret_func->($loop_ret)
                                       if $loop_status eq 'return';
@@ -2459,12 +2536,12 @@ my $result = do {
                         $gather_ret;
                     },
                     $file_scope,
-                    $pos->(207.1)
+                    $pos->(209.1)
                 );
                 return $ret_func->(
                     $$scope->{'Vector'}->(
                         [ undef, [ items => $$scope->{'items'} ] ],
-                        $scope, undef, $pos->(214.3)
+                        $scope, undef, $pos->(216.3)
                     )
                 );
                 return $ret;
@@ -2586,7 +2663,7 @@ my $result = do {
                             do {
                                 $ins = $transform->(
                                     $$scope->{'_axisToNumber'}->(
-                                        [$ins], $scope, undef, $pos->(218.3)
+                                        [$ins], $scope, undef, $pos->(230.3)
                                     ),
                                     $ins
                                 );

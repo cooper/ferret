@@ -17,7 +17,7 @@ init {
     if $from.length != 1
         fail Error(:InvalidConversion, "String of length != cannot be Char")
 
-    Char.init($from)(from: $from, isInit: true)
+    Character.init($from)(from: $from, isInit: true)
     return $from
 }
 

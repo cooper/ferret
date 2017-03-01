@@ -383,7 +383,13 @@ sub _get_types {
 
     # find scope of interest.
     my $soi = $func->{outer_scope} || $func->f->main_context;
-    $soi = $soi->closest_context;
+
+    # FIXME: we used to use the nearest context to the outer scope of the
+    # function, but now we use the outer scope itself. this is because
+    # class-level declarations are associated with the class, not the context.
+    # since you can store contexts in classes now, maybe classes themselves
+    # should inherit from Context...
+    #$soi = $soi->closest_context;
 
     # either a single type or a list of types.
     foreach my $type (ref $t eq 'ARRAY' ? @$t : ($t)) {

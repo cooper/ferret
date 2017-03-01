@@ -32,7 +32,7 @@ prop unitVector {
 
 #> returns the unit vector in the direction of the given axis
 method axisUnitVector {
-    need $axis: VectorAxis #< axis number, starting at 1 (e.g. x-axis)
+    need $axis: VectorAxis #< axis number or letter, starting at 1 or "i"
     return Vector.axisUnitVector(@dimension, $axis)
 }
 
@@ -53,6 +53,8 @@ prop z {
 
 #> for a 2D vector, its direction, measured in radians
 prop direction {
+    if @dimension != 2
+        throw Error(:DimensionError, "Direction only exists in 2D")
     return Math.atan2(@y, @x)
 }
 
@@ -201,7 +203,7 @@ func zeroVector {
 #> returns the unit vector for the given dimension and axis
 func axisUnitVector {
     need $dimension: Num
-    need $axis: VectorAxis #< axis number or letter, starting at 1 or "x"
+    need $axis: VectorAxis #< axis number or letter, starting at 1 or "i"
     if $dimension < 1
         throw Error(:DimensionError, "Need dimension >= 1D")
     $items = gather for $i in 1..$dimension {
@@ -214,13 +216,16 @@ func axisUnitVector {
     return Vector(items: $items)
 }
 
-type VectorAxis {
-    transform _axisToNumber($_)
-}
-
 func _axisToNumber {
     need $axis: Num | Char
     if $axis.*instanceOf(Num)
         return $axis
-    return 120 - $axis.ord
+    $o = $axis.ord
+    if $o > 119
+        return $o - 119
+    return $o - 104
+}
+
+type VectorAxis {
+    transform _axisToNumber($_)
 }
