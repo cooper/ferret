@@ -869,7 +869,6 @@ sub equal_to {
 
     # fallback to object equality.
     return $left_obj->equal_to_exactly($right_obj, $scope);
-
 }
 
 # test exact object equality, return Ferret boolean

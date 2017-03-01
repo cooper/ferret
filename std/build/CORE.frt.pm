@@ -67,7 +67,7 @@
 #              Instruction
 #                  Transform
 #                      Property variable '.hashValue'
-#      Type definition ('Indexed')
+#      Type definition ('IndexedRead')
 #          Type body
 #              Instruction
 #                  Can
@@ -77,6 +77,8 @@
 #                              Item 0
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
+#      Type definition ('IndexedWrite')
+#          Type body
 #              Instruction
 #                  Can
 #                      Method requirement
@@ -96,7 +98,15 @@
 #                              Item 0
 #                                  Pair 'index'
 #                                      Bareword 'Hashable'
-#      Include (Any, Complex, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, Iterator, Obj, Object, Signal, Str)
+#      Type definition ('Indexed')
+#          Type body
+#              Instruction
+#                  Isa
+#                      Bareword 'IndexedRead'
+#              Instruction
+#                  Isa
+#                      Bareword 'IndexedWrite'
+#      Include (Any, Complex, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::Number, Extension::String, Hashable, IndexedRead, IndexedWrite, Iterator, Obj, Object, Signal, Str)
 package FF;
 
 use warnings;
@@ -126,7 +136,7 @@ my $result = do {
     load_core('CORE');
 
     load_namespaces( $context,
-        qw(Any Complex Error EventSet Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable Iterator Obj Object Signal Str)
+        qw(Any Complex Error EventSet Extension Extension::Hash Extension::List Extension::Number Extension::String Hashable IndexedRead IndexedWrite Iterator Obj Object Signal Str)
     );
 
     typedef(
@@ -199,7 +209,7 @@ my $result = do {
     );
     typedef(
         $scope, $context,
-        'Indexed',
+        'IndexedRead',
         sub {
             my ( $ins, $create_can, $transform ) = @_;
             state $anchor = \0 + 0;
@@ -211,7 +221,22 @@ my $result = do {
                             'getValue', [ index => 'Hashable' ],
                             undef, $ins
                         )->();
-                    },
+                    }
+                ],
+                equal_to => undef
+            ) ? $ins : undef;
+        },
+        undef
+    );
+    typedef(
+        $scope, $context,
+        'IndexedWrite',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
+            typedef_check(
+                $scope, $scope, $ins, $anchor,
+                conditions => [
                     sub {
                         $create_can->(
                             'setValue', [ value => 'Obj', index => 'Hashable' ],
@@ -224,6 +249,23 @@ my $result = do {
                             undef, $ins
                         )->();
                     }
+                ],
+                equal_to => undef
+            ) ? $ins : undef;
+        },
+        undef
+    );
+    typedef(
+        $scope, $context,
+        'Indexed',
+        sub {
+            my ( $ins, $create_can, $transform ) = @_;
+            state $anchor = \0 + 0;
+            typedef_check(
+                $scope, $scope, $ins, $anchor,
+                conditions => [
+                    sub { $ins->fits_type_u( $$scope->{'IndexedRead'} ) },
+                    sub { $ins->fits_type_u( $$scope->{'IndexedWrite'} ) }
                 ],
                 equal_to => undef
             ) ? $ins : undef;

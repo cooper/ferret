@@ -108,12 +108,10 @@ sub get_context  {
 
     # might already have this context cached.
     return $f->{context}{$name} if $f->{context}{$name};
-
-    my $c = $f->core_context;
     my @parts = split /::/, $name;
 
     # create/find contexts
-    $c = $f->core_context;
+    my $c = $f->main_context; # changed 03/01/2017 from core
     for my $part (@parts) {
         my $new = $c->property($part);
         if ($new) {
