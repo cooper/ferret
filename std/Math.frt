@@ -1,5 +1,6 @@
 package Math
 
+#> the ratio of a circle's circumference to it's diameter (π)
 share $pi ?= NATIVE::Math.pi!
 
 #> sine, expressed in radians
@@ -39,14 +40,38 @@ func atan2 {
     return NATIVE::Math.atan2($y, $x)
 }
 
+#> inverse tangent
+func atan {
+    need $num: Num
+    return atan2($num, 1)
+}
+
 #> secant, expressed in radians
 func sec {
     need $num: Num
     return 1 / cos($num)
 }
 
-# cosecant, expressed in radians
+#> cosecant, expressed in radians
 func csc {
     need $num: Num
     return 1 / sin($num)
+}
+
+#> natural logarithm (base *e*).
+func log {
+    need $num: Num
+    return NATIVE::Math.log($num)
+}
+
+#> log base 10.
+func log10 {
+    need $num: Num
+    return logb(10, $num)
+}
+
+#> log base `$base`.
+func logb {
+    need $base: Num, $num: Num
+    return log($num) / log($base)
 }
