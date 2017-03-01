@@ -8,7 +8,7 @@ init {
 
     # if we have no imaginary part, return a real number
     if $imag == 0
-        return $imag
+        return $real
 }
 
 #> addition of complex numbers
@@ -70,15 +70,43 @@ operator / {
     )
 }
 
+#> division of complex number by real number
+operator / {
+    need $rhs: Num
+    return Complex(
+        @a / $rhs,
+        @b / $rhs
+    )
+}
+
 #> complex number to real power
 operator ^ {
     need $rhs: Num
+    if $rhs <= 0
+        return 1
+    return *self * *self ^ ($rhs - 1)
+}
 
+#> complex number to real power
+method pow {
+    need $rhs: Num
+    $log_a  = Math.log(@abs)
+    $factor = Math.exp($rhs * $log_a)
+    $theta  = $rhs * @arg
+    return Complex(
+        $factor * Math.cos($theta),
+        $factor * Math.sin($theta)
+    )
 }
 
 #> absolute value of complex number
 prop abs {
     return (@a ^ 2 + @b ^ 2).sqrt
+}
+
+#> argument of complex number
+prop arg {
+    return Math.atan2(@b, @a)
 }
 
 #> conjugate of complex number

@@ -30,7 +30,7 @@
 #                      If body
 #                          Instruction
 #                              Return
-#                                  Lexical variable '$imag'
+#                                  Lexical variable '$real'
 #          Method 'opAdd' { $rhs:Complex -> $result }
 #              Function body
 #                  Instruction
@@ -240,13 +240,118 @@
 #                                          Division operator (/)
 #                                          Property 'a'
 #                                              Lexical variable '$den'
-#          Method 'opPow' { $rhs:Num }
+#          Method 'opDiv' { $rhs:Num -> $result }
 #              Function body
 #                  Instruction
 #                      Need
 #                          Lexical variable '$rhs'
 #                          Argument type
 #                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'Complex'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Operation
+#                                          Instance variable '@a'
+#                                          Division operator (/)
+#                                          Lexical variable '$rhs'
+#                                  Item 1
+#                                      Operation
+#                                          Instance variable '@b'
+#                                          Division operator (/)
+#                                          Lexical variable '$rhs'
+#          Method 'opPow' { $rhs:Num -> $result $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$rhs'
+#                          Argument type
+#                              Bareword 'Num'
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Lexical variable '$rhs'
+#                              Less than or equal to operator (<=)
+#                              Number '0'
+#                      If body
+#                          Instruction
+#                              Return
+#                                  Number '1'
+#                  Instruction
+#                      Return
+#                          Operation
+#                              Special variable '*self'
+#                              Multiplication operator (*)
+#                              Special variable '*self'
+#                              Exponent operator (^)
+#                              Single value [1 item]
+#                                  Item 0
+#                                      Operation
+#                                          Lexical variable '$rhs'
+#                                          Subtraction operator (-)
+#                                          Number '1'
+#          Method 'pow' { $rhs:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$rhs'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$log_a'
+#                          Call
+#                              Property 'log'
+#                                  Bareword 'Math'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Instance variable '@abs'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$factor'
+#                          Call
+#                              Property 'exp'
+#                                  Bareword 'Math'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Operation
+#                                          Lexical variable '$rhs'
+#                                          Multiplication operator (*)
+#                                          Lexical variable '$log_a'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$theta'
+#                          Operation
+#                              Lexical variable '$rhs'
+#                              Multiplication operator (*)
+#                              Instance variable '@arg'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'Complex'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Operation
+#                                          Lexical variable '$factor'
+#                                          Multiplication operator (*)
+#                                          Call
+#                                              Property 'cos'
+#                                                  Bareword 'Math'
+#                                              Argument list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$theta'
+#                                  Item 1
+#                                      Operation
+#                                          Lexical variable '$factor'
+#                                          Multiplication operator (*)
+#                                          Call
+#                                              Property 'sin'
+#                                                  Bareword 'Math'
+#                                              Argument list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$theta'
 #          Computed property 'abs' { -> $result }
 #              Function body
 #                  Instruction
@@ -262,6 +367,18 @@
 #                                          Instance variable '@b'
 #                                          Exponent operator (^)
 #                                          Number '2'
+#          Computed property 'arg' { -> $result }
+#              Function body
+#                  Instruction
+#                      Return
+#                          Call
+#                              Property 'atan2'
+#                                  Bareword 'Math'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Instance variable '@b'
+#                                  Item 1
+#                                      Instance variable '@a'
 #          Computed property 'conj' { -> $result }
 #              Function body
 #                  Instruction
@@ -381,7 +498,7 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      String '+'
-#      Include (Complex, Num)
+#      Include (Complex, Math, Num)
 package FF;
 
 use warnings;
@@ -405,7 +522,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my $pos = before_content( 'Complex.frt', './std/Complex.frt' );
 
 use Ferret::Core::Operations
-  qw(_sub add all_true bool div equal less mul num pow str);
+  qw(_sub add all_true bool div equal less less_e mul num pow str);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
@@ -452,7 +569,7 @@ my $result = do {
                 {
                     my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                    return $ret_func->( $$scope->{'imag'} );
+                    return $ret_func->( $$scope->{'real'} );
                 }
                 return $ret;
             }
@@ -804,9 +921,9 @@ my $result = do {
             }
         );
 
-        # Method event 'opPow' definition
+        # Method event 'opDiv' definition
         my $func_9 = method_event_def(
-            $f, $scope, 'opPow',
+            $f, $scope, 'opDiv',
             [
                 {
                     name     => 'rhs',
@@ -819,35 +936,193 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $scope, $args, 'rhs', 75.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$scope->{'Complex'}->(
+                        [
+                            div(
+                                $scope,        $pos->(77.2),
+                                $$self->{'a'}, $$scope->{'rhs'}
+                            ),
+                            div(
+                                $scope,        $pos->(78.2),
+                                $$self->{'b'}, $$scope->{'rhs'}
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(76.3)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opPow' definition
+        my $func_10 = method_event_def(
+            $f, $scope, 'opPow',
+            [
+                {
+                    name     => 'rhs',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'rhs', 84.2 ) || return $ret_func->();
+                if (
+                    bool(
+                        less_e(
+                            $scope, $pos->(85.3),
+                            $$scope->{'rhs'}, num( $f, "0" )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->( num( $f, "1" ) );
+                }
+                return $ret_func->(
+                    mul(
+                        $scope,
+                        $pos->(87.15),
+                        ${ $scope->{special} }->{'self'},
+                        pow(
+                            $scope,
+                            $pos->(87.15),
+                            ${ $scope->{special} }->{'self'},
+                            _sub(
+                                $scope, $pos->(87.4),
+                                $$scope->{'rhs'}, num( $f, "1" )
+                            )
+                        )
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'pow' definition
+        my $func_11 = method_event_def(
+            $f, $scope, 'pow',
+            [
+                {
+                    name     => 'rhs',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'rhs', 92.2 ) || return $ret_func->();
+                var(
+                    $scope,
+                    log_a =>
+                      $$scope->{'Math'}->property_u( 'log', $pos->(93.4) )
+                      ->( [ $$self->{'abs'} ], $scope, undef, $pos->(93.5) ),
+                    $file_scope, $pos->(93.2)
+                );
+                var(
+                    $scope,
+                    factor =>
+                      $$scope->{'Math'}->property_u( 'exp', $pos->(94.2) )->(
+                        [
+                            mul(
+                                $scope,           $pos->(94.35),
+                                $$scope->{'rhs'}, $$scope->{'log_a'}
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(94.25)
+                      ),
+                    $file_scope,
+                    $pos->(94.1)
+                );
+                var(
+                    $scope,
+                    theta => mul(
+                        $scope,           $pos->(95.4),
+                        $$scope->{'rhs'}, $$self->{'arg'}
+                    ),
+                    $file_scope,
+                    $pos->(95.2)
+                );
+                return $ret_func->(
+                    $$scope->{'Complex'}->(
+                        [
+                            mul(
+                                $scope,
+                                $pos->(97.2),
+                                $$scope->{'factor'},
+                                $$scope->{'Math'}
+                                  ->property_u( 'cos', $pos->(97.4) )->(
+                                    [ $$scope->{'theta'} ], $scope,
+                                    undef,                  $pos->(97.5)
+                                  )
+                            ),
+                            mul(
+                                $scope,
+                                $pos->(98.2),
+                                $$scope->{'factor'},
+                                $$scope->{'Math'}
+                                  ->property_u( 'sin', $pos->(98.4) )->(
+                                    [ $$scope->{'theta'} ], $scope,
+                                    undef,                  $pos->(98.5)
+                                  )
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(96.3)
+                    )
+                );
                 return $ret;
             }
         );
 
         # Method event 'abs' definition
-        my $func_10 = method_event_def(
+        my $func_12 = method_event_def(
             $f, $scope, 'abs', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add(
                         $scope,
-                        $pos->(81.2),
+                        $pos->(104.2),
                         pow(
-                            $scope, $pos->(81.2),
+                            $scope, $pos->(104.2),
                             $$self->{'a'}, num( $f, "2" )
                         ),
                         pow(
-                            $scope, $pos->(81.2),
+                            $scope, $pos->(104.2),
                             $$self->{'b'}, num( $f, "2" )
                         )
-                    )->property_u( 'sqrt', $pos->(81.55) )
+                    )->property_u( 'sqrt', $pos->(104.55) )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'arg' definition
+        my $func_13 = method_event_def(
+            $f, $scope, 'arg', undef, undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                return $ret_func->(
+                    $$scope->{'Math'}->property_u( 'atan2', $pos->(109.15) )->(
+                        [ $$self->{'b'}, $$self->{'a'} ], $scope,
+                        undef, $pos->(109.2)
+                    )
                 );
                 return $ret;
             }
         );
 
         # Method event 'conj' definition
-        my $func_11 = method_event_def(
+        my $func_14 = method_event_def(
             $f, $scope, 'conj', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
@@ -856,12 +1131,12 @@ my $result = do {
                         [
                             $$self->{'a'},
                             _sub(
-                                $scope,   $pos->(86.3),
+                                $scope,   $pos->(114.3),
                                 $f->zero, $$self->{'b'}
                             )
                         ],
                         $scope, undef,
-                        $pos->(86.15)
+                        $pos->(114.15)
                     )
                 );
                 return $ret;
@@ -869,28 +1144,28 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $func_12 = method_event_def(
+        my $func_15 = method_event_def(
             $f, $scope,
             'description',
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, r => $$self->{'a'}, $file_scope, $pos->(90.2) );
-                var( $scope, i => $$self->{'b'}, $file_scope, $pos->(91.2) );
+                var( $scope, r => $$self->{'a'}, $file_scope, $pos->(118.2) );
+                var( $scope, i => $$self->{'b'}, $file_scope, $pos->(119.2) );
                 if (
                     bool(
                         all_true(
                             $scope,
-                            $pos->(92.15),
+                            $pos->(120.15),
                             sub {
                                 equal(
-                                    $scope, $pos->(92.15),
+                                    $scope, $pos->(120.15),
                                     $$scope->{'r'}, num( $f, "0" )
                                 );
                             },
                             sub {
                                 equal(
-                                    $scope, $pos->(92.15),
+                                    $scope, $pos->(120.15),
                                     $$scope->{'i'}, num( $f, "0" )
                                 );
                             }
@@ -905,7 +1180,7 @@ my $result = do {
                 if (
                     bool(
                         equal(
-                            $scope, $pos->(94.3),
+                            $scope, $pos->(122.3),
                             $$scope->{'r'}, num( $f, "0" )
                         )
                     )
@@ -916,13 +1191,13 @@ my $result = do {
                     var(
                         $scope,
                         r => str( $f, "" ),
-                        $file_scope, $pos->(95.2)
+                        $file_scope, $pos->(123.2)
                     );
                 }
                 if (
                     bool(
                         equal(
-                            $scope, $pos->(96.3),
+                            $scope, $pos->(124.3),
                             $$scope->{'i'}, num( $f, "0" )
                         )
                     )
@@ -933,17 +1208,17 @@ my $result = do {
                     var(
                         $scope,
                         i => str( $f, "" ),
-                        $file_scope, $pos->(97.2)
+                        $file_scope, $pos->(125.2)
                     );
                 }
                 elsif (
                     bool(
                         equal(
                             $scope,
-                            $pos->(98.3),
+                            $pos->(126.3),
                             $$scope->{'i'},
                             _sub(
-                                $scope, $pos->(98.3),
+                                $scope, $pos->(126.3),
                                 $f->zero, num( $f, "1" )
                             )
                         )
@@ -955,13 +1230,13 @@ my $result = do {
                     var(
                         $scope,
                         i => str( $f, "-i" ),
-                        $file_scope, $pos->(99.2)
+                        $file_scope, $pos->(127.2)
                     );
                 }
                 elsif (
                     bool(
                         less(
-                            $scope, $pos->(100.3),
+                            $scope, $pos->(128.3),
                             $$scope->{'i'}, num( $f, "0" )
                         )
                     )
@@ -972,17 +1247,17 @@ my $result = do {
                     var(
                         $scope,
                         i => add(
-                            $scope, $pos->(101.2),
+                            $scope, $pos->(129.2),
                             $$scope->{'i'}, str( $f, "i" )
                         ),
                         $file_scope,
-                        $pos->(101.2)
+                        $pos->(129.2)
                     );
                 }
                 elsif (
                     bool(
                         equal(
-                            $scope, $pos->(102.3),
+                            $scope, $pos->(130.3),
                             $$scope->{'i'}, num( $f, "1" )
                         )
                     )
@@ -993,26 +1268,26 @@ my $result = do {
                     var(
                         $scope,
                         i => str( $f, "+i" ),
-                        $file_scope, $pos->(103.2)
+                        $file_scope, $pos->(131.2)
                     );
                 }
                 else {
                     var(
                         $scope,
                         i => add(
-                            $scope, $pos->(105.4),
+                            $scope, $pos->(133.4),
                             str( $f, "+" ), $$scope->{'i'},
                             str( $f, "i" )
                         ),
                         $file_scope,
-                        $pos->(105.2)
+                        $pos->(133.2)
                     );
                 }
                 return $ret_func->(
                     add(
-                        $scope, $pos->(106.2), $$scope->{'r'}, $$scope->{'i'}
-                      )->property_u( 'trimPrefix', $pos->(106.35) )
-                      ->( [ str( $f, "+" ) ], $scope, undef, $pos->(106.4) )
+                        $scope, $pos->(134.2), $$scope->{'r'}, $$scope->{'i'}
+                      )->property_u( 'trimPrefix', $pos->(134.35) )
+                      ->( [ str( $f, "+" ) ], $scope, undef, $pos->(134.4) )
                 );
                 return $ret;
             }
@@ -1054,20 +1329,29 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
         $func_9->inside_scope(
+            opDiv => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_10->inside_scope(
             opPow => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_10->inside_scope( abs => $scope, $proto, $class, $ins, 1, undef );
         $func_11->inside_scope(
+            pow => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_12->inside_scope( abs => $scope, $proto, $class, $ins, 1, undef );
+        $func_13->inside_scope( arg => $scope, $proto, $class, $ins, 1, undef );
+        $func_14->inside_scope(
             conj => $scope,
             $proto, $class, $ins, 1, undef
         );
-        $func_12->inside_scope(
+        $func_15->inside_scope(
             description => $scope,
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Complex Num) );
+    load_namespaces( $context, qw(Complex Math Num) );
 };
 
 after_content();
