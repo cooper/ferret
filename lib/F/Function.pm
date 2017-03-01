@@ -245,8 +245,10 @@ sub markdown_fmt {
 
     # create heading.
     my $head = $method->get_markdown_heading(
-        $method->is_init    ?
-        'Initializer'       :
+        $method->is_init                ?
+        'Initializer'                   :
+        $method->{operator_p}           ?
+        ucfirst $method->{operator_p}   :
         $method->{name}
     );
 
@@ -260,10 +262,20 @@ sub markdown_fmt {
     my $instn_name = '$'.lc($class_name);
     my $owner_name = $method->{main} ? $class_name : $instn_name;
     my $example =
+
+        # operator
+        $method->{operator}                             ?
+        $instn_name." $$method{operator} ".$signature   :
+
+        # property
         $method->{is_prop}                              ?
         $owner_name.'.'.$method->{name}                 :
+
+        # initializer
         $method->is_init                                ?
         $instn_name.' = '.$class_name."($signature)"    :
+
+        # normal method
         $owner_name.'.'.$method->{name}."($signature)"  ;
 
     # handle arguments.

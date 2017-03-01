@@ -68,10 +68,10 @@ number.
 
 
 
-### opAdd
+### Addition operator (+)
 
 ```
-$complex.opAdd($rhs: Complex)
+$complex + $rhs: Complex
 ```
 
 Addition of complex numbers.
@@ -83,10 +83,10 @@ Addition of complex numbers.
 
 
 
-### opAdd
+### Addition operator (+)
 
 ```
-$complex.opAdd($ehs: Num)
+$complex + $ehs: Num
 ```
 
 Addition of complex and real numbers.
@@ -98,10 +98,10 @@ Addition of complex and real numbers.
 
 
 
-### opSub
+### Subtraction operator (-)
 
 ```
-$complex.opSub($rhs: Complex)
+$complex - $rhs: Complex
 ```
 
 Subtraction of complex numbers.
@@ -113,10 +113,10 @@ Subtraction of complex numbers.
 
 
 
-### opSub
+### Subtraction operator (-)
 
 ```
-$complex.opSub($rhs: Num)
+$complex - $rhs: Num
 ```
 
 Subtraction of real number from complex number.
@@ -128,10 +128,10 @@ Subtraction of real number from complex number.
 
 
 
-### opSub
+### Subtraction operator (-)
 
 ```
-$complex.opSub($lhs: Num)
+$complex - $lhs: Num
 ```
 
 Subtraction of complex number from real number.
@@ -143,10 +143,10 @@ Subtraction of complex number from real number.
 
 
 
-### opMul
+### Multiplication operator (*)
 
 ```
-$complex.opMul($rhs: Complex)
+$complex * $rhs: Complex
 ```
 
 Multiplication of complex numbers.
@@ -158,10 +158,10 @@ Multiplication of complex numbers.
 
 
 
-### opMul
+### Multiplication operator (*)
 
 ```
-$complex.opMul($ehs: Num)
+$complex * $ehs: Num
 ```
 
 Multiplication of real and complex numbers.
@@ -173,10 +173,10 @@ Multiplication of real and complex numbers.
 
 
 
-### opDiv
+### Division operator (/)
 
 ```
-$complex.opDiv($rhs: Complex)
+$complex / $rhs: Complex
 ```
 
 Division of complex numbers.
@@ -188,10 +188,10 @@ Division of complex numbers.
 
 
 
-### opDiv
+### Division operator (/)
 
 ```
-$complex.opDiv($rhs: Num)
+$complex / $rhs: Num
 ```
 
 Division of complex number by real number.
@@ -203,10 +203,10 @@ Division of complex number by real number.
 
 
 
-### opPow
+### Exponent operator (^)
 
 ```
-$complex.opPow($rhs: Num)
+$complex ^ $rhs: Num
 ```
 
 Complex number to real power.

@@ -853,7 +853,11 @@ sub c_operator {
     my $last_tok = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
     if ($last_tok eq 'KEYWORD_OPERATOR') {
         my $method = $operator_tok_to_method{ $c->label };
-        return $c->simulate('METHOD', { name => $method });
+        return $c->simulate('METHOD', {
+            name        => $method,
+            operator    => F::operator_token($c->label),
+            operator_p  => F::pretty_token($c->label)
+        });
     }
 
     # we're only interested in the previous element at the same level.
