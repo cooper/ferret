@@ -9,8 +9,8 @@ use warnings;
 use strict;
 use 5.010;
 
-our $prop_reg = qr/[A-Za-z_]+[A-Za-z0-9_]*/;
-our $type_reg = qr/[A-Za-z_]+[A-Za-z0-9_\:]*/;
+our $prop_reg = qr/[\p{Letter}_]+[\p{Number}\p{Letter}_]*/;
+our $type_reg = qr/[\p{Letter}_]+[\p{Number}\p{Letter}_\:]*/;
 
 sub import {
     my $this_package = shift;
