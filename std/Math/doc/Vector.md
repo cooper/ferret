@@ -40,6 +40,16 @@ Computed property. Magnitude of the vector.
 
 
 
+### unitVector
+
+```
+$vector.unitVector
+```
+
+Computed property. Returns the unit vector in the direction of this vector.
+
+
+
 ### Addition operator (+)
 
 ```
@@ -52,6 +62,21 @@ Addition of two vectors.
 #### Arguments
 
 * __ehs__: Vector  
+
+
+
+### Subtraction operator (-)
+
+```
+$vector - $lhs: Num
+```
+
+Allows you to take the opposite vector.
+
+
+#### Arguments
+
+* __lhs__: [Number](/std/doc/Number.md)  
 
 
 
@@ -168,6 +193,36 @@ $vector.angleBetween($ehs: Vector)
 
 Angle between this vector and another of the same dimension, measured in
 radians.
+
+
+#### Arguments
+
+* __ehs__: Vector  
+
+
+
+### orthogonalTo
+
+```
+$vector.orthogonalTo($ehs: Vector)
+```
+
+True if this vector is orthogonal to another of the same dimension.
+
+
+#### Arguments
+
+* __ehs__: Vector  
+
+
+
+### parallelTo
+
+```
+$vector.parallelTo($ehs: Vector)
+```
+
+True if this vector is parallel to another of the same dimension.
 
 
 #### Arguments

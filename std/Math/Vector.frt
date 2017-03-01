@@ -16,6 +16,11 @@ prop magnitude {
     return @items.map! { -> $_ ^ 2 }.sum.sqrt
 }
 
+#> returns the unit vector in the direction of this vector
+prop unitVector {
+    return *self / @magnitude
+}
+
 #> addition of two vectors
 operator + {
     need $ehs: Vector
@@ -25,6 +30,16 @@ operator + {
         take *self[$i] + $ehs[$i]
     }
     return Vector(items: $items)
+}
+
+#> allows you to take the opposite vector
+operator - {
+    need $lhs: Num
+    if $lhs != 0
+        throw(:InvalidOperation, "Unsupported operation")
+    return Vector(items: gather for $x in @items {
+        take -$x
+    })
 }
 
 #> subtraction of a vector from another
@@ -99,6 +114,24 @@ method angleBetween {
     # a·b = |a||b|cosθ
     $cosθ = @dot($ehs) / (@magnitude * $ehs.magnitude)
     return Math.acos($cosθ)
+}
+
+#> true if this vector is orthogonal to another of the same dimension
+# consider: the dot product is also zero if either is a zero vector. should
+# we still return true in that case?
+method orthogonalTo {
+    need $ehs: Vector
+    return @dot($ehs) == 0
+}
+
+#> true if this vector is parallel to another of the same dimension
+method parallelTo {
+    need $ehs: Vector
+    $u1 = @unitVector
+    $u2 = $ehs.unitVector
+    if $u1 == $u2 || -$u1 == $u2
+        return true
+    return false
 }
 
 #> fetches the component at the given index. Allows Vector to conform to
