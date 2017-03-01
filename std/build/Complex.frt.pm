@@ -23,7 +23,7 @@
 #                          Instruction
 #                              Return
 #                                  Instance variable '@a'
-#          Class method 'polar' { $r:Num $theta:Num -> $result }
+#          Class method 'polar' { $r:Num $θ:Num -> $result }
 #              Function body
 #                  Instruction
 #                      Need
@@ -32,7 +32,7 @@
 #                              Bareword 'Num'
 #                  Instruction
 #                      Need
-#                          Lexical variable '$theta'
+#                          Lexical variable '$θ'
 #                          Argument type
 #                              Bareword 'Num'
 #                  Instruction
@@ -49,7 +49,7 @@
 #                                                  Bareword 'Math'
 #                                              Argument list [1 item]
 #                                                  Item 0
-#                                                      Lexical variable '$theta'
+#                                                      Lexical variable '$θ'
 #                                  Item 1
 #                                      Operation
 #                                          Lexical variable '$r'
@@ -59,7 +59,7 @@
 #                                                  Bareword 'Math'
 #                                              Argument list [1 item]
 #                                                  Item 0
-#                                                      Lexical variable '$theta'
+#                                                      Lexical variable '$θ'
 #          Computed property 'abs' { -> $result }
 #              Function body
 #                  Instruction
@@ -392,7 +392,7 @@
 #                                          Lexical variable '$log_a'
 #                  Instruction
 #                      Assignment
-#                          Lexical variable '$theta'
+#                          Lexical variable '$θ'
 #                          Operation
 #                              Lexical variable '$rhs'
 #                              Multiplication operator (*)
@@ -411,7 +411,7 @@
 #                                                  Bareword 'Math'
 #                                              Argument list [1 item]
 #                                                  Item 0
-#                                                      Lexical variable '$theta'
+#                                                      Lexical variable '$θ'
 #                                  Item 1
 #                                      Operation
 #                                          Lexical variable '$factor'
@@ -421,7 +421,7 @@
 #                                                  Bareword 'Math'
 #                                              Argument list [1 item]
 #                                                  Item 0
-#                                                      Lexical variable '$theta'
+#                                                      Lexical variable '$θ'
 #          Method 'opEqual' { $ehs:Complex -> $result }
 #              Function body
 #                  Instruction
@@ -649,7 +649,7 @@ my $result = do {
                     more     => undef
                 },
                 {
-                    name     => 'theta',
+                    name     => 'θ',
                     type     => 'Num',
                     optional => undef,
                     more     => undef
@@ -658,8 +658,8 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'r',     27.2 ) || return $ret_func->();
-                need( $scope, $args, 'theta', 28.2 ) || return $ret_func->();
+                need( $scope, $args, 'r', 27.2 ) || return $ret_func->();
+                need( $scope, $args, 'θ', 28.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$scope->{'Complex'}->(
                         [
@@ -669,8 +669,8 @@ my $result = do {
                                 $$scope->{'r'},
                                 $$scope->{'Math'}
                                   ->property_u( 'cos', $pos->(31.4) )->(
-                                    [ $$scope->{'theta'} ], $scope,
-                                    undef,                  $pos->(31.5)
+                                    [ $$scope->{'θ'} ], $scope,
+                                    undef,              $pos->(31.5)
                                   )
                             ),
                             mul(
@@ -679,8 +679,8 @@ my $result = do {
                                 $$scope->{'r'},
                                 $$scope->{'Math'}
                                   ->property_u( 'sin', $pos->(32.4) )->(
-                                    [ $$scope->{'theta'} ], $scope,
-                                    undef,                  $pos->(32.5)
+                                    [ $$scope->{'θ'} ], $scope,
+                                    undef,              $pos->(32.5)
                                   )
                             )
                         ],
@@ -1221,7 +1221,7 @@ my $result = do {
                 );
                 var(
                     $scope,
-                    theta => mul(
+                    θ => mul(
                         $scope,           $pos->(143.4),
                         $$scope->{'rhs'}, $$self->{'arg'}
                     ),
@@ -1237,8 +1237,8 @@ my $result = do {
                                 $$scope->{'factor'},
                                 $$scope->{'Math'}
                                   ->property_u( 'cos', $pos->(145.4) )->(
-                                    [ $$scope->{'theta'} ], $scope,
-                                    undef,                  $pos->(145.5)
+                                    [ $$scope->{'θ'} ], $scope,
+                                    undef,              $pos->(145.5)
                                   )
                             ),
                             mul(
@@ -1247,8 +1247,8 @@ my $result = do {
                                 $$scope->{'factor'},
                                 $$scope->{'Math'}
                                   ->property_u( 'sin', $pos->(146.4) )->(
-                                    [ $$scope->{'theta'} ], $scope,
-                                    undef,                  $pos->(146.5)
+                                    [ $$scope->{'θ'} ], $scope,
+                                    undef,              $pos->(146.5)
                                   )
                             )
                         ],

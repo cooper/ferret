@@ -202,7 +202,7 @@ sub do_file {
     if (!$doc) {
 
         # parse the input file.
-        defined(my $str = eval { slurp($file) })
+        defined(my $str = eval { slurp($file, binmode => ':utf8') })
             or return error($ret, $fh, $write_file, $!);
 
         # tokenize.

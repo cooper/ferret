@@ -22,14 +22,14 @@ init {
         return @a
 }
 
-#> Create a complex number with the given polar coordinates `r` and `theta`.
+#> Create a complex number with the given polar coordinates `r` and `θ`.
 func polar {
     need $r: Num        #< distance from the origin in the complex plane
-    need $theta: Num    #< the angle between the positive real axis and the
+    need $θ: Num        #< the angle between the positive real axis and the
                         #| line drawn from the origin to the point
     return Complex(
-        $r * Math.cos($theta),
-        $r * Math.sin($theta)
+        $r * Math.cos($θ),
+        $r * Math.sin($θ)
     )
 }
 
@@ -44,8 +44,8 @@ prop abs {
 #> [Argument](https://en.wikipedia.org/wiki/Argument_(complex_analysis)) of
 #| the complex number. On the
 #| [complex plane](https://en.wikipedia.org/wiki/Complex_plane), this is the
-#| angle between the positive real axis and the line drawn from the origin to
-#| the point. In polar form, this is theta.
+#| angle φ between the positive real axis and the line drawn from the origin to
+#| the point. In polar form, this is θ.
 prop arg {
     return Math.atan2(@b, @a)
 }
@@ -140,10 +140,10 @@ method pow {
     need $rhs: Num
     $log_a  = Math.log(@abs)
     $factor = Math.exp($rhs * $log_a)
-    $theta  = $rhs * @arg
+    $θ      = $rhs * @arg
     return Complex(
-        $factor * Math.cos($theta),
-        $factor * Math.sin($theta)
+        $factor * Math.cos($θ),
+        $factor * Math.sin($θ)
     )
 }
 

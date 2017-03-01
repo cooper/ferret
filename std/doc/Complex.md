@@ -54,8 +54,8 @@ $complex.arg
 Computed property. [Argument](https://en.wikipedia.org/wiki/Argument_(complex_analysis)) of
 the complex number. On the
 [complex plane](https://en.wikipedia.org/wiki/Complex_plane), this is the
-angle between the positive real axis and the line drawn from the origin to
-the point. In polar form, this is theta.
+angle φ between the positive real axis and the line drawn from the origin to
+the point. In polar form, this is θ.
 
 
 
@@ -280,17 +280,17 @@ $complex.description()
 ### polar
 
 ```
-Complex.polar($r: Num, $theta: Num)
+Complex.polar($r: Num, $θ: Num)
 ```
 
-Create a complex number with the given polar coordinates `r` and `theta`.
+Create a complex number with the given polar coordinates `r` and `θ`.
 
 
 #### Arguments
 
 * __r__: [Number](/std/doc/Number.md) - Distance from the origin in the complex plane.
 
-* __theta__: [Number](/std/doc/Number.md) - The angle between the positive real axis and the.
+* __θ__: [Number](/std/doc/Number.md) - The angle between the positive real axis and the.
 
 
 
