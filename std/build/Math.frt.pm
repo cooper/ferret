@@ -236,6 +236,21 @@
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$base'
+#      Function 'exp' { $num:Num -> $result }
+#          Function body
+#              Instruction
+#                  Need
+#                      Lexical variable '$num'
+#                      Argument type
+#                          Bareword 'Num'
+#              Instruction
+#                  Return
+#                      Call
+#                          Property 'exp'
+#                              Bareword 'NATIVE::Math'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  Lexical variable '$num'
 #      Include (NATIVE, NATIVE::Math, Num)
 package FF;
 
@@ -518,6 +533,21 @@ my $result = do {
             return $ret;
         }
     );
+
+    # Function event 'exp' definition
+    my $func_12 = function_event_def(
+        $f, $context, 'exp', undef,
+        [ { name => 'num', type => 'Num', optional => undef, more => undef } ],
+        undef,
+        sub {
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+            need( $scope, $args, 'num', 81.2 ) || return $ret_func->();
+            return $ret_func->(
+                $$scope->{'NATIVE::Math'}->property_u( 'exp', $pos->(82.25) )
+                  ->( [ $$scope->{'num'} ], $scope, undef, $pos->(82.3) ) );
+            return $ret;
+        }
+    );
     $func_0->inside_scope( sin => $scope, $context, undef, $ins, undef, undef );
     $func_1->inside_scope(
         asin => $scope,
@@ -546,6 +576,10 @@ my $result = do {
     );
     $func_11->inside_scope(
         logb => $scope,
+        $context, undef, $ins, undef, undef
+    );
+    $func_12->inside_scope(
+        exp => $scope,
         $context, undef, $ins, undef, undef
     );
     load_namespaces( $context, qw(NATIVE NATIVE::Math Num) );

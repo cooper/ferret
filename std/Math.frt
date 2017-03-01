@@ -75,3 +75,9 @@ func logb {
     need $base: Num, $num: Num
     return log($num) / log($base)
 }
+
+#> takes `e` (the base of the natural logarithm) to a power.
+func exp {
+    need $num: Num
+    return NATIVE::Math.exp($num)
+}
