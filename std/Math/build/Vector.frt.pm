@@ -475,7 +475,7 @@
 #                              Bareword 'Vector'
 #                  Instruction
 #                      Assignment
-#                          Lexical variable '$cosTheta'
+#                          Lexical variable '$cosθ'
 #                          Operation
 #                              Call
 #                                  Instance variable '@dot'
@@ -497,7 +497,7 @@
 #                                  Bareword 'Math'
 #                              Argument list [1 item]
 #                                  Item 0
-#                                      Lexical variable '$cosTheta'
+#                                      Lexical variable '$cosθ'
 #          Method 'getValue' { $index:Num -> $result }
 #              Function body
 #                  Instruction
@@ -1333,7 +1333,7 @@ my $result = do {
                 need( $scope, $args, 'ehs', 98.2 ) || return $ret_func->();
                 var(
                     $scope,
-                    cosTheta => div(
+                    cosθ => div(
                         $scope,
                         $pos->(100.35),
                         $$self->{'dot'}->(
@@ -1352,10 +1352,8 @@ my $result = do {
                     $pos->(100.1)
                 );
                 return $ret_func->(
-                    $$scope->{'Math'}->property_u( 'acos', $pos->(101.3) )->(
-                        [ $$scope->{'cosTheta'} ], $scope,
-                        undef,                     $pos->(101.4)
-                    )
+                    $$scope->{'Math'}->property_u( 'acos', $pos->(101.3) )
+                      ->( [ $$scope->{'cosθ'} ], $scope, undef, $pos->(101.4) )
                 );
                 return $ret;
             }

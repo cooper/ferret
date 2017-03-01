@@ -40,7 +40,7 @@ $complex.abs
 
 Computed property. [Absolute value](https://en.wikipedia.org/wiki/Absolute_value#Complex_numbers)
 (or modulus) of the complex number. This is distance from the origin on the
-complex plane](https://en.wikipedia.org/wiki/Complex_plane). In polar form,
+[complex plane](https://en.wikipedia.org/wiki/Complex_plane). In polar form,
 this is `r`.
 
 
@@ -54,8 +54,8 @@ $complex.arg
 Computed property. [Argument](https://en.wikipedia.org/wiki/Argument_(complex_analysis)) of
 the complex number. On the
 [complex plane](https://en.wikipedia.org/wiki/Complex_plane), this is the
-angle φ between the positive real axis and the line drawn from the origin to
-the point. In polar form, this is θ.
+angle `θ` between the positive real axis and the line drawn from the origin
+to the point. In polar form, this is `θ`.
 
 
 

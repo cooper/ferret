@@ -96,9 +96,9 @@ method cross {
 #| radians
 method angleBetween {
     need $ehs: Vector
-    # a·b = |a||b|cos(theta)
-    $cosTheta = @dot($ehs) / (@magnitude * $ehs.magnitude)
-    return Math.acos($cosTheta)
+    # a·b = |a||b|cosθ
+    $cosθ = @dot($ehs) / (@magnitude * $ehs.magnitude)
+    return Math.acos($cosθ)
 }
 
 #> fetches the component at the given index. Allows Vector to conform to
