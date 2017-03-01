@@ -39,7 +39,9 @@ $complex.abs
 ```
 
 Computed property. [Absolute value](https://en.wikipedia.org/wiki/Absolute_value#Complex_numbers)
-(or modulus) of the complex number.
+(or modulus) of the complex number. This is distance from the origin on the
+complex plane](https://en.wikipedia.org/wiki/Complex_plane). In polar form,
+this is `r`.
 
 
 
@@ -52,8 +54,8 @@ $complex.arg
 Computed property. [Argument](https://en.wikipedia.org/wiki/Argument_(complex_analysis)) of
 the complex number. On the
 [complex plane](https://en.wikipedia.org/wiki/Complex_plane), this is the
-angle Ï between the positive real axis and the line from the origin to the
-point this number represents.
+angle between the positive real axis and the line drawn from the origin to
+the point. In polar form, this is theta.
 
 
 
@@ -243,6 +245,22 @@ $complex.description()
 ```
 
 
+## Class functions
+
+### polar
+
+```
+Complex.polar($r: Num, $theta: Num)
+```
+
+Create a complex number with the given polar coordinates `r` and `theta`.
+
+
+#### Arguments
+
+* __r__: [Number](/std/doc/Number.md) - Distance from the origin in the complex plane.
+
+* __theta__: [Number](/std/doc/Number.md) - The angle between the positive real axis and the.
 
 
 
