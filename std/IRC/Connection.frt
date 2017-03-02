@@ -82,7 +82,7 @@ method _handleLine {
 method getTarget {
     need $target: Str #< channel name or nickname
     # TODO: once we look at RPL_ISUPPORT, check that for channel prefixes
-    if $target.hasPrefix("\#")
+    if $target.hasPrefix("#")
         return @getChannel($target)
     else
         return @getUser($target)

@@ -153,6 +153,6 @@ on $conn.disconnected {
     }
 }
 
-$conn.autojoin = ["\#k"]
+$conn.autojoin = ["#k"]
 $bot.addConnection($conn)
 $bot.connect()

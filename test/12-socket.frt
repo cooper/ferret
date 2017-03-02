@@ -19,5 +19,5 @@ on $sock.connected {
 $sock.connect()
 
 on Timer(5).once!.expire {
-    $sock.println("JOIN \#k")
+    $sock.println("JOIN #k")
 }
