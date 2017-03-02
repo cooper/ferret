@@ -7,9 +7,9 @@ Represents a complex number.
 Ferret has native support for complex numbers, including syntax for the
 normal mathematic notation. Complex numbers are written as `a + bi`, where
 `a` and `b` are [real numbers](Number.md) and `i` is the
-[imaginary unit](https:
+[imaginary unit](https://en.wikipedia.org/wiki/Imaginary_unit).
 
-`a` and `b` are commonly called the
+`a` and `b` are commonly called the"real part" and "imaginary part"
 respectively, despite both being real numbers.
 
 
@@ -38,9 +38,9 @@ has native support for inline `a + bi` notation.
 $complex.abs
 ```
 
-Computed property. [Absolute value](https:
+Computed property. [Absolute value](https://en.wikipedia.org/wiki/Absolute_value#Complex_numbers)
 (or modulus) of the complex number. This is distance from the origin on the
-[complex plane](https:
+[complex plane](https://en.wikipedia.org/wiki/Complex_plane). In polar form,
 this is `r`.
 
 
@@ -51,9 +51,9 @@ this is `r`.
 $complex.arg
 ```
 
-Computed property. [Argument](https:
+Computed property. [Argument](https://en.wikipedia.org/wiki/Argument_(complex_analysis)) of
 the complex number. On the
-[complex plane](https:
+[complex plane](https://en.wikipedia.org/wiki/Complex_plane), this is the
 angle `θ` between the positive real axis and the line drawn from the origin
 to the point. In polar form, this is `θ`.
 
@@ -65,7 +65,7 @@ to the point. In polar form, this is `θ`.
 $complex.conj
 ```
 
-Computed property. [Conjugate](https:
+Computed property. [Conjugate](https://en.wikipedia.org/wiki/Complex_conjugate) of complex the
 number.
 
 

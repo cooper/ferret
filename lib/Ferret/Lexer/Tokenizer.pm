@@ -75,7 +75,7 @@ my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
 my @token_formats = (
 
     # strings and regex at the same precedence
-    [ STR_REG       => qr/$string_reg|$regex_reg/,  \&increment_lines       ],  # string or regex
+    [ STR_REG       => qr/$string_reg|$regex_reg/       ],  # string or regex
 
     # comments
     [ COMMENT_LD    => qr/#[<>\|]+[^\n]*/,          \&handle_doc_comment    ],  # doc comment
@@ -84,7 +84,7 @@ my @token_formats = (
     # this is way up here because it must be above VAR_SYM and OP_VALUE.
     [ OP_PACK       => qr/::/                                               ],  # package
 
-    [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/,     \&increment_lines       ],  # simple .property
+    [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/       ],  # simple .property
 
     # variables
     [ VAR_LEX       => qr/\$$prop_reg_n/,   \&remove_first_char             ],  # lexical variable
@@ -96,9 +96,9 @@ my @token_formats = (
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start
     [ CLOSURE_E     => qr/}/                                                ],  # closure end
-    [ PAREN_S       => qr/[^\S\n]*\(/,      \&increment_lines               ],  # parentheses start
+    [ PAREN_S       => qr/[^\S\n]*\(/,                     ],  # parentheses start
     [ PAREN_E       => qr/\)/                                               ],  # parentheses end
-    [ BRACKET_S     => qr/[^\S\n]*\[/,      \&increment_lines               ],  # bracket start
+    [ BRACKET_S     => qr/[^\S\n]*\[/,                     ],  # bracket start
     [ BRACKET_E     => qr/\]/                                               ],  # bracket end
 
     # keywords
@@ -137,8 +137,8 @@ my @token_formats = (
     [ OP_NOT        => qr/!/                                                ],  # call without arguments
     [ OP_MOD        => qr/%/                                                ],  # modulus operator
     [ OP_MAYBE      => qr/\?/                                               ],  # inline if operator
-    [ ANGLE_S       => qr/<[^\S\n]*/,       \&increment_lines               ],  # opening angle
-    [ ANGLE_E       => qr/[^\S\n]*>/,       \&increment_lines               ],  # closing angle
+    [ ANGLE_S       => qr/<[^\S\n]*/,                      ],  # opening angle
+    [ ANGLE_E       => qr/[^\S\n]*>/,                      ],  # closing angle
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
     [ OP_ELLIP      => qr/\.\.\./                                           ],  # ellipsis
     [ OP_RANGE      => qr/\.\./                                             ],  # range
@@ -152,7 +152,6 @@ my @token_formats = (
     [ OP_PROP       => qr/\./                                               ],  # non-bareword property
     [ NEWLINE       => qr/\n/,              \&ignore_increment              ],  # newline
     [ SPACE         => qr/\s*/,             \&ignore                        ]   # whitespace
-
 );
 
 # parentheses can be wrappers or function calls.
@@ -420,7 +419,7 @@ sub _escape {
 
 sub handle_doc_comment {
     my ($tokens, $value) = @_;
-    increment_lines(@_);
+
     my $pfx = \substr($value, 0, 2);
     if ($$pfx eq '#<') {
         $$pfx = '';
@@ -640,13 +639,12 @@ sub remove_first_char { [ $_[0], substr $_[1], 1     ] }
 sub remove_last_char  { [ $_[0], substr $_[1], 0, -1 ] }
 sub remove_firstlast  { [ $_[0], substr(substr($_[1], 0, -1), 1) ] }
 sub ignore            { }
-sub ignore_increment  { &increment_lines; () }
+sub ignore_increment  { ; () }
 sub increment_lines   {
-    my ($l, $v) = @_;
+    my $v = shift;
     my $old = $position;
     $position += () = $v =~ /\n/g;
     $position = int $position if $position > $old;
-    return [ $l, $v ];
 }
 
 sub tokenize {
@@ -660,14 +658,18 @@ sub _tokenize {
     $file = $_file if length $_file;
     my @tokens;
 
-    my @terminated_lines;
-    while (my $token = &$lexer) {
+    my @terminated_lines; my $last;
+    my $do_tok; $do_tok = sub {
+        my $token = shift;
+
+        # update position
+        my $tok_str = ref $token ? $token->[1] : $token;
+        increment_lines($tok_str);
 
         # this line was terminated by a comment
         if (my $comment_tok = $terminated_lines[$position]) {
-            my $string = ref $token ? $token->[1] : $token;
-            $comment_tok->[1] .= $string;
-            next;
+            $comment_tok->[1] .= $tok_str;
+            return;
         }
 
         # something wasn't tokenized
@@ -675,6 +677,15 @@ sub _tokenize {
             "Unable to tokenize '%s' at line %d.",
             $token, $position
         ), @tokens) if ref $token ne 'ARRAY';
+
+        # transform function
+        if (my $transform = $token->[3]) {
+            for my $res ($transform->(@$token)) {
+                my $err = $do_tok->($res);
+                return $err if $err;
+            }
+            return;
+        }
 
         # if this is a line comment, mark this line as terminated
         if (!index($token->[0], 'COMMENT_L')) {
@@ -685,15 +696,28 @@ sub _tokenize {
         my $code = __PACKAGE__->can("tok_$$token[0]");
         $token = $code->(\@tokens, $token->[1]) || $token if $code;
 
-        # skip/end
-        next unless @$token;
-        last if $token->[0] eq 'KEYWORD___END__';
+        # skip
+        return unless @$token;
+
+        # end
+        if ($token->[0] eq 'KEYWORD___END__') {
+            $last++;
+            return;
+        };
 
         # we don't care about the value for this type of token
         undef $token->[1] if $no_value{ $token->[0] };
 
         $token->[2] = $position;
         push @tokens, $token;
+
+        return;
+    };
+
+    while (my $token = &$lexer) {
+        my $err = $do_tok->($token);
+        return $err if $err;
+        last if $last;
     }
 
     # if this is a string or something, don't do any of the below just yet.

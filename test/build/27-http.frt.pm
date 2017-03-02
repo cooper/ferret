@@ -236,7 +236,7 @@ my $result = do {
                     {}
                 );
                 $$ins->{'connect'}
-                  ->( [ undef, [] ], $scope, undef, $pos->(24.3) );
+                  ->( [ undef, [] ], $scope, undef, $pos->(24.2) );
             }
         );
         return $ret_func->($inside_return) if $inside_status eq 'return';

@@ -2,7 +2,7 @@
 
 This is the Math::Matrix class.
 
-Represents a [matrix](https:
+Represents a [matrix](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 of any dimensions.
 
 

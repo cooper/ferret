@@ -4,7 +4,7 @@ This is the String class.
 
 A string is basic datatype which stores an arbitrary sequence of bytes,
 typically representing characters. String literals are delimited by
-double quotes, like so: `.
+double quotes, like so: `"The quick brown fox jumps over the lazy dog"`.
 
 
 
@@ -77,7 +77,7 @@ objects capable of string conversion.
 `.fill()` will also respect indentation. If the provided values are
 multi-line, they will be indented at the same depth as the placeholder.
 
-For example, `.
+For example, `"Hi <<name>>!".fill(name: "Steve")` returns `"Hi Steve!"`.
 
 
 #### Arguments
