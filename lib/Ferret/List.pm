@@ -184,7 +184,7 @@ sub _splice {
     my ($list, $args) = &FUNC_V1;
     my ($offset, $length) = map $args->pnumber($_), 'offset', 'length';
     my @removed = $list->splice($offset, $length);
-    return flist(@removed);
+    return @removed ? flist(@removed) : Ferret::undefined;
 }
 
 # join stringified elements by a separator
