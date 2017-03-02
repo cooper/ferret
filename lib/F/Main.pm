@@ -19,9 +19,10 @@ sub perl_fmt_do {
     my $perl = join "\n", map { $_->perl_fmt_do } $main->children;
     return $perl if $mini;
     return F::get_format('Perl', main => {
-        content   => $perl,
-        file_name => $main->{name},
-        base_name => basename($main->{name})
+        operations  => join(' ', sort keys %{ $main->{required_operations} }),
+        content     => $perl,
+        file_name   => $main->{name},
+        base_name   => basename($main->{name})
     });
 }
 

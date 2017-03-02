@@ -185,6 +185,7 @@ BEGIN {
 }
 
 use Ferret;
+use Ferret::Core::Operations qw(_not _sub add any_true less num);
 
 my ( $self, $ins );
 my $f = get_ferret();
@@ -192,9 +193,9 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $file_name = './std/Iterator.frt';
 my $pos = before_content( 'Iterator.frt', $file_name );
+my $result;
 
-use Ferret::Core::Operations qw(_not _sub add any_true less num);
-my $result = do {
+$result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
     load_core('main');

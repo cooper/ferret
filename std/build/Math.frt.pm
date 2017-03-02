@@ -283,6 +283,7 @@ BEGIN {
 }
 
 use Ferret;
+use Ferret::Core::Operations qw(_sub div mul num pow);
 
 my ( $self, $ins );
 my $f = get_ferret();
@@ -290,9 +291,9 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $file_name = './std/Math.frt';
 my $pos = before_content( 'Math.frt', $file_name );
+my $result;
 
-use Ferret::Core::Operations qw(_sub div mul num pow);
-my $result = do {
+$result = do {
     my ( $file_scope, $context ) = get_context( $f, 'Math' );
     my $scope = $file_scope;
     load_core('Math');

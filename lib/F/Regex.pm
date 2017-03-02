@@ -35,8 +35,8 @@ sub desc {
 
 sub perl_fmt {
     my $rgx = shift;
-    my $doc = $rgx->document;
-    $doc->{required_operations}{rgx}++;
+    my $main = $rgx->main;
+    $main->{required_operations}{rgx}++;
     return regex => {
         regex => quote($rgx->{value}),
         id    => 'undef',

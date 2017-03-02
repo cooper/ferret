@@ -133,8 +133,8 @@ sub op_fmt {
     my ($op, $op_name, @items) = (shift, @{ +shift });
     $op_name = $map{$op_name} || $op_name;
 
-    my $doc = $op->document;
-    $doc->{required_operations}{$op_name}++;
+    my $main = $op->main;
+    $main->{required_operations}{$op_name}++;
 
     # consider return when wrapped with sub{}?
     return operation => {

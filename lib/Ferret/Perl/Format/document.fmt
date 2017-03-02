@@ -1,5 +1,4 @@
-use Ferret::Core::Operations qw(<<operations>>);
-my $result = do {
+$result = do {
     my ($file_scope, $context) = get_context($f, '<<package>>');
     my $scope = $file_scope;
     load_core('<<package>>');

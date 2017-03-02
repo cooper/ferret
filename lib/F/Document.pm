@@ -53,7 +53,6 @@ sub perl_fmt {
 
     return document => {
         'package'      => $doc->{package},
-        operations     => join(' ', sort keys %{ $doc->{required_operations} }),
         upper_content  => $before_c,    # function declarations
         lower_content  => $after_c,     # all other children
         all_content    => join("\n", $before_c, $after_c)

@@ -29,7 +29,7 @@ sub new {
 
 sub simple_fmt {
     my $if = shift;
-    $if->document->{required_operations}{bool}++;
+    $if->main->{required_operations}{bool}++;
 
     # get content.
     my $content = $if->body->body_fmt_do;

@@ -17,8 +17,8 @@ sub desc {
 
 sub perl_fmt {
     my $num = shift;
-    my $doc = $num->document;
-    $doc->{required_operations}{num}++;
+    my $main = $num->main;
+    $main->{required_operations}{num}++;
     return 'zero' if $num->{zero};
     return number => { num => quote($num->{value}) };
 }

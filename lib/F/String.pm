@@ -18,8 +18,8 @@ sub desc {
 
 sub perl_fmt {
     my $str = shift;
-    my $doc = $str->document;
-    $doc->{required_operations}{str}++;
+    my $main = $str->main;
+    $main->{required_operations}{str}++;
     return string => { string => quote($str->{value}) };
 }
 

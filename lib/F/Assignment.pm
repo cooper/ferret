@@ -75,7 +75,7 @@ sub perl_fmt {
             items     => "$old, $val",
             pos       => $a->{create_pos}
         });
-        $a->document->{required_operations}{$op}++;
+        $a->main->{required_operations}{$op}++;
     }
 
     $fmt_args->{assign_value} = $val;

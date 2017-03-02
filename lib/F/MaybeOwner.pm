@@ -8,12 +8,12 @@ use parent 'F::Node';
 sub maybe_fmt {
     my ($node, $maybe_n) = (shift, 0);
     my @maybes = @{ $node->{maybes} };
-    my $doc = $node->document;
+    my $main = $node->main;
 
     # my $maybe...
     my $definitions = '';
     foreach my $maybe (@maybes) {
-        $doc->{required_operations}{bool}++;
+        $main->{required_operations}{bool}++;
         $maybe->{n} = $maybe_n++;
         $definitions .= sprintf "my %s = %s;\n",
             $maybe->perl_fmt_do,
@@ -26,7 +26,7 @@ sub maybe_fmt {
         $conditionals = $maybes[0]->perl_fmt_do;
     }
     elsif (@maybes) {
-        $doc->{required_operations}{all_true}++;
+        $main->{required_operations}{all_true}++;
         $conditionals = F::get_perl_fmt(operation => {
             operation => 'all_true',
             items     => join(', ', map 'sub { '.$_->perl_fmt_do.' }', @maybes),

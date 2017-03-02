@@ -22,6 +22,7 @@ BEGIN {
 }
 
 use Ferret;
+use Ferret::Core::Operations qw(str);
 
 my ( $self, $ins );
 my $f = get_ferret();
@@ -29,9 +30,9 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $file_name = './test/1-hello-world.frt';
 my $pos = before_content( '1-hello-world.frt', $file_name );
+my $result;
 
-use Ferret::Core::Operations qw(str);
-my $result = do {
+$result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
     load_core('main');
