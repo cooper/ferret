@@ -3,7 +3,7 @@
 This is the JSON class version 1.0.
 
 Provides JSON serializing and deserializing, done correctly and fast.
-Based on [JSON::XS](http://search.cpan.org/perldoc?JSON%3A%3AXS).
+Based on [JSON::XS](http:
 Basic operations are accessible via [class functions](#class-functions).
 Advanced options are available through the use of a JSON
 [class instance](#initializer).

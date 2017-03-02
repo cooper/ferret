@@ -9,6 +9,8 @@
 #                          Argument type
 #                              Bareword 'Str'
 #                  Instruction
+#                      String '::'
+#                  Instruction
 #                      Want
 #                          Instance variable '@prefix'
 #                          Argument type
@@ -93,6 +95,7 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'name' ) || return $ret_func->();
+                str( $f, "::" );
                 want( $self, $args, 'prefix', 9.2, str( $f, "CORE" ) );
                 want( $self, $args, 'version', 12.2, num( $f, "1.0" ) );
                 $self->set_property(

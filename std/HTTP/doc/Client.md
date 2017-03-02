@@ -16,7 +16,7 @@ Creates a new Client class instance.
 
 ### Arguments
 
-* *optional* __userAgent__: [String](/std/doc/String.md) - HTTP user agent. Default is `"ferret-http/<version>"`.
+* *optional* __userAgent__: [String](/std/doc/String.md) - HTTP user agent. Default is `.
 
 * *optional* __timeout__: [Number](/std/doc/Number.md) - Request timeout. Set to undefined for no timeout.
 

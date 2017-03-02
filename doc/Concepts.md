@@ -47,7 +47,7 @@ on Person.proto.haveBirthday {
 }
 ```
 
-#### Objective
+## Objective
 
 All Ferret data types are objects. Yeah, that sounds pretty cliché nowadays,
 but Ferret's inheritance system makes it unique (see "Inheritance").

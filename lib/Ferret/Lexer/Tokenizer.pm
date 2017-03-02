@@ -71,16 +71,15 @@ my $prop_reg    = $Ferret::Shared::Utils::prop_reg;
 my $prop_reg_n  = qr/(?:$prop_reg)|(?:[0-9]+)/;
 my $string_reg  = qr/"(?:[^"\\]|\\.)*"/;
 my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
-my $not_esc     = qr/(?<!\\)/;
 
 my @token_formats = (
 
-    # comments
-    [ COMMENT_LD    => qr/$not_esc#[<>\|]+[^\n]*/,  \&handle_doc_comment    ],  # doc comment
-    [ COMMENT_L     => qr/$not_esc#+[^\n]*/,        \&ignore_increment      ],  # normal line comment
-
     # strings and regex at the same precedence
     [ STR_REG       => qr/$string_reg|$regex_reg/,  \&increment_lines       ],  # string or regex
+
+    # comments
+    [ COMMENT_LD    => qr/#[<>\|]+[^\n]*/,          \&handle_doc_comment    ],  # doc comment
+    [ COMMENT_L     => qr/#+[^\n]*/,                \&ignore_increment      ],  # normal line comment
 
     # this is way up here because it must be above VAR_SYM and OP_VALUE.
     [ OP_PACK       => qr/::/                                               ],  # package
@@ -394,7 +393,6 @@ sub handle_strings {
             # variable or property.
             push @parts, $add if @parts && $part->[0] ne 'PROPERTY';
             push @parts, $part;
-
         }
 
         push @new_tokens, @parts;
@@ -662,23 +660,36 @@ sub _tokenize {
     $file = $_file if length $_file;
     my @tokens;
 
+    my @terminated_lines;
     while (my $token = &$lexer) {
 
-        # something wasn't tokenized.
+        # this line was terminated by a comment
+        if (my $comment_tok = $terminated_lines[$position]) {
+            my $string = ref $token ? $token->[1] : $token;
+            $comment_tok->[1] .= $string;
+            next;
+        }
+
+        # something wasn't tokenized
         return (F::fatal(sprintf
             "Unable to tokenize '%s' at line %d.",
             $token, $position
         ), @tokens) if ref $token ne 'ARRAY';
 
-        # additional tokenizing subroutine.
+        # if this is a line comment, mark this line as terminated
+        if (!index($token->[0], 'COMMENT_L')) {
+            $terminated_lines[$position] = $token;
+        }
+
+        # tokenization routine
         my $code = __PACKAGE__->can("tok_$$token[0]");
         $token = $code->(\@tokens, $token->[1]) || $token if $code;
 
-        # skip/end.
+        # skip/end
         next unless @$token;
         last if $token->[0] eq 'KEYWORD___END__';
 
-        # we don't care about the value for this type of token.
+        # we don't care about the value for this type of token
         undef $token->[1] if $no_value{ $token->[0] };
 
         $token->[2] = $position;
@@ -692,32 +703,33 @@ sub _tokenize {
     @tokens = handle_strings(@tokens);
 
     # separate into lines.
-    my (@lines, @all_on_line, @done_on_line);
+    my (@lines);
     foreach my $tok (@tokens) {
         my $line = $tok->[2];
         push @{ $lines[$line] ||= [] }, $tok;
-        $all_on_line[$line]++;
     }
 
     # inject semicolons.
     foreach my $line (@lines) {
         my $last = $line->[-1] or next;
 
-        # if it's a comment, look at the second-to-last.
-        $last = $line->[-2] if $last->[0] =~ m/^COMMENT/;
-        $last or next;
+        # if it's a comment (probably only doc comments left at this point),
+        # look at the second-to-last token
+        if ($last->[0] =~ m/^COMMENT/) {
+            $last = $line->[-2] or next;
+        }
 
         next unless $semi_follows{ $last->[0] };
-        push @$line, [ 'OP_SEMI', 'simulated', $last->[2] ];
-        $all_on_line[ $last->[2] ]++;
+        push @$line, [ OP_SEMI => 'simulated', $last->[2] ];
     }
 
     @tokens = map @$_, @lines;
 
     # add positioning bits.
+    my @done_on_line;
     for my $token (@tokens) {
         my $i = ++$done_on_line[ $token->[2] ];
-        my $inc = sprintf '%.5f', $i / multen($all_on_line[ $token->[2] ]);
+        my $inc = sprintf '%.5f', $i / multen(scalar @{ $lines[ $token->[2] ] });
         $token->[2] = int($token->[2]) + $inc;
     }
 

@@ -7,7 +7,7 @@ particular quantity. Numbers are useful for counting things and for
 performing mathematical calculations.
 
 This class encompasses all sorts of
-[real numbers](https://en.wikipedia.org/wiki/Real_number), including integers
+[real numbers](https:
 and inexact floating-point values in the native architecture's
 double-precision representation; as well as the more abstract concepts of
 [infinity](#inf) and [NaN](#nan).
@@ -125,7 +125,7 @@ $number.factorial()
 ```
 
 The number's factorial (`n!`). This can also be written `n!` because
-"calling" a number yields its factorial. Non-integers are transformed with
+
 `.floor`.
 
 

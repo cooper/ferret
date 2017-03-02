@@ -64,7 +64,7 @@ operator - {
     return @map! { -> $_ - $rhs }
 }
 
-#> allows you to take the opposite vector `-$u`
+#> allows you to take the opposite matrix
 operator - {
     need $lhs: Num
     if $lhs != 0

@@ -2,7 +2,7 @@
 
 This is the Math::Matrix class.
 
-Represents a [matrix](https://en.wikipedia.org/wiki/Matrix_(mathematics))
+Represents a [matrix](https:
 of any dimensions.
 
 
@@ -132,7 +132,7 @@ Scalar subtraction.
 $matrix - $lhs: Num
 ```
 
-Allows you to take the opposite vector `-$u`.
+Allows you to take the opposite matrix.
 
 
 #### Arguments

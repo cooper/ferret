@@ -14,6 +14,8 @@
 #                              Item 0
 #                                  String 'Got TERM. ...'
 #      Instruction
+#          String 'are you sure?'
+#      Instruction
 #          Assignment
 #              Lexical variable '$asked'
 #              Boolean false
@@ -133,6 +135,7 @@ my $result = do {
         ),
         { before => ['default'] }
     );
+    str( $f, "are you sure?" );
     var( $scope, asked => $false, undef, $pos->(8.2) );
     on(
         $$scope->{'Signal'}->property_u( 'INT', $pos->(9.3) ),
