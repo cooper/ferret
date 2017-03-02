@@ -181,13 +181,12 @@ BEGIN {
 use Ferret;
 use Ferret::Core::Operations qw(add all_true bool gr8r nequal num str);
 
-my ( $self, $ins );
+my ( $self, $ins, $result );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $file_name = './test/20-irc-complex/IRCBot/Message.frt';
-my $pos = before_content( 'Message.frt', $file_name );
-my $result;
+my ( $pos, $file_name ) =
+  before_content( 'Message.frt', './test/20-irc-complex/IRCBot/Message.frt' );
 
 $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'IRCBot' );

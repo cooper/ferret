@@ -43,13 +43,12 @@ BEGIN {
 use Ferret;
 use Ferret::Core::Operations qw(num);
 
-my ( $self, $ins );
+my ( $self, $ins, $result );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $file_name = './test/33-function-prop-var.frt';
-my $pos = before_content( '33-function-prop-var.frt', $file_name );
-my $result;
+my ( $pos, $file_name ) = before_content( '33-function-prop-var.frt',
+    './test/33-function-prop-var.frt' );
 
 $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );

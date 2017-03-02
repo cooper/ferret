@@ -57,13 +57,12 @@ BEGIN {
 use Ferret;
 use Ferret::Core::Operations qw();
 
-my ( $self, $ins );
+my ( $self, $ins, $result );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $file_name = './std/HTTP/Request.frt';
-my $pos = before_content( 'Request.frt', $file_name );
-my $result;
+my ( $pos, $file_name ) =
+  before_content( 'Request.frt', './std/HTTP/Request.frt' );
 
 $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'HTTP' );

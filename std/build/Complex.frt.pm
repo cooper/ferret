@@ -583,13 +583,11 @@ use Ferret;
 use Ferret::Core::Operations
   qw(_sub add all_true bool div equal less less_e mul num pow str);
 
-my ( $self, $ins );
+my ( $self, $ins, $result );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $file_name = './std/Complex.frt';
-my $pos = before_content( 'Complex.frt', $file_name );
-my $result;
+my ( $pos, $file_name ) = before_content( 'Complex.frt', './std/Complex.frt' );
 
 $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );

@@ -203,13 +203,12 @@ use Ferret;
 use Ferret::Core::Operations
   qw(_sub bool div equal less mod mul nequal num pow range str);
 
-my ( $self, $ins );
+my ( $self, $ins, $result );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $file_name = './std/Extension/Number.frt';
-my $pos = before_content( 'Number.frt', $file_name );
-my $result;
+my ( $pos, $file_name ) =
+  before_content( 'Number.frt', './std/Extension/Number.frt' );
 
 $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );

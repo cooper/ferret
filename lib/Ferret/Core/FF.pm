@@ -57,7 +57,7 @@ sub before_content {
     # create a function to make dualvar positions.
     my $posfunc = sub { $pos = dualvar shift, $file };
 
-    return $posfunc;
+    return ($posfunc, $file);
 }
 
 # things to do after evaluating runtime content.

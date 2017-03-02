@@ -149,6 +149,8 @@ sub get_class {
         $context = $f->main_context;
     }
 
+    # return space($context, undef, 1, $class_name);
+
     my ($class, $owner) = $context->_property($class_name);
     return unless $class && $class->isa('Ferret::Class');
 
@@ -183,10 +185,11 @@ sub space {
         my $file = build_name(ns_to_slash("$space.frt.pm"));
 
         # already tried this file
-        return $context->property($space) if $tried_files{$file};
+        return $context->property($space)
+            if $tried_files{$file};
 
         # do the file
-        $tried_files{$file} = 1;
+        $tried_files{$file}++;
         do $file or do {
             if ($@) {
                 print "error in $file: $@";
@@ -200,7 +203,8 @@ sub space {
         return $context->property($space);
     }
     return if $last_check;
-    push @{ $context->f->{pending_spaces}{$file_name} ||= [] }, [ $context, @acceptable ];
+    push @{ $context->f->{pending_spaces}{$file_name} ||= [] },
+        [ $context, @acceptable ];
 }
 
 sub check_spaces {
@@ -216,7 +220,7 @@ sub check_spaces {
         }
 
         # try to load again
-        next if Ferret::space($context, $file_name, 1, @acceptable);
+        next if space($context, $file_name, 1, @acceptable);
 
         # failed
         return join '|', @acceptable;

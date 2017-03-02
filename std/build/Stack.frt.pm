@@ -67,13 +67,11 @@ BEGIN {
 use Ferret;
 use Ferret::Core::Operations qw(add str);
 
-my ( $self, $ins );
+my ( $self, $ins, $result );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $file_name = './std/Stack.frt';
-my $pos = before_content( 'Stack.frt', $file_name );
-my $result;
+my ( $pos, $file_name ) = before_content( 'Stack.frt', './std/Stack.frt' );
 
 $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );

@@ -127,13 +127,12 @@ BEGIN {
 use Ferret;
 use Ferret::Core::Operations qw(add equal nequal num str);
 
-my ( $self, $ins );
+my ( $self, $ins, $result );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $file_name = './std/Extension/String.frt';
-my $pos = before_content( 'String.frt', $file_name );
-my $result;
+my ( $pos, $file_name ) =
+  before_content( 'String.frt', './std/Extension/String.frt' );
 
 $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );

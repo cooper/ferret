@@ -95,13 +95,12 @@ BEGIN {
 use Ferret;
 use Ferret::Core::Operations qw(add num str);
 
-my ( $self, $ins );
+my ( $self, $ins, $result );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $file_name = './test/4-collections.frt';
-my $pos = before_content( '4-collections.frt', $file_name );
-my $result;
+my ( $pos, $file_name ) =
+  before_content( '4-collections.frt', './test/4-collections.frt' );
 
 $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
