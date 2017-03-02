@@ -120,7 +120,7 @@ After that, try running the compiler from the repository root directory
 If you cannot write to `/etc/ferret.conf`, you can store your configuration
 elsewhere. Just set the environment variable `$FERRET_CONFIG` to the absolute
 path of your configuration file. To set it semi-permanently, add it to your
-`~/.bashrc` or the like.
+`~/.bash_profile` or the like.
 
 ```sh
 export FERRET_CONFIG="/path/to/my/ferret.conf"
