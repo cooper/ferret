@@ -143,7 +143,7 @@ sub markdown_fmt {
 
     return type => {
         heading     => $head,
-        description => dot_trim($type->{doc_comment}),
+        description => dot_trim($type->doc_comment),
         name        => $type->type_name,
         equal_to    => $equal_to,
         conditions  => $conditions

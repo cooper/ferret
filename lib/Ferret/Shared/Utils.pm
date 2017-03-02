@@ -63,9 +63,16 @@ sub trim {
     return $str;
 }
 
-# trim and add a period at the end, if there isn't one already.
+# remove leading and trailing whitespace from all lines
+sub trim_lines {
+    my $str = shift;
+    return undef if !defined $str;
+    return join "\n", map { trim($_) } split "\n", $str;
+}
+
+# trim lines and add a period at the end, if there isn't one already.
 sub dot_trim {
-    my $str = trim(shift);
+    my $str = trim_lines(shift);
     return undef if !defined $str;
     $str .= '.' unless $str =~ m/\.$/;
     return ucfirst $str;

@@ -6,8 +6,9 @@ use strict;
 use 5.010;
 
 use Evented::Object::Hax;
-use Scalar::Util 'blessed';
-use List::Util 'any';
+use Ferret::Shared::Utils qw(trim_lines);
+use Scalar::Util qw(blessed);
+use List::Util qw(any);
 
 sub new {
     my ($class, %opts) = @_;
@@ -175,5 +176,7 @@ sub somewhere_inside {
     }
     return;
 }
+
+sub doc_comment { trim_lines(shift->{doc_comment}) }
 
 1

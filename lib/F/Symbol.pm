@@ -21,8 +21,8 @@ sub markdown_fmt {
     my $sym = shift;
     return symbol => {
         name    => $sym->{sym_value},
-        hyph    => length $sym->{doc_comment} ? ' - ' : '',
-        comment => dot_trim($sym->{doc_comment})
+        hyph    => length $sym->doc_comment ? ' - ' : '',
+        comment => dot_trim($sym->doc_comment)
     };
 }
 

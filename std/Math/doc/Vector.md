@@ -72,7 +72,7 @@ Returns the unit vector in the direction of the given axis.
 
 #### Arguments
 
-* __axis__: VectorAxis - Axis number or letter, starting at 1 or"i".
+* __axis__: VectorAxis - Axis number or letter, starting at 1 or "i".
 
 
 
@@ -362,7 +362,7 @@ Returns the unit vector for the given dimension and axis.
 
 * __dimension__: [Number](/std/doc/Number.md)  
 
-* __axis__: VectorAxis - Axis number or letter, starting at 1 or"i".
+* __axis__: VectorAxis - Axis number or letter, starting at 1 or "i".
 
 
 

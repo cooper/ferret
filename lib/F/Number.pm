@@ -27,8 +27,8 @@ sub markdown_fmt {
     my $num = shift;
     return number => {
         num     => $num->{value},
-        hyph    => length $num->{doc_comment} ? ' - ' : '',
-        comment => dot_trim($num->{doc_comment})
+        hyph    => length $num->doc_comment ? ' - ' : '',
+        comment => dot_trim($num->doc_comment)
     };
 }
 

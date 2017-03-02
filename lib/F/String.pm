@@ -27,8 +27,8 @@ sub markdown_fmt {
     my $str = shift;
     return string => {
         string  => quote($str->{value}),
-        hyph    => length $str->{doc_comment} ? ' - ' : '',
-        comment => dot_trim($str->{doc_comment})
+        hyph    => length $str->doc_comment ? ' - ' : '',
+        comment => dot_trim($str->doc_comment)
     };
 }
 

@@ -172,7 +172,7 @@ sub markdown_fmt {
 
     return class => {
         name            => $class_full_name,
-        description     => dot_trim($class->{doc_comment}),
+        description     => dot_trim($class->doc_comment),
         version         => $class->{version},
         version_str     => $class->{version}    ?
             " version $$class{version}"         :

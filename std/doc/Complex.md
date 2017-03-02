@@ -9,7 +9,7 @@ normal mathematic notation. Complex numbers are written as `a + bi`, where
 `a` and `b` are [real numbers](Number.md) and `i` is the
 [imaginary unit](https://en.wikipedia.org/wiki/Imaginary_unit).
 
-`a` and `b` are commonly called the"real part" and "imaginary part"
+`a` and `b` are commonly called the "real part" and "imaginary part"
 respectively, despite both being real numbers.
 
 

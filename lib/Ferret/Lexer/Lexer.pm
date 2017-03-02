@@ -29,7 +29,7 @@ sub _tokens {
 
     my $maketoken = sub {
         my ($buf, $l, $v) = @_;
-        return [$l,$v,undef,$maketoken_user];
+        return [ $l, $v, undef, $maketoken_user ];
     };
 
     my @tokens;

@@ -6,7 +6,7 @@ use strict;
 use 5.010;
 use parent 'F::Element';
 
-use Scalar::Util 'weaken';
+use Scalar::Util qw(weaken);
 
 sub new {
     my ($class, %opts) = @_;
@@ -164,7 +164,8 @@ sub has_descendant {
 sub find_doc_comment {
     my $do; $do = sub {
         my $el = shift;
-        return $el->{doc_comment} if length $el->{doc_comment};
+        return $el->doc_comment
+            if length $el->doc_comment;
         return if !$el->is_node;
         for ($el->children) {
             my $yes = $do->($_);

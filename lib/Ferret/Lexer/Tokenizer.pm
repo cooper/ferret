@@ -75,16 +75,16 @@ my $regex_reg   = qr/\/(?:[^\/\\\n]|\\.)*\/[a-zA-Z]*/;
 my @token_formats = (
 
     # strings and regex at the same precedence
-    [ STR_REG       => qr/$string_reg|$regex_reg/       ],  # string or regex
+    [ STR_REG       => qr/$string_reg|$regex_reg/                           ],  # string or regex
 
     # comments
     [ COMMENT_LD    => qr/#[<>\|]+[^\n]*/,          \&handle_doc_comment    ],  # doc comment
-    [ COMMENT_L     => qr/#+[^\n]*/,                \&ignore_increment      ],  # normal line comment
+    [ COMMENT_L     => qr/#+[^\n]*/,                \&ignore                ],  # normal line comment
 
     # this is way up here because it must be above VAR_SYM and OP_VALUE.
     [ OP_PACK       => qr/::/                                               ],  # package
 
-    [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/       ],  # simple .property
+    [ PROPERTY      => qr/\s*\.[\*]?$prop_reg/                              ],  # simple .property
 
     # variables
     [ VAR_LEX       => qr/\$$prop_reg_n/,   \&remove_first_char             ],  # lexical variable
@@ -96,9 +96,9 @@ my @token_formats = (
     # wrappers
     [ CLOSURE_S     => qr/{/                                                ],  # closure start
     [ CLOSURE_E     => qr/}/                                                ],  # closure end
-    [ PAREN_S       => qr/[^\S\n]*\(/,                     ],  # parentheses start
+    [ PAREN_S       => qr/[^\S\n]*\(/,                                      ],  # parentheses start
     [ PAREN_E       => qr/\)/                                               ],  # parentheses end
-    [ BRACKET_S     => qr/[^\S\n]*\[/,                     ],  # bracket start
+    [ BRACKET_S     => qr/[^\S\n]*\[/,                                      ],  # bracket start
     [ BRACKET_E     => qr/\]/                                               ],  # bracket end
 
     # keywords
@@ -137,8 +137,8 @@ my @token_formats = (
     [ OP_NOT        => qr/!/                                                ],  # call without arguments
     [ OP_MOD        => qr/%/                                                ],  # modulus operator
     [ OP_MAYBE      => qr/\?/                                               ],  # inline if operator
-    [ ANGLE_S       => qr/<[^\S\n]*/,                      ],  # opening angle
-    [ ANGLE_E       => qr/[^\S\n]*>/,                      ],  # closing angle
+    [ ANGLE_S       => qr/<[^\S\n]*/,                                       ],  # opening angle
+    [ ANGLE_E       => qr/[^\S\n]*>/,                                       ],  # closing angle
     [ OP_SEMI       => qr/;/                                                ],  # instruction terminator
     [ OP_ELLIP      => qr/\.\.\./                                           ],  # ellipsis
     [ OP_RANGE      => qr/\.\./                                             ],  # range
@@ -150,7 +150,7 @@ my @token_formats = (
     [ BAREWORD      => qr/[A-Za-z_]+[A-Za-z0-9:_]*/                         ],  # bareword (and keywords)
     [ NUMBER        => qr/\d+(?:\.\d+(?:e\d+)?)?/                           ],  # number
     [ OP_PROP       => qr/\./                                               ],  # non-bareword property
-    [ NEWLINE       => qr/\n/,              \&ignore_increment              ],  # newline
+    [ NEWLINE       => qr/\n/,              \&ignore                        ],  # newline
     [ SPACE         => qr/\s*/,             \&ignore                        ]   # whitespace
 );
 
@@ -419,21 +419,17 @@ sub _escape {
 
 sub handle_doc_comment {
     my ($tokens, $value) = @_;
-
     my $pfx = \substr($value, 0, 2);
     if ($$pfx eq '#<') {
         $$pfx = '';
-        $value =~ s/^\s+|\s+$//g;
         return [ COMMENT_LDL => $value ];
     }
     if ($$pfx eq '#>') {
         $$pfx = '';
-        $value =~ s/^\s+|\s+$//g;
         return [ COMMENT_LDR => $value ];
     }
     if ($$pfx eq '#|') {
         $$pfx = '';
-        $value =~ s/^\s+|\s+$//g;
         return [ COMMENT_LDA => $value ];
     }
     return [];
@@ -639,7 +635,6 @@ sub remove_first_char { [ $_[0], substr $_[1], 1     ] }
 sub remove_last_char  { [ $_[0], substr $_[1], 0, -1 ] }
 sub remove_firstlast  { [ $_[0], substr(substr($_[1], 0, -1), 1) ] }
 sub ignore            { }
-sub ignore_increment  { ; () }
 sub increment_lines   {
     my $v = shift;
     my $old = $position;

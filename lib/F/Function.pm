@@ -291,7 +291,7 @@ sub markdown_fmt {
     }
 
     # handle comments.
-    my $comment = $method->{doc_comment};
+    my $comment = $method->doc_comment;
     if (!length $comment && $method->is_init) {
         $comment = "Creates a new $class_name class instance.";
     }
