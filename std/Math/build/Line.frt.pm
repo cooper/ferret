@@ -1,119 +1,119 @@
 # === Document Model ===
-#  Document './std/Math/Line.frt'
+#  File './std/Math/Line.frt'
 #      Package 'Math'
-#      Class 'Line'
-#          Class method 'initializer__' { $pt1:Point $pt2:Point }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@pt1'
-#                          Argument type
-#                              Bareword 'Point'
-#                  Instruction
-#                      Need
-#                          Instance variable '@pt2'
-#                          Argument type
-#                              Bareword 'Point'
-#          Computed property 'length' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'distanceTo'
-#                                  Instance variable '@pt1'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Instance variable '@pt2'
-#          Computed property 'endpoints' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Value list [2 items]
-#                              Item 0
-#                                  Instance variable '@pt1'
-#                              Item 1
-#                                  Instance variable '@pt2'
-#          Computed property 'midpoint' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'midpoint'
-#                                  Set [2 items]
+#          Class 'Line'
+#              Class method 'initializer__' { $pt1:Point $pt2:Point }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Instance variable '@pt1'
+#                              Argument type
+#                                  Bareword 'Point'
+#                      Instruction
+#                          Need
+#                              Instance variable '@pt2'
+#                              Argument type
+#                                  Bareword 'Point'
+#              Computed property 'length' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'distanceTo'
+#                                      Instance variable '@pt1'
+#                                  Argument list [1 item]
 #                                      Item 0
-#                                          Instance variable '@pt1'
-#                                      Item 1
 #                                          Instance variable '@pt2'
-#                              Argument list [0 items]
-#          Method 'description' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$mp'
-#                          Instance variable '@midpoint'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$pox'
-#                          Property 'x'
-#                              Instance variable '@pt1'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$poy'
-#                          Property 'y'
-#                              Instance variable '@pt1'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$ptx'
-#                          Property 'x'
-#                              Instance variable '@pt2'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$pty'
-#                          Property 'y'
-#                              Instance variable '@pt2'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$mx'
-#                          Property 'x'
+#              Computed property 'endpoints' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Value list [2 items]
+#                                  Item 0
+#                                      Instance variable '@pt1'
+#                                  Item 1
+#                                      Instance variable '@pt2'
+#              Computed property 'midpoint' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'midpoint'
+#                                      Set [2 items]
+#                                          Item 0
+#                                              Instance variable '@pt1'
+#                                          Item 1
+#                                              Instance variable '@pt2'
+#                                  Argument list [0 items]
+#              Method 'description' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
 #                              Lexical variable '$mp'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$my'
-#                          Property 'y'
-#                              Lexical variable '$mp'
-#                  Instruction
-#                      Return
-#                          Operation
-#                              String 'Segment( |('
-#                              Addition operator (+)
+#                              Instance variable '@midpoint'
+#                      Instruction
+#                          Assignment
 #                              Lexical variable '$pox'
-#                              Addition operator (+)
-#                              String ', '
-#                              Addition operator (+)
+#                              Property 'x'
+#                                  Instance variable '@pt1'
+#                      Instruction
+#                          Assignment
 #                              Lexical variable '$poy'
-#                              Addition operator (+)
-#                              String ')---('
-#                              Addition operator (+)
-#                              Lexical variable '$mx'
-#                              Addition operator (+)
-#                              String ', '
-#                              Addition operator (+)
-#                              Lexical variable '$my'
-#                              Addition operator (+)
-#                              String ')---('
-#                              Addition operator (+)
+#                              Property 'y'
+#                                  Instance variable '@pt1'
+#                      Instruction
+#                          Assignment
 #                              Lexical variable '$ptx'
-#                              Addition operator (+)
-#                              String ', '
-#                              Addition operator (+)
+#                              Property 'x'
+#                                  Instance variable '@pt2'
+#                      Instruction
+#                          Assignment
 #                              Lexical variable '$pty'
-#                              Addition operator (+)
-#                              String ')| Length = '
-#                              Addition operator (+)
-#                              Instance variable '@length'
-#                              Addition operator (+)
-#                              String ' )'
-#      Include (Point)
+#                              Property 'y'
+#                                  Instance variable '@pt2'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$mx'
+#                              Property 'x'
+#                                  Lexical variable '$mp'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$my'
+#                              Property 'y'
+#                                  Lexical variable '$mp'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  String 'Segment( |('
+#                                  Addition operator (+)
+#                                  Lexical variable '$pox'
+#                                  Addition operator (+)
+#                                  String ', '
+#                                  Addition operator (+)
+#                                  Lexical variable '$poy'
+#                                  Addition operator (+)
+#                                  String ')---('
+#                                  Addition operator (+)
+#                                  Lexical variable '$mx'
+#                                  Addition operator (+)
+#                                  String ', '
+#                                  Addition operator (+)
+#                                  Lexical variable '$my'
+#                                  Addition operator (+)
+#                                  String ')---('
+#                                  Addition operator (+)
+#                                  Lexical variable '$ptx'
+#                                  Addition operator (+)
+#                                  String ', '
+#                                  Addition operator (+)
+#                                  Lexical variable '$pty'
+#                                  Addition operator (+)
+#                                  String ')| Length = '
+#                                  Addition operator (+)
+#                                  Instance variable '@length'
+#                                  Addition operator (+)
+#                                  String ' )'
+#          Include (Point)
 package FF;
 
 use warnings;

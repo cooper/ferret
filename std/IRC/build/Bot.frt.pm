@@ -1,138 +1,138 @@
 # === Document Model ===
-#  Document './std/IRC/Bot.frt'
+#  File './std/IRC/Bot.frt'
 #      Package 'IRC'
-#      Class 'Bot'
-#          Class method 'initializer__' { ?$commands }
-#              Function body
-#                  Instruction
-#                      Want
-#                          Instance variable '@commands'
-#                          Argument value
-#                              Object [0 items]
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@handlers'
-#                          Object [0 items]
-#                  Instruction
-#                      Call
-#                          Special property '*addParent'
+#          Class 'Bot'
+#              Class method 'initializer__' { ?$commands }
+#                  Function body
+#                      Instruction
+#                          Want
+#                              Instance variable '@commands'
+#                              Argument value
+#                                  Object [0 items]
+#                      Instruction
+#                          Assignment
 #                              Instance variable '@handlers'
-#                          Argument list [1 item]
-#                              Item 0
+#                              Object [0 items]
+#                      Instruction
+#                          Call
+#                              Special property '*addParent'
+#                                  Instance variable '@handlers'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Property 'handlers'
+#                                          Bareword 'BotHandlers'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@conns'
+#                              Value list [0 items]
+#              Method 'addConnection' { $connection:Connection }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$connection'
+#                              Argument type
+#                                  Bareword 'Connection'
+#                      Instruction
+#                          Call
+#                              Property 'push'
+#                                  Instance variable '@conns'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Lexical variable '$connection'
+#                      Instruction
+#                          Call
+#                              Special property '*addParent'
 #                                  Property 'handlers'
-#                                      Bareword 'BotHandlers'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@conns'
-#                          Value list [0 items]
-#          Method 'addConnection' { $connection:Connection }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$connection'
-#                          Argument type
-#                              Bareword 'Connection'
-#                  Instruction
-#                      Call
-#                          Property 'push'
-#                              Instance variable '@conns'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Lexical variable '$connection'
-#                  Instruction
-#                      Call
-#                          Special property '*addParent'
-#                              Property 'handlers'
-#                                  Lexical variable '$connection'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Instance variable '@handlers'
-#                  Instruction
-#                      Call
-#                          Special property '*addListener'
-#                              Property 'handlers'
-#                                  Lexical variable '$connection'
-#                          Mixed argument list [2 items]
-#                              Item 0
-#                                  Instance variable '@handlers'
-#                              Item 1
-#                                  Pair 'bot'
-#                                      Special variable '*self'
-#          Method 'removeConnection' { $connection:Connection }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$connection'
-#                          Argument type
-#                              Bareword 'Connection'
-#                  Instruction
-#                      Call
-#                          Property 'remove'
-#                              Instance variable '@conns'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Lexical variable '$connection'
-#                  Instruction
-#                      Call
-#                          Special property '*removeParent'
-#                              Property 'handlers'
-#                                  Lexical variable '$connection'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Instance variable '@handlers'
-#                  Instruction
-#                      Call
-#                          Special property '*removeListener'
-#                              Property 'handlers'
-#                                  Instance variable '@connection'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Instance variable '@handlers'
-#          Method 'connect'
-#              Function body
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$c'
-#                      Expression ('in' parameter)
-#                          Instance variable '@conns'
-#                      For body
-#                          Instruction
-#                              Call
-#                                  Property 'connect'
-#                                      Lexical variable '$c'
-#                                  Argument list [0 items]
-#          Method 'description' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$s'
-#                          String ''
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Property 'length'
+#                                      Lexical variable '$connection'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Instance variable '@handlers'
+#                      Instruction
+#                          Call
+#                              Special property '*addListener'
+#                                  Property 'handlers'
+#                                      Lexical variable '$connection'
+#                              Mixed argument list [2 items]
+#                                  Item 0
+#                                      Instance variable '@handlers'
+#                                  Item 1
+#                                      Pair 'bot'
+#                                          Special variable '*self'
+#              Method 'removeConnection' { $connection:Connection }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$connection'
+#                              Argument type
+#                                  Bareword 'Connection'
+#                      Instruction
+#                          Call
+#                              Property 'remove'
 #                                  Instance variable '@conns'
-#                              Negated equality operator (!=)
-#                              Number '1'
-#                      If body
-#                          Instruction
-#                              Assignment
-#                                  Lexical variable '$s'
-#                                  String 's'
-#                  Instruction
-#                      Return
-#                          Operation
-#                              String 'IRC::Bot('
-#                              Addition operator (+)
-#                              Property 'length'
-#                                  Instance variable '@conns'
-#                              Addition operator (+)
-#                              String ' connection'
-#                              Addition operator (+)
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Lexical variable '$connection'
+#                      Instruction
+#                          Call
+#                              Special property '*removeParent'
+#                                  Property 'handlers'
+#                                      Lexical variable '$connection'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Instance variable '@handlers'
+#                      Instruction
+#                          Call
+#                              Special property '*removeListener'
+#                                  Property 'handlers'
+#                                      Instance variable '@connection'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Instance variable '@handlers'
+#              Method 'connect'
+#                  Function body
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$c'
+#                          Expression ('in' parameter)
+#                              Instance variable '@conns'
+#                          For body
+#                              Instruction
+#                                  Call
+#                                      Property 'connect'
+#                                          Lexical variable '$c'
+#                                      Argument list [0 items]
+#              Method 'description' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
 #                              Lexical variable '$s'
-#                              Addition operator (+)
-#                              String ')'
-#      Include (BotHandlers, Connection)
+#                              String ''
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Property 'length'
+#                                      Instance variable '@conns'
+#                                  Negated equality operator (!=)
+#                                  Number '1'
+#                          If body
+#                              Instruction
+#                                  Assignment
+#                                      Lexical variable '$s'
+#                                      String 's'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  String 'IRC::Bot('
+#                                  Addition operator (+)
+#                                  Property 'length'
+#                                      Instance variable '@conns'
+#                                  Addition operator (+)
+#                                  String ' connection'
+#                                  Addition operator (+)
+#                                  Lexical variable '$s'
+#                                  Addition operator (+)
+#                                  String ')'
+#          Include (BotHandlers, Connection)
 package FF;
 
 use warnings;

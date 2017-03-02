@@ -1,285 +1,286 @@
 # === Document Model ===
-#  Document './std/Test.frt'
-#      Class 'Test' version 1.0
-#          Class method 'initializer__' { ?$name ?$fatal }
-#              Function body
-#                  Instruction
-#                      Want
-#                          Instance variable '@name'
-#                          Argument value
-#                              String 'Test'
-#                  Instruction
-#                      Want
-#                          Instance variable '@fatal'
-#                          Argument value
-#                              Boolean true
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@tested'
-#                          Number '0'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@passed'
-#                          Number '0'
-#          Method 'trueValue' { $a -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$a'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@_test'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Call
-#                                          Bareword 'Bool'
-#                                          Argument list [1 item]
-#                                              Item 0
-#                                                  Lexical variable '$a'
-#                                  Item 1
-#                                      String 'Value must...'
-#          Method 'veryTrue' { $a -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$a'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@_test'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$a'
-#                                          Reference equality operator (===)
-#                                          Boolean true
-#                                  Item 1
-#                                      String 'Value must...'
-#          Method 'equal' { $a $b -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$a'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$b'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@_test'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$a'
-#                                          Equality operator (==)
-#                                          Lexical variable '$b'
-#                                  Item 1
-#                                      String 'Values mus...'
-#          Method 'objectsEqual' { $a $b -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$a'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$b'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@_test'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$a'
-#                                          Reference equality operator (===)
-#                                          Lexical variable '$b'
-#                                  Item 1
-#                                      String 'Objects mu...'
-#          Method 'notEqual' { $a $b -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$a'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$b'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@_test'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$a'
-#                                          Negated equality operator (!=)
-#                                          Lexical variable '$b'
-#                                  Item 1
-#                                      String 'Values mus...'
-#          Method 'objectsNotEqual' { $a $b -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$a'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$b'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@_test'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$a'
-#                                          Negated reference equality operator (!==)
-#                                          Lexical variable '$b'
-#                                  Item 1
-#                                      String 'Objects mu...'
-#          Method 'instanceOf' { $a $b -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$a'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$b'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@_test'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Call
-#                                          Special property '*instanceOf'
-#                                              Lexical variable '$a'
-#                                          Argument list [1 item]
-#                                              Item 0
-#                                                  Lexical variable '$b'
-#                                  Item 1
-#                                      String 'Object mus...'
-#          Method 'review' { ?$quiet:Bool -> $string $tests $fails $passes $allOK }
-#              Function body
-#                  Instruction
-#                      Want
-#                          Lexical variable '$quiet'
-#                          Argument type
-#                              Bareword 'Bool'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$failed'
-#                          Operation
-#                              Instance variable '@tested'
-#                              Subtraction operator (-)
-#                              Instance variable '@passed'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$allOK'
-#                          Operation
-#                              Instance variable '@passed'
-#                              Equality operator (==)
-#                              Instance variable '@tested'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$review'
-#                          Operation
-#                              String '['
-#                              Addition operator (+)
+#  File './std/Test.frt'
+#      Package 'main'
+#          Class 'Test' version 1.0
+#              Class method 'initializer__' { ?$name ?$fatal }
+#                  Function body
+#                      Instruction
+#                          Want
 #                              Instance variable '@name'
-#                              Addition operator (+)
-#                              String '] ran '
-#                              Addition operator (+)
-#                              Instance variable '@tested'
-#                              Addition operator (+)
-#                              String ' tests; '
-#                              Addition operator (+)
-#                              Instance variable '@passed'
-#                              Addition operator (+)
-#                              String ' passed; '
-#                              Addition operator (+)
-#                              Lexical variable '$failed'
-#                              Addition operator (+)
-#                              String ' failed'
-#                  If
-#                      Expression ('if' parameter)
-#                          Lexical variable '$allOK'
-#                      If body
-#                          Instruction
-#                              Addition assignment
-#                                  Lexical variable '$review'
-#                                  String '; all OK'
-#                  If
-#                      Expression ('if' parameter)
-#                          Negation
-#                              Lexical variable '$quiet'
-#                      If body
-#                          Instruction
-#                              Call
-#                                  Bareword 'say'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          Lexical variable '$review'
-#                  Instruction
-#                      Return pair 'string'
-#                          Lexical variable '$review'
-#                  Instruction
-#                      Return pair 'tests'
-#                          Instance variable '@tested'
-#                  Instruction
-#                      Return pair 'fails'
-#                          Lexical variable '$failed'
-#                  Instruction
-#                      Return pair 'passes'
-#                          Instance variable '@passed'
-#                  Instruction
-#                      Return pair 'allOK'
-#                          Lexical variable '$allOK'
-#          Method '_test' { $yes $message -> $pass $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$yes'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$message'
-#                  Instruction
-#                      Addition assignment
-#                          Instance variable '@tested'
-#                          Number '1'
-#                  If
-#                      Expression ('if' parameter)
-#                          Lexical variable '$yes'
-#                      If body
-#                          Instruction
-#                              Addition assignment
-#                                  Instance variable '@passed'
-#                                  Number '1'
-#                          Instruction
-#                              Return pair 'pass'
+#                              Argument value
+#                                  String 'Test'
+#                      Instruction
+#                          Want
+#                              Instance variable '@fatal'
+#                              Argument value
 #                                  Boolean true
-#                          Instruction
-#                              Return
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$e'
-#                          Call
-#                              Bareword 'Error'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Symbol :TestFailure
-#                                  Item 1
-#                                      Lexical variable '$message'
-#                  If
-#                      Expression ('if' parameter)
-#                          Instance variable '@fatal'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Lexical variable '$e'
-#                  Instruction
-#                      Fail (nonfatal exception)
-#                          Lexical variable '$e'
-#      Include (Bool, Error)
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@tested'
+#                              Number '0'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@passed'
+#                              Number '0'
+#              Method 'trueValue' { $a -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$a'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@_test'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Call
+#                                              Bareword 'Bool'
+#                                              Argument list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$a'
+#                                      Item 1
+#                                          String 'Value must...'
+#              Method 'veryTrue' { $a -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$a'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@_test'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$a'
+#                                              Reference equality operator (===)
+#                                              Boolean true
+#                                      Item 1
+#                                          String 'Value must...'
+#              Method 'equal' { $a $b -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$a'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$b'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@_test'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$a'
+#                                              Equality operator (==)
+#                                              Lexical variable '$b'
+#                                      Item 1
+#                                          String 'Values mus...'
+#              Method 'objectsEqual' { $a $b -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$a'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$b'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@_test'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$a'
+#                                              Reference equality operator (===)
+#                                              Lexical variable '$b'
+#                                      Item 1
+#                                          String 'Objects mu...'
+#              Method 'notEqual' { $a $b -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$a'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$b'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@_test'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$a'
+#                                              Negated equality operator (!=)
+#                                              Lexical variable '$b'
+#                                      Item 1
+#                                          String 'Values mus...'
+#              Method 'objectsNotEqual' { $a $b -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$a'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$b'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@_test'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$a'
+#                                              Negated reference equality operator (!==)
+#                                              Lexical variable '$b'
+#                                      Item 1
+#                                          String 'Objects mu...'
+#              Method 'instanceOf' { $a $b -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$a'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$b'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@_test'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Call
+#                                              Special property '*instanceOf'
+#                                                  Lexical variable '$a'
+#                                              Argument list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$b'
+#                                      Item 1
+#                                          String 'Object mus...'
+#              Method 'review' { ?$quiet:Bool -> $string $tests $fails $passes $allOK }
+#                  Function body
+#                      Instruction
+#                          Want
+#                              Lexical variable '$quiet'
+#                              Argument type
+#                                  Bareword 'Bool'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$failed'
+#                              Operation
+#                                  Instance variable '@tested'
+#                                  Subtraction operator (-)
+#                                  Instance variable '@passed'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$allOK'
+#                              Operation
+#                                  Instance variable '@passed'
+#                                  Equality operator (==)
+#                                  Instance variable '@tested'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$review'
+#                              Operation
+#                                  String '['
+#                                  Addition operator (+)
+#                                  Instance variable '@name'
+#                                  Addition operator (+)
+#                                  String '] ran '
+#                                  Addition operator (+)
+#                                  Instance variable '@tested'
+#                                  Addition operator (+)
+#                                  String ' tests; '
+#                                  Addition operator (+)
+#                                  Instance variable '@passed'
+#                                  Addition operator (+)
+#                                  String ' passed; '
+#                                  Addition operator (+)
+#                                  Lexical variable '$failed'
+#                                  Addition operator (+)
+#                                  String ' failed'
+#                      If
+#                          Expression ('if' parameter)
+#                              Lexical variable '$allOK'
+#                          If body
+#                              Instruction
+#                                  Addition assignment
+#                                      Lexical variable '$review'
+#                                      String '; all OK'
+#                      If
+#                          Expression ('if' parameter)
+#                              Negation
+#                                  Lexical variable '$quiet'
+#                          If body
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Lexical variable '$review'
+#                      Instruction
+#                          Return pair 'string'
+#                              Lexical variable '$review'
+#                      Instruction
+#                          Return pair 'tests'
+#                              Instance variable '@tested'
+#                      Instruction
+#                          Return pair 'fails'
+#                              Lexical variable '$failed'
+#                      Instruction
+#                          Return pair 'passes'
+#                              Instance variable '@passed'
+#                      Instruction
+#                          Return pair 'allOK'
+#                              Lexical variable '$allOK'
+#              Method '_test' { $yes $message -> $pass $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$yes'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$message'
+#                      Instruction
+#                          Addition assignment
+#                              Instance variable '@tested'
+#                              Number '1'
+#                      If
+#                          Expression ('if' parameter)
+#                              Lexical variable '$yes'
+#                          If body
+#                              Instruction
+#                                  Addition assignment
+#                                      Instance variable '@passed'
+#                                      Number '1'
+#                              Instruction
+#                                  Return pair 'pass'
+#                                      Boolean true
+#                              Instruction
+#                                  Return
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$e'
+#                              Call
+#                                  Bareword 'Error'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Symbol :TestFailure
+#                                      Item 1
+#                                          Lexical variable '$message'
+#                      If
+#                          Expression ('if' parameter)
+#                              Instance variable '@fatal'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Lexical variable '$e'
+#                      Instruction
+#                          Fail (nonfatal exception)
+#                              Lexical variable '$e'
+#          Include (Bool, Error)
 package FF;
 
 use warnings;

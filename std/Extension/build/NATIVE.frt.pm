@@ -1,38 +1,39 @@
 # === Document Model ===
-#  Document './std/Extension/NATIVE.frt'
-#      Class 'NATIVE'
-#          Instruction
-#              Load
-#                  Bareword 'NATIVE::PerlObject'
-#          Instruction
-#              Shared variable declaration
-#                  Lazy assignment
-#                      Lexical variable '$ferret'
-#                      Call
-#                          Property 'wrapPackageVariable'
-#                              Bareword 'PerlObject'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  String 'Ferret'
-#                              Item 1
-#                                  String '$ferret'
-#          Instruction
-#              Shared variable declaration
-#                  Lazy assignment
-#                      Lexical variable '$coreContext'
-#                      Call
-#                          Property 'core_context'
-#                              Lexical variable '$ferret'
-#                          Argument list [0 items]
-#          Instruction
-#              Shared variable declaration
-#                  Lazy assignment
-#                      Lexical variable '$mainContext'
-#                      Call
-#                          Property 'main_context'
-#                              Lexical variable '$ferret'
-#                          Argument list [0 items]
-#      Include (NATIVE::PerlObject, PerlObject)
+#  File './std/Extension/NATIVE.frt'
+#      Package 'main'
+#          Class 'NATIVE'
+#              Instruction
+#                  Load
+#                      Bareword 'NATIVE::PerlObject'
+#              Instruction
+#                  Shared variable declaration
+#                      Lazy assignment
+#                          Lexical variable '$ferret'
+#                          Call
+#                              Property 'wrapPackageVariable'
+#                                  Bareword 'PerlObject'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      String 'Ferret'
+#                                  Item 1
+#                                      String '$ferret'
+#              Instruction
+#                  Shared variable declaration
+#                      Lazy assignment
+#                          Lexical variable '$coreContext'
+#                          Call
+#                              Property 'core_context'
+#                                  Lexical variable '$ferret'
+#                              Argument list [0 items]
+#              Instruction
+#                  Shared variable declaration
+#                      Lazy assignment
+#                          Lexical variable '$mainContext'
+#                          Call
+#                              Property 'main_context'
+#                                  Lexical variable '$ferret'
+#                              Argument list [0 items]
+#          Include (NATIVE::PerlObject, PerlObject)
 package FF;
 
 use warnings;

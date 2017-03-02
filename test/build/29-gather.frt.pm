@@ -1,153 +1,154 @@
 # === Document Model ===
-#  Document './test/29-gather.frt'
-#      Function 'nonZeroCoodinates' { $pt:Math::Point -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$pt'
-#                      Argument type
-#                          Bareword 'Math::Point'
-#              Instruction
-#                  Return
-#                      Gather
-#                          Gather body
-#                              If
-#                                  Expression ('if' parameter)
-#                                      Operation
-#                                          Property 'x'
-#                                              Lexical variable '$pt'
-#                                          Negated equality operator (!=)
-#                                          Number '0'
-#                                  If body
-#                                      Instruction
-#                                          Take
+#  File './test/29-gather.frt'
+#      Package 'main'
+#          Function 'nonZeroCoodinates' { $pt:Math::Point -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$pt'
+#                          Argument type
+#                              Bareword 'Math::Point'
+#                  Instruction
+#                      Return
+#                          Gather
+#                              Gather body
+#                                  If
+#                                      Expression ('if' parameter)
+#                                          Operation
 #                                              Property 'x'
 #                                                  Lexical variable '$pt'
-#                              If
-#                                  Expression ('if' parameter)
-#                                      Operation
-#                                          Property 'y'
-#                                              Lexical variable '$pt'
-#                                          Negated equality operator (!=)
-#                                          Number '0'
-#                                  If body
-#                                      Instruction
-#                                          Take
+#                                              Negated equality operator (!=)
+#                                              Number '0'
+#                                      If body
+#                                          Instruction
+#                                              Take
+#                                                  Property 'x'
+#                                                      Lexical variable '$pt'
+#                                  If
+#                                      Expression ('if' parameter)
+#                                          Operation
 #                                              Property 'y'
 #                                                  Lexical variable '$pt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$pt1'
-#              Call
-#                  Bareword 'Math::Point'
-#                  Argument list [2 items]
-#                      Item 0
-#                          Number '0'
-#                      Item 1
-#                          Number '0'
-#      Instruction
-#          Assignment
-#              Lexical variable '$pt2'
-#              Call
-#                  Bareword 'Math::Point'
-#                  Argument list [2 items]
-#                      Item 0
-#                          Number '1'
-#                      Item 1
-#                          Number '1'
-#      Instruction
-#          Assignment
-#              Lexical variable '$pt3'
-#              Call
-#                  Bareword 'Math::Point'
-#                  Argument list [2 items]
-#                      Item 0
-#                          Number '1'
-#                      Item 1
-#                          Number '0'
-#      For (values)
-#          Expression ('for' parameter)
-#              Lexical variable '$pt'
-#          Expression ('in' parameter)
-#              Value list [3 items]
-#                  Item 0
-#                      Lexical variable '$pt1'
-#                  Item 1
-#                      Lexical variable '$pt2'
-#                  Item 2
-#                      Lexical variable '$pt3'
-#          For body
-#              Instruction
+#                                              Negated equality operator (!=)
+#                                              Number '0'
+#                                      If body
+#                                          Instruction
+#                                              Take
+#                                                  Property 'y'
+#                                                      Lexical variable '$pt'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$pt1'
 #                  Call
-#                      Bareword 'inspect'
-#                      Argument list [1 item]
+#                      Bareword 'Math::Point'
+#                      Argument list [2 items]
 #                          Item 0
-#                              Call
-#                                  Bareword 'nonZeroCoodinates'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          Lexical variable '$pt'
-#      Function 'evenNumbers' { $nums:Num... -> $even }
-#          Function body
-#              Instruction
-#                  Need (...)
-#                      Lexical variable '$nums'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return pair 'even'
-#                      Gather
-#                          Gather body
-#                              For (values)
-#                                  Expression ('for' parameter)
-#                                      Lexical variable '$n'
-#                                  Expression ('in' parameter)
-#                                      Lexical variable '$nums'
-#                                  For body
-#                                      If
-#                                          Expression ('if' parameter)
-#                                              Property 'even'
-#                                                  Lexical variable '$n'
-#                                          If body
-#                                              Instruction
-#                                                  Take
-#                                                      Lexical variable '$n'
-#      Instruction
-#          Call
-#              Bareword 'inspect'
-#              Argument list [1 item]
-#                  Item 0
+#                              Number '0'
+#                          Item 1
+#                              Number '0'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$pt2'
+#                  Call
+#                      Bareword 'Math::Point'
+#                      Argument list [2 items]
+#                          Item 0
+#                              Number '1'
+#                          Item 1
+#                              Number '1'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$pt3'
+#                  Call
+#                      Bareword 'Math::Point'
+#                      Argument list [2 items]
+#                          Item 0
+#                              Number '1'
+#                          Item 1
+#                              Number '0'
+#          For (values)
+#              Expression ('for' parameter)
+#                  Lexical variable '$pt'
+#              Expression ('in' parameter)
+#                  Value list [3 items]
+#                      Item 0
+#                          Lexical variable '$pt1'
+#                      Item 1
+#                          Lexical variable '$pt2'
+#                      Item 2
+#                          Lexical variable '$pt3'
+#              For body
+#                  Instruction
 #                      Call
-#                          Bareword 'evenNumbers'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Value list [4 items]
-#                                      Item 0
-#                                          Number '1'
-#                                      Item 1
-#                                          Number '2'
-#                                      Item 2
-#                                          Number '3'
-#                                      Item 3
-#                                          Number '4'
-#      Instruction
-#          Call
-#              Bareword 'inspect'
-#              Argument list [1 item]
-#                  Item 0
-#                      Call
-#                          Bareword 'evenNumbers'
+#                          Bareword 'inspect'
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Call
-#                                      Property 'toList'
-#                                          Single value [1 item]
-#                                              Item 0
-#                                                  Operation
-#                                                      Number '0'
-#                                                      Range operator (..)
-#                                                      Number '9'
-#      Include (Math::Point, Num)
+#                                      Bareword 'nonZeroCoodinates'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Lexical variable '$pt'
+#          Function 'evenNumbers' { $nums:Num... -> $even }
+#              Function body
+#                  Instruction
+#                      Need (...)
+#                          Lexical variable '$nums'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return pair 'even'
+#                          Gather
+#                              Gather body
+#                                  For (values)
+#                                      Expression ('for' parameter)
+#                                          Lexical variable '$n'
+#                                      Expression ('in' parameter)
+#                                          Lexical variable '$nums'
+#                                      For body
+#                                          If
+#                                              Expression ('if' parameter)
+#                                                  Property 'even'
+#                                                      Lexical variable '$n'
+#                                              If body
+#                                                  Instruction
+#                                                      Take
+#                                                          Lexical variable '$n'
+#          Instruction
+#              Call
+#                  Bareword 'inspect'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Call
+#                              Bareword 'evenNumbers'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Value list [4 items]
+#                                          Item 0
+#                                              Number '1'
+#                                          Item 1
+#                                              Number '2'
+#                                          Item 2
+#                                              Number '3'
+#                                          Item 3
+#                                              Number '4'
+#          Instruction
+#              Call
+#                  Bareword 'inspect'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Call
+#                              Bareword 'evenNumbers'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Call
+#                                          Property 'toList'
+#                                              Single value [1 item]
+#                                                  Item 0
+#                                                      Operation
+#                                                          Number '0'
+#                                                          Range operator (..)
+#                                                          Number '9'
+#          Include (Math::Point, Num)
 package FF;
 
 use warnings;

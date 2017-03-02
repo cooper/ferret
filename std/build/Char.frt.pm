@@ -1,100 +1,101 @@
 # === Document Model ===
-#  Document './std/Char.frt'
-#      Type definition ('Char')
-#          Type body
-#              Instruction
-#                  Transform
-#                      Call
-#                          Bareword 'Character'
-#                          Named argument list [1 item]
-#                              Item 0
-#                                  Pair 'from'
-#                                      Topic variable '$_'
-#      Class 'Character'
-#          Class method 'initializer__' { $from:Num|Str ?$isInit:Bool -> $result $result }
-#              Function body
+#  File './std/Char.frt'
+#      Package 'main'
+#          Type definition ('Char')
+#              Type body
 #                  Instruction
-#                      Need
-#                          Lexical variable '$from'
-#                          Argument type
-#                              Bareword 'Num'
-#                              Bareword 'Str'
-#                  Instruction
-#                      Want
-#                          Lexical variable '$isInit'
-#                          Argument type
-#                              Bareword 'Bool'
-#                  If
-#                      Expression ('if' parameter)
-#                          Lexical variable '$isInit'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  Lexical variable '$from'
-#                  If
-#                      Expression ('if' parameter)
+#                      Transform
 #                          Call
-#                              Special property '*instanceOf'
-#                                  Lexical variable '$from'
-#                              Argument list [1 item]
+#                              Bareword 'Character'
+#                              Named argument list [1 item]
 #                                  Item 0
-#                                      Bareword 'Num'
-#                      If body
-#                          Instruction
-#                              Fail (nonfatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :Unimplemented
-#                                          Item 1
-#                                              String 'not yet im...'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Property 'length'
-#                                  Lexical variable '$from'
-#                              Negated equality operator (!=)
-#                              Number '1'
-#                      If body
-#                          Instruction
-#                              Fail (nonfatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :InvalidConversion
-#                                          Item 1
-#                                              String 'String of ...'
-#                  Instruction
-#                      Call
-#                          Call
-#                              Property 'init'
-#                                  Bareword 'Character'
-#                              Argument list [1 item]
-#                                  Item 0
+#                                      Pair 'from'
+#                                          Topic variable '$_'
+#          Class 'Character'
+#              Class method 'initializer__' { $from:Num|Str ?$isInit:Bool -> $result $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$from'
+#                              Argument type
+#                                  Bareword 'Num'
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Want
+#                              Lexical variable '$isInit'
+#                              Argument type
+#                                  Bareword 'Bool'
+#                      If
+#                          Expression ('if' parameter)
+#                              Lexical variable '$isInit'
+#                          If body
+#                              Instruction
+#                                  Return
 #                                      Lexical variable '$from'
-#                          Named argument list [2 items]
-#                              Item 0
-#                                  Pair 'from'
+#                      If
+#                          Expression ('if' parameter)
+#                              Call
+#                                  Special property '*instanceOf'
 #                                      Lexical variable '$from'
-#                              Item 1
-#                                  Pair 'isInit'
-#                                      Boolean true
-#                  Instruction
-#                      Return
-#                          Lexical variable '$from'
-#          Computed property 'ord' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Bareword 'Num'
+#                          If body
+#                              Instruction
+#                                  Fail (nonfatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :Unimplemented
+#                                              Item 1
+#                                                  String 'not yet im...'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Property 'length'
+#                                      Lexical variable '$from'
+#                                  Negated equality operator (!=)
+#                                  Number '1'
+#                          If body
+#                              Instruction
+#                                  Fail (nonfatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :InvalidConversion
+#                                              Item 1
+#                                                  String 'String of ...'
+#                      Instruction
 #                          Call
-#                              Property 'ord'
-#                                  Bareword 'NATIVE'
-#                              Argument list [1 item]
+#                              Call
+#                                  Property 'init'
+#                                      Bareword 'Character'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$from'
+#                              Named argument list [2 items]
 #                                  Item 0
-#                                      Special variable '*self'
-#      Include (Bool, Character, Error, NATIVE, Num, Str)
+#                                      Pair 'from'
+#                                          Lexical variable '$from'
+#                                  Item 1
+#                                      Pair 'isInit'
+#                                          Boolean true
+#                      Instruction
+#                          Return
+#                              Lexical variable '$from'
+#              Computed property 'ord' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'ord'
+#                                      Bareword 'NATIVE'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Special variable '*self'
+#          Include (Bool, Character, Error, NATIVE, Num, Str)
 package FF;
 
 use warnings;

@@ -1,33 +1,34 @@
 # === Document Model ===
-#  Document './test/10-irc-simple/bot_test2.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$bot'
-#              Call
-#                  Bareword 'Bot2'
-#                  Named argument list [3 items]
-#                      Item 0
-#                          Pair 'address'
-#                              String 'k.notroll.net'
-#                      Item 1
-#                          Pair 'nick'
-#                              String 'ferret'
-#                      Item 2
-#                          Pair 'user'
-#                              String 'bot'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Property 'address'
-#                          Lexical variable '$bot'
-#      Instruction
-#          Call
-#              Property 'connect'
+#  File './test/10-irc-simple/bot_test2.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
 #                  Lexical variable '$bot'
-#              Argument list [0 items]
-#      Include (Bot2)
+#                  Call
+#                      Bareword 'Bot2'
+#                      Named argument list [3 items]
+#                          Item 0
+#                              Pair 'address'
+#                                  String 'k.notroll.net'
+#                          Item 1
+#                              Pair 'nick'
+#                                  String 'ferret'
+#                          Item 2
+#                              Pair 'user'
+#                                  String 'bot'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Property 'address'
+#                              Lexical variable '$bot'
+#          Instruction
+#              Call
+#                  Property 'connect'
+#                      Lexical variable '$bot'
+#                  Argument list [0 items]
+#          Include (Bot2)
 package FF;
 
 use warnings;

@@ -1,94 +1,95 @@
 # === Document Model ===
-#  Document './test/7-math.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$rect'
-#              Call
-#                  Bareword 'Math::Rect'
-#                  Named argument list [4 items]
-#                      Item 0
-#                          Pair 'x'
-#                              Number '5'
-#                      Item 1
-#                          Pair 'y'
-#                              Number '4'
-#                      Item 2
-#                          Pair 'width'
-#                              Number '12'
-#                      Item 3
-#                          Pair 'height'
-#                              Number '10'
-#      Instruction
-#          Assignment
-#              Lexical variable '$center'
-#              Property 'center'
+#  File './test/7-math.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
 #                  Lexical variable '$rect'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Center of ...'
-#                          Addition operator (+)
-#                          Lexical variable '$center'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Center dis...'
-#                          Addition operator (+)
-#                          Property 'distanceFromOrigin'
-#                              Lexical variable '$center'
-#      Instruction
-#          Assignment
-#              Lexical variable '$otherPt'
+#                  Call
+#                      Bareword 'Math::Rect'
+#                      Named argument list [4 items]
+#                          Item 0
+#                              Pair 'x'
+#                                  Number '5'
+#                          Item 1
+#                              Pair 'y'
+#                                  Number '4'
+#                          Item 2
+#                              Pair 'width'
+#                                  Number '12'
+#                          Item 3
+#                              Pair 'height'
+#                                  Number '10'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$center'
+#                  Property 'center'
+#                      Lexical variable '$rect'
+#          Instruction
 #              Call
-#                  Bareword 'Math::Point'
-#                  Argument list [2 items]
+#                  Bareword 'say'
+#                  Argument list [1 item]
 #                      Item 0
-#                          Number '9'
-#                      Item 1
-#                          Number '2'
-#      Instruction
-#          Assignment
-#              Lexical variable '$midpoint'
+#                          Operation
+#                              String 'Center of ...'
+#                              Addition operator (+)
+#                              Lexical variable '$center'
+#          Instruction
 #              Call
-#                  Property 'pretty'
-#                      Call
-#                          Property 'midpoint'
-#                              Set [2 items]
-#                                  Item 0
-#                                      Lexical variable '$center'
-#                                  Item 1
-#                                      Lexical variable '$otherPt'
-#                          Argument list [0 items]
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Midpoint: '
-#                          Addition operator (+)
-#                          Lexical variable '$midpoint'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Square roo...'
-#                          Addition operator (+)
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Operation
+#                              String 'Center dis...'
+#                              Addition operator (+)
+#                              Property 'distanceFromOrigin'
+#                                  Lexical variable '$center'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$otherPt'
+#                  Call
+#                      Bareword 'Math::Point'
+#                      Argument list [2 items]
+#                          Item 0
+#                              Number '9'
+#                          Item 1
+#                              Number '2'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$midpoint'
+#                  Call
+#                      Property 'pretty'
 #                          Call
-#                              Property 'sqrt'
-#                                  Bareword 'Math'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Number '4'
-#      Include (Math, Math::Point, Math::Rect)
+#                              Property 'midpoint'
+#                                  Set [2 items]
+#                                      Item 0
+#                                          Lexical variable '$center'
+#                                      Item 1
+#                                          Lexical variable '$otherPt'
+#                              Argument list [0 items]
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Operation
+#                              String 'Midpoint: '
+#                              Addition operator (+)
+#                              Lexical variable '$midpoint'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Operation
+#                              String 'Square roo...'
+#                              Addition operator (+)
+#                              Call
+#                                  Property 'sqrt'
+#                                      Bareword 'Math'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Number '4'
+#          Include (Math, Math::Point, Math::Rect)
 package FF;
 
 use warnings;

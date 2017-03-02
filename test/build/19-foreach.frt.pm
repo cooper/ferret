@@ -1,29 +1,30 @@
 # === Document Model ===
-#  Document './test/19-foreach.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$words'
-#              Call
-#                  Property 'split'
-#                      String 'how are you?'
-#                  Argument list [1 item]
-#                      Item 0
-#                          String ' '
-#      For (values)
-#          Expression ('for' parameter)
-#              Lexical variable '$word'
-#          Expression ('in' parameter)
-#              Lexical variable '$words'
-#          For body
-#              Instruction
+#  File './test/19-foreach.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$words'
 #                  Call
-#                      Bareword 'say'
+#                      Property 'split'
+#                          String 'how are you?'
 #                      Argument list [1 item]
 #                          Item 0
-#                              Operation
-#                                  String 'part: '
-#                                  Addition operator (+)
-#                                  Lexical variable '$word'
+#                              String ' '
+#          For (values)
+#              Expression ('for' parameter)
+#                  Lexical variable '$word'
+#              Expression ('in' parameter)
+#                  Lexical variable '$words'
+#              For body
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  Operation
+#                                      String 'part: '
+#                                      Addition operator (+)
+#                                      Lexical variable '$word'
 package FF;
 
 use warnings;

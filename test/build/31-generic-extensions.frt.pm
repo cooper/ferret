@@ -1,7 +1,8 @@
 # === Document Model ===
-#  Document './test/31-generic-extensions.frt'
-#      Class 'A' <T>
-#      Class 'A' <T, U>
+#  File './test/31-generic-extensions.frt'
+#      Package 'main'
+#          Class 'A' <T>
+#          Class 'A' <T, U>
 package FF;
 
 use warnings;

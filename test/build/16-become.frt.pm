@@ -1,31 +1,32 @@
 # === Document Model ===
-#  Document './test/16-become.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$obj'
-#              String 'hi'
-#      Instruction
-#          Call
+#  File './test/16-become.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$obj'
+#                  String 'hi'
+#          Instruction
 #              Call
-#                  Property 'init'
-#                      Bareword 'Math::Point'
+#                  Call
+#                      Property 'init'
+#                          Bareword 'Math::Point'
+#                      Argument list [1 item]
+#                          Item 0
+#                              Lexical variable '$obj'
+#                  Argument list [2 items]
+#                      Item 0
+#                          Number '1'
+#                      Item 1
+#                          Number '1'
+#          Instruction
+#              Call
+#                  Bareword 'say'
 #                  Argument list [1 item]
 #                      Item 0
-#                          Lexical variable '$obj'
-#              Argument list [2 items]
-#                  Item 0
-#                      Number '1'
-#                  Item 1
-#                      Number '1'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Call
-#                          Property 'pretty'
-#                              Lexical variable '$obj'
-#      Include (Math::Point)
+#                          Call
+#                              Property 'pretty'
+#                                  Lexical variable '$obj'
+#          Include (Math::Point)
 package FF;
 
 use warnings;

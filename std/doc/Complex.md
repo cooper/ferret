@@ -1,6 +1,6 @@
-# Complex
+# main::Complex
 
-This is the Complex class version 1.0.
+This is the main::Complex class version 1.0.
 
 Represents a complex number.
 
@@ -299,7 +299,7 @@ Create a complex number with the given polar coordinates `r` and `θ`.
 
 
 
-End of Complex class.
+End of main::Complex class.
 
 This file was generated automatically by the Ferret compiler from
 [Complex.frt](../Complex.frt).

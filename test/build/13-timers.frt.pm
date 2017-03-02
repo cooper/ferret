@@ -1,56 +1,57 @@
 # === Document Model ===
-#  Document './test/13-timers.frt'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      String 'hello'
-#      On
-#          Expression ('on' parameter)
-#              Property 'expire'
-#                  Call
-#                      Property 'once'
-#                          Call
-#                              Bareword 'Timer'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Number '5'
-#          Anonymous function
-#              Function body
-#                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  String 'five secon...'
-#      Instruction
-#          Assignment
-#              Lexical variable '$t2'
+#  File './test/13-timers.frt'
+#      Package 'main'
+#          Instruction
 #              Call
-#                  Bareword 'Timer'
+#                  Bareword 'say'
 #                  Argument list [1 item]
 #                      Item 0
-#                          Number '2'
-#      On
-#          Expression ('on' parameter)
-#              Property 'expire'
-#                  Call
-#                      Property 'once'
-#                          Lexical variable '$t2'
-#          Anonymous function
-#              Function body
-#                  Instruction
+#                          String 'hello'
+#          On
+#              Expression ('on' parameter)
+#                  Property 'expire'
 #                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  String 'this shoul...'
-#      Instruction
-#          Call
-#              Property 'cancel'
+#                          Property 'once'
+#                              Call
+#                                  Bareword 'Timer'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Number '5'
+#              Anonymous function
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      String 'five secon...'
+#          Instruction
+#              Assignment
 #                  Lexical variable '$t2'
-#      Include (Timer)
+#                  Call
+#                      Bareword 'Timer'
+#                      Argument list [1 item]
+#                          Item 0
+#                              Number '2'
+#          On
+#              Expression ('on' parameter)
+#                  Property 'expire'
+#                      Call
+#                          Property 'once'
+#                              Lexical variable '$t2'
+#              Anonymous function
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      String 'this shoul...'
+#          Instruction
+#              Call
+#                  Property 'cancel'
+#                      Lexical variable '$t2'
+#          Include (Timer)
 package FF;
 
 use warnings;

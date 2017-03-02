@@ -6,8 +6,6 @@ use strict;
 use utf8;
 use 5.010;
 
-use Ferret::Shared::Utils qw(trim);
-
 sub F::Element::markdown_fmt { }
 
 sub F::Element::markdown_fmt_do {

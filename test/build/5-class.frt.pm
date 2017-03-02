@@ -1,175 +1,176 @@
 # === Document Model ===
-#  Document './test/5-class.frt'
-#      Class 'Point' version 1.0
-#          Class method 'initializer__' { $x $y }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$x'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$y'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@x'
-#                          Lexical variable '$x'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@y'
-#                          Lexical variable '$y'
-#          Method 'oneToRight' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$pt'
-#                          Call
-#                              Special variable '*class'
-#                              Argument list [2 items]
+#  File './test/5-class.frt'
+#      Package 'main'
+#          Class 'Point' version 1.0
+#              Class method 'initializer__' { $x $y }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$x'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$y'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@x'
+#                              Lexical variable '$x'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@y'
+#                              Lexical variable '$y'
+#              Method 'oneToRight' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$pt'
+#                              Call
+#                                  Special variable '*class'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Instance variable '@x'
+#                                              Addition operator (+)
+#                                              Number '1'
+#                                      Item 1
+#                                          Instance variable '@y'
+#                      Instruction
+#                          Return
+#                              Lexical variable '$pt'
+#              Method 'pretty' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Single value [1 item]
 #                                  Item 0
 #                                      Operation
+#                                          String '('
+#                                          Addition operator (+)
 #                                          Instance variable '@x'
 #                                          Addition operator (+)
-#                                          Number '1'
-#                                  Item 1
-#                                      Instance variable '@y'
-#                  Instruction
-#                      Return
-#                          Lexical variable '$pt'
-#          Method 'pretty' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Single value [1 item]
-#                              Item 0
-#                                  Operation
-#                                      String '('
-#                                      Addition operator (+)
-#                                      Instance variable '@x'
-#                                      Addition operator (+)
-#                                      String ', '
-#                                      Addition operator (+)
-#                                      Instance variable '@y'
-#                                      Addition operator (+)
-#                                      String ')'
-#          Method 'toString' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@pretty'
-#                              Argument list [0 items]
-#          Class method 'midpoint' { $pt1 $pt2 -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$pt1'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$pt2'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Point'
-#                              Named argument list [2 items]
-#                                  Item 0
-#                                      Pair 'x'
-#                                          Operation
-#                                              Single value [1 item]
-#                                                  Item 0
-#                                                      Operation
-#                                                          Property 'x'
-#                                                              Lexical variable '$pt1'
-#                                                          Addition operator (+)
-#                                                          Property 'x'
-#                                                              Lexical variable '$pt2'
-#                                              Division operator (/)
-#                                              Number '2'
-#                                  Item 1
-#                                      Pair 'y'
-#                                          Operation
-#                                              Single value [1 item]
-#                                                  Item 0
-#                                                      Operation
-#                                                          Property 'y'
-#                                                              Lexical variable '$pt1'
-#                                                          Addition operator (+)
-#                                                          Property 'y'
-#                                                              Lexical variable '$pt2'
-#                                              Division operator (/)
-#                                              Number '2'
-#      Instruction
-#          Assignment
-#              Lexical variable '$pt'
-#              Call
-#                  Bareword 'Point'
-#                  Argument list [2 items]
-#                      Item 0
-#                          Number '5'
-#                      Item 1
-#                          Number '3'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Point'
-#                          Addition operator (+)
-#                          Lexical variable '$pt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$rpt'
-#              Call
-#                  Property 'oneToRight'
-#                      Lexical variable '$pt'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Right'
-#                          Addition operator (+)
-#                          Lexical variable '$rpt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$mdpt'
-#              Call
-#                  Property 'midpoint'
+#                                          String ', '
+#                                          Addition operator (+)
+#                                          Instance variable '@y'
+#                                          Addition operator (+)
+#                                          String ')'
+#              Method 'toString' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@pretty'
+#                                  Argument list [0 items]
+#              Class method 'midpoint' { $pt1 $pt2 -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$pt1'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$pt2'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Point'
+#                                  Named argument list [2 items]
+#                                      Item 0
+#                                          Pair 'x'
+#                                              Operation
+#                                                  Single value [1 item]
+#                                                      Item 0
+#                                                          Operation
+#                                                              Property 'x'
+#                                                                  Lexical variable '$pt1'
+#                                                              Addition operator (+)
+#                                                              Property 'x'
+#                                                                  Lexical variable '$pt2'
+#                                                  Division operator (/)
+#                                                  Number '2'
+#                                      Item 1
+#                                          Pair 'y'
+#                                              Operation
+#                                                  Single value [1 item]
+#                                                      Item 0
+#                                                          Operation
+#                                                              Property 'y'
+#                                                                  Lexical variable '$pt1'
+#                                                              Addition operator (+)
+#                                                              Property 'y'
+#                                                                  Lexical variable '$pt2'
+#                                                  Division operator (/)
+#                                                  Number '2'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$pt'
+#                  Call
 #                      Bareword 'Point'
-#                  Argument list [2 items]
+#                      Argument list [2 items]
+#                          Item 0
+#                              Number '5'
+#                          Item 1
+#                              Number '3'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
 #                      Item 0
+#                          Operation
+#                              String 'Point'
+#                              Addition operator (+)
+#                              Lexical variable '$pt'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$rpt'
+#                  Call
+#                      Property 'oneToRight'
 #                          Lexical variable '$pt'
-#                      Item 1
-#                          Lexical variable '$rpt'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Midpoint'
-#                          Addition operator (+)
-#                          Lexical variable '$mdpt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$nineteen'
-#              Operation
-#                  Number '4'
-#                  Addition operator (+)
-#                  Number '45'
-#                  Division operator (/)
-#                  Number '3'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Nineteen: '
-#                          Addition operator (+)
-#                          Lexical variable '$nineteen'
-#      Include (Point)
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Operation
+#                              String 'Right'
+#                              Addition operator (+)
+#                              Lexical variable '$rpt'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$mdpt'
+#                  Call
+#                      Property 'midpoint'
+#                          Bareword 'Point'
+#                      Argument list [2 items]
+#                          Item 0
+#                              Lexical variable '$pt'
+#                          Item 1
+#                              Lexical variable '$rpt'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Operation
+#                              String 'Midpoint'
+#                              Addition operator (+)
+#                              Lexical variable '$mdpt'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$nineteen'
+#                  Operation
+#                      Number '4'
+#                      Addition operator (+)
+#                      Number '45'
+#                      Division operator (/)
+#                      Number '3'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Operation
+#                              String 'Nineteen: '
+#                              Addition operator (+)
+#                              Lexical variable '$nineteen'
+#          Include (Point)
 package FF;
 
 use warnings;

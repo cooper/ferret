@@ -1,69 +1,70 @@
 # === Document Model ===
-#  Document './test/21-nested-callbacks.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$parts'
-#              Call
-#                  Property 'split'
-#                      String 's p a m'
-#                  Argument list [1 item]
-#                      Item 0
-#                          String ' '
-#      For (pairs)
-#          Expression ('for' parameter)
-#              Set [2 items]
-#                  Item 0
-#                      Lexical variable '$i'
-#                  Item 1
-#                      Lexical variable '$part'
-#          Expression ('in' parameter)
-#              Lexical variable '$parts'
-#          For body
-#              On
-#                  Expression ('on' parameter)
-#                      Property 'expire'
-#                          Call
-#                              Property 'once'
-#                                  Call
-#                                      Bareword 'Timer'
-#                                      Argument list [1 item]
-#                                          Item 0
-#                                              Lexical variable '$i'
-#                              Argument list [0 items]
-#                  Anonymous function
-#                      Function body
-#                          Instruction
-#                              Call
-#                                  Bareword 'say'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          Operation
-#                                              String '('
-#                                              Addition operator (+)
-#                                              Lexical variable '$i'
-#                                              Addition operator (+)
-#                                              String ') '
-#                                              Addition operator (+)
-#                                              Lexical variable '$part'
-#      For (values)
-#          Expression ('for' parameter)
-#              Lexical variable '$part'
-#          Expression ('in' parameter)
-#              Value list [3 items]
-#                  Item 0
-#                      Number '1'
-#                  Item 1
-#                      Number '2'
-#                  Item 2
-#                      Number '3'
-#          For body
-#              Instruction
+#  File './test/21-nested-callbacks.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$parts'
 #                  Call
-#                      Bareword 'say'
+#                      Property 'split'
+#                          String 's p a m'
 #                      Argument list [1 item]
 #                          Item 0
-#                              Lexical variable '$part'
-#      Include (Timer)
+#                              String ' '
+#          For (pairs)
+#              Expression ('for' parameter)
+#                  Set [2 items]
+#                      Item 0
+#                          Lexical variable '$i'
+#                      Item 1
+#                          Lexical variable '$part'
+#              Expression ('in' parameter)
+#                  Lexical variable '$parts'
+#              For body
+#                  On
+#                      Expression ('on' parameter)
+#                          Property 'expire'
+#                              Call
+#                                  Property 'once'
+#                                      Call
+#                                          Bareword 'Timer'
+#                                          Argument list [1 item]
+#                                              Item 0
+#                                                  Lexical variable '$i'
+#                                  Argument list [0 items]
+#                      Anonymous function
+#                          Function body
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Operation
+#                                                  String '('
+#                                                  Addition operator (+)
+#                                                  Lexical variable '$i'
+#                                                  Addition operator (+)
+#                                                  String ') '
+#                                                  Addition operator (+)
+#                                                  Lexical variable '$part'
+#          For (values)
+#              Expression ('for' parameter)
+#                  Lexical variable '$part'
+#              Expression ('in' parameter)
+#                  Value list [3 items]
+#                      Item 0
+#                          Number '1'
+#                      Item 1
+#                          Number '2'
+#                      Item 2
+#                          Number '3'
+#              For body
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  Lexical variable '$part'
+#          Include (Timer)
 package FF;
 
 use warnings;

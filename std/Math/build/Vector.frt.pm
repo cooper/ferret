@@ -1,958 +1,958 @@
 # === Document Model ===
-#  Document './std/Math/Vector.frt'
+#  File './std/Math/Vector.frt'
 #      Package 'Math'
-#      Class 'Vector'
-#          Class method 'initializer__' { ?$items:Num... }
-#              Function body
-#                  Instruction
-#                      Want (...)
-#                          Instance variable '@items'
-#                          Argument type
-#                              Bareword 'Num'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Instance variable '@dimension'
-#                              Less than operator (<)
-#                              Number '1'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              String 'Need dimen...'
-#          Computed property 'dimension' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Property 'length'
+#          Class 'Vector'
+#              Class method 'initializer__' { ?$items:Num... }
+#                  Function body
+#                      Instruction
+#                          Want (...)
 #                              Instance variable '@items'
-#          Computed property 'dimensionHR' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Instance variable '@dimension'
-#                              Addition operator (+)
-#                              String 'D'
-#          Computed property 'magnitude' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Property 'sqrt'
-#                              Property 'sum'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Instance variable '@dimension'
+#                                  Less than operator (<)
+#                                  Number '1'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  String 'Need dimen...'
+#              Computed property 'dimension' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Property 'length'
+#                                  Instance variable '@items'
+#              Computed property 'dimensionHR' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Instance variable '@dimension'
+#                                  Addition operator (+)
+#                                  String 'D'
+#              Computed property 'magnitude' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Property 'sqrt'
+#                                  Property 'sum'
+#                                      Call
+#                                          Property 'map'
+#                                              Instance variable '@items'
+#                                          Argument list [1 item]
+#                                              Item 0
+#                                                  Anonymous function { -> $result }
+#                                                      Function body
+#                                                          Instruction
+#                                                              Return
+#                                                                  Operation
+#                                                                      Topic variable '$_'
+#                                                                      Exponent operator (^)
+#                                                                      Number '2'
+#              Computed property 'unitVector' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Special variable '*self'
+#                                  Division operator (/)
+#                                  Instance variable '@magnitude'
+#              Method 'axisUnitVector' { $axis:VectorAxis -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$axis'
+#                              Argument type
+#                                  Bareword 'VectorAxis'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'axisUnitVector'
+#                                      Bareword 'Vector'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Instance variable '@dimension'
+#                                      Item 1
+#                                          Lexical variable '$axis'
+#              Computed property 'x' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Index
+#                                  Special variable '*self'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Number '0'
+#              Computed property 'y' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Index
+#                                  Special variable '*self'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Number '1'
+#              Computed property 'z' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Index
+#                                  Special variable '*self'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Number '2'
+#              Computed property 'direction' { -> $result }
+#                  Function body
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Instance variable '@dimension'
+#                                  Negated equality operator (!=)
+#                                  Number '2'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  String 'Direction ...'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'atan2'
+#                                      Bareword 'Math'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Instance variable '@y'
+#                                      Item 1
+#                                          Instance variable '@x'
+#              Method 'opAdd' { $ehs:Vector -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Vector'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Property 'dimension'
+#                                      Lexical variable '$ehs'
+#                                  Negated equality operator (!=)
+#                                  Instance variable '@dimension'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  Operation
+#                                                      String 'Dimension ...'
+#                                                      Addition operator (+)
+#                                                      Property 'dimensionHR'
+#                                                          Lexical variable '$ehs'
+#                                                      Addition operator (+)
+#                                                      String ' != '
+#                                                      Addition operator (+)
+#                                                      Instance variable '@dimensionHR'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$items'
+#                              Gather
+#                                  Gather body
+#                                      For (values)
+#                                          Expression ('for' parameter)
+#                                              Lexical variable '$i'
+#                                          Expression ('in' parameter)
+#                                              Operation
+#                                                  Number '0'
+#                                                  Range operator (..)
+#                                                  Property 'lastIndex'
+#                                                      Instance variable '@items'
+#                                          For body
+#                                              Instruction
+#                                                  Take
+#                                                      Operation
+#                                                          Index
+#                                                              Special variable '*self'
+#                                                              Index list [1 item]
+#                                                                  Item 0
+#                                                                      Lexical variable '$i'
+#                                                          Addition operator (+)
+#                                                          Index
+#                                                              Lexical variable '$ehs'
+#                                                              Index list [1 item]
+#                                                                  Item 0
+#                                                                      Lexical variable '$i'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Vector'
+#                                  Named argument list [1 item]
+#                                      Item 0
+#                                          Pair 'items'
+#                                              Lexical variable '$items'
+#              Method 'opSub' { $lhs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$lhs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$lhs'
+#                                  Negated equality operator (!=)
+#                                  Number '0'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Set [2 items]
+#                                          Item 0
+#                                              Symbol :InvalidOperation
+#                                          Item 1
+#                                              String 'Unsupporte...'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Vector'
+#                                  Named argument list [1 item]
+#                                      Item 0
+#                                          Pair 'items'
+#                                              Gather
+#                                                  Gather body
+#                                                      For (values)
+#                                                          Expression ('for' parameter)
+#                                                              Lexical variable '$x'
+#                                                          Expression ('in' parameter)
+#                                                              Instance variable '@items'
+#                                                          For body
+#                                                              Instruction
+#                                                                  Take
+#                                                                      Operation
+#                                                                          Constant zero
+#                                                                          Negation operator (-)
+#                                                                          Lexical variable '$x'
+#              Method 'opSub' { $rhs:Vector -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Vector'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Property 'dimension'
+#                                      Lexical variable '$rhs'
+#                                  Negated equality operator (!=)
+#                                  Instance variable '@dimension'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  Operation
+#                                                      String 'Dimension ...'
+#                                                      Addition operator (+)
+#                                                      Property 'dimensionHR'
+#                                                          Lexical variable '$rhs'
+#                                                      Addition operator (+)
+#                                                      String ' != '
+#                                                      Addition operator (+)
+#                                                      Instance variable '@dimensionHR'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$items'
+#                              Gather
+#                                  Gather body
+#                                      For (values)
+#                                          Expression ('for' parameter)
+#                                              Lexical variable '$i'
+#                                          Expression ('in' parameter)
+#                                              Operation
+#                                                  Number '0'
+#                                                  Range operator (..)
+#                                                  Property 'lastIndex'
+#                                                      Instance variable '@items'
+#                                          For body
+#                                              Instruction
+#                                                  Take
+#                                                      Operation
+#                                                          Index
+#                                                              Special variable '*self'
+#                                                              Index list [1 item]
+#                                                                  Item 0
+#                                                                      Lexical variable '$i'
+#                                                          Subtraction operator (-)
+#                                                          Index
+#                                                              Lexical variable '$rhs'
+#                                                              Index list [1 item]
+#                                                                  Item 0
+#                                                                      Lexical variable '$i'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Vector'
+#                                  Named argument list [1 item]
+#                                      Item 0
+#                                          Pair 'items'
+#                                              Lexical variable '$items'
+#              Method 'opMul' { $ehs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Vector'
+#                                  Named argument list [1 item]
+#                                      Item 0
+#                                          Pair 'items'
+#                                              Call
+#                                                  Property 'map'
+#                                                      Instance variable '@items'
+#                                                  Argument list [1 item]
+#                                                      Item 0
+#                                                          Anonymous function { -> $result }
+#                                                              Function body
+#                                                                  Instruction
+#                                                                      Return
+#                                                                          Operation
+#                                                                              Topic variable '$_'
+#                                                                              Multiplication operator (*)
+#                                                                              Lexical variable '$ehs'
+#              Method 'opDiv' { $rhs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Special variable '*self'
+#                                  Multiplication operator (*)
+#                                  Single value [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              Number '1'
+#                                              Division operator (/)
+#                                              Lexical variable '$rhs'
+#              Method 'opMul' { $ehs:Vector -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Vector'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@dot'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$ehs'
+#              Method 'opEqual' { $ehs:Vector -> $result $result $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Vector'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Property 'dimension'
+#                                      Lexical variable '$ehs'
+#                                  Negated equality operator (!=)
+#                                  Instance variable '@dimension'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      Boolean false
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$i'
+#                          Expression ('in' parameter)
+#                              Operation
+#                                  Number '0'
+#                                  Range operator (..)
+#                                  Property 'lastIndex'
+#                                      Instance variable '@items'
+#                          For body
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Operation
+#                                          Index
+#                                              Special variable '*self'
+#                                              Index list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$i'
+#                                          Equality operator (==)
+#                                          Index
+#                                              Lexical variable '$ehs'
+#                                              Index list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$i'
+#                                  If body
+#                                      Instruction
+#                                          Next
+#                              Instruction
+#                                  Return
+#                                      Boolean false
+#                      Instruction
+#                          Return
+#                              Boolean true
+#              Method 'dot' { $ehs:Vector -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Vector'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Property 'dimension'
+#                                      Lexical variable '$ehs'
+#                                  Negated equality operator (!=)
+#                                  Instance variable '@dimension'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  Operation
+#                                                      String 'Dimension ...'
+#                                                      Addition operator (+)
+#                                                      Property 'dimensionHR'
+#                                                          Lexical variable '$ehs'
+#                                                      Addition operator (+)
+#                                                      String ' != '
+#                                                      Addition operator (+)
+#                                                      Instance variable '@dimensionHR'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$dot'
+#                              Number '0'
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$i'
+#                          Expression ('in' parameter)
+#                              Operation
+#                                  Number '0'
+#                                  Range operator (..)
+#                                  Property 'lastIndex'
+#                                      Instance variable '@items'
+#                          For body
+#                              Instruction
+#                                  Addition assignment
+#                                      Lexical variable '$dot'
+#                                      Operation
+#                                          Index
+#                                              Special variable '*self'
+#                                              Index list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$i'
+#                                          Multiplication operator (*)
+#                                          Index
+#                                              Lexical variable '$ehs'
+#                                              Index list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$i'
+#                      Instruction
+#                          Return
+#                              Lexical variable '$dot'
+#              Method 'cross' { $ehs:Vector -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Vector'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Property 'dimension'
+#                                      Lexical variable '$ehs'
+#                                  Negated equality operator (!=)
+#                                  Number '3'
+#                                  Logical or operator (||)
+#                                  Instance variable '@dimension'
+#                                  Negated equality operator (!=)
+#                                  Number '3'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  String 'Cross prod...'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@a'
+#                              Operation
+#                                  Index
+#                                      Special variable '*self'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '1'
+#                                  Multiplication operator (*)
+#                                  Index
+#                                      Lexical variable '$ehs'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '2'
+#                                  Subtraction operator (-)
+#                                  Index
+#                                      Special variable '*self'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '2'
+#                                  Multiplication operator (*)
+#                                  Index
+#                                      Lexical variable '$ehs'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '1'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@b'
+#                              Operation
+#                                  Index
+#                                      Special variable '*self'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '2'
+#                                  Multiplication operator (*)
+#                                  Index
+#                                      Lexical variable '$ehs'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '0'
+#                                  Subtraction operator (-)
+#                                  Index
+#                                      Special variable '*self'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '0'
+#                                  Multiplication operator (*)
+#                                  Index
+#                                      Lexical variable '$ehs'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '2'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@c'
+#                              Operation
+#                                  Index
+#                                      Special variable '*self'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '0'
+#                                  Multiplication operator (*)
+#                                  Index
+#                                      Lexical variable '$ehs'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '1'
+#                                  Subtraction operator (-)
+#                                  Index
+#                                      Special variable '*self'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '1'
+#                                  Multiplication operator (*)
+#                                  Index
+#                                      Lexical variable '$ehs'
+#                                      Index list [1 item]
+#                                          Item 0
+#                                              Number '0'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Vector'
+#                                  Argument list [3 items]
+#                                      Item 0
+#                                          Instance variable '@a'
+#                                      Item 1
+#                                          Instance variable '@b'
+#                                      Item 2
+#                                          Instance variable '@c'
+#              Method 'angleBetween' { $ehs:Vector -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Vector'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$cosθ'
+#                              Operation
 #                                  Call
-#                                      Property 'map'
+#                                      Instance variable '@dot'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Lexical variable '$ehs'
+#                                  Division operator (/)
+#                                  Single value [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              Instance variable '@magnitude'
+#                                              Multiplication operator (*)
+#                                              Property 'magnitude'
+#                                                  Lexical variable '$ehs'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'acos'
+#                                      Bareword 'Math'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$cosθ'
+#              Method 'orthogonalTo' { $ehs:Vector -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Vector'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Call
+#                                      Instance variable '@dot'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Lexical variable '$ehs'
+#                                  Equality operator (==)
+#                                  Number '0'
+#              Method 'parallelTo' { $ehs:Vector -> $result $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Vector'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Property 'dimension'
+#                                      Lexical variable '$ehs'
+#                                  Negated equality operator (!=)
+#                                  Instance variable '@dimension'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  Operation
+#                                                      String 'Dimension ...'
+#                                                      Addition operator (+)
+#                                                      Property 'dimensionHR'
+#                                                          Lexical variable '$ehs'
+#                                                      Addition operator (+)
+#                                                      String ' != '
+#                                                      Addition operator (+)
+#                                                      Instance variable '@dimensionHR'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$u1'
+#                              Instance variable '@unitVector'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$u2'
+#                              Property 'unitVector'
+#                                  Lexical variable '$ehs'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$u1'
+#                                  Equality operator (==)
+#                                  Lexical variable '$u2'
+#                                  Logical or operator (||)
+#                                  Constant zero
+#                                  Negation operator (-)
+#                                  Lexical variable '$u1'
+#                                  Equality operator (==)
+#                                  Lexical variable '$u2'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      Boolean true
+#                      Instruction
+#                          Return
+#                              Boolean false
+#              Method 'getValue' { $index:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$index'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$n'
+#                              Operation
+#                                  Lexical variable '$index'
+#                                  Addition operator (+)
+#                                  Number '1'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Instance variable '@dimension'
+#                                  Less than operator (<)
+#                                  Lexical variable '$n'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  Operation
+#                                                      Instance variable '@dimensionHR'
+#                                                      Addition operator (+)
+#                                                      String ' vector ha...'
+#                                                      Addition operator (+)
+#                                                      Lexical variable '$n'
+#                      Instruction
+#                          Return
+#                              Index
+#                                  Instance variable '@items'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$index'
+#              Method 'copy' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Vector'
+#                                  Named argument list [1 item]
+#                                      Item 0
+#                                          Pair 'items'
+#                                              Call
+#                                                  Property 'copy'
+#                                                      Instance variable '@items'
+#              Method 'description' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  String '<'
+#                                  Addition operator (+)
+#                                  Call
+#                                      Property 'join'
 #                                          Instance variable '@items'
 #                                      Argument list [1 item]
 #                                          Item 0
-#                                              Anonymous function { -> $result }
-#                                                  Function body
-#                                                      Instruction
-#                                                          Return
-#                                                              Operation
-#                                                                  Topic variable '$_'
-#                                                                  Exponent operator (^)
-#                                                                  Number '2'
-#          Computed property 'unitVector' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Special variable '*self'
-#                              Division operator (/)
-#                              Instance variable '@magnitude'
-#          Method 'axisUnitVector' { $axis:VectorAxis -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$axis'
-#                          Argument type
-#                              Bareword 'VectorAxis'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'axisUnitVector'
+#                                              String ', '
+#                                  Addition operator (+)
+#                                  String '>'
+#              Class method 'zeroVector' { $dimension:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$dimension'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$dimension'
+#                                  Less than operator (<)
+#                                  Number '1'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  String 'Need dimen...'
+#                      Instruction
+#                          Return
+#                              Call
 #                                  Bareword 'Vector'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Instance variable '@dimension'
-#                                  Item 1
-#                                      Lexical variable '$axis'
-#          Computed property 'x' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Index
-#                              Special variable '*self'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Number '0'
-#          Computed property 'y' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Index
-#                              Special variable '*self'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Number '1'
-#          Computed property 'z' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Index
-#                              Special variable '*self'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Number '2'
-#          Computed property 'direction' { -> $result }
-#              Function body
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Instance variable '@dimension'
-#                              Negated equality operator (!=)
-#                              Number '2'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              String 'Direction ...'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'atan2'
-#                                  Bareword 'Math'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Instance variable '@y'
-#                                  Item 1
-#                                      Instance variable '@x'
-#          Method 'opAdd' { $ehs:Vector -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Vector'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Property 'dimension'
-#                                  Lexical variable '$ehs'
-#                              Negated equality operator (!=)
-#                              Instance variable '@dimension'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              Operation
-#                                                  String 'Dimension ...'
-#                                                  Addition operator (+)
-#                                                  Property 'dimensionHR'
-#                                                      Lexical variable '$ehs'
-#                                                  Addition operator (+)
-#                                                  String ' != '
-#                                                  Addition operator (+)
-#                                                  Instance variable '@dimensionHR'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$items'
-#                          Gather
-#                              Gather body
-#                                  For (values)
-#                                      Expression ('for' parameter)
-#                                          Lexical variable '$i'
-#                                      Expression ('in' parameter)
-#                                          Operation
-#                                              Number '0'
-#                                              Range operator (..)
-#                                              Property 'lastIndex'
-#                                                  Instance variable '@items'
-#                                      For body
-#                                          Instruction
-#                                              Take
-#                                                  Operation
-#                                                      Index
-#                                                          Special variable '*self'
-#                                                          Index list [1 item]
-#                                                              Item 0
-#                                                                  Lexical variable '$i'
-#                                                      Addition operator (+)
-#                                                      Index
-#                                                          Lexical variable '$ehs'
-#                                                          Index list [1 item]
-#                                                              Item 0
-#                                                                  Lexical variable '$i'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Vector'
-#                              Named argument list [1 item]
-#                                  Item 0
-#                                      Pair 'items'
-#                                          Lexical variable '$items'
-#          Method 'opSub' { $lhs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$lhs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Lexical variable '$lhs'
-#                              Negated equality operator (!=)
-#                              Number '0'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Set [2 items]
+#                                  Named argument list [1 item]
 #                                      Item 0
-#                                          Symbol :InvalidOperation
-#                                      Item 1
-#                                          String 'Unsupporte...'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Vector'
-#                              Named argument list [1 item]
-#                                  Item 0
-#                                      Pair 'items'
-#                                          Gather
-#                                              Gather body
-#                                                  For (values)
-#                                                      Expression ('for' parameter)
-#                                                          Lexical variable '$x'
-#                                                      Expression ('in' parameter)
-#                                                          Instance variable '@items'
-#                                                      For body
-#                                                          Instruction
-#                                                              Take
-#                                                                  Operation
-#                                                                      Constant zero
-#                                                                      Negation operator (-)
-#                                                                      Lexical variable '$x'
-#          Method 'opSub' { $rhs:Vector -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Vector'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Property 'dimension'
-#                                  Lexical variable '$rhs'
-#                              Negated equality operator (!=)
-#                              Instance variable '@dimension'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              Operation
-#                                                  String 'Dimension ...'
-#                                                  Addition operator (+)
-#                                                  Property 'dimensionHR'
-#                                                      Lexical variable '$rhs'
-#                                                  Addition operator (+)
-#                                                  String ' != '
-#                                                  Addition operator (+)
-#                                                  Instance variable '@dimensionHR'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$items'
-#                          Gather
-#                              Gather body
-#                                  For (values)
-#                                      Expression ('for' parameter)
-#                                          Lexical variable '$i'
-#                                      Expression ('in' parameter)
-#                                          Operation
-#                                              Number '0'
-#                                              Range operator (..)
-#                                              Property 'lastIndex'
-#                                                  Instance variable '@items'
-#                                      For body
-#                                          Instruction
-#                                              Take
-#                                                  Operation
-#                                                      Index
-#                                                          Special variable '*self'
-#                                                          Index list [1 item]
-#                                                              Item 0
-#                                                                  Lexical variable '$i'
-#                                                      Subtraction operator (-)
-#                                                      Index
-#                                                          Lexical variable '$rhs'
-#                                                          Index list [1 item]
-#                                                              Item 0
-#                                                                  Lexical variable '$i'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Vector'
-#                              Named argument list [1 item]
-#                                  Item 0
-#                                      Pair 'items'
-#                                          Lexical variable '$items'
-#          Method 'opMul' { $ehs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Vector'
-#                              Named argument list [1 item]
-#                                  Item 0
-#                                      Pair 'items'
-#                                          Call
-#                                              Property 'map'
-#                                                  Instance variable '@items'
-#                                              Argument list [1 item]
-#                                                  Item 0
-#                                                      Anonymous function { -> $result }
-#                                                          Function body
+#                                          Pair 'items'
+#                                              Gather
+#                                                  Gather body
+#                                                      For (values)
+#                                                          Expression ('for' parameter)
+#                                                              Lexical variable '$i'
+#                                                          Expression ('in' parameter)
+#                                                              Operation
+#                                                                  Number '1'
+#                                                                  Range operator (..)
+#                                                                  Lexical variable '$dimension'
+#                                                          For body
 #                                                              Instruction
-#                                                                  Return
-#                                                                      Operation
-#                                                                          Topic variable '$_'
-#                                                                          Multiplication operator (*)
-#                                                                          Lexical variable '$ehs'
-#          Method 'opDiv' { $rhs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Special variable '*self'
-#                              Multiplication operator (*)
-#                              Single value [1 item]
-#                                  Item 0
-#                                      Operation
-#                                          Number '1'
-#                                          Division operator (/)
-#                                          Lexical variable '$rhs'
-#          Method 'opMul' { $ehs:Vector -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Vector'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@dot'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$ehs'
-#          Method 'opEqual' { $ehs:Vector -> $result $result $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Vector'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Property 'dimension'
-#                                  Lexical variable '$ehs'
-#                              Negated equality operator (!=)
-#                              Instance variable '@dimension'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  Boolean false
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$i'
-#                      Expression ('in' parameter)
-#                          Operation
-#                              Number '0'
-#                              Range operator (..)
-#                              Property 'lastIndex'
-#                                  Instance variable '@items'
-#                      For body
-#                          If
-#                              Expression ('if' parameter)
-#                                  Operation
-#                                      Index
-#                                          Special variable '*self'
-#                                          Index list [1 item]
-#                                              Item 0
-#                                                  Lexical variable '$i'
-#                                      Equality operator (==)
-#                                      Index
-#                                          Lexical variable '$ehs'
-#                                          Index list [1 item]
-#                                              Item 0
-#                                                  Lexical variable '$i'
-#                              If body
-#                                  Instruction
-#                                      Next
-#                          Instruction
-#                              Return
-#                                  Boolean false
-#                  Instruction
-#                      Return
-#                          Boolean true
-#          Method 'dot' { $ehs:Vector -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Vector'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Property 'dimension'
-#                                  Lexical variable '$ehs'
-#                              Negated equality operator (!=)
-#                              Instance variable '@dimension'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              Operation
-#                                                  String 'Dimension ...'
-#                                                  Addition operator (+)
-#                                                  Property 'dimensionHR'
-#                                                      Lexical variable '$ehs'
-#                                                  Addition operator (+)
-#                                                  String ' != '
-#                                                  Addition operator (+)
-#                                                  Instance variable '@dimensionHR'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$dot'
-#                          Number '0'
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$i'
-#                      Expression ('in' parameter)
-#                          Operation
-#                              Number '0'
-#                              Range operator (..)
-#                              Property 'lastIndex'
-#                                  Instance variable '@items'
-#                      For body
-#                          Instruction
-#                              Addition assignment
-#                                  Lexical variable '$dot'
-#                                  Operation
-#                                      Index
-#                                          Special variable '*self'
-#                                          Index list [1 item]
-#                                              Item 0
-#                                                  Lexical variable '$i'
-#                                      Multiplication operator (*)
-#                                      Index
-#                                          Lexical variable '$ehs'
-#                                          Index list [1 item]
-#                                              Item 0
-#                                                  Lexical variable '$i'
-#                  Instruction
-#                      Return
-#                          Lexical variable '$dot'
-#          Method 'cross' { $ehs:Vector -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Vector'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Property 'dimension'
-#                                  Lexical variable '$ehs'
-#                              Negated equality operator (!=)
-#                              Number '3'
-#                              Logical or operator (||)
-#                              Instance variable '@dimension'
-#                              Negated equality operator (!=)
-#                              Number '3'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              String 'Cross prod...'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@a'
-#                          Operation
-#                              Index
-#                                  Special variable '*self'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '1'
-#                              Multiplication operator (*)
-#                              Index
-#                                  Lexical variable '$ehs'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '2'
-#                              Subtraction operator (-)
-#                              Index
-#                                  Special variable '*self'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '2'
-#                              Multiplication operator (*)
-#                              Index
-#                                  Lexical variable '$ehs'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '1'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@b'
-#                          Operation
-#                              Index
-#                                  Special variable '*self'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '2'
-#                              Multiplication operator (*)
-#                              Index
-#                                  Lexical variable '$ehs'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '0'
-#                              Subtraction operator (-)
-#                              Index
-#                                  Special variable '*self'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '0'
-#                              Multiplication operator (*)
-#                              Index
-#                                  Lexical variable '$ehs'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '2'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@c'
-#                          Operation
-#                              Index
-#                                  Special variable '*self'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '0'
-#                              Multiplication operator (*)
-#                              Index
-#                                  Lexical variable '$ehs'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '1'
-#                              Subtraction operator (-)
-#                              Index
-#                                  Special variable '*self'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '1'
-#                              Multiplication operator (*)
-#                              Index
-#                                  Lexical variable '$ehs'
-#                                  Index list [1 item]
-#                                      Item 0
-#                                          Number '0'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Vector'
-#                              Argument list [3 items]
-#                                  Item 0
-#                                      Instance variable '@a'
-#                                  Item 1
-#                                      Instance variable '@b'
-#                                  Item 2
-#                                      Instance variable '@c'
-#          Method 'angleBetween' { $ehs:Vector -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Vector'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$cosθ'
-#                          Operation
-#                              Call
-#                                  Instance variable '@dot'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          Lexical variable '$ehs'
-#                              Division operator (/)
-#                              Single value [1 item]
-#                                  Item 0
-#                                      Operation
-#                                          Instance variable '@magnitude'
-#                                          Multiplication operator (*)
-#                                          Property 'magnitude'
-#                                              Lexical variable '$ehs'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'acos'
-#                                  Bareword 'Math'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$cosθ'
-#          Method 'orthogonalTo' { $ehs:Vector -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Vector'
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Call
-#                                  Instance variable '@dot'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          Lexical variable '$ehs'
-#                              Equality operator (==)
-#                              Number '0'
-#          Method 'parallelTo' { $ehs:Vector -> $result $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Vector'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Property 'dimension'
-#                                  Lexical variable '$ehs'
-#                              Negated equality operator (!=)
-#                              Instance variable '@dimension'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              Operation
-#                                                  String 'Dimension ...'
-#                                                  Addition operator (+)
-#                                                  Property 'dimensionHR'
-#                                                      Lexical variable '$ehs'
-#                                                  Addition operator (+)
-#                                                  String ' != '
-#                                                  Addition operator (+)
-#                                                  Instance variable '@dimensionHR'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$u1'
-#                          Instance variable '@unitVector'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$u2'
-#                          Property 'unitVector'
-#                              Lexical variable '$ehs'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Lexical variable '$u1'
-#                              Equality operator (==)
-#                              Lexical variable '$u2'
-#                              Logical or operator (||)
-#                              Constant zero
-#                              Negation operator (-)
-#                              Lexical variable '$u1'
-#                              Equality operator (==)
-#                              Lexical variable '$u2'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  Boolean true
-#                  Instruction
-#                      Return
-#                          Boolean false
-#          Method 'getValue' { $index:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$index'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$n'
-#                          Operation
-#                              Lexical variable '$index'
-#                              Addition operator (+)
-#                              Number '1'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Instance variable '@dimension'
-#                              Less than operator (<)
-#                              Lexical variable '$n'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              Operation
-#                                                  Instance variable '@dimensionHR'
-#                                                  Addition operator (+)
-#                                                  String ' vector ha...'
-#                                                  Addition operator (+)
-#                                                  Lexical variable '$n'
-#                  Instruction
-#                      Return
-#                          Index
-#                              Instance variable '@items'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$index'
-#          Method 'copy' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Vector'
-#                              Named argument list [1 item]
-#                                  Item 0
-#                                      Pair 'items'
-#                                          Call
-#                                              Property 'copy'
-#                                                  Instance variable '@items'
-#          Method 'description' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              String '<'
-#                              Addition operator (+)
-#                              Call
-#                                  Property 'join'
-#                                      Instance variable '@items'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          String ', '
-#                              Addition operator (+)
-#                              String '>'
-#          Class method 'zeroVector' { $dimension:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$dimension'
-#                          Argument type
-#                              Bareword 'Num'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
+#                                                                  Take
+#                                                                      Number '0'
+#              Class method 'axisUnitVector' { $dimension:Num $axis:VectorAxis -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
 #                              Lexical variable '$dimension'
-#                              Less than operator (<)
-#                              Number '1'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              String 'Need dimen...'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Vector'
-#                              Named argument list [1 item]
-#                                  Item 0
-#                                      Pair 'items'
-#                                          Gather
-#                                              Gather body
-#                                                  For (values)
-#                                                      Expression ('for' parameter)
-#                                                          Lexical variable '$i'
-#                                                      Expression ('in' parameter)
-#                                                          Operation
-#                                                              Number '1'
-#                                                              Range operator (..)
-#                                                              Lexical variable '$dimension'
-#                                                      For body
-#                                                          Instruction
-#                                                              Take
-#                                                                  Number '0'
-#          Class method 'axisUnitVector' { $dimension:Num $axis:VectorAxis -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$dimension'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$axis'
-#                          Argument type
-#                              Bareword 'VectorAxis'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Lexical variable '$dimension'
-#                              Less than operator (<)
-#                              Number '1'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              String 'Need dimen...'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$items'
-#                          Gather
-#                              Gather body
-#                                  For (values)
-#                                      Expression ('for' parameter)
-#                                          Lexical variable '$i'
-#                                      Expression ('in' parameter)
-#                                          Operation
-#                                              Number '1'
-#                                              Range operator (..)
-#                                              Lexical variable '$dimension'
-#                                      For body
-#                                          If
-#                                              Expression ('if' parameter)
-#                                                  Operation
-#                                                      Lexical variable '$i'
-#                                                      Equality operator (==)
-#                                                      Lexical variable '$axis'
-#                                              If body
-#                                                  Instruction
-#                                                      Take
-#                                                          Number '1'
-#                                                  Instruction
-#                                                      Next
-#                                          Instruction
-#                                              Take
-#                                                  Number '0'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Vector'
-#                              Named argument list [1 item]
-#                                  Item 0
-#                                      Pair 'items'
-#                                          Lexical variable '$items'
-#          Function '_axisToNumber' { $axis:Num|Char -> $result $result $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$axis'
-#                          Argument type
-#                              Bareword 'Num'
-#                              Bareword 'Char'
-#                  If
-#                      Expression ('if' parameter)
-#                          Call
-#                              Special property '*instanceOf'
-#                                  Lexical variable '$axis'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Bareword 'Num'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  Lexical variable '$axis'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$o'
-#                          Property 'ord'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Need
 #                              Lexical variable '$axis'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
+#                              Argument type
+#                                  Bareword 'VectorAxis'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$dimension'
+#                                  Less than operator (<)
+#                                  Number '1'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  String 'Need dimen...'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$items'
+#                              Gather
+#                                  Gather body
+#                                      For (values)
+#                                          Expression ('for' parameter)
+#                                              Lexical variable '$i'
+#                                          Expression ('in' parameter)
+#                                              Operation
+#                                                  Number '1'
+#                                                  Range operator (..)
+#                                                  Lexical variable '$dimension'
+#                                          For body
+#                                              If
+#                                                  Expression ('if' parameter)
+#                                                      Operation
+#                                                          Lexical variable '$i'
+#                                                          Equality operator (==)
+#                                                          Lexical variable '$axis'
+#                                                  If body
+#                                                      Instruction
+#                                                          Take
+#                                                              Number '1'
+#                                                      Instruction
+#                                                          Next
+#                                              Instruction
+#                                                  Take
+#                                                      Number '0'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Vector'
+#                                  Named argument list [1 item]
+#                                      Item 0
+#                                          Pair 'items'
+#                                              Lexical variable '$items'
+#              Function '_axisToNumber' { $axis:Num|Char -> $result $result $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$axis'
+#                              Argument type
+#                                  Bareword 'Num'
+#                                  Bareword 'Char'
+#                      If
+#                          Expression ('if' parameter)
+#                              Call
+#                                  Special property '*instanceOf'
+#                                      Lexical variable '$axis'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Bareword 'Num'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      Lexical variable '$axis'
+#                      Instruction
+#                          Assignment
 #                              Lexical variable '$o'
-#                              Greater than operator (>)
-#                              Number '119'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  Operation
-#                                      Lexical variable '$o'
-#                                      Subtraction operator (-)
-#                                      Number '119'
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Lexical variable '$o'
-#                              Subtraction operator (-)
-#                              Number '104'
-#          Type definition ('VectorAxis')
-#              Type body
-#                  Instruction
-#                      Transform
-#                          Call
-#                              Bareword '_axisToNumber'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Topic variable '$_'
-#      Include (Char, Error, Math, Num, Vector, VectorAxis)
+#                              Property 'ord'
+#                                  Lexical variable '$axis'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$o'
+#                                  Greater than operator (>)
+#                                  Number '119'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      Operation
+#                                          Lexical variable '$o'
+#                                          Subtraction operator (-)
+#                                          Number '119'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Lexical variable '$o'
+#                                  Subtraction operator (-)
+#                                  Number '104'
+#              Type definition ('VectorAxis')
+#                  Type body
+#                      Instruction
+#                          Transform
+#                              Call
+#                                  Bareword '_axisToNumber'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Topic variable '$_'
+#          Include (Char, Error, Math, Num, Vector, VectorAxis)
 package FF;
 
 use warnings;

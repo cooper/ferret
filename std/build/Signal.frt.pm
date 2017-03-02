@@ -1,94 +1,95 @@
 # === Document Model ===
-#  Document './std/Signal.frt'
-#      Class 'Signal'
-#          Instruction
-#              Load
-#                  Bareword 'NATIVE::Signal'
-#          Instruction
-#              Shared variable declaration
+#  File './std/Signal.frt'
+#      Package 'main'
+#          Class 'Signal'
+#              Instruction
+#                  Load
+#                      Bareword 'NATIVE::Signal'
+#              Instruction
+#                  Shared variable declaration
+#                      Lazy assignment
+#                          Lexical variable '$INT'
+#                          Call
+#                              Special variable '*class'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Symbol :INT
+#              Instruction
+#                  Shared variable declaration
+#                      Lazy assignment
+#                          Lexical variable '$HUP'
+#                          Call
+#                              Special variable '*class'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Symbol :HUP
+#              Instruction
+#                  Shared variable declaration
+#                      Lazy assignment
+#                          Lexical variable '$TERM'
+#                          Call
+#                              Special variable '*class'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Symbol :TERM
+#              Instruction
+#                  Shared variable declaration
+#                      Lazy assignment
+#                          Lexical variable '$ALRM'
+#                          Call
+#                              Special variable '*class'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Symbol :ALRM
+#              Instruction
 #                  Lazy assignment
-#                      Lexical variable '$INT'
-#                      Call
-#                          Special variable '*class'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Symbol :INT
-#          Instruction
-#              Shared variable declaration
-#                  Lazy assignment
-#                      Lexical variable '$HUP'
-#                      Call
-#                          Special variable '*class'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Symbol :HUP
-#          Instruction
-#              Shared variable declaration
-#                  Lazy assignment
-#                      Lexical variable '$TERM'
-#                      Call
-#                          Special variable '*class'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Symbol :TERM
-#          Instruction
-#              Shared variable declaration
-#                  Lazy assignment
-#                      Lexical variable '$ALRM'
-#                      Call
-#                          Special variable '*class'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Symbol :ALRM
-#          Instruction
-#              Lazy assignment
-#                  Lexical variable '$signals'
-#                  Hash [4 items]
-#                      Item 0
-#                          Pair 'INT'
-#                              Lexical variable '$INT'
-#                      Item 1
-#                          Pair 'HUP'
-#                              Lexical variable '$HUP'
-#                      Item 2
-#                          Pair 'TERM'
-#                              Lexical variable '$TERM'
-#                      Item 3
-#                          Pair 'ALRM'
-#                              Lexical variable '$ALRM'
-#          Class method 'initializer__' { $type:Sym }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@type'
-#                          Argument type
-#                              Bareword 'Sym'
-#          Method 'trap'
-#              Function body
-#                  Instruction
-#                      Call
-#                          Bareword '_exit'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Number '0'
-#          Class method 'fireSignal' { $type:Sym }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$type'
-#                          Argument type
-#                              Bareword 'Sym'
-#                  Instruction
-#                      Call
-#                          Property 'trap'
-#                              Maybe
-#                                  Index
-#                                      Lexical variable '$signals'
-#                                      Index list [1 item]
-#                                          Item 0
-#                                              Lexical variable '$type'
-#                          Argument list [0 items]
-#      Include (NATIVE::Signal, Sym)
+#                      Lexical variable '$signals'
+#                      Hash [4 items]
+#                          Item 0
+#                              Pair 'INT'
+#                                  Lexical variable '$INT'
+#                          Item 1
+#                              Pair 'HUP'
+#                                  Lexical variable '$HUP'
+#                          Item 2
+#                              Pair 'TERM'
+#                                  Lexical variable '$TERM'
+#                          Item 3
+#                              Pair 'ALRM'
+#                                  Lexical variable '$ALRM'
+#              Class method 'initializer__' { $type:Sym }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Instance variable '@type'
+#                              Argument type
+#                                  Bareword 'Sym'
+#              Method 'trap'
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Bareword '_exit'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Number '0'
+#              Class method 'fireSignal' { $type:Sym }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$type'
+#                              Argument type
+#                                  Bareword 'Sym'
+#                      Instruction
+#                          Call
+#                              Property 'trap'
+#                                  Maybe
+#                                      Index
+#                                          Lexical variable '$signals'
+#                                          Index list [1 item]
+#                                              Item 0
+#                                                  Lexical variable '$type'
+#                              Argument list [0 items]
+#          Include (NATIVE::Signal, Sym)
 package FF;
 
 use warnings;

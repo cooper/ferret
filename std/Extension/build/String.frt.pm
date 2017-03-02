@@ -1,114 +1,115 @@
 # === Document Model ===
-#  Document './std/Extension/String.frt'
-#      Class 'String'
-#          Type definition ('NonEmpty')
-#              Type body
-#                  Instruction
-#                      Isa
-#                          Special variable '*class'
-#                  Instruction
-#                      Satisfies
-#                          Operation
-#                              Property variable '.length'
-#                              Negated equality operator (!=)
-#                              Number '0'
-#          Instruction
-#              Alias
-#                  Assignment
-#                      Bareword 'NE'
-#                      Bareword 'NonEmpty'
-#          Type definition ('Uppercase')
-#              Type body
-#                  Instruction
-#                      Isa
-#                          Special variable '*class'
-#                  Instruction
-#                      Transform
-#                          Property variable '.uppercase'
-#          Instruction
-#              Alias
-#                  Assignment
-#                      Bareword 'UC'
-#                      Bareword 'Uppercase'
-#          Type definition ('Lowercase')
-#              Type body
-#                  Instruction
-#                      Isa
-#                          Special variable '*class'
-#                  Instruction
-#                      Transform
-#                          Property variable '.lowercase'
-#          Instruction
-#              Alias
-#                  Assignment
-#                      Bareword 'LC'
-#                      Bareword 'Lowercase'
-#          Type definition ('Any')
-#              Type body
-#                  Instruction
-#                      Transform
-#                          Call
-#                              Bareword 'Str'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Topic variable '$_'
-#          Method 'word' { $wordI:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$wordI'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Index
+#  File './std/Extension/String.frt'
+#      Package 'main'
+#          Class 'String'
+#              Type definition ('NonEmpty')
+#                  Type body
+#                      Instruction
+#                          Isa
+#                              Special variable '*class'
+#                      Instruction
+#                          Satisfies
+#                              Operation
+#                                  Property variable '.length'
+#                                  Negated equality operator (!=)
+#                                  Number '0'
+#              Instruction
+#                  Alias
+#                      Assignment
+#                          Bareword 'NE'
+#                          Bareword 'NonEmpty'
+#              Type definition ('Uppercase')
+#                  Type body
+#                      Instruction
+#                          Isa
+#                              Special variable '*class'
+#                      Instruction
+#                          Transform
+#                              Property variable '.uppercase'
+#              Instruction
+#                  Alias
+#                      Assignment
+#                          Bareword 'UC'
+#                          Bareword 'Uppercase'
+#              Type definition ('Lowercase')
+#                  Type body
+#                      Instruction
+#                          Isa
+#                              Special variable '*class'
+#                      Instruction
+#                          Transform
+#                              Property variable '.lowercase'
+#              Instruction
+#                  Alias
+#                      Assignment
+#                          Bareword 'LC'
+#                          Bareword 'Lowercase'
+#              Type definition ('Any')
+#                  Type body
+#                      Instruction
+#                          Transform
 #                              Call
-#                                  Instance variable '@split'
-#                                  Mixed argument list [2 items]
+#                                  Bareword 'Str'
+#                                  Argument list [1 item]
 #                                      Item 0
-#                                          String ' '
-#                                      Item 1
-#                                          Pair 'limit'
-#                                              Operation
-#                                                  Lexical variable '$wordI'
-#                                                  Addition operator (+)
-#                                                  Number '2'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$wordI'
-#          Method 'fromWord' { $wordN:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$wordN'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Index
-#                              Call
-#                                  Instance variable '@split'
-#                                  Mixed argument list [2 items]
+#                                          Topic variable '$_'
+#              Method 'word' { $wordI:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$wordI'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Index
+#                                  Call
+#                                      Instance variable '@split'
+#                                      Mixed argument list [2 items]
+#                                          Item 0
+#                                              String ' '
+#                                          Item 1
+#                                              Pair 'limit'
+#                                                  Operation
+#                                                      Lexical variable '$wordI'
+#                                                      Addition operator (+)
+#                                                      Number '2'
+#                                  Index list [1 item]
 #                                      Item 0
-#                                          String ' '
-#                                      Item 1
-#                                          Pair 'limit'
-#                                              Operation
-#                                                  Lexical variable '$wordN'
-#                                                  Addition operator (+)
-#                                                  Number '1'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$wordN'
-#          Computed property 'empty' (lazy) { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Instance variable '@length'
-#                              Equality operator (==)
-#                              Number '0'
-#      Include (LC, Lowercase, NE, NonEmpty, Num, Str, UC, Uppercase)
+#                                          Lexical variable '$wordI'
+#              Method 'fromWord' { $wordN:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$wordN'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Index
+#                                  Call
+#                                      Instance variable '@split'
+#                                      Mixed argument list [2 items]
+#                                          Item 0
+#                                              String ' '
+#                                          Item 1
+#                                              Pair 'limit'
+#                                                  Operation
+#                                                      Lexical variable '$wordN'
+#                                                      Addition operator (+)
+#                                                      Number '1'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$wordN'
+#              Computed property 'empty' (lazy) { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Instance variable '@length'
+#                                  Equality operator (==)
+#                                  Number '0'
+#          Include (LC, Lowercase, NE, NonEmpty, Num, Str, UC, Uppercase)
 package FF;
 
 use warnings;

@@ -1,189 +1,190 @@
 # === Document Model ===
-#  Document './std/Extension/Number.frt'
-#      Class 'Number'
-#          Type definition ('Even')
-#              Type body
-#                  Instruction
-#                      Isa
-#                          Special variable '*class'
-#                  Instruction
-#                      Satisfies
-#                          Property variable '.even'
-#          Type definition ('Odd')
-#              Type body
-#                  Instruction
-#                      Isa
-#                          Special variable '*class'
-#                  Instruction
-#                      Satisfies
-#                          Property variable '.odd'
-#          Type definition ('Integer')
-#              Type body
-#                  Instruction
-#                      Isa
-#                          Special variable '*class'
-#                  Instruction
-#                      Transform
-#                          Property variable '.floor'
+#  File './std/Extension/Number.frt'
+#      Package 'main'
+#          Class 'Number'
+#              Type definition ('Even')
+#                  Type body
+#                      Instruction
+#                          Isa
+#                              Special variable '*class'
+#                      Instruction
+#                          Satisfies
+#                              Property variable '.even'
+#              Type definition ('Odd')
+#                  Type body
+#                      Instruction
+#                          Isa
+#                              Special variable '*class'
+#                      Instruction
+#                          Satisfies
+#                              Property variable '.odd'
+#              Type definition ('Integer')
+#                  Type body
+#                      Instruction
+#                          Isa
+#                              Special variable '*class'
+#                      Instruction
+#                          Transform
+#                              Property variable '.floor'
+#              Instruction
+#                  Alias
+#                      Assignment
+#                          Bareword 'Int'
+#                          Bareword 'Integer'
+#              Computed property 'sqrt' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'sqrt'
+#                                      Bareword 'NATIVE::Math'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Special variable '*self'
+#              Computed property 'cbrt' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@root'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Number '3'
+#              Computed property 'square' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Special variable '*self'
+#                                  Exponent operator (^)
+#                                  Number '2'
+#              Computed property 'abs' { -> $result $result }
+#                  Function body
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Special variable '*self'
+#                                  Less than operator (<)
+#                                  Number '0'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      Operation
+#                                          Constant zero
+#                                          Negation operator (-)
+#                                          Special variable '*self'
+#                      Instruction
+#                          Return
+#                              Special variable '*self'
+#              Computed property 'even' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Special variable '*self'
+#                                  Modulus operator (%)
+#                                  Number '2'
+#                                  Equality operator (==)
+#                                  Number '0'
+#              Computed property 'odd' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Special variable '*self'
+#                                  Modulus operator (%)
+#                                  Number '2'
+#                                  Negated equality operator (!=)
+#                                  Number '0'
+#              Method 'root' { $root:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$root'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Special variable '*self'
+#                                  Exponent operator (^)
+#                                  Single value [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              Number '1'
+#                                              Division operator (/)
+#                                              Lexical variable '$root'
+#              Method 'factorial' { -> $result $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$new'
+#                              Number '1'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Special variable '*self'
+#                                  Less than operator (<)
+#                                  Number '2'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      Special variable '*self'
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$i'
+#                          Expression ('in' parameter)
+#                              Operation
+#                                  Special variable '*self'
+#                                  Range operator (..)
+#                                  Number '2'
+#                          For body
+#                              Instruction
+#                                  Multiplication assignment
+#                                      Lexical variable '$new'
+#                                      Lexical variable '$i'
+#                      Instruction
+#                          Return
+#                              Lexical variable '$new'
+#              Method 'toFunction' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Instance variable '@factorial'
+#              Instruction
+#                  Shared variable declaration
+#                      Assignment
+#                          Lexical variable '$Inf'
+#                          Call
+#                              Bareword 'Num'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      String 'inf'
+#              Instruction
+#                  Shared variable declaration
+#                      Assignment
+#                          Lexical variable '$NaN'
+#                          Call
+#                              Bareword 'Num'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      String 'nan'
 #          Instruction
 #              Alias
 #                  Assignment
 #                      Bareword 'Int'
-#                      Bareword 'Integer'
-#          Computed property 'sqrt' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'sqrt'
-#                                  Bareword 'NATIVE::Math'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Special variable '*self'
-#          Computed property 'cbrt' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@root'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Number '3'
-#          Computed property 'square' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Special variable '*self'
-#                              Exponent operator (^)
-#                              Number '2'
-#          Computed property 'abs' { -> $result $result }
-#              Function body
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Special variable '*self'
-#                              Less than operator (<)
-#                              Number '0'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  Operation
-#                                      Constant zero
-#                                      Negation operator (-)
-#                                      Special variable '*self'
-#                  Instruction
-#                      Return
-#                          Special variable '*self'
-#          Computed property 'even' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Special variable '*self'
-#                              Modulus operator (%)
-#                              Number '2'
-#                              Equality operator (==)
-#                              Number '0'
-#          Computed property 'odd' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Special variable '*self'
-#                              Modulus operator (%)
-#                              Number '2'
-#                              Negated equality operator (!=)
-#                              Number '0'
-#          Method 'root' { $root:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$root'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Special variable '*self'
-#                              Exponent operator (^)
-#                              Single value [1 item]
-#                                  Item 0
-#                                      Operation
-#                                          Number '1'
-#                                          Division operator (/)
-#                                          Lexical variable '$root'
-#          Method 'factorial' { -> $result $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$new'
-#                          Number '1'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Special variable '*self'
-#                              Less than operator (<)
-#                              Number '2'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  Special variable '*self'
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$i'
-#                      Expression ('in' parameter)
-#                          Operation
-#                              Special variable '*self'
-#                              Range operator (..)
-#                              Number '2'
-#                      For body
-#                          Instruction
-#                              Multiplication assignment
-#                                  Lexical variable '$new'
-#                                  Lexical variable '$i'
-#                  Instruction
-#                      Return
-#                          Lexical variable '$new'
-#          Method 'toFunction' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Instance variable '@factorial'
+#                      Bareword 'Num::Int'
 #          Instruction
-#              Shared variable declaration
+#              Alias
 #                  Assignment
-#                      Lexical variable '$Inf'
-#                      Call
-#                          Bareword 'Num'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  String 'inf'
+#                      Bareword 'Inf'
+#                      Bareword 'Num::Inf'
 #          Instruction
-#              Shared variable declaration
+#              Alias
 #                  Assignment
-#                      Lexical variable '$NaN'
-#                      Call
-#                          Bareword 'Num'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  String 'nan'
-#      Instruction
-#          Alias
-#              Assignment
-#                  Bareword 'Int'
-#                  Bareword 'Num::Int'
-#      Instruction
-#          Alias
-#              Assignment
-#                  Bareword 'Inf'
-#                  Bareword 'Num::Inf'
-#      Instruction
-#          Alias
-#              Assignment
-#                  Bareword 'NaN'
-#                  Bareword 'Num::NaN'
-#      Include (Inf, Int, Integer, NATIVE::Math, NaN, Num, Num::Inf, Num::Int, Num::NaN)
+#                      Bareword 'NaN'
+#                      Bareword 'Num::NaN'
+#          Include (Inf, Int, Integer, NATIVE::Math, NaN, Num, Num::Inf, Num::Int, Num::NaN)
 package FF;
 
 use warnings;

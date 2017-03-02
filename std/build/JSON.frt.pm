@@ -1,385 +1,386 @@
 # === Document Model ===
-#  Document './std/JSON.frt'
-#      Class 'JSON' version 1.0
-#          Instruction
-#              Alias
-#                  Assignment
-#                      Bareword '_PO'
-#                      Bareword 'NATIVE::PerlObject'
-#          Instruction
-#              Lazy assignment
-#                  Lexical variable '$default'
-#                  Call
-#                      Special variable '*class'
-#                      Argument list [0 items]
-#          Type definition ('Charset')
-#              Type body
-#                  Instruction
-#                      Symbol :ascii
-#                  Instruction
-#                      Symbol :latin1
-#                  Instruction
-#                      Symbol :utf8
-#          Class method 'initializer__' { ?$strict:Bool ?$consistent:Bool ?$charset:Charset ?$strictRoot:Bool ?$pretty:Bool ?$spaceBefore:Bool ?$spaceAfter:Bool ?$indent:Bool }
-#              Function body
-#                  Instruction
-#                      Want
-#                          Instance variable '@strict'
-#                          Argument type
-#                              Bareword 'Bool'
-#                          Argument value
-#                              Boolean true
-#                  Instruction
-#                      Want
-#                          Instance variable '@consistent'
-#                          Argument type
-#                              Bareword 'Bool'
-#                          Argument value
-#                              Boolean false
-#                  Instruction
-#                      Want
-#                          Instance variable '@charset'
-#                          Argument type
-#                              Bareword 'Charset'
-#                          Argument value
-#                              Symbol :utf8
-#                  Instruction
-#                      Want
-#                          Instance variable '@strictRoot'
-#                          Argument type
-#                              Bareword 'Bool'
-#                          Argument value
-#                              Boolean false
-#                  Instruction
-#                      Want
-#                          Instance variable '@pretty'
-#                          Argument type
-#                              Bareword 'Bool'
-#                          Argument value
-#                              Boolean false
-#                  Instruction
-#                      Want
-#                          Instance variable '@spaceBefore'
-#                          Argument type
-#                              Bareword 'Bool'
-#                          Argument value
-#                              Boolean false
-#                  Instruction
-#                      Want
-#                          Instance variable '@spaceAfter'
-#                          Argument type
-#                              Bareword 'Bool'
-#                          Argument value
-#                              Boolean false
-#                  Instruction
-#                      Want
-#                          Instance variable '@indent'
-#                          Argument type
-#                              Bareword 'Bool'
-#                          Argument value
-#                              Boolean false
-#                  Instruction
-#                      Call
-#                          Property 'require'
-#                              Bareword '_PO'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  String 'JSON::XS'
-#                      Catch
-#                          Expression ('catch' parameter)
-#                              Lexical variable '$err'
-#                          Catch body
-#                              Instruction
-#                                  Fail (nonfatal exception)
-#                                      Call
-#                                          Bareword 'Error'
-#                                          Mixed argument list [3 items]
-#                                              Item 0
-#                                                  Symbol :PerlRequireFailed
-#                                              Item 1
-#                                                  String 'Unable to ...'
-#                                              Item 2
-#                                                  Pair 'subError'
-#                                                      Lexical variable '$err'
-#                  Instruction
+#  File './std/JSON.frt'
+#      Package 'main'
+#          Class 'JSON' version 1.0
+#              Instruction
+#                  Alias
 #                      Assignment
-#                          Instance variable '@xs'
+#                          Bareword '_PO'
+#                          Bareword 'NATIVE::PerlObject'
+#              Instruction
+#                  Lazy assignment
+#                      Lexical variable '$default'
+#                      Call
+#                          Special variable '*class'
+#                          Argument list [0 items]
+#              Type definition ('Charset')
+#                  Type body
+#                      Instruction
+#                          Symbol :ascii
+#                      Instruction
+#                          Symbol :latin1
+#                      Instruction
+#                          Symbol :utf8
+#              Class method 'initializer__' { ?$strict:Bool ?$consistent:Bool ?$charset:Charset ?$strictRoot:Bool ?$pretty:Bool ?$spaceBefore:Bool ?$spaceAfter:Bool ?$indent:Bool }
+#                  Function body
+#                      Instruction
+#                          Want
+#                              Instance variable '@strict'
+#                              Argument type
+#                                  Bareword 'Bool'
+#                              Argument value
+#                                  Boolean true
+#                      Instruction
+#                          Want
+#                              Instance variable '@consistent'
+#                              Argument type
+#                                  Bareword 'Bool'
+#                              Argument value
+#                                  Boolean false
+#                      Instruction
+#                          Want
+#                              Instance variable '@charset'
+#                              Argument type
+#                                  Bareword 'Charset'
+#                              Argument value
+#                                  Symbol :utf8
+#                      Instruction
+#                          Want
+#                              Instance variable '@strictRoot'
+#                              Argument type
+#                                  Bareword 'Bool'
+#                              Argument value
+#                                  Boolean false
+#                      Instruction
+#                          Want
+#                              Instance variable '@pretty'
+#                              Argument type
+#                                  Bareword 'Bool'
+#                              Argument value
+#                                  Boolean false
+#                      Instruction
+#                          Want
+#                              Instance variable '@spaceBefore'
+#                              Argument type
+#                                  Bareword 'Bool'
+#                              Argument value
+#                                  Boolean false
+#                      Instruction
+#                          Want
+#                              Instance variable '@spaceAfter'
+#                              Argument type
+#                                  Bareword 'Bool'
+#                              Argument value
+#                                  Boolean false
+#                      Instruction
+#                          Want
+#                              Instance variable '@indent'
+#                              Argument type
+#                                  Bareword 'Bool'
+#                              Argument value
+#                                  Boolean false
+#                      Instruction
 #                          Call
-#                              Bareword '_PO'
+#                              Property 'require'
+#                                  Bareword '_PO'
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      String 'JSON::XS'
-#                      Catch
-#                          Expression ('catch' parameter)
-#                              Lexical variable '$err'
-#                          Catch body
-#                              Instruction
-#                                  Fail (nonfatal exception)
-#                                      Call
-#                                          Bareword 'Error'
-#                                          Mixed argument list [3 items]
-#                                              Item 0
-#                                                  Symbol :PerlConstructorFailed
-#                                              Item 1
-#                                                  String 'Could not ...'
-#                                              Item 2
-#                                                  Pair 'subError'
-#                                                      Lexical variable '$err'
-#                  Instruction
-#                      Call
-#                          Property (name evaluated at runtime)
+#                          Catch
+#                              Expression ('catch' parameter)
+#                                  Lexical variable '$err'
+#                              Catch body
+#                                  Instruction
+#                                      Fail (nonfatal exception)
+#                                          Call
+#                                              Bareword 'Error'
+#                                              Mixed argument list [3 items]
+#                                                  Item 0
+#                                                      Symbol :PerlRequireFailed
+#                                                  Item 1
+#                                                      String 'Unable to ...'
+#                                                  Item 2
+#                                                      Pair 'subError'
+#                                                          Lexical variable '$err'
+#                      Instruction
+#                          Assignment
 #                              Instance variable '@xs'
-#                              Property index [1 item]
-#                                  Item 0
-#                                      Instance variable '@charset'
-#                  If
-#                      Expression ('if' parameter)
-#                          Instance variable '@pretty'
-#                      If body
-#                          Instruction
 #                              Call
-#                                  Property 'pretty'
-#                                      Instance variable '@xs'
-#                  If
-#                      Expression ('if' parameter)
-#                          Instance variable '@spaceBefore'
-#                      If body
-#                          Instruction
-#                              Call
-#                                  Property 'spaceBefore'
-#                                      Instance variable '@xs'
-#                  If
-#                      Expression ('if' parameter)
-#                          Instance variable '@spaceAfter'
-#                      If body
-#                          Instruction
-#                              Call
-#                                  Property 'spaceAfter'
-#                                      Instance variable '@xs'
-#                  If
-#                      Expression ('if' parameter)
-#                          Instance variable '@indent'
-#                      If body
-#                          Instruction
-#                              Call
-#                                  Property 'indent'
-#                                      Instance variable '@xs'
-#                  If
-#                      Expression ('if' parameter)
-#                          Negation
-#                              Instance variable '@strict'
-#                      If body
-#                          Instruction
-#                              Call
-#                                  Property 'relaxed'
-#                                      Instance variable '@xs'
-#                  If
-#                      Expression ('if' parameter)
-#                          Instance variable '@consistent'
-#                      If body
-#                          Instruction
-#                              Call
-#                                  Property 'canonical'
-#                                      Instance variable '@xs'
-#                  If
-#                      Expression ('if' parameter)
-#                          Negation
-#                              Instance variable '@strictRoot'
-#                      If body
-#                          Instruction
-#                              Call
-#                                  Property 'allow_nonref'
-#                                      Instance variable '@xs'
-#          Method 'encode' { $data -> $json }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$data'
-#                  Instruction
-#                      Return pair 'json'
+#                                  Bareword '_PO'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          String 'JSON::XS'
+#                          Catch
+#                              Expression ('catch' parameter)
+#                                  Lexical variable '$err'
+#                              Catch body
+#                                  Instruction
+#                                      Fail (nonfatal exception)
+#                                          Call
+#                                              Bareword 'Error'
+#                                              Mixed argument list [3 items]
+#                                                  Item 0
+#                                                      Symbol :PerlConstructorFailed
+#                                                  Item 1
+#                                                      String 'Could not ...'
+#                                                  Item 2
+#                                                      Pair 'subError'
+#                                                          Lexical variable '$err'
+#                      Instruction
 #                          Call
-#                              Property 'encode'
+#                              Property (name evaluated at runtime)
 #                                  Instance variable '@xs'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$data'
-#                      Catch
-#                          Expression ('catch' parameter)
-#                              Lexical variable '$err'
-#                          Catch body
+#                                  Property index [1 item]
+#                                      Item 0
+#                                          Instance variable '@charset'
+#                      If
+#                          Expression ('if' parameter)
+#                              Instance variable '@pretty'
+#                          If body
 #                              Instruction
-#                                  Fail (nonfatal exception)
-#                                      Call
-#                                          Bareword 'Error'
-#                                          Mixed argument list [3 items]
-#                                              Item 0
-#                                                  Symbol :JSONError
-#                                              Item 1
-#                                                  String 'JSON encod...'
-#                                              Item 2
-#                                                  Pair 'subError'
-#                                                      Lexical variable '$err'
-#          Method 'decode' { $json:Str -> $data }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$json'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Return pair 'data'
-#                          Call
-#                              Property 'decode'
-#                                  Instance variable '@xs'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$json'
-#                      Catch
-#                          Expression ('catch' parameter)
-#                              Lexical variable '$err'
-#                          Catch body
+#                                  Call
+#                                      Property 'pretty'
+#                                          Instance variable '@xs'
+#                      If
+#                          Expression ('if' parameter)
+#                              Instance variable '@spaceBefore'
+#                          If body
 #                              Instruction
-#                                  Fail (nonfatal exception)
-#                                      Call
-#                                          Bareword 'Error'
-#                                          Mixed argument list [3 items]
-#                                              Item 0
-#                                                  Symbol :JSONError
-#                                              Item 1
-#                                                  String 'JSON decod...'
-#                                              Item 2
-#                                                  Pair 'subError'
-#                                                      Lexical variable '$err'
-#          Method 'decoderAdd' { $fragment:Str -> $added }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$fragment'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Call
-#                          Property 'perlCall'
-#                              Instance variable '@xs'
-#                          Mixed argument list [3 items]
-#                              Item 0
-#                                  String 'incr_parse'
-#                              Item 1
-#                                  Lexical variable '$fragment'
-#                              Item 2
-#                                  Pair 'CONTEXT'
-#                                      String 'void'
-#                      Catch
-#                          Expression ('catch' parameter)
-#                              Lexical variable '$err'
-#                          Catch body
+#                                  Call
+#                                      Property 'spaceBefore'
+#                                          Instance variable '@xs'
+#                      If
+#                          Expression ('if' parameter)
+#                              Instance variable '@spaceAfter'
+#                          If body
 #                              Instruction
-#                                  Fail (nonfatal exception)
-#                                      Call
-#                                          Bareword 'Error'
-#                                          Mixed argument list [3 items]
-#                                              Item 0
-#                                                  Symbol :JSONError
-#                                              Item 1
-#                                                  String 'JSON incr_...'
-#                                              Item 2
-#                                                  Pair 'subError'
-#                                                      Lexical variable '$err'
-#                  Instruction
-#                      Return pair 'added'
-#                          Boolean true
-#          Method 'decoderDone' { -> $found $data }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$objects'
+#                                  Call
+#                                      Property 'spaceAfter'
+#                                          Instance variable '@xs'
+#                      If
+#                          Expression ('if' parameter)
+#                              Instance variable '@indent'
+#                          If body
+#                              Instruction
+#                                  Call
+#                                      Property 'indent'
+#                                          Instance variable '@xs'
+#                      If
+#                          Expression ('if' parameter)
+#                              Negation
+#                                  Instance variable '@strict'
+#                          If body
+#                              Instruction
+#                                  Call
+#                                      Property 'relaxed'
+#                                          Instance variable '@xs'
+#                      If
+#                          Expression ('if' parameter)
+#                              Instance variable '@consistent'
+#                          If body
+#                              Instruction
+#                                  Call
+#                                      Property 'canonical'
+#                                          Instance variable '@xs'
+#                      If
+#                          Expression ('if' parameter)
+#                              Negation
+#                                  Instance variable '@strictRoot'
+#                          If body
+#                              Instruction
+#                                  Call
+#                                      Property 'allow_nonref'
+#                                          Instance variable '@xs'
+#              Method 'encode' { $data -> $json }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$data'
+#                      Instruction
+#                          Return pair 'json'
+#                              Call
+#                                  Property 'encode'
+#                                      Instance variable '@xs'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$data'
+#                          Catch
+#                              Expression ('catch' parameter)
+#                                  Lexical variable '$err'
+#                              Catch body
+#                                  Instruction
+#                                      Fail (nonfatal exception)
+#                                          Call
+#                                              Bareword 'Error'
+#                                              Mixed argument list [3 items]
+#                                                  Item 0
+#                                                      Symbol :JSONError
+#                                                  Item 1
+#                                                      String 'JSON encod...'
+#                                                  Item 2
+#                                                      Pair 'subError'
+#                                                          Lexical variable '$err'
+#              Method 'decode' { $json:Str -> $data }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$json'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Return pair 'data'
+#                              Call
+#                                  Property 'decode'
+#                                      Instance variable '@xs'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$json'
+#                          Catch
+#                              Expression ('catch' parameter)
+#                                  Lexical variable '$err'
+#                              Catch body
+#                                  Instruction
+#                                      Fail (nonfatal exception)
+#                                          Call
+#                                              Bareword 'Error'
+#                                              Mixed argument list [3 items]
+#                                                  Item 0
+#                                                      Symbol :JSONError
+#                                                  Item 1
+#                                                      String 'JSON decod...'
+#                                                  Item 2
+#                                                      Pair 'subError'
+#                                                          Lexical variable '$err'
+#              Method 'decoderAdd' { $fragment:Str -> $added }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$fragment'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
 #                          Call
 #                              Property 'perlCall'
 #                                  Instance variable '@xs'
-#                              Mixed argument list [2 items]
+#                              Mixed argument list [3 items]
 #                                  Item 0
 #                                      String 'incr_parse'
 #                                  Item 1
+#                                      Lexical variable '$fragment'
+#                                  Item 2
 #                                      Pair 'CONTEXT'
-#                                          String 'list'
-#                      Catch
-#                          Expression ('catch' parameter)
-#                              Lexical variable '$err'
-#                          Catch body
-#                              Instruction
-#                                  Fail (nonfatal exception)
-#                                      Call
-#                                          Bareword 'Error'
-#                                          Mixed argument list [3 items]
-#                                              Item 0
-#                                                  Symbol :JSONError
-#                                              Item 1
-#                                                  String 'JSON incr_...'
-#                                              Item 2
-#                                                  Pair 'subError'
-#                                                      Lexical variable '$err'
-#                  If
-#                      Expression ('if' parameter)
-#                          Call
-#                              Special property '*instanceOf'
-#                                  Lexical variable '$objects'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Bareword 'List'
-#                      If body
-#                          Instruction
-#                              Return pair 'found'
-#                                  Property 'length'
+#                                          String 'void'
+#                          Catch
+#                              Expression ('catch' parameter)
+#                                  Lexical variable '$err'
+#                              Catch body
+#                                  Instruction
+#                                      Fail (nonfatal exception)
+#                                          Call
+#                                              Bareword 'Error'
+#                                              Mixed argument list [3 items]
+#                                                  Item 0
+#                                                      Symbol :JSONError
+#                                                  Item 1
+#                                                      String 'JSON incr_...'
+#                                                  Item 2
+#                                                      Pair 'subError'
+#                                                          Lexical variable '$err'
+#                      Instruction
+#                          Return pair 'added'
+#                              Boolean true
+#              Method 'decoderDone' { -> $found $data }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$objects'
+#                              Call
+#                                  Property 'perlCall'
+#                                      Instance variable '@xs'
+#                                  Mixed argument list [2 items]
+#                                      Item 0
+#                                          String 'incr_parse'
+#                                      Item 1
+#                                          Pair 'CONTEXT'
+#                                              String 'list'
+#                          Catch
+#                              Expression ('catch' parameter)
+#                                  Lexical variable '$err'
+#                              Catch body
+#                                  Instruction
+#                                      Fail (nonfatal exception)
+#                                          Call
+#                                              Bareword 'Error'
+#                                              Mixed argument list [3 items]
+#                                                  Item 0
+#                                                      Symbol :JSONError
+#                                                  Item 1
+#                                                      String 'JSON incr_...'
+#                                                  Item 2
+#                                                      Pair 'subError'
+#                                                          Lexical variable '$err'
+#                      If
+#                          Expression ('if' parameter)
+#                              Call
+#                                  Special property '*instanceOf'
 #                                      Lexical variable '$objects'
-#                  Instruction
-#                      Return pair 'data'
-#                          Lexical variable '$objects'
-#          Method 'decoderReset'
-#              Function body
-#                  Instruction
-#                      Call
-#                          Property 'incr_reset'
-#                              Instance variable '@xs'
-#                          Argument list [0 items]
-#          Class method 'encode' { $data -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$data'
-#                  Instruction
-#                      Return
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Bareword 'List'
+#                          If body
+#                              Instruction
+#                                  Return pair 'found'
+#                                      Property 'length'
+#                                          Lexical variable '$objects'
+#                      Instruction
+#                          Return pair 'data'
+#                              Lexical variable '$objects'
+#              Method 'decoderReset'
+#                  Function body
+#                      Instruction
 #                          Call
-#                              Property 'encode'
-#                                  Lexical variable '$default'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$data'
-#          Class method 'decode' { $json:Str -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$json'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'decode'
-#                                  Lexical variable '$default'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$json'
-#          Instruction
-#              Alias
-#                  Assignment
-#                      Bareword 'stringify'
-#                      Bareword 'encode'
-#          Instruction
-#              Alias
-#                  Assignment
-#                      Bareword 'parse'
-#                      Bareword 'decode'
-#      Include (Bool, Charset, Error, List, NATIVE::PerlObject, Str)
+#                              Property 'incr_reset'
+#                                  Instance variable '@xs'
+#                              Argument list [0 items]
+#              Class method 'encode' { $data -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$data'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'encode'
+#                                      Lexical variable '$default'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$data'
+#              Class method 'decode' { $json:Str -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$json'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'decode'
+#                                      Lexical variable '$default'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$json'
+#              Instruction
+#                  Alias
+#                      Assignment
+#                          Bareword 'stringify'
+#                          Bareword 'encode'
+#              Instruction
+#                  Alias
+#                      Assignment
+#                          Bareword 'parse'
+#                          Bareword 'decode'
+#          Include (Bool, Charset, Error, List, NATIVE::PerlObject, Str)
 package FF;
 
 use warnings;

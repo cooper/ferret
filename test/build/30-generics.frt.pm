@@ -1,99 +1,100 @@
 # === Document Model ===
-#  Document './test/30-generics.frt'
-#      Class 'Stack' <Element>
-#          Class method 'initializer__'
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@items'
-#                          Value list [0 items]
-#          Method 'push' { $item:Element -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$item'
-#                          Argument type
-#                              Bareword 'Element'
-#                  Instruction
-#                      Return
+#  File './test/30-generics.frt'
+#      Package 'main'
+#          Class 'Stack' <Element>
+#              Class method 'initializer__'
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@items'
+#                              Value list [0 items]
+#              Method 'push' { $item:Element -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$item'
+#                              Argument type
+#                                  Bareword 'Element'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'push'
+#                                      Instance variable '@items'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$item'
+#              Method 'pop' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'pop'
+#                                      Instance variable '@items'
+#                                  Argument list [0 items]
+#              Method 'description' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  String 'Stack '
+#                                  Addition operator (+)
+#                                  Special property '*description'
+#                                      Instance variable '@items'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$stack'
+#                  Call
+#                      Bareword 'Stack'
+#                      Argument list [0 items]
+#              Catch
+#                  Expression ('catch' parameter)
+#                      Lexical variable '$e'
+#                  Catch body
+#                      Instruction
 #                          Call
-#                              Property 'push'
-#                                  Instance variable '@items'
+#                              Bareword 'say'
 #                              Argument list [1 item]
 #                                  Item 0
-#                                      Lexical variable '$item'
-#          Method 'pop' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'pop'
-#                                  Instance variable '@items'
-#                              Argument list [0 items]
-#          Method 'description' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              String 'Stack '
-#                              Addition operator (+)
-#                              Special property '*description'
-#                                  Instance variable '@items'
-#      Instruction
-#          Assignment
-#              Lexical variable '$stack'
+#                                      Operation
+#                                          String 'Error! '
+#                                          Addition operator (+)
+#                                          Lexical variable '$e'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$numstack'
+#                  Call
+#                      Class name with generics
+#                          Bareword 'Stack'
+#                          Bareword 'Num'
+#                      Argument list [0 items]
+#          Instruction
 #              Call
-#                  Bareword 'Stack'
-#                  Argument list [0 items]
-#          Catch
-#              Expression ('catch' parameter)
-#                  Lexical variable '$e'
-#              Catch body
-#                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Operation
-#                                      String 'Error! '
-#                                      Addition operator (+)
-#                                      Lexical variable '$e'
-#      Instruction
-#          Assignment
-#              Lexical variable '$numstack'
-#              Call
-#                  Class name with generics
-#                      Bareword 'Stack'
-#                      Bareword 'Num'
-#                  Argument list [0 items]
-#      Instruction
-#          Call
-#              Property 'push'
-#                  Lexical variable '$numstack'
-#              Argument list [1 item]
-#                  Item 0
-#                      Number '1'
-#      Instruction
-#          Call
-#              Property 'push'
-#                  Lexical variable '$numstack'
-#              Argument list [1 item]
-#                  Item 0
-#                      String 'this shoul...'
-#      Instruction
-#          Call
-#              Property 'push'
-#                  Lexical variable '$numstack'
-#              Argument list [1 item]
-#                  Item 0
-#                      Number '2'
-#      Instruction
-#          Call
-#              Bareword 'inspect'
-#              Argument list [1 item]
-#                  Item 0
+#                  Property 'push'
 #                      Lexical variable '$numstack'
-#      Include (Element, Num, Stack)
+#                  Argument list [1 item]
+#                      Item 0
+#                          Number '1'
+#          Instruction
+#              Call
+#                  Property 'push'
+#                      Lexical variable '$numstack'
+#                  Argument list [1 item]
+#                      Item 0
+#                          String 'this shoul...'
+#          Instruction
+#              Call
+#                  Property 'push'
+#                      Lexical variable '$numstack'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Number '2'
+#          Instruction
+#              Call
+#                  Bareword 'inspect'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Lexical variable '$numstack'
+#          Include (Element, Num, Stack)
 package FF;
 
 use warnings;

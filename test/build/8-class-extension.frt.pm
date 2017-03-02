@@ -1,26 +1,27 @@
 # === Document Model ===
-#  Document './test/8-class-extension.frt'
-#      Class 'String'
-#          Method 'doubledLength' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
+#  File './test/8-class-extension.frt'
+#      Package 'main'
+#          Class 'String'
+#              Method 'doubledLength' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Call
+#                                      Instance variable '@length'
+#                                  Multiplication operator (*)
+#                                  Number '2'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
 #                          Operation
+#                              String 'Length tim...'
+#                              Addition operator (+)
 #                              Call
-#                                  Instance variable '@length'
-#                              Multiplication operator (*)
-#                              Number '2'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Length tim...'
-#                          Addition operator (+)
-#                          Call
-#                              Property 'doubledLength'
-#                                  String 'hi there'
+#                                  Property 'doubledLength'
+#                                      String 'hi there'
 package FF;
 
 use warnings;

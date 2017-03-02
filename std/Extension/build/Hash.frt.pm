@@ -1,111 +1,112 @@
 # === Document Model ===
-#  Document './std/Extension/Hash.frt'
-#      Class 'Hash' <K, V>
-#          Computed property 'empty' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Instance variable '@length'
-#                              Equality operator (==)
-#                              Number '0'
-#          Computed property 'iterator' { -> Iterator }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'HashIterator'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Special variable '*self'
-#                          Bareword 'Iterator'
-#      Class 'OrderedHash' <K, V>
-#          Class method 'initializer__'
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@orderedKeys'
-#                          Value list [0 items]
-#                  Instruction
-#                      Call
-#                          Call
-#                              Property 'init'
-#                                  Class name with generics
-#                                      Bareword 'Hash'
-#                                      Bareword 'K'
-#                                      Bareword 'V'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Special variable '*self'
-#                          Argument list [0 items]
-#          Computed property 'keys' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Instance variable '@orderedKeys'
-#          Method 'pushPair' { $key:K $value:V -> $overwritten }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$key'
-#                          Argument type
-#                              Bareword 'K'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$value'
-#                          Argument type
-#                              Bareword 'V'
-#                  If
-#                      Expression ('if' parameter)
-#                          Property 'removed'
+#  File './std/Extension/Hash.frt'
+#      Package 'main'
+#          Class 'Hash' <K, V>
+#              Computed property 'empty' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Instance variable '@length'
+#                                  Equality operator (==)
+#                                  Number '0'
+#              Computed property 'iterator' { -> Iterator }
+#                  Function body
+#                      Instruction
+#                          Return
 #                              Call
-#                                  Property 'remove'
-#                                      Instance variable '@orderedKeys'
+#                                  Bareword 'HashIterator'
 #                                  Argument list [1 item]
 #                                      Item 0
-#                                          Lexical variable '$key'
-#                      If body
-#                          Instruction
-#                              Return pair 'overwritten'
-#                                  Boolean true
-#                  Instruction
-#                      Assignment
-#                          Index
-#                              Special variable '*self'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$key'
-#                          Lexical variable '$value'
-#                  Instruction
-#                      Call
-#                          Property 'push'
+#                                          Special variable '*self'
+#                              Bareword 'Iterator'
+#          Class 'OrderedHash' <K, V>
+#              Class method 'initializer__'
+#                  Function body
+#                      Instruction
+#                          Assignment
 #                              Instance variable '@orderedKeys'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Lexical variable '$key'
-#          Computed property 'iterator' { -> Iterator }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$it'
+#                              Value list [0 items]
+#                      Instruction
 #                          Call
-#                              Bareword 'HashIterator'
+#                              Call
+#                                  Property 'init'
+#                                      Class name with generics
+#                                          Bareword 'Hash'
+#                                          Bareword 'K'
+#                                          Bareword 'V'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Special variable '*self'
+#                              Argument list [0 items]
+#              Computed property 'keys' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Instance variable '@orderedKeys'
+#              Method 'pushPair' { $key:K $value:V -> $overwritten }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$key'
+#                              Argument type
+#                                  Bareword 'K'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$value'
+#                              Argument type
+#                                  Bareword 'V'
+#                      If
+#                          Expression ('if' parameter)
+#                              Property 'removed'
+#                                  Call
+#                                      Property 'remove'
+#                                          Instance variable '@orderedKeys'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Lexical variable '$key'
+#                          If body
+#                              Instruction
+#                                  Return pair 'overwritten'
+#                                      Boolean true
+#                      Instruction
+#                          Assignment
+#                              Index
+#                                  Special variable '*self'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$key'
+#                              Lexical variable '$value'
+#                      Instruction
+#                          Call
+#                              Property 'push'
+#                                  Instance variable '@orderedKeys'
 #                              Argument list [1 item]
 #                                  Item 0
-#                                      Special variable '*self'
-#                  Instruction
-#                      Assignment
-#                          Property 'keysLeft'
+#                                      Lexical variable '$key'
+#              Computed property 'iterator' { -> Iterator }
+#                  Function body
+#                      Instruction
+#                          Assignment
 #                              Lexical variable '$it'
-#                          Call
-#                              Property 'copy'
-#                                  Instance variable '@orderedKeys'
-#                              Argument list [0 items]
-#                  Instruction
-#                      Return
-#                          Lexical variable '$it'
-#                          Bareword 'Iterator'
-#      Include (Hash, HashIterator, Iterator, K, V)
+#                              Call
+#                                  Bareword 'HashIterator'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Special variable '*self'
+#                      Instruction
+#                          Assignment
+#                              Property 'keysLeft'
+#                                  Lexical variable '$it'
+#                              Call
+#                                  Property 'copy'
+#                                      Instance variable '@orderedKeys'
+#                                  Argument list [0 items]
+#                      Instruction
+#                          Return
+#                              Lexical variable '$it'
+#                              Bareword 'Iterator'
+#          Include (Hash, HashIterator, Iterator, K, V)
 package FF;
 
 use warnings;

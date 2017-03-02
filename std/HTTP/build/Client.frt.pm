@@ -1,127 +1,127 @@
 # === Document Model ===
-#  Document './std/HTTP/Client.frt'
+#  File './std/HTTP/Client.frt'
 #      Package 'HTTP'
-#      Class 'Client' version 1.0
-#          Instruction
-#              Assignment
-#                  Lexical variable '$defaultUA'
-#                  Operation
-#                      String 'ferret-http/'
-#                      Addition operator (+)
-#                      Property 'version'
-#                          Special variable '*class'
-#          Instruction
-#              Assignment
-#                  Lexical variable '$defaultLength'
-#                  Operation
-#                      Number '64'
-#                      Multiplication operator (*)
-#                      Number '1024'
-#          Class method 'initializer__' { ?$userAgent:Str ?$timeout:Num ?$maxContentLength:Num ?$readLength:Num ?$writeLength:Num }
-#              Function body
-#                  Instruction
-#                      Want
-#                          Instance variable '@userAgent'
-#                          Argument type
-#                              Bareword 'Str'
-#                          Argument value
-#                              Lexical variable '$defaultUA'
-#                  Instruction
-#                      Want
-#                          Instance variable '@timeout'
-#                          Argument type
-#                              Bareword 'Num'
-#                          Argument value
-#                              Number '10'
-#                  Instruction
-#                      Want
-#                          Instance variable '@maxContentLength'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Want
-#                          Instance variable '@readLength'
-#                          Argument type
-#                              Bareword 'Num'
-#                          Argument value
-#                              Lexical variable '$defaultLength'
-#                  Instruction
-#                      Want
-#                          Instance variable '@writeLength'
-#                          Argument type
-#                              Bareword 'Num'
-#                          Argument value
-#                              Lexical variable '$defaultLength'
-#                  Instruction
-#                      Call
-#                          Property 'initialize'
-#                              Bareword 'NATIVE::HTTPClient'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Special variable '*self'
-#          Method 'get' { $url:Str -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$url'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Return
+#          Class 'Client' version 1.0
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$defaultUA'
+#                      Operation
+#                          String 'ferret-http/'
+#                          Addition operator (+)
+#                          Property 'version'
+#                              Special variable '*class'
+#              Instruction
+#                  Assignment
+#                      Lexical variable '$defaultLength'
+#                      Operation
+#                          Number '64'
+#                          Multiplication operator (*)
+#                          Number '1024'
+#              Class method 'initializer__' { ?$userAgent:Str ?$timeout:Num ?$maxContentLength:Num ?$readLength:Num ?$writeLength:Num }
+#                  Function body
+#                      Instruction
+#                          Want
+#                              Instance variable '@userAgent'
+#                              Argument type
+#                                  Bareword 'Str'
+#                              Argument value
+#                                  Lexical variable '$defaultUA'
+#                      Instruction
+#                          Want
+#                              Instance variable '@timeout'
+#                              Argument type
+#                                  Bareword 'Num'
+#                              Argument value
+#                                  Number '10'
+#                      Instruction
+#                          Want
+#                              Instance variable '@maxContentLength'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Want
+#                              Instance variable '@readLength'
+#                              Argument type
+#                                  Bareword 'Num'
+#                              Argument value
+#                                  Lexical variable '$defaultLength'
+#                      Instruction
+#                          Want
+#                              Instance variable '@writeLength'
+#                              Argument type
+#                                  Bareword 'Num'
+#                              Argument value
+#                                  Lexical variable '$defaultLength'
+#                      Instruction
 #                          Call
-#                              Instance variable '@request'
-#                              Named argument list [2 items]
+#                              Property 'initialize'
+#                                  Bareword 'NATIVE::HTTPClient'
+#                              Argument list [1 item]
 #                                  Item 0
-#                                      Pair 'httpMethod'
-#                                          Symbol :GET
-#                                  Item 1
-#                                      Pair 'url'
-#                                          Lexical variable '$url'
-#          Method 'post' { $url:Str -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$url'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@request'
-#                              Named argument list [2 items]
-#                                  Item 0
-#                                      Pair 'httpMethod'
-#                                          Symbol :POST
-#                                  Item 1
-#                                      Pair 'url'
-#                                          Lexical variable '$url'
-#          Method 'request' { $httpMethod:HTTPMethod $url:Str -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$httpMethod'
-#                          Argument type
-#                              Bareword 'HTTPMethod'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$url'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'HTTP::Request'
-#                              Named argument list [3 items]
-#                                  Item 0
-#                                      Pair 'client'
-#                                          Special variable '*self'
-#                                  Item 1
-#                                      Pair 'httpMethod'
-#                                          Lexical variable '$httpMethod'
-#                                  Item 2
-#                                      Pair 'url'
-#                                          Lexical variable '$url'
-#      Include (HTTP::Request, HTTPMethod, NATIVE::HTTPClient, Num, Str)
+#                                      Special variable '*self'
+#              Method 'get' { $url:Str -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$url'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@request'
+#                                  Named argument list [2 items]
+#                                      Item 0
+#                                          Pair 'httpMethod'
+#                                              Symbol :GET
+#                                      Item 1
+#                                          Pair 'url'
+#                                              Lexical variable '$url'
+#              Method 'post' { $url:Str -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$url'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@request'
+#                                  Named argument list [2 items]
+#                                      Item 0
+#                                          Pair 'httpMethod'
+#                                              Symbol :POST
+#                                      Item 1
+#                                          Pair 'url'
+#                                              Lexical variable '$url'
+#              Method 'request' { $httpMethod:HTTPMethod $url:Str -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$httpMethod'
+#                              Argument type
+#                                  Bareword 'HTTPMethod'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$url'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'HTTP::Request'
+#                                  Named argument list [3 items]
+#                                      Item 0
+#                                          Pair 'client'
+#                                              Special variable '*self'
+#                                      Item 1
+#                                          Pair 'httpMethod'
+#                                              Lexical variable '$httpMethod'
+#                                      Item 2
+#                                          Pair 'url'
+#                                              Lexical variable '$url'
+#          Include (HTTP::Request, HTTPMethod, NATIVE::HTTPClient, Num, Str)
 package FF;
 
 use warnings;

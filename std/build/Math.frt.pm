@@ -1,273 +1,273 @@
 # === Document Model ===
-#  Document './std/Math.frt'
+#  File './std/Math.frt'
 #      Package 'Math'
-#      Instruction
-#          Shared variable declaration
-#              Lazy assignment
-#                  Lexical variable '$pi'
-#                  Operation
-#                      Number '4'
-#                      Multiplication operator (*)
+#          Instruction
+#              Shared variable declaration
+#                  Lazy assignment
+#                      Lexical variable '$pi'
+#                      Operation
+#                          Number '4'
+#                          Multiplication operator (*)
+#                          Call
+#                              Bareword 'atan2'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Number '1'
+#                                  Item 1
+#                                      Number '1'
+#          Instruction
+#              Shared variable declaration
+#                  Lazy assignment
+#                      Lexical variable '$e'
 #                      Call
-#                          Bareword 'atan2'
-#                          Argument list [2 items]
+#                          Bareword 'exp'
+#                          Argument list [1 item]
 #                              Item 0
 #                                  Number '1'
-#                              Item 1
-#                                  Number '1'
-#      Instruction
-#          Shared variable declaration
-#              Lazy assignment
-#                  Lexical variable '$e'
-#                  Call
-#                      Bareword 'exp'
-#                      Argument list [1 item]
-#                          Item 0
+#          Function 'sin' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Property 'sin'
+#                                  Bareword 'NATIVE::Math'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Lexical variable '$num'
+#          Function 'asin' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'atan2'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Lexical variable '$num'
+#                                  Item 1
+#                                      Property 'sqrt'
+#                                          Single value [1 item]
+#                                              Item 0
+#                                                  Operation
+#                                                      Number '1'
+#                                                      Subtraction operator (-)
+#                                                      Lexical variable '$num'
+#                                                      Exponent operator (^)
+#                                                      Number '2'
+#          Function 'cos' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Property 'cos'
+#                                  Bareword 'NATIVE::Math'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Lexical variable '$num'
+#          Function 'acos' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'atan2'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Property 'sqrt'
+#                                          Single value [1 item]
+#                                              Item 0
+#                                                  Operation
+#                                                      Number '1'
+#                                                      Subtraction operator (-)
+#                                                      Lexical variable '$num'
+#                                                      Exponent operator (^)
+#                                                      Number '2'
+#                                  Item 1
+#                                      Lexical variable '$num'
+#          Function 'tan' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Operation
+#                              Call
+#                                  Bareword 'sin'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$num'
+#                              Division operator (/)
+#                              Call
+#                                  Bareword 'cos'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$num'
+#          Function 'atan2' { $y:Num $x:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$y'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$x'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Property 'atan2'
+#                                  Bareword 'NATIVE::Math'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Lexical variable '$y'
+#                                  Item 1
+#                                      Lexical variable '$x'
+#          Function 'atan' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Bareword 'atan2'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Lexical variable '$num'
+#                                  Item 1
+#                                      Number '1'
+#          Function 'sec' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Operation
 #                              Number '1'
-#      Function 'sin' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Call
-#                          Property 'sin'
-#                              Bareword 'NATIVE::Math'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Lexical variable '$num'
-#      Function 'asin' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Call
-#                          Bareword 'atan2'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Lexical variable '$num'
-#                              Item 1
-#                                  Property 'sqrt'
-#                                      Single value [1 item]
-#                                          Item 0
-#                                              Operation
-#                                                  Number '1'
-#                                                  Subtraction operator (-)
-#                                                  Lexical variable '$num'
-#                                                  Exponent operator (^)
-#                                                  Number '2'
-#      Function 'cos' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Call
-#                          Property 'cos'
-#                              Bareword 'NATIVE::Math'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Lexical variable '$num'
-#      Function 'acos' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Call
-#                          Bareword 'atan2'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Property 'sqrt'
-#                                      Single value [1 item]
-#                                          Item 0
-#                                              Operation
-#                                                  Number '1'
-#                                                  Subtraction operator (-)
-#                                                  Lexical variable '$num'
-#                                                  Exponent operator (^)
-#                                                  Number '2'
-#                              Item 1
-#                                  Lexical variable '$num'
-#      Function 'tan' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Operation
+#                              Division operator (/)
+#                              Call
+#                                  Bareword 'cos'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$num'
+#          Function 'csc' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Operation
+#                              Number '1'
+#                              Division operator (/)
+#                              Call
+#                                  Bareword 'sin'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$num'
+#          Function 'log' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
 #                          Call
-#                              Bareword 'sin'
+#                              Property 'log'
+#                                  Bareword 'NATIVE::Math'
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$num'
-#                          Division operator (/)
+#          Function 'log10' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
 #                          Call
-#                              Bareword 'cos'
+#                              Bareword 'logb'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Number '10'
+#                                  Item 1
+#                                      Lexical variable '$num'
+#          Function 'logb' { $base:Num $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$base'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Operation
+#                              Call
+#                                  Bareword 'log'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$num'
+#                              Division operator (/)
+#                              Call
+#                                  Bareword 'log'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$base'
+#          Function 'exp' { $num:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$num'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Property 'exp'
+#                                  Bareword 'NATIVE::Math'
 #                              Argument list [1 item]
 #                                  Item 0
 #                                      Lexical variable '$num'
-#      Function 'atan2' { $y:Num $x:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$y'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Need
-#                      Lexical variable '$x'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Call
-#                          Property 'atan2'
-#                              Bareword 'NATIVE::Math'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Lexical variable '$y'
-#                              Item 1
-#                                  Lexical variable '$x'
-#      Function 'atan' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Call
-#                          Bareword 'atan2'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Lexical variable '$num'
-#                              Item 1
-#                                  Number '1'
-#      Function 'sec' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Operation
-#                          Number '1'
-#                          Division operator (/)
-#                          Call
-#                              Bareword 'cos'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$num'
-#      Function 'csc' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Operation
-#                          Number '1'
-#                          Division operator (/)
-#                          Call
-#                              Bareword 'sin'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$num'
-#      Function 'log' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Call
-#                          Property 'log'
-#                              Bareword 'NATIVE::Math'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Lexical variable '$num'
-#      Function 'log10' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Call
-#                          Bareword 'logb'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Number '10'
-#                              Item 1
-#                                  Lexical variable '$num'
-#      Function 'logb' { $base:Num $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$base'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Operation
-#                          Call
-#                              Bareword 'log'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$num'
-#                          Division operator (/)
-#                          Call
-#                              Bareword 'log'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$base'
-#      Function 'exp' { $num:Num -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$num'
-#                      Argument type
-#                          Bareword 'Num'
-#              Instruction
-#                  Return
-#                      Call
-#                          Property 'exp'
-#                              Bareword 'NATIVE::Math'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Lexical variable '$num'
-#      Include (NATIVE::Math, Num)
+#          Include (NATIVE::Math, Num)
 package FF;
 
 use warnings;
@@ -600,7 +600,6 @@ my $result = do {
         $context, undef, $ins, undef, undef
     );
     load_namespaces( $context, $file_name, qw(NATIVE::Math Num) );
-
     var(
         $context,
         pi => [

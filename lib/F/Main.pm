@@ -5,6 +5,9 @@ use warnings;
 use strict;
 use parent 'F::Node';
 
+use Ferret::Shared::Utils qw(trim);
+use File::Basename qw(basename);
+
 sub file_name { shift->{name} }
 sub desc {
     my $file_name = shift->file_name;

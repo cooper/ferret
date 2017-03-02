@@ -1,38 +1,38 @@
 # === Document Model ===
-#  Document './std/IRC/User.frt'
+#  File './std/IRC/User.frt'
 #      Package 'IRC'
-#      Class 'User'
-#          Class method 'initializer__' { $connection:Connection $nick:Str ?$user:Str ?$host:Str ?$real:Str }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@connection'
-#                          Argument type
-#                              Bareword 'Connection'
-#                  Instruction
-#                      Need
-#                          Instance variable '@nick'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Want
-#                          Instance variable '@user'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Want
-#                          Instance variable '@host'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Want
-#                          Instance variable '@real'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Weaken modifier
-#                          Instance variable '@connection'
-#      Include (Connection, Str)
+#          Class 'User'
+#              Class method 'initializer__' { $connection:Connection $nick:Str ?$user:Str ?$host:Str ?$real:Str }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Instance variable '@connection'
+#                              Argument type
+#                                  Bareword 'Connection'
+#                      Instruction
+#                          Need
+#                              Instance variable '@nick'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Want
+#                              Instance variable '@user'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Want
+#                              Instance variable '@host'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Want
+#                              Instance variable '@real'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Weaken modifier
+#                              Instance variable '@connection'
+#          Include (Connection, Str)
 package FF;
 
 use warnings;

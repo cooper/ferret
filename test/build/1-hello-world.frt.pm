@@ -1,11 +1,12 @@
 # === Document Model ===
-#  Document './test/1-hello-world.frt'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      String 'Hello World!'
+#  File './test/1-hello-world.frt'
+#      Package 'main'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          String 'Hello World!'
 package FF;
 
 use warnings;

@@ -65,7 +65,7 @@ sub markdown_fmt {
     my $content = '';
 
     # this must be called before calling ->markdown_fmt_do on children.
-    #my $head = $doc->get_markdown_heading($doc->package);
+    #my $head = $doc->get_markdown_heading($doc->{package});
 
     # first, classes.
     my @classes = $doc->filter_children(type => 'Class');

@@ -1,39 +1,39 @@
 # === Document Model ===
-#  Document './std/IRC/Channel.frt'
+#  File './std/IRC/Channel.frt'
 #      Package 'IRC'
-#      Class 'Channel'
-#          Class method 'initializer__' { $connection:Connection $name:Str }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@connection'
-#                          Argument type
-#                              Bareword 'Connection'
-#                  Instruction
-#                      Need
-#                          Instance variable '@name'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Weaken modifier
-#                          Instance variable '@connection'
-#          Method 'privmsg' { $message:Str::Any }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$message'
-#                          Argument type
-#                              Bareword 'Str::Any'
-#                  Instruction
-#                      Call
-#                          Property 'sendPrivmsg'
+#          Class 'Channel'
+#              Class method 'initializer__' { $connection:Connection $name:Str }
+#                  Function body
+#                      Instruction
+#                          Need
 #                              Instance variable '@connection'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Instance variable '@name'
-#                              Item 1
-#                                  Lexical variable '$message'
-#      Include (Connection, Str, Str::Any)
+#                              Argument type
+#                                  Bareword 'Connection'
+#                      Instruction
+#                          Need
+#                              Instance variable '@name'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Weaken modifier
+#                              Instance variable '@connection'
+#              Method 'privmsg' { $message:Str::Any }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$message'
+#                              Argument type
+#                                  Bareword 'Str::Any'
+#                      Instruction
+#                          Call
+#                              Property 'sendPrivmsg'
+#                                  Instance variable '@connection'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Instance variable '@name'
+#                                  Item 1
+#                                      Lexical variable '$message'
+#          Include (Connection, Str, Str::Any)
 package FF;
 
 use warnings;

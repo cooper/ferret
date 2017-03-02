@@ -1,39 +1,40 @@
 # === Document Model ===
-#  Document './std/Module.frt'
-#      Class 'Module' version 1.0
-#          Class method 'initializer__' { $name:Str ?$prefix:Str ?$version:Num }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@name'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      String '::'
-#                  Instruction
-#                      Want
-#                          Instance variable '@prefix'
-#                          Argument type
-#                              Bareword 'Str'
-#                          Argument value
-#                              String 'CORE'
-#                  Instruction
-#                      Want
-#                          Instance variable '@version'
-#                          Argument type
-#                              Bareword 'Num'
-#                          Argument value
-#                              Number '1.0'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@fullName'
-#                          Operation
-#                              Instance variable '@prefix'
-#                              Addition operator (+)
-#                              String '::'
-#                              Addition operator (+)
+#  File './std/Module.frt'
+#      Package 'main'
+#          Class 'Module' version 1.0
+#              Class method 'initializer__' { $name:Str ?$prefix:Str ?$version:Num }
+#                  Function body
+#                      Instruction
+#                          Need
 #                              Instance variable '@name'
-#      Include (Num, Str)
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          String '::'
+#                      Instruction
+#                          Want
+#                              Instance variable '@prefix'
+#                              Argument type
+#                                  Bareword 'Str'
+#                              Argument value
+#                                  String 'CORE'
+#                      Instruction
+#                          Want
+#                              Instance variable '@version'
+#                              Argument type
+#                                  Bareword 'Num'
+#                              Argument value
+#                                  Number '1.0'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@fullName'
+#                              Operation
+#                                  Instance variable '@prefix'
+#                                  Addition operator (+)
+#                                  String '::'
+#                                  Addition operator (+)
+#                                  Instance variable '@name'
+#          Include (Num, Str)
 package FF;
 
 use warnings;

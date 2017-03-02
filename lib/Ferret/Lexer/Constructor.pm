@@ -58,8 +58,7 @@ sub construct {
 
     }
 
-    # inject includes and EOF.
-    c_spaces($current, $main_node);
+    # EOF
     return $err if $err = c_eof($current, $main_node);
 
     # ENFORCER
@@ -152,6 +151,9 @@ sub handle_label {
 # package declaration.
 sub c_PKG_DEC {
     my ($c, $value) = @_;
+
+    # add includes to current package
+    c_spaces($c->document) if $c->document;
 
     # terminate current class.
     $c->close_node_maybe('Document');
@@ -2457,12 +2459,11 @@ sub c_any {
     return 1; # true = started an instruction
 }
 
-# injected by the constructor. indicates namespace requirements.
+# includes
 sub c_spaces {
-    my ($c, $main_node) = @_;
+    my $doc = shift;
     my $spaces = F::new('Spaces');
-    $main_node->adopt($spaces);
-    return;
+    $doc->adopt($spaces);
 }
 
 # represents the end of the document.
@@ -2472,6 +2473,12 @@ sub c_eof {
     # if there's a current instruction, fake a semicolon.
     if ($c->instruction) {
         $c->simulate('OP_SEMI');
+    }
+
+    # if there's a current document, add includes
+    if ($c->document) {
+        c_spaces($c->document);
+        $c->close_document;
     }
 
     # end of file can terminate these.

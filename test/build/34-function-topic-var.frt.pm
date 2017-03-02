@@ -1,32 +1,33 @@
 # === Document Model ===
-#  Document './test/34-function-topic-var.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$doubles'
-#              Call
-#                  Property 'map'
-#                      Value list [3 items]
+#  File './test/34-function-topic-var.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$doubles'
+#                  Call
+#                      Property 'map'
+#                          Value list [3 items]
+#                              Item 0
+#                                  Number '4'
+#                              Item 1
+#                                  Number '16'
+#                              Item 2
+#                                  Number '25'
+#                      Argument list [1 item]
 #                          Item 0
-#                              Number '4'
-#                          Item 1
-#                              Number '16'
-#                          Item 2
-#                              Number '25'
+#                              Anonymous function
+#                                  Function body
+#                                      Instruction
+#                                          Operation
+#                                              Topic variable '$_'
+#                                              Multiplication operator (*)
+#                                              Number '2'
+#          Instruction
+#              Call
+#                  Bareword 'inspect'
 #                  Argument list [1 item]
 #                      Item 0
-#                          Anonymous function
-#                              Function body
-#                                  Instruction
-#                                      Operation
-#                                          Topic variable '$_'
-#                                          Multiplication operator (*)
-#                                          Number '2'
-#      Instruction
-#          Call
-#              Bareword 'inspect'
-#              Argument list [1 item]
-#                  Item 0
-#                      Lexical variable '$doubles'
+#                          Lexical variable '$doubles'
 package FF;
 
 use warnings;

@@ -1,54 +1,54 @@
 # === Document Model ===
-#  Document './std/Indexed.frt'
+#  File './std/Indexed.frt'
 #      Package 'CORE'
-#      Type definition ('Hashable')
-#          Type body
-#              Instruction
-#                  Can
-#                      Property variable '.hashValue'
-#              Instruction
-#                  Transform
-#                      Property variable '.hashValue'
-#      Type definition ('IndexedRead')
-#          Type body
-#              Instruction
-#                  Can
-#                      Method requirement
-#                          Property variable '.getValue'
-#                          Named argument list [1 item]
-#                              Item 0
-#                                  Pair 'index'
-#                                      Bareword 'Any'
-#      Type definition ('IndexedWrite')
-#          Type body
-#              Instruction
-#                  Can
-#                      Method requirement
-#                          Property variable '.setValue'
-#                          Named argument list [2 items]
-#                              Item 0
-#                                  Pair 'value'
-#                                      Bareword 'Any'
-#                              Item 1
-#                                  Pair 'index'
-#                                      Bareword 'Any'
-#              Instruction
-#                  Can
-#                      Method requirement
-#                          Property variable '.deleteValue'
-#                          Named argument list [1 item]
-#                              Item 0
-#                                  Pair 'index'
-#                                      Bareword 'Any'
-#      Type definition ('Indexed')
-#          Type body
-#              Instruction
-#                  Isa
-#                      Bareword 'IndexedRead'
-#              Instruction
-#                  Isa
-#                      Bareword 'IndexedWrite'
-#      Include (Any, IndexedRead, IndexedWrite)
+#          Type definition ('Hashable')
+#              Type body
+#                  Instruction
+#                      Can
+#                          Property variable '.hashValue'
+#                  Instruction
+#                      Transform
+#                          Property variable '.hashValue'
+#          Type definition ('IndexedRead')
+#              Type body
+#                  Instruction
+#                      Can
+#                          Method requirement
+#                              Property variable '.getValue'
+#                              Named argument list [1 item]
+#                                  Item 0
+#                                      Pair 'index'
+#                                          Bareword 'Any'
+#          Type definition ('IndexedWrite')
+#              Type body
+#                  Instruction
+#                      Can
+#                          Method requirement
+#                              Property variable '.setValue'
+#                              Named argument list [2 items]
+#                                  Item 0
+#                                      Pair 'value'
+#                                          Bareword 'Any'
+#                                  Item 1
+#                                      Pair 'index'
+#                                          Bareword 'Any'
+#                  Instruction
+#                      Can
+#                          Method requirement
+#                              Property variable '.deleteValue'
+#                              Named argument list [1 item]
+#                                  Item 0
+#                                      Pair 'index'
+#                                          Bareword 'Any'
+#          Type definition ('Indexed')
+#              Type body
+#                  Instruction
+#                      Isa
+#                          Bareword 'IndexedRead'
+#                  Instruction
+#                      Isa
+#                          Bareword 'IndexedWrite'
+#          Include (Any, IndexedRead, IndexedWrite)
 package FF;
 
 use warnings;
@@ -79,7 +79,6 @@ my $result = do {
     load_core('CORE');
 
     load_namespaces( $context, $file_name, qw(Any IndexedRead IndexedWrite) );
-
     typedef(
         $scope, $context,
         'Hashable',

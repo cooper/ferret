@@ -1,6 +1,6 @@
-# Number
+# main::Number
 
-This is the Number class.
+This is the main::Number class.
 
 A number is a basic datatype for an arithmetical value which represents a
 particular quantity. Numbers are useful for counting things and for
@@ -193,7 +193,7 @@ In order to comply, the test object must satisfy each of the following condition
 2. __transform__: The number is truncated to its `.floor` value.
 
 
-End of Number class.
+End of main::Number class.
 
 This file was generated automatically by the Ferret compiler from
 [Number.frtdoc](../Number.frtdoc).

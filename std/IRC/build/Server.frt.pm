@@ -1,23 +1,23 @@
 # === Document Model ===
-#  Document './std/IRC/Server.frt'
+#  File './std/IRC/Server.frt'
 #      Package 'IRC'
-#      Class 'Server'
-#          Class method 'initializer__' { $connection:Connection $name:Str }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@connection'
-#                          Argument type
-#                              Bareword 'Connection'
-#                  Instruction
-#                      Need
-#                          Instance variable '@name'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Weaken modifier
-#                          Instance variable '@connection'
-#      Include (Connection, Str)
+#          Class 'Server'
+#              Class method 'initializer__' { $connection:Connection $name:Str }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Instance variable '@connection'
+#                              Argument type
+#                                  Bareword 'Connection'
+#                      Instruction
+#                          Need
+#                              Instance variable '@name'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Weaken modifier
+#                              Instance variable '@connection'
+#          Include (Connection, Str)
 package FF;
 
 use warnings;

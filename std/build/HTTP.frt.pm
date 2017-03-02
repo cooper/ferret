@@ -1,51 +1,51 @@
 # === Document Model ===
-#  Document './std/HTTP.frt'
+#  File './std/HTTP.frt'
 #      Package 'HTTP'
-#      Type definition ('HTTPMethod')
-#          Type body
-#              Instruction
-#                  Symbol :GET
-#              Instruction
-#                  Symbol :POST
-#      Instruction
-#          Lazy assignment
-#              Lexical variable '$client'
-#              Call
-#                  Bareword 'HTTP::Client'
-#                  Argument list [0 items]
-#      Function 'get' { $url:Str -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$url'
-#                      Argument type
-#                          Bareword 'Str'
-#              Instruction
-#                  Return
-#                      Call
-#                          Property 'get'
-#                              Lexical variable '$client'
-#                          Named argument list [1 item]
-#                              Item 0
-#                                  Pair 'url'
-#                                      Lexical variable '$url'
-#      Function 'post' { $url:Str -> $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$url'
-#                      Argument type
-#                          Bareword 'Str'
-#              Instruction
-#                  Return
-#                      Call
-#                          Property 'post'
-#                              Lexical variable '$client'
-#                          Named argument list [1 item]
-#                              Item 0
-#                                  Pair 'url'
-#                                      Lexical variable '$url'
-#      Include (HTTP::Client, Str)
+#          Type definition ('HTTPMethod')
+#              Type body
+#                  Instruction
+#                      Symbol :GET
+#                  Instruction
+#                      Symbol :POST
+#          Instruction
+#              Lazy assignment
+#                  Lexical variable '$client'
+#                  Call
+#                      Bareword 'HTTP::Client'
+#                      Argument list [0 items]
+#          Function 'get' { $url:Str -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$url'
+#                          Argument type
+#                              Bareword 'Str'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Property 'get'
+#                                  Lexical variable '$client'
+#                              Named argument list [1 item]
+#                                  Item 0
+#                                      Pair 'url'
+#                                          Lexical variable '$url'
+#          Function 'post' { $url:Str -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$url'
+#                          Argument type
+#                              Bareword 'Str'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Property 'post'
+#                                  Lexical variable '$client'
+#                              Named argument list [1 item]
+#                                  Item 0
+#                                      Pair 'url'
+#                                          Lexical variable '$url'
+#          Include (HTTP::Client, Str)
 package FF;
 
 use warnings;
@@ -116,7 +116,6 @@ my $result = do {
         $context, undef, $ins, undef, undef
     );
     load_namespaces( $context, $file_name, qw(HTTP::Client Str) );
-
     typedef(
         $scope, $context,
         'HTTPMethod',

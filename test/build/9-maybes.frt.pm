@@ -1,38 +1,39 @@
 # === Document Model ===
-#  Document './test/9-maybes.frt'
-#      Function 'sayHello' { $who:Str }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$who'
-#                      Argument type
-#                          Bareword 'Str'
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 item]
-#                          Item 0
-#                              Operation
-#                                  String 'Hello '
-#                                  Addition operator (+)
-#                                  Lexical variable '$who'
-#                                  Addition operator (+)
-#                                  String '!'
-#      Instruction
-#          Call
-#              Maybe
-#                  Bareword 'sayHello'
-#              Argument list [1 item]
-#                  Item 0
-#                      String 'World'
-#      Instruction
-#          Call
-#              Maybe
-#                  Bareword 'sayGoodbye'
-#              Argument list [1 item]
-#                  Item 0
-#                      String 'World'
-#      Include (Str)
+#  File './test/9-maybes.frt'
+#      Package 'main'
+#          Function 'sayHello' { $who:Str }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$who'
+#                          Argument type
+#                              Bareword 'Str'
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  Operation
+#                                      String 'Hello '
+#                                      Addition operator (+)
+#                                      Lexical variable '$who'
+#                                      Addition operator (+)
+#                                      String '!'
+#          Instruction
+#              Call
+#                  Maybe
+#                      Bareword 'sayHello'
+#                  Argument list [1 item]
+#                      Item 0
+#                          String 'World'
+#          Instruction
+#              Call
+#                  Maybe
+#                      Bareword 'sayGoodbye'
+#                  Argument list [1 item]
+#                      Item 0
+#                          String 'World'
+#          Include (Str)
 package FF;
 
 use warnings;

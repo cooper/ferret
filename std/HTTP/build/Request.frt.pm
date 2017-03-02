@@ -1,45 +1,45 @@
 # === Document Model ===
-#  Document './std/HTTP/Request.frt'
+#  File './std/HTTP/Request.frt'
 #      Package 'HTTP'
-#      Class 'Request'
-#          Class method 'initializer__' { $client:Client $url:Str $httpMethod:HTTPMethod }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$client'
-#                          Argument type
-#                              Bareword 'Client'
-#                  Instruction
-#                      Weaken modifier
-#                          Assignment
-#                              Instance variable '@client'
+#          Class 'Request'
+#              Class method 'initializer__' { $client:Client $url:Str $httpMethod:HTTPMethod }
+#                  Function body
+#                      Instruction
+#                          Need
 #                              Lexical variable '$client'
-#                  Instruction
-#                      Need
-#                          Instance variable '@url'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Need
-#                          Instance variable '@httpMethod'
-#                          Argument type
-#                              Bareword 'HTTPMethod'
-#          Method 'connect'
-#              Function body
-#                  Instruction
-#                      Call
-#                          Property 'connect'
-#                              Bareword 'NATIVE::HTTPClient'
-#                          Argument list [2 items]
-#                              Item 0
+#                              Argument type
+#                                  Bareword 'Client'
+#                      Instruction
+#                          Weaken modifier
+#                              Assignment
 #                                  Instance variable '@client'
-#                              Item 1
-#                                  Special variable '*self'
-#          Method 'connected'
-#          Method 'redirect'
-#          Method 'error'
-#          Method 'response'
-#      Include (Client, HTTPMethod, NATIVE::HTTPClient, Str)
+#                                  Lexical variable '$client'
+#                      Instruction
+#                          Need
+#                              Instance variable '@url'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Need
+#                              Instance variable '@httpMethod'
+#                              Argument type
+#                                  Bareword 'HTTPMethod'
+#              Method 'connect'
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Property 'connect'
+#                                  Bareword 'NATIVE::HTTPClient'
+#                              Argument list [2 items]
+#                                  Item 0
+#                                      Instance variable '@client'
+#                                  Item 1
+#                                      Special variable '*self'
+#              Method 'connected'
+#              Method 'redirect'
+#              Method 'error'
+#              Method 'response'
+#          Include (Client, HTTPMethod, NATIVE::HTTPClient, Str)
 package FF;
 
 use warnings;

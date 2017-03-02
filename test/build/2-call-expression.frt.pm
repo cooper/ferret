@@ -1,15 +1,16 @@
 # === Document Model ===
-#  Document './test/2-call-expression.frt'
-#      Instruction
-#          Single value [1 item]
-#              Item 0
-#                  Call
-#                      Single value [1 item]
-#                          Item 0
-#                              Bareword 'say'
-#                      Argument list [1 item]
-#                          Item 0
-#                              String 'Hello World!'
+#  File './test/2-call-expression.frt'
+#      Package 'main'
+#          Instruction
+#              Single value [1 item]
+#                  Item 0
+#                      Call
+#                          Single value [1 item]
+#                              Item 0
+#                                  Bareword 'say'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  String 'Hello World!'
 package FF;
 
 use warnings;

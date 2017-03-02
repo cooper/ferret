@@ -1,101 +1,102 @@
 # === Document Model ===
-#  Document './test/3-nested-functions.frt'
-#      Instruction
-#          Call
-#              Bareword 'helloWorld'
-#              Named argument list [2 items]
-#                  Item 0
-#                      Pair 'name2'
-#                          String 'USA'
-#                  Item 1
-#                      Pair 'name1'
-#                          String 'World'
-#      Instruction
-#          Call
-#              Bareword 'helloWorld'
-#              Named argument list [2 items]
-#                  Item 0
-#                      Pair 'name1'
-#                          String 'Earth'
-#                  Item 1
-#                      Pair 'name2'
-#                          String 'Humans'
-#      Instruction
-#          Call
-#              Bareword 'helloWorld'
-#              Argument list [2 items]
-#                  Item 0
-#                      String 'Benjamin'
-#                  Item 1
-#                      String 'George'
-#      Function 'helloWorld' { $name1 $name2 }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$name1'
-#              Instruction
-#                  Need
-#                      Lexical variable '$name2'
-#              Instruction
-#                  Call
-#                      Bareword 'hello1'
-#                      Argument list [0 items]
-#              Instruction
-#                  Call
-#                      Bareword 'hello2'
-#                      Argument list [0 items]
-#              Function 'hello1'
-#                  Function body
-#                      Instruction
-#                          Assignment
-#                              Lexical variable '$hello'
-#                              String 'Hello'
-#                      Instruction
-#                          Assignment
-#                              Property 'name'
+#  File './test/3-nested-functions.frt'
+#      Package 'main'
+#          Instruction
+#              Call
+#                  Bareword 'helloWorld'
+#                  Named argument list [2 items]
+#                      Item 0
+#                          Pair 'name2'
+#                              String 'USA'
+#                      Item 1
+#                          Pair 'name1'
+#                              String 'World'
+#          Instruction
+#              Call
+#                  Bareword 'helloWorld'
+#                  Named argument list [2 items]
+#                      Item 0
+#                          Pair 'name1'
+#                              String 'Earth'
+#                      Item 1
+#                          Pair 'name2'
+#                              String 'Humans'
+#          Instruction
+#              Call
+#                  Bareword 'helloWorld'
+#                  Argument list [2 items]
+#                      Item 0
+#                          String 'Benjamin'
+#                      Item 1
+#                          String 'George'
+#          Function 'helloWorld' { $name1 $name2 }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$name1'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$name2'
+#                  Instruction
+#                      Call
+#                          Bareword 'hello1'
+#                          Argument list [0 items]
+#                  Instruction
+#                      Call
+#                          Bareword 'hello2'
+#                          Argument list [0 items]
+#                  Function 'hello1'
+#                      Function body
+#                          Instruction
+#                              Assignment
 #                                  Lexical variable '$hello'
-#                              Lexical variable '$name1'
-#                      Instruction
-#                          Call
-#                              Bareword 'say'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$hello'
-#                                          Addition operator (+)
-#                                          String ' '
-#                                          Addition operator (+)
-#                                          Property 'name'
+#                                  String 'Hello'
+#                          Instruction
+#                              Assignment
+#                                  Property 'name'
+#                                      Lexical variable '$hello'
+#                                  Lexical variable '$name1'
+#                          Instruction
+#                              Call
+#                                  Bareword 'say'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Operation
 #                                              Lexical variable '$hello'
-#              Function 'hello2'
-#                  Function body
-#                      Instruction
-#                          Call
-#                              Bareword 'say'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Operation
-#                                          String 'Hello '
-#                                          Addition operator (+)
-#                                          Lexical variable '$name2'
-#      Instruction
-#          Assignment
-#              Lexical variable '$pi'
-#              Operation
-#                  Number '3'
-#                  Addition operator (+)
-#                  Number '0.1'
-#                  Addition operator (+)
-#                  Number '0.04'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Pi = '
-#                          Addition operator (+)
-#                          Lexical variable '$pi'
+#                                              Addition operator (+)
+#                                              String ' '
+#                                              Addition operator (+)
+#                                              Property 'name'
+#                                                  Lexical variable '$hello'
+#                  Function 'hello2'
+#                      Function body
+#                          Instruction
+#                              Call
+#                                  Bareword 'say'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              String 'Hello '
+#                                              Addition operator (+)
+#                                              Lexical variable '$name2'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$pi'
+#                  Operation
+#                      Number '3'
+#                      Addition operator (+)
+#                      Number '0.1'
+#                      Addition operator (+)
+#                      Number '0.04'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Operation
+#                              String 'Pi = '
+#                              Addition operator (+)
+#                              Lexical variable '$pi'
 package FF;
 
 use warnings;

@@ -1,110 +1,111 @@
 # === Document Model ===
-#  Document './test/11-external-inside-on.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$point'
-#              Call
-#                  Bareword 'Math::Point'
-#                  Argument list [2 items]
-#                      Item 0
-#                          Number '0'
-#                      Item 1
-#                          Number '0'
-#      If
-#          Expression ('if' parameter)
-#              Lexical variable '$point'
-#          If body
-#              Instruction
+#  File './test/11-external-inside-on.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$point'
 #                  Call
-#                      Bareword 'say'
-#                      Argument list [1 item]
+#                      Bareword 'Math::Point'
+#                      Argument list [2 items]
 #                          Item 0
-#                              String 'The point ...'
-#              Instruction
-#                  Call
-#                      Bareword 'inspect'
-#                      Argument list [1 item]
-#                          Item 0
-#                              Lexical variable '$point'
-#      Inside
-#          Expression ('inside' parameter)
-#              Lexical variable '$point'
-#          Inside body
-#              Instruction
-#                  Assignment
-#                      Lexical variable '$x'
-#                      Number '5'
-#              Instruction
-#                  Assignment
-#                      Lexical variable '$y'
-#                      Number '10'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Point: '
-#                          Addition operator (+)
-#                          Lexical variable '$point'
-#      On
-#          Expression ('on' parameter)
-#              Bareword 'say'
-#          Anonymous function { $twice $message -> $didTwice }
-#              Function body
+#                              Number '0'
+#                          Item 1
+#                              Number '0'
+#          If
+#              Expression ('if' parameter)
+#                  Lexical variable '$point'
+#              If body
 #                  Instruction
-#                      Need
-#                          Lexical variable '$twice'
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  String 'The point ...'
 #                  Instruction
-#                      Need
-#                          Lexical variable '$message'
-#                  If
-#                      Expression ('if' parameter)
-#                          Lexical variable '$twice'
-#                      If body
-#                          Instruction
-#                              Call
-#                                  Bareword 'say'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          Operation
-#                                              Lexical variable '$message'
-#                                              Addition operator (+)
-#                                              String ' again'
+#                      Call
+#                          Bareword 'inspect'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  Lexical variable '$point'
+#          Inside
+#              Expression ('inside' parameter)
+#                  Lexical variable '$point'
+#              Inside body
 #                  Instruction
-#                      Return pair 'didTwice'
-#                          Lexical variable '$twice'
-#      Instruction
-#          Assignment
-#              Lexical variable '$r'
+#                      Assignment
+#                          Lexical variable '$x'
+#                          Number '5'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$y'
+#                          Number '10'
+#          Instruction
 #              Call
 #                  Bareword 'say'
-#                  Mixed argument list [2 items]
+#                  Argument list [1 item]
 #                      Item 0
-#                          String 'It was said'
-#                      Item 1
-#                          Pair 'twice'
-#                              Boolean true
-#      If
-#          Expression ('if' parameter)
-#              Property 'didTwice'
+#                          Operation
+#                              String 'Point: '
+#                              Addition operator (+)
+#                              Lexical variable '$point'
+#          On
+#              Expression ('on' parameter)
+#                  Bareword 'say'
+#              Anonymous function { $twice $message -> $didTwice }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$twice'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$message'
+#                      If
+#                          Expression ('if' parameter)
+#                              Lexical variable '$twice'
+#                          If body
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Operation
+#                                                  Lexical variable '$message'
+#                                                  Addition operator (+)
+#                                                  String ' again'
+#                      Instruction
+#                          Return pair 'didTwice'
+#                              Lexical variable '$twice'
+#          Instruction
+#              Assignment
 #                  Lexical variable '$r'
-#          If body
-#              Instruction
 #                  Call
 #                      Bareword 'say'
-#                      Argument list [1 item]
+#                      Mixed argument list [2 items]
 #                          Item 0
-#                              String 'Did the fi...'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [2 items]
-#                  Item 0
-#                      String 'this shoul...'
-#                  Item 1
-#                      Boolean true
-#      Include (Math::Point)
+#                              String 'It was said'
+#                          Item 1
+#                              Pair 'twice'
+#                                  Boolean true
+#          If
+#              Expression ('if' parameter)
+#                  Property 'didTwice'
+#                      Lexical variable '$r'
+#              If body
+#                  Instruction
+#                      Call
+#                          Bareword 'say'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  String 'Did the fi...'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [2 items]
+#                      Item 0
+#                          String 'this shoul...'
+#                      Item 1
+#                          Boolean true
+#          Include (Math::Point)
 package FF;
 
 use warnings;

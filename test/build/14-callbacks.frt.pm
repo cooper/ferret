@@ -1,72 +1,73 @@
 # === Document Model ===
-#  Document './test/14-callbacks.frt'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      String 'test'
-#      Instruction
-#          Assignment
-#              Lexical variable '$str'
-#              String 'hi'
-#      On
-#          Expression ('on' parameter)
-#              Property 'length'
+#  File './test/14-callbacks.frt'
+#      Package 'main'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          String 'test'
+#          Instruction
+#              Assignment
 #                  Lexical variable '$str'
-#          Anonymous function
-#              Function body
-#                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Operation
-#                                      String 'found ''
-#                                      Addition operator (+)
-#                                      Special variable '*this'
-#                                      Addition operator (+)
-#                                      String '' length t...'
-#                                      Addition operator (+)
-#                                      Property 'result'
-#                                          Special variable '*return'
-#      Instruction
-#          Call
-#              Property 'length'
-#                  Lexical variable '$str'
-#              Argument list [0 items]
-#      Instruction
-#          Call
-#              Property 'length'
-#                  String 'hello'
-#              Argument list [0 items]
-#      On
-#          Expression ('on' parameter)
-#              Property 'length'
-#                  Property 'proto'
-#                      Bareword 'String'
-#          Anonymous function
-#              Function body
-#                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Operation
-#                                      String 'found ''
-#                                      Addition operator (+)
-#                                      Special variable '*this'
-#                                      Addition operator (+)
-#                                      String '' length t...'
-#                                      Addition operator (+)
-#                                      Property 'result'
-#                                          Special variable '*return'
-#      Instruction
-#          Call
-#              Property 'length'
-#                  String 'hello'
-#              Argument list [0 items]
-#      Include (String)
+#                  String 'hi'
+#          On
+#              Expression ('on' parameter)
+#                  Property 'length'
+#                      Lexical variable '$str'
+#              Anonymous function
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Operation
+#                                          String 'found ''
+#                                          Addition operator (+)
+#                                          Special variable '*this'
+#                                          Addition operator (+)
+#                                          String '' length t...'
+#                                          Addition operator (+)
+#                                          Property 'result'
+#                                              Special variable '*return'
+#          Instruction
+#              Call
+#                  Property 'length'
+#                      Lexical variable '$str'
+#                  Argument list [0 items]
+#          Instruction
+#              Call
+#                  Property 'length'
+#                      String 'hello'
+#                  Argument list [0 items]
+#          On
+#              Expression ('on' parameter)
+#                  Property 'length'
+#                      Property 'proto'
+#                          Bareword 'String'
+#              Anonymous function
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Operation
+#                                          String 'found ''
+#                                          Addition operator (+)
+#                                          Special variable '*this'
+#                                          Addition operator (+)
+#                                          String '' length t...'
+#                                          Addition operator (+)
+#                                          Property 'result'
+#                                              Special variable '*return'
+#          Instruction
+#              Call
+#                  Property 'length'
+#                      String 'hello'
+#                  Argument list [0 items]
+#          Include (String)
 package FF;
 
 use warnings;

@@ -1,80 +1,81 @@
 # === Document Model ===
-#  Document './test/27-http.frt'
-#      Inside
-#          Expression ('inside' parameter)
-#              Call
-#                  Property 'get'
-#                      Bareword 'HTTP'
-#                  Argument list [1 item]
-#                      Item 0
-#                          String 'http://goo...'
-#          Inside body
-#              On
-#                  Expression ('on' parameter)
-#                      Property variable '.connected'
-#                  Anonymous function
-#                      Function body
-#                          Instruction
-#                              Call
-#                                  Bareword 'say'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          String 'Connected!'
-#              On
-#                  Expression ('on' parameter)
-#                      Property variable '.redirect'
-#                  Anonymous function { $location:Str }
-#                      Function body
-#                          Instruction
-#                              Need
-#                                  Lexical variable '$location'
-#                                  Argument type
-#                                      Bareword 'Str'
-#                          Instruction
-#                              Call
-#                                  Bareword 'say'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          Operation
-#                                              String 'Redirected...'
-#                                              Addition operator (+)
-#                                              Lexical variable '$location'
-#              On
-#                  Expression ('on' parameter)
-#                      Property variable '.response'
-#                  Anonymous function { $content:Str }
-#                      Function body
-#                          Instruction
-#                              Need
-#                                  Lexical variable '$content'
-#                                  Argument type
-#                                      Bareword 'Str'
-#                          Instruction
-#                              Call
-#                                  Bareword 'say'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          Operation
-#                                              String 'Got conten...'
-#                                              Addition operator (+)
-#                                              Property 'length'
-#                                                  Lexical variable '$content'
-#              On
-#                  Expression ('on' parameter)
-#                      Property variable '.error'
-#                  Anonymous function
-#                      Function body
-#                          Instruction
-#                              Call
-#                                  Bareword 'say'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          String 'Got error!'
-#              Instruction
+#  File './test/27-http.frt'
+#      Package 'main'
+#          Inside
+#              Expression ('inside' parameter)
 #                  Call
-#                      Property variable '.connect'
-#                      Argument list [0 items]
-#      Include (HTTP, Str)
+#                      Property 'get'
+#                          Bareword 'HTTP'
+#                      Argument list [1 item]
+#                          Item 0
+#                              String 'http://goo...'
+#              Inside body
+#                  On
+#                      Expression ('on' parameter)
+#                          Property variable '.connected'
+#                      Anonymous function
+#                          Function body
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              String 'Connected!'
+#                  On
+#                      Expression ('on' parameter)
+#                          Property variable '.redirect'
+#                      Anonymous function { $location:Str }
+#                          Function body
+#                              Instruction
+#                                  Need
+#                                      Lexical variable '$location'
+#                                      Argument type
+#                                          Bareword 'Str'
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Operation
+#                                                  String 'Redirected...'
+#                                                  Addition operator (+)
+#                                                  Lexical variable '$location'
+#                  On
+#                      Expression ('on' parameter)
+#                          Property variable '.response'
+#                      Anonymous function { $content:Str }
+#                          Function body
+#                              Instruction
+#                                  Need
+#                                      Lexical variable '$content'
+#                                      Argument type
+#                                          Bareword 'Str'
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Operation
+#                                                  String 'Got conten...'
+#                                                  Addition operator (+)
+#                                                  Property 'length'
+#                                                      Lexical variable '$content'
+#                  On
+#                      Expression ('on' parameter)
+#                          Property variable '.error'
+#                      Anonymous function
+#                          Function body
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              String 'Got error!'
+#                  Instruction
+#                      Call
+#                          Property variable '.connect'
+#                          Argument list [0 items]
+#          Include (HTTP, Str)
 package FF;
 
 use warnings;

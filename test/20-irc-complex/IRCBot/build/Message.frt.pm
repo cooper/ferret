@@ -1,115 +1,101 @@
 # === Document Model ===
-#  Document './test/20-irc-complex/IRCBot/Message.frt'
+#  File './test/20-irc-complex/IRCBot/Message.frt'
 #      Package 'IRCBot'
-#      Class 'Message'
-#          Class method 'initializer__' { $line:Str }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@line'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$lineSplit'
-#                          Call
-#                              Property 'split'
-#                                  Instance variable '@line'
-#                              Mixed argument list [2 items]
-#                                  Item 0
-#                                      String ' '
-#                                  Item 1
-#                                      Pair 'limit'
-#                                          Number '4'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@channel'
-#                          Index
+#          Class 'Message'
+#              Class method 'initializer__' { $line:Str }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Instance variable '@line'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Assignment
 #                              Lexical variable '$lineSplit'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Number '2'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@nickname'
-#                          Index
 #                              Call
 #                                  Property 'split'
-#                                      Index
-#                                          Lexical variable '$lineSplit'
-#                                          Index list [1 item]
-#                                              Item 0
-#                                                  Number '0'
+#                                      Instance variable '@line'
 #                                  Mixed argument list [2 items]
 #                                      Item 0
-#                                          String '!'
+#                                          String ' '
 #                                      Item 1
 #                                          Pair 'limit'
-#                                              Number '2'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Number '0'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@nickname'
-#                          Call
-#                              Property 'trimPrefix'
-#                                  Instance variable '@nickname'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      String ':'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@message'
-#                          Index
-#                              Lexical variable '$lineSplit'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Number '3'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@message'
-#                          Call
-#                              Property 'trimPrefix'
-#                                  Instance variable '@message'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      String ':'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@parts'
-#                          Call
-#                              Property 'split'
-#                                  Instance variable '@message'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      String ' '
-#          Computed property 'command' (lazy) { -> $result $result }
-#              Function body
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Property 'length'
-#                                  Instance variable '@parts'
-#                              Negated equality operator (!=)
-#                              Number '0'
-#                              Logical and operator (&&)
+#                                              Number '4'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@channel'
+#                              Index
+#                                  Lexical variable '$lineSplit'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Number '2'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@nickname'
+#                              Index
+#                                  Call
+#                                      Property 'split'
+#                                          Index
+#                                              Lexical variable '$lineSplit'
+#                                              Index list [1 item]
+#                                                  Item 0
+#                                                      Number '0'
+#                                      Mixed argument list [2 items]
+#                                          Item 0
+#                                              String '!'
+#                                          Item 1
+#                                              Pair 'limit'
+#                                                  Number '2'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Number '0'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@nickname'
 #                              Call
-#                                  Property 'hasPrefix'
-#                                      Index
-#                                          Instance variable '@parts'
-#                                          Index list [1 item]
-#                                              Item 0
-#                                                  Number '0'
+#                                  Property 'trimPrefix'
+#                                      Instance variable '@nickname'
 #                                  Argument list [1 item]
 #                                      Item 0
-#                                          String '.'
-#                      If body
-#                          Instruction
-#                              Assignment
-#                                  Lexical variable '$cmd'
+#                                          String ':'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@message'
+#                              Index
+#                                  Lexical variable '$lineSplit'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Number '3'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@message'
+#                              Call
+#                                  Property 'trimPrefix'
+#                                      Instance variable '@message'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          String ':'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@parts'
+#                              Call
+#                                  Property 'split'
+#                                      Instance variable '@message'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          String ' '
+#              Computed property 'command' (lazy) { -> $result $result }
+#                  Function body
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Property 'length'
+#                                      Instance variable '@parts'
+#                                  Negated equality operator (!=)
+#                                  Number '0'
+#                                  Logical and operator (&&)
 #                                  Call
-#                                      Property 'trimPrefix'
+#                                      Property 'hasPrefix'
 #                                          Index
 #                                              Instance variable '@parts'
 #                                              Index list [1 item]
@@ -118,52 +104,66 @@
 #                                      Argument list [1 item]
 #                                          Item 0
 #                                              String '.'
-#                          If
-#                              Expression ('if' parameter)
-#                                  Property 'length'
+#                          If body
+#                              Instruction
+#                                  Assignment
 #                                      Lexical variable '$cmd'
-#                              If body
-#                                  Instruction
-#                                      Return
+#                                      Call
+#                                          Property 'trimPrefix'
+#                                              Index
+#                                                  Instance variable '@parts'
+#                                                  Index list [1 item]
+#                                                      Item 0
+#                                                          Number '0'
+#                                          Argument list [1 item]
+#                                              Item 0
+#                                                  String '.'
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Property 'length'
 #                                          Lexical variable '$cmd'
-#                  Instruction
-#                      Return
-#                          Boolean false
-#          Computed property 'commandHasParameters' (lazy) { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Property 'length'
-#                                  Instance variable '@parts'
-#                              Greater than operator (>)
-#                              Number '1'
-#          Method 'fromWord' { $wordN:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$wordN'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Index
-#                              Call
-#                                  Property 'split'
-#                                      Instance variable '@message'
-#                                  Mixed argument list [2 items]
+#                                  If body
+#                                      Instruction
+#                                          Return
+#                                              Lexical variable '$cmd'
+#                      Instruction
+#                          Return
+#                              Boolean false
+#              Computed property 'commandHasParameters' (lazy) { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Property 'length'
+#                                      Instance variable '@parts'
+#                                  Greater than operator (>)
+#                                  Number '1'
+#              Method 'fromWord' { $wordN:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$wordN'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Index
+#                                  Call
+#                                      Property 'split'
+#                                          Instance variable '@message'
+#                                      Mixed argument list [2 items]
+#                                          Item 0
+#                                              String ' '
+#                                          Item 1
+#                                              Pair 'limit'
+#                                                  Operation
+#                                                      Lexical variable '$wordN'
+#                                                      Addition operator (+)
+#                                                      Number '1'
+#                                  Index list [1 item]
 #                                      Item 0
-#                                          String ' '
-#                                      Item 1
-#                                          Pair 'limit'
-#                                              Operation
-#                                                  Lexical variable '$wordN'
-#                                                  Addition operator (+)
-#                                                  Number '1'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$wordN'
-#      Include (Num, Str)
+#                                          Lexical variable '$wordN'
+#          Include (Num, Str)
 package FF;
 
 use warnings;

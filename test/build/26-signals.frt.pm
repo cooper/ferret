@@ -1,66 +1,67 @@
 # === Document Model ===
-#  Document './test/26-signals.frt'
-#      On
-#          Expression ('on' parameter)
-#              Property 'trap'
-#                  Property 'TERM'
-#                      Bareword 'Signal'
-#          Anonymous function
-#              Function body
-#                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  String 'Got TERM. ...'
-#      Instruction
-#          String 'are you sure?'
-#      Instruction
-#          Assignment
-#              Lexical variable '$asked'
-#              Boolean false
-#      On
-#          Expression ('on' parameter)
-#              Property 'trap'
-#                  Property 'INT'
-#                      Bareword 'Signal'
-#          Anonymous function { -> $result }
-#              Function body
-#                  If
-#                      Expression ('if' parameter)
-#                          Negation
-#                              Lexical variable '$asked'
-#                      If body
-#                          Instruction
-#                              Call
-#                                  Bareword 'say'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          String 'Are you sure?'
-#                          Instruction
-#                              Assignment
+#  File './test/26-signals.frt'
+#      Package 'main'
+#          On
+#              Expression ('on' parameter)
+#                  Property 'trap'
+#                      Property 'TERM'
+#                          Bareword 'Signal'
+#              Anonymous function
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      String 'Got TERM. ...'
+#          Instruction
+#              String 'are you sure?'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$asked'
+#                  Boolean false
+#          On
+#              Expression ('on' parameter)
+#                  Property 'trap'
+#                      Property 'INT'
+#                          Bareword 'Signal'
+#              Anonymous function { -> $result }
+#                  Function body
+#                      If
+#                          Expression ('if' parameter)
+#                              Negation
 #                                  Lexical variable '$asked'
-#                                  Boolean true
-#                          Instruction
-#                              Stop
-#                          Instruction
-#                              Return
-#                  Instruction
+#                          If body
+#                              Instruction
+#                                  Call
+#                                      Bareword 'say'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              String 'Are you sure?'
+#                              Instruction
+#                                  Assignment
+#                                      Lexical variable '$asked'
+#                                      Boolean true
+#                              Instruction
+#                                  Stop
+#                              Instruction
+#                                  Return
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      String 'Got second...'
+#          Instruction
+#              Call
+#                  Property 'start'
 #                      Call
-#                          Bareword 'say'
+#                          Bareword 'Timer'
 #                          Argument list [1 item]
 #                              Item 0
-#                                  String 'Got second...'
-#      Instruction
-#          Call
-#              Property 'start'
-#                  Call
-#                      Bareword 'Timer'
-#                      Argument list [1 item]
-#                          Item 0
-#                              Number '5'
-#              Argument list [0 items]
-#      Include (Signal, Timer)
+#                                  Number '5'
+#                  Argument list [0 items]
+#          Include (Signal, Timer)
 package FF;
 
 use warnings;

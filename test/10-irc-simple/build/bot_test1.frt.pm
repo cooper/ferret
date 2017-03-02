@@ -1,26 +1,27 @@
 # === Document Model ===
-#  Document './test/10-irc-simple/bot_test1.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$bot'
-#              Call
-#                  Bareword 'Bot1'
-#                  Named argument list [3 items]
-#                      Item 0
-#                          Pair 'addr'
-#                              String 'k.notroll.net'
-#                      Item 1
-#                          Pair 'nick'
-#                              String 'ferret'
-#                      Item 2
-#                          Pair 'user'
-#                              String 'bot'
-#      Instruction
-#          Call
-#              Property 'connect'
+#  File './test/10-irc-simple/bot_test1.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
 #                  Lexical variable '$bot'
-#              Argument list [0 items]
-#      Include (Bot1)
+#                  Call
+#                      Bareword 'Bot1'
+#                      Named argument list [3 items]
+#                          Item 0
+#                              Pair 'addr'
+#                                  String 'k.notroll.net'
+#                          Item 1
+#                              Pair 'nick'
+#                                  String 'ferret'
+#                          Item 2
+#                              Pair 'user'
+#                                  String 'bot'
+#          Instruction
+#              Call
+#                  Property 'connect'
+#                      Lexical variable '$bot'
+#                  Argument list [0 items]
+#          Include (Bot1)
 package FF;
 
 use warnings;

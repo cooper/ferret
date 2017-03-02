@@ -190,17 +190,17 @@ sub class    { shift->{class}   }
 sub end_cap  { shift->{end_cap} }
 
 sub set_document {
-    my ($c, $pkg) = @_;
+    my ($c, $doc) = @_;
 
     # close the previous package without end keyword.
     $c->{end_cap} = $c->{end_cap}{parent_end_cap}
         if $c->{end_cap} && $c->{end_cap}->type eq 'Document';
 
     # capture end.
-    $pkg->{parent_end_cap} = $c->{end_cap};
-    $c->{end_cap} = $pkg;
-
-    return $c->{document} = $pkg;
+    $doc->{parent_end_cap} = $c->{end_cap};
+    $c->{end_cap} = $doc;
+    
+    return $c->{document} = $doc;
 }
 
 sub close_document {

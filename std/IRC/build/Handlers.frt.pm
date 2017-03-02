@@ -1,197 +1,197 @@
 # === Document Model ===
-#  Document './std/IRC/Handlers.frt'
+#  File './std/IRC/Handlers.frt'
 #      Package 'IRC::Handlers'
-#      Instruction
-#          Shared variable declaration
-#              Assignment
-#                  Lexical variable '$handlers'
-#                  Object [7 items]
-#                      Item 0
-#                          Pair 'PING'
-#                              Bareword 'ping'
-#                      Item 1
-#                          Pair
-#                              String '001'
-#                              Bareword 'welcome'
-#                      Item 2
-#                          Pair
-#                              String '004'
-#                              Bareword 'myInfo'
-#                      Item 3
-#                          Pair
-#                              String '376'
-#                              Bareword 'endOfMOTD'
-#                      Item 4
-#                          Pair
-#                              String '396'
-#                              Bareword 'hiddenHost'
-#                      Item 5
-#                          Pair
-#                              String '422'
-#                              Bareword 'endOfMOTD'
-#                      Item 6
-#                          Pair
-#                              String '433'
-#                              Bareword 'nickInUse'
-#      Function 'ping' { $msg }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$msg'
-#              Instruction
-#                  Call
-#                      This variable '%send'
-#                      Argument list [1 item]
+#          Instruction
+#              Shared variable declaration
+#                  Assignment
+#                      Lexical variable '$handlers'
+#                      Object [7 items]
 #                          Item 0
-#                              Operation
-#                                  String 'PONG :'
-#                                  Addition operator (+)
-#                                  Index
-#                                      Property 'params'
-#                                          Lexical variable '$msg'
-#                                      Index list [1 item]
-#                                          Item 0
-#                                              Operation
-#                                                  Constant zero
-#                                                  Negation operator (-)
-#                                                  Number '1'
-#      Function 'welcome' { $msg }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$msg'
-#              Instruction
-#                  Assignment
-#                      This variable '%registered'
-#                      Boolean true
-#              Instruction
-#                  Assignment
-#                      Property 'nick'
-#                          This variable '%me'
-#                      Index
-#                          Property 'params'
-#                              Lexical variable '$msg'
-#                          Index list [1 item]
+#                              Pair 'PING'
+#                                  Bareword 'ping'
+#                          Item 1
+#                              Pair
+#                                  String '001'
+#                                  Bareword 'welcome'
+#                          Item 2
+#                              Pair
+#                                  String '004'
+#                                  Bareword 'myInfo'
+#                          Item 3
+#                              Pair
+#                                  String '376'
+#                                  Bareword 'endOfMOTD'
+#                          Item 4
+#                              Pair
+#                                  String '396'
+#                                  Bareword 'hiddenHost'
+#                          Item 5
+#                              Pair
+#                                  String '422'
+#                                  Bareword 'endOfMOTD'
+#                          Item 6
+#                              Pair
+#                                  String '433'
+#                                  Bareword 'nickInUse'
+#          Function 'ping' { $msg }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  Instruction
+#                      Call
+#                          This variable '%send'
+#                          Argument list [1 item]
 #                              Item 0
-#                                  Number '0'
-#              If
-#                  Expression ('if' parameter)
-#                      Operation
+#                                  Operation
+#                                      String 'PONG :'
+#                                      Addition operator (+)
+#                                      Index
+#                                          Property 'params'
+#                                              Lexical variable '$msg'
+#                                          Index list [1 item]
+#                                              Item 0
+#                                                  Operation
+#                                                      Constant zero
+#                                                      Negation operator (-)
+#                                                      Number '1'
+#          Function 'welcome' { $msg }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  Instruction
+#                      Assignment
+#                          This variable '%registered'
+#                          Boolean true
+#                  Instruction
+#                      Assignment
+#                          Property 'nick'
+#                              This variable '%me'
 #                          Index
 #                              Property 'params'
 #                                  Lexical variable '$msg'
 #                              Index list [1 item]
 #                                  Item 0
-#                                      Operation
-#                                          Constant zero
-#                                          Negation operator (-)
-#                                          Number '1'
-#                          Similarity operator (=~)
-#                          Regex /^(.+)!(.+).../
-#                  If body
-#                      Instruction
-#                          Assignment
-#                              Property 'nick'
-#                                  This variable '%me'
-#                              Lexical variable '$1'
-#                      Instruction
-#                          Assignment
-#                              Property 'user'
-#                                  This variable '%me'
-#                              Lexical variable '$2'
-#                      Instruction
-#                          Assignment
-#                              Property 'host'
-#                                  This variable '%me'
-#                              Lexical variable '$3'
-#                      Instruction
-#                          Assignment
-#                              Property 'realHost'
-#                                  This variable '%me'
-#                              Lexical variable '$3'
-#      Function 'myInfo' { $msg }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$msg'
-#              Instruction
-#                  Assignment
-#                      Property 'name'
-#                          This variable '%server'
-#                      Index
-#                          Property 'params'
-#                              Lexical variable '$msg'
-#                          Index list [1 item]
-#                              Item 0
-#                                  Number '1'
-#              Instruction
-#                  Assignment
-#                      Property 'version'
-#                          This variable '%server'
-#                      Index
-#                          Property 'params'
-#                              Lexical variable '$msg'
-#                          Index list [1 item]
-#                              Item 0
-#                                  Number '2'
-#      Function 'endOfMOTD' { -> $result }
-#          Function body
-#              If
-#                  Expression ('if' parameter)
-#                      Operation
-#                          Negation
-#                              This variable '%autojoin'
-#                          Logical or operator (||)
-#                          This variable '%_didAutojoin'
-#                  If body
-#                      Instruction
-#                          Return
-#              Instruction
-#                  Call
-#                      This variable '%sendJoin'
-#                      Named argument list [1 item]
-#                          Item 0
-#                              Pair 'channelNames'
+#                                      Number '0'
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Index
+#                                  Property 'params'
+#                                      Lexical variable '$msg'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              Constant zero
+#                                              Negation operator (-)
+#                                              Number '1'
+#                              Similarity operator (=~)
+#                              Regex /^(.+)!(.+).../
+#                      If body
+#                          Instruction
+#                              Assignment
+#                                  Property 'nick'
+#                                      This variable '%me'
+#                                  Lexical variable '$1'
+#                          Instruction
+#                              Assignment
+#                                  Property 'user'
+#                                      This variable '%me'
+#                                  Lexical variable '$2'
+#                          Instruction
+#                              Assignment
+#                                  Property 'host'
+#                                      This variable '%me'
+#                                  Lexical variable '$3'
+#                          Instruction
+#                              Assignment
+#                                  Property 'realHost'
+#                                      This variable '%me'
+#                                  Lexical variable '$3'
+#          Function 'myInfo' { $msg }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  Instruction
+#                      Assignment
+#                          Property 'name'
+#                              This variable '%server'
+#                          Index
+#                              Property 'params'
+#                                  Lexical variable '$msg'
+#                              Index list [1 item]
+#                                  Item 0
+#                                      Number '1'
+#                  Instruction
+#                      Assignment
+#                          Property 'version'
+#                              This variable '%server'
+#                          Index
+#                              Property 'params'
+#                                  Lexical variable '$msg'
+#                              Index list [1 item]
+#                                  Item 0
+#                                      Number '2'
+#          Function 'endOfMOTD' { -> $result }
+#              Function body
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Negation
 #                                  This variable '%autojoin'
-#              Instruction
-#                  Assignment
-#                      This variable '%_didAutojoin'
-#                      Boolean true
-#      Function 'hiddenHost' { $msg }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$msg'
-#              Instruction
-#                  Assignment
-#                      Property 'host'
-#                          This variable '%me'
-#                      Index
-#                          Property 'params'
-#                              Lexical variable '$msg'
-#                          Index list [1 item]
+#                              Logical or operator (||)
+#                              This variable '%_didAutojoin'
+#                      If body
+#                          Instruction
+#                              Return
+#                  Instruction
+#                      Call
+#                          This variable '%sendJoin'
+#                          Named argument list [1 item]
 #                              Item 0
-#                                  Number '1'
-#      Function 'nickInUse' { -> $result }
-#          Function body
-#              If
-#                  Expression ('if' parameter)
-#                      This variable '%registered'
-#                  If body
-#                      Instruction
-#                          Return
-#              Instruction
-#                  Addition assignment
-#                      Property 'nick'
-#                          This variable '%me'
-#                      String '_'
-#              Instruction
-#                  Call
-#                      This variable '%sendNick'
-#                      Argument list [1 item]
-#                          Item 0
-#                              Property 'nick'
-#                                  This variable '%me'
+#                                  Pair 'channelNames'
+#                                      This variable '%autojoin'
+#                  Instruction
+#                      Assignment
+#                          This variable '%_didAutojoin'
+#                          Boolean true
+#          Function 'hiddenHost' { $msg }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  Instruction
+#                      Assignment
+#                          Property 'host'
+#                              This variable '%me'
+#                          Index
+#                              Property 'params'
+#                                  Lexical variable '$msg'
+#                              Index list [1 item]
+#                                  Item 0
+#                                      Number '1'
+#          Function 'nickInUse' { -> $result }
+#              Function body
+#                  If
+#                      Expression ('if' parameter)
+#                          This variable '%registered'
+#                      If body
+#                          Instruction
+#                              Return
+#                  Instruction
+#                      Addition assignment
+#                          Property 'nick'
+#                              This variable '%me'
+#                          String '_'
+#                  Instruction
+#                      Call
+#                          This variable '%sendNick'
+#                          Argument list [1 item]
+#                              Item 0
+#                                  Property 'nick'
+#                                      This variable '%me'
 package FF;
 
 use warnings;
@@ -431,7 +431,6 @@ my $result = do {
         nickInUse => $scope,
         $context, undef, $ins, undef, undef
     );
-
     var(
         $context,
         handlers => create_object(

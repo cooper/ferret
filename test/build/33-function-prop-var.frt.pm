@@ -1,30 +1,31 @@
 # === Document Model ===
-#  Document './test/33-function-prop-var.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$roots'
-#              Call
-#                  Property 'map'
-#                      Value list [3 items]
+#  File './test/33-function-prop-var.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$roots'
+#                  Call
+#                      Property 'map'
+#                          Value list [3 items]
+#                              Item 0
+#                                  Number '4'
+#                              Item 1
+#                                  Number '16'
+#                              Item 2
+#                                  Number '25'
+#                      Argument list [1 item]
 #                          Item 0
-#                              Number '4'
-#                          Item 1
-#                              Number '16'
-#                          Item 2
-#                              Number '25'
+#                              Anonymous function { -> $result }
+#                                  Function body
+#                                      Instruction
+#                                          Return
+#                                              Property variable '.sqrt'
+#          Instruction
+#              Call
+#                  Bareword 'inspect'
 #                  Argument list [1 item]
 #                      Item 0
-#                          Anonymous function { -> $result }
-#                              Function body
-#                                  Instruction
-#                                      Return
-#                                          Property variable '.sqrt'
-#      Instruction
-#          Call
-#              Bareword 'inspect'
-#              Argument list [1 item]
-#                  Item 0
-#                      Lexical variable '$roots'
+#                          Lexical variable '$roots'
 package FF;
 
 use warnings;

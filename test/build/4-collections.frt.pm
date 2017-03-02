@@ -1,82 +1,83 @@
 # === Document Model ===
-#  Document './test/4-collections.frt'
-#      Function 'makePoint' { $x $y ?$z -> $point }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$x'
-#              Instruction
-#                  Need
-#                      Lexical variable '$y'
-#              Instruction
-#                  Want
-#                      Lexical variable '$z'
-#              Instruction
-#                  Assignment
-#                      Lexical variable '$point'
-#                      Object [2 items]
-#                          Item 0
-#                              Pair 'x'
-#                                  Lexical variable '$x'
-#                          Item 1
-#                              Pair 'y'
-#                                  Lexical variable '$y'
-#              Instruction
-#                  Return pair 'point'
-#                      Lexical variable '$point'
-#      Instruction
-#          Assignment
-#              Lexical variable '$pt'
-#              Property 'point'
-#                  Call
-#                      Bareword 'makePoint'
-#                      Argument list [2 items]
-#                          Item 0
-#                              Number '5'
-#                          Item 1
-#                              Number '3'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Operation
-#                          String 'Point('
-#                          Addition operator (+)
-#                          Property 'x'
-#                              Lexical variable '$pt'
-#                          Addition operator (+)
-#                          String ', '
-#                          Addition operator (+)
-#                          Property 'y'
-#                              Lexical variable '$pt'
-#                          Addition operator (+)
-#                          String ')'
-#      Instruction
-#          Assignment
-#              Lexical variable '$numbers'
-#              Value list [5 items]
-#                  Item 0
-#                      Number '1'
-#                  Item 1
-#                      Number '2'
-#                  Item 2
-#                      Number '3'
-#                  Item 3
-#                      Number '4'
-#                  Item 4
-#                      Operation
-#                          Number '4'
-#                          Addition operator (+)
+#  File './test/4-collections.frt'
+#      Package 'main'
+#          Function 'makePoint' { $x $y ?$z -> $point }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$x'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$y'
+#                  Instruction
+#                      Want
+#                          Lexical variable '$z'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$point'
+#                          Object [2 items]
+#                              Item 0
+#                                  Pair 'x'
+#                                      Lexical variable '$x'
+#                              Item 1
+#                                  Pair 'y'
+#                                      Lexical variable '$y'
+#                  Instruction
+#                      Return pair 'point'
+#                          Lexical variable '$point'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$pt'
+#                  Property 'point'
+#                      Call
+#                          Bareword 'makePoint'
+#                          Argument list [2 items]
+#                              Item 0
+#                                  Number '5'
+#                              Item 1
+#                                  Number '3'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Operation
+#                              String 'Point('
+#                              Addition operator (+)
+#                              Property 'x'
+#                                  Lexical variable '$pt'
+#                              Addition operator (+)
+#                              String ', '
+#                              Addition operator (+)
+#                              Property 'y'
+#                                  Lexical variable '$pt'
+#                              Addition operator (+)
+#                              String ')'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$numbers'
+#                  Value list [5 items]
+#                      Item 0
 #                          Number '1'
-#      Instruction
-#          Assignment
-#              Lexical variable '$emptyArray'
-#              Value list [0 items]
-#      Instruction
-#          Assignment
-#              Lexical variable '$emptyHash'
-#              Hash [0 items]
+#                      Item 1
+#                          Number '2'
+#                      Item 2
+#                          Number '3'
+#                      Item 3
+#                          Number '4'
+#                      Item 4
+#                          Operation
+#                              Number '4'
+#                              Addition operator (+)
+#                              Number '1'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$emptyArray'
+#                  Value list [0 items]
+#          Instruction
+#              Assignment
+#                  Lexical variable '$emptyHash'
+#                  Hash [0 items]
 package FF;
 
 use warnings;

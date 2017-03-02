@@ -1,89 +1,89 @@
 # === Document Model ===
-#  Document './std/IRC/Outgoing.frt'
+#  File './std/IRC/Outgoing.frt'
 #      Package 'IRC'
-#      Class 'Connection'
-#          Method 'sendJoin' { $channelNames:Str... }
-#              Function body
-#                  Instruction
-#                      Need (...)
-#                          Lexical variable '$channelNames'
-#                          Argument type
-#                              Bareword 'Str'
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$name'
-#                      Expression ('in' parameter)
-#                          Lexical variable '$channelNames'
-#                      For body
-#                          Instruction
+#          Class 'Connection'
+#              Method 'sendJoin' { $channelNames:Str... }
+#                  Function body
+#                      Instruction
+#                          Need (...)
+#                              Lexical variable '$channelNames'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$name'
+#                          Expression ('in' parameter)
+#                              Lexical variable '$channelNames'
+#                          For body
+#                              Instruction
+#                                  Call
+#                                      Instance variable '@send'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Operation
+#                                                  String 'JOIN '
+#                                                  Addition operator (+)
+#                                                  Lexical variable '$name'
+#              Method 'sendPrivmsg' { $target:Str $message:Str::Any }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$target'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$message'
+#                              Argument type
+#                                  Bareword 'Str::Any'
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$line'
+#                          Expression ('in' parameter)
 #                              Call
-#                                  Instance variable '@send'
+#                                  Property 'split'
+#                                      Lexical variable '$message'
 #                                  Argument list [1 item]
 #                                      Item 0
-#                                          Operation
-#                                              String 'JOIN '
-#                                              Addition operator (+)
-#                                              Lexical variable '$name'
-#          Method 'sendPrivmsg' { $target:Str $message:Str::Any }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$target'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$message'
-#                          Argument type
-#                              Bareword 'Str::Any'
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$line'
-#                      Expression ('in' parameter)
+#                                          String '␤'
+#                          For body
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Property 'empty'
+#                                          Lexical variable '$line'
+#                                  If body
+#                                      Instruction
+#                                          Next
+#                              Instruction
+#                                  Call
+#                                      Instance variable '@send'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Operation
+#                                                  String 'PRIVMSG '
+#                                                  Addition operator (+)
+#                                                  Lexical variable '$target'
+#                                                  Addition operator (+)
+#                                                  String ' :'
+#                                                  Addition operator (+)
+#                                                  Lexical variable '$line'
+#              Method 'sendNick' { $nick:Str }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$nick'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
 #                          Call
-#                              Property 'split'
-#                                  Lexical variable '$message'
+#                              Instance variable '@send'
 #                              Argument list [1 item]
 #                                  Item 0
-#                                      String '␤'
-#                      For body
-#                          If
-#                              Expression ('if' parameter)
-#                                  Property 'empty'
-#                                      Lexical variable '$line'
-#                              If body
-#                                  Instruction
-#                                      Next
-#                          Instruction
-#                              Call
-#                                  Instance variable '@send'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          Operation
-#                                              String 'PRIVMSG '
-#                                              Addition operator (+)
-#                                              Lexical variable '$target'
-#                                              Addition operator (+)
-#                                              String ' :'
-#                                              Addition operator (+)
-#                                              Lexical variable '$line'
-#          Method 'sendNick' { $nick:Str }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$nick'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Call
-#                          Instance variable '@send'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Operation
-#                                      String 'NICK '
-#                                      Addition operator (+)
-#                                      Lexical variable '$nick'
-#      Include (Str, Str::Any)
+#                                      Operation
+#                                          String 'NICK '
+#                                          Addition operator (+)
+#                                          Lexical variable '$nick'
+#          Include (Str, Str::Any)
 package FF;
 
 use warnings;

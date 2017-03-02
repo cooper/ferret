@@ -1,6 +1,6 @@
-# Test
+# main::Test
 
-This is the Test class version 1.0.
+This is the main::Test class version 1.0.
 
 Provides a basic test suite.
 
@@ -157,7 +157,7 @@ Prints the test review.
 
 
 
-End of Test class.
+End of main::Test class.
 
 This file was generated automatically by the Ferret compiler from
 [Test.frt](../Test.frt).

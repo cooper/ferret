@@ -1,5 +1,5 @@
 # === Document Model ===
-#  Document './std/IRC/Utils.frt'
+#  File './std/IRC/Utils.frt'
 package FF;
 
 use warnings;
@@ -22,13 +22,5 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $file_name = './std/IRC/Utils.frt';
 my $pos = before_content( 'Utils.frt', $file_name );
-
-use Ferret::Core::Operations qw();
-my $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
-    my $scope = $file_scope;
-    load_core('main');
-
-};
 
 after_content($file_name);

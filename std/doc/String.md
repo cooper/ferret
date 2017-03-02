@@ -1,6 +1,6 @@
-# String
+# main::String
 
-This is the String class.
+This is the main::String class.
 
 A string is basic datatype which stores an arbitrary sequence of bytes,
 typically representing characters. String literals are delimited by
@@ -194,7 +194,7 @@ In order to comply, the test object must satisfy each of the following condition
 2. __transform__: The string transforms to an lowercase version (`.lowercase`).
 
 
-End of String class.
+End of main::String class.
 
 This file was generated automatically by the Ferret compiler from
 [String.frtdoc](../String.frtdoc).

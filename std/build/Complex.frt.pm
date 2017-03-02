@@ -1,569 +1,570 @@
 # === Document Model ===
-#  Document './std/Complex.frt'
-#      Class 'Complex' version 1.0
-#          Class method 'initializer__' { $a:Num $b:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@a'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Need
-#                          Instance variable '@b'
-#                          Argument type
-#                              Bareword 'Num'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Instance variable '@b'
-#                              Equality operator (==)
-#                              Number '0'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  Instance variable '@a'
-#          Class method 'polar' { $r:Num $θ:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$r'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$θ'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$r'
-#                                          Multiplication operator (*)
-#                                          Call
-#                                              Property 'cos'
-#                                                  Bareword 'Math'
-#                                              Argument list [1 item]
-#                                                  Item 0
-#                                                      Lexical variable '$θ'
-#                                  Item 1
-#                                      Operation
-#                                          Lexical variable '$r'
-#                                          Multiplication operator (*)
-#                                          Call
-#                                              Property 'sin'
-#                                                  Bareword 'Math'
-#                                              Argument list [1 item]
-#                                                  Item 0
-#                                                      Lexical variable '$θ'
-#          Computed property 'abs' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Property 'sqrt'
-#                              Single value [1 item]
-#                                  Item 0
-#                                      Operation
-#                                          Instance variable '@a'
-#                                          Exponent operator (^)
-#                                          Number '2'
-#                                          Addition operator (+)
-#                                          Instance variable '@b'
-#                                          Exponent operator (^)
-#                                          Number '2'
-#          Computed property 'arg' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'atan2'
-#                                  Bareword 'Math'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Instance variable '@b'
-#                                  Item 1
-#                                      Instance variable '@a'
-#          Computed property 'conj' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Instance variable '@a'
-#                                  Item 1
-#                                      Operation
-#                                          Constant zero
-#                                          Negation operator (-)
-#                                          Instance variable '@b'
-#          Method 'opAdd' { $rhs:Complex -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Complex'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Instance variable '@a'
-#                                          Addition operator (+)
-#                                          Property 'a'
-#                                              Lexical variable '$rhs'
-#                                  Item 1
-#                                      Operation
-#                                          Instance variable '@b'
-#                                          Addition operator (+)
-#                                          Property 'b'
-#                                              Lexical variable '$rhs'
-#          Method 'opAdd' { $ehs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Instance variable '@a'
-#                                          Addition operator (+)
-#                                          Lexical variable '$ehs'
-#                                  Item 1
-#                                      Instance variable '@b'
-#          Method 'opSub' { $rhs:Complex -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Complex'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Instance variable '@a'
-#                                          Subtraction operator (-)
-#                                          Property 'a'
-#                                              Lexical variable '$rhs'
-#                                  Item 1
-#                                      Operation
-#                                          Instance variable '@b'
-#                                          Subtraction operator (-)
-#                                          Property 'b'
-#                                              Lexical variable '$rhs'
-#          Method 'opSub' { $rhs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Instance variable '@a'
-#                                          Subtraction operator (-)
-#                                          Lexical variable '$rhs'
-#                                  Item 1
-#                                      Instance variable '@b'
-#          Method 'opSub' { $lhs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$lhs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$lhs'
-#                                          Subtraction operator (-)
-#                                          Instance variable '@a'
-#                                  Item 1
-#                                      Operation
-#                                          Constant zero
-#                                          Negation operator (-)
-#                                          Instance variable '@b'
-#          Method 'opMul' { $rhs:Complex -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Complex'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Instance variable '@a'
-#                                          Multiplication operator (*)
-#                                          Property 'a'
-#                                              Lexical variable '$rhs'
-#                                          Subtraction operator (-)
-#                                          Instance variable '@b'
-#                                          Multiplication operator (*)
-#                                          Property 'b'
-#                                              Lexical variable '$rhs'
-#                                  Item 1
-#                                      Operation
-#                                          Instance variable '@a'
-#                                          Multiplication operator (*)
-#                                          Property 'b'
-#                                              Lexical variable '$rhs'
-#                                          Addition operator (+)
-#                                          Instance variable '@b'
-#                                          Multiplication operator (*)
-#                                          Property 'a'
-#                                              Lexical variable '$rhs'
-#          Method 'opMul' { $ehs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$ehs'
-#                                          Multiplication operator (*)
-#                                          Instance variable '@a'
-#                                  Item 1
-#                                      Operation
-#                                          Lexical variable '$ehs'
-#                                          Multiplication operator (*)
-#                                          Instance variable '@b'
-#          Method 'opDiv' { $rhs:Complex -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Complex'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$conj'
-#                          Property 'conj'
-#                              Lexical variable '$rhs'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$num'
-#                          Operation
-#                              Special variable '*self'
-#                              Multiplication operator (*)
-#                              Lexical variable '$conj'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$den'
-#                          Operation
-#                              Lexical variable '$rhs'
-#                              Multiplication operator (*)
-#                              Lexical variable '$conj'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Property 'a'
-#                                              Lexical variable '$num'
-#                                          Division operator (/)
-#                                          Property 'a'
-#                                              Lexical variable '$den'
-#                                  Item 1
-#                                      Operation
-#                                          Property 'b'
-#                                              Lexical variable '$num'
-#                                          Division operator (/)
-#                                          Property 'a'
-#                                              Lexical variable '$den'
-#          Method 'opDiv' { $rhs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Instance variable '@a'
-#                                          Division operator (/)
-#                                          Lexical variable '$rhs'
-#                                  Item 1
-#                                      Operation
-#                                          Instance variable '@b'
-#                                          Division operator (/)
-#                                          Lexical variable '$rhs'
-#          Method 'opPow' { $rhs:Num -> $result $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Lexical variable '$rhs'
-#                              Less than or equal to operator (<=)
-#                              Number '0'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  Number '1'
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Special variable '*self'
-#                              Multiplication operator (*)
-#                              Special variable '*self'
-#                              Exponent operator (^)
-#                              Single value [1 item]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$rhs'
-#                                          Subtraction operator (-)
-#                                          Number '1'
-#          Method 'pow' { $rhs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$log_a'
-#                          Call
-#                              Property 'log'
-#                                  Bareword 'Math'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Instance variable '@abs'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$factor'
-#                          Call
-#                              Property 'exp'
-#                                  Bareword 'Math'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$rhs'
-#                                          Multiplication operator (*)
-#                                          Lexical variable '$log_a'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$θ'
-#                          Operation
-#                              Lexical variable '$rhs'
-#                              Multiplication operator (*)
-#                              Instance variable '@arg'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Complex'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$factor'
-#                                          Multiplication operator (*)
-#                                          Call
-#                                              Property 'cos'
-#                                                  Bareword 'Math'
-#                                              Argument list [1 item]
-#                                                  Item 0
-#                                                      Lexical variable '$θ'
-#                                  Item 1
-#                                      Operation
-#                                          Lexical variable '$factor'
-#                                          Multiplication operator (*)
-#                                          Call
-#                                              Property 'sin'
-#                                                  Bareword 'Math'
-#                                              Argument list [1 item]
-#                                                  Item 0
-#                                                      Lexical variable '$θ'
-#          Method 'opEqual' { $ehs:Complex -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Complex'
-#                  Instruction
-#                      Return
-#                          Operation
+#  File './std/Complex.frt'
+#      Package 'main'
+#          Class 'Complex' version 1.0
+#              Class method 'initializer__' { $a:Num $b:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
 #                              Instance variable '@a'
-#                              Equality operator (==)
-#                              Property 'a'
-#                                  Lexical variable '$ehs'
-#                              Logical and operator (&&)
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Need
 #                              Instance variable '@b'
-#                              Equality operator (==)
-#                              Property 'b'
-#                                  Lexical variable '$ehs'
-#          Method 'opEqual' { $ehs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Instance variable '@a'
-#                              Equality operator (==)
-#                              Lexical variable '$ehs'
-#                              Logical and operator (&&)
-#                              Instance variable '@b'
-#                              Equality operator (==)
-#                              Number '0'
-#          Method 'description' { -> $result $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$r'
-#                          Instance variable '@a'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$i'
-#                          Instance variable '@b'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
+#                              Argument type
+#                                  Bareword 'Num'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Instance variable '@b'
+#                                  Equality operator (==)
+#                                  Number '0'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      Instance variable '@a'
+#              Class method 'polar' { $r:Num $θ:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
 #                              Lexical variable '$r'
-#                              Equality operator (==)
-#                              Number '0'
-#                              Logical and operator (&&)
-#                              Lexical variable '$i'
-#                              Equality operator (==)
-#                              Number '0'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  String '0'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Lexical variable '$r'
-#                              Equality operator (==)
-#                              Number '0'
-#                      If body
-#                          Instruction
-#                              Assignment
-#                                  Lexical variable '$r'
-#                                  String ''
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Lexical variable '$i'
-#                              Equality operator (==)
-#                              Number '0'
-#                      If body
-#                          Instruction
-#                              Assignment
-#                                  Lexical variable '$i'
-#                                  String ''
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Lexical variable '$i'
-#                              Equality operator (==)
-#                              Constant zero
-#                              Negation operator (-)
-#                              Number '1'
-#                      If body
-#                          Instruction
-#                              Assignment
-#                                  Lexical variable '$i'
-#                                  String '-i'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Lexical variable '$i'
-#                              Less than operator (<)
-#                              Number '0'
-#                      If body
-#                          Instruction
-#                              Addition assignment
-#                                  Lexical variable '$i'
-#                                  String 'i'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Lexical variable '$i'
-#                              Equality operator (==)
-#                              Number '1'
-#                      If body
-#                          Instruction
-#                              Assignment
-#                                  Lexical variable '$i'
-#                                  String '+i'
-#                  Else
-#                      Else body
-#                          Instruction
-#                              Assignment
-#                                  Lexical variable '$i'
-#                                  Operation
-#                                      String '+'
-#                                      Addition operator (+)
-#                                      Lexical variable '$i'
-#                                      Addition operator (+)
-#                                      String 'i'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Property 'trimPrefix'
-#                                  Single value [1 item]
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$θ'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
 #                                      Item 0
 #                                          Operation
 #                                              Lexical variable '$r'
+#                                              Multiplication operator (*)
+#                                              Call
+#                                                  Property 'cos'
+#                                                      Bareword 'Math'
+#                                                  Argument list [1 item]
+#                                                      Item 0
+#                                                          Lexical variable '$θ'
+#                                      Item 1
+#                                          Operation
+#                                              Lexical variable '$r'
+#                                              Multiplication operator (*)
+#                                              Call
+#                                                  Property 'sin'
+#                                                      Bareword 'Math'
+#                                                  Argument list [1 item]
+#                                                      Item 0
+#                                                          Lexical variable '$θ'
+#              Computed property 'abs' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Property 'sqrt'
+#                                  Single value [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              Instance variable '@a'
+#                                              Exponent operator (^)
+#                                              Number '2'
 #                                              Addition operator (+)
-#                                              Lexical variable '$i'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      String '+'
-#      Include (Complex, Math, Num)
+#                                              Instance variable '@b'
+#                                              Exponent operator (^)
+#                                              Number '2'
+#              Computed property 'arg' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'atan2'
+#                                      Bareword 'Math'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Instance variable '@b'
+#                                      Item 1
+#                                          Instance variable '@a'
+#              Computed property 'conj' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Instance variable '@a'
+#                                      Item 1
+#                                          Operation
+#                                              Constant zero
+#                                              Negation operator (-)
+#                                              Instance variable '@b'
+#              Method 'opAdd' { $rhs:Complex -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Complex'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Instance variable '@a'
+#                                              Addition operator (+)
+#                                              Property 'a'
+#                                                  Lexical variable '$rhs'
+#                                      Item 1
+#                                          Operation
+#                                              Instance variable '@b'
+#                                              Addition operator (+)
+#                                              Property 'b'
+#                                                  Lexical variable '$rhs'
+#              Method 'opAdd' { $ehs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Instance variable '@a'
+#                                              Addition operator (+)
+#                                              Lexical variable '$ehs'
+#                                      Item 1
+#                                          Instance variable '@b'
+#              Method 'opSub' { $rhs:Complex -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Complex'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Instance variable '@a'
+#                                              Subtraction operator (-)
+#                                              Property 'a'
+#                                                  Lexical variable '$rhs'
+#                                      Item 1
+#                                          Operation
+#                                              Instance variable '@b'
+#                                              Subtraction operator (-)
+#                                              Property 'b'
+#                                                  Lexical variable '$rhs'
+#              Method 'opSub' { $rhs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Instance variable '@a'
+#                                              Subtraction operator (-)
+#                                              Lexical variable '$rhs'
+#                                      Item 1
+#                                          Instance variable '@b'
+#              Method 'opSub' { $lhs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$lhs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$lhs'
+#                                              Subtraction operator (-)
+#                                              Instance variable '@a'
+#                                      Item 1
+#                                          Operation
+#                                              Constant zero
+#                                              Negation operator (-)
+#                                              Instance variable '@b'
+#              Method 'opMul' { $rhs:Complex -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Complex'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Instance variable '@a'
+#                                              Multiplication operator (*)
+#                                              Property 'a'
+#                                                  Lexical variable '$rhs'
+#                                              Subtraction operator (-)
+#                                              Instance variable '@b'
+#                                              Multiplication operator (*)
+#                                              Property 'b'
+#                                                  Lexical variable '$rhs'
+#                                      Item 1
+#                                          Operation
+#                                              Instance variable '@a'
+#                                              Multiplication operator (*)
+#                                              Property 'b'
+#                                                  Lexical variable '$rhs'
+#                                              Addition operator (+)
+#                                              Instance variable '@b'
+#                                              Multiplication operator (*)
+#                                              Property 'a'
+#                                                  Lexical variable '$rhs'
+#              Method 'opMul' { $ehs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$ehs'
+#                                              Multiplication operator (*)
+#                                              Instance variable '@a'
+#                                      Item 1
+#                                          Operation
+#                                              Lexical variable '$ehs'
+#                                              Multiplication operator (*)
+#                                              Instance variable '@b'
+#              Method 'opDiv' { $rhs:Complex -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Complex'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$conj'
+#                              Property 'conj'
+#                                  Lexical variable '$rhs'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$num'
+#                              Operation
+#                                  Special variable '*self'
+#                                  Multiplication operator (*)
+#                                  Lexical variable '$conj'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$den'
+#                              Operation
+#                                  Lexical variable '$rhs'
+#                                  Multiplication operator (*)
+#                                  Lexical variable '$conj'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Property 'a'
+#                                                  Lexical variable '$num'
+#                                              Division operator (/)
+#                                              Property 'a'
+#                                                  Lexical variable '$den'
+#                                      Item 1
+#                                          Operation
+#                                              Property 'b'
+#                                                  Lexical variable '$num'
+#                                              Division operator (/)
+#                                              Property 'a'
+#                                                  Lexical variable '$den'
+#              Method 'opDiv' { $rhs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Instance variable '@a'
+#                                              Division operator (/)
+#                                              Lexical variable '$rhs'
+#                                      Item 1
+#                                          Operation
+#                                              Instance variable '@b'
+#                                              Division operator (/)
+#                                              Lexical variable '$rhs'
+#              Method 'opPow' { $rhs:Num -> $result $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$rhs'
+#                                  Less than or equal to operator (<=)
+#                                  Number '0'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      Number '1'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Special variable '*self'
+#                                  Multiplication operator (*)
+#                                  Special variable '*self'
+#                                  Exponent operator (^)
+#                                  Single value [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$rhs'
+#                                              Subtraction operator (-)
+#                                              Number '1'
+#              Method 'pow' { $rhs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$log_a'
+#                              Call
+#                                  Property 'log'
+#                                      Bareword 'Math'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Instance variable '@abs'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$factor'
+#                              Call
+#                                  Property 'exp'
+#                                      Bareword 'Math'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$rhs'
+#                                              Multiplication operator (*)
+#                                              Lexical variable '$log_a'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$θ'
+#                              Operation
+#                                  Lexical variable '$rhs'
+#                                  Multiplication operator (*)
+#                                  Instance variable '@arg'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Complex'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$factor'
+#                                              Multiplication operator (*)
+#                                              Call
+#                                                  Property 'cos'
+#                                                      Bareword 'Math'
+#                                                  Argument list [1 item]
+#                                                      Item 0
+#                                                          Lexical variable '$θ'
+#                                      Item 1
+#                                          Operation
+#                                              Lexical variable '$factor'
+#                                              Multiplication operator (*)
+#                                              Call
+#                                                  Property 'sin'
+#                                                      Bareword 'Math'
+#                                                  Argument list [1 item]
+#                                                      Item 0
+#                                                          Lexical variable '$θ'
+#              Method 'opEqual' { $ehs:Complex -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Complex'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Instance variable '@a'
+#                                  Equality operator (==)
+#                                  Property 'a'
+#                                      Lexical variable '$ehs'
+#                                  Logical and operator (&&)
+#                                  Instance variable '@b'
+#                                  Equality operator (==)
+#                                  Property 'b'
+#                                      Lexical variable '$ehs'
+#              Method 'opEqual' { $ehs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Instance variable '@a'
+#                                  Equality operator (==)
+#                                  Lexical variable '$ehs'
+#                                  Logical and operator (&&)
+#                                  Instance variable '@b'
+#                                  Equality operator (==)
+#                                  Number '0'
+#              Method 'description' { -> $result $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$r'
+#                              Instance variable '@a'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$i'
+#                              Instance variable '@b'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$r'
+#                                  Equality operator (==)
+#                                  Number '0'
+#                                  Logical and operator (&&)
+#                                  Lexical variable '$i'
+#                                  Equality operator (==)
+#                                  Number '0'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      String '0'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$r'
+#                                  Equality operator (==)
+#                                  Number '0'
+#                          If body
+#                              Instruction
+#                                  Assignment
+#                                      Lexical variable '$r'
+#                                      String ''
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$i'
+#                                  Equality operator (==)
+#                                  Number '0'
+#                          If body
+#                              Instruction
+#                                  Assignment
+#                                      Lexical variable '$i'
+#                                      String ''
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$i'
+#                                  Equality operator (==)
+#                                  Constant zero
+#                                  Negation operator (-)
+#                                  Number '1'
+#                          If body
+#                              Instruction
+#                                  Assignment
+#                                      Lexical variable '$i'
+#                                      String '-i'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$i'
+#                                  Less than operator (<)
+#                                  Number '0'
+#                          If body
+#                              Instruction
+#                                  Addition assignment
+#                                      Lexical variable '$i'
+#                                      String 'i'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$i'
+#                                  Equality operator (==)
+#                                  Number '1'
+#                          If body
+#                              Instruction
+#                                  Assignment
+#                                      Lexical variable '$i'
+#                                      String '+i'
+#                      Else
+#                          Else body
+#                              Instruction
+#                                  Assignment
+#                                      Lexical variable '$i'
+#                                      Operation
+#                                          String '+'
+#                                          Addition operator (+)
+#                                          Lexical variable '$i'
+#                                          Addition operator (+)
+#                                          String 'i'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'trimPrefix'
+#                                      Single value [1 item]
+#                                          Item 0
+#                                              Operation
+#                                                  Lexical variable '$r'
+#                                                  Addition operator (+)
+#                                                  Lexical variable '$i'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          String '+'
+#          Include (Complex, Math, Num)
 package FF;
 
 use warnings;

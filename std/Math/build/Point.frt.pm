@@ -1,127 +1,127 @@
 # === Document Model ===
-#  Document './std/Math/Point.frt'
+#  File './std/Math/Point.frt'
 #      Package 'Math'
-#      Class 'Point'
-#          Instruction
-#              Shared variable declaration
-#                  Lazy assignment
-#                      Lexical variable '$origin'
-#                      Call
-#                          Bareword 'Point'
-#                          Argument list [2 items]
-#                              Item 0
-#                                  Number '0'
-#                              Item 1
-#                                  Number '0'
-#          Class method 'initializer__' { $x:Num $y:Num }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@x'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Need
-#                          Instance variable '@y'
-#                          Argument type
-#                              Bareword 'Num'
-#          Method 'distanceTo' { $pt2:Point -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$pt2'
-#                          Argument type
-#                              Bareword 'Point'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$dx'
-#                          Operation
-#                              Instance variable '@x'
-#                              Subtraction operator (-)
-#                              Property 'x'
-#                                  Lexical variable '$pt2'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$dy'
-#                          Operation
-#                              Instance variable '@y'
-#                              Subtraction operator (-)
-#                              Property 'y'
-#                                  Lexical variable '$pt2'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'sqrt'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Operation
-#                                          Lexical variable '$dx'
-#                                          Exponent operator (^)
-#                                          Number '2'
-#                                          Addition operator (+)
-#                                          Lexical variable '$dy'
-#                                          Exponent operator (^)
-#                                          Number '2'
-#          Method 'midpoint' { $pt2:Point -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$pt2'
-#                          Argument type
-#                              Bareword 'Point'
-#                  Instruction
-#                      Return
+#          Class 'Point'
+#              Instruction
+#                  Shared variable declaration
+#                      Lazy assignment
+#                          Lexical variable '$origin'
 #                          Call
 #                              Bareword 'Point'
-#                              Named argument list [2 items]
+#                              Argument list [2 items]
 #                                  Item 0
-#                                      Pair 'x'
-#                                          Operation
-#                                              Single value [1 item]
-#                                                  Item 0
-#                                                      Operation
-#                                                          Instance variable '@x'
-#                                                          Addition operator (+)
-#                                                          Property 'x'
-#                                                              Lexical variable '$pt2'
-#                                              Division operator (/)
-#                                              Number '2'
+#                                      Number '0'
 #                                  Item 1
-#                                      Pair 'y'
-#                                          Operation
-#                                              Single value [1 item]
-#                                                  Item 0
-#                                                      Operation
-#                                                          Instance variable '@y'
-#                                                          Addition operator (+)
-#                                                          Property 'y'
-#                                                              Lexical variable '$pt2'
-#                                              Division operator (/)
-#                                              Number '2'
-#          Computed property 'distanceFromOrigin' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@distanceTo'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Lexical variable '$origin'
-#          Method 'description' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              String '('
-#                              Addition operator (+)
+#                                      Number '0'
+#              Class method 'initializer__' { $x:Num $y:Num }
+#                  Function body
+#                      Instruction
+#                          Need
 #                              Instance variable '@x'
-#                              Addition operator (+)
-#                              String ', '
-#                              Addition operator (+)
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Need
 #                              Instance variable '@y'
-#                              Addition operator (+)
-#                              String ')'
-#      Include (Num, Point)
+#                              Argument type
+#                                  Bareword 'Num'
+#              Method 'distanceTo' { $pt2:Point -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$pt2'
+#                              Argument type
+#                                  Bareword 'Point'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$dx'
+#                              Operation
+#                                  Instance variable '@x'
+#                                  Subtraction operator (-)
+#                                  Property 'x'
+#                                      Lexical variable '$pt2'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$dy'
+#                              Operation
+#                                  Instance variable '@y'
+#                                  Subtraction operator (-)
+#                                  Property 'y'
+#                                      Lexical variable '$pt2'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'sqrt'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              Lexical variable '$dx'
+#                                              Exponent operator (^)
+#                                              Number '2'
+#                                              Addition operator (+)
+#                                              Lexical variable '$dy'
+#                                              Exponent operator (^)
+#                                              Number '2'
+#              Method 'midpoint' { $pt2:Point -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$pt2'
+#                              Argument type
+#                                  Bareword 'Point'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Point'
+#                                  Named argument list [2 items]
+#                                      Item 0
+#                                          Pair 'x'
+#                                              Operation
+#                                                  Single value [1 item]
+#                                                      Item 0
+#                                                          Operation
+#                                                              Instance variable '@x'
+#                                                              Addition operator (+)
+#                                                              Property 'x'
+#                                                                  Lexical variable '$pt2'
+#                                                  Division operator (/)
+#                                                  Number '2'
+#                                      Item 1
+#                                          Pair 'y'
+#                                              Operation
+#                                                  Single value [1 item]
+#                                                      Item 0
+#                                                          Operation
+#                                                              Instance variable '@y'
+#                                                              Addition operator (+)
+#                                                              Property 'y'
+#                                                                  Lexical variable '$pt2'
+#                                                  Division operator (/)
+#                                                  Number '2'
+#              Computed property 'distanceFromOrigin' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@distanceTo'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$origin'
+#              Method 'description' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  String '('
+#                                  Addition operator (+)
+#                                  Instance variable '@x'
+#                                  Addition operator (+)
+#                                  String ', '
+#                                  Addition operator (+)
+#                                  Instance variable '@y'
+#                                  Addition operator (+)
+#                                  String ')'
+#          Include (Num, Point)
 package FF;
 
 use warnings;

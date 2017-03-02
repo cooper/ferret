@@ -1,36 +1,37 @@
 # === Document Model ===
-#  Document './test/17-empty-become.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$obj'
-#              Object [0 items]
-#      Instruction
-#          Call
+#  File './test/17-empty-become.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$obj'
+#                  Object [0 items]
+#          Instruction
 #              Call
-#                  Property 'init'
-#                      Bareword 'Timer'
+#                  Call
+#                      Property 'init'
+#                          Bareword 'Timer'
+#                      Argument list [1 item]
+#                          Item 0
+#                              Lexical variable '$obj'
 #                  Argument list [1 item]
 #                      Item 0
-#                          Lexical variable '$obj'
-#              Argument list [1 item]
-#                  Item 0
-#                      Number '5'
-#      On
-#          Expression ('on' parameter)
-#              Property 'expire'
-#                  Call
-#                      Property 'once'
-#                          Lexical variable '$obj'
-#                      Argument list [0 items]
-#          Anonymous function
-#              Function body
-#                  Instruction
+#                          Number '5'
+#          On
+#              Expression ('on' parameter)
+#                  Property 'expire'
 #                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  String 'it works!'
-#      Include (Timer)
+#                          Property 'once'
+#                              Lexical variable '$obj'
+#                          Argument list [0 items]
+#              Anonymous function
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      String 'it works!'
+#          Include (Timer)
 package FF;
 
 use warnings;

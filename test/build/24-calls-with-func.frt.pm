@@ -1,51 +1,52 @@
 # === Document Model ===
-#  Document './test/24-calls-with-func.frt'
-#      Instruction
-#          Call
-#              Bareword 'delay'
-#              Argument list [2 items]
-#                  Item 0
-#                      Number '5'
-#                  Item 1
-#                      Anonymous function
-#                          Function body
-#                              Instruction
-#                                  Call
-#                                      Bareword 'say'
-#                                      Argument list [1 item]
-#                                          Item 0
-#                                              String 'been five ...'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      String 'waiting...'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Property 'message'
-#                          Call
-#                              Bareword 'something'
-#                              Argument list [1 item]
-#                                  Item 1
-#                                      Anonymous function { -> $result }
-#                                          Function body
-#                                              Instruction
-#                                                  Return
-#                                                      String 'any second...'
-#      Function 'something' { $code -> $message }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$code'
-#              Instruction
-#                  Return pair 'message'
-#                      Call
+#  File './test/24-calls-with-func.frt'
+#      Package 'main'
+#          Instruction
+#              Call
+#                  Bareword 'delay'
+#                  Argument list [2 items]
+#                      Item 0
+#                          Number '5'
+#                      Item 1
+#                          Anonymous function
+#                              Function body
+#                                  Instruction
+#                                      Call
+#                                          Bareword 'say'
+#                                          Argument list [1 item]
+#                                              Item 0
+#                                                  String 'been five ...'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          String 'waiting...'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Property 'message'
+#                              Call
+#                                  Bareword 'something'
+#                                  Argument list [1 item]
+#                                      Item 1
+#                                          Anonymous function { -> $result }
+#                                              Function body
+#                                                  Instruction
+#                                                      Return
+#                                                          String 'any second...'
+#          Function 'something' { $code -> $message }
+#              Function body
+#                  Instruction
+#                      Need
 #                          Lexical variable '$code'
-#                          Argument list [0 items]
+#                  Instruction
+#                      Return pair 'message'
+#                          Call
+#                              Lexical variable '$code'
+#                              Argument list [0 items]
 package FF;
 
 use warnings;

@@ -1,12 +1,13 @@
 # === Document Model ===
-#  Document './test/23-property-modifiers/Second.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$x'
-#              Object [0 items]
-#      Instruction
-#          Weaken modifier
-#              Lexical variable '$x'
+#  File './test/23-property-modifiers/Second.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$x'
+#                  Object [0 items]
+#          Instruction
+#              Weaken modifier
+#                  Lexical variable '$x'
 package FF;
 
 use warnings;

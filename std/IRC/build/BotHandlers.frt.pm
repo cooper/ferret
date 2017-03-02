@@ -1,103 +1,103 @@
 # === Document Model ===
-#  Document './std/IRC/BotHandlers.frt'
+#  File './std/IRC/BotHandlers.frt'
 #      Package 'IRC::BotHandlers'
-#      Instruction
-#          Shared variable declaration
-#              Assignment
-#                  Lexical variable '$handlers'
-#                  Object [1 item]
-#                      Item 0
-#                          Pair 'PRIVMSG'
-#                              Bareword 'privmsg'
-#      Function 'privmsg' { $bot $msg -> $result $result }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$bot'
-#              Instruction
-#                  Need
-#                      Lexical variable '$msg'
-#              If
-#                  Expression ('if' parameter)
-#                      Negation
-#                          Call
-#                              Special property '*instanceOf'
-#                                  Property 'target'
-#                                      Lexical variable '$msg'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Bareword 'Channel'
-#                  If body
-#                      Instruction
-#                          Return
-#              Instruction
+#          Instruction
+#              Shared variable declaration
 #                  Assignment
-#                      Lexical variable '$trim'
-#                      Detail
-#                          Call
-#                              Property 'trimPrefix'
-#                                  Call
-#                                      Property 'word'
-#                                          Index
-#                                              Property 'params'
-#                                                  Lexical variable '$msg'
-#                                              Index list [1 item]
-#                                                  Item 0
-#                                                      Number '1'
-#                                      Argument list [1 item]
-#                                          Item 0
-#                                              Number '0'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      String '.'
-#              If
-#                  Expression ('if' parameter)
-#                      Negation
-#                          Property 'trimmed'
-#                              Lexical variable '$trim'
-#                  If body
-#                      Instruction
-#                          Return
-#              Instruction
-#                  Assignment
-#                      Lexical variable '$command'
-#                      Property 'result'
-#                          Lexical variable '$trim'
-#              Instruction
-#                  Call
-#                      Maybe
-#                          Property (name evaluated at runtime)
-#                              Property 'commands'
-#                                  Lexical variable '$bot'
-#                              Property index [1 item]
-#                                  Item 0
-#                                      Property 'lowercase'
-#                                          Lexical variable '$command'
-#                      Named argument list [3 items]
+#                      Lexical variable '$handlers'
+#                      Object [1 item]
 #                          Item 0
-#                              Pair '_this'
-#                                  Lexical variable '$bot'
-#                          Item 1
-#                              Pair 'msg'
-#                                  Lexical variable '$msg'
-#                          Item 2
-#                              Pair 'channel'
-#                                  Property 'target'
-#                                      Lexical variable '$msg'
-#                  Catch
-#                      Expression ('catch' parameter)
-#                          Lexical variable '$e'
-#                      Catch body
-#                          Instruction
+#                              Pair 'PRIVMSG'
+#                                  Bareword 'privmsg'
+#          Function 'privmsg' { $bot $msg -> $result $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$bot'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$msg'
+#                  If
+#                      Expression ('if' parameter)
+#                          Negation
 #                              Call
-#                                  Property 'privmsg'
+#                                  Special property '*instanceOf'
 #                                      Property 'target'
 #                                          Lexical variable '$msg'
 #                                  Argument list [1 item]
 #                                      Item 0
-#                                          Property 'msg'
-#                                              Lexical variable '$e'
-#      Include (Channel)
+#                                          Bareword 'Channel'
+#                      If body
+#                          Instruction
+#                              Return
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$trim'
+#                          Detail
+#                              Call
+#                                  Property 'trimPrefix'
+#                                      Call
+#                                          Property 'word'
+#                                              Index
+#                                                  Property 'params'
+#                                                      Lexical variable '$msg'
+#                                                  Index list [1 item]
+#                                                      Item 0
+#                                                          Number '1'
+#                                          Argument list [1 item]
+#                                              Item 0
+#                                                  Number '0'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          String '.'
+#                  If
+#                      Expression ('if' parameter)
+#                          Negation
+#                              Property 'trimmed'
+#                                  Lexical variable '$trim'
+#                      If body
+#                          Instruction
+#                              Return
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$command'
+#                          Property 'result'
+#                              Lexical variable '$trim'
+#                  Instruction
+#                      Call
+#                          Maybe
+#                              Property (name evaluated at runtime)
+#                                  Property 'commands'
+#                                      Lexical variable '$bot'
+#                                  Property index [1 item]
+#                                      Item 0
+#                                          Property 'lowercase'
+#                                              Lexical variable '$command'
+#                          Named argument list [3 items]
+#                              Item 0
+#                                  Pair '_this'
+#                                      Lexical variable '$bot'
+#                              Item 1
+#                                  Pair 'msg'
+#                                      Lexical variable '$msg'
+#                              Item 2
+#                                  Pair 'channel'
+#                                      Property 'target'
+#                                          Lexical variable '$msg'
+#                      Catch
+#                          Expression ('catch' parameter)
+#                              Lexical variable '$e'
+#                          Catch body
+#                              Instruction
+#                                  Call
+#                                      Property 'privmsg'
+#                                          Property 'target'
+#                                              Lexical variable '$msg'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Property 'msg'
+#                                                  Lexical variable '$e'
+#          Include (Channel)
 package FF;
 
 use warnings;
@@ -237,7 +237,6 @@ my $result = do {
         $context, undef, $ins, undef, undef
     );
     load_namespaces( $context, $file_name, qw(Channel) );
-
     var(
         $context,
         handlers => create_object( $f, [ PRIVMSG => $$scope->{'privmsg'} ] ),

@@ -1,386 +1,386 @@
 # === Document Model ===
-#  Document './std/Math/Matrix.frt'
+#  File './std/Math/Matrix.frt'
 #      Package 'Math'
-#      Class 'Matrix'
-#          Class method 'initializer__' { $m:Int ?$items:Num... }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@m'
-#                          Argument type
-#                              Bareword 'Int'
-#                  Instruction
-#                      Want (...)
-#                          Instance variable '@items'
-#                          Argument type
-#                              Bareword 'Num'
-#          Computed property 'rows' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Instance variable '@m'
-#          Computed property 'columns' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Property 'length'
-#                                  Instance variable '@items'
-#                              Division operator (/)
+#          Class 'Matrix'
+#              Class method 'initializer__' { $m:Int ?$items:Num... }
+#                  Function body
+#                      Instruction
+#                          Need
 #                              Instance variable '@m'
-#          Computed property 'dimensionHR' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Instance variable '@rows'
-#                              Addition operator (+)
-#                              String 'x'
-#                              Addition operator (+)
-#                              Instance variable '@columns'
-#          Computed property 'rowList' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$items'
-#                          Call
-#                              Property 'copy'
-#                                  Instance variable '@items'
-#                  Instruction
-#                      Return
-#                          Gather
-#                              Gather body
-#                                  For (while)
-#                                      Expression ('for' parameter)
-#                                          Assignment
-#                                              Lexical variable '$row'
-#                                              Call
-#                                                  Property 'splice'
-#                                                      Lexical variable '$items'
-#                                                  Argument list [2 items]
-#                                                      Item 0
-#                                                          Number '0'
-#                                                      Item 1
-#                                                          Instance variable '@columns'
-#                                      Expression ('in' parameter)
-#                                      For body
-#                                          Instruction
-#                                              Take
+#                              Argument type
+#                                  Bareword 'Int'
+#                      Instruction
+#                          Want (...)
+#                              Instance variable '@items'
+#                              Argument type
+#                                  Bareword 'Num'
+#              Computed property 'rows' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Instance variable '@m'
+#              Computed property 'columns' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Property 'length'
+#                                      Instance variable '@items'
+#                                  Division operator (/)
+#                                  Instance variable '@m'
+#              Computed property 'dimensionHR' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Instance variable '@rows'
+#                                  Addition operator (+)
+#                                  String 'x'
+#                                  Addition operator (+)
+#                                  Instance variable '@columns'
+#              Computed property 'rowList' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$items'
+#                              Call
+#                                  Property 'copy'
+#                                      Instance variable '@items'
+#                      Instruction
+#                          Return
+#                              Gather
+#                                  Gather body
+#                                      For (while)
+#                                          Expression ('for' parameter)
+#                                              Assignment
 #                                                  Lexical variable '$row'
-#          Method 'map' { $code:Code -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$code'
-#                          Argument type
-#                              Bareword 'Code'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Matrix'
-#                              Named argument list [2 items]
-#                                  Item 0
-#                                      Pair 'm'
-#                                          Instance variable '@m'
-#                                  Item 1
-#                                      Pair 'items'
-#                                          Call
-#                                              Property 'map'
-#                                                  Instance variable '@items'
-#                                              Argument list [1 item]
-#                                                  Item 0
-#                                                      Lexical variable '$code'
-#          Method 'mapWith' { $rhs:Matrix $code:Code -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Matrix'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$code'
-#                          Argument type
-#                              Bareword 'Code'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Instance variable '@dimensionHR'
-#                              Negated equality operator (!=)
-#                              Property 'dimensionHR'
-#                                  Lexical variable '$rhs'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Call
-#                                      Bareword 'Error'
-#                                      Argument list [2 items]
-#                                          Item 0
-#                                              Symbol :DimensionError
-#                                          Item 1
-#                                              Operation
-#                                                  String 'Dimension ...'
-#                                                  Addition operator (+)
-#                                                  Instance variable '@dimensionHR'
-#                                                  Addition operator (+)
-#                                                  String ' != '
-#                                                  Addition operator (+)
-#                                                  Property 'dimensionHR'
-#                                                      Lexical variable '$rhs'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$items'
-#                          Gather
-#                              Gather body
-#                                  For (values)
-#                                      Expression ('for' parameter)
-#                                          Lexical variable '$i'
-#                                      Expression ('in' parameter)
-#                                          Operation
-#                                              Number '0'
-#                                              Range operator (..)
-#                                              Property 'lastIndex'
-#                                                  Instance variable '@items'
-#                                      For body
-#                                          Instruction
-#                                              Take
 #                                                  Call
-#                                                      Lexical variable '$code'
+#                                                      Property 'splice'
+#                                                          Lexical variable '$items'
 #                                                      Argument list [2 items]
 #                                                          Item 0
-#                                                              Index
-#                                                                  Property 'items'
-#                                                                      Special variable '*self'
-#                                                                  Index list [1 item]
-#                                                                      Item 0
-#                                                                          Lexical variable '$i'
+#                                                              Number '0'
 #                                                          Item 1
-#                                                              Index
-#                                                                  Property 'items'
-#                                                                      Lexical variable '$rhs'
-#                                                                  Index list [1 item]
-#                                                                      Item 0
-#                                                                          Lexical variable '$i'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Matrix'
-#                              Named argument list [2 items]
-#                                  Item 0
-#                                      Pair 'm'
-#                                          Instance variable '@m'
-#                                  Item 1
-#                                      Pair 'items'
-#                                          Lexical variable '$items'
-#          Method 'opAdd' { $ehs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@map'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Anonymous function { -> $result }
-#                                          Function body
+#                                                              Instance variable '@columns'
+#                                          Expression ('in' parameter)
+#                                          For body
 #                                              Instruction
-#                                                  Return
-#                                                      Operation
-#                                                          Topic variable '$_'
-#                                                          Addition operator (+)
-#                                                          Lexical variable '$ehs'
-#          Method 'opSub' { $rhs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@map'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Anonymous function { -> $result }
-#                                          Function body
-#                                              Instruction
-#                                                  Return
-#                                                      Operation
-#                                                          Topic variable '$_'
-#                                                          Subtraction operator (-)
-#                                                          Lexical variable '$rhs'
-#          Method 'opSub' { $lhs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$lhs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  If
-#                      Expression ('if' parameter)
-#                          Operation
-#                              Lexical variable '$lhs'
-#                              Negated equality operator (!=)
-#                              Number '0'
-#                      If body
-#                          Instruction
-#                              Throw (fatal exception)
-#                                  Set [2 items]
+#                                                  Take
+#                                                      Lexical variable '$row'
+#              Method 'map' { $code:Code -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$code'
+#                              Argument type
+#                                  Bareword 'Code'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Matrix'
+#                                  Named argument list [2 items]
 #                                      Item 0
-#                                          Symbol :InvalidOperation
+#                                          Pair 'm'
+#                                              Instance variable '@m'
 #                                      Item 1
-#                                          String 'Unsupporte...'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@map'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Anonymous function { -> $result }
-#                                          Function body
-#                                              Instruction
-#                                                  Return
-#                                                      Operation
-#                                                          Constant zero
-#                                                          Negation operator (-)
-#                                                          Topic variable '$_'
-#          Method 'opMul' { $ehs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@map'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Anonymous function { -> $result }
-#                                          Function body
-#                                              Instruction
-#                                                  Return
-#                                                      Operation
-#                                                          Topic variable '$_'
-#                                                          Multiplication operator (*)
-#                                                          Lexical variable '$ehs'
-#          Method 'opDiv' { $rhs:Num -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@map'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Anonymous function { -> $result }
-#                                          Function body
-#                                              Instruction
-#                                                  Return
-#                                                      Operation
-#                                                          Topic variable '$_'
-#                                                          Division operator (/)
-#                                                          Lexical variable '$rhs'
-#          Method 'opAdd' { $ehs:Matrix -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$ehs'
-#                          Argument type
-#                              Bareword 'Matrix'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@mapWith'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Lexical variable '$ehs'
-#                                  Item 1
-#                                      Anonymous function { $a $b -> $result }
-#                                          Function body
-#                                              Instruction
-#                                                  Need
-#                                                      Lexical variable '$a'
-#                                              Instruction
-#                                                  Need
-#                                                      Lexical variable '$b'
-#                                              Instruction
-#                                                  Return
-#                                                      Operation
-#                                                          Lexical variable '$a'
-#                                                          Addition operator (+)
-#                                                          Lexical variable '$b'
-#          Method 'opSub' { $rhs:Matrix -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'Matrix'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@mapWith'
-#                              Argument list [2 items]
-#                                  Item 0
+#                                          Pair 'items'
+#                                              Call
+#                                                  Property 'map'
+#                                                      Instance variable '@items'
+#                                                  Argument list [1 item]
+#                                                      Item 0
+#                                                          Lexical variable '$code'
+#              Method 'mapWith' { $rhs:Matrix $code:Code -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Matrix'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$code'
+#                              Argument type
+#                                  Bareword 'Code'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Instance variable '@dimensionHR'
+#                                  Negated equality operator (!=)
+#                                  Property 'dimensionHR'
 #                                      Lexical variable '$rhs'
-#                                  Item 1
-#                                      Anonymous function { $a $b -> $result }
-#                                          Function body
-#                                              Instruction
-#                                                  Need
-#                                                      Lexical variable '$a'
-#                                              Instruction
-#                                                  Need
-#                                                      Lexical variable '$b'
-#                                              Instruction
-#                                                  Return
-#                                                      Operation
-#                                                          Lexical variable '$a'
-#                                                          Subtraction operator (-)
-#                                                          Lexical variable '$b'
-#          Method 'description' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$str'
-#                          String ''
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$row'
-#                      Expression ('in' parameter)
-#                          Instance variable '@rowList'
-#                      For body
-#                          Instruction
-#                              Addition assignment
-#                                  Lexical variable '$str'
-#                                  Operation
-#                                      String '[ '
-#                                      Addition operator (+)
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
 #                                      Call
-#                                          Property 'join'
-#                                              Lexical variable '$row'
-#                                          Argument list [1 item]
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
 #                                              Item 0
-#                                                  String ' '
-#                                      Addition operator (+)
-#                                      String ' ]'
-#                                      Addition operator (+)
-#                                      String '␤'
-#                  Instruction
-#                      Return
-#                          Lexical variable '$str'
-#      Include (Code, Error, Int, Matrix, Num)
+#                                                  Symbol :DimensionError
+#                                              Item 1
+#                                                  Operation
+#                                                      String 'Dimension ...'
+#                                                      Addition operator (+)
+#                                                      Instance variable '@dimensionHR'
+#                                                      Addition operator (+)
+#                                                      String ' != '
+#                                                      Addition operator (+)
+#                                                      Property 'dimensionHR'
+#                                                          Lexical variable '$rhs'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$items'
+#                              Gather
+#                                  Gather body
+#                                      For (values)
+#                                          Expression ('for' parameter)
+#                                              Lexical variable '$i'
+#                                          Expression ('in' parameter)
+#                                              Operation
+#                                                  Number '0'
+#                                                  Range operator (..)
+#                                                  Property 'lastIndex'
+#                                                      Instance variable '@items'
+#                                          For body
+#                                              Instruction
+#                                                  Take
+#                                                      Call
+#                                                          Lexical variable '$code'
+#                                                          Argument list [2 items]
+#                                                              Item 0
+#                                                                  Index
+#                                                                      Property 'items'
+#                                                                          Special variable '*self'
+#                                                                      Index list [1 item]
+#                                                                          Item 0
+#                                                                              Lexical variable '$i'
+#                                                              Item 1
+#                                                                  Index
+#                                                                      Property 'items'
+#                                                                          Lexical variable '$rhs'
+#                                                                      Index list [1 item]
+#                                                                          Item 0
+#                                                                              Lexical variable '$i'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Matrix'
+#                                  Named argument list [2 items]
+#                                      Item 0
+#                                          Pair 'm'
+#                                              Instance variable '@m'
+#                                      Item 1
+#                                          Pair 'items'
+#                                              Lexical variable '$items'
+#              Method 'opAdd' { $ehs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@map'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Anonymous function { -> $result }
+#                                              Function body
+#                                                  Instruction
+#                                                      Return
+#                                                          Operation
+#                                                              Topic variable '$_'
+#                                                              Addition operator (+)
+#                                                              Lexical variable '$ehs'
+#              Method 'opSub' { $rhs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@map'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Anonymous function { -> $result }
+#                                              Function body
+#                                                  Instruction
+#                                                      Return
+#                                                          Operation
+#                                                              Topic variable '$_'
+#                                                              Subtraction operator (-)
+#                                                              Lexical variable '$rhs'
+#              Method 'opSub' { $lhs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$lhs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Lexical variable '$lhs'
+#                                  Negated equality operator (!=)
+#                                  Number '0'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Set [2 items]
+#                                          Item 0
+#                                              Symbol :InvalidOperation
+#                                          Item 1
+#                                              String 'Unsupporte...'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@map'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Anonymous function { -> $result }
+#                                              Function body
+#                                                  Instruction
+#                                                      Return
+#                                                          Operation
+#                                                              Constant zero
+#                                                              Negation operator (-)
+#                                                              Topic variable '$_'
+#              Method 'opMul' { $ehs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@map'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Anonymous function { -> $result }
+#                                              Function body
+#                                                  Instruction
+#                                                      Return
+#                                                          Operation
+#                                                              Topic variable '$_'
+#                                                              Multiplication operator (*)
+#                                                              Lexical variable '$ehs'
+#              Method 'opDiv' { $rhs:Num -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@map'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Anonymous function { -> $result }
+#                                              Function body
+#                                                  Instruction
+#                                                      Return
+#                                                          Operation
+#                                                              Topic variable '$_'
+#                                                              Division operator (/)
+#                                                              Lexical variable '$rhs'
+#              Method 'opAdd' { $ehs:Matrix -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$ehs'
+#                              Argument type
+#                                  Bareword 'Matrix'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@mapWith'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Lexical variable '$ehs'
+#                                      Item 1
+#                                          Anonymous function { $a $b -> $result }
+#                                              Function body
+#                                                  Instruction
+#                                                      Need
+#                                                          Lexical variable '$a'
+#                                                  Instruction
+#                                                      Need
+#                                                          Lexical variable '$b'
+#                                                  Instruction
+#                                                      Return
+#                                                          Operation
+#                                                              Lexical variable '$a'
+#                                                              Addition operator (+)
+#                                                              Lexical variable '$b'
+#              Method 'opSub' { $rhs:Matrix -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'Matrix'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@mapWith'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Lexical variable '$rhs'
+#                                      Item 1
+#                                          Anonymous function { $a $b -> $result }
+#                                              Function body
+#                                                  Instruction
+#                                                      Need
+#                                                          Lexical variable '$a'
+#                                                  Instruction
+#                                                      Need
+#                                                          Lexical variable '$b'
+#                                                  Instruction
+#                                                      Return
+#                                                          Operation
+#                                                              Lexical variable '$a'
+#                                                              Subtraction operator (-)
+#                                                              Lexical variable '$b'
+#              Method 'description' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$str'
+#                              String ''
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$row'
+#                          Expression ('in' parameter)
+#                              Instance variable '@rowList'
+#                          For body
+#                              Instruction
+#                                  Addition assignment
+#                                      Lexical variable '$str'
+#                                      Operation
+#                                          String '[ '
+#                                          Addition operator (+)
+#                                          Call
+#                                              Property 'join'
+#                                                  Lexical variable '$row'
+#                                              Argument list [1 item]
+#                                                  Item 0
+#                                                      String ' '
+#                                          Addition operator (+)
+#                                          String ' ]'
+#                                          Addition operator (+)
+#                                          String '␤'
+#                      Instruction
+#                          Return
+#                              Lexical variable '$str'
+#          Include (Code, Error, Int, Matrix, Num)
 package FF;
 
 use warnings;

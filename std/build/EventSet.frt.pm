@@ -1,25 +1,26 @@
 # === Document Model ===
-#  Document './std/EventSet.frt'
-#      Class 'EventSet'
-#          Class method 'initializer__' { ?$code:Code }
-#              Function body
-#                  Instruction
-#                      Want
-#                          Lexical variable '$code'
-#                          Argument type
-#                              Bareword 'Code'
-#                  If
-#                      Expression ('if' parameter)
-#                          Lexical variable '$code'
-#                      If body
-#                          Instruction
-#                              Call
-#                                  Lexical variable '$code'
-#                                  Named argument list [1 item]
-#                                      Item 0
-#                                          Pair '_'
-#                                              Special variable '*self'
-#      Include (Code)
+#  File './std/EventSet.frt'
+#      Package 'main'
+#          Class 'EventSet'
+#              Class method 'initializer__' { ?$code:Code }
+#                  Function body
+#                      Instruction
+#                          Want
+#                              Lexical variable '$code'
+#                              Argument type
+#                                  Bareword 'Code'
+#                      If
+#                          Expression ('if' parameter)
+#                              Lexical variable '$code'
+#                          If body
+#                              Instruction
+#                                  Call
+#                                      Lexical variable '$code'
+#                                      Named argument list [1 item]
+#                                          Item 0
+#                                              Pair '_'
+#                                                  Special variable '*self'
+#          Include (Code)
 package FF;
 
 use warnings;

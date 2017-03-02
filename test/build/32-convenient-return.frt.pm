@@ -1,18 +1,19 @@
 # === Document Model ===
-#  Document './test/32-convenient-return.frt'
-#      Function 'A' { -> $result }
-#          Function body
-#              Instruction
-#                  Return
-#                      String 'return value'
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Call
-#                          Bareword 'A'
-#      Include (A)
+#  File './test/32-convenient-return.frt'
+#      Package 'main'
+#          Function 'A' { -> $result }
+#              Function body
+#                  Instruction
+#                      Return
+#                          String 'return value'
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Call
+#                              Bareword 'A'
+#          Include (A)
 package FF;
 
 use warnings;

@@ -1,80 +1,81 @@
 # === Document Model ===
-#  Document './test/28-type.frt'
-#      Type definition ('Gender')
-#          Type body
-#              Instruction
-#                  Symbol :male
-#              Instruction
-#                  Symbol :female
-#      Function 'announce' { $name:Str $gender:Gender }
-#          Function body
-#              Instruction
-#                  Need
-#                      Lexical variable '$name'
-#                      Argument type
-#                          Bareword 'Str'
-#              Instruction
-#                  Need
-#                      Lexical variable '$gender'
-#                      Argument type
-#                          Bareword 'Gender'
-#              Instruction
-#                  Assignment
-#                      Lexical variable '$what'
+#  File './test/28-type.frt'
+#      Package 'main'
+#          Type definition ('Gender')
+#              Type body
+#                  Instruction
+#                      Symbol :male
+#                  Instruction
+#                      Symbol :female
+#          Function 'announce' { $name:Str $gender:Gender }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$name'
+#                          Argument type
+#                              Bareword 'Str'
+#                  Instruction
+#                      Need
+#                          Lexical variable '$gender'
+#                          Argument type
+#                              Bareword 'Gender'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$what'
+#                          Call
+#                              Property 'trimPrefix'
+#                                  Call
+#                                      Bareword 'Str'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Lexical variable '$gender'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      String ':'
+#                  Instruction
 #                      Call
-#                          Property 'trimPrefix'
-#                              Call
-#                                  Bareword 'Str'
-#                                  Argument list [1 item]
-#                                      Item 0
-#                                          Lexical variable '$gender'
+#                          Bareword 'say'
 #                          Argument list [1 item]
 #                              Item 0
-#                                  String ':'
-#              Instruction
-#                  Call
-#                      Bareword 'say'
-#                      Argument list [1 item]
-#                          Item 0
-#                              Operation
-#                                  Lexical variable '$name'
-#                                  Addition operator (+)
-#                                  String ' is '
-#                                  Addition operator (+)
-#                                  Lexical variable '$what'
-#      Instruction
-#          Call
-#              Bareword 'announce'
-#              Argument list [2 items]
-#                  Item 0
-#                      String 'Robert'
-#                  Item 1
-#                      Symbol :male
-#      Instruction
-#          Call
-#              Bareword 'announce'
-#              Argument list [2 items]
-#                  Item 0
-#                      String 'Kris'
-#                  Item 1
-#                      Symbol :female
-#      Instruction
-#          Call
-#              Bareword 'announce'
-#              Argument list [2 items]
-#                  Item 0
-#                      String 'Kylie'
-#                  Item 1
-#                      Symbol :female
-#      Instruction
-#          Call
-#              Bareword 'announce'
-#              Argument list [2 items]
-#                  Item 0
-#                      String 'Caitlyn'
-#                  Item 1
-#                      Symbol :other
-#      Include (Gender, Str)
+#                                  Operation
+#                                      Lexical variable '$name'
+#                                      Addition operator (+)
+#                                      String ' is '
+#                                      Addition operator (+)
+#                                      Lexical variable '$what'
+#          Instruction
+#              Call
+#                  Bareword 'announce'
+#                  Argument list [2 items]
+#                      Item 0
+#                          String 'Robert'
+#                      Item 1
+#                          Symbol :male
+#          Instruction
+#              Call
+#                  Bareword 'announce'
+#                  Argument list [2 items]
+#                      Item 0
+#                          String 'Kris'
+#                      Item 1
+#                          Symbol :female
+#          Instruction
+#              Call
+#                  Bareword 'announce'
+#                  Argument list [2 items]
+#                      Item 0
+#                          String 'Kylie'
+#                      Item 1
+#                          Symbol :female
+#          Instruction
+#              Call
+#                  Bareword 'announce'
+#                  Argument list [2 items]
+#                      Item 0
+#                          String 'Caitlyn'
+#                      Item 1
+#                          Symbol :other
+#          Include (Gender, Str)
 package FF;
 
 use warnings;

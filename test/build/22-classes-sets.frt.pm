@@ -1,164 +1,165 @@
 # === Document Model ===
-#  Document './test/22-classes-sets.frt'
-#      Class 'Cow'
-#          Class method 'initializer__' { ?$moos }
-#              Function body
-#                  Instruction
-#                      Want
-#                          Instance variable '@moos'
-#                          Argument value
-#                              Boolean true
-#          Method 'moo' { -> $result $result }
-#              Function body
-#                  If
-#                      Expression ('if' parameter)
-#                          Instance variable '@moos'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  String 'moo'
-#                  Instruction
-#                      Return
-#                          String 'I am a non...'
-#      Class 'Dog'
-#          Class method 'initializer__' { ?$barks }
-#              Function body
-#                  Instruction
-#                      Want
-#                          Instance variable '@barks'
-#                          Argument value
-#                              Boolean false
-#          Method 'bark' { -> $result $result }
-#              Function body
-#                  If
-#                      Expression ('if' parameter)
-#                          Instance variable '@barks'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  String 'bark'
-#                  Instruction
-#                      Return
-#                          String 'I had my b...'
-#      Class 'Cat'
-#          Class method 'initializer__' { ?$mean }
-#              Function body
-#                  Instruction
-#                      Want
-#                          Instance variable '@mean'
-#                          Argument value
-#                              Boolean false
-#          Method 'meow' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          String 'meow'
-#          Class method 'fight' { $cat1:Cat $cat2:Cat -> $result $result $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$cat1'
-#                          Argument type
-#                              Bareword 'Cat'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$cat2'
-#                          Argument type
-#                              Bareword 'Cat'
-#                  If
-#                      Expression ('if' parameter)
-#                          Property 'mean'
+#  File './test/22-classes-sets.frt'
+#      Package 'main'
+#          Class 'Cow'
+#              Class method 'initializer__' { ?$moos }
+#                  Function body
+#                      Instruction
+#                          Want
+#                              Instance variable '@moos'
+#                              Argument value
+#                                  Boolean true
+#              Method 'moo' { -> $result $result }
+#                  Function body
+#                      If
+#                          Expression ('if' parameter)
+#                              Instance variable '@moos'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      String 'moo'
+#                      Instruction
+#                          Return
+#                              String 'I am a non...'
+#          Class 'Dog'
+#              Class method 'initializer__' { ?$barks }
+#                  Function body
+#                      Instruction
+#                          Want
+#                              Instance variable '@barks'
+#                              Argument value
+#                                  Boolean false
+#              Method 'bark' { -> $result $result }
+#                  Function body
+#                      If
+#                          Expression ('if' parameter)
+#                              Instance variable '@barks'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      String 'bark'
+#                      Instruction
+#                          Return
+#                              String 'I had my b...'
+#          Class 'Cat'
+#              Class method 'initializer__' { ?$mean }
+#                  Function body
+#                      Instruction
+#                          Want
+#                              Instance variable '@mean'
+#                              Argument value
+#                                  Boolean false
+#              Method 'meow' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              String 'meow'
+#              Class method 'fight' { $cat1:Cat $cat2:Cat -> $result $result $result }
+#                  Function body
+#                      Instruction
+#                          Need
 #                              Lexical variable '$cat1'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  String 'Cat 1 star...'
-#                  If
-#                      Expression ('if' parameter)
-#                          Property 'mean'
+#                              Argument type
+#                                  Bareword 'Cat'
+#                      Instruction
+#                          Need
 #                              Lexical variable '$cat2'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  String 'Cat 2 star...'
-#                  Instruction
-#                      Return
-#                          String 'nice cats ...'
-#      Instruction
-#          Assignment
-#              Lexical variable '$animal'
+#                              Argument type
+#                                  Bareword 'Cat'
+#                      If
+#                          Expression ('if' parameter)
+#                              Property 'mean'
+#                                  Lexical variable '$cat1'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      String 'Cat 1 star...'
+#                      If
+#                          Expression ('if' parameter)
+#                              Property 'mean'
+#                                  Lexical variable '$cat2'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      String 'Cat 2 star...'
+#                      Instruction
+#                          Return
+#                              String 'nice cats ...'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$animal'
+#                  Call
+#                      Bareword 'Cow'
+#                      Argument list [0 items]
+#          Instruction
 #              Call
-#                  Bareword 'Cow'
-#                  Argument list [0 items]
-#      Instruction
-#          Call
-#              Call
-#                  Property 'init'
-#                      Bareword 'Dog'
-#                  Argument list [1 item]
-#                      Item 0
-#                          Lexical variable '$animal'
-#              Argument list [0 items]
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Call
-#                          Property 'moo'
-#                              Lexical variable '$animal'
-#                          Argument list [0 items]
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Call
-#                          Property 'bark'
-#                              Lexical variable '$animal'
-#                          Argument list [0 items]
-#      Instruction
-#          Call
-#              Call
-#                  Property 'init'
-#                      Bareword 'Cat'
-#                  Argument list [1 item]
-#                      Item 0
-#                          Lexical variable '$animal'
-#              Named argument list [1 item]
-#                  Item 0
-#                      Pair 'mean'
-#                          Boolean true
-#      Instruction
-#          Call
-#              Bareword 'inspect'
-#              Argument list [1 item]
-#                  Item 0
-#                      Lexical variable '$animal'
-#      Instruction
-#          Assignment
-#              Lexical variable '$cat'
-#              Call
-#                  Bareword 'Cat'
-#                  Argument list [0 items]
-#      Instruction
-#          Assignment
-#              Lexical variable '$aftermath'
-#              Call
-#                  Property 'fight'
-#                      Set [2 items]
+#                  Call
+#                      Property 'init'
+#                          Bareword 'Dog'
+#                      Argument list [1 item]
 #                          Item 0
 #                              Lexical variable '$animal'
-#                          Item 1
-#                              Lexical variable '$cat'
 #                  Argument list [0 items]
-#      Instruction
-#          Call
-#              Bareword 'say'
-#              Argument list [1 item]
-#                  Item 0
-#                      Lexical variable '$aftermath'
-#      Include (Cat, Cow, Dog)
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Call
+#                              Property 'moo'
+#                                  Lexical variable '$animal'
+#                              Argument list [0 items]
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Call
+#                              Property 'bark'
+#                                  Lexical variable '$animal'
+#                              Argument list [0 items]
+#          Instruction
+#              Call
+#                  Call
+#                      Property 'init'
+#                          Bareword 'Cat'
+#                      Argument list [1 item]
+#                          Item 0
+#                              Lexical variable '$animal'
+#                  Named argument list [1 item]
+#                      Item 0
+#                          Pair 'mean'
+#                              Boolean true
+#          Instruction
+#              Call
+#                  Bareword 'inspect'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Lexical variable '$animal'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$cat'
+#                  Call
+#                      Bareword 'Cat'
+#                      Argument list [0 items]
+#          Instruction
+#              Assignment
+#                  Lexical variable '$aftermath'
+#                  Call
+#                      Property 'fight'
+#                          Set [2 items]
+#                              Item 0
+#                                  Lexical variable '$animal'
+#                              Item 1
+#                                  Lexical variable '$cat'
+#                      Argument list [0 items]
+#          Instruction
+#              Call
+#                  Bareword 'say'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Lexical variable '$aftermath'
+#          Include (Cat, Cow, Dog)
 package FF;
 
 use warnings;

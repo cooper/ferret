@@ -1,174 +1,175 @@
 # === Document Model ===
-#  Document './std/Iterator.frt'
-#      Type definition ('Iterator')
-#          Type body
-#              Instruction
-#                  Can
-#                      Property variable '.more'
-#              Instruction
-#                  Can
-#                      Property variable '.nextElement'
-#              Instruction
-#                  Can
-#                      Property variable '.iterator'
-#      Type definition ('MultiIterator')
-#          Type body
-#              Instruction
-#                  Isa
-#                      Bareword 'Iterator'
-#              Instruction
-#                  Can
-#                      Property variable '.nextElements'
-#      Type definition ('Iterable')
-#          Type body
-#              Instruction
-#                  Can
-#                      Property variable '.iterator'
-#                      Bareword 'Iterator'
-#      Class 'ListIterator'
-#          Class method 'initializer__' { $list:List }
-#              Function body
+#  File './std/Iterator.frt'
+#      Package 'main'
+#          Type definition ('Iterator')
+#              Type body
 #                  Instruction
-#                      Need
-#                          Lexical variable '$list'
-#                          Argument type
-#                              Bareword 'List'
+#                      Can
+#                          Property variable '.more'
 #                  Instruction
-#                      Assignment
-#                          Instance variable '@list'
-#                          Call
-#                              Property 'copy'
-#                                  Lexical variable '$list'
-#                              Argument list [0 items]
+#                      Can
+#                          Property variable '.nextElement'
 #                  Instruction
-#                      Assignment
-#                          Instance variable '@i'
-#                          Operation
-#                              Constant zero
-#                              Negation operator (-)
-#                              Number '1'
-#          Computed property 'more' { -> $result }
-#              Function body
+#                      Can
+#                          Property variable '.iterator'
+#          Type definition ('MultiIterator')
+#              Type body
 #                  Instruction
-#                      Return
-#                          Operation
-#                              Instance variable '@i'
-#                              Less than operator (<)
-#                              Single value [1 item]
-#                                  Item 0
-#                                      Operation
-#                                          Property 'lastIndex'
-#                                              Instance variable '@list'
-#                                          Logical or operator (||)
-#                                          Constant zero
-#                                          Negation operator (-)
-#                                          Number '1'
-#          Computed property 'nextElement' { -> $result }
-#              Function body
+#                      Isa
+#                          Bareword 'Iterator'
 #                  Instruction
-#                      Addition assignment
-#                          Instance variable '@i'
-#                          Number '1'
+#                      Can
+#                          Property variable '.nextElements'
+#          Type definition ('Iterable')
+#              Type body
 #                  Instruction
-#                      Return
-#                          Index
+#                      Can
+#                          Property variable '.iterator'
+#                          Bareword 'Iterator'
+#          Class 'ListIterator'
+#              Class method 'initializer__' { $list:List }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$list'
+#                              Argument type
+#                                  Bareword 'List'
+#                      Instruction
+#                          Assignment
 #                              Instance variable '@list'
-#                              Index list [1 item]
+#                              Call
+#                                  Property 'copy'
+#                                      Lexical variable '$list'
+#                                  Argument list [0 items]
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@i'
+#                              Operation
+#                                  Constant zero
+#                                  Negation operator (-)
+#                                  Number '1'
+#              Computed property 'more' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Instance variable '@i'
+#                                  Less than operator (<)
+#                                  Single value [1 item]
+#                                      Item 0
+#                                          Operation
+#                                              Property 'lastIndex'
+#                                                  Instance variable '@list'
+#                                              Logical or operator (||)
+#                                              Constant zero
+#                                              Negation operator (-)
+#                                              Number '1'
+#              Computed property 'nextElement' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Addition assignment
+#                              Instance variable '@i'
+#                              Number '1'
+#                      Instruction
+#                          Return
+#                              Index
+#                                  Instance variable '@list'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Instance variable '@i'
+#              Computed property 'nextElements' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Addition assignment
+#                              Instance variable '@i'
+#                              Number '1'
+#                      Instruction
+#                          Return
+#                              Value list [2 items]
 #                                  Item 0
 #                                      Instance variable '@i'
-#          Computed property 'nextElements' { -> $result }
-#              Function body
-#                  Instruction
-#                      Addition assignment
-#                          Instance variable '@i'
-#                          Number '1'
-#                  Instruction
-#                      Return
-#                          Value list [2 items]
-#                              Item 0
-#                                  Instance variable '@i'
-#                              Item 1
-#                                  Index
-#                                      Instance variable '@list'
-#                                      Index list [1 item]
-#                                          Item 0
-#                                              Instance variable '@i'
-#          Computed property 'iterator' { -> Iterator }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Special variable '*self'
-#                          Bareword 'Iterator'
-#      Class 'HashIterator'
-#          Class method 'initializer__' { $hash:Hash }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$hash'
-#                          Argument type
-#                              Bareword 'Hash'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@hash'
-#                          Call
-#                              Property 'copy'
-#                                  Lexical variable '$hash'
-#                              Argument list [0 items]
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@keysLeft'
-#                          Property 'keys'
+#                                  Item 1
+#                                      Index
+#                                          Instance variable '@list'
+#                                          Index list [1 item]
+#                                              Item 0
+#                                                  Instance variable '@i'
+#              Computed property 'iterator' { -> Iterator }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Special variable '*self'
+#                              Bareword 'Iterator'
+#          Class 'HashIterator'
+#              Class method 'initializer__' { $hash:Hash }
+#                  Function body
+#                      Instruction
+#                          Need
 #                              Lexical variable '$hash'
-#          Computed property 'more' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Negation
-#                              Property 'empty'
-#                                  Instance variable '@keysLeft'
-#          Computed property 'nextElement' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$key'
-#                          Call
-#                              Property 'pop'
-#                                  Instance variable '@keysLeft'
-#                              Argument list [0 items]
-#                  Instruction
-#                      Return
-#                          Index
+#                              Argument type
+#                                  Bareword 'Hash'
+#                      Instruction
+#                          Assignment
 #                              Instance variable '@hash'
-#                              Index list [1 item]
+#                              Call
+#                                  Property 'copy'
+#                                      Lexical variable '$hash'
+#                                  Argument list [0 items]
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@keysLeft'
+#                              Property 'keys'
+#                                  Lexical variable '$hash'
+#              Computed property 'more' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Negation
+#                                  Property 'empty'
+#                                      Instance variable '@keysLeft'
+#              Computed property 'nextElement' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$key'
+#                              Call
+#                                  Property 'pop'
+#                                      Instance variable '@keysLeft'
+#                                  Argument list [0 items]
+#                      Instruction
+#                          Return
+#                              Index
+#                                  Instance variable '@hash'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$key'
+#              Computed property 'nextElements' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$key'
+#                              Call
+#                                  Property 'pop'
+#                                      Instance variable '@keysLeft'
+#                                  Argument list [0 items]
+#                      Instruction
+#                          Return
+#                              Value list [2 items]
 #                                  Item 0
 #                                      Lexical variable '$key'
-#          Computed property 'nextElements' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$key'
-#                          Call
-#                              Property 'pop'
-#                                  Instance variable '@keysLeft'
-#                              Argument list [0 items]
-#                  Instruction
-#                      Return
-#                          Value list [2 items]
-#                              Item 0
-#                                  Lexical variable '$key'
-#                              Item 1
-#                                  Index
-#                                      Instance variable '@hash'
-#                                      Index list [1 item]
-#                                          Item 0
-#                                              Lexical variable '$key'
-#          Computed property 'iterator' { -> Iterator }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Special variable '*self'
-#                          Bareword 'Iterator'
-#      Include (Hash, Iterator, List)
+#                                  Item 1
+#                                      Index
+#                                          Instance variable '@hash'
+#                                          Index list [1 item]
+#                                              Item 0
+#                                                  Lexical variable '$key'
+#              Computed property 'iterator' { -> Iterator }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Special variable '*self'
+#                              Bareword 'Iterator'
+#          Include (Hash, Iterator, List)
 package FF;
 
 use warnings;

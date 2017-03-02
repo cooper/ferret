@@ -1,524 +1,525 @@
 # === Document Model ===
-#  Document './std/Extension/List.frt'
-#      Class 'List' <T>
-#          Type definition ('Pairs')
-#              Type body
-#                  Instruction
-#                      Isa
-#                          Special variable '*class'
-#                  Instruction
-#                      Satisfies
-#                          Property 'even'
-#                              Property variable '.length'
-#          Computed property 'empty' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Operation
-#                              Instance variable '@length'
-#                              Equality operator (==)
-#                              Number '0'
-#          Method 'map' { $code:Code -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$code'
-#                          Argument type
-#                              Bareword 'Code'
-#                  Instruction
-#                      Return
-#                          Gather
-#                              Gather body
-#                                  For (values)
-#                                      Expression ('for' parameter)
-#                                          Lexical variable '$el'
-#                                      Expression ('in' parameter)
-#                                          Special variable '*self'
-#                                      For body
-#                                          Instruction
-#                                              Take
-#                                                  Call
-#                                                      Lexical variable '$code'
-#                                                      Argument list [1 item]
-#                                                          Item 0
-#                                                              Lexical variable '$el'
-#          Method 'grep' { $code:Code -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$code'
-#                          Argument type
-#                              Bareword 'Code'
-#                  Instruction
-#                      Return
-#                          Gather
-#                              Gather body
-#                                  For (values)
-#                                      Expression ('for' parameter)
-#                                          Lexical variable '$el'
-#                                      Expression ('in' parameter)
-#                                          Special variable '*self'
-#                                      For body
-#                                          If
-#                                              Expression ('if' parameter)
-#                                                  Call
-#                                                      Lexical variable '$code'
-#                                                      Argument list [1 item]
-#                                                          Item 0
-#                                                              Lexical variable '$el'
-#                                              If body
-#                                                  Instruction
-#                                                      Take
-#                                                          Lexical variable '$el'
-#          Method 'flatten' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$new'
-#                          Value list [0 items]
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$el'
-#                      Expression ('in' parameter)
-#                          Special variable '*self'
-#                      For body
-#                          If
-#                              Expression ('if' parameter)
-#                                  Call
-#                                      Special property '*instanceOf'
-#                                          Lexical variable '$el'
-#                                      Argument list [1 item]
-#                                          Item 0
-#                                              Bareword 'List'
-#                              If body
-#                                  Instruction
-#                                      Call
-#                                          Property 'push'
-#                                              Lexical variable '$new'
-#                                          Named argument list [1 item]
-#                                              Item 0
-#                                                  Pair 'items'
+#  File './std/Extension/List.frt'
+#      Package 'main'
+#          Class 'List' <T>
+#              Type definition ('Pairs')
+#                  Type body
+#                      Instruction
+#                          Isa
+#                              Special variable '*class'
+#                      Instruction
+#                          Satisfies
+#                              Property 'even'
+#                                  Property variable '.length'
+#              Computed property 'empty' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  Instance variable '@length'
+#                                  Equality operator (==)
+#                                  Number '0'
+#              Method 'map' { $code:Code -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$code'
+#                              Argument type
+#                                  Bareword 'Code'
+#                      Instruction
+#                          Return
+#                              Gather
+#                                  Gather body
+#                                      For (values)
+#                                          Expression ('for' parameter)
+#                                              Lexical variable '$el'
+#                                          Expression ('in' parameter)
+#                                              Special variable '*self'
+#                                          For body
+#                                              Instruction
+#                                                  Take
 #                                                      Call
-#                                                          Property 'flatten'
+#                                                          Lexical variable '$code'
+#                                                          Argument list [1 item]
+#                                                              Item 0
+#                                                                  Lexical variable '$el'
+#              Method 'grep' { $code:Code -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$code'
+#                              Argument type
+#                                  Bareword 'Code'
+#                      Instruction
+#                          Return
+#                              Gather
+#                                  Gather body
+#                                      For (values)
+#                                          Expression ('for' parameter)
+#                                              Lexical variable '$el'
+#                                          Expression ('in' parameter)
+#                                              Special variable '*self'
+#                                          For body
+#                                              If
+#                                                  Expression ('if' parameter)
+#                                                      Call
+#                                                          Lexical variable '$code'
+#                                                          Argument list [1 item]
+#                                                              Item 0
+#                                                                  Lexical variable '$el'
+#                                                  If body
+#                                                      Instruction
+#                                                          Take
 #                                                              Lexical variable '$el'
-#                                                          Argument list [0 items]
-#                          Else
-#                              Else body
-#                                  Instruction
+#              Method 'flatten' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$new'
+#                              Value list [0 items]
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$el'
+#                          Expression ('in' parameter)
+#                              Special variable '*self'
+#                          For body
+#                              If
+#                                  Expression ('if' parameter)
 #                                      Call
-#                                          Property 'push'
-#                                              Lexical variable '$new'
+#                                          Special property '*instanceOf'
+#                                              Lexical variable '$el'
 #                                          Argument list [1 item]
 #                                              Item 0
-#                                                  Lexical variable '$el'
-#                  Instruction
-#                      Return
-#                          Lexical variable '$new'
-#          Method 'reverse' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$new'
-#                          Value list [0 items]
-#                  Instruction
-#                      Return
-#                          Gather
-#                              Gather body
-#                                  For (values)
-#                                      Expression ('for' parameter)
-#                                          Lexical variable '$i'
-#                                      Expression ('in' parameter)
-#                                          Operation
-#                                              Instance variable '@lastIndex'
-#                                              Range operator (..)
-#                                              Number '0'
-#                                      For body
-#                                          Instruction
-#                                              Take
-#                                                  Index
-#                                                      Special variable '*self'
-#                                                      Index list [1 item]
-#                                                          Item 0
-#                                                              Lexical variable '$i'
-#          Method 'withoutAll' { $what -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$what'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@grep'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Anonymous function { -> $result }
-#                                          Function body
+#                                                  Bareword 'List'
+#                                  If body
+#                                      Instruction
+#                                          Call
+#                                              Property 'push'
+#                                                  Lexical variable '$new'
+#                                              Named argument list [1 item]
+#                                                  Item 0
+#                                                      Pair 'items'
+#                                                          Call
+#                                                              Property 'flatten'
+#                                                                  Lexical variable '$el'
+#                                                              Argument list [0 items]
+#                              Else
+#                                  Else body
+#                                      Instruction
+#                                          Call
+#                                              Property 'push'
+#                                                  Lexical variable '$new'
+#                                              Argument list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$el'
+#                      Instruction
+#                          Return
+#                              Lexical variable '$new'
+#              Method 'reverse' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$new'
+#                              Value list [0 items]
+#                      Instruction
+#                          Return
+#                              Gather
+#                                  Gather body
+#                                      For (values)
+#                                          Expression ('for' parameter)
+#                                              Lexical variable '$i'
+#                                          Expression ('in' parameter)
+#                                              Operation
+#                                                  Instance variable '@lastIndex'
+#                                                  Range operator (..)
+#                                                  Number '0'
+#                                          For body
 #                                              Instruction
-#                                                  Return
+#                                                  Take
+#                                                      Index
+#                                                          Special variable '*self'
+#                                                          Index list [1 item]
+#                                                              Item 0
+#                                                                  Lexical variable '$i'
+#              Method 'withoutAll' { $what -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$what'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@grep'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Anonymous function { -> $result }
+#                                              Function body
+#                                                  Instruction
+#                                                      Return
+#                                                          Operation
+#                                                              Lexical variable '$what'
+#                                                              Negated equality operator (!=)
+#                                                              Topic variable '$_'
+#              Method 'without' { $what -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$what'
+#                      Instruction
+#                          Local variable declaration
+#                              Lexical variable '$found'
+#                      Instruction
+#                          Return
+#                              Gather
+#                                  Gather body
+#                                      For (pairs)
+#                                          Expression ('for' parameter)
+#                                              Set [2 items]
+#                                                  Item 0
+#                                                      Lexical variable '$i'
+#                                                  Item 1
+#                                                      Lexical variable '$el'
+#                                          Expression ('in' parameter)
+#                                              Special variable '*self'
+#                                          For body
+#                                              If
+#                                                  Expression ('if' parameter)
+#                                                      Operation
+#                                                          Negation
+#                                                              Lexical variable '$found'
+#                                                          Logical and operator (&&)
+#                                                          Lexical variable '$what'
+#                                                          Equality operator (==)
+#                                                          Lexical variable '$el'
+#                                                  If body
+#                                                      Instruction
+#                                                          Assignment
+#                                                              Lexical variable '$found'
+#                                                              Boolean true
+#                                                      Instruction
+#                                                          Next
+#                                              Instruction
+#                                                  Take
+#                                                      Lexical variable '$el'
+#              Method 'remove' { $what -> $removed $removed }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$what'
+#                      Instruction
+#                          Return pair 'removed'
+#                              Boolean false
+#                      For (pairs)
+#                          Expression ('for' parameter)
+#                              Set [2 items]
+#                                  Item 0
+#                                      Lexical variable '$i'
+#                                  Item 1
+#                                      Lexical variable '$el'
+#                          Expression ('in' parameter)
+#                              Special variable '*self'
+#                          For body
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Operation
+#                                          Lexical variable '$what'
+#                                          Negated equality operator (!=)
+#                                          Lexical variable '$el'
+#                                  If body
+#                                      Instruction
+#                                          Next
+#                              Instruction
+#                                  Call
+#                                      Instance variable '@splice'
+#                                      Argument list [2 items]
+#                                          Item 0
+#                                              Lexical variable '$i'
+#                                          Item 1
+#                                              Number '1'
+#                              Instruction
+#                                  Return pair 'removed'
+#                                      Boolean true
+#                              Instruction
+#                                  Last
+#              Method 'removeAll' { $what -> $removed }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$what'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$indices'
+#                              Gather
+#                                  Gather body
+#                                      For (pairs)
+#                                          Expression ('for' parameter)
+#                                              Set [2 items]
+#                                                  Item 0
+#                                                      Lexical variable '$i'
+#                                                  Item 1
+#                                                      Lexical variable '$el'
+#                                          Expression ('in' parameter)
+#                                              Special variable '*self'
+#                                          For body
+#                                              If
+#                                                  Expression ('if' parameter)
 #                                                      Operation
 #                                                          Lexical variable '$what'
 #                                                          Negated equality operator (!=)
-#                                                          Topic variable '$_'
-#          Method 'without' { $what -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$what'
-#                  Instruction
-#                      Local variable declaration
-#                          Lexical variable '$found'
-#                  Instruction
-#                      Return
-#                          Gather
-#                              Gather body
-#                                  For (pairs)
-#                                      Expression ('for' parameter)
-#                                          Set [2 items]
-#                                              Item 0
-#                                                  Lexical variable '$i'
-#                                              Item 1
-#                                                  Lexical variable '$el'
-#                                      Expression ('in' parameter)
-#                                          Special variable '*self'
-#                                      For body
-#                                          If
-#                                              Expression ('if' parameter)
-#                                                  Operation
-#                                                      Negation
-#                                                          Lexical variable '$found'
-#                                                      Logical and operator (&&)
-#                                                      Lexical variable '$what'
-#                                                      Equality operator (==)
-#                                                      Lexical variable '$el'
-#                                              If body
-#                                                  Instruction
-#                                                      Assignment
-#                                                          Lexical variable '$found'
-#                                                          Boolean true
-#                                                  Instruction
-#                                                      Next
-#                                          Instruction
-#                                              Take
-#                                                  Lexical variable '$el'
-#          Method 'remove' { $what -> $removed $removed }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$what'
-#                  Instruction
-#                      Return pair 'removed'
-#                          Boolean false
-#                  For (pairs)
-#                      Expression ('for' parameter)
-#                          Set [2 items]
-#                              Item 0
-#                                  Lexical variable '$i'
-#                              Item 1
-#                                  Lexical variable '$el'
-#                      Expression ('in' parameter)
-#                          Special variable '*self'
-#                      For body
-#                          If
-#                              Expression ('if' parameter)
-#                                  Operation
-#                                      Lexical variable '$what'
-#                                      Negated equality operator (!=)
-#                                      Lexical variable '$el'
-#                              If body
-#                                  Instruction
-#                                      Next
-#                          Instruction
-#                              Call
-#                                  Instance variable '@splice'
-#                                  Argument list [2 items]
-#                                      Item 0
-#                                          Lexical variable '$i'
-#                                      Item 1
-#                                          Number '1'
-#                          Instruction
-#                              Return pair 'removed'
-#                                  Boolean true
-#                          Instruction
-#                              Last
-#          Method 'removeAll' { $what -> $removed }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$what'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$indices'
-#                          Gather
-#                              Gather body
-#                                  For (pairs)
-#                                      Expression ('for' parameter)
-#                                          Set [2 items]
-#                                              Item 0
-#                                                  Lexical variable '$i'
-#                                              Item 1
-#                                                  Lexical variable '$el'
-#                                      Expression ('in' parameter)
-#                                          Special variable '*self'
-#                                      For body
-#                                          If
-#                                              Expression ('if' parameter)
-#                                                  Operation
-#                                                      Lexical variable '$what'
-#                                                      Negated equality operator (!=)
-#                                                      Lexical variable '$el'
-#                                              If body
-#                                                  Instruction
-#                                                      Next
-#                                          Instruction
-#                                              Take
-#                                                  Lexical variable '$i'
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$i'
-#                      Expression ('in' parameter)
-#                          Call
-#                              Property 'reverse'
-#                                  Lexical variable '$indices'
-#                      For body
-#                          Instruction
-#                              Call
-#                                  Instance variable '@splice'
-#                                  Argument list [2 items]
-#                                      Item 0
-#                                          Lexical variable '$i'
-#                                      Item 1
-#                                          Number '1'
-#                  Instruction
-#                      Return pair 'removed'
-#                          Property 'length'
-#                              Lexical variable '$indices'
-#          Method 'contains' { $what -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$what'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Instance variable '@any'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Anonymous function { -> $result }
-#                                          Function body
+#                                                          Lexical variable '$el'
+#                                                  If body
+#                                                      Instruction
+#                                                          Next
 #                                              Instruction
-#                                                  Return
-#                                                      Operation
-#                                                          Lexical variable '$what'
-#                                                          Equality operator (==)
-#                                                          Topic variable '$_'
-#          Method 'first' { $code:Code -> $result $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$code'
-#                          Argument type
-#                              Bareword 'Code'
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$el'
-#                      Expression ('in' parameter)
-#                          Special variable '*self'
-#                      For body
-#                          If
-#                              Expression ('if' parameter)
+#                                                  Take
+#                                                      Lexical variable '$i'
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$i'
+#                          Expression ('in' parameter)
+#                              Call
+#                                  Property 'reverse'
+#                                      Lexical variable '$indices'
+#                          For body
+#                              Instruction
 #                                  Call
-#                                      Lexical variable '$code'
-#                                      Argument list [1 item]
+#                                      Instance variable '@splice'
+#                                      Argument list [2 items]
 #                                          Item 0
-#                                              Lexical variable '$el'
-#                              If body
-#                                  Instruction
-#                                      Return
-#                                          Lexical variable '$el'
-#                  Instruction
-#                      Return
-#                          Undefined
-#          Method 'any' { $code:Code -> $result $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$code'
-#                          Argument type
-#                              Bareword 'Code'
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$el'
-#                      Expression ('in' parameter)
-#                          Special variable '*self'
-#                      For body
-#                          If
-#                              Expression ('if' parameter)
-#                                  Call
-#                                      Lexical variable '$code'
-#                                      Argument list [1 item]
-#                                          Item 0
-#                                              Lexical variable '$el'
-#                              If body
-#                                  Instruction
-#                                      Return
-#                                          Boolean true
-#                  Instruction
-#                      Return
-#                          Boolean false
-#          Method 'all' { $code:Code -> $result $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$code'
-#                          Argument type
-#                              Bareword 'Code'
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$el'
-#                      Expression ('in' parameter)
-#                          Special variable '*self'
-#                      For body
-#                          If
-#                              Expression ('if' parameter)
-#                                  Negation
+#                                              Lexical variable '$i'
+#                                          Item 1
+#                                              Number '1'
+#                      Instruction
+#                          Return pair 'removed'
+#                              Property 'length'
+#                                  Lexical variable '$indices'
+#              Method 'contains' { $what -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$what'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Instance variable '@any'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Anonymous function { -> $result }
+#                                              Function body
+#                                                  Instruction
+#                                                      Return
+#                                                          Operation
+#                                                              Lexical variable '$what'
+#                                                              Equality operator (==)
+#                                                              Topic variable '$_'
+#              Method 'first' { $code:Code -> $result $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$code'
+#                              Argument type
+#                                  Bareword 'Code'
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$el'
+#                          Expression ('in' parameter)
+#                              Special variable '*self'
+#                          For body
+#                              If
+#                                  Expression ('if' parameter)
 #                                      Call
 #                                          Lexical variable '$code'
 #                                          Argument list [1 item]
 #                                              Item 0
 #                                                  Lexical variable '$el'
-#                              If body
-#                                  Instruction
-#                                      Return
-#                                          Boolean false
-#                  Instruction
-#                      Return
-#                          Boolean true
-#          Computed property 'sum' { -> $result $result }
-#              Function body
-#                  If
-#                      Expression ('if' parameter)
-#                          Instance variable '@empty'
-#                      If body
-#                          Instruction
-#                              Return
-#                                  Undefined
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$c'
-#                          Index
+#                                  If body
+#                                      Instruction
+#                                          Return
+#                                              Lexical variable '$el'
+#                      Instruction
+#                          Return
+#                              Undefined
+#              Method 'any' { $code:Code -> $result $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$code'
+#                              Argument type
+#                                  Bareword 'Code'
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$el'
+#                          Expression ('in' parameter)
 #                              Special variable '*self'
-#                              Index list [1 item]
-#                                  Item 0
-#                                      Number '0'
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$i'
-#                      Expression ('in' parameter)
-#                          Operation
-#                              Number '1'
-#                              Range operator (..)
-#                              Instance variable '@lastIndex'
-#                      For body
-#                          Instruction
-#                              Assignment
-#                                  Lexical variable '$c'
-#                                  Operation
-#                                      Lexical variable '$c'
-#                                      Addition operator (+)
-#                                      Index
-#                                          Special variable '*self'
-#                                          Index list [1 item]
+#                          For body
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Call
+#                                          Lexical variable '$code'
+#                                          Argument list [1 item]
 #                                              Item 0
-#                                                  Lexical variable '$i'
-#                  Instruction
-#                      Return
-#                          Lexical variable '$c'
-#          Computed property 'sum0' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$c'
-#                          Number '0'
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$el'
-#                      Expression ('in' parameter)
-#                          Special variable '*self'
-#                      For body
-#                          Instruction
-#                              Assignment
-#                                  Lexical variable '$c'
-#                                  Operation
+#                                                  Lexical variable '$el'
+#                                  If body
+#                                      Instruction
+#                                          Return
+#                                              Boolean true
+#                      Instruction
+#                          Return
+#                              Boolean false
+#              Method 'all' { $code:Code -> $result $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$code'
+#                              Argument type
+#                                  Bareword 'Code'
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$el'
+#                          Expression ('in' parameter)
+#                              Special variable '*self'
+#                          For body
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Negation
+#                                          Call
+#                                              Lexical variable '$code'
+#                                              Argument list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$el'
+#                                  If body
+#                                      Instruction
+#                                          Return
+#                                              Boolean false
+#                      Instruction
+#                          Return
+#                              Boolean true
+#              Computed property 'sum' { -> $result $result }
+#                  Function body
+#                      If
+#                          Expression ('if' parameter)
+#                              Instance variable '@empty'
+#                          If body
+#                              Instruction
+#                                  Return
+#                                      Undefined
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$c'
+#                              Index
+#                                  Special variable '*self'
+#                                  Index list [1 item]
+#                                      Item 0
+#                                          Number '0'
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$i'
+#                          Expression ('in' parameter)
+#                              Operation
+#                                  Number '1'
+#                                  Range operator (..)
+#                                  Instance variable '@lastIndex'
+#                          For body
+#                              Instruction
+#                                  Assignment
 #                                      Lexical variable '$c'
-#                                      Addition operator (+)
-#                                      Lexical variable '$el'
-#                  Instruction
-#                      Return
-#                          Lexical variable '$c'
-#          Computed property 'iterator' { -> Iterator }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'ListIterator'
-#                              Argument list [1 item]
-#                                  Item 0
-#                                      Special variable '*self'
-#                          Bareword 'Iterator'
-#          Method 'opAdd' { $rhs:List -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'List'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$new'
-#                          Call
-#                              Instance variable '@copy'
-#                              Argument list [0 items]
-#                  Instruction
-#                      Call
-#                          Property 'push'
-#                              Lexical variable '$new'
-#                          Named argument list [1 item]
-#                              Item 0
-#                                  Pair 'items'
-#                                      Lexical variable '$rhs'
-#                  Instruction
-#                      Return
-#                          Lexical variable '$new'
-#          Method 'opSub' { $rhs:List -> $result }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$rhs'
-#                          Argument type
-#                              Bareword 'List'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$new'
-#                          Call
-#                              Instance variable '@copy'
-#                              Argument list [0 items]
-#                  For (values)
-#                      Expression ('for' parameter)
-#                          Lexical variable '$remove'
-#                      Expression ('in' parameter)
-#                          Lexical variable '$rhs'
-#                      For body
-#                          Instruction
+#                                      Operation
+#                                          Lexical variable '$c'
+#                                          Addition operator (+)
+#                                          Index
+#                                              Special variable '*self'
+#                                              Index list [1 item]
+#                                                  Item 0
+#                                                      Lexical variable '$i'
+#                      Instruction
+#                          Return
+#                              Lexical variable '$c'
+#              Computed property 'sum0' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$c'
+#                              Number '0'
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$el'
+#                          Expression ('in' parameter)
+#                              Special variable '*self'
+#                          For body
+#                              Instruction
+#                                  Assignment
+#                                      Lexical variable '$c'
+#                                      Operation
+#                                          Lexical variable '$c'
+#                                          Addition operator (+)
+#                                          Lexical variable '$el'
+#                      Instruction
+#                          Return
+#                              Lexical variable '$c'
+#              Computed property 'iterator' { -> Iterator }
+#                  Function body
+#                      Instruction
+#                          Return
 #                              Call
-#                                  Property 'removeAll'
-#                                      Lexical variable '$new'
+#                                  Bareword 'ListIterator'
 #                                  Argument list [1 item]
 #                                      Item 0
-#                                          Lexical variable '$remove'
-#                  Instruction
-#                      Return
-#                          Lexical variable '$new'
-#      Include (Code, Iterator, List, ListIterator)
+#                                          Special variable '*self'
+#                              Bareword 'Iterator'
+#              Method 'opAdd' { $rhs:List -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'List'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$new'
+#                              Call
+#                                  Instance variable '@copy'
+#                                  Argument list [0 items]
+#                      Instruction
+#                          Call
+#                              Property 'push'
+#                                  Lexical variable '$new'
+#                              Named argument list [1 item]
+#                                  Item 0
+#                                      Pair 'items'
+#                                          Lexical variable '$rhs'
+#                      Instruction
+#                          Return
+#                              Lexical variable '$new'
+#              Method 'opSub' { $rhs:List -> $result }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$rhs'
+#                              Argument type
+#                                  Bareword 'List'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$new'
+#                              Call
+#                                  Instance variable '@copy'
+#                                  Argument list [0 items]
+#                      For (values)
+#                          Expression ('for' parameter)
+#                              Lexical variable '$remove'
+#                          Expression ('in' parameter)
+#                              Lexical variable '$rhs'
+#                          For body
+#                              Instruction
+#                                  Call
+#                                      Property 'removeAll'
+#                                          Lexical variable '$new'
+#                                      Argument list [1 item]
+#                                          Item 0
+#                                              Lexical variable '$remove'
+#                      Instruction
+#                          Return
+#                              Lexical variable '$new'
+#          Include (Code, Iterator, List, ListIterator)
 package FF;
 
 use warnings;

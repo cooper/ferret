@@ -1,53 +1,53 @@
 # === Document Model ===
-#  Document './std/CORE.frt'
+#  File './std/CORE.frt'
 #      Package 'CORE'
-#      Instruction
-#          Load
-#              Bareword 'Error'
-#      Instruction
-#          Load
-#              Bareword 'Signal'
-#      Instruction
-#          Load
-#              Bareword 'Complex'
-#      Instruction
-#          Load
-#              Bareword 'Char'
-#      Instruction
-#          Load
-#              Bareword 'Extension::NATIVE'
-#      Instruction
-#          Load
-#              Bareword 'Extension::Number'
-#      Instruction
-#          Load
-#              Bareword 'Extension::String'
-#      Instruction
-#          Load
-#              Bareword 'Extension::List'
-#      Instruction
-#          Load
-#              Bareword 'Extension::Hash'
-#      Instruction
-#          Load
-#              Bareword 'Iterator'
-#      Instruction
-#          Load
-#              Bareword 'EventSet'
-#      Instruction
-#          Load
-#              Bareword 'Indexed'
-#      Type definition ('Any')
-#          Type body
-#      Type definition ('Code')
-#          Type body
-#              Instruction
-#                  Satisfies
-#                      Property variable '.name'
-#              Instruction
-#                  Satisfies
-#                      Property variable '.signature'
-#      Include (Char, Complex, Error, EventSet, Extension::Hash, Extension::List, Extension::NATIVE, Extension::Number, Extension::String, Indexed, Iterator, Signal)
+#          Instruction
+#              Load
+#                  Bareword 'Error'
+#          Instruction
+#              Load
+#                  Bareword 'Signal'
+#          Instruction
+#              Load
+#                  Bareword 'Complex'
+#          Instruction
+#              Load
+#                  Bareword 'Char'
+#          Instruction
+#              Load
+#                  Bareword 'Extension::NATIVE'
+#          Instruction
+#              Load
+#                  Bareword 'Extension::Number'
+#          Instruction
+#              Load
+#                  Bareword 'Extension::String'
+#          Instruction
+#              Load
+#                  Bareword 'Extension::List'
+#          Instruction
+#              Load
+#                  Bareword 'Extension::Hash'
+#          Instruction
+#              Load
+#                  Bareword 'Iterator'
+#          Instruction
+#              Load
+#                  Bareword 'EventSet'
+#          Instruction
+#              Load
+#                  Bareword 'Indexed'
+#          Type definition ('Any')
+#              Type body
+#          Type definition ('Code')
+#              Type body
+#                  Instruction
+#                      Satisfies
+#                          Property variable '.name'
+#                  Instruction
+#                      Satisfies
+#                          Property variable '.signature'
+#          Include (Char, Complex, Error, EventSet, Extension::Hash, Extension::List, Extension::NATIVE, Extension::Number, Extension::String, Indexed, Iterator, Signal)
 package FF;
 
 use warnings;

@@ -1,54 +1,55 @@
 # === Document Model ===
-#  Document './std/Stack.frt'
-#      Class 'Stack' <T>
-#          Class method 'initializer__' { ?$items:T... }
-#              Function body
-#                  Instruction
-#                      Want (...)
-#                          Instance variable '@items'
-#                          Argument type
-#                              Bareword 'T'
-#          Method 'push' { $item:T }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$item'
-#                          Argument type
-#                              Bareword 'T'
-#                  Instruction
-#                      Call
-#                          Property 'push'
+#  File './std/Stack.frt'
+#      Package 'main'
+#          Class 'Stack' <T>
+#              Class method 'initializer__' { ?$items:T... }
+#                  Function body
+#                      Instruction
+#                          Want (...)
 #                              Instance variable '@items'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Lexical variable '$item'
-#          Method 'pop' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
+#                              Argument type
+#                                  Bareword 'T'
+#              Method 'push' { $item:T }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$item'
+#                              Argument type
+#                                  Bareword 'T'
+#                      Instruction
 #                          Call
-#                              Property 'pop'
+#                              Property 'push'
 #                                  Instance variable '@items'
-#                              Argument list [0 items]
-#          Method 'description' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$name'
-#                          Property 'name'
-#                              Bareword 'T'
-#                  Instruction
-#                      Return
-#                          Operation
-#                              String 'Stack<'
-#                              Addition operator (+)
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Lexical variable '$item'
+#              Method 'pop' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Property 'pop'
+#                                      Instance variable '@items'
+#                                  Argument list [0 items]
+#              Method 'description' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
 #                              Lexical variable '$name'
-#                              Addition operator (+)
-#                              String '> '
-#                              Addition operator (+)
-#                              Special property '*description'
-#                                  Instance variable '@items'
-#      Include (T)
+#                              Property 'name'
+#                                  Bareword 'T'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  String 'Stack<'
+#                                  Addition operator (+)
+#                                  Lexical variable '$name'
+#                                  Addition operator (+)
+#                                  String '> '
+#                                  Addition operator (+)
+#                                  Special property '*description'
+#                                      Instance variable '@items'
+#          Include (T)
 package FF;
 
 use warnings;

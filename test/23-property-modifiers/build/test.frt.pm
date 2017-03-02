@@ -1,15 +1,16 @@
 # === Document Model ===
-#  Document './test/23-property-modifiers/test.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$x'
-#              Object [0 items]
-#      Instruction
-#          Delete modifier
-#              Lexical variable '$x'
-#      Instruction
-#          Bareword 'Second'
-#      Include (Second)
+#  File './test/23-property-modifiers/test.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
+#                  Lexical variable '$x'
+#                  Object [0 items]
+#          Instruction
+#              Delete modifier
+#                  Lexical variable '$x'
+#          Instruction
+#              Bareword 'Second'
+#          Include (Second)
 package FF;
 
 use warnings;

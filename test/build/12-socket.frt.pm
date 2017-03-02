@@ -1,116 +1,117 @@
 # === Document Model ===
-#  Document './test/12-socket.frt'
-#      Instruction
-#          Assignment
-#              Lexical variable '$sock'
-#              Call
-#                  Bareword 'Socket::TCP'
-#                  Named argument list [3 items]
-#                      Item 0
-#                          Pair 'address'
-#                              String 'k.notroll.net'
-#                      Item 1
-#                          Pair 'port'
-#                              Number '6667'
-#                      Item 2
-#                          Pair 'readMode'
-#                              Symbol :line
-#      Instruction
-#          Call
-#              Bareword 'inspect'
-#              Argument list [1 item]
-#                  Item 0
-#                      Lexical variable '$sock'
-#      On
-#          Expression ('on' parameter)
-#              Property 'gotLine'
+#  File './test/12-socket.frt'
+#      Package 'main'
+#          Instruction
+#              Assignment
 #                  Lexical variable '$sock'
-#          Anonymous function { $data }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$data'
-#                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Operation
-#                                      String 'recv: '
-#                                      Addition operator (+)
-#                                      Lexical variable '$data'
-#      On
-#          Expression ('on' parameter)
-#              Property 'println'
-#                  Lexical variable '$sock'
-#          Anonymous function { $data }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$data'
-#                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Operation
-#                                      String 'send: '
-#                                      Addition operator (+)
-#                                      Lexical variable '$data'
-#      On
-#          Expression ('on' parameter)
-#              Property 'connected'
-#                  Lexical variable '$sock'
-#          Anonymous function
-#              Function body
-#                  Instruction
-#                      Call
-#                          Property 'println'
-#                              Lexical variable '$sock'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  String 'NICK k'
-#                  Instruction
-#                      Call
-#                          Property 'println'
-#                              Lexical variable '$sock'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Operation
-#                                      String 'USER k '
-#                                      Addition operator (+)
-#                                      String '*'
-#                                      Addition operator (+)
-#                                      String ' '
-#                                      Addition operator (+)
-#                                      String '*'
-#                                      Addition operator (+)
-#                                      String ' :k'
-#      Instruction
-#          Call
-#              Property 'connect'
-#                  Lexical variable '$sock'
-#              Argument list [0 items]
-#      On
-#          Expression ('on' parameter)
-#              Property 'expire'
 #                  Call
-#                      Property 'once'
+#                      Bareword 'Socket::TCP'
+#                      Named argument list [3 items]
+#                          Item 0
+#                              Pair 'address'
+#                                  String 'k.notroll.net'
+#                          Item 1
+#                              Pair 'port'
+#                                  Number '6667'
+#                          Item 2
+#                              Pair 'readMode'
+#                                  Symbol :line
+#          Instruction
+#              Call
+#                  Bareword 'inspect'
+#                  Argument list [1 item]
+#                      Item 0
+#                          Lexical variable '$sock'
+#          On
+#              Expression ('on' parameter)
+#                  Property 'gotLine'
+#                      Lexical variable '$sock'
+#              Anonymous function { $data }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$data'
+#                      Instruction
 #                          Call
-#                              Bareword 'Timer'
+#                              Bareword 'say'
 #                              Argument list [1 item]
 #                                  Item 0
-#                                      Number '5'
-#          Anonymous function
-#              Function body
-#                  Instruction
+#                                      Operation
+#                                          String 'recv: '
+#                                          Addition operator (+)
+#                                          Lexical variable '$data'
+#          On
+#              Expression ('on' parameter)
+#                  Property 'println'
+#                      Lexical variable '$sock'
+#              Anonymous function { $data }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$data'
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Operation
+#                                          String 'send: '
+#                                          Addition operator (+)
+#                                          Lexical variable '$data'
+#          On
+#              Expression ('on' parameter)
+#                  Property 'connected'
+#                      Lexical variable '$sock'
+#              Anonymous function
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Property 'println'
+#                                  Lexical variable '$sock'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      String 'NICK k'
+#                      Instruction
+#                          Call
+#                              Property 'println'
+#                                  Lexical variable '$sock'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Operation
+#                                          String 'USER k '
+#                                          Addition operator (+)
+#                                          String '*'
+#                                          Addition operator (+)
+#                                          String ' '
+#                                          Addition operator (+)
+#                                          String '*'
+#                                          Addition operator (+)
+#                                          String ' :k'
+#          Instruction
+#              Call
+#                  Property 'connect'
+#                      Lexical variable '$sock'
+#                  Argument list [0 items]
+#          On
+#              Expression ('on' parameter)
+#                  Property 'expire'
 #                      Call
-#                          Property 'println'
-#                              Lexical variable '$sock'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  String 'JOIN #k'
-#      Include (Socket::TCP, Timer)
+#                          Property 'once'
+#                              Call
+#                                  Bareword 'Timer'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Number '5'
+#              Anonymous function
+#                  Function body
+#                      Instruction
+#                          Call
+#                              Property 'println'
+#                                  Lexical variable '$sock'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      String 'JOIN #k'
+#          Include (Socket::TCP, Timer)
 package FF;
 
 use warnings;

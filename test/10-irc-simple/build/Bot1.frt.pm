@@ -1,135 +1,136 @@
 # === Document Model ===
-#  Document './test/10-irc-simple/Bot1.frt'
-#      Class 'Bot1'
-#          Class method 'initializer__' { $addr:Str $nick:Str $user:Str ?$port:Num ?$real:Str }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Instance variable '@addr'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Need
-#                          Instance variable '@nick'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Need
-#                          Instance variable '@user'
-#                          Argument type
-#                              Bareword 'Str'
-#                  Instruction
-#                      Want
-#                          Instance variable '@port'
-#                          Argument type
-#                              Bareword 'Num'
-#                          Argument value
-#                              Number '6667'
-#                  Instruction
-#                      Want
-#                          Instance variable '@real'
-#                          Argument type
-#                              Bareword 'Str'
-#                          Argument value
-#                              String 'Ferret IRC'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@sock'
+#  File './test/10-irc-simple/Bot1.frt'
+#      Package 'main'
+#          Class 'Bot1'
+#              Class method 'initializer__' { $addr:Str $nick:Str $user:Str ?$port:Num ?$real:Str }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Instance variable '@addr'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Need
+#                              Instance variable '@nick'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Need
+#                              Instance variable '@user'
+#                              Argument type
+#                                  Bareword 'Str'
+#                      Instruction
+#                          Want
+#                              Instance variable '@port'
+#                              Argument type
+#                                  Bareword 'Num'
+#                              Argument value
+#                                  Number '6667'
+#                      Instruction
+#                          Want
+#                              Instance variable '@real'
+#                              Argument type
+#                                  Bareword 'Str'
+#                              Argument value
+#                                  String 'Ferret IRC'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@sock'
+#                              Call
+#                                  Bareword 'Socket::TCP'
+#                                  Named argument list [3 items]
+#                                      Item 0
+#                                          Pair 'address'
+#                                              Instance variable '@addr'
+#                                      Item 1
+#                                          Pair 'port'
+#                                              Instance variable '@port'
+#                                      Item 2
+#                                          Pair 'readMode'
+#                                              Symbol :line
+#                      On
+#                          Expression ('on' parameter)
+#                              Property 'connected'
+#                                  Instance variable '@sock'
+#                          Anonymous function
+#                              Function body
+#                                  Instruction
+#                                      Call
+#                                          Instance variable '@send'
+#                                          Argument list [1 item]
+#                                              Item 0
+#                                                  Operation
+#                                                      String 'USER '
+#                                                      Addition operator (+)
+#                                                      Instance variable '@user'
+#                                                      Addition operator (+)
+#                                                      String ' '
+#                                                      Addition operator (+)
+#                                                      String '*'
+#                                                      Addition operator (+)
+#                                                      String ' '
+#                                                      Addition operator (+)
+#                                                      String '*'
+#                                                      Addition operator (+)
+#                                                      String ' :'
+#                                                      Addition operator (+)
+#                                                      Instance variable '@real'
+#                                  Instruction
+#                                      Call
+#                                          Instance variable '@send'
+#                                          Argument list [1 item]
+#                                              Item 0
+#                                                  Operation
+#                                                      String 'NICK '
+#                                                      Addition operator (+)
+#                                                      Instance variable '@nick'
+#                      On
+#                          Expression ('on' parameter)
+#                              Property 'gotLine'
+#                                  Instance variable '@sock'
+#                          Anonymous function { $data }
+#                              Function body
+#                                  Instruction
+#                                      Need
+#                                          Lexical variable '$data'
+#                                  Instruction
+#                                      Call
+#                                          Bareword 'say'
+#                                          Argument list [1 item]
+#                                              Item 0
+#                                                  Operation
+#                                                      String 'recv: '
+#                                                      Addition operator (+)
+#                                                      Lexical variable '$data'
+#              Method 'connect'
+#                  Function body
+#                      Instruction
 #                          Call
-#                              Bareword 'Socket::TCP'
-#                              Named argument list [3 items]
+#                              Property 'connect'
+#                                  Instance variable '@sock'
+#                              Argument list [0 items]
+#              Method 'send' { $line }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$line'
+#                      Instruction
+#                          Call
+#                              Bareword 'say'
+#                              Argument list [1 item]
 #                                  Item 0
-#                                      Pair 'address'
-#                                          Instance variable '@addr'
-#                                  Item 1
-#                                      Pair 'port'
-#                                          Instance variable '@port'
-#                                  Item 2
-#                                      Pair 'readMode'
-#                                          Symbol :line
-#                  On
-#                      Expression ('on' parameter)
-#                          Property 'connected'
-#                              Instance variable '@sock'
-#                      Anonymous function
-#                          Function body
-#                              Instruction
-#                                  Call
-#                                      Instance variable '@send'
-#                                      Argument list [1 item]
-#                                          Item 0
-#                                              Operation
-#                                                  String 'USER '
-#                                                  Addition operator (+)
-#                                                  Instance variable '@user'
-#                                                  Addition operator (+)
-#                                                  String ' '
-#                                                  Addition operator (+)
-#                                                  String '*'
-#                                                  Addition operator (+)
-#                                                  String ' '
-#                                                  Addition operator (+)
-#                                                  String '*'
-#                                                  Addition operator (+)
-#                                                  String ' :'
-#                                                  Addition operator (+)
-#                                                  Instance variable '@real'
-#                              Instruction
-#                                  Call
-#                                      Instance variable '@send'
-#                                      Argument list [1 item]
-#                                          Item 0
-#                                              Operation
-#                                                  String 'NICK '
-#                                                  Addition operator (+)
-#                                                  Instance variable '@nick'
-#                  On
-#                      Expression ('on' parameter)
-#                          Property 'gotLine'
-#                              Instance variable '@sock'
-#                      Anonymous function { $data }
-#                          Function body
-#                              Instruction
-#                                  Need
-#                                      Lexical variable '$data'
-#                              Instruction
-#                                  Call
-#                                      Bareword 'say'
-#                                      Argument list [1 item]
-#                                          Item 0
-#                                              Operation
-#                                                  String 'recv: '
-#                                                  Addition operator (+)
-#                                                  Lexical variable '$data'
-#          Method 'connect'
-#              Function body
-#                  Instruction
-#                      Call
-#                          Property 'connect'
-#                              Instance variable '@sock'
-#                          Argument list [0 items]
-#          Method 'send' { $line }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$line'
-#                  Instruction
-#                      Call
-#                          Bareword 'say'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Operation
-#                                      String 'send: '
-#                                      Addition operator (+)
+#                                      Operation
+#                                          String 'send: '
+#                                          Addition operator (+)
+#                                          Lexical variable '$line'
+#                      Instruction
+#                          Call
+#                              Property 'println'
+#                                  Instance variable '@sock'
+#                              Argument list [1 item]
+#                                  Item 0
 #                                      Lexical variable '$line'
-#                  Instruction
-#                      Call
-#                          Property 'println'
-#                              Instance variable '@sock'
-#                          Argument list [1 item]
-#                              Item 0
-#                                  Lexical variable '$line'
-#      Include (Num, Socket::TCP, Str)
+#          Include (Num, Socket::TCP, Str)
 package FF;
 
 use warnings;

@@ -1,204 +1,204 @@
 # === Document Model ===
-#  Document './std/Math/Rect.frt'
+#  File './std/Math/Rect.frt'
 #      Package 'Math'
-#      Class 'Rect'
-#          Class method 'initializer__' { $x:Num $y:Num $width:Num $height:Num }
-#              Function body
-#                  Instruction
-#                      Need
-#                          Lexical variable '$x'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Need
-#                          Lexical variable '$y'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Need
-#                          Instance variable '@width'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Need
-#                          Instance variable '@height'
-#                          Argument type
-#                              Bareword 'Num'
-#                  Instruction
-#                      Assignment
-#                          Instance variable '@origin'
-#                          Call
-#                              Bareword 'Point'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Lexical variable '$x'
-#                                  Item 1
-#                                      Lexical variable '$y'
-#          Computed property 'vertices' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Value list [4 items]
-#                              Item 0
-#                                  Instance variable '@topLeft'
-#                              Item 1
-#                                  Instance variable '@topRight'
-#                              Item 2
-#                                  Instance variable '@bottomLeft'
-#                              Item 3
-#                                  Instance variable '@bottomRight'
-#          Computed property 'bottomLeft' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Instance variable '@origin'
-#          Computed property 'bottomRight' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Point'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Property 'x'
-#                                              Instance variable '@origin'
-#                                          Addition operator (+)
-#                                          Instance variable '@width'
-#                                  Item 1
-#                                      Property 'y'
-#                                          Instance variable '@origin'
-#          Computed property 'topLeft' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Point'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Property 'x'
-#                                          Instance variable '@origin'
-#                                  Item 1
-#                                      Operation
-#                                          Property 'y'
-#                                              Instance variable '@origin'
-#                                          Addition operator (+)
-#                                          Instance variable '@height'
-#          Computed property 'topRight' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Point'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Operation
-#                                          Property 'x'
-#                                              Instance variable '@origin'
-#                                          Addition operator (+)
-#                                          Instance variable '@width'
-#                                  Item 1
-#                                      Operation
-#                                          Property 'y'
-#                                              Instance variable '@origin'
-#                                          Addition operator (+)
-#                                          Instance variable '@height'
-#          Computed property 'bottomLine' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Line'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Instance variable '@bottomLeft'
-#                                  Item 1
-#                                      Instance variable '@bottomRight'
-#          Computed property 'topLine' { -> $result }
-#              Function body
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Line'
-#                              Argument list [2 items]
+#          Class 'Rect'
+#              Class method 'initializer__' { $x:Num $y:Num $width:Num $height:Num }
+#                  Function body
+#                      Instruction
+#                          Need
+#                              Lexical variable '$x'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Need
+#                              Lexical variable '$y'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Need
+#                              Instance variable '@width'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Need
+#                              Instance variable '@height'
+#                              Argument type
+#                                  Bareword 'Num'
+#                      Instruction
+#                          Assignment
+#                              Instance variable '@origin'
+#                              Call
+#                                  Bareword 'Point'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Lexical variable '$x'
+#                                      Item 1
+#                                          Lexical variable '$y'
+#              Computed property 'vertices' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Value list [4 items]
 #                                  Item 0
 #                                      Instance variable '@topLeft'
 #                                  Item 1
 #                                      Instance variable '@topRight'
-#          Computed property 'center' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$x'
-#                          Operation
-#                              Property 'x'
-#                                  Instance variable '@origin'
-#                              Addition operator (+)
-#                              Instance variable '@width'
-#                              Division operator (/)
-#                              Number '2'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$y'
-#                          Operation
-#                              Property 'y'
-#                                  Instance variable '@origin'
-#                              Addition operator (+)
-#                              Instance variable '@height'
-#                              Division operator (/)
-#                              Number '2'
-#                  Instruction
-#                      Return
-#                          Call
-#                              Bareword 'Point'
-#                              Argument list [2 items]
-#                                  Item 0
-#                                      Lexical variable '$x'
-#                                  Item 1
-#                                      Lexical variable '$y'
-#          Method 'description' { -> $result }
-#              Function body
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$o'
-#                          Instance variable '@origin'
-#                  Instruction
-#                      Assignment
-#                          Lexical variable '$c'
-#                          Instance variable '@center'
-#                  Instruction
-#                      Return
-#                          Operation
-#                              String 'Rect( Origin('
-#                              Addition operator (+)
-#                              Property 'x'
-#                                  Lexical variable '$o'
-#                              Addition operator (+)
-#                              String ', '
-#                              Addition operator (+)
-#                              Property 'y'
-#                                  Lexical variable '$o'
-#                              Addition operator (+)
-#                              String ') Center('
-#                              Addition operator (+)
-#                              Property 'x'
-#                                  Lexical variable '$c'
-#                              Addition operator (+)
-#                              String ', '
-#                              Addition operator (+)
-#                              Property 'y'
-#                                  Lexical variable '$c'
-#                              Addition operator (+)
-#                              String ') Width = '
-#                              Addition operator (+)
-#                              Instance variable '@width'
-#                              Addition operator (+)
-#                              String ' Height = '
-#                              Addition operator (+)
-#                              Instance variable '@height'
-#                              Addition operator (+)
-#                              String ' )'
-#      Include (Line, Num, Point)
+#                                  Item 2
+#                                      Instance variable '@bottomLeft'
+#                                  Item 3
+#                                      Instance variable '@bottomRight'
+#              Computed property 'bottomLeft' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Instance variable '@origin'
+#              Computed property 'bottomRight' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Point'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Property 'x'
+#                                                  Instance variable '@origin'
+#                                              Addition operator (+)
+#                                              Instance variable '@width'
+#                                      Item 1
+#                                          Property 'y'
+#                                              Instance variable '@origin'
+#              Computed property 'topLeft' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Point'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Property 'x'
+#                                              Instance variable '@origin'
+#                                      Item 1
+#                                          Operation
+#                                              Property 'y'
+#                                                  Instance variable '@origin'
+#                                              Addition operator (+)
+#                                              Instance variable '@height'
+#              Computed property 'topRight' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Point'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Operation
+#                                              Property 'x'
+#                                                  Instance variable '@origin'
+#                                              Addition operator (+)
+#                                              Instance variable '@width'
+#                                      Item 1
+#                                          Operation
+#                                              Property 'y'
+#                                                  Instance variable '@origin'
+#                                              Addition operator (+)
+#                                              Instance variable '@height'
+#              Computed property 'bottomLine' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Line'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Instance variable '@bottomLeft'
+#                                      Item 1
+#                                          Instance variable '@bottomRight'
+#              Computed property 'topLine' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Line'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Instance variable '@topLeft'
+#                                      Item 1
+#                                          Instance variable '@topRight'
+#              Computed property 'center' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$x'
+#                              Operation
+#                                  Property 'x'
+#                                      Instance variable '@origin'
+#                                  Addition operator (+)
+#                                  Instance variable '@width'
+#                                  Division operator (/)
+#                                  Number '2'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$y'
+#                              Operation
+#                                  Property 'y'
+#                                      Instance variable '@origin'
+#                                  Addition operator (+)
+#                                  Instance variable '@height'
+#                                  Division operator (/)
+#                                  Number '2'
+#                      Instruction
+#                          Return
+#                              Call
+#                                  Bareword 'Point'
+#                                  Argument list [2 items]
+#                                      Item 0
+#                                          Lexical variable '$x'
+#                                      Item 1
+#                                          Lexical variable '$y'
+#              Method 'description' { -> $result }
+#                  Function body
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$o'
+#                              Instance variable '@origin'
+#                      Instruction
+#                          Assignment
+#                              Lexical variable '$c'
+#                              Instance variable '@center'
+#                      Instruction
+#                          Return
+#                              Operation
+#                                  String 'Rect( Origin('
+#                                  Addition operator (+)
+#                                  Property 'x'
+#                                      Lexical variable '$o'
+#                                  Addition operator (+)
+#                                  String ', '
+#                                  Addition operator (+)
+#                                  Property 'y'
+#                                      Lexical variable '$o'
+#                                  Addition operator (+)
+#                                  String ') Center('
+#                                  Addition operator (+)
+#                                  Property 'x'
+#                                      Lexical variable '$c'
+#                                  Addition operator (+)
+#                                  String ', '
+#                                  Addition operator (+)
+#                                  Property 'y'
+#                                      Lexical variable '$c'
+#                                  Addition operator (+)
+#                                  String ') Width = '
+#                                  Addition operator (+)
+#                                  Instance variable '@width'
+#                                  Addition operator (+)
+#                                  String ' Height = '
+#                                  Addition operator (+)
+#                                  Instance variable '@height'
+#                                  Addition operator (+)
+#                                  String ' )'
+#          Include (Line, Num, Point)
 package FF;
 
 use warnings;
