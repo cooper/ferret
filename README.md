@@ -182,3 +182,20 @@ Otherwise, head to **#k** on **irc.notroll.net** and start complaining.
 * [Keywords](doc/Keywords.md) - Detailed account of every Ferret keyword
 * [Operators](doc/Operators.md) - Detailed account of Ferret operators
 * [Variables](doc/Variables.md) - Explanation of Ferret variable types
+
+Standard library
+
+* [String](std/doc/String.md) - UTF-8 strings
+* [Number](std/doc/Number.md) - Real numbers
+* [Complex](std/doc/Complex.md) - Complex numbers
+* [JSON](std/doc/JSON.md) - JSON encoding/decoding
+* [Math](std/doc/Math.md) - Math functions and constants
+* [Math::Point](std/Math/doc/Point.md) - 2D points
+* [Math::Line](std/Math/doc/Line.md) - Line segments
+* [Math::Rect](std/Math/doc/Rect.md) - Rectangles
+* [Math::Vector](std/Math/doc/Vector.md) - Vectors of any dimension
+* [Math::Matrix](std/Math/doc/Matrix.md) - Matrices of any dimensions
+* [HTTP](std/HTTP/doc) - HTTP suite
+* [HTTP::Client](std/HTTP/doc/Client.md) - Represents an HTTP user agent
+* [HTTP::Request](std/HTTP/doc/Request.md) - Represents an HTTP request
+* [Test](std/doc/Test.md) - Basic test suite
