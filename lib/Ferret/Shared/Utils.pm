@@ -84,7 +84,7 @@ state $link_map = {
 
     'Num'               => '[Num](/std/doc/Number.md)',
     'Number'            => '[Num](/std/doc/Number.md)',
-    'Complex'           => '[Num](/std/doc/Complex.md)',
+    'Complex'           => '[Complex](/std/doc/Complex.md)',
 
     # even numbers
     'Num::Even'         => '[Num::Even](/std/doc/Number.md)',

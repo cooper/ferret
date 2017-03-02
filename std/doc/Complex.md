@@ -81,7 +81,7 @@ Addition of complex numbers.
 
 #### Arguments
 
-* __rhs__: [Num](/std/doc/Complex.md)  
+* __rhs__: [Complex](/std/doc/Complex.md)  
 
 
 
@@ -111,7 +111,7 @@ Subtraction of complex numbers.
 
 #### Arguments
 
-* __rhs__: [Num](/std/doc/Complex.md)  
+* __rhs__: [Complex](/std/doc/Complex.md)  
 
 
 
@@ -156,7 +156,7 @@ Multiplication of complex numbers.
 
 #### Arguments
 
-* __rhs__: [Num](/std/doc/Complex.md)  
+* __rhs__: [Complex](/std/doc/Complex.md)  
 
 
 
@@ -186,7 +186,7 @@ Division of complex numbers.
 
 #### Arguments
 
-* __rhs__: [Num](/std/doc/Complex.md)  
+* __rhs__: [Complex](/std/doc/Complex.md)  
 
 
 
@@ -249,7 +249,7 @@ Equality of complex numbers.
 
 #### Arguments
 
-* __ehs__: [Num](/std/doc/Complex.md)  
+* __ehs__: [Complex](/std/doc/Complex.md)  
 
 
 
