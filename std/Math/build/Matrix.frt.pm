@@ -341,7 +341,7 @@ my $result = do {
             my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
             return $ret_func->(
-                add( $scope, $pos->(46.35), $ins, $$scope->{'ehs'} ) );
+                add( $scope, $pos->(58.35), $ins, $$scope->{'ehs'} ) );
             return $ret;
         }
     );
@@ -355,7 +355,7 @@ my $result = do {
             my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
             my $ins = $args->{_};
             return $ret_func->(
-                _sub( $scope, $pos->(51.35), $ins, $$scope->{'rhs'} ) );
+                _sub( $scope, $pos->(64.35), $ins, $$scope->{'rhs'} ) );
             return $ret;
         }
     );
@@ -370,10 +370,10 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'a', 57.2 ) || return $ret_func->();
-            need( $scope, $args, 'b', 57.4 ) || return $ret_func->();
+            need( $scope, $args, 'a', 71.2 ) || return $ret_func->();
+            need( $scope, $args, 'b', 71.4 ) || return $ret_func->();
             return $ret_func->(
-                add( $scope, $pos->(58.3), $$scope->{'a'}, $$scope->{'b'} ) );
+                add( $scope, $pos->(72.3), $$scope->{'a'}, $$scope->{'b'} ) );
             return $ret;
         }
     );
@@ -388,10 +388,10 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'a', 65.2 ) || return $ret_func->();
-            need( $scope, $args, 'b', 65.4 ) || return $ret_func->();
+            need( $scope, $args, 'a', 80.2 ) || return $ret_func->();
+            need( $scope, $args, 'b', 80.4 ) || return $ret_func->();
             return $ret_func->(
-                _sub( $scope, $pos->(66.3), $$scope->{'a'}, $$scope->{'b'} ) );
+                _sub( $scope, $pos->(81.3), $$scope->{'a'}, $$scope->{'b'} ) );
             return $ret;
         }
     );
@@ -418,7 +418,7 @@ my $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 need( $self, $args, 'm' ) || return $ret_func->();
-                want( $self, $args, 'items', 6.2 );
+                want( $self, $args, 'items', 9.2 );
                 return $ret;
             }
         );
@@ -443,8 +443,8 @@ my $result = do {
                 return $ret_func->(
                     div(
                         $scope,
-                        $pos->(14.4),
-                        $$self->{'items'}->property_u( 'length', $pos->(14.3) ),
+                        $pos->(19.4),
+                        $$self->{'items'}->property_u( 'length', $pos->(19.3) ),
                         $$self->{'m'}
                     )
                 );
@@ -461,7 +461,7 @@ my $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     add(
-                        $scope, $pos->(18.3),
+                        $scope, $pos->(24.3),
                         $$self->{'rows'}, str( $f, "x" ),
                         $$self->{'columns'}
                     )
@@ -480,9 +480,9 @@ my $result = do {
                 var(
                     $scope,
                     items =>
-                      $$self->{'items'}->property_u( 'copy', $pos->(22.4) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(22.5) ),
-                    $file_scope, $pos->(22.2)
+                      $$self->{'items'}->property_u( 'copy', $pos->(29.4) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(29.5) ),
+                    $file_scope, $pos->(29.2)
                 );
                 return $ret_func->(
                     do {
@@ -499,23 +499,23 @@ my $result = do {
                                                 $scope,
                                                 row => $$scope->{'items'}
                                                   ->property_u( 'splice',
-                                                    $pos->(23.3) )->(
+                                                    $pos->(30.3) )->(
                                                     [
                                                         num( $f, "0" ),
                                                         $$self->{'columns'}
                                                     ],
                                                     $scope, undef,
-                                                    $pos->(23.35)
+                                                    $pos->(30.35)
                                                     ),
                                                 $file_scope,
-                                                $pos->(23.2)
+                                                $pos->(30.2)
                                             );
                                         },
                                         sub {
                                             my ( $scope, $ret_func ) = @_;
                                             $take->( $$scope->{'row'} );
                                         },
-                                        $pos->(23.1)
+                                        $pos->(30.1)
                                       );
                                     return $ret_func->($loop_ret)
                                       if $loop_status eq 'return';
@@ -545,7 +545,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'code', 29.2 ) || return $ret_func->();
+                need( $scope, $args, 'code', 37.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$scope->{'Matrix'}->(
                         [
@@ -553,14 +553,14 @@ my $result = do {
                             [
                                 m     => $$self->{'m'},
                                 items => $$self->{'items'}
-                                  ->property_u( 'map', $pos->(30.45) )->(
+                                  ->property_u( 'map', $pos->(38.45) )->(
                                     [ $$scope->{'code'} ], $scope,
-                                    undef,                 $pos->(30.5)
+                                    undef,                 $pos->(38.5)
                                   )
                             ]
                         ],
                         $scope, undef,
-                        $pos->(30.15)
+                        $pos->(38.15)
                     )
                 );
                 return $ret;
@@ -588,16 +588,16 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs',  34.2 ) || return $ret_func->();
-                need( $scope, $args, 'code', 35.2 ) || return $ret_func->();
+                need( $scope, $args, 'rhs',  44.2 ) || return $ret_func->();
+                need( $scope, $args, 'code', 45.2 ) || return $ret_func->();
                 if (
                     bool(
                         nequal(
                             $scope,
-                            $pos->(36.3),
+                            $pos->(47.3),
                             $$self->{'dimensionHR'},
                             $$scope->{'rhs'}
-                              ->property_u( 'dimensionHR', $pos->(36.5) )
+                              ->property_u( 'dimensionHR', $pos->(47.5) )
                         )
                     )
                   )
@@ -611,19 +611,19 @@ my $result = do {
                                     get_symbol( $f, 'DimensionError' ),
                                     add(
                                         $scope,
-                                        $pos->(37.35),
+                                        $pos->(48.35),
                                         str( $f, "Dimension mismatch " ),
                                         $$self->{'dimensionHR'},
                                         str( $f, " != " ),
                                         $$scope->{'rhs'}->property_u(
-                                            'dimensionHR', $pos->(37.65)
+                                            'dimensionHR', $pos->(48.65)
                                         )
                                     )
                                 ],
                                 $scope, undef,
-                                $pos->(37.15)
+                                $pos->(48.15)
                             ),
-                            $pos->(37.05)
+                            $pos->(48.05)
                         )
                     );
                 }
@@ -639,10 +639,10 @@ my $result = do {
                                         $f, $scope,
                                         range(
                                             $scope,
-                                            $pos->(38.35),
+                                            $pos->(49.35),
                                             num( $f, "0" ),
                                             $$self->{'items'}->property_u(
-                                                'lastIndex', $pos->(38.45)
+                                                'lastIndex', $pos->(49.45)
                                             )
                                         ),
                                         'i',
@@ -654,27 +654,27 @@ my $result = do {
                                                         ${ $scope->{special} }
                                                           ->{'self'}
                                                           ->property_u( 'items',
-                                                            $pos->(39.25) )
+                                                            $pos->(50.25) )
                                                           ->get_index_value(
                                                             [ $$scope->{'i'} ],
                                                             $scope,
-                                                            $pos->(39.3)
+                                                            $pos->(50.3)
                                                           ),
                                                         $$scope->{'rhs'}
                                                           ->property_u( 'items',
-                                                            $pos->(39.55) )
+                                                            $pos->(50.55) )
                                                           ->get_index_value(
                                                             [ $$scope->{'i'} ],
                                                             $scope,
-                                                            $pos->(39.6)
+                                                            $pos->(50.6)
                                                           )
                                                     ],
                                                     $scope, undef,
-                                                    $pos->(39.15)
+                                                    $pos->(50.15)
                                                 )
                                             );
                                         },
-                                        $pos->(38.15)
+                                        $pos->(49.15)
                                     );
                                     return $ret_func->($loop_ret)
                                       if $loop_status eq 'return';
@@ -686,7 +686,7 @@ my $result = do {
                         $gather_ret;
                     },
                     $file_scope,
-                    $pos->(38.1)
+                    $pos->(49.1)
                 );
                 return $ret_func->(
                     $$scope->{'Matrix'}->(
@@ -695,7 +695,7 @@ my $result = do {
                             [ m => $$self->{'m'}, items => $$scope->{'items'} ]
                         ],
                         $scope, undef,
-                        $pos->(41.15)
+                        $pos->(52.15)
                     )
                 );
                 return $ret;
@@ -716,7 +716,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 45.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 57.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'map'}->(
                         [
@@ -726,7 +726,7 @@ my $result = do {
                             )
                         ],
                         $scope, undef,
-                        $pos->(46.15)
+                        $pos->(58.15)
                     )
                 );
                 return $ret;
@@ -747,7 +747,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 50.2 ) || return $ret_func->();
+                need( $scope, $args, 'rhs', 63.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'map'}->(
                         [
@@ -757,7 +757,7 @@ my $result = do {
                             )
                         ],
                         $scope, undef,
-                        $pos->(51.15)
+                        $pos->(64.15)
                     )
                 );
                 return $ret;
@@ -778,7 +778,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 55.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 69.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'mapWith'}->(
                         [
@@ -789,7 +789,7 @@ my $result = do {
                             )
                         ],
                         $scope, undef,
-                        $pos->(56.3)
+                        $pos->(70.3)
                     )
                 );
                 return $ret;
@@ -810,7 +810,7 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 63.2 ) || return $ret_func->();
+                need( $scope, $args, 'rhs', 78.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'mapWith'}->(
                         [
@@ -821,7 +821,7 @@ my $result = do {
                             )
                         ],
                         $scope, undef,
-                        $pos->(64.3)
+                        $pos->(79.3)
                     )
                 );
                 return $ret;
@@ -835,7 +835,7 @@ my $result = do {
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, str => str( $f, "" ), $file_scope, $pos->(71.2) );
+                var( $scope, str => str( $f, "" ), $file_scope, $pos->(86.2) );
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
@@ -847,27 +847,27 @@ my $result = do {
                                 $scope,
                                 str => add(
                                     $scope,
-                                    $pos->(73.1),
+                                    $pos->(88.1),
                                     $$scope->{'str'},
                                     add(
                                         $scope,
-                                        $pos->(73.2),
+                                        $pos->(88.2),
                                         str( $f, "[ " ),
                                         $$scope->{'row'}
-                                          ->property_u( 'join', $pos->(73.3) )
+                                          ->property_u( 'join', $pos->(88.3) )
                                           ->(
                                             [ str( $f, " " ) ], $scope,
-                                            undef, $pos->(73.35)
+                                            undef, $pos->(88.35)
                                           ),
                                         str( $f, " ]" ),
                                         str( $f, "\n" )
                                     )
                                 ),
                                 $file_scope,
-                                $pos->(73.1)
+                                $pos->(88.1)
                             );
                         },
-                        $pos->(72.1)
+                        $pos->(87.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
