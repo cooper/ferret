@@ -26,9 +26,9 @@ has native support for inline `a + bi` notation.
 
 ### Arguments
 
-* __a__: [Number](/std/doc/Number.md) - Real part.
+* __a__: [Num](/std/doc/Number.md) - Real part.
 
-* __b__: [Number](/std/doc/Number.md) - Imaginary part (a real number, though).
+* __b__: [Num](/std/doc/Number.md) - Imaginary part (a real number, though).
 
 ## Methods
 
@@ -81,7 +81,7 @@ Addition of complex numbers.
 
 #### Arguments
 
-* __rhs__: Complex  
+* __rhs__: [Num](/std/doc/Complex.md)  
 
 
 
@@ -96,7 +96,7 @@ Addition of complex and real numbers.
 
 #### Arguments
 
-* __ehs__: [Number](/std/doc/Number.md)  
+* __ehs__: [Num](/std/doc/Number.md)  
 
 
 
@@ -111,7 +111,7 @@ Subtraction of complex numbers.
 
 #### Arguments
 
-* __rhs__: Complex  
+* __rhs__: [Num](/std/doc/Complex.md)  
 
 
 
@@ -126,7 +126,7 @@ Subtraction of real number from complex number.
 
 #### Arguments
 
-* __rhs__: [Number](/std/doc/Number.md)  
+* __rhs__: [Num](/std/doc/Number.md)  
 
 
 
@@ -141,7 +141,7 @@ Subtraction of complex number from real number.
 
 #### Arguments
 
-* __lhs__: [Number](/std/doc/Number.md)  
+* __lhs__: [Num](/std/doc/Number.md)  
 
 
 
@@ -156,7 +156,7 @@ Multiplication of complex numbers.
 
 #### Arguments
 
-* __rhs__: Complex  
+* __rhs__: [Num](/std/doc/Complex.md)  
 
 
 
@@ -171,7 +171,7 @@ Multiplication of real and complex numbers.
 
 #### Arguments
 
-* __ehs__: [Number](/std/doc/Number.md)  
+* __ehs__: [Num](/std/doc/Number.md)  
 
 
 
@@ -186,7 +186,7 @@ Division of complex numbers.
 
 #### Arguments
 
-* __rhs__: Complex  
+* __rhs__: [Num](/std/doc/Complex.md)  
 
 
 
@@ -201,7 +201,7 @@ Division of complex number by real number.
 
 #### Arguments
 
-* __rhs__: [Number](/std/doc/Number.md)  
+* __rhs__: [Num](/std/doc/Number.md)  
 
 
 
@@ -218,7 +218,7 @@ For a quicker (and less precise) alternative, see [`.pow()`](#pow).
 
 #### Arguments
 
-* __rhs__: [Number](/std/doc/Number.md)  
+* __rhs__: [Num](/std/doc/Number.md)  
 
 
 
@@ -234,7 +234,7 @@ uses trigonometric functions to find a quicker but less precise result.
 
 #### Arguments
 
-* __rhs__: [Number](/std/doc/Number.md)  
+* __rhs__: [Num](/std/doc/Number.md)  
 
 
 
@@ -249,7 +249,7 @@ Equality of complex numbers.
 
 #### Arguments
 
-* __ehs__: Complex  
+* __ehs__: [Num](/std/doc/Complex.md)  
 
 
 
@@ -264,7 +264,7 @@ Equality of complex number and real number.
 
 #### Arguments
 
-* __ehs__: [Number](/std/doc/Number.md)  
+* __ehs__: [Num](/std/doc/Number.md)  
 
 
 
@@ -288,9 +288,9 @@ Create a complex number with the given polar coordinates `r` and `θ`.
 
 #### Arguments
 
-* __r__: [Number](/std/doc/Number.md) - Distance from the origin in the complex plane.
+* __r__: [Num](/std/doc/Number.md) - Distance from the origin in the complex plane.
 
-* __θ__: [Number](/std/doc/Number.md) - The angle between the positive real axis and the.
+* __θ__: [Num](/std/doc/Number.md) - The angle between the positive real axis and the.
 
 
 

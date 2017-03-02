@@ -16,13 +16,13 @@ Creates a rectangle, given its origin (bottom-left vertex) and dimensions.
 
 ### Arguments
 
-* __x__: [Number](/std/doc/Number.md) - X-coordinate of the rectangle's origin.
+* __x__: [Num](/std/doc/Number.md) - X-coordinate of the rectangle's origin.
 
-* __y__: [Number](/std/doc/Number.md) - Y-coordinate of the rectangle's origin.
+* __y__: [Num](/std/doc/Number.md) - Y-coordinate of the rectangle's origin.
 
-* __width__: [Number](/std/doc/Number.md) - Width of the rectangle.
+* __width__: [Num](/std/doc/Number.md) - Width of the rectangle.
 
-* __height__: [Number](/std/doc/Number.md) - Height of the rectangle.
+* __height__: [Num](/std/doc/Number.md) - Height of the rectangle.
 
 ## Methods
 

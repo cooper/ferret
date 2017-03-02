@@ -18,7 +18,7 @@ Creates a new Server class instance.
 
 * __connection__: Connection  
 
-* __name__: [String](/std/doc/String.md)  
+* __name__: [Str](/std/doc/String.md)  
 
 
 

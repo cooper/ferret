@@ -84,7 +84,7 @@ provided at initialization.
 
 #### Arguments
 
-* __json__: [String](/std/doc/String.md) - A JSON text to parse and convert to a Ferret object.
+* __json__: [Str](/std/doc/String.md) - A JSON text to parse and convert to a Ferret object.
 
 
 
@@ -124,7 +124,7 @@ a list `[1, 2]`.
 
 #### Arguments
 
-* __fragment__: [String](/std/doc/String.md) - A fragment of JSON text to add to the decoder buffer.
+* __fragment__: [Str](/std/doc/String.md) - A fragment of JSON text to add to the decoder buffer.
 
 
 
@@ -181,7 +181,7 @@ See the [`.decode()`](#decode) method for more options.
 
 #### Arguments
 
-* __json__: [String](/std/doc/String.md) - A JSON text to parse and convert to a Ferret object.
+* __json__: [Str](/std/doc/String.md) - A JSON text to parse and convert to a Ferret object.
 
 
 
