@@ -214,6 +214,83 @@
 #                                                          Topic variable '$_'
 #                                                          Subtraction operator (-)
 #                                                          Lexical variable '$rhs'
+#          Method 'opSub' { $lhs:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$lhs'
+#                          Argument type
+#                              Bareword 'Num'
+#                  If
+#                      Expression ('if' parameter)
+#                          Operation
+#                              Lexical variable '$lhs'
+#                              Negated equality operator (!=)
+#                              Number '0'
+#                      If body
+#                          Instruction
+#                              Throw (fatal exception)
+#                                  Set [2 items]
+#                                      Item 0
+#                                          Symbol :InvalidOperation
+#                                      Item 1
+#                                          String 'Unsupporte...'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@map'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Anonymous function { -> $result }
+#                                          Function body
+#                                              Instruction
+#                                                  Return
+#                                                      Operation
+#                                                          Constant zero
+#                                                          Negation operator (-)
+#                                                          Topic variable '$_'
+#          Method 'opMul' { $ehs:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$ehs'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@map'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Anonymous function { -> $result }
+#                                          Function body
+#                                              Instruction
+#                                                  Return
+#                                                      Operation
+#                                                          Topic variable '$_'
+#                                                          Multiplication operator (*)
+#                                                          Lexical variable '$ehs'
+#          Method 'opDiv' { $rhs:Num -> $result }
+#              Function body
+#                  Instruction
+#                      Need
+#                          Lexical variable '$rhs'
+#                          Argument type
+#                              Bareword 'Num'
+#                  Instruction
+#                      Return
+#                          Call
+#                              Instance variable '@map'
+#                              Argument list [1 item]
+#                                  Item 0
+#                                      Anonymous function { -> $result }
+#                                          Function body
+#                                              Instruction
+#                                                  Return
+#                                                      Operation
+#                                                          Topic variable '$_'
+#                                                          Division operator (/)
+#                                                          Lexical variable '$rhs'
 #          Method 'opAdd' { $ehs:Matrix -> $result }
 #              Function body
 #                  Instruction
@@ -326,7 +403,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos = before_content( 'Matrix.frt', './std/Math/Matrix.frt' );
 
-use Ferret::Core::Operations qw(_sub add bool div nequal num range str);
+use Ferret::Core::Operations qw(_sub add bool div mul nequal num range str);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'Math' );
     my $scope = $file_scope;
@@ -360,26 +437,49 @@ my $result = do {
         }
     );
 
-    # Anonymous function definition
+    # Anonymous function definition with topicalizer
     my $func_11 = function_def(
         $f, undef, undef,
-        [
-            { name => 'a', type => undef, optional => undef, more => undef },
-            { name => 'b', type => undef, optional => undef, more => undef }
-        ],
+        [ { name => '_' } ],
         undef,
         sub {
-            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'a', 71.2 ) || return $ret_func->();
-            need( $scope, $args, 'b', 71.4 ) || return $ret_func->();
+            my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
+            my $ins = $args->{_};
+            return $ret_func->( _sub( $scope, $pos->(72.6), $f->zero, $ins ) );
+            return $ret;
+        }
+    );
+
+    # Anonymous function definition with topicalizer
+    my $func_13 = function_def(
+        $f, undef, undef,
+        [ { name => '_' } ],
+        undef,
+        sub {
+            my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
+            my $ins = $args->{_};
             return $ret_func->(
-                add( $scope, $pos->(72.3), $$scope->{'a'}, $$scope->{'b'} ) );
+                mul( $scope, $pos->(78.35), $ins, $$scope->{'ehs'} ) );
+            return $ret;
+        }
+    );
+
+    # Anonymous function definition with topicalizer
+    my $func_15 = function_def(
+        $f, undef, undef,
+        [ { name => '_' } ],
+        undef,
+        sub {
+            my ( $scope, $self, $this, undef, $args, $ret ) = &args_v1;
+            my $ins = $args->{_};
+            return $ret_func->(
+                div( $scope, $pos->(84.35), $ins, $$scope->{'rhs'} ) );
             return $ret;
         }
     );
 
     # Anonymous function definition
-    my $func_13 = function_def(
+    my $func_17 = function_def(
         $f, undef, undef,
         [
             { name => 'a', type => undef, optional => undef, more => undef },
@@ -388,10 +488,28 @@ my $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'a', 80.2 ) || return $ret_func->();
-            need( $scope, $args, 'b', 80.4 ) || return $ret_func->();
+            need( $scope, $args, 'a', 91.2 ) || return $ret_func->();
+            need( $scope, $args, 'b', 91.4 ) || return $ret_func->();
             return $ret_func->(
-                _sub( $scope, $pos->(81.3), $$scope->{'a'}, $$scope->{'b'} ) );
+                add( $scope, $pos->(92.3), $$scope->{'a'}, $$scope->{'b'} ) );
+            return $ret;
+        }
+    );
+
+    # Anonymous function definition
+    my $func_19 = function_def(
+        $f, undef, undef,
+        [
+            { name => 'a', type => undef, optional => undef, more => undef },
+            { name => 'b', type => undef, optional => undef, more => undef }
+        ],
+        undef,
+        sub {
+            my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+            need( $scope, $args, 'a', 100.2 ) || return $ret_func->();
+            need( $scope, $args, 'b', 100.4 ) || return $ret_func->();
+            return $ret_func->(
+                _sub( $scope, $pos->(101.3), $$scope->{'a'}, $$scope->{'b'} ) );
             return $ret;
         }
     );
@@ -764,8 +882,123 @@ my $result = do {
             }
         );
 
-        # Method event 'opAdd' definition
+        # Method event 'opSub' definition
         my $func_12 = method_event_def(
+            $f, $scope, 'opSub',
+            [
+                {
+                    name     => 'lhs',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'lhs', 69.2 ) || return $ret_func->();
+                if (
+                    bool(
+                        nequal(
+                            $scope, $pos->(70.3),
+                            $$scope->{'lhs'}, num( $f, "0" )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->(
+                        $ret->throw(
+                            create_set(
+                                $scope,
+                                get_symbol( $f, 'InvalidOperation' ),
+                                str( $f, "Unsupported operation" )
+                            ),
+                            $pos->(71.1)
+                        )
+                    );
+                }
+                return $ret_func->(
+                    $$self->{'map'}->(
+                        [
+                            $func_11->inside_scope(
+                                (undef) => $scope,
+                                undef, $class, $ins, undef, undef
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(72.3)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opMul' definition
+        my $func_14 = method_event_def(
+            $f, $scope, 'opMul',
+            [
+                {
+                    name     => 'ehs',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'ehs', 77.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$self->{'map'}->(
+                        [
+                            $func_13->inside_scope(
+                                (undef) => $scope,
+                                undef, $class, $ins, undef, undef
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(78.15)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opDiv' definition
+        my $func_16 = method_event_def(
+            $f, $scope, 'opDiv',
+            [
+                {
+                    name     => 'rhs',
+                    type     => 'Num',
+                    optional => undef,
+                    more     => undef
+                }
+            ],
+            undef,
+            sub {
+                my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                need( $scope, $args, 'rhs', 83.2 ) || return $ret_func->();
+                return $ret_func->(
+                    $$self->{'map'}->(
+                        [
+                            $func_15->inside_scope(
+                                (undef) => $scope,
+                                undef, $class, $ins, undef, undef
+                            )
+                        ],
+                        $scope, undef,
+                        $pos->(84.15)
+                    )
+                );
+                return $ret;
+            }
+        );
+
+        # Method event 'opAdd' definition
+        my $func_18 = method_event_def(
             $f, $scope, 'opAdd',
             [
                 {
@@ -778,18 +1011,18 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'ehs', 69.2 ) || return $ret_func->();
+                need( $scope, $args, 'ehs', 89.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'mapWith'}->(
                         [
                             $$scope->{'ehs'},
-                            $func_11->inside_scope(
+                            $func_17->inside_scope(
                                 (undef) => $scope,
                                 undef, $class, $ins, undef, undef
                             )
                         ],
                         $scope, undef,
-                        $pos->(70.3)
+                        $pos->(90.3)
                     )
                 );
                 return $ret;
@@ -797,7 +1030,7 @@ my $result = do {
         );
 
         # Method event 'opSub' definition
-        my $func_14 = method_event_def(
+        my $func_20 = method_event_def(
             $f, $scope, 'opSub',
             [
                 {
@@ -810,18 +1043,18 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'rhs', 78.2 ) || return $ret_func->();
+                need( $scope, $args, 'rhs', 98.2 ) || return $ret_func->();
                 return $ret_func->(
                     $$self->{'mapWith'}->(
                         [
                             $$scope->{'rhs'},
-                            $func_13->inside_scope(
+                            $func_19->inside_scope(
                                 (undef) => $scope,
                                 undef, $class, $ins, undef, undef
                             )
                         ],
                         $scope, undef,
-                        $pos->(79.3)
+                        $pos->(99.3)
                     )
                 );
                 return $ret;
@@ -829,13 +1062,13 @@ my $result = do {
         );
 
         # Method event 'description' definition
-        my $func_15 = method_event_def(
+        my $func_21 = method_event_def(
             $f, $scope,
             'description',
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, str => str( $f, "" ), $file_scope, $pos->(86.2) );
+                var( $scope, str => str( $f, "" ), $file_scope, $pos->(106.2) );
                 {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
@@ -847,27 +1080,29 @@ my $result = do {
                                 $scope,
                                 str => add(
                                     $scope,
-                                    $pos->(88.1),
+                                    $pos->(108.1),
                                     $$scope->{'str'},
                                     add(
                                         $scope,
-                                        $pos->(88.2),
+                                        $pos->(108.2),
                                         str( $f, "[ " ),
                                         $$scope->{'row'}
-                                          ->property_u( 'join', $pos->(88.3) )
+                                          ->property_u( 'join', $pos->(108.3) )
                                           ->(
-                                            [ str( $f, " " ) ], $scope,
-                                            undef, $pos->(88.35)
+                                            [ str( $f, " " ) ],
+                                            $scope,
+                                            undef,
+                                            $pos->(108.35)
                                           ),
                                         str( $f, " ]" ),
                                         str( $f, "\n" )
                                     )
                                 ),
                                 $file_scope,
-                                $pos->(88.1)
+                                $pos->(108.1)
                             );
                         },
-                        $pos->(87.1)
+                        $pos->(107.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -909,14 +1144,26 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
         $func_12->inside_scope(
-            opAdd => $scope,
-            $proto, $class, $ins, undef, undef
-        );
-        $func_14->inside_scope(
             opSub => $scope,
             $proto, $class, $ins, undef, undef
         );
-        $func_15->inside_scope(
+        $func_14->inside_scope(
+            opMul => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_16->inside_scope(
+            opDiv => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_18->inside_scope(
+            opAdd => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_20->inside_scope(
+            opSub => $scope,
+            $proto, $class, $ins, undef, undef
+        );
+        $func_21->inside_scope(
             description => $scope,
             $proto, $class, $ins, undef, undef
         );

@@ -126,6 +126,51 @@ Scalar subtraction.
 
 
 
+### Subtraction operator (-)
+
+```
+$matrix - $lhs: Num
+```
+
+Allows you to take the opposite vector `-$u`.
+
+
+#### Arguments
+
+* __lhs__: [Number](/std/doc/Number.md)  
+
+
+
+### Multiplication operator (*)
+
+```
+$matrix * $ehs: Num
+```
+
+Scalar multiplication.
+
+
+#### Arguments
+
+* __ehs__: [Number](/std/doc/Number.md)  
+
+
+
+### Division operator (/)
+
+```
+$matrix / $rhs: Num
+```
+
+Scalar division.
+
+
+#### Arguments
+
+* __rhs__: [Number](/std/doc/Number.md)  
+
+
+
 ### Addition operator (+)
 
 ```

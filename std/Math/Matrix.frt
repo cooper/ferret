@@ -64,6 +64,26 @@ operator - {
     return @map! { -> $_ - $rhs }
 }
 
+#> allows you to take the opposite vector `-$u`
+operator - {
+    need $lhs: Num
+    if $lhs != 0
+        throw(:InvalidOperation, "Unsupported operation")
+    return @map! { -> -$_ }
+}
+
+#> scalar multiplication
+operator * {
+    need $ehs: Num
+    return @map! { -> $_ * $ehs }
+}
+
+#> scalar division
+operator / {
+    need $rhs: Num
+    return @map! { -> $_ / $rhs }
+}
+
 #> entry-wise matrix addition
 operator + {
     need $ehs: Matrix   #< another matrix of the same dimensions
