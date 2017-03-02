@@ -10,7 +10,6 @@ sub new {
     my ($class, %opts) = @_;
     return $class->SUPER::new(
         function_defs       => [],
-        required_spaces     => {},
         required_operations => {},
         %opts
     );
@@ -20,9 +19,10 @@ sub hold_instr { 1 }
 
 sub desc {
     my $doc = shift;
-    my $str = "document '$$doc{name}'";
-    return $str;
+    return "package '$$doc{package}'";
 }
+
+sub file_name { shift->parent->{name} }
 
 sub perl_fmt {
     my $doc = shift;
@@ -52,7 +52,7 @@ sub perl_fmt {
     } @{ $doc->{function_defs} };
 
     return document => {
-        'package'      => $doc->{package} // 'main',
+        'package'      => $doc->{package},
         operations     => join(' ', sort keys %{ $doc->{required_operations} }),
         upper_content  => $before_c,    # function declarations
         lower_content  => $after_c,     # all other children
@@ -65,7 +65,7 @@ sub markdown_fmt {
     my $content = '';
 
     # this must be called before calling ->markdown_fmt_do on children.
-    #my $head = $doc->get_markdown_heading($doc->{package});
+    #my $head = $doc->get_markdown_heading($doc->package);
 
     # first, classes.
     my @classes = $doc->filter_children(type => 'Class');

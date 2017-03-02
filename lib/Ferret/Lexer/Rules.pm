@@ -10,24 +10,11 @@ use List::Util qw(any);
 
 our %token_rules = (
 
-    PKG_DEC => [
-
-        # only one package declaration per document.
-        current_must_not_have => [                                              # PKG_DEC[0]
-            'package',
-            'Multiple packages per file not yet implemented',
-            0
-        ],
-
-    ],
-
     KEYWORD_END => [
 
-        # FIXME: package is not a node so this currently only works for classes
-
-        # the current node must be somewhere inside a Package or Class.
+        # the current node must be somewhere inside a Document or Class.
         upper_nodes_must_have => [                                              # KEYWORD_END[0]
-            'Package Class',
+            'Document Class',
             'End keyword must terminate a class or package declaration',
             0
         ],
@@ -39,9 +26,9 @@ our %token_rules = (
             1
         ],
 
-        # the current node at this time must be a Package or Class.
+        # the current node at this time must be a Document or Class.
         current_node_must_be => [                                               # KEYWORD_END[2]
-            'Package Class',
+            'Document Class',
             'Package or class must be the current node to capture end keyword',
             2
         ]
@@ -174,11 +161,11 @@ our %token_rules = (
 
 our %element_rules = (
 
-    Package => {
+    Document => {
 
         # parent of package declaration must be a document.
-        parent_must_be => [                                                     # Package[0]
-            'Document',
+        parent_must_be => [                                                     # Document[0]
+            'Main',
             'Package declaration must be in the global scope',
             0
         ]
@@ -216,7 +203,7 @@ our %element_rules = (
         # parent of package declaration must be a document.
         parent_must_be => [                                                     # Class[0]
             'Document',
-            'Class declaration must be in the global scope',
+            'Class declaration must be at package level',
             0
         ],
 
@@ -578,7 +565,7 @@ our %element_rules = (
             parent_must_be => [                                                 # SharedDeclaration[4]
                 'Class Document',
                 'Shared variable declaration can only exist at class or '.
-                'document level',
+                'package level',
                 4
             ]
 
@@ -667,7 +654,7 @@ our %element_rules = (
             # the instruction's parent must be a class or document.
             parent_must_be => [                                                 # Load[1]
                 'Class Document',
-                'Load statement can only exist at class or document level',
+                'Load statement can only exist at class or package level',
                 1
             ]
 

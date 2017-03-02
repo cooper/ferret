@@ -103,22 +103,22 @@ sub construct {
     my @tokens = @$tokens;
 
     # construct
-    my $doc = F::new('Document', name => '(input)');
-    $err = eval { Ferret::Lexer::Constructor::construct($doc, @tokens) };
+    my $main = F::new('Main', name => '(input)');
+    $err = eval { Ferret::Lexer::Constructor::construct($main, @tokens) };
 
     # either it returned an error or an exception occurred
     if (my $bad = $err ? $$err : $@) {
         return ferror($bad, 'ConstructError');
     }
 
-    return (undef, $doc);
+    return (undef, $main);
 }
 
 sub _construct {
     my ($compiler, $args, undef, undef, $ret) = @_;
 
     # construct
-    my ($err, $doc) = $compiler->construct();
+    my ($err, $main) = $compiler->construct();
     if ($err) {
         $ret->set_property(error => $err);
         return $ret;
@@ -126,7 +126,7 @@ sub _construct {
 
     # pretty
     if ($args->pbool('pretty')) {
-        my $pretty = F::show_dom($doc);
+        my $pretty = F::show_dom($main);
         $ret->set_property(pretty => fstring($pretty));
     }
 
@@ -137,11 +137,11 @@ sub compile {
     my ($compiler, $mini) = @_;
 
     # construct
-    my ($err, $doc) = eval { $compiler->construct };
+    my ($err, $main) = eval { $compiler->construct };
     return $err if $err;
 
     # compile
-    my $ret = eval { Ferret::Perl::main($doc, $mini) };
+    my $ret = eval { $main->perl_fmt_do($mini) };
     return defined $ret ? (undef, $ret) : ferror($@, 'CompileError');
 }
 

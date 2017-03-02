@@ -33,7 +33,7 @@ sub construct {
 
     $current = Ferret::Lexer::Current->new(
         main_node   => $main_node,
-        file        => $main_node->{name} || 'unknown',
+        file        => $main_node->file_name || 'unknown',
         node        => $main_node,
         last_el     => $main_node,
         token_lines => \@lines,
@@ -153,14 +153,20 @@ sub handle_label {
 sub c_PKG_DEC {
     my ($c, $value) = @_;
 
-    # create a package.
-    my $pkg = F::new('Package', pkg_name => $value->{name});
-    $c->set_package($pkg);
+    # terminate current class.
+    $c->close_node_maybe('Document');
+
+    # create a document.
+    my $pkg = F::new('Document', package => $value->{name});
+    $c->set_document($pkg);
 
     # Rule Package[0]:
     #   Must be a direct child of a Document.
 
-    $c->node->adopt($pkg);
+    # set as current node.
+    # will be terminated by another package declaration, 'end', or end of file.
+    $c->adopt_and_set_node($pkg);
+
     return $pkg;
 }
 
@@ -176,7 +182,7 @@ sub c_CLASS_DEC {
     $c->set_class($class);
 
     # Rule Class[0]:
-    #   Must be a direct child of a Document.
+    #   Must be a direct child of a Document or Package.
 
     # set as current node.
     # will be terminated by another class declaration, 'end', or end of file.
@@ -201,7 +207,7 @@ sub c_CLASS_DEC {
     return $class;
 }
 
-# end of a class or package.
+# end of a class or document.
 sub c_KEYWORD_END {
     my ($c, $value) = @_;
 
@@ -209,7 +215,7 @@ sub c_KEYWORD_END {
     #   Upper nodes must contain a Class or Package.
 
     # Rule KEYWORD_END[1]:
-    #   The current 'end_cap' (package or class to capture 'end') must exist.
+    #   The current 'end_cap' (document or class to capture 'end') must exist.
 
     # Rule KEYWORD_END[2]:
     #   The current node must be a Class or Package.
@@ -220,11 +226,9 @@ sub c_KEYWORD_END {
         $c->close_class;
     }
 
-    # return to the previous package.
-    elsif ($c->package && $class_or_pkg == $c->package) {
-        return $c->unexpected(
-            '(multiple packages per file not yet implemented)'
-        );
+    # end the document.
+    elsif ($c->document && $class_or_pkg == $c->document) {
+        $c->close_document;
     }
 
     # close it.
@@ -2408,6 +2412,11 @@ sub c_COMMENT_LDA {
 sub c_any {
     my ($label, $c, $value) = @_;
 
+    ### START A PACKAGE
+    if ($c->node->type eq 'Main' && $label ne 'PKG_DEC') {
+        $c->simulate(PKG_DEC => { name => 'main' });
+    }
+
     ### START AN INSTRUCTION ###
 
     # something requested not to start an instruction
@@ -2466,7 +2475,7 @@ sub c_eof {
     }
 
     # end of file can terminate these.
-    $c->close_node_maybe('Class');
+    $c->close_nodes('Class', 'Document');
 
     # when all is said and done, the current node should be the main node.
     if ($c->node != $main_node) {

@@ -134,6 +134,7 @@ sub all_ancestors {
     return @ancestors;
 }
 
+sub main     { first_self_or_parent(shift, 'Main')     }
 sub document { first_self_or_parent(shift, 'Document') }
 sub class    { first_self_or_parent(shift, 'Class')    }
 

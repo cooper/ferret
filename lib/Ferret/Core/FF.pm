@@ -73,7 +73,6 @@ sub after_content {
 
     # file returns true.
     return 1;
-
 }
 
 # load namespaces.

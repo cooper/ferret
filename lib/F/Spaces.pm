@@ -18,7 +18,7 @@ sub spaces {
     my $spaces = shift;
     return @{ $spaces->{spaces} } if $spaces->{spaces};
     my @spaces;
-    for my $bw ($spaces->document->filter_descendants(type => 'Bareword')) {
+    for my $bw ($spaces->main->filter_descendants(type => 'Bareword')) {
         my $val = $bw->{bareword_value};
 
         # if it starts with a capital letter, it's a class or namespace.

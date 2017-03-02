@@ -45,7 +45,7 @@ sub node { shift->{node} }
 
 sub set_node {
     my ($c, $new) = @_;
-    $c->node->close if $c->node->type ne 'Document';
+    $c->node->close if $c->node->type ne 'Main';
     $new->open;
     return $c->{node} = $new;
 }
@@ -59,7 +59,7 @@ sub adopt_and_set_node {
 # close the current node or n nodes.
 sub close_node {
     my ($c, $n) = (shift, shift || 1);
-    die 'Attempted to close document!' if $c->node->type eq 'Document';
+    die 'Attempted to close main!' if $c->node->type eq 'Main';
     $c->set_node($c->node->close) for 1..$n;
     return $c->node;
 }
@@ -185,25 +185,35 @@ sub instruction_will_close_closure {
 ### PACKAGES AND CLASSES ###
 ############################
 
-sub package { shift->{package} }
-sub class   { shift->{class}   }
-sub end_cap { shift->{end_cap} }
+sub document { shift->{document} }
+sub class    { shift->{class}   }
+sub end_cap  { shift->{end_cap} }
 
-sub set_package {
+sub set_document {
     my ($c, $pkg) = @_;
+
+    # close the previous package without end keyword.
+    $c->{end_cap} = $c->{end_cap}{parent_end_cap}
+        if $c->{end_cap} && $c->{end_cap}->type eq 'Document';
 
     # capture end.
     $pkg->{parent_end_cap} = $c->{end_cap};
     $c->{end_cap} = $pkg;
 
-    return $c->{package} = $pkg;
+    return $c->{document} = $pkg;
+}
+
+sub close_document {
+    my $c = shift;
+    return delete $c->{document};
 }
 
 sub set_class {
     my ($c, $class) = @_;
 
     # close the previous class without end keyword.
-    $c->{end_cap} = $c->{end_cap}{parent_end_cap} if $c->{end_cap};
+    $c->{end_cap} = $c->{end_cap}{parent_end_cap}
+        if $c->{end_cap} && $c->{end_cap}->type eq 'Class';
 
     # capture end.
     $class->{parent_end_cap} = $c->{end_cap};

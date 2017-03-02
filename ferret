@@ -198,8 +198,8 @@ sub do_file {
     open $fh, '>', $write_file or die "Couldn't open $write_file to write";
 
     # see if we've already constructed it.
-    my $doc = $done{$abs};
-    if (!$doc) {
+    my $main = $done{$abs};
+    if (!$main) {
 
         # parse the input file.
         defined(my $str = eval { slurp($file, binmode => ':utf8') })
@@ -216,25 +216,25 @@ sub do_file {
         return error($ret, $fh, $write_file, $$err) if $err;
 
         # construct elements.
-        $doc = F::new('Document', name => $file);
-        $err = Ferret::Lexer::Constructor::construct($doc, @tok);
+        $main = F::new('Main', name => $file);
+        $err = Ferret::Lexer::Constructor::construct($main, @tok);
         if ($o->dom || $err) {
-            my $dom = F::show_dom($doc, $o->show_all);
+            my $dom = F::show_dom($main, $o->show_all);
             print $fh "# === Document Model ===\n"  if !$err && !$is_docs;
             print $fh commentize($dom), "\n"        if !$err && !$is_docs;
             $ret->{construction} = $dom if $o->verbose || $err;
         }
 
         return error($ret, $fh, $write_file, $$err) if $err;
-        $done{$abs} = $doc;
+        $done{$abs} = $main;
     }
 
     # compile to Markdown.
     if ($is_docs) {
         require Ferret::Markdown;
 
-        $doc->{name} = $abs;
-        my $markdown = Ferret::Markdown::main($doc);
+        $main->{name} = $abs;
+        my $markdown = $main->markdown_fmt_do;
 
         print $fh $markdown;
         close $fh;
@@ -244,7 +244,7 @@ sub do_file {
     else {
         require Ferret::Perl;
 
-        my $compiled = Ferret::Perl::main($doc);
+        my $compiled = $main->perl_fmt_do;
         beautify(\$compiled) if $o->beautify;
         minify(\$compiled)   if $o->minify;
 
