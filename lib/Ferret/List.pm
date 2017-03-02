@@ -38,7 +38,7 @@ my @methods = (
         code => \&_join
     },
     setValue => {
-        need => '$item:T $index:Num',
+        need => '$value:T $index:Num',
         code => \&_set_value
     },
     getValue => {

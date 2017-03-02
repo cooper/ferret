@@ -36,14 +36,14 @@ type Hashable {
 #> Matches objects that implement element getters.
 #| Used for `$obj[idx]`.
 type IndexedRead {
-    can .getValue(index: Hashable)
+    can .getValue(index: Any)
 }
 
 #> Matches objects that implement element setters.
 #| Used for `$obj[idx] = $val`.
 type IndexedWrite {
-    can .setValue(value: Obj, index: Hashable)
-    can .deleteValue(index: Hashable)
+    can .setValue(value: Any, index: Any)
+    can .deleteValue(index: Any)
     # optionally can .weakenValue(index: Hashable)
 }
 

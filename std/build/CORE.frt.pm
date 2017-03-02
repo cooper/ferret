@@ -71,7 +71,7 @@
 #                          Named argument list [1 item]
 #                              Item 0
 #                                  Pair 'index'
-#                                      Bareword 'Hashable'
+#                                      Bareword 'Any'
 #      Type definition ('IndexedWrite')
 #          Type body
 #              Instruction
@@ -81,10 +81,10 @@
 #                          Named argument list [2 items]
 #                              Item 0
 #                                  Pair 'value'
-#                                      Bareword 'Obj'
+#                                      Bareword 'Any'
 #                              Item 1
 #                                  Pair 'index'
-#                                      Bareword 'Hashable'
+#                                      Bareword 'Any'
 #              Instruction
 #                  Can
 #                      Method requirement
@@ -92,7 +92,7 @@
 #                          Named argument list [1 item]
 #                              Item 0
 #                                  Pair 'index'
-#                                      Bareword 'Hashable'
+#                                      Bareword 'Any'
 #      Type definition ('Indexed')
 #          Type body
 #              Instruction
@@ -101,7 +101,7 @@
 #              Instruction
 #                  Isa
 #                      Bareword 'IndexedWrite'
-#      Include (Any, Char, Complex, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::NATIVE, Extension::Number, Extension::String, Hashable, IndexedRead, IndexedWrite, Iterator, Obj, Object, Signal)
+#      Include (Any, Char, Complex, Error, EventSet, Extension, Extension::Hash, Extension::List, Extension::NATIVE, Extension::Number, Extension::String, IndexedRead, IndexedWrite, Iterator, Obj, Object, Signal)
 package FF;
 
 use warnings;
@@ -131,7 +131,7 @@ my $result = do {
     load_core('CORE');
 
     load_namespaces( $context,
-        qw(Any Char Complex Error EventSet Extension Extension::Hash Extension::List Extension::NATIVE Extension::Number Extension::String Hashable IndexedRead IndexedWrite Iterator Obj Object Signal)
+        qw(Any Char Complex Error EventSet Extension Extension::Hash Extension::List Extension::NATIVE Extension::Number Extension::String IndexedRead IndexedWrite Iterator Obj Object Signal)
     );
 
     typedef(
@@ -194,7 +194,7 @@ my $result = do {
                 conditions => [
                     sub {
                         $create_can->(
-                            'getValue', [ index => 'Hashable' ],
+                            'getValue', [ index => 'Any' ],
                             undef, $ins
                         )->();
                     }
@@ -215,13 +215,13 @@ my $result = do {
                 conditions => [
                     sub {
                         $create_can->(
-                            'setValue', [ value => 'Obj', index => 'Hashable' ],
+                            'setValue', [ value => 'Any', index => 'Any' ],
                             undef, $ins
                         )->();
                     },
                     sub {
                         $create_can->(
-                            'deleteValue', [ index => 'Hashable' ],
+                            'deleteValue', [ index => 'Any' ],
                             undef, $ins
                         )->();
                     }

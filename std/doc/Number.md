@@ -12,6 +12,9 @@ and inexact floating-point values in the native architecture's
 double-precision representation; as well as the more abstract concepts of
 [infinity](#inf) and [NaN](#nan).
 
+The Number class is only concerned with real numbers, but Ferret has native
+support for complex numbers as well through the [Complex](Complex.md) class.
+
 
 
 ## Methods

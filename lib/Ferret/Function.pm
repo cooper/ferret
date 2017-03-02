@@ -409,7 +409,6 @@ sub _get_types {
         # get object.
         my $found = $generics{$type} || $soi->property($type);
         push @final, $found if $found;
-
     }
 
     return @final;
@@ -426,8 +425,8 @@ sub _obj_type_works {
 
 sub _type_type_works {
     my ($func, $type_obj, $types, $generics_maybe) = @_;
+    return 1 if $type_obj->{name} eq 'Any'; # HACK
     foreach my $type ($func->_get_types($types, $generics_maybe)) {
-        return 1 if $type_obj->{name} eq 'Any'; # HACK
         return 1 if $type_obj == $type;
     }
     return;

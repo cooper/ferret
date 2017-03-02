@@ -13,6 +13,9 @@ class Complex 1.0
 #> Creates a complex number with the given real and imaginary parts. This is
 #| only useful to create a complex number from variable parts, since Ferret
 #| has native support for inline `a + bi` notation.
+#|
+#| If the given imaginary part is zero, the constructor returns the real part
+#| as a [real number](Number.frt).
 init {
     need @a: Num #< real part
     need @b: Num #< imaginary part (a real number, though)
