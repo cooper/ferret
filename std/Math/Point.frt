@@ -1,10 +1,17 @@
 package Math
 class Point
+#< represents a 2D point
 
+#> the point `(0,0)`
+share $origin ?= Point(0, 0)
+
+#> creates a point given x- and y- coordinates
 init {
-    need @x: Num, @y: Num
+    need @x: Num    #< x-coordinate
+    need @y: Num    #< y-coordinate
 }
 
+#> returns the distance between this point and another
 method distanceTo {
     need $pt2: Point
     $dx = @x - $pt2.x
@@ -12,31 +19,20 @@ method distanceTo {
     return sqrt($dx ^ 2 + $dy ^ 2)
 }
 
-prop distanceFromOrigin {
-    return @distanceTo(*class(0, 0))
-}
-
-prop pretty {
-    return "(@x, @y)"
-}
-
-method toString {
-    return @pretty
-}
-
-method description {
-    return "Point" + @pretty
-}
-
-func midpoint {
-    need $pt1: Point, $pt2: Point
-    return *class(
-        x: ($pt1.x + $pt2.x) / 2,
-        y: ($pt1.y + $pt2.y) / 2
+#> given another point, returns the point centered between them
+method midpoint {
+    need $pt2: Point
+    return Point(
+        x: (@x + $pt2.x) / 2,
+        y: (@y + $pt2.y) / 2
     )
 }
 
-func distanceBetween {
-    need $pt1: Point, $pt2: Point
-    return $pt1.distanceTo($pt2)
+#> distance between this point and the origin `(0, 0)`
+prop distanceFromOrigin {
+    return @distanceTo($origin)
+}
+
+method description {
+    return "(@x, @y)"
 }

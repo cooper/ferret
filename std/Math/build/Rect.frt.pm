@@ -135,8 +135,8 @@
 #                                  Instance variable '@origin'
 #                              Addition operator (+)
 #                              Instance variable '@width'
-#                              Multiplication operator (*)
-#                              Number '0.5'
+#                              Division operator (/)
+#                              Number '2'
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$y'
@@ -145,8 +145,8 @@
 #                                  Instance variable '@origin'
 #                              Addition operator (+)
 #                              Instance variable '@height'
-#                              Multiplication operator (*)
-#                              Number '0.5'
+#                              Division operator (/)
+#                              Number '2'
 #                  Instruction
 #                      Return
 #                          Call
@@ -221,7 +221,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my $pos = before_content( 'Rect.frt', './std/Math/Rect.frt' );
 
-use Ferret::Core::Operations qw(add mul num str);
+use Ferret::Core::Operations qw(add div num str);
 my $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'Math' );
     my $scope = $file_scope;
@@ -265,16 +265,16 @@ my $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'x', 5.1 ) || return $ret_func->();
-                need( $scope, $args, 'y', 5.3 ) || return $ret_func->();
+                need( $scope, $args, 'x', 7.2 ) || return $ret_func->();
+                need( $scope, $args, 'y', 8.2 ) || return $ret_func->();
                 need( $self, $args, 'width' )  || return $ret_func->();
                 need( $self, $args, 'height' ) || return $ret_func->();
                 $self->set_property(
                     origin => $$scope->{'Point'}->(
                         [ $$scope->{'x'}, $$scope->{'y'} ], $scope,
-                        undef, $pos->(6.2)
+                        undef, $pos->(11.2)
                     ),
-                    $pos->(6.1)
+                    $pos->(11.1)
                 );
                 return $ret;
             }
@@ -324,15 +324,15 @@ my $result = do {
                         [
                             add(
                                 $scope,
-                                $pos->(23.3),
+                                $pos->(31.3),
                                 $$self->{'origin'}
-                                  ->property_u( 'x', $pos->(23.25) ),
+                                  ->property_u( 'x', $pos->(31.25) ),
                                 $$self->{'width'}
                             ),
-                            $$self->{'origin'}->property_u( 'y', $pos->(23.5) )
+                            $$self->{'origin'}->property_u( 'y', $pos->(31.5) )
                         ],
                         $scope, undef,
-                        $pos->(23.15)
+                        $pos->(31.15)
                     )
                 );
                 return $ret;
@@ -350,17 +350,17 @@ my $result = do {
                     $$scope->{'Point'}->(
                         [
                             $$self->{'origin'}
-                              ->property_u( 'x', $pos->(27.25) ),
+                              ->property_u( 'x', $pos->(36.25) ),
                             add(
                                 $scope,
-                                $pos->(27.45),
+                                $pos->(36.45),
                                 $$self->{'origin'}
-                                  ->property_u( 'y', $pos->(27.4) ),
+                                  ->property_u( 'y', $pos->(36.4) ),
                                 $$self->{'height'}
                             )
                         ],
                         $scope, undef,
-                        $pos->(27.15)
+                        $pos->(36.15)
                     )
                 );
                 return $ret;
@@ -379,21 +379,21 @@ my $result = do {
                         [
                             add(
                                 $scope,
-                                $pos->(31.3),
+                                $pos->(41.3),
                                 $$self->{'origin'}
-                                  ->property_u( 'x', $pos->(31.25) ),
+                                  ->property_u( 'x', $pos->(41.25) ),
                                 $$self->{'width'}
                             ),
                             add(
                                 $scope,
-                                $pos->(31.55),
+                                $pos->(41.55),
                                 $$self->{'origin'}
-                                  ->property_u( 'y', $pos->(31.5) ),
+                                  ->property_u( 'y', $pos->(41.5) ),
                                 $$self->{'height'}
                             )
                         ],
                         $scope, undef,
-                        $pos->(31.15)
+                        $pos->(41.15)
                     )
                 );
                 return $ret;
@@ -410,7 +410,7 @@ my $result = do {
                 return $ret_func->(
                     $$scope->{'Line'}->(
                         [ $$self->{'bottomLeft'}, $$self->{'bottomRight'} ],
-                        $scope, undef, $pos->(35.3)
+                        $scope, undef, $pos->(46.3)
                     )
                 );
                 return $ret;
@@ -427,7 +427,7 @@ my $result = do {
                 return $ret_func->(
                     $$scope->{'Line'}->(
                         [ $$self->{'topLeft'}, $$self->{'topRight'} ],
-                        $scope, undef, $pos->(39.3)
+                        $scope, undef, $pos->(51.3)
                     )
                 );
                 return $ret;
@@ -443,34 +443,34 @@ my $result = do {
                     $scope,
                     x => add(
                         $scope,
-                        $pos->(43.25),
-                        $$self->{'origin'}->property_u( 'x', $pos->(43.2) ),
-                        mul(
-                            $scope, $pos->(43.25),
-                            $$self->{'width'}, num( $f, "0.5" )
+                        $pos->(56.25),
+                        $$self->{'origin'}->property_u( 'x', $pos->(56.2) ),
+                        div(
+                            $scope, $pos->(56.25),
+                            $$self->{'width'}, num( $f, "2" )
                         )
                     ),
                     $file_scope,
-                    $pos->(43.1)
+                    $pos->(56.1)
                 );
                 var(
                     $scope,
                     y => add(
                         $scope,
-                        $pos->(44.25),
-                        $$self->{'origin'}->property_u( 'y', $pos->(44.2) ),
-                        mul(
-                            $scope, $pos->(44.25),
-                            $$self->{'height'}, num( $f, "0.5" )
+                        $pos->(57.25),
+                        $$self->{'origin'}->property_u( 'y', $pos->(57.2) ),
+                        div(
+                            $scope, $pos->(57.25),
+                            $$self->{'height'}, num( $f, "2" )
                         )
                     ),
                     $file_scope,
-                    $pos->(44.1)
+                    $pos->(57.1)
                 );
                 return $ret_func->(
                     $$scope->{'Point'}->(
                         [ $$scope->{'x'}, $$scope->{'y'} ], $scope,
-                        undef, $pos->(45.3)
+                        undef, $pos->(58.3)
                     )
                 );
                 return $ret;
@@ -487,25 +487,25 @@ my $result = do {
                 var(
                     $scope,
                     o => $$self->{'origin'},
-                    $file_scope, $pos->(49.2)
+                    $file_scope, $pos->(62.2)
                 );
                 var(
                     $scope,
                     c => $$self->{'center'},
-                    $file_scope, $pos->(50.2)
+                    $file_scope, $pos->(63.2)
                 );
                 return $ret_func->(
                     add(
                         $scope,
-                        $pos->(51.075),
+                        $pos->(64.075),
                         str( $f, "Rect( Origin(" ),
-                        $$scope->{'o'}->property_u( 'x', $pos->(51.125) ),
+                        $$scope->{'o'}->property_u( 'x', $pos->(64.125) ),
                         str( $f, ", " ),
-                        $$scope->{'o'}->property_u( 'y', $pos->(51.25) ),
+                        $$scope->{'o'}->property_u( 'y', $pos->(64.25) ),
                         str( $f, ") Center(" ),
-                        $$scope->{'c'}->property_u( 'x', $pos->(51.375) ),
+                        $$scope->{'c'}->property_u( 'x', $pos->(64.375) ),
                         str( $f, ", " ),
-                        $$scope->{'c'}->property_u( 'y', $pos->(51.5) ),
+                        $$scope->{'c'}->property_u( 'y', $pos->(64.5) ),
                         str( $f, ") Width = " ),
                         $$self->{'width'},
                         str( $f, " Height = " ),
