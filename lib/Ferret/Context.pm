@@ -23,4 +23,10 @@ sub new {
 
 sub closest_context { shift }
 
+sub full_name {
+    my $context = shift;
+    return $context->{full_name} if length $context->{full_name};
+    return $context->{name};
+}
+
 1

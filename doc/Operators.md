@@ -36,16 +36,23 @@ Tokenized as `OP_COMMA`.
 
     :
 
-Separates key: value pairs. If it follows a bareword immediately (without
-whitespace in between), it is assumed that the bareword is the key for an object
-or hash pair.
+Separates key-value pairs.
+
+If it follows a bareword immediately (without whitespace in between), it is
+assumed that the bareword is the key for an object or hash pair and is tokenized
+as `PROP_VALUE`.
 
     $object = (key: "value", other: "another")
+
+Any other expression can precede it, in which case it is tokenized as
+`OP_VALUE`.
+
+    $object = ("key": "value", "other": "another")
 
 The symbol data type (e.g. `:sym`) is tokenized separately as `VAR_SYM`; see
 [Symbols](https://github.com/cooper/ferret/blob/master/doc/Variables.md#symbols).
 
-Tokenized as `OP_VALUE`.
+Tokenized as `PROP_VALUE` or `OP_VALUE`.
 
 ### Property operator
 
@@ -54,18 +61,16 @@ Tokenized as `OP_VALUE`.
 Accesses a property on an object.
 
 Bareword properties such as `.propName`, including the period (`.`), are
-tokenized as a single `PROPERTY` token. For non-barewords, `OP_PROP` is used
-and must be followed by an expression delimited in square brackets `[` and `]`.
-This allows property names to be evaluated at runtime.
-
-Example of a bareword property
+tokenized as a single `PROPERTY` token.
 
     $value = $object.propName
 
-Example of a runtime-evaluted property
+For non-barewords, `OP_PROP` is used and must be followed by an expression
+delimited in square brackets `[` and `]`. This allows property names to be
+evaluated at runtime.
 
     $prop  = "propName"
-    $value = $object.[$prop]
+    $value = $object.[$prop]    # note: NOT the same as $object[$prop]
 
 Tokenized as `PROPERTY` or `OP_PROP`.
 

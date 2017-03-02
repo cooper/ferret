@@ -118,7 +118,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'BotHandlers.frt', './std/IRC/BotHandlers.frt' );
+my $file_name = './std/IRC/BotHandlers.frt';
+my $pos = before_content( 'BotHandlers.frt', $file_name );
 
 use Ferret::Core::Operations qw(_not bool num str);
 my $result = do {
@@ -235,7 +236,7 @@ my $result = do {
         privmsg => $scope,
         $context, undef, $ins, undef, undef
     );
-    load_namespaces( $context, qw(Channel) );
+    load_namespaces( $context, $file_name, qw(Channel) );
 
     var(
         $context,
@@ -244,4 +245,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

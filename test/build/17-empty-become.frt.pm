@@ -51,7 +51,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '17-empty-become.frt', './test/17-empty-become.frt' );
+my $file_name = './test/17-empty-become.frt';
+my $pos = before_content( '17-empty-become.frt', $file_name );
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
@@ -69,7 +70,7 @@ my $result = do {
             return $ret;
         }
     );
-    load_namespaces( $context, qw(Timer) );
+    load_namespaces( $context, $file_name, qw(Timer) );
     var( $scope, obj => create_object( $f, [] ), undef, $pos->(2.2) );
     $$scope->{'Timer'}->property_u( 'init', $pos->(5.1) )
       ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(5.15) )
@@ -86,4 +87,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

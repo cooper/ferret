@@ -973,7 +973,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Vector.frt', './std/Math/Vector.frt' );
+my $file_name = './std/Math/Vector.frt';
+my $pos = before_content( 'Vector.frt', $file_name );
 
 use Ferret::Core::Operations
   qw(_sub add any_true bool div equal gr8r less mul nequal num pow range str);
@@ -2676,7 +2677,8 @@ my $result = do {
             undef
         );
     }
-    load_namespaces( $context, qw(Char Error Math Num Vector VectorAxis) );
+    load_namespaces( $context, $file_name,
+        qw(Char Error Math Num Vector VectorAxis) );
 };
 
-after_content();
+after_content($file_name);

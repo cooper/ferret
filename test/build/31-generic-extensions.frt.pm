@@ -2,7 +2,6 @@
 #  Document './test/31-generic-extensions.frt'
 #      Class 'A' <T>
 #      Class 'A' <T, U>
-#      Include (T, U)
 package FF;
 
 use warnings;
@@ -23,8 +22,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '31-generic-extensions.frt',
-    './test/31-generic-extensions.frt' );
+my $file_name = './test/31-generic-extensions.frt';
+my $pos = before_content( '31-generic-extensions.frt', $file_name );
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -45,7 +44,6 @@ my $result = do {
           get_class( $f, $context, $file_scope, 'A', undef, [ 'T', \'U' ] );
 
     }
-    load_namespaces( $context, qw(T U) );
 };
 
-after_content();
+after_content($file_name);

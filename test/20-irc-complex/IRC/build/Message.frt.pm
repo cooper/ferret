@@ -184,8 +184,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos =
-  before_content( 'Message.frt', './test/20-irc-complex/IRC/Message.frt' );
+my $file_name = './test/20-irc-complex/IRC/Message.frt';
+my $pos = before_content( 'Message.frt', $file_name );
 
 use Ferret::Core::Operations qw(add all_true bool gr8r nequal num str);
 my $result = do {
@@ -407,7 +407,7 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Num Str) );
+    load_namespaces( $context, $file_name, qw(Num Str) );
 };
 
-after_content();
+after_content($file_name);

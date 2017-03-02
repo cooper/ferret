@@ -550,7 +550,7 @@
 #              Property 'connect'
 #                  Lexical variable '$i'
 #              Argument list [0 items]
-#      Include (COMPILER, IRC, IRC::Connection, IRCBot, IRCBot::Bot, Str)
+#      Include (COMPILER, IRC::Connection, IRCBot::Bot, Str)
 package FF;
 
 use warnings;
@@ -571,7 +571,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'run.frt', './test/20-irc-complex/run.frt' );
+my $file_name = './test/20-irc-complex/run.frt';
+my $pos = before_content( 'run.frt', $file_name );
 
 use Ferret::Core::Operations qw(_not bool equal num str);
 my $result = do {
@@ -1120,8 +1121,8 @@ my $result = do {
         ircsay => $scope,
         $context, undef, $ins, undef, undef
     );
-    load_namespaces( $context,
-        qw(COMPILER IRC IRC::Connection IRCBot IRCBot::Bot Str) );
+    load_namespaces( $context, $file_name,
+        qw(COMPILER IRC::Connection IRCBot::Bot Str) );
     var(
         $context,
         bot => $$scope->{'IRCBot::Bot'}->(
@@ -1233,4 +1234,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(90.3) );
 };
 
-after_content();
+after_content($file_name);

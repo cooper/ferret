@@ -1,5 +1,5 @@
 # === Document Model ===
-#  Document './std/CORE.frt'
+#  Document './std/Any.frt'
 #      Package 'CORE'
 #      Instruction
 #          Load
@@ -68,8 +68,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $file_name = './std/CORE.frt';
-my $pos = before_content( 'CORE.frt', $file_name );
+my $file_name = './std/Any.frt';
+my $pos = before_content( 'Any.frt', $file_name );
 
 use Ferret::Core::Operations qw();
 my $result = do {

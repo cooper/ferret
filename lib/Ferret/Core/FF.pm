@@ -62,6 +62,11 @@ sub before_content {
 
 # things to do after evaluating runtime content.
 sub after_content {
+    my $file_name = shift;
+
+    # check that required spaces are loaded.
+    my $err = $Ferret::ferret->check_spaces($file_name);
+    die "Couldn't find $err" if $err; # FIXME
 
     # start the runtime.
     Ferret::runtime();
@@ -73,20 +78,17 @@ sub after_content {
 
 # load namespaces.
 sub load_namespaces {
-    my ($context, @namespaces) = @_;
-    my @caller = caller;
+    my ($context, $file_name, @namespaces) = @_;
 
-    # consider package first.
-    # e.g. Point -> Math::Point, Point
-    my $pkg = $context->{name};
-    if ($pkg ne 'CORE' && $pkg ne 'main') {
-        my @map =
-            map  { $pkg.'::'.$_ }
-            grep { $pkg ne $_ && !/^\Q$pkg\E::/ } @namespaces;
-        @namespaces = (@map, @namespaces);
+    # try to load each space
+    my $pkg = $context->full_name;
+    my @possible_prefixes = split /::/, $pkg;
+    for my $name (@namespaces) {
+        my @acceptable = ((map { $_.'::'.$name } @possible_prefixes), $name);
+        my $skip = $pkg eq 'CORE' || $pkg eq 'main';
+        Ferret::space($context, $file_name, $skip, @acceptable);
     }
 
-    Ferret::space($context, \@caller, $_) for @namespaces;
     return;
 }
 

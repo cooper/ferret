@@ -120,7 +120,7 @@
 #                                                  String 'send: '
 #                                                  Addition operator (+)
 #                                                  Lexical variable '$data'
-#      Include (Num, Socket, Socket::TCP, Str)
+#      Include (Num, Socket::TCP, Str)
 package FF;
 
 use warnings;
@@ -141,7 +141,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Bot2.frt', './test/10-irc-simple/Bot2.frt' );
+my $file_name = './test/10-irc-simple/Bot2.frt';
+my $pos = before_content( 'Bot2.frt', $file_name );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -325,7 +326,7 @@ my $result = do {
             $class, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Num Socket Socket::TCP Str) );
+    load_namespaces( $context, $file_name, qw(Num Socket::TCP Str) );
 };
 
-after_content();
+after_content($file_name);

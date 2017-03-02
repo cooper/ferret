@@ -183,7 +183,7 @@
 #              Assignment
 #                  Bareword 'NaN'
 #                  Bareword 'Num::NaN'
-#      Include (Inf, Int, Integer, NATIVE, NATIVE::Math, NaN, Num, Num::Inf, Num::Int, Num::NaN)
+#      Include (Inf, Int, Integer, NATIVE::Math, NaN, Num, Num::Inf, Num::Int, Num::NaN)
 package FF;
 
 use warnings;
@@ -204,7 +204,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Number.frt', './std/Extension/Number.frt' );
+my $file_name = './std/Extension/Number.frt';
+my $pos = before_content( 'Number.frt', $file_name );
 
 use Ferret::Core::Operations
   qw(_sub bool div equal less mod mul nequal num pow range str);
@@ -514,12 +515,11 @@ my $result = do {
             undef, $pos->(81.3)
         );
     }
-    load_namespaces( $context,
-        qw(Inf Int Integer NATIVE NATIVE::Math NaN Num Num::Inf Num::Int Num::NaN)
-    );
+    load_namespaces( $context, $file_name,
+        qw(Inf Int Integer NATIVE::Math NaN Num Num::Inf Num::Int Num::NaN) );
     $context->set_property( Int => $$scope->{'Num::Int'}, $pos->(87.3) );
     $context->set_property( Inf => $$scope->{'Num::Inf'}, $pos->(88.3) );
     $context->set_property( NaN => $$scope->{'Num::NaN'}, $pos->(89.3) );
 };
 
-after_content();
+after_content($file_name);

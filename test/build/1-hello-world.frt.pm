@@ -26,7 +26,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '1-hello-world.frt', './test/1-hello-world.frt' );
+my $file_name = './test/1-hello-world.frt';
+my $pos = before_content( '1-hello-world.frt', $file_name );
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
@@ -38,4 +39,4 @@ my $result = do {
       ->( [ str( $f, "Hello World!" ) ], $scope, undef, $pos->(1.2) );
 };
 
-after_content();
+after_content($file_name);

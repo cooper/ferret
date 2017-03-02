@@ -212,7 +212,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Handlers.frt', './std/IRC/Handlers.frt' );
+my $file_name = './std/IRC/Handlers.frt';
+my $pos = before_content( 'Handlers.frt', $file_name );
 
 use Ferret::Core::Operations qw(_not _sub add any_true bool num rgx sim str);
 my $result = do {
@@ -450,4 +451,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

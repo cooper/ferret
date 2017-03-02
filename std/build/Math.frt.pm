@@ -267,7 +267,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  Lexical variable '$num'
-#      Include (NATIVE, NATIVE::Math, Num)
+#      Include (NATIVE::Math, Num)
 package FF;
 
 use warnings;
@@ -288,7 +288,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Math.frt', './std/Math.frt' );
+my $file_name = './std/Math.frt';
+my $pos = before_content( 'Math.frt', $file_name );
 
 use Ferret::Core::Operations qw(_sub div mul num pow);
 my $result = do {
@@ -598,7 +599,7 @@ my $result = do {
         exp => $scope,
         $context, undef, $ins, undef, undef
     );
-    load_namespaces( $context, qw(NATIVE NATIVE::Math Num) );
+    load_namespaces( $context, $file_name, qw(NATIVE::Math Num) );
 
     var(
         $context,
@@ -631,4 +632,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

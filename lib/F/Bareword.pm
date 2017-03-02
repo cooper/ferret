@@ -12,26 +12,6 @@ sub desc {
     return $desc;
 }
 
-sub after_adopt {
-    my $el = shift;
-    my $val = $el->{bareword_value};
-
-    # if it starts with a capital letter, it's a class or namespace.
-    my @parts;
-    foreach my $part (split /::/, $val) {
-        if ($part =~ m/^[A-Z]/) {
-            push @parts, $part;
-            next;
-        }
-        last;
-    }
-
-    $val = join '::', @parts;
-    my $doc = $el->document;
-    $doc->{required_spaces}{$val} = 1 if $val; # do not increment
-
-}
-
 sub perl_fmt {
     return bareword => { name => shift->{bareword_value} };
 }

@@ -190,7 +190,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '5-class.frt', './test/5-class.frt' );
+my $file_name = './test/5-class.frt';
+my $pos = before_content( '5-class.frt', $file_name );
 
 use Ferret::Core::Operations qw(add div num str);
 my $result = do {
@@ -374,7 +375,7 @@ my $result = do {
             $class, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Point) );
+    load_namespaces( $context, $file_name, qw(Point) );
     var(
         $scope,
         pt => $$scope->{'Point'}
@@ -436,4 +437,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

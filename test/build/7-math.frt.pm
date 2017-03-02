@@ -109,7 +109,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '7-math.frt', './test/7-math.frt' );
+my $file_name = './test/7-math.frt';
+my $pos = before_content( '7-math.frt', $file_name );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -117,7 +118,7 @@ my $result = do {
     my $scope = $file_scope;
     load_core('main');
 
-    load_namespaces( $context, qw(Math Math::Point Math::Rect) );
+    load_namespaces( $context, $file_name, qw(Math Math::Point Math::Rect) );
     var(
         $scope,
         rect => $$scope->{'Math::Rect'}->(
@@ -205,4 +206,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

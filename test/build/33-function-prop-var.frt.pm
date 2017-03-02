@@ -45,8 +45,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '33-function-prop-var.frt',
-    './test/33-function-prop-var.frt' );
+my $file_name = './test/33-function-prop-var.frt';
+my $pos = before_content( '33-function-prop-var.frt', $file_name );
 
 use Ferret::Core::Operations qw(num);
 my $result = do {
@@ -87,4 +87,4 @@ my $result = do {
       ->( [ $$scope->{'roots'} ], $scope, undef, $pos->(2.2) );
 };
 
-after_content();
+after_content($file_name);

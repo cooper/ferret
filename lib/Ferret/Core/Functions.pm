@@ -102,7 +102,7 @@ sub _delay {
     my ($num, $func) = @$args{'timeout', 'callback'};
 
     # load Timer and create a timer.
-    my $timer_class = Ferret::space($num->f->core_context, [caller], 'Timer');
+    my $timer_class = $ret->f->get_class('Timer');
     my $timer = $timer_class->call({ delay => $num });
 
     # attach the callback.

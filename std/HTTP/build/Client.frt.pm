@@ -121,7 +121,7 @@
 #                                  Item 2
 #                                      Pair 'url'
 #                                          Lexical variable '$url'
-#      Include (HTTP, HTTP::Request, HTTPMethod, NATIVE, NATIVE::HTTPClient, Num, Str)
+#      Include (HTTP::Request, HTTPMethod, NATIVE::HTTPClient, Num, Str)
 package FF;
 
 use warnings;
@@ -142,7 +142,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Client.frt', './std/HTTP/Client.frt' );
+my $file_name = './std/HTTP/Client.frt';
+my $pos = before_content( 'Client.frt', $file_name );
 
 use Ferret::Core::Operations qw(add mul num str);
 my $result = do {
@@ -350,8 +351,8 @@ my $result = do {
             undef, $pos->(6.2)
         );
     }
-    load_namespaces( $context,
-        qw(HTTP HTTP::Request HTTPMethod NATIVE NATIVE::HTTPClient Num Str) );
+    load_namespaces( $context, $file_name,
+        qw(HTTP::Request HTTPMethod NATIVE::HTTPClient Num Str) );
 };
 
-after_content();
+after_content($file_name);

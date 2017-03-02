@@ -300,7 +300,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Test.frt', './std/Test.frt' );
+my $file_name = './std/Test.frt';
+my $pos = before_content( 'Test.frt', $file_name );
 
 use Ferret::Core::Operations
   qw(_not _sub add bool equal nequal num refs_equal refs_nequal str);
@@ -796,7 +797,7 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Bool Error) );
+    load_namespaces( $context, $file_name, qw(Bool Error) );
 };
 
-after_content();
+after_content($file_name);

@@ -15,8 +15,30 @@ sub desc {
 }
 
 sub spaces {
-    my $doc = shift->document;
-    return sort keys %{ $doc->{required_spaces} };
+    my $spaces = shift;
+    return @{ $spaces->{spaces} } if $spaces->{spaces};
+    my @spaces;
+    for my $bw ($spaces->document->filter_descendants(type => 'Bareword')) {
+        my $val = $bw->{bareword_value};
+
+        # if it starts with a capital letter, it's a class or namespace.
+        my @parts;
+        foreach my $part (split /::/, $val) {
+            if ($part =~ m/^[A-Z]/) {
+                push @parts, $part;
+                next;
+            }
+            last;
+        }
+
+        $val = join '::', @parts;
+        push @spaces, $val;
+    }
+    my %seen;
+    @spaces = grep { length && !$seen{$_}++ } @spaces;
+    @spaces = sort @spaces;
+    $spaces->{spaces} = \@spaces;
+    return @spaces;
 }
 
 sub after_adopt {

@@ -14,7 +14,7 @@ use Scalar::Util qw(blessed);
 sub _handle_signal {
     my $f = $Ferret::ferret;
     my $type = FF::get_symbol($f, shift);
-    my $signal_class = Ferret::space($f->main_context, [caller], 'Signal');
+    my $signal_class = $f->get_class('Signal');
     $signal_class->call_prop(fireSignal => { type => $type });
 }
 

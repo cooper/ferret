@@ -104,7 +104,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Outgoing.frt', './std/IRC/Outgoing.frt' );
+my $file_name = './std/IRC/Outgoing.frt';
+my $pos = before_content( 'Outgoing.frt', $file_name );
 
 use Ferret::Core::Operations qw(add bool str);
 my $result = do {
@@ -270,7 +271,7 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Str Str::Any) );
+    load_namespaces( $context, $file_name, qw(Str Str::Any) );
 };
 
-after_content();
+after_content($file_name);

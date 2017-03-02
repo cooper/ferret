@@ -39,7 +39,7 @@
 #          Method 'redirect'
 #          Method 'error'
 #          Method 'response'
-#      Include (Client, HTTPMethod, NATIVE, NATIVE::HTTPClient, Str)
+#      Include (Client, HTTPMethod, NATIVE::HTTPClient, Str)
 package FF;
 
 use warnings;
@@ -60,7 +60,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Request.frt', './std/HTTP/Request.frt' );
+my $file_name = './std/HTTP/Request.frt';
+my $pos = before_content( 'Request.frt', $file_name );
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -164,8 +165,8 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context,
-        qw(Client HTTPMethod NATIVE NATIVE::HTTPClient Str) );
+    load_namespaces( $context, $file_name,
+        qw(Client HTTPMethod NATIVE::HTTPClient Str) );
 };
 
-after_content();
+after_content($file_name);

@@ -81,7 +81,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '26-signals.frt', './test/26-signals.frt' );
+my $file_name = './test/26-signals.frt';
+my $pos = before_content( '26-signals.frt', $file_name );
 
 use Ferret::Core::Operations qw(_not bool num str);
 my $result = do {
@@ -125,7 +126,7 @@ my $result = do {
             return $ret;
         }
     );
-    load_namespaces( $context, qw(Signal Timer) );
+    load_namespaces( $context, $file_name, qw(Signal Timer) );
     on(
         $$scope->{'Signal'}->property_u( 'TERM', $pos->(2.3) ),
         'trap', $self, $scope,
@@ -151,4 +152,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(23.6) );
 };
 
-after_content();
+after_content($file_name);

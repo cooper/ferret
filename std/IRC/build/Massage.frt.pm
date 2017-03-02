@@ -379,7 +379,7 @@
 #                      Return
 #                          Property 'host'
 #                              Instance variable '@_parsedSource'
-#      Include (Bool, Connection, Str, Str::NE)
+#      Include (Bool, Connection, Str::NE)
 package FF;
 
 use warnings;
@@ -400,7 +400,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Massage.frt', './std/IRC/Massage.frt' );
+my $file_name = './std/IRC/Massage.frt';
+my $pos = before_content( 'Massage.frt', $file_name );
 
 use Ferret::Core::Operations
   qw(_not add all_true bool equal gr8r num rgx sim str);
@@ -944,7 +945,7 @@ my $result = do {
         $func_6->inside_scope( user => $scope, $proto, $class, $ins, 1, undef );
         $func_7->inside_scope( host => $scope, $proto, $class, $ins, 1, undef );
     }
-    load_namespaces( $context, qw(Bool Connection Str Str::NE) );
+    load_namespaces( $context, $file_name, qw(Bool Connection Str::NE) );
 };
 
-after_content();
+after_content($file_name);

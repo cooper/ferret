@@ -1,1 +1,1 @@
-load_namespaces($context, qw(<<spaces>>));
+load_namespaces($context, $file_name, qw(<<spaces>>));

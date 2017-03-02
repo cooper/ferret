@@ -84,8 +84,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos =
-  before_content( '21-nested-callbacks.frt', './test/21-nested-callbacks.frt' );
+my $file_name = './test/21-nested-callbacks.frt';
+my $pos = before_content( '21-nested-callbacks.frt', $file_name );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -112,7 +112,7 @@ my $result = do {
             return $ret;
         }
     );
-    load_namespaces( $context, qw(Timer) );
+    load_namespaces( $context, $file_name, qw(Timer) );
     var(
         $scope,
         parts => str( $f, "s p a m" )->property_u( 'split', $pos->(1.4) )
@@ -161,4 +161,4 @@ my $result = do {
     }
 };
 
-after_content();
+after_content($file_name);

@@ -175,7 +175,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Error.frt', './std/Error.frt' );
+my $file_name = './std/Error.frt';
+my $pos = before_content( 'Error.frt', $file_name );
 
 use Ferret::Core::Operations qw(_not add bool str);
 my $result = do {
@@ -444,7 +445,7 @@ my $result = do {
             $scope, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Error List NATIVE Num Str Sym) );
+    load_namespaces( $context, $file_name, qw(Error List NATIVE Num Str Sym) );
 };
 
-after_content();
+after_content($file_name);

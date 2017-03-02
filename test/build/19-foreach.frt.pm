@@ -44,7 +44,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '19-foreach.frt', './test/19-foreach.frt' );
+my $file_name = './test/19-foreach.frt';
+my $pos = before_content( '19-foreach.frt', $file_name );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -82,4 +83,4 @@ my $result = do {
     }
 };
 
-after_content();
+after_content($file_name);

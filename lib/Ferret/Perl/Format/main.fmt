@@ -18,8 +18,9 @@ my ($self, $ins);
 my $f = get_ferret();
 my ($true, $false, $undefined, $ret_func) = get_constant_objects($f);
 
-my $pos = before_content('<<base_name>>', '<<file_name>>');
+my $file_name = '<<file_name>>';
+my $pos = before_content('<<base_name>>', $file_name);
 
 <<content>>
 
-after_content();
+after_content($file_name);

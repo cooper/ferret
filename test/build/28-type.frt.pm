@@ -95,7 +95,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '28-type.frt', './test/28-type.frt' );
+my $file_name = './test/28-type.frt';
+my $pos = before_content( '28-type.frt', $file_name );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -148,7 +149,7 @@ my $result = do {
         announce => $scope,
         $context, undef, $ins, undef, undef
     );
-    load_namespaces( $context, qw(Gender Str) );
+    load_namespaces( $context, $file_name, qw(Gender Str) );
     typedef(
         $scope, $context, 'Gender',
         sub {
@@ -183,4 +184,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

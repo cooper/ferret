@@ -104,7 +104,7 @@
 #                      String 'this shoul...'
 #                  Item 1
 #                      Boolean true
-#      Include (Math, Math::Point)
+#      Include (Math::Point)
 package FF;
 
 use warnings;
@@ -125,8 +125,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '11-external-inside-on.frt',
-    './test/11-external-inside-on.frt' );
+my $file_name = './test/11-external-inside-on.frt';
+my $pos = before_content( '11-external-inside-on.frt', $file_name );
 
 use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
@@ -174,7 +174,7 @@ my $result = do {
             return $ret;
         }
     );
-    load_namespaces( $context, qw(Math Math::Point) );
+    load_namespaces( $context, $file_name, qw(Math::Point) );
     var(
         $scope,
         point => $$scope->{'Math::Point'}
@@ -244,4 +244,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

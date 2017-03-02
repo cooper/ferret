@@ -48,8 +48,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos =
-  before_content( 'bot_test2.frt', './test/10-irc-simple/bot_test2.frt' );
+my $file_name = './test/10-irc-simple/bot_test2.frt';
+my $pos = before_content( 'bot_test2.frt', $file_name );
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
@@ -57,7 +57,7 @@ my $result = do {
     my $scope = $file_scope;
     load_core('main');
 
-    load_namespaces( $context, qw(Bot2) );
+    load_namespaces( $context, $file_name, qw(Bot2) );
     var(
         $scope,
         bot => $$scope->{'Bot2'}->(
@@ -83,4 +83,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(3.3) );
 };
 
-after_content();
+after_content($file_name);

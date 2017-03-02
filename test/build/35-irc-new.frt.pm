@@ -800,7 +800,7 @@
 #              Property 'connect'
 #                  Lexical variable '$bot'
 #              Argument list [0 items]
-#      Include (COMPILER, Error, IRC, IRC::Bot, IRC::Connection, IRC::Massage, Str, Str::Any)
+#      Include (COMPILER, Error, IRC::Bot, IRC::Connection, IRC::Massage, Str::Any)
 package FF;
 
 use warnings;
@@ -821,7 +821,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '35-irc-new.frt', './test/35-irc-new.frt' );
+my $file_name = './test/35-irc-new.frt';
+my $pos = before_content( '35-irc-new.frt', $file_name );
 
 use Ferret::Core::Operations qw(_not add any_true bool less num rgx str);
 my $result = do {
@@ -1693,9 +1694,8 @@ my $result = do {
         ircsay => $scope,
         $context, undef, $ins, undef, undef
     );
-    load_namespaces( $context,
-        qw(COMPILER Error IRC IRC::Bot IRC::Connection IRC::Massage Str Str::Any)
-    );
+    load_namespaces( $context, $file_name,
+        qw(COMPILER Error IRC::Bot IRC::Connection IRC::Massage Str::Any) );
     var(
         $context,
         bot =>
@@ -1822,4 +1822,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(158.3) );
 };
 
-after_content();
+after_content($file_name);

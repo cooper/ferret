@@ -541,7 +541,7 @@
 #                                      Lexical variable '$msg'
 #                              Item 1
 #                                  Lexical variable '$response'
-#      Include (Message, Num, Socket, Socket::TCP, Str, Str::LC)
+#      Include (Message, Num, Socket::TCP, Str, Str::LC)
 package FF;
 
 use warnings;
@@ -562,7 +562,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Bot.frt', './test/20-irc-complex/IRCBot/Bot.frt' );
+my $file_name = './test/20-irc-complex/IRCBot/Bot.frt';
+my $pos = before_content( 'Bot.frt', $file_name );
 
 use Ferret::Core::Operations qw(_not add bool equal num str);
 my $result = do {
@@ -1297,7 +1298,8 @@ my $result = do {
             $pos->(10.3)
         );
     }
-    load_namespaces( $context, qw(Message Num Socket Socket::TCP Str Str::LC) );
+    load_namespaces( $context, $file_name,
+        qw(Message Num Socket::TCP Str Str::LC) );
 };
 
-after_content();
+after_content($file_name);

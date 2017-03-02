@@ -153,7 +153,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Bot.frt', './std/IRC/Bot.frt' );
+my $file_name = './std/IRC/Bot.frt';
+my $pos = before_content( 'Bot.frt', $file_name );
 
 use Ferret::Core::Operations qw(add bool nequal num str);
 my $result = do {
@@ -359,7 +360,7 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(BotHandlers Connection) );
+    load_namespaces( $context, $file_name, qw(BotHandlers Connection) );
 };
 
-after_content();
+after_content($file_name);

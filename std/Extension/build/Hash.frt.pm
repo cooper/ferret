@@ -126,7 +126,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Hash.frt', './std/Extension/Hash.frt' );
+my $file_name = './std/Extension/Hash.frt';
+my $pos = before_content( 'Hash.frt', $file_name );
 
 use Ferret::Core::Operations qw(bool equal num);
 my $result = do {
@@ -305,7 +306,7 @@ my $result = do {
             $proto, $class, $ins, 1, undef
         );
     }
-    load_namespaces( $context, qw(Hash HashIterator Iterator K V) );
+    load_namespaces( $context, $file_name, qw(Hash HashIterator Iterator K V) );
 };
 
-after_content();
+after_content($file_name);

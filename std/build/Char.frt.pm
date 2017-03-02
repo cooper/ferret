@@ -115,7 +115,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Char.frt', './std/Char.frt' );
+my $file_name = './std/Char.frt';
+my $pos = before_content( 'Char.frt', $file_name );
 
 use Ferret::Core::Operations qw(bool nequal num str);
 my $result = do {
@@ -243,7 +244,8 @@ my $result = do {
         );
         $func_1->inside_scope( ord => $scope, $proto, $class, $ins, 1, undef );
     }
-    load_namespaces( $context, qw(Bool Character Error NATIVE Num Str) );
+    load_namespaces( $context, $file_name,
+        qw(Bool Character Error NATIVE Num Str) );
     typedef(
         $scope, $context, 'Char',
         sub {
@@ -271,4 +273,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

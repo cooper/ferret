@@ -32,7 +32,7 @@
 #                          Property 'main_context'
 #                              Lexical variable '$ferret'
 #                          Argument list [0 items]
-#      Include (NATIVE, NATIVE::PerlObject, PerlObject)
+#      Include (NATIVE::PerlObject, PerlObject)
 package FF;
 
 use warnings;
@@ -53,7 +53,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'NATIVE.frt', './std/Extension/NATIVE.frt' );
+my $file_name = './std/Extension/NATIVE.frt';
+my $pos = before_content( 'NATIVE.frt', $file_name );
 
 use Ferret::Core::Operations qw(str);
 my $result = do {
@@ -105,7 +106,7 @@ my $result = do {
             $pos->(7.3)
         );
     }
-    load_namespaces( $context, qw(NATIVE NATIVE::PerlObject PerlObject) );
+    load_namespaces( $context, $file_name, qw(NATIVE::PerlObject PerlObject) );
 };
 
-after_content();
+after_content($file_name);

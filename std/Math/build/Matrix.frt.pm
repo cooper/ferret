@@ -401,7 +401,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Matrix.frt', './std/Math/Matrix.frt' );
+my $file_name = './std/Math/Matrix.frt';
+my $pos = before_content( 'Matrix.frt', $file_name );
 
 use Ferret::Core::Operations qw(_sub add bool div mul nequal num range str);
 my $result = do {
@@ -1168,7 +1169,7 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Code Error Int Matrix Num) );
+    load_namespaces( $context, $file_name, qw(Code Error Int Matrix Num) );
 };
 
-after_content();
+after_content($file_name);

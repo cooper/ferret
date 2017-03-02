@@ -95,7 +95,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '27-http.frt', './test/27-http.frt' );
+my $file_name = './test/27-http.frt';
+my $pos = before_content( '27-http.frt', $file_name );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -185,7 +186,7 @@ my $result = do {
             return $ret;
         }
     );
-    load_namespaces( $context, qw(HTTP Str) );
+    load_namespaces( $context, $file_name, qw(HTTP Str) );
 
     # Inside
     {
@@ -243,4 +244,4 @@ my $result = do {
     }
 };
 
-after_content();
+after_content($file_name);

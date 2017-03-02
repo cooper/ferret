@@ -584,7 +584,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Complex.frt', './std/Complex.frt' );
+my $file_name = './std/Complex.frt';
+my $pos = before_content( 'Complex.frt', $file_name );
 
 use Ferret::Core::Operations
   qw(_sub add all_true bool div equal less less_e mul num pow str);
@@ -1551,7 +1552,7 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Complex Math Num) );
+    load_namespaces( $context, $file_name, qw(Complex Math Num) );
 };
 
-after_content();
+after_content($file_name);

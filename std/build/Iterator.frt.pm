@@ -189,7 +189,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Iterator.frt', './std/Iterator.frt' );
+my $file_name = './std/Iterator.frt';
+my $pos = before_content( 'Iterator.frt', $file_name );
 
 use Ferret::Core::Operations qw(_not _sub add any_true less num);
 my $result = do {
@@ -480,7 +481,7 @@ my $result = do {
             $proto, $class, $ins, 1, undef
         );
     }
-    load_namespaces( $context, qw(Hash Iterator List) );
+    load_namespaces( $context, $file_name, qw(Hash Iterator List) );
     typedef(
         $scope, $context,
         'Iterator',
@@ -542,4 +543,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

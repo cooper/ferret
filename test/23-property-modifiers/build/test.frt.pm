@@ -30,7 +30,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'test.frt', './test/23-property-modifiers/test.frt' );
+my $file_name = './test/23-property-modifiers/test.frt';
+my $pos = before_content( 'test.frt', $file_name );
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -38,11 +39,11 @@ my $result = do {
     my $scope = $file_scope;
     load_core('main');
 
-    load_namespaces( $context, qw(Second) );
+    load_namespaces( $context, $file_name, qw(Second) );
     var( $scope, x => create_object( $f, [] ), undef, $pos->(1.2) );
 
     $scope->delete_property_ow( 'x', $pos->(2.1) );
     $$scope->{'Second'};
 };
 
-after_content();
+after_content($file_name);

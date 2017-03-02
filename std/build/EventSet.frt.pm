@@ -40,7 +40,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'EventSet.frt', './std/EventSet.frt' );
+my $file_name = './std/EventSet.frt';
+my $pos = before_content( 'EventSet.frt', $file_name );
 
 use Ferret::Core::Operations qw(bool);
 my $result = do {
@@ -85,7 +86,7 @@ my $result = do {
             $class, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Code) );
+    load_namespaces( $context, $file_name, qw(Code) );
 };
 
-after_content();
+after_content($file_name);

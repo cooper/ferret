@@ -389,7 +389,7 @@ sub _get_types {
     # class-level declarations are associated with the class, not the context.
     # since you can store contexts in classes now, maybe classes themselves
     # should inherit from Context...
-    #$soi = $soi->closest_context;
+    $soi = $soi->closest_context;
 
     # either a single type or a list of types.
     foreach my $type (ref $t eq 'ARRAY' ? @$t : ($t)) {

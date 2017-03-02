@@ -71,7 +71,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '13-timers.frt', './test/13-timers.frt' );
+my $file_name = './test/13-timers.frt';
+my $pos = before_content( '13-timers.frt', $file_name );
 
 use Ferret::Core::Operations qw(num str);
 my $result = do {
@@ -102,7 +103,7 @@ my $result = do {
             return $ret;
         }
     );
-    load_namespaces( $context, qw(Timer) );
+    load_namespaces( $context, $file_name, qw(Timer) );
     $$scope->{'say'}->( [ str( $f, "hello" ) ], $scope, undef, $pos->(1.2) );
     on(
         $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(3.15) )
@@ -135,4 +136,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(12.3) );
 };
 
-after_content();
+after_content($file_name);

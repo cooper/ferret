@@ -87,7 +87,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '14-callbacks.frt', './test/14-callbacks.frt' );
+my $file_name = './test/14-callbacks.frt';
+my $pos = before_content( '14-callbacks.frt', $file_name );
 
 use Ferret::Core::Operations qw(add str);
 my $result = do {
@@ -142,7 +143,7 @@ my $result = do {
             return $ret;
         }
     );
-    load_namespaces( $context, qw(String) );
+    load_namespaces( $context, $file_name, qw(String) );
     $$scope->{'say'}->( [ str( $f, "test" ) ], $scope, undef, $pos->(1.2) );
     var( $scope, str => str( $f, "hi" ), undef, $pos->(3.2) );
     on(
@@ -171,4 +172,4 @@ my $result = do {
       ->( [ undef, [] ], $scope, undef, $pos->(25.3) );
 };
 
-after_content();
+after_content($file_name);

@@ -518,7 +518,7 @@
 #                  Instruction
 #                      Return
 #                          Lexical variable '$new'
-#      Include (Code, Iterator, List, ListIterator, T)
+#      Include (Code, Iterator, List, ListIterator)
 package FF;
 
 use warnings;
@@ -539,7 +539,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'List.frt', './std/Extension/List.frt' );
+my $file_name = './std/Extension/List.frt';
+my $pos = before_content( 'List.frt', $file_name );
 
 use Ferret::Core::Operations qw(_not add all_true bool equal nequal num range);
 my $result = do {
@@ -1537,7 +1538,8 @@ my $result = do {
             undef
         );
     }
-    load_namespaces( $context, qw(Code Iterator List ListIterator T) );
+    load_namespaces( $context, $file_name,
+        qw(Code Iterator List ListIterator) );
 };
 
-after_content();
+after_content($file_name);

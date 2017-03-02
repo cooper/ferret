@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use utf8;
 use 5.010;
-use parent 'Ferret::Context';
+use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken blessed);
 use Ferret::Core::Conversion qw(

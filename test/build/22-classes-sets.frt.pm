@@ -179,7 +179,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '22-classes-sets.frt', './test/22-classes-sets.frt' );
+my $file_name = './test/22-classes-sets.frt';
+my $pos = before_content( '22-classes-sets.frt', $file_name );
 
 use Ferret::Core::Operations qw(bool str);
 my $result = do {
@@ -368,7 +369,7 @@ my $result = do {
             $class, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Cat Cow Dog) );
+    load_namespaces( $context, $file_name, qw(Cat Cow Dog) );
     var(
         $scope,
         animal =>
@@ -415,4 +416,4 @@ my $result = do {
       ->( [ $$scope->{'aftermath'} ], $scope, undef, $pos->(72.2) );
 };
 
-after_content();
+after_content($file_name);

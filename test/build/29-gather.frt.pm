@@ -147,7 +147,7 @@
 #                                                      Number '0'
 #                                                      Range operator (..)
 #                                                      Number '9'
-#      Include (Math, Math::Point, Num)
+#      Include (Math::Point, Num)
 package FF;
 
 use warnings;
@@ -168,7 +168,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '29-gather.frt', './test/29-gather.frt' );
+my $file_name = './test/29-gather.frt';
+my $pos = before_content( '29-gather.frt', $file_name );
 
 use Ferret::Core::Operations qw(bool nequal num range);
 my $result = do {
@@ -308,7 +309,7 @@ my $result = do {
         evenNumbers => $scope,
         $context, undef, $ins, undef, undef
     );
-    load_namespaces( $context, qw(Math Math::Point Num) );
+    load_namespaces( $context, $file_name, qw(Math::Point Num) );
     var(
         $scope,
         pt1 => $$scope->{'Math::Point'}
@@ -390,4 +391,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

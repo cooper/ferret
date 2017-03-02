@@ -111,16 +111,19 @@ sub get_context  {
     my @parts = split /::/, $name;
 
     # create/find contexts
+    my $full_name;
     my $c = $f->main_context; # changed 03/01/2017 from core
     for my $part (@parts) {
+        $full_name = length $full_name ? "${full_name}::$part" : $part;
         my $new = $c->property($part);
         if ($new) {
             $c = $new;
             next;
         }
         $new = Ferret::Context->new($f,
-            name => $part,
-            parent => $c
+            name      => $part,
+            full_name => $full_name,
+            parent    => $c,
         );
         $c->set_property($part => $new);
         $c = $new;
@@ -174,16 +177,51 @@ sub get_class {
 # fetch a class or namespace.
 # if necessary, load it.
 sub space {
-    my ($context, $caller, $space) = @_;
-    my $file = build_name(ns_to_slash("$space.frt.pm"));
+    my ($context, $file_name, $last_check, @acceptable) = @_;
+    @acceptable = grep defined, @acceptable;
+    foreach my $space (@acceptable) {
+        my $file = build_name(ns_to_slash("$space.frt.pm"));
 
-    # already tried this file.
-    return $context->property($space) if $tried_files{$file};
+        # already tried this file
+        return $context->property($space) if $tried_files{$file};
 
-    $tried_files{$file} = 1;
-    do $file or do { print "error in $file: $@" and return if $@ };
+        # do the file
+        $tried_files{$file} = 1;
+        do $file or do {
+            if ($@) {
+                print "error in $file: $@";
+                return;
+            }
+            next if $!; # not found
+            print "error in $file: did not return a true value\n";
+            return;
+        };
 
-    return $context->property($space);
+        return $context->property($space);
+    }
+    return if $last_check;
+    push @{ $context->f->{pending_spaces}{$file_name} ||= [] }, [ $context, @acceptable ];
+}
+
+sub check_spaces {
+    my ($f, $file_name) = @_;
+    my @spaces = @{ $f->{pending_spaces}{$file_name} || [] };
+    return if !@spaces; # success
+    SPACE: for (@spaces) {
+        my ($context, @acceptable) = @$_;
+
+        # already loaded?
+        for (@acceptable) {
+            next SPACE if $context->property($_);
+        }
+
+        # try to load again
+        next if Ferret::space($context, $file_name, 1, @acceptable);
+
+        # failed
+        return join '|', @acceptable;
+    }
+    return; # success
 }
 
 ####################

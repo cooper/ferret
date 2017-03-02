@@ -438,7 +438,7 @@
 #                              Instance variable '@port'
 #                              Addition operator (+)
 #                              String ')'
-#      Include (Channel, Handlers, IRC, IRC::Massage, List, Num, Outgoing, Server, Socket, Socket::TCP, Str, User)
+#      Include (Channel, Handlers, IRC::Massage, List, Num, Outgoing, Server, Socket::TCP, Str, User)
 package FF;
 
 use warnings;
@@ -459,7 +459,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Connection.frt', './std/IRC/Connection.frt' );
+my $file_name = './std/IRC/Connection.frt';
+my $pos = before_content( 'Connection.frt', $file_name );
 
 use Ferret::Core::Operations qw(add bool num str);
 my $result = do {
@@ -1122,9 +1123,9 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context,
-        qw(Channel Handlers IRC IRC::Massage List Num Outgoing Server Socket Socket::TCP Str User)
+    load_namespaces( $context, $file_name,
+        qw(Channel Handlers IRC::Massage List Num Outgoing Server Socket::TCP Str User)
     );
 };
 
-after_content();
+after_content($file_name);

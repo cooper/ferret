@@ -219,7 +219,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Rect.frt', './std/Math/Rect.frt' );
+my $file_name = './std/Math/Rect.frt';
+my $pos = before_content( 'Rect.frt', $file_name );
 
 use Ferret::Core::Operations qw(add div num str);
 my $result = do {
@@ -557,7 +558,7 @@ my $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Line Num Point) );
+    load_namespaces( $context, $file_name, qw(Line Num Point) );
 };
 
-after_content();
+after_content($file_name);

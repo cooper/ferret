@@ -110,7 +110,7 @@
 #                          Argument list [1 item]
 #                              Item 0
 #                                  String 'JOIN #k'
-#      Include (Socket, Socket::TCP, Timer)
+#      Include (Socket::TCP, Timer)
 package FF;
 
 use warnings;
@@ -131,7 +131,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( '12-socket.frt', './test/12-socket.frt' );
+my $file_name = './test/12-socket.frt';
+my $pos = before_content( '12-socket.frt', $file_name );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -219,7 +220,7 @@ my $result = do {
             return $ret;
         }
     );
-    load_namespaces( $context, qw(Socket Socket::TCP Timer) );
+    load_namespaces( $context, $file_name, qw(Socket::TCP Timer) );
     var(
         $scope,
         sock => $$scope->{'Socket::TCP'}->(
@@ -283,4 +284,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

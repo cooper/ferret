@@ -45,7 +45,7 @@
 #                              Item 0
 #                                  Pair 'url'
 #                                      Lexical variable '$url'
-#      Include (HTTP, HTTP::Client, Str)
+#      Include (HTTP::Client, Str)
 package FF;
 
 use warnings;
@@ -66,7 +66,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'HTTP.frt', './std/HTTP.frt' );
+my $file_name = './std/HTTP.frt';
+my $pos = before_content( 'HTTP.frt', $file_name );
 
 use Ferret::Core::Operations qw();
 my $result = do {
@@ -114,7 +115,7 @@ my $result = do {
         post => $scope,
         $context, undef, $ins, undef, undef
     );
-    load_namespaces( $context, qw(HTTP HTTP::Client Str) );
+    load_namespaces( $context, $file_name, qw(HTTP::Client Str) );
 
     typedef(
         $scope, $context,
@@ -146,4 +147,4 @@ my $result = do {
     );
 };
 
-after_content();
+after_content($file_name);

@@ -88,7 +88,7 @@
 #                                          Item 0
 #                                              Lexical variable '$type'
 #                          Argument list [0 items]
-#      Include (NATIVE, NATIVE::Signal, Sym)
+#      Include (NATIVE::Signal, Sym)
 package FF;
 
 use warnings;
@@ -109,7 +109,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Signal.frt', './std/Signal.frt' );
+my $file_name = './std/Signal.frt';
+my $pos = before_content( 'Signal.frt', $file_name );
 
 use Ferret::Core::Operations qw(bool num);
 my $result = do {
@@ -266,7 +267,7 @@ my $result = do {
             $pos->(12.2)
         );
     }
-    load_namespaces( $context, qw(NATIVE NATIVE::Signal Sym) );
+    load_namespaces( $context, $file_name, qw(NATIVE::Signal Sym) );
 };
 
-after_content();
+after_content($file_name);

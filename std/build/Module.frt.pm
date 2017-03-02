@@ -54,7 +54,8 @@ my ( $self, $ins );
 my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
-my $pos = before_content( 'Module.frt', './std/Module.frt' );
+my $file_name = './std/Module.frt';
+my $pos = before_content( 'Module.frt', $file_name );
 
 use Ferret::Core::Operations qw(add num str);
 my $result = do {
@@ -114,7 +115,7 @@ my $result = do {
             $class, $class, $ins, undef, undef
         );
     }
-    load_namespaces( $context, qw(Num Str) );
+    load_namespaces( $context, $file_name, qw(Num Str) );
 };
 
-after_content();
+after_content($file_name);
