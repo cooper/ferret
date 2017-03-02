@@ -16,8 +16,18 @@ sub desc {
 
 sub perl_fmt_do {
     my ($main, $mini) = @_;
-    my $perl = join "\n", map { $_->perl_fmt_do } $main->children;
+
+    # mini mode with one pkg
+    my @children = $main->children;
+    if ($mini && @children == 1) {
+        return ($main->first_child->perl_fmt)[1]->{all_content};
+    }
+
+    # mini mode with multiple packages
+    my $perl = join "\n", map { $_->perl_fmt_do } @children;
     return $perl if $mini;
+
+    # normal mode
     return F::get_format('Perl', main => {
         operations  => join(' ', sort keys %{ $main->{required_operations} }),
         content     => $perl,
