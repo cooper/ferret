@@ -43,7 +43,7 @@ my ( $pos, $file_name ) =
   before_content( 'Server.frt', './std/IRC/Server.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC', 1.1 );
     my $scope = $file_scope;
     load_core('IRC');
 
@@ -85,8 +85,8 @@ $result = do {
             $class, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Server) );
-    load_namespaces( $context, $file_name, qw(Connection Str) );
+    provides_namespaces( $context, $file_name, $pos->(8.1), qw(Server) );
+    load_namespaces( $context, $file_name, $pos->(8.1), qw(Connection Str) );
 };
 
 after_content($file_name);

@@ -135,7 +135,7 @@ my ( $pos, $file_name ) =
   before_content( 'String.frt', './std/Extension/String.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -342,9 +342,9 @@ $result = do {
             undef
         );
     }
-    provides_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(40.1),
         qw(Any LC Lowercase NE NonEmpty String UC Uppercase) );
-    load_namespaces( $context, $file_name,
+    load_namespaces( $context, $file_name, $pos->(40.1),
         qw(LC Lowercase NE NonEmpty Num Str UC Uppercase) );
 };
 

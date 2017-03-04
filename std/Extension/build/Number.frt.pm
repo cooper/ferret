@@ -211,7 +211,7 @@ my ( $pos, $file_name ) =
   before_content( 'Number.frt', './std/Extension/Number.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -516,9 +516,9 @@ $result = do {
             undef, $pos->(81.3)
         );
     }
-    provides_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(89.7),
         qw(Even Inf Int Integer NaN Number Odd) );
-    load_namespaces( $context, $file_name,
+    load_namespaces( $context, $file_name, $pos->(89.7),
         qw(Inf Int Integer NATIVE::Math NaN Num Num::Inf Num::Int Num::NaN) );
     $context->set_property( Int => $$scope->{'Num::Int'}, $pos->(87.3) );
     $context->set_property( Inf => $$scope->{'Num::Inf'}, $pos->(88.3) );

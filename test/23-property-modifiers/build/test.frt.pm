@@ -36,12 +36,12 @@ my ( $pos, $file_name ) =
   before_content( 'test.frt', './test/23-property-modifiers/test.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Second) );
+    provides_namespaces( $context, $file_name, $pos->(3.2), qw() );
+    load_namespaces( $context, $file_name, $pos->(3.2), qw(Second) );
     var( $scope, x => create_object( $f, [] ), undef, $pos->(1.2) );
 
     $scope->delete_property_ow( 'x', $pos->(2.1) );

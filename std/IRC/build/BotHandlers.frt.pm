@@ -123,7 +123,7 @@ my ( $pos, $file_name ) =
   before_content( 'BotHandlers.frt', './std/IRC/BotHandlers.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'IRC::BotHandlers' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC::BotHandlers', 1.1 );
     my $scope = $file_scope;
     load_core('IRC::BotHandlers');
 
@@ -236,8 +236,8 @@ $result = do {
         privmsg => $scope,
         $context, undef, $ins, undef, undef
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Channel) );
+    provides_namespaces( $context, $file_name, $pos->(26.1), qw() );
+    load_namespaces( $context, $file_name, $pos->(26.1), qw(Channel) );
     var(
         $context,
         handlers => create_object( $f, [ PRIVMSG => $$scope->{'privmsg'} ] ),

@@ -306,7 +306,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'Test.frt', './std/Test.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -797,8 +797,8 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Test) );
-    load_namespaces( $context, $file_name, qw(Bool Error) );
+    provides_namespaces( $context, $file_name, $pos->(102.1), qw(Test) );
+    load_namespaces( $context, $file_name, $pos->(102.1), qw(Bool Error) );
 };
 
 after_content($file_name);

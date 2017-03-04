@@ -174,7 +174,7 @@ my ( $pos, $file_name ) =
   before_content( '29-gather.frt', './test/29-gather.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 3.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -310,8 +310,8 @@ $result = do {
         evenNumbers => $scope,
         $context, undef, $ins, undef, undef
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Math::Point Num) );
+    provides_namespaces( $context, $file_name, $pos->(35.7), qw() );
+    load_namespaces( $context, $file_name, $pos->(35.7), qw(Math::Point Num) );
     var(
         $scope,
         pt1 => $$scope->{'Math::Point'}

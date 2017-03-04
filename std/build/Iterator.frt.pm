@@ -195,7 +195,7 @@ my ( $pos, $file_name ) =
   before_content( 'Iterator.frt', './std/Iterator.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -482,9 +482,10 @@ $result = do {
             $proto, $class, $ins, 1, undef
         );
     }
-    provides_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(76.1),
         qw(HashIterator Iterable Iterator ListIterator MultiIterator) );
-    load_namespaces( $context, $file_name, qw(Hash Iterator List) );
+    load_namespaces( $context, $file_name, $pos->(76.1),
+        qw(Hash Iterator List) );
     typedef(
         $scope, $context,
         'Iterator',

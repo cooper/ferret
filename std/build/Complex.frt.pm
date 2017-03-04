@@ -590,7 +590,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'Complex.frt', './std/Complex.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -1552,8 +1552,9 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Complex) );
-    load_namespaces( $context, $file_name, qw(Complex Math Num) );
+    provides_namespaces( $context, $file_name, $pos->(183.1), qw(Complex) );
+    load_namespaces( $context, $file_name, $pos->(183.1),
+        qw(Complex Math Num) );
 };
 
 after_content($file_name);

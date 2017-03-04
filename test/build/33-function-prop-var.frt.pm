@@ -51,7 +51,7 @@ my ( $pos, $file_name ) = before_content( '33-function-prop-var.frt',
     './test/33-function-prop-var.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.05 );
     my $scope = $file_scope;
     load_core('main');
 

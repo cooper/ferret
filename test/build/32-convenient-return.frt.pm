@@ -39,7 +39,7 @@ my ( $pos, $file_name ) = before_content( '32-convenient-return.frt',
     './test/32-convenient-return.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -53,8 +53,8 @@ $result = do {
         }
     );
     $func_0->inside_scope( A => $scope, $context, undef, $ins, undef, undef );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(A) );
+    provides_namespaces( $context, $file_name, $pos->(5.6), qw() );
+    load_namespaces( $context, $file_name, $pos->(5.6), qw(A) );
     $$scope->{'say'}->(
         [ $$scope->{'A'}->( [ undef, [] ], $scope, undef, $pos->(5.4) ) ],
         $scope, undef, $pos->(5.2)

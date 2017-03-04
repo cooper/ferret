@@ -132,7 +132,7 @@ my ( $pos, $file_name ) =
   before_content( 'Hash.frt', './std/Extension/Hash.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -307,8 +307,10 @@ $result = do {
             $proto, $class, $ins, 1, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Hash K OrderedHash V) );
-    load_namespaces( $context, $file_name, qw(Hash HashIterator Iterator K V) );
+    provides_namespaces( $context, $file_name, $pos->(39.1),
+        qw(Hash K OrderedHash V) );
+    load_namespaces( $context, $file_name, $pos->(39.1),
+        qw(Hash HashIterator Iterator K V) );
 };
 
 after_content($file_name);

@@ -146,7 +146,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'Point.frt', './std/Math/Point.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'Math' );
+    my ( $file_scope, $context ) = get_context( $f, 'Math', 1.1 );
     my $scope = $file_scope;
     load_core('Math');
 
@@ -363,8 +363,8 @@ $result = do {
             $pos->(6.15)
         );
     }
-    provides_namespaces( $context, $file_name, qw(Point) );
-    load_namespaces( $context, $file_name, qw(Num Point) );
+    provides_namespaces( $context, $file_name, $pos->(38.1), qw(Point) );
+    load_namespaces( $context, $file_name, $pos->(38.1), qw(Num Point) );
 };
 
 after_content($file_name);

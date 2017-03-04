@@ -185,7 +185,7 @@ my ( $pos, $file_name ) =
   before_content( '22-classes-sets.frt', './test/22-classes-sets.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 3.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -370,8 +370,8 @@ $result = do {
             $class, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Cat Cow Dog) );
-    load_namespaces( $context, $file_name, qw(Cat Cow Dog) );
+    provides_namespaces( $context, $file_name, $pos->(72.5), qw(Cat Cow Dog) );
+    load_namespaces( $context, $file_name, $pos->(72.5), qw(Cat Cow Dog) );
     var(
         $scope,
         animal =>

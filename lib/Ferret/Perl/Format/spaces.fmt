@@ -1,2 +1,2 @@
-provides_namespaces($context, $file_name, qw(<<provides>>));
-load_namespaces($context, $file_name, qw(<<requires>>));
+provides_namespaces($context, $file_name, $pos->(<<pos>>), qw(<<provides>>));
+load_namespaces($context, $file_name, $pos->(<<pos>>), qw(<<requires>>));

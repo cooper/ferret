@@ -131,7 +131,7 @@ my ( $pos, $file_name ) = before_content( '11-external-inside-on.frt',
     './test/11-external-inside-on.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.05 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -175,8 +175,8 @@ $result = do {
             return $ret;
         }
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Math::Point) );
+    provides_namespaces( $context, $file_name, $pos->(28.7), qw() );
+    load_namespaces( $context, $file_name, $pos->(28.7), qw(Math::Point) );
     var(
         $scope,
         point => $$scope->{'Math::Point'}

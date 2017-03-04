@@ -47,12 +47,12 @@ my ( $pos, $file_name ) =
   before_content( 'bot_test1.frt', './test/10-irc-simple/bot_test1.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.05 );
     my $scope = $file_scope;
     load_core('main');
 
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Bot1) );
+    provides_namespaces( $context, $file_name, $pos->(2.5), qw() );
+    load_namespaces( $context, $file_name, $pos->(2.5), qw(Bot1) );
     var(
         $scope,
         bot => $$scope->{'Bot1'}->(

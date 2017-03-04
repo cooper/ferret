@@ -73,13 +73,14 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'Indexed.frt', './std/Indexed.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'CORE' );
+    my ( $file_scope, $context ) = get_context( $f, 'CORE', 1.1 );
     my $scope = $file_scope;
     load_core('CORE');
 
-    provides_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(28.1),
         qw(Hashable Indexed IndexedRead IndexedWrite) );
-    load_namespaces( $context, $file_name, qw(Any IndexedRead IndexedWrite) );
+    load_namespaces( $context, $file_name, $pos->(28.1),
+        qw(Any IndexedRead IndexedWrite) );
     typedef(
         $scope, $context,
         'Hashable',

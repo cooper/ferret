@@ -406,7 +406,7 @@ my ( $pos, $file_name ) =
   before_content( 'Matrix.frt', './std/Math/Matrix.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'Math' );
+    my ( $file_scope, $context ) = get_context( $f, 'Math', 1.1 );
     my $scope = $file_scope;
     load_core('Math');
 
@@ -1169,8 +1169,9 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Matrix) );
-    load_namespaces( $context, $file_name, qw(Code Error Int Matrix Num) );
+    provides_namespaces( $context, $file_name, $pos->(110.1), qw(Matrix) );
+    load_namespaces( $context, $file_name, $pos->(110.1),
+        qw(Code Error Int Matrix Num) );
 };
 
 after_content($file_name);

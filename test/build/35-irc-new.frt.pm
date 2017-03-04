@@ -827,7 +827,7 @@ my ( $pos, $file_name ) =
   before_content( '35-irc-new.frt', './test/35-irc-new.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.05 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -1695,10 +1695,9 @@ $result = do {
         ircsay => $scope,
         $context, undef, $ins, undef, undef
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(158.5), qw() );
+    load_namespaces( $context, $file_name, $pos->(158.5),
         qw(COMPILER Error IRC::Bot IRC::Connection IRC::Massage Str::Any) );
-        print "IRC::Bot -> ", $$$scope{'IRC::Bot'}, "\n";
     var(
         $context,
         bot =>

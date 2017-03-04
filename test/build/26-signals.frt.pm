@@ -87,7 +87,7 @@ my ( $pos, $file_name ) =
   before_content( '26-signals.frt', './test/26-signals.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 2.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -127,8 +127,8 @@ $result = do {
             return $ret;
         }
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Signal Timer) );
+    provides_namespaces( $context, $file_name, $pos->(23.8), qw() );
+    load_namespaces( $context, $file_name, $pos->(23.8), qw(Signal Timer) );
     on(
         $$scope->{'Signal'}->property_u( 'TERM', $pos->(2.3) ),
         'trap', $self, $scope,

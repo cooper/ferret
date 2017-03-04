@@ -405,7 +405,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'JSON.frt', './std/JSON.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -941,8 +941,9 @@ $result = do {
         $class->set_property( stringify => $$scope->{'encode'}, $pos->(191.3) );
         $class->set_property( parse     => $$scope->{'decode'}, $pos->(192.3) );
     }
-    provides_namespaces( $context, $file_name, qw(Charset JSON) );
-    load_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(192.5),
+        qw(Charset JSON) );
+    load_namespaces( $context, $file_name, $pos->(192.5),
         qw(Bool Charset Error List NATIVE::PerlObject Str) );
 };
 

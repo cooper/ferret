@@ -122,7 +122,7 @@ my ( $pos, $file_name ) =
   before_content( '3-nested-functions.frt', './test/3-nested-functions.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.05 );
     my $scope = $file_scope;
     load_core('main');
 

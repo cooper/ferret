@@ -74,7 +74,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'Stack.frt', './std/Stack.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -172,8 +172,8 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Stack T) );
-    load_namespaces( $context, $file_name, qw(T) );
+    provides_namespaces( $context, $file_name, $pos->(19.1), qw(Stack T) );
+    load_namespaces( $context, $file_name, $pos->(19.1), qw(T) );
 };
 
 after_content($file_name);

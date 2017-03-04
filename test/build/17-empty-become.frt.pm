@@ -57,7 +57,7 @@ my ( $pos, $file_name ) =
   before_content( '17-empty-become.frt', './test/17-empty-become.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 2.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -71,8 +71,8 @@ $result = do {
             return $ret;
         }
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Timer) );
+    provides_namespaces( $context, $file_name, $pos->(9.1), qw() );
+    load_namespaces( $context, $file_name, $pos->(9.1), qw(Timer) );
     var( $scope, obj => create_object( $f, [] ), undef, $pos->(2.2) );
     $$scope->{'Timer'}->property_u( 'init', $pos->(5.1) )
       ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(5.15) )

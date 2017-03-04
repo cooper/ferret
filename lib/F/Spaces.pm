@@ -95,6 +95,7 @@ sub perl_fmt {
     my @requires = $spaces->requires;
     return if !@provides && !@requires;
     return spaces => {
+        pos      => $spaces->{create_pos},
         provides => join(' ', @provides),
         requires => join(' ', @requires)
     };

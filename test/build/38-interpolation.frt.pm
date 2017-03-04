@@ -44,11 +44,11 @@ my ( $pos, $file_name ) =
   before_content( '38-interpolation.frt', './test/38-interpolation.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
-Ferret::inspect($context->f->main_context->property('String::Any'));
-    load_namespaces( $context, $file_name, 'String::Any' );
+
+    load_namespaces( $context, $file_name, $pos->(1.1), 'String::Any' );
     var( $scope, name => str( $f, "Bob" ), undef, $pos->(2.2) );
     $$scope->{'say'}->(
         [

@@ -109,7 +109,7 @@ my ( $pos, $file_name ) =
   before_content( 'Outgoing.frt', './std/IRC/Outgoing.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC', 1.1 );
     my $scope = $file_scope;
     load_core('IRC');
 
@@ -271,8 +271,8 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Connection) );
-    load_namespaces( $context, $file_name, qw(Str Str::Any) );
+    provides_namespaces( $context, $file_name, $pos->(25.1), qw(Connection) );
+    load_namespaces( $context, $file_name, $pos->(25.1), qw(Str Str::Any) );
 };
 
 after_content($file_name);

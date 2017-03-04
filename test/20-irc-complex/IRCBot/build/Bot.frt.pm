@@ -567,7 +567,7 @@ my ( $pos, $file_name ) =
   before_content( 'Bot.frt', './test/20-irc-complex/IRCBot/Bot.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'IRCBot' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRCBot', 1.1 );
     my $scope = $file_scope;
     load_core('IRCBot');
 
@@ -1298,8 +1298,8 @@ $result = do {
             $pos->(10.3)
         );
     }
-    provides_namespaces( $context, $file_name, qw(Bot) );
-    load_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(160.1), qw(Bot) );
+    load_namespaces( $context, $file_name, $pos->(160.1),
         qw(Message Num Socket::TCP Str Str::LC) );
 };
 

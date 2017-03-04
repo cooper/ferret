@@ -114,7 +114,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'Signal.frt', './std/Signal.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -195,7 +195,7 @@ $result = do {
             fireSignal => $scope,
             $class, $class, $ins, undef, undef
         );
-        load_namespaces( $context, $file_name, 'NATIVE::Signal' );
+        load_namespaces( $context, $file_name, $pos->(5.1), 'NATIVE::Signal' );
         var(
             $class,
             INT => [
@@ -267,8 +267,9 @@ $result = do {
             $pos->(12.2)
         );
     }
-    provides_namespaces( $context, $file_name, qw(ALRM HUP INT Signal TERM) );
-    load_namespaces( $context, $file_name, qw(Sym) );
+    provides_namespaces( $context, $file_name, $pos->(33.1),
+        qw(ALRM HUP INT Signal TERM) );
+    load_namespaces( $context, $file_name, $pos->(33.1), qw(Sym) );
 };
 
 after_content($file_name);

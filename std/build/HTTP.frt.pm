@@ -70,7 +70,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'HTTP.frt', './std/HTTP.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'HTTP' );
+    my ( $file_scope, $context ) = get_context( $f, 'HTTP', 1.1 );
     my $scope = $file_scope;
     load_core('HTTP');
 
@@ -114,8 +114,8 @@ $result = do {
         post => $scope,
         $context, undef, $ins, undef, undef
     );
-    provides_namespaces( $context, $file_name, qw(HTTPMethod) );
-    load_namespaces( $context, $file_name, qw(HTTP::Client Str) );
+    provides_namespaces( $context, $file_name, $pos->(22.1), qw(HTTPMethod) );
+    load_namespaces( $context, $file_name, $pos->(22.1), qw(HTTP::Client Str) );
     typedef(
         $scope, $context,
         'HTTPMethod',

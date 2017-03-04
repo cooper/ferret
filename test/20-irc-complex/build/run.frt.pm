@@ -577,7 +577,7 @@ my ( $pos, $file_name ) =
   before_content( 'run.frt', './test/20-irc-complex/run.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.05 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -1122,8 +1122,8 @@ $result = do {
         ircsay => $scope,
         $context, undef, $ins, undef, undef
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(90.5), qw() );
+    load_namespaces( $context, $file_name, $pos->(90.5),
         qw(COMPILER IRC::Connection IRCBot::Bot Str) );
     var(
         $context,

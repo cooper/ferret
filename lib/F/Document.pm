@@ -55,7 +55,8 @@ sub perl_fmt {
         'package'      => $doc->{package},
         upper_content  => $before_c,    # function declarations
         lower_content  => $after_c,     # all other children
-        all_content    => join("\n", $before_c, $after_c)
+        all_content    => join("\n", $before_c, $after_c),
+        pos            => $doc->{create_pos}
     };
 }
 

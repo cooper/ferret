@@ -34,12 +34,13 @@ my ( $pos, $file_name ) =
   before_content( '37-autoload-failure.frt', './test/37-autoload-failure.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.05 );
     my $scope = $file_scope;
     load_core('main');
 
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Some::Nonexistent::Package) );
+    provides_namespaces( $context, $file_name, $pos->(1.55), qw() );
+    load_namespaces( $context, $file_name, $pos->(1.55),
+        qw(Some::Nonexistent::Package) );
     var(
         $scope,
         x => $$scope->{'Some::Nonexistent::Package'}

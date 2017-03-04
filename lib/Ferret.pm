@@ -104,7 +104,7 @@ sub core_context { shift->{context}{CORE}   }
 
 # fetch a context or create it.
 sub get_context  {
-    my ($f, $name) = @_;
+    my ($f, $name, $pos) = @_;
 
     # might already have this context cached.
     return $f->{context}{$name} if $f->{context}{$name};
@@ -129,9 +129,10 @@ sub get_context  {
         $c = $new;
     }
     continue {
-        die "trying to extend non-context $name"
+        Ferret::Core::Errors::throw(ExtensionOfNonContext => $pos, [
+            Object => $c->description
+        ], $name, $full_name)
             if !$c->isa('Ferret::Context') && !$c->isa('Ferret::Class');
-        # FIXME
     }
 
     return $f->{context}{$name} = $c;
@@ -179,7 +180,7 @@ sub get_class {
 # fetch a class or namespace.
 # if necessary, load it.
 sub space {
-    my ($context, $file_name, $die, @acceptable) = @_;
+    my ($context, $file_name, $die, $pos, @acceptable) = @_;
     @acceptable = grep defined, @acceptable;
     foreach my $space (@acceptable) {
         my $existing = $context->property($space);
@@ -204,20 +205,27 @@ sub space {
 
         return $context->property($space);
     }
-    die "not found: @acceptable" if $die; # XXX
+
+    # if $die, throw an error
+    Ferret::Core::Errors::throw(
+        UnresolvedDependencies => $pos, undef,
+        $acceptable[-1]
+    ) if $die;
+
+    # otherwise store it for the after_content() check
     push @{ $context->f->{pending_spaces}{$file_name} ||= [] },
         [ $context, @acceptable ];
 }
 
 sub check_spaces {
-    my ($f, $file_name, $die) = @_;
+    my ($f, $file_name, $pos, $die) = @_;
     my @spaces = @{ $f->{pending_spaces}{$file_name} || [] };
     return if !@spaces; # success
     SPACE: for (@spaces) {
         my ($context, @acceptable) = @$_;
 
         # try to load again
-        next if space($context, $file_name, $die, @acceptable);
+        next if space($context, $file_name, $die, $pos, @acceptable);
 
         # failed
         return join '|', @acceptable;

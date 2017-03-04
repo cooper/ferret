@@ -65,7 +65,7 @@ sub after_content {
     my $file_name = shift;
 
     # check that required spaces are loaded.
-    my $err = $Ferret::ferret->check_spaces($file_name, 1);
+    my $err = $Ferret::ferret->check_spaces($file_name, undef, 1);
     #die "Couldn't find $err" if $err; # FIXME
 
     # start the runtime.
@@ -80,13 +80,13 @@ my %provides;
 # in the before_content autoload check, these will be skipped
 # until after_content
 sub provides_namespaces {
-    my ($context, $file_name, @namespaces) = @_;
+    my ($context, $file_name, $pos, @namespaces) = @_;
     $provides{$file_name}{$_}++ for @namespaces;
 }
 
 # load namespaces.
 sub load_namespaces {
-    my ($context, $file_name, @namespaces) = @_;
+    my ($context, $file_name, $pos, @namespaces) = @_;
 
     # try to load each space
     my $pkg = $context->full_name;
@@ -95,8 +95,7 @@ sub load_namespaces {
         my @acceptable = ((map { $_.'::'.$name } @possible_prefixes), $name);
         my $r = (split '::', $name)[-1]; # HACK
         my $die = !$provides{$file_name}{ $r };
-        #undef $die if $pkg eq 'CORE';
-        Ferret::space($context, $file_name, $die, @acceptable);
+        Ferret::space($context, $file_name, $die, $pos, @acceptable);
     }
 
     delete $provides{$file_name};

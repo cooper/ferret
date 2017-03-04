@@ -52,12 +52,12 @@ my ( $pos, $file_name ) =
   before_content( '16-become.frt', './test/16-become.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 2.1 );
     my $scope = $file_scope;
     load_core('main');
 
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Math::Point) );
+    provides_namespaces( $context, $file_name, $pos->(11.7), qw() );
+    load_namespaces( $context, $file_name, $pos->(11.7), qw(Math::Point) );
     var( $scope, obj => str( $f, "hi" ), undef, $pos->(2.2) );
     $$scope->{'Math::Point'}->property_u( 'init', $pos->(9.2) )
       ->( [ $$scope->{'obj'} ], $scope, undef, $pos->(9.25) )

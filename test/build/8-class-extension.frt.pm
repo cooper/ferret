@@ -48,7 +48,7 @@ my ( $pos, $file_name ) =
   before_content( '8-class-extension.frt', './test/8-class-extension.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -81,8 +81,8 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(String) );
-    load_namespaces( $context, $file_name, qw() );
+    provides_namespaces( $context, $file_name, $pos->(9.45), qw(String) );
+    load_namespaces( $context, $file_name, $pos->(9.45), qw() );
     $$scope->{'say'}->(
         [
             add(

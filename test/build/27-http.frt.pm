@@ -100,7 +100,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( '27-http.frt', './test/27-http.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -186,8 +186,8 @@ $result = do {
             return $ret;
         }
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(HTTP Str) );
+    provides_namespaces( $context, $file_name, $pos->(25.1), qw() );
+    load_namespaces( $context, $file_name, $pos->(25.1), qw(HTTP Str) );
 
     # Inside
     {

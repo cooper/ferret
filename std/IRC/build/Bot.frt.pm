@@ -157,7 +157,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'Bot.frt', './std/IRC/Bot.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC', 1.1 );
     my $scope = $file_scope;
     load_core('IRC');
 
@@ -359,8 +359,9 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Bot) );
-    load_namespaces( $context, $file_name, qw(BotHandlers Connection) );
+    provides_namespaces( $context, $file_name, $pos->(34.1), qw(Bot) );
+    load_namespaces( $context, $file_name, $pos->(34.1),
+        qw(BotHandlers Connection) );
 };
 
 after_content($file_name);

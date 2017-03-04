@@ -59,7 +59,7 @@ my ( $pos, $file_name ) =
   before_content( '9-maybes.frt', './test/9-maybes.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -91,8 +91,8 @@ $result = do {
         sayHello => $scope,
         $context, undef, $ins, undef, undef
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Str) );
+    provides_namespaces( $context, $file_name, $pos->(7.6), qw() );
+    load_namespaces( $context, $file_name, $pos->(7.6), qw(Str) );
     {
         my $maybe_0 = $$scope->{'sayHello'};
         if ( bool($maybe_0) ) {

@@ -464,7 +464,7 @@ my ( $pos, $file_name ) =
   before_content( 'Connection.frt', './std/IRC/Connection.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC', 1.1 );
     my $scope = $file_scope;
     load_core('IRC');
 
@@ -1122,10 +1122,10 @@ $result = do {
             description => $scope,
             $proto, $class, $ins, undef, undef
         );
-        load_namespaces( $context, $file_name, 'Outgoing' );
+        load_namespaces( $context, $file_name, $pos->(4.1), 'Outgoing' );
     }
-    provides_namespaces( $context, $file_name, qw(Connection) );
-    load_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(145.1), qw(Connection) );
+    load_namespaces( $context, $file_name, $pos->(145.1),
         qw(Channel Handlers IRC::Massage List Num Server Socket::TCP Str User)
     );
 };

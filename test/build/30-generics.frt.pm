@@ -120,7 +120,7 @@ my ( $pos, $file_name ) =
   before_content( '30-generics.frt', './test/30-generics.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -214,8 +214,10 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Element Stack) );
-    load_namespaces( $context, $file_name, qw(Element Num Stack) );
+    provides_namespaces( $context, $file_name, $pos->(33.5),
+        qw(Element Stack) );
+    load_namespaces( $context, $file_name, $pos->(33.5),
+        qw(Element Num Stack) );
     try_catch(
         $f, $scope,
         sub {

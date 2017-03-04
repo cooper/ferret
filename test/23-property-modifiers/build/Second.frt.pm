@@ -33,7 +33,7 @@ my ( $pos, $file_name ) =
   before_content( 'Second.frt', './test/23-property-modifiers/Second.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 

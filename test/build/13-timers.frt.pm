@@ -77,7 +77,7 @@ my ( $pos, $file_name ) =
   before_content( '13-timers.frt', './test/13-timers.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -104,8 +104,8 @@ $result = do {
             return $ret;
         }
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Timer) );
+    provides_namespaces( $context, $file_name, $pos->(12.4), qw() );
+    load_namespaces( $context, $file_name, $pos->(12.4), qw(Timer) );
     $$scope->{'say'}->( [ str( $f, "hello" ) ], $scope, undef, $pos->(1.2) );
     on(
         $$scope->{'Timer'}->( [ num( $f, "5" ) ], $scope, undef, $pos->(3.15) )

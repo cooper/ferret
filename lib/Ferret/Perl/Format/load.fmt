@@ -1,1 +1,1 @@
-load_namespaces($context, $file_name, '<<name>>');
+load_namespaces($context, $file_name, $pos->(<<pos>>), '<<name>>');

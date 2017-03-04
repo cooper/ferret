@@ -1,5 +1,5 @@
 $result = do {
-    my ($file_scope, $context) = get_context($f, '<<package>>');
+    my ($file_scope, $context) = get_context($f, '<<package>>', <<pos>>);
     my $scope = $file_scope;
     load_core('<<package>>');
 

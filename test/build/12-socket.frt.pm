@@ -137,7 +137,7 @@ my ( $pos, $file_name ) =
   before_content( '12-socket.frt', './test/12-socket.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.05 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -221,8 +221,9 @@ $result = do {
             return $ret;
         }
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Socket::TCP Timer) );
+    provides_namespaces( $context, $file_name, $pos->(23.1), qw() );
+    load_namespaces( $context, $file_name, $pos->(23.1),
+        qw(Socket::TCP Timer) );
     var(
         $scope,
         sock => $$scope->{'Socket::TCP'}->(

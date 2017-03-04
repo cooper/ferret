@@ -979,7 +979,7 @@ my ( $pos, $file_name ) =
   before_content( 'Vector.frt', './std/Math/Vector.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'Math' );
+    my ( $file_scope, $context ) = get_context( $f, 'Math', 1.1 );
     my $scope = $file_scope;
     load_core('Math');
 
@@ -2677,8 +2677,9 @@ $result = do {
             undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Vector VectorAxis) );
-    load_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(231.1),
+        qw(Vector VectorAxis) );
+    load_namespaces( $context, $file_name, $pos->(231.1),
         qw(Char Error Math Num Vector VectorAxis) );
 };
 

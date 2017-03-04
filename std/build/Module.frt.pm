@@ -59,7 +59,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'Module.frt', './std/Module.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -115,8 +115,8 @@ $result = do {
             $class, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Module) );
-    load_namespaces( $context, $file_name, qw(Num Str) );
+    provides_namespaces( $context, $file_name, $pos->(17.1), qw(Module) );
+    load_namespaces( $context, $file_name, $pos->(17.1), qw(Num Str) );
 };
 
 after_content($file_name);

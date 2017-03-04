@@ -147,7 +147,7 @@ my ( $pos, $file_name ) =
   before_content( 'Client.frt', './std/HTTP/Client.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'HTTP' );
+    my ( $file_scope, $context ) = get_context( $f, 'HTTP', 1.1 );
     my $scope = $file_scope;
     load_core('HTTP');
 
@@ -351,8 +351,8 @@ $result = do {
             undef, $pos->(6.2)
         );
     }
-    provides_namespaces( $context, $file_name, qw(Client) );
-    load_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(66.1), qw(Client) );
+    load_namespaces( $context, $file_name, $pos->(66.1),
         qw(HTTP::Request HTTPMethod NATIVE::HTTPClient Num Str) );
 };
 

@@ -73,6 +73,16 @@ our %errors = (
         message => "No operator implementation for those types"
     },
 
+    # tried to extend something other than a class or context
+    ExtensionOfNonContext => {
+        message => "In 'package %s', %s evaluates to a non-context object"
+    },
+
+    # autoloading or load statement failed
+    UnresolvedDependencies => {
+        message => "Unable to resolve dependency '%s'"
+    },
+
     # an exception occurred in native code (Perl die(), croak(), etc.)
     NativeCodeError => {
         message => "%s"
@@ -105,7 +115,7 @@ sub throw {
     # we may have been passed an already-prepared error object.
     if (blessed $fmt) {
         $fmt->set_property(fatal => Ferret::true);
-        die $fmt->description;
+        die $fmt;
     }
 
     # main error.

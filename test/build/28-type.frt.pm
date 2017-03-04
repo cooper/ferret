@@ -100,7 +100,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( '28-type.frt', './test/28-type.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -149,8 +149,8 @@ $result = do {
         announce => $scope,
         $context, undef, $ins, undef, undef
     );
-    provides_namespaces( $context, $file_name, qw(Gender) );
-    load_namespaces( $context, $file_name, qw(Gender Str) );
+    provides_namespaces( $context, $file_name, $pos->(15.7), qw(Gender) );
+    load_namespaces( $context, $file_name, $pos->(15.7), qw(Gender Str) );
     typedef(
         $scope, $context, 'Gender',
         sub {

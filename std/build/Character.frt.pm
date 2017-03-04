@@ -121,7 +121,7 @@ my ( $pos, $file_name ) =
   before_content( 'Character.frt', './std/Character.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -245,8 +245,9 @@ $result = do {
         );
         $func_1->inside_scope( ord => $scope, $proto, $class, $ins, 1, undef );
     }
-    provides_namespaces( $context, $file_name, qw(Char Character) );
-    load_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(26.1),
+        qw(Char Character) );
+    load_namespaces( $context, $file_name, $pos->(26.1),
         qw(Bool Character Error NATIVE Num Str) );
     typedef(
         $scope, $context, 'Char',

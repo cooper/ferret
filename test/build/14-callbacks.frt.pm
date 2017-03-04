@@ -93,7 +93,7 @@ my ( $pos, $file_name ) =
   before_content( '14-callbacks.frt', './test/14-callbacks.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -144,8 +144,8 @@ $result = do {
             return $ret;
         }
     );
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(String) );
+    provides_namespaces( $context, $file_name, $pos->(25.5), qw() );
+    load_namespaces( $context, $file_name, $pos->(25.5), qw(String) );
     $$scope->{'say'}->( [ str( $f, "test" ) ], $scope, undef, $pos->(1.2) );
     var( $scope, str => str( $f, "hi" ), undef, $pos->(3.2) );
     on(

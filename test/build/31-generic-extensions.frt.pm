@@ -29,7 +29,7 @@ my ( $pos, $file_name ) = before_content( '31-generic-extensions.frt',
     './test/31-generic-extensions.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -46,8 +46,8 @@ $result = do {
           get_class( $f, $context, $file_scope, 'A', undef, [ 'T', \'U' ] );
 
     }
-    provides_namespaces( $context, $file_name, qw(A T U) );
-    load_namespaces( $context, $file_name, qw() );
+    provides_namespaces( $context, $file_name, $pos->(3.7), qw(A T U) );
+    load_namespaces( $context, $file_name, $pos->(3.7), qw() );
 };
 
 after_content($file_name);

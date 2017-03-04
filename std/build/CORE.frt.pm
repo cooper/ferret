@@ -69,12 +69,12 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'CORE.frt', './std/CORE.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'CORE' );
+    my ( $file_scope, $context ) = get_context( $f, 'CORE', 1.1 );
     my $scope = $file_scope;
     load_core('CORE');
 
-    provides_namespaces( $context, $file_name, qw(Any Code) );
-    load_namespaces( $context, $file_name, qw() );
+    provides_namespaces( $context, $file_name, $pos->(25.3), qw(Any Code) );
+    load_namespaces( $context, $file_name, $pos->(25.3), qw() );
     typedef(
         $scope, $context, 'Any',
         sub {
@@ -102,17 +102,17 @@ $result = do {
         },
         undef
     );
-    load_namespaces( $context, $file_name, 'Signal' );
-    load_namespaces( $context, $file_name, 'Complex' );
-    load_namespaces( $context, $file_name, 'Character' );
-    load_namespaces( $context, $file_name, 'Extension::NATIVE' );
-    load_namespaces( $context, $file_name, 'Extension::Number' );
-    load_namespaces( $context, $file_name, 'Extension::String' );
-    load_namespaces( $context, $file_name, 'Extension::List' );
-    load_namespaces( $context, $file_name, 'Extension::Hash' );
-    load_namespaces( $context, $file_name, 'Iterator' );
-    load_namespaces( $context, $file_name, 'EventSet' );
-    load_namespaces( $context, $file_name, 'Indexed' );
+    load_namespaces( $context, $file_name, $pos->(13.1), 'Signal' );
+    load_namespaces( $context, $file_name, $pos->(14.1), 'Complex' );
+    load_namespaces( $context, $file_name, $pos->(15.1), 'Character' );
+    load_namespaces( $context, $file_name, $pos->(17.1), 'Extension::NATIVE' );
+    load_namespaces( $context, $file_name, $pos->(18.1), 'Extension::Number' );
+    load_namespaces( $context, $file_name, $pos->(19.1), 'Extension::String' );
+    load_namespaces( $context, $file_name, $pos->(20.1), 'Extension::List' );
+    load_namespaces( $context, $file_name, $pos->(21.1), 'Extension::Hash' );
+    load_namespaces( $context, $file_name, $pos->(23.1), 'Iterator' );
+    load_namespaces( $context, $file_name, $pos->(24.1), 'EventSet' );
+    load_namespaces( $context, $file_name, $pos->(25.1), 'Indexed' );
 };
 
 after_content($file_name);

@@ -406,7 +406,7 @@ my ( $pos, $file_name ) =
   before_content( 'Massage.frt', './std/IRC/Massage.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC', 1.1 );
     my $scope = $file_scope;
     load_core('IRC');
 
@@ -945,8 +945,9 @@ $result = do {
         $func_6->inside_scope( user => $scope, $proto, $class, $ins, 1, undef );
         $func_7->inside_scope( host => $scope, $proto, $class, $ins, 1, undef );
     }
-    provides_namespaces( $context, $file_name, qw(Massage) );
-    load_namespaces( $context, $file_name, qw(Bool Connection Str::NE) );
+    provides_namespaces( $context, $file_name, $pos->(120.7), qw(Massage) );
+    load_namespaces( $context, $file_name, $pos->(120.7),
+        qw(Bool Connection Str::NE) );
 };
 
 after_content($file_name);

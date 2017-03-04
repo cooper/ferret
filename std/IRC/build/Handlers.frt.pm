@@ -217,7 +217,7 @@ my ( $pos, $file_name ) =
   before_content( 'Handlers.frt', './std/IRC/Handlers.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'IRC::Handlers' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC::Handlers', 1.1 );
     my $scope = $file_scope;
     load_core('IRC::Handlers');
 

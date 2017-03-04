@@ -114,12 +114,13 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( '7-math.frt', './test/7-math.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.03333 );
     my $scope = $file_scope;
     load_core('main');
 
-    provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Math Math::Point Math::Rect) );
+    provides_namespaces( $context, $file_name, $pos->(11.55), qw() );
+    load_namespaces( $context, $file_name, $pos->(11.55),
+        qw(Math Math::Point Math::Rect) );
     var(
         $scope,
         rect => $$scope->{'Math::Rect'}->(

@@ -545,7 +545,7 @@ my ( $pos, $file_name ) =
   before_content( 'List.frt', './std/Extension/List.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -1539,8 +1539,9 @@ $result = do {
             undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(List Pairs T) );
-    load_namespaces( $context, $file_name,
+    provides_namespaces( $context, $file_name, $pos->(179.1),
+        qw(List Pairs T) );
+    load_namespaces( $context, $file_name, $pos->(179.1),
         qw(Code Iterator List ListIterator) );
 };
 

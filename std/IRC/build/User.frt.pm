@@ -57,7 +57,7 @@ my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 my ( $pos, $file_name ) = before_content( 'User.frt', './std/IRC/User.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'IRC' );
+    my ( $file_scope, $context ) = get_context( $f, 'IRC', 1.1 );
     my $scope = $file_scope;
     load_core('IRC');
 
@@ -105,8 +105,8 @@ $result = do {
             $class, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(User) );
-    load_namespaces( $context, $file_name, qw(Connection Str) );
+    provides_namespaces( $context, $file_name, $pos->(8.1), qw(User) );
+    load_namespaces( $context, $file_name, $pos->(8.1), qw(Connection Str) );
 };
 
 after_content($file_name);

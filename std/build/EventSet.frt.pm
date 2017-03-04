@@ -46,7 +46,7 @@ my ( $pos, $file_name ) =
   before_content( 'EventSet.frt', './std/EventSet.frt' );
 
 $result = do {
-    my ( $file_scope, $context ) = get_context( $f, 'main' );
+    my ( $file_scope, $context ) = get_context( $f, 'main', 1.1 );
     my $scope = $file_scope;
     load_core('main');
 
@@ -87,8 +87,8 @@ $result = do {
             $class, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(EventSet) );
-    load_namespaces( $context, $file_name, qw(Code) );
+    provides_namespaces( $context, $file_name, $pos->(7.1), qw(EventSet) );
+    load_namespaces( $context, $file_name, $pos->(7.1), qw(Code) );
 };
 
 after_content($file_name);
