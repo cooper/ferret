@@ -184,20 +184,23 @@ wontChangeX()   # returns 2
 ### want
 
 ```
-want ($ | @)<name>[: <type>] [= <fallback_value>][, more...]
+want ($ | @)<argument_name>[: <type>] [= <fallback_value>]
 ```
 
-Function optional argument declaration. Typically used at the start of a
-function body to indicate the name and type of an optional argument. Multiple
-comma-separated declarations can exist with a single `want` keyword.
+Function optional argument declaration.
+
+Typically used at the start of a function body to indicate the name and type of
+an optional argument. Multiple comma-separated declarations can exist with a
+single `want` statement.
 
 If the bareword `type` is provided, the value of the variable will be undefined
-if the passed argument is not of that type. If `fallback_value` is provided,
-the variable will be set to that value when the argument is not provided or is
-of an incorrect type.
+if the passed argument is not of that type.
+
+If `fallback_value` is provided, the variable will be set to that value when the
+argument is not provided or is of an incorrect type.
 
 Within a class method, `want` may contain instance variables. This is especially
-useful for providing initial property values within `init` methods.
+useful for providing initial property values within `init {}`.
 
 ```
 func sayHello {
@@ -213,21 +216,25 @@ sayHello(7)         # "Hello Guest!"
 ### need
 
 ```
-need ($ | @)<name>[: <type>] [= <required_value>][, more...]
+need ($ | @)<argument_name>[: <type>] [= <required_value>]
 ```
 
-Function required argument declaration. Typically used at the start of a
-function body to indicate the name and type of a required argument. Multiple
-comma-separated declarations can exist with a single `need` keyword.
+Function required argument declaration.
+
+Typically used at the start of a function body to indicate the name and type of
+a required argument. Multiple comma-separated declarations can exist with a
+single `need` keyword.
 
 If the bareword `type` is provided, the function will not be executed if the
-passed argument is not of that type. If `required_value` is provided, the
-function will not be executed if the passed argument is not equal to that value
-(with the behavior of the `==` operator). This is useful for multi-function
-events where certain callbacks are only applicable to specific argument values.
+passed argument is not of that type.
+
+If `required_value` is provided, the function will only be executed when the
+passed argument is equal to that value (according to the `==` operator). This is
+useful for multi-function events where certain callbacks are only applicable to
+specific argument values.
 
 Within a class method, `need` may contain instance variables. This is especially
-useful for providing initial property values within `init` methods.
+useful for providing initial property values within `init {}`.
 
 ```
 func sayHello {
@@ -250,39 +257,56 @@ sayHello(name: "Steve", sunny: false)   # "Hello Steve!" other callback ignored
 
 ## Property modifiers
 
-These modifiers can be used on mutable properties and variables.
+These modifiers can be used on mutable variables, properties, and indices.
 
 ### delete
 
 ```
-delete ( ($ | @)<name> ) | ( <object>.<property> )
+delete <variable_name>
+```
+```
+delete <object>.<property_name>
+```
+```
+delete <object>[<index>]
 ```
 
-Deletes the reference to the value of the property or variable. It will then
-adopt the `undefined` value. If the value object is not referred to elsewhere,
-it will be disposed of by garbage collection immediately following the `delete`
-statement.
+Deletes the association between the given variable, property, or index and its
+value.
+
+This does NOT necessarily destroy an object; it only destroys the reference to
+it. Garbage collection will only destroy the object if no other references
+exist.
 
 ```
 delete $noLongerNeeded
 delete $message.temporaryValue
+delete $myList[7]
 ```
 
 ### weaken
 
 ```
-weaken ( ($ | @)<name> ) | ( <object>.<property> )
+weaken <variable_name>
+```
+```
+weaken <object>.<property_name>
+```
+```
+weaken <object>[<index>]
 ```
 
-Weakens the reference to the value of the property or variable. In other words,
-it decreases the object's reference count by one. This is useful in the
-prevention of cyclical references lost in space. If the object is not referred
-to elsewhere, it will be disposed of by garbage collection immediately following
-the `weaken` statement, and the property will adopt the `undefined` value.
+Weakens the association between the given variable, property, or index and its
+value. In other words, it decreases the value's reference count by one. This is
+useful in the case of cyclical references.
+
+If the object is not referred to elsewhere, it will be immediately consumed by
+the garbage collector upon the `weaken` statement.
 
 ```
 weaken $cyclical
 weaken $person.parent
+weaken $myHash["somewhere"]
 ```
 
 ## Functions and events
@@ -290,28 +314,28 @@ weaken $person.parent
 ### func
 
 ```
-func [<name>] [ { [<statements>...] } ]
+func [<name>] { <statements> }
 ```
 
 Declares an event or anonymous function. It is spelled `func` because all
 named functions are implemented as events.
 
-If `name` is provided, the event will be assigned to that property of the
-[scope of interest](Scopes.md#scope-of-interest) and will be available only
-within that scope.
+If `name` is provided, the event will be assigned to a property of the
+[scope of interest](Scopes.md#scope-of-interest). Named functions can be nested
+within one another.
 
-Without a name, `func` acts as an inline expression representing an anonymous
-function.
-
-The curly bracket delimiters `{` and `}` may be omitted if the function has no
-body. This is useful for declaring an event with no default callback.
+Without a name, `func` becomes an expression representing an anonymous function.
+Anonymous functions are permitted everywhere that expressions are accepted.
 
 ```
 func spam {
     want $start: Num = 1, $end: Num = 100
-    for $i in $start..$end {
-        say("$i of $end")
+    func nested {
+        need $which
+        say("$which of $end")
     }
+    for $i in $start..$end
+        nested($i)
 }
 
 spam(end: 30)
@@ -327,55 +351,59 @@ $anon = func {
 doSomethingWithAnon($anon, $other_args)
 ```
 
+See also the function argument declarations [`want`](#want) and [`need`](#need).
+
 ### on
 
 ```
-on <event>[ <priority_hints>...][, :<callback_name>] { [<statements>...] }
+on <event>[ <priority_hints>][, :<callback_name>] { <statements> }
 ```
 
-Attaches an event callback function. The `event` may be a bareword, variable, or
-property only. Other expressions, such as the return value of a function call,
-will raise a compile-time error.
+Attaches an event callback.
 
-If no value at the `event` variable or property exists, `on` will create the
-event. If a non-event value exists, a runtime error will be thrown. If an event
-value exists, the callback will be attached to the existing event.
+The `event` may be a bareword, variable, or property only. Other expressions,
+such as the return value of a function call, will raise a compile-time error.
 
-Callbacks are specific to the object on which they are attached. If you want a
-callback to apply to any object, attach it to a class prototype object.
+The `event` must evaluate at runtime to either an existing Event or `undefined`.
+In the case of `undefined`, a new event is created. Other values will throw a
+runtime error.
 
-The use of a symbol `callback_name` is optional but strongly recommended. The
-order of callback execution depends on the use of priority hints. See the below
-example and [`before`](#before) and [`after`](#after) keywords for information
-on `priority_hints`.
+Callbacks are specific to the object on which they are attached. An exception to
+this is when you attach a callback directly to a class prototype object, in
+which case all instances of the class will respect the callback.
+
+The order of callback execution for a given event depends on `priority_hints`
+associated with each of its callbacks. See the below example and the
+[`before`](#before) and [`after`](#after) keywords for info about priorities.
+
+The use of a [symbol](Variables.md#symbols) `callback_name` is optional but
+strongly recommended. This allows the callback to be referred to in priority
+hints among other purposes.
+
+Within the callback body, [this variables](Variables.md#this-variables) refer to
+the object on which the event was called.
 
 ```
-# assuming class Person exists and has a method haveBirthday
+# suppose class Person exists and has a method haveBirthday
 # which increments the person's age
 
 $jake = Person(name: "Jake", sex: :male, age: 22)
 
 # the below callback has a 'before' hint,
-# so that *this.age will not yet be updated
+# so that %age will not yet be updated
 
 on $jake.haveBirthday before :default, :sayHappy {
-
-    # note the use of special variable *this below.
-    # it refers to the object on which the callback is attached.
-    # *self and instance (@) variables refer to outer
-    # scope's class instance, if applicable.
-
-    say("Happy Birthday *this.name. Say goodbye to *this.age!")
+    say("Happy Birthday %name. Say goodbye to %age!")
 }
 
 # example of a callback with no priority hints or callback name.
-# it will be executed after :default, and *this.age will be updated.
+# it will be executed after :default, and %age will be updated.
 #
 # also, it is attached to the prototype,
 # so it applies to all Persons, not just Jake.
 
 on Person.proto.haveBirthday {
-    say("You're *this.age")
+    say("%name is now %age!")
 }
 ```
 
@@ -385,13 +413,14 @@ on Person.proto.haveBirthday {
 before :<callback_name>
 ```
 
-Indicates a priority hint for an event callback function (`on` block). When
-hints are supplied, the runtime will attempt to resolve them into numerical
-callback priorities at a best-effort basis. Many space-searated priority hints
-may be utilized for a single callback.
+Indicates a "call before" priority hint for an event callback.
+
+When hints are supplied, the runtime will do its best to resolve priorities
+if at all possible. Many space-searated priority hints may be utilized for a
+single callback.
 
 ```
-on $obj.someEvent before :lateCallback after :earlyCallback { }
+on $obj.someEvent before :lateCallback after :earlyCallback { ... }
 ```
 
 ### after
@@ -400,13 +429,14 @@ on $obj.someEvent before :lateCallback after :earlyCallback { }
 after :<callback_name>
 ```
 
-Indicates a priority hint for an event callback function (`on` block). When
-hints are supplied, the runtime will attempt to resolve them into numerical
-callback priorities at a best-effort basis. Many space-searated priority hints
-may be utilized for a single callback.
+Indicates a "call after" priority" hint for an event callback.
+
+When hints are supplied, the runtime will do its best to resolve priorities
+if at all possible. Many space-searated priority hints may be utilized for a
+single callback.
 
 ```
-on $obj.someEvent before :lateCallback after :earlyCallback { }
+on $obj.someEvent before :lateCallback after :earlyCallback { ... }
 ```
 
 ### stop
@@ -415,11 +445,12 @@ on $obj.someEvent before :lateCallback after :earlyCallback { }
 stop
 ```
 
-Cancels all remaining callbacks for this event call. This does not affect any
-future calls, only the current one. Also note that it does not emulate a
-function return; any statements below it will still execute unless it is
-followed by an explicit `return` statement. `stop` cannot fail, as if there are
-no pending callbacks, it has no effect and raises no error or warning.
+Stops the propagation of the event and cancels all remaining callbacks for this
+particular call.
+
+This does not affect any future calls, only the current one. Also note that it
+does not emulate a function return; any statements below it will still execute
+unless it is followed by an explicit `return` statement.
 
 ```
 # on INT, ask "are you sure?"
@@ -444,12 +475,13 @@ on Signal.INT.trap before :default {
 $ret = detail someFunction()
 ```
 
-Requests "more detail" in the return value of a function call. This means that,
-regardless of any explicit `return` statements that may exist, the call will
-always return the [return object](Variables.md#special-variables).
+Requests "more detail" in the return value of a function call.
+
+This means that, regardless of any explicit `return` statements that may exist,
+the call will always return the [return object](Variables.md#special-variables).
 
 If at least one explicit `return` did exist, the most recent one determines the
-value of the `default` property in the return object.
+value of the `result` property of the return object.
 
 Consider this example:
 ```
@@ -462,12 +494,13 @@ A()
 ```
 
 `A()` will always be `"the ultimate value"`, and the others are inaccessible.
-Detail fixes this:
+Detail fixes this with:
+
 ```
 $ret = detail A()
 $ret.x          # "a return value"
 $ret.y          # "another value"
-$ret.default    # "the ultimate value"
+$ret.result     # "the ultimate value"
 ```
 
 ## Classes
@@ -477,14 +510,13 @@ These keywords are to be used within classes only.
 ### method
 
 ```
-method <name> [ { [<statements>...] } ]
+method <name> { <statements> }
 ```
 
-Declares a class instance method. All methods are implemented as events. The
-event will be assigned to the property `name` of the class's prototype object.
+Declares a class instance method.
 
-The curly bracket delimiters (`{` and `}`) may be omitted if the method has no
-body. This is useful for declaring an event with no default callback.
+All methods are implemented as events. The event will be assigned to the
+property `name` of the class's prototype object.
 
 ```
 class Person
@@ -497,12 +529,14 @@ method haveBirthday {
 ### hook
 
 ```
-hook <name> [ { [<statements>...] } ]
+hook <name> [{ <statements> }]
 ```
 
 Exactly the same as the `method` keyword, except that it is used by convention
-for event hooks. Usually the body is omitted, but you can still provide one if
-your class needs to respond to its own hook.
+for event hooks.
+
+Usually the body is omitted, but you can still provide one if your class needs
+a default responder for its own hook.
 
 ```
 class MySocket 1.0
@@ -514,7 +548,7 @@ hook disconnected
 ### init
 
 ```
-init { [<statements>...] }
+init { <statements> }
 ```
 
 Declares a class instance initializer.
@@ -530,7 +564,7 @@ init {
 ### prop
 
 ```
-prop[?] <name> { [<statements>...] }
+prop[?] <name> { <statements> }
 ```
 
 Declares a computed property (instance variable).
@@ -557,26 +591,41 @@ $line.midpoint  # returns a Point, created on the spot
 ### operator
 
 ```
-operator <op> { [<statements>...] }
+operator <op> { <statements> }
 ```
 
-Defines an operator overload method. This allows you to add custom operator
-implementations for the instances of the class.
+Defines an operator overload method for the operator `op`. This allows you to
+add custom operator implementations involving the instances of the class.
 
-In Ferret, the left hand operand dictates which operator implementation will be
-used. The operator method is passed the right hand operand as its sole argument.
+The implementation should [`need`](#need) one of `$rhs`, `$lhs`, or `$ehs`:
+* `$rhs` - Right operand.
+* `$lhs` - Left operand. This will only be used if an implementation from the
+  left operand could not be resolved.
+* `$ehs` - Either operand. This is useful for commutative operations where the
+  side of the operand does not matter (e.g. scalar addition and multiplication).
+
+For all operations, the Ferret runtime first attempts to resolve it
+left-to-right. If the left operand offers an implementation observing `$rhs` or
+`$ehs` with the given types, that is what determines the result of the
+operation.
+
+If the left operand does not offer a suitable implementation, the runtime will
+look to the right operand for an implementation observing `$lhs` or `$ehs` for
+the given types.
+
+If no implementation exists for a given operation, a runtime error is thrown.
 
 ```
 package Time
 class Duration
 
 operator + {
-    need $rhs: Duration
+    need $ehs: Duration # the side does not matter for addition
     return @addDuration($rhs)
 }
 
 operator - {
-    need $rhs: Duration
+    need $rhs: Duration # the side matters for subtraction
     return @subtractDuration($rhs)
 }
 ```
@@ -586,17 +635,18 @@ operator - {
 ### if
 
 ```
-if <condition> { [<statements>...] }
+if <condition> { <statements> }
 ```
 
-Conditional statement. The code within the block will be executed only if
-`condition` represents a true value. All values are true other than `false`,
-`undefined`, and sometimes [return objects](Variables.md#special-variables).
+Conditional statement.
 
-If the condition is followed by a colon (`:`) rather than an opening curly
-bracket (`{`), the if statement must consume only a one-line instruction. This
-is similar to `if (condition) statement` without the use of curly brackets in
-languages such as C.
+The code within the block will be executed only if `condition` represents a true
+value. In Ferret, all values are true other than `false`,
+`undefined`, and empty [return objects](Variables.md#special-variables).
+
+If the body of the conditional is a single statement, the curly brackets `{` and
+`}` may be omitted, provided that the statement occurs on a separate line from
+the condition.
 
 ```
 # this will be executed
@@ -610,11 +660,8 @@ if 1.even {
     doStuff()
     doOtherStuff()
 }
-```
 
-One-line example
-
-```
+# one-statement conditional
 if "hi".length == 2
     doOneThingOnly()
 ```
@@ -622,11 +669,15 @@ if "hi".length == 2
 ### else
 
 ```
-else { [<statements>...] }
+else { <statements> }
 ```
 
-Compliment to `if`. Specifies an alternate set of operations in the case of
-a false condition.
+Compliment to [`if`](#if). Specifies an alternate set of operations in the case
+of a false condition.
+
+If the body of the else is a single statement, the curly brackets `{` and
+`}` may be omitted, provided that the statement occurs on a separate line from
+the `else` keyword.
 
 ```
 if false {
@@ -636,11 +687,8 @@ if false {
 else {
     say("This will be said")
 }
-```
 
-One-line example
-
-```
+# one-statement conditional
 if false
     say("Nothing here will happen")
 else
@@ -656,6 +704,10 @@ It allows you to chain [`if`](#if) conditional statements. The chain will
 continue until one of the conditions has a boolean true value. In that case,
 none of the remaining `else if` or `else` statements will be executed.
 
+If the body of the `else if` is a single statement, the curly brackets `{` and
+`}` may be omitted, provided that the statement occurs on a separate line from
+the `else if` keyword.
+
 ```
 if false {
     say("Nothing here will happen")
@@ -668,6 +720,14 @@ else if true {
 else {
     say("This will not be reached")
 }
+
+# one-statement conditional
+if false
+    say("Nothing here will happen")
+else if true
+    say("This will be said")
+else
+    say("This will not be reached")
 ```
 
 ### return
@@ -683,7 +743,7 @@ the return object ([special variable](Variables.md#special-variables)
 
 When used within an event callback, it is possible that the provided value will
 not ultimately be returned by the event call. If multiple callbacks have an
-explicit `return` statement, the value of the lattermost statement will be used.
+explicit `return` statement, the value of the lattermost statement is used.
 
 ```
 func simple {
@@ -719,16 +779,18 @@ keyword is used for all forms of loops. See the proper section.
 ### for (iteration)
 
 ```
-for $<value_var> in <collection> { [<statements>...] }
+for $<value_var> in <collection> { <statements> }
 ```
 ```
-for ($<key_var>, $<value_var>) in <collection> { [<statements>...] }
+for ($<key_var>, $<value_var>) in <collection> { <statements> }
 ```
 
-Performs an iteration over a collection. Collection types include `List`,
-`Hash`, and `Set`. Right of the keyword must be a lexical variable representing
-the current value. If the `collection` has a key or index, you may optionally
-specify two lexical variables in the form of `($key, $val)`.
+Performs an iteration over a collection.
+
+Collection types include `List`, `Hash`, and `Set`. Right of the keyword must be
+a lexical variable representing the current value. If the `collection` has a key
+or index, you may optionally specify two lexical variables in the form of
+`($key, $val)`.
 
 The parentheses are required when using two variables and forbidden when using
 one. The variable(s) are defined only within the body of the `for` statement.
@@ -749,13 +811,14 @@ for ($firstWord, $others) in $hash {
 ### for (conditional)
 
 ```
-for <condition> { [<statements>...] }
+for <condition> { <statements> }
 ```
 
-Loops while the provided `condition` is true. The statements in the block will
-be executed repeatedly until the first time the condition evaluates to boolean
-false or an exit of the loop via [`last`](#last) or some other form of goto
-statement.
+Loops while the provided `condition` is true.
+
+The statements in the block will be executed repeatedly until the first time the
+condition evaluates to boolean false or an exit of the loop via [`last`](#last)
+or some other form of goto statement.
 
 If the `condition` is not true at the time when the `for` is reached, the block
 will never be executed.
@@ -775,12 +838,13 @@ say($fiveEs)    # eeeee
 ### for (infinite)
 
 ```
-for { [<statements>...] }
+for { <statements> }
 ```
 
-Loops indefinitely. The statements in the block will be executed repeatedly
-until a possible exit of the loop via [`last`](#last) or some other form of
-goto statement.
+Loops indefinitely.
+
+The statements in the block will be executed repeatedly until a possible exit of
+the loop via [`last`](#last) or some other form of goto statement.
 
 Only use `for {}` when you have intentions of eventually exiting the loop.
 It is not advisable to base a program around a master loop. The runtime itself
@@ -803,7 +867,7 @@ for {
 
 ### in
 
-Compliment to the [`for`](#for-iteration) while iterating over a collection.
+Compliment to [`for`](#for-iteration) while iterating over a collection.
 Expects an expression over which to iterate.
 
 ## next
@@ -838,10 +902,7 @@ conditional.
 __END__
 ```
 
-Terminates the document. This keyword is never required, as reaching the actual
-EOF has the same effect. However, it is useful if there is data such as
-documentation below the code intended to be compiled. If present, `__END__`
-should always occur on a line by itself.
+Terminates the document before the EOF.
 
 ```
 $x = 1
@@ -855,10 +916,11 @@ non-code down here
 ### defer
 
 ```
-defer { [<statements>...] }
+defer { <statements> }
 ```
 
 Postpones the execution of code until the current routine reaches its end.
+
 This is useful to guarantee that something be done after a routine executes,
 regardless of whether it terminated early by `return` or other means.
 
@@ -880,7 +942,7 @@ ok()    # says "hello" then "goodbye"
 ### type
 
 ```
-type[?] <name> { [(<conditions>|<transforms>|<expresions>)...] }
+type[?] <name> { (<conditions>|<transforms>|<expresions>)... }
 ```
 
 Defines a type interface for dynamic type checking. This is especially useful
@@ -1112,7 +1174,7 @@ alwaysFails() catch $e {
 ### catch
 
 ```
-catch [$<err_var>] { [<statements>...] }
+catch [$<err_var>] { <statements> }
 ```
 
 Allows handling of both fatal and nonfatal exceptions. Unlike in many
@@ -1183,7 +1245,7 @@ alias Str = String
 ### inside
 
 ```
-inside <object> { [<statements>...] }
+inside <object> { <statements> }
 ```
 
 Temporarily sets a focal object for a shorthand syntax using
