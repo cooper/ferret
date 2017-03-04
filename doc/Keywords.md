@@ -43,7 +43,7 @@ class <name> [<version>]
 ```
 
 Declares a class. Many class declarations can exist within a single document.
-Terminated with the `end` keyword or another `class` declaration.
+Terminated with the [`end`](#end) keyword or another `class` declaration.
 
 ```
 class Person 1.0
@@ -57,10 +57,7 @@ See [Classes](Classes.md) for general information on classes.
 end
 ```
 
-Terminates a [`class`](#class). It is required for that purpose, except when
-multiple classes in a row are declared, in which case the `class` keyword alone
-terminates the previous class. When multiple package declarations per document
-become possible, this keyword will also terminate a `package`.
+Terminates a [`class`](#class) or [`package`](#class).
 
 ### load
 
@@ -229,9 +226,9 @@ If the bareword `type` is provided, the function will not be executed if the
 passed argument is not of that type.
 
 If `required_value` is provided, the function will only be executed when the
-passed argument is equal to that value (according to the `==` operator). This is
-useful for multi-function events where certain callbacks are only applicable to
-specific argument values.
+passed argument is equal to that value (according to the
+[`==`](Operators.md#equality-operator) operator). This is useful for events
+where certain callbacks are only applicable to specific argument values.
 
 Within a class method, `need` may contain instance variables. This is especially
 useful for providing initial property values within `init {}`.
@@ -532,8 +529,8 @@ method haveBirthday {
 hook <name> [{ <statements> }]
 ```
 
-Exactly the same as the `method` keyword, except that it is used by convention
-for event hooks.
+Exactly the same as the [`method`](#method) keyword, except that it is used by
+convention for event hooks.
 
 Usually the body is omitted, but you can still provide one if your class needs
 a default responder for its own hook.
@@ -569,18 +566,16 @@ prop[?] <name> { <statements> }
 
 Declares a computed property (instance variable).
 
-If the keyword is spelled `prop?` with a question mark
-([`OP_MAYBE`](Operators.md#inline-if-operator)) suffixing it, its value will
+If the keyword is spelled `prop?` with a question mark, its value will
 only be computed once. After the first evaluation, the returned value will be
 stored as the semi-permanent property value. This works similarly to lazy
-assignment with the `?=` operator
-([`OP_LASSIGN`](Operators.md#lazy-assignment-operator)).
+assignment with the [`?=`](Operators.md#lazy-assignment-operator).
 
 ```
 class Line
 
 prop midpoint {
-    return (@pt1, @pt2).midpoint()
+    return @pt1.midpoint(@pt2)
 }
 ```
 
@@ -765,7 +760,7 @@ complex(5)  # returns (gotX: true, value: 5)
 complex()   # returns "reached bottom"
 ```
 
-See also the return operator [`OP_RETURN`](Operators.md#return-operator) (`->`).
+See also the return operator [`->`](Operators.md#return-operator).
 
 ### for
 
@@ -967,7 +962,7 @@ keywords for additional information on their usage.
 A `type` construct can also contain standalone expressions. They must occur
 below any possible conditions or transforms. If expression(s) are provided, an
 object will conform to the type only if it is equal
-(according to the `==` [`OP_EQUAL`](Operators.md#equality-operator) operator)
+(according to the [`==`](Operators.md#equality-operator) operator)
 to at least **one** of them. Although this feature is most
 often used with [symbols](Variables.md#symbols), any expressions are valid.
 
@@ -998,8 +993,7 @@ or another object returned by a [`transform`](#transform). If it fails,
 The finished type function will be available only within the
 [scope of interest](Scopes.md#scope-of-interest).
 
-If the keyword is spelled `type?` with a question mark
-([`OP_MAYBE`](Operators.md#inline-if-operator)) suffixing it, the interface
+If the keyword is spelled `type?` with a question mark, the interface
 is marked as lazy. Lazy interfaces are evaluated only once per object. If an
 object conforms to the interface once, it will be assumed to conform
 permanently, and all further checks will be skipped.
@@ -1227,12 +1221,11 @@ For functions, this is similar to `func <func_name> { <other_func_name>() }`,
 without considering arguments. For types, this is functionally equivalent to
 `type <type_name> { isa <other_type_name> }`.
 
-If the keyword is spelled `alias?` with a question mark
-([`OP_MAYBE`](Operators.md#inline-if-operator)) suffixing it, the alias
+If the keyword is spelled `alias?` with a question mark, the alias
 will not be created until the first time it is referenced. This is only useful
 when the target itself is lazy-evaluated, such as a `type?` or `prop?`.
-This works similarly to lazy assignment with the `?=` operator
-([`OP_LASSIGN`](Operators.md#lazy-assignment-operator)).
+This works similarly to lazy assignment with the
+[`?=`](Operators.md#lazy-assignment-operator)) operator.
 
 The finished type or function will be available only within the
 [scope of interest](Scopes.md#scope-of-interest).
