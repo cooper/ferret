@@ -172,7 +172,7 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Stack) );
+    provides_namespaces( $context, $file_name, qw(Stack T) );
     load_namespaces( $context, $file_name, qw(T) );
 };
 

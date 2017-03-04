@@ -1539,7 +1539,7 @@ $result = do {
             undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(List Pairs) );
+    provides_namespaces( $context, $file_name, qw(List Pairs T) );
     load_namespaces( $context, $file_name,
         qw(Code Iterator List ListIterator) );
 };

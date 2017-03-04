@@ -30,6 +30,8 @@ sub perl_fmt {
     return $child->perl_fmt;
 }
 
+sub provides_name { shift->variable->{var_name} }
+
 sub markdown_fmt {
     my $share   = shift;
     my $var     = $share->variable;

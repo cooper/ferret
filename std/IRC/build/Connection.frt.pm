@@ -438,7 +438,7 @@
 #                                  Instance variable '@port'
 #                                  Addition operator (+)
 #                                  String ')'
-#          Include (Channel, Handlers, IRC::Massage, List, Num, Outgoing, Server, Socket::TCP, Str, User)
+#          Include (Channel, Handlers, IRC::Massage, List, Num, Server, Socket::TCP, Str, User)
 package FF;
 
 use warnings;
@@ -1122,10 +1122,11 @@ $result = do {
             description => $scope,
             $proto, $class, $ins, undef, undef
         );
+        load_namespaces( $context, $file_name, 'Outgoing' );
     }
     provides_namespaces( $context, $file_name, qw(Connection) );
     load_namespaces( $context, $file_name,
-        qw(Channel Handlers IRC::Massage List Num Outgoing Server Socket::TCP Str User)
+        qw(Channel Handlers IRC::Massage List Num Server Socket::TCP Str User)
     );
 };
 

@@ -46,7 +46,7 @@ $result = do {
           get_class( $f, $context, $file_scope, 'A', undef, [ 'T', \'U' ] );
 
     }
-    provides_namespaces( $context, $file_name, qw(A) );
+    provides_namespaces( $context, $file_name, qw(A T U) );
     load_namespaces( $context, $file_name, qw() );
 };
 

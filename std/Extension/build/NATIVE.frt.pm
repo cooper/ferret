@@ -3,15 +3,12 @@
 #      Package 'main'
 #          Class 'NATIVE'
 #              Instruction
-#                  Load
-#                      Bareword 'NATIVE::PerlObject'
-#              Instruction
 #                  Shared variable declaration
 #                      Lazy assignment
 #                          Lexical variable '$ferret'
 #                          Call
 #                              Property 'wrapPackageVariable'
-#                                  Bareword 'PerlObject'
+#                                  Bareword 'NATIVE::PerlObject'
 #                              Argument list [2 items]
 #                                  Item 0
 #                                      String 'Ferret'
@@ -33,7 +30,7 @@
 #                              Property 'main_context'
 #                                  Lexical variable '$ferret'
 #                              Argument list [0 items]
-#          Include (NATIVE::PerlObject, PerlObject)
+#          Include (NATIVE::PerlObject)
 package FF;
 
 use warnings;
@@ -72,43 +69,43 @@ $result = do {
             $class,
             ferret => [
                 sub {
-                    $$scope->{'PerlObject'}
-                      ->property_u( 'wrapPackageVariable', $pos->(5.25) )->(
+                    $$scope->{'NATIVE::PerlObject'}
+                      ->property_u( 'wrapPackageVariable', $pos->(3.35) )->(
                         [ str( $f, "Ferret" ), str( $f, "\$ferret" ) ],
-                        $scope, undef, $pos->(5.3)
+                        $scope, undef, $pos->(3.4)
                       );
                 }
             ],
             undef,
-            $pos->(5.15)
+            $pos->(3.15)
         );
         var(
             $class,
             coreContext => [
                 sub {
                     $$scope->{'ferret'}
-                      ->property_u( 'core_context', $pos->(6.5) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(6.6) );
+                      ->property_u( 'core_context', $pos->(4.5) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(4.6) );
                 }
             ],
             undef,
-            $pos->(6.3)
+            $pos->(4.3)
         );
         var(
             $class,
             mainContext => [
                 sub {
                     $$scope->{'ferret'}
-                      ->property_u( 'main_context', $pos->(7.5) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(7.6) );
+                      ->property_u( 'main_context', $pos->(5.5) )
+                      ->( [ undef, [] ], $scope, undef, $pos->(5.6) );
                 }
             ],
             undef,
-            $pos->(7.3)
+            $pos->(5.3)
         );
     }
     provides_namespaces( $context, $file_name, qw(NATIVE) );
-    load_namespaces( $context, $file_name, qw(NATIVE::PerlObject PerlObject) );
+    load_namespaces( $context, $file_name, qw(NATIVE::PerlObject) );
 };
 
 after_content($file_name);

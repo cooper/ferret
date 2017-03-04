@@ -238,9 +238,12 @@ sub _property {
 
     # try a different context.
     if (!$simple_only && index($prop_name, '::') != -1) {
-        my ($context, $real_prop_name) = ($prop_name =~ m/^(.+)::(.+?)$/);
-        $context = $obj->f->get_context_or_class($context) or return;
-        return $context->_property($real_prop_name, undef, $simple_only);
+        my ($ctx, @more, %tried) = $borrow_obj;
+        while (my ($ctx_name, $rest) = $prop_name =~ m/^(.+?)::(.+)$/) {
+            ($ctx, @more) = $ctx->property($ctx_name);
+            return if !$ctx || $tried{$ctx}++;
+        }
+        return ($ctx, @more);
     }
 
     # try inheritance.

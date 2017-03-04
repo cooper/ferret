@@ -214,7 +214,7 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, qw(Stack) );
+    provides_namespaces( $context, $file_name, qw(Element Stack) );
     load_namespaces( $context, $file_name, qw(Element Num Stack) );
     try_catch(
         $f, $scope,

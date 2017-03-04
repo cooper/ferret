@@ -1,6 +1,16 @@
 # === Document Model ===
 #  File './std/CORE.frt'
 #      Package 'CORE'
+#          Type definition ('Any')
+#              Type body
+#          Type definition ('Code')
+#              Type body
+#                  Instruction
+#                      Satisfies
+#                          Property variable '.name'
+#                  Instruction
+#                      Satisfies
+#                          Property variable '.signature'
 #          Instruction
 #              Load
 #                  Bareword 'Signal'
@@ -34,17 +44,7 @@
 #          Instruction
 #              Load
 #                  Bareword 'Indexed'
-#          Type definition ('Any')
-#              Type body
-#          Type definition ('Code')
-#              Type body
-#                  Instruction
-#                      Satisfies
-#                          Property variable '.name'
-#                  Instruction
-#                      Satisfies
-#                          Property variable '.signature'
-#          Include (Character, Complex, EventSet, Extension::Hash, Extension::List, Extension::NATIVE, Extension::Number, Extension::String, Indexed, Iterator, Signal)
+#          Include
 package FF;
 
 use warnings;
@@ -74,10 +74,7 @@ $result = do {
     load_core('CORE');
 
     provides_namespaces( $context, $file_name, qw(Any Code) );
-    load_namespaces( $context, $file_name,
-        qw(Character Complex EventSet Extension::Hash Extension::List Extension::NATIVE Extension::Number Extension::String Indexed Iterator Signal)
-    );
-
+    load_namespaces( $context, $file_name, qw() );
     typedef(
         $scope, $context, 'Any',
         sub {
@@ -105,6 +102,17 @@ $result = do {
         },
         undef
     );
+    load_namespaces( $context, $file_name, 'Signal' );
+    load_namespaces( $context, $file_name, 'Complex' );
+    load_namespaces( $context, $file_name, 'Character' );
+    load_namespaces( $context, $file_name, 'Extension::NATIVE' );
+    load_namespaces( $context, $file_name, 'Extension::Number' );
+    load_namespaces( $context, $file_name, 'Extension::String' );
+    load_namespaces( $context, $file_name, 'Extension::List' );
+    load_namespaces( $context, $file_name, 'Extension::Hash' );
+    load_namespaces( $context, $file_name, 'Iterator' );
+    load_namespaces( $context, $file_name, 'EventSet' );
+    load_namespaces( $context, $file_name, 'Indexed' );
 };
 
 after_content($file_name);

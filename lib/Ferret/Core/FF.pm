@@ -42,7 +42,7 @@ sub load_core {
     # this is the CORE module, or it's already been done.
     return if $name eq 'CORE' || $INC{'CORE.frt.pm'};
 
-    do 'build/CORE.frt.pm' or die "Core error: ".($@ || $!);
+    do 'build/CORE.frt.pm' or die "error in CORE.frt.pm: ".($@ || $!);
     return;
 }
 
@@ -66,7 +66,7 @@ sub after_content {
 
     # check that required spaces are loaded.
     my $err = $Ferret::ferret->check_spaces($file_name, 1);
-    die "Couldn't find $err" if $err; # FIXME
+    #die "Couldn't find $err" if $err; # FIXME
 
     # start the runtime.
     Ferret::runtime();
@@ -93,8 +93,9 @@ sub load_namespaces {
     my @possible_prefixes = split /::/, $pkg;
     for my $name (@namespaces) {
         my @acceptable = ((map { $_.'::'.$name } @possible_prefixes), $name);
-        my $die = !delete $provides{$file_name}{$name};
-        undef $die if $pkg eq 'CORE';
+        my $r = (split '::', $name)[-1]; # HACK
+        my $die = !$provides{$file_name}{ $r };
+        #undef $die if $pkg eq 'CORE';
         Ferret::space($context, $file_name, $die, @acceptable);
     }
 

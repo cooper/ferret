@@ -183,22 +183,23 @@ sub space {
     @acceptable = grep defined, @acceptable;
     foreach my $space (@acceptable) {
         my $existing = $context->property($space);
+        print "found @acceptable -> $existing\n" if $existing;
         return $existing if $existing;
 
         # already tried this file
         my $file = build_name(ns_to_slash("$space.frt.pm"));
         return $existing
-            if $tried_files{$file};
+            if $tried_files{$file}++;
 
         # do the file
-        $tried_files{$file}++;
         do $file or do {
             if ($@) {
-                print "error in $file: $@";
+                local $@ = "\n    $@" if !index($@, 'error in');
+                die "error in $file: $@\n";
                 return;
             }
             next if $!; # not found
-            print "error in $file: did not return a true value\n";
+            die "error in $file: did not return a true value\n";
             return;
         };
 

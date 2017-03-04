@@ -9,8 +9,6 @@ use Ferret::Shared::Utils qw(dot_trim);
 
 sub hold_instr { 1 }
 
-sub provides_name { shift->{name} }
-
 sub desc {
     my $class = shift;
     my $desc  = "class '$$class{name}'";
@@ -18,6 +16,13 @@ sub desc {
     $desc    .= ' <'.join(', ', @{ $class->{generics} }).'>'
                 if $class->{generics};
     return $desc;
+}
+
+sub provides_name {
+    my $class = shift;
+    my @provides = $class->{name};
+    push @provides, @{ $class->{generics} } if $class->{generics};
+    return @provides;
 }
 
 sub add_generic {

@@ -70,13 +70,10 @@ automatically simply by referencing their names, so `load` is **almost never
 required**. Its occasional use case is when a package should be loaded but is
 not actually referenced within the current file.
 
-`load` provides no true function beyond a human-readable statement with a clear
-intent. It is functionally equivalent to simply stating a package name alone in
-void context. In fact, it does not affect the compiled code in any way.
-
-Additionally, `load` cannot enforce that a package actually be loaded. If such
-a file is not found or has errors, the statement will be quietly ignored, and
-the runtime will attempt to continue normal execution.
+With normal autoloading, all requirements referenced anywhere with in the file
+are loaded before beginning the execution of the code within the file. When
+using `load`, this is not the case; instead, the requirement is loaded when the
+execution within the file reaches the `load` statement.
 
 ```
 load My::Package

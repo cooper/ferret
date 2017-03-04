@@ -21,6 +21,7 @@ sub requires {
     my @spaces;
 
     for my $bw ($spaces->document->filter_descendants(type => 'Bareword')) {
+        next if $bw->parent->type eq 'Load';
         my $val = $bw->{bareword_value};
 
         # if it starts with a capital letter, it's a class or namespace.
@@ -52,17 +53,18 @@ sub provides {
     return @{ $spaces->{provides} } if $spaces->{provides};
     my @spaces;
 
-    my @types = qw(Class Type Document Alias);
+    my @types = qw(Class Type Document Alias SharedDeclaration);
     foreach my $thing ($spaces->document->filter_descendants(type => "@types")) {
-        my $name = $thing->provides_name;
+        foreach my $name ($thing->provides_name) {
 
-        # ignore main package
-        next if $name eq 'main';
+            # ignore main package
+            next if $name eq 'main';
 
-        # ignore things that aren't capitalized
-        next if $name !~ m/^[A-Z]/;
+            # ignore things that aren't capitalized
+            next if $name !~ m/^[A-Z]/;
 
-        push @spaces, $name;
+            push @spaces, $name;
+        }
     }
 
     # make consistent across builds

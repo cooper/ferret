@@ -89,7 +89,7 @@
 #                                              Item 0
 #                                                  Lexical variable '$type'
 #                              Argument list [0 items]
-#          Include (NATIVE::Signal, Sym)
+#          Include (Sym)
 package FF;
 
 use warnings;
@@ -195,7 +195,7 @@ $result = do {
             fireSignal => $scope,
             $class, $class, $ins, undef, undef
         );
-
+        load_namespaces( $context, $file_name, 'NATIVE::Signal' );
         var(
             $class,
             INT => [
@@ -267,8 +267,8 @@ $result = do {
             $pos->(12.2)
         );
     }
-    provides_namespaces( $context, $file_name, qw(Signal) );
-    load_namespaces( $context, $file_name, qw(NATIVE::Signal Sym) );
+    provides_namespaces( $context, $file_name, qw(ALRM HUP INT Signal TERM) );
+    load_namespaces( $context, $file_name, qw(Sym) );
 };
 
 after_content($file_name);
