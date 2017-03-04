@@ -55,7 +55,6 @@ sub construct {
         if ($last_el != $old_el && $current->{doc_comment}) {
             $last_el->{doc_comment} = delete $current->{doc_comment};
         }
-
     }
 
     # EOF

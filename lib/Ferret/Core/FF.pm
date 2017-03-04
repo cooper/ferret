@@ -524,7 +524,6 @@ sub typedef {
 
             # return whatever the transform returns.
             return $func->call([ $obj ], $scope);
-
         };
 
         # create a prototype.

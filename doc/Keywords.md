@@ -13,20 +13,22 @@ package <name> [<version>]
 ```
 
 Declares the document's package name. Package names determine the current
-context object, which is essentially a namespace. All contexts are global, and
-their names are always root-level.
-
-At this time, only one package declaration per document is supported. Although
-it generally appears on the first line, its location within the file is
-insignificant. It does not require termination.
+context object, which is essentially a namespace. The name declared with the
+`package` keyword is absolute (root level), not relative to the current package.
+Anywhere that a package has not been declared, `package main` is inferred.
 
 ```
 package Hello 1.0
 ```
 
+Once declared, the package extends to whichever comes first:
+* a corresponding [`end`](#end) keyword, which sets the package back to `main`
+* another `package` declaration
+* the end of the file
+
 Packages may be organized into different namespaces using the namespace operator
-(`::`). When doing so, the package inherits all global variables and functions
-of the broader ones.
+(`::`). Packages inherit from the namespaces above them. For example, package
+`Math::Trig` inherits from the `Math` package.
 
 ```
 package A::B    # A::B inherits all of A's symbols
