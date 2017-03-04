@@ -9,7 +9,7 @@ use 5.010;
 use parent 'Ferret::Object';
 use Ferret::Core::Conversion qw(
     FUNC_V1 FUNC_SELF FUNC_ARGS FUNC_RET
-    fstring fnumber perlize
+    fstring fnumber flist perlize
 );
 
 my @methods = (
@@ -34,6 +34,8 @@ sub init {
     my ($err, $args) = &FUNC_V1;
     $err->set_property($_ => $args->{$_})
         for qw(type msg hints subError fatal);
+    $err->set_property(hints => flist()) if !$err->has_property('hints');
+    return $err;
 }
 
 sub _setPosition {
