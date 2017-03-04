@@ -21,11 +21,6 @@ Anywhere that a package has not been declared, `package main` is inferred.
 package Hello 1.0
 ```
 
-Once declared, the package extends to whichever comes first:
-* a corresponding [`end`](#end) keyword, which sets the package back to `main`
-* another `package` declaration
-* the end of the file
-
 Packages may be organized into different namespaces using the namespace operator
 (`::`). Packages inherit from the namespaces above them. For example, package
 `Math::Trig` inherits from the `Math` package.
@@ -33,6 +28,11 @@ Packages may be organized into different namespaces using the namespace operator
 ```
 package A::B    # A::B inherits all of A's symbols
 ```
+
+Once declared, the package extends until whichever of these comes first:
+* a corresponding [`end`](#end) keyword, which sets the package back to `main`
+* another `package` declaration
+* the end of the file
 
 See [Contexts](Scopes.md#context) for general information on namespaces.
 

@@ -6,14 +6,14 @@ Variables are identifiers prefix and/or suffixed with sigils.
 
 Lexical variables are identified by the `$` sigil.
 
-Lexical variables are specific to the
-scope in which they are declared. Scopes which inherit from that scope can
-access them, but exterior scopes cannot.
+Lexical variables are specific to the [scope](Scopes.md) in which they are
+declared. Scopes which inherit from that scope can access them, but exterior
+scopes cannot.
 
-Lexical variables are actually implemented as properties of the current scope
-object. Inheritance of variables from external scopes is possible through the
-same ISA inheritance system used for all objects. For this reason, `$var` is
-functionally equivalent to `*scope.var`.
+Lexical variables are implemented as properties of the current scope object.
+Inheritance of variables from external scopes is possible through the
+same [ISA inheritance system](Inheritance.md) used for all objects. For this
+reason, `$var` is functionally equivalent to `*scope.var`.
 
 Tokenized as `VAR_LEX`.
 
@@ -51,7 +51,7 @@ scopes, as well as other select objects, possess a special object. However, such
 objects cannot be accessed directly; their properties can only be retrieved
 using this type of variable.
 
-* __*scope__ - refers to the current scope object
+* __*scope__ - refers to the current [scope](Scopes.md) object
 * __*return__ - within a function, refers to the return object
 * __*class__ - within a class, refers to the class itself
 * __*self__ - within a class, refers to the current instance
