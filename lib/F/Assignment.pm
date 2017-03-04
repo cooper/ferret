@@ -99,7 +99,7 @@ sub property_name       { shift->assign_to->property_name               }
 sub property_name_code  { shift->assign_to->property_name_code          }
 sub property_owner_code { shift->assign_to->property_owner_code         }
 
-sub public       { shift->public        }
+sub public       { shift->{public}      }
 sub assign_to    { shift->first_child   }
 sub assign_value { (shift->children)[1] }
 

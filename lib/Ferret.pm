@@ -183,9 +183,7 @@ sub space {
     @acceptable = grep defined, @acceptable;
     foreach my $space (@acceptable) {
         my $existing = $context->property($space);
-        #print "$file_name @acceptable -> $$existing{name}\n" if $existing;
         return $existing if $existing;
-
 
         # already tried this file
         my $file = build_name(ns_to_slash("$space.frt.pm"));
@@ -206,22 +204,17 @@ sub space {
 
         return $context->property($space);
     }
-    die "BAD: @acceptable" if $die; # XXX
+    die "not found: @acceptable" if $die; # XXX
     push @{ $context->f->{pending_spaces}{$file_name} ||= [] },
         [ $context, @acceptable ];
 }
 
-sub check_spaces {return; # XXX
+sub check_spaces {
     my ($f, $file_name, $die) = @_;
     my @spaces = @{ $f->{pending_spaces}{$file_name} || [] };
     return if !@spaces; # success
     SPACE: for (@spaces) {
         my ($context, @acceptable) = @$_;
-
-        # already loaded?
-        for (@acceptable) {
-            next SPACE if $context->property($_);
-        }
 
         # try to load again
         next if space($context, $file_name, $die, @acceptable);
@@ -410,7 +403,11 @@ sub runtime {
 
 sub inspect {
     my $f = $ferret or return;
-    $f->main_context->property('inspect')->call([ $_ ]) for @_;
+    my ($val, $detailed) = @_;
+    $f->main_context->property('inspect')->call({
+        value    => $val,
+        detailed => $detailed ? true : false
+    });
 }
 
 sub dump {

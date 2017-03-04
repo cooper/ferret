@@ -3,16 +3,13 @@
 #      Package 'CORE'
 #          Instruction
 #              Load
-#                  Bareword 'Error'
-#          Instruction
-#              Load
 #                  Bareword 'Signal'
 #          Instruction
 #              Load
 #                  Bareword 'Complex'
 #          Instruction
 #              Load
-#                  Bareword 'Char'
+#                  Bareword 'Character'
 #          Instruction
 #              Load
 #                  Bareword 'Extension::NATIVE'
@@ -47,7 +44,7 @@
 #                  Instruction
 #                      Satisfies
 #                          Property variable '.signature'
-#          Include (Char, Complex, Error, EventSet, Extension::Hash, Extension::List, Extension::NATIVE, Extension::Number, Extension::String, Indexed, Iterator, Signal)
+#          Include (Character, Complex, EventSet, Extension::Hash, Extension::List, Extension::NATIVE, Extension::Number, Extension::String, Indexed, Iterator, Signal)
 package FF;
 
 use warnings;
@@ -78,7 +75,7 @@ $result = do {
 
     provides_namespaces( $context, $file_name, qw(Any Code) );
     load_namespaces( $context, $file_name,
-        qw(Char Complex Error EventSet Extension::Hash Extension::List Extension::NATIVE Extension::Number Extension::String Indexed Iterator Signal)
+        qw(Character Complex EventSet Extension::Hash Extension::List Extension::NATIVE Extension::Number Extension::String Indexed Iterator Signal)
     );
 
     typedef(

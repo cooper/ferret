@@ -52,7 +52,7 @@ sub provides {
     return @{ $spaces->{provides} } if $spaces->{provides};
     my @spaces;
 
-    my @types = qw(Class Type Document);
+    my @types = qw(Class Type Document Alias);
     foreach my $thing ($spaces->document->filter_descendants(type => "@types")) {
         my $name = $thing->provides_name;
 

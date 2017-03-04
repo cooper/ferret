@@ -343,7 +343,7 @@ $result = do {
         );
     }
     provides_namespaces( $context, $file_name,
-        qw(Any Lowercase NonEmpty String Uppercase) );
+        qw(Any LC Lowercase NE NonEmpty String UC Uppercase) );
     load_namespaces( $context, $file_name,
         qw(LC Lowercase NE NonEmpty Num Str UC Uppercase) );
 };

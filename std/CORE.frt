@@ -1,9 +1,8 @@
 package CORE
 
-load Error
 load Signal
 load Complex
-load Char
+load Character
 
 load Extension::NATIVE
 load Extension::Number

@@ -945,7 +945,7 @@ $result = do {
         $func_6->inside_scope( user => $scope, $proto, $class, $ins, 1, undef );
         $func_7->inside_scope( host => $scope, $proto, $class, $ins, 1, undef );
     }
-    provides_namespaces( $context, $file_name, qw(Massage Str::NE) );
+    provides_namespaces( $context, $file_name, qw(Massage) );
     load_namespaces( $context, $file_name, qw(Bool Connection Str::NE) );
 };
 

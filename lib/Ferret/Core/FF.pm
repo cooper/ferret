@@ -65,7 +65,7 @@ sub after_content {
     my $file_name = shift;
 
     # check that required spaces are loaded.
-    my $err = $Ferret::ferret->check_spaces($file_name);
+    my $err = $Ferret::ferret->check_spaces($file_name, 1);
     die "Couldn't find $err" if $err; # FIXME
 
     # start the runtime.
@@ -94,6 +94,7 @@ sub load_namespaces {
     for my $name (@namespaces) {
         my @acceptable = ((map { $_.'::'.$name } @possible_prefixes), $name);
         my $die = !delete $provides{$file_name}{$name};
+        undef $die if $pkg eq 'CORE';
         Ferret::space($context, $file_name, $die, @acceptable);
     }
 
