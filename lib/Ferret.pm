@@ -179,13 +179,17 @@ sub get_class {
 # fetch a class or namespace.
 # if necessary, load it.
 sub space {
-    my ($context, $file_name, $last_check, @acceptable) = @_;
+    my ($context, $file_name, $die, @acceptable) = @_;
     @acceptable = grep defined, @acceptable;
     foreach my $space (@acceptable) {
-        my $file = build_name(ns_to_slash("$space.frt.pm"));
+        my $existing = $context->property($space);
+        #print "$file_name @acceptable -> $$existing{name}\n" if $existing;
+        return $existing if $existing;
+
 
         # already tried this file
-        return $context->property($space)
+        my $file = build_name(ns_to_slash("$space.frt.pm"));
+        return $existing
             if $tried_files{$file};
 
         # do the file
@@ -202,13 +206,13 @@ sub space {
 
         return $context->property($space);
     }
-    return if $last_check;
+    die "BAD: @acceptable" if $die; # XXX
     push @{ $context->f->{pending_spaces}{$file_name} ||= [] },
         [ $context, @acceptable ];
 }
 
-sub check_spaces {
-    my ($f, $file_name) = @_;
+sub check_spaces {return; # XXX
+    my ($f, $file_name, $die) = @_;
     my @spaces = @{ $f->{pending_spaces}{$file_name} || [] };
     return if !@spaces; # success
     SPACE: for (@spaces) {
@@ -220,7 +224,7 @@ sub check_spaces {
         }
 
         # try to load again
-        next if space($context, $file_name, 1, @acceptable);
+        next if space($context, $file_name, $die, @acceptable);
 
         # failed
         return join '|', @acceptable;
@@ -434,6 +438,7 @@ sub dump {
 use Ferret::Object;
 use Ferret::Undefined;
 use Ferret::NATIVE;
+use Ferret::Error;
 use Ferret::String;
 use Ferret::Regex;
 use Ferret::Number;

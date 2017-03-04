@@ -58,6 +58,7 @@ $result = do {
     my $scope = $file_scope;
     load_core('main');
 
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(Bot2) );
     var(
         $scope,

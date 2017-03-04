@@ -9,6 +9,8 @@ use Ferret::Shared::Utils qw(dot_trim);
 
 sub hold_instr { 1 }
 
+sub provides_name { shift->{name} }
+
 sub desc {
     my $class = shift;
     my $desc  = "class '$$class{name}'";

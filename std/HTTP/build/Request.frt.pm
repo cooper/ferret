@@ -165,6 +165,7 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Request) );
     load_namespaces( $context, $file_name,
         qw(Client HTTPMethod NATIVE::HTTPClient Str) );
 };

@@ -267,6 +267,7 @@ $result = do {
             $pos->(12.2)
         );
     }
+    provides_namespaces( $context, $file_name, qw(Signal) );
     load_namespaces( $context, $file_name, qw(NATIVE::Signal Sym) );
 };
 

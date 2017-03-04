@@ -1695,6 +1695,7 @@ $result = do {
         ircsay => $scope,
         $context, undef, $ins, undef, undef
     );
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name,
         qw(COMPILER Error IRC::Bot IRC::Connection IRC::Massage Str::Any) );
     var(

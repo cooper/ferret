@@ -94,7 +94,7 @@ sub _inspect {
 sub _require {
     my (undef, $args) = @_;
     return Ferret::true if $args->pbool('test');
-    die; # FIXME: throw
+    die '_require'; # FIXME: throw
 }
 
 sub _delay {

@@ -105,7 +105,7 @@ sub throw {
     # we may have been passed an already-prepared error object.
     if (blessed $fmt) {
         $fmt->set_property(fatal => Ferret::true);
-        die Ferret::Core::Conversion::ferror($fmt);
+        die $fmt;
     }
 
     # main error.

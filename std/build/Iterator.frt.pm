@@ -482,6 +482,8 @@ $result = do {
             $proto, $class, $ins, 1, undef
         );
     }
+    provides_namespaces( $context, $file_name,
+        qw(HashIterator Iterable Iterator ListIterator MultiIterator) );
     load_namespaces( $context, $file_name, qw(Hash Iterator List) );
     typedef(
         $scope, $context,

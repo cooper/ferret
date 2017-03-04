@@ -75,6 +75,15 @@ sub after_content {
     return 1;
 }
 
+my %provides;
+
+# in the before_content autoload check, these will be skipped
+# until after_content
+sub provides_namespaces {
+    my ($context, $file_name, @namespaces) = @_;
+    $provides{$file_name}{$_}++ for @namespaces;
+}
+
 # load namespaces.
 sub load_namespaces {
     my ($context, $file_name, @namespaces) = @_;
@@ -84,10 +93,11 @@ sub load_namespaces {
     my @possible_prefixes = split /::/, $pkg;
     for my $name (@namespaces) {
         my @acceptable = ((map { $_.'::'.$name } @possible_prefixes), $name);
-        my $skip = $pkg eq 'CORE' || $pkg eq 'main';
-        Ferret::space($context, $file_name, $skip, @acceptable);
+        my $die = !delete $provides{$file_name}{$name};
+        Ferret::space($context, $file_name, $die, @acceptable);
     }
 
+    delete $provides{$file_name};
     return;
 }
 
@@ -524,6 +534,7 @@ sub typedef {
 
             # return whatever the transform returns.
             return $func->call([ $obj ], $scope);
+
         };
 
         # create a prototype.

@@ -206,7 +206,7 @@ sub _property {
         if (ref $p eq 'ARRAY' && !$no_compute) {
             $setting = 1;
             $p = shift @$p;
-            die unless ref $p eq 'CODE'; # FIXME: lazy
+            die 'not code!' unless ref $p eq 'CODE'; # FIXME: lazy
         }
 
         # code reference is a computed property.
@@ -763,7 +763,7 @@ sub hash_string {
 
     # TODO: runtime error if not hashable.
     if (Ferret::undefined($hash_value)) {
-        die;
+        die 'not hashable!';
     }
 
     return  _psym($hash_value);

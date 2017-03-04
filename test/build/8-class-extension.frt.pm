@@ -22,6 +22,7 @@
 #                              Call
 #                                  Property 'doubledLength'
 #                                      String 'hi there'
+#          Include
 package FF;
 
 use warnings;
@@ -80,6 +81,8 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(String) );
+    load_namespaces( $context, $file_name, qw() );
     $$scope->{'say'}->(
         [
             add(

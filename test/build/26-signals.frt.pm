@@ -127,6 +127,7 @@ $result = do {
             return $ret;
         }
     );
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(Signal Timer) );
     on(
         $$scope->{'Signal'}->property_u( 'TERM', $pos->(2.3) ),

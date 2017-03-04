@@ -221,6 +221,7 @@ $result = do {
             return $ret;
         }
     );
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(Socket::TCP Timer) );
     var(
         $scope,

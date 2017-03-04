@@ -1,16 +1,14 @@
 # === Document Model ===
-#  File './test/23-property-modifiers/test.frt'
+#  File './test/37-autoload-failure.frt'
 #      Package 'main'
 #          Instruction
 #              Assignment
 #                  Lexical variable '$x'
-#                  Object [0 items]
-#          Instruction
-#              Delete modifier
-#                  Lexical variable '$x'
-#          Instruction
-#              Bareword 'Second'
-#          Include (Second)
+#                  Call
+#                      Property 'aFunc'
+#                          Bareword 'Some::Nonexistent::Package'
+#                      Argument list [0 items]
+#          Include (Some::Nonexistent::Package)
 package FF;
 
 use warnings;
@@ -33,7 +31,7 @@ my $f = get_ferret();
 my ( $true, $false, $undefined, $ret_func ) = get_constant_objects($f);
 
 my ( $pos, $file_name ) =
-  before_content( 'test.frt', './test/23-property-modifiers/test.frt' );
+  before_content( '37-autoload-failure.frt', './test/37-autoload-failure.frt' );
 
 $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
@@ -41,11 +39,14 @@ $result = do {
     load_core('main');
 
     provides_namespaces( $context, $file_name, qw() );
-    load_namespaces( $context, $file_name, qw(Second) );
-    var( $scope, x => create_object( $f, [] ), undef, $pos->(1.2) );
-
-    $scope->delete_property_ow( 'x', $pos->(2.1) );
-    $$scope->{'Second'};
+    load_namespaces( $context, $file_name, qw(Some::Nonexistent::Package) );
+    var(
+        $scope,
+        x => $$scope->{'Some::Nonexistent::Package'}
+          ->property_u( 'aFunc', $pos->(1.4) )
+          ->( [ undef, [] ], $scope, undef, $pos->(1.45) ),
+        undef, $pos->(1.1)
+    );
 };
 
 after_content($file_name);

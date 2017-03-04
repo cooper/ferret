@@ -557,6 +557,7 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Rect) );
     load_namespaces( $context, $file_name, qw(Line Num Point) );
 };
 

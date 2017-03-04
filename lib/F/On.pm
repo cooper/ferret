@@ -57,7 +57,7 @@ sub event_object {
     return '$this'  if $c->type eq 'ThisVariable';
     return '$ins'   if $c->type eq 'PropertyVariable';
     return $c->left if $c->type eq 'Property';
-    die;
+    die 'event_object';
 }
 
 sub event_exp {
@@ -74,7 +74,7 @@ sub event_exp {
         return $c->index_fmt;
     }
 
-    die;
+    die 'event_exp';
 }
 
 sub opts_string {

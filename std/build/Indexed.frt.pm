@@ -77,6 +77,8 @@ $result = do {
     my $scope = $file_scope;
     load_core('CORE');
 
+    provides_namespaces( $context, $file_name,
+        qw(Hashable Indexed IndexedRead IndexedWrite) );
     load_namespaces( $context, $file_name, qw(Any IndexedRead IndexedWrite) );
     typedef(
         $scope, $context,

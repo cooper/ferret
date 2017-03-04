@@ -150,10 +150,11 @@ sub markdown_fmt {
     };
 }
 
-sub type_name  { shift->{type_name} }
-sub body       { shift->{body}      }
-sub is_closure { 1 }
-sub hold_instr { 1 }
+sub type_name       { shift->{type_name} }
+sub provides_name   { shift->{type_name} }
+sub body            { shift->{body}      }
+sub is_closure      { 1 }
+sub hold_instr      { 1 }
 
 sub desc       {
     my $type = shift;

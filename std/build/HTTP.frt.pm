@@ -114,6 +114,7 @@ $result = do {
         post => $scope,
         $context, undef, $ins, undef, undef
     );
+    provides_namespaces( $context, $file_name, qw(HTTPMethod) );
     load_namespaces( $context, $file_name, qw(HTTP::Client Str) );
     typedef(
         $scope, $context,

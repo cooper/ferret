@@ -53,6 +53,7 @@ $result = do {
         }
     );
     $func_0->inside_scope( A => $scope, $context, undef, $ins, undef, undef );
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(A) );
     $$scope->{'say'}->(
         [ $$scope->{'A'}->( [ undef, [] ], $scope, undef, $pos->(5.4) ) ],

@@ -3,6 +3,7 @@
 #      Package 'main'
 #          Class 'A' <T>
 #          Class 'A' <T, U>
+#          Include
 package FF;
 
 use warnings;
@@ -45,6 +46,8 @@ $result = do {
           get_class( $f, $context, $file_scope, 'A', undef, [ 'T', \'U' ] );
 
     }
+    provides_namespaces( $context, $file_name, qw(A) );
+    load_namespaces( $context, $file_name, qw() );
 };
 
 after_content($file_name);

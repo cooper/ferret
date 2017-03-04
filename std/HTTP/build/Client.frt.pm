@@ -351,6 +351,7 @@ $result = do {
             undef, $pos->(6.2)
         );
     }
+    provides_namespaces( $context, $file_name, qw(Client) );
     load_namespaces( $context, $file_name,
         qw(HTTP::Request HTTPMethod NATIVE::HTTPClient Num Str) );
 };

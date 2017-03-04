@@ -76,6 +76,7 @@ $result = do {
     my $scope = $file_scope;
     load_core('CORE');
 
+    provides_namespaces( $context, $file_name, qw(Any Code) );
     load_namespaces( $context, $file_name,
         qw(Char Complex Error EventSet Extension::Hash Extension::List Extension::NATIVE Extension::Number Extension::String Indexed Iterator Signal)
     );

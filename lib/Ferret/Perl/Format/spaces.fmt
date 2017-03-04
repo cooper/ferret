@@ -1,1 +1,2 @@
-load_namespaces($context, $file_name, qw(<<spaces>>));
+provides_namespaces($context, $file_name, qw(<<provides>>));
+load_namespaces($context, $file_name, qw(<<requires>>));

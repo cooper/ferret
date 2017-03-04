@@ -1169,6 +1169,7 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Matrix) );
     load_namespaces( $context, $file_name, qw(Code Error Int Matrix Num) );
 };
 

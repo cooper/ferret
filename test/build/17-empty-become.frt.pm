@@ -71,6 +71,7 @@ $result = do {
             return $ret;
         }
     );
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(Timer) );
     var( $scope, obj => create_object( $f, [] ), undef, $pos->(2.2) );
     $$scope->{'Timer'}->property_u( 'init', $pos->(5.1) )

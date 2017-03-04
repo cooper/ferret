@@ -115,6 +115,7 @@ $result = do {
             $class, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Module) );
     load_namespaces( $context, $file_name, qw(Num Str) );
 };
 

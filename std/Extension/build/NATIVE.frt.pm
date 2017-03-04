@@ -107,6 +107,7 @@ $result = do {
             $pos->(7.3)
         );
     }
+    provides_namespaces( $context, $file_name, qw(NATIVE) );
     load_namespaces( $context, $file_name, qw(NATIVE::PerlObject PerlObject) );
 };
 

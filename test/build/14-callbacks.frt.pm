@@ -144,6 +144,7 @@ $result = do {
             return $ret;
         }
     );
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(String) );
     $$scope->{'say'}->( [ str( $f, "test" ) ], $scope, undef, $pos->(1.2) );
     var( $scope, str => str( $f, "hi" ), undef, $pos->(3.2) );

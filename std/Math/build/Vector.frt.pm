@@ -2677,6 +2677,7 @@ $result = do {
             undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Vector VectorAxis) );
     load_namespaces( $context, $file_name,
         qw(Char Error Math Num Vector VectorAxis) );
 };

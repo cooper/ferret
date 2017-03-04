@@ -363,6 +363,7 @@ $result = do {
             $pos->(6.15)
         );
     }
+    provides_namespaces( $context, $file_name, qw(Point) );
     load_namespaces( $context, $file_name, qw(Num Point) );
 };
 

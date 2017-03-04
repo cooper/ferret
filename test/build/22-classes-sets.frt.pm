@@ -370,6 +370,7 @@ $result = do {
             $class, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Cat Cow Dog) );
     load_namespaces( $context, $file_name, qw(Cat Cow Dog) );
     var(
         $scope,

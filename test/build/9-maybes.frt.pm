@@ -91,6 +91,7 @@ $result = do {
         sayHello => $scope,
         $context, undef, $ins, undef, undef
     );
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(Str) );
     {
         my $maybe_0 = $$scope->{'sayHello'};

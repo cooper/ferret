@@ -289,8 +289,6 @@ sub ferror {
 
     # already an error object.
     if (blessed $err && $err->isa('Ferret::Error')) {
-        $type = 'NativeCodeError' if !$type && !$err->has_property('type');
-        $err->set_property(type => fsym($type)) if $type;
         return $err;
     }
 

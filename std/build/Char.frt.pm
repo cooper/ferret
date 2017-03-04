@@ -244,6 +244,7 @@ $result = do {
         );
         $func_1->inside_scope( ord => $scope, $proto, $class, $ins, 1, undef );
     }
+    provides_namespaces( $context, $file_name, qw(Char Character) );
     load_namespaces( $context, $file_name,
         qw(Bool Character Error NATIVE Num Str) );
     typedef(

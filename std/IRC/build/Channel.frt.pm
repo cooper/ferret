@@ -130,6 +130,7 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Channel) );
     load_namespaces( $context, $file_name, qw(Connection Str Str::Any) );
 };
 

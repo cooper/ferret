@@ -1123,6 +1123,7 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Connection) );
     load_namespaces( $context, $file_name,
         qw(Channel Handlers IRC::Massage List Num Outgoing Server Socket::TCP Str User)
     );

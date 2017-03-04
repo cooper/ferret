@@ -310,6 +310,7 @@ $result = do {
         evenNumbers => $scope,
         $context, undef, $ins, undef, undef
     );
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(Math::Point Num) );
     var(
         $scope,

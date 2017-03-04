@@ -149,6 +149,7 @@ $result = do {
         announce => $scope,
         $context, undef, $ins, undef, undef
     );
+    provides_namespaces( $context, $file_name, qw(Gender) );
     load_namespaces( $context, $file_name, qw(Gender Str) );
     typedef(
         $scope, $context, 'Gender',

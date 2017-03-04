@@ -516,6 +516,7 @@ $result = do {
             undef, $pos->(81.3)
         );
     }
+    provides_namespaces( $context, $file_name, qw(Even Integer Number Odd) );
     load_namespaces( $context, $file_name,
         qw(Inf Int Integer NATIVE::Math NaN Num Num::Inf Num::Int Num::NaN) );
     $context->set_property( Int => $$scope->{'Num::Int'}, $pos->(87.3) );

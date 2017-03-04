@@ -1298,6 +1298,7 @@ $result = do {
             $pos->(10.3)
         );
     }
+    provides_namespaces( $context, $file_name, qw(Bot) );
     load_namespaces( $context, $file_name,
         qw(Message Num Socket::TCP Str Str::LC) );
 };

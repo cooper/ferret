@@ -105,6 +105,7 @@ $result = do {
             $class, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(User) );
     load_namespaces( $context, $file_name, qw(Connection Str) );
 };
 

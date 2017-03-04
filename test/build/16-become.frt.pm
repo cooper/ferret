@@ -56,6 +56,7 @@ $result = do {
     my $scope = $file_scope;
     load_core('main');
 
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(Math::Point) );
     var( $scope, obj => str( $f, "hi" ), undef, $pos->(2.2) );
     $$scope->{'Math::Point'}->property_u( 'init', $pos->(9.2) )

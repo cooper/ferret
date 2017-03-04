@@ -296,11 +296,14 @@ sub verify_lexical_variables {
             my $sfi = $var->{available_scope} || $soi;
 
             # find the position of where the variable is first declared.
-            my $pos = $sfi->where_lex_declared($var->{var_name}) or die;
+            my $pos = $sfi->where_lex_declared($var->{var_name})
+                or die "can't find lexical declaration";
 
             # find the declaration at that position.
             # this could be a SharedDeclaration, LocalDeclaration, Assignment...
-            my $decl_a = $v->{lex_declarations}{$pos} or die;
+            my $decl_a = $v->{lex_declarations}{$pos}
+                or die "can't find lexical declaration";
+                
             my ($decl, @decl_vars) = @$decl_a;
 
             # if any of the variables in this declaration are this variable,

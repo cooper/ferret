@@ -1242,7 +1242,7 @@ sub c_OP_MAYBE {
     my $owner = $c->maybe_owner;
     if (!$owner) {
         # TODO: error!
-        die;
+        die 'no maybe owner';
     }
 
     # create a maybe, adopting the last element.

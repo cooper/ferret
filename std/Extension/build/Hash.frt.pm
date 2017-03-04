@@ -307,6 +307,7 @@ $result = do {
             $proto, $class, $ins, 1, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Hash OrderedHash) );
     load_namespaces( $context, $file_name, qw(Hash HashIterator Iterator K V) );
 };
 

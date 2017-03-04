@@ -1552,6 +1552,7 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Complex) );
     load_namespaces( $context, $file_name, qw(Complex Math Num) );
 };
 

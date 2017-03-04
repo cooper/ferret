@@ -37,7 +37,7 @@ sub _hashify {
         my @keys  = @a[ grep { not $_ % 2 } 0..$#a ];
         return (\@keys, { @a });
     }
-    die;
+    die '_hashify';
 }
 
 ###################

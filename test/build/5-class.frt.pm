@@ -375,6 +375,7 @@ $result = do {
             $class, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Point) );
     load_namespaces( $context, $file_name, qw(Point) );
     var(
         $scope,

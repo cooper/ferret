@@ -15,14 +15,14 @@ sub new {
     );
 }
 
-sub hold_instr { 1 }
-
 sub desc {
     my $doc = shift;
     return "package '$$doc{package}'";
 }
 
-sub file_name { shift->parent->{name} }
+sub file_name     { shift->parent->{name}   }
+sub provides_name { shift->{package}        }
+sub hold_instr    { 1 }
 
 sub perl_fmt {
     my $doc = shift;

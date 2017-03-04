@@ -186,6 +186,7 @@ $result = do {
             return $ret;
         }
     );
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(HTTP Str) );
 
     # Inside

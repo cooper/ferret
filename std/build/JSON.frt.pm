@@ -941,6 +941,7 @@ $result = do {
         $class->set_property( stringify => $$scope->{'encode'}, $pos->(191.3) );
         $class->set_property( parse     => $$scope->{'decode'}, $pos->(192.3) );
     }
+    provides_namespaces( $context, $file_name, qw(Charset JSON) );
     load_namespaces( $context, $file_name,
         qw(Bool Charset Error List NATIVE::PerlObject Str) );
 };

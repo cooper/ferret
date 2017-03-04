@@ -598,6 +598,7 @@ $result = do {
         exp => $scope,
         $context, undef, $ins, undef, undef
     );
+    provides_namespaces( $context, $file_name, qw() );
     load_namespaces( $context, $file_name, qw(NATIVE::Math Num) );
     var(
         $context,

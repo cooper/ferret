@@ -353,6 +353,7 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
+    provides_namespaces( $context, $file_name, qw(Bot1) );
     load_namespaces( $context, $file_name, qw(Num Socket::TCP Str) );
 };
 
