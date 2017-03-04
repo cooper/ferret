@@ -937,7 +937,7 @@ ok()    # says "hello" then "goodbye"
 ### type
 
 ```
-type[?] <name> { (<conditions>|<transforms>|<expresions>)... }
+type[?] <name> { <conditions/transforms/expressions> }
 ```
 
 Defines a type interface for dynamic type checking. This is especially useful
@@ -1056,7 +1056,7 @@ Note that the type in the example exists in the standard library as
 ### can
 
 ```
-can .<methodName>"("<arguments>...")"
+can .<methodName>(<arguments>)
 ```
 
 Used within a [`type`](#type) construct to specify a method requirement.
@@ -1297,7 +1297,7 @@ else {
 ### gather
 
 ```
-gather { [<take_statements>...] | [<other_statements>...] }
+gather { <statements> }
 ```
 
 Constructs a list by consolidating the provided expression values of each
