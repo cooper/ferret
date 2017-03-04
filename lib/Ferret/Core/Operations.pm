@@ -79,7 +79,7 @@ sub _do_operator {
     # type of object. just move on to the next operand. if not even one callback
     # was satisfied by the arguments, it will have ->failed.
     # consider: produce a warning?
-    print "WTF! ", $$next{first_error}->description, "\n" and
+    print "WTF! ", $$next{first_error}->description and
     return if $next->isa('Ferret::Return') && $next->failed;
 
     return $next;

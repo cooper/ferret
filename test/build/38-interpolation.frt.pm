@@ -2,6 +2,9 @@
 #  File './test/38-interpolation.frt'
 #      Package 'main'
 #          Instruction
+#              Load
+#                  Bareword 'String::Any'
+#          Instruction
 #              Assignment
 #                  Lexical variable '$name'
 #                  String 'Bob'
@@ -44,18 +47,19 @@ $result = do {
     my ( $file_scope, $context ) = get_context( $f, 'main' );
     my $scope = $file_scope;
     load_core('main');
-
-    var( $scope, name => str( $f, "Bob" ), undef, $pos->(1.2) );
+Ferret::inspect($context->f->main_context->property('String::Any'));
+    load_namespaces( $context, $file_name, 'String::Any' );
+    var( $scope, name => str( $f, "Bob" ), undef, $pos->(2.2) );
     $$scope->{'say'}->(
         [
             add(
-                $scope, $pos->(2.2),
+                $scope, $pos->(3.2),
                 str( $f, "Hello " ), $$scope->{'name'},
                 str( $f, "!" )
             )
         ],
         $scope, undef,
-        $pos->(2.1)
+        $pos->(3.1)
     );
 };
 

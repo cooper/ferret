@@ -183,7 +183,6 @@ sub space {
     @acceptable = grep defined, @acceptable;
     foreach my $space (@acceptable) {
         my $existing = $context->property($space);
-        print "found @acceptable -> $existing\n" if $existing;
         return $existing if $existing;
 
         # already tried this file

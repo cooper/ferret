@@ -238,12 +238,12 @@ sub _property {
 
     # try a different context.
     if (!$simple_only && index($prop_name, '::') != -1) {
-        my ($ctx, @more, %tried) = $borrow_obj;
-        while (my ($ctx_name, $rest) = $prop_name =~ m/^(.+?)::(.+)$/) {
-            ($ctx, @more) = $ctx->property($ctx_name);
+        my ($ctx, %tried) = $borrow_obj;
+        while ($prop_name =~ s/^(.+?):://) {
+            $ctx = $ctx->property($1);
             return if !$ctx || $tried{$ctx}++;
         }
-        return ($ctx, @more);
+        return $ctx->_property($prop_name);
     }
 
     # try inheritance.
