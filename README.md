@@ -1,6 +1,7 @@
 # Ferret
 
-Ferret is an evented, objective hobby programming language.
+Ferret is an [evented](https://github.com/cooper/evented-object), objective
+hobby programming language.
 
 ![Editor](http://i.imgur.com/0Ebp32e.png)
 
@@ -20,10 +21,6 @@ Ferret has many novel features, sometimes at the cost of considerable overhead.
 say("Hello World!")
 ```
 
-```perl
-$$scope->{'say'}->( [ str( $f, "Hello World!" ) ])
-```
-
 ### Interpretable
 
 While Ferret is a compiled language, its compiler and
@@ -33,7 +30,7 @@ Ferret to offers some features of interpreted languages such as compilation and
 evaluation during runtime.
 
 ```
-$code = "sqrt(4)"
+$code = "4.sqrt"
 $two = COMPILER($code).eval().result
 ```
 
@@ -135,15 +132,15 @@ files with `.frt`. Then [compile](#compiling).
 ### Compiling
 
 Compile with the `ferret` executable. It searches the current directory and all
-subdirectories for `.frt` files. See `./ferret -h` for all flags. The entire
-standard library is compiled like so:
+subdirectories for `.frt` files. Unchanged files are ignored. See `./ferret -h`
+for all flags. The entire standard library is compiled like so:
 
 ```sh
 ./ferret -pd
 ```
 
-After updating the repository, the compiler may have changed. You may want to
-run with the `-n` flag to force all files to recompile.
+After updating the repository, the compiler may have changed. You might want to
+run `ferret` with the `-n` flag to force all source files to recompile.
 
 ```sh
 ./ferret -pdn
