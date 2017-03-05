@@ -167,18 +167,13 @@
 #                                              Operation
 #                                                  Constant zero
 #                                                  Negation operator (-)
-#                                                  Single value [1 item]
-#                                                      Item 0
-#                                                          Operation
-#                                                              Property 'abs'
-#                                                                  Special variable '*self'
-#                                                              Exponent operator (^)
-#                                                              Single value [1 item]
-#                                                                  Item 0
-#                                                                      Operation
-#                                                                          Number '1'
-#                                                                          Division operator (/)
-#                                                                          Lexical variable '$root'
+#                                                  Call
+#                                                      Property 'root'
+#                                                          Property 'abs'
+#                                                              Special variable '*self'
+#                                                      Argument list [1 item]
+#                                                          Item 0
+#                                                              Lexical variable '$root'
 #                      Instruction
 #                          Return
 #                              Operation
@@ -560,16 +555,12 @@ $result = do {
                                 $scope,
                                 $pos->(78.1),
                                 $f->zero,
-                                pow(
-                                    $scope,
-                                    $pos->(78.3),
-                                    ${ $scope->{special} }->{'self'}
-                                      ->property_u( 'abs', $pos->(78.25) ),
-                                    div(
-                                        $scope, $pos->(78.45),
-                                        num( $f, "1" ), $$scope->{'root'}
-                                    )
-                                )
+                                ${ $scope->{special} }->{'self'}
+                                  ->property_u( 'abs',  $pos->(78.2) )
+                                  ->property_u( 'root', $pos->(78.25) )->(
+                                    [ $$scope->{'root'} ], $scope,
+                                    undef,                 $pos->(78.3)
+                                  )
                             )
                         );
                     }

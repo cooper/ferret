@@ -75,7 +75,7 @@ method root {
 
         # odd root, fixes things like (-2)^(1/3) returning nan
         else
-            return -(*self.abs ^ (1 / $root))
+            return -*self.abs.root($root)
 
     }
 
