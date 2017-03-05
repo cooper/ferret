@@ -112,8 +112,14 @@ sub handle_result {
 
     # error
     if ($ret->{error}) {
-        print $o->clean ? "CLEAN\n" : "ERROR\n";
-        push @errors, [ $file, $ret->{error}, $o->clean ];
+        print "ERROR\n";
+        push @errors, [ $file, $ret->{error} ];
+        return next_result;
+    }
+
+    # cleaned
+    if ($ret->{clean}) {
+        print "CLEAN\n";
         return next_result;
     }
 
@@ -144,9 +150,10 @@ sub finish {
         print "\n\n[ $file ]\n\n$msg\n";
     }
 
-    my $e = scalar(grep !$_->[2], @errors) || 'no';
+    my $e = scalar @errors || 'no';
     my $s = $e ne '1' ? 's' : '';
     print "\nCompilation completed with $e error$s.\n";
+    exit(@errors ? 1 : 0);
 }
 
 # returns {
@@ -198,7 +205,10 @@ sub do_file {
 
     # clean.
     if ($o->clean) {
-        return error($ret, $write_file, 'Clean');
+        error($ret, undef, $write_file, 'Clean');
+        delete $ret->{error};
+        $ret->{clean}++;
+        return $ret;
     }
 
     # open the output file.
