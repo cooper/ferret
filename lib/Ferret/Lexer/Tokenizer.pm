@@ -676,7 +676,7 @@ sub _tokenize {
         # transform function
         if (my $transform = $token->[3]) {
             for my $res ($transform->(@$token)) {
-                my $err = $do_tok->($res);
+                my ($err) = $do_tok->($res);
                 return $err if $err;
             }
             return;
@@ -710,7 +710,7 @@ sub _tokenize {
     };
 
     while (my $token = &$lexer) {
-        my $err = $do_tok->($token);
+        my ($err) = $do_tok->($token);
         return $err if $err;
         last if $last;
     }
