@@ -121,10 +121,10 @@ sub handle_result {
     print "OK\n";
 
     # show stuff
-    print "=== Tokenization ===\n$$ret{tokenization}\n"
-        if length $ret->{tokenization};
-    print "=== Document Model ===\n$$ret{construction}\n"
-        if length $ret->{construction};
+    # print "=== Tokenization ===\n$$ret{tokenization}\n"
+    #     if length $ret->{tokenization};
+    # print "=== Document Model ===\n$$ret{construction}\n"
+    #     if length $ret->{construction};
 
     return next_result;
 }
