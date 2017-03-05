@@ -84,25 +84,38 @@ func respondFactoid {
 
 #=== COMPILER INTERFACE ===
 
+# normal eval
 on $bot.commands.e {
     need $msg, $channel
-    handleEval($msg, $channel, false)
+    handleEval($msg, $channel)
 }
 
+# inspect eval, has more detail
 on $bot.commands.i {
     need $msg, $channel
     handleEval($msg, $channel, true)
 }
 
+# inherited inspect eval, has all the details, even inherited properties
+on $bot.commands.ii {
+    need $msg, $channel
+    handleEval($msg, $channel, true, true)
+}
+
 func handleEval {
-    need $msg, $channel, $detailed
+    need $msg, $channel
+    want $detailed, $veryDetailed
     $res = timeout(5) { -> COMPILER(getParameter($msg)).eval() }
     if $res.error {
         $channel.privmsg($res.error)
         return
     }
     $string = inspect(
-        value: $res.result, quiet: true, detailed: $detailed).string
+        value:      $res.result,
+        quiet:      true,
+        detailed:   $detailed,
+        ownOnly:    !$veryDetailed
+    ).string
     $channel.privmsg($string)
 }
 
