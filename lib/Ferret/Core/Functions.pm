@@ -74,17 +74,16 @@ sub _inspect {
     my ($self, $args, $call_scope, $scope, $ret) = @_;
     my $obj = $args->{value};
 
-    # use Object's ->description if detailed
-    my $code = $args->pbool('detailed')     ?
-        Ferret::Object->can('description')  :
-        Ferret::Core::Conversion->can('pdescription');
+    # options
+    my %opts;
+    $opts{no_method}++  if $args->pbool('detailed');
+    $opts{own_only}++   if $args->pbool('ownOnly');
+    $opts{compute}++    if $args->pbool('compute');
 
-    my $str = $code->(
-        $obj,
-        $args->pbool('ownOnly'),
-        $args->pbool('compute'),
-        1   # tells Object to use its own ->description
-    );
+    # call Object's description
+    my $str = $obj->Ferret::Object::description(%opts);
+
+    # print the results
     say $str unless $args->pbool('quiet');
 
     $ret->set_property(string => fstring($str));

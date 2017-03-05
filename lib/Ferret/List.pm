@@ -271,11 +271,12 @@ sub _copy {
 }
 
 sub description {
-    my ($list, $own_only) = @_;
+    my ($list, %opts) = @_;
 
     # handle indents
     my @values = map {
-        join "\n    ", split /\n/, pdescription($_, $own_only)
+        $opts{ignore}{$_}++ ? '(recursion)' :
+        join "\n    ", split /\n/, pdescription($_, %opts)
     } @{ $list->{list_items} };
 
     return "[]" if !@values;

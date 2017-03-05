@@ -54,7 +54,7 @@ sub update_position {
 }
 
 sub description {
-    my ($err) = &FUNC_V1;
+    my ($err, %opts) = @_;
     my ($type, $msg) = map $err->pstring($_), qw(type msg);
     my $fmt = "[$type] $msg";
 
@@ -69,6 +69,7 @@ sub description {
 
     # sub error
     if (my $sub_err = $err->property('subError')) {
+        return $fmt if $opts{ignore}{$sub_err}++;
         return "$fmt -> ".$sub_err->description;
     }
 

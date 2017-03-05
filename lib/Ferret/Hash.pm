@@ -154,11 +154,12 @@ sub _values {
 }
 
 sub description {
-    my ($hash, $own_only) = @_;
-    my @keys   = $hash->keys;
+    my ($hash, %opts) = @_;
+    my @keys = $hash->keys;
 
     my @values = map {
-        join "\n    ", split /\n/, pdescription($_, $own_only)
+        $opts{ignore}{$_}++ ? '(recursion)' :
+        join "\n    ", split /\n/, pdescription($_, %opts)
     } $hash->values;
 
     return "[:]" if !@keys;

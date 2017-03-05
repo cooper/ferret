@@ -353,7 +353,7 @@ sub _copy {
 
 # string surrounded by double quotes.
 sub description {
-    my ($str, $own_only) = @_;
+    my $str = shift;
     $str = q(").$str->{str_value}.q(");
     $str =~ s/\r\n|\r|\n/\x{2424}/g;
     return $str;

@@ -596,14 +596,30 @@ sub listeners_and_arguments {
 ### MISCELLANEOUS ###
 #####################
 
+# %opts = (
+#   own_only    true if we should omit inherited properties
+#   compute     true if we should compute computed properties
+#   no_method   true if we should NOT check the object for a description method
+#   ignore      hashref of objects to ignore, to prevent recursion
+# )
 sub description {
-    my ($obj, $own_only, $compute, $no_method, $ignore) = @_;
-
+    my ($obj, %opts) = @_;
     return 'undefined' if Ferret::undefined($obj);
     return 'true'      if $obj == Ferret::true;
     return 'false'     if $obj == Ferret::false;
 
-    # description method
+    # prepare options
+    $opts{ignore} ||= {};
+    $opts{ignore}{$obj}++;
+    my $no_method = delete $opts{no_method};
+
+    # Perl description method
+    my $code = $obj->can('description');
+    if (!$no_method && $code != __PACKAGE__->can('description')) {
+        return $code->($obj, %opts);
+    }
+
+    # Ferret description method
     if (!$no_method && !$obj->{is_proto} && !$obj->{is_special} and
       my $d_func = $obj->property('description')) {
         return _pstring($d_func->call);
@@ -616,7 +632,7 @@ sub description {
         # fetch value
         # if it's computed, it will return the arrayref or coderef.
         my ($value, $owner) =
-            $obj->_property($prop_name, undef, undef, !$compute, 1);
+            $obj->_property($prop_name, undef, undef, !$opts{compute}, 1);
 
         # skip other contexts
         if ($owner != $obj && $owner->isa('Ferret::Context')) {
@@ -625,7 +641,7 @@ sub description {
         }
 
         # skipping all inherited
-        if ($owner != $obj && $own_only) {
+        if ($owner != $obj && $opts{own_only}) {
             $skipped++;
             next;
         }
@@ -636,9 +652,9 @@ sub description {
         $prop_name = "($prop_name)" if $owner != $obj;
 
         # indent lines
-        $value = $ignore && $value == $ignore ? '(recursion)' :
+        $value = $opts{ignore}{$value}++ ? '(recursion)' :
             blessed $value ? join "\n    ", split /\n/,
-            _pdescription($value, $own_only, $compute, $obj) : '(computed)';
+            _pdescription($value, %opts) : '(computed)';
         $prop_str .= '    '.$prop_name." = $value\n";
 
     }

@@ -76,10 +76,9 @@ sub pstring {
 
 # return a perl object description.
 sub pdescription {
-    my ($val, $own_only, $compute, $ignore) = @_;
+    my $val = shift;
     return 'undefined' if !defined $val || !blessed $val;
-    return $val->description($own_only, $compute, undef, $ignore)
-        if $val->can('description');
+    return $val->Ferret::Object::description(@_);
 }
 
 ###############
