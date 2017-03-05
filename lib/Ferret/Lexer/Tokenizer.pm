@@ -11,8 +11,8 @@ use Ferret::Lexer::Rules;
 use Ferret::Lexer::Lexer qw(string_lexer);
 
 use JSON::XS;
-my $json = JSON::XS->new->allow_nonref(1);
-my ($position, $file);
+my $json = JSON::XS->new->allow_nonref;
+my ($position, $file, $nested);
 
 # keywords.
 # when changing this, update Keywords.md
@@ -194,6 +194,7 @@ sub possibly_call {
         $last ne 'KEYWORD_UNDEFINED'    &&
         $last ne 'KEYWORD_TRUE'         &&
         $last ne 'KEYWORD_FALSE'        &&
+        $last ne 'OP_CALL'              &&
         $last ne 'OP_MAYBE'             && $last =~ $_
     } qr/^OP_(.*)$/, qr/^KEYWORD.*$/;
 
@@ -346,7 +347,9 @@ sub tok_STR_REG {
         }
 
         my $code = "$$part{sigil}$$part{name}";
-        $parts[$i] = (_tokenize($code, undef, 1))[1];
+        $nested++;
+        $parts[$i] = (_tokenize($code))[1];
+        $nested--;
     }
 
     @parts = grep length, @parts;
@@ -606,15 +609,18 @@ sub tok_CLOSURE_S {
 
 sub tok_PROPERTY {
     my ($tokens, $value) = @_;
+    my $whitespace = $value =~ s/^\s+//;
 
-    # if it has whitespace, it's VAR_PROP.
-    if ($value =~ s/^\s+//) {
+    # can the previous item be a function value?
+    # if so, that's good enough for me to assume a property is valid
+    if (!$whitespace and $nested || possibly_call($tokens)) {
         $value = substr $value, 1;
-        return [ VAR_PROP => $value ];
+        return [ PROPERTY => $value ];
     }
 
+    # otherwise, property variable
     $value = substr $value, 1;
-    return [ PROPERTY => $value ];
+    return [ VAR_PROP => $value ];
 }
 
 sub tok_VAR_SPEC {
@@ -648,7 +654,7 @@ sub tokenize {
 }
 
 sub _tokenize {
-    my ($string, $_file, $inside) = @_;
+    my ($string, $_file) = @_;
     my $lexer = string_lexer($string, @token_formats);
     $file = $_file if length $_file;
     my @tokens;
@@ -716,7 +722,7 @@ sub _tokenize {
     }
 
     # if this is a string or something, don't do any of the below just yet.
-    return (undef, @tokens) if $inside;
+    return (undef, @tokens) if $nested;
 
     # split strings into multiple tokens.
     @tokens = handle_strings(@tokens);
