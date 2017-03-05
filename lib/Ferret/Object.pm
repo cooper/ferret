@@ -78,7 +78,7 @@ sub set_property {
     # special properties can never be assigned to from Ferret.
     if (substr($prop_name, 0, 1) eq '*') {
         throw(AssignmentToSpecialProperty => $pos, [
-            Object   => $obj->description,
+            Object   => $obj->description_ol,
             Property => $prop_name
         ], $prop_name);
     }
@@ -376,7 +376,7 @@ sub _check_prop_alteration {
     my ($obj, $prop_name, $pos) = @_;
     return 1 unless $obj->{ro_properties};
     throw(AlterationOfReadOnlyProperty => $pos, [
-        Object   => $obj->description,
+        Object   => $obj->description_ol,
         Property => $prop_name
     ], $prop_name);
 }

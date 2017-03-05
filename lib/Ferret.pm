@@ -130,7 +130,7 @@ sub get_context  {
     }
     continue {
         Ferret::Core::Errors::throw(ExtensionOfNonContext => $pos, [
-            Object => $c->description
+            Object => $c->description_ol
         ], $name, $full_name)
             if !$c->isa('Ferret::Context') && !$c->isa('Ferret::Class');
     }

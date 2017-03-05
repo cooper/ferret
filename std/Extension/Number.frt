@@ -26,6 +26,13 @@ prop sqrt {
     return NATIVE::Math.sqrt(*self)
 }
 
+#> square root of the number, returning a complex number if `n < 0`
+prop sqrti {
+    if *self < 0
+        return *self.abs.sqrt * i
+    return @sqrt
+}
+
 #> cube root of the number
 prop cbrt {
     return @root(3)
@@ -57,6 +64,15 @@ prop odd {
 method root {
     need $root: Num
     return *self ^ (1 / $root)
+}
+
+#> the Nth root of the number M, returning a complex number if `N` is even and
+#| `M < 0`.
+method rooti {
+    need $root: Num
+    if $root.even && *self < 0
+        return *self.abs.root($root) * i
+    return @root($root)
 }
 
 #> The number's factorial. This can also be written `N!`.
