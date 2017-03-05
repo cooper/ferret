@@ -85,7 +85,7 @@ sub markdown_fmt {
 
     # this must be called before calling ->markdown_fmt_do on children.
     my $pkg = $class->document->{package};
-    my $class_full_name = $pkg ? $pkg.'::'.$class->{name} : $class->{name};
+    my $class_full_name = $pkg ne 'main' ? $pkg.'::'.$class->{name} : $class->{name};
     my $head = $class->get_markdown_heading($class_full_name);
 
     # separate into parts.

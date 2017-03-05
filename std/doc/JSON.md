@@ -1,6 +1,6 @@
-# main::JSON
+# JSON
 
-This is the main::JSON class version 1.0.
+This is the JSON class version 1.0.
 
 Provides JSON serializing and deserializing, done correctly and fast.
 Based on [JSON::XS](http://search.cpan.org/perldoc?JSON%3A%3AXS).
@@ -203,7 +203,7 @@ In order to comply, the test object must be equal (according to the `==` [`OP_EQ
 * `:utf8` - Expects utf8-encoded input and outputs utf8.
 
 
-End of main::JSON class.
+End of JSON class.
 
 This file was generated automatically by the Ferret compiler from
 [JSON.frt](../JSON.frt).
