@@ -66,7 +66,7 @@ sub tokenize {
         eval { Ferret::Lexer::Tokenizer::tokenize("$code\n", '(input)') };
 
     # either it returned an error or an exception occurred
-    if (my $bad = $err ? (ref $err ? $$err : $err) : $@) {
+    if (my $bad = $err ? $$err : $@) {
         return ferror($bad, 'TokenizeError');
     }
 

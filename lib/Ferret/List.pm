@@ -26,7 +26,7 @@ my @methods = (
         prop => 1
     },
     insert => {
-        need => '$index:Num $item:T',
+        need => '$index:Num $value:T',
         code => \&_insert
     },
     splice => {
@@ -60,7 +60,7 @@ my @methods = (
         code => \&_item_method
     },
     unshift => {
-        need => '$item:T',
+        need => '$value:T',
         code => \&_item_method
     },
     push => {
@@ -103,7 +103,7 @@ sub init {
 sub _item_method {
     my ($func, $list, $args) = ($_[FUNC_FUNC], &FUNC_V1);
     my $code = $list->can($func->{event_name}) or return;
-    my $ret  = $code->($list, $args->{item});
+    my $ret  = $code->($list, $args->{value});
     return blessed $ret ? $ret : $list;
 }
 
@@ -170,7 +170,7 @@ sub insert {
 sub _insert {
     my ($list, $args) = &FUNC_V1;
     my $index = $args->pnumber('index');
-    $list->insert($index, $args->{item});
+    $list->insert($index, $args->{value});
     return $list;
 }
 
@@ -209,7 +209,7 @@ sub set_value {
 sub _set_value {
     my ($list, $args) = &FUNC_V1;
     my $index = $args->pnumber('index');
-    $list->set_value($index, $args->{item});
+    $list->set_value($index, $args->{value});
     return $list;
 }
 
