@@ -11,6 +11,7 @@ use Scalar::Util qw(blessed);
 use List::Util qw(sum product min max);
 use POSIX qw(ceil floor);
 
+use Ferret::Core::Errors qw(throw);
 use Ferret::Core::Conversion qw(
     fnumber pnumber plist flist fbool
     fsym flist_fromref fstring
@@ -126,9 +127,9 @@ sub _op_sub {
 # number divided by number
 sub _op_div {
     my ($num, $args) = &FUNC_V1;
-    my $rhs = $args->{rhs};
-    my $new_value = pnumber($num) / pnumber($rhs);
-    return fnumber($new_value);
+    my ($n, $m) = map pnumber($_), $num, $args->{rhs};
+    throw(ZeroDivision =>) if $m == 0;
+    return fnumber($n / $m);
 }
 
 # number times number

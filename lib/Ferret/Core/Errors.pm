@@ -86,6 +86,11 @@ our %errors = (
     # an exception occurred in native code (Perl die(), croak(), etc.)
     NativeCodeError => {
         message => "%s"
+    },
+
+    # divison by zero
+    ZeroDivision => {
+        message => "Illegal division by zero"
     }
 );
 
@@ -129,6 +134,7 @@ sub throw {
         push @$hints, Line => int $pos;
     }
 
+    $fmt .= 'Error';
     throw(Ferret::Core::Conversion::ferror($err, $fmt, @$hints));
 }
 
