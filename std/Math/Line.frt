@@ -20,13 +20,9 @@ prop endpoints {
 
 #> midpoint of the line segment
 prop midpoint {
-    return (@pt1, @pt2).midpoint()
+    return @pt1.midpoint(@pt2)
 }
 
 method description {
-    $mp  = @midpoint
-    $pox = @pt1.x;  $poy = @pt1.y
-    $ptx = @pt2.x;  $pty = @pt2.y
-    $mx  = $mp.x;   $my  = $mp.y
-    return "Segment( |($pox, $poy)---($mx, $my)---($ptx, $pty)| Length = @length )"
+    return "|(@pt1.x, @pt1.y)---(@pt2.x, @pt2.y)|"
 }

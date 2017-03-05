@@ -169,35 +169,35 @@
 #                      Instruction
 #                          Return
 #                              Operation
-#                                  String 'Rect( Origin('
-#                                  Addition operator (+)
-#                                  Property 'x'
-#                                      Lexical variable '$o'
-#                                  Addition operator (+)
-#                                  String ', '
-#                                  Addition operator (+)
-#                                  Property 'y'
-#                                      Lexical variable '$o'
-#                                  Addition operator (+)
-#                                  String ') Center('
-#                                  Addition operator (+)
-#                                  Property 'x'
-#                                      Lexical variable '$c'
-#                                  Addition operator (+)
-#                                  String ', '
-#                                  Addition operator (+)
-#                                  Property 'y'
-#                                      Lexical variable '$c'
-#                                  Addition operator (+)
-#                                  String ') Width = '
+#                                  String '[ '
 #                                  Addition operator (+)
 #                                  Instance variable '@width'
 #                                  Addition operator (+)
-#                                  String ' Height = '
+#                                  String 'x'
 #                                  Addition operator (+)
 #                                  Instance variable '@height'
 #                                  Addition operator (+)
-#                                  String ' )'
+#                                  String '; Origin('
+#                                  Addition operator (+)
+#                                  Property 'x'
+#                                      Lexical variable '$o'
+#                                  Addition operator (+)
+#                                  String ', '
+#                                  Addition operator (+)
+#                                  Property 'y'
+#                                      Lexical variable '$o'
+#                                  Addition operator (+)
+#                                  String '); Center('
+#                                  Addition operator (+)
+#                                  Property 'x'
+#                                      Lexical variable '$c'
+#                                  Addition operator (+)
+#                                  String ', '
+#                                  Addition operator (+)
+#                                  Property 'y'
+#                                      Lexical variable '$c'
+#                                  Addition operator (+)
+#                                  String ') ]'
 #          Include (Line, Num, Point)
 package FF;
 
@@ -498,19 +498,19 @@ $result = do {
                     add(
                         $scope,
                         $pos->(64.075),
-                        str( $f, "Rect( Origin(" ),
-                        $$scope->{'o'}->property_u( 'x', $pos->(64.125) ),
-                        str( $f, ", " ),
-                        $$scope->{'o'}->property_u( 'y', $pos->(64.25) ),
-                        str( $f, ") Center(" ),
-                        $$scope->{'c'}->property_u( 'x', $pos->(64.375) ),
-                        str( $f, ", " ),
-                        $$scope->{'c'}->property_u( 'y', $pos->(64.5) ),
-                        str( $f, ") Width = " ),
+                        str( $f, "[ " ),
                         $$self->{'width'},
-                        str( $f, " Height = " ),
+                        str( $f, "x" ),
                         $$self->{'height'},
-                        str( $f, " )" )
+                        str( $f, "; Origin(" ),
+                        $$scope->{'o'}->property_u( 'x', $pos->(64.325) ),
+                        str( $f, ", " ),
+                        $$scope->{'o'}->property_u( 'y', $pos->(64.45) ),
+                        str( $f, "); Center(" ),
+                        $$scope->{'c'}->property_u( 'x', $pos->(64.575) ),
+                        str( $f, ", " ),
+                        $$scope->{'c'}->property_u( 'y', $pos->(64.7) ),
+                        str( $f, ") ]" )
                     )
                 );
                 return $ret;

@@ -201,7 +201,7 @@ sub possibly_call {
     return if grep { $last eq $_ } qw(
         PAREN_S     PAREN_CALL
         BRACKET_S   BRACKET_IDX
-        CLOSURE_S
+        CLOSURE_S   PROP_VALUE
     );
 
     return 1;

@@ -39,80 +39,36 @@
 #                          Return
 #                              Call
 #                                  Property 'midpoint'
-#                                      Set [2 items]
-#                                          Item 0
-#                                              Instance variable '@pt1'
-#                                          Item 1
-#                                              Instance variable '@pt2'
-#                                  Argument list [0 items]
+#                                      Instance variable '@pt1'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Instance variable '@pt2'
 #              Method 'description' { -> $result }
 #                  Function body
 #                      Instruction
-#                          Assignment
-#                              Lexical variable '$mp'
-#                              Instance variable '@midpoint'
-#                      Instruction
-#                          Assignment
-#                              Lexical variable '$pox'
-#                              Property 'x'
-#                                  Instance variable '@pt1'
-#                      Instruction
-#                          Assignment
-#                              Lexical variable '$poy'
-#                              Property 'y'
-#                                  Instance variable '@pt1'
-#                      Instruction
-#                          Assignment
-#                              Lexical variable '$ptx'
-#                              Property 'x'
-#                                  Instance variable '@pt2'
-#                      Instruction
-#                          Assignment
-#                              Lexical variable '$pty'
-#                              Property 'y'
-#                                  Instance variable '@pt2'
-#                      Instruction
-#                          Assignment
-#                              Lexical variable '$mx'
-#                              Property 'x'
-#                                  Lexical variable '$mp'
-#                      Instruction
-#                          Assignment
-#                              Lexical variable '$my'
-#                              Property 'y'
-#                                  Lexical variable '$mp'
-#                      Instruction
 #                          Return
 #                              Operation
-#                                  String 'Segment( |('
+#                                  String '|('
 #                                  Addition operator (+)
-#                                  Lexical variable '$pox'
+#                                  Property 'x'
+#                                      Instance variable '@pt1'
 #                                  Addition operator (+)
 #                                  String ', '
 #                                  Addition operator (+)
-#                                  Lexical variable '$poy'
+#                                  Property 'y'
+#                                      Instance variable '@pt1'
 #                                  Addition operator (+)
 #                                  String ')---('
 #                                  Addition operator (+)
-#                                  Lexical variable '$mx'
+#                                  Property 'x'
+#                                      Instance variable '@pt2'
 #                                  Addition operator (+)
 #                                  String ', '
 #                                  Addition operator (+)
-#                                  Lexical variable '$my'
+#                                  Property 'y'
+#                                      Instance variable '@pt2'
 #                                  Addition operator (+)
-#                                  String ')---('
-#                                  Addition operator (+)
-#                                  Lexical variable '$ptx'
-#                                  Addition operator (+)
-#                                  String ', '
-#                                  Addition operator (+)
-#                                  Lexical variable '$pty'
-#                                  Addition operator (+)
-#                                  String ')| Length = '
-#                                  Addition operator (+)
-#                                  Instance variable '@length'
-#                                  Addition operator (+)
-#                                  String ' )'
+#                                  String ')|'
 #          Include (Point)
 package FF;
 
@@ -207,9 +163,8 @@ $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
-                    create_set( $scope, $$self->{'pt1'}, $$self->{'pt2'} )
-                      ->property_u( 'midpoint', $pos->(23.35) )
-                      ->( [ undef, [] ], $scope, undef, $pos->(23.4) ) );
+                    $$self->{'pt1'}->property_u( 'midpoint', $pos->(23.3) )
+                      ->( [ $$self->{'pt2'} ], $scope, undef, $pos->(23.4) ) );
                 return $ret;
             }
         );
@@ -221,52 +176,19 @@ $result = do {
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var(
-                    $scope,
-                    mp => $$self->{'midpoint'},
-                    $file_scope, $pos->(27.2)
-                );
-                var(
-                    $scope,
-                    pox => $$self->{'pt1'}->property_u( 'x', $pos->(28.2) ),
-                    $file_scope, $pos->(28.1)
-                );
-                var(
-                    $scope,
-                    poy => $$self->{'pt1'}->property_u( 'y', $pos->(28.45) ),
-                    $file_scope, $pos->(28.35)
-                );
-                var(
-                    $scope,
-                    ptx => $$self->{'pt2'}->property_u( 'x', $pos->(29.2) ),
-                    $file_scope, $pos->(29.1)
-                );
-                var(
-                    $scope,
-                    pty => $$self->{'pt2'}->property_u( 'y', $pos->(29.45) ),
-                    $file_scope, $pos->(29.35)
-                );
-                var(
-                    $scope,
-                    mx => $$scope->{'mp'}->property_u( 'x', $pos->(30.2) ),
-                    $file_scope, $pos->(30.1)
-                );
-                var(
-                    $scope,
-                    my => $$scope->{'mp'}->property_u( 'y', $pos->(30.45) ),
-                    $file_scope, $pos->(30.35)
-                );
                 return $ret_func->(
                     add(
-                        $scope, $pos->(31.075),
-                        str( $f, "Segment( |(" ),  $$scope->{'pox'},
-                        str( $f, ", " ),           $$scope->{'poy'},
-                        str( $f, ")---(" ),        $$scope->{'mx'},
-                        str( $f, ", " ),           $$scope->{'my'},
-                        str( $f, ")---(" ),        $$scope->{'ptx'},
-                        str( $f, ", " ),           $$scope->{'pty'},
-                        str( $f, ")| Length = " ), $$self->{'length'},
-                        str( $f, " )" )
+                        $scope,
+                        $pos->(27.1),
+                        str( $f, "|(" ),
+                        $$self->{'pt1'}->property_u( 'x', $pos->(27.16667) ),
+                        str( $f, ", " ),
+                        $$self->{'pt1'}->property_u( 'y', $pos->(27.33333) ),
+                        str( $f, ")---(" ),
+                        $$self->{'pt2'}->property_u( 'x', $pos->(27.5) ),
+                        str( $f, ", " ),
+                        $$self->{'pt2'}->property_u( 'y', $pos->(27.66667) ),
+                        str( $f, ")|" )
                     )
                 );
                 return $ret;
@@ -293,8 +215,8 @@ $result = do {
             $proto, $class, $ins, undef, undef
         );
     }
-    provides_namespaces( $context, $file_name, $pos->(32.1), qw(Line) );
-    load_namespaces( $context, $file_name, $pos->(32.1), qw(Point) );
+    provides_namespaces( $context, $file_name, $pos->(28.1), qw(Line) );
+    load_namespaces( $context, $file_name, $pos->(28.1), qw(Point) );
 };
 
 after_content($file_name);

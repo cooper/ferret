@@ -127,7 +127,7 @@ sub failed { shift->{failed} }
 sub description {
     my $obj = shift;
     return "[ No return ]" if !scalar $obj->properties(1);
-    return $obj->SUPER::description(@_);
+    return $obj->SUPER::description(@_, no_method => 1);
 }
 
 1
