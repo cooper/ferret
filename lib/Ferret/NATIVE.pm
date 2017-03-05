@@ -7,7 +7,8 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(fnumber fbool FUNC_ARGS);
+use Ferret::Core::Conversion qw(fnumber fstring fbool FUNC_ARGS);
+use File::Slurp qw(slurp);
 
 my @functions = (
     isa => {
@@ -21,6 +22,10 @@ my @functions = (
     ord => {
         need => '$char:Char',
         code => \&_ord
+    },
+    slurp => {
+        need => '$filePath:Str $encoding:File::Encoding',
+        code => \&_slurp
     }
 );
 
@@ -46,6 +51,22 @@ sub _bless {
 sub _ord {
     my $args = $_[FUNC_ARGS];
     return fnumber(ord $args->pstring('char'));
+}
+
+my %encoding = (
+    ':binary'   => ':raw',
+    ':utf8'     => ':utf8'
+);
+
+sub _slurp {
+    my $args = $_[FUNC_ARGS];
+    my $slurped = slurp(
+        $args->pstring('filePath'),
+        binmode => $args->pstring('encoding')
+    );
+    # FIXME, if binary, use something other than normal string, since normal
+    # strings are encoded in UTF-8
+    return fstring($slurped);
 }
 
 1

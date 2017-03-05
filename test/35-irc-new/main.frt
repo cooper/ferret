@@ -1,5 +1,13 @@
+$conf = Config::JSON2("config.json").parse()
+
 share $bot = IRC::Bot()
-share $conn = IRC::Connection(addr: "k.notroll.net", nick: "booby",  user: "ferret");
+
+share $conn = IRC::Connection(
+    addr: $conf["server"],
+    nick: $conf["nick"],
+    user: $conf["user"],
+    real: $conf["real"]
+) catch $e: throw $e;
 
 on $bot.commands.info {
     need $channel
@@ -153,6 +161,6 @@ on $conn.disconnected {
     }
 }
 
-$conn.autojoin = ["#k"]
+$conn.autojoin = $conf["autojoin"]
 $bot.addConnection($conn)
 $bot.connect()

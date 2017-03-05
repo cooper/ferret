@@ -476,7 +476,7 @@ sub _ferretize {
 
     # if it's blessed and we're allowing PerlObjects, use that.
     if (blessed $val && $create_perlobject) {
-        return Ferret::Native::PerlObject::_wrap($Ferret::ferret, $val);
+        return Ferret::NATIVE::PerlObject::_wrap($Ferret::ferret, $val);
     }
 
     # it's an array. convert to a list.

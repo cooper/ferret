@@ -1,0 +1,7 @@
+{
+	"server": "k.notroll.net",
+	"nick": "booby",
+	"user": "ferret",
+	"real": "Ferret IRC bot",
+	"autojoin": [ "#k" ]
+}
