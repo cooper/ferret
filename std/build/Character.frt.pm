@@ -47,7 +47,7 @@
 #                                          Bareword 'Error'
 #                                          Argument list [2 items]
 #                                              Item 0
-#                                                  Symbol :Unimplemented
+#                                                  Symbol :UnimplementedError
 #                                              Item 1
 #                                                  String 'not yet im...'
 #                      If
@@ -64,7 +64,7 @@
 #                                          Bareword 'Error'
 #                                          Argument list [2 items]
 #                                              Item 0
-#                                                  Symbol :InvalidConversion
+#                                                  Symbol :InvalidConversionError
 #                                              Item 1
 #                                                  String 'String of ...'
 #                      Instruction
@@ -174,7 +174,7 @@ $result = do {
                         $ret->fail(
                             $$scope->{'Error'}->(
                                 [
-                                    get_symbol( $f, 'Unimplemented' ),
+                                    get_symbol( $f, 'UnimplementedError' ),
                                     str( $f, "not yet implemented" )
                                 ],
                                 $scope, undef,
@@ -202,7 +202,7 @@ $result = do {
                         $ret->fail(
                             $$scope->{'Error'}->(
                                 [
-                                    get_symbol( $f, 'InvalidConversion' ),
+                                    get_symbol( $f, 'InvalidConversionError' ),
                                     str(
                                         $f,
                                         "String of length != cannot be Char"

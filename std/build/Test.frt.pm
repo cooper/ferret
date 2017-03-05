@@ -267,7 +267,7 @@
 #                                  Bareword 'Error'
 #                                  Argument list [2 items]
 #                                      Item 0
-#                                          Symbol :TestFailure
+#                                          Symbol :TestFailureError
 #                                      Item 1
 #                                          Lexical variable '$message'
 #                      If
@@ -736,7 +736,7 @@ $result = do {
                     $scope,
                     e => $$scope->{'Error'}->(
                         [
-                            get_symbol( $f, 'TestFailure' ),
+                            get_symbol( $f, 'TestFailureError' ),
                             $$scope->{'message'}
                         ],
                         $scope, undef,

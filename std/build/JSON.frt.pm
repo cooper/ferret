@@ -96,7 +96,7 @@
 #                                              Bareword 'Error'
 #                                              Mixed argument list [3 items]
 #                                                  Item 0
-#                                                      Symbol :PerlRequireFailed
+#                                                      Symbol :PerlRequireError
 #                                                  Item 1
 #                                                      String 'Unable to ...'
 #                                                  Item 2
@@ -120,7 +120,7 @@
 #                                              Bareword 'Error'
 #                                              Mixed argument list [3 items]
 #                                                  Item 0
-#                                                      Symbol :PerlConstructorFailed
+#                                                      Symbol :PerlConstructorError
 #                                                  Item 1
 #                                                      String 'Could not ...'
 #                                                  Item 2
@@ -494,7 +494,7 @@ $result = do {
                             $ret->fail(
                                 $$scope->{'Error'}->(
                                     [
-                                        get_symbol( $f, 'PerlRequireFailed' ),
+                                        get_symbol( $f, 'PerlRequireError' ),
                                         str( $f, "Unable to load JSON::XS" ),
                                         [ subError => $$scope->{'err'} ]
                                     ],
@@ -525,7 +525,7 @@ $result = do {
                                 $$scope->{'Error'}->(
                                     [
                                         get_symbol(
-                                            $f, 'PerlConstructorFailed'
+                                            $f, 'PerlConstructorError'
                                         ),
                                         str(
                                             $f,

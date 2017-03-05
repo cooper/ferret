@@ -93,7 +93,7 @@ method _test {
     }
 
     # it failed. stop now if this should be fatal
-    $e = Error(:TestFailure, $message)
+    $e = Error(:TestFailureError, $message)
     if @fatal
         throw $e
 
