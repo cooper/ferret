@@ -33,6 +33,22 @@
 #                          Bareword 'Integer'
 #              Computed property 'sqrt' { -> $result }
 #                  Function body
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Special variable '*self'
+#                                  Less than operator (<)
+#                                  Number '0'
+#                          If body
+#                              Instruction
+#                                  Throw (fatal exception)
+#                                      Call
+#                                          Bareword 'Error'
+#                                          Argument list [2 items]
+#                                              Item 0
+#                                                  Symbol :DomainError
+#                                              Item 1
+#                                                  String 'Cannot tak...'
 #                      Instruction
 #                          Return
 #                              Call
@@ -116,13 +132,53 @@
 #                                  Number '2'
 #                                  Negated equality operator (!=)
 #                                  Number '0'
-#              Method 'root' { $root:Num -> $result }
+#              Method 'root' { $root:Num -> $result $result }
 #                  Function body
 #                      Instruction
 #                          Need
 #                              Lexical variable '$root'
 #                              Argument type
 #                                  Bareword 'Num'
+#                      If
+#                          Expression ('if' parameter)
+#                              Operation
+#                                  Special variable '*self'
+#                                  Less than operator (<)
+#                                  Number '0'
+#                          If body
+#                              If
+#                                  Expression ('if' parameter)
+#                                      Property 'even'
+#                                          Lexical variable '$root'
+#                                  If body
+#                                      Instruction
+#                                          Throw (fatal exception)
+#                                              Call
+#                                                  Bareword 'Error'
+#                                                  Argument list [2 items]
+#                                                      Item 0
+#                                                          Symbol :DomainError
+#                                                      Item 1
+#                                                          String 'Cannot tak...'
+#                              Else
+#                                  Else body
+#                                      Instruction
+#                                          Return
+#                                              Operation
+#                                                  Constant zero
+#                                                  Negation operator (-)
+#                                                  Single value [1 item]
+#                                                      Item 0
+#                                                          Operation
+#                                                              Property 'abs'
+#                                                                  Special variable '*self'
+#                                                              Exponent operator (^)
+#                                                              Single value [1 item]
+#                                                                  Item 0
+#                                                                      Operation
+#                                                                          Number '1'
+#                                                                          Division operator (/)
+#                                                                          Lexical variable '$root'
 #                      Instruction
 #                          Return
 #                              Operation
@@ -240,7 +296,7 @@
 #                  Assignment
 #                      Bareword 'NaN'
 #                      Bareword 'Num::NaN'
-#          Include (Inf, Int, Integer, NATIVE::Math, NaN, Num, Num::Inf, Num::Int, Num::NaN)
+#          Include (Error, Inf, Int, Integer, NATIVE::Math, NaN, Num, Num::Inf, Num::Int, Num::NaN)
 package FF;
 
 use warnings;
@@ -281,11 +337,39 @@ $result = do {
             $f, $scope, 'sqrt', undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
+                if (
+                    bool(
+                        less(
+                            $scope, $pos->(26.3),
+                            ${ $scope->{special} }->{'self'}, num( $f, "0" )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    return $ret_func->(
+                        $ret->throw(
+                            $$scope->{'Error'}->(
+                                [
+                                    get_symbol( $f, 'DomainError' ),
+                                    str(
+                                        $f,
+"Cannot take even root of negative number"
+                                    )
+                                ],
+                                $scope, undef,
+                                $pos->(27.3)
+                            ),
+                            $pos->(27.1)
+                        )
+                    );
+                }
                 return $ret_func->(
                     $$scope->{'NATIVE::Math'}
-                      ->property_u( 'sqrt', $pos->(26.25) )->(
+                      ->property_u( 'sqrt', $pos->(28.25) )->(
                         [ ${ $scope->{special} }->{'self'} ], $scope,
-                        undef,                                $pos->(26.3)
+                        undef,                                $pos->(28.3)
                       )
                 );
                 return $ret;
@@ -300,7 +384,7 @@ $result = do {
                 if (
                     bool(
                         less(
-                            $scope, $pos->(31.3),
+                            $scope, $pos->(33.3),
                             ${ $scope->{special} }->{'self'}, num( $f, "0" )
                         )
                     )
@@ -311,10 +395,10 @@ $result = do {
                     return $ret_func->(
                         mul(
                             $scope,
-                            $pos->(32.5),
+                            $pos->(34.5),
                             ${ $scope->{special} }->{'self'}
-                              ->property_u( 'abs',  $pos->(32.3) )
-                              ->property_u( 'sqrt', $pos->(32.4) ),
+                              ->property_u( 'abs',  $pos->(34.3) )
+                              ->property_u( 'sqrt', $pos->(34.4) ),
                             num( $f, "i" )
                         )
                     );
@@ -330,7 +414,7 @@ $result = do {
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->( $$self->{'root'}
-                      ->( [ num( $f, "3" ) ], $scope, undef, $pos->(38.3) ) );
+                      ->( [ num( $f, "3" ) ], $scope, undef, $pos->(40.3) ) );
                 return $ret;
             }
         );
@@ -342,7 +426,7 @@ $result = do {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
                 return $ret_func->(
                     pow(
-                        $scope, $pos->(43.3),
+                        $scope, $pos->(45.3),
                         ${ $scope->{special} }->{'self'}, num( $f, "2" )
                     )
                 );
@@ -358,7 +442,7 @@ $result = do {
                 if (
                     bool(
                         less(
-                            $scope, $pos->(48.3),
+                            $scope, $pos->(50.3),
                             ${ $scope->{special} }->{'self'}, num( $f, "0" )
                         )
                     )
@@ -368,7 +452,7 @@ $result = do {
 
                     return $ret_func->(
                         _sub(
-                            $scope,   $pos->(49.2),
+                            $scope,   $pos->(51.2),
                             $f->zero, ${ $scope->{special} }->{'self'}
                         )
                     );
@@ -386,9 +470,9 @@ $result = do {
                 return $ret_func->(
                     equal(
                         $scope,
-                        $pos->(55.3),
+                        $pos->(57.3),
                         mod(
-                            $scope, $pos->(55.3),
+                            $scope, $pos->(57.3),
                             ${ $scope->{special} }->{'self'}, num( $f, "2" )
                         ),
                         num( $f, "0" )
@@ -406,9 +490,9 @@ $result = do {
                 return $ret_func->(
                     nequal(
                         $scope,
-                        $pos->(60.3),
+                        $pos->(62.3),
                         mod(
-                            $scope, $pos->(60.3),
+                            $scope, $pos->(62.3),
                             ${ $scope->{special} }->{'self'}, num( $f, "2" )
                         ),
                         num( $f, "0" )
@@ -432,14 +516,71 @@ $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'root', 65.2 ) || return $ret_func->();
+                need( $scope, $args, 'root', 67.2 ) || return $ret_func->();
+                if (
+                    bool(
+                        less(
+                            $scope, $pos->(70.3),
+                            ${ $scope->{special} }->{'self'}, num( $f, "0" )
+                        )
+                    )
+                  )
+                {
+                    my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                    if (
+                        bool(
+                            $$scope->{'root'}
+                              ->property_u( 'even', $pos->(73.3) )
+                        )
+                      )
+                    {
+                        my $scope = Ferret::Scope->new( $f, parent => $scope );
+
+                        return $ret_func->(
+                            $ret->throw(
+                                $$scope->{'Error'}->(
+                                    [
+                                        get_symbol( $f, 'DomainError' ),
+                                        str(
+                                            $f,
+"Cannot take even root of negative number"
+                                        )
+                                    ],
+                                    $scope, undef,
+                                    $pos->(74.3)
+                                ),
+                                $pos->(74.1)
+                            )
+                        );
+                    }
+                    else {
+                        return $ret_func->(
+                            _sub(
+                                $scope,
+                                $pos->(78.1),
+                                $f->zero,
+                                pow(
+                                    $scope,
+                                    $pos->(78.3),
+                                    ${ $scope->{special} }->{'self'}
+                                      ->property_u( 'abs', $pos->(78.25) ),
+                                    div(
+                                        $scope, $pos->(78.45),
+                                        num( $f, "1" ), $$scope->{'root'}
+                                    )
+                                )
+                            )
+                        );
+                    }
+                }
                 return $ret_func->(
                     pow(
                         $scope,
-                        $pos->(66.15),
+                        $pos->(83.15),
                         ${ $scope->{special} }->{'self'},
                         div(
-                            $scope, $pos->(66.3),
+                            $scope, $pos->(83.3),
                             num( $f, "1" ), $$scope->{'root'}
                         )
                     )
@@ -462,19 +603,19 @@ $result = do {
             undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                need( $scope, $args, 'root', 72.2 ) || return $ret_func->();
+                need( $scope, $args, 'root', 89.2 ) || return $ret_func->();
                 if (
                     bool(
                         all_true(
                             $scope,
-                            $pos->(73.4),
+                            $pos->(90.4),
                             sub {
                                 $$scope->{'root'}
-                                  ->property_u( 'even', $pos->(73.3) );
+                                  ->property_u( 'even', $pos->(90.3) );
                             },
                             sub {
                                 less(
-                                    $scope, $pos->(73.4),
+                                    $scope, $pos->(90.4),
                                     ${ $scope->{special} }->{'self'},
                                     num( $f, "0" )
                                 );
@@ -488,19 +629,19 @@ $result = do {
                     return $ret_func->(
                         mul(
                             $scope,
-                            $pos->(74.4),
+                            $pos->(91.4),
                             ${ $scope->{special} }->{'self'}
-                              ->property_u( 'abs',  $pos->(74.15) )
-                              ->property_u( 'root', $pos->(74.2) )->(
+                              ->property_u( 'abs',  $pos->(91.15) )
+                              ->property_u( 'root', $pos->(91.2) )->(
                                 [ $$scope->{'root'} ], $scope,
-                                undef,                 $pos->(74.25)
+                                undef,                 $pos->(91.25)
                               ),
                             num( $f, "i" )
                         )
                     );
                 }
                 return $ret_func->( $$self->{'root'}
-                      ->( [ $$scope->{'root'} ], $scope, undef, $pos->(75.3) )
+                      ->( [ $$scope->{'root'} ], $scope, undef, $pos->(92.3) )
                 );
                 return $ret;
             }
@@ -513,11 +654,11 @@ $result = do {
             undef, undef,
             sub {
                 my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-                var( $scope, new => num( $f, "1" ), $file_scope, $pos->(80.2) );
+                var( $scope, new => num( $f, "1" ), $file_scope, $pos->(97.2) );
                 if (
                     bool(
                         less(
-                            $scope, $pos->(81.3),
+                            $scope, $pos->(98.3),
                             ${ $scope->{special} }->{'self'}, num( $f, "2" )
                         )
                     )
@@ -531,7 +672,7 @@ $result = do {
                     my ( $loop_status, $loop_ret ) = iterate(
                         $f, $scope,
                         range(
-                            $scope, $pos->(83.5),
+                            $scope, $pos->(100.5),
                             ${ $scope->{special} }->{'self'}, num( $f, "2" )
                         ),
                         'i',
@@ -540,14 +681,14 @@ $result = do {
                             var(
                                 $scope,
                                 new => mul(
-                                    $scope,           $pos->(84.2),
+                                    $scope,           $pos->(101.2),
                                     $$scope->{'new'}, $$scope->{'i'}
                                 ),
                                 $file_scope,
-                                $pos->(84.2)
+                                $pos->(101.2)
                             );
                         },
-                        $pos->(83.1)
+                        $pos->(100.1)
                     );
                     return $ret_func->($loop_ret) if $loop_status eq 'return';
                 }
@@ -660,23 +801,24 @@ $result = do {
         var(
             $class,
             Inf => $$scope->{'Num'}
-              ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(94.5) ),
-            undef, $pos->(94.3)
+              ->( [ str( $f, "inf" ) ], $scope, undef, $pos->(111.5) ),
+            undef, $pos->(111.3)
         );
         var(
             $class,
             NaN => $$scope->{'Num'}
-              ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(97.5) ),
-            undef, $pos->(97.3)
+              ->( [ str( $f, "nan" ) ], $scope, undef, $pos->(114.5) ),
+            undef, $pos->(114.3)
         );
     }
-    provides_namespaces( $context, $file_name, $pos->(105.7),
+    provides_namespaces( $context, $file_name, $pos->(122.7),
         qw(Even Inf Int Integer NaN Number Odd) );
-    load_namespaces( $context, $file_name, $pos->(105.7),
-        qw(Inf Int Integer NATIVE::Math NaN Num Num::Inf Num::Int Num::NaN) );
-    $context->set_property( Int => $$scope->{'Num::Int'}, $pos->(103.3) );
-    $context->set_property( Inf => $$scope->{'Num::Inf'}, $pos->(104.3) );
-    $context->set_property( NaN => $$scope->{'Num::NaN'}, $pos->(105.3) );
+    load_namespaces( $context, $file_name, $pos->(122.7),
+        qw(Error Inf Int Integer NATIVE::Math NaN Num Num::Inf Num::Int Num::NaN)
+    );
+    $context->set_property( Int => $$scope->{'Num::Int'}, $pos->(120.3) );
+    $context->set_property( Inf => $$scope->{'Num::Inf'}, $pos->(121.3) );
+    $context->set_property( NaN => $$scope->{'Num::NaN'}, $pos->(122.3) );
 };
 
 after_content($file_name);

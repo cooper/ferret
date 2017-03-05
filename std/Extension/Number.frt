@@ -23,10 +23,12 @@ alias Int = Integer
 
 #> square root of the number
 prop sqrt {
+    if *self < 0
+        throw Error(:DomainError, "Cannot take even root of negative number")
     return NATIVE::Math.sqrt(*self)
 }
 
-#> square root of the number, returning a complex number if `n < 0`
+#> square root of the number, returning a complex number if `N < 0`
 prop sqrti {
     if *self < 0
         return *self.abs.sqrt * i
@@ -63,6 +65,21 @@ prop odd {
 #> the Nth root of the number
 method root {
     need $root: Num
+
+    # negative number
+    if *self < 0 {
+
+        # even root, not supported
+        if $root.even
+            throw Error(:DomainError, "Cannot take even root of negative number")
+
+        # odd root, fixes things like (-2)^(1/3) returning nan
+        else
+            return -(*self.abs ^ (1 / $root))
+
+    }
+
+    # non-negative number
     return *self ^ (1 / $root)
 }
 
