@@ -150,9 +150,10 @@ sub get_class {
         $context = $f->main_context;
     }
 
-    # return space($context, undef, 1, $class_name);
-
     my ($class, $owner) = $context->_property($class_name);
+    space($context, undef, undef, undef, $class_name) if !$class;
+    ($class, $owner) = $context->_property($class_name);
+
     return unless $class && $class->isa('Ferret::Class');
 
     # if the context owns the class, use it.
@@ -214,7 +215,7 @@ sub space {
 
     # otherwise store it for the after_content() check
     push @{ $context->f->{pending_spaces}{$file_name} ||= [] },
-        [ $context, @acceptable ];
+        [ $context, @acceptable ] if defined $file_name;
 }
 
 sub check_spaces {
