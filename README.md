@@ -108,8 +108,8 @@ Make sure that all users have read permission.
 sudo chmod 755 /etc/ferret.conf
 ```
 
-After that, try running the compiler from the repository root directory
-(which recompiles the standard library) to verify that all is working.
+After that, try running the compiler from the repository root directory to
+compile the standard library.
 
 ```sh
 ./ferret -pdn
