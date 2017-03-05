@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Evented::Object;
+use Evented::Object::Hax;
 use Scalar::Util qw(reftype refaddr weaken blessed);
 use Ferret::Core::Conversion qw(perlize pargs ferretize ffunction_smart ferror);
 

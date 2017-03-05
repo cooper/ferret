@@ -1,5 +1,9 @@
 $conf = Config::JSON2("config.json").parse()
 
+# after parsing config, get rid of File and NATIVE.slurp
+delete NATIVE.mainContext.File
+delete NATIVE.slurp
+
 share $bot = IRC::Bot()
 
 share $conn = IRC::Connection(
@@ -90,16 +94,9 @@ on $bot.commands.i {
     handleEval($msg, $channel, true)
 }
 
-$safeEvalPrefix = "
-package SafeEval
-\$NATIVE = undefined
-\$File = undefined
-"
-
 func handleEval {
     need $msg, $channel, $detailed
-    $code = $safeEvalPrefix + getParameter($msg)
-    $res = timeout(5) { -> COMPILER($code).eval() }
+    $res = timeout(5) { -> COMPILER(getParameter($msg)).eval() }
     if $res.error {
         $channel.privmsg($res.error)
         return
