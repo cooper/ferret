@@ -47,11 +47,12 @@ my ($o, $usage) = describe_options(
 print($usage->text) and exit if $o->help;
 
 my (
-    $loop,      # IO::Async::Loop
-    $function,  # IO::Async compile function
-    $pending,   # number of files in progress
-    @errors,    # postponed errors
-    %done       # files already done
+    $loop,          # IO::Async::Loop
+    $function,      # IO::Async compile function
+    $pending,       # number of files in progress
+    $not_skipped,   # number of files that were NOT skipped
+    @errors,        # postponed errors
+    %done           # files already done
 );
 
 # find the files.
@@ -89,45 +90,53 @@ sub async_do_file {
     );
 }
 
+sub next_result () {
+    finish() if !--$pending;
+}
+
 sub handle_result {
     my ($file, $status, $ret) = @_;
+
+    # skipped
+    return next_result if $ret && $ret->{skipped};
+    $not_skipped++;
+
     print "[ $file ] " if !$o->synchronous;
 
-    # bad status
+    # bad exit status
     if ($status eq 'error') {
         print "ERROR\n";
         push @errors, [ $file, 'Process exited prematurely' ];
+        return next_result;
     }
 
-    # skipped.
-    elsif ($ret->{skipped}) {
-        print "SKIP\n";
-    }
-
-    # error.
-    elsif ($ret->{error}) {
+    # error
+    if ($ret->{error}) {
         print $o->clean ? "CLEAN\n" : "ERROR\n";
         push @errors, [ $file, $ret->{error}, $o->clean ];
+        return next_result;
     }
 
     # good status
-    else {
-        print "OK\n";
-    }
+    print "OK\n";
 
     # show stuff
-    if ($status ne 'error') {
-        print "=== Tokenization ===\n$$ret{tokenization}\n"
-            if length $ret->{tokenization};
-        print "=== Document Model ===\n$$ret{construction}\n"
-            if length $ret->{construction};
-    }
+    print "=== Tokenization ===\n$$ret{tokenization}\n"
+        if length $ret->{tokenization};
+    print "=== Document Model ===\n$$ret{construction}\n"
+        if length $ret->{construction};
 
-    finish() if !--$pending;
+    return next_result;
 }
 
 sub finish {
     $loop->stop if $loop;
+
+    # all skipped
+    unless ($not_skipped) {
+        print "No changes. Use $0 -n to force rebuild.\n";
+        return;
+    }
 
     # show errors
     foreach my $error (@errors) {
