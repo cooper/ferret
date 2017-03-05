@@ -447,6 +447,10 @@
 #                                      Lexical variable '$channel'
 #                                  Item 2
 #                                      Boolean true
+#          Instruction
+#              Assignment
+#                  Lexical variable '$safeEvalPrefix'
+#                  String '␤package S...'
 #          Function 'handleEval' { $msg $channel $detailed -> $result }
 #              Function body
 #                  Instruction
@@ -458,6 +462,17 @@
 #                  Instruction
 #                      Need
 #                          Lexical variable '$detailed'
+#                  Instruction
+#                      Assignment
+#                          Lexical variable '$code'
+#                          Operation
+#                              Lexical variable '$safeEvalPrefix'
+#                              Addition operator (+)
+#                              Call
+#                                  Bareword 'getParameter'
+#                                  Argument list [1 item]
+#                                      Item 0
+#                                          Lexical variable '$msg'
 #                  Instruction
 #                      Assignment
 #                          Lexical variable '$res'
@@ -477,11 +492,7 @@
 #                                                                  Bareword 'COMPILER'
 #                                                                  Argument list [1 item]
 #                                                                      Item 0
-#                                                                          Call
-#                                                                              Bareword 'getParameter'
-#                                                                              Argument list [1 item]
-#                                                                                  Item 0
-#                                                                                      Lexical variable '$msg'
+#                                                                          Lexical variable '$code'
 #                                                          Argument list [0 items]
 #                  If
 #                      Expression ('if' parameter)
@@ -952,19 +963,10 @@ $result = do {
         $f, undef, undef, undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            return $ret_func->(
-                $$scope->{'COMPILER'}->(
-                    [
-                        $$scope->{'getParameter'}->(
-                            [ $$scope->{'msg'} ], $scope,
-                            undef,                $pos->(95.4)
-                        )
-                    ],
-                    $scope, undef,
-                    $pos->(95.33333)
-                  )->property_u( 'eval', $pos->(95.53333) )
-                  ->( [ undef, [] ], $scope, undef, $pos->(95.56667) )
-            );
+            return $ret_func->( $$scope->{'COMPILER'}
+                  ->( [ $$scope->{'code'} ], $scope, undef, $pos->(102.5) )
+                  ->property_u( 'eval', $pos->(102.65) )
+                  ->( [ undef, [] ], $scope, undef, $pos->(102.7) ) );
             return $ret;
         }
     );
@@ -992,9 +994,21 @@ $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',      94.2 ) || return $ret_func->();
-            need( $scope, $args, 'channel',  94.4 ) || return $ret_func->();
-            need( $scope, $args, 'detailed', 94.6 ) || return $ret_func->();
+            need( $scope, $args, 'msg',      100.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel',  100.4 ) || return $ret_func->();
+            need( $scope, $args, 'detailed', 100.6 ) || return $ret_func->();
+            var(
+                $scope,
+                code => add(
+                    $scope,
+                    $pos->(101.2),
+                    $$scope->{'safeEvalPrefix'},
+                    $$scope->{'getParameter'}
+                      ->( [ $$scope->{'msg'} ], $scope, undef, $pos->(101.3) )
+                ),
+                $file_scope,
+                $pos->(101.1)
+            );
             var(
                 $scope,
                 res => $$scope->{'timeout'}->(
@@ -1006,18 +1020,19 @@ $result = do {
                         )
                     ],
                     $scope, undef,
-                    $pos->(95.13333)
+                    $pos->(102.2)
                 ),
                 $file_scope,
-                $pos->(95.06667)
+                $pos->(102.1)
             );
-            if ( bool( $$scope->{'res'}->property_u( 'error', $pos->(96.3) ) ) )
+            if (
+                bool( $$scope->{'res'}->property_u( 'error', $pos->(103.3) ) ) )
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $$scope->{'channel'}->property_u( 'privmsg', $pos->(97.2) )->(
-                    [ $$scope->{'res'}->property_u( 'error', $pos->(97.5) ) ],
-                    $scope, undef, $pos->(97.3)
+                $$scope->{'channel'}->property_u( 'privmsg', $pos->(104.2) )->(
+                    [ $$scope->{'res'}->property_u( 'error', $pos->(104.5) ) ],
+                    $scope, undef, $pos->(104.3)
                 );
                 return $ret_func->();
             }
@@ -1028,19 +1043,19 @@ $result = do {
                         undef,
                         [
                             value => $$scope->{'res'}
-                              ->property_u( 'result', $pos->(101.15) ),
+                              ->property_u( 'result', $pos->(108.15) ),
                             quiet    => $true,
                             detailed => $$scope->{'detailed'}
                         ]
                     ],
                     $scope, undef,
-                    $pos->(100.4)
-                  )->property_u( 'string', $pos->(101.55) ),
+                    $pos->(107.4)
+                  )->property_u( 'string', $pos->(108.55) ),
                 $file_scope,
-                $pos->(100.2)
+                $pos->(107.2)
             );
-            $$scope->{'channel'}->property_u( 'privmsg', $pos->(102.2) )
-              ->( [ $$scope->{'string'} ], $scope, undef, $pos->(102.3) );
+            $$scope->{'channel'}->property_u( 'privmsg', $pos->(109.2) )
+              ->( [ $$scope->{'string'} ], $scope, undef, $pos->(109.3) );
             return $ret;
         }
     );
@@ -1063,41 +1078,41 @@ $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     136.2 ) || return $ret_func->();
-            need( $scope, $args, 'channel', 136.4 ) || return $ret_func->();
-            need( $scope, $args, 'mini',    136.6 ) || return $ret_func->();
+            need( $scope, $args, 'msg',     143.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 143.4 ) || return $ret_func->();
+            need( $scope, $args, 'mini',    143.6 ) || return $ret_func->();
             var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
                         $$scope->{'getParameter'}->(
                             [ $$scope->{'msg'} ], $scope,
-                            undef,                $pos->(137.3)
+                            undef,                $pos->(144.3)
                         )
                     ],
                     $scope, undef,
-                    $pos->(137.2)
-                  )->property_u( 'compile', $pos->(137.5) )->(
+                    $pos->(144.2)
+                  )->property_u( 'compile', $pos->(144.5) )->(
                     [ undef, [ mini => $$scope->{'mini'} ] ], $scope,
-                    undef, $pos->(137.55)
+                    undef, $pos->(144.55)
                   ),
                 $file_scope,
-                $pos->(137.1)
+                $pos->(144.1)
             );
             if (
-                bool( $$scope->{'res'}->property_u( 'error', $pos->(138.3) ) ) )
+                bool( $$scope->{'res'}->property_u( 'error', $pos->(145.3) ) ) )
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $$scope->{'channel'}->property_u( 'privmsg', $pos->(139.2) )->(
-                    [ $$scope->{'res'}->property_u( 'error', $pos->(139.5) ) ],
-                    $scope, undef, $pos->(139.3)
+                $$scope->{'channel'}->property_u( 'privmsg', $pos->(146.2) )->(
+                    [ $$scope->{'res'}->property_u( 'error', $pos->(146.5) ) ],
+                    $scope, undef, $pos->(146.3)
                 );
                 return $ret_func->();
             }
-            $$scope->{'channel'}->property_u( 'privmsg', $pos->(142.2) )->(
-                [ $$scope->{'res'}->property_u( 'perl', $pos->(142.5) ) ],
-                $scope, undef, $pos->(142.3)
+            $$scope->{'channel'}->property_u( 'privmsg', $pos->(149.2) )->(
+                [ $$scope->{'res'}->property_u( 'perl', $pos->(149.5) ) ],
+                $scope, undef, $pos->(149.3)
             );
             return $ret;
         }
@@ -1119,31 +1134,31 @@ $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg', 146.2 ) || return $ret_func->();
+            need( $scope, $args, 'msg', 153.2 ) || return $ret_func->();
             var(
                 $scope,
                 string => any_true(
                     $scope,
-                    $pos->(147.6),
+                    $pos->(154.6),
                     sub {
-                        $$scope->{'msg'}->property_u( 'params', $pos->(147.2) )
+                        $$scope->{'msg'}->property_u( 'params', $pos->(154.2) )
                           ->get_index_value( [ num( $f, "1" ) ],
-                            $scope, $pos->(147.25) )
-                          ->property_u( 'fromWord', $pos->(147.4) )->(
+                            $scope, $pos->(154.25) )
+                          ->property_u( 'fromWord', $pos->(154.4) )->(
                             [ num( $f, "1" ) ],
-                            $scope, undef, $pos->(147.45)
+                            $scope, undef, $pos->(154.45)
                           );
                     },
                     sub { str( $f, "" ) }
                 ),
                 $file_scope,
-                $pos->(147.1)
+                $pos->(154.1)
             );
             return $ret_func->(
-                $$scope->{'string'}->property_u( 'split', $pos->(148.15) )
-                  ->( [ str( $f, "_NL_" ) ], $scope, undef, $pos->(148.2) )
-                  ->property_u( 'join', $pos->(148.35) )
-                  ->( [ str( $f, "\n" ) ], $scope, undef, $pos->(148.4) ) );
+                $$scope->{'string'}->property_u( 'split', $pos->(155.15) )
+                  ->( [ str( $f, "_NL_" ) ], $scope, undef, $pos->(155.2) )
+                  ->property_u( 'join', $pos->(155.35) )
+                  ->( [ str( $f, "\n" ) ], $scope, undef, $pos->(155.4) ) );
             return $ret;
         }
     );
@@ -1162,28 +1177,28 @@ $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'message', 152.2 ) || return $ret_func->();
+            need( $scope, $args, 'message', 159.2 ) || return $ret_func->();
             var(
                 $scope,
                 chan =>
-                  $$scope->{'conn'}->property_u( 'getChannel', $pos->(153.2) )
+                  $$scope->{'conn'}->property_u( 'getChannel', $pos->(160.2) )
                   ->(
                     [
                         $$scope->{'conn'}
-                          ->property_u( 'autojoin', $pos->(153.35) )
+                          ->property_u( 'autojoin', $pos->(160.35) )
                           ->get_index_value(
                             [ num( $f, "0" ) ],
-                            $scope, $pos->(153.4)
+                            $scope, $pos->(160.4)
                           )
                     ],
                     $scope, undef,
-                    $pos->(153.25)
+                    $pos->(160.25)
                   ),
                 $file_scope,
-                $pos->(153.1)
+                $pos->(160.1)
             );
-            $$scope->{'chan'}->property_u( 'privmsg', $pos->(154.2) )
-              ->( [ $$scope->{'message'} ], $scope, undef, $pos->(154.3) );
+            $$scope->{'chan'}->property_u( 'privmsg', $pos->(161.2) )
+              ->( [ $$scope->{'message'} ], $scope, undef, $pos->(161.3) );
             return $ret;
         }
     );
@@ -1537,40 +1552,40 @@ $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     106.2 ) || return $ret_func->();
-            need( $scope, $args, 'channel', 106.4 ) || return $ret_func->();
+            need( $scope, $args, 'msg',     113.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 113.4 ) || return $ret_func->();
             var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
                         $$scope->{'getParameter'}->(
                             [ $$scope->{'msg'} ], $scope,
-                            undef,                $pos->(107.3)
+                            undef,                $pos->(114.3)
                         )
                     ],
                     $scope, undef,
-                    $pos->(107.2)
-                  )->property_u( 'tokenize', $pos->(107.5) )->(
+                    $pos->(114.2)
+                  )->property_u( 'tokenize', $pos->(114.5) )->(
                     [ undef, [ pretty => $true ] ], $scope,
-                    undef, $pos->(107.55)
+                    undef, $pos->(114.55)
                   ),
                 $file_scope,
-                $pos->(107.1)
+                $pos->(114.1)
             );
             if (
-                bool( $$scope->{'res'}->property_u( 'error', $pos->(108.3) ) ) )
+                bool( $$scope->{'res'}->property_u( 'error', $pos->(115.3) ) ) )
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $$scope->{'channel'}->property_u( 'privmsg', $pos->(109.2) )->(
-                    [ $$scope->{'res'}->property_u( 'error', $pos->(109.5) ) ],
-                    $scope, undef, $pos->(109.3)
+                $$scope->{'channel'}->property_u( 'privmsg', $pos->(116.2) )->(
+                    [ $$scope->{'res'}->property_u( 'error', $pos->(116.5) ) ],
+                    $scope, undef, $pos->(116.3)
                 );
                 return $ret_func->();
             }
-            $$scope->{'channel'}->property_u( 'privmsg', $pos->(112.2) )->(
-                [ $$scope->{'res'}->property_u( 'pretty', $pos->(112.5) ) ],
-                $scope, undef, $pos->(112.3)
+            $$scope->{'channel'}->property_u( 'privmsg', $pos->(119.2) )->(
+                [ $$scope->{'res'}->property_u( 'pretty', $pos->(119.5) ) ],
+                $scope, undef, $pos->(119.3)
             );
             return $ret;
         }
@@ -1591,40 +1606,40 @@ $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     116.2 ) || return $ret_func->();
-            need( $scope, $args, 'channel', 116.4 ) || return $ret_func->();
+            need( $scope, $args, 'msg',     123.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 123.4 ) || return $ret_func->();
             var(
                 $scope,
                 res => $$scope->{'COMPILER'}->(
                     [
                         $$scope->{'getParameter'}->(
                             [ $$scope->{'msg'} ], $scope,
-                            undef,                $pos->(117.3)
+                            undef,                $pos->(124.3)
                         )
                     ],
                     $scope, undef,
-                    $pos->(117.2)
-                  )->property_u( 'construct', $pos->(117.5) )->(
+                    $pos->(124.2)
+                  )->property_u( 'construct', $pos->(124.5) )->(
                     [ undef, [ pretty => $true ] ], $scope,
-                    undef, $pos->(117.55)
+                    undef, $pos->(124.55)
                   ),
                 $file_scope,
-                $pos->(117.1)
+                $pos->(124.1)
             );
             if (
-                bool( $$scope->{'res'}->property_u( 'error', $pos->(118.3) ) ) )
+                bool( $$scope->{'res'}->property_u( 'error', $pos->(125.3) ) ) )
             {
                 my $scope = Ferret::Scope->new( $f, parent => $scope );
 
-                $$scope->{'channel'}->property_u( 'privmsg', $pos->(119.2) )->(
-                    [ $$scope->{'res'}->property_u( 'error', $pos->(119.5) ) ],
-                    $scope, undef, $pos->(119.3)
+                $$scope->{'channel'}->property_u( 'privmsg', $pos->(126.2) )->(
+                    [ $$scope->{'res'}->property_u( 'error', $pos->(126.5) ) ],
+                    $scope, undef, $pos->(126.3)
                 );
                 return $ret_func->();
             }
-            $$scope->{'channel'}->property_u( 'privmsg', $pos->(122.2) )->(
-                [ $$scope->{'res'}->property_u( 'pretty', $pos->(122.5) ) ],
-                $scope, undef, $pos->(122.3)
+            $$scope->{'channel'}->property_u( 'privmsg', $pos->(129.2) )->(
+                [ $$scope->{'res'}->property_u( 'pretty', $pos->(129.5) ) ],
+                $scope, undef, $pos->(129.3)
             );
             return $ret;
         }
@@ -1645,11 +1660,11 @@ $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     126.2 ) || return $ret_func->();
-            need( $scope, $args, 'channel', 126.4 ) || return $ret_func->();
+            need( $scope, $args, 'msg',     133.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 133.4 ) || return $ret_func->();
             $$scope->{'handlePerl'}->(
                 [ $$scope->{'msg'}, $$scope->{'channel'}, $true ],
-                $scope, undef, $pos->(127.1)
+                $scope, undef, $pos->(134.1)
             );
             return $ret;
         }
@@ -1670,11 +1685,11 @@ $result = do {
         undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            need( $scope, $args, 'msg',     131.2 ) || return $ret_func->();
-            need( $scope, $args, 'channel', 131.4 ) || return $ret_func->();
+            need( $scope, $args, 'msg',     138.2 ) || return $ret_func->();
+            need( $scope, $args, 'channel', 138.4 ) || return $ret_func->();
             $$scope->{'handlePerl'}->(
                 [ $$scope->{'msg'}, $$scope->{'channel'}, $false ],
-                $scope, undef, $pos->(132.1)
+                $scope, undef, $pos->(139.1)
             );
             return $ret;
         }
@@ -1685,8 +1700,8 @@ $result = do {
         $f, undef, undef, undef, undef,
         sub {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
-            $$scope->{'bot'}->property_u( 'connect', $pos->(160.2) )
-              ->( [ undef, [] ], $scope, undef, $pos->(160.3) );
+            $$scope->{'bot'}->property_u( 'connect', $pos->(167.2) )
+              ->( [ undef, [] ], $scope, undef, $pos->(167.3) );
             return $ret;
         }
     );
@@ -1698,7 +1713,7 @@ $result = do {
             my ( $scope, $self, $this, $ins, $args, $ret ) = &args_v1;
             $$scope->{'say'}->(
                 [ str( $f, "Disconnected. Trying again." ) ],
-                $scope, undef, $pos->(158.2)
+                $scope, undef, $pos->(165.2)
             );
             $$scope->{'delay'}->(
                 [
@@ -1709,7 +1724,7 @@ $result = do {
                     )
                 ],
                 $scope, undef,
-                $pos->(159.2)
+                $pos->(166.2)
             );
             return $ret;
         }
@@ -1734,8 +1749,8 @@ $result = do {
         ircsay => $scope,
         $context, undef, $ins, undef, undef
     );
-    provides_namespaces( $context, $file_name, $pos->(166.5), qw() );
-    load_namespaces( $context, $file_name, $pos->(166.5),
+    provides_namespaces( $context, $file_name, $pos->(173.5), qw() );
+    load_namespaces( $context, $file_name, $pos->(173.5),
         qw(COMPILER Config::JSON2 Error IRC::Bot IRC::Connection IRC::Massage Str::Any)
     );
     var(
@@ -1839,8 +1854,17 @@ $result = do {
         ),
         {}
     );
+    var(
+        $scope,
+        safeEvalPrefix => str(
+            $f,
+            "\npackage SafeEval\n\$NATIVE = undefined\n\$File = undefined\n"
+        ),
+        undef,
+        $pos->(93.2)
+    );
     on(
-        $$scope->{'bot'}->property_u( 'commands', $pos->(105.3) ),
+        $$scope->{'bot'}->property_u( 'commands', $pos->(112.3) ),
         't', $self, $scope,
         $func_11->inside_scope(
             (undef) => $scope,
@@ -1849,7 +1873,7 @@ $result = do {
         {}
     );
     on(
-        $$scope->{'bot'}->property_u( 'commands', $pos->(115.3) ),
+        $$scope->{'bot'}->property_u( 'commands', $pos->(122.3) ),
         'c', $self, $scope,
         $func_12->inside_scope(
             (undef) => $scope,
@@ -1858,7 +1882,7 @@ $result = do {
         {}
     );
     on(
-        $$scope->{'bot'}->property_u( 'commands', $pos->(125.3) ),
+        $$scope->{'bot'}->property_u( 'commands', $pos->(132.3) ),
         'p', $self, $scope,
         $func_13->inside_scope(
             (undef) => $scope,
@@ -1867,7 +1891,7 @@ $result = do {
         {}
     );
     on(
-        $$scope->{'bot'}->property_u( 'commands', $pos->(130.3) ),
+        $$scope->{'bot'}->property_u( 'commands', $pos->(137.3) ),
         'pp', $self, $scope,
         $func_14->inside_scope(
             (undef) => $scope,
@@ -1887,13 +1911,13 @@ $result = do {
     );
     $$scope->{'conn'}->set_property(
         autojoin => $$scope->{'conf'}
-          ->get_index_value( [ str( $f, "autojoin" ) ], $scope, $pos->(164.5) ),
-        $pos->(164.3)
+          ->get_index_value( [ str( $f, "autojoin" ) ], $scope, $pos->(171.5) ),
+        $pos->(171.3)
     );
-    $$scope->{'bot'}->property_u( 'addConnection', $pos->(165.2) )
-      ->( [ $$scope->{'conn'} ], $scope, undef, $pos->(165.3) );
-    $$scope->{'bot'}->property_u( 'connect', $pos->(166.2) )
-      ->( [ undef, [] ], $scope, undef, $pos->(166.3) );
+    $$scope->{'bot'}->property_u( 'addConnection', $pos->(172.2) )
+      ->( [ $$scope->{'conn'} ], $scope, undef, $pos->(172.3) );
+    $$scope->{'bot'}->property_u( 'connect', $pos->(173.2) )
+      ->( [ undef, [] ], $scope, undef, $pos->(173.3) );
 };
 
 after_content($file_name);

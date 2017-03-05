@@ -90,9 +90,16 @@ on $bot.commands.i {
     handleEval($msg, $channel, true)
 }
 
+$safeEvalPrefix = "
+package SafeEval
+\$NATIVE = undefined
+\$File = undefined
+"
+
 func handleEval {
     need $msg, $channel, $detailed
-    $res = timeout(5) { -> COMPILER(getParameter($msg)).eval() }
+    $code = $safeEvalPrefix + getParameter($msg)
+    $res = timeout(5) { -> COMPILER($code).eval() }
     if $res.error {
         $channel.privmsg($res.error)
         return
