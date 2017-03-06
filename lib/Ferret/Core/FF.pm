@@ -384,7 +384,7 @@ sub get_class {
     }
 
     # create a scope inheriting from the class and the file scope.
-    my $scope = Ferret::Scope->new($f, parent_scope => $file_scope);
+    my $scope = Ferret::Scope->new($f, parent => $file_scope);
     $scope->add_parent($class);
 
     # special properties, accessible in class scope.
@@ -618,7 +618,7 @@ sub try_catch {
         my $err = shift;
 
         # create a scope for the catch body.
-        my $scope = Ferret::Scope->new($f, parent_scope => $outer_scope);
+        my $scope = Ferret::Scope->new($f, parent => $outer_scope);
         $scope->set_property($var_name => $err) if defined $var_name;
 
         # call the body.
@@ -656,7 +656,7 @@ sub gather {
     my $take = sub { $list->push(shift) };
 
     # create a scope.
-    my $scope = Ferret::Scope->new($f, parent_scope => $outer_scope);
+    my $scope = Ferret::Scope->new($f, parent => $outer_scope);
 
     # call the gather code with the scope and take function.
     my ($status, $ret) = $gather_code->($scope, $take, $once_ret_func);

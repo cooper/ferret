@@ -50,6 +50,7 @@ sub new {
     }
 
     # save object location.
+    weaken($obj->{ferret});
     weaken($f->{objects}{$obj + 0} = $obj);
 
     return $obj;

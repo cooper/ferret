@@ -305,7 +305,10 @@ sub _global_class_prototype {
         $proto->set_property(init => _global_init($f));
         $proto->set_property(signature => sub {
             my ($class) = @_;
-            Ferret::String->new($f, str_value => $class->signature_string);
+            Ferret::String->new(
+                $class->f,
+                str_value => $class->signature_string
+            );
         });
         $proto;
     };
@@ -318,7 +321,7 @@ sub _global_init {
         my ($weak_class, $args) = &FUNC_V1;
         my $obj = delete $args->{obj};
         weaken($weak_class);
-        return Ferret::Function->new($f,
+        return Ferret::Function->new($obj->f,
             mimic   => $weak_class->property('initializer__') || undef,
             code    => sub { $weak_class->init($obj, $_[FUNC_ARGS]) },
             all_opt => 1

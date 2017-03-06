@@ -13,6 +13,8 @@ use Ferret::Shared::Utils qw(signature_to_string detailed_signature_to_string);
 use Ferret::Arguments;
 use Ferret::Return;
 
+my $dummy_code = sub { return $_[FUNC_RET] };
+
 Ferret::bind_class(
     name => 'Function',
     init => sub {
@@ -51,7 +53,7 @@ sub new {
         %opts
     );
 
-    $func->{code} ||= state $dummy_code = sub { return $_[FUNC_RET] };
+    $func->{code} ||= $dummy_code;
     $func->{id} = 'F'.($func + 0);
 
     # make the function inherit from the global function prototype.
@@ -216,8 +218,13 @@ sub call {
         $ins                    # FUNC_INS
     );
 
+    # finalize the return
     $return->detail if $detail;
-    return $return->return($ret);
+    $ret = $return->return($ret);
+
+    # destroy the scope
+
+    return $ret;
 }
 
 #########################
@@ -497,6 +504,7 @@ sub inside_scope {
     my ($func, $name, $scope, $owner, $class, $ins, $is_prop, $p_set) =
         (shift, @_);
 
+    $func->{anonymous}     = !$owner;
     $func->{class}         = $class;
     $func->{outer_scope}   = $scope;
     $func->{is_class_func} = 1 if $owner && $owner->isa('Ferret::Class');
