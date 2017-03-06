@@ -9,7 +9,7 @@ use parent 'Ferret::Object';
 
 use Scalar::Util qw(weaken blessed);
 use Ferret::Core::Conversion qw(
-    plist ferror fmethod
+    plist ferror fmethod pcoderef_normalized
     FUNC_V1 FUNC_RET FUNC_ARGS
 );
 
@@ -181,8 +181,6 @@ sub init {
 ### BINDING ###
 ###############
 
-my $dummy_cb_func = sub { $_[FUNC_RET] };
-
 # bind a method or class function, creating an event
 sub bind_function { _bind_function(0, @_) }
 sub bind_method   { _bind_function(1, @_) }
@@ -191,25 +189,9 @@ sub _bind_function {
     my ($is_method, $class, $name, %opts) = @_;
     my $f = $class->f;
 
-    # create code.
-    my $real_code = $opts{code};
-    my $code = $real_code ? sub {
-        my $ret = $real_code->(@_);
-
-        # undefined
-        return Ferret::undefined if Ferret::undefined($ret);
-
-        # other non-object value
-        return $_[FUNC_RET] if
-            !blessed $ret   ||
-            !$ret->isa('Ferret::Object');
-
-        return $ret;
-    } : $dummy_cb_func;
-
     # create function.
     my $func = Ferret::Function->new($f,
-        code        => $code,
+        code        => pcoderef_normalized($opts{code}),
         name        => $opts{cbnm}      || $opts{cb_name} || 'default',
         need        => $opts{need},
         want        => $opts{want},

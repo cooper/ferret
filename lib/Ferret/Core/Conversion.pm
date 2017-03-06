@@ -456,6 +456,27 @@ sub pfunction_smart {
     };
 }
 
+my $dummy_cb_func = sub { $_[FUNC_RET] };
+
+# wraps a code reference from Perl code
+sub pcoderef_normalized {
+    my $real_code = shift;
+    return $dummy_cb_func if !$real_code;
+    return sub {
+        my $real_ret = $real_code->(@_);
+
+        # undefined
+        return Ferret::undefined if Ferret::undefined($real_ret);
+
+        # other non-object value
+        return $_[FUNC_RET]     if
+            !blessed $real_ret  ||
+            !$real_ret->isa('Ferret::Object');
+
+        return $real_ret;
+    };
+}
+
 #############################
 ### BEST-GUESS CONVERSION ###
 #############################

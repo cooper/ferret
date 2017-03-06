@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Context';
 
-use Ferret::Core::Conversion qw(flist_fromref);
+use Ferret::Core::Conversion qw(flist_fromref pcoderef_normalized);
 
 # creates a new context.
 sub new {
@@ -32,7 +32,7 @@ sub add_global_functions {
         # create function with proper requirements.
         my $func = Ferret::Function->new($f,
             name => $opts{cb_name} // 'default',
-            code => $opts{code},
+            code => pcoderef_normalized($opts{code}),
             need => $opts{need},
             want => $opts{want},
             rtrn => $opts{rtrn},
