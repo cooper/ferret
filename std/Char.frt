@@ -1,8 +1,8 @@
 type Char {
-    transform character(from: $_)
+    transform _character(from: $_)
 }
 
-class character
+class _character
 
 init {
     need $from: Num | Str
@@ -17,7 +17,7 @@ init {
     if $from.length != 1
         fail Error(:InvalidConversionError, "String of length != cannot be Char")
 
-    character.init($from)(from: $from, isInit: true)
+    _character.init($from)(from: $from, isInit: true)
     return $from
 }
 
