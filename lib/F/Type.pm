@@ -42,8 +42,9 @@ sub public {
 sub owner {
     my ($type, $owner, $owner_str) = shift;
 
-    # private if starts with _
+    # private if starts with _ or a lowercase letter
     my $private = substr($type->type_name, 0, 1) eq '_';
+    $private ||= $type->type_name !~ m/^[[:upper:]]/;
     $type->{public} = !$private;
 
     if ($type->parent->type eq 'Class') {

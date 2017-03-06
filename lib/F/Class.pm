@@ -46,6 +46,7 @@ sub add_generic {
 # classes are public when the name starts with a capital letter
 sub public {
     my $name = shift->{name};
+    return if substr($name, 0, 1) eq '_';
     return $name =~ m/^[[:upper:]]/;
 }
 
