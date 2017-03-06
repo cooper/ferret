@@ -196,10 +196,12 @@ sub _bind_function {
     my $code = $real_code ? sub {
         my $ret = $real_code->(@_);
 
-        # not OK
-        return Ferret::undefined if
-            Ferret::undefined($ret) ||
-            !blessed $ret           ||
+        # undefined
+        return Ferret::undefined if Ferret::undefined($ret);
+
+        # other non-object value
+        return $_[FUNC_RET] if
+            !blessed $ret   ||
             !$ret->isa('Ferret::Object');
 
         return $ret;
