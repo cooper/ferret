@@ -6,9 +6,6 @@ class _character
 
 init {
     need $from: Num | Str
-    want $isInit: Bool
-    if $isInit:
-        return $from
 
     # TODO: chr()
     if $from.*instanceOf(Num)
@@ -17,8 +14,12 @@ init {
     if $from.length != 1
         fail Error(:InvalidConversionError, "String of length != 1 cannot be Char")
 
-    _character.init($from)(from: $from, isInit: true)
+    _character.init($from)(isInit: true)
     return $from
+}
+
+init {
+    need $isInit: Bool = true
 }
 
 prop ord {
