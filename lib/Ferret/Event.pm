@@ -108,7 +108,7 @@ sub add_function_with_opts {
     if (!$func) {
         $func = $obj;
         $obj  = $event->{last_parent};
-        $obj  = undef if $obj->{is_proto}; # adding to proto is for all objs
+        $obj  = undef if $obj->isa('Ferret::Prototype'); # all objects
         $obj  = undef if $obj->{is_scope};
     }
 

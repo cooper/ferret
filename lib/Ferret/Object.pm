@@ -456,8 +456,8 @@ sub parent_names {
     my $obj = shift;
     my @parents;
 
-    # only say Prototype for prototypes.
-    return "Prototype '$$obj{proto_name}'" if $obj->{is_proto};
+    return "Prototype '$$obj{proto_name}'"  if $obj->isa('Ferret::Prototype');
+    return "Context '$$obj{name}'"          if $obj->isa('Ferret::Context');
 
     foreach my $parent ($obj->parents) {
 
@@ -488,7 +488,7 @@ sub _uniq {
 sub parent_classes {
     my ($obj, @classes) = shift;
     foreach my $parent ($obj->parents) {
-        next unless $parent->{is_proto} && $parent->{proto_class};
+        next unless $parent->isa('Ferret::Prototype') && $parent->{proto_class};
         push @classes, $parent->{proto_class};
     }
     return @classes;
@@ -620,8 +620,8 @@ sub description {
     }
 
     # Ferret description method
-    if (!$no_method && !$obj->{is_proto} && !$obj->{is_special} and
-      my $d_func = $obj->property('description')) {
+    if (!$no_method && !$obj->isa('Ferret::Prototype') && !$obj->{is_special}
+      and my $d_func = $obj->property('description')) {
         return _pstring($d_func->call);
     }
 

@@ -494,7 +494,7 @@ sub inside_scope {
     $func->{class}         = $class;
     $func->{outer_scope}   = $scope;
     $func->{is_class_func} = 1 if $owner && $owner->isa('Ferret::Class');
-    $func->{is_method}     = 1 if $owner && $owner->{is_proto};
+    $func->{is_method}     = 1 if $owner && $owner->isa('Ferret::Prototype');
     $func->{ins}           = $ins;
 
     weaken($func->{class}) if $func->{class};

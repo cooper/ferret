@@ -10,7 +10,6 @@ use parent 'Ferret::Object';
 sub new {
     my ($class, $f, %opts) = @_;
     return $class->SUPER::new($f,
-        is_proto => 1,
         faketype => 'Prototype',
         %opts
     );
