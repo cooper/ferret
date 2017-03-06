@@ -547,12 +547,34 @@ init { <statements> }
 
 Declares a class instance initializer.
 
+A class may have any number of initializers. Initialize succeeds as long as at
+least one of them is satisfied. The first one found is considered default and
+dictates the `init` signature.
+
 ```
 class Person
 
+# default initializer since it occurs first
 init {
     need @fullName: Str, @age: Num, @gender: Sym
 }
+
+# secondary initializer
+# this one happens to refer to the default one, but that is not required
+init {
+    need $firstName: Str, $lastName: Str
+    need $age: Num, $gender: Sym
+    return Person("$firstName $lastName", $age, $gender)
+}
+
+end
+
+# OK, uses default init signature
+$john = Person("John Doe", 43, :male)
+
+# uses secondary initializer.
+# note the args for a secondary initializer must be explicit.
+$jane = Person(firstName: "Jane", lastName: "Doe", age: 42, gender: :female)
 ```
 
 ### prop

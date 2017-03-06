@@ -1,7 +1,7 @@
 package CORE
 
 #> Matches any object
-type Any { }
+type Any
 
 # FIXME: this is a bad way to match events and functions
 #> Matches events and functions
