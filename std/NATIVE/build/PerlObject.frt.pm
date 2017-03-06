@@ -196,7 +196,6 @@ sub set_property {
     # at this point, the object isn't a hash ref.
     # we can't store anything in it, so store it in the PerlObject.
     return $pobj->SUPER::set_property(@_);
-
 }
 
 sub _has_hash_key {

@@ -2,27 +2,29 @@ class Time 1.0
 
 alias _PO = NATIVE::PerlObject
 
-type _timeUnitMeasuedFromZero {
+#> generic type for time components measured from zero
+type _timeUnitMeasuredFromZero {
     isa Num
     satisfies $_ >= 0
 }
 
-type _timeUnitMeasuedFromOne {
+#> generic type for time components measured from one
+type _timeUnitMeasuredFromOne {
     isa Num
     satisfies $_ >= 1
 }
 
+#> generic type for minutes and seconds
 type _timeUnit0to59 {
     isa Num
     satisfies $_ >= 0 && $_ <= 59
 }
 
-alias Year = _timeUnitMeasuedFromZero
-
-#> month type accepting a month symbol or integer 1-12
-type Month { transform numberToMonth }
+#> years, starting at year 0
+alias Year = _timeUnitMeasuredFromZero
 
 $months = [
+    undefined,
     :January,
     :February,
     :March,
@@ -37,27 +39,71 @@ $months = [
     :December
 ];
 
+#> Month type accepting a month symbol or integer 1-12.
+#| Yields a MonthSym.
+type Month {
+    transform func {
+        need $num: Int | MonthSym
+        if $num.*instanceOf(Num)
+            $num = $months[$num]
+        return $num : MonthSym
+    }
+}
+
 type MonthSym {
     isa Sym
     satisfies $months.contains($_)
 }
 
-alias Day = _timeUnitMeasuedFromOne
+#> day of the month, 1-31
+alias Day = _timeUnitMeasuredFromOne
 
+$weekdays = [
+    undefined,
+    :Monday,
+    :Tuesday,
+    :Wednesday,
+    :Thursday,
+    :Friday,
+    :Saturday,
+    :Sunday
+]
+
+#> Weekday type accepting a weekday symbol or integer 1-7, starting with Monday.
+#| Yields a WeekdaySym.
+type Weekday {
+    transform func {
+        need $num: Int | WeekdaySym
+        if $num.*instanceOf(Num)
+            $num = $weekdays[$num]
+        return $num : WeekdaySym
+    }
+}
+
+type WeekdaySym {
+    isa Sym
+    satisfies $weekdays.contains($_)
+}
+
+#> hour 0-23
 type Hour {
     isa Num
     satisfies $_ >= 0 && $_ <= 23
 }
 
+#> minute 0-59
 alias Minute = _timeUnit0to59
 
+#> second 0-59
 alias Second = _timeUnit0to59
 
+#> nanosecond >= 0
 type Nanosecond {
     isa Int
     satisfies $_ >= 0
 }
 
+#> creates a new time given date components
 init {
     want $year:         Year
     want $month:        Month
@@ -67,11 +113,7 @@ init {
     want $second:       Second
     want $nanosecond:   Nanosecond
 
-    _PO.require("DateTime") catch $err
-        fail Error(:PerlRequireError,
-            "Unable to load DateTime",
-            subError: $err
-        )
+    _PO.require("DateTime")
 
     # determine args to DateTime constructor
     $args = []
@@ -85,21 +127,56 @@ init {
         nanosecond:     $nanosecond
     ]
     for ($arg, $val) in $possible {
-        if $val == undefined
+        if !$val || $val == 0
             next
         $args.push($arg, $val)
     }
 
+    # use current time if no options provided
+    $init = "new"
+    if $args.empty
+        $init = "now"
+
     # create the underlying DateTime object
-    @dt = _PO("DateTime", args: $args)
+    @dt = _PO("DateTime", INIT: $init, args: $args) catch $e
+        throw Error(:Bad, "sorry")
 
     # want @locale
     # want @timeZone
 }
 
-func numberToMonth {
-    need $num: Int | MonthSym
-    if $num.*instanceOf(Num)
-        $num = $months[$num - 1]
-    return $num : MonthSym
+#> year
+prop year {
+    return Year(@dt.year!) : Year
+}
+
+#> month
+prop month {
+    return Month(@dt.month!) : MonthSym
+}
+
+#> day of the month, 1-31
+prop day {
+    return Day(@dt.day!) : Day
+}
+
+#> day of the week
+prop weekday {
+    return Weekday(@dt.day_of_week!) : WeekdaySym
+}
+
+method description {
+    return @dt.ymd("-") + " "  + @dt.hms(":")
+}
+
+#> returns the current time
+func now {
+    return Time()
+}
+
+#> returns a time at the moment the current day started
+func today {
+    $t = Time()
+    $t.dt.truncate(to: "day")
+    return $t
 }
