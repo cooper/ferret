@@ -502,6 +502,9 @@ sub perlize {
     # not a Ferret object, so leave it as-is.
     return $val if !blessed $val || !$val->isa('Ferret::Object');
 
+    # PerlObject to underlying object
+    return $val->{real_obj} if $val->isa('Ferret::NATIVE::PerlObject');
+
     # it's the constant true. return something like 1.
     return Types::Serialiser::true if $val == Ferret::true;
 

@@ -2,6 +2,10 @@ class Time 1.0
 
 alias _PO = NATIVE::PerlObject
 
+############################
+### DATE COMPONENT TYPES ###
+############################
+
 #> generic type for time components measured from zero
 type _timeUnitMeasuredFromZero {
     isa Num
@@ -103,6 +107,8 @@ type Nanosecond {
     satisfies $_ >= 0
 }
 
+
+
 #> creates a new time given date components
 init {
     want $year:         Year
@@ -145,6 +151,10 @@ init {
     # want @timeZone
 }
 
+#######################
+### DATE COMPONENTS ###
+#######################
+
 #> year
 prop year {
     return Year(@dt.year!) : Year
@@ -153,6 +163,10 @@ prop year {
 #> month
 prop month {
     return Month(@dt.month!) : MonthSym
+}
+
+prop monthName {
+    return @month.name
 }
 
 #> day of the month, 1-31
@@ -164,6 +178,19 @@ prop day {
 prop weekday {
     return Weekday(@dt.day_of_week!) : WeekdaySym
 }
+
+#> string name of the day of the week
+prop weekdayName {
+    return @weekday.name
+}
+
+#################
+### OPERATORS ###
+#################
+
+#####################
+### MISCELLANEOUS ###
+#####################
 
 method description {
     return @dt.ymd("-") + " "  + @dt.hms(":")
