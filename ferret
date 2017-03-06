@@ -12,7 +12,7 @@ use Cwd             'abs_path';
 use File::Slurp     'slurp';
 use File::Find      'find';
 use Scalar::Util    'blessed';
-use File::Basename  'fileparse';
+use File::Basename  qw(fileparse basename);
 use IO::Async::Function;
 use IO::Async::Loop;
 use Getopt::Long::Descriptive;
@@ -28,7 +28,7 @@ BEGIN {
 use Ferret::Lexer;
 
 my ($o, $usage) = describe_options(
-    "$0 %o [file ...]",
+    basename($0).' %o [file ...]',
 
     [], [ 'Build options:' ],
     [ 'beautify|p'      => 'beautify output code'                           ],
@@ -42,6 +42,7 @@ my ($o, $usage) = describe_options(
     [ 'verbose|v'       => 'print tokens/DOM (with -d/t)'                   ],
 
     [], [ 'Other actions:' ],
+    [ 'run|r'   => 'run in interpeter mode'                                 ],
     [ 'clean|c' => 'clean up build files and exit', {implies => 'noskip'}   ],
     [ 'help|h'  => 'show usage and exit'                                    ]
 );
@@ -69,6 +70,10 @@ if (!@files) {
     }, no_chdir => 1 }, '.');
 }
 
+# only makes sense to do one file in run mode
+die "Can't run multiple files.\n"
+    if $o->run && @files > 1;
+
 # do it synchronously.
 if ($o->synchronous) {
     $pending = scalar @files;
@@ -82,6 +87,15 @@ else {
     $loop->add($function);
     async_do_file($_) foreach @files;
     $loop->run;
+}
+
+sub status_n (@) {
+    return if $o->run;
+    print @_;
+}
+
+sub status (@) {
+    status_n @_, "\n";
 }
 
 sub async_do_file {
@@ -105,35 +119,35 @@ sub handle_result {
     $not_skipped++;
 
     # show stuff in verbose mode
-    print "=== Tokenization ===\n$$ret{tokenization}\n"
+    status "=== Tokenization ===\n$$ret{tokenization}"
         if ref $ret && length $ret->{tokenization};
-    print "=== Document Model ===\n$$ret{construction}\n"
+    status "=== Document Model ===\n$$ret{construction}"
         if ref $ret && length $ret->{construction};
 
-    print "[ $file ] " if !$o->synchronous;
+    status_n "[ $file ] " if !$o->synchronous;
 
     # bad exit status
     if ($status eq 'error') {
-        print "ERROR\n";
+        status "ERROR";
         push @errors, [ $file, 'Process exited prematurely' ];
         return next_result;
     }
 
     # error
     if ($ret->{error}) {
-        print "ERROR\n";
+        status "ERROR";
         push @errors, [ $file, $ret->{error} ];
         return next_result;
     }
 
     # cleaned
     if ($ret->{clean}) {
-        print "CLEAN\n";
+        status "CLEAN";
         return next_result;
     }
 
     # good status
-    print "OK\n";
+    status "OK";
 
     return next_result;
 }
@@ -141,21 +155,28 @@ sub handle_result {
 sub finish {
     $loop->stop if $loop;
 
+    # actually did something
+    if ($not_skipped) {
+
+        # show errors
+        foreach my $error (@errors) {
+            my ($file, $msg) = @$error;
+            status "\n\n[ $file ]\n\n$msg";
+        }
+
+        my $e = scalar @errors || 'no';
+        my $s = $e ne '1' ? 's' : '';
+        status "\nCompilation completed with $e error$s.";
+    }
+
     # all skipped
-    unless ($not_skipped) {
-        print "No changes. Use $0 -n to force rebuild.\n";
-        return;
+    else {
+        status "No changes. Use $0 -n to force rebuild.";
     }
 
-    # show errors
-    foreach my $error (@errors) {
-        my ($file, $msg) = @$error;
-        print "\n\n[ $file ]\n\n$msg\n";
-    }
+    # run
+    run_file(shift @files) if $o->run;
 
-    my $e = scalar @errors || 'no';
-    my $s = $e ne '1' ? 's' : '';
-    print "\nCompilation completed with $e error$s.\n";
     exit(@errors ? 1 : 0);
 }
 
@@ -169,7 +190,7 @@ sub finish {
 # }
 sub do_file {
     my $file = shift;
-    print "[ $file ] " if $o->synchronous;
+    status_n "[ $file ] " if $o->synchronous;
 
     # split file into parts.
     my ($write_dir, $write_file);
@@ -311,4 +332,10 @@ sub error {
     unlink $output_file if $output_file;
     $ret->{error} = 'Error: '.$msg;
     return $ret;
+}
+
+sub run_file {
+    my $file = shift;
+    my ($name, $path, $ext) = fileparse($file, qr/\.[^.]*/);
+    exec 'perl', "$path/build/$name$ext.pm";
 }

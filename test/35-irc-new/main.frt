@@ -1,3 +1,4 @@
+#!/usr/bin/env ferret -r
 $conf = Config::JSON2("config.json").parse()
 
 # after parsing config, get rid of File and NATIVE.slurp
