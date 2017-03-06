@@ -29,21 +29,25 @@ use Ferret::Lexer;
 
 my ($o, $usage) = describe_options(
     "$0 %o [file ...]",
-    [ 'noskip|n'        => 'do not skip unchanged files'                ],
-    [ 'synchronous|y'   => 'work one file at a time in a single thread '],
-    [ 'clean|c'  => 'clean up build directories', {implies => 'noskip'} ],
-    [ 'tokens|t'        => 'write tokenization'                         ],
-    [ 'dom|d'           => 'write lexer object tree (DOM)'              ],
-    [ 'show-all'        => 'include unknown objects in DOM'             ],
-    [ 'verbose|v'       => 'print tokens/DOM to STDOUT (with -d/t)'     ],
-    #[ 'stdout|s'        => 'write to STDOUT instead of file'            ],
-    [ 'beautify|p'      => 'beautify code with perltidy'                ],
-    [ 'minify|m'        => 'minify code'                                ],
-    [ 'help|h'          => 'show help'                                  ]
+
+    [], [ 'Build options:' ],
+    [ 'beautify|p'      => 'beautify output code'                           ],
+    [ 'minify|m'        => 'minify output code'                             ],
+    [ 'noskip|n'        => 'do not skip unchanged files'                    ],
+    [ 'synchronous|y'   => 'do not spawn worker processes'                  ],
+
+    [], [ 'Verbosity:' ],
+    [ 'tokens|t'        => 'write tokenization'                             ],
+    [ 'dom|d'           => 'write lexer object tree (DOM)'                  ],
+    [ 'verbose|v'       => 'print tokens/DOM (with -d/t)'                   ],
+
+    [], [ 'Other actions:' ],
+    [ 'clean|c' => 'clean up build files and exit', {implies => 'noskip'}   ],
+    [ 'help|h'  => 'show usage and exit'                                    ]
 );
 
 # show help.
-print($usage->text) and exit if $o->help;
+say($usage->text) and exit if $o->help;
 
 my (
     $loop,          # IO::Async::Loop
@@ -124,6 +128,12 @@ sub handle_result {
 
     # good status
     print "OK\n";
+
+    # show stuff in verbose mode
+    print "=== Tokenization ===\n$$ret{tokenization}\n"
+        if length $ret->{tokenization};
+    print "=== Document Model ===\n$$ret{construction}\n"
+        if length $ret->{construction};
 
     return next_result;
 }
@@ -232,7 +242,7 @@ sub do_file {
         $main = F::new('Main', name => $file);
         $err = Ferret::Lexer::Constructor::construct($main, @tok);
         if ($o->dom || $err) {
-            my $dom = F::show_dom($main, $o->show_all);
+            my $dom = F::show_dom($main, 1);
             print $fh "# === Document Model ===\n"  if !$err && !$is_docs;
             print $fh commentize($dom), "\n"        if !$err && !$is_docs;
             $ret->{construction} = $dom if $o->verbose || $err;
