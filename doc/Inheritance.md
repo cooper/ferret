@@ -9,7 +9,7 @@ As silly as it may sound, objects can belong to any number of classes.
 But they don't inherit from those classes; they inherit from their prototype
 objects.
 
-If an object is an instance of the String class, for instance, its `*isa`
+If an object is an instance of the String class, for instance, its `*ISA`
 (list of parent objects) would include the `String.proto` object.
 
 ## Example class
@@ -62,7 +62,7 @@ func distanceBetween {
 ```
 
 Initializing an object as a certain type is as simple as adding an object to
-its `*isa` list. However, this is not typically done directly. Consider this
+its `*ISA` list. However, this is not typically done directly. Consider this
 example.
 
 ```
@@ -73,7 +73,7 @@ $obj = (:)
 Math::Point.init($obj)(0, 0)
 
 # The object is now a Point representing the origin.
-# Therefore, $obj.*isa includes Math::Point.proto.
+# Therefore, $obj.*ISA includes Math::Point.proto.
 inspect($obj)
 ```
 
@@ -105,8 +105,8 @@ $male = (gender: "male")
 # create a basic object representing a specific person.
 $person = (name: "Jake", age: 22)
 
-# add $male to $person's *isa list
-$person.*isa.push($male)
+# add $male to $person's *ISA list
+$person.*ISA.push($male)
 
 inspect($person)
 ```

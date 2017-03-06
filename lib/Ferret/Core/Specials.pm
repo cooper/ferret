@@ -13,12 +13,12 @@ use Ferret::Core::Conversion qw(
 
 my %specials = (
     self            => \&_self,
-    isa             => \&_isa,
+    ISA             => \&_ISA,
     classes         => \&_classes,
     ownProperties   => \&_ownProperties,
     allProperties   => \&_allProperties,
     instanceOfClass => _function('instanceOfClass', '$class'),
-    fitsType        => _function('fitsType', '$type'),
+    isa             => _function('isa', '$type'),
     get             => _function('get', '$property:Str'),
     getOwn          => _function('getOwn', '$property:Str'),
     set             => _function('set', '$property:Str $value'),
@@ -58,7 +58,7 @@ sub _self {
 }
 
 # returns mutable ISA list.
-sub _isa {
+sub _ISA {
     my $obj = shift;
     return $obj->{_isa_ferret} if $obj->{_isa_ferret};
     my $list = flist_wrap($obj->{isa});
@@ -95,7 +95,7 @@ sub _instanceOfClass {
     return fbool($obj->instance_of($class));
 }
 
-sub _fitsType {
+sub _isa {
     my ($obj, $args) = @_;
     my $class_or_func = $args->{type};
     return $obj->fits_type_u($class_or_func);
@@ -150,7 +150,7 @@ sub _fullName {
 sub _addParent {
     my ($obj, $args) = @_;
     $obj->add_parent($args->{object});
-    return _isa($obj);
+    return _ISA($obj);
 }
 
 sub _addListener {
