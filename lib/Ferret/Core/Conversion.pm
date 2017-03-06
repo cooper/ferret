@@ -304,14 +304,23 @@ sub ferror {
 ### FUNCTIONS & METHODS ###
 ###########################
 
-sub FUNC_SELF   () { 0 }
-sub FUNC_ARGS   () { 1 }
-sub FUNC_CSCOPE () { 2 }
-sub FUNC_SCOPE  () { 3 }
-sub FUNC_RET    () { 4 }
-sub FUNC_FUNC   () { 5 }
-sub FUNC_THIS   () { 6 }
-sub FUNC_INS    () { 7 }
+sub FUNC_SELF   ();
+sub FUNC_ARGS   ();
+sub FUNC_CSCOPE ();
+sub FUNC_SCOPE  ();
+sub FUNC_RET    ();
+sub FUNC_FUNC   ();
+sub FUNC_THIS   ();
+sub FUNC_INS    ();
+
+*FUNC_SELF      = \&Ferret::FUNC_SELF;
+*FUNC_ARGS      = \&Ferret::FUNC_ARGS;
+*FUNC_CSCOPE    = \&Ferret::FUNC_CSCOPE;
+*FUNC_SCOPE     = \&Ferret::FUNC_SCOPE;
+*FUNC_RET       = \&Ferret::FUNC_RET;
+*FUNC_FUNC      = \&Ferret::FUNC_FUNC;
+*FUNC_THIS      = \&Ferret::FUNC_THIS;
+*FUNC_INS       = \&Ferret::FUNC_INS;
 
 sub FUNC_V1 () {
     return @_[

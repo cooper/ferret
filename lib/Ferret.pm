@@ -22,6 +22,15 @@ my (
     %delay_class_bindings   # class bindings pending Class creation
 );
 
+sub FUNC_SELF   () { 0 }
+sub FUNC_ARGS   () { 1 }
+sub FUNC_CSCOPE () { 2 }
+sub FUNC_SCOPE  () { 3 }
+sub FUNC_RET    () { 4 }
+sub FUNC_FUNC   () { 5 }
+sub FUNC_THIS   () { 6 }
+sub FUNC_INS    () { 7 }
+
 # create a new ferret.
 sub new {
     my ($class, %opts) = @_;
@@ -77,7 +86,7 @@ sub truth {
     return if !defined $val;
     return if $val == false;
     return if undefined $val;
-    return if blessed $val && $val->{is_return} && !$val->true_return;
+    return if blessed $val && $val->isa('Ferret::Return') && !$val->true_return;
     return !!$val;
 }
 
@@ -297,9 +306,9 @@ sub add_binding {
     # add init.
     if (my $init = $opts{init}) {
         $class->bind_function('initializer__', code => sub {
-            bless $_[0], $opts{perl_package};
+            bless $_[FUNC_SELF], $opts{perl_package};
             $init->(@_);
-            # return value is ignored here
+            $_[FUNC_RET]; # ignore whatever Perl implementation returns
         }, need => $opts{init_need}, want => $opts{init_want});
     }
 
