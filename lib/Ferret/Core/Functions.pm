@@ -18,6 +18,10 @@ use Ferret::Core::Conversion qw(
 );
 
 our %functions = (
+    findCycle => {
+        need => '$obj',
+        code => \&_find_cycle
+    },
     say => {
         need => '$message',
         code => \&_say
@@ -175,6 +179,13 @@ sub _exit {
     my (undef, $args) = @_;
     my $status = $args->pnumber('status', 0);
     exit $status;
+}
+
+sub _find_cycle {
+    my (undef, $args) = @_;
+    my $obj = $args->{obj};
+    require Devel::Cycle;
+    Devel::Cycle::find_cycle($obj);
 }
 
 1
