@@ -93,7 +93,7 @@ sub call {
 
     # if it failed, return the return object with no instance.
     # it will yield a boolean false value.
-    if ($ret->{failed}) {
+    if ($ret->failed) {
         $ret->delete_property('instance');
         return $ret;
     }
@@ -160,6 +160,7 @@ sub init {
     # if init's default func failed (returned undef),
     # a need was not satisfied. in this case, we will return instance as
     # the empty object. therefore a class call will return undef.
+    # FIXME: this probably needs updated since adding multiple initializers
     if ($fire && !defined $fire->return_of('default')) {
         $obj->remove_parent($class->prototype);
     }

@@ -189,7 +189,9 @@ sub add_function_with_opts {
 sub call_with_self {
     my ($event, $self) = (shift, shift);
     $event->{force_self} = $self;
-    return $event->call(@_);
+    my $ret = $event->call(@_);
+    delete $event->{force_self};
+    return $ret;
 }
 
 sub prepare {
@@ -297,7 +299,7 @@ sub _handle_call {
 
     # determine self
     my $self = $arguments->{_self}  ||
-        delete $event->{force_self} ||
+        $event->{force_self}        ||
         $outer_self                 ||
         $obj_maybe;
 
