@@ -1,3 +1,5 @@
+# Ferret::Lexer::Lexer
+#
 # Based on HOP::Lexer
 # http://search.cpan.org/~ovid/HOP-Lexer-0.032/lib/HOP/Lexer.pm
 #
@@ -19,104 +21,66 @@ sub string_lexer {
     my $lexer  = sub { shift @text };
     while (@_) {
         my $args = shift;
-        $lexer = _tokens( $string, $lexer, @$args );
+        $lexer = _tokens($string, $lexer, @$args);
     }
     return $lexer;
 }
 
 sub _tokens {
-    my ( $string, $input, $label, $pattern, $maketoken_user ) = @_;
+    my ($string, $input_lexer, $label, $pattern, $maketoken_user) = @_;
 
+    # make a token
     my $maketoken = sub {
-        my ($buf, $l, $v) = @_;
-        return [ $l, $v, undef, $maketoken_user ];
+        return [
+            $label,             # label
+            shift,              # value
+            undef,              # position
+            $maketoken_user     # transform
+        ];
     };
 
+    # initial stuff
     my @tokens;
-    my $buf = "";    # set to undef when input is exhausted
-    my $split = sub { split /($pattern)/ => $_[0] };
+    my $buf = '';    # set to undef when input is exhausted
+    my $split = sub { split /($pattern)/, shift };
 
+    # lexer routine
     return sub {
-        while ( 0 == @tokens && defined $buf ) {
-            my $i = $input->();
-            if ( ref $i ) {    # input is a token
-                my ( $sep, $tok ) = $split->($buf);
-                $tok = $maketoken->( $buf, $label, $tok ) if defined $tok;
-                push @tokens => grep defined && $_ ne "" => $sep, $tok, $i;
-                $buf = "";
+        while (!scalar @tokens && defined $buf) {
+            my $i = $input_lexer->();
+
+            # input is a token
+            if (ref $i) {
+                my ($sep, $tok) = $split->($buf);
+                $tok = $maketoken->($tok)
+                    if defined $tok;
+                push @tokens, grep length, $sep, $tok, $i;
+                $buf = '';
                 last;
             }
-            $buf .= $i if defined $i;    # append new input to buffer
+
+            # append new input to buffer
+            $buf .= $i if defined $i;
             my @newtoks = $split->($buf);
-            while ( @newtoks > 2 || @newtoks && !defined $i ) {
+            while (@newtoks > 2 || @newtoks && !defined $i) {
 
                 # buffer contains complete separator plus combined token
                 # OR we've reached the end of input
-                push @tokens => shift @newtoks;
-                push @tokens => $maketoken->( $buf, $label, shift @newtoks )
+                push @tokens, shift @newtoks;
+                push @tokens, $maketoken->(shift @newtoks)
                   if @newtoks;
             }
 
             # reassemble remaining contents of buffer
-            $buf = join "" => @newtoks;
+            $buf = join '', @newtoks;
             undef $buf unless defined $i;
-            @tokens = grep $_ ne "" => @tokens;
+            @tokens = grep length, @tokens;
         }
-        $_[0] = '' unless defined $_[0];
-        return 'peek' eq $_[0] ? $tokens[0] : shift @tokens;
+
+        #
+        return shift @tokens;
     };
 }
-
-=head1 DEBUGGING
-
-The following caveats (or pitfalls, if you prefer), should be kept in mind
-while lexing data.
-
-=over 4
-
-=item * Unlexed data
-
-The tokens returned by the lexer are array references.  If any data cannot be
-lexed, it will be returned as a string, unchanged.
-
-=item * Capturing parens
-
-Internally, L<Hop::Lexer> uses capturing parentheses to extract the data from
-the provided regular expressions.  If you need to group data in regular
-expressions, use the non-capturing parentheses C<(?:...)>.  Otherwise, your
-code will break.
-
-=item * Precedence
-
-It's important to note that the order of the described tokens is important.
-If you have keywords such as "while", "if", "unless", and so on, and any text
-which matches C<qr/[[:word:]]+/> is considered a variable, the following fails:
-
-  my @input_tokens = (
-      [ 'VAR',     qr/[[:word:]]+/         ],
-      [ 'KEYWORD', qr/(?:while|if|unless)/ ],
-  );
-
-This is because the potential keywords will be matched as C<VAR>.  To deal
-with this, place the higher precedence tokens first:
-
-  my @input_tokens = (
-      [ 'KEYWORD', qr/(?:while|if|unless)/ ],
-      [ 'VAR',     qr/[[:word:]]+/         ],
-  );
-
-=back
-
-=head1 AUTHOR
-
-Mark Jason Dominus.  Maintained by Curtis "Ovid" Poe, C<< <ovid@cpan.org> >>
-
-=head1 FURTHER READING
-
-See L<http://www.perl.com/pub/a/2006/01/05/parsing.html> for a detailed
-article about using this module, along with a comprehensive example.
-
-This has now been included in the distribution as L<HOP::Lexer::Article>.
 
 =head1 ACKNOWLEDGEMENTS
 
