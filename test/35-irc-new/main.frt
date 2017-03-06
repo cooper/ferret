@@ -1,7 +1,7 @@
 $conf = Config::JSON2("config.json").parse()
 
 # after parsing config, get rid of File and NATIVE.slurp
-delete NATIVE.mainContext.File
+delete *scope.*ISA[0].File
 delete NATIVE.slurp
 
 share $bot = IRC::Bot()

@@ -14,7 +14,6 @@ sub new {
     my ($class, $f, %opts) = @_;
     return $class->SUPER::new($f,
         faketype  => 'Return',
-        is_return => 1,
         %opts
     );
 }
@@ -42,6 +41,12 @@ sub defer {
 sub return {
     my ($ret, $force) = @_;
     $ret->_run_defers;
+
+    # just a check to make sure native code doesn't return non-Ferret
+    # blessed objects
+    if ($force && blessed $force && !$force->isa('Ferret::Object')) {
+        $force = Ferret::undefined;
+    }
 
     # if returned an object other than $ret,
     # it will override the current return.

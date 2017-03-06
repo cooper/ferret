@@ -140,30 +140,39 @@ sub init {
             $ret
         );
         $fire = $init->{most_recent_fire};
+        Ferret::inspect($ret) if $$class{name} eq 'K';
     }
 
-    # strong override from a Perl implementation
+    # override return object from a Perl implementation
     $obj = delete $obj->{override_init_obj}
         if $obj->{override_init_obj};
 
-    # in Ferret code, another object was explicitly returned
+    # in Ferret code, another object was explicitly returned. this cannot
+    # happen for init functions written in Perl, because the bind_method call
+    # purposely masks the return value. in Perl you can only override_init_obj.
     $obj = $init_ret if
+        $init_ret != $obj                   &&
         !Ferret::undefined($init_ret)       &&
-        blessed $init_ret                   &&
-        $init_ret->isa('Ferret::Object')    &&
-        !$init_ret->isa('Ferret::Return')   &&
-        $init_ret != $obj;
+        !$init_ret->isa('Ferret::Return');
+
+    # all initializers failed
+    if ($ret->failed) {
+        $obj->remove_parent($class->prototype);
+        $ret->delete_property('instance');
+        return $ret;
+    }
 
     # inject instance property
     $ret->set_property(instance => $obj);
 
-    # if init's default func failed (returned undef),
-    # a need was not satisfied. in this case, we will return instance as
-    # the empty object. therefore a class call will return undef.
-    # FIXME: this probably needs updated since adding multiple initializers
-    if ($fire && !defined $fire->return_of('default')) {
-        $obj->remove_parent($class->prototype);
-    }
+    # # if init's default func failed (returned undef),
+    # # a need was not satisfied. in this case, we will return instance as
+    # # the empty object. therefore a class call will return undef.
+    # # FIXME: this probably needs updated since adding multiple initializers
+    # if ($fire && !defined $fire->return_of('default')) {
+    #     $obj->remove_parent($class->prototype);
+    # }
+
 
     return $ret;
 }
@@ -182,10 +191,24 @@ sub _bind_function {
     my ($is_method, $class, $name, %opts) = @_;
     my $f = $class->f;
 
+    # create code.
+    my $real_code = $opts{code};
+    my $code = $real_code ? sub {
+        my $ret = $real_code->(@_);
+
+        # not OK
+        return Ferret::undefined if
+            Ferret::undefined($ret) ||
+            !blessed $ret           ||
+            !$ret->isa('Ferret::Object');
+
+        return $ret;
+    } : $dummy_cb_func;
+
     # create function.
     my $func = Ferret::Function->new($f,
+        code        => $code,
         name        => $opts{cbnm}      || $opts{cb_name} || 'default',
-        code        => $opts{code}      || $dummy_cb_func,
         need        => $opts{need},
         want        => $opts{want},
         rtrn        => $opts{rtrn},

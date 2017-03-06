@@ -217,7 +217,7 @@ sub call {
     );
 
     $return->detail if $detail;
-    return $return->return($ret // Ferret::undefined);
+    return $return->return($ret);
 }
 
 #########################
