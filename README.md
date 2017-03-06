@@ -131,9 +131,11 @@ files with `.frt`. Then [compile](#compiling).
 
 ### Compiling
 
-Compile with the `ferret` executable. It searches the current directory and all
-subdirectories for `.frt` files. Unchanged files are ignored. See `./ferret -h`
-for all flags. The entire standard library is compiled like so:
+Compile with the `ferret` executable, passing file paths as arguments. If no
+file paths are provided, it searches the current directory and all
+subdirectories for `.frt` and `.frtdoc` files. Unchanged files are ignored.
+See `./ferret -h` for all flags. The entire standard library is compiled like
+so:
 
 ```sh
 ./ferret -pd
@@ -148,17 +150,19 @@ run `ferret` with the `-n` flag to force all source files to recompile.
 
 ### Running
 
-The Ferret compiler will soon be capable of automatically generating executables,
-but for the time being, simply run the output Perl files with `perl`. If the
-code depends on other packages, make sure you run it from the correct directory.
-For example, the IRC bot example in `test/20-irc-complex` should be run like so:
+Run files with the `-r` flag:
 
 ```sh
-cd test/20-irc-complex
-perl build/run.frt.pm
+./ferret -r test/1-hello-world.frt
 ```
 
-Do NOT run Ferret code directly from the `build` directory.
+You can also run Ferret files directly if they are executable and include the
+hashbang `#!/usr/bin/env ferret -r` (assuming the ferret bin is in your `PATH`):
+
+```sh
+cd test/35-irc-new
+./bot
+```
 
 ### Troubleshooting
 
