@@ -104,6 +104,12 @@ sub handle_result {
     return next_result if $ret && $ret->{skipped};
     $not_skipped++;
 
+    # show stuff in verbose mode
+    print "=== Tokenization ===\n$$ret{tokenization}\n"
+        if ref $ret && length $ret->{tokenization};
+    print "=== Document Model ===\n$$ret{construction}\n"
+        if ref $ret && length $ret->{construction};
+
     print "[ $file ] " if !$o->synchronous;
 
     # bad exit status
@@ -128,12 +134,6 @@ sub handle_result {
 
     # good status
     print "OK\n";
-
-    # show stuff in verbose mode
-    print "=== Tokenization ===\n$$ret{tokenization}\n"
-        if length $ret->{tokenization};
-    print "=== Document Model ===\n$$ret{construction}\n"
-        if length $ret->{construction};
 
     return next_result;
 }
@@ -245,7 +245,7 @@ sub do_file {
             my $dom = F::show_dom($main, 1);
             print $fh "# === Document Model ===\n"  if !$err && !$is_docs;
             print $fh commentize($dom), "\n"        if !$err && !$is_docs;
-            $ret->{construction} = $dom if $o->verbose || $err;
+            $ret->{construction} = $dom if $o->verbose;
         }
 
         return error($ret, $fh, $write_file, $$err) if $err;

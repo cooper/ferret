@@ -194,7 +194,7 @@ If `fallback_value` is provided, the variable will be set to that value when the
 argument is not provided or is of an incorrect type.
 
 Within a class method, `want` may contain instance variables. This is especially
-useful for providing initial property values within `init {}`.
+useful for providing initial property values within [`init {}`](#init).
 
 ```
 func sayHello {
@@ -228,7 +228,7 @@ passed argument is equal to that value (according to the
 where certain callbacks are only applicable to specific argument values.
 
 Within a class method, `need` may contain instance variables. This is especially
-useful for providing initial property values within `init {}`.
+useful for providing initial property values within [`init {}`](#init).
 
 ```
 func sayHello {
@@ -547,8 +547,8 @@ init { <statements> }
 
 Declares a class instance initializer.
 
-A class may have any number of initializers. Initialize succeeds as long as at
-least one of them is satisfied. The first one found is considered default and
+A class may have any number of initializers. Initialization succeeds as long as
+at least one of them is satisfied. The first one found is considered default and
 dictates the `init` signature.
 
 ```

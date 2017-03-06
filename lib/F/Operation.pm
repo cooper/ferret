@@ -164,11 +164,4 @@ sub is_op {
     return 1;
 }
 
-sub desc {
-    my $op = shift;
-    use Data::Dumper;
-    $Data::Dumper::Maxdepth = 1;
-    return 'operation '.Dumper($op->compile);
-}
-
 1
