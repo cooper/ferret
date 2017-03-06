@@ -66,6 +66,11 @@ sub new {
             if ref $mimic && $mimic->isa('Ferret::Function');
     }
 
+    # all_opt = if true, convert the signature to all optional
+    if (delete $func->{all_opt}) {
+        $_->{optional} = 1 for @{ $func->{signatures} };
+    }
+
     # add needs from string.
     if (my $need = delete $func->{need}) {
         $func->add_argument(

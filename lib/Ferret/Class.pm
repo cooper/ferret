@@ -184,12 +184,13 @@ sub _bind_function {
 
     # create function.
     my $func = Ferret::Function->new($f,
-        name        => $opts{cbnm} || $opts{cb_name} || 'default',
-        code        => $opts{code}    || $dummy_cb_func,
+        name        => $opts{cbnm}      || $opts{cb_name} || 'default',
+        code        => $opts{code}      || $dummy_cb_func,
         need        => $opts{need},
         want        => $opts{want},
         rtrn        => $opts{rtrn},
         mimic       => $opts{mimic},
+        all_opt     => $opts{all_opt},
         is_method   => $is_method,
         pending_add => 1
     );
@@ -311,8 +312,9 @@ sub _global_init {
         my $obj = delete $args->{obj};
         weaken($weak_class);
         return Ferret::Function->new($f,
-            mimic => $weak_class->property('initializer__') || undef,
-            code  => sub { $weak_class->init($obj, $_[FUNC_ARGS]) }
+            mimic   => $weak_class->property('initializer__') || undef,
+            code    => sub { $weak_class->init($obj, $_[FUNC_ARGS]) },
+            all_opt => 1
         );
     }, 'init', '$obj');
 }

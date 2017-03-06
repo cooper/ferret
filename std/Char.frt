@@ -14,12 +14,13 @@ init {
     if $from.length != 1
         fail Error(:InvalidConversionError, "String of length != 1 cannot be Char")
 
-    _character.init($from)(isInit: true)
+    _character.init($from)(isInit: true) catch $e:
+        throw $e
     return $from
 }
 
 init {
-    need $isInit: Bool = true
+    need $isInit = true
 }
 
 prop ord {
