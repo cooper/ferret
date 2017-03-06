@@ -12,7 +12,7 @@ type Code {
 
 load Signal
 load Complex
-load Character
+load Char
 
 load Extension::NATIVE
 load Extension::Number

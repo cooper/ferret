@@ -43,6 +43,12 @@ sub add_generic {
 
 }
 
+# classes are public when the name starts with a capital letter
+sub public {
+    my $name = shift->{name};
+    return $name =~ m/^[[:upper:]]/;
+}
+
 sub perl_fmt {
     my $class = shift;
     my ($before_c, $after_c) = ('') x 2;
@@ -73,6 +79,7 @@ sub perl_fmt {
     return class => {
         name           => $class->{name},
         version        => $class->{version} // 'undef',
+        context         => $class->public ? '$context' : 'undef',
         upper_content  => $before_c,    # function declarations
         lower_content  => $after_c,     # all other children
         generics       => $generics

@@ -367,18 +367,18 @@ sub inside {
 
 # class definition or extension.
 sub get_class {
-    my ($f, $context, $file_scope, $name, $version, $generics) = @_;
+    my ($f, $context_maybe, $file_scope, $name, $version, $generics) = @_;
     my $class;
 
     # create the class only if it does not exist.
     my $created;
-    if (not $class = $f->get_class($context, $name)) {
+    if (!$context_maybe || !($class = $f->get_class($context_maybe, $name))) {
         $class = Ferret::Class->new($f,
             name    => $name,
             version => $version,
             just_created => 1
         );
-        $context->set_property($name => $class);
+        ($context_maybe || $file_scope)->set_property($name => $class);
         $created++;
     }
 
