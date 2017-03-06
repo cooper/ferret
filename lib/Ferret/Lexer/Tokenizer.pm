@@ -77,7 +77,7 @@ my @token_formats = (
 
     # comments
     [ COMMENT_LD    => qr/#[<>\|]+[^\n]*/,          \&handle_doc_comment    ],  # doc comment
-    [ COMMENT_L     => qr/#+[^\n]*/,                \&ignore                ],  # normal line comment
+    [ COMMENT_L     => qr/#[^\n]*/,                                         ],  # normal line comment
 
     # this is way up here because it must be above VAR_SYM and OP_VALUE.
     [ OP_PACK       => qr/::/                                               ],  # package
@@ -433,7 +433,7 @@ sub handle_doc_comment {
         $$pfx = '';
         return [ COMMENT_LDA => $value ];
     }
-    return [];
+    return [ COMMENT_L => $value ];
 }
 
 sub tok_KEYWORD {
@@ -676,6 +676,14 @@ sub _tokenize {
             "Unable to tokenize '%s' at line %d.",
             $token, $position
         ), @tokens) if ref $token ne 'ARRAY';
+
+        # Safe point - $token is an arrayref
+
+        # handle normal line comments specially
+        if ($token->[0] eq 'COMMENT_L') {
+            $terminated_lines[$position] = $token;
+            return;
+        }
 
         # transform function
         if (my $transform = $token->[3]) {

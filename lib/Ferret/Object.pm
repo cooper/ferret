@@ -510,12 +510,7 @@ sub best_common_class {
     }
 
     return undef;
-    # TODO: if ever implemented an Object class, return it here.
 }
-
-# FIXME: should ->instance_of() return true for all objs for Obj?
-# currently it does not. But this does not affect arguments, etc.
-# because they use ->fits_type() instead.
 
 # returns Perl true if the object is an instance of a class
 sub instance_of {
@@ -786,7 +781,9 @@ sub hash_string {
         die 'not hashable!';
     }
 
-    return  _psym($hash_value);
+    # if $hash_value is sym, returns the sym_value.
+    # otherwise returns str_value.
+    return _psym($hash_value);
 }
 
 ###############

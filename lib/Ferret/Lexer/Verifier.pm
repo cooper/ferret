@@ -303,7 +303,7 @@ sub verify_lexical_variables {
             # this could be a SharedDeclaration, LocalDeclaration, Assignment...
             my $decl_a = $v->{lex_declarations}{$pos}
                 or die "can't find lexical declaration";
-                
+
             my ($decl, @decl_vars) = @$decl_a;
 
             # if any of the variables in this declaration are this variable,
@@ -455,7 +455,6 @@ sub verify_regular_expressions {
             $regex->{value} // '',
             $regex->{mods}  // ''
         );
-
     }
 }
 
