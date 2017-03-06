@@ -14,7 +14,7 @@ use POSIX qw(ceil floor);
 use Ferret::Core::Errors qw(throw);
 use Ferret::Core::Conversion qw(
     fnumber pnumber plist flist fbool
-    fsym flist_fromref fstring
+    flist_fromref fstring
     FUNC_V1
 );
 
@@ -202,7 +202,7 @@ sub description {
 
 sub _hash_value {
     my ($num) = &FUNC_V1;
-    return fsym($num->{num_value});
+    return fstring($num->{num_value});
 }
 
 sub equal {

@@ -10,7 +10,7 @@ use parent 'Ferret::Object';
 use Scalar::Util qw(blessed looks_like_number);
 use Ferret::Core::Conversion qw(
     pstring pnumber phashref plist flist_fromref
-    fstring flist fbool fnumber fsym
+    fstring flist fbool fnumber
     FUNC_V1 FUNC_SELF FUNC_ARGS FUNC_RET
 );
 
@@ -326,7 +326,7 @@ sub _match {
 # strings are hashable in nature.
 sub _hash_value {
     my ($str) = &FUNC_V1;
-    return fsym($str->{str_value});
+    return $str;
 }
 
 # convert to number. force Perl numeric context.

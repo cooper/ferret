@@ -83,14 +83,16 @@ sub _wrap {
     my ($f, $real_obj) = @_;
 
     # if it isn't blessed, we can't create a PerlObject.
-    return Ferret::undefined if !$real_obj || !blessed $real_obj;
+    return Ferret::undefined
+        if !$real_obj || !blessed $real_obj;
 
     # a PerlObject already exists.
     my $pobj = $objects{ refaddr($real_obj) || 0 };
     return $pobj if $pobj;
 
     # create one.
-    $pobj = __PACKAGE__->new;
+    $pobj = Ferret::Object->new($f);
+    bless $pobj;
     $pobj->{real_obj}   = $real_obj;
     $pobj->{class_name} = blessed $real_obj;
 

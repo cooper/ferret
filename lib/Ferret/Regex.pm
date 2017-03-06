@@ -11,7 +11,7 @@ use Scalar::Util qw(blessed looks_like_number);
 use Ferret::Shared::Utils qw(regex_str);
 use Ferret::Core::Conversion qw(
     pstring pnumber phashref plist
-    fstring flist fbool fnumber fsym
+    fstring flist fbool fnumber
 );
 
 my @methods = (

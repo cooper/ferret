@@ -154,12 +154,13 @@ sub get_set_type {
 sub get_symbol {
     my ($f, $name) = @_;
 
-    # the symbol exists.
+    # don't waste time making a new one if it exists
     return $f->{symbols}{$name} if $f->{symbols}{$name};
 
-    # create a new one.
-    my $sym = Ferret::Symbol->new($f, init_args => { from => fstring($name) });
-    weaken($f->{symbols}{$name} = $sym);
+    # create a new one
+    my $sym = Ferret::Symbol->new($f,
+        init_args => { from => fstring($name) }
+    )->get_sym;
 
     return $sym;
 }
