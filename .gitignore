@@ -20,7 +20,7 @@ pm_to_blib
 .DS_Store
 ferret.pages
 
-*.frt.pm
+**/build/*.pm
 !std/build/COMPILER.frt.pm
 !std/build/Timer.frt.pm
 !std/NATIVE/build/HTTPClient.frt.pm

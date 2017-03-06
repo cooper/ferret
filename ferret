@@ -60,7 +60,7 @@ my (
 );
 
 # find the files.
-my @files = grep m/\.(frt|frtdoc)$/, @ARGV;
+my @files = @ARGV;
 if (!@files) {
     find({ wanted => sub {
         my $f = $File::Find::name;
@@ -69,6 +69,9 @@ if (!@files) {
         }
     }, no_chdir => 1 }, '.');
 }
+
+die "No input files.\n"
+    if !@files;
 
 # only makes sense to do one file in run mode
 die "Can't run multiple files.\n"
@@ -201,7 +204,7 @@ sub do_file {
 
     # writing to .md.
     if ($is_docs) {
-        my $docs        = "$path/doc";
+        my $docs        = "${path}doc";
         $write_dir      = $docs;
         $write_file     = "$docs/$name.md";
         $ret->{docs}    = $docs;
@@ -210,7 +213,7 @@ sub do_file {
 
     # writing to .pm.
     else {
-        my $build       = "$path/build";
+        my $build       = "${path}build";
         $write_dir      = $build;
         $write_file     = "$build/$name$ext.pm";
         $ret->{build}   = $build;
@@ -337,5 +340,5 @@ sub error {
 sub run_file {
     my $file = shift;
     my ($name, $path, $ext) = fileparse($file, qr/\.[^.]*/);
-    exec 'perl', "$path/build/$name$ext.pm";
+    exec 'perl', "${path}build/$name$ext.pm";
 }
