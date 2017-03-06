@@ -109,7 +109,7 @@ sub add_function_with_opts {
         $func = $obj;
         $obj  = $event->{last_parent};
         $obj  = undef if $obj->isa('Ferret::Prototype'); # all objects
-        $obj  = undef if $obj->{is_scope};
+        $obj  = undef if $obj->isa('Ferret::Scope');     # bareword event
     }
 
     # if 'self' option is specified, the event holds a strong reference to
