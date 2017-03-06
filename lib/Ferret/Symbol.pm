@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Ferret::Core::Conversion qw(pstring fstring fnumber);
+use Ferret::Core::Conversion qw(pstring fstring flist fnumber);
 
 my @methods = (
     hashValue => {
@@ -21,8 +21,8 @@ my @methods = (
 );
 
 my @functions = (
-    activeCount => {
-        code => \&_active_symbol_count
+    all => {
+        code => \&_all
     }
 );
 
@@ -71,9 +71,10 @@ sub get_sym {
     return $f->{symbols}{$name} ||= $sym;
 }
 
-sub _active_symbol_count {
+# returns a list of all symbols
+sub _all {
     my $f = shift->f;
-    return fnumber(scalar values %{ $f->{symbols} });
+    return flist(values %{ $f->{symbols} });
 }
 
 sub description {
