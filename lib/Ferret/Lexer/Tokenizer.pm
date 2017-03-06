@@ -147,7 +147,7 @@ my @token_formats = (
     [ OP_VALUE      => qr/:/                                                ],  # key:value (not bareword)
 
     # other
-    [ BAREWORD      => qr/[A-Za-z_]+[A-Za-z0-9:_]*/                         ],  # bareword (and keywords)
+    [ BAREWORD      => qr/$prop_reg/                                        ],  # bareword (and keywords)
     [ NUMBER        => qr/\d+(?:\.\d+(?:e\d+)?)?/                           ],  # number
     [ OP_PROP       => qr/\./                                               ],  # non-bareword property
     [ NEWLINE       => qr/\n/,              \&ignore                        ],  # newline
