@@ -61,6 +61,13 @@ method instanceOfClass {
     return @_test($a.*instanceOfClass($b), "Object must be an instance of the class")
 }
 
+#> Test succeeds of `$a` satisfies type `$b`.
+method fitsType {
+    need $a #< test object
+    need $b #< test type
+    return @_test($a.*isa($b), "Object must satisfy the type")
+}
+
 #> Prints the test review.
 method review {
     want $quiet: Bool

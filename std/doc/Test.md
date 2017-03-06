@@ -138,6 +138,23 @@ Test succeeds of `$a` is an instance of class `$b`.
 
 
 
+### fitsType
+
+```
+$test.fitsType($a, $b)
+```
+
+Test succeeds of `$a` satisfies type `$b`.
+
+
+#### Arguments
+
+* __a__: Any - Test object.
+
+* __b__: Any - Test type.
+
+
+
 ### review
 
 ```
