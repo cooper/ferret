@@ -121,10 +121,10 @@ Test succeeds if `$a !== $b`.
 
 
 
-### instanceOf
+### instanceOfClass
 
 ```
-$test.instanceOf($a, $b)
+$test.instanceOfClass($a, $b)
 ```
 
 Test succeeds of `$a` is an instance of class `$b`.

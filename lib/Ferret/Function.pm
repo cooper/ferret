@@ -29,7 +29,7 @@ Ferret::bind_class(
     # it emulates a real class, but it's not truly such.
     #
     # explicitly setting the proto and proto class allows
-    # functions such as say.*instanceOf(Function) to behave as expected.
+    # functions such as say.*instanceOfClass(Function) to behave as expected.
     #
     on_bind => sub {
         my $class = shift;

@@ -8,7 +8,7 @@ init {
     need $from: Num | Str
 
     # TODO: chr()
-    if $from.*instanceOf(Num)
+    if $from.*instanceOfClass(Num)
         fail Error(:UnimplementedError, "Not yet implemented")
 
     if $from.length != 1

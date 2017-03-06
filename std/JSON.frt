@@ -147,7 +147,7 @@ method decoderDone {
     $objects = @xs.perlCall("incr_parse", CONTEXT: "list") catch $err
         fail Error(:JSONError, "JSON incr_parse() error", subError: $err)
 
-    if $objects.*instanceOf(List)
+    if $objects.*instanceOfClass(List)
         found -> $objects.length
 
     data -> $objects

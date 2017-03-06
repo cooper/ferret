@@ -55,10 +55,10 @@ method objectsNotEqual {
 }
 
 #> Test succeeds of `$a` is an instance of class `$b`.
-method instanceOf {
+method instanceOfClass {
     need $a #< test object
     need $b #< test class
-    return @_test($a.*instanceOf($b), "Object must be an instance of the class")
+    return @_test($a.*instanceOfClass($b), "Object must be an instance of the class")
 }
 
 #> Prints the test review.

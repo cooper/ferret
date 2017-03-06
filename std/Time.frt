@@ -48,7 +48,7 @@ $months = [
 type Month {
     transform func {
         need $num: Int | MonthSym
-        if $num.*instanceOf(Num)
+        if $num.*instanceOfClass(Num)
             $num = $months[$num]
         return $num : MonthSym
     }
@@ -78,7 +78,7 @@ $weekdays = [
 type Weekday {
     transform func {
         need $num: Int | WeekdaySym
-        if $num.*instanceOf(Num)
+        if $num.*instanceOfClass(Num)
             $num = $weekdays[$num]
         return $num : WeekdaySym
     }

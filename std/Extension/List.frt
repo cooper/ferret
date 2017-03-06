@@ -33,7 +33,7 @@ method grep {
 method flatten {
     $new = []
     for $el in *self {
-        if $el.*instanceOf(List)
+        if $el.*instanceOfClass(List)
             $new.push(items: $el.flatten())
         else
             $new.push($el)

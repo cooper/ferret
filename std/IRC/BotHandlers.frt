@@ -8,7 +8,7 @@ func privmsg {
     need $bot, $msg
 
     # commands only work in channels right now
-    if !$msg.target.*instanceOf(Channel)
+    if !$msg.target.*instanceOfClass(Channel)
         return
 
     # find the command

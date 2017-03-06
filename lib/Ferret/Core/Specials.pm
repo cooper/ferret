@@ -17,7 +17,7 @@ my %specials = (
     classes         => \&_classes,
     ownProperties   => \&_ownProperties,
     allProperties   => \&_allProperties,
-    instanceOf      => _function('instanceOf', '$class'),
+    instanceOfClass => _function('instanceOfClass', '$class'),
     fitsType        => _function('fitsType', '$type'),
     get             => _function('get', '$property:Str'),
     getOwn          => _function('getOwn', '$property:Str'),
@@ -89,7 +89,7 @@ sub _ownProperties {
     return flist($obj->properties);
 }
 
-sub _instanceOf {
+sub _instanceOfClass {
     my ($obj, $args) = @_;
     my $class = $args->{class};
     return fbool($obj->instance_of($class));

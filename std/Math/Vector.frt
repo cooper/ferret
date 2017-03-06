@@ -218,7 +218,7 @@ func axisUnitVector {
 
 func _axisToNumber {
     need $axis: Num | Char
-    if $axis.*instanceOf(Num)
+    if $axis.*instanceOfClass(Num)
         return $axis
     $o = $axis.ord
     if $o > 119
