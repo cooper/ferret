@@ -67,21 +67,22 @@ sub adopt {
 
 sub compile {
     my $op = shift;
+    return @{ $op->{compiled} } if $op->{compiled};
     my @children = $op->children;
 
     # for each operator, while there are instances of that operator
     foreach my $op_type (qw/
-        ssub    sadd    range
-        pow     mod
-        mul     div
-        sub     add
-        less    less_e
-        gr8r    gr8r_e
-        equal_i nequal_i
-        equal   nequal
-        sim     nsim
-        band    xor     bor
-        and     or
+        range       pow
+        ssub        sadd
+        mod         mul         div
+        sub         add
+        less        less_e
+        gr8r        gr8r_e
+        equal_i     nequal_i
+        equal       nequal
+        sim         nsim
+        band        xor         bor
+        and         or
     /) {
     while (grep { is_op($_, $op_type) } @children) {
         my ($i, $left, $right) = -1;
@@ -110,6 +111,7 @@ sub compile {
         }
     }}
 
+    $op->{compiled} = \@children;
     return @children;
 }
 
@@ -160,6 +162,13 @@ sub is_op {
     $op->type    eq 'Operator' or return;
     $op->op_type eq $type      or return if length $type;
     return 1;
+}
+
+sub desc {
+    my $op = shift;
+    use Data::Dumper;
+    $Data::Dumper::Maxdepth = 1;
+    return 'operation '.Dumper($op->compile);
 }
 
 1

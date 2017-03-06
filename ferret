@@ -16,7 +16,6 @@ use File::Basename  'fileparse';
 use IO::Async::Function;
 use IO::Async::Loop;
 use Getopt::Long::Descriptive;
-use JSON::XS;
 
 BEGIN {
     use FindBin;
@@ -126,12 +125,6 @@ sub handle_result {
     # good status
     print "OK\n";
 
-    # show stuff
-    # print "=== Tokenization ===\n$$ret{tokenization}\n"
-    #     if length $ret->{tokenization};
-    # print "=== Document Model ===\n$$ret{construction}\n"
-    #     if length $ret->{construction};
-
     return next_result;
 }
 
@@ -212,9 +205,10 @@ sub do_file {
     }
 
     # open the output file.
-    my $fh; # if ($o->stdout) { $fh = \*STDOUT }
+    my $fh;
     mkdir $write_dir or die "Couldn't create $write_dir" if !-d $write_dir;
     open $fh, '>', $write_file or die "Couldn't open $write_file to write";
+    binmode $fh, ':utf8';
 
     # see if we've already constructed it.
     my $main = $done{$abs};

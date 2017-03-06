@@ -10,8 +10,6 @@ use Ferret::Shared::Utils;
 use Ferret::Lexer::Rules;
 use Ferret::Lexer::Lexer qw(string_lexer);
 
-use JSON::XS;
-my $json = JSON::XS->new->allow_nonref;
 my ($position, $file, $nested);
 
 # keywords.
