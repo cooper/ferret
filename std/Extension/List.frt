@@ -115,6 +115,15 @@ method first {
     return undefined
 }
 
+#> Returns the index of the first occurrence of the given value
+method indexOf {
+    need $what
+    for ($i, $el) in *self {
+        if $what == $el: return $i
+    }
+    return undefined
+}
+
 #> Returns true if at least one element satisfies a code.
 method any {
     need $code: Code

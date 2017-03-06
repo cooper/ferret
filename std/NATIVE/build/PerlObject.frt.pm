@@ -37,7 +37,8 @@ Ferret::bind_class(
     functions => \@functions,
     methods   => \@methods,
     init      => \&init,
-    init_want => '$CLASS:Str $args...'
+    init_need => '$CLASS:Str',
+    init_want => '$args...'
 );
 
 *new = *Ferret::bind_constructor;
@@ -66,7 +67,7 @@ sub init {
         # an error occurred, or the constructor returned false.
         if (!$real_obj || !blessed $real_obj) {
             my $err = ferror($@, 'PerlConstructorFailed');
-            return $ret->fail($err);
+            return $ret->throw($err);
         }
 
         weaken($objects{ refaddr($real_obj) } = $pobj);
@@ -102,15 +103,13 @@ sub _require {
     my @args = $args->plist('args');
 
     # convert package name to filename.
-    if (index($file, '::') != -1) {
-        $file =~ s/::/\//g;
-        $file .= '.pm';
-    }
+    $file =~ s/::/\//g;
+    $file .= '.pm';
 
     # if this eval returns false, there was an error.
     if (!eval { require $file; 1 }) {
         my $err = ferror($@, 'PerlRequireFailed');
-        return $ret->fail($err);
+        return $ret->throw($err);
     }
 
     return Ferret::true;
@@ -138,7 +137,7 @@ sub _perlCall {
 
     # find the method.
     my $code = $real_obj->can($func_name);
-    return $ret->fail(
+    return $ret->throw(
         ferror("No such Perl method '$func_name'", 'NativeCodeError')
     ) if !$code;
 

@@ -41,4 +41,9 @@ sub call {
     ]);
 }
 
+sub equal_to {
+    my ($obj, $other) = @_;
+    $obj->equal_to_exactly($other);
+}
+
 1

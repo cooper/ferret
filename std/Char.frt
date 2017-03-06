@@ -12,10 +12,10 @@ init {
 
     # TODO: chr()
     if $from.*instanceOf(Num)
-        fail Error(:UnimplementedError, "not yet implemented")
+        fail Error(:UnimplementedError, "Not yet implemented")
 
     if $from.length != 1
-        fail Error(:InvalidConversionError, "String of length != cannot be Char")
+        fail Error(:InvalidConversionError, "String of length != 1 cannot be Char")
 
     _character.init($from)(from: $from, isInit: true)
     return $from

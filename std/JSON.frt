@@ -62,18 +62,10 @@ init {
     #|  line, identifying them properly.
 
     # require JSON::XS.
-    _PO.require("JSON::XS") catch $err
-        fail Error(:PerlRequireError,
-            "Unable to load JSON::XS",
-            subError: $err
-        )
+    _PO.require("JSON::XS")
 
     # create the underlying JSON::XS object.
-    @xs = _PO("JSON::XS") catch $err
-        fail Error(:PerlConstructorError,
-            "Could not create JSON::XS object",
-            subError: $err
-        )
+    @xs = _PO("JSON::XS")
 
     # set properties.
     @xs.[@charset]!                                     # charset
