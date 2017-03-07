@@ -375,9 +375,10 @@ sub get_class {
     my $created;
     if (!$context_maybe || !($class = $f->get_class($context_maybe, $name))) {
         $class = Ferret::Class->new($f,
-            name    => $name,
-            version => $version,
-            just_created => 1
+            name            => $name,
+            version         => $version,
+            parent          => $context_maybe,
+            just_created    => 1
         );
         ($context_maybe || $file_scope)->set_property($name => $class);
         $created++;
