@@ -2490,8 +2490,8 @@ sub c_eof {
 
         # if the node started on a different line than current,
         # mention where it started.
-        my $started = $node->{create_line} == $c->line ?
-            '' : " (which started on line $$node{create_line})";
+        my $started = !defined $node->{create_line} ? '' :
+            " (which started on line $$node{create_line})";
 
         return $c->expected(
             "termination of $desc$started",
