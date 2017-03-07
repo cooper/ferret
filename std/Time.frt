@@ -1,6 +1,7 @@
 class Time 1.0
 
 alias _PO = NATIVE::PerlObject
+load Time::Duration # FIXME
 
 ############################
 ### DATE COMPONENT TYPES ###
@@ -107,8 +108,6 @@ type Nanosecond {
     satisfies $_ >= 0
 }
 
-
-
 #> creates a new time given date components
 init {
     want $year:         Year
@@ -118,6 +117,7 @@ init {
     want $minute:       Minute
     want $second:       Second
     want $nanosecond:   Nanosecond
+    want $timeZone:     Str
 
     _PO.require("DateTime")
 
@@ -143,12 +143,13 @@ init {
     if $args.empty
         $init = "now"
 
+    if $timeZone
+        $args.push("time_zone", $timeZone)
+
     # create the underlying DateTime object
     @dt = _PO("DateTime", INIT: $init, args: $args) catch $e
         throw Error(:Bad, "sorry")
 
-    # want @locale
-    # want @timeZone
 }
 
 #######################
@@ -188,9 +189,29 @@ prop weekdayName {
 ### OPERATORS ###
 #################
 
+operator + {
+    need $ehs: Duration
+    $t = @copy!
+    $t.dt.add_duration($ehs.dtd)
+    return $t
+}
+
+operator - {
+    need $rhs: Duration
+    $t = @copy!
+    $t.dt.subtract_duration($rhs.dtd)
+    return $t
+}
+
 #####################
 ### MISCELLANEOUS ###
 #####################
+
+method copy {
+    $t = Time.now!
+    $t.dt = @dt.clone!
+    return $t
+}
 
 method description {
     return @dt.ymd("-") + " "  + @dt.hms(":")
@@ -206,4 +227,9 @@ func today {
     $t = Time()
     $t.dt.truncate(to: "day")
     return $t
+}
+
+#> returns a time at the start of tomorrow
+func tomorrow {
+    return @today! + Duration(days: 1)
 }
