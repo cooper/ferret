@@ -78,8 +78,8 @@ Functions can return any number of values. Like arguments, these values are
 named in the function's [signature](#signatures).
 
 Each return value is associated with a name. These will be properties of the
-return object yielded by the function. Execution of the function continues
-beyond each return pair.
+[return object](#return-objects) yielded by the function. Execution of the
+function continues beyond each return pair.
 
 ```
 name -> $value
@@ -87,7 +87,7 @@ name -> $value
 
 For simple functions, one value may returned in the usual way. This, of course,
 stops the execution of the function at that point. The function then yields the
-returned value instead of the return object.
+returned value instead of the [return object](#return-objects).
 
 ```
 return $value
@@ -101,17 +101,6 @@ return
 ```
 
 Functions with no return value do not need an explicit return statement.
-
-### Signatures
-
-A signature describes the arguments and returns of a function. When passing
-unnamed arguments to a function call, the signature is used in determining which
-names the arguments are associated with.
-
-This is the human-readable signature of the `checkID` function:
-```
-$name:Str ?$age:Num
-```
 
 ### Breakdown
 
@@ -156,14 +145,34 @@ checkID(age: 12)            # "Sorry, sir. Come back later."
 checkID("Jane Roe")         # no output (unsatisfied 'need')
 ```
 
-## Function stuff
+## Function features
+
+### Signatures
+
+A signature describes the arguments and returns of a function. When passing
+unnamed arguments to a function call, the signature is used in determining which
+names the arguments are associated with.
+
+This is the human-readable signature of the `checkID` function:
+```
+$name:Str ?$age:Num
+```
 
 ### Return objects
 
+For each function call, a return object is created. The
+[return values](#returns) of the function are assigned to properties of this
+object.
+
+Calls always yield the return object except when the return value is overridden
+by an explicit return statement. In such a case, the return object can still be
+accessed with [`detail`](#detail).
+
 ### Detail
 
+If a function has an explicit return statement, its value overrides the
+[return object](#return-objects). The [`detail`](Keywords.md#detail) keyword
+allows you to access the return object when it would have otherwise been masked
+by the override value.
+
 ### Ellipsis arguments
-
-## Event stuff
-
-one return object. default function determines signature
