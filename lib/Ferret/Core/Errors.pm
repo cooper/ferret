@@ -84,7 +84,7 @@ our %errors = (
     },
 
     # an exception occurred in native code (Perl die(), croak(), etc.)
-    NativeCodeError => {
+    NativeCode => {
         message => "%s"
     },
 

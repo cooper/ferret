@@ -407,7 +407,7 @@ sub ffunction_smart {
 
         # an error occurred.
         if (!defined $ret && $@) {
-            throw(NativeCodeError => undef, [
+            throw(NativeCode => undef, [
                 Name     => $name || 'unknown function'
             ], $@);
             return;
