@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 
 use Scalar::Util 'blessed';
-use Ferret::Shared::Utils qw(ns_to_slash build_name);
+use Ferret::Shared::Utils qw(file_for_space);
 
 our (
     $ferret,                # the global Ferret instance
@@ -197,7 +197,7 @@ sub space {
         return $existing if $existing;
 
         # already tried this file
-        my $file = build_name(ns_to_slash("$space.frt.pm"));
+        my $file = file_for_space($space);
         return $existing
             if $tried_files{$file}++;
 

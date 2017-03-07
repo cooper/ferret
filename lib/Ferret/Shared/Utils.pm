@@ -9,6 +9,8 @@ use warnings;
 use strict;
 use 5.010;
 
+use List::Util qw(first);
+
 our $prop_reg = qr/[\p{Letter}_]+[\p{Number}\p{Letter}_]*/;
 our $type_reg = qr/[\p{Letter}_]+[\p{Number}\p{Letter}_\:]*/;
 
@@ -45,10 +47,19 @@ sub slash_to_ns {
 }
 
 sub build_name {
-    my $s = shift;
+    my ($s, $subdir) = @_;
     my @parts = split /\//, $s;
     my $base  = pop @parts;
-    return join '/', @parts, 'build', $base;
+    return join '/', @parts, $subdir, $base;
+}
+
+sub file_for_space {
+    my $space   = shift;
+    my $name    = ns_to_slash($space);
+    my $fp      = build_name($name, 'perl')  . '.pm';
+    my $build   = build_name($name, 'build') . '.frt.pm';
+    return $fp  if first { -e "$_/$fp" } @INC;
+    return $build;
 }
 
 ###############
