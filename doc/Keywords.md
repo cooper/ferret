@@ -410,7 +410,7 @@ before :<callback_name>
 Indicates a "call before" priority hint for an event callback.
 
 When hints are supplied, the runtime will do its best to resolve priorities
-if at all possible. Many space-searated priority hints may be utilized for a
+if at all possible. Many space-separated priority hints may be utilized for a
 single callback.
 
 ```
@@ -426,7 +426,7 @@ after :<callback_name>
 Indicates a "call after" priority" hint for an event callback.
 
 When hints are supplied, the runtime will do its best to resolve priorities
-if at all possible. Many space-searated priority hints may be utilized for a
+if at all possible. Many space-separated priority hints may be utilized for a
 single callback.
 
 ```

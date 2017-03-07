@@ -93,8 +93,9 @@ returned value instead of the [return object](#return-objects).
 return $value
 ```
 
-A return with no value stops the execution of the function, yielding the return
-object as-is (NOT a void value). This is demonstrated in the `checkID` example.
+A return with no value stops the execution of the function, yielding the
+[return object](#return-objects) as-is (NOT a void value). This is demonstrated
+in the `checkID()` example.
 
 ```
 return
@@ -104,7 +105,7 @@ Functions with no return value do not need an explicit return statement.
 
 ### Breakdown
 
-This is a line-by-line breakdown of the same `checkID` example from above.
+This is a line-by-line breakdown of the same `checkID()` example from above.
 
 ```
 # func checkID is actually an event!
@@ -147,15 +148,17 @@ checkID("Jane Roe")         # no output (unsatisfied 'need')
 
 ## Function features
 
+These features apply to Functions and Events alike.
+
 ### Signatures
 
 A signature describes the arguments and returns of a function. When passing
 unnamed arguments to a function call, the signature is used in determining which
 names the arguments are associated with.
 
-This is the human-readable signature of the `checkID` function:
+This is the human-readable signature of the `checkID()` function:
 ```
-$name:Str ?$age:Num
+?$name:Str $age:Num -> $underage:Bool
 ```
 
 ### Return objects
@@ -175,4 +178,77 @@ If a function has an explicit return statement, its value overrides the
 allows you to access the return object when it would have otherwise been masked
 by the override value.
 
+### Fail
+
+[`fail`](Keywords.md#fail) is an alternative to [`throw`](Keywords.md#throw) for
+indicating the failure of a function call.
+
+```
+
+```
+
+`fail` does NOT throw an exception, nor does it stop the execution of the
+thread. It only stops the execution of the current function and stores the
+error. You should use `fail` in place of `return` any time the function did not
+achieve what it intended to.
+
+In events, however, `fail` serves another purpose. All callbacks dependent on
+the one which failed (due to [`after`](#priority-hints) priority hints) are
+canceled with failure status.
+
+An event call only ever fails if every callback fails. The error message is set
+to the first error which occurred (usually that of the default callback).
+
 ### Ellipsis arguments
+
+Functions may accept a variable number of arguments.
+
+```
+func getSum {
+    need $nums: Num...
+    return $nums.sum
+}
+
+getSum(1, 2, 3, 4, 5)   # 15
+```
+
+See the [ellipsis](Operators.md#ellipsis).
+
+## Event features
+
+These features are available to Events only.
+
+### Callback names
+
+### Priority hints
+
+```
+func enterBar {
+    need $name: Str
+    say("Welcome $name.")
+}
+
+func enterBar before :default, :checkID {
+    want $age: Int = 0
+    want $name: Str = "stranger"
+    if $age >= 21
+        return
+    fail Error(:UnderageError, "Sorry $name...")
+    stop # cancel all remaining callbacks
+}
+
+enterBar("John", age: 39)       # "Welcome John."
+enterBar("Chip", age: 12)       # :UnderageError "Sorry Chip..."
+enterBar("Mark")                # :UnderageError "Sorry Mark..."
+enterBar(age: 15)               # :UnderageError "Sorry stranger..."
+```
+
+### Stop
+
+The [`return`](Keywords.md#return) statement stops the execution of the current
+callback function but does NOT stop the propagation of the event.
+
+[`stop`](Keywords.md#stop) cancels any remaining callbacks for the particular
+call but does NOT stop the execution of the current callback function.
+
+### Cancel
