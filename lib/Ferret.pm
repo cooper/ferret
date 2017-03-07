@@ -204,6 +204,7 @@ sub space {
         # do the file
         do $file or do {
             if ($@) {
+                die "error in $file: ".$@->description."\n" if ref $@;
                 local $@ = "\n    $@" if !index($@, 'error in');
                 die "error in $file: $@\n";
                 return;
