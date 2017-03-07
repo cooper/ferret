@@ -1,0 +1,175 @@
+# Time::Duration
+
+This is the Time::Duration class version 1.0.
+
+
+
+
+## Initializer
+
+```
+$duration = Duration()
+```
+
+Creates a new duration given the time components.
+All components are integers.
+
+
+### Arguments
+
+* *optional* __years__: [Int](/std/doc/Number.md)  
+
+* *optional* __months__: [Int](/std/doc/Number.md)  
+
+* *optional* __weeks__: [Int](/std/doc/Number.md)  
+
+* *optional* __days__: [Int](/std/doc/Number.md)  
+
+* *optional* __hours__: [Int](/std/doc/Number.md)  
+
+* *optional* __minutes__: [Int](/std/doc/Number.md)  
+
+* *optional* __seconds__: [Int](/std/doc/Number.md)  
+
+* *optional* __nanoseconds__: [Int](/std/doc/Number.md)  
+
+## Methods
+
+### years
+
+```
+$duration.years
+```
+
+Computed property. Years.
+
+
+
+### months
+
+```
+$duration.months
+```
+
+Computed property. Months.
+
+
+
+### weeks
+
+```
+$duration.weeks
+```
+
+Computed property. Weeks.
+
+
+
+### days
+
+```
+$duration.days
+```
+
+Computed property. Days.
+
+
+
+### hours
+
+```
+$duration.hours
+```
+
+Computed property. Hours.
+
+
+
+### minutes
+
+```
+$duration.minutes
+```
+
+Computed property. Minutes.
+
+
+
+### seconds
+
+```
+$duration.seconds
+```
+
+Computed property. Seconds.
+
+
+
+### nanoseconds
+
+```
+$duration.nanoseconds
+```
+
+Computed property. Nanoseconds.
+
+
+
+### Addition operator (+)
+
+```
+$duration + $ehs: Duration
+```
+
+Add two durations.
+
+
+#### Arguments
+
+* __ehs__: Duration  
+
+
+
+### Subtraction operator (-)
+
+```
+$duration - $rhs: Duration
+```
+
+Subtract a duration from this one.
+
+
+#### Arguments
+
+* __rhs__: Duration  
+
+
+
+### copy
+
+```
+$duration.copy()
+```
+
+Make a copy of this duration.
+
+
+
+
+
+### description
+
+```
+$duration.description()
+```
+
+
+
+
+
+
+
+End of Time::Duration class.
+
+This file was generated automatically by the Ferret compiler from
+[Duration.frt](../Duration.frt).

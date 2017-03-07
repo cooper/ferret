@@ -55,6 +55,7 @@ type Month {
     }
 }
 
+#> symbol month names, accepted for the month time component
 type MonthSym {
     isa Sym
     satisfies $months.contains($_)
@@ -85,6 +86,7 @@ type Weekday {
     }
 }
 
+#> symbol weekday names
 type WeekdaySym {
     isa Sym
     satisfies $weekdays.contains($_)
@@ -110,14 +112,18 @@ type Nanosecond {
 
 #> creates a new time given date components
 init {
-    want $year:         Year
-    want $month:        Month
-    want $day:          Day
-    want $hour:         Hour
-    want $minute:       Minute
-    want $second:       Second
-    want $nanosecond:   Nanosecond
-    want $timeZone:     Str
+    want $year:         Year            #< year `>= 1`
+    want $month:        Month           #< month symbol (e.g. `:January`) or 1-12
+    want $day:          Day             #< day of the month, 1-31
+    want $hour:         Hour            #< hour, 0-23
+    want $minute:       Minute          #< minute, 0-59
+    want $second:       Second          #< second, 0-59
+    want $nanosecond:   Nanosecond      #< nanoseconds >= 0
+
+    #> Time zone identifier (e.g. `"America/Chicago"`) or offset
+    #| string (e.g. `"+0630"`) or `"local"` for the local timezone.
+    #| If omitted, no timezone will be associated with this timepoint.
+    want $timeZone: Str
 
     _PO.require("DateTime")
 
@@ -166,8 +172,9 @@ prop month {
     return Month(@dt.month!) : MonthSym
 }
 
+#> name of the month
 prop monthName {
-    return @month.name
+    return @month.name : Str
 }
 
 #> day of the month, 1-31
@@ -180,15 +187,16 @@ prop weekday {
     return Weekday(@dt.day_of_week!) : WeekdaySym
 }
 
-#> string name of the day of the week
+#> name of the day of the week
 prop weekdayName {
-    return @weekday.name
+    return @weekday.name : Str
 }
 
 #################
 ### OPERATORS ###
 #################
 
+#> add a duration to a timepoint
 operator + {
     need $ehs: Duration
     $t = @copy!
@@ -196,6 +204,7 @@ operator + {
     return $t
 }
 
+#> subtract a duration from a timepoint
 operator - {
     need $rhs: Duration
     $t = @copy!
@@ -207,6 +216,7 @@ operator - {
 ### MISCELLANEOUS ###
 #####################
 
+#> make a copy of this timepoint
 method copy {
     $t = Time.now!
     $t.dt = @dt.clone!

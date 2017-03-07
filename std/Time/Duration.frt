@@ -3,7 +3,8 @@ class Duration 1.0
 
 alias _PO = NATIVE::PerlObject
 
-#> creates a new duration given the time components
+#> Creates a new duration given the time components.
+#| All components are integers.
 init {
     want $years:        Int
     want $months:       Int
@@ -43,15 +44,16 @@ init {
     # want @timeZone
 }
 
-prop years          { -> @dtd.years!        : Int }
-prop months         { -> @dtd.months!       : Int }
-prop weeks          { -> @dtd.weeks!        : Int }
-prop days           { -> @dtd.days!         : Int }
-prop hours          { -> @dtd.hours!        : Int }
-prop minutes        { -> @dtd.minutes!      : Int }
-prop seconds        { -> @dtd.seconds!      : Int }
-prop nanoseconds    { -> @dtd.nanoseconds!  : Int }
+prop years          { -> @dtd.years!        : Int } #< years
+prop months         { -> @dtd.months!       : Int } #< months
+prop weeks          { -> @dtd.weeks!        : Int } #< weeks
+prop days           { -> @dtd.days!         : Int } #< days
+prop hours          { -> @dtd.hours!        : Int } #< hours
+prop minutes        { -> @dtd.minutes!      : Int } #< minutes
+prop seconds        { -> @dtd.seconds!      : Int } #< seconds
+prop nanoseconds    { -> @dtd.nanoseconds!  : Int } #< nanoseconds
 
+#> add two durations
 operator + {
     need $ehs: Duration
     $d = @copy!
@@ -59,6 +61,7 @@ operator + {
     return $d
 }
 
+#> subtract a duration from this one
 operator - {
     need $rhs: Duration
     $d = @copy!
@@ -66,6 +69,7 @@ operator - {
     return $d
 }
 
+#> make a copy of this duration
 method copy {
     $d = Duration()
     $d.dtd = @dtd.clone!
