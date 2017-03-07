@@ -109,7 +109,7 @@ After that, try running the compiler from the repository root directory to
 compile the standard library.
 
 ```sh
-./ferret -pdn
+./ferret -n
 ```
 
 **Configuration elsewhere**
@@ -138,14 +138,14 @@ See `./ferret -h` for all flags. The entire standard library is compiled like
 so:
 
 ```sh
-./ferret -pd
+./ferret
 ```
 
 After updating the repository, the compiler may have changed. You might want to
 run `ferret` with the `-n` flag to force all source files to recompile.
 
 ```sh
-./ferret -pdn
+./ferret -n
 ```
 
 ### Running
