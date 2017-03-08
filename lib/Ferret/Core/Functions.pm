@@ -14,7 +14,7 @@ use Ferret::Core::Conversion qw(
     pnumber         fnumber
     pdescription    ferror
     FUNC_ARGS       FUNC_RET
-    FUNC_CSCOPE
+    FUNC_CSCOPE     flist
 );
 
 our %functions = (
@@ -147,15 +147,18 @@ sub _fetchObject {
 }
 
 sub _activeObjectCount {
-    my (undef, $args, $call_scope) = @_;
+    my ($args, $call_scope, $ret) = @_[FUNC_ARGS, FUNC_CSCOPE, FUNC_RET];
     my $f = $call_scope->f;
+    my @objects;
     if (my $str = $args->pstring('perlType')) {
-        return fnumber(scalar grep $_->isa($str), values %{ $f->{objects} })
+        @objects = grep $_->isa($str), values %{ $f->{objects} };
     }
-    if (my $class = $args->{classType}) {
+    elsif (my $class = $args->{classType}) {
         return fnumber(0) if !$class->isa('Ferret::Class');
-        return fnumber(scalar
-            grep $_->instance_of($class), values %{ $f->{objects} });
+        @objects = grep $_->instance_of($class), values %{ $f->{objects} };
+    }
+    else {
+        @objects = values %{ $f->{objects} };
     }
 
     # my $d = {};
@@ -170,8 +173,12 @@ sub _activeObjectCount {
     #     map { [ $_ => $d->{$_} ] }
     #     sort { $d->{$b} <=> $d->{$a} } keys %$d
     # ]), "\n";
+    my %classes;
+    $classes{ blessed $_ }++ for @objects;
+    my @sorted = sort { $classes{$b} <=> $classes{$a} } keys %classes;
+    $ret->set_property(classes => flist(map { "$_ ($classes{$_})" } @sorted));
 
-    return fnumber(scalar keys %{ $f->{objects} });
+    return fnumber(scalar @objects);
 }
 
 # this is temporary, until *process.exit() exists
