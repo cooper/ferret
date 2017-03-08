@@ -7,7 +7,7 @@ use utf8;
 use 5.010;
 use parent 'Ferret::Object';
 
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed weaken);
 use Ferret::Core::Conversion qw(
     fnumber pnumber
     fstring pstring
