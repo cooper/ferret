@@ -396,15 +396,24 @@ sub add_parent {
     my ($obj, $new_parent) = @_;
     return unless $new_parent;
     $obj->{isa_changes}++;
+    my $isa = $obj->{isa};
     # TODO: if $new_parent is a Ferret array, convert to Perl array ref.
-    unshift @{ $obj->{isa} }, $new_parent;
+    unshift @$isa, $new_parent;
+    weaken($isa->[0]);
 }
 
 # revoke an object of parenthood.
 sub remove_parent {
     my ($obj, $old_parent) = @_;
+    my $isa = $obj->{isa};
+    my $i = -1;
+    foreach $i (0..$#$isa) {
+        next if $isa->[$i] != $old_parent;
+        last;
+    }
+    return if $i == -1;
     $obj->{isa_changes}++;
-    @{ $obj->{isa} } = grep { $_ != $old_parent } @{ $obj->{isa} };
+    delete $isa->[$i];
 }
 
 sub has_parent {
@@ -418,7 +427,7 @@ sub parents {
     my (@parents, %done);
     my $add; $add = sub {
         foreach (@_) {
-            next if $done{$_};
+            next if !defined || $done{$_};
             $done{$_} = 1;
             if (ref $_ eq 'ARRAY') {
                 $add->(@$_);
