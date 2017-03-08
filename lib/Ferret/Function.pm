@@ -97,12 +97,12 @@ sub new {
 
     $func->set_property(name => [ sub {
         my $func = $_[1];
-        Ferret::String->new($f, str_value => $func->{name})
+        Ferret::String->new($func->f, str_value => $func->{name})
     } ]);
 
     $func->set_property(id => [ sub {
         my $func = $_[1];
-        Ferret::String->new($f, str_value => $func->{id})
+        Ferret::String->new($func->f, str_value => $func->{id})
     } ]);
 
     return $func;
@@ -593,11 +593,11 @@ sub _global_function_prototype {
         my $proto = Ferret::Prototype->new($f, proto_name => 'Function');
         $proto->set_property(signature => sub {
             my ($func) = @_;
-            Ferret::String->new($f, str_value => $func->signature_string)
+            Ferret::String->new($func->f, str_value => $func->signature_string)
         });
         $proto->set_property(detailedSignature => sub {
             my ($func) = @_;
-            Ferret::String->new($f, str_value =>
+            Ferret::String->new($func->f, str_value =>
                 $func->detailed_signature_string
             )
         });
