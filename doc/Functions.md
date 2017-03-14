@@ -1,10 +1,10 @@
 # Functions
 
 In Ferret, all named functions and methods are implemented transparently as
-events. This means that for every function or method name, any number of
-responders may exist, each of which accepts its own arguments and spits out its
-own return values. The result is that Ferret libraries and programs are
-extremely extensible.
+[events](https://github.com/cooper/evented-object). This means that for every
+function or method name, any number of responders may exist, each of which
+accepts its own arguments and spits out its own return values. The result is
+that Ferret libraries and programs are extremely extensible.
 
 ### Function vs Event
 

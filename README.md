@@ -9,54 +9,31 @@ hobby programming language.
 * [Getting started](#getting-started)
 * [Documentation](#documentation)
 
-## Introduction
-
-### Compiled
-
-Ferret currently compiles exclusively to Perl, a high-level language. It might
-therefore be classified as a very-high-level language (VHLL). In other words,
-Ferret has many novel features, sometimes at the cost of considerable overhead.
-
-```
-say("Hello World!")
-```
-
-### Interpretable
-
-While Ferret is a compiled language, its compiler and
-runtime are both written in an interpreted language. On top of that, the
-standard library provides a Ferret interface to its own compiler. This allows
-Ferret to offers some features of interpreted languages such as compilation and
-evaluation during runtime.
-
-```
-$code = "4.sqrt"
-$two = COMPILER($code).eval().result
-```
-
 ### Concepts
 
-Ferret was originally titled
-[__EOPRJ__](https://github.com/cooper/evented-objective-perl-ruby-javascript),
-an acronym in which each letter represents a core focus or idea.
+### Events
 
-See [Concepts](doc/Concepts.md) for a list of Ferret's fundamentals.
+All functions and methods in Ferret are implemented as
+[events](doc/Functions.md).
+
+This means that for every named function or method, any number of callbacks may
+be hidden behind it, each of which accepts its own arguments and spits out its
+own return values. This makes it really easy to extend existing code without
+breaking things.
 
 ### Inheritance
 
-Ferret features a unique ISA inheritance system in which all values are objects,
-objects can inherit from any number of objects, and all objects' properties are
-inheritable.
-
-See [Inheritance](doc/Inheritance.md) to explore the ISA inheritance system.
+Ferret features a [unique inheritance system](doc/Inheritance.md) in which all
+values are objects, each of which can inherit from any number of other objects.
 
 ### Runtime
 
-Ferret features a transparent runtime based on an I/O framework. If
-asynchronous operations are occurring at any given moment, a Ferret program
-will continue processing until all operations are complete. It is not necessary
-to create custom run loops, and Ferret will effortlessly make use of
-system-specific polling methods.
+Ferret's transparent runtime makes it easy to manage I/O, timers, asynchronous
+operations, and more – all without implementing your own event loop.
+
+If asynchronous operations are occurring at any given moment, a Ferret program
+continues processing until those operations are complete. Ferret also
+effortlessly makes use of system-optimized polling methods for I/O.
 
 ```
 delay(5) {
@@ -66,14 +43,29 @@ delay(5) {
 say("starting timer...")
 ```
 
-### Compilation
+### Compiled
 
-Compilation is a multi-stage process. Put simply, the compiler converts
-Ferret code into tokens, tokens into an objective document model
-(hierarchical tree), and objects into Perl code.
+Ferret currently [compiles](doc/Compilation.md) exclusively to Perl, a
+high-level language. It might therefore be classified as a very-high-level
+language (VHLL). In other words, Ferret has many novel features, often at the
+cost of considerable overhead.
 
-That's the gist, but there's more to it. See [Compilation](doc/Compilation.md)
-for a breakdown of the process.
+```
+say("Hello World!")
+```
+
+### Interpretable
+
+While Ferret is a compiled language, its compiler and
+runtime are both written in an interpreted language. On top of that, the
+standard library provides an interface to the compiler. This allows Ferret to
+offer some features of interpreted languages such as compilation and
+evaluation during runtime.
+
+```
+$code = "4.sqrt"
+$two = COMPILER($code).eval().result
+```
 
 ## Getting started
 
@@ -173,30 +165,52 @@ things you can try.
 If you encounter an error while compiling, see
 [troubleshooting](doc/Compilation.md#troubleshooting) in Compilation.
 
-Otherwise, head to **#k** on **irc.notroll.net** and start complaining.
+Otherwise, head to `#k` on `irc.notroll.net` and start complaining.
 
 ## Documentation
 
-* [Concepts](doc/Concepts.md) - Ferret fundamental ideas
-* [Compilation](doc/Compilation.md) - Breakdown of how code is compiled
-* [Inheritance](doc/Inheritance.md) - Explanation of ISA inheritance system
+### Language
+
 * [Keywords](doc/Keywords.md) - Detailed account of every Ferret keyword
 * [Operators](doc/Operators.md) - Detailed account of Ferret operators
 * [Variables](doc/Variables.md) - Explanation of Ferret variable types
+* [Functions](doc/Functions.md) - Explanation of Ferret functions/events
+* [Scopes](doc/Scopes.md) - Explanation of Ferret lexical scoping
+<!-- * [Classes](doc/Classes.md) -->
+<!-- * [Runtime](doc/Runtime.md) -->
 
-Standard library
+### Standard library
 
 * [String](std/doc/String.md) - UTF-8 strings
 * [Number](std/doc/Number.md) - Real numbers
 * [Complex](std/doc/Complex.md) - Complex numbers
-* [JSON](std/doc/JSON.md) - JSON encoding/decoding
 * [Math](std/doc/Math.md) - Math functions and constants
-* [Math::Point](std/Math/doc/Point.md) - 2D points
-* [Math::Line](std/Math/doc/Line.md) - Line segments
-* [Math::Rect](std/Math/doc/Rect.md) - Rectangles
-* [Math::Vector](std/Math/doc/Vector.md) - Vectors of any dimension
-* [Math::Matrix](std/Math/doc/Matrix.md) - Matrices of any dimensions
+    * [Point](std/Math/doc/Point.md) - 2D points
+    * [Line](std/Math/doc/Line.md) - Line segments
+    * [Rect](std/Math/doc/Rect.md) - Rectangles
+    * [Vector](std/Math/doc/Vector.md) - Vectors of any dimension
+    * [Matrix](std/Math/doc/Matrix.md) - Matrices of any dimensions
+* [Time](std/doc/Time.md) - Represents a moment in time
+    * [Duration](std/doc/Time/Duration.md) - Represents a duration of time
 * [HTTP](std/HTTP/doc) - HTTP suite
-* [HTTP::Client](std/HTTP/doc/Client.md) - Represents an HTTP user agent
-* [HTTP::Request](std/HTTP/doc/Request.md) - Represents an HTTP request
+    * [Client](std/HTTP/doc/Client.md) - Represents an HTTP user agent
+    * [Request](std/HTTP/doc/Request.md) - Represents an HTTP request
+* [IRC](std/doc/IRC.md) - IRC suite <!-- nonexistent -->
+    * [Connection](std/IRC/doc/Connection.md) - IRC client
+    * [Massage](std/IRC/doc/Massage.md) - Represents an IRC message
+    * [Server](std/IRC/doc/Server.md) - Represents an IRC server
+    * [User](std/IRC/doc/User.md) - Represents an IRC user
+    * [Channel](std/IRC/doc/Channel.md) - Represents an IRC channel
 * [Test](std/doc/Test.md) - Basic test suite
+
+### Technical
+
+* [Compilation](doc/Compilation.md) - Breakdown of how code is compiled
+* [Tokenizer](doc/Tokenizer/Tokenizer.md) - Tokenizes Ferret source code <!-- empty -->
+    * [Tokens](doc/Tokenizer/Tokens.md) - List of tokens <!-- empty -->
+* [Constructor](doc/Constructor/Constructor.md) - Generates document model from tokens <!-- empty -->
+    * [Elements](doc/Constructor/Elements.md) - List of element types
+    * [Element](doc/Constructor/Element.md) - The base of all elements
+    * [Node](doc/Constructor/Node.md) - The base of all nodes
+    * [Rules](doc/Constructor/Rules.md) <!-- incomplete -->
+* [Inheritance](doc/Inheritance.md) - Explanation of ISA inheritance system
