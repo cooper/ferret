@@ -5,11 +5,24 @@ hobby programming language.
 
 ![Editor](http://i.imgur.com/0Ebp32e.png)
 
-* [Introduction](#introduction)
+* [Concepts](#concepts)
+  * [Events](#events)
+  * [Inheritance](#inheritance)
+  * [Runtime](#runtime)
+  * [Compiled](#compiled)
+  * [Interpretable](#interpretable)
 * [Getting started](#getting-started)
+  * [Installation](#installation)
+  * [Writing](#writing)
+  * [Compiling](#compiling)
+  * [Running](#running)
+  * [Troubleshooting](#troubleshooting)
 * [Documentation](#documentation)
+  * [Language](#language)
+  * [Standard library](#standard-library)
+  * [Technical](#technical)
 
-### Concepts
+## Concepts
 
 ### Events
 
