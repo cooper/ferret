@@ -209,10 +209,10 @@ Otherwise, head to `#k` on `irc.notroll.net` and start complaining.
     * [Time](std/doc/Time.md) - Represents a moment in time
         * [Duration](std/doc/Time/Duration.md) - Represents a duration of time
 * Networking
-    * [HTTP](std/HTTP/doc) - HTTP suite
+    * [HTTP](std/doc/HTTP.md) - HTTP suite
         * [Client](std/HTTP/doc/Client.md) - Represents an HTTP user agent
         * [Request](std/HTTP/doc/Request.md) - Represents an HTTP request
-    * [IRC](std/doc/IRC.md) - IRC suite <!-- nonexistent -->
+    * [IRC](std/doc/IRC.md) - IRC suite
         * [Connection](std/IRC/doc/Connection.md) - IRC client
         * [Massage](std/IRC/doc/Massage.md) - Represents an IRC message
         * [Server](std/IRC/doc/Server.md) - Represents an IRC server

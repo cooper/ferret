@@ -220,7 +220,28 @@ These features are available to Events only.
 
 ### Callback names
 
+Callback names allow callbacks to be identified by each other. This is useful
+for [priority hints](#priority-hints), [cancellation](#cancel), and tracebacks.
+
+Callback names follow the [`func`](Keywords.md#func),
+[`method`](Keywords.md#method), or [`on`](Keywords.md#on) declaration and are
+identified by [symbols](Variables.md#symbols).
+
+```
+on $myObj.someEvent, :doSomething {
+    statements
+}
+```
+
+When the callback name is omitted, `:default` is implicit. It is not useful to
+specify a callback name for every function or method, only those which are
+extensions of the event rather than the default responder.
+
 ### Priority hints
+
+The priority hints [`before`](Keywords.md#before) and
+[`after`](Keywords.md#after) allow you to specify that a callback should be
+executed at some point relative to another callback's execution time.
 
 ```
 func enterBar {
@@ -245,10 +266,23 @@ enterBar(age: 15)               # :UnderageError "Sorry stranger..."
 
 ### Stop
 
-The [`return`](Keywords.md#return) statement stops the execution of the current
-callback function but does NOT stop the propagation of the event.
-
 [`stop`](Keywords.md#stop) cancels any remaining callbacks for the particular
 call but does NOT stop the execution of the current callback function.
 
+The [`return`](Keywords.md#return) statement stops the execution of the current
+callback function but does NOT stop the propagation of the event.
+
 ### Cancel
+
+The [`cancel`](Keywords.md#cancel) statement cancels the execution of the
+callback with the provided name. If no such callback exists, or if the callback
+was already executed (due to a higher priority than the current one), `cancel`
+does nothing.
+
+```
+on say before :default, :censor {
+    need $message: Str
+    if $message == "shit"
+        cancel :default
+}
+```
