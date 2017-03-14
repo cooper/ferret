@@ -194,41 +194,32 @@ Otherwise, head to `#k` on `irc.notroll.net` and start complaining.
 
 ### Standard library
 
-Basic datatypes
-
-* [String](std/doc/String.md) - UTF-8 strings
-* [Number](std/doc/Number.md) - Real numbers
-* [Complex](std/doc/Complex.md) - Complex numbers
-
-Math
-
-* [Math](std/doc/Math.md) - Math functions and constants
-    * [Point](std/Math/doc/Point.md) - 2D points
-    * [Line](std/Math/doc/Line.md) - Line segments
-    * [Rect](std/Math/doc/Rect.md) - Rectangles
-    * [Vector](std/Math/doc/Vector.md) - Vectors of any dimension
-    * [Matrix](std/Math/doc/Matrix.md) - Matrices of any dimensions
-
-Date and time
-
-* [Time](std/doc/Time.md) - Represents a moment in time
-    * [Duration](std/doc/Time/Duration.md) - Represents a duration of time
-
-Networking
-
-* [HTTP](std/HTTP/doc) - HTTP suite
-    * [Client](std/HTTP/doc/Client.md) - Represents an HTTP user agent
-    * [Request](std/HTTP/doc/Request.md) - Represents an HTTP request
-* [IRC](std/doc/IRC.md) - IRC suite <!-- nonexistent -->
-    * [Connection](std/IRC/doc/Connection.md) - IRC client
-    * [Massage](std/IRC/doc/Massage.md) - Represents an IRC message
-    * [Server](std/IRC/doc/Server.md) - Represents an IRC server
-    * [User](std/IRC/doc/User.md) - Represents an IRC user
-    * [Channel](std/IRC/doc/Channel.md) - Represents an IRC channel
-
-Development
-
-* [Test](std/doc/Test.md) - Basic test suite
+* Basic datatypes
+    * [String](std/doc/String.md) - UTF-8 strings
+    * [Number](std/doc/Number.md) - Real numbers
+* Math
+    * [Complex](std/doc/Complex.md) - Complex numbers
+    * [Math](std/doc/Math.md) - Math functions and constants
+        * [Point](std/Math/doc/Point.md) - 2D points
+        * [Line](std/Math/doc/Line.md) - Line segments
+        * [Rect](std/Math/doc/Rect.md) - Rectangles
+        * [Vector](std/Math/doc/Vector.md) - Vectors of any dimension
+        * [Matrix](std/Math/doc/Matrix.md) - Matrices of any dimensions
+* Date and time
+    * [Time](std/doc/Time.md) - Represents a moment in time
+        * [Duration](std/doc/Time/Duration.md) - Represents a duration of time
+* Networking
+    * [HTTP](std/HTTP/doc) - HTTP suite
+        * [Client](std/HTTP/doc/Client.md) - Represents an HTTP user agent
+        * [Request](std/HTTP/doc/Request.md) - Represents an HTTP request
+    * [IRC](std/doc/IRC.md) - IRC suite <!-- nonexistent -->
+        * [Connection](std/IRC/doc/Connection.md) - IRC client
+        * [Massage](std/IRC/doc/Massage.md) - Represents an IRC message
+        * [Server](std/IRC/doc/Server.md) - Represents an IRC server
+        * [User](std/IRC/doc/User.md) - Represents an IRC user
+        * [Channel](std/IRC/doc/Channel.md) - Represents an IRC channel
+* Development
+    * [Test](std/doc/Test.md) - Basic test suite
 
 ### Technical
 
