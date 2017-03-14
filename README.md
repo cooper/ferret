@@ -184,27 +184,38 @@ Otherwise, head to `#k` on `irc.notroll.net` and start complaining.
 
 ### Language
 
-* [Keywords](doc/Keywords.md) - Detailed account of every Ferret keyword
+* [Keywords](doc/Keywords.md) - Detailed account of Ferret keywords
 * [Operators](doc/Operators.md) - Detailed account of Ferret operators
 * [Variables](doc/Variables.md) - Explanation of Ferret variable types
-* [Functions](doc/Functions.md) - Explanation of Ferret functions/events
-* [Scopes](doc/Scopes.md) - Explanation of Ferret lexical scoping
+* [Functions](doc/Functions.md) - Explanation of Ferret functions and events
+* [Scopes](doc/Scopes.md) - Explanation of Ferret contexts and lexical scoping
 <!-- * [Classes](doc/Classes.md) -->
 <!-- * [Runtime](doc/Runtime.md) -->
 
 ### Standard library
 
+Basic datatypes
+
 * [String](std/doc/String.md) - UTF-8 strings
 * [Number](std/doc/Number.md) - Real numbers
 * [Complex](std/doc/Complex.md) - Complex numbers
+
+Math
+
 * [Math](std/doc/Math.md) - Math functions and constants
     * [Point](std/Math/doc/Point.md) - 2D points
     * [Line](std/Math/doc/Line.md) - Line segments
     * [Rect](std/Math/doc/Rect.md) - Rectangles
     * [Vector](std/Math/doc/Vector.md) - Vectors of any dimension
     * [Matrix](std/Math/doc/Matrix.md) - Matrices of any dimensions
+
+Date and time
+
 * [Time](std/doc/Time.md) - Represents a moment in time
     * [Duration](std/doc/Time/Duration.md) - Represents a duration of time
+
+Networking
+
 * [HTTP](std/HTTP/doc) - HTTP suite
     * [Client](std/HTTP/doc/Client.md) - Represents an HTTP user agent
     * [Request](std/HTTP/doc/Request.md) - Represents an HTTP request
@@ -214,6 +225,9 @@ Otherwise, head to `#k` on `irc.notroll.net` and start complaining.
     * [Server](std/IRC/doc/Server.md) - Represents an IRC server
     * [User](std/IRC/doc/User.md) - Represents an IRC user
     * [Channel](std/IRC/doc/Channel.md) - Represents an IRC channel
+
+Development
+
 * [Test](std/doc/Test.md) - Basic test suite
 
 ### Technical
@@ -225,5 +239,5 @@ Otherwise, head to `#k` on `irc.notroll.net` and start complaining.
     * [Elements](doc/Constructor/Elements.md) - List of element types
     * [Element](doc/Constructor/Element.md) - The base of all elements
     * [Node](doc/Constructor/Node.md) - The base of all nodes
-    * [Rules](doc/Constructor/Rules.md) <!-- incomplete -->
+    * [Rules](doc/Constructor/Rules.md) - Token and element rules <!-- incomplete -->
 * [Inheritance](doc/Inheritance.md) - Explanation of ISA inheritance system
