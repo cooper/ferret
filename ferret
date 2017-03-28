@@ -116,7 +116,8 @@ sub next_result () {
 
 sub handle_result {
     my ($file, $status, $ret) = @_;
-
+    undef $ret if ref $ret ne 'HASH';
+    
     # skipped
     return next_result if $ret && $ret->{skipped};
     $not_skipped++;

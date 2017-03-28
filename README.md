@@ -92,6 +92,24 @@ $two = COMPILER($code).eval().result
 
 ### Installation
 
+### Dependencies
+
+Ferret requires the following Perl modules from the CPAN:
+
+```
+cpanm File::Slurp IO::Async Getopt::Long::Descriptive Data::Dump Perl::Tidy Types::Serialiser JSON::XS DateTime
+```
+
+The following core modules are also required but are likely already present on
+your system. If an error mentions any of them, you may need to upgrade them to
+their latest versions.
+
+```
+cpanm File::Find File::Basename Scalar::Util List::Util FindBin Carp POSIX Exporter
+```
+
+### Configuration
+
 After cloning the repository, Ferret requires a configuration. It's truly as
 simple as specifying where on your system the repository exists.
 
@@ -114,7 +132,7 @@ After that, try running the compiler from the repository root directory to
 compile the standard library.
 
 ```sh
-./ferret -n
+./ferret
 ```
 
 **Configuration elsewhere**

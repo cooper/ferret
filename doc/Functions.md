@@ -85,9 +85,9 @@ function continues beyond each return pair.
 name -> $value
 ```
 
-For simple functions, one value may returned in the usual way. This, of course,
-stops the execution of the function at that point. The function then yields the
-returned value instead of the [return object](#return-objects).
+For simple functions, one value may be returned in the usual way. This, of
+course, stops the execution of the function at that point. The function then
+yields the returned value instead of the [return object](#return-objects).
 
 ```
 return $value
