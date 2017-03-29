@@ -38,7 +38,6 @@ End of the IRC::Server class.
 
 
 
-
 End of the IRC package.
 
 This file was generated automatically by the Ferret compiler from

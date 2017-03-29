@@ -9,7 +9,202 @@ This is the Math package.
 
 ## Functions
 
-## Functions
+### sin
+
+```
+Math.sin($num: Num)
+```
+
+Sine, expressed in radians.
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### asin
+
+```
+Math.asin($num: Num)
+```
+
+Inverse sine.
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### cos
+
+```
+Math.cos($num: Num)
+```
+
+Cosine, expressed in radians.
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### acos
+
+```
+Math.acos($num: Num)
+```
+
+Inverse cosine.
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### tan
+
+```
+Math.tan($num: Num)
+```
+
+Tangent, expressed in radians.
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### atan2
+
+```
+Math.atan2($y: Num, $x: Num)
+```
+
+Note that `atan2(0, 0)` is unreliable.
+
+
+#### Arguments
+
+* __y__: [Num](/std/doc/Number.md)  
+
+* __x__: [Num](/std/doc/Number.md)  
+
+
+
+### atan
+
+```
+Math.atan($num: Num)
+```
+
+Inverse tangent.
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### sec
+
+```
+Math.sec($num: Num)
+```
+
+Secant, expressed in radians.
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### csc
+
+```
+Math.csc($num: Num)
+```
+
+Cosecant, expressed in radians.
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### log
+
+```
+Math.log($num: Num)
+```
+
+Natural logarithm (base *e*).
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### log10
+
+```
+Math.log10($num: Num)
+```
+
+Log base 10.
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### logb
+
+```
+Math.logb($base: Num, $num: Num)
+```
+
+Log base `$base`.
+
+
+#### Arguments
+
+* __base__: [Num](/std/doc/Number.md)  
+
+* __num__: [Num](/std/doc/Number.md)  
+
+
+
+### exp
+
+```
+Math.exp($num: Num)
+```
+
+Takes `e` (the base of the natural logarithm) to a power.
+
+
+#### Arguments
+
+* __num__: [Num](/std/doc/Number.md)  
 
 ## Shared variables
 

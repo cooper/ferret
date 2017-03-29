@@ -136,7 +136,6 @@ sub markdown_fmt {
             '',
         heading         => $head || '',
         classes         => $classes,
-        functions       => $functions,
         types           => $types,
         doc_functions   => $functions,
         doc_variables   => $doc_variables

@@ -102,7 +102,6 @@ End of the HTTP::Request class.
 
 
 
-
 End of the HTTP package.
 
 This file was generated automatically by the Ferret compiler from

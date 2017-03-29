@@ -391,7 +391,6 @@ End of the Math::Vector class.
 
 
 
-
 End of the Math package.
 
 This file was generated automatically by the Ferret compiler from

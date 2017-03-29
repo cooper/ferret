@@ -204,7 +204,6 @@ End of the Number class.
 
 
 
-
 End of the main package.
 
 This file was generated automatically by the Ferret compiler from

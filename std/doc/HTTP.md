@@ -9,7 +9,33 @@ This is the HTTP package.
 
 ## Functions
 
-## Functions
+### get
+
+```
+HTTP.get($url: Str)
+```
+
+Convenience method for calling `.get()` on the default client.
+
+
+#### Arguments
+
+* __url__: [Str](/std/doc/String.md)  
+
+
+
+### post
+
+```
+HTTP.post($url: Str)
+```
+
+Convenience method for calling `.post()` on the default client.
+
+
+#### Arguments
+
+* __url__: [Str](/std/doc/String.md)  
 
 
 ## Type interfaces

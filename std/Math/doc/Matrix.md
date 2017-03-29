@@ -224,7 +224,6 @@ End of the Math::Matrix class.
 
 
 
-
 End of the Math package.
 
 This file was generated automatically by the Ferret compiler from

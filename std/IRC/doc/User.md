@@ -44,7 +44,6 @@ End of the IRC::User class.
 
 
 
-
 End of the IRC package.
 
 This file was generated automatically by the Ferret compiler from

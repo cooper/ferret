@@ -75,7 +75,6 @@ End of the Math::Line class.
 
 
 
-
 End of the Math package.
 
 This file was generated automatically by the Ferret compiler from

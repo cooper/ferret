@@ -310,7 +310,6 @@ End of the Complex class.
 
 
 
-
 End of the main package.
 
 This file was generated automatically by the Ferret compiler from

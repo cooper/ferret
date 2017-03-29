@@ -93,7 +93,6 @@ End of the IRC::Massage class.
 
 
 
-
 End of the IRC package.
 
 This file was generated automatically by the Ferret compiler from

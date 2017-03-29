@@ -180,7 +180,6 @@ End of the Time::Duration class.
 
 
 
-
 End of the Time package.
 
 This file was generated automatically by the Ferret compiler from

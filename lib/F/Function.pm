@@ -241,8 +241,7 @@ sub perl_fmt {
 
 sub markdown_fmt {
     my $method = shift;
-    return if !$method->is_method; # TODO
-
+    
     # create heading.
     my $head = $method->get_markdown_heading(
         $method->is_init                ?
@@ -258,9 +257,16 @@ sub markdown_fmt {
     $signature = Ferret::Shared::Utils::signature_to_string($signature, 1);
 
     # show class name or instance variable?
-    my $class_name = $method->class->{name};
-    my $instn_name = '$'.lc($class_name);
-    my $owner_name = $method->{main} ? $class_name : $instn_name;
+    my ($class_name, $instn_name, $owner_name);
+    if ($method->class) {
+        $class_name = $method->class->{name};
+        $instn_name = '$'.lc($class_name);
+        $owner_name = $method->{main} ? $class_name : $instn_name;
+    }
+    else {
+        $owner_name = $method->document->{package};
+    }
+    
     my $example =
 
         # operator

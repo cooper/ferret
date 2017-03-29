@@ -93,7 +93,6 @@ End of the Math::Point class.
 
 
 
-
 End of the Math package.
 
 This file was generated automatically by the Ferret compiler from
