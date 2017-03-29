@@ -1,11 +1,18 @@
-# Math::Rect
+# Math
+
+This is the Math package.
+
+
+
+
+## Math::Rect
 
 This is the Math::Rect class.
 
 Represents a rectangle.
 
 
-## Initializer
+### Initializer
 
 ```
 $rect = Rect($x: Num, $y: Num, $width: Num, $height: Num)
@@ -14,7 +21,7 @@ $rect = Rect($x: Num, $y: Num, $width: Num, $height: Num)
 Creates a rectangle, given its origin (bottom-left vertex) and dimensions.
 
 
-### Arguments
+#### Arguments
 
 * __x__: [Num](/std/doc/Number.md) - X-coordinate of the rectangle's origin.
 
@@ -24,9 +31,9 @@ Creates a rectangle, given its origin (bottom-left vertex) and dimensions.
 
 * __height__: [Num](/std/doc/Number.md) - Height of the rectangle.
 
-## Methods
+### Methods
 
-### vertices
+#### vertices
 
 ```
 $rect.vertices
@@ -36,7 +43,7 @@ Computed property. A list of the four vertices of the rectangle.
 
 
 
-### bottomLeft
+#### bottomLeft
 
 ```
 $rect.bottomLeft
@@ -46,7 +53,7 @@ Computed property. Bottom left vertex of the rectangle.
 
 
 
-### bottomRight
+#### bottomRight
 
 ```
 $rect.bottomRight
@@ -56,7 +63,7 @@ Computed property. Bottom right vertex of the rectangle.
 
 
 
-### topLeft
+#### topLeft
 
 ```
 $rect.topLeft
@@ -66,7 +73,7 @@ Computed property. Top left vertex of the rectangle.
 
 
 
-### topRight
+#### topRight
 
 ```
 $rect.topRight
@@ -76,7 +83,7 @@ Computed property. Top right vertex of the rectangle.
 
 
 
-### bottomLine
+#### bottomLine
 
 ```
 $rect.bottomLine
@@ -86,7 +93,7 @@ Computed property. Line segment formed by the bottom vertices of the rectangle.
 
 
 
-### topLine
+#### topLine
 
 ```
 $rect.topLine
@@ -96,7 +103,7 @@ Computed property. Line segment formed by the top vertices of the rectangle.
 
 
 
-### center
+#### center
 
 ```
 $rect.center
@@ -106,7 +113,7 @@ Computed property. Center point of the rectangle.
 
 
 
-### description
+#### description
 
 ```
 $rect.description()
@@ -116,9 +123,14 @@ $rect.description()
 
 
 
+End of the Math::Rect class.
 
 
-End of Math::Rect class.
+
+
+
+
+End of the Math package.
 
 This file was generated automatically by the Ferret compiler from
 [Rect.frt](../Rect.frt).

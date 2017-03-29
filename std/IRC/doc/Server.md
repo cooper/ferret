@@ -1,11 +1,18 @@
-# IRC::Server
+# IRC
+
+This is the IRC package.
+
+
+
+
+## IRC::Server
 
 This is the IRC::Server class.
 
 
 
 
-## Initializer
+### Initializer
 
 ```
 $server = Server($connection: Connection, $name: Str)
@@ -14,7 +21,7 @@ $server = Server($connection: Connection, $name: Str)
 Creates a new Server class instance.
 
 
-### Arguments
+#### Arguments
 
 * __connection__: Connection  
 
@@ -25,9 +32,14 @@ Creates a new Server class instance.
 
 
 
+End of the IRC::Server class.
 
 
-End of IRC::Server class.
+
+
+
+
+End of the IRC package.
 
 This file was generated automatically by the Ferret compiler from
 [Server.frt](../Server.frt).

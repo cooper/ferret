@@ -6,6 +6,8 @@ use strict;
 use 5.010;
 use parent 'F::ScopeOwner';
 
+use Ferret::Shared::Utils qw(dot_trim);
+
 sub new {
     my ($class, %opts) = @_;
     return $class->SUPER::new(
@@ -17,7 +19,9 @@ sub new {
 
 sub desc {
     my $doc = shift;
-    return "package '$$doc{package}'";
+    my $desc = "package '$$doc{package}'";
+    $desc   .= " version $$doc{version}" if defined $doc->{version};
+    return $desc;
 }
 
 sub file_name     { shift->parent->{name}   }
@@ -62,18 +66,80 @@ sub perl_fmt {
 
 sub markdown_fmt {
     my $doc = shift;
-    my $content = '';
 
     # this must be called before calling ->markdown_fmt_do on children.
-    #my $head = $doc->get_markdown_heading($doc->{package});
+    my $head = $doc->get_markdown_heading($doc->{package});
 
     # first, classes.
+    my $classes = '';
     my @classes = $doc->filter_children(type => 'Class');
-    $content .= $_->markdown_fmt_do."\n" for @classes;
+    $classes .= $_->markdown_fmt_do."\n" for @classes;
+
+    # separate into parts.
+    my @functions    = grep $_->public, $doc->filter_children(type => 'Function');
+    my @aliases      = grep $_->public, $doc->filter_children(type => 'Alias');
+    my @types        = grep $_->public, $doc->filter_children(type => 'Type');
+    my @vars         = map $_->first_child,
+        $doc->filter_children(type => 'Instruction.SharedDeclaration');
+
+    # type interfaces
+    my $types = '';
+    if (@types) {
+
+        # add the heading. increase the class heading.
+        $doc->{markdown_heading_level}++;
+        $types .= $doc->get_markdown_heading('Type interfaces')."\n";
+
+        foreach my $type (@types) {
+            $types .= $type->markdown_fmt_do."\n";
+        }
+
+        $doc->{markdown_heading_level}--;
+    }
+
+    # functions
+    my $functions = '';
+    if (@functions) {
+
+        # add the heading. increase the class heading to trick the methods.
+        $doc->{markdown_heading_level}++;
+        $functions .= $doc->get_markdown_heading('Functions')."\n";
+
+        foreach my $function (@functions) {
+            $functions .= $function->markdown_fmt_do."\n";
+        }
+
+        $doc->{markdown_heading_level}--;
+    }
+
+    # class variables.
+    my $doc_variables = '';
+    if (@vars) {
+
+        # add the heading. increase the class heading.
+        $doc->{markdown_heading_level}++;
+        $doc_variables .= $doc->get_markdown_heading('Shared variables')."\n";
+
+        foreach my $share (@vars) {
+            $doc_variables .= $share->markdown_fmt_do."\n";
+        }
+
+        $doc->{markdown_heading_level}--;
+    }
 
     return document => {
-        #heading => $head,
-        content => $content
+        name            => $doc->{package},
+        description     => dot_trim($doc->doc_comment),
+        version         => $doc->{version},
+        version_str     => $doc->{version}    ?
+            " version $$doc{version}"         :
+            '',
+        heading         => $head || '',
+        classes         => $classes,
+        functions       => $functions,
+        types           => $types,
+        doc_functions   => $functions,
+        doc_variables   => $doc_variables
     };
 }
 

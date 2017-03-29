@@ -1,11 +1,18 @@
-# Test
+# main
+
+This is the main package.
+
+
+
+
+## Test
 
 This is the Test class version 1.0.
 
 Provides a basic test suite.
 
 
-## Initializer
+### Initializer
 
 ```
 $test = Test()
@@ -14,16 +21,16 @@ $test = Test()
 Creates a new Test class instance.
 
 
-### Arguments
+#### Arguments
 
 * *optional* __name__: Any - Test name.
 
 * *optional* __fatal__: Any - If true, a failed test will throw a fatal error.
 This is the default behavior.
 
-## Methods
+### Methods
 
-### trueValue
+#### trueValue
 
 ```
 $test.trueValue($a)
@@ -32,13 +39,13 @@ $test.trueValue($a)
 Test succeeds if `Bool($a) === true`.
 
 
-#### Arguments
+##### Arguments
 
 * __a__: Any - Test object.
 
 
 
-### veryTrue
+#### veryTrue
 
 ```
 $test.veryTrue($a)
@@ -47,13 +54,13 @@ $test.veryTrue($a)
 Test succeeds if `$a === true`.
 
 
-#### Arguments
+##### Arguments
 
 * __a__: Any - Test object.
 
 
 
-### equal
+#### equal
 
 ```
 $test.equal($a, $b)
@@ -62,7 +69,7 @@ $test.equal($a, $b)
 Test succeeds if `$a == $b`.
 
 
-#### Arguments
+##### Arguments
 
 * __a__: Any - Test object 1.
 
@@ -70,7 +77,7 @@ Test succeeds if `$a == $b`.
 
 
 
-### objectsEqual
+#### objectsEqual
 
 ```
 $test.objectsEqual($a, $b)
@@ -79,7 +86,7 @@ $test.objectsEqual($a, $b)
 Test succeeds if `$a === $b`.
 
 
-#### Arguments
+##### Arguments
 
 * __a__: Any - Test object 1.
 
@@ -87,7 +94,7 @@ Test succeeds if `$a === $b`.
 
 
 
-### notEqual
+#### notEqual
 
 ```
 $test.notEqual($a, $b)
@@ -96,7 +103,7 @@ $test.notEqual($a, $b)
 Test succeeds if `$a != $b`.
 
 
-#### Arguments
+##### Arguments
 
 * __a__: Any - Test object 1.
 
@@ -104,7 +111,7 @@ Test succeeds if `$a != $b`.
 
 
 
-### objectsNotEqual
+#### objectsNotEqual
 
 ```
 $test.objectsNotEqual($a, $b)
@@ -113,7 +120,7 @@ $test.objectsNotEqual($a, $b)
 Test succeeds if `$a !== $b`.
 
 
-#### Arguments
+##### Arguments
 
 * __a__: Any - Test object 1.
 
@@ -121,7 +128,7 @@ Test succeeds if `$a !== $b`.
 
 
 
-### instanceOfClass
+#### instanceOfClass
 
 ```
 $test.instanceOfClass($a, $b)
@@ -130,7 +137,7 @@ $test.instanceOfClass($a, $b)
 Test succeeds of `$a` is an instance of class `$b`.
 
 
-#### Arguments
+##### Arguments
 
 * __a__: Any - Test object.
 
@@ -138,7 +145,7 @@ Test succeeds of `$a` is an instance of class `$b`.
 
 
 
-### fitsType
+#### fitsType
 
 ```
 $test.fitsType($a, $b)
@@ -147,7 +154,7 @@ $test.fitsType($a, $b)
 Test succeeds of `$a` satisfies type `$b`.
 
 
-#### Arguments
+##### Arguments
 
 * __a__: Any - Test object.
 
@@ -155,7 +162,7 @@ Test succeeds of `$a` satisfies type `$b`.
 
 
 
-### review
+#### review
 
 ```
 $test.review()
@@ -164,7 +171,7 @@ $test.review()
 Prints the test review.
 
 
-#### Arguments
+##### Arguments
 
 * *optional* __quiet__: [Bool](/std/doc/Bool.md)  
 
@@ -172,9 +179,14 @@ Prints the test review.
 
 
 
+End of the Test class.
 
 
-End of Test class.
+
+
+
+
+End of the main package.
 
 This file was generated automatically by the Ferret compiler from
 [Test.frt](../Test.frt).

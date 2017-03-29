@@ -1,4 +1,11 @@
-# Number
+# main
+
+This is the main package.
+
+
+
+
+## Number
 
 This is the Number class.
 
@@ -17,9 +24,9 @@ support for complex numbers as well through the [Complex](Complex.md) class.
 
 
 
-## Methods
+### Methods
 
-### even
+#### even
 
 ```
 $number.even
@@ -29,7 +36,7 @@ Computed property. Boolean evenness of the number.
 
 
 
-### odd
+#### odd
 
 ```
 $number.odd
@@ -39,7 +46,7 @@ Computed property. Boolean oddness of the number.
 
 
 
-### round
+#### round
 
 ```
 $number.round
@@ -50,7 +57,7 @@ Examples: `3.5` -> `4`, `3.4` -> `3`.
 
 
 
-### ceil
+#### ceil
 
 ```
 $number.ceil
@@ -61,7 +68,7 @@ Example: `3.001.ceil` -> `4`.
 
 
 
-### floor
+#### floor
 
 ```
 $number.floor
@@ -72,7 +79,7 @@ Example: `3.999` -> `3`.
 
 
 
-### square
+#### square
 
 ```
 $number.square
@@ -83,7 +90,7 @@ Example: `2.square` -> `4`.
 
 
 
-### sqrt
+#### sqrt
 
 ```
 $number.sqrt
@@ -94,7 +101,7 @@ Example: `4.sqrt` -> `2`.
 
 
 
-### cbrt
+#### cbrt
 
 ```
 $number.cbrt
@@ -105,7 +112,7 @@ Example: `8.cbrt` -> `2`.
 
 
 
-### root
+#### root
 
 ```
 $number.root($root: Num)
@@ -115,13 +122,13 @@ Nth root of the number.
 Example: `8.root(3)` -> `2`.
 
 
-#### Arguments
+##### Arguments
 
 * __root__: [Num](/std/doc/Number.md) - The root. For example, `3` is the cube root.
 
 
 
-### factorial
+#### factorial
 
 ```
 $number.factorial()
@@ -131,11 +138,9 @@ The number's factorial (`n!`). This can also be written `n!` because
 "calling" a number yields its factorial. Non-integers are transformed with
 `.floor`.
 
+### Class properties
 
-## Class properties
-
-
-### Inf
+#### Inf
 
 ```
 Number.Inf
@@ -143,7 +148,7 @@ Number.Inf
 
 Infinity. Alias `Inf` exists in the global context.
 
-### NaN
+#### NaN
 
 ```
 Number.NaN
@@ -151,14 +156,14 @@ Number.NaN
 
 Not a number. Alias `NaN` exists in the global context.
 
-## Type interfaces
+### Type interfaces
 
-### Even
+#### Even
 
 An interface to which only even numbers conform.
 
 
-#### Restraints and transforms
+##### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
@@ -166,12 +171,12 @@ In order to comply, the test object must satisfy each of the following condition
 2. __satisfies__: The number is even (`.even`).
 
 
-### Odd
+#### Odd
 
 An interface to which only odd numbers conform.
 
 
-#### Restraints and transforms
+##### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
@@ -179,13 +184,13 @@ In order to comply, the test object must satisfy each of the following condition
 2. __satisfies__: The number is odd (`.odd`).
 
 
-### Integer
+#### Integer
 
 This interface promises an integer value, returning the `.floor` property
 of floating-point numbers. Alias `Int` exists in the global context.
 
 
-#### Restraints and transforms
+##### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
@@ -193,7 +198,14 @@ In order to comply, the test object must satisfy each of the following condition
 2. __transform__: The number is truncated to its `.floor` value.
 
 
-End of Number class.
+End of the Number class.
+
+
+
+
+
+
+End of the main package.
 
 This file was generated automatically by the Ferret compiler from
 [Number.frtdoc](../Number.frtdoc).

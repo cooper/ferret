@@ -38,10 +38,12 @@ sub _all_types {
 }
 
 sub is_type {
-    my ($el, $type) = @_;
-    return 1 if any { $_ eq $type } $el->all_types;
-    if (my $code = $el->can("is_$type")) {
-        return $code->($el);
+    my ($el, $types) = @_;
+    foreach my $type (split /\s+/, $types) {
+        return 1 if any { $_ eq $type } $el->all_types;
+        if (my $code = $el->can("is_$type")) {
+            return $code->($el);
+        }
     }
     return;
 }
@@ -85,7 +87,8 @@ sub first_parent {
 }
 
 sub first_self_or_parent {
-    my ($el, @types) = @_;
+    my ($el, $types) = @_;
+    my @types = split /\s+/, $types;
     do {
         for (@types) {
             return $el if _check_type($el, $_);

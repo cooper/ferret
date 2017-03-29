@@ -95,7 +95,7 @@ sub markdown_fmt {
     my $head = $class->get_markdown_heading($class_full_name);
 
     # separate into parts.
-    my @all_methods  = grep $_->is_method, $class->filter_children(type => 'Function');
+    my @all_methods  = grep $_->public, $class->filter_children(type => 'Function');
     my @aliases      = grep $_->public, $class->filter_children(type => 'Alias');
     my @types        = grep $_->public, $class->filter_children(type => 'Type');
     my @class_vars   = map $_->first_child,

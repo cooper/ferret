@@ -1,11 +1,18 @@
-# IRC::Connection
+# IRC
+
+This is the IRC package.
+
+
+
+
+## IRC::Connection
 
 This is the IRC::Connection class.
 
 
 
 
-## Initializer
+### Initializer
 
 ```
 $connection = Connection($addr: Str, $nick: Str)
@@ -14,7 +21,7 @@ $connection = Connection($addr: Str, $nick: Str)
 Creates a new Connection class instance.
 
 
-### Arguments
+#### Arguments
 
 * __addr__: [Str](/std/doc/String.md) - IRC server address.
 
@@ -28,9 +35,9 @@ Creates a new Connection class instance.
 
 * *optional* __autojoin__: List - Channels to join on connect.
 
-## Methods
+### Methods
 
-### connect
+#### connect
 
 ```
 $connection.connect()
@@ -42,7 +49,7 @@ Initiates the connection.
 
 
 
-### send
+#### send
 
 ```
 $connection.send($line: Str)
@@ -51,13 +58,13 @@ $connection.send($line: Str)
 Sends a line of IRC data.
 
 
-#### Arguments
+##### Arguments
 
 * __line__: [Str](/std/doc/String.md) - A string outgoing data.
 
 
 
-### getTarget
+#### getTarget
 
 ```
 $connection.getTarget($target: Str)
@@ -66,13 +73,13 @@ $connection.getTarget($target: Str)
 Fetches a channel or user object.
 
 
-#### Arguments
+##### Arguments
 
 * __target__: [Str](/std/doc/String.md) - Channel name or nickname.
 
 
 
-### getChannel
+#### getChannel
 
 ```
 $connection.getChannel($name: Str)
@@ -81,13 +88,13 @@ $connection.getChannel($name: Str)
 Fetches a channel object from a channel name.
 
 
-#### Arguments
+##### Arguments
 
 * __name__: [Str](/std/doc/String.md) - Channel name.
 
 
 
-### getUser
+#### getUser
 
 ```
 $connection.getUser($nick: Str)
@@ -96,13 +103,13 @@ $connection.getUser($nick: Str)
 Fetches a user object from a nickname.
 
 
-#### Arguments
+##### Arguments
 
 * __nick__: [Str](/std/doc/String.md) - Nickname associated with the user.
 
 
 
-### getServer
+#### getServer
 
 ```
 $connection.getServer($name: Str)
@@ -111,13 +118,13 @@ $connection.getServer($name: Str)
 Fetches a server object from a server name.
 
 
-#### Arguments
+##### Arguments
 
 * __name__: [Str](/std/doc/String.md) - Server name.
 
 
 
-### connected
+#### connected
 
 ```
 $connection.connected()
@@ -129,7 +136,7 @@ Hook. Called when a connection to the socket is established.
 
 
 
-### disconnected
+#### disconnected
 
 ```
 $connection.disconnected()
@@ -141,7 +148,7 @@ Hook. Called on disconnect, whether it be user-initiated or due to error.
 
 
 
-### copy
+#### copy
 
 ```
 $connection.copy()
@@ -153,7 +160,7 @@ Creates a new IRC::Connection with the same options.
 
 
 
-### description
+#### description
 
 ```
 $connection.description()
@@ -163,9 +170,14 @@ $connection.description()
 
 
 
+End of the IRC::Connection class.
 
 
-End of IRC::Connection class.
+
+
+
+
+End of the IRC package.
 
 This file was generated automatically by the Ferret compiler from
 [Connection.frt](../Connection.frt).

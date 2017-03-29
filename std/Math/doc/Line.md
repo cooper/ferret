@@ -1,11 +1,18 @@
-# Math::Line
+# Math
+
+This is the Math package.
+
+
+
+
+## Math::Line
 
 This is the Math::Line class.
 
 Represents a line segment.
 
 
-## Initializer
+### Initializer
 
 ```
 $line = Line($pt1: Point, $pt2: Point)
@@ -14,15 +21,15 @@ $line = Line($pt1: Point, $pt2: Point)
 Creates a line segment given two endpoints.
 
 
-### Arguments
+#### Arguments
 
 * __pt1__: Point - An endpoint.
 
 * __pt2__: Point - Another endpoint.
 
-## Methods
+### Methods
 
-### length
+#### length
 
 ```
 $line.length
@@ -32,7 +39,7 @@ Computed property. Length of the line segment.
 
 
 
-### endpoints
+#### endpoints
 
 ```
 $line.endpoints
@@ -42,7 +49,7 @@ Computed property. A list of endpoints.
 
 
 
-### midpoint
+#### midpoint
 
 ```
 $line.midpoint
@@ -52,7 +59,7 @@ Computed property. Midpoint of the line segment.
 
 
 
-### description
+#### description
 
 ```
 $line.description()
@@ -62,9 +69,14 @@ $line.description()
 
 
 
+End of the Math::Line class.
 
 
-End of Math::Line class.
+
+
+
+
+End of the Math package.
 
 This file was generated automatically by the Ferret compiler from
 [Line.frt](../Line.frt).

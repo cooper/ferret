@@ -1,11 +1,18 @@
-# Time::Duration
+# Time
+
+This is the Time package.
+
+
+
+
+## Time::Duration
 
 This is the Time::Duration class version 1.0.
 
 
 
 
-## Initializer
+### Initializer
 
 ```
 $duration = Duration()
@@ -15,7 +22,7 @@ Creates a new duration given the time components.
 All components are integers.
 
 
-### Arguments
+#### Arguments
 
 * *optional* __years__: [Int](/std/doc/Number.md)  
 
@@ -33,9 +40,9 @@ All components are integers.
 
 * *optional* __nanoseconds__: [Int](/std/doc/Number.md)  
 
-## Methods
+### Methods
 
-### years
+#### years
 
 ```
 $duration.years
@@ -45,7 +52,7 @@ Computed property. Years.
 
 
 
-### months
+#### months
 
 ```
 $duration.months
@@ -55,7 +62,7 @@ Computed property. Months.
 
 
 
-### weeks
+#### weeks
 
 ```
 $duration.weeks
@@ -65,7 +72,7 @@ Computed property. Weeks.
 
 
 
-### days
+#### days
 
 ```
 $duration.days
@@ -75,7 +82,7 @@ Computed property. Days.
 
 
 
-### hours
+#### hours
 
 ```
 $duration.hours
@@ -85,7 +92,7 @@ Computed property. Hours.
 
 
 
-### minutes
+#### minutes
 
 ```
 $duration.minutes
@@ -95,7 +102,7 @@ Computed property. Minutes.
 
 
 
-### seconds
+#### seconds
 
 ```
 $duration.seconds
@@ -105,7 +112,7 @@ Computed property. Seconds.
 
 
 
-### nanoseconds
+#### nanoseconds
 
 ```
 $duration.nanoseconds
@@ -115,7 +122,7 @@ Computed property. Nanoseconds.
 
 
 
-### Addition operator (+)
+#### Addition operator (+)
 
 ```
 $duration + $ehs: Duration
@@ -124,13 +131,13 @@ $duration + $ehs: Duration
 Add two durations.
 
 
-#### Arguments
+##### Arguments
 
 * __ehs__: Duration  
 
 
 
-### Subtraction operator (-)
+#### Subtraction operator (-)
 
 ```
 $duration - $rhs: Duration
@@ -139,13 +146,13 @@ $duration - $rhs: Duration
 Subtract a duration from this one.
 
 
-#### Arguments
+##### Arguments
 
 * __rhs__: Duration  
 
 
 
-### copy
+#### copy
 
 ```
 $duration.copy()
@@ -157,7 +164,7 @@ Make a copy of this duration.
 
 
 
-### description
+#### description
 
 ```
 $duration.description()
@@ -167,9 +174,14 @@ $duration.description()
 
 
 
+End of the Time::Duration class.
 
 
-End of Time::Duration class.
+
+
+
+
+End of the Time package.
 
 This file was generated automatically by the Ferret compiler from
 [Duration.frt](../Duration.frt).

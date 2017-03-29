@@ -1,4 +1,11 @@
-# String
+# main
+
+This is the main package.
+
+
+
+
+## String
 
 This is the String class.
 
@@ -8,9 +15,9 @@ double quotes, like so: `"The quick brown fox jumps over the lazy dog"`.
 
 
 
-## Methods
+### Methods
 
-### length
+#### length
 
 ```
 $string.length
@@ -20,7 +27,7 @@ Computed property. The length of the string.
 
 
 
-### uppercase
+#### uppercase
 
 ```
 $string.uppercase
@@ -30,7 +37,7 @@ Computed property. A string based on the original with an uppercase transformati
 
 
 
-### lowercase
+#### lowercase
 
 ```
 $string.lowercase
@@ -40,7 +47,7 @@ Computed property. A string based on the original with a lowercase transformatio
 
 
 
-### split
+#### split
 
 ```
 $string.split()
@@ -50,7 +57,7 @@ Returns a list of substrings based on the division of the original
 string by the provided separator.
 
 
-#### Arguments
+##### Arguments
 
 * *optional* __separator__: [Str](/std/doc/String.md) | [Rgx](/std/doc/Regex.md) - The substring separator. The default is the empty string, which results
 in a list of individual characters.
@@ -62,7 +69,7 @@ of the separator.
 
 
 
-### fill
+#### fill
 
 ```
 $string.fill()
@@ -80,14 +87,14 @@ multi-line, they will be indented at the same depth as the placeholder.
 For example, `"Hi <<name>>!".fill(name: "Steve")` returns `"Hi Steve!"`.
 
 
-#### Arguments
+##### Arguments
 
 * *optional* __valueHash__: Hash - If provided, the keys and values in this hash will be used to
 fill the placeholders rather than the named argument pairs.
 
 
 
-### hasPrefix
+#### hasPrefix
 
 ```
 $string.hasPrefix($prefix: Str)
@@ -96,13 +103,13 @@ $string.hasPrefix($prefix: Str)
 Returns a boolean true value if the prefix exists.
 
 
-#### Arguments
+##### Arguments
 
 * __prefix__: [Str](/std/doc/String.md) - The prefix to look for.
 
 
 
-### trimPrefix
+#### trimPrefix
 
 ```
 $string.trimPrefix($prefix: Str)
@@ -113,13 +120,13 @@ beginning (left side) of the original string. If the string does not
 have that prefix, a copy of the original string is returned.
 
 
-#### Arguments
+##### Arguments
 
 * __prefix__: [Str](/std/doc/String.md) - The prefix to remove.
 
 
 
-### hasSuffix
+#### hasSuffix
 
 ```
 $string.hasSuffix($suffix: Str)
@@ -128,13 +135,13 @@ $string.hasSuffix($suffix: Str)
 Returns a boolean true value if the suffix exists.
 
 
-#### Arguments
+##### Arguments
 
 * __suffix__: [Str](/std/doc/String.md) - The suffix to look for.
 
 
 
-### trimSuffix
+#### trimSuffix
 
 ```
 $string.trimSuffix($suffix: Str)
@@ -145,22 +152,20 @@ end (right side) of the original string. If the string does not
 have that suffix, a copy of the original string is returned.
 
 
-#### Arguments
+##### Arguments
 
 * __suffix__: [Str](/std/doc/String.md) - The suffix to remove.
 
 
 
+### Type interfaces
 
-
-## Type interfaces
-
-### NonEmpty
+#### NonEmpty
 
 An interface to which only non-empty strings comply.
 
 
-#### Restraints and transforms
+##### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
@@ -168,12 +173,12 @@ In order to comply, the test object must satisfy each of the following condition
 2. __satisfies__: The string length is not zero (`.length != 0`).
 
 
-### Uppercase
+#### Uppercase
 
 Performs an uppercase transformation.
 
 
-#### Restraints and transforms
+##### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
@@ -181,12 +186,12 @@ In order to comply, the test object must satisfy each of the following condition
 2. __transform__: The string transforms to an uppercase version (`.uppercase`).
 
 
-### Lowercase
+#### Lowercase
 
 Performs a lowercase transformation.
 
 
-#### Restraints and transforms
+##### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
@@ -194,7 +199,14 @@ In order to comply, the test object must satisfy each of the following condition
 2. __transform__: The string transforms to an lowercase version (`.lowercase`).
 
 
-End of String class.
+End of the String class.
+
+
+
+
+
+
+End of the main package.
 
 This file was generated automatically by the Ferret compiler from
 [String.frtdoc](../String.frtdoc).

@@ -1,3 +1,14 @@
 <<heading>>
 
-<<content>>
+This is the <<name>> package<<version_str>>.
+
+<<description>>
+
+<<classes>>
+
+<<functions>>
+<<doc_functions>>
+<<doc_variables>>
+<<types>>
+
+End of the <<name>> package.

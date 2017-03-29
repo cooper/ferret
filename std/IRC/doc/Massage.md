@@ -1,11 +1,18 @@
-# IRC::Massage
+# IRC
+
+This is the IRC package.
+
+
+
+
+## IRC::Massage
 
 This is the IRC::Massage class.
 
 
 
 
-## Initializer
+### Initializer
 
 ```
 $massage = Massage()
@@ -14,16 +21,16 @@ $massage = Massage()
 Creates a new Massage class instance.
 
 
-### Arguments
+#### Arguments
 
 * *optional* __data__: [Str::NE](/std/doc/String.md) - A complete IRC message.
 
 * *optional* __connection__: Connection - The connection object to associate the message with,
 used for source and target properties.
 
-## Methods
+### Methods
 
-### parse
+#### parse
 
 ```
 $massage.parse($data: Str::NE)
@@ -32,13 +39,13 @@ $massage.parse($data: Str::NE)
 Parses IRC data.
 
 
-#### Arguments
+##### Arguments
 
 * __data__: [Str::NE](/std/doc/String.md) - A string of IRC-encoded data.
 
 
 
-### target
+#### target
 
 ```
 $massage.target
@@ -48,7 +55,7 @@ Computed property. User or channel object from the first parameter.
 
 
 
-### nick
+#### nick
 
 ```
 $massage.nick
@@ -58,7 +65,7 @@ Computed property. Source's nickname.
 
 
 
-### user
+#### user
 
 ```
 $massage.user
@@ -68,7 +75,7 @@ Computed property. Source's username (ident).
 
 
 
-### host
+#### host
 
 ```
 $massage.host
@@ -80,9 +87,14 @@ Computed property. Source's host.
 
 
 
+End of the IRC::Massage class.
 
 
-End of IRC::Massage class.
+
+
+
+
+End of the IRC package.
 
 This file was generated automatically by the Ferret compiler from
 [Massage.frt](../Massage.frt).

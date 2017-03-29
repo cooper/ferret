@@ -38,12 +38,13 @@ sub markdown_fmt {
     my $head    = $share->get_markdown_heading($var->{var_name});
     my $comment = $share->parent->find_doc_comment;
 
-    # create an example.
-    # later: when outside a class, show PackageName.varName.
+    # create an example, using the name of the nearest class or package
     my $example;
-    my $class = $share->first_self_or_parent('Class');
-    if ($class) {
-        $example = $class->{name}.'.'.$var->{var_name};
+    my $owner = $share->first_self_or_parent('Class Document');
+    if ($owner) {
+        my $name = $owner->type eq 'Document' ?
+            $owner->{package} : $owner->{name};
+        $example = "$name.$$var{var_name}";
     }
 
     return share_lexical_var => {
