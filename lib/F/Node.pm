@@ -93,7 +93,8 @@ sub _filter_elements {
 
         # not the right type.
         next if keys %types && !$types{$type} && !$types{$fc_type};
-
+        $el = $el->first_child if $types{$fc_type};
+        
         # not public.
         next if $rules{public} && !$el->public;
 

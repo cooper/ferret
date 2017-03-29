@@ -98,8 +98,7 @@ sub markdown_fmt {
     my @all_methods  = $class->filter_children(public => 1, type => 'Function');
     my @aliases      = $class->filter_children(public => 1, type => 'Alias');
     my @types        = $class->filter_children(public => 1, type => 'Type');
-    my @class_vars   = map $_->first_child,
-        $class->filter_children(type => 'Instruction.SharedDeclaration');
+    my @class_vars   = $class->filter_children(type => 'Instruction.SharedDeclaration');
 
     # separate methods into initializer, class functions, and normal.
     my (@methods, @class_funcs, $init);

@@ -361,8 +361,7 @@ sub identify_recursive_type_declarations {
     foreach my $type ($main_node->filter_descendants(type => 'Type')) {
 
         # find requirements.
-        my @req = map $_->first_child,
-            $type->body->filter_children(type => 'Instruction.TypeRequirement');
+        my @req = $type->body->filter_children(type => 'Instruction.TypeRequirement');
 
         # filter out isa.
         foreach my $isa (grep { $_->{req_type} eq 'isa' } @req) {

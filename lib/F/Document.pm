@@ -72,8 +72,7 @@ sub markdown_fmt {
     my @functions    = $doc->filter_children(public => 1, type => 'Function');
     my @aliases      = $doc->filter_children(public => 1, type => 'Alias');
     my @types        = $doc->filter_children(public => 1, type => 'Type');
-    my @vars         = map $_->first_child,
-        $doc->filter_children(type => 'Instruction.SharedDeclaration');
+    my @vars         = $doc->filter_children(type => 'Instruction.SharedDeclaration');
 
     # if the file contains only classes, show them and nothing else
     my @everything = (@classes, @functions, @aliases, @types, @vars);
