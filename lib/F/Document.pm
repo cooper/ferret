@@ -68,7 +68,7 @@ sub markdown_fmt {
     my $doc = shift;
 
     # separate into parts.
-    my @classes      = $doc->filter_children(type => 'Class');
+    my @classes      = grep $_->public, $doc->filter_children(type => 'Class');
     my @functions    = grep $_->public, $doc->filter_children(type => 'Function');
     my @aliases      = grep $_->public, $doc->filter_children(type => 'Alias');
     my @types        = grep $_->public, $doc->filter_children(type => 'Type');
