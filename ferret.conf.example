@@ -1,34 +1,12 @@
 use strict;
+package Ferret::Config;
 
 # CHANGE THIS TO FERRET REPOSITORY DIRECTORY
-my $ferret_root = '/Users/someperson/Projects/ferret';
+our $ferret_root = '/Users/someperson/Projects/ferret';
 
 # you may add your own paths here if you wish
-my @user_lib = (
+our @user_lib = (
 
 );
 
-#####################################
-### DO NOT CHANGE BELOW THIS LINE ###
-#####################################
-
-my @core_lib = (
-    "$ferret_root/lib",
-    "$ferret_root/lib/evented-object/lib"
-);
-
-my @core_std = (
-    "$ferret_root/std"
-);
-
-unless (length $Ferret::ferret_root) {
-
-    my @libs = ( '.', @core_std, @core_lib, @user_lib );
-
-    $Ferret::ferret_root = $ferret_root;
-    $Ferret::ferret_libs = \@libs;
-
-    unshift @INC, @libs;
-}
-
-1;
+require Ferret::Lib;
