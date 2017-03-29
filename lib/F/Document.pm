@@ -75,12 +75,12 @@ sub markdown_fmt {
     my @vars         = map $_->first_child,
         $doc->filter_children(type => 'Instruction.SharedDeclaration');
 
-    # if it's just one class, only show that
+    # if the file contains only classes, show them and nothing else
     my @everything = (@classes, @functions, @aliases, @types, @vars);
-    if (@everything == 1) {
-        my $class_maybe = shift @everything;
-        return $class_maybe->markdown_fmt
-            if $class_maybe->type eq 'Class';
+    if (@everything && @everything == @classes) {
+        my $classes = '';
+        $classes .= $_->markdown_fmt_do."\n" for @classes;
+        return document_classes => { content => $classes };
     }
 
     # this must be called before calling ->markdown_fmt_do on children.
