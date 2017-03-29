@@ -94,6 +94,9 @@ sub _filter_elements {
         # not the right type.
         next if keys %types && !$types{$type} && !$types{$fc_type};
 
+        # not public.
+        next if $rules{public} && !$el->public;
+
         # add to accepted.
         if ($order{$type}) { push @{ $ordered{$type} ||= [] }, $el  }
         else               { push @ordered, $el                     }

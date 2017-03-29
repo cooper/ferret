@@ -68,10 +68,10 @@ sub markdown_fmt {
     my $doc = shift;
 
     # separate into parts.
-    my @classes      = grep $_->public, $doc->filter_children(type => 'Class');
-    my @functions    = grep $_->public, $doc->filter_children(type => 'Function');
-    my @aliases      = grep $_->public, $doc->filter_children(type => 'Alias');
-    my @types        = grep $_->public, $doc->filter_children(type => 'Type');
+    my @classes      = $doc->filter_children(public => 1, type => 'Class');
+    my @functions    = $doc->filter_children(public => 1, type => 'Function');
+    my @aliases      = $doc->filter_children(public => 1, type => 'Alias');
+    my @types        = $doc->filter_children(public => 1, type => 'Type');
     my @vars         = map $_->first_child,
         $doc->filter_children(type => 'Instruction.SharedDeclaration');
 
