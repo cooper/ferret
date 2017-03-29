@@ -115,8 +115,8 @@ simple as specifying where on your system the repository exists.
 
 **Using a systemwide configuration**
 
-Copy [`ferret.conf.example`](ferret.conf.example) to `/etc/ferret.conf` and
-change the top line to the full path of wherever you cloned this repository.
+Copy [`ferret.conf.example`](ferret.conf.example) to `/etc/ferret.conf`. In it,
+set the `$ferret_root` variable to the absolute path of this repository.
 
 ```sh
 sudo cp ferret.conf.example /etc/ferret.conf
