@@ -1,18 +1,11 @@
-# Math
-
-This is the Math package.
-
-
-
-
-## Math::Point
+# Math::Point
 
 This is the Math::Point class.
 
 Represents a 2D point.
 
 
-### Initializer
+## Initializer
 
 ```
 $point = Point($x: Num, $y: Num)
@@ -21,15 +14,15 @@ $point = Point($x: Num, $y: Num)
 Creates a point given x- and y- coordinates.
 
 
-#### Arguments
+### Arguments
 
 * __x__: [Num](/std/doc/Number.md) - X-coordinate.
 
 * __y__: [Num](/std/doc/Number.md) - Y-coordinate.
 
-### Methods
+## Methods
 
-#### distanceTo
+### distanceTo
 
 ```
 $point.distanceTo($pt2: Point)
@@ -38,13 +31,13 @@ $point.distanceTo($pt2: Point)
 Returns the distance between this point and another.
 
 
-##### Arguments
+#### Arguments
 
 * __pt2__: Point  
 
 
 
-#### midpoint
+### midpoint
 
 ```
 $point.midpoint($pt2: Point)
@@ -53,13 +46,13 @@ $point.midpoint($pt2: Point)
 Given another point, returns the point centered between them.
 
 
-##### Arguments
+#### Arguments
 
 * __pt2__: Point  
 
 
 
-#### distanceFromOrigin
+### distanceFromOrigin
 
 ```
 $point.distanceFromOrigin
@@ -69,15 +62,15 @@ Computed property. Distance between this point and the origin `(0, 0)`.
 
 
 
-#### description
+### description
 
 ```
 $point.description()
 ```
 
-### Class properties
+## Class properties
 
-#### origin
+### origin
 
 ```
 Point.origin
@@ -88,12 +81,6 @@ The point `(0,0)`.
 
 
 End of the Math::Point class.
-
-
-
-
-
-End of the Math package.
 
 This file was generated automatically by the Ferret compiler from
 [Point.frt](../Point.frt).

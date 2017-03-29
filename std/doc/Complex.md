@@ -1,11 +1,4 @@
-# main
-
-This is the main package.
-
-
-
-
-## Complex
+# Complex
 
 This is the Complex class version 1.0.
 
@@ -20,7 +13,7 @@ normal mathematic notation. Complex numbers are written as `a + bi`, where
 respectively, despite both being real numbers.
 
 
-### Initializer
+## Initializer
 
 ```
 $complex = Complex($a: Num, $b: Num)
@@ -34,15 +27,15 @@ If the given imaginary part is zero, the constructor returns the real part
 as a [real number](Number.frt).
 
 
-#### Arguments
+### Arguments
 
 * __a__: [Num](/std/doc/Number.md) - Real part.
 
 * __b__: [Num](/std/doc/Number.md) - Imaginary part (a real number, though).
 
-### Methods
+## Methods
 
-#### abs
+### abs
 
 ```
 $complex.abs
@@ -55,7 +48,7 @@ this is `r`.
 
 
 
-#### arg
+### arg
 
 ```
 $complex.arg
@@ -69,7 +62,7 @@ to the point. In polar form, this is `θ`.
 
 
 
-#### conj
+### conj
 
 ```
 $complex.conj
@@ -80,7 +73,7 @@ number.
 
 
 
-#### Addition operator (+)
+### Addition operator (+)
 
 ```
 $complex + $rhs: Complex
@@ -89,13 +82,13 @@ $complex + $rhs: Complex
 Addition of complex numbers.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: [Complex](/std/doc/Complex.md)  
 
 
 
-#### Addition operator (+)
+### Addition operator (+)
 
 ```
 $complex + $ehs: Num
@@ -104,13 +97,13 @@ $complex + $ehs: Num
 Addition of complex and real numbers.
 
 
-##### Arguments
+#### Arguments
 
 * __ehs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Subtraction operator (-)
+### Subtraction operator (-)
 
 ```
 $complex - $rhs: Complex
@@ -119,13 +112,13 @@ $complex - $rhs: Complex
 Subtraction of complex numbers.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: [Complex](/std/doc/Complex.md)  
 
 
 
-#### Subtraction operator (-)
+### Subtraction operator (-)
 
 ```
 $complex - $rhs: Num
@@ -134,13 +127,13 @@ $complex - $rhs: Num
 Subtraction of real number from complex number.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Subtraction operator (-)
+### Subtraction operator (-)
 
 ```
 $complex - $lhs: Num
@@ -149,13 +142,13 @@ $complex - $lhs: Num
 Subtraction of complex number from real number.
 
 
-##### Arguments
+#### Arguments
 
 * __lhs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Multiplication operator (*)
+### Multiplication operator (*)
 
 ```
 $complex * $rhs: Complex
@@ -164,13 +157,13 @@ $complex * $rhs: Complex
 Multiplication of complex numbers.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: [Complex](/std/doc/Complex.md)  
 
 
 
-#### Multiplication operator (*)
+### Multiplication operator (*)
 
 ```
 $complex * $ehs: Num
@@ -179,13 +172,13 @@ $complex * $ehs: Num
 Multiplication of real and complex numbers.
 
 
-##### Arguments
+#### Arguments
 
 * __ehs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Division operator (/)
+### Division operator (/)
 
 ```
 $complex / $rhs: Complex
@@ -194,13 +187,13 @@ $complex / $rhs: Complex
 Division of complex numbers.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: [Complex](/std/doc/Complex.md)  
 
 
 
-#### Division operator (/)
+### Division operator (/)
 
 ```
 $complex / $rhs: Num
@@ -209,13 +202,13 @@ $complex / $rhs: Num
 Division of complex number by real number.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Exponent operator (^)
+### Exponent operator (^)
 
 ```
 $complex ^ $rhs: Num
@@ -226,13 +219,13 @@ This can get expensive for large powers.
 For a quicker (and less precise) alternative, see [`.pow()`](#pow).
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: [Num](/std/doc/Number.md)  
 
 
 
-#### pow
+### pow
 
 ```
 $complex.pow($rhs: Num)
@@ -242,13 +235,13 @@ Complex number to real power. This is an alternative implementation which
 uses trigonometric functions to find a quicker but less precise result.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Equality operator (==)
+### Equality operator (==)
 
 ```
 $complex == $ehs: Complex
@@ -257,13 +250,13 @@ $complex == $ehs: Complex
 Equality of complex numbers.
 
 
-##### Arguments
+#### Arguments
 
 * __ehs__: [Complex](/std/doc/Complex.md)  
 
 
 
-#### Equality operator (==)
+### Equality operator (==)
 
 ```
 $complex == $ehs: Num
@@ -272,21 +265,21 @@ $complex == $ehs: Num
 Equality of complex number and real number.
 
 
-##### Arguments
+#### Arguments
 
 * __ehs__: [Num](/std/doc/Number.md)  
 
 
 
-#### description
+### description
 
 ```
 $complex.description()
 ```
 
-### Class functions
+## Class functions
 
-#### polar
+### polar
 
 ```
 Complex.polar($r: Num, $θ: Num)
@@ -295,7 +288,7 @@ Complex.polar($r: Num, $θ: Num)
 Create a complex number with the given polar coordinates `r` and `θ`.
 
 
-##### Arguments
+#### Arguments
 
 * __r__: [Num](/std/doc/Number.md) - Distance from the origin in the complex plane.
 
@@ -305,12 +298,6 @@ Create a complex number with the given polar coordinates `r` and `θ`.
 
 
 End of the Complex class.
-
-
-
-
-
-End of the main package.
 
 This file was generated automatically by the Ferret compiler from
 [Complex.frt](../Complex.frt).

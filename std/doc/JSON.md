@@ -1,11 +1,4 @@
-# main
-
-This is the main package.
-
-
-
-
-## JSON
+# JSON
 
 This is the JSON class version 1.0.
 
@@ -16,7 +9,7 @@ Advanced options are available through the use of a JSON
 [class instance](#initializer).
 
 
-### Initializer
+## Initializer
 
 ```
 $json = JSON()
@@ -25,7 +18,7 @@ $json = JSON()
 Creates a new JSON class instance.
 
 
-#### Arguments
+### Arguments
 
 * *optional* __strict__: [Bool](/std/doc/Bool.md) - Enables strict decoding. This is default. If explicitly disabled,
 shell-style (#) comments are allowed, and extra commas are
@@ -59,9 +52,9 @@ the colon separating keys from values in JSON objects.
 putting every array member or object/hash key-value pair into its own
 line, identifying them properly.
 
-### Methods
+## Methods
 
-#### encode
+### encode
 
 ```
 $json.encode($data)
@@ -72,13 +65,13 @@ The output of this method is dependent on the various options provided at
 initialization.
 
 
-##### Arguments
+#### Arguments
 
 * __data__: Any - An object to convert to JSON text.
 
 
 
-#### decode
+### decode
 
 ```
 $json.decode($json: Str)
@@ -89,13 +82,13 @@ The success or failure of this method is dependent on the various options
 provided at initialization.
 
 
-##### Arguments
+#### Arguments
 
 * __json__: [Str](/std/doc/String.md) - A JSON text to parse and convert to a Ferret object.
 
 
 
-#### decoderAdd
+### decoderAdd
 
 ```
 $json.decoderAdd($fragment: Str)
@@ -129,13 +122,13 @@ different inputs can have the same output. Consider the following
 a list `[1, 2]`.
 
 
-##### Arguments
+#### Arguments
 
 * __fragment__: [Str](/std/doc/String.md) - A fragment of JSON text to add to the decoder buffer.
 
 
 
-#### decoderDone
+### decoderDone
 
 ```
 $json.decoderDone()
@@ -148,7 +141,7 @@ See [`.decoderAdd()`](#decoderadd) for an explanation of decoder buffers.
 
 
 
-#### decoderReset
+### decoderReset
 
 ```
 $json.decoderReset()
@@ -157,9 +150,9 @@ $json.decoderReset()
 Resets the decoder buffer.
 See [`.decoderAdd()`](#decoderadd) for an explanation of decoder buffers.
 
-### Class functions
+## Class functions
 
-#### encode
+### encode
 
 ```
 JSON.encode($data)
@@ -169,13 +162,13 @@ Convenient class function to encode data to a UTF-8 JSON text.
 See the [`.encode()`](#encode) method for more options.
 
 
-##### Arguments
+#### Arguments
 
 * __data__: Any - An object to convert to JSON text.
 
 
 
-#### decode
+### decode
 
 ```
 JSON.decode($json: Str)
@@ -185,21 +178,21 @@ Convenient class function to decode UTF-8 JSON data.
 See the [`.decode()`](#decode) method for more options.
 
 
-##### Arguments
+#### Arguments
 
 * __json__: [Str](/std/doc/String.md) - A JSON text to parse and convert to a Ferret object.
 
 
-### Type interfaces
+## Type interfaces
 
-#### Charset
+### Charset
 
 Defines the various character sets available for JSON encoding and decoding.
 Used for the `.charset` property. See the [initializer](#initializer).
 
 
 
-##### Accepted values
+#### Accepted values
 
 In order to comply, the test object must be equal (according to the `==` [`OP_EQUAL`](/doc/Operators.md#equality-operator) operator) to any one of these values.
 
@@ -209,12 +202,6 @@ In order to comply, the test object must be equal (according to the `==` [`OP_EQ
 
 
 End of the JSON class.
-
-
-
-
-
-End of the main package.
 
 This file was generated automatically by the Ferret compiler from
 [JSON.frt](../JSON.frt).

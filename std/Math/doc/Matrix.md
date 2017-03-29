@@ -1,11 +1,4 @@
-# Math
-
-This is the Math package.
-
-
-
-
-## Math::Matrix
+# Math::Matrix
 
 This is the Math::Matrix class.
 
@@ -13,7 +6,7 @@ Represents a [matrix](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 of any dimensions.
 
 
-### Initializer
+## Initializer
 
 ```
 $matrix = Matrix($m: Int)
@@ -22,15 +15,15 @@ $matrix = Matrix($m: Int)
 Creates a matrix with the given entries and row count.
 
 
-#### Arguments
+### Arguments
 
 * __m__: [Int](/std/doc/Number.md) - Number of rows.
 
 * *optional* __items__: [Num](/std/doc/Number.md)... - Variable number of arguments. List of entries.
 
-### Methods
+## Methods
 
-#### rows
+### rows
 
 ```
 $matrix.rows
@@ -40,7 +33,7 @@ Computed property. Number of rows.
 
 
 
-#### columns
+### columns
 
 ```
 $matrix.columns
@@ -50,7 +43,7 @@ Computed property. Number of columns.
 
 
 
-#### dimensionHR
+### dimensionHR
 
 ```
 $matrix.dimensionHR
@@ -60,7 +53,7 @@ Computed property. Human-readable dimensions.
 
 
 
-#### rowList
+### rowList
 
 ```
 $matrix.rowList
@@ -70,7 +63,7 @@ Computed property. A list whose elements are lists of items in each row.
 
 
 
-#### map
+### map
 
 ```
 $matrix.map($code: Code)
@@ -79,13 +72,13 @@ $matrix.map($code: Code)
 Creates a matrix with the given transformation applied to each entry.
 
 
-##### Arguments
+#### Arguments
 
 * __code__: Code  
 
 
 
-#### mapWith
+### mapWith
 
 ```
 $matrix.mapWith($rhs: Matrix, $code: Code)
@@ -95,7 +88,7 @@ Creates a matrix with the given operation performed between each entry and
 its corresponding entry in another matrix of the same dimensions.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: Matrix - Another matrix of the same dimensions.
 
@@ -103,7 +96,7 @@ its corresponding entry in another matrix of the same dimensions.
 
 
 
-#### Addition operator (+)
+### Addition operator (+)
 
 ```
 $matrix + $ehs: Num
@@ -112,13 +105,13 @@ $matrix + $ehs: Num
 Scalar addition.
 
 
-##### Arguments
+#### Arguments
 
 * __ehs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Subtraction operator (-)
+### Subtraction operator (-)
 
 ```
 $matrix - $rhs: Num
@@ -127,13 +120,13 @@ $matrix - $rhs: Num
 Scalar subtraction.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Subtraction operator (-)
+### Subtraction operator (-)
 
 ```
 $matrix - $lhs: Num
@@ -142,13 +135,13 @@ $matrix - $lhs: Num
 Allows you to take the opposite matrix.
 
 
-##### Arguments
+#### Arguments
 
 * __lhs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Multiplication operator (*)
+### Multiplication operator (*)
 
 ```
 $matrix * $ehs: Num
@@ -157,13 +150,13 @@ $matrix * $ehs: Num
 Scalar multiplication.
 
 
-##### Arguments
+#### Arguments
 
 * __ehs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Division operator (/)
+### Division operator (/)
 
 ```
 $matrix / $rhs: Num
@@ -172,13 +165,13 @@ $matrix / $rhs: Num
 Scalar division.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: [Num](/std/doc/Number.md)  
 
 
 
-#### Addition operator (+)
+### Addition operator (+)
 
 ```
 $matrix + $ehs: Matrix
@@ -187,13 +180,13 @@ $matrix + $ehs: Matrix
 Entry-wise matrix addition.
 
 
-##### Arguments
+#### Arguments
 
 * __ehs__: Matrix - Another matrix of the same dimensions.
 
 
 
-#### Subtraction operator (-)
+### Subtraction operator (-)
 
 ```
 $matrix - $rhs: Matrix
@@ -202,13 +195,13 @@ $matrix - $rhs: Matrix
 Entry-wise matrix subtraction.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: Matrix - Another matrix of the same dimensions.
 
 
 
-#### description
+### description
 
 ```
 $matrix.description()
@@ -219,12 +212,6 @@ $matrix.description()
 
 
 End of the Math::Matrix class.
-
-
-
-
-
-End of the Math package.
 
 This file was generated automatically by the Ferret compiler from
 [Matrix.frt](../Matrix.frt).

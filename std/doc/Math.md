@@ -90,7 +90,7 @@ Tangent, expressed in radians.
 Math.atan2($y: Num, $x: Num)
 ```
 
-Note that `atan2(0, 0)` is unreliable.
+Note that `atan2(0, 0)` is not well-defined.
 
 
 #### Arguments

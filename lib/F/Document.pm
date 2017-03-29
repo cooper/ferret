@@ -67,20 +67,28 @@ sub perl_fmt {
 sub markdown_fmt {
     my $doc = shift;
 
-    # this must be called before calling ->markdown_fmt_do on children.
-    my $head = $doc->get_markdown_heading($doc->{package});
-
-    # first, classes.
-    my $classes = '';
-    my @classes = $doc->filter_children(type => 'Class');
-    $classes .= $_->markdown_fmt_do."\n" for @classes;
-
     # separate into parts.
+    my @classes      = $doc->filter_children(type => 'Class');
     my @functions    = grep $_->public, $doc->filter_children(type => 'Function');
     my @aliases      = grep $_->public, $doc->filter_children(type => 'Alias');
     my @types        = grep $_->public, $doc->filter_children(type => 'Type');
     my @vars         = map $_->first_child,
         $doc->filter_children(type => 'Instruction.SharedDeclaration');
+
+    # if it's just one class, only show that
+    my @everything = (@classes, @functions, @aliases, @types, @vars);
+    if (@everything == 1) {
+        my $class_maybe = shift @everything;
+        return $class_maybe->markdown_fmt
+            if $class_maybe->type eq 'Class';
+    }
+
+    # this must be called before calling ->markdown_fmt_do on children.
+    my $head = $doc->get_markdown_heading($doc->{package});
+
+    # classes
+    my $classes = '';
+    $classes .= $_->markdown_fmt_do."\n" for @classes;
 
     # type interfaces
     my $types = '';

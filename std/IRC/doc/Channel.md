@@ -1,18 +1,11 @@
-# IRC
-
-This is the IRC package.
-
-
-
-
-## IRC::Channel
+# IRC::Channel
 
 This is the IRC::Channel class.
 
 
 
 
-### Initializer
+## Initializer
 
 ```
 $channel = Channel($connection: Connection, $name: Str)
@@ -21,15 +14,15 @@ $channel = Channel($connection: Connection, $name: Str)
 Creates a new Channel class instance.
 
 
-#### Arguments
+### Arguments
 
 * __connection__: Connection  
 
 * __name__: [Str](/std/doc/String.md)  
 
-### Methods
+## Methods
 
-#### privmsg
+### privmsg
 
 ```
 $channel.privmsg($message: Str::Any)
@@ -38,7 +31,7 @@ $channel.privmsg($message: Str::Any)
 Sends a message to the channel.
 
 
-##### Arguments
+#### Arguments
 
 * __message__: Str::Any  
 
@@ -47,12 +40,6 @@ Sends a message to the channel.
 
 
 End of the IRC::Channel class.
-
-
-
-
-
-End of the IRC package.
 
 This file was generated automatically by the Ferret compiler from
 [Channel.frt](../Channel.frt).

@@ -1,18 +1,11 @@
-# HTTP
-
-This is the HTTP package.
-
-
-
-
-## HTTP::Client
+# HTTP::Client
 
 This is the HTTP::Client class version 1.0.
 
 Represents an HTTP user agent.
 
 
-### Initializer
+## Initializer
 
 ```
 $client = Client()
@@ -21,7 +14,7 @@ $client = Client()
 Creates a new Client class instance.
 
 
-#### Arguments
+### Arguments
 
 * *optional* __userAgent__: [Str](/std/doc/String.md) - HTTP user agent. Default is `"ferret-http/<version>"`.
 
@@ -36,9 +29,9 @@ By default, there is no limit.
 
 * *optional* __writeLength__: [Num](/std/doc/Number.md) - Write length in bytes. Default is 64 KB.
 
-### Methods
+## Methods
 
-#### get
+### get
 
 ```
 $client.get($url: Str)
@@ -48,13 +41,13 @@ Convenient method for a GET request.
 See the [`request`](#request) method.
 
 
-##### Arguments
+#### Arguments
 
 * __url__: [Str](/std/doc/String.md) - HTTP URL to request.
 
 
 
-#### post
+### post
 
 ```
 $client.post($url: Str)
@@ -64,13 +57,13 @@ Convenient method for a POST request.
 See the [`request`](#request) method.
 
 
-##### Arguments
+#### Arguments
 
 * __url__: [Str](/std/doc/String.md) - HTTP URL to request.
 
 
 
-#### request
+### request
 
 ```
 $client.request($httpMethod: HTTPMethod, $url: Str)
@@ -79,7 +72,7 @@ $client.request($httpMethod: HTTPMethod, $url: Str)
 Creates an [`HTTP::Request`](Request.md).
 
 
-##### Arguments
+#### Arguments
 
 * __httpMethod__: HTTPMethod - Request HTTP method.
 See [HTTPMethod](../HTTP.md#httpmethod) interface.
@@ -91,12 +84,6 @@ See [HTTPMethod](../HTTP.md#httpmethod) interface.
 
 
 End of the HTTP::Client class.
-
-
-
-
-
-End of the HTTP package.
 
 This file was generated automatically by the Ferret compiler from
 [Client.frt](../Client.frt).

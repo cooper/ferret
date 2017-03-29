@@ -37,7 +37,7 @@ func tan {
 }
 
 #> two-argument inverse tangent.
-#> Note that `atan2(0, 0)` is unreliable.
+#> Note that `atan2(0, 0)` is not well-defined.
 func atan2 {
     need $y: Num, $x: Num
     return NATIVE::Math.atan2($y, $x)

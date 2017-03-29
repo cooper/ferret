@@ -1,18 +1,11 @@
-# HTTP
-
-This is the HTTP package.
-
-
-
-
-## HTTP::Request
+# HTTP::Request
 
 This is the HTTP::Request class.
 
 
 
 
-### Initializer
+## Initializer
 
 ```
 $request = Request($client: Client, $url: Str, $httpMethod: HTTPMethod)
@@ -22,7 +15,7 @@ HTTP request objects generally are not created directly. Instead, use the
 methods provided by the [`Client`](Client.md) class.
 
 
-#### Arguments
+### Arguments
 
 * __client__: Client - An HTTP::Client, representing the user agent.
 
@@ -31,9 +24,9 @@ methods provided by the [`Client`](Client.md) class.
 * __httpMethod__: HTTPMethod - Request HTTP method.
 See [HTTPMethod](../HTTP.md#httpmethod) interface.
 
-### Methods
+## Methods
 
-#### connect
+### connect
 
 ```
 $request.connect()
@@ -47,7 +40,7 @@ event will be called.
 
 
 
-#### connected
+### connected
 
 ```
 $request.connected()
@@ -60,7 +53,7 @@ May be called multiple times if the request is redirected or retried.
 
 
 
-#### redirect
+### redirect
 
 ```
 $request.redirect()
@@ -72,7 +65,7 @@ Hook. Called when the request was redirected by an HTTP location header.
 
 
 
-#### error
+### error
 
 ```
 $request.error()
@@ -84,7 +77,7 @@ Hook. Called when a connection error occurs.
 
 
 
-#### response
+### response
 
 ```
 $request.response()
@@ -97,12 +90,6 @@ Hook. Called when an HTTP response is constructed.
 
 
 End of the HTTP::Request class.
-
-
-
-
-
-End of the HTTP package.
 
 This file was generated automatically by the Ferret compiler from
 [Request.frt](../Request.frt).

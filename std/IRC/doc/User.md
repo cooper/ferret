@@ -1,18 +1,11 @@
-# IRC
-
-This is the IRC package.
-
-
-
-
-## IRC::User
+# IRC::User
 
 This is the IRC::User class.
 
 
 
 
-### Initializer
+## Initializer
 
 ```
 $user = User($connection: Connection, $nick: Str)
@@ -21,7 +14,7 @@ $user = User($connection: Connection, $nick: Str)
 Creates a new User class instance.
 
 
-#### Arguments
+### Arguments
 
 * __connection__: Connection  
 
@@ -39,12 +32,6 @@ Creates a new User class instance.
 
 
 End of the IRC::User class.
-
-
-
-
-
-End of the IRC package.
 
 This file was generated automatically by the Ferret compiler from
 [User.frt](../User.frt).

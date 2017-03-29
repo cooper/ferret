@@ -1,18 +1,11 @@
-# main
-
-This is the main package.
-
-
-
-
-## Time
+# Time
 
 This is the Time class version 1.0.
 
 
 
 
-### Initializer
+## Initializer
 
 ```
 $time = Time()
@@ -21,7 +14,7 @@ $time = Time()
 Creates a new time given date components.
 
 
-#### Arguments
+### Arguments
 
 * *optional* __year__: Year - Year `>= 1`.
 
@@ -41,9 +34,9 @@ Creates a new time given date components.
 string (e.g. `"+0630"`) or `"local"` for the local timezone.
 If omitted, no timezone will be associated with this timepoint.
 
-### Methods
+## Methods
 
-#### year
+### year
 
 ```
 $time.year
@@ -53,7 +46,7 @@ Computed property. Year.
 
 
 
-#### month
+### month
 
 ```
 $time.month
@@ -63,7 +56,7 @@ Computed property. Month.
 
 
 
-#### monthName
+### monthName
 
 ```
 $time.monthName
@@ -73,7 +66,7 @@ Computed property. Name of the month.
 
 
 
-#### day
+### day
 
 ```
 $time.day
@@ -83,7 +76,7 @@ Computed property. Day of the month, 1-31.
 
 
 
-#### weekday
+### weekday
 
 ```
 $time.weekday
@@ -93,7 +86,7 @@ Computed property. Day of the week.
 
 
 
-#### weekdayName
+### weekdayName
 
 ```
 $time.weekdayName
@@ -103,7 +96,7 @@ Computed property. Name of the day of the week.
 
 
 
-#### Addition operator (+)
+### Addition operator (+)
 
 ```
 $time + $ehs: Duration
@@ -112,13 +105,13 @@ $time + $ehs: Duration
 Add a duration to a timepoint.
 
 
-##### Arguments
+#### Arguments
 
 * __ehs__: Duration  
 
 
 
-#### Subtraction operator (-)
+### Subtraction operator (-)
 
 ```
 $time - $rhs: Duration
@@ -127,13 +120,13 @@ $time - $rhs: Duration
 Subtract a duration from a timepoint.
 
 
-##### Arguments
+#### Arguments
 
 * __rhs__: Duration  
 
 
 
-#### copy
+### copy
 
 ```
 $time.copy()
@@ -145,15 +138,15 @@ Make a copy of this timepoint.
 
 
 
-#### description
+### description
 
 ```
 $time.description()
 ```
 
-### Class functions
+## Class functions
 
-#### now
+### now
 
 ```
 Time.now()
@@ -165,7 +158,7 @@ Returns the current time.
 
 
 
-#### today
+### today
 
 ```
 Time.today()
@@ -177,7 +170,7 @@ Returns a time at the moment the current day started.
 
 
 
-#### tomorrow
+### tomorrow
 
 ```
 Time.tomorrow()
@@ -186,27 +179,27 @@ Time.tomorrow()
 Returns a time at the start of tomorrow.
 
 
-### Type interfaces
+## Type interfaces
 
-#### Month
+### Month
 
 Month type accepting a month symbol or integer 1-12.
 Yields a MonthSym.
 
 
-##### Restraints and transforms
+#### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
 1. __transform__: Requirement determined at runtime.
 
 
-#### MonthSym
+### MonthSym
 
 Symbol month names, accepted for the month time component.
 
 
-##### Restraints and transforms
+#### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
@@ -214,25 +207,25 @@ In order to comply, the test object must satisfy each of the following condition
 2. __satisfies__: Requirement determined at runtime.
 
 
-#### Weekday
+### Weekday
 
 Weekday type accepting a weekday symbol or integer 1-7, starting with Monday.
 Yields a WeekdaySym.
 
 
-##### Restraints and transforms
+#### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
 1. __transform__: Requirement determined at runtime.
 
 
-#### WeekdaySym
+### WeekdaySym
 
 Symbol weekday names.
 
 
-##### Restraints and transforms
+#### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
@@ -240,12 +233,12 @@ In order to comply, the test object must satisfy each of the following condition
 2. __satisfies__: Requirement determined at runtime.
 
 
-#### Hour
+### Hour
 
 Hour 0-23.
 
 
-##### Restraints and transforms
+#### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
@@ -253,12 +246,12 @@ In order to comply, the test object must satisfy each of the following condition
 2. __satisfies__: Requirement determined at runtime.
 
 
-#### Nanosecond
+### Nanosecond
 
 Nanosecond >= 0.
 
 
-##### Restraints and transforms
+#### Restraints and transforms
 
 In order to comply, the test object must satisfy each of the following conditions and transforms.
 
@@ -267,12 +260,6 @@ In order to comply, the test object must satisfy each of the following condition
 
 
 End of the Time class.
-
-
-
-
-
-End of the main package.
 
 This file was generated automatically by the Ferret compiler from
 [Time.frt](../Time.frt).
