@@ -12,7 +12,7 @@ This is the Math package.
 ### sin
 
 ```
-Math.sin($num: Num)
+Math.sin($θ: Num)
 ```
 
 Sine, expressed in radians.
@@ -20,7 +20,7 @@ Sine, expressed in radians.
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/std/doc/Number.md)  
 
 
 
@@ -42,7 +42,7 @@ Inverse sine.
 ### cos
 
 ```
-Math.cos($num: Num)
+Math.cos($θ: Num)
 ```
 
 Cosine, expressed in radians.
@@ -50,7 +50,7 @@ Cosine, expressed in radians.
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/std/doc/Number.md)  
 
 
 
@@ -72,7 +72,7 @@ Inverse cosine.
 ### tan
 
 ```
-Math.tan($num: Num)
+Math.tan($θ: Num)
 ```
 
 Tangent, expressed in radians.
@@ -80,7 +80,7 @@ Tangent, expressed in radians.
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/std/doc/Number.md)  
 
 
 
@@ -119,7 +119,7 @@ Inverse tangent.
 ### sec
 
 ```
-Math.sec($num: Num)
+Math.sec($θ: Num)
 ```
 
 Secant, expressed in radians.
@@ -127,14 +127,14 @@ Secant, expressed in radians.
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/std/doc/Number.md)  
 
 
 
 ### csc
 
 ```
-Math.csc($num: Num)
+Math.csc($θ: Num)
 ```
 
 Cosecant, expressed in radians.
@@ -142,7 +142,7 @@ Cosecant, expressed in radians.
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/std/doc/Number.md)  
 
 
 

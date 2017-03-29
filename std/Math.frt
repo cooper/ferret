@@ -8,8 +8,8 @@ share $e ?= exp(1)
 
 #> sine, expressed in radians
 func sin {
-    need $num: Num
-    return NATIVE::Math.sin($num)
+    need $θ: Num
+    return NATIVE::Math.sin($θ)
 }
 
 #> inverse sine
@@ -20,8 +20,8 @@ func asin {
 
 #> cosine, expressed in radians
 func cos {
-    need $num: Num
-    return NATIVE::Math.cos($num)
+    need $θ: Num
+    return NATIVE::Math.cos($θ)
 }
 
 #> inverse cosine
@@ -32,8 +32,8 @@ func acos {
 
 #> tangent, expressed in radians
 func tan {
-    need $num: Num
-    return sin($num) / cos($num)
+    need $θ: Num
+    return sin($θ) / cos($θ)
 }
 
 #> two-argument inverse tangent.
@@ -51,14 +51,14 @@ func atan {
 
 #> secant, expressed in radians
 func sec {
-    need $num: Num
-    return 1 / cos($num)
+    need $θ: Num
+    return 1 / cos($θ)
 }
 
 #> cosecant, expressed in radians
 func csc {
-    need $num: Num
-    return 1 / sin($num)
+    need $θ: Num
+    return 1 / sin($θ)
 }
 
 #> natural logarithm (base *e*).
