@@ -158,7 +158,7 @@ An interface to which only even numbers conform.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Num](/std/doc/Number.md).
 2. __satisfies__: The number is even (`.even`).
@@ -171,7 +171,7 @@ An interface to which only odd numbers conform.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Num](/std/doc/Number.md).
 2. __satisfies__: The number is odd (`.odd`).
@@ -185,7 +185,7 @@ of floating-point numbers. Alias `Int` exists in the global context.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Num](/std/doc/Number.md).
 2. __transform__: The number is truncated to its `.floor` value.

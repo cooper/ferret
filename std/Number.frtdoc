@@ -53,13 +53,13 @@ method root {
 #> The number's factorial (`n!`). This can also be written `n!` because
 #| "calling" a number yields its factorial. Non-integers are transformed with
 #| `.floor`.
-method factorial { }
+method factorial
 
 #> An interface to which only even numbers conform
 type Even {
     isa *class
 
-    #> The number is even (`.even`)
+    #> The number is even according to `.even`
     satisfies .even
 }
 
@@ -67,7 +67,7 @@ type Even {
 type Odd {
     isa *class
 
-    #> The number is odd (`.odd`)
+    #> The number is odd according to `.odd`
     satisfies .odd
 }
 

@@ -120,12 +120,12 @@ sub markdown_fmt {
     if (@equal_possibly) {
         $type->{markdown_heading_level}++;
         $equal_to .= $type->get_markdown_heading('Accepted values')."\n\n";
-        $equal_to .= "In order to comply, the test object must be equal ".
-                     "(according to the `==` ".
-                     "[`OP_EQUAL`](/doc/Operators.md#equality-operator) ".
-                     "operator) to any one of these values.\n";
+        $equal_to .= "In order to comply, the object must be ".
+                     "[equal](/doc/Operators.md#equality-operator) to ";
+        $equal_to .= "the following value.\n"   if @equal_possibly == 1;
+        $equal_to .= "one of these values.\n"   if @equal_possibly != 1;
         $equal_to .= (F::get_markdown_fmt(type_exp => { expression => $_ }))
-            // '(a value evaluated at runtime)'
+            // 'determined at runtime; see code'
             foreach @equal_possibly;
         $type->{markdown_heading_level}--;
     }
@@ -135,8 +135,9 @@ sub markdown_fmt {
     if (@conditions) {
         $type->{markdown_heading_level}++;
         $conditions .= $type->get_markdown_heading('Restraints and transforms')."\n\n";
-        $conditions .= "In order to comply, the test object must satisfy ".
-                       "each of the following conditions and transforms.\n";
+        $conditions .= "In order to comply, the object must satisfy ";
+        $conditions .= "the following condition.\n"          if @conditions == 1;
+        $conditions .= "each of the following conditions.\n" if @conditions != 1;
         $conditions .= $_ foreach @conditions;
         $type->{markdown_heading_level}--;
     }

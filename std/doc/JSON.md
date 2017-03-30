@@ -194,7 +194,7 @@ Used for the `.charset` property. See the [initializer](#initializer).
 
 #### Accepted values
 
-In order to comply, the test object must be equal (according to the `==` [`OP_EQUAL`](/doc/Operators.md#equality-operator) operator) to any one of these values.
+In order to comply, the object must be [equal](/doc/Operators.md#equality-operator) to one of these values.
 
 * `:ascii` - RFC4627,      range 0..127, ignores otherwise.
 * `:latin1` - ISO-8859-1,   range 0..255, ignores otherwise.

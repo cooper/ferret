@@ -2,7 +2,11 @@
 
 This is the HTTP package.
 
-
+This namespace contains the implementation of the
+[Hypertext Transfer Protocol](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol).
+The HTTP package itself provides a few very basic convenience methods which
+may be used in simple applications, but more advanced programs may need
+to use a custom [HTTP client](../HTTP/doc/Client.md) object.
 
 
 
@@ -15,7 +19,8 @@ This is the HTTP package.
 HTTP.get($url: Str)
 ```
 
-Convenience method for calling `.get()` on the default client.
+Convenience method for calling `.get()` on the default
+[client](../HTTP/doc/Client.md).
 
 
 #### Arguments
@@ -30,7 +35,8 @@ Convenience method for calling `.get()` on the default client.
 HTTP.post($url: Str)
 ```
 
-Convenience method for calling `.post()` on the default client.
+Convenience method for calling `.post()` on the default
+[client](../HTTP/doc/Client.md).
 
 
 #### Arguments
@@ -48,7 +54,7 @@ HTTP methods.
 
 #### Accepted values
 
-In order to comply, the test object must be equal (according to the `==` [`OP_EQUAL`](/doc/Operators.md#equality-operator) operator) to any one of these values.
+In order to comply, the object must be [equal](/doc/Operators.md#equality-operator) to one of these values.
 
 * `:GET` - HTTP GET method.
 * `:POST` - HTTP POST method.

@@ -373,9 +373,9 @@ Returns the unit vector for the given dimension and axis.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy the following condition.
 
-1. __transform__: Requirement determined at runtime.
+1. __transform__: Determined at runtime; see code.
 
 
 End of the Math::Vector class.

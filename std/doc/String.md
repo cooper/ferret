@@ -160,7 +160,7 @@ An interface to which only non-empty strings comply.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Str](/std/doc/String.md).
 2. __satisfies__: The string length is not zero (`.length != 0`).
@@ -173,7 +173,7 @@ Performs an uppercase transformation.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Str](/std/doc/String.md).
 2. __transform__: The string transforms to an uppercase version (`.uppercase`).
@@ -186,7 +186,7 @@ Performs a lowercase transformation.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Str](/std/doc/String.md).
 2. __transform__: The string transforms to an lowercase version (`.lowercase`).

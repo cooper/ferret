@@ -189,9 +189,9 @@ Yields a MonthSym.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy the following condition.
 
-1. __transform__: Requirement determined at runtime.
+1. __transform__: Determined at runtime; see code.
 
 
 ### MonthSym
@@ -201,10 +201,10 @@ Symbol month names, accepted for the month time component.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Sym](/std/doc/Symbol.md).
-2. __satisfies__: Requirement determined at runtime.
+2. __satisfies__: Determined at runtime; see code.
 
 
 ### Weekday
@@ -215,9 +215,9 @@ Yields a WeekdaySym.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy the following condition.
 
-1. __transform__: Requirement determined at runtime.
+1. __transform__: Determined at runtime; see code.
 
 
 ### WeekdaySym
@@ -227,10 +227,10 @@ Symbol weekday names.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Sym](/std/doc/Symbol.md).
-2. __satisfies__: Requirement determined at runtime.
+2. __satisfies__: Determined at runtime; see code.
 
 
 ### Hour
@@ -240,10 +240,10 @@ Hour 0-23.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Num](/std/doc/Number.md).
-2. __satisfies__: Requirement determined at runtime.
+2. __satisfies__: Determined at runtime; see code.
 
 
 ### Nanosecond
@@ -253,10 +253,10 @@ Nanosecond >= 0.
 
 #### Restraints and transforms
 
-In order to comply, the test object must satisfy each of the following conditions and transforms.
+In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Int](/std/doc/Number.md).
-2. __satisfies__: Requirement determined at runtime.
+2. __satisfies__: Determined at runtime; see code.
 
 
 End of the Time class.

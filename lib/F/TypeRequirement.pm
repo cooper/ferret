@@ -110,7 +110,7 @@ sub markdown_fmt {
     }
 
     $condition //= $req->find_doc_comment;
-    $condition //= "requirement determined at runtime";
+    $condition //= 'determined at runtime; see code';
     return type_req => {
         n         => $req->{markdown_req_n},
         type      => $type,
