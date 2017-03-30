@@ -226,6 +226,10 @@ func _axisToNumber {
     return $o - 104
 }
 
+#> An interface which accepts an axis letter starting at "i" or number starting
+#| at 1. For instance, a 3D vector is represented by axes i, j, and k, which
+#| correspond to the numbers 1, 2, and 3, respectively.
 type VectorAxis {
+    #> converts letters starting at 'i' to axis numbers
     transform _axisToNumber($_)
 }

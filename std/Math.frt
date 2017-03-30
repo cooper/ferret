@@ -1,7 +1,10 @@
 package Math
 
-#> the ratio of a circle's circumference to it's diameter (π)
-share $pi ?= 4 * atan2(1, 1)
+#> the ratio of a circle's circumference to it's diameter
+share $π ?= 4 * atan2(1, 1)
+
+#> alias for `$π`
+share $pi ?= $π
 
 #> the base of the natural logarithm
 share $e ?= exp(1)

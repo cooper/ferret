@@ -29,7 +29,8 @@ init {
 func polar {
     need $r: Num        #< distance from the origin in the complex plane
     need $θ: Num        #< the angle between the positive real axis and the
-                        #| line drawn from the origin to the point
+                        #| line drawn from the origin to the point, measured in
+                        #| radians
     return Complex(
         $r * Math.cos($θ),
         $r * Math.sin($θ)

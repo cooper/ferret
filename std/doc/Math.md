@@ -208,13 +208,21 @@ Takes `e` (the base of the natural logarithm) to a power.
 
 ## Shared variables
 
+### π
+
+```
+Math.π
+```
+
+The ratio of a circle's circumference to it's diameter.
+
 ### pi
 
 ```
 Math.pi
 ```
 
-The ratio of a circle's circumference to it's diameter (π).
+Alias for `$π`.
 
 ### e
 
