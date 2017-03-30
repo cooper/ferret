@@ -9,7 +9,7 @@ die '$ferret_root is not configured'
 
 # core libs
 my @core_lib = (
-    "$ferret_root/lib",
+    # "$ferret_root/lib", # already included from configuration
     "$ferret_root/lib/evented-object/lib"
 );
 
