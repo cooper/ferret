@@ -9,4 +9,6 @@ our @user_lib = (
 
 );
 
+# DO NOT CHANGE BELOW THIS LINE
+unshift @INC, "$ferret_root/lib";
 require Ferret::Lib;
