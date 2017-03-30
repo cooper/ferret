@@ -124,11 +124,23 @@ sub get_context  {
     my $c = $f->main_context; # changed 03/01/2017 from core
     for my $part (@parts) {
         $full_name = length $full_name ? "${full_name}::$part" : $part;
+        
+        # context already exists here
         my $new = $c->property($part);
         if ($new) {
             $c = $new;
             next;
         }
+        
+        # try loading a context here
+        # ($context, $file_name, $die, $pos, @acceptable)
+        $new = space($c, undef, undef, undef, $part);
+        if ($new) {
+            $c = $new;
+            next;
+        }
+        
+        # create a new context here
         $new = Ferret::Context->new($f,
             name      => $part,
             full_name => $full_name,
@@ -193,8 +205,12 @@ sub space {
     my ($context, $file_name, $die, $pos, @acceptable) = @_;
     @acceptable = grep defined, @acceptable;
     foreach my $space (@acceptable) {
+        
+        # before all else, check if this exists
         my $existing = $context->property($space);
         return $existing if $existing;
+        
+        # ok, at this point we will try to load the file
 
         # already tried this file
         my $file = file_for_space($space);

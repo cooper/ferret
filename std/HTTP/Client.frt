@@ -52,8 +52,7 @@ method post {
 method request {
 
     #> Request HTTP method.
-    #| See [HTTPMethod](../HTTP.md#httpmethod) interface.
-    need $httpMethod: HTTPMethod
+    need $httpMethod: Method
 
     #> HTTP URL to request
     need $url: Str

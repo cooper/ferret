@@ -66,7 +66,7 @@ See the [`request`](#request) method.
 ### request
 
 ```
-$client.request($httpMethod: HTTPMethod, $url: Str)
+$client.request($httpMethod: Method, $url: Str)
 ```
 
 Creates an [`HTTP::Request`](Request.md).
@@ -74,8 +74,7 @@ Creates an [`HTTP::Request`](Request.md).
 
 #### Arguments
 
-* __httpMethod__: HTTPMethod - Request HTTP method.
-See [HTTPMethod](../HTTP.md#httpmethod) interface.
+* __httpMethod__: Method - Request HTTP method.
 
 * __url__: [Str](/std/doc/String.md) - HTTP URL to request.
 

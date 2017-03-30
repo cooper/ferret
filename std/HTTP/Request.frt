@@ -13,8 +13,7 @@ init {
     need @url: Str
 
     #> Request HTTP method.
-    #| See [HTTPMethod](../HTTP.md#httpmethod) interface.
-    need @httpMethod: HTTPMethod
+    need @httpMethod: Method
 
 }
 

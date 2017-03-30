@@ -46,7 +46,7 @@ Convenience method for calling `.post()` on the default
 
 ## Type interfaces
 
-### HTTPMethod
+### Method
 
 HTTP methods.
 

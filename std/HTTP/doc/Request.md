@@ -8,7 +8,7 @@ This is the HTTP::Request class.
 ## Initializer
 
 ```
-$request = Request($client: Client, $url: Str, $httpMethod: HTTPMethod)
+$request = Request($client: Client, $url: Str, $httpMethod: Method)
 ```
 
 HTTP request objects generally are not created directly. Instead, use the
@@ -21,8 +21,7 @@ methods provided by the [`Client`](Client.md) class.
 
 * __url__: [Str](/std/doc/String.md) - HTTP URL to request.
 
-* __httpMethod__: HTTPMethod - Request HTTP method.
-See [HTTPMethod](../HTTP.md#httpmethod) interface.
+* __httpMethod__: Method - Request HTTP method.
 
 ## Methods
 

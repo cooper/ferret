@@ -6,13 +6,13 @@ package HTTP 1.0
 #| to use a custom [HTTP client](../HTTP/doc/Client.md) object.
 
 #> HTTP methods.
-type HTTPMethod {
+type Method {
     :GET        #< HTTP GET method
     :POST       #< HTTP POST method
 }
 
 # default HTTP client
-$client ?= HTTP::Client()
+$client ?= Client()
 
 #> Convenience method for calling `.get()` on the default
 #| [client](../HTTP/doc/Client.md).
