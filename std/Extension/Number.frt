@@ -21,18 +21,11 @@ type Integer {
 
 alias Int = Integer
 
-#> square root of the number
+#> square root of the number, returning a complex number if `N < 0`
 prop sqrt {
     if *self < 0
-        throw Error(:DomainError, "Cannot take even root of negative number")
-    return NATIVE::Math.sqrt(*self)
-}
-
-#> square root of the number, returning a complex number if `N < 0`
-prop sqrti {
-    if *self < 0
         return *self.abs.sqrt * i
-    return @sqrt
+    return NATIVE::Math.sqrt(*self)
 }
 
 #> cube root of the number
@@ -62,34 +55,23 @@ prop odd {
     return *self % 2 != 0
 }
 
-#> the Nth root of the number
+#> the Nth root of the number M, returning a complex number if `N` is even and
+#| `M < 0`.
 method root {
     need $root: Num
-
+    
     # negative number
     if *self < 0 {
-
-        # even root, not supported
         if $root.even
-            throw Error(:DomainError, "Cannot take even root of negative number")
-
+            return *self.abs.root($root) * i
+            
         # odd root, fixes things like (-2)^(1/3) returning nan
         else
             return -*self.abs.root($root)
-
     }
-
+    
     # non-negative number
     return *self ^ (1 / $root)
-}
-
-#> the Nth root of the number M, returning a complex number if `N` is even and
-#| `M < 0`.
-method rooti {
-    need $root: Num
-    if $root.even && *self < 0
-        return *self.abs.root($root) * i
-    return @root($root)
 }
 
 #> The number's factorial. This can also be written `N!`.

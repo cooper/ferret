@@ -90,6 +90,7 @@ $number.sqrt
 ```
 
 Computed property. Square root of the number (`n ^ (1/2)`).
+Returns a complex number if `n < 0`.
 Example: `4.sqrt` -> `2`.
 
 
@@ -111,7 +112,8 @@ Example: `8.cbrt` -> `2`.
 $number.root($root: Num)
 ```
 
-Nth root of the number.
+Mth root of the number N (`N ^ (1/M)`).
+Returns a complex number if `M` is even and `N < 0`.
 Example: `8.root(3)` -> `2`.
 
 
@@ -161,7 +163,7 @@ An interface to which only even numbers conform.
 In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Num](/std/doc/Number.md).
-2. __satisfies__: The number is even (`.even`).
+2. __satisfies__: The number is even according to `.even`.
 
 
 ### Odd
@@ -174,7 +176,7 @@ An interface to which only odd numbers conform.
 In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Num](/std/doc/Number.md).
-2. __satisfies__: The number is odd (`.odd`).
+2. __satisfies__: The number is odd according to `.odd`.
 
 
 ### Integer
