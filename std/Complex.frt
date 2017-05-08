@@ -2,13 +2,15 @@ class Complex 1.0
 #< Represents a complex number.
 #|
 #| Ferret has native support for complex numbers, including syntax for the
-#| normal mathematic notation. Complex numbers are written as `a + bi`, where
-#| `a` and `b` are [real numbers](Number.md) and `i` is the
+#| normal mathematic notation in rectangular form. Complex numbers are written
+#| as `a + bi`, where `a` and `b` are [real numbers](Number.md) and `i` is the
 #| [imaginary unit](https://en.wikipedia.org/wiki/Imaginary_unit).
 #|
 #| `a` and `b` are commonly called the "real part" and "imaginary part"
 #| respectively, despite both being real numbers.
 #|
+#| Complex numbers can also be constructed from a polar representations
+#| `r(cosθ + isinθ)` or `re^(iθ)` with [`Complex.polar()`](#polar).
 
 #> Creates a complex number with the given real and imaginary parts. This is
 #| only useful to create a complex number from variable parts, since Ferret
@@ -143,11 +145,11 @@ operator ^ {
 method pow {
     need $rhs: Num
     $log_a  = Math.log(@abs)
-    $factor = Math.exp($rhs * $log_a)
+    $r      = Math.exp($rhs * $log_a)
     $θ      = $rhs * @arg
     return Complex(
-        $factor * Math.cos($θ),
-        $factor * Math.sin($θ)
+        $r * Math.cos($θ),
+        $r * Math.sin($θ)
     )
 }
 
