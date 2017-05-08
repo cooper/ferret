@@ -3,13 +3,13 @@ package Math
 #> the ratio of a circle's circumference to it's diameter
 share $π ?= 4 * atan2(1, 1)
 
-#> alias for `$π`
+#> alias for `Math.π`
 share $pi ?= $π
 
 #> the base of the natural logarithm
 share $e ?= exp(1)
 
-#> sine, expressed in radians.
+#> Sine, expressed in radians.
 #|
 #| Domain:  `ℝ`
 #|
@@ -20,7 +20,7 @@ func sin {
     return NATIVE::Math.sin($θ)
 }
 
-#> inverse sine
+#> Inverse sine.
 #|
 #| Domain:  `[-1, 1]`
 #|
@@ -31,7 +31,7 @@ func asin {
     return atan2($num, (1 - $num ^ 2).sqrt)
 }
 
-#> cosine, expressed in radians.
+#> Cosine, expressed in radians.
 #|
 #| Domain:  `ℝ`
 #|
@@ -42,7 +42,7 @@ func cos {
     return NATIVE::Math.cos($θ)
 }
 
-#> inverse cosine
+#> Inverse cosine.
 #|
 #| Domain:  `[-1, 1]`
 #|
@@ -53,7 +53,7 @@ func acos {
     return atan2((1 - $num ^ 2).sqrt, $num)
 }
 
-#> tangent, expressed in radians.
+#> Tangent, expressed in radians.
 #|
 #| Domain:  `x ≠ π/2 + kπ` for all integers `k`
 #|
@@ -87,7 +87,7 @@ func atan2 {
     return NATIVE::Math.atan2($y, $x)
 }
 
-#> inverse tangent.
+#> Inverse tangent.
 #|
 #| Domain:  `ℝ`
 #|
@@ -100,7 +100,7 @@ func atan {
     return atan2($num, 1)
 }
 
-#> secant, expressed in radians.
+#> Secant, expressed in radians.
 #|
 #| Domain:  `x ≠ π/2 + kπ` for all integers `k`
 #|
@@ -111,7 +111,7 @@ func sec {
     return 1 / cos($θ)
 }
 
-#> cosecant, expressed in radians.
+#> Cosecant, expressed in radians.
 #|
 #| Domain:  `x ≠ kπ` for all integers `k`
 #|
@@ -122,7 +122,7 @@ func csc {
     return 1 / sin($θ)
 }
 
-#| cotangent, expressed in radians.
+#> Cotangent, expressed in radians.
 #|
 #| Domain:  `x ≠ kπ` for all integers `k`
 #|

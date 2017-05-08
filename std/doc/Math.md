@@ -34,7 +34,7 @@ Range:   `[-1, 1]`.
 Math.asin($num: Num)
 ```
 
-Inverse sine
+Inverse sine.
 
 Domain:  `[-1, 1]`
 
@@ -72,7 +72,7 @@ Range:   `[-1, 1]`.
 Math.acos($num: Num)
 ```
 
-Inverse cosine
+Inverse cosine.
 
 Domain:  `[-1, 1]`
 
@@ -203,7 +203,11 @@ Range:   `(–∞, –1] ∪ [1, ∞)`.
 Math.cot($θ: Num)
 ```
 
+Cotangent, expressed in radians.
 
+Domain:  `x ≠ kπ` for all integers `k`
+
+Range:   `ℝ`.
 
 
 #### Arguments
@@ -288,7 +292,7 @@ The ratio of a circle's circumference to it's diameter.
 Math.pi
 ```
 
-Alias for `$π`.
+Alias for `Math.π`.
 
 ### e
 

@@ -219,7 +219,8 @@ sub prepare {
         $event->{outer_scope},
         $arguments,
         $call_scope,
-        $return
+        $return,
+        $pos
     );
 
     # prepare the base events.
@@ -275,7 +276,7 @@ sub _handle_call {
     my (
         $event, $func, $outer_self, $outer_scope_maybe,
         $fire, $obj_maybe, $class, $outer_scope,
-        $arguments, $call_scope, $return
+        $arguments, $call_scope, $return, $pos
     ) = @_;
 
     # force outer scope.
@@ -309,7 +310,8 @@ sub _handle_call {
         $self,
         $arguments,
         $call_scope,
-        $return
+        $return,
+        $pos
     );
 }
 
