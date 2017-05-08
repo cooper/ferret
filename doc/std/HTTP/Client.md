@@ -85,4 +85,4 @@ Creates an [`HTTP::Request`](Request.md).
 End of the HTTP::Client class.
 
 This file was generated automatically by the Ferret compiler from
-[Client.frt](../Client.frt).
+Client.frt.

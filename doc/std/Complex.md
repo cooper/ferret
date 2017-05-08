@@ -325,4 +325,4 @@ Create a complex number in polar form given radius `r` and angle `θ`.
 End of the Complex class.
 
 This file was generated automatically by the Ferret compiler from
-[Complex.frt](../Complex.frt).
+Complex.frt.

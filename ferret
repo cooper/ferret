@@ -11,6 +11,7 @@ use open ':std', ':encoding(UTF-8)';
 use Cwd             'abs_path';
 use File::Slurp     'slurp';
 use File::Find      'find';
+use File::Path      qw(make_path);
 use Scalar::Util    'blessed';
 use File::Basename  qw(fileparse basename dirname);
 use JSON::XS        qw(decode_json);
@@ -208,10 +209,14 @@ sub do_file {
 
     # writing to .md.
     if ($is_docs) {
-        my $docs        = $meta{doc_dir} // "${path}doc";
-        $write_dir      = $docs;
-        $write_file     = "$docs/$name.md";
-        $ret->{docs}    = $docs;
+        my $doc_dir = get_meta_dir(
+            key         => 'doc_dir',
+            file        => $file,
+            fallback    => "${path}doc"
+        );
+        $write_dir      = $doc_dir;
+        $write_file     = "$doc_dir/$name.md";
+        $ret->{docs}    = $doc_dir;
         $ret->{md}      = $write_file;
     }
 
@@ -244,9 +249,9 @@ sub do_file {
 
     # open the output file.
     my $fh;
-    mkdir $write_dir
-        or die "Couldn't create $write_dir"
-        if !-d $write_dir;
+    if (!-d $write_dir) {
+        make_path($write_dir) or die "Couldn't create $write_dir";
+    }
     open $fh, '>', $write_file
         or die "Couldn't open $write_file to write";
     binmode $fh, ':utf8';
@@ -368,12 +373,18 @@ sub get_metadata {
     my $href    = eval { decode_json($slurped) };
     return if ref $href ne 'HASH';
     
-    # adjust paths
-    if (length $href->{doc_dir} && index($href->{doc_dir}, '/')) {
-        $href->{doc_dir} = "$dir/$$href{doc_dir}";
-    }
-    
     # cache
+    $href->{dir} = $dir;
     $metadata{$dir} = $href;
     return %$href;
+}
+
+sub get_meta_dir {
+    my %meta = @_;
+    return $meta{fallback} if !length $meta{ $meta{key} };
+    my $dir = join '/', grep length,
+        $meta{dir},
+        $meta{ $meta{key} },
+        dirname($meta{file});
+    return $dir;
 }

@@ -28,4 +28,4 @@ Creates a new Server class instance.
 End of the IRC::Server class.
 
 This file was generated automatically by the Ferret compiler from
-[Server.frt](../Server.frt).
+Server.frt.

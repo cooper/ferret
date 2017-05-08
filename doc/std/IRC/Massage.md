@@ -83,4 +83,4 @@ Computed property. Source's host.
 End of the IRC::Massage class.
 
 This file was generated automatically by the Ferret compiler from
-[Massage.frt](../Massage.frt).
+Massage.frt.

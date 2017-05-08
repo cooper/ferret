@@ -62,4 +62,4 @@ In order to comply, the object must be [equal](/doc/Operators.md#equality-operat
 End of the HTTP package.
 
 This file was generated automatically by the Ferret compiler from
-[HTTP.frt](../HTTP.frt).
+HTTP.frt.

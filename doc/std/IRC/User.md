@@ -34,4 +34,4 @@ Creates a new User class instance.
 End of the IRC::User class.
 
 This file was generated automatically by the Ferret compiler from
-[User.frt](../User.frt).
+User.frt.

@@ -214,4 +214,4 @@ $matrix.description()
 End of the Math::Matrix class.
 
 This file was generated automatically by the Ferret compiler from
-[Matrix.frt](../Matrix.frt).
+Matrix.frt.

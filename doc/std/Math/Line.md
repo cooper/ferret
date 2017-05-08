@@ -65,4 +65,4 @@ $line.description()
 End of the Math::Line class.
 
 This file was generated automatically by the Ferret compiler from
-[Line.frt](../Line.frt).
+Line.frt.

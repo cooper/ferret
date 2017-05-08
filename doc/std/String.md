@@ -195,4 +195,4 @@ In order to comply, the object must satisfy each of the following conditions.
 End of the String class.
 
 This file was generated automatically by the Ferret compiler from
-[String.frtdoc](../String.frtdoc).
+String.frtdoc.

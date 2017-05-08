@@ -196,4 +196,4 @@ In order to comply, the object must satisfy each of the following conditions.
 End of the Number class.
 
 This file was generated automatically by the Ferret compiler from
-[Number.frtdoc](../Number.frtdoc).
+Number.frtdoc.

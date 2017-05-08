@@ -175,4 +175,4 @@ Prints the test review.
 End of the Test class.
 
 This file was generated automatically by the Ferret compiler from
-[Test.frt](../Test.frt).
+Test.frt.

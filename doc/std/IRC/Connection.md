@@ -166,4 +166,4 @@ $connection.description()
 End of the IRC::Connection class.
 
 This file was generated automatically by the Ferret compiler from
-[Connection.frt](../Connection.frt).
+Connection.frt.

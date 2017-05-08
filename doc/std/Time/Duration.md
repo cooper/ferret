@@ -170,4 +170,4 @@ $duration.description()
 End of the Time::Duration class.
 
 This file was generated automatically by the Ferret compiler from
-[Duration.frt](../Duration.frt).
+Duration.frt.

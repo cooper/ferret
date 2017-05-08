@@ -91,4 +91,4 @@ Hook. Called when an HTTP response is constructed.
 End of the HTTP::Request class.
 
 This file was generated automatically by the Ferret compiler from
-[Request.frt](../Request.frt).
+Request.frt.

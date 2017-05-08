@@ -119,4 +119,4 @@ $rect.description()
 End of the Math::Rect class.
 
 This file was generated automatically by the Ferret compiler from
-[Rect.frt](../Rect.frt).
+Rect.frt.

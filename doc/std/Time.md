@@ -262,4 +262,4 @@ In order to comply, the object must satisfy each of the following conditions.
 End of the Time class.
 
 This file was generated automatically by the Ferret compiler from
-[Time.frt](../Time.frt).
+Time.frt.

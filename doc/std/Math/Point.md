@@ -83,4 +83,4 @@ The point `(0,0)`.
 End of the Math::Point class.
 
 This file was generated automatically by the Ferret compiler from
-[Point.frt](../Point.frt).
+Point.frt.

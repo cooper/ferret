@@ -306,4 +306,4 @@ The base of the natural logarithm.
 End of the Math package.
 
 This file was generated automatically by the Ferret compiler from
-[Math.frt](../Math.frt).
+Math.frt.

@@ -204,4 +204,4 @@ In order to comply, the object must be [equal](/doc/Operators.md#equality-operat
 End of the JSON class.
 
 This file was generated automatically by the Ferret compiler from
-[JSON.frt](../JSON.frt).
+JSON.frt.

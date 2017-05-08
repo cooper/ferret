@@ -383,4 +383,4 @@ In order to comply, the object must satisfy the following condition.
 End of the Math::Vector class.
 
 This file was generated automatically by the Ferret compiler from
-[Vector.frt](../Vector.frt).
+Vector.frt.
