@@ -5,7 +5,6 @@ class Complex 1.0
 #| normal mathematic notation in rectangular form. Complex numbers are written
 #| as `a + bi`, where `a` and `b` are [real numbers](Number.md) and `i` is the
 #| [imaginary unit](https://en.wikipedia.org/wiki/Imaginary_unit).
-#|
 #| `a` and `b` are commonly called the "real part" and "imaginary part"
 #| respectively, despite both being real numbers.
 #|
@@ -18,6 +17,9 @@ class Complex 1.0
 #|
 #| If the given imaginary part is zero, the constructor returns the real part
 #| as a [real number](Number.frt).
+#|
+#| To instead create a complex number from `r` and `θ`,
+#| use [`Complex.polar()`](#polar).
 init {
     need @a: Num #< real part
     need @b: Num #< imaginary part (a real number, though)
@@ -27,7 +29,9 @@ init {
         return @a
 }
 
-#> Create a complex number with the given polar coordinates `r` and `θ`.
+#> Create a complex number given polar coordinates `r` and `θ`.
+#|
+#| `z = r(cosθ + isinθ)`
 func polar {
     need $r: Num        #< distance from the origin in the complex plane
     need $θ: Num        #< the angle between the positive real axis and the
@@ -41,8 +45,9 @@ func polar {
 
 #> [Absolute value](https://en.wikipedia.org/wiki/Absolute_value#Complex_numbers)
 #| (or modulus) of the complex number. This is distance from the origin on the
-#| [complex plane](https://en.wikipedia.org/wiki/Complex_plane). In polar form,
-#| this is `r`.
+#| [complex plane](https://en.wikipedia.org/wiki/Complex_plane).
+#|
+#| In polar form, this is `r`.
 prop abs {
     return (@a ^ 2 + @b ^ 2).sqrt
 }
@@ -50,8 +55,9 @@ prop abs {
 #> [Argument](https://en.wikipedia.org/wiki/Argument_(complex_analysis)) of
 #| the complex number. On the
 #| [complex plane](https://en.wikipedia.org/wiki/Complex_plane), this is the
-#| angle `θ` between the positive real axis and the line drawn from the origin
-#| to the point. In polar form, this is `θ`.
+#| angle `θ` between the positive real axis and the position vector.
+#|
+#| In polar form, this is `θ`.
 prop arg {
     return Math.atan2(@b, @a)
 }
@@ -131,8 +137,9 @@ operator / {
 }
 
 #> Complex number to real power.
+#|
 #| This can get expensive for large powers.
-#| For a quicker (and less precise) alternative, see [`.pow()`](#pow).
+#| For a quicker but less precise alternative, use [`.pow()`](#pow).
 operator ^ {
     need $rhs: Num
     if $rhs <= 0
@@ -140,8 +147,10 @@ operator ^ {
     return *self * *self ^ ($rhs - 1)
 }
 
-#> Complex number to real power. This is an alternative implementation which
-#| uses trigonometric functions to find a quicker but less precise result.
+#> Complex number to real power. This is an alternative implementation to the
+#| power operator which is faster but less precise.
+#|
+#| `z^n = (re^(iθ))^n`
 method pow {
     need $rhs: Num
     $log_a  = Math.log(@abs)
@@ -151,6 +160,12 @@ method pow {
         $r * Math.cos($θ),
         $r * Math.sin($θ)
     )
+}
+
+#| Real number to a complex power
+operator ^ {
+    need $lhs: Num
+    return Complex.polar($lhs ^ @a, @b * Math.log($lhs))
 }
 
 #> equality of complex numbers

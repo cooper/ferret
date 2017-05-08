@@ -94,7 +94,12 @@ sub load_namespaces {
     for my $name (@namespaces) {
         my @acceptable = ((map { $_.'::'.$name } @possible_prefixes), $name);
         my $r = (split '::', $name)[-1]; # HACK
-        my $die = !$provides{$file_name}{ $r };
+        my $die = !$provides{$file_name}{$r};
+        print "Does $file_name provide $r? ", $provides{$file_name}{$r} ? 'yes' : 'no', "\n";
+        if ($r eq 'Method') {
+            print "??\n";
+            Ferret::inspect($context->property('HTTP'));
+        }
         Ferret::space($context, $file_name, $die, $pos, @acceptable);
     }
 
