@@ -11,7 +11,8 @@ share $e ?= exp(1)
 
 #> sine, expressed in radians.
 #|
-#| Domain:  `ℝ`  
+#| Domain:  `ℝ`
+#|
 #| Range:   `[-1, 1]`
 #|
 func sin {
@@ -22,6 +23,7 @@ func sin {
 #> inverse sine
 #|
 #| Domain:  `[-1, 1]`
+#|
 #| Range:   `ℝ`
 #|
 func asin {
@@ -32,6 +34,7 @@ func asin {
 #> cosine, expressed in radians.
 #|
 #| Domain:  `ℝ`
+#|
 #| Range:   `[-1, 1]`
 #|
 func cos {
@@ -42,6 +45,7 @@ func cos {
 #> inverse cosine
 #|
 #| Domain:  `[-1, 1]`
+#|
 #| Range:   `[0, π]`
 #|
 func acos {
@@ -52,6 +56,7 @@ func acos {
 #> tangent, expressed in radians.
 #|
 #| Domain:  `x ≠ π/2 + kπ` for all integers `k`
+#|
 #| Range:   `ℝ`
 #|
 func tan {
@@ -62,14 +67,17 @@ func tan {
 #> Two-argument inverse tangent.
 #|
 #| Domain:  `ℝ`
+#|
 #| Range:   `(-π, π]`
 #|
-#| ```              atan(y/x)           x > 0
-#|                  atan(y/x) + π       x < 0 and y ≥ 0
-#| atan2(y, x)  =   atan(y/x) - π       x < 0 and y < 0
-#|                  π/2                 x = 0 and y > 0
-#|                  -π/2                x = 0 and y < 0
-#|                  indeterminate       x = 0 and y = 0
+#| `atan2(y, x) =`
+#| ```
+#| atan(y/x)           x > 0
+#| atan(y/x) + π       x < 0 and y ≥ 0
+#| atan(y/x) - π       x < 0 and y < 0
+#| π/2                 x = 0 and y > 0
+#| -π/2                x = 0 and y < 0
+#| indeterminate       x = 0 and y = 0
 #| ```
 #|
 #| Note that `atan2(0, 0)` is not well-defined.
@@ -82,6 +90,7 @@ func atan2 {
 #> inverse tangent.
 #|
 #| Domain:  `ℝ`
+#|
 #| Range:   `(-π/2, π/2)`
 #|
 #| Note that the range of this function is `(-π/2, π/2)`,
@@ -94,6 +103,7 @@ func atan {
 #> secant, expressed in radians.
 #|
 #| Domain:  `x ≠ π/2 + kπ` for all integers `k`
+#|
 #| Range:   `(–∞, –1] ∪ [1, ∞)`
 #|
 func sec {
@@ -104,6 +114,7 @@ func sec {
 #> cosecant, expressed in radians.
 #|
 #| Domain:  `x ≠ kπ` for all integers `k`
+#|
 #| Range:   `(–∞, –1] ∪ [1, ∞)`
 #|
 func csc {
@@ -114,6 +125,7 @@ func csc {
 #| cotangent, expressed in radians.
 #|
 #| Domain:  `x ≠ kπ` for all integers `k`
+#|
 #| Range:   `ℝ`
 #|
 func cot {

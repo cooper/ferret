@@ -18,6 +18,7 @@ Math.sin($θ: Num)
 Sine, expressed in radians.
 
 Domain:  `ℝ`
+
 Range:   `[-1, 1]`.
 
 
@@ -36,6 +37,7 @@ Math.asin($num: Num)
 Inverse sine
 
 Domain:  `[-1, 1]`
+
 Range:   `ℝ`.
 
 
@@ -54,6 +56,7 @@ Math.cos($θ: Num)
 Cosine, expressed in radians.
 
 Domain:  `ℝ`
+
 Range:   `[-1, 1]`.
 
 
@@ -72,6 +75,7 @@ Math.acos($num: Num)
 Inverse cosine
 
 Domain:  `[-1, 1]`
+
 Range:   `[0, π]`.
 
 
@@ -90,6 +94,7 @@ Math.tan($θ: Num)
 Tangent, expressed in radians.
 
 Domain:  `x ≠ π/2 + kπ` for all integers `k`
+
 Range:   `ℝ`.
 
 
@@ -108,11 +113,14 @@ Math.atan2($y: Num, $x: Num)
 Two-argument inverse tangent.
 
 Domain:  `ℝ`
+
 Range:   `(-π, π]`
 
-```              atan(y/x)           x > 0
+`atan2(y, x) =`
+```
+atan(y/x)           x > 0
 atan(y/x) + π       x < 0 and y ≥ 0
-atan2(y, x)  =   atan(y/x) - π       x < 0 and y < 0
+atan(y/x) - π       x < 0 and y < 0
 π/2                 x = 0 and y > 0
 -π/2                x = 0 and y < 0
 indeterminate       x = 0 and y = 0
@@ -138,6 +146,7 @@ Math.atan($num: Num)
 Inverse tangent.
 
 Domain:  `ℝ`
+
 Range:   `(-π/2, π/2)`
 
 Note that the range of this function is `(-π/2, π/2)`,
@@ -159,6 +168,7 @@ Math.sec($θ: Num)
 Secant, expressed in radians.
 
 Domain:  `x ≠ π/2 + kπ` for all integers `k`
+
 Range:   `(–∞, –1] ∪ [1, ∞)`.
 
 
@@ -177,6 +187,7 @@ Math.csc($θ: Num)
 Cosecant, expressed in radians.
 
 Domain:  `x ≠ kπ` for all integers `k`
+
 Range:   `(–∞, –1] ∪ [1, ∞)`.
 
 
