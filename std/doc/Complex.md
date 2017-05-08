@@ -5,11 +5,11 @@ This is the Complex class version 1.0.
 Represents a complex number.
 
 Ferret has native support for complex numbers, including syntax for the
-normal mathematic notation in rectangular form. Complex numbers are written
-as `a + bi`, where `a` and `b` are [real numbers](Number.md) and `i` is the
+normal mathematic notation in rectangular form `a + bi`, where `a` and `b`
+are [real numbers](Number.md) and `i` is the
 [imaginary unit](https://en.wikipedia.org/wiki/Imaginary_unit).
 `a` and `b` are commonly called the "real part" and "imaginary part"
-respectively, despite both being real numbers.
+respectively, despite both being [real numbers](Number.frt).
 
 Complex numbers can also be constructed from a polar representations
 `r(cosθ + isinθ)` or `re^(iθ)` with [`Complex.polar()`](#polar).
@@ -242,8 +242,6 @@ $complex.pow($rhs: Num)
 Complex number to real power. This is an alternative implementation to the
 power operator which is faster but less precise.
 
-`z^n = (re^(iθ))^n`.
-
 
 #### Arguments
 
@@ -310,7 +308,7 @@ $complex.description()
 Complex.polar($r: Num, $θ: Num)
 ```
 
-Create a complex number given polar coordinates `r` and `θ`.
+Create a complex number in polar form given radius `r` and angle `θ`.
 
 `z = r(cosθ + isinθ)`.
 

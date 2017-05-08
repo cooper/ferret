@@ -17,6 +17,9 @@ Math.sin($θ: Num)
 
 Sine, expressed in radians.
 
+Domain:  `ℝ`
+Range:   `[-1, 1]`.
+
 
 #### Arguments
 
@@ -30,7 +33,10 @@ Sine, expressed in radians.
 Math.asin($num: Num)
 ```
 
-Inverse sine.
+Inverse sine
+
+Domain:  `[-1, 1]`
+Range:   `ℝ`.
 
 
 #### Arguments
@@ -47,6 +53,9 @@ Math.cos($θ: Num)
 
 Cosine, expressed in radians.
 
+Domain:  `ℝ`
+Range:   `[-1, 1]`.
+
 
 #### Arguments
 
@@ -60,7 +69,10 @@ Cosine, expressed in radians.
 Math.acos($num: Num)
 ```
 
-Inverse cosine.
+Inverse cosine
+
+Domain:  `[-1, 1]`
+Range:   `[0, π]`.
 
 
 #### Arguments
@@ -77,6 +89,9 @@ Math.tan($θ: Num)
 
 Tangent, expressed in radians.
 
+Domain:  `x ≠ π/2 + kπ` for all integers `k`
+Range:   `ℝ`.
+
 
 #### Arguments
 
@@ -88,6 +103,19 @@ Tangent, expressed in radians.
 
 ```
 Math.atan2($y: Num, $x: Num)
+```
+
+Two-argument inverse tangent.
+
+Domain:  `ℝ`
+Range:   `(-π, π]`
+
+```              atan(y/x)           x > 0
+atan(y/x) + π       x < 0 and y ≥ 0
+atan2(y, x)  =   atan(y/x) - π       x < 0 and y < 0
+π/2                 x = 0 and y > 0
+-π/2                x = 0 and y < 0
+indeterminate       x = 0 and y = 0
 ```
 
 Note that `atan2(0, 0)` is not well-defined.
@@ -109,6 +137,12 @@ Math.atan($num: Num)
 
 Inverse tangent.
 
+Domain:  `ℝ`
+Range:   `(-π/2, π/2)`
+
+Note that the range of this function is `(-π/2, π/2)`,
+unlike [`atan2()`](#atan2) which adjusts to the proper quadrant.
+
 
 #### Arguments
 
@@ -124,6 +158,9 @@ Math.sec($θ: Num)
 
 Secant, expressed in radians.
 
+Domain:  `x ≠ π/2 + kπ` for all integers `k`
+Range:   `(–∞, –1] ∪ [1, ∞)`.
+
 
 #### Arguments
 
@@ -138,6 +175,24 @@ Math.csc($θ: Num)
 ```
 
 Cosecant, expressed in radians.
+
+Domain:  `x ≠ kπ` for all integers `k`
+Range:   `(–∞, –1] ∪ [1, ∞)`.
+
+
+#### Arguments
+
+* __θ__: [Num](/std/doc/Number.md)  
+
+
+
+### cot
+
+```
+Math.cot($θ: Num)
+```
+
+
 
 
 #### Arguments

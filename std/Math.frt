@@ -9,59 +9,116 @@ share $pi ?= $π
 #> the base of the natural logarithm
 share $e ?= exp(1)
 
-#> sine, expressed in radians
+#> sine, expressed in radians.
+#|
+#| Domain:  `ℝ`  
+#| Range:   `[-1, 1]`
+#|
 func sin {
     need $θ: Num
     return NATIVE::Math.sin($θ)
 }
 
 #> inverse sine
+#|
+#| Domain:  `[-1, 1]`
+#| Range:   `ℝ`
+#|
 func asin {
     need $num: Num
     return atan2($num, (1 - $num ^ 2).sqrt)
 }
 
-#> cosine, expressed in radians
+#> cosine, expressed in radians.
+#|
+#| Domain:  `ℝ`
+#| Range:   `[-1, 1]`
+#|
 func cos {
     need $θ: Num
     return NATIVE::Math.cos($θ)
 }
 
 #> inverse cosine
+#|
+#| Domain:  `[-1, 1]`
+#| Range:   `[0, π]`
+#|
 func acos {
     need $num: Num
     return atan2((1 - $num ^ 2).sqrt, $num)
 }
 
-#> tangent, expressed in radians
+#> tangent, expressed in radians.
+#|
+#| Domain:  `x ≠ π/2 + kπ` for all integers `k`
+#| Range:   `ℝ`
+#|
 func tan {
     need $θ: Num
     return sin($θ) / cos($θ)
 }
 
-#> two-argument inverse tangent.
-#> Note that `atan2(0, 0)` is not well-defined.
+#> Two-argument inverse tangent.
+#|
+#| Domain:  `ℝ`
+#| Range:   `(-π, π]`
+#|
+#| ```              atan(y/x)           x > 0
+#|                  atan(y/x) + π       x < 0 and y ≥ 0
+#| atan2(y, x)  =   atan(y/x) - π       x < 0 and y < 0
+#|                  π/2                 x = 0 and y > 0
+#|                  -π/2                x = 0 and y < 0
+#|                  indeterminate       x = 0 and y = 0
+#| ```
+#|
+#| Note that `atan2(0, 0)` is not well-defined.
+#|
 func atan2 {
     need $y: Num, $x: Num
     return NATIVE::Math.atan2($y, $x)
 }
 
-#> inverse tangent
+#> inverse tangent.
+#|
+#| Domain:  `ℝ`
+#| Range:   `(-π/2, π/2)`
+#|
+#| Note that the range of this function is `(-π/2, π/2)`,
+#| unlike [`atan2()`](#atan2) which adjusts to the proper quadrant.
 func atan {
     need $num: Num
     return atan2($num, 1)
 }
 
-#> secant, expressed in radians
+#> secant, expressed in radians.
+#|
+#| Domain:  `x ≠ π/2 + kπ` for all integers `k`
+#| Range:   `(–∞, –1] ∪ [1, ∞)`
+#|
 func sec {
     need $θ: Num
     return 1 / cos($θ)
 }
 
-#> cosecant, expressed in radians
+#> cosecant, expressed in radians.
+#|
+#| Domain:  `x ≠ kπ` for all integers `k`
+#| Range:   `(–∞, –1] ∪ [1, ∞)`
+#|
 func csc {
     need $θ: Num
     return 1 / sin($θ)
+}
+
+#| cotangent, expressed in radians.
+#|
+#| Domain:  `x ≠ kπ` for all integers `k`
+#| Range:   `ℝ`
+#|
+func cot {
+    need $θ: Num
+    return cos($θ) / sin($θ)
 }
 
 #> natural logarithm (base *e*).

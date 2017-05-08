@@ -2,11 +2,11 @@ class Complex 1.0
 #< Represents a complex number.
 #|
 #| Ferret has native support for complex numbers, including syntax for the
-#| normal mathematic notation in rectangular form. Complex numbers are written
-#| as `a + bi`, where `a` and `b` are [real numbers](Number.md) and `i` is the
+#| normal mathematic notation in rectangular form `a + bi`, where `a` and `b`
+#| are [real numbers](Number.md) and `i` is the
 #| [imaginary unit](https://en.wikipedia.org/wiki/Imaginary_unit).
 #| `a` and `b` are commonly called the "real part" and "imaginary part"
-#| respectively, despite both being real numbers.
+#| respectively, despite both being [real numbers](Number.frt).
 #|
 #| Complex numbers can also be constructed from a polar representations
 #| `r(cosθ + isinθ)` or `re^(iθ)` with [`Complex.polar()`](#polar).
@@ -29,14 +29,13 @@ init {
         return @a
 }
 
-#> Create a complex number given polar coordinates `r` and `θ`.
+#> Create a complex number in polar form given radius `r` and angle `θ`.
 #|
 #| `z = r(cosθ + isinθ)`
 func polar {
     need $r: Num        #< distance from the origin in the complex plane
     need $θ: Num        #< the angle between the positive real axis and the
-                        #| line drawn from the origin to the point, measured in
-                        #| radians
+                        #| position vector, measured in radians
     return Complex(
         $r * Math.cos($θ),
         $r * Math.sin($θ)
@@ -149,16 +148,12 @@ operator ^ {
 
 #> Complex number to real power. This is an alternative implementation to the
 #| power operator which is faster but less precise.
-#|
-#| `z^n = (re^(iθ))^n`
 method pow {
     need $rhs: Num
-    $log_a  = Math.log(@abs)
-    $r      = Math.exp($rhs * $log_a)
-    $θ      = $rhs * @arg
-    return Complex(
-        $r * Math.cos($θ),
-        $r * Math.sin($θ)
+    $log = Math.log(@abs)
+    return Complex.polar(
+        Math.exp($rhs * $log),
+        $rhs * @arg
     )
 }
 
