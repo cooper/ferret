@@ -16,9 +16,9 @@ Creates a point given x- and y- coordinates.
 
 ### Arguments
 
-* __x__: [Num](/std/doc/Number.md) - X-coordinate.
+* __x__: [Num](/doc/std/Number.md) - X-coordinate.
 
-* __y__: [Num](/std/doc/Number.md) - Y-coordinate.
+* __y__: [Num](/doc/std/Number.md) - Y-coordinate.
 
 ## Methods
 

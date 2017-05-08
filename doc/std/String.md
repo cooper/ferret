@@ -52,10 +52,10 @@ string by the provided separator.
 
 #### Arguments
 
-* *optional* __separator__: [Str](/std/doc/String.md) | [Rgx](/std/doc/Regex.md) - The substring separator. The default is the empty string, which results
+* *optional* __separator__: [Str](/doc/std/String.md) | [Rgx](/doc/std/Regex.md) - The substring separator. The default is the empty string, which results
 in a list of individual characters.
 
-* *optional* __limit__: [Num](/std/doc/Number.md) - The number of substrings to extract.
+* *optional* __limit__: [Num](/doc/std/Number.md) - The number of substrings to extract.
 If specified, the returned list will have at most this number
 of strings. The final string in that list may include occurrences
 of the separator.
@@ -98,7 +98,7 @@ Returns a boolean true value if the prefix exists.
 
 #### Arguments
 
-* __prefix__: [Str](/std/doc/String.md) - The prefix to look for.
+* __prefix__: [Str](/doc/std/String.md) - The prefix to look for.
 
 
 
@@ -115,7 +115,7 @@ have that prefix, a copy of the original string is returned.
 
 #### Arguments
 
-* __prefix__: [Str](/std/doc/String.md) - The prefix to remove.
+* __prefix__: [Str](/doc/std/String.md) - The prefix to remove.
 
 
 
@@ -130,7 +130,7 @@ Returns a boolean true value if the suffix exists.
 
 #### Arguments
 
-* __suffix__: [Str](/std/doc/String.md) - The suffix to look for.
+* __suffix__: [Str](/doc/std/String.md) - The suffix to look for.
 
 
 
@@ -147,7 +147,7 @@ have that suffix, a copy of the original string is returned.
 
 #### Arguments
 
-* __suffix__: [Str](/std/doc/String.md) - The suffix to remove.
+* __suffix__: [Str](/doc/std/String.md) - The suffix to remove.
 
 
 
@@ -162,7 +162,7 @@ An interface to which only non-empty strings comply.
 
 In order to comply, the object must satisfy each of the following conditions.
 
-1. __isa__: Must be an instance of [Str](/std/doc/String.md).
+1. __isa__: Must be an instance of [Str](/doc/std/String.md).
 2. __satisfies__: The string length is not zero (`.length != 0`).
 
 
@@ -175,7 +175,7 @@ Performs an uppercase transformation.
 
 In order to comply, the object must satisfy each of the following conditions.
 
-1. __isa__: Must be an instance of [Str](/std/doc/String.md).
+1. __isa__: Must be an instance of [Str](/doc/std/String.md).
 2. __transform__: The string transforms to an uppercase version (`.uppercase`).
 
 
@@ -188,7 +188,7 @@ Performs a lowercase transformation.
 
 In order to comply, the object must satisfy each of the following conditions.
 
-1. __isa__: Must be an instance of [Str](/std/doc/String.md).
+1. __isa__: Must be an instance of [Str](/doc/std/String.md).
 2. __transform__: The string transforms to an lowercase version (`.lowercase`).
 
 

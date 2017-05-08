@@ -17,7 +17,7 @@ Creates a vector with the given components.
 
 ### Arguments
 
-* *optional* __items__: [Num](/std/doc/Number.md)...  Variable number of arguments. 
+* *optional* __items__: [Num](/doc/std/Number.md)...  Variable number of arguments. 
 
 ## Methods
 
@@ -142,7 +142,7 @@ Allows you to take the opposite vector `-$u`.
 
 #### Arguments
 
-* __lhs__: [Num](/std/doc/Number.md)  
+* __lhs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -172,7 +172,7 @@ Scalar multiplication of the vector.
 
 #### Arguments
 
-* __ehs__: [Num](/std/doc/Number.md)  
+* __ehs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -187,7 +187,7 @@ Scalar division of the vector.
 
 #### Arguments
 
-* __rhs__: [Num](/std/doc/Number.md)  
+* __rhs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -309,7 +309,7 @@ IndexedRead such that `$vector[N]` is the N+1th component.
 
 #### Arguments
 
-* __index__: [Num](/std/doc/Number.md)  
+* __index__: [Num](/doc/std/Number.md)  
 
 
 
@@ -344,7 +344,7 @@ Returns the zero vector in the given dimension.
 
 #### Arguments
 
-* __dimension__: [Num](/std/doc/Number.md)  
+* __dimension__: [Num](/doc/std/Number.md)  
 
 
 
@@ -359,7 +359,7 @@ Returns the unit vector for the given dimension and axis.
 
 #### Arguments
 
-* __dimension__: [Num](/std/doc/Number.md)  
+* __dimension__: [Num](/doc/std/Number.md)  
 
 * __axis__: VectorAxis - Axis number or letter, starting at 1 or "i".
 

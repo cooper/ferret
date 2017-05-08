@@ -119,7 +119,7 @@ Example: `8.root(3)` -> `2`.
 
 #### Arguments
 
-* __root__: [Num](/std/doc/Number.md) - The root. For example, `3` is the cube root.
+* __root__: [Num](/doc/std/Number.md) - The root. For example, `3` is the cube root.
 
 
 
@@ -162,7 +162,7 @@ An interface to which only even numbers conform.
 
 In order to comply, the object must satisfy each of the following conditions.
 
-1. __isa__: Must be an instance of [Num](/std/doc/Number.md).
+1. __isa__: Must be an instance of [Num](/doc/std/Number.md).
 2. __satisfies__: The number is even according to `.even`.
 
 
@@ -175,7 +175,7 @@ An interface to which only odd numbers conform.
 
 In order to comply, the object must satisfy each of the following conditions.
 
-1. __isa__: Must be an instance of [Num](/std/doc/Number.md).
+1. __isa__: Must be an instance of [Num](/doc/std/Number.md).
 2. __satisfies__: The number is odd according to `.odd`.
 
 
@@ -189,7 +189,7 @@ of floating-point numbers. Alias `Int` exists in the global context.
 
 In order to comply, the object must satisfy each of the following conditions.
 
-1. __isa__: Must be an instance of [Num](/std/doc/Number.md).
+1. __isa__: Must be an instance of [Num](/doc/std/Number.md).
 2. __transform__: The number is truncated to its `.floor` value.
 
 

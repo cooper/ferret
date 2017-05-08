@@ -166,7 +166,7 @@ Prints the test review.
 
 #### Arguments
 
-* *optional* __quiet__: [Bool](/std/doc/Bool.md)  
+* *optional* __quiet__: [Bool](/doc/std/Bool.md)  
 
 
 

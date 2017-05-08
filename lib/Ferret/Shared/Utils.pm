@@ -93,61 +93,61 @@ state $link_map = {
 
     ### NUMBERS
 
-    'Num'               => '[Num](/std/doc/Number.md)',
-    'Number'            => '[Num](/std/doc/Number.md)',
-    'Complex'           => '[Complex](/std/doc/Complex.md)',
+    'Num'               => '[Num](/doc/std/Number.md)',
+    'Number'            => '[Num](/doc/std/Number.md)',
+    'Complex'           => '[Complex](/doc/std/Complex.md)',
 
     # even numbers
-    'Num::Even'         => '[Num::Even](/std/doc/Number.md)',
-    'Number::Even'      => '[Num::Even](/std/doc/Number.md)',
+    'Num::Even'         => '[Num::Even](/doc/std/Number.md)',
+    'Number::Even'      => '[Num::Even](/doc/std/Number.md)',
 
     # odd numbers
-    'Num::Odd'          => '[Num::Odd](/std/doc/Number.md)',
-    'Number::Odd'       => '[Num::Odd](/std/doc/Number.md)',
+    'Num::Odd'          => '[Num::Odd](/doc/std/Number.md)',
+    'Number::Odd'       => '[Num::Odd](/doc/std/Number.md)',
 
     # integers
-    'Int'               => '[Int](/std/doc/Number.md)',
-    'Num::Int'          => '[Int](/std/doc/Number.md)',
-    'Num::Integer'      => '[Int](/std/doc/Number.md)',
-    'Number::Integer'   => '[Int](/std/doc/Number.md)',
-    'Number::Int'       => '[Int](/std/doc/Number.md)',
+    'Int'               => '[Int](/doc/std/Number.md)',
+    'Num::Int'          => '[Int](/doc/std/Number.md)',
+    'Num::Integer'      => '[Int](/doc/std/Number.md)',
+    'Number::Integer'   => '[Int](/doc/std/Number.md)',
+    'Number::Int'       => '[Int](/doc/std/Number.md)',
 
     ### STRINGS
 
-    'Str'               => '[Str](/std/doc/String.md)',
-    'String'            => '[Str](/std/doc/String.md)',
+    'Str'               => '[Str](/doc/std/String.md)',
+    'String'            => '[Str](/doc/std/String.md)',
 
     # uppercase strings
-    'Str::UC'           => '[Str::UC](/std/doc/String.md)',
-    'Str::Uppercase'    => '[Str::UC](/std/doc/String.md)',
-    'String::UC'        => '[Str::UC](/std/doc/String.md)',
-    'String::Uppercase' => '[Str::UC](/std/doc/String.md)',
+    'Str::UC'           => '[Str::UC](/doc/std/String.md)',
+    'Str::Uppercase'    => '[Str::UC](/doc/std/String.md)',
+    'String::UC'        => '[Str::UC](/doc/std/String.md)',
+    'String::Uppercase' => '[Str::UC](/doc/std/String.md)',
 
     # lowercase strings
-    'Str::LC'           => '[Str::LC](/std/doc/String.md)',
-    'Str::Lowercase'    => '[Str::LC](/std/doc/String.md)',
-    'String::LC'        => '[Str::LC](/std/doc/String.md)',
-    'String::Lowercase' => '[Str::LC](/std/doc/String.md)',
+    'Str::LC'           => '[Str::LC](/doc/std/String.md)',
+    'Str::Lowercase'    => '[Str::LC](/doc/std/String.md)',
+    'String::LC'        => '[Str::LC](/doc/std/String.md)',
+    'String::Lowercase' => '[Str::LC](/doc/std/String.md)',
 
     # non-empty strings
-    'Str::NE'           => '[Str::NE](/std/doc/String.md)',
-    'Str::NonEmpty'     => '[Str::NE](/std/doc/String.md)',
-    'String::NonEmpty'  => '[Str::NE](/std/doc/String.md)',
-    'String::NE'        => '[Str::NE](/std/doc/String.md)',
+    'Str::NE'           => '[Str::NE](/doc/std/String.md)',
+    'Str::NonEmpty'     => '[Str::NE](/doc/std/String.md)',
+    'String::NonEmpty'  => '[Str::NE](/doc/std/String.md)',
+    'String::NE'        => '[Str::NE](/doc/std/String.md)',
 
     ### REGULAR EXPRESSIONS
 
-    'Rgx'               => '[Rgx](/std/doc/Regex.md)',
-    'Regex'             => '[Rgx](/std/doc/Regex.md)',
+    'Rgx'               => '[Rgx](/doc/std/Regex.md)',
+    'Regex'             => '[Rgx](/doc/std/Regex.md)',
 
     ### SYMBOLS
 
-    'Sym'               => '[Sym](/std/doc/Symbol.md)',
-    'Symbol'            => '[Sym](/std/doc/Symbol.md)',
+    'Sym'               => '[Sym](/doc/std/Symbol.md)',
+    'Symbol'            => '[Sym](/doc/std/Symbol.md)',
 
     ### BOOLEANS
 
-    'Bool'              => '[Bool](/std/doc/Bool.md)'
+    'Bool'              => '[Bool](/doc/std/Bool.md)'
 };
 
 # link for a built-in type.

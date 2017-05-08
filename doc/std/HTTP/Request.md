@@ -19,7 +19,7 @@ methods provided by the [`Client`](Client.md) class.
 
 * __client__: Client - An HTTP::Client, representing the user agent.
 
-* __url__: [Str](/std/doc/String.md) - HTTP URL to request.
+* __url__: [Str](/doc/std/String.md) - HTTP URL to request.
 
 * __httpMethod__: Method - Request HTTP method.
 

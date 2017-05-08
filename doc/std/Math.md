@@ -24,7 +24,7 @@ Range:   `[-1, 1]`.
 
 #### Arguments
 
-* __θ__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/doc/std/Number.md)  
 
 
 
@@ -43,7 +43,7 @@ Range:   `ℝ`.
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __num__: [Num](/doc/std/Number.md)  
 
 
 
@@ -62,7 +62,7 @@ Range:   `[-1, 1]`.
 
 #### Arguments
 
-* __θ__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/doc/std/Number.md)  
 
 
 
@@ -81,7 +81,7 @@ Range:   `[0, π]`.
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __num__: [Num](/doc/std/Number.md)  
 
 
 
@@ -100,7 +100,7 @@ Range:   `ℝ`.
 
 #### Arguments
 
-* __θ__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/doc/std/Number.md)  
 
 
 
@@ -131,9 +131,9 @@ Note that `atan2(0, 0)` is not well-defined.
 
 #### Arguments
 
-* __y__: [Num](/std/doc/Number.md)  
+* __y__: [Num](/doc/std/Number.md)  
 
-* __x__: [Num](/std/doc/Number.md)  
+* __x__: [Num](/doc/std/Number.md)  
 
 
 
@@ -155,7 +155,7 @@ unlike [`atan2()`](#atan2) which adjusts to the proper quadrant.
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __num__: [Num](/doc/std/Number.md)  
 
 
 
@@ -174,7 +174,7 @@ Range:   `(–∞, –1] ∪ [1, ∞)`.
 
 #### Arguments
 
-* __θ__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/doc/std/Number.md)  
 
 
 
@@ -193,7 +193,7 @@ Range:   `(–∞, –1] ∪ [1, ∞)`.
 
 #### Arguments
 
-* __θ__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/doc/std/Number.md)  
 
 
 
@@ -212,7 +212,7 @@ Range:   `ℝ`.
 
 #### Arguments
 
-* __θ__: [Num](/std/doc/Number.md)  
+* __θ__: [Num](/doc/std/Number.md)  
 
 
 
@@ -227,7 +227,7 @@ Natural logarithm (base *e*).
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __num__: [Num](/doc/std/Number.md)  
 
 
 
@@ -242,7 +242,7 @@ Log base 10.
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __num__: [Num](/doc/std/Number.md)  
 
 
 
@@ -257,9 +257,9 @@ Log base `$base`.
 
 #### Arguments
 
-* __base__: [Num](/std/doc/Number.md)  
+* __base__: [Num](/doc/std/Number.md)  
 
-* __num__: [Num](/std/doc/Number.md)  
+* __num__: [Num](/doc/std/Number.md)  
 
 
 
@@ -274,7 +274,7 @@ Takes `e` (the base of the natural logarithm) to a power.
 
 #### Arguments
 
-* __num__: [Num](/std/doc/Number.md)  
+* __num__: [Num](/doc/std/Number.md)  
 
 ## Shared variables
 

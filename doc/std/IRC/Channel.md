@@ -18,7 +18,7 @@ Creates a new Channel class instance.
 
 * __connection__: Connection  
 
-* __name__: [Str](/std/doc/String.md)  
+* __name__: [Str](/doc/std/String.md)  
 
 ## Methods
 

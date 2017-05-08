@@ -25,7 +25,7 @@ Convenience method for calling `.get()` on the default
 
 #### Arguments
 
-* __url__: [Str](/std/doc/String.md)  
+* __url__: [Str](/doc/std/String.md)  
 
 
 
@@ -41,7 +41,7 @@ Convenience method for calling `.post()` on the default
 
 #### Arguments
 
-* __url__: [Str](/std/doc/String.md)  
+* __url__: [Str](/doc/std/String.md)  
 
 
 ## Type interfaces

@@ -16,15 +16,15 @@ Creates a new Connection class instance.
 
 ### Arguments
 
-* __addr__: [Str](/std/doc/String.md) - IRC server address.
+* __addr__: [Str](/doc/std/String.md) - IRC server address.
 
-* *optional* __port__: [Num](/std/doc/Number.md) - IRC server port.
+* *optional* __port__: [Num](/doc/std/Number.md) - IRC server port.
 
-* __nick__: [Str](/std/doc/String.md) - Preferred nickname.
+* __nick__: [Str](/doc/std/String.md) - Preferred nickname.
 
-* *optional* __user__: [Str](/std/doc/String.md) - Username (ident).
+* *optional* __user__: [Str](/doc/std/String.md) - Username (ident).
 
-* *optional* __real__: [Str](/std/doc/String.md) - Real name.
+* *optional* __real__: [Str](/doc/std/String.md) - Real name.
 
 * *optional* __autojoin__: List - Channels to join on connect.
 
@@ -53,7 +53,7 @@ Sends a line of IRC data.
 
 #### Arguments
 
-* __line__: [Str](/std/doc/String.md) - A string outgoing data.
+* __line__: [Str](/doc/std/String.md) - A string outgoing data.
 
 
 
@@ -68,7 +68,7 @@ Fetches a channel or user object.
 
 #### Arguments
 
-* __target__: [Str](/std/doc/String.md) - Channel name or nickname.
+* __target__: [Str](/doc/std/String.md) - Channel name or nickname.
 
 
 
@@ -83,7 +83,7 @@ Fetches a channel object from a channel name.
 
 #### Arguments
 
-* __name__: [Str](/std/doc/String.md) - Channel name.
+* __name__: [Str](/doc/std/String.md) - Channel name.
 
 
 
@@ -98,7 +98,7 @@ Fetches a user object from a nickname.
 
 #### Arguments
 
-* __nick__: [Str](/std/doc/String.md) - Nickname associated with the user.
+* __nick__: [Str](/doc/std/String.md) - Nickname associated with the user.
 
 
 
@@ -113,7 +113,7 @@ Fetches a server object from a server name.
 
 #### Arguments
 
-* __name__: [Str](/std/doc/String.md) - Server name.
+* __name__: [Str](/doc/std/String.md) - Server name.
 
 
 

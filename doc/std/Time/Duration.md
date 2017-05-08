@@ -17,21 +17,21 @@ All components are integers.
 
 ### Arguments
 
-* *optional* __years__: [Int](/std/doc/Number.md)  
+* *optional* __years__: [Int](/doc/std/Number.md)  
 
-* *optional* __months__: [Int](/std/doc/Number.md)  
+* *optional* __months__: [Int](/doc/std/Number.md)  
 
-* *optional* __weeks__: [Int](/std/doc/Number.md)  
+* *optional* __weeks__: [Int](/doc/std/Number.md)  
 
-* *optional* __days__: [Int](/std/doc/Number.md)  
+* *optional* __days__: [Int](/doc/std/Number.md)  
 
-* *optional* __hours__: [Int](/std/doc/Number.md)  
+* *optional* __hours__: [Int](/doc/std/Number.md)  
 
-* *optional* __minutes__: [Int](/std/doc/Number.md)  
+* *optional* __minutes__: [Int](/doc/std/Number.md)  
 
-* *optional* __seconds__: [Int](/std/doc/Number.md)  
+* *optional* __seconds__: [Int](/doc/std/Number.md)  
 
-* *optional* __nanoseconds__: [Int](/std/doc/Number.md)  
+* *optional* __nanoseconds__: [Int](/doc/std/Number.md)  
 
 ## Methods
 

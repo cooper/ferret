@@ -17,9 +17,9 @@ Creates a matrix with the given entries and row count.
 
 ### Arguments
 
-* __m__: [Int](/std/doc/Number.md) - Number of rows.
+* __m__: [Int](/doc/std/Number.md) - Number of rows.
 
-* *optional* __items__: [Num](/std/doc/Number.md)... - Variable number of arguments. List of entries.
+* *optional* __items__: [Num](/doc/std/Number.md)... - Variable number of arguments. List of entries.
 
 ## Methods
 
@@ -107,7 +107,7 @@ Scalar addition.
 
 #### Arguments
 
-* __ehs__: [Num](/std/doc/Number.md)  
+* __ehs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -122,7 +122,7 @@ Scalar subtraction.
 
 #### Arguments
 
-* __rhs__: [Num](/std/doc/Number.md)  
+* __rhs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -137,7 +137,7 @@ Allows you to take the opposite matrix.
 
 #### Arguments
 
-* __lhs__: [Num](/std/doc/Number.md)  
+* __lhs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -152,7 +152,7 @@ Scalar multiplication.
 
 #### Arguments
 
-* __ehs__: [Num](/std/doc/Number.md)  
+* __ehs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -167,7 +167,7 @@ Scalar division.
 
 #### Arguments
 
-* __rhs__: [Num](/std/doc/Number.md)  
+* __rhs__: [Num](/doc/std/Number.md)  
 
 
 

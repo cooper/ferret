@@ -16,18 +16,18 @@ Creates a new Client class instance.
 
 ### Arguments
 
-* *optional* __userAgent__: [Str](/std/doc/String.md) - HTTP user agent. Default is `"ferret-http/<version>"`.
+* *optional* __userAgent__: [Str](/doc/std/String.md) - HTTP user agent. Default is `"ferret-http/<version>"`.
 
-* *optional* __timeout__: [Num](/std/doc/Number.md) - Request timeout. Set to undefined for no timeout.
+* *optional* __timeout__: [Num](/doc/std/Number.md) - Request timeout. Set to undefined for no timeout.
 
-* *optional* __maxContentLength__: [Num](/std/doc/Number.md) - Maximum length of content.
+* *optional* __maxContentLength__: [Num](/doc/std/Number.md) - Maximum length of content.
 If reached, the connection will be closed
 and the response will be truncated to this length.
 By default, there is no limit.
 
-* *optional* __readLength__: [Num](/std/doc/Number.md) - Read length in bytes. Default is 64 KB.
+* *optional* __readLength__: [Num](/doc/std/Number.md) - Read length in bytes. Default is 64 KB.
 
-* *optional* __writeLength__: [Num](/std/doc/Number.md) - Write length in bytes. Default is 64 KB.
+* *optional* __writeLength__: [Num](/doc/std/Number.md) - Write length in bytes. Default is 64 KB.
 
 ## Methods
 
@@ -43,7 +43,7 @@ See the [`request`](#request) method.
 
 #### Arguments
 
-* __url__: [Str](/std/doc/String.md) - HTTP URL to request.
+* __url__: [Str](/doc/std/String.md) - HTTP URL to request.
 
 
 
@@ -59,7 +59,7 @@ See the [`request`](#request) method.
 
 #### Arguments
 
-* __url__: [Str](/std/doc/String.md) - HTTP URL to request.
+* __url__: [Str](/doc/std/String.md) - HTTP URL to request.
 
 
 
@@ -76,7 +76,7 @@ Creates an [`HTTP::Request`](Request.md).
 
 * __httpMethod__: Method - Request HTTP method.
 
-* __url__: [Str](/std/doc/String.md) - HTTP URL to request.
+* __url__: [Str](/doc/std/String.md) - HTTP URL to request.
 
 
 

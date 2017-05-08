@@ -18,13 +18,13 @@ Creates a new User class instance.
 
 * __connection__: Connection  
 
-* __nick__: [Str](/std/doc/String.md)  
+* __nick__: [Str](/doc/std/String.md)  
 
-* *optional* __user__: [Str](/std/doc/String.md)  
+* *optional* __user__: [Str](/doc/std/String.md)  
 
-* *optional* __host__: [Str](/std/doc/String.md)  
+* *optional* __host__: [Str](/doc/std/String.md)  
 
-* *optional* __real__: [Str](/std/doc/String.md)  
+* *optional* __real__: [Str](/doc/std/String.md)  
 
 
 

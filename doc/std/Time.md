@@ -30,7 +30,7 @@ Creates a new time given date components.
 
 * *optional* __nanosecond__: Nanosecond - Nanoseconds >= 0.
 
-* *optional* __timeZone__: [Str](/std/doc/String.md) - Time zone identifier (e.g. `"America/Chicago"`) or offset
+* *optional* __timeZone__: [Str](/doc/std/String.md) - Time zone identifier (e.g. `"America/Chicago"`) or offset
 string (e.g. `"+0630"`) or `"local"` for the local timezone.
 If omitted, no timezone will be associated with this timepoint.
 
@@ -203,7 +203,7 @@ Symbol month names, accepted for the month time component.
 
 In order to comply, the object must satisfy each of the following conditions.
 
-1. __isa__: Must be an instance of [Sym](/std/doc/Symbol.md).
+1. __isa__: Must be an instance of [Sym](/doc/std/Symbol.md).
 2. __satisfies__: Determined at runtime; see code.
 
 
@@ -229,7 +229,7 @@ Symbol weekday names.
 
 In order to comply, the object must satisfy each of the following conditions.
 
-1. __isa__: Must be an instance of [Sym](/std/doc/Symbol.md).
+1. __isa__: Must be an instance of [Sym](/doc/std/Symbol.md).
 2. __satisfies__: Determined at runtime; see code.
 
 
@@ -242,7 +242,7 @@ Hour 0-23.
 
 In order to comply, the object must satisfy each of the following conditions.
 
-1. __isa__: Must be an instance of [Num](/std/doc/Number.md).
+1. __isa__: Must be an instance of [Num](/doc/std/Number.md).
 2. __satisfies__: Determined at runtime; see code.
 
 
@@ -255,7 +255,7 @@ Nanosecond >= 0.
 
 In order to comply, the object must satisfy each of the following conditions.
 
-1. __isa__: Must be an instance of [Int](/std/doc/Number.md).
+1. __isa__: Must be an instance of [Int](/doc/std/Number.md).
 2. __satisfies__: Determined at runtime; see code.
 
 

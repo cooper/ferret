@@ -6,7 +6,7 @@ class Complex 1.0
 #| are [real numbers](Number.md) and `i` is the
 #| [imaginary unit](https://en.wikipedia.org/wiki/Imaginary_unit).
 #| `a` and `b` are commonly called the "real part" and "imaginary part"
-#| respectively, despite both being [real numbers](Number.frt).
+#| respectively, despite both being [real numbers](Number.md).
 #|
 #| Complex numbers can also be constructed from a polar representations
 #| `r(cosθ + isinθ)` or `re^(iθ)` with [`Complex.polar()`](#polar).
@@ -16,7 +16,7 @@ class Complex 1.0
 #| has native support for inline `a + bi` notation.
 #|
 #| If the given imaginary part is zero, the constructor returns the real part
-#| as a [real number](Number.frt).
+#| as a [real number](Number.md).
 #|
 #| To instead create a complex number from `r` and `θ`,
 #| use [`Complex.polar()`](#polar).
