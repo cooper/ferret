@@ -12,7 +12,8 @@ use Cwd             'abs_path';
 use File::Slurp     'slurp';
 use File::Find      'find';
 use Scalar::Util    'blessed';
-use File::Basename  qw(fileparse basename);
+use File::Basename  qw(fileparse basename dirname);
+use JSON::XS        qw(decode_json);
 use IO::Async::Function;
 use IO::Async::Loop;
 use Getopt::Long::Descriptive;
@@ -56,7 +57,8 @@ my (
     $pending,       # number of files in progress
     $not_skipped,   # number of files that were NOT skipped
     @errors,        # postponed errors
-    %done           # files already done
+    %done,          # files already done
+    %metadata       # file-to-metadata map
 );
 
 # find the files.
@@ -202,10 +204,11 @@ sub do_file {
     my $abs     = abs_path($file);
     my $is_docs = $ext eq '.frtdoc';
     my $ret     = { file => $file, abs => $abs };
+    my %meta    = get_metadata($file);
 
     # writing to .md.
     if ($is_docs) {
-        my $docs        = "${path}doc";
+        my $docs        = $meta{doc_dir} // "${path}doc";
         $write_dir      = $docs;
         $write_file     = "$docs/$name.md";
         $ret->{docs}    = $docs;
@@ -241,8 +244,11 @@ sub do_file {
 
     # open the output file.
     my $fh;
-    mkdir $write_dir or die "Couldn't create $write_dir" if !-d $write_dir;
-    open $fh, '>', $write_file or die "Couldn't open $write_file to write";
+    mkdir $write_dir
+        or die "Couldn't create $write_dir"
+        if !-d $write_dir;
+    open $fh, '>', $write_file
+        or die "Couldn't open $write_file to write";
     binmode $fh, ':utf8';
 
     # see if we've already constructed it.
@@ -342,4 +348,32 @@ sub run_file {
     my $file = shift;
     my ($name, $path, $ext) = fileparse($file, qr/\.[^.]*/);
     exec 'perl', "${path}build/$name$ext.pm";
+}
+
+sub get_metadata {
+    my $dir = dirname(shift);
+    
+    # metadata may be cached here
+    if (my $meta = $metadata{$dir}) {
+        return %$meta;
+    }
+    
+    # nothing exists here; check the directory above
+    my $meta_file = "$dir/ferret.json";
+    return get_metadata($dir)
+        if !-e $meta_file;
+    
+    # read JSON file
+    my $slurped = slurp($meta_file);
+    my $href    = eval { decode_json($slurped) };
+    return if ref $href ne 'HASH';
+    
+    # adjust paths
+    if (length $href->{doc_dir} && index($href->{doc_dir}, '/')) {
+        $href->{doc_dir} = "$dir/$$href{doc_dir}";
+    }
+    
+    # cache
+    $metadata{$dir} = $href;
+    return %$href;
 }
