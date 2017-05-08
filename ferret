@@ -210,6 +210,7 @@ sub do_file {
     # writing to .md.
     if ($is_docs) {
         my $doc_dir = get_meta_dir(
+            %meta,
             key         => 'doc_dir',
             file        => $file,
             fallback    => "${path}doc"
@@ -366,7 +367,7 @@ sub get_metadata {
     # nothing exists here; check the directory above
     my $meta_file = "$dir/ferret.json";
     return get_metadata($dir)
-        if !-e $meta_file;
+        if !-e $meta_file && index($dir, '/') != -1;
     
     # read JSON file
     my $slurped = slurp($meta_file);
@@ -381,7 +382,8 @@ sub get_metadata {
 
 sub get_meta_dir {
     my %meta = @_;
-    return $meta{fallback} if !length $meta{ $meta{key} };
+    return $meta{fallback}
+        if !length $meta{ $meta{key} };
     my $dir = join '/', grep length,
         $meta{dir},
         $meta{ $meta{key} },
