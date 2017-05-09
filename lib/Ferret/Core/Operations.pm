@@ -22,7 +22,8 @@ my %operators = (
     mod     => '%',
     mul     => 'x',
     div     => '/',
-    _sub    => '-',
+    add     => '+',
+    sub     => '-',
     sim     => '=~',
     equal   => '=='
 );
