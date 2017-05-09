@@ -1,2 +1,2 @@
 # Anonymous function definition
-my $func_<<id>> = function_def($f, <<owner>>, <<name>>);
+my $func_<<id>> = function_def($f, <<owner>>, <<quoted_name>>);

@@ -46,13 +46,6 @@ sub perl_fmt {
         my $fmt  = $_->{event_cb}   ? 'function_def_event' :
                    $_->{need_topic} ? 'function_def_topic' : 'function_def';
         $fmt .= '_e' if !$_->{has_body};
-
-        # fix quoting
-        $info->{name} =
-            length $info->{name} && index($info->{name}, "'") ?
-            "'$$info{name}'"                                  :
-            $info->{name};
-
         F::get_perl_fmt($fmt => $_);
     } @{ $doc->{function_defs} };
 

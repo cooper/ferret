@@ -199,28 +199,33 @@ sub perl_fmt {
     my $arg_str = join(', ', @arguments);
     my $ret_str = join(', ', @returns);
 
-    my $func_name = '(undef)';
+    my ($func_name, $quoted_name);
     if (length $func->{name}) {
-        $func_name = $func->{name};
-        $func_name = "'$func_name'" if $func_name =~ m/\W/;
+        $func_name   = $func->{name};
+        $quoted_name = "'$func_name'";
+        $func_name   = $quoted_name if $func_name =~ m/\W/;
+    }
+    else {
+        $func_name = $quoted_name = '(undef)';
     }
 
     my $info = {
-        has_body   => !!$body,
-        need_topic => $need_topic,
-        anonymous  => $func->{anonymous},
-        event_cb   => $func->{event_cb},
-        owner      => $func->owner_str,
-        id         => $func->document->{function_cid}++,
-        name       => $func_name,
-        cb_name    => length $func->{cb_name} ? "'$$func{cb_name}'" : 'undef',
-        class      => $class ? '$class' : 'undef',
-        semi       => $func->{anonymous} ? ''        : ';', # probably temporary hack
-        is_prop    => $func->{is_prop}   ? '1'       : 'undef',
-        p_set      => $func->{p_set}     ? '1'       : 'undef',
-        statements => $content,
-        arguments  => length $arg_str ? "[ $arg_str ]" : 'undef',
-        returns    => length $ret_str ? "[ $ret_str ]" : 'undef'
+        has_body    => !!$body,
+        need_topic  => $need_topic,
+        anonymous   => $func->{anonymous},
+        event_cb    => $func->{event_cb},
+        owner       => $func->owner_str,
+        id          => $func->document->{function_cid}++,
+        name        => $func_name,
+        quoted_name => $quoted_name,
+        cb_name     => length $func->{cb_name} ? "'$$func{cb_name}'" : 'undef',
+        class       => $class ? '$class' : 'undef',
+        semi        => $func->{anonymous} ? ''        : ';', # probably temporary hack
+        is_prop     => $func->{is_prop}   ? '1'       : 'undef',
+        p_set       => $func->{p_set}     ? '1'       : 'undef',
+        statements  => $content,
+        arguments   => length $arg_str ? "[ $arg_str ]" : 'undef',
+        returns     => length $ret_str ? "[ $ret_str ]" : 'undef'
     };
 
     # these things depend on whether it's a function or method.
