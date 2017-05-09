@@ -20,7 +20,7 @@ my %operators = (
     range   => '..',
     pow     => '^',
     mod     => '%',
-    mul     => '*',
+    mul     => 'x',
     div     => '/',
     _sub    => '-',
     sim     => '=~',
