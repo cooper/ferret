@@ -199,6 +199,12 @@ sub perl_fmt {
     my $arg_str = join(', ', @arguments);
     my $ret_str = join(', ', @returns);
 
+    my $func_name = '(undef)';
+    if (length $func->{name}) {
+        $func_name = $func->{name};
+        $func_name = "'$func_name'" if $func_name =~ m/\W/;
+    }
+
     my $info = {
         has_body   => !!$body,
         need_topic => $need_topic,
@@ -206,7 +212,7 @@ sub perl_fmt {
         event_cb   => $func->{event_cb},
         owner      => $func->owner_str,
         id         => $func->document->{function_cid}++,
-        name       => length $func->{name} ? $func->{name} : '(undef)',
+        name       => $func_name,
         cb_name    => length $func->{cb_name} ? "'$$func{cb_name}'" : 'undef',
         class      => $class ? '$class' : 'undef',
         semi       => $func->{anonymous} ? ''        : ';', # probably temporary hack
