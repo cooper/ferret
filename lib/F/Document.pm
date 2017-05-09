@@ -47,10 +47,11 @@ sub perl_fmt {
                    $_->{need_topic} ? 'function_def_topic' : 'function_def';
         $fmt .= '_e' if !$_->{has_body};
 
+        # fix quoting
         $info->{name} =
-            length $info->{name} && $info->{name} ne '(undef)' ?
-            "'$$info{name}'"                                   :
-            'undef';
+            length $info->{name} && index($info->{name}, "'") ?
+            "'$$info{name}'"                                  :
+            $info->{name};
 
         F::get_perl_fmt($fmt => $_);
     } @{ $doc->{function_defs} };
