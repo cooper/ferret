@@ -59,7 +59,7 @@ prop direction {
 }
 
 #> addition of two vectors
-operator + {
+method + {
     need $ehs: Vector
     if $ehs.dimension != @dimension
         throw Error(:DimensionError, "Dimension mismatch $ehs.dimensionHR != @dimensionHR")
@@ -70,7 +70,7 @@ operator + {
 }
 
 #> allows you to take the opposite vector `-$u`
-operator - {
+method - {
     need $lhs: Num
     if $lhs != 0
         throw(:InvalidOperation, "Unsupported operation")
@@ -80,7 +80,7 @@ operator - {
 }
 
 #> subtraction of a vector from another
-operator - {
+method - {
     need $rhs: Vector
     if $rhs.dimension != @dimension
         throw Error(:DimensionError, "Dimension mismatch $rhs.dimensionHR != @dimensionHR")
@@ -91,25 +91,25 @@ operator - {
 }
 
 #> scalar multiplication of the vector
-operator * {
+method * {
     need $ehs: Num
     return Vector(items: @items.map! { -> $_ * $ehs })
 }
 
 #> scalar division of the vector
-operator / {
+method / {
     need $rhs: Num
     return *self * (1 / $rhs)
 }
 
 #> dot product of two vectors
-operator * {
+method * {
     need $ehs: Vector
     return @dot($ehs)
 }
 
 #> vector equality
-operator == {
+method == {
     need $ehs: Vector
     if $ehs.dimension != @dimension
         return false

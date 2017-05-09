@@ -19,43 +19,43 @@ use Ferret::Core::Conversion qw(
 );
 
 my @methods = (
-    opEqual => {
+    '==' => {
         code => \&_op_equal,
         need => '$rhs:Num'
     },
-    opLess => {
+    '<' => {
         code => \&_op_less,
         need => '$rhs:Num'
     },
-    opGr8r => {
+    '>' => {
         code => \&_op_gr8r,
         need => '$rhs:Num'
     },
-    opAdd => {
+    '+' => {
         code => \&_op_add,
         need => '$rhs:Num'
     },
-    opSub => {
+    '-' => {
         code => \&_op_sub,
         need => '$rhs:Num'
     },
-    opDiv => {
+    '/' => {
         code => \&_op_div,
         need => '$rhs:Num'
     },
-    opMul => {
+    '*' => {
         code => \&_op_mul,
         need => '$rhs:Num'
     },
-    opPow => {
+    '^' => {
         code => \&_op_pow,
         need => '$rhs:Num'
     },
-    opMod => {
+    '%' => {
         code => \&_op_mod,
         need => '$rhs:Num'
     },
-    opRange => {
+    '..' => {
         code => \&_op_range,
         need => '$rhs:Num|undefined'
     },

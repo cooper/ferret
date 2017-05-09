@@ -26,7 +26,7 @@ my $keyword_reg = '\\b(?:'.join('|', qw{
     type        alias       delete      weaken
     can         satisfies   transform   isa
     detail      throw       fail        catch
-    hook        operator    __END__
+    hook        __END__
 }).')\\b';
 
 # these tokens do not have values.
@@ -62,6 +62,18 @@ my %semi_follows = map { $_ => 1 } qw(
     KEYWORD_RETURN  KEYWORD_STOP    BAREWORD
     KEYWORD_NEXT    KEYWORD_LAST    KEYWORD_REDO
     KEYWORD_ELSE
+);
+
+my %operator_tok_to_method = (
+    OP_ADD      => '+',
+    OP_SUB      => '-',
+    OP_MUL      => '*',
+    OP_DIV      => '/',
+    OP_MOD      => '%',
+    OP_POW      => '^',
+    OP_SIM      => '=~',
+    OP_RANGE    => '..',
+    OP_EQUAL    => '=='
 );
 
 # reused formats
@@ -599,8 +611,29 @@ sub tok_OP_MAYBE {
 sub tok_CLOSURE_S {
     my ($tokens, $value) = @_;
     my $last = $tokens->[-1] or return;
-    if ($last->[0] eq 'KEYWORD_FUNC') {
+    my $last_tok = $last->[0];
+    
+    # anonymous function
+    if ($last_tok eq 'KEYWORD_FUNC') {
         $tokens->[-1] = [ FUNCTION => { anonymous => 1 }, $position ];
+        return;
+    }
+    
+    # operator method
+    my $last_2 = $tokens->[-2] or return;
+    my $last_tok_2 = $last_2->[0];
+    my $op = $operator_tok_to_method{$last_tok};
+    if ($op && $last_tok_2 eq 'KEYWORD_METHOD') {
+        print "USING $op! $last_tok\n";
+        print "OVERWRITING $$tokens[-2][0]\n";
+        $tokens->[-2] = [ METHOD => {
+            name        => $op,
+            operator    => F::operator_token($last_tok),
+            operator_p  => F::pretty_token($last_tok)
+        }, $position ];
+        print "DELETING $$tokens[-1][0]\n";
+        delete @$tokens[-1];
+
         return;
     }
 }

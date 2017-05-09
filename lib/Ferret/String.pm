@@ -15,25 +15,25 @@ use Ferret::Core::Conversion qw(
 );
 
 my @methods = (
-    opAdd => {
+    '+' => {
         need => '$lhs:Str::Any',
         code => \&_op_add_lhs,
         cbnm => 'lhs'
     },
-    opAdd => {
+    '+' => {
         need => '$rhs:Str::Any',
         code => \&_op_add_rhs,
         cbnm => 'rhs'
     },
-    opSim => {
+    '=~' => {
         need => '$rhs:Rgx',
         code => \&_op_sim
     },
-    opMul => {
+    '*' => {
         need => '$ehs:Num',
         code => \&_op_mul
     },
-    opEqual => {
+    '==' => {
         need => '$rhs:Str',
         code => \&_op_equal
     },

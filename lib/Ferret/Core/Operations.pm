@@ -16,10 +16,21 @@ BEGIN {
     }
 }
 
+my %operators = (
+    range   => '..',
+    pow     => '^',
+    mod     => '%',
+    mul     => '*',
+    div     => '/',
+    _sub    => '-',
+    sim     => '=~',
+    equal   => '=='
+);
+
 sub op_star {
     my ($star, $scope, $pos, @items) = @_;
     $star    = 'sub' if $star eq '_sub';
-    my $op   = 'op'.ucfirst($star);
+    my $op   = $operators{$star};
     my $left = shift @items or return;
 
     while (@items) {

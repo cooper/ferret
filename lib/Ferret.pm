@@ -357,7 +357,8 @@ sub bind_constructor {
     my ($perl_class, $f, %opts) = @_;
 
     # find the class object.
-    my $class = $class_bindings{$perl_class}{class} or return;
+    my $class = $class_bindings{$perl_class}{class}
+        or return undef;
 
     # find init arguments.
     my $arguments = delete $opts{init_args} || {};

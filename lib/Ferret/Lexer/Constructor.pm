@@ -839,32 +839,9 @@ sub c_altering_assignment {
 *c_OP_GR8R    = *c_OP_GR8R_E   =
 *c_OP_RANGE   = *c_operator;
 
-my %operator_tok_to_method = (
-    OP_ADD      => 'opAdd',
-    OP_SUB      => 'opSub',
-    OP_MUL      => 'opMul',
-    OP_DIV      => 'opDiv',
-    OP_MOD      => 'opMod',
-    OP_POW      => 'opPow',
-    OP_SIM      => 'opSim',
-    OP_RANGE    => 'opRange',
-    OP_EQUAL    => 'opEqual'
-);
-
 # used for all operators managed by the Operation node.
 sub c_operator {
     my ($c, $value) = @_;
-
-    # if the last token is the operator keyword, this is an operator overload
-    my $last_tok = $c->{done_toks}[-1] ? $c->{done_toks}[-1][0] : '';
-    if ($last_tok eq 'KEYWORD_OPERATOR') {
-        my $method = $operator_tok_to_method{ $c->label };
-        return $c->simulate('METHOD', {
-            name        => $method,
-            operator    => F::operator_token($c->label),
-            operator_p  => F::pretty_token($c->label)
-        });
-    }
 
     # we're only interested in the previous element at the same level.
     my $last_el = $c->last_el;
@@ -1627,20 +1604,6 @@ sub c_FUNCTION {
     $c->capture_closure_with($function->body) if $function->body;
 
     return $function;
-}
-
-# operator overload.
-sub c_KEYWORD_OPERATOR {
-    my ($c, $value) = @_;
-    my $next   = ($c->next_tok || '');
-    my $pretty = F::pretty_token($next);
-    my $method = $operator_tok_to_method{$next};
-    return $c->unexpected([
-        "in front of $pretty",
-        ucfirst "$pretty cannot be overloaded"
-    ]) if !$method;
-    $c->{no_instr}++;
-    return;
 }
 
 # event callback.
@@ -2435,7 +2398,7 @@ sub c_any {
 
         ^KEYWORD_INSIDE$    ^KEYWORD_FOR$       ^KEYWORD_ON$
         ^KEYWORD_IF$        ^KEYWORD_ELSE$      ^KEYWORD_ELSIF$
-        ^KEYWORD_DEFER$     ^KEYWORD_CONTINUE$  ^KEYWORD_OPERATOR$
+        ^KEYWORD_DEFER$     ^KEYWORD_CONTINUE$
 
         ^CLOSURE_.+$        ^ANGLE_.+$
         ^OP_(?!(?:ADD|SUB|NOT|RETURN)$).+$

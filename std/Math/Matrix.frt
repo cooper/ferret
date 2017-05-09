@@ -53,19 +53,19 @@ method mapWith {
 }
 
 #> scalar addition
-operator + {
+method + {
     need $ehs: Num
     return @map! { -> $_ + $ehs }
 }
 
 #> scalar subtraction
-operator - {
+method - {
     need $rhs: Num
     return @map! { -> $_ - $rhs }
 }
 
 #> allows you to take the opposite matrix
-operator - {
+method - {
     need $lhs: Num
     if $lhs != 0
         throw(:InvalidOperation, "Unsupported operation")
@@ -73,19 +73,19 @@ operator - {
 }
 
 #> scalar multiplication
-operator * {
+method * {
     need $ehs: Num
     return @map! { -> $_ * $ehs }
 }
 
 #> scalar division
-operator / {
+method / {
     need $rhs: Num
     return @map! { -> $_ / $rhs }
 }
 
 #> entry-wise matrix addition
-operator + {
+method + {
     need $ehs: Matrix   #< another matrix of the same dimensions
     return @mapWith($ehs) {
         need $a, $b
@@ -94,7 +94,7 @@ operator + {
 }
 
 #> entry-wise matrix subtraction
-operator - {
+method - {
     need $rhs: Matrix   #< another matrix of the same dimensions
     return @mapWith($rhs) {
         need $a, $b
