@@ -22,6 +22,7 @@ my (
     %delay_class_bindings   # class bindings pending Class creation
 );
 
+# also update these in Conversion.pm
 sub FUNC_SELF   () { 0 }
 sub FUNC_ARGS   () { 1 }
 sub FUNC_CSCOPE () { 2 }
@@ -30,6 +31,7 @@ sub FUNC_RET    () { 4 }
 sub FUNC_FUNC   () { 5 }
 sub FUNC_THIS   () { 6 }
 sub FUNC_INS    () { 7 }
+sub FUNC_POS    () { 8 }
 
 # create a new ferret.
 sub new {

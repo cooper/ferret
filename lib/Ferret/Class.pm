@@ -10,7 +10,7 @@ use parent 'Ferret::Context';
 use Scalar::Util qw(weaken blessed);
 use Ferret::Core::Conversion qw(
     plist ferror fmethod pcoderef_normalized
-    FUNC_V1 FUNC_RET FUNC_ARGS
+    FUNC_V1 FUNC_RET FUNC_ARGS FUNC_POS
 );
 
 Ferret::bind_class(
@@ -78,7 +78,7 @@ sub new {
 
 # "calling" a class is creating an instance.
 sub call {
-    my ($class, $args) = @_;
+    my ($class, $args, undef, undef, $pos) = @_;
 
     # if passed an instance, return the instance.
     if (ref $args eq 'ARRAY' && @$args == 1) {
@@ -89,7 +89,7 @@ sub call {
     my $obj = Ferret::Object->new($class->f);
 
     # initialize it.
-    my $ret = $class->init($obj, $args);
+    my $ret = $class->init($obj, $args, $pos);
 
     # if it failed, return the return object with no instance.
     # it will yield a boolean false value.
@@ -104,7 +104,7 @@ sub call {
 
 # initialize an object.
 sub init {
-    my ($class, $obj, $args) = @_;
+    my ($class, $obj, $args, $pos) = @_;
 
     # add the class prototype to the object.
     $obj->add_parent($class->prototype)
@@ -137,7 +137,8 @@ sub init {
             $obj,
             $args,
             $class->{outer_scope},
-            $ret
+            $ret,
+            $pos
         );
         $fire = $init->{most_recent_fire};
         Ferret::inspect($ret) if $$class{name} eq 'K';
@@ -323,7 +324,9 @@ sub _global_init {
         weaken($weak_class);
         return Ferret::Function->new($obj->f,
             mimic   => $weak_class->property('initializer__') || undef,
-            code    => sub { $weak_class->init($obj, $_[FUNC_ARGS]) },
+            code    => sub {
+                $weak_class->init($obj, $_[FUNC_ARGS], $_[FUNC_POS]);
+            },
             all_opt => 1
         );
     }, 'init', '$obj');

@@ -312,6 +312,7 @@ sub FUNC_RET    ();
 sub FUNC_FUNC   ();
 sub FUNC_THIS   ();
 sub FUNC_INS    ();
+sub FUNC_POS    ();
 
 *FUNC_SELF      = \&Ferret::FUNC_SELF;
 *FUNC_ARGS      = \&Ferret::FUNC_ARGS;
@@ -321,6 +322,7 @@ sub FUNC_INS    ();
 *FUNC_FUNC      = \&Ferret::FUNC_FUNC;
 *FUNC_THIS      = \&Ferret::FUNC_THIS;
 *FUNC_INS       = \&Ferret::FUNC_INS;
+*FUNC_POS       = \&Ferret::FUNC_POS;
 
 sub FUNC_V1 () {
     return @_[
@@ -331,7 +333,8 @@ sub FUNC_V1 () {
         FUNC_RET,           # return object
         FUNC_FUNC,          # the function itself
         FUNC_THIS,          # *this
-        FUNC_INS            # $_
+        FUNC_INS,           # $_
+        FUNC_POS            # call position ref
     ];
 }
 

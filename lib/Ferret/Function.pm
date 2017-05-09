@@ -8,7 +8,7 @@ use 5.010;
 
 use parent 'Ferret::Object';
 use Scalar::Util qw(blessed weaken);
-use Ferret::Core::Conversion qw(plist pstring flist ferror FUNC_RET);
+use Ferret::Core::Conversion qw(plist pstring flist ferror FUNC_RET FUNC_POS);
 use Ferret::Shared::Utils qw(signature_to_string detailed_signature_to_string);
 use Ferret::Arguments;
 use Ferret::Return;
@@ -24,7 +24,7 @@ Ferret::bind_class(
             'use the func keyword instead',
             'InvalidInitialization'
         );
-        return $ret->fail($err);
+        return $ret->fail($err, $_[FUNC_POS]);
     },
     alias => 'Func',
     # this relates to the class called Function.
@@ -215,7 +215,8 @@ sub call {
         $return,                # FUNC_RET
         $func,                  # FUNC_FUNC
         $this,                  # FUNC_THIS
-        $ins                    # FUNC_INS
+        $ins,                   # FUNC_INS
+        $pos                    # FUNC_POS
     );
 
     # finalize the return
