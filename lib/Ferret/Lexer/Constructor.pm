@@ -1173,13 +1173,13 @@ sub c_OP_PACK {
     # left side must be bareword.
     return $c->expected(
         'a bareword',
-        'at left of namespace operator (::)'
+        'at left of namespace separator (::)'
     ) unless $l_word->type eq 'Bareword';
 
     # right side must be bareword.
     return $c->expected(
         'a bareword',
-        'at right of namespace operator (::)'
+        'at right of namespace separator (::)'
     ) unless $c->next_tok eq 'BAREWORD';
 
     $l_word->{bareword_value} .= '::';
@@ -1339,7 +1339,7 @@ sub c_BAREWORD {
         # this is not allowed because it is not a namespace.
         if ($value =~ m/^[^A-Z]/) {
             return $c->unexpected([
-                'following namespace operator (::)',
+                'following namespace separator (::)',
                 ':: is used for namespaces; use the .property syntax '.
                 'for accessing normal properties'
             ]);

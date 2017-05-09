@@ -21,7 +21,7 @@ Anywhere that a package has not been declared, `package main` is inferred.
 package Hello 1.0
 ```
 
-Packages may be organized into different namespaces using the namespace operator
+Packages may be organized into different namespaces using the namespace separator
 (`::`). Packages inherit from the namespaces above them. For example, package
 `Math::Trig` inherits from the `Math` package.
 

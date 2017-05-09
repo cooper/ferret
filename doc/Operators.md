@@ -156,7 +156,7 @@ Tokenized as `OP_RETURN`.
 
 See also the [`return`](Keywords.md#return) keyword.
 
-### Namespace operator
+### Namespace separator
 
     ::
 

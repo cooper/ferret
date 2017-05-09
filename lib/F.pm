@@ -73,7 +73,7 @@ our %pretty_tokens = (
     OP_RANGE    => [ '..',  'range operator (..)'                           ],
     OP_PROP     => [ '.',   'property operator (.)'                         ],
     OP_COMMA    => [ ',',   'comma (,)'                                     ],
-    OP_PACK     => [ '::',  'namespace operator (::)'                       ],
+    OP_PACK     => [ '::',  'namespace separator (::)'                      ],
     OP_VALUE    => [ ':',   'colon (:)'                                     ],
     OP_CALL     => [ '!',   'zero-argument call operator (!)'               ],
     OP_LESS_E   => [ '<=',  'less than or equal to operator (<=)'           ],
