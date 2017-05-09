@@ -54,7 +54,7 @@ prop seconds        { -> @dtd.seconds!      : Int } #< seconds
 prop nanoseconds    { -> @dtd.nanoseconds!  : Int } #< nanoseconds
 
 #> add two durations
-method + {
+operator + {
     need $ehs: Duration
     $d = @copy!
     $d.dtd.add_duration($ehs.dtd)
@@ -62,7 +62,7 @@ method + {
 }
 
 #> subtract a duration from this one
-method - {
+operator - {
     need $rhs: Duration
     $d = @copy!
     $d.dtd.subtract_duration($rhs.dtd)

@@ -628,16 +628,12 @@ sub tok_CLOSURE_S {
     my $last_tok_2 = $last_2->[0];
     my $op = $operator_tok_to_method{$last_tok};
     if ($op && $last_tok_2 eq 'KEYWORD_METHOD') {
-        print "USING $op! $last_tok\n";
-        print "OVERWRITING $$tokens[-2][0]\n";
         $tokens->[-2] = [ METHOD => {
             name        => $op,
             operator    => F::operator_token($last_tok),
             operator_p  => F::pretty_token($last_tok)
         }, $position ];
-        print "DELETING $$tokens[-1][0]\n";
         delete @$tokens[-1];
-
         return;
     }
 }
